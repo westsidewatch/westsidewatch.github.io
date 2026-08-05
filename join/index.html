@@ -17,11 +17,16 @@
 <style>
 
 
+* {
+    box-sizing: border-box;
+}
+
+
 body {
 
-    text-align: center;
+    margin: 0;
 
-    padding: 80px 35px;
+    padding: 35px 15px;
 
     background-image:
     linear-gradient(
@@ -34,8 +39,6 @@ body {
 
     background-position: center;
 
-    background-attachment: fixed;
-
     color: #252525;
 
     font-family: "Noto Serif TC", serif;
@@ -44,53 +47,43 @@ body {
 
 
 
-/* Outer invitation frame */
+/* Invitation Card */
 
-body::before {
+.card {
 
-    content: "";
+    max-width: 430px;
 
-    position: fixed;
+    margin: 0 auto;
 
-    top: 22px;
-
-    left: 22px;
-
-    right: 22px;
-
-    bottom: 22px;
+    padding: 55px 30px;
 
     border: 1px solid rgba(37,37,37,0.65);
 
-    pointer-events: none;
-
-    z-index: 10;
+    position: relative;
 
 }
 
 
 
-/* Inner invitation frame */
+/* Inner Frame */
 
-body::after {
+.card::before {
 
     content: "";
 
-    position: fixed;
+    position: absolute;
 
-    top: 30px;
+    top: 9px;
 
-    left: 30px;
+    left: 9px;
 
-    right: 30px;
+    right: 9px;
 
-    bottom: 30px;
+    bottom: 9px;
 
     border: 1px solid rgba(37,37,37,0.25);
 
     pointer-events: none;
-
-    z-index: 10;
 
 }
 
@@ -166,7 +159,7 @@ body::after {
 
 .verse {
 
-    max-width: 360px;
+    max-width: 330px;
 
     margin: 0 auto;
 
@@ -178,7 +171,7 @@ body::after {
 
 
 
-/* Reference */
+/* Scripture Reference */
 
 .reference {
 
@@ -204,15 +197,17 @@ body::after {
 
 
 
-/* QR */
+/* QR Code */
 
 .qr {
 
-    width: 260px;
+    width: 240px;
 
     max-width: 80%;
 
     margin: 35px auto;
+
+    display: block;
 
     filter: drop-shadow(0 4px 8px rgba(37,37,37,0.25));
 
@@ -224,12 +219,23 @@ body::after {
 
 .join {
 
-    font-size: 19px;
+    font-size: 18px;
 
     line-height: 1.8;
 
 }
 
+
+
+/* Church */
+
+.footer {
+
+    margin-top: 50px;
+
+    line-height: 1.8;
+
+}
 
 
 /* Church Chinese */
@@ -240,7 +246,9 @@ body::after {
                  "Noto Serif TC",
                  serif;
 
-    font-size: 19px;
+    font-size: 20px;
+
+    white-space: nowrap;
 
 }
 
@@ -252,25 +260,23 @@ body::after {
 
     font-family: "Cormorant Garamond", serif;
 
-    font-size: 20px;
+    font-size: 15px;
 
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
+
+    max-width: 100%;
+
+    margin: 0 auto;
 
 }
 
 
 
-/* Footer */
+.tag {
 
-.footer {
+    font-size: 13px;
 
-    margin-top: 55px;
-
-    color: #252525;
-
-    line-height: 1.8;
-
-    font-size: 14px;
+    margin-top: 18px;
 
 }
 
@@ -281,36 +287,28 @@ body::after {
 </head>
 
 
-
 <body>
 
 
+<div class="card">
+
+
 <div class="brand-cn">
-
 西區守望
-
 </div>
-
 
 
 <div class="brand-en">
-
 WESTSIDE WATCH
-
 </div>
-
 
 
 <div class="tagline">
-
 Watch for the Dawn
-
 </div>
 
 
-
 <div class="divider"></div>
-
 
 
 <div class="verse">
@@ -325,13 +323,10 @@ Watch for the Dawn
 —— 羅馬書 
 
 <span class="reference-number">
-
 13:12
-
 </span>
 
 </div>
-
 
 </div>
 
@@ -350,7 +345,6 @@ Join Westside Watch Community
 </div>
 
 
-
 <div class="divider"></div>
 
 
@@ -365,7 +359,6 @@ Join Westside Watch Community
 </div>
 
 
-
 <div class="church-en">
 
 P.A.O.C. Living Water Assembly West
@@ -373,10 +366,14 @@ P.A.O.C. Living Water Assembly West
 </div>
 
 
-<br>
-
+<div class="tag">
 
 Bible Study · Fellowship · Community
+
+</div>
+
+
+</div>
 
 
 </div>
