@@ -7,13 +7,22 @@
       <span aria-hidden="true">/</span>
       <span aria-current="page">Vol.00</span>
     </nav>
-    <header class="volume__header">
-      <p class="kicker">{{ .Params.volume }}</p>
+    <header class="volume__header volume__header--contents">
+      <p class="kicker">{{ .Params.volume }} · Founding Volume</p>
       <h1>{{ .Title }}</h1>
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+      <nav class="volume__routes" aria-label="Volume routes">
+        <a href="{{ "/#vol-00-proclamation" | relURL }}">Read the opening</a>
+        <a href="#contents">Browse contents</a>
+        <a href="{{ "journal/" | relURL }}">Return to Journal</a>
+      </nav>
     </header>
 
     {{ $volume := index site.Data.volumes "vol-00" }}
+    <div id="contents" class="contents-heading">
+      <p class="kicker">Contents · 目錄</p>
+      <p>This volume moves through four movements and three watches. Column names are permanent editorial rooms; the works published inside them may continue to grow.</p>
+    </div>
     <div class="symphony" aria-label="Vol.00 editorial structure">
       {{ range $movement := $volume.movements }}
         <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
@@ -42,7 +51,7 @@
           {{ with $movement.interlude }}
             <aside class="interlude" aria-label="Interlude: {{ .name }}">
               <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
-              <span class="interlude__label">Interlude</span>
+              <span class="interlude__label">{{ .watch_en }} · <b lang="zh-Hant">{{ .watch }}</b></span>
               <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
               <span><b>{{ .modulation }}</b><br>{{ .character }} · {{ .form }}</span>
             </aside>

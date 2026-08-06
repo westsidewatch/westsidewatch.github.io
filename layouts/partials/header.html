@@ -1,11 +1,37 @@
 <header class="site-header">
-  <a class="wordmark" href="{{ site.Home.RelPermalink }}" aria-label="Westside Watch home">
-    {{ readFile "static/images/westside-watch-masthead.svg" | safeHTML }}
-  </a>
-  <nav aria-label="Primary navigation">
-    <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
-    <a href="{{ "website/" | relURL }}"{{ if eq .Section "website" }} aria-current="page"{{ end }}>Website</a>
-    <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>Church</a>
-    <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
-  </nav>
+  <div class="site-header__primary">
+    <a class="wordmark" href="{{ site.Home.RelPermalink }}" aria-label="Westside Watch home">
+      {{ readFile "static/images/westside-watch-masthead.svg" | safeHTML }}
+    </a>
+    <nav class="primary-nav" aria-label="Primary navigation">
+      <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
+      <a href="{{ "website/" | relURL }}"{{ if eq .Section "website" }} aria-current="page"{{ end }}>Website</a>
+      <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>Church</a>
+      <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
+    </nav>
+  </div>
+
+  {{ if or (eq .Section "journal") (eq .Section "vol-00") }}
+    <nav class="section-nav" aria-label="Journal navigation">
+      <span class="section-nav__identity">Journal</span>
+      <a href="{{ "journal/" | relURL }}"{{ if eq .RelPermalink "/journal/" }} aria-current="page"{{ end }}>Overview</a>
+      <a href="{{ "vol-00/" | relURL }}"{{ if eq .Section "vol-00" }} aria-current="page"{{ end }}>Vol.00</a>
+      <a href="{{ "vol-00/#contents" | relURL }}">Contents</a>
+      <a href="{{ "/#vol-00-proclamation" | relURL }}">Opening</a>
+    </nav>
+  {{ else if eq .Section "website" }}
+    <nav class="section-nav" aria-label="Website navigation">
+      <a class="section-nav__identity" href="{{ "website/" | relURL }}">Website</a>
+      {{ range (site.GetPage "/website").Pages.ByWeight }}
+        <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
+      {{ end }}
+    </nav>
+  {{ else if eq .Section "church" }}
+    <nav class="section-nav" aria-label="Church navigation">
+      <a class="section-nav__identity" href="{{ "church/" | relURL }}">Church</a>
+      {{ range (site.GetPage "/church").Pages.ByWeight }}
+        <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
+      {{ end }}
+    </nav>
+  {{ end }}
 </header>

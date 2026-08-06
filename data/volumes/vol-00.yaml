@@ -11,10 +11,10 @@ movements:
         role: "卷首"
       - number: "02"
         name: "伯利恆"
-        role: "Bethlehem · 本月靈糧"
+        role: "Bethlehem · 每日靈糧"
       - number: "03"
         name: "門"
-        role: "The Gate · 約稿論壇"
+        role: "The Gate · 守望神學的持續對話"
       - number: "04"
         name: "迦密"
         role: "Feature · 專題"
@@ -23,8 +23,10 @@ movements:
         role: "神學 · 神先尋找人"
       - number: "06"
         name: "西區的夜晚"
-        role: "以馬忤斯"
+        role: "以馬忤斯 · 線上查經工具"
     interlude:
+      watch: "初更"
+      watch_en: "First Watch"
       name: "Selah"
       name_zh: "細拉"
       rhythm: "▆▅▅▆▇"
@@ -49,6 +51,8 @@ movements:
         name: "伯特利"
         role: "教會生活"
     interlude:
+      watch: "中更"
+      watch_en: "Middle Watch"
       name: "The Silent Dove in the Distance"
       name_zh: "遠方無聲鴿"
       rhythm: "▅▆▇▆▅"
@@ -70,6 +74,8 @@ movements:
         name: "亞杜蘭洞"
         role: "Adullam · 守望者訪談"
     interlude:
+      watch: "晨更"
+      watch_en: "Morning Watch"
       name: "Kinneret"
       name_zh: "基尼烈"
       rhythm: "▆▇▅▇▆▅"
@@ -86,4 +92,4 @@ movements:
     columns:
       - number: "12"
         name: "瑪拉拿"
-        role: "結語"
+        role: "閉卷禱告與讚美"
