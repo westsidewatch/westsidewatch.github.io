@@ -567,14 +567,11 @@ h1 {
 .portal { width: var(--page); min-height: 72vh; margin-inline: auto; padding: clamp(5rem, 12vw, 11rem) 0; }
 .portal__header { max-width: 70rem; }
 .church-display-name {
-  max-width: 11em;
-  font-family: "HYRuiShou", "HYRuishou", "Noto Serif TC", serif;
-  font-size: clamp(3rem, 7.2vw, 7.4rem);
-  font-weight: 500;
-  letter-spacing: .035em;
-  line-height: 1.05;
-  text-wrap: balance;
+  width: min(100%, 62rem);
+  margin: 1.5rem 0 0;
+  line-height: 1;
 }
+.church-display-name img { display: block; width: 100%; height: auto; }
 .portal-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: clamp(5rem, 10vw, 9rem); border-top: 1px solid var(--line); }
 .portal-card {
   position: relative;

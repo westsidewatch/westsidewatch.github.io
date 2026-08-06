@@ -7,7 +7,14 @@
     </nav>
     <header class="portal__header">
       <p class="kicker">Westside Watch</p>
-      <h1{{ if eq .Section "church" }} class="church-display-name"{{ end }}>{{ .Params.display_title | default .Title }}</h1>
+      {{ if and (eq .Section "church") .Params.display_logo }}
+        <h1 class="church-display-name">
+          <img src="{{ .Params.display_logo | relURL }}" alt="" aria-hidden="true">
+          <span class="visually-hidden">{{ .Params.display_title | default .Title }}</span>
+        </h1>
+      {{ else }}
+        <h1>{{ .Params.display_title | default .Title }}</h1>
+      {{ end }}
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
     <div class="portal-grid">
