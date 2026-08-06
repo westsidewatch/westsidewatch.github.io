@@ -32,10 +32,9 @@
           <ol class="column-list">
             {{ range $column := $movement.columns }}
               <li>
-                <span class="column-list__number">Column {{ $column.number }}</span>
+                <span class="column-list__number">{{ $column.number }}</span>
                 <strong lang="zh-Hant">{{ $column.name }}</strong>
                 <span class="column-list__role">{{ $column.role }}</span>
-                <span class="column-list__state">Column</span>
               </li>
             {{ end }}
           </ol>
