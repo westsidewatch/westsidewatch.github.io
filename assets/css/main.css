@@ -235,13 +235,45 @@ h1 {
 .stone-intro__meta { padding-left: max(1rem, calc((100vw - 88rem) / 2)); }
 .stone-intro__body { max-width: 52rem; padding-right: max(1rem, calc((100vw - 88rem) / 2)); }
 .stone-intro__body h2 { margin: 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(3rem, 7vw, 7rem); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
-.stone-intro__body > p:not(.kicker) { max-width: 36rem; margin: 2rem 0; font-family: var(--font-display); font-size: 1.25rem; }
-.stone-intro__declaration {
-  max-width: 42rem !important;
+.stone-intro__body > p:not(.kicker) { max-width: 42rem; margin: 2rem 0; font-family: var(--font-display); font-size: 1.25rem; }
+.proclamation__scripture {
+  max-width: 42rem;
+  margin: clamp(3rem, 6vw, 5rem) 0;
+  padding-left: clamp(1rem, 3vw, 2rem);
+  border-left: 1px solid var(--first-light-gold);
   color: var(--watch-night);
-  font-size: clamp(1.35rem, 2.6vw, 2.25rem) !important;
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  line-height: 1.5;
+}
+.proclamation__scripture p { margin: 0 0 1rem; }
+.proclamation__scripture cite { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+.proclamation__lead {
+  color: var(--watch-night);
+  font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
+  line-height: 1.45;
+}
+.proclamation__watchman { font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important; }
+.proclamation__cycle {
+  margin: clamp(3rem, 6vw, 5rem) 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
+  border-block: 1px solid var(--line);
+  color: var(--watch-night);
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
+  line-height: 1.6;
+}
+.proclamation__cycle p { margin: 0; }
+.proclamation__cycle .section-label { margin-bottom: 1rem; font-family: var(--font-body); }
+.proclamation__creed {
+  max-width: 46rem;
+  color: var(--watch-night);
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 3vw, 2.5rem);
   line-height: 1.35;
 }
+.proclamation__creed p { margin: 0 0 2rem; }
+.proclamation__promise { margin-block: clamp(3rem, 6vw, 5rem) !important; color: var(--first-light-gold); }
 .stone-intro__actions { display: flex; align-items: center; gap: 2rem; }
 .stone-intro__rhythm {
   color: var(--first-light-gold);
