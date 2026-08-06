@@ -1,0 +1,24 @@
+{{ define "main" }}
+  <article class="volume volume--contents">
+    <header class="volume__header">
+      <p class="kicker">{{ .Params.volume }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+    </header>
+
+    <ol class="contents-list">
+      {{ range $index, $page := .RegularPages.ByWeight }}
+        <li>
+          <a href="{{ $page.RelPermalink }}">
+            <span class="contents-list__number">{{ printf "%02d" (add $index 1) }}</span>
+            <span class="contents-list__entry">
+              <strong>{{ $page.Title }}</strong>
+              {{ with $page.Description }}<small>{{ . }}</small>{{ end }}
+            </span>
+            <span class="contents-list__status">{{ $page.Params.status }}</span>
+          </a>
+        </li>
+      {{ end }}
+    </ol>
+  </article>
+{{ end }}

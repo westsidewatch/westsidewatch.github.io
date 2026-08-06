@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <section class="publication-index" aria-labelledby="journal-title">
+    <header class="publication-index__header">
+      <p class="kicker">Westside Watch</p>
+      <h1 id="journal-title">{{ .Title }}</h1>
+      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+    </header>
+
+    <a class="volume-card" href="{{ "vol-00/" | relURL }}">
+      <span class="volume-card__number">Vol.00</span>
+      <span class="volume-card__title">The Foundations of a Watchful City</span>
+      <span class="volume-card__state">In formation</span>
+      <span class="volume-card__arrow" aria-hidden="true">→</span>
+    </a>
+  </section>
+{{ end }}

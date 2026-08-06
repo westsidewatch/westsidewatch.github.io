@@ -3,7 +3,7 @@
     {{ readFile "static/images/westside-watch-masthead.svg" | safeHTML }}
   </a>
   <nav aria-label="Primary navigation">
-    <a href="{{ "vol-00/" | relURL }}">Journal</a>
-    <span class="nav-placeholder" aria-hidden="true">About</span>
+    <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
+    <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
   </nav>
 </header>

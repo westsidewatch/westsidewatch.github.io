@@ -1,0 +1,18 @@
+{{ define "main" }}
+  <article class="article article--volume">
+    <header class="article__header">
+      <p class="kicker">Vol.00 · {{ .Params.status }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+    </header>
+
+    <div class="prose">
+      {{ if .Content }}{{ .Content }}{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
+    </div>
+
+    <nav class="article-nav" aria-label="Volume navigation">
+      {{ with .NextInSection }}<a href="{{ .RelPermalink }}"><span>Previous</span><strong>{{ .Title }}</strong></a>{{ else }}<span></span>{{ end }}
+      {{ with .PrevInSection }}<a href="{{ .RelPermalink }}"><span>Next</span><strong>{{ .Title }}</strong></a>{{ end }}
+    </nav>
+  </article>
+{{ end }}
