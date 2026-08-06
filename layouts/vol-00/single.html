@@ -1,13 +1,22 @@
 {{ define "main" }}
-  <article class="article article--volume">
+  <article class="article article--volume{{ with .Params.featured_image }} article--visual{{ end }}">
     <header class="article__header">
       <p class="kicker">Vol.00 · {{ .Params.status }}</p>
       <h1>{{ .Title }}</h1>
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
 
-    <div class="prose">
-      {{ if .Content }}{{ .Content }}{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
+    {{ with .Params.featured_image }}
+      <figure class="article-plate">
+        <img src="{{ . | relURL }}" alt="{{ $.Params.featured_image_alt }}">
+        <div class="article-plate__wall" aria-hidden="true"></div>
+      </figure>
+    {{ end }}
+
+    <div class="article-body">
+      <div class="prose">
+        {{ if .Content }}{{ .Content }}{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
+      </div>
     </div>
 
     <nav class="article-nav" aria-label="Volume navigation">
