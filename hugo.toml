@@ -17,3 +17,18 @@ disableKinds = ["taxonomy", "term"]
 [minify]
   minifyOutput = true
 
+# Preserve the existing invitation page and its root-level assets in the
+# generated Pages artifact while keeping their source files untouched.
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+  [[module.mounts]]
+    source = "join"
+    target = "static/join"
+  [[module.mounts]]
+    source = "background.jpg"
+    target = "static/background.jpg"
+  [[module.mounts]]
+    source = "wechat-qr.png"
+    target = "static/wechat-qr.png"

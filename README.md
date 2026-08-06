@@ -1,6 +1,8 @@
 # Westside Watch
 
-The official publication site for Westside Watch, built with Hugo without a third-party theme.
+Westside Watch — A Bible study and community publication project.
+
+The official publication site is built with Hugo without a third-party theme. The existing `join/` invitation remains available as an independent page.
 
 ## Local preview
 
