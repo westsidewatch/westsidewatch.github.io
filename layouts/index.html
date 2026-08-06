@@ -1,0 +1,29 @@
+{{ define "main" }}
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero__eyebrow">
+      <span>{{ site.Params.volume }}</span>
+      <span>Westside · Toronto</span>
+    </div>
+    <div class="hero__body">
+      <p class="hero__mark" aria-hidden="true">W</p>
+      <div class="hero__copy">
+        <p class="kicker">A publication for those who keep watch</p>
+        <h1 id="hero-title">{{ site.Params.volumeTitle }}</h1>
+        <p class="hero__intro">Before the city wakes, someone is already watching. Westside Watch is a journal of faith, place, and attentive presence.</p>
+        <a class="text-link" href="{{ "vol-00/" | relURL }}">Enter Vol.00 <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <div class="hero__foot">
+      <span>Watch Night</span>
+      <span>Dawn Gold</span>
+      <span>Living Paper</span>
+      <span>Temple Stone</span>
+    </div>
+  </section>
+
+  <section class="statement" aria-label="Editorial statement">
+    <p class="section-label">Our posture</p>
+    <p class="statement__text">We attend to the city because <em>God watches first.</em></p>
+  </section>
+{{ end }}
+

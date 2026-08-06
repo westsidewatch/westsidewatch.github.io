@@ -1,0 +1,14 @@
+{{ define "main" }}
+  <article class="volume">
+    <header class="volume__header">
+      <p class="kicker">{{ .Params.volume | default site.Params.volume }}</p>
+      <h1>{{ .Title }}</h1>
+      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+    </header>
+    <div class="volume__note">
+      <p>The first pages are being prepared.</p>
+      <a class="text-link" href="{{ site.Home.RelPermalink }}">Return home <span aria-hidden="true">↙</span></a>
+    </div>
+  </article>
+{{ end }}
+
