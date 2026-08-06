@@ -6,19 +6,41 @@
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
 
-    <ol class="contents-list">
-      {{ range $index, $page := .RegularPages.ByWeight }}
-        <li>
-          <a href="{{ $page.RelPermalink }}">
-            <span class="contents-list__number">{{ printf "%02d" (add $index 1) }}</span>
-            <span class="contents-list__entry">
-              <strong>{{ $page.Title }}</strong>
-              {{ with $page.Description }}<small>{{ . }}</small>{{ end }}
-            </span>
-            <span class="contents-list__status">{{ $page.Params.status }}</span>
-          </a>
-        </li>
+    {{ $volume := index site.Data.volumes "vol-00" }}
+    <div class="symphony" aria-label="Vol.00 editorial structure">
+      {{ range $movement := $volume.movements }}
+        <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
+          <header class="movement__header">
+            <span class="movement__initial" aria-hidden="true">W</span>
+            <div class="movement__identity">
+              <p>{{ $movement.number }} · {{ $movement.tempo }}</p>
+              <h2 id="movement-{{ lower $movement.name }}">{{ upper $movement.name }}</h2>
+              <p lang="zh-Hant">{{ $movement.name_zh }}</p>
+            </div>
+            <p class="movement__statement" lang="zh-Hant">{{ $movement.statement }}</p>
+          </header>
+
+          <ol class="column-list">
+            {{ range $column := $movement.columns }}
+              <li>
+                <span class="column-list__number">Column {{ $column.number }}</span>
+                <strong lang="zh-Hant">{{ $column.name }}</strong>
+                <span class="column-list__role">{{ $column.role }}</span>
+                <span class="column-list__state">Articles forthcoming</span>
+              </li>
+            {{ end }}
+          </ol>
+
+          {{ with $movement.interlude }}
+            <aside class="interlude" aria-label="Interlude: {{ .name }}">
+              <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
+              <span class="interlude__label">Interlude</span>
+              <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
+              <span>{{ .character }} · {{ .form }}</span>
+            </aside>
+          {{ end }}
+        </section>
       {{ end }}
-    </ol>
+    </div>
   </article>
 {{ end }}
