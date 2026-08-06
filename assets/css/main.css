@@ -120,6 +120,7 @@ a { color: inherit; }
   display: block;
   width: 100%;
   height: auto;
+  clip-path: inset(0 .25rem);
 }
 
 .hero__center {
