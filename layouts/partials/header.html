@@ -4,8 +4,8 @@
   </a>
   <nav aria-label="Primary navigation">
     <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
+    <a href="{{ "website/" | relURL }}"{{ if eq .Section "website" }} aria-current="page"{{ end }}>Website</a>
     <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>Church</a>
-    <a href="{{ "resources/" | relURL }}"{{ if eq .Section "resources" }} aria-current="page"{{ end }}>Resources</a>
     <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
   </nav>
 </header>
