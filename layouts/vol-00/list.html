@@ -18,7 +18,6 @@
       {{ range $movement := $volume.movements }}
         <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
           <header class="movement__header">
-            <span class="movement__initial" aria-hidden="true">W</span>
             <div class="movement__identity">
               <p>{{ $movement.number }} · {{ $movement.tempo }}</p>
               <h2 id="movement-{{ lower $movement.name }}">{{ upper $movement.name }}</h2>

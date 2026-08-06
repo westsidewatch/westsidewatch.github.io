@@ -409,17 +409,9 @@ h1 {
 
 .movement__header {
   display: grid;
-  grid-template-columns: clamp(8rem, 14vw, 13rem) minmax(14rem, 1fr) minmax(18rem, 1.1fr);
+  grid-template-columns: minmax(14rem, 1fr) minmax(18rem, 1.1fr);
   align-items: end;
   gap: clamp(1.5rem, 4vw, 4rem);
-}
-
-.movement__initial {
-  color: var(--first-light-gold);
-  font-family: var(--font-display);
-  font-size: clamp(9rem, 18vw, 17rem);
-  font-weight: 400;
-  line-height: .62;
 }
 
 .movement__identity { display: grid; gap: .3rem; }
@@ -429,7 +421,7 @@ h1 {
 .movement__statement { max-width: 31rem; margin: 0; font-family: var(--font-display); font-size: clamp(1.1rem, 1.8vw, 1.45rem); }
 
 .column-list {
-  margin: clamp(3rem, 6vw, 5rem) 0 0 clamp(8rem, 14vw, 13rem);
+  margin: clamp(3rem, 6vw, 5rem) 0 0;
   padding: 0;
   border-top: 1px solid var(--line);
   list-style: none;
@@ -492,9 +484,8 @@ h1 {
   .volume-card__state { display: none; }
   .contents-list a { grid-template-columns: 2rem 1fr; gap: 1rem; }
   .contents-list__status { display: none; }
-  .movement__header { grid-template-columns: 5rem 1fr; align-items: end; }
-  .movement__initial { font-size: 7rem; }
-  .movement__statement { grid-column: 1 / -1; margin-top: 1.5rem; }
+  .movement__header { grid-template-columns: 1fr; align-items: end; }
+  .movement__statement { margin-top: 1.5rem; }
   .column-list { margin-left: 0; }
   .column-list li { grid-template-columns: 5rem 1fr; gap: .5rem 1rem; }
   .column-list__role { grid-column: 2; }
