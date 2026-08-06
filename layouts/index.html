@@ -37,18 +37,18 @@
     </div>
   </section>
 
-  <section id="current-issue" class="stone-intro" aria-labelledby="volume-title">
+  <section id="vol-00-proclamation" class="stone-intro" aria-labelledby="volume-title">
     <div class="stone-intro__meta">
-      <p class="section-label">Current Issue</p>
+      <p class="section-label">{{ site.Params.volume }} · Proclamation</p>
       <p class="stone-intro__rhythm" aria-hidden="true">▅▇▆▇▆▇▅▇▆</p>
     </div>
     <div class="stone-intro__body">
-      <p class="kicker">{{ site.Params.volume }} · Founding Volume</p>
-      <h2 id="volume-title">{{ site.Params.volumeTitle }}</h2>
-      <p>The founding volume of Westside Watch.</p>
-      <nav class="stone-intro__actions" aria-label="Current issue navigation">
-        <a class="text-link" href="{{ "vol-00/" | relURL }}">View contents <span aria-hidden="true">→</span></a>
-        <a class="text-link text-link--quiet" href="{{ "journal/" | relURL }}">All issues</a>
+      <p class="kicker">{{ site.Params.volumeTitle }}</p>
+      <h2 id="volume-title" lang="zh-Hant">守望，那座光明的城</h2>
+      <p class="stone-intro__declaration" lang="zh-Hant">我們不是因尋見神而開始守望；我們乃是因神先尋見我們，才得以站在城牆之上。</p>
+      <nav class="stone-intro__actions" aria-label="Vol.00 navigation">
+        <a class="text-link" href="{{ "vol-00/" | relURL }}">Contents <span aria-hidden="true">→</span></a>
+        <a class="text-link text-link--quiet" href="{{ "journal/" | relURL }}">Journal index</a>
       </nav>
     </div>
     <p class="watch-rhythm" aria-label="End of section"><span></span><b aria-hidden="true">▅▆▇▆▅▇▆▅</b><span></span></p>
