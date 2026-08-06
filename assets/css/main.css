@@ -1,11 +1,19 @@
 :root {
-  --watch-night: #18221d;
-  --dawn-gold: #c89b3c;
-  --living-paper: #f1ecdf;
-  --temple-stone: #8b877a;
-  --ink: var(--watch-night);
+  /* Westside Watch Sacred Palette v1.0 */
+  --first-light-gold: #a2872a;
+  --warm-gold: #b79838;
+  --morning-gold: #d2bc69;
+  --watch-night: #102a43;
+  --living-paper: #faf9f5;
+  /* Brand PDF repeats Living Paper's HEX here; #252525 is sampled from its Ink Black swatch. */
+  --ink-black: #252525;
+  --olive-branch: #738a5a;
+  --living-water: #5b8fa8;
+  --harvest: #b8944a;
+  --crimson-robe: #a14d57;
+  --ink: var(--ink-black);
   --paper: var(--living-paper);
-  --line: color-mix(in srgb, var(--temple-stone) 55%, transparent);
+  --line: color-mix(in srgb, var(--first-light-gold) 32%, transparent);
   --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
   --font-text: Inter, "Helvetica Neue", Arial, sans-serif;
   --page: min(100% - 2rem, 88rem);
@@ -31,7 +39,7 @@ a { color: inherit; }
   left: .5rem;
   z-index: 10;
   padding: .6rem .8rem;
-  background: var(--dawn-gold);
+  background: var(--first-light-gold);
   transform: translateY(-150%);
 }
 
@@ -68,7 +76,7 @@ a { color: inherit; }
 
 .site-header nav { display: flex; gap: 1.5rem; font-size: .76rem; letter-spacing: .12em; text-transform: uppercase; }
 .site-header nav a { text-underline-offset: .3em; }
-.nav-placeholder { color: var(--temple-stone); }
+.nav-placeholder { color: color-mix(in srgb, var(--ink) 55%, var(--paper)); }
 
 .hero { min-height: calc(100vh - 4.3rem); display: grid; grid-template-rows: auto 1fr auto; }
 
@@ -78,7 +86,7 @@ a { color: inherit; }
   justify-content: space-between;
   gap: 1rem;
   padding: 1rem 0;
-  color: var(--temple-stone);
+  color: color-mix(in srgb, var(--ink) 55%, var(--paper));
   font-size: .66rem;
   letter-spacing: .16em;
   text-transform: uppercase;
@@ -94,7 +102,7 @@ a { color: inherit; }
 
 .hero__mark {
   margin: 0;
-  color: var(--dawn-gold);
+  color: var(--first-light-gold);
   font-family: var(--font-display);
   font-size: clamp(14rem, 30vw, 32rem);
   font-weight: 400;
@@ -105,7 +113,7 @@ a { color: inherit; }
 .kicker,
 .section-label {
   margin: 0 0 1.25rem;
-  color: var(--temple-stone);
+  color: color-mix(in srgb, var(--ink) 55%, var(--paper));
   font-size: .7rem;
   font-weight: 600;
   letter-spacing: .18em;
@@ -126,7 +134,7 @@ h1 {
 .volume__description {
   max-width: 36rem;
   margin: 2rem 0;
-  color: color-mix(in srgb, var(--ink) 78%, var(--temple-stone));
+  color: color-mix(in srgb, var(--ink) 78%, var(--paper));
   font-family: var(--font-display);
   font-size: clamp(1.1rem, 1.6vw, 1.4rem);
 }
@@ -136,7 +144,7 @@ h1 {
 .text-link:hover span { transform: translateX(.3rem); }
 
 .hero__foot { border-top: 1px solid var(--line); }
-.hero__foot span:nth-child(2) { color: var(--dawn-gold); }
+.hero__foot span:nth-child(2) { color: var(--first-light-gold); }
 
 .statement {
   display: grid;
@@ -147,14 +155,14 @@ h1 {
 }
 
 .statement__text { max-width: 20ch; margin: 0; font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 6rem); line-height: 1; letter-spacing: -.045em; }
-.statement__text em { color: var(--dawn-gold); font-weight: 400; }
+.statement__text em { color: var(--first-light-gold); font-weight: 400; }
 
-.site-footer { display: grid; grid-template-columns: 1fr 2fr auto; gap: 1rem; padding: 2rem 0 4rem; color: var(--temple-stone); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
+.site-footer { display: grid; grid-template-columns: 1fr 2fr auto; gap: 1rem; padding: 2rem 0 4rem; color: color-mix(in srgb, var(--ink) 55%, var(--paper)); font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; }
 .site-footer p { margin: 0; }
 
 .volume, .article { min-height: 72vh; padding: clamp(5rem, 12vw, 11rem) 0; }
 .volume__header, .article__header { max-width: 70rem; }
-.volume__note { display: flex; justify-content: space-between; align-items: end; margin-top: 7rem; padding-top: 1rem; border-top: 1px solid var(--line); color: var(--temple-stone); }
+.volume__note { display: flex; justify-content: space-between; align-items: end; margin-top: 7rem; padding-top: 1rem; border-top: 1px solid var(--line); color: color-mix(in srgb, var(--ink) 55%, var(--paper)); }
 .article__header { margin-bottom: 5rem; }
 .prose { max-width: 42rem; font-family: var(--font-display); font-size: 1.2rem; }
 
@@ -176,4 +184,3 @@ h1 {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: .01ms !important; }
 }
-
