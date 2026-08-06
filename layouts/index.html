@@ -14,10 +14,26 @@
       <cite>Romans 13:12, KJV</cite>
     </div>
     <div class="hero__wall" aria-hidden="true">
-      <div class="hero__wall-art">
-        <img src="{{ "images/jerusalem-wall.png" | relURL }}" alt="">
-        <span class="hero__golden-gate"></span>
-      </div>
+      <svg viewBox="0 0 12000 392" preserveAspectRatio="xMidYMax meet" focusable="false">
+        <defs>
+          <pattern id="wall-left" width="700" height="392" patternUnits="userSpaceOnUse">
+            <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-100" width="1983" height="392" />
+          </pattern>
+          <pattern id="wall-right" width="700" height="392" patternUnits="userSpaceOnUse">
+            <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-1183" width="1983" height="392" />
+          </pattern>
+          <linearGradient id="golden-gate" x1="0" x2="1">
+            <stop offset="0" stop-color="#a2872a" />
+            <stop offset=".3" stop-color="#d2bc69" />
+            <stop offset=".7" stop-color="#d2bc69" />
+            <stop offset="1" stop-color="#a2872a" />
+          </linearGradient>
+        </defs>
+        <rect width="5009" height="392" fill="url(#wall-left)" shape-rendering="crispEdges" />
+        <rect x="6991" width="5009" height="392" fill="url(#wall-right)" shape-rendering="crispEdges" />
+        <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="5008.5" width="1983" height="392" />
+        <path d="M5967 392V286a33.5 33.5 0 0 1 67 0v106Z" fill="url(#golden-gate)" />
+      </svg>
     </div>
   </section>
 
