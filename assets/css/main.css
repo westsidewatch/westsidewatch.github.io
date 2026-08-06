@@ -128,14 +128,19 @@ a { color: inherit; }
 }
 
 .hero__center {
+  position: relative;
   align-self: center;
-  display: grid;
-  grid-template-columns: auto 1fr;
+  display: flex;
   align-items: center;
-  gap: clamp(2rem, 8vw, 9rem);
+  justify-content: center;
 }
 
-.hero__star { margin: 0; font-size: clamp(1.8rem, 3vw, 3rem); }
+.hero__star {
+  position: absolute;
+  left: 0;
+  margin: 0;
+  font-size: clamp(1.8rem, 3vw, 3rem);
+}
 
 .hero__watchword {
   display: flex;
