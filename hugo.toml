@@ -1,0 +1,19 @@
+baseURL = "https://westsidewatch.github.io/"
+languageCode = "en-ca"
+title = "Westside Watch"
+copyright = "© Westside Watch"
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  description = "A watchful publication for the city."
+  volume = "Vol.00"
+  volumeTitle = "The Foundations of a Watchful City"
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = false
+
+[minify]
+  minifyOutput = true
+
