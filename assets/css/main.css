@@ -111,20 +111,22 @@ a { color: inherit; }
 .wordmark #logo-westside-watch use { fill: var(--watch-night); }
 
 .site-header nav { display: flex; gap: 1.5rem; font-family: var(--font-display); font-size: .82rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
-.site-header nav a { position: relative; padding-top: .55rem; text-decoration: none; }
+.site-header nav a { position: relative; padding-top: .78rem; text-decoration: none; }
 .site-header nav a::before {
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  height: .26rem;
+  height: .48rem;
   background: currentColor;
-  clip-path: polygon(0 35%, 12% 35%, 12% 0, 25% 0, 25% 35%, 38% 35%, 38% 0, 51% 0, 51% 35%, 64% 35%, 64% 0, 77% 0, 77% 35%, 90% 35%, 90% 0, 100% 0, 100% 100%, 0 100%);
+  clip-path: polygon(0 52%, 11% 52%, 11% 0, 26% 0, 26% 52%, 37% 52%, 37% 0, 52% 0, 52% 52%, 63% 52%, 63% 0, 78% 0, 78% 52%, 89% 52%, 89% 0, 100% 0, 100% 100%, 0 100%);
   content: "";
   opacity: .18;
 }
 .site-header nav a[aria-current="page"] { color: var(--first-light-gold); }
-.site-header nav a[aria-current="page"]::before { height: .38rem; opacity: 1; }
+.site-header nav a[aria-current="page"]::before { height: .68rem; opacity: 1; }
+.home .site-header nav a { padding-top: 0; }
+.home .site-header nav a::before { display: none; }
 .nav-placeholder { color: color-mix(in srgb, var(--ink) 55%, var(--paper)); }
 
 .hero {
@@ -361,7 +363,7 @@ h1 {
   text-decoration: none;
 }
 .portal-card:nth-child(even) { border-right: 0; }
-.portal-card::before { position: absolute; top: -.42rem; left: clamp(2rem, 5vw, 4rem); width: 3.8rem; height: .46rem; background: var(--first-light-gold); clip-path: polygon(0 35%, 18% 35%, 18% 0, 36% 0, 36% 35%, 55% 35%, 55% 0, 73% 0, 73% 35%, 91% 35%, 91% 0, 100% 0, 100% 100%, 0 100%); content: ""; }
+.portal-card::before { position: absolute; top: -.64rem; left: clamp(2rem, 5vw, 4rem); width: 4.4rem; height: .7rem; background: var(--first-light-gold); clip-path: polygon(0 52%, 16% 52%, 16% 0, 34% 0, 34% 52%, 50% 52%, 50% 0, 68% 0, 68% 52%, 84% 52%, 84% 0, 100% 0, 100% 100%, 0 100%); content: ""; }
 .portal-card__number { grid-row: 1 / 4; color: color-mix(in srgb, var(--ink) 52%, var(--paper)); font-size: var(--type-label); letter-spacing: .13em; }
 .portal-card strong { color: var(--watch-night); font-family: var(--font-display); font-size: clamp(1.8rem, 3vw, 3.2rem); font-weight: 400; line-height: 1; }
 .portal-card__subtitle { color: var(--first-light-gold); font-family: var(--font-display); font-style: italic; }
