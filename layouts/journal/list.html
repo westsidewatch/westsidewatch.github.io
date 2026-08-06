@@ -11,7 +11,7 @@
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
 
-    <a class="issue-door" href="{{ "vol-00/" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City">
+    <a class="issue-door" href="{{ "/#vol-00-proclamation" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City">
       <span class="issue-door__watch">Current volume · Vol.00</span>
       <span class="issue-door__title">The Foundations<br>of a Watchful City</span>
       <span class="issue-door__summary">A founding volume in four movements, twelve permanent columns, and three watches of the night.</span>
@@ -20,9 +20,9 @@
     </a>
 
     <nav class="journal-quicklinks" aria-label="Journal shortcuts">
-      <a href="{{ "vol-00/#contents" | relURL }}"><span>01</span><strong>Contents</strong><small>Four movements · Twelve columns</small></a>
+      <a href="{{ "/#contents" | relURL }}"><span>01</span><strong>Contents</strong><small>Four movements · Twelve columns</small></a>
       <a href="{{ "/#vol-00-proclamation" | relURL }}"><span>02</span><strong>Opening</strong><small>The founding proclamation</small></a>
-      <a href="{{ "vol-00/" | relURL }}"><span>03</span><strong>Read Vol.00</strong><small>Enter the current volume</small></a>
+      <a href="{{ "/#movement-watch" | relURL }}"><span>03</span><strong>Read Vol.00</strong><small>Continue through the volume</small></a>
     </nav>
   </section>
 {{ end }}

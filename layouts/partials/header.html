@@ -16,7 +16,7 @@
       <span class="section-nav__identity">Journal</span>
       <a href="{{ "journal/" | relURL }}"{{ if eq .RelPermalink "/journal/" }} aria-current="page"{{ end }}>Overview</a>
       <a href="{{ "vol-00/" | relURL }}"{{ if eq .Section "vol-00" }} aria-current="page"{{ end }}>Vol.00</a>
-      <a href="{{ "vol-00/#contents" | relURL }}">Contents</a>
+      <a href="{{ "/#contents" | relURL }}">Contents</a>
       <a href="{{ "/#vol-00-proclamation" | relURL }}">Opening</a>
     </nav>
   {{ else if eq .Section "website" }}

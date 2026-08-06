@@ -1,0 +1,60 @@
+{{ $volume := index site.Data.volumes "vol-00" }}
+<section id="contents" class="continuous-contents" aria-labelledby="contents-title">
+  <header class="contents-heading">
+    <div>
+      <p class="kicker">Contents · 目錄</p>
+      <h2 id="contents-title">The shape of<br>the volume</h2>
+    </div>
+    <div class="contents-heading__guide">
+      <p lang="zh-Hant">這不是離開閱讀的索引，而是接下來旅程的地圖。四個樂章、十二個固定欄目與三個夜間更次，共同構成 Vol.00 的閱讀節奏。</p>
+      <p>Read continuously, or use the contents to enter a particular chamber of the city.</p>
+    </div>
+  </header>
+
+  <nav class="contents-jump" aria-label="Jump to a movement">
+    {{ range $movement := $volume.movements }}
+      <a href="#movement-{{ lower $movement.name }}">
+        <span>{{ $movement.number }}</span>
+        <strong>{{ upper $movement.name }}</strong>
+        <small lang="zh-Hant">{{ $movement.name_zh }}</small>
+      </a>
+    {{ end }}
+  </nav>
+
+  <div class="symphony" aria-label="Vol.00 editorial structure">
+    {{ range $movement := $volume.movements }}
+      <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
+        <header class="movement__header">
+          <div class="movement__identity">
+            <p>{{ $movement.number }} · {{ $movement.tempo }}</p>
+            <h2 id="movement-{{ lower $movement.name }}">{{ upper $movement.name }}</h2>
+            <p lang="zh-Hant">{{ $movement.name_zh }}</p>
+          </div>
+          <div class="movement__voice">
+            <p class="movement__opening">{{ $movement.opening }}</p>
+            <p class="movement__statement" lang="zh-Hant">{{ $movement.statement }}</p>
+          </div>
+        </header>
+
+        <ol class="column-list">
+          {{ range $column := $movement.columns }}
+            <li id="column-{{ $column.number }}">
+              <span class="column-list__number">{{ $column.number }}</span>
+              <strong lang="zh-Hant">{{ $column.name }}</strong>
+              <span class="column-list__role">{{ $column.role }}</span>
+            </li>
+          {{ end }}
+        </ol>
+
+        {{ with $movement.interlude }}
+          <aside class="interlude" aria-label="Interlude: {{ .name }}">
+            <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
+            <span class="interlude__label">{{ .watch_en }} · <b lang="zh-Hant">{{ .watch }}</b></span>
+            <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
+            <span><b>{{ .modulation }}</b><br>{{ .character }} · {{ .form }}</span>
+          </aside>
+        {{ end }}
+      </section>
+    {{ end }}
+  </div>
+</section>
