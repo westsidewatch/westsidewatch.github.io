@@ -23,7 +23,10 @@
               <h2 id="movement-{{ lower $movement.name }}">{{ upper $movement.name }}</h2>
               <p lang="zh-Hant">{{ $movement.name_zh }}</p>
             </div>
-            <p class="movement__statement" lang="zh-Hant">{{ $movement.statement }}</p>
+            <div class="movement__voice">
+              <p class="movement__opening">{{ $movement.opening }}</p>
+              <p class="movement__statement" lang="zh-Hant">{{ $movement.statement }}</p>
+            </div>
           </header>
 
           <ol class="column-list">
@@ -42,7 +45,7 @@
               <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
               <span class="interlude__label">Interlude</span>
               <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
-              <span>{{ .character }} · {{ .form }}</span>
+              <span><b>{{ .modulation }}</b><br>{{ .character }} · {{ .form }}</span>
             </aside>
           {{ end }}
         </section>
