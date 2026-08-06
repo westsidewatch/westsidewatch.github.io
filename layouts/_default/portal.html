@@ -7,7 +7,7 @@
     </nav>
     <header class="portal__header">
       <p class="kicker">Westside Watch</p>
-      <h1>{{ .Title }}</h1>
+      <h1{{ if eq .Section "church" }} class="church-display-name"{{ end }}>{{ .Params.display_title | default .Title }}</h1>
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
     <div class="portal-grid">
