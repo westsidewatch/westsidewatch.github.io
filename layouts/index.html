@@ -1,10 +1,8 @@
 {{ define "main" }}
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__masthead">
-      <p class="hero__publisher"><em>Living</em>Water</p>
-      <h1 id="hero-title">Westside Watch</h1>
-      <p class="hero__volume">{{ site.Params.volume }}</p>
-      <p class="hero__chinese" lang="zh-Hant"><span>西</span><span>望</span></p>
+      <img class="hero__masthead-art" src="{{ "images/westside-watch-masthead.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
+      <h1 id="hero-title" class="visually-hidden">Westside Watch</h1>
     </div>
     <div class="hero__center">
       <p class="hero__star" aria-hidden="true">✦</p>
