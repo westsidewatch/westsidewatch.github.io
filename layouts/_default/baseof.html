@@ -10,7 +10,7 @@
       <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
     {{ end }}
   </head>
-  <body>
+  <body{{ if .IsHome }} class="home"{{ end }}>
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
     <main id="main">

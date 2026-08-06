@@ -1,28 +1,33 @@
 {{ define "main" }}
   <section class="hero" aria-labelledby="hero-title">
-    <div class="hero__eyebrow">
-      <span>{{ site.Params.volume }}</span>
-      <span>Westside · Toronto</span>
+    <div class="hero__masthead">
+      <p class="hero__publisher"><em>Living</em>Water</p>
+      <h1 id="hero-title">Westside Watch</h1>
+      <p class="hero__volume">{{ site.Params.volume }}</p>
+      <p class="hero__chinese" lang="zh-Hant"><span>西</span><span>望</span></p>
     </div>
-    <div class="hero__body">
-      <p class="hero__mark" aria-hidden="true">W</p>
-      <div class="hero__copy">
-        <p class="kicker">A publication for those who keep watch</p>
-        <h1 id="hero-title">{{ site.Params.volumeTitle }}</h1>
-        <p class="hero__intro">Before the city wakes, someone is already watching. Westside Watch is a journal of faith, place, and attentive presence.</p>
-        <a class="text-link" href="{{ "vol-00/" | relURL }}">Enter Vol.00 <span aria-hidden="true">→</span></a>
-      </div>
+    <div class="hero__center">
+      <p class="hero__star" aria-hidden="true">✦</p>
+      <p class="hero__watchword"><span></span><em>Watch for the Dawn</em><span></span></p>
     </div>
-    <div class="hero__foot">
-      <span>Watch Night</span>
-      <span>First Light</span>
-      <span>Living Paper</span>
-      <span>Ink Black</span>
+    <div class="hero__scripture">
+      <p lang="zh-Hant">黑夜已深，白晝將近。</p>
+      <p><em>The Night Is Far Spent. The Day Is at Hand.</em></p>
+      <cite>Romans 13:12, KJV</cite>
     </div>
+    <div class="hero__battlements" aria-hidden="true"><span></span></div>
   </section>
 
-  <section class="statement" aria-label="Editorial statement">
-    <p class="section-label">Our posture</p>
-    <p class="statement__text">We attend to the city because <em>God watches first.</em></p>
+  <section class="stone-intro" aria-labelledby="volume-title">
+    <div class="stone-intro__meta">
+      <p class="section-label">Westside Watch · {{ site.Params.volume }}</p>
+      <p class="stone-intro__rhythm" aria-hidden="true">▅ ▇ ▆ ▇　▆ ▇ ▅ ▇ ▆</p>
+    </div>
+    <div class="stone-intro__body">
+      <p class="kicker">The inaugural volume</p>
+      <h2 id="volume-title">{{ site.Params.volumeTitle }}</h2>
+      <p>Before the city wakes, someone is already watching. Westside Watch is a journal of faith, place, and attentive presence.</p>
+      <a class="text-link" href="{{ "vol-00/" | relURL }}">Enter Vol.00 <span aria-hidden="true">→</span></a>
+    </div>
   </section>
 {{ end }}
