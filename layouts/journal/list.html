@@ -1,5 +1,10 @@
 {{ define "main" }}
   <section class="publication-index" aria-labelledby="journal-title">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Journal</span>
+    </nav>
     <header class="publication-index__header">
       <p class="kicker">Westside Watch</p>
       <h1 id="journal-title">{{ .Title }}</h1>

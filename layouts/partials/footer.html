@@ -1,6 +1,8 @@
 <footer class="site-footer">
-  <p>Westside Watch</p>
-  <p>A watchful publication for the city.</p>
+  <a href="{{ site.Home.RelPermalink }}">Westside Watch</a>
+  <nav aria-label="Footer navigation">
+    <a href="{{ "journal/" | relURL }}">Journal</a>
+    <a href="{{ "about/" | relURL }}">About</a>
+  </nav>
   <p>{{ now.Year }}</p>
 </footer>
-

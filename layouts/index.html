@@ -37,16 +37,19 @@
     </div>
   </section>
 
-  <section class="stone-intro" aria-labelledby="volume-title">
+  <section id="current-issue" class="stone-intro" aria-labelledby="volume-title">
     <div class="stone-intro__meta">
-      <p class="section-label">Westside Watch · {{ site.Params.volume }}</p>
+      <p class="section-label">Current Issue</p>
       <p class="stone-intro__rhythm" aria-hidden="true">▅▇▆▇▆▇▅▇▆</p>
     </div>
     <div class="stone-intro__body">
-      <p class="kicker">The inaugural volume</p>
+      <p class="kicker">{{ site.Params.volume }} · Founding Volume</p>
       <h2 id="volume-title">{{ site.Params.volumeTitle }}</h2>
-      <p>Before the city wakes, someone is already watching. Westside Watch is a journal of faith, place, and attentive presence.</p>
-      <a class="text-link" href="{{ "vol-00/" | relURL }}">Enter Vol.00 <span aria-hidden="true">→</span></a>
+      <p>The founding volume of Westside Watch.</p>
+      <nav class="stone-intro__actions" aria-label="Current issue navigation">
+        <a class="text-link" href="{{ "vol-00/" | relURL }}">View contents <span aria-hidden="true">→</span></a>
+        <a class="text-link text-link--quiet" href="{{ "journal/" | relURL }}">All issues</a>
+      </nav>
     </div>
     <p class="watch-rhythm" aria-label="End of section"><span></span><b aria-hidden="true">▅▆▇▆▅▇▆▅</b><span></span></p>
   </section>

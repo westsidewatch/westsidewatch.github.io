@@ -1,5 +1,12 @@
 {{ define "main" }}
   <article class="volume volume--contents">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ "journal/" | relURL }}">Journal</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">Vol.00</span>
+    </nav>
     <header class="volume__header">
       <p class="kicker">{{ .Params.volume }}</p>
       <h1>{{ .Title }}</h1>
