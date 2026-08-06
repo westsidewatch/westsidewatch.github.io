@@ -1,7 +1,10 @@
 {{ define "main" }}
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__masthead">
-      <img class="hero__masthead-art" src="{{ "images/westside-watch-masthead.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
+      <picture>
+        <source media="(min-width: 701px) and (min-aspect-ratio: 4/3)" srcset="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}">
+        <img class="hero__masthead-art" src="{{ "images/westside-watch-masthead.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
+      </picture>
       <h1 id="hero-title" class="visually-hidden">Westside Watch</h1>
     </div>
     <div class="hero__center">
