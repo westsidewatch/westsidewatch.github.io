@@ -1,1 +1,544 @@
-Hello
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>ONE | 一卷</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;400i&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+
+
+<style>
+
+:root {
+    --ink:#252525;
+    --gold:#A2872A;
+    --fade:rgba(37,37,37,.25);
+}
+
+
+*{
+    box-sizing:border-box;
+}
+
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    background:
+    linear-gradient(
+        rgba(206,189,116,.78),
+        rgba(206,189,116,.78)
+    ),
+    url("/images/stone.jpg");
+
+    background-size:cover;
+
+    color:var(--ink);
+
+    font-family:"Noto Serif TC",serif;
+
+}
+
+
+.page{
+
+    width:min(430px,92vw);
+
+    margin:40px auto;
+
+    padding:55px 35px;
+
+    border:1px solid var(--gold);
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+
+.page:before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:9px;
+
+    border:1px solid rgba(162,135,42,.35);
+
+}
+
+
+.content{
+
+    position:relative;
+
+}
+
+
+/* Brand */
+
+.brand{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:14px;
+
+    letter-spacing:4px;
+
+    margin-bottom:55px;
+
+}
+
+
+
+/* ONE */
+
+.one{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:76px;
+
+    letter-spacing:10px;
+
+}
+
+
+.one-cn{
+
+    font-size:32px;
+
+    letter-spacing:10px;
+
+}
+
+
+
+/* Motto */
+
+.motto{
+
+    margin-top:55px;
+
+}
+
+
+.motto-cn{
+
+    font-size:18px;
+
+    line-height:2;
+
+    letter-spacing:4px;
+
+}
+
+
+.motto-en{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:20px;
+
+    font-style:italic;
+
+    margin-top:10px;
+
+}
+
+
+
+/* Bible list */
+
+.books{
+
+    margin-top:65px;
+
+}
+
+
+
+.book{
+
+    margin:8px 0;
+
+}
+
+
+
+.number{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:18px;
+
+    color:var(--fade);
+
+}
+
+
+
+.book.active .number{
+
+    color:var(--gold);
+
+}
+
+
+
+.book-name{
+
+    display:none;
+
+}
+
+
+
+.book.active .book-name{
+
+    display:block;
+
+    color:var(--gold);
+
+    margin-top:5px;
+
+    font-size:16px;
+
+}
+
+
+
+.book-name-en{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-style:italic;
+
+}
+
+
+
+/* Scripture */
+
+.scripture{
+
+    margin-top:90px;
+
+}
+
+
+
+.scripture-cn{
+
+    font-size:16px;
+
+}
+
+
+
+.scripture-en{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-size:20px;
+
+    margin-top:10px;
+
+}
+
+
+
+.reference{
+
+    font-family:"Cormorant Garamond",serif;
+
+    font-style:italic;
+
+    font-size:14px;
+
+    margin-top:10px;
+
+}
+
+
+
+/* Church */
+
+.church{
+
+    margin-top:45px;
+
+}
+
+
+.church img{
+
+    width:150px;
+
+}
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+<div class="page">
+
+<div class="content">
+
+
+<div class="brand">
+WESTSIDE WATCH
+</div>
+
+
+
+<div class="one">
+ONE
+</div>
+
+
+<div class="one-cn">
+一卷
+</div>
+
+
+
+<div class="motto">
+
+<div class="motto-cn">
+一卷入夜，<br>
+合卷天明。
+</div>
+
+
+<div class="motto-en">
+Read one book,<br>
+till dawn.
+</div>
+
+</div>
+
+
+
+
+<div class="books">
+
+
+<div class="book">
+<div class="number">01</div>
+</div>
+
+<div class="book">
+<div class="number">02</div>
+</div>
+
+<div class="book">
+<div class="number">03</div>
+</div>
+
+<!-- 此處省略灰色卷 -->
+
+<div class="book active">
+
+<div class="number">
+47
+</div>
+
+
+<div class="book-name">
+
+帖撒羅尼迦前書
+
+<div class="book-name-en">
+The First Epistle to the Thessalonians
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="book active">
+
+<div class="number">
+48
+</div>
+
+
+<div class="book-name">
+
+帖撒羅尼迦後書
+
+<div class="book-name-en">
+The Second Epistle to the Thessalonians
+</div>
+
+</div>
+
+</div>
+
+
+<div class="book">
+<div class="number">49</div>
+</div>
+
+
+<div class="book">
+<div class="number">50</div>
+</div>
+
+
+<div class="book">
+<div class="number">51</div>
+</div>
+
+
+<div class="book">
+<div class="number">52</div>
+</div>
+
+
+<div class="book">
+<div class="number">53</div>
+</div>
+
+
+<div class="book">
+<div class="number">54</div>
+</div>
+
+
+<div class="book">
+<div class="number">55</div>
+</div>
+
+
+<div class="book">
+<div class="number">56</div>
+</div>
+
+
+<div class="book">
+<div class="number">57</div>
+</div>
+
+
+<div class="book">
+<div class="number">58</div>
+</div>
+
+
+<div class="book">
+<div class="number">59</div>
+</div>
+
+
+<div class="book">
+<div class="number">60</div>
+</div>
+
+
+<div class="book">
+<div class="number">61</div>
+</div>
+
+
+<div class="book">
+<div class="number">62</div>
+</div>
+
+
+<div class="book">
+<div class="number">63</div>
+</div>
+
+
+<div class="book">
+<div class="number">64</div>
+</div>
+
+
+<div class="book">
+<div class="number">65</div>
+</div>
+
+
+<div class="book">
+<div class="number">66</div>
+</div>
+
+
+
+</div>
+
+
+
+
+
+<div class="scripture">
+
+
+<div class="scripture-cn">
+
+在你的光中，我們必得見光。
+
+</div>
+
+
+<div class="scripture-en">
+
+In thy light shall we see light.
+
+</div>
+
+
+<div class="reference">
+
+Psalm 36:9 KJV
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="church">
+
+<img src="/images/living-water-west-church-name.png"
+alt="P.A.O.C. Living Water Assembly West">
+
+</div>
+
+
+
+
+</div>
+
+</div>
+
+
+</body>
+
+</html>
