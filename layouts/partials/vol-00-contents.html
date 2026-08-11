@@ -16,7 +16,7 @@
 
       <div class="contents-catalog" aria-label="Vol.00 table of contents">
         {{ range $movement := $volume.movements }}
-          <section class="contents-catalog__movement" aria-labelledby="contents-{{ lower $movement.name }}">
+          <section class="contents-catalog__movement editorial-card editorial-card--portrait" aria-labelledby="contents-{{ lower $movement.name }}">
             <a class="contents-catalog__heading" href="#movement-{{ lower $movement.name }}">
               <span>{{ $movement.number }}</span>
               <strong id="contents-{{ lower $movement.name }}">{{ upper $movement.name }}</strong>

@@ -1452,6 +1452,79 @@ h1 {
 .contents-catalog__interlude,
 .contents-catalog__interlude strong { color: var(--morning-gold); }
 
+/* Cards mark thresholds in the journal: foundation in Opening, index in Contents.
+   The continuous reading sequence remains unframed. */
+@media (min-width: 1000px) {
+  .opening-scriptures {
+    align-items: stretch;
+    gap: var(--grid-gap);
+  }
+
+  .opening-scriptures .editorial-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 5 / 8;
+    margin-top: 0;
+    padding: clamp(1.5rem, 2.4vw, 2.5rem);
+    border: 1px solid color-mix(in srgb, var(--first-light-gold) 58%, transparent);
+    background: color-mix(in srgb, var(--living-paper) 36%, transparent);
+  }
+
+  .opening-scriptures .proclamation__scripture--foundation { grid-column: 1 / span 4; }
+  .opening-scriptures .proclamation__scripture--watch {
+    grid-column: 7 / span 4;
+    font-size: clamp(1.45rem, 2.25vw, 2.2rem);
+  }
+
+  .opening-scriptures .proclamation__index { margin-bottom: auto; }
+  .opening-scriptures .proclamation__scripture cite { margin-top: auto; padding-top: 2rem; }
+}
+
+@media (min-width: 1280px) {
+  .contents-catalog {
+    gap: clamp(.9rem, 1.5vw, 1.6rem);
+  }
+
+  .contents-catalog .editorial-card {
+    position: relative;
+    grid-column: span 3;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 5 / 8;
+    min-width: 0;
+    padding: clamp(1.1rem, 1.7vw, 1.7rem);
+    overflow: hidden;
+    border: 1px solid rgba(210, 188, 105, .48);
+    background: rgba(6, 18, 29, .34);
+  }
+
+  .contents-catalog .editorial-card::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 38%;
+    height: .4rem;
+    background: var(--morning-gold);
+    content: "";
+    opacity: .65;
+  }
+
+  .contents-catalog__heading {
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: .45rem;
+    min-height: 7.25rem;
+    padding-top: 0;
+  }
+
+  .contents-catalog__heading strong { font-size: clamp(1.55rem, 2.2vw, 2.6rem); }
+  .contents-catalog__heading small { grid-column: 2; }
+  .contents-catalog li a { grid-template-columns: 1fr; gap: .3rem; padding: .68rem 0; }
+  .contents-catalog__identity { flex-wrap: wrap; }
+  .contents-catalog__type { justify-content: flex-start; padding-left: 2.2rem; text-align: left; }
+  .contents-catalog__interlude { margin-top: auto; padding: 1rem 0 .35rem; }
+}
+
 .contents-continue {
   display: grid;
   grid-template-columns: 1fr auto;
