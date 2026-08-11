@@ -1,4 +1,4 @@
-{{ $volume := index site.Data.volumes "vol-00" }}
+{{ $volume := index hugo.Data.volumes "vol-00" }}
 <section id="contents" class="continuous-contents journal-light-journey" aria-labelledby="contents-title">
   <span class="journal-light-journey__beam" aria-hidden="true"></span>
   <div class="journal-light-journey__inner">
@@ -48,7 +48,7 @@
 
     <div class="symphony" aria-label="Vol.00 editorial structure">
       {{ range $movement := $volume.movements }}
-        <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
+        <section class="movement movement--{{ lower $movement.name }}" data-movement="{{ $movement.number }}" aria-labelledby="movement-{{ lower $movement.name }}">
         <header class="movement__header">
           <div class="movement__identity">
             <p>{{ $movement.number }} · {{ $movement.tempo }}</p>

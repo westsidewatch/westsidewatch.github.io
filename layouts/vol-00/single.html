@@ -1,9 +1,21 @@
 {{ define "main" }}
   <article class="article article--volume{{ with .Params.featured_image }} article--visual{{ end }}">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a>
+      <span aria-hidden="true">/</span>
+      <a href="{{ "vol-00/" | relURL }}">Vol.00</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
     <header class="article__header">
-      <p class="kicker">Vol.00 · {{ .Params.status }}</p>
-      <h1>{{ .Title }}</h1>
-      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+      <div class="article__identity">
+        <p class="kicker">Vol.00 · {{ .Params.status }}</p>
+        <span aria-hidden="true">✦</span>
+      </div>
+      <div class="article__title-block">
+        <h1>{{ .Title }}</h1>
+        {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+      </div>
     </header>
 
     {{ with .Params.featured_image }}
@@ -13,7 +25,11 @@
       </figure>
     {{ end }}
 
-    <div class="article-body">
+    <div class="article-body article-body--editorial">
+      <aside class="article-rail" aria-label="Volume identity">
+        <span>WESTSIDE WATCH · VOL.00</span>
+        <strong>{{ .Params.status | default "Journal" }}</strong>
+      </aside>
       <div class="prose">
         {{ if .Content }}{{ .Content }}{{ else }}<p class="editorial-state">Editorial text is in preparation.</p>{{ end }}
       </div>
