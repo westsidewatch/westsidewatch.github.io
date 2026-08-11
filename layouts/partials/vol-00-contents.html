@@ -1,29 +1,31 @@
 {{ $volume := index site.Data.volumes "vol-00" }}
-<section id="contents" class="continuous-contents" aria-labelledby="contents-title">
-  <header class="contents-heading">
-    <div>
-      <p class="kicker">Contents · 目錄</p>
-      <h2 id="contents-title">The shape of<br>the volume</h2>
-    </div>
-    <div class="contents-heading__guide">
-      <p lang="zh-Hant">這不是離開閱讀的索引，而是接下來旅程的地圖。四個樂章、十二個固定欄目與三個夜間更次，共同構成 Vol.00 的閱讀節奏。</p>
-      <p>Read continuously, or use the contents to enter a particular chamber of the city.</p>
-    </div>
-  </header>
+<section id="contents" class="continuous-contents journal-light-journey" aria-labelledby="contents-title">
+  <span class="journal-light-journey__beam" aria-hidden="true"></span>
+  <div class="journal-light-journey__inner">
+    <header class="contents-heading">
+      <div>
+        <p class="kicker">Contents · 目錄</p>
+        <h2 id="contents-title">A city<br>under light</h2>
+      </div>
+      <div class="contents-heading__guide">
+        <p lang="zh-Hant">這不是離開閱讀的索引，而是一道穿過全刊的光。它從黑夜中的微光開始，經過四個樂章、十二個欄目與三個夜間更次，最後照亮整座城。</p>
+        <p>One light descends through the Journal—beginning as a beam in the night and ending as the great light that fills the city.</p>
+      </div>
+    </header>
 
-  <nav class="contents-jump" aria-label="Jump to a movement">
-    {{ range $movement := $volume.movements }}
-      <a href="#movement-{{ lower $movement.name }}">
-        <span>{{ $movement.number }}</span>
-        <strong>{{ upper $movement.name }}</strong>
-        <small lang="zh-Hant">{{ $movement.name_zh }}</small>
-      </a>
-    {{ end }}
-  </nav>
+    <nav class="contents-jump" aria-label="Jump to a movement">
+      {{ range $movement := $volume.movements }}
+        <a href="#movement-{{ lower $movement.name }}">
+          <span>{{ $movement.number }}</span>
+          <strong>{{ upper $movement.name }}</strong>
+          <small lang="zh-Hant">{{ $movement.name_zh }}</small>
+        </a>
+      {{ end }}
+    </nav>
 
-  <div class="symphony" aria-label="Vol.00 editorial structure">
-    {{ range $movement := $volume.movements }}
-      <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
+    <div class="symphony" aria-label="Vol.00 editorial structure">
+      {{ range $movement := $volume.movements }}
+        <section class="movement movement--{{ lower $movement.name }}" aria-labelledby="movement-{{ lower $movement.name }}">
         <header class="movement__header">
           <div class="movement__identity">
             <p>{{ $movement.number }} · {{ $movement.tempo }}</p>
@@ -36,25 +38,49 @@
           </div>
         </header>
 
-        <ol class="column-list">
-          {{ range $column := $movement.columns }}
-            <li id="column-{{ $column.number }}">
-              <span class="column-list__number">{{ $column.number }}</span>
-              <strong lang="zh-Hant">{{ $column.name }}</strong>
-              <span class="column-list__role">{{ $column.role }}</span>
-            </li>
-          {{ end }}
-        </ol>
+          <ol class="column-list">
+            {{ range $column := $movement.columns }}
+              <li id="column-{{ $column.number }}" class="column-preview{{ if eq $column.number "04" }} column-preview--feature{{ end }}{{ if eq $column.number "12" }} column-preview--finale{{ end }}">
+                <article>
+                  <div class="column-preview__meta">
+                    <span class="column-list__number">{{ $column.number }}</span>
+                    <div>
+                      <strong lang="zh-Hant">{{ $column.name }}</strong>
+                      <span class="column-list__role">{{ $column.role }}</span>
+                    </div>
+                  </div>
+                  <div class="column-preview__story">
+                    <p class="column-preview__state">Preview · 預想選題</p>
+                    <h3 lang="zh-Hant">{{ $column.title }}</h3>
+                    <p class="column-preview__deck" lang="zh-Hant">{{ $column.deck }}</p>
+                    <p class="column-preview__source">{{ $column.source }}</p>
+                  </div>
+                </article>
+              </li>
+            {{ end }}
+          </ol>
 
-        {{ with $movement.interlude }}
-          <aside class="interlude" aria-label="Interlude: {{ .name }}">
-            <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
-            <span class="interlude__label">{{ .watch_en }} · <b lang="zh-Hant">{{ .watch }}</b></span>
-            <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
-            <span><b>{{ .modulation }}</b><br>{{ .character }} · {{ .form }}</span>
-          </aside>
-        {{ end }}
-      </section>
-    {{ end }}
+          {{ with $movement.interlude }}
+            <aside class="interlude" aria-label="Interlude: {{ .name }}">
+              <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
+              <span class="interlude__label">{{ .watch_en }} · <b lang="zh-Hant">{{ .watch }}</b></span>
+              <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
+              <span><b>{{ .modulation }}</b><br>{{ .character }} · {{ .form }}</span>
+            </aside>
+          {{ end }}
+        </section>
+      {{ end }}
+    </div>
+
+    <footer class="journal-coda" aria-label="The great light">
+      <p class="journal-coda__light" aria-hidden="true">✦</p>
+      <p class="kicker">Maranatha · The Great Light</p>
+      <h2 lang="zh-Hant">那座有根基的城</h2>
+      <blockquote>
+        <p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p>
+        <cite>希伯來書 11:10</cite>
+      </blockquote>
+      <p class="journal-coda__prayer" lang="zh-Hant">主啊，願你來。使你的光照亮我們所守望的城。</p>
+    </footer>
   </div>
 </section>
