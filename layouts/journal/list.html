@@ -6,8 +6,8 @@
       <span aria-current="page">Journal</span>
     </nav>
     <header class="publication-index__header">
-      <p class="kicker">Westside Watch · Living Journal</p>
-      <h1 id="journal-title">{{ .Title }}</h1>
+      <img class="publication-index__masthead" src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
+      <h1 id="journal-title" class="visually-hidden">{{ .Title }}</h1>
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
 
