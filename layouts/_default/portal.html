@@ -17,6 +17,32 @@
       {{ end }}
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
+
+    <section class="visual-index" aria-labelledby="visual-index-title">
+      <header class="visual-index__header">
+        <p class="kicker">Visual Index · 視覺索引</p>
+        <h2 id="visual-index-title">A catalogue<br>of entrances</h2>
+        <p>Each card is both a cover and an index: a fixed window into the continuing life of {{ .Title }}.</p>
+      </header>
+      <div class="visual-index__cards">
+        {{ range .Pages.ByWeight }}
+          {{ partial "index-card.html" (dict
+            "href" .RelPermalink
+            "number" (printf "%02d" .Weight)
+            "section" (upper $.Title)
+            "title" .Title
+            "subtitle" .Params.subtitle
+            "description" .Description
+            "orientation" "portrait"
+          ) }}
+        {{ end }}
+      </div>
+    </section>
+
+    <header class="directory-heading">
+      <p class="kicker">Directory · 文字目錄</p>
+      <p>Browse the same collection as a compact editorial index.</p>
+    </header>
     <div class="portal-grid">
       {{ range .Pages.ByWeight }}
         <a class="portal-card" href="{{ .RelPermalink }}">

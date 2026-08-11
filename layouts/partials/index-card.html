@@ -1,0 +1,12 @@
+{{ $orientation := .orientation | default "portrait" }}
+<a class="index-card index-card--{{ $orientation }}" href="{{ .href }}"{{ with .ariaLabel }} aria-label="{{ . }}"{{ end }}>
+  <span class="index-card__folio">{{ .number }} <i aria-hidden="true">/</i> {{ .section }}</span>
+  <span class="index-card__body">
+    <strong>{{ .title }}</strong>
+    {{ with .subtitle }}<em>{{ . }}</em>{{ end }}
+  </span>
+  <span class="index-card__foot">
+    {{ with .description }}<small>{{ . }}</small>{{ end }}
+    <b>{{ .action | default "Enter" }} <i aria-hidden="true">↗</i></b>
+  </span>
+</a>
