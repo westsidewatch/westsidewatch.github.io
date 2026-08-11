@@ -1,11 +1,29 @@
 {{ define "main" }}
-  <article class="article">
+  {{ $section := .Section | default "Westside Watch" }}
+  <article class="article article--standard">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a>
+      <span aria-hidden="true">/</span>
+      {{ if .Section }}{{ with site.GetPage (printf "/%s" $.Section) }}<a href="{{ .RelPermalink }}">{{ .Title }}</a><span aria-hidden="true">/</span>{{ end }}{{ end }}
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
     <header class="article__header">
-      <p class="kicker">{{ .Section }}</p>
-      <h1>{{ .Title }}</h1>
-      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+      <div class="article__identity">
+        <p class="kicker">{{ $section }}</p>
+        <span aria-hidden="true">✦</span>
+      </div>
+      <div class="article__title-block">
+        <h1>{{ .Title }}</h1>
+        {{ with .Params.subtitle }}<p class="article__subtitle">{{ . }}</p>{{ end }}
+        {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+      </div>
     </header>
-    <div class="prose">{{ .Content }}</div>
+    <div class="article-body article-body--editorial">
+      <aside class="article-rail" aria-label="Article identity">
+        <span>{{ upper $section }}</span>
+        <strong>{{ .Title }}</strong>
+      </aside>
+      <div class="prose">{{ .Content }}</div>
+    </div>
   </article>
 {{ end }}
-
