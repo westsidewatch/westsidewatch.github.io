@@ -1,0 +1,92 @@
+{{ define "main" }}
+  {{ $library := hugo.Data.resources }}
+  <article class="article dawn-library">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span>
+      {{ with site.GetPage "/website" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a><span aria-hidden="true">/</span>{{ end }}
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
+
+    <header class="library-hero">
+      <div class="library-hero__meta">
+        <p class="kicker">MOUNT OF OLIVES · RESOURCE 01</p>
+        <span aria-hidden="true">✦</span>
+      </div>
+      <div class="library-hero__title">
+        <p>{{ .Params.subtitle }}</p>
+        <h1>{{ .Title }}</h1>
+      </div>
+      <p class="library-hero__description">{{ .Description }}</p>
+      <p class="library-hero__status"><b>OPEN</b><span>首批核心資源</span><small>Updated {{ $library.updated }}</small></p>
+    </header>
+
+    <section class="library-theme" aria-labelledby="weekly-theme-title">
+      <p class="kicker">Weekly Theme · 本週主題</p>
+      <div>
+        <span>{{ $library.weekly_theme.title_en }}</span>
+        <h2 id="weekly-theme-title">{{ $library.weekly_theme.title }}</h2>
+      </div>
+      <p>{{ $library.weekly_theme.description }}</p>
+    </section>
+
+    <section class="morning-stars" aria-labelledby="morning-stars-title">
+      <header>
+        <p class="kicker">Three Morning Stars · 三晨星</p>
+        <h2 id="morning-stars-title">今日三個<br>閱讀入口</h2>
+        <p>三晨星不是人氣排名，而是由本週主題帶領的每日編輯推薦。</p>
+      </header>
+      <div class="resource-card-grid resource-card-grid--stars">
+        {{ range where $library.resources "morning_star" true }}
+          {{ partial "resource-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="library-spectrum" aria-labelledby="spectrum-title">
+      <header>
+        <p class="kicker">Spectrum · 光譜</p>
+        <h2 id="spectrum-title">不是分類標籤，<br>而是學習的位置</h2>
+      </header>
+      <ol>
+        <li><span>01</span><strong>入門閱讀</strong><p>建立每日讀經、聆聽與記錄的穩定節奏。</p></li>
+        <li><span>02</span><strong>中階研讀</strong><p>使用版本比較、原文編號與背景資料擴大觀察。</p></li>
+        <li><span>03</span><strong>深入研讀</strong><p>進入註解、串珠、書卷結構與多種解經材料。</p></li>
+      </ol>
+    </section>
+
+    <section class="library-collections" aria-labelledby="collections-title">
+      <header>
+        <p class="kicker">Curated Collections · 策展集</p>
+        <h2 id="collections-title">從入口走向深入</h2>
+        <p>策展集不是另一組分類，而是把資源編排成可以實際行走的閱讀道路。</p>
+      </header>
+      <div class="collection-grid">
+        {{ range $library.collections }}
+          <article class="collection-card index-card--portrait">
+            <p><span>{{ .number }}</span><small>DAWN LIBRARY</small></p>
+            <div><em>{{ .title_en }}</em><h3>{{ .title }}</h3></div>
+            <p>{{ .description }}</p>
+          </article>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="library-catalogue" aria-labelledby="catalogue-title">
+      <header>
+        <p class="kicker">Core Resources · 核心館藏</p>
+        <h2 id="catalogue-title">已完成整理的<br>第一批資源卡</h2>
+        <p>每張卡保留編輯推薦、光譜位置、策展關係與使用場景；外部入口均指向資源官方網站。</p>
+      </header>
+      <div class="resource-card-grid">
+        {{ range $library.resources }}
+          {{ partial "resource-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+
+    <footer class="library-principle">
+      <p class="kicker">Final Principle · 最終原則</p>
+      <p>經文在中心。工具服務經文。資源服務學習。設計服務使命。</p>
+    </footer>
+  </article>
+{{ end }}

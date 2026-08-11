@@ -1,0 +1,128 @@
+{
+  "updated": "2026-08-11",
+  "weekly_theme": {
+    "title": "從經文開始",
+    "title_en": "Begin with Scripture",
+    "description": "先讀經文，再以版本比較、原文工具、歷史背景與解經材料幫助理解；工具服務經文，而不取代經文。"
+  },
+  "resources": [
+    {
+      "id": "DL-BST-001",
+      "name": "信望愛聖經工具",
+      "name_en": "FHL Bible Tools",
+      "url": "https://bible.fhl.net/",
+      "category": "Bible Study Tools",
+      "subcategory": "Integrated Bible Study Platform",
+      "language": "繁體中文",
+      "resource_type": "Web Platform",
+      "description": "整合中文聖經閱讀、多版本對照、Strong 編號、原文字典、字彙分析與部分註釋的查經工作台。",
+      "recommendation": "適合從中文經文直接進入版本比較與原文觀察，是華人信徒建立基本查經流程的重要入口。",
+      "audio": true,
+      "access": "Free",
+      "morning_star": true,
+      "spectrum": "中階研讀",
+      "spectrum_order": 2,
+      "collections": ["每日讀經起步", "中文查經工作台"],
+      "use_cases": ["個人查經", "小組查經", "主日學", "講章預備"]
+    },
+    {
+      "id": "DL-BST-002",
+      "name": "微讀聖經",
+      "name_en": "WeDevote Bible",
+      "url": "https://wd.bible/",
+      "category": "Bible Text / Bible Study Tools",
+      "subcategory": "Bible Reading Platform",
+      "language": "中文／多語",
+      "resource_type": "Web & App",
+      "description": "提供正版多語聖經、聽經、讀經計畫、原文工具與跨裝置筆記同步的日常讀經平台。",
+      "recommendation": "介面適合每日閱讀與聆聽，也能由日常讀經自然進入版本與原文工具。",
+      "audio": true,
+      "access": "Free",
+      "morning_star": true,
+      "spectrum": "入門閱讀",
+      "spectrum_order": 1,
+      "collections": ["每日讀經起步"],
+      "use_cases": ["個人靈修", "每日讀經", "聽經", "讀經計畫"]
+    },
+    {
+      "id": "DL-BST-003",
+      "name": "華人基督徒查經資料網站",
+      "name_en": "Chinese Christian Bible Study",
+      "url": "https://www.ccbiblestudy.org/index-T.htm",
+      "category": "Commentary Resources",
+      "subcategory": "Chinese Study Archive",
+      "language": "繁體／簡體中文",
+      "resource_type": "Reference Archive",
+      "description": "按聖經書卷整理註解、拾穗、例證、信息與綱目的大型中文查經資料庫。",
+      "recommendation": "適合在已完成經文觀察後擴大參考範圍；資料豐富，需要帶着分辨與上下文意識使用。",
+      "audio": false,
+      "access": "Free",
+      "morning_star": false,
+      "spectrum": "深入參考",
+      "spectrum_order": 3,
+      "collections": ["中文查經工作台", "解經與背景"],
+      "use_cases": ["小組查經", "主日學", "講章預備", "資料查考"]
+    },
+    {
+      "id": "DL-BST-004",
+      "name": "聖經綜合解讀",
+      "name_en": "CMC Bible Reading",
+      "url": "https://cmcbiblereading.com/",
+      "category": "Commentary / Reference",
+      "subcategory": "Biblical Background & Commentary",
+      "language": "簡體中文",
+      "resource_type": "Commentary Library",
+      "description": "逐卷提供必要的歷史、地理、文化與屬靈背景，並依上下文與全本聖經進行解釋和應用。",
+      "recommendation": "結構清楚，能幫助普通讀者把單節經文放回書卷與救贖歷史的較大脈絡。",
+      "audio": true,
+      "access": "Free",
+      "morning_star": true,
+      "spectrum": "中階研讀",
+      "spectrum_order": 2,
+      "collections": ["解經與背景"],
+      "use_cases": ["個人查經", "小組查經", "背景研究", "講章預備"]
+    },
+    {
+      "id": "DL-BT-001",
+      "name": "網上聖經恢復本",
+      "name_en": "Recovery Version Online",
+      "url": "https://recoveryversion.com.tw/",
+      "category": "Bible Text / Bible Study Tools",
+      "subcategory": "Chinese Bible Version",
+      "language": "繁體／簡體中文",
+      "resource_type": "Bible Text & Study Edition",
+      "description": "具有原文翻譯取向的中文聖經版本，並以綱目、註解、串珠和圖表形成系統研讀架構。",
+      "recommendation": "其價值不只在譯文，也在經文、綱目、註解與串珠彼此連接的研讀方式；應與其他譯本互相參照。",
+      "audio": false,
+      "access": "Free",
+      "morning_star": false,
+      "spectrum": "深入研讀",
+      "spectrum_order": 3,
+      "collections": ["中文查經工作台", "版本與原文"],
+      "use_cases": ["經文研讀", "版本比較", "串珠查考", "生命讀經"]
+    }
+  ],
+  "collections": [
+    {
+      "id": "daily-scripture",
+      "number": "01",
+      "title": "每日讀經起步",
+      "title_en": "Daily Scripture",
+      "description": "從穩定閱讀、聆聽與記錄開始，使工具回到每日與神話語相遇的實際。"
+    },
+    {
+      "id": "chinese-workbench",
+      "number": "02",
+      "title": "中文查經工作台",
+      "title_en": "Chinese Study Workbench",
+      "description": "把版本對照、原文觀察、串珠、註解與資料查考組成可重複使用的研讀流程。"
+    },
+    {
+      "id": "commentary-background",
+      "number": "03",
+      "title": "解經與背景",
+      "title_en": "Commentary & Context",
+      "description": "在經文觀察之後，進入書卷脈絡、歷史地理、文化背景與不同解經材料。"
+    }
+  ]
+}
