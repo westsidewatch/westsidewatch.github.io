@@ -11,7 +11,7 @@
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
     </header>
 
-    <a class="issue-door" href="{{ "/#vol-00-proclamation" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City">
+    <a class="issue-door index-card--landscape" href="{{ "/#vol-00-proclamation" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City">
       <span class="issue-door__watch">Current volume · Vol.00</span>
       <span class="issue-door__title">The Foundations<br>of a Watchful City</span>
       <span class="issue-door__summary">A founding volume in four movements, twelve permanent columns, and three watches of the night.</span>
@@ -19,10 +19,10 @@
       <span class="issue-door__light" aria-hidden="true"></span>
     </a>
 
-    <nav class="journal-quicklinks" aria-label="Journal shortcuts">
-      <a href="{{ "/#contents" | relURL }}"><span>01</span><strong>Contents</strong><small>Four movements · Twelve columns</small></a>
-      <a href="{{ "/#vol-00-proclamation" | relURL }}"><span>02</span><strong>Opening</strong><small>The founding proclamation</small></a>
-      <a href="{{ "/#movement-watch" | relURL }}"><span>03</span><strong>Read Vol.00</strong><small>Continue through the volume</small></a>
+    <nav class="journal-quicklinks" aria-label="Journal visual index">
+      {{ partial "index-card.html" (dict "href" ("/#contents" | relURL) "number" "01" "section" "VOL.00" "title" "Contents" "subtitle" "目錄" "description" "Four movements · Twelve columns · Three watches" "orientation" "portrait" "action" "Browse") }}
+      {{ partial "index-card.html" (dict "href" ("/#vol-00-proclamation" | relURL) "number" "02" "section" "VOL.00" "title" "Opening" "subtitle" "卷首序曲" "description" "The founding proclamation of a watchful city" "orientation" "portrait" "action" "Enter") }}
+      {{ partial "index-card.html" (dict "href" ("/#movement-watch" | relURL) "number" "03" "section" "VOL.00" "title" "Read Vol.00" "subtitle" "開始閱讀" "description" "Begin with Watch and continue toward the Great Light" "orientation" "portrait" "action" "Read") }}
     </nav>
   </section>
 {{ end }}
