@@ -25,11 +25,17 @@
         <p>Each card is both a cover and an index: a fixed window into the continuing life of {{ .Title }}.</p>
       </header>
       <div class="visual-index__cards">
+        {{ $cardSection := upper .Title }}
+        {{ if eq .Section "website" }}
+          {{ $cardSection = "MOUNT OF OLIVES" }}
+        {{ else if eq .Section "church" }}
+          {{ $cardSection = "LIVING WATER" }}
+        {{ end }}
         {{ range .Pages.ByWeight }}
           {{ partial "index-card.html" (dict
             "href" .RelPermalink
             "number" (printf "%02d" .Weight)
-            "section" (upper $.Title)
+            "section" $cardSection
             "title" .Title
             "subtitle" .Params.subtitle
             "description" .Description

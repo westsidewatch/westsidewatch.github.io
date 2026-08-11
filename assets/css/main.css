@@ -1471,6 +1471,18 @@ h1 {
     background: color-mix(in srgb, var(--living-paper) 36%, transparent);
   }
 
+  .opening-scriptures .editorial-card::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 42%;
+    height: 1rem;
+    background: var(--first-light-gold);
+    clip-path: polygon(0 58%, 15% 58%, 15% 8%, 32% 8%, 32% 48%, 51% 48%, 51% 0, 69% 0, 69% 54%, 85% 54%, 85% 16%, 100% 16%, 100% 100%, 0 100%);
+    content: "";
+    opacity: .58;
+  }
+
   .opening-scriptures .proclamation__scripture--foundation { grid-column: 1 / span 4; }
   .opening-scriptures .proclamation__scripture--watch {
     grid-column: 7 / span 4;
@@ -1503,11 +1515,12 @@ h1 {
     position: absolute;
     right: 0;
     bottom: 0;
-    width: 38%;
-    height: .4rem;
+    width: 42%;
+    height: 1rem;
     background: var(--morning-gold);
+    clip-path: polygon(0 58%, 15% 58%, 15% 8%, 32% 8%, 32% 48%, 51% 48%, 51% 0, 69% 0, 69% 54%, 85% 54%, 85% 16%, 100% 16%, 100% 100%, 0 100%);
     content: "";
-    opacity: .65;
+    opacity: .58;
   }
 
   .contents-catalog__heading {
