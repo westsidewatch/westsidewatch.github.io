@@ -203,8 +203,25 @@ a { color: inherit; }
   grid-template-rows: auto 1fr auto;
   padding: clamp(2.75rem, 2.8vw, 3.25rem) max(1rem, calc((100% - 88rem) / 2)) clamp(8rem, 13vw, 11rem);
   color: var(--first-light-gold);
-  background: var(--watch-night);
+  background:
+    radial-gradient(circle at 50% 18%, rgba(210, 188, 105, .08), transparent 18%),
+    linear-gradient(#071522, var(--watch-night));
 }
+
+.hero::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  width: auto;
+  display: none;
+  background: none;
+  clip-path: none;
+  content: "";
+  filter: blur(1px);
+}
+
+.hero > * { position: relative; z-index: 1; }
+.hero > .hero__wall { position: absolute; }
 
 .hero__masthead { position: relative; overflow: hidden; }
 
@@ -307,8 +324,11 @@ h1 {
   grid-template-columns: 1fr 3fr;
   gap: 2rem;
   padding: clamp(6rem, 14vw, 13rem) 0;
-  border-bottom: 1px solid var(--line);
-  background-image: linear-gradient(rgba(250,249,245,.5), rgba(250,249,245,.5)), url("/images/temple-stone-light.png");
+  color: color-mix(in srgb, var(--living-paper) 82%, var(--morning-gold));
+  border-bottom: 1px solid rgba(210, 188, 105, .22);
+  background-image:
+    linear-gradient(rgba(7, 21, 34, .9), rgba(16, 42, 67, .82)),
+    url("/images/temple-stone-light.png");
   background-size: auto, 48rem auto;
   overflow: hidden;
   scroll-margin-top: 0;
@@ -317,13 +337,13 @@ h1 {
 .opening-plate > *:not(.opening-plate__light) { position: relative; z-index: 1; }
 .opening-plate__light {
   position: absolute;
-  top: -12%;
-  bottom: -12%;
-  left: 23%;
-  width: clamp(7rem, 16vw, 17rem);
-  background: linear-gradient(100deg, transparent 0 8%, rgba(210,188,105,.05) 22%, rgba(210,188,105,.22) 52%, rgba(255,250,221,.38) 66%, transparent 100%);
+  inset: -1px 0;
+  width: auto;
+  display: none;
+  background: none;
+  clip-path: none;
   filter: blur(1px);
-  transform: skewX(-7deg);
+  transform: none;
   transform-origin: top;
 }
 
@@ -356,14 +376,14 @@ h1 {
   min-width: 0;
   padding-right: max(1rem, calc((100vw - 88rem) / 2));
 }
-.stone-intro__body h2 { margin: 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(3rem, 7vw, 7rem); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
+.stone-intro__body h2 { margin: 0; color: var(--living-paper); font-family: var(--font-display); font-size: clamp(3rem, 7vw, 7rem); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
 .stone-intro__body > p:not(.kicker) { max-width: 42rem; margin: 2rem 0; font-family: var(--font-display); font-size: 1.25rem; }
 .proclamation__scripture {
   max-width: 42rem;
   margin: clamp(3rem, 6vw, 5rem) 0;
   padding-left: clamp(1rem, 3vw, 2rem);
   border-left: 1px solid var(--first-light-gold);
-  color: var(--watch-night);
+  color: var(--living-paper);
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 2vw, 1.55rem);
   line-height: 1.5;
@@ -371,16 +391,16 @@ h1 {
 .proclamation__scripture p { margin: 0 0 1rem; }
 .proclamation__scripture cite { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
 .proclamation__lead {
-  color: var(--watch-night);
+  color: var(--living-paper);
   font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
   line-height: 1.45;
 }
-.proclamation__watchman { font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important; }
+.proclamation__watchman { color: var(--living-paper); font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important; }
 .proclamation__cycle {
   margin: clamp(3rem, 6vw, 5rem) 0;
   padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   border-block: 1px solid var(--line);
-  color: var(--watch-night);
+  color: var(--living-paper);
   font-family: var(--font-display);
   font-size: clamp(1.05rem, 1.7vw, 1.3rem);
   line-height: 1.6;
@@ -389,7 +409,7 @@ h1 {
 .proclamation__cycle .section-label { margin-bottom: 1rem; font-family: var(--font-body); }
 .proclamation__creed {
   max-width: 46rem;
-  color: var(--watch-night);
+  color: var(--living-paper);
   font-family: var(--font-display);
   font-size: clamp(1.45rem, 3vw, 2.5rem);
   line-height: 1.35;
@@ -410,7 +430,7 @@ h1 {
   text-decoration: none;
 }
 .opening-continue span { color: color-mix(in srgb, var(--ink) 55%, var(--paper)); font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; }
-.opening-continue strong { grid-column: 1; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 400; }
+.opening-continue strong { grid-column: 1; color: var(--living-paper); font-family: var(--font-display); font-size: clamp(1.35rem, 2vw, 1.8rem); font-weight: 400; }
 .opening-continue b { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--first-light-gold); font-size: 1.4rem; font-weight: 400; transition: transform .2s ease; }
 .opening-continue:hover b { transform: translateY(.3rem); }
 .stone-intro__rhythm {
@@ -749,6 +769,264 @@ h1 {
 .interlude > span:last-child { color: var(--ink); font-size: .8rem; }
 .interlude > span:last-child b { color: var(--first-light-gold); font-size: var(--type-label); letter-spacing: .13em; }
 
+/* Vol.00 — one continuous light from the night watch to the great light. */
+.volume--contents { width: 100%; }
+.volume--contents > .breadcrumb,
+.volume--contents > .volume__header { width: var(--page); margin-inline: auto; }
+
+.continuous-contents.journal-light-journey {
+  position: relative;
+  width: 100%;
+  max-width: none;
+  margin-top: 0;
+  padding: clamp(7rem, 13vw, 12rem) 0 0;
+  overflow: hidden;
+  color: #f3edda;
+  background:
+    linear-gradient(
+      to bottom,
+      #06121d 0%,
+      #081827 28%,
+      #0d2336 58%,
+      #102a43 82%,
+      #132f49 100%
+    );
+  isolation: isolate;
+}
+
+.volume--contents .continuous-contents.journal-light-journey { margin-top: clamp(5rem, 10vw, 9rem); }
+
+.journal-light-journey::after {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background-image: url("/images/temple-stone-light.png");
+  background-size: 54rem auto;
+  content: "";
+  mix-blend-mode: soft-light;
+  opacity: .13;
+}
+
+.journal-light-journey__beam {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(210, 188, 105, .28),
+      rgba(220, 201, 126, .42) 28%,
+      rgba(235, 218, 152, .66) 55%,
+      rgba(255, 246, 202, .9) 78%,
+      rgba(255, 255, 247, 1)
+    );
+  clip-path: polygon(0 0, 100% 100%, 0 100%);
+  filter: none;
+}
+
+.journal-light-journey__inner {
+  position: relative;
+  z-index: 1;
+  width: var(--page);
+  margin-inline: auto;
+}
+
+.journal-light-journey .contents-heading { border-top-color: rgba(210, 188, 105, .5); }
+.journal-light-journey .contents-heading h2,
+.journal-light-journey .contents-jump strong { color: var(--living-paper); }
+.journal-light-journey .contents-heading__guide p:first-child { max-width: 34rem; }
+.journal-light-journey .contents-heading__guide p:last-child { color: var(--morning-gold); }
+
+.journal-light-journey .contents-jump { border-top-color: rgba(210, 188, 105, .42); }
+.journal-light-journey .contents-jump a {
+  border-bottom-color: rgba(210, 188, 105, .3);
+  background: rgba(6, 18, 29, .18);
+  backdrop-filter: blur(2px);
+}
+.journal-light-journey .contents-jump a + a { border-left-color: rgba(210, 188, 105, .3); }
+.journal-light-journey .contents-jump span { color: rgba(250, 249, 245, .58); }
+
+.journal-light-journey .symphony {
+  margin-top: clamp(5rem, 10vw, 9rem);
+  border-bottom: 0;
+}
+
+.journal-light-journey .movement {
+  --movement-ink: #f4efdf;
+  --movement-muted: rgba(244, 239, 223, .66);
+  --movement-rule: rgba(210, 188, 105, .34);
+  padding: clamp(7rem, 13vw, 12rem) 0;
+  color: var(--movement-ink);
+  border-top-color: var(--movement-rule);
+  overflow: visible;
+}
+
+.journal-light-journey .movement--watch { min-height: 150vh; }
+.journal-light-journey .movement--witness { min-height: 100vh; }
+.journal-light-journey .movement--walk { min-height: 170vh; }
+.journal-light-journey .movement--worship {
+  --movement-ink: var(--ink-black);
+  --movement-muted: rgba(37, 37, 37, .65);
+  --movement-rule: rgba(162, 135, 42, .38);
+  min-height: 110vh;
+}
+
+.journal-light-journey .movement__identity p,
+.journal-light-journey .column-list__number,
+.journal-light-journey .column-list__role { color: var(--movement-muted); }
+.journal-light-journey .movement__identity p:last-child,
+.journal-light-journey .column-preview__state,
+.journal-light-journey .column-preview__source { color: var(--morning-gold); }
+.journal-light-journey .movement--worship .movement__identity p:last-child,
+.journal-light-journey .movement--worship .column-preview__state,
+.journal-light-journey .movement--worship .column-preview__source { color: var(--first-light-gold); }
+.journal-light-journey .movement__identity h2,
+.journal-light-journey .movement__opening,
+.journal-light-journey .column-list strong,
+.journal-light-journey .column-preview h3 { color: var(--movement-ink); }
+
+.journal-light-journey .movement__identity h2 {
+  font-size: clamp(4rem, 10vw, 10rem);
+  letter-spacing: -.055em;
+  line-height: .78;
+}
+.journal-light-journey .movement__opening { font-size: clamp(1.8rem, 3.5vw, 3.5rem); }
+.journal-light-journey .movement__statement { color: var(--movement-muted); }
+
+.journal-light-journey .column-list {
+  margin-top: clamp(5rem, 10vw, 9rem);
+  border-top-color: var(--movement-rule);
+}
+.journal-light-journey .column-list li {
+  display: block;
+  padding: 0;
+  border-bottom-color: var(--movement-rule);
+}
+
+.column-preview article {
+  display: grid;
+  grid-template-columns: minmax(12rem, .55fr) minmax(18rem, 1fr);
+  gap: clamp(2rem, 7vw, 8rem);
+  min-height: clamp(24rem, 54vh, 38rem);
+  padding: clamp(3.5rem, 8vw, 7rem) clamp(1rem, 3vw, 3rem);
+  background: linear-gradient(115deg, rgba(6, 18, 29, .22), rgba(250, 249, 245, .035));
+  backdrop-filter: blur(1.5px);
+}
+.movement--walk .column-preview article { background: linear-gradient(115deg, rgba(6, 18, 29, .13), rgba(250, 249, 245, .07)); }
+.movement--worship .column-preview article { background: linear-gradient(115deg, rgba(250, 249, 245, .22), rgba(255, 255, 247, .55)); }
+
+.column-preview__meta {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  align-content: start;
+  gap: 1rem;
+}
+.column-preview__meta > div { display: grid; gap: .55rem; }
+.journal-light-journey .column-list strong {
+  font-size: clamp(1.25rem, 2.2vw, 2rem);
+  letter-spacing: .1em;
+}
+.journal-light-journey .column-list__role { display: block; max-width: 18rem; font-size: .78rem; }
+
+.column-preview__story { align-self: center; max-width: 48rem; }
+.column-preview__state {
+  margin: 0 0 1.25rem;
+  font-size: var(--type-label);
+  font-weight: 600;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+.column-preview h3 {
+  max-width: 13ch;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6vw, 6.8rem);
+  font-weight: 400;
+  letter-spacing: -.045em;
+  line-height: .98;
+}
+.column-preview__deck {
+  max-width: 37rem;
+  margin: clamp(1.5rem, 3vw, 2.5rem) 0;
+  color: var(--movement-muted);
+  font-family: var(--font-display);
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  line-height: 1.7;
+}
+.column-preview__source {
+  margin: 0;
+  font-size: .68rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.column-preview--feature article { min-height: min(82vh, 54rem); }
+.column-preview--feature h3 { font-size: clamp(3.4rem, 8vw, 8.7rem); }
+.column-preview--finale article { min-height: min(84vh, 56rem); }
+
+.journal-light-journey .interlude {
+  position: relative;
+  margin: clamp(5rem, 10vw, 9rem) 0 0;
+  padding: clamp(2rem, 5vw, 4rem);
+  color: var(--morning-gold);
+  border-color: rgba(210, 188, 105, .58);
+  background: rgba(7, 21, 34, .24);
+  backdrop-filter: blur(4px);
+}
+.journal-light-journey .movement--walk .interlude { background: rgba(250, 249, 245, .1); }
+.journal-light-journey .interlude strong { color: var(--movement-ink); }
+.journal-light-journey .interlude > span:last-child { color: var(--movement-muted); }
+
+.journal-coda {
+  position: relative;
+  display: grid;
+  place-content: center;
+  min-height: 115vh;
+  margin-inline: calc((100vw - var(--page)) / -2);
+  padding: clamp(8rem, 18vw, 18rem) max(1rem, calc((100vw - 64rem) / 2));
+  overflow: hidden;
+  color: var(--watch-night);
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(255, 255, 255, 1) 0 7%, rgba(255, 251, 222, .93) 19%, rgba(210, 188, 105, .48) 43%, transparent 72%),
+    linear-gradient(to bottom, transparent, rgba(250, 249, 245, .96) 42%);
+}
+.journal-coda::after {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: clamp(4rem, 9vw, 8rem);
+  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
+  content: "";
+  opacity: .42;
+}
+.journal-coda > * { position: relative; z-index: 1; }
+.journal-coda__light {
+  margin: 0 0 clamp(2rem, 5vw, 4rem);
+  color: var(--first-light-gold);
+  font-size: clamp(3rem, 7vw, 7rem);
+  line-height: 1;
+  text-shadow: 0 0 3rem rgba(210, 188, 105, .9);
+}
+.journal-coda h2 {
+  max-width: 10ch;
+  margin: 0 auto;
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 10vw, 11rem);
+  font-weight: 400;
+  letter-spacing: -.065em;
+  line-height: .88;
+}
+.journal-coda blockquote {
+  max-width: 42rem;
+  margin: clamp(3rem, 7vw, 6rem) auto;
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 2.4vw, 2rem);
+}
+.journal-coda blockquote p { margin: 0 0 1rem; }
+.journal-coda cite { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+.journal-coda__prayer { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 2.8rem); }
+
 .article-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: clamp(6rem, 12vw, 11rem); padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .article-nav a { display: grid; gap: .35rem; color: inherit; text-decoration: none; }
 .article-nav a:last-child { text-align: right; }
@@ -773,7 +1051,7 @@ h1 {
   .stone-intro { grid-template-columns: 1fr; }
   .stone-intro__meta, .stone-intro__body { padding-inline: .75rem; }
   .stone-intro__actions { align-items: flex-start; flex-direction: column; gap: 1rem; }
-  .opening-plate__light { left: 58%; width: 7rem; opacity: .8; }
+  .opening-plate__light { display: none; }
   .opening-nav { grid-template-columns: repeat(2, 1fr); margin-bottom: 4rem; }
   .opening-nav a + a { margin-left: .75rem; }
   .opening-nav a:nth-child(3) { margin-left: 0; }
@@ -802,6 +1080,27 @@ h1 {
   .interlude { grid-template-columns: 5rem 1fr; gap: .5rem 1rem; }
   .interlude__rhythm { grid-row: 1 / 3; }
   .interlude > span:last-child { grid-column: 2; }
+  .continuous-contents.journal-light-journey { margin-top: 0; padding-top: 6rem; }
+  .volume--contents .continuous-contents.journal-light-journey { margin-top: 4rem; }
+  .journal-light-journey__beam {
+    clip-path: polygon(0 0, 100% 100%, 0 100%);
+  }
+  .journal-light-journey .movement { padding-block: 6rem; }
+  .journal-light-journey .movement__identity h2 { font-size: clamp(3.8rem, 22vw, 7rem); }
+  .column-preview article {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    min-height: 34rem;
+    padding: 3.5rem .75rem;
+  }
+  .column-preview__meta { grid-template-columns: 2.25rem 1fr; }
+  .column-preview h3 { font-size: clamp(2.8rem, 14vw, 5rem); }
+  .column-preview--feature h3 { font-size: clamp(3.2rem, 16vw, 5.8rem); }
+  .journal-light-journey .interlude { padding: 2rem .75rem; }
+  .journal-coda {
+    margin-inline: -.625rem;
+    padding-inline: 1rem;
+  }
   .article-nav { grid-template-columns: 1fr; }
   .article-nav a:last-child { text-align: left; }
   .portal-grid { grid-template-columns: 1fr; }
