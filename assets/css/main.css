@@ -328,7 +328,7 @@ h1 {
   color: color-mix(in srgb, var(--living-paper) 82%, var(--morning-gold));
   border-bottom: 1px solid rgba(210, 188, 105, .22);
   background-image:
-    linear-gradient(rgba(7, 21, 34, .82), rgba(16, 42, 67, .68)),
+    linear-gradient(rgba(250, 249, 245, .08), rgba(210, 188, 105, .12)),
     url("/images/temple-stone-light.png");
   background-size: auto, 44rem auto;
   overflow: hidden;
@@ -339,9 +339,8 @@ h1 {
   position: absolute;
   inset: 0;
   z-index: 0;
-  background:
-    repeating-linear-gradient(to bottom, transparent 0 6.95rem, rgba(210, 188, 105, .13) 7rem 7.06rem),
-    linear-gradient(90deg, rgba(7, 21, 34, .16), transparent 36%);
+  background: linear-gradient(to bottom, rgba(7, 21, 34, .9), rgba(16, 42, 67, .84));
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 18% 100%);
   content: "";
   pointer-events: none;
 }
@@ -352,7 +351,7 @@ h1 {
   z-index: 1;
   width: auto;
   display: block;
-  background: linear-gradient(to bottom, rgba(210, 188, 105, .16), rgba(244, 232, 176, .42));
+  background: linear-gradient(to bottom, rgba(255, 251, 226, .04), rgba(210, 188, 105, .18));
   clip-path: polygon(0 0, 0 100%, 18% 100%);
   filter: none;
   transform: none;
@@ -794,15 +793,7 @@ h1 {
   padding: clamp(7rem, 13vw, 12rem) 0 0;
   overflow: hidden;
   color: #f3edda;
-  background:
-    linear-gradient(
-      to bottom,
-      #06121d 0%,
-      #081827 28%,
-      #0d2336 58%,
-      #102a43 82%,
-      #132f49 100%
-    );
+  background: #eee5cb url("/images/temple-stone-light.png") 0 0 / 48rem auto repeat;
   isolation: isolate;
 }
 
@@ -812,13 +803,10 @@ h1 {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background-image:
-    repeating-linear-gradient(to bottom, transparent 0 7.95rem, rgba(210, 188, 105, .13) 8rem 8.06rem),
-    url("/images/temple-stone-light.png");
-  background-size: auto, 48rem auto;
+  background: linear-gradient(to bottom, #06121d 0%, #081827 30%, #0d2336 64%, #132f49 100%);
+  clip-path: polygon(18% 0, 100% 0, 100% 100%);
   content: "";
-  mix-blend-mode: soft-light;
-  opacity: .24;
+  opacity: 1;
 }
 
 .journal-light-journey__beam {
@@ -828,11 +816,11 @@ h1 {
   background:
     linear-gradient(
       to bottom,
-      rgba(210, 188, 105, .28),
-      rgba(220, 201, 126, .42) 28%,
-      rgba(235, 218, 152, .66) 55%,
-      rgba(255, 246, 202, .9) 78%,
-      rgba(255, 255, 247, 1)
+      rgba(210, 188, 105, .05),
+      rgba(220, 201, 126, .1) 28%,
+      rgba(235, 218, 152, .14) 55%,
+      rgba(255, 246, 202, .18) 78%,
+      rgba(255, 255, 247, .3)
     );
   clip-path: polygon(0 0, 18% 0, 100% 100%, 0 100%);
   filter: none;
@@ -854,6 +842,8 @@ h1 {
 .journal-light-journey .contents-heading { border-top-color: rgba(210, 188, 105, .5); }
 .journal-light-journey .contents-heading h2,
 .journal-light-journey .contents-jump strong { color: var(--living-paper); }
+.journal-light-journey .contents-heading h2 { color: var(--watch-night); }
+.journal-light-journey .contents-heading h2 span { color: var(--living-paper); }
 .journal-light-journey .contents-heading__guide p:first-child { max-width: 34rem; }
 .journal-light-journey .contents-heading__guide p:last-child { color: var(--morning-gold); }
 
@@ -887,10 +877,25 @@ h1 {
   text-decoration: none;
 }
 .contents-catalog li span { color: rgba(244, 239, 223, .55); font-size: .68rem; letter-spacing: .12em; }
+.contents-catalog__type,
+.contents-catalog__name { display: flex; align-items: baseline; gap: .45rem; }
+.contents-catalog__type::before,
+.contents-catalog__name::before { color: var(--first-light-gold); content: "—"; }
 .contents-catalog li strong { font-family: var(--font-display); font-size: 1.1rem; font-weight: 400; letter-spacing: .08em; }
-.contents-catalog li small { color: rgba(244, 239, 223, .62); font-size: .72rem; line-height: 1.5; }
+.contents-catalog li small { color: rgba(244, 239, 223, .62); font-family: var(--font-display); font-size: .76rem; line-height: 1.5; }
 .contents-catalog__interlude { display: flex; justify-content: space-between; gap: 1rem; margin: 1rem 0 0; color: var(--morning-gold); font-size: .65rem; letter-spacing: .09em; text-transform: uppercase; }
 .contents-catalog__interlude strong { font-weight: 400; }
+.contents-catalog__movement:nth-child(odd),
+.contents-catalog__movement:nth-child(odd) .contents-catalog__heading span,
+.contents-catalog__movement:nth-child(odd) .contents-catalog__heading small,
+.contents-catalog__movement:nth-child(odd) .contents-catalog__interlude,
+.contents-catalog__movement:nth-child(odd) li > a > span:first-child,
+.contents-catalog__movement:nth-child(odd) li strong { color: var(--watch-night); }
+.contents-catalog__movement:nth-child(odd) li small,
+.contents-catalog__movement:nth-child(odd) .contents-catalog__interlude strong { color: var(--first-light-gold); }
+.contents-catalog__movement:nth-child(odd) .contents-catalog__heading,
+.contents-catalog__movement:nth-child(odd) ol,
+.contents-catalog__movement:nth-child(odd) li { border-color: rgba(37, 37, 37, .28); }
 .contents-continue {
   display: grid;
   grid-template-columns: 1fr auto;
@@ -905,17 +910,6 @@ h1 {
 .contents-continue span { color: rgba(244, 239, 223, .6); font-size: .68rem; letter-spacing: .13em; text-transform: uppercase; }
 .contents-continue strong { font-family: var(--font-display); font-size: 1.65rem; font-weight: 400; }
 .contents-continue b { grid-column: 2; grid-row: 1 / 3; align-self: center; color: var(--morning-gold); font-weight: 400; }
-.contents-page__battlements {
-  position: absolute;
-  right: calc((100vw - var(--page)) / -2);
-  bottom: 0;
-  left: calc((100vw - var(--page)) / -2);
-  height: clamp(3rem, 7vw, 6rem);
-  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
-  opacity: .2;
-  mix-blend-mode: screen;
-}
-
 .journal-light-journey .symphony {
   margin-top: 0;
   border-bottom: 0;
@@ -1155,7 +1149,6 @@ h1 {
   .contents-catalog { grid-template-columns: 1fr; }
   .contents-catalog li a { grid-template-columns: 2rem minmax(6rem, .45fr) minmax(9rem, 1fr); gap: .75rem; }
   .contents-catalog__interlude { align-items: flex-start; flex-direction: column; }
-  .contents-page__battlements { right: -.625rem; left: -.625rem; }
   .journal-light-journey__beam {
     clip-path: polygon(0 0, 18% 0, 100% 100%, 0 100%);
   }

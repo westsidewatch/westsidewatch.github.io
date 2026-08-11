@@ -6,7 +6,7 @@
       <header class="contents-heading">
         <div>
           <p class="kicker">Contents · 目錄</p>
-          <h2 id="contents-title">A city<br>under light</h2>
+          <h2 id="contents-title">A city<br>under <span>light</span></h2>
         </div>
         <div class="contents-heading__guide">
           <p lang="zh-Hant">四個樂章，十二個欄目，三個夜間更次。從守望、見證、同行，進入敬拜；一道光穿過整本期刊，照在同一座城牆之上。</p>
@@ -27,8 +27,8 @@
                 <li>
                   <a href="#column-{{ $column.number }}">
                     <span>{{ $column.number }}</span>
-                    <strong lang="zh-Hant">{{ $column.name }}</strong>
-                    <small>{{ $column.role }}</small>
+                    <span class="contents-catalog__type"><strong lang="zh-Hant">{{ $column.section_zh }}</strong><small>{{ $column.section_en }}</small></span>
+                    <span class="contents-catalog__name"><strong lang="zh-Hant">{{ $column.name }}</strong><small>{{ $column.name_en }}</small></span>
                   </a>
                 </li>
               {{ end }}
@@ -45,7 +45,6 @@
         <strong>Read · 閱讀</strong>
         <b aria-hidden="true">↓</b>
       </a>
-      <span class="contents-page__battlements" aria-hidden="true"></span>
     </div>
 
     <div class="symphony" aria-label="Vol.00 editorial structure">
