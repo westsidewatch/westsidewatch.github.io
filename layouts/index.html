@@ -54,7 +54,11 @@
     </div>
     <div class="stone-intro__body">
       <p class="kicker">Founding Volume · 創刊號</p>
-      <h2 id="volume-title">{{ site.Params.volumeTitle }}</h2>
+      {{ $volumeTitleParts := split site.Params.volumeTitle "，" }}
+      <h2 id="volume-title">
+        <span lang="zh-Hant">{{ index $volumeTitleParts 0 }}，</span>
+        <span lang="zh-Hant">{{ index $volumeTitleParts 1 }}</span>
+      </h2>
       <div class="opening-scriptures" aria-label="Opening scriptures">
         <blockquote class="proclamation__scripture proclamation__scripture--foundation editorial-card editorial-card--portrait">
           <span class="proclamation__index">01 · Foundation</span>
