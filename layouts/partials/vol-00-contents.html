@@ -26,9 +26,8 @@
               {{ range $column := $movement.columns }}
                 <li>
                   <a href="#column-{{ $column.number }}">
-                    <span>{{ $column.number }}</span>
+                    <span class="contents-catalog__identity"><b>{{ $column.number }}</b><strong lang="zh-Hant">{{ $column.name }}</strong><small>{{ $column.name_en }}</small></span>
                     <span class="contents-catalog__type"><strong lang="zh-Hant">{{ $column.section_zh }}</strong><small>{{ $column.section_en }}</small></span>
-                    <span class="contents-catalog__name"><strong lang="zh-Hant">{{ $column.name }}</strong><small>{{ $column.name_en }}</small></span>
                   </a>
                 </li>
               {{ end }}
