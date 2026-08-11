@@ -447,52 +447,150 @@ h1 {
   min-width: 0;
   padding-right: max(1rem, calc((100vw - 88rem) / 2));
 }
-.stone-intro__body h2 { margin: 0; color: var(--living-paper); font-family: var(--font-display); font-size: clamp(3rem, 7vw, 7rem); font-weight: 400; line-height: .92; letter-spacing: -.055em; }
-.stone-intro__body > p:not(.kicker) { max-width: 42rem; margin: 2rem 0; font-family: var(--font-display); font-size: 1.25rem; }
+.stone-intro__body h2 {
+  max-width: 10ch;
+  margin: .65rem 0 0;
+  color: var(--living-paper);
+  font-family: var(--font-display);
+  font-size: clamp(4rem, 8vw, 8.5rem);
+  font-weight: 400;
+  line-height: .82;
+  letter-spacing: -.065em;
+}
+.opening-scriptures {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: clamp(6rem, 13vw, 12rem);
+}
 .proclamation__scripture {
-  max-width: 42rem;
-  margin: clamp(3rem, 6vw, 5rem) 0;
-  padding-left: clamp(1rem, 3vw, 2rem);
-  border-left: 1px solid var(--first-light-gold);
+  margin: 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
   color: var(--living-paper);
   font-family: var(--font-display);
   font-size: clamp(1.15rem, 2vw, 1.55rem);
   line-height: 1.5;
 }
+.proclamation__scripture--foundation { grid-column: 1 / span 5; align-self: start; }
+.proclamation__scripture--watch {
+  grid-column: 6 / -1;
+  margin-top: clamp(5rem, 9vw, 8rem);
+  border-top-color: var(--first-light-gold);
+  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+  line-height: 1.32;
+}
+.proclamation__index {
+  display: block;
+  margin-bottom: clamp(2rem, 5vw, 4.5rem);
+  color: var(--first-light-gold);
+  font-family: var(--font-body);
+  font-size: .64rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
 .proclamation__scripture p { margin: 0 0 1rem; }
-.proclamation__scripture cite { font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; }
+.proclamation__scripture cite {
+  display: block;
+  margin-top: clamp(1.5rem, 3vw, 2.5rem);
+  color: var(--first-light-gold);
+  font-family: var(--font-body);
+  font-size: .68rem;
+  font-style: normal;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.proclamation__thesis {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: clamp(8rem, 16vw, 14rem);
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}
+.proclamation__thesis .section-label { grid-column: 1 / span 3; margin: 0; }
 .proclamation__lead {
+  grid-column: 4 / span 7;
+  margin: 0;
   color: var(--living-paper);
-  font-size: clamp(1.35rem, 2.4vw, 2rem) !important;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.2vw, 4.2rem);
+  letter-spacing: -.035em;
+  line-height: 1.12;
+}
+.proclamation__watchman {
+  grid-column: 7 / -1;
+  margin: clamp(3rem, 6vw, 5rem) 0 0;
+  color: var(--living-paper);
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2vw, 1.75rem);
+  line-height: 1.4;
+}
+.proclamation__watchman strong { color: var(--first-light-gold); font-weight: 400; }
+.proclamation__cycle {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: clamp(9rem, 18vw, 16rem);
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+  color: var(--living-paper);
+  font-family: var(--font-display);
+}
+.proclamation__cycle .section-label { grid-column: 1 / span 3; margin: 0; font-family: var(--font-body); }
+.proclamation__cycle ol { grid-column: 4 / -1; margin: 0; padding: 0; list-style: none; }
+.proclamation__cycle li {
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 1.2rem 0;
+  border-bottom: 1px solid var(--line);
+  font-size: clamp(1.4rem, 2.8vw, 2.75rem);
+  letter-spacing: -.025em;
+  line-height: 1.1;
+}
+.proclamation__cycle li span { padding-top: .4em; color: var(--first-light-gold); font-family: var(--font-body); font-size: .62rem; letter-spacing: .12em; }
+.proclamation__cycle li strong { color: color-mix(in srgb, var(--watch-night) 62%, var(--living-paper)); font-weight: 400; }
+.proclamation__creed {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: var(--grid-gap);
+  margin-top: clamp(10rem, 20vw, 18rem);
+  padding-top: 1rem;
+  border-top: 1px solid var(--first-light-gold);
+  color: var(--living-paper);
+  font-family: var(--font-display);
+}
+.proclamation__creed .section-label { grid-column: 1 / span 3; margin: 0; font-family: var(--font-body); }
+.proclamation__creed > p:nth-child(2) {
+  grid-column: 4 / -1;
+  margin: 0;
+  font-size: clamp(2.8rem, 6.3vw, 6.7rem);
+  letter-spacing: -.055em;
+  line-height: .9;
+}
+.proclamation__creed > p:nth-child(2) strong { font-weight: 400; }
+.proclamation__creed > p:nth-child(3) {
+  grid-column: 7 / -1;
+  margin: clamp(4rem, 8vw, 7rem) 0 0;
+  font-size: clamp(1.35rem, 2.3vw, 2rem);
+  line-height: 1.5;
+}
+.proclamation__promise {
+  grid-column: 4 / span 7;
+  margin: clamp(6rem, 12vw, 10rem) 0 0;
+  color: var(--first-light-gold);
+  font-size: clamp(1.15rem, 2vw, 1.65rem);
   line-height: 1.45;
 }
-.proclamation__watchman { color: var(--living-paper); font-size: clamp(1.2rem, 1.8vw, 1.5rem) !important; }
-.proclamation__cycle {
-  margin: clamp(3rem, 6vw, 5rem) 0;
-  padding: clamp(1.5rem, 3vw, 2.5rem) 0;
-  border-block: 1px solid var(--line);
-  color: var(--living-paper);
-  font-family: var(--font-display);
-  font-size: clamp(1.05rem, 1.7vw, 1.3rem);
-  line-height: 1.6;
-}
-.proclamation__cycle p { margin: 0; }
-.proclamation__cycle .section-label { margin-bottom: 1rem; font-family: var(--font-body); }
-.proclamation__creed {
-  max-width: 46rem;
-  color: var(--living-paper);
-  font-family: var(--font-display);
-  font-size: clamp(1.45rem, 3vw, 2.5rem);
-  line-height: 1.35;
-}
-.proclamation__creed p { margin: 0 0 2rem; }
-.proclamation__promise { margin-block: clamp(3rem, 6vw, 5rem) !important; color: var(--first-light-gold); }
 .stone-intro__actions { display: flex; align-items: center; gap: 2rem; }
 .opening-continue {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   gap: .35rem 2rem;
-  max-width: 42rem;
+  width: 75%;
+  max-width: 58rem;
+  margin-left: 25%;
   margin-top: clamp(4rem, 8vw, 7rem);
   padding: 1.1rem 0;
   border-top: 1px solid var(--first-light-gold);
@@ -582,6 +680,45 @@ h1 {
   background: var(--watch-night);
   text-decoration: none;
 }
+.issue-door__shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.image-windows {
+  display: flex;
+  gap: clamp(.45rem, 1vw, 1rem);
+}
+.image-windows i {
+  display: block;
+  flex: 0 0 auto;
+  height: 100%;
+  aspect-ratio: 5 / 8;
+  background-image: url("/images/damascus-gate.jpg");
+  background-repeat: no-repeat;
+  background-size: 300% auto;
+  filter: sepia(.26) contrast(1.06) saturate(.68);
+}
+.image-windows i:nth-child(1) { background-position: left 43%; }
+.image-windows i:nth-child(2) { background-position: center 43%; }
+.image-windows i:nth-child(3) { background-position: right 43%; }
+.issue-door__windows {
+  position: absolute;
+  top: 19%;
+  right: 4%;
+  z-index: 0;
+  width: 72%;
+  height: 62%;
+  justify-content: flex-end;
+}
+.issue-door__shade {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(6, 18, 29, .92) 0%, rgba(6, 18, 29, .68) 48%, rgba(6, 18, 29, .28) 100%),
+    linear-gradient(0deg, rgba(6, 18, 29, .78), transparent 58%);
+}
+.issue-door > :not(.issue-door__windows, .issue-door__shade) { position: relative; z-index: 3; }
 
 .issue-door::after {
   position: absolute;
@@ -591,6 +728,7 @@ h1 {
   height: clamp(1.6rem, 3.8vw, 3.25rem);
   background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
   content: "";
+  z-index: 2;
 }
 
 .issue-door__watch {
@@ -632,12 +770,22 @@ h1 {
 
 .issue-door__action b { display: inline-block; margin-left: 1rem; transition: transform .2s ease; }
 .issue-door:hover .issue-door__action b { transform: translateX(.4rem); }
+.issue-door__credit {
+  position: absolute !important;
+  right: clamp(2rem, 5vw, 5rem);
+  bottom: clamp(1rem, 2vw, 1.75rem);
+  color: rgba(250, 249, 245, .68);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
 .issue-door__light {
   position: absolute;
   right: 12%;
   bottom: 3rem;
   width: min(26vw, 23rem);
   height: min(44vw, 38rem);
+  display: none;
   opacity: .42;
   background: linear-gradient(165deg, transparent 0 43%, color-mix(in srgb, var(--morning-gold) 34%, transparent) 44% 100%);
   pointer-events: none;
@@ -1479,7 +1627,30 @@ h1 {
   background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
   content: "";
   opacity: .22;
+  z-index: 2;
 }
+.journal-light-journey .interlude__windows,
+.journal-light-journey .interlude__image-shade {
+  position: absolute;
+}
+.journal-light-journey .interlude__windows {
+  inset: 12.5% 6%;
+  z-index: 0;
+  justify-content: center;
+}
+.journal-light-journey .interlude__image-shade {
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(6, 18, 29, .78), rgba(6, 18, 29, .22) 74%),
+    linear-gradient(0deg, rgba(6, 18, 29, .7), transparent 62%);
+}
+.journal-light-journey .interlude--image > :not(.interlude__windows, .interlude__image-shade) { position: relative; z-index: 3; }
+.journal-light-journey .interlude--image strong { color: var(--living-paper); text-shadow: 0 1px 1.4rem rgba(6, 18, 29, .88); }
+.journal-light-journey .interlude--image .interlude__label,
+.journal-light-journey .interlude--image > span:last-child { color: rgba(250, 249, 245, .78); }
 .journal-light-journey .interlude__rhythm { grid-column: 1; grid-row: 1; }
 .journal-light-journey .interlude__label { grid-column: 2; grid-row: 1; justify-self: end; }
 .journal-light-journey .interlude strong {
@@ -1592,16 +1763,45 @@ h1 {
   .hero__watchword span { width: 2rem; }
   .stone-intro { grid-template-columns: 1fr; }
   .stone-intro__meta, .stone-intro__body { padding-inline: .75rem; }
+  .stone-intro__body h2 { margin-top: .85rem; font-size: clamp(3.6rem, 18vw, 5.5rem); }
+  .opening-scriptures { grid-template-columns: 1fr; margin-top: 5rem; }
+  .proclamation__scripture--foundation,
+  .proclamation__scripture--watch { grid-column: 1; }
+  .proclamation__scripture--watch { margin-top: 4.5rem; font-size: clamp(1.7rem, 8.5vw, 2.45rem); }
+  .proclamation__index { margin-bottom: 2.5rem; }
+  .proclamation__thesis,
+  .proclamation__cycle,
+  .proclamation__creed { grid-template-columns: 1fr; }
+  .proclamation__thesis { margin-top: 7rem; }
+  .proclamation__thesis .section-label,
+  .proclamation__lead,
+  .proclamation__watchman,
+  .proclamation__cycle .section-label,
+  .proclamation__cycle ol,
+  .proclamation__creed .section-label,
+  .proclamation__creed > p:nth-child(2),
+  .proclamation__creed > p:nth-child(3),
+  .proclamation__promise { grid-column: 1; }
+  .proclamation__lead { margin-top: 3rem; font-size: clamp(2rem, 10vw, 3rem); }
+  .proclamation__watchman { margin-top: 2.5rem; }
+  .proclamation__cycle { margin-top: 8rem; }
+  .proclamation__cycle ol { margin-top: 2.5rem; }
+  .proclamation__cycle li { grid-template-columns: 2rem minmax(0, 1fr); font-size: clamp(1.35rem, 7vw, 1.85rem); }
+  .proclamation__creed { margin-top: 9rem; }
+  .proclamation__creed > p:nth-child(2) { margin-top: 3rem; font-size: clamp(3rem, 15vw, 4.6rem); }
+  .proclamation__creed > p:nth-child(3) { margin-top: 3.5rem; }
+  .proclamation__promise { margin-top: 5rem; }
   .stone-intro__actions { align-items: flex-start; flex-direction: column; gap: 1rem; }
   .opening-plate__light { display: none; }
   .opening-nav { grid-template-columns: repeat(2, 1fr); margin-bottom: 4rem; }
   .opening-nav a + a { margin-left: .75rem; }
   .opening-nav a:nth-child(3) { margin-left: 0; }
-  .opening-continue { grid-template-columns: 1fr auto; }
+  .opening-continue { grid-template-columns: 1fr auto; width: 100%; margin-left: 0; }
   .volume-card { grid-template-columns: 1fr auto; gap: 1rem; }
   .volume-card__title { grid-column: 1 / -1; grid-row: 2; }
   .volume-card__state { display: none; }
   .issue-door { grid-template-columns: 1fr; min-height: 0; aspect-ratio: 5 / 8; }
+  .issue-door__windows { top: 12%; right: 6%; width: 88%; height: 30%; }
   .issue-door__title { align-self: end; font-size: clamp(3.1rem, 15vw, 5.4rem); }
   .issue-door__summary { align-self: start; }
   .issue-door__action { grid-column: 1; }

@@ -84,7 +84,14 @@
           </ol>
 
           {{ with $movement.interlude }}
-            <aside class="interlude index-card--landscape" aria-label="Interlude: {{ .name }}">
+            {{ $isImageInterlude := eq .name "Selah" }}
+            <aside class="interlude index-card--landscape{{ if $isImageInterlude }} interlude--image{{ end }}" aria-label="Interlude: {{ .name }}">
+              {{ if $isImageInterlude }}
+                <span class="interlude__windows image-windows" role="img" aria-label="Historic view of the Damascus Gate in Jerusalem, divided across three portrait windows">
+                  <i aria-hidden="true"></i><i aria-hidden="true"></i><i aria-hidden="true"></i>
+                </span>
+                <span class="interlude__image-shade" aria-hidden="true"></span>
+              {{ end }}
               <span class="interlude__rhythm" aria-hidden="true">{{ .rhythm }}</span>
               <span class="interlude__label">{{ .watch_en }} · <b lang="zh-Hant">{{ .watch }}</b></span>
               <strong>{{ .name }} <i lang="zh-Hant">{{ .name_zh }}</i></strong>
