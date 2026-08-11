@@ -1,0 +1,16 @@
+<a class="resource-card index-card--portrait" href="{{ .url }}" target="_blank" rel="noopener noreferrer" aria-label="開啟 {{ .name }} 官方網站">
+  <p class="resource-card__folio"><span>{{ .id }}</span><small>DAWN LIBRARY</small></p>
+  <div class="resource-card__identity">
+    <span>{{ .category }}</span>
+    <h3>{{ .name }}</h3>
+    <em>{{ .name_en }}</em>
+  </div>
+  <div class="resource-card__details">
+    <p>{{ .description }}</p>
+    <dl>
+      <div><dt>Spectrum</dt><dd>{{ .spectrum }}</dd></div>
+      <div><dt>Access</dt><dd>{{ .access }}</dd></div>
+    </dl>
+    <strong>Open resource <i aria-hidden="true">↗</i></strong>
+  </div>
+</a>
