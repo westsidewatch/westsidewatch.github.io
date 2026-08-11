@@ -2,26 +2,51 @@
 <section id="contents" class="continuous-contents journal-light-journey" aria-labelledby="contents-title">
   <span class="journal-light-journey__beam" aria-hidden="true"></span>
   <div class="journal-light-journey__inner">
-    <header class="contents-heading">
-      <div>
-        <p class="kicker">Contents · 目錄</p>
-        <h2 id="contents-title">A city<br>under light</h2>
-      </div>
-      <div class="contents-heading__guide">
-        <p lang="zh-Hant">這不是離開閱讀的索引，而是一道穿過全刊的光。它從黑夜中的微光開始，經過四個樂章、十二個欄目與三個夜間更次，最後照亮整座城。</p>
-        <p>One light descends through the Journal—beginning as a beam in the night and ending as the great light that fills the city.</p>
-      </div>
-    </header>
+    <div class="contents-page">
+      <header class="contents-heading">
+        <div>
+          <p class="kicker">Contents · 目錄</p>
+          <h2 id="contents-title">A city<br>under light</h2>
+        </div>
+        <div class="contents-heading__guide">
+          <p lang="zh-Hant">四個樂章，十二個欄目，三個夜間更次。從守望、見證、同行，進入敬拜；一道光穿過整本期刊，照在同一座城牆之上。</p>
+          <p>Four movements · Twelve columns · Three watches of the night</p>
+        </div>
+      </header>
 
-    <nav class="contents-jump" aria-label="Jump to a movement">
-      {{ range $movement := $volume.movements }}
-        <a href="#movement-{{ lower $movement.name }}">
-          <span>{{ $movement.number }}</span>
-          <strong>{{ upper $movement.name }}</strong>
-          <small lang="zh-Hant">{{ $movement.name_zh }}</small>
-        </a>
-      {{ end }}
-    </nav>
+      <div class="contents-catalog" aria-label="Vol.00 table of contents">
+        {{ range $movement := $volume.movements }}
+          <section class="contents-catalog__movement" aria-labelledby="contents-{{ lower $movement.name }}">
+            <a class="contents-catalog__heading" href="#movement-{{ lower $movement.name }}">
+              <span>{{ $movement.number }}</span>
+              <strong id="contents-{{ lower $movement.name }}">{{ upper $movement.name }}</strong>
+              <small lang="zh-Hant">{{ $movement.name_zh }}</small>
+            </a>
+            <ol>
+              {{ range $column := $movement.columns }}
+                <li>
+                  <a href="#column-{{ $column.number }}">
+                    <span>{{ $column.number }}</span>
+                    <strong lang="zh-Hant">{{ $column.name }}</strong>
+                    <small>{{ $column.role }}</small>
+                  </a>
+                </li>
+              {{ end }}
+            </ol>
+            {{ with $movement.interlude }}
+              <p class="contents-catalog__interlude"><span>{{ .watch_en }} · {{ .watch }}</span><strong>{{ .name }} · {{ .name_zh }}</strong></p>
+            {{ end }}
+          </section>
+        {{ end }}
+      </div>
+
+      <a class="contents-continue" href="#movement-watch">
+        <span>Begin the Journal</span>
+        <strong>Read · 閱讀</strong>
+        <b aria-hidden="true">↓</b>
+      </a>
+      <span class="contents-page__battlements" aria-hidden="true"></span>
+    </div>
 
     <div class="symphony" aria-label="Vol.00 editorial structure">
       {{ range $movement := $volume.movements }}
