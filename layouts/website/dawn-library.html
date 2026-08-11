@@ -84,6 +84,41 @@
       </div>
     </section>
 
+    <section class="resource-dossiers" aria-labelledby="dossiers-title">
+      <header>
+        <p class="kicker">Editorial Records · 編輯檔案</p>
+        <h2 id="dossiers-title">卡片背後的<br>選擇與使用</h2>
+        <p>資源卡不是網址摘要。這裡公開每項資源被收錄的理由、所在光譜、策展關係與建議使用場景。</p>
+      </header>
+      <ol>
+        {{ range $library.resources }}
+          <li id="resource-{{ lower .id }}">
+            <article>
+              <header class="resource-dossier__identity">
+                <span>{{ .id }}</span>
+                <div><small>{{ .category }}</small><h3>{{ .name }}</h3><em>{{ .name_en }}</em></div>
+              </header>
+              <div class="resource-dossier__recommendation">
+                <p class="kicker">Why it is here · 收錄理由</p>
+                <p>{{ .recommendation }}</p>
+              </div>
+              <dl class="resource-dossier__facts">
+                <div><dt>光譜 Spectrum</dt><dd>{{ .spectrum }}</dd></div>
+                <div><dt>語言 Language</dt><dd>{{ .language }}</dd></div>
+                <div><dt>媒介 Format</dt><dd>{{ .resource_type }}</dd></div>
+                <div><dt>聲音 Audio</dt><dd>{{ if .audio }}Available{{ else }}—{{ end }}</dd></div>
+              </dl>
+              <div class="resource-dossier__relations">
+                <div><p class="kicker">Collections · 策展關係</p><ul>{{ range .collections }}<li>{{ . }}</li>{{ end }}</ul></div>
+                <div><p class="kicker">Use Cases · 使用場景</p><ul>{{ range .use_cases }}<li>{{ . }}</li>{{ end }}</ul></div>
+              </div>
+              <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">Open official resource <span aria-hidden="true">↗</span></a>
+            </article>
+          </li>
+        {{ end }}
+      </ol>
+    </section>
+
     <footer class="library-principle">
       <p class="kicker">Final Principle · 最終原則</p>
       <p>經文在中心。工具服務經文。資源服務學習。設計服務使命。</p>

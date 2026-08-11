@@ -1048,6 +1048,32 @@ h1 {
 .collection-card em { color: var(--section-accent); font-family: var(--font-display); }
 .collection-card h3 { margin: .5rem 0 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(2rem, 3vw, 3.2rem); font-weight: 400; line-height: .95; }
 .collection-card > p:last-of-type { position: absolute; right: 1.35rem; bottom: 2rem; left: 1.35rem; margin: 0; color: var(--text-muted-on-light); font-size: .78rem; line-height: 1.6; }
+.resource-dossiers { margin-top: clamp(7rem, 14vw, 13rem); padding-top: 1.5rem; border-top: 1px solid var(--line); }
+.resource-dossiers > header { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); align-items: end; }
+.resource-dossiers > header .kicker { grid-column: 1 / 4; align-self: start; }
+.resource-dossiers > header h2 { grid-column: 4 / 9; margin: 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(3rem, 6vw, 6rem); font-weight: 400; letter-spacing: -.055em; line-height: .88; }
+.resource-dossiers > header > p:last-child { grid-column: 9 / -1; margin: 0; color: var(--text-muted-on-light); line-height: 1.8; }
+.resource-dossiers > ol { margin: clamp(4rem, 8vw, 7rem) 0 0; padding: 0; border-top: 1px solid var(--line); list-style: none; }
+.resource-dossiers > ol > li { padding: clamp(3.5rem, 7vw, 6rem) 0; border-bottom: 1px solid var(--line); scroll-margin-top: 2rem; }
+.resource-dossiers article { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: clamp(2rem, 4vw, 4rem) var(--grid-gap); }
+.resource-dossier__identity { grid-column: 1 / 6; display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: 1rem; }
+.resource-dossier__identity > span { padding-top: .35rem; color: var(--section-accent); font-size: .62rem; letter-spacing: .1em; }
+.resource-dossier__identity small { color: var(--section-accent); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
+.resource-dossier__identity h3 { margin: .55rem 0 .2rem; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(2.4rem, 4.5vw, 4.5rem); font-weight: 400; letter-spacing: -.04em; line-height: .92; }
+.resource-dossier__identity em { color: var(--section-accent); font-family: var(--font-display); }
+.resource-dossier__recommendation { grid-column: 7 / -1; }
+.resource-dossier__recommendation > p:last-child { max-width: 34rem; margin: 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(1.25rem, 2vw, 1.7rem); line-height: 1.55; }
+.resource-dossier__facts { grid-column: 1 / 6; display: grid; grid-template-columns: 1fr 1fr; margin: 0; border-top: 1px solid var(--line); }
+.resource-dossier__facts div { display: grid; gap: .35rem; padding: .9rem 0; border-bottom: 1px solid var(--line); }
+.resource-dossier__facts div:nth-child(odd) { padding-right: 1rem; }
+.resource-dossier__facts dt { color: var(--text-muted-on-light); font-size: .58rem; letter-spacing: .1em; text-transform: uppercase; }
+.resource-dossier__facts dd { margin: 0; color: var(--section-accent); font-size: .8rem; }
+.resource-dossier__relations { grid-column: 7 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
+.resource-dossier__relations ul { display: flex; flex-wrap: wrap; gap: .5rem; margin: 0; padding: 0; list-style: none; }
+.resource-dossier__relations li { padding: .4rem .65rem; color: var(--text-muted-on-light); border: 1px solid var(--line); font-size: .68rem; }
+.resource-dossiers article > a { grid-column: 7 / -1; justify-self: start; color: var(--section-accent); font-size: .65rem; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
+.resource-dossiers article > a span { display: inline-block; transition: transform .2s ease; }
+.resource-dossiers article > a:hover span, .resource-dossiers article > a:focus-visible span { transform: translate(.2rem, -.2rem); }
 .library-principle { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: var(--grid-gap); margin-top: clamp(7rem, 14vw, 13rem); padding-top: 1.5rem; border-top: 1px solid var(--line); }
 .library-principle .kicker { grid-column: 1 / 4; }
 .library-principle > p:last-child { grid-column: 4 / -1; margin: 0; color: var(--watch-night); font-family: var(--font-display); font-size: clamp(2rem, 4vw, 4rem); line-height: 1.2; }
@@ -2227,10 +2253,11 @@ h1 {
   .morning-stars > header .kicker, .morning-stars > header h2, .morning-stars > header > p:last-child,
   .library-collections > header .kicker, .library-collections > header h2, .library-collections > header > p:last-child,
   .library-catalogue > header .kicker, .library-catalogue > header h2, .library-catalogue > header > p:last-child,
+  .resource-dossiers > header .kicker, .resource-dossiers > header h2, .resource-dossiers > header > p:last-child,
   .library-spectrum .kicker, .library-spectrum h2, .library-principle .kicker, .library-principle > p:last-child { grid-column: 1 / -1; }
   .library-hero__title { margin-top: 1rem; }
   .library-hero h1 { font-size: clamp(4rem, 23vw, 7rem); }
-  .library-hero__description, .library-theme > p:last-child, .morning-stars > header > p:last-child, .library-collections > header > p:last-child, .library-catalogue > header > p:last-child { margin-top: 1.5rem; }
+  .library-hero__description, .library-theme > p:last-child, .morning-stars > header > p:last-child, .library-collections > header > p:last-child, .library-catalogue > header > p:last-child, .resource-dossiers > header > p:last-child { margin-top: 1.5rem; }
   .library-hero__status { flex-wrap: wrap; }
   .library-hero__status small { width: 100%; margin-left: 0; }
   .resource-card-grid, .collection-grid { display: flex; gap: 1rem; margin-inline: -.625rem; padding-inline: .625rem; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -2239,6 +2266,8 @@ h1 {
   .library-spectrum ol { grid-template-columns: 1fr; }
   .library-spectrum li { min-height: 11rem; }
   .library-spectrum li + li { border-left: 0; }
+  .resource-dossier__identity, .resource-dossier__recommendation, .resource-dossier__facts, .resource-dossier__relations, .resource-dossiers article > a { grid-column: 1 / -1; }
+  .resource-dossier__relations { grid-template-columns: 1fr; }
   .directory-heading { gap: 1rem; }
   .portal-card {
     grid-template-columns: 2rem minmax(0, 1fr) auto;
