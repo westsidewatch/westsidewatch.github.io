@@ -1,7 +1,7 @@
 <header class="site-header">
   <div class="site-header__primary">
     <a class="wordmark" href="{{ site.Home.RelPermalink }}" aria-label="Westside Watch home">
-      {{ readFile "static/images/westside-watch-masthead.svg" | safeHTML }}
+      <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="Westside Watch">
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
       <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
