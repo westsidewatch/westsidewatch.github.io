@@ -1,556 +1,117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="zh-Hant">
-
 <head>
-
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ONE | 一卷</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
-
-
-<style>
-
-:root {
-    --ink:#252525;
-    --gold:#A2872A;
-    --fade:rgba(37,37,37,.25);
-}
-
-
-*{
-    box-sizing:border-box;
-}
-
-
-body{
-
-    margin:0;
-
-    min-height:100vh;
-
-    background:
-    linear-gradient(
-        rgba(206,189,116,.78),
-        rgba(206,189,116,.78)
-    ),
-    url("/images/stone.jpg");
-
-    background-size:cover;
-
-    color:var(--ink);
-
-    font-family:"Noto Serif TC",serif;
-
-}
-
-
-.page{
-
-    width:min(430px,92vw);
-
-    margin:40px auto;
-
-    padding:55px 35px;
-
-    border:1px solid var(--gold);
-
-    text-align:center;
-
-    position:relative;
-
-}
-
-
-.page:before{
-
-    content:"";
-
-    position:absolute;
-
-    inset:9px;
-
-    border:1px solid rgba(162,135,42,.35);
-
-}
-
-
-.content{
-
-    position:relative;
-
-}
-
-
-/* Brand */
-
-.brand{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:14px;
-
-    letter-spacing:4px;
-
-    margin-bottom:55px;
-
-}
-
-
-
-/* ONE */
-
-.one{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:76px;
-
-    letter-spacing:10px;
-
-}
-
-
-.one-cn{
-
-    font-size:32px;
-
-    letter-spacing:10px;
-
-}
-
-
-
-/* Motto */
-
-.motto{
-
-    margin-top:55px;
-
-}
-
-
-.motto-cn{
-
-    font-size:18px;
-
-    line-height:2;
-
-    letter-spacing:4px;
-
-}
-
-
-.motto-en{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-
-    font-style:italic;
-
-    margin-top:10px;
-
-}
-
-
-
-/* Bible list */
-
-.books{
-
-    margin-top:65px;
-
-}
-
-
-
-.book{
-
-    margin:8px 0;
-
-}
-
-
-
-.number{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:18px;
-
-    color:var(--fade);
-
-}
-
-
-
-.book.active .number{
-
-    color:var(--gold);
-
-}
-
-
-
-.book-name{
-
-    display:none;
-
-}
-
-
-
-.book.active .book-name{
-
-    display:block;
-
-    color:var(--gold);
-
-    margin-top:5px;
-
-    font-size:16px;
-
-}
-
-
-
-.book-name-en{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-style:italic;
-
-}
-
-
-
-/* Scripture */
-
-.scripture{
-
-    margin-top:90px;
-
-}
-
-
-
-.scripture-cn{
-
-    font-size:16px;
-
-}
-
-
-
-.scripture-en{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:20px;
-
-    margin-top:10px;
-
-}
-
-
-
-.reference{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-style:italic;
-
-    font-size:14px;
-
-    margin-top:10px;
-
-}
-
-
-
-/* Church */
-
-.church{
-
-    margin-top:45px;
-
-}
-
-
-.church img{
-
-    width:280px;
-
-}
-
-.one-cn,
-.motto-cn,
-.scripture-cn{
-
-    font-family:"Noto Serif TC",serif;
-
-}
-
-</style>
-
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="ONE 一卷——從一卷開始、逐章前行的查經前哨站。">
+  <title>ONE｜一卷・查經前哨站</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Noto+Serif+TC:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./one.css">
+  <link rel="stylesheet" href="./one-layout.css">
 </head>
-
-
-
 <body>
-
-
-<div class="page">
-
-<div class="content">
-
-
-<div class="brand">
-WESTSIDE WATCH
-</div>
-
-
-
-<div class="one">
-ONE
-</div>
-
-
-<div class="one-cn">
-一卷
-</div>
-
-
-
-<div class="motto">
-
-<div class="motto-cn">
-一卷入夜<br>
-合卷天明
-</div>
-
-
-<div class="motto-en">
-Read one book<br>
-till dawn
-</div>
-
-</div>
-
-
-
-
-<div class="books">
-
-
-<div class="book">
-<div class="number">01</div>
-</div>
-
-<div class="book">
-<div class="number">02</div>
-</div>
-
-<div class="book">
-<div class="number">03</div>
-</div>
-
-<!-- 此處省略灰色卷 -->
-
-<div class="book active">
-
-<div class="number">
-47
-</div>
-
-
-<div class="book-name">
-
-帖撒羅尼迦前書
-
-<div class="book-name-en">
-The First Epistle to the Thessalonians
-</div>
-
-</div>
-
-</div>
-
-
-
-<div class="book active">
-
-<div class="number">
-48
-</div>
-
-
-<div class="book-name">
-
-帖撒羅尼迦後書
-
-<div class="book-name-en">
-The Second Epistle to the Thessalonians
-</div>
-
-</div>
-
-</div>
-
-
-<div class="book">
-<div class="number">49</div>
-</div>
-
-
-<div class="book">
-<div class="number">50</div>
-</div>
-
-
-<div class="book">
-<div class="number">51</div>
-</div>
-
-
-<div class="book">
-<div class="number">52</div>
-</div>
-
-
-<div class="book">
-<div class="number">53</div>
-</div>
-
-
-<div class="book">
-<div class="number">54</div>
-</div>
-
-
-<div class="book">
-<div class="number">55</div>
-</div>
-
-
-<div class="book">
-<div class="number">56</div>
-</div>
-
-
-<div class="book">
-<div class="number">57</div>
-</div>
-
-
-<div class="book">
-<div class="number">58</div>
-</div>
-
-
-<div class="book">
-<div class="number">59</div>
-</div>
-
-
-<div class="book">
-<div class="number">60</div>
-</div>
-
-
-<div class="book">
-<div class="number">61</div>
-</div>
-
-
-<div class="book">
-<div class="number">62</div>
-</div>
-
-
-<div class="book">
-<div class="number">63</div>
-</div>
-
-
-<div class="book">
-<div class="number">64</div>
-</div>
-
-
-<div class="book">
-<div class="number">65</div>
-</div>
-
-
-<div class="book">
-<div class="number">66</div>
-</div>
-
-
-
-</div>
-
-
-
-
-
-<div class="scripture">
-
-
-<div class="scripture-cn">
-
-在你的光中，我們必得見光。
-
-</div>
-
-
-<div class="scripture-en">
-
-IN THY LIGHT SHALL WE SEE LIGHT.
-
-</div>
-
-
-<div class="reference">
-
-Psalm 36:9 , KJV
-
-</div>
-
-
-</div>
-
-
-
-
-<div class="church">
-
-<img src="/images/living-water-west-church-name.png"
-alt="P.A.O.C. Living Water Assembly West">
-
-<div class="church-name-en">
-
-P.A.O.C. Living Water Assembly West
-
-</div>
-
-    
-</div>
-
-
-
-</div>
-
-</div>
-
-
+  <a class="skip" href="#main">跳到內容</a>
+  <header class="opening" aria-labelledby="one-title">
+    <div class="shell opening__inner">
+      <div class="one" aria-hidden="true">ONE</div>
+      <div class="opening__copy">
+        <p class="kicker">Bible study outpost · 查經前哨站</p>
+        <h1 id="one-title">一卷</h1>
+        <p class="motto">一卷入夜，合卷天明<br><i>Read one book till dawn</i></p>
+        <p>不是逐節註釋，而是先看見整卷，再逐章進入故事。背景、歷史、地圖、串珠與工具在查經以前抵達，作偵察兵，也作引路人。</p>
+      </div>
+      <p class="brand">Living Water · Mount of Olives</p>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="now">
+      <div class="shell now__intro">
+        <div>
+          <p class="kicker">Now studying · 現在查考</p>
+          <h2>馬太福音<br><i>Matthew</i></h2>
+          <p>第 40 卷 · 共 28 章</p>
+        </div>
+        <div class="status">
+          <span>起點</span>
+          <strong>第 1 章</strong>
+          <p>家譜與耶穌降生</p>
+        </div>
+        <div class="progress" aria-label="馬太福音查經進度：尚未完成，從第一章開始">
+          <span style="width:0%"></span>
+        </div>
+      </div>
+    </section>
+
+    <nav class="view-tabs" aria-label="ONE 功能">
+      <div class="shell">
+        <button data-view="view-now" aria-selected="true">現在</button>
+        <button data-view="view-books" aria-selected="false">66 卷</button>
+        <button data-view="view-chapter" aria-selected="false">馬太福音 1</button>
+        <button data-view="view-calendar" aria-selected="false">日曆與進度</button>
+      </div>
+    </nav>
+
+    <div class="views shell">
+      <section class="view active" id="view-now">
+        <div class="head"><p class="kicker">Open · 開卷</p><h2>先看見整卷，<br>再進入第一章。</h2></div>
+        <div class="calendar-grid">
+          <article class="calendar-card"><span>01</span><h3>整卷定位</h3><p>新約第一卷、聖經第 40 卷。馬太宣告耶穌是應許的彌賽亞、天國的君王。</p></article>
+          <article class="calendar-card"><span>02</span><h3>本次前哨</h3><p>從第 1 章開始：家譜、約瑟、耶穌與以馬內利。先讀全章，再帶著線索查考。</p></article>
+          <article class="calendar-card"><span>03</span><h3>聚會狀態</h3><p>日期與時間待確認；確認後由日曆同步查經通知與進度。</p></article>
+        </div>
+        <div class="notice-actions"><button type="button" data-open-chapter>進入馬太福音第 1 章</button><button type="button" id="share-one">複製 ONE 連結</button></div>
+      </section>
+
+      <section class="view" id="view-books">
+        <div class="head"><p class="kicker">The 66 books · 全部書卷</p><h2>一卷一卷，<br>穿過整本聖經。</h2><p>目前從第 40 卷《馬太福音》開始。其餘書卷保留為完整索引，偵察資料將隨查經進度建立。</p></div>
+        <div class="book-legend" aria-label="書卷狀態圖例"><span><i class="legend-light active-light"></i>正在查考</span><span><i class="legend-light completed-light"></i>已完成</span><span><i class="legend-light dormant-light"></i>尚未查考</span></div>
+        <div class="book-grid" id="book-grid"></div>
+        <div class="book-detail" id="book-detail" aria-live="polite"></div>
+      </section>
+
+      <section class="view" id="view-chapter">
+        <div class="head"><p class="kicker">Book 40 · Matthew</p><h2>馬太福音</h2><p>從第 1 章開始。28 章是全卷範圍，不是目前進度。</p></div>
+        <div class="movement-grid" id="movement-grid"></div>
+        <div class="head"><p class="kicker">Chapter path · 逐章路徑</p><h2>第一章已開啟</h2></div>
+        <div class="chapter-grid" id="chapter-grid"></div>
+        <div class="chapter-detail" id="chapter-detail"></div>
+        <div class="head"><p class="kicker">Core tools · 核心工具</p><h2>帶著工具進入經文</h2><p>工具提供原文、串珠、歷史與結構線索；它們服事閱讀，不取代經文本身。</p></div>
+        <div class="resource-grid" id="resource-grid"></div>
+      </section>
+
+      <section class="view" id="view-calendar">
+        <div class="head"><p class="kicker">Group rhythm · 查經組節奏</p><h2>知道走到哪裡，<br>也知道下一步。</h2></div>
+        <div class="profile-bar">
+          <label for="profile-select">目前紀錄</label>
+          <select id="profile-select" aria-label="選擇查經組紀錄"></select>
+          <button type="button" id="new-profile">建立新的查經組</button>
+          <button type="button" id="restart-profile">重新開始一輪</button>
+        </div>
+        <div class="calendar-grid">
+          <article class="calendar-card"><span>Progress</span><h3 id="profile-progress">馬太福音 0 / 28</h3><p id="profile-next">尚未完成任何章。下一次查考從第 1 章開始。</p></article>
+          <article class="calendar-card"><span>Next</span><h3>日期待確認</h3><p>時間待確認 · 西區的夜晚查經組</p></article>
+          <article class="calendar-card"><span>Record</span><h3 id="profile-history-count">2 卷完成</h3><p>已完成的書卷繼續亮起；更換查經組不會改動本紀錄。</p></article>
+        </div>
+        <form class="profile-form" id="profile-form" hidden>
+          <label for="profile-name">新查經組名稱</label>
+          <input id="profile-name" name="profile-name" maxlength="40" placeholder="例如：週五查經組" required>
+          <p>新紀錄從 66 卷全暗開始，原有紀錄仍被保留。</p>
+          <div class="notice-actions"><button type="submit">建立並切換</button><button type="button" id="cancel-profile">取消</button></div>
+        </form>
+        <div class="restart-confirm" id="restart-confirm" hidden>
+          <p><strong>重新開始不會覆寫本輪。</strong>系統會保存目前紀錄的封存副本，再建立同名的新一輪，從全暗狀態開始。</p>
+          <div class="notice-actions"><button type="button" id="confirm-restart">確認封存並重新開始</button><button type="button" id="cancel-restart">取消</button></div>
+        </div>
+        <div class="notice"><p class="kicker">Pre-study notice · 會前分享</p><pre id="notice-text"></pre><div class="notice-actions"><button type="button" id="copy-notice">複製查經通知</button></div></div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="closing"><p>「因為在你那裡有生命的源頭；在你的光中，我們必得見光。」</p><small>詩篇 36:9 · 這是 ONE 的核心經文，不是書卷旅程的終點。</small></footer>
+  <script src="./one-data.js"></script>
+  <script src="./one-app.js"></script>
 </body>
-
 </html>
