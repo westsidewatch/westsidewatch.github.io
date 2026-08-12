@@ -20,6 +20,79 @@
       <p class="library-hero__status"><b>OPEN</b><span>首批核心資源</span><small>Updated {{ $library.updated }}</small></p>
     </header>
 
+    <section class="library-ledger" aria-labelledby="ledger-title">
+      <header>
+        <p class="kicker">Resource Master · 資源總帳</p>
+        <h2 id="ledger-title">不是書單，<br>是一個編輯系統</h2>
+        <p>{{ $library.system.source }} 是所有正式資源的唯一資料來源；候選項目必須經過甄選，才會進入晨星、光譜、策展與館藏。</p>
+      </header>
+      <dl>
+        <div><dt>正式館藏</dt><dd>{{ len $library.resources }}</dd><small>Selected Resources</small></div>
+        <div><dt>候選資源</dt><dd>{{ len $library.candidate_pool }}</dd><small>Candidate Pool</small></div>
+        <div><dt>今日晨星</dt><dd>{{ len (where $library.resources "morning_star" true) }}</dd><small>Morning Stars</small></div>
+        <div><dt>策展路徑</dt><dd>{{ len $library.collections }}</dd><small>Collections</small></div>
+      </dl>
+    </section>
+
+    <section class="library-workflow" aria-labelledby="workflow-title">
+      <header>
+        <p class="kicker">Editorial Chain · 編輯鏈</p>
+        <h2 id="workflow-title">一項資源如何<br>成為館藏</h2>
+      </header>
+      <ol>
+        {{ range $library.system.workflow }}
+          <li><span>{{ .number }}</span><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>
+        {{ end }}
+      </ol>
+    </section>
+
+    <section class="resource-architecture" aria-labelledby="architecture-title">
+      <header>
+        <p class="kicker">Shared Resource Layer · 共享資源層</p>
+        <h2 id="architecture-title">同一個資源母體，<br>走向不同生命場景</h2>
+        <p>{{ $library.system.vision }}</p>
+      </header>
+      <div class="resource-architecture__map">
+        <article>
+          <span>01 · SOURCE</span>
+          <h3>內容來源</h3>
+          <ul>{{ range $library.system.source_domains }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ul>
+        </article>
+        <article>
+          <span>02 · INTELLIGENCE</span>
+          <h3>編輯與資料</h3>
+          <p>Resource Master 保存資源身分、分類、功能與編輯判斷；晨星確認珍貴作品，光譜建立真理結構，策展集引導學習道路。</p>
+          <ol>{{ range $library.system.principles }}<li>{{ . }}</li>{{ end }}</ol>
+        </article>
+        <article>
+          <span>03 · ACTIVATION</span>
+          <h3>調用與出口</h3>
+          <ul>{{ range $library.system.activation }}<li><strong>{{ .name }}</strong><small>{{ .purpose }} · {{ .purpose_en }}</small></li>{{ end }}</ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="resource-layers" aria-labelledby="layers-title">
+      <header>
+        <p class="kicker">Three Functions · 三層功能</p>
+        <h2 id="layers-title">資源不只被收藏，<br>還要被調動</h2>
+        <p>外部保持簡潔，內部保持智能。三層共同服務一個目標：讓資源持續產生閱讀、研究、設計與生命內容。</p>
+      </header>
+      <ol>
+        {{ range $library.system.layers }}
+          <li><span>{{ .number }}</span><small>{{ .name_en }}</small><strong>{{ .name }}</strong><p>{{ .purpose }}</p></li>
+        {{ end }}
+      </ol>
+    </section>
+
+    <section class="resource-rhythm" aria-labelledby="rhythm-title">
+      <header>
+        <p class="kicker">Living Rhythm · 生命節奏</p>
+        <h2 id="rhythm-title">從年度方向，<br>回到新的資源</h2>
+      </header>
+      <ol>{{ range $library.system.rhythm }}<li><span>{{ .number }}</span><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
+    </section>
+
     <section class="library-theme" aria-labelledby="weekly-theme-title">
       <p class="kicker">Weekly Theme · 本週主題</p>
       <div>
@@ -69,6 +142,119 @@
           </article>
         {{ end }}
       </div>
+    </section>
+
+    <section class="library-taxonomy" aria-labelledby="taxonomy-title">
+      <header>
+        <p class="kicker">Resource Taxonomy · 資源分類</p>
+        <h2 id="taxonomy-title">六個入口，<br>不是六個孤島</h2>
+        <p>分類負責定位，光譜標示學習深度，策展集則把不同類別重新編排成可行走的閱讀道路。</p>
+      </header>
+      <ol>
+        {{ range $index, $category := $library.system.categories }}
+          <li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $category.name }}</strong><small>{{ $category.name_en }}</small></li>
+        {{ end }}
+      </ol>
+    </section>
+
+    <section class="resource-branches" aria-labelledby="branches-title">
+      <header>
+        <p class="kicker">Specialist Architecture · 專門架構</p>
+        <h2 id="branches-title">經文本身，<br>與研讀經文的工具</h2>
+        <p>Bible Text 與 Bible Study Tools 必須分開建模；恢復本等資源可以具有雙重身分，但不應因此混淆文本與工具。</p>
+      </header>
+      <div>
+        <article>
+          <p><span>01</span><small>BIBLE TEXT</small></p>
+          <h3>聖經文本架構</h3>
+          <ol>{{ range $library.system.bible_text }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
+          <footer>Original Text 只指希伯來文與希臘文；拉丁文歸入版本或教會歷史文本。</footer>
+        </article>
+        <article>
+          <p><span>02</span><small>BIBLE STUDY TOOLS</small></p>
+          <h3>查經工具架構</h3>
+          <ol>{{ range $library.system.study_tools }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
+          <footer>以華人查經為第一優先；英文工具作為輔助、設計研究與未來自製工具的參考。</footer>
+        </article>
+      </div>
+    </section>
+
+    <section class="resource-inventory" aria-labelledby="inventory-title">
+      <header>
+        <p class="kicker">Internal Intelligence · 內部智能</p>
+        <h2 id="inventory-title">核心之外，<br>還有完整世界</h2>
+        <p>前台不需要暴露龐大的分類樹；內部索引則必須容納神學、學習、歷史、設計與視覺素材，才能真正支援內容生成。</p>
+      </header>
+      <div class="resource-inventory__departments">
+        {{ range $index, $department := $library.system.inventory_departments }}
+          <article><span>{{ printf "%02d" (add $index 1) }}</span><small>{{ $department.name_en }}</small><h3>{{ $department.name }}</h3><p>{{ $department.status }}</p></article>
+        {{ end }}
+      </div>
+      <article class="resource-edge-example">
+        <p><span>RESOURCE CARD {{ $library.system.edge_example.id }}</span><small>{{ $library.system.edge_example.department }}</small></p>
+        <div><em>{{ $library.system.edge_example.context }}</em><h3>{{ $library.system.edge_example.name }}</h3><small>{{ $library.system.edge_example.name_en }}</small></div>
+        <p>{{ $library.system.edge_example.purpose }}</p>
+      </article>
+    </section>
+
+    <section class="book-system" aria-labelledby="books-title">
+      <header>
+        <p class="kicker">Book Resource System · 書籍資源</p>
+        <h2 id="books-title">不是書單，<br>而是閱讀道路</h2>
+        <p>{{ $library.system.books.principle }}</p>
+      </header>
+      <div class="book-system__policy">
+        {{ range $library.system.books.language_policy }}
+          <article><strong>{{ .share }}</strong><span>{{ .name }}</span><small>{{ .name_en }}</small></article>
+        {{ end }}
+      </div>
+      <div class="book-system__shelves">
+        <p class="kicker">Reading Shelves · 閱讀書架</p>
+        <ol>{{ range $index, $shelf := $library.system.books.shelves }}<li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $shelf }}</strong></li>{{ end }}</ol>
+      </div>
+      <div class="book-system__foundation">
+        <div><p class="kicker">Foundation Shelf · 核心書架</p><h3>Bible &<br>Biblical Studies</h3></div>
+        <ol>{{ range $library.system.books.core_shelf }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
+      </div>
+      <footer>
+        <p>{{ $library.system.books.status }}</p>
+        <ul>{{ range $library.system.books.editorial_rhythm }}<li>{{ . }}</li>{{ end }}</ul>
+      </footer>
+    </section>
+
+    <section class="recovered-index" aria-labelledby="recovered-title">
+      <header>
+        <p class="kicker">Recovered Card Index · 恢復索引</p>
+        <h2 id="recovered-title">只寫回已找到的，<br>保留仍然缺失的</h2>
+        <p>這些卡片屬於 Resource Inventory：表示資源已被盤點和編號，不等於已通過三晨星、光譜與策展甄選。</p>
+      </header>
+      {{ range $library.system.recovered_inventory }}
+        <section class="recovered-index__batch">
+          <header><div><span>{{ .range }}</span><small>{{ .status }}</small></div><h3>{{ .category }}</h3></header>
+          <ol>
+            {{ range .items }}
+              <li><span>{{ .id }}</span><div><strong>{{ .name }}</strong><small>{{ .name_en }}</small></div></li>
+            {{ end }}
+          </ol>
+        </section>
+      {{ end }}
+      <aside class="recovered-index__gaps" aria-label="Unrecovered index ranges">
+        <p class="kicker">Recovery Gaps · 待恢復區間</p>
+        <ol>{{ range $library.system.recovery_gaps }}<li><span>{{ .range }}</span><strong>{{ .name }}</strong><small>{{ .status }}</small></li>{{ end }}</ol>
+      </aside>
+    </section>
+
+    <section class="candidate-pool" aria-labelledby="candidate-title">
+      <header>
+        <p class="kicker">Candidate Pool · 候選資源池</p>
+        <h2 id="candidate-title">先被看見，<br>再被選入</h2>
+        <p>以下項目只代表已進入編輯視野，尚未成為推薦、晨星或正式館藏；這條界線必須保留。</p>
+      </header>
+      <ol>
+        {{ range $index, $candidate := $library.candidate_pool }}
+          <li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $candidate.name }}</strong><small>{{ $candidate.status }}</small></li>
+        {{ end }}
+      </ol>
     </section>
 
     <section class="library-catalogue" aria-labelledby="catalogue-title">
