@@ -20,17 +20,25 @@
       <h1 class="cover-one-cn" id="one-title">一卷</h1>
       <div class="cover-motto"><p>一卷入夜<br>合卷天明</p><i>Read one book<br>till dawn</i></div>
       <div class="cover-books" id="cover-books" aria-label="六十六卷聖經"></div>
-      <div class="cover-scripture"><p>在你的光中，我們必得見光。</p><strong>IN THY LIGHT SHALL WE SEE LIGHT.</strong><i>Psalm 36:9, KJV</i></div>
+      <button class="cover-scripture" id="open-scripture" type="button" aria-haspopup="dialog"><p>在你的光中，我們必得見光。</p><strong>IN THY LIGHT SHALL WE SEE LIGHT.</strong><i>Psalm 36:9, KJV</i></button>
       <div class="cover-church"><img src="/images/living-water-west-church-name.png" alt="P.A.O.C. Living Water Assembly West"><span>P.A.O.C. Living Water Assembly West</span></div>
+      <nav class="cover-portals" aria-label="相關入口">
+        <a class="gate-mark" href="/join/"><span>THE</span><strong>GATE</strong><i>門</i></a>
+        <a class="watch-mark" href="/"><span>LivingWater</span><strong>WESTSIDE WATCH</strong><i>西<br>望</i></a>
+      </nav>
     </div>
   </header>
+
+  <div class="light-reading" id="light-reading" role="dialog" aria-modal="true" aria-labelledby="light-verse" hidden>
+    <button class="light-close" id="close-scripture" type="button" aria-label="合上經文">合</button>
+    <div class="light-reading__verse"><p id="light-verse">「因為在你那裡<br>有生命的源頭；<br>在你的光中，我們必得見光。」</p><small>詩篇 36:9</small></div>
+  </div>
 
   <main id="main" class="app-layer" hidden>
     <div class="shell app-return"><button type="button" id="return-cover">← 返回一卷</button></div>
     <section class="now">
       <div class="shell now__intro">
         <div>
-          <p class="kicker">Now studying · 現在查考</p>
           <h2>馬太福音<br><i>Matthew</i></h2>
           <p>第 40 卷 · 共 28 章</p>
         </div>
@@ -56,7 +64,7 @@
 
     <div class="views shell">
       <section class="view active" id="view-now">
-        <div class="head"><p class="kicker">Matthew · 馬太福音</p><h2>第一章</h2></div>
+        <div class="head"><p class="kicker">Matthew 1</p><h2>第一章</h2></div>
         <div class="calendar-grid">
           <article class="calendar-card"><span>01</span><h3>君王</h3><p>大衛的子孫，亞伯拉罕的子孫。</p></article>
           <article class="calendar-card"><span>02</span><h3>名字</h3><p>耶穌 · 以馬內利</p></article>
@@ -67,23 +75,22 @@
 
       <section class="view" id="view-books">
         <div class="head"><p class="kicker">The 66 books · 六十六卷</p><h2>書卷</h2><p>馬太福音 · 帖撒羅尼迦前書 · 帖撒羅尼迦後書</p></div>
-        <div class="book-legend" aria-label="書卷狀態圖例"><span><i class="legend-light active-light"></i>正在查考</span><span><i class="legend-light completed-light"></i>已完成</span><span><i class="legend-light dormant-light"></i>尚未查考</span></div>
         <div class="book-grid" id="book-grid"></div>
         <div class="book-detail" id="book-detail" aria-live="polite"></div>
       </section>
 
       <section class="view" id="view-chapter">
         <div class="head"><p class="kicker">Book 40 · Matthew</p><h2>馬太福音</h2><p>第 1 章 · 家譜與耶穌降生</p></div>
-        <div class="movement-grid" id="movement-grid"></div>
-        <div class="head"><p class="kicker">Chapter path · 逐章路徑</p><h2>第一章已開啟</h2></div>
-        <div class="chapter-grid" id="chapter-grid"></div>
         <div class="chapter-detail" id="chapter-detail"></div>
-        <div class="head"><p class="kicker">References · 參考</p><h2>經文與資料</h2></div>
+        <div class="head assistant-head"><p class="kicker">References</p><h2>助手</h2></div>
         <div class="resource-grid" id="resource-grid"></div>
+        <div class="head chapter-path-head"><p class="kicker">Matthew</p><h2>第一章</h2></div>
+        <div class="chapter-grid" id="chapter-grid"></div>
+        <div class="movement-grid" id="movement-grid"></div>
       </section>
 
       <section class="view" id="view-calendar">
-        <div class="head"><p class="kicker">Group rhythm · 查經組節奏</p><h2>知道走到哪裡，<br>也知道下一步。</h2></div>
+        <div class="head"><p class="kicker">西區的夜晚</p><h2>查經日曆</h2></div>
         <div class="profile-bar">
           <label for="profile-select">查經組</label>
           <select id="profile-select" aria-label="選擇查經組紀錄"></select>
@@ -91,9 +98,9 @@
           <button type="button" id="restart-profile">新一輪</button>
         </div>
         <div class="calendar-grid">
-          <article class="calendar-card"><span>Progress</span><h3 id="profile-progress">馬太福音 0 / 28</h3><p id="profile-next">尚未完成任何章。下一次查考從第 1 章開始。</p></article>
-          <article class="calendar-card"><span>Next</span><h3>日期待確認</h3><p>時間待確認 · 西區的夜晚查經組</p></article>
-          <article class="calendar-card"><span>Books</span><h3 id="profile-history-count">2 卷完成</h3></article>
+          <article class="calendar-card"><span>所至</span><h3 id="profile-progress">馬太福音 0 / 28</h3><p id="profile-next">下一次：第 1 章</p></article>
+          <article class="calendar-card"><span>下次</span><h3>日期待定</h3><p>時間待定 · 西區的夜晚</p></article>
+          <article class="calendar-card"><span>已讀</span><h3 id="profile-history-count">2 卷</h3></article>
         </div>
         <form class="profile-form" id="profile-form" hidden>
           <label for="profile-name">新查經組名稱</label>
@@ -104,12 +111,12 @@
           <p>封存本輪，另開新一輪？</p>
           <div class="notice-actions"><button type="button" id="confirm-restart">確認封存並重新開始</button><button type="button" id="cancel-restart">取消</button></div>
         </div>
-        <div class="notice"><p class="kicker">Pre-study notice · 會前分享</p><pre id="notice-text"></pre><div class="notice-actions"><button type="button" id="copy-notice">複製查經通知</button></div></div>
+        <div class="notice"><pre id="notice-text"></pre><div class="notice-actions"><button type="button" id="copy-notice">複製</button></div></div>
       </section>
     </div>
   </main>
 
-  <footer class="closing app-layer" hidden><p>「因為在你那裡有生命的源頭；在你的光中，我們必得見光。」</p><small>詩篇 36:9</small></footer>
+  <footer class="closing scripture-panel app-layer" hidden><p>「因為在你那裡<br>有生命的源頭；<br>在你的光中，我們必得見光。」</p><small>詩篇 36:9</small></footer>
   <script src="./one-data.js"></script>
   <script src="./one-app.js"></script>
 </body>
