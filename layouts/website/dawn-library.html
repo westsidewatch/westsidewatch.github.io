@@ -1,112 +1,51 @@
 {{ define "main" }}
   {{ $library := hugo.Data.resources }}
-  <article class="article dawn-library">
+  <article class="article dawn-library dawn-library--public">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span>
       {{ with site.GetPage "/website" }}<a href="{{ .RelPermalink }}">{{ .Title }}</a><span aria-hidden="true">/</span>{{ end }}
       <span aria-current="page">{{ .Title }}</span>
     </nav>
 
-    <header class="library-hero">
+    <header class="library-hero library-hero--public">
       <div class="library-hero__meta">
-        <p class="kicker">MOUNT OF OLIVES · RESOURCE 01</p>
+        <p class="kicker">MOUNT OF OLIVES · LIVING WATER</p>
         <span aria-hidden="true">✦</span>
+      </div>
+      <div class="library-hero__index" aria-hidden="true">
+        <p><span>01</span><small>DAWN LIBRARY</small></p>
+        <strong>黎明</strong>
+        <div><em>{{ $library.weekly_theme.title_en }}</em><span>本週閱讀</span></div>
       </div>
       <div class="library-hero__title">
         <p>{{ .Params.subtitle }}</p>
         <h1>{{ .Title }}</h1>
       </div>
-      <p class="library-hero__description">{{ .Description }}</p>
-      <p class="library-hero__status"><b>OPEN</b><span>首批核心資源</span><small>Updated {{ $library.updated }}</small></p>
+      <p class="library-hero__description">從經文、書籍與珍貴作品中，找到今天可以開始的一條閱讀道路。</p>
+      <nav class="library-hero__browse" aria-label="Browse Dawn Library">
+        <a href="#morning-stars">今日晨星</a>
+        <a href="#reading-rooms">閱覽室</a>
+        <a href="#book-shelves">書架</a>
+        <a href="#selected-resources">全部資源</a>
+      </nav>
     </header>
 
-    <section class="library-ledger" aria-labelledby="ledger-title">
-      <header>
-        <p class="kicker">Resource Master · 資源總帳</p>
-        <h2 id="ledger-title">不是書單，<br>是一個編輯系統</h2>
-        <p>{{ $library.system.source }} 是所有正式資源的唯一資料來源；候選項目必須經過甄選，才會進入晨星、光譜、策展與館藏。</p>
-      </header>
-      <dl>
-        <div><dt>正式館藏</dt><dd>{{ len $library.resources }}</dd><small>Selected Resources</small></div>
-        <div><dt>候選資源</dt><dd>{{ len $library.candidate_pool }}</dd><small>Candidate Pool</small></div>
-        <div><dt>今日晨星</dt><dd>{{ len (where $library.resources "morning_star" true) }}</dd><small>Morning Stars</small></div>
-        <div><dt>策展路徑</dt><dd>{{ len $library.collections }}</dd><small>Collections</small></div>
-      </dl>
-    </section>
-
-    <section class="library-workflow" aria-labelledby="workflow-title">
-      <header>
-        <p class="kicker">Editorial Chain · 編輯鏈</p>
-        <h2 id="workflow-title">一項資源如何<br>成為館藏</h2>
-      </header>
-      <ol>
-        {{ range $library.system.workflow }}
-          <li><span>{{ .number }}</span><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>
-        {{ end }}
-      </ol>
-    </section>
-
-    <section class="resource-architecture" aria-labelledby="architecture-title">
-      <header>
-        <p class="kicker">Shared Resource Layer · 共享資源層</p>
-        <h2 id="architecture-title">同一個資源母體，<br>走向不同生命場景</h2>
-        <p>{{ $library.system.vision }}</p>
-      </header>
-      <div class="resource-architecture__map">
-        <article>
-          <span>01 · SOURCE</span>
-          <h3>內容來源</h3>
-          <ul>{{ range $library.system.source_domains }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ul>
-        </article>
-        <article>
-          <span>02 · INTELLIGENCE</span>
-          <h3>編輯與資料</h3>
-          <p>Resource Master 保存資源身分、分類、功能與編輯判斷；晨星確認珍貴作品，光譜建立真理結構，策展集引導學習道路。</p>
-          <ol>{{ range $library.system.principles }}<li>{{ . }}</li>{{ end }}</ol>
-        </article>
-        <article>
-          <span>03 · ACTIVATION</span>
-          <h3>調用與出口</h3>
-          <ul>{{ range $library.system.activation }}<li><strong>{{ .name }}</strong><small>{{ .purpose }} · {{ .purpose_en }}</small></li>{{ end }}</ul>
-        </article>
-      </div>
-    </section>
-
-    <section class="resource-layers" aria-labelledby="layers-title">
-      <header>
-        <p class="kicker">Three Functions · 三層功能</p>
-        <h2 id="layers-title">資源不只被收藏，<br>還要被調動</h2>
-        <p>外部保持簡潔，內部保持智能。三層共同服務一個目標：讓資源持續產生閱讀、研究、設計與生命內容。</p>
-      </header>
-      <ol>
-        {{ range $library.system.layers }}
-          <li><span>{{ .number }}</span><small>{{ .name_en }}</small><strong>{{ .name }}</strong><p>{{ .purpose }}</p></li>
-        {{ end }}
-      </ol>
-    </section>
-
-    <section class="resource-rhythm" aria-labelledby="rhythm-title">
-      <header>
-        <p class="kicker">Living Rhythm · 生命節奏</p>
-        <h2 id="rhythm-title">從年度方向，<br>回到新的資源</h2>
-      </header>
-      <ol>{{ range $library.system.rhythm }}<li><span>{{ .number }}</span><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
-    </section>
-
-    <section class="library-theme" aria-labelledby="weekly-theme-title">
-      <p class="kicker">Weekly Theme · 本週主題</p>
-      <div>
+    <section class="library-feature" aria-labelledby="weekly-theme-title">
+      <p class="kicker">This Week · 本週策展</p>
+      <div class="library-feature__number" aria-hidden="true">01</div>
+      <div class="library-feature__title">
         <span>{{ $library.weekly_theme.title_en }}</span>
         <h2 id="weekly-theme-title">{{ $library.weekly_theme.title }}</h2>
       </div>
       <p>{{ $library.weekly_theme.description }}</p>
+      <a href="#morning-stars">沿這條道路開始閱讀 <span aria-hidden="true">↓</span></a>
     </section>
 
-    <section class="morning-stars" aria-labelledby="morning-stars-title">
+    <section class="morning-stars" id="morning-stars" aria-labelledby="morning-stars-title">
       <header>
         <p class="kicker">Three Morning Stars · 三晨星</p>
-        <h2 id="morning-stars-title">今日三個<br>閱讀入口</h2>
-        <p>三晨星不是人氣排名，而是由本週主題帶領的每日編輯推薦。</p>
+        <h2 id="morning-stars-title">今天，從這裡開始</h2>
+        <p>三個經過選擇的入口，帶領閱讀、聆聽與研讀。</p>
       </header>
       <div class="resource-card-grid resource-card-grid--stars">
         {{ range where $library.resources "morning_star" true }}
@@ -115,28 +54,16 @@
       </div>
     </section>
 
-    <section class="library-spectrum" aria-labelledby="spectrum-title">
-      <header>
-        <p class="kicker">Spectrum · 光譜</p>
-        <h2 id="spectrum-title">不是分類標籤，<br>而是學習的位置</h2>
-      </header>
-      <ol>
-        <li><span>01</span><strong>入門閱讀</strong><p>建立每日讀經、聆聽與記錄的穩定節奏。</p></li>
-        <li><span>02</span><strong>中階研讀</strong><p>使用版本比較、原文編號與背景資料擴大觀察。</p></li>
-        <li><span>03</span><strong>深入研讀</strong><p>進入註解、串珠、書卷結構與多種解經材料。</p></li>
-      </ol>
-    </section>
-
     <section class="library-collections" aria-labelledby="collections-title">
       <header>
-        <p class="kicker">Curated Collections · 策展集</p>
-        <h2 id="collections-title">從入口走向深入</h2>
-        <p>策展集不是另一組分類，而是把資源編排成可以實際行走的閱讀道路。</p>
+        <p class="kicker">Curated Paths · 策展閱讀</p>
+        <h2 id="collections-title">一條路，不只一項資源</h2>
+        <p>從每日讀經到深入研讀，沿着主題進入彼此關聯的作品。</p>
       </header>
       <div class="collection-grid">
         {{ range $library.collections }}
           <article class="collection-card index-card--portrait">
-            <p><span>{{ .number }}</span><small>DAWN LIBRARY</small></p>
+            <p><span>{{ .number }}</span><small>MOUNT OF OLIVES</small></p>
             <div><em>{{ .title_en }}</em><h3>{{ .title }}</h3></div>
             <p>{{ .description }}</p>
           </article>
@@ -144,124 +71,69 @@
       </div>
     </section>
 
-    <section class="library-taxonomy" aria-labelledby="taxonomy-title">
+    <section class="library-rooms" id="reading-rooms" aria-labelledby="rooms-title">
       <header>
-        <p class="kicker">Resource Taxonomy · 資源分類</p>
-        <h2 id="taxonomy-title">六個入口，<br>不是六個孤島</h2>
-        <p>分類負責定位，光譜標示學習深度，策展集則把不同類別重新編排成可行走的閱讀道路。</p>
+        <p class="kicker">Reading Rooms · 閱覽室</p>
+        <h2 id="rooms-title">走進更大的資源世界</h2>
+        <p>聖經、學習、歷史、設計與視覺作品，在不同房間彼此照亮。</p>
       </header>
-      <ol>
-        {{ range $index, $category := $library.system.categories }}
-          <li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $category.name }}</strong><small>{{ $category.name_en }}</small></li>
+      <div class="library-room-grid">
+        {{ range $index, $department := $library.system.inventory_departments }}
+          <article class="library-room">
+            <p><span>{{ printf "%02d" (add $index 1) }}</span><small>{{ $department.name_en }}</small></p>
+            <h3>{{ $department.name }}</h3>
+            {{ if eq $index 0 }}
+              <ul>{{ range first 3 $library.system.books.core_shelf }}<li>{{ .name }}</li>{{ end }}</ul>
+            {{ else if eq $index 1 }}
+              <ul><li>門徒訓練</li><li>禱告與靈修</li><li>教會與生活</li></ul>
+            {{ else if eq $index 2 }}
+              {{ with index $library.system.recovered_inventory 1 }}<ul>{{ range first 3 .items }}<li>{{ .name }}</li>{{ end }}</ul>{{ end }}
+            {{ else if eq $index 3 }}
+              {{ with index $library.system.recovered_inventory 2 }}<ul>{{ range first 2 .items }}<li>{{ .name }}</li>{{ end }}<li>{{ $library.system.edge_example.name }}</li></ul>{{ end }}
+            {{ else }}
+              <ul><li>聖經地景</li><li>編輯與版式</li><li>教會視覺素材</li></ul>
+            {{ end }}
+            <footer><span>館藏持續更新</span><small>Living Collection</small></footer>
+          </article>
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="library-books" id="book-shelves" aria-labelledby="books-title">
+      <header>
+        <p class="kicker">Book Shelves · 書籍資源</p>
+        <h2 id="books-title">選一個書架，開始長久閱讀</h2>
+        <p>從聖經研究、神學與靈命塑造，到家庭、歷史、文化與下一代。</p>
+      </header>
+      <ol class="library-shelf-list">
+        {{ range $index, $shelf := $library.system.books.shelves }}
+          <li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $shelf }}</strong><small>Shelf</small></li>
         {{ end }}
       </ol>
-    </section>
-
-    <section class="resource-branches" aria-labelledby="branches-title">
-      <header>
-        <p class="kicker">Specialist Architecture · 專門架構</p>
-        <h2 id="branches-title">經文本身，<br>與研讀經文的工具</h2>
-        <p>Bible Text 與 Bible Study Tools 必須分開建模；恢復本等資源可以具有雙重身分，但不應因此混淆文本與工具。</p>
-      </header>
-      <div>
-        <article>
-          <p><span>01</span><small>BIBLE TEXT</small></p>
-          <h3>聖經文本架構</h3>
-          <ol>{{ range $library.system.bible_text }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
-          <footer>Original Text 只指希伯來文與希臘文；拉丁文歸入版本或教會歷史文本。</footer>
-        </article>
-        <article>
-          <p><span>02</span><small>BIBLE STUDY TOOLS</small></p>
-          <h3>查經工具架構</h3>
-          <ol>{{ range $library.system.study_tools }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
-          <footer>以華人查經為第一優先；英文工具作為輔助、設計研究與未來自製工具的參考。</footer>
-        </article>
-      </div>
-    </section>
-
-    <section class="resource-inventory" aria-labelledby="inventory-title">
-      <header>
-        <p class="kicker">Internal Intelligence · 內部智能</p>
-        <h2 id="inventory-title">核心之外，<br>還有完整世界</h2>
-        <p>前台不需要暴露龐大的分類樹；內部索引則必須容納神學、學習、歷史、設計與視覺素材，才能真正支援內容生成。</p>
-      </header>
-      <div class="resource-inventory__departments">
-        {{ range $index, $department := $library.system.inventory_departments }}
-          <article><span>{{ printf "%02d" (add $index 1) }}</span><small>{{ $department.name_en }}</small><h3>{{ $department.name }}</h3><p>{{ $department.status }}</p></article>
-        {{ end }}
-      </div>
-      <article class="resource-edge-example">
-        <p><span>RESOURCE CARD {{ $library.system.edge_example.id }}</span><small>{{ $library.system.edge_example.department }}</small></p>
-        <div><em>{{ $library.system.edge_example.context }}</em><h3>{{ $library.system.edge_example.name }}</h3><small>{{ $library.system.edge_example.name_en }}</small></div>
-        <p>{{ $library.system.edge_example.purpose }}</p>
-      </article>
-    </section>
-
-    <section class="book-system" aria-labelledby="books-title">
-      <header>
-        <p class="kicker">Book Resource System · 書籍資源</p>
-        <h2 id="books-title">不是書單，<br>而是閱讀道路</h2>
-        <p>{{ $library.system.books.principle }}</p>
-      </header>
-      <div class="book-system__policy">
-        {{ range $library.system.books.language_policy }}
-          <article><strong>{{ .share }}</strong><span>{{ .name }}</span><small>{{ .name_en }}</small></article>
-        {{ end }}
-      </div>
-      <div class="book-system__shelves">
-        <p class="kicker">Reading Shelves · 閱讀書架</p>
-        <ol>{{ range $index, $shelf := $library.system.books.shelves }}<li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $shelf }}</strong></li>{{ end }}</ol>
-      </div>
-      <div class="book-system__foundation">
-        <div><p class="kicker">Foundation Shelf · 核心書架</p><h3>Bible &<br>Biblical Studies</h3></div>
-        <ol>{{ range $library.system.books.core_shelf }}<li><strong>{{ .name }}</strong><small>{{ .name_en }}</small></li>{{ end }}</ol>
-      </div>
-      <footer>
-        <p>{{ $library.system.books.status }}</p>
-        <ul>{{ range $library.system.books.editorial_rhythm }}<li>{{ . }}</li>{{ end }}</ul>
-      </footer>
-    </section>
-
-    <section class="recovered-index" aria-labelledby="recovered-title">
-      <header>
-        <p class="kicker">Recovered Card Index · 恢復索引</p>
-        <h2 id="recovered-title">只寫回已找到的，<br>保留仍然缺失的</h2>
-        <p>這些卡片屬於 Resource Inventory：表示資源已被盤點和編號，不等於已通過三晨星、光譜與策展甄選。</p>
-      </header>
-      {{ range $library.system.recovered_inventory }}
-        <section class="recovered-index__batch">
-          <header><div><span>{{ .range }}</span><small>{{ .status }}</small></div><h3>{{ .category }}</h3></header>
-          <ol>
-            {{ range .items }}
-              <li><span>{{ .id }}</span><div><strong>{{ .name }}</strong><small>{{ .name_en }}</small></div></li>
-            {{ end }}
-          </ol>
-        </section>
-      {{ end }}
-      <aside class="recovered-index__gaps" aria-label="Unrecovered index ranges">
-        <p class="kicker">Recovery Gaps · 待恢復區間</p>
-        <ol>{{ range $library.system.recovery_gaps }}<li><span>{{ .range }}</span><strong>{{ .name }}</strong><small>{{ .status }}</small></li>{{ end }}</ol>
+      <aside class="library-books__feature">
+        <p class="kicker">Foundation Shelf · 核心書架</p>
+        <div><h3>Bible &amp;<br>Biblical Studies</h3><p>從聖經綜覽、聖經神學與研讀本，進入背景研究和可靠註釋。</p></div>
+        <ul>{{ range first 4 $library.system.books.core_shelf }}<li>{{ .name }}</li>{{ end }}</ul>
       </aside>
     </section>
 
-    <section class="candidate-pool" aria-labelledby="candidate-title">
+    <section class="library-spectrum" aria-labelledby="spectrum-title">
       <header>
-        <p class="kicker">Candidate Pool · 候選資源池</p>
-        <h2 id="candidate-title">先被看見，<br>再被選入</h2>
-        <p>以下項目只代表已進入編輯視野，尚未成為推薦、晨星或正式館藏；這條界線必須保留。</p>
+        <p class="kicker">Choose Your Depth · 選擇深度</p>
+        <h2 id="spectrum-title">按今天的需要閱讀</h2>
       </header>
       <ol>
-        {{ range $index, $candidate := $library.candidate_pool }}
-          <li><span>{{ printf "%02d" (add $index 1) }}</span><strong>{{ $candidate.name }}</strong><small>{{ $candidate.status }}</small></li>
-        {{ end }}
+        <li><span>01</span><strong>開始閱讀</strong><p>讀經、聽經與每日同行。</p></li>
+        <li><span>02</span><strong>進一步研讀</strong><p>版本比較、原文與背景觀察。</p></li>
+        <li><span>03</span><strong>深入參考</strong><p>註釋、歷史與專門研究。</p></li>
       </ol>
     </section>
 
-    <section class="library-catalogue" aria-labelledby="catalogue-title">
+    <section class="library-catalogue" id="selected-resources" aria-labelledby="catalogue-title">
       <header>
-        <p class="kicker">Core Resources · 核心館藏</p>
-        <h2 id="catalogue-title">已完成整理的<br>第一批資源卡</h2>
-        <p>每張卡保留編輯推薦、光譜位置、策展關係與使用場景；外部入口均指向資源官方網站。</p>
+        <p class="kicker">Selected Resources · 精選資源</p>
+        <h2 id="catalogue-title">可以立即使用的館藏</h2>
+        <p>由中文讀經與查經入口開始，逐步增加書籍、歷史、設計與教會資源。</p>
       </header>
       <div class="resource-card-grid">
         {{ range $library.resources }}
@@ -270,44 +142,9 @@
       </div>
     </section>
 
-    <section class="resource-dossiers" aria-labelledby="dossiers-title">
-      <header>
-        <p class="kicker">Editorial Records · 編輯檔案</p>
-        <h2 id="dossiers-title">卡片背後的<br>選擇與使用</h2>
-        <p>資源卡不是網址摘要。這裡公開每項資源被收錄的理由、所在光譜、策展關係與建議使用場景。</p>
-      </header>
-      <ol>
-        {{ range $library.resources }}
-          <li id="resource-{{ lower .id }}">
-            <article>
-              <header class="resource-dossier__identity">
-                <span>{{ .id }}</span>
-                <div><small>{{ .category }}</small><h3>{{ .name }}</h3><em>{{ .name_en }}</em></div>
-              </header>
-              <div class="resource-dossier__recommendation">
-                <p class="kicker">Why it is here · 收錄理由</p>
-                <p>{{ .recommendation }}</p>
-              </div>
-              <dl class="resource-dossier__facts">
-                <div><dt>光譜 Spectrum</dt><dd>{{ .spectrum }}</dd></div>
-                <div><dt>語言 Language</dt><dd>{{ .language }}</dd></div>
-                <div><dt>媒介 Format</dt><dd>{{ .resource_type }}</dd></div>
-                <div><dt>聲音 Audio</dt><dd>{{ if .audio }}Available{{ else }}—{{ end }}</dd></div>
-              </dl>
-              <div class="resource-dossier__relations">
-                <div><p class="kicker">Collections · 策展關係</p><ul>{{ range .collections }}<li>{{ . }}</li>{{ end }}</ul></div>
-                <div><p class="kicker">Use Cases · 使用場景</p><ul>{{ range .use_cases }}<li>{{ . }}</li>{{ end }}</ul></div>
-              </div>
-              <a href="{{ .url }}" target="_blank" rel="noopener noreferrer">Open official resource <span aria-hidden="true">↗</span></a>
-            </article>
-          </li>
-        {{ end }}
-      </ol>
-    </section>
-
     <footer class="library-principle">
-      <p class="kicker">Final Principle · 最終原則</p>
-      <p>經文在中心。工具服務經文。資源服務學習。設計服務使命。</p>
+      <p class="kicker">Dawn Library · 黎明書房</p>
+      <p>經文在中心。<br>讓每一項資源，成為今天可以開始的道路。</p>
     </footer>
   </article>
 {{ end }}
