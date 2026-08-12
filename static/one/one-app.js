@@ -38,7 +38,7 @@ $('#restart-profile').onclick=()=>{$('#restart-confirm').hidden=false;$('#profil
 $('#cancel-restart').onclick=()=>{$('#restart-confirm').hidden=true};
 $('#confirm-restart').onclick=()=>{const old=clone(profile()),stamp=new Date().toISOString();state.archives=state.archives||[];state.archives.push({...old,archived:stamp});const id=`round-${Date.now()}`;state.profiles.push({id,name:`${old.name} · 新一輪`,created:stamp,activeBook:null,books:{},history:[]});state.activeProfile=id;saveState();$('#restart-confirm').hidden=true;renderProfiles()};
 
-const notice=`西區的夜晚｜查經\n\n《馬太福音》第 1 章\n家譜與耶穌降生\n日期：${D.meeting.date}\n時間：${D.meeting.time}\n\n預備：\n${D.matthew.chapterStudies["1"].prepare.map(x=>'・'+x).join('\n')}\n\n${location.href}`;$('#notice-text').textContent=notice;
+const notice=`西區的夜晚｜查經\n\n《馬太福音》第 1 章\n家譜與耶穌降生\n日期：${D.meeting.date}\n時間：${D.meeting.time}\nZoom：${D.meeting.zoom}\nCode：${D.meeting.code}\n\n預備：\n${D.matthew.chapterStudies["1"].prepare.map(x=>'・'+x).join('\n')}\n\n${location.href}`;$('#notice-text').textContent=notice;
 async function copy(text,button){try{await navigator.clipboard.writeText(text);const old=button.textContent;button.textContent='已複製';setTimeout(()=>button.textContent=old,1600)}catch(error){button.textContent='請手動複製'}}
 $('#copy-notice').onclick=event=>copy(notice,event.currentTarget);$('#share-one').onclick=event=>copy(location.href,event.currentTarget);$$('[data-open-chapter]').forEach(button=>button.onclick=()=>{const tab=$('[data-view="view-chapter"]');tab.click();$('#chapter-detail').scrollIntoView({behavior:'smooth',block:'start'})});
 renderProfiles();showChapter(1,D.matthew.chapters[0]);

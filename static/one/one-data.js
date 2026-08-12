@@ -27,7 +27,14 @@ window.ONE_DATA = {
     }]
   },
   current: { book: 40, completedChapter: 0, nextChapter: 1, updated: "待首次查經後更新" },
-  meeting: { date: "待確認", time: "待確認", group: "西區的夜晚", status: "upcoming" },
+  meeting: {
+    date: "待確認",
+    time: "待確認",
+    group: "西區的夜晚",
+    status: "upcoming",
+    zoom: "5225819774",
+    code: "3927"
+  },
   matthew: {
     summary: "馬太宣告耶穌是所應許的彌賽亞、大衛的子孫、天國的君王；祂成全聖經，也呼召門徒進入祂的國度。",
     meta: [["位置","新約第一卷 · 第40卷"],["文體","福音書 · 敘事與講論"],["章數","28章"],["核心線索","應驗 · 天國 · 以馬內利 · 門徒"]],
