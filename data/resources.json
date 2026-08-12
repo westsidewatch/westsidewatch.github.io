@@ -5,6 +5,197 @@
     "title_en": "Begin with Scripture",
     "description": "先讀經文，再以版本比較、原文工具、歷史背景與解經材料幫助理解；工具服務經文，而不取代經文。"
   },
+  "system": {
+    "source": "Resource Master",
+    "vision": "收集珍貴資源，建立真理結構，引導學習道路，並為 Westside Watch 的閱讀、查經、教學、教會與出版提供同一個可持續調用的基礎。",
+    "principles": ["經文在中心", "工具服務經文", "資源服務學習", "設計服務使命"],
+    "layers": [
+      {"number": "01", "name": "聖經研究基礎", "name_en": "Scripture Research", "purpose": "經文、聖經工具、解經與背景研究，服務期刊、ONE 與查經。"},
+      {"number": "02", "name": "Website 活資源", "name_en": "Living Resources", "purpose": "以三晨星、本週主題、月度策展和光譜持續調動資源。"},
+      {"number": "03", "name": "設計與媒體資源", "name_en": "Design & Media", "purpose": "圖片、設計素材與視覺資源，服務每日靈糧、三間奏與社交媒體。"}
+    ],
+    "rhythm": [
+      {"number": "01", "name": "年度方向", "name_en": "Annual Direction"},
+      {"number": "02", "name": "月度策展", "name_en": "Monthly Curation"},
+      {"number": "03", "name": "本週主題", "name_en": "Weekly Theme"},
+      {"number": "04", "name": "每日三晨星", "name_en": "Daily Three Stars"},
+      {"number": "05", "name": "期刊與社交媒體", "name_en": "Journal & Social"},
+      {"number": "06", "name": "新內容回流資源池", "name_en": "Return to Resource Pool"}
+    ],
+    "workflow": [
+      {"number": "01", "name": "候選資源池", "name_en": "Candidate Pool"},
+      {"number": "02", "name": "編輯甄選", "name_en": "Editorial Selection"},
+      {"number": "03", "name": "三晨星", "name_en": "Three Morning Stars"},
+      {"number": "04", "name": "光譜", "name_en": "Spectrum"},
+      {"number": "05", "name": "策展集", "name_en": "Curated Collections"},
+      {"number": "06", "name": "資源卡", "name_en": "Resource Card"},
+      {"number": "07", "name": "黎明書房", "name_en": "Dawn Library"}
+    ],
+    "categories": [
+      {"name": "聖經文本", "name_en": "Bible Text"},
+      {"name": "查經工具", "name_en": "Bible Study Tools"},
+      {"name": "參考資源", "name_en": "Reference Resources"},
+      {"name": "解經資源", "name_en": "Commentary Resources"},
+      {"name": "基督徒學習", "name_en": "Christian Learning Resources"},
+      {"name": "教會資源", "name_en": "Church Resources"}
+    ],
+    "source_domains": [
+      {"name": "聖經與原文", "name_en": "Scripture & Original Text"},
+      {"name": "書籍與資料庫", "name_en": "Books & Archives"},
+      {"name": "人物與見證", "name_en": "People & Witness"},
+      {"name": "查經與教學", "name_en": "Bible Study & Teaching"},
+      {"name": "禱告與靈修", "name_en": "Prayer & Formation"},
+      {"name": "教會與生活", "name_en": "Church & Life"},
+      {"name": "文化與作品", "name_en": "Culture & Works"},
+      {"name": "職場、家庭與教育", "name_en": "Work, Family & Education"}
+    ],
+    "inventory_departments": [
+      {"name": "聖經與神學", "name_en": "Bible & Theology", "status": "深度整理"},
+      {"name": "基督徒學習", "name_en": "Christian Learning", "status": "廣度建庫"},
+      {"name": "歷史與文明", "name_en": "History & Civilization", "status": "卡片索引已建立"},
+      {"name": "設計與創意", "name_en": "Design & Creative", "status": "079–100 第一階段完成"},
+      {"name": "圖片與視覺素材", "name_en": "Images & Visual Assets", "status": "媒體支持層"}
+    ],
+    "edge_example": {
+      "id": "086",
+      "name": "T-Shirt 設計與文化傳播",
+      "name_en": "T-Shirt Design & Cultural Communication",
+      "department": "Design & Creative",
+      "context": "Wearable Communication",
+      "purpose": "以可穿戴媒介研究視覺信息、身份表達與群體文化；它證明邊緣資料也能被策展和內容系統調用。"
+    },
+    "activation": [
+      {"name": "黎明書房", "name_en": "Dawn Library", "purpose": "認識資源", "purpose_en": "Discover"},
+      {"name": "西區的夜晚", "name_en": "Westside Night", "purpose": "理解與應用", "purpose_en": "Understand & Apply"},
+      {"name": "ONE", "name_en": "Research Entry", "purpose": "研究入口", "purpose_en": "Research"},
+      {"name": "教會", "name_en": "Church", "purpose": "生命建造", "purpose_en": "Life Formation"},
+      {"name": "Journal", "name_en": "Editorial Publication", "purpose": "編輯出版", "purpose_en": "Publish"},
+      {"name": "Podcast／Video／Newsletter", "name_en": "Media Channels", "purpose": "傳播與延伸", "purpose_en": "Extend"}
+    ],
+    "bible_text": [
+      {"name": "聖經版本", "name_en": "Bible Versions"},
+      {"name": "原文：希伯來文／希臘文", "name_en": "Original Text: Hebrew / Greek"},
+      {"name": "文本歷史", "name_en": "Text History"},
+      {"name": "多版本比較", "name_en": "Multiversion Comparison"}
+    ],
+    "study_tools": [
+      {"name": "綜合查經平台", "name_en": "Integrated Platforms"},
+      {"name": "參考工具", "name_en": "Reference Tools"},
+      {"name": "原文工具", "name_en": "Original Language Tools"},
+      {"name": "版本比較工具", "name_en": "Bible Comparison Tools"},
+      {"name": "學術工具", "name_en": "Academic Tools"}
+    ],
+    "books": {
+      "principle": "書籍需要比一般資源更細的分類，因為書架不只負責定位，也要引導讀者形成閱讀道路。",
+      "language_policy": [
+        {"share": "80%", "name": "中文可讀核心", "name_en": "Chinese-readable Core"},
+        {"share": "15%", "name": "經典中文譯本", "name_en": "Classics in Translation"},
+        {"share": "5%", "name": "必要原文頂級作品", "name_en": "Essential Original-language Works"}
+      ],
+      "shelves": [
+        "Bible & Biblical Studies", "Theology", "Spiritual Formation", "Christian Life", "Discipleship", "Prayer", "Church & Ministry", "Mission & Evangelism", "Apologetics", "Christian Family", "Marriage", "Parenting", "Leadership", "Christian History", "Classics", "Culture & Faith", "Youth & Children"
+      ],
+      "core_shelf": [
+        {"name": "聖經綜覽", "name_en": "Bible Overview"},
+        {"name": "聖經神學", "name_en": "Biblical Theology"},
+        {"name": "研讀本", "name_en": "Study Bibles"},
+        {"name": "聖經背景研究", "name_en": "Bible Background Studies"},
+        {"name": "丁道爾聖經註釋", "name_en": "Tyndale Commentaries"},
+        {"name": "NIV 應用註釋", "name_en": "NIV Application Commentary"},
+        {"name": "經典註釋系列", "name_en": "Matthew Henry · Barclay · Morgan · Spurgeon · MacArthur"}
+      ],
+      "editorial_rhythm": ["每日三晨星", "每週跨資源光譜", "每月策展閱讀道路"],
+      "status": "書架與初步索引已建立；逐書編輯、URL 核驗和完整策展仍需恢復。"
+    },
+    "recovered_inventory": [
+      {
+        "category": "Foundation Layer 00 · Bible Text & Study",
+        "range": "021-B–029-B",
+        "status": "Practical-outlet batch recovered",
+        "items": [
+          {"id": "021-B", "name": "聖經神學", "name_en": "Biblical Theology"},
+          {"id": "022-B", "name": "聖經神學詞典", "name_en": "Dictionary of Biblical Theology"},
+          {"id": "023-B", "name": "門徒訓練資源", "name_en": "Discipleship Resources"},
+          {"id": "024-B", "name": "查經方法", "name_en": "Bible Study Methods"},
+          {"id": "025-B", "name": "歸納式查經", "name_en": "Inductive Bible Study"},
+          {"id": "026-B", "name": "神學教育資源", "name_en": "Theological Education Resources"},
+          {"id": "027-B", "name": "中文聖經學習資源", "name_en": "Chinese Bible Learning Resources"},
+          {"id": "028-B", "name": "讀經計畫", "name_en": "Bible Reading Plans"},
+          {"id": "029-B", "name": "教會聖經教導資源", "name_en": "Church Bible Teaching Resources"}
+        ]
+      },
+      {
+        "category": "History & Civilization",
+        "range": "001–021",
+        "status": "Resource Inventory recovered",
+        "items": [
+          {"id": "001", "name": "猶太古史記", "name_en": "Jewish Antiquities"},
+          {"id": "002", "name": "教會史", "name_en": "Eusebius · Ecclesiastical History"},
+          {"id": "003", "name": "基督教會史", "name_en": "Philip Schaff · History of the Christian Church"},
+          {"id": "004", "name": "死海古卷", "name_en": "Dead Sea Scrolls"},
+          {"id": "005", "name": "耶路撒冷：一座城市，一部世界史", "name_en": "Jerusalem: The Biography"},
+          {"id": "006", "name": "羅馬帝國衰亡史", "name_en": "The History of the Decline and Fall of the Roman Empire"},
+          {"id": "007", "name": "古代以色列史", "name_en": "History of Ancient Israel"},
+          {"id": "008", "name": "宗教改革史", "name_en": "History of the Reformation"},
+          {"id": "009", "name": "宣教的歷史", "name_en": "History of Christian Missions"},
+          {"id": "010", "name": "教父學", "name_en": "Patristics"},
+          {"id": "011", "name": "尼西亞會議", "name_en": "Council of Nicaea"},
+          {"id": "012", "name": "上帝之城", "name_en": "Augustine · The City of God"},
+          {"id": "013", "name": "十字軍史", "name_en": "History of the Crusades"},
+          {"id": "014", "name": "宗教改革家", "name_en": "The Reformers"},
+          {"id": "015", "name": "戴德生傳", "name_en": "Hudson Taylor"},
+          {"id": "016", "name": "中國基督教史", "name_en": "History of Christianity in China"},
+          {"id": "017", "name": "馬禮遜傳", "name_en": "Robert Morrison"},
+          {"id": "018", "name": "和合本聖經史", "name_en": "History of the Chinese Union Version"},
+          {"id": "019", "name": "內地會歷史", "name_en": "China Inland Mission History"},
+          {"id": "020", "name": "聖經考古博物館資源", "name_en": "Biblical Archaeology Museum Resources"},
+          {"id": "021", "name": "宣教士列傳", "name_en": "Missionary Biographies"}
+        ]
+      },
+      {
+        "category": "Design & Creative",
+        "range": "079–100",
+        "status": "Phase one inventory complete",
+        "items": [
+          {"id": "079", "name": "設計中的設計", "name_en": "Designing Design"},
+          {"id": "080", "name": "平面設計中的網格系統", "name_en": "Grid Systems in Graphic Design"},
+          {"id": "081", "name": "新字體排印", "name_en": "The New Typography"},
+          {"id": "082", "name": "平面設計史", "name_en": "Meggs' History of Graphic Design"},
+          {"id": "083", "name": "品牌識別設計", "name_en": "Identity Designed"},
+          {"id": "084", "name": "現代主義標誌", "name_en": "Logo Modernism"},
+          {"id": "085", "name": "日常事物的設計", "name_en": "The Design of Everyday Things"},
+          {"id": "086", "name": "T-Shirt 設計與文化傳播", "name_en": "T-Shirt as Visual Communication"},
+          {"id": "087", "name": "教會品牌識別系統", "name_en": "Church Branding & Visual Identity"},
+          {"id": "088", "name": "編輯設計", "name_en": "Editorial Design"},
+          {"id": "089", "name": "版式設計原則", "name_en": "The Elements of Typographic Style"},
+          {"id": "090", "name": "網頁設計與數字體驗", "name_en": "Web Design & Digital Experience"},
+          {"id": "091", "name": "創造力神學", "name_en": "Theology of Creativity"},
+          {"id": "092", "name": "創意的本質", "name_en": "Creative Process Studies"},
+          {"id": "093", "name": "建築的複雜性與矛盾性", "name_en": "Complexity and Contradiction in Architecture"},
+          {"id": "094", "name": "建築：形式、空間和秩序", "name_en": "Architecture: Form, Space, and Order"},
+          {"id": "095", "name": "工藝研究", "name_en": "Craftsmanship Studies"},
+          {"id": "096", "name": "工作的意義", "name_en": "Every Good Endeavor"},
+          {"id": "097", "name": "物質文化與基督教", "name_en": "Material Culture and Christianity"},
+          {"id": "098", "name": "AI 與人的創造力", "name_en": "AI and Human Creativity"},
+          {"id": "099", "name": "品牌原則", "name_en": "Branding Principles"},
+          {"id": "100", "name": "創造主與創造的神學", "name_en": "Theology of the Creator and Creation"}
+        ]
+      }
+    ],
+    "recovery_gaps": [
+      {"range": "001-B–020-B", "name": "Foundation Layer 00", "status": "Original card names not yet recovered"},
+      {"range": "030-B–041-B", "name": "Foundation Layer 00", "status": "Numbering and card boundaries require verification"},
+      {"range": "022–078", "name": "General Resource Inventory", "status": "Category batches remain incomplete in surviving records"}
+    ]
+  },
+  "candidate_pool": [
+    {"name": "Bible Gateway", "status": "Awaiting editorial selection"},
+    {"name": "STEP Bible", "status": "Awaiting editorial selection"},
+    {"name": "Bible Hub", "status": "Awaiting editorial selection"},
+    {"name": "Blue Letter Bible", "status": "Awaiting editorial selection"},
+    {"name": "BibleProject", "status": "Awaiting editorial selection"},
+    {"name": "YouVersion", "status": "Awaiting editorial selection"}
+  ],
   "resources": [
     {
       "id": "DL-BST-001",
