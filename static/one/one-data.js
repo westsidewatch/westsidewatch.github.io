@@ -15,16 +15,9 @@ window.ONE_DATA = {
     [61,"彼得後書","2 Peter",3],[62,"約翰一書","1 John",5],[63,"約翰二書","2 John",1],[64,"約翰三書","3 John",1],[65,"猶大書","Jude",1],[66,"啟示錄","Revelation",22]
   ],
   progress: {
-    version: 1,
-    defaultProfile: "westside",
-    profiles: [{
-      id: "westside",
-      name: "西區的夜晚",
-      created: "既有查經紀錄",
-      activeBook: 40,
-      books: { "40": { status: "active", completedChapter: 0 }, "52": { status: "completed", completedChapter: 5 }, "53": { status: "completed", completedChapter: 3 } },
-      history: [{ book: 52, completedChapter: 5, status: "completed" }, { book: 53, completedChapter: 3, status: "completed" }]
-    }]
+    version: 2,
+    defaultProfile: null,
+    profiles: []
   },
   current: { book: 40, completedChapter: 0, nextChapter: 1, updated: "待首次查經後更新" },
   meeting: {
