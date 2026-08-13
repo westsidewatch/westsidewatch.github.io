@@ -24,6 +24,7 @@
       <p class="library-hero__description">從經文、書籍與珍貴作品中，找到今天可以開始的一條閱讀道路。</p>
       <nav class="library-hero__browse" aria-label="Browse Dawn Library">
         <a href="#morning-stars">今日晨星</a>
+        <a href="#bible-study">經文學習</a>
         <a href="#reading-rooms">閱覽室</a>
         <a href="#book-shelves">書架</a>
         <a href="#selected-resources">全部資源</a>
@@ -49,6 +50,19 @@
       </header>
       <div class="resource-card-grid resource-card-grid--stars">
         {{ range where $library.resources "morning_star" true }}
+          {{ partial "resource-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="library-catalogue library-bible-study" id="bible-study" aria-labelledby="bible-study-title">
+      <header>
+        <p class="kicker">Bible Study · 經文學習</p>
+        <h2 id="bible-study-title">從經文進入更深的研讀</h2>
+        <p>六個彼此互補的入口，涵蓋中文查經、原文與註釋、地圖與時間軸、平行經文及視覺導讀。</p>
+      </header>
+      <div class="resource-card-grid resource-card-grid--bible-study">
+        {{ range sort (where $library.resources "bible_study_core" true) "bible_study_order" }}
           {{ partial "resource-card.html" . }}
         {{ end }}
       </div>

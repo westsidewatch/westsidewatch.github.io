@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&amp;family=Noto+Serif+TC:wght@400;500;600&amp;display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./one.css">
   <link rel="stylesheet" href="./one-layout.css">
+  <link rel="stylesheet" href="./one-book.css">
 </head>
 <body>
   <a class="skip" href="#one-cover">跳到一卷</a>
@@ -88,9 +89,17 @@
           <div class="movement-grid" id="movement-grid"></div>
           <div class="chapter-grid" id="chapter-grid"></div>
         </div>
+        <aside class="reading-tools" aria-label="本章閱讀方式">
+          <p><span>Reading posture</span><strong id="reading-mode-label">查經模式</strong></p>
+          <div class="reading-mode" role="group" aria-label="選擇閱讀方式">
+            <button type="button" data-reading-mode="reading" aria-pressed="false">閱讀</button>
+            <button type="button" data-reading-mode="study" aria-pressed="true">查經</button>
+          </div>
+          <button class="print-chapter" type="button" id="print-chapter">列印本章</button>
+        </aside>
         <div class="chapter-detail" id="chapter-detail"></div>
-        <div class="head assistant-head"><p class="kicker">Scripture Resources</p><h2>經文資料</h2><p>經文工具、背景研究與地圖伴讀</p></div>
-        <div class="resource-grid" id="resource-grid"></div>
+        <div class="head assistant-head"><p class="kicker">Dawn Library · Bible Study</p><h2>經文學習</h2><p>由黎明書房策展，配合 ONE 的逐章研讀道路。<a href="/website/dawn-library/#bible-study">查看完整館藏 ↗</a></p></div>
+        <div class="resource-groups" id="resource-grid"></div>
       </section>
 
       <section class="view" id="view-calendar">
