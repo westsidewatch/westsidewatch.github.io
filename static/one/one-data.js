@@ -105,5 +105,6 @@ window.ONE_DATA = {
     ["DL-MAP-002","Bible Mapper WebViewer","按地名或經文搜尋地點、比較距離，適合逐章伴讀","https://biblemapper.com/web/","聖經地圖","開啟"],
     ["DL-MAP-003","STEP Bible · Biblical Locations","把聖經地點、地圖與相關經文放在同一個查考入口","https://www.stepbible.org/html/places.html","聖經地圖","開啟"],
     ["DL-MAP-004","OpenBible.info · Bible Geocoding","按書卷與章節查看聖經地點，並說明古地名定位的不確定性","https://www.openbible.info/geo/","聖經地圖","開啟"]
+    ,["DL-TIM-001","聖經共享 · 聖經書卷時間軸","串連聖經書卷、主要事件與地緣政治，可拖動和縮放查閱","https://bibleeveryone.com/bible-timeline.php","聖經時間軸","查看"]
   ]
 };
