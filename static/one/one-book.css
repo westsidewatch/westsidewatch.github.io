@@ -13,13 +13,13 @@
   --one-ink:#102a43;
   --one-leaf-shadow:0 1.4rem 4rem rgba(72,49,18,.16),0 .18rem .5rem rgba(72,49,18,.16);
   --one-paper-surface:
-    radial-gradient(circle at 17% 7%,rgba(255,246,187,.46),transparent 28%),
-    radial-gradient(circle at 84% 91%,rgba(146,104,32,.12),transparent 34%),
-    linear-gradient(rgba(226,211,151,.82),rgba(212,194,125,.84)),
+    radial-gradient(circle at 17% 7%,rgba(255,246,187,.24),transparent 28%),
+    radial-gradient(circle at 84% 91%,rgba(146,104,32,.07),transparent 34%),
+    linear-gradient(rgba(226,211,151,.28),rgba(212,194,125,.34)),
     url('/images/temple-stone-light.png') center/560px auto;
   --one-page-surface:
-    radial-gradient(ellipse at 30% 10%,rgba(255,248,204,.45),transparent 38%),
-    linear-gradient(rgba(231,218,168,.88),rgba(218,201,139,.91)),
+    radial-gradient(ellipse at 30% 10%,rgba(255,248,204,.25),transparent 38%),
+    linear-gradient(rgba(231,218,168,.34),rgba(218,201,139,.42)),
     url('/images/temple-stone-light.png') center/520px auto;
   --one-chapter-engraving:url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/The_Birth_of_Jesus.jpg/960px-The_Birth_of_Jesus.jpg');
   --one-chapter-number:"01";
@@ -95,7 +95,7 @@ main,.views{background:transparent}
 .view-tabs{
   border-color:rgba(117,85,31,.32);
   background:
-    linear-gradient(rgba(220,204,143,.92),rgba(211,192,124,.92)),
+    linear-gradient(rgba(220,204,143,.58),rgba(211,192,124,.62)),
     url('/images/temple-stone-light.png') center/520px auto;
   box-shadow:0 .45rem 1.4rem rgba(72,49,18,.1);
   backdrop-filter:blur(8px);
@@ -153,7 +153,7 @@ main,.views{background:transparent}
   color:var(--one-ink);
   border:1px solid rgba(117,85,31,.48);
   background:
-    linear-gradient(rgba(211,191,122,.72),rgba(203,180,106,.72)),
+    linear-gradient(rgba(211,191,122,.42),rgba(203,180,106,.46)),
     url('/images/temple-stone-light.png') center/460px auto;
   box-shadow:inset 0 0 0 7px rgba(181,141,34,.08);
 }
@@ -164,25 +164,41 @@ main,.views{background:transparent}
 .now__intro{
   isolation:isolate;
   overflow:hidden;
-  min-height:min(82rem,calc(100svh - 3rem));
-  background:var(--one-page-surface);
+  width:min(100%,62rem);
+  min-height:0;
+  padding:0;
+  background:#2b291f;
+  aspect-ratio:auto;
 }
-.now__intro:before{
-  z-index:-1;
-  inset:0;
-  background:
-    linear-gradient(180deg,rgba(38,29,18,.12),rgba(29,25,20,.32)),
-    var(--chapter-engraving) center top/contain no-repeat,
-    linear-gradient(180deg,rgba(49,39,24,.9),rgba(34,30,22,.94));
-  filter:grayscale(1) sepia(.28) contrast(1.08);
-  opacity:.83;
-  mix-blend-mode:multiply;
-}
+.now__intro:before{display:none}
 .now__intro:after{
-  z-index:3;
+  z-index:5;
   inset:1.9rem;
   border-color:rgba(228,200,93,.72);
   box-shadow:0 0 0 6px rgba(57,41,20,.08);
+}
+.chapter-cover-art{
+  position:relative;
+  z-index:0;
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  object-position:center top;
+  filter:grayscale(1) sepia(.3) saturate(.72) contrast(1.08) brightness(.68);
+}
+.chapter-cover-overlay{
+  position:absolute;
+  z-index:3;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:space-around;
+  gap:clamp(2rem,7vh,6rem);
+  padding:clamp(5rem,9vw,8rem) clamp(2rem,6vw,5rem);
+  background:linear-gradient(180deg,rgba(27,26,20,.05),rgba(24,24,20,.13));
+  text-align:center;
 }
 .now h2,.status,.morning-star,.chapter-art-credit{z-index:4}
 .now h2{
@@ -203,13 +219,22 @@ main,.views{background:transparent}
   isolation:isolate;
   overflow:hidden;
   min-height:70svh;
-  background:
-    linear-gradient(rgba(225,210,154,.9),rgba(211,192,126,.93)),
-    var(--one-chapter-engraving) center top/contain no-repeat,
-    url('/images/temple-stone-light.png') center/520px auto;
-  background-blend-mode:normal,multiply,normal;
+  background:var(--one-page-surface);
 }
-.book-frontispiece>*{z-index:1}
+.book-frontispiece:before{z-index:2}
+.book-frontispiece:after{
+  position:absolute;
+  z-index:0;
+  inset:1.6rem;
+  background:var(--one-chapter-engraving) center top/contain no-repeat;
+  filter:grayscale(1) sepia(.3) contrast(1.02);
+  opacity:.2;
+  -webkit-mask-image:radial-gradient(ellipse 74% 96% at 50% 44%,#000 44%,transparent 96%);
+  mask-image:radial-gradient(ellipse 74% 96% at 50% 44%,#000 44%,transparent 96%);
+  content:"";
+  pointer-events:none;
+}
+.book-frontispiece>*{position:relative;z-index:1}
 .book-frontispiece .head h2{
   color:var(--one-ink);
   text-shadow:0 1px rgba(255,247,211,.5);
@@ -373,7 +398,7 @@ main,.views{background:transparent}
   border:1px solid rgba(117,75,26,.74);
   background:
     linear-gradient(90deg,rgba(85,51,19,.24),transparent 4%,transparent 96%,rgba(85,51,19,.24)),
-    linear-gradient(rgba(230,214,158,.7),rgba(205,179,104,.78)),
+    linear-gradient(rgba(230,214,158,.42),rgba(205,179,104,.48)),
     var(--one-chapter-engraving) center top/contain no-repeat,
     url('/images/temple-stone-light.png') center/460px auto;
   background-blend-mode:normal,normal,multiply,normal;
@@ -432,8 +457,8 @@ main,.views{background:transparent}
 .assistant-head>*{position:relative}
 .resource-card-one{
   background:
-    radial-gradient(circle at 22% 10%,rgba(255,245,187,.35),transparent 31%),
-    linear-gradient(rgba(231,218,168,.8),rgba(211,191,124,.86)),
+    radial-gradient(circle at 22% 10%,rgba(255,245,187,.2),transparent 31%),
+    linear-gradient(rgba(231,218,168,.42),rgba(211,191,124,.48)),
     url('/images/temple-stone-light.png') center/430px auto;
   box-shadow:inset 0 0 0 7px rgba(116,77,25,.06),inset 0 0 0 8px rgba(117,82,30,.35),0 .8rem 2rem rgba(74,49,18,.1);
 }
@@ -591,26 +616,19 @@ main,.views{background:transparent}
   border-top:1px solid rgba(117,85,31,.35);
 }
 
-/* The opening remains a book cover, while the local study-group doorway is always recoverable. */
-.cover-session{
-  display:grid;
-  justify-items:center;
-  gap:.45rem;
-  margin:3.75rem 0 1rem;
-  padding:1.35rem .7rem;
-  border-block:1px solid rgba(117,85,31,.32);
-  text-align:center;
+/* The opening remains editorial: ONE is the quiet doorway and the numbers are the motion. */
+.cover-one-trigger{
+  display:block;
+  width:100%;
+  margin:0;
+  padding:0;
+  appearance:none;
+  border:0;
+  color:inherit;
+  background:transparent;
+  cursor:pointer;
 }
-.cover-session p,.cover-session span,.cover-finder-copy{margin:0}
-.cover-session p{
-  color:var(--one-gilt-dark);
-  font:600 .55rem var(--sans);
-  letter-spacing:.16em;
-}
-.cover-session strong{color:var(--one-ink);font:500 1.42rem var(--display)}
-.cover-session span{max-width:30ch;color:rgba(16,42,67,.68);font-size:.72rem;line-height:1.6}
-.cover-session-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:.42rem;margin-top:.55rem}
-.cover-session-actions button,
+.cover-one-trigger:focus-visible{outline:1px solid rgba(117,85,31,.65);outline-offset:.65rem}
 .one-dialog__actions button{
   padding:.58rem .78rem;
   border:1px solid rgba(117,85,31,.52);
@@ -620,60 +638,96 @@ main,.views{background:transparent}
   letter-spacing:.05em;
   cursor:pointer;
 }
-.cover-session-actions button:first-child,
 .one-dialog__actions button:first-child{color:#fff8dc;background:var(--one-gilt-dark)}
-.cover-session-actions button:hover,
 .one-dialog__actions button:hover{color:#fff8dc;background:var(--one-gilt-dark)}
-.cover-session-actions button:focus-visible,
 .one-dialog__actions button:focus-visible{outline:2px solid var(--one-ink);outline-offset:2px}
-.cover-finder-copy{
-  margin-top:3.5rem;
-  color:rgba(16,42,67,.58);
-  font-size:.67rem;
-  letter-spacing:.05em;
+.cover-books{
+  position:relative;
+  height:clamp(20rem,44svh,31rem);
+  margin-top:clamp(4.25rem,10vh,6.5rem);
+  overflow:hidden;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  contain:layout paint;
+  -webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);
+  mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);
 }
-.cover-books{margin-top:1.4rem}
+.cover-books.is-dragging{cursor:grabbing}
+.cover-books:focus-visible{outline:1px solid rgba(117,85,31,.28);outline-offset:.35rem}
 .cover-book{
-  min-height:2.15rem;
+  position:absolute;
+  top:50%;
+  left:50%;
+  z-index:1;
+  display:grid;
+  place-items:center;
+  width:100%;
+  min-height:4.8rem;
   appearance:none;
   -webkit-appearance:none;
-  padding:.15rem;
+  margin:0;
+  padding:0;
   border:0;
   color:inherit;
   background:transparent;
   cursor:pointer;
-  transform-origin:center;
-  transition:color .22s,opacity .22s,transform .28s,text-shadow .28s;
+  opacity:var(--rail-opacity,.12);
+  transform:translate3d(-50%,calc(-50% + var(--rail-y,0px)),0);
+  transition:none;
+  will-change:transform,opacity;
 }
-.cover-book>span{font-size:1rem;transition:inherit}
-.cover-book.has-study>span{color:rgba(117,85,31,.72)}
-.cover-book.active>span{color:var(--one-gilt-dark)}
-.cover-book.completed>span{color:var(--olive)}
-.cover-book:hover,.cover-book:focus-visible{position:relative;z-index:3;transform:scale(1.42)}
-.cover-book.selected{position:relative;z-index:4;transform:scale(1.9);text-shadow:0 0 1.4rem rgba(181,141,34,.72)}
-.cover-book.selected>span{color:var(--one-gilt-dark)}
-.cover-book.forthcoming{opacity:.52}
-.cover-book-float{
-  position:fixed;
-  z-index:80;
+.cover-book:before{
+  position:absolute;
   top:50%;
-  left:calc(50% + 15.5rem);
-  display:grid;
-  width:min(18rem,calc(100vw - 2rem));
-  padding:1.3rem 1.5rem;
-  border:3px double rgba(181,141,34,.68);
-  color:var(--one-ink);
-  background:var(--one-page-surface);
-  box-shadow:var(--one-leaf-shadow);
-  pointer-events:none;
-  transform:translateY(-50%);
-  text-align:center;
+  left:50%;
+  width:0;
+  height:1px;
+  background:rgba(181,141,34,.46);
+  transform:translate(-50%,-50%);
+  transition:width .36s cubic-bezier(.22,.8,.22,1);
+  content:"";
 }
-.cover-book-float span{color:var(--one-gilt-dark);font:600 .58rem var(--sans);letter-spacing:.18em}
-.cover-book-float strong{margin:.2rem 0 0;font:500 1.7rem var(--display)}
-.cover-book-float i{font:italic 1.05rem var(--display)}
-.cover-book-float small{margin-top:.65rem;color:rgba(16,42,67,.6);font-size:.65rem}
-@media(max-width:1100px) and (min-width:651px){.cover-book-float{right:1rem;left:auto}}
+.cover-book>span{
+  position:relative;
+  z-index:1;
+  color:rgba(34,42,45,.29);
+  font:400 1rem/1 var(--display);
+  letter-spacing:.08em;
+  transform:translateZ(0) scale(var(--rail-scale,1));
+  transition:color .28s,text-shadow .28s;
+  will-change:transform;
+}
+.cover-book strong{
+  position:absolute;
+  top:calc(50% + 1.25rem);
+  left:50%;
+  display:grid;
+  width:max-content;
+  max-width:92%;
+  opacity:0;
+  pointer-events:none;
+  transform:translate3d(-50%,.45rem,0);
+  transition:opacity .32s ease,transform .42s cubic-bezier(.22,.8,.22,1);
+}
+.cover-book strong b{color:var(--one-ink);font:500 1.2rem/1.1 var(--text);letter-spacing:.08em}
+.cover-book strong i{margin-top:.28rem;color:var(--one-gilt-dark);font:italic .82rem/1 var(--display)}
+.cover-book.rail-near{z-index:3}
+.cover-book.rail-near>span{color:rgba(117,85,31,.68);text-shadow:0 0 1.2rem rgba(255,226,104,.18)}
+.cover-book.rail-current{z-index:5;opacity:1!important}
+.cover-book.rail-current:before{width:clamp(8rem,56%,12rem)}
+.cover-book.rail-current>span{color:var(--one-gilt);text-shadow:0 0 1.5rem rgba(255,225,100,.62)}
+.cover-books.is-settled .cover-book.rail-current strong{opacity:1;transform:translate3d(-50%,0,0)}
+.cover-book.selected>span{color:var(--one-gilt-light)}
+.cover-book.entering{
+  z-index:6;
+  transform:translate3d(-50%,calc(-50% + var(--rail-y,0px)),0);
+}
+.cover-book:focus-visible{outline:0}
+.cover-books:not(.is-dragging) .cover-book.rail-current{transition:opacity .28s}
+.cover-books.is-dragging .cover-book strong{opacity:0}
+.cover-books.is-dragging .cover-book:before{width:0}
+.cover-books.is-dragging .cover-book>span{transition:none}
 
 /* Selection and group recovery are presented as bound leaves, not application pop-ups. */
 .one-dialog{
@@ -760,11 +814,7 @@ main,.views{background:transparent}
 
 /* Every chapter cover follows the same opening axis: book, metadata, chapter, title. */
 .now__intro{
-  display:flex!important;
-  flex-direction:column;
-  align-items:center!important;
-  justify-content:center;
-  gap:clamp(3rem,8vh,7rem)!important;
+  display:block!important;
   text-align:center!important;
 }
 .chapter-cover-book{
@@ -816,8 +866,9 @@ main,.views{background:transparent}
   .one-cover:before,.book-frontispiece:before{inset:1rem}
   #view-now,#view-books,#view-calendar{padding:3.25rem 1.35rem}
   .now{padding:0}
-  .now__intro{min-height:100svh;padding:5rem 1.75rem}
+  .now__intro{width:100%;min-height:0;padding:0}
   .now__intro:after{inset:1.15rem}
+  .chapter-cover-overlay{gap:2rem;padding:4.5rem 1.75rem}
   .book-frontispiece{padding:4rem 1.65rem}
   .chapter-detail{gap:1rem}
   .chapter-detail>.study-intro,
@@ -851,13 +902,11 @@ main,.views{background:transparent}
   .chapter-turn>p{min-width:0}
   .chapter-turn button strong,.chapter-turn__boundary strong{font-size:.92rem}
   .running-head{top:1rem;right:1.2rem;left:1.2rem}
-  .cover-session-actions{display:grid;width:100%}
-  .cover-session-actions button{width:100%}
-  .cover-book-float{top:auto;right:1rem;bottom:1rem;left:1rem;width:auto;transform:none}
+  .cover-books{height:25rem;margin-top:4rem}
+  .cover-book strong b{font-size:1.05rem}
   .one-dialog__leaf{min-height:calc(100svh - 2rem);padding:4.5rem 1.5rem 3rem}
   .local-group{grid-template-columns:1fr;padding:1rem .5rem;text-align:center}
   .local-group span,.local-group strong,.local-group small,.local-group i{grid-column:1;grid-row:auto;text-align:center}
-  .now__intro{gap:3rem!important}
   .chapter-cover-chapter{width:94%!important}
 }
 
@@ -919,4 +968,46 @@ main,.views{background:transparent}
   .scripture-reading__pages article:last-child{break-after:auto}
   .scripture-reading__pages article+article{border-left:0}
   .mode-reading #chapter-detail>.chapter-section{display:none!important}
+}
+
+/* Final chapter-cover geometry: the engraving is the page, never a contained background strip. */
+.now .now__intro{
+  display:block!important;
+  position:relative;
+  width:min(100%,62rem);
+  min-height:0;
+  padding:0;
+  background:transparent;
+}
+.now .now__intro:before{display:none!important}
+.now .chapter-cover-art{
+  display:block;
+  width:100%;
+  height:auto;
+  object-fit:contain;
+  object-position:center top;
+}
+.now .chapter-cover-overlay{
+  position:absolute;
+  z-index:3;
+  inset:0;
+  display:flex!important;
+  flex-direction:column;
+  align-items:center!important;
+  justify-content:space-around;
+}
+.now .chapter-cover-overlay .chapter-cover-book,
+.now .chapter-cover-overlay .chapter-cover-chapter,
+.now .chapter-cover-overlay .morning-star{position:relative;z-index:4;top:auto;right:auto;left:auto;bottom:auto}
+.now .chapter-cover-overlay .chapter-cover-book{flex:0 0 auto}
+.now .chapter-cover-overlay .chapter-cover-book>p{color:rgba(255,248,220,.78)}
+.now .chapter-cover-overlay .chapter-cover-chapter{
+  flex:0 1 auto;
+  min-height:clamp(10rem,28vw,20rem);
+}
+@media(max-width:650px){
+  .now .now__intro{width:100%;min-height:0;padding:0}
+  .now .chapter-cover-overlay{gap:1rem;padding:3.5rem 1.5rem}
+  .now .chapter-cover-overlay .chapter-cover-chapter{min-height:9rem}
+  .now .chapter-cover-overlay .morning-star{transform:scale(.78)}
 }

@@ -53,53 +53,114 @@ let readingMode=loadReadingMode();
 let selectedBookNumber=null;
 let pendingBookNumber=null;
 let newGroupSelection=false;
+let coverRail=null;
 
 const initialChapter=validatedChapter(currentBookNumber,requestedChapterValue);
 currentChapter=initialChapter||1;
 
 function renderCover(){
   const list=$('#cover-books'),active=profile(),activeBook=active?.activeBook?bookInfo(active.activeBook):null;
+  coverRail?.destroy();coverRail=null;
   list.innerHTML='';
+  list.tabIndex=0;
+  list.setAttribute('role','listbox');
   list.dataset.profile=active?.id||'';
-  $('#cover-session-name').textContent=active?.name||'尚未建立';
-  if(active&&activeBook){
-    const progress=bookState(activeBook[0],active);
-    $('#cover-session-copy').textContent=`${activeBook[1]} · 已完成 ${progress.completedChapter||0} / ${activeBook[3]} 章`;
-  }else $('#cover-session-copy').textContent='從下面的數字選擇一卷，開始新的查經道路。';
-  $('#cover-continue').hidden=!activeBook||!D.studyBooks?.[activeBook[0]];
-  $('#cover-groups').hidden=!state.profiles.length;
-  $('#cover-new-group').textContent=active?'建立另一個查經組':'建立查經組';
-  $('#cover-finder-copy').textContent=newGroupSelection?'新查經組：先從數字選擇起卷。':'從數字選擇經卷；卷名會隨指向浮現。';
+  $('#cover-groups').setAttribute('aria-label',active?`我的查經組，目前為${active.name}`:'建立查經組');
   D.books.forEach(book=>{
     const progress=bookState(book[0],active),available=Boolean(D.studyBooks?.[book[0]]),item=document.createElement('button');
     item.className=`cover-book ${progress.status}${available?' has-study':' forthcoming'}${selectedBookNumber===book[0]?' selected':''}`;
     item.dataset.book=book[0];
     item.type='button';
+    item.tabIndex=-1;
+    item.id=`cover-book-${book[0]}`;
+    item.setAttribute('role','option');
     item.setAttribute('aria-label',`第 ${book[0]} 卷，${book[1]}，${available?'可開始查考':'研讀內容製作中'}`);
-    item.innerHTML=`<span>${String(book[0]).padStart(2,'0')}</span>`;
-    item.addEventListener('mouseenter',()=>showBookFloat(book));
-    item.addEventListener('mouseleave',hideBookFloat);
-    item.addEventListener('focus',()=>showBookFloat(book));
-    item.addEventListener('blur',hideBookFloat);
-    item.onclick=()=>selectCoverBook(book);
+    item.innerHTML=`<span aria-hidden="true">${String(book[0]).padStart(2,'0')}</span><strong aria-hidden="true"><b>${book[1]}</b><i>${book[2]}</i></strong>`;
+    item.onclick=event=>{
+      if(coverRail?.consumeClick){event.preventDefault();coverRail.consumeClick=false;return}
+      if(!item.classList.contains('rail-current')){coverRail?.settleTo(item,{reveal:true});return}
+      selectCoverBook(book);
+    };
     list.append(item);
   });
+  coverRail=createCoverRail(list,activeBook?.[0]||1);
   renderGroupList();
 }
 
-function showBookFloat(book){
-  const float=$('#cover-book-float'),available=Boolean(D.studyBooks?.[book[0]]);
-  $('#cover-book-float-number').textContent=String(book[0]).padStart(2,'0');
-  $('#cover-book-float-name').textContent=book[1];
-  $('#cover-book-float-en').textContent=book[2];
-  $('#cover-book-float-status').textContent=available?'研讀內容已備妥':'研讀內容製作中';
-  float.hidden=false;
+function createCoverRail(list,startBook){
+  const items=[...list.querySelectorAll('.cover-book')],step=38,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let position=Math.max(0,Math.min(items.length-1,startBook-1)),target=position,dragging=false,startY=0,startPosition=position,lastY=0,lastTime=0,velocity=0,frame=0,paintFrame=0,wheelTimer=0,didDrag=false,consumeClick=false,revealTimer=0,destroyed=false;
+  const clamp=value=>Math.max(0,Math.min(items.length-1,value));
+  const paint=()=>{
+    items.forEach((item,index)=>{
+      const distance=index-position,absolute=Math.abs(distance),scale=1+Math.max(0,1-absolute)*1.48,opacity=Math.max(.1,1-absolute*.18);
+      item.style.setProperty('--rail-y',`${distance*step}px`);
+      item.style.setProperty('--rail-scale',scale.toFixed(3));
+      item.style.setProperty('--rail-opacity',opacity.toFixed(3));
+      item.classList.toggle('rail-near',absolute<.56);
+    });
+  };
+  const reveal=()=>{
+    clearTimeout(revealTimer);
+    const index=Math.round(position);
+    list.classList.add('is-settled');
+    items.forEach((item,itemIndex)=>{const current=itemIndex===index;item.classList.toggle('rail-current',current);item.setAttribute('aria-selected',String(current))});
+    list.setAttribute('aria-activedescendant',items[index]?.id||'');
+  };
+  const schedulePaint=()=>{if(!paintFrame)paintFrame=requestAnimationFrame(()=>{paintFrame=0;paint()})};
+  const animate=()=>{
+    if(destroyed)return;
+    const delta=target-position;
+    position+=delta*(reducedMotion?1:.2);
+    if(Math.abs(delta)<.001){position=target;paint();if(!wheelTimer)reveal();frame=0;return}
+    paint();frame=requestAnimationFrame(animate);
+  };
+  const settle=(next,{reveal:showName=true}={})=>{
+    clearTimeout(wheelTimer);wheelTimer=0;target=clamp(next);list.classList.remove('is-settled');items.forEach(item=>item.classList.remove('rail-current'));
+    if(frame)cancelAnimationFrame(frame);
+    frame=requestAnimationFrame(animate);
+    if(!showName)clearTimeout(revealTimer);
+  };
+  const settleTo=(item,options)=>settle(items.indexOf(item),options);
+  const onDown=event=>{
+    if(frame)cancelAnimationFrame(frame);frame=0;clearTimeout(wheelTimer);wheelTimer=0;
+    dragging=true;didDrag=false;consumeClick=false;startY=lastY=event.clientY;startPosition=position;lastTime=performance.now();velocity=0;
+    list.setPointerCapture?.(event.pointerId);
+  };
+  const onMove=event=>{
+    if(!dragging)return;
+    const now=performance.now(),dy=event.clientY-lastY,elapsed=Math.max(8,now-lastTime);
+    if(!didDrag&&Math.abs(event.clientY-startY)>5){didDrag=true;list.classList.add('is-dragging');list.classList.remove('is-settled');items.forEach(item=>item.classList.remove('rail-current'))}
+    if(!didDrag)return;
+    velocity=dy/elapsed;position=clamp(startPosition-(event.clientY-startY)/step);target=position;
+    lastY=event.clientY;lastTime=now;schedulePaint();
+  };
+  const onUp=event=>{
+    if(!dragging)return;
+    dragging=false;list.classList.remove('is-dragging');list.releasePointerCapture?.(event.pointerId);
+    if(!didDrag)return;
+    const projected=clamp(position-velocity*6.4);consumeClick=true;settle(Math.round(projected));
+  };
+  const onWheel=event=>{
+    if(Math.abs(event.deltaY)<Math.abs(event.deltaX))return;
+    event.preventDefault();list.classList.remove('is-settled');items.forEach(item=>item.classList.remove('rail-current'));
+    target=clamp(position+event.deltaY/step);
+    if(!frame)frame=requestAnimationFrame(animate);
+    clearTimeout(wheelTimer);wheelTimer=setTimeout(()=>{wheelTimer=0;settle(Math.round(target))},110);
+  };
+  const onKey=event=>{
+    if(!['ArrowUp','ArrowDown','Home','End','Enter',' '].includes(event.key))return;
+    if(event.key==='Enter'||event.key===' '){const current=items[Math.round(position)];if(current.classList.contains('rail-current'))current.click();else settleTo(current);event.preventDefault();return}
+    event.preventDefault();settle(event.key==='Home'?0:event.key==='End'?items.length-1:Math.round(position)+(event.key==='ArrowDown'?1:-1));
+  };
+  list.addEventListener('pointerdown',onDown);list.addEventListener('pointermove',onMove);list.addEventListener('pointerup',onUp);list.addEventListener('pointercancel',onUp);list.addEventListener('wheel',onWheel,{passive:false});list.addEventListener('keydown',onKey);
+  paint();revealTimer=setTimeout(reveal,850);
+  return {get consumeClick(){return consumeClick},set consumeClick(value){consumeClick=value},settleTo,destroy(){destroyed=true;cancelAnimationFrame(frame);cancelAnimationFrame(paintFrame);clearTimeout(wheelTimer);clearTimeout(revealTimer);list.removeEventListener('pointerdown',onDown);list.removeEventListener('pointermove',onMove);list.removeEventListener('pointerup',onUp);list.removeEventListener('pointercancel',onUp);list.removeEventListener('wheel',onWheel);list.removeEventListener('keydown',onKey)}};
 }
-function hideBookFloat(){if(!selectedBookNumber)$('#cover-book-float').hidden=true}
+
 function selectCoverBook(book){
   selectedBookNumber=book[0];
   $$('.cover-book').forEach(item=>item.classList.toggle('selected',Number(item.dataset.book)===book[0]));
-  showBookFloat(book);
   openBookDialog(book,{forceNewGroup:newGroupSelection||!profile()});
 }
 
@@ -127,7 +188,6 @@ function openBookDialog(book,{forceNewGroup=false}={}){
 function cancelBookDialog(){
   hideDialog($('#book-dialog'));
   pendingBookNumber=null;selectedBookNumber=null;
-  $('#cover-book-float').hidden=true;
   $$('.cover-book').forEach(item=>item.classList.remove('selected'));
 }
 function showGroupStartStep(){
@@ -203,7 +263,7 @@ $('#return-cover').onclick=()=>returnToCover();
 function beginNewGroupSelection(){
   newGroupSelection=true;selectedBookNumber=null;renderCover();
   $('#cover-books').scrollIntoView({behavior:'smooth',block:'start'});
-  $('#cover-books .cover-book')?.focus();
+  $('#cover-books').focus({preventScroll:true});
 }
 
 function renderGroupList(){
@@ -230,9 +290,7 @@ function switchProfile(id,{open=false}={}){
   else{saveState();closeGroupsDialog();renderProfiles();renderCover()}
 }
 
-$('#cover-continue').onclick=()=>{const active=profile(),book=active?.activeBook?bookInfo(active.activeBook):null;if(book&&studyBook(book[0]))startBookForProfile(active,book[0],{open:true})};
 $('#cover-groups').onclick=openGroupsDialog;
-$('#cover-new-group').onclick=beginNewGroupSelection;
 $('#groups-new').onclick=()=>{closeGroupsDialog();beginNewGroupSelection()};
 $('#close-groups-dialog').onclick=closeGroupsDialog;
 $('#groups-dialog').onclick=event=>{if(event.target===$('#groups-dialog'))closeGroupsDialog()};
@@ -398,7 +456,7 @@ function showChapter(number,name,{sync=true}={}){
   chapterStatus.querySelector('span').textContent=number===1?'起點':'本章';chapterStatus.querySelector('strong').textContent=`第 ${number} 章`;chapterStatus.querySelector('p').textContent=study.title;
   $('#frontispiece-chapter').textContent=`第 ${number} 章 · ${study.title}`;
   $('[data-open-chapter]').textContent=`進入${volume.name}第 ${number} 章`;
-  if(study.illustration){const engraving=`url("${study.illustration.src}")`;now.style.setProperty('--chapter-engraving',engraving);document.documentElement.style.setProperty('--one-chapter-engraving',engraving);const credit=$('#chapter-art-credit');credit.href=study.illustration.source;credit.textContent=`Gustave Doré · ${study.illustration.title}`;credit.hidden=false}
+  if(study.illustration){const engraving=`url("${study.illustration.src}")`,coverArt=$('#chapter-cover-art');now.style.setProperty('--chapter-engraving',engraving);document.documentElement.style.setProperty('--one-chapter-engraving',engraving);coverArt.src=study.illustration.src;coverArt.alt=study.illustration.alt;const credit=$('#chapter-art-credit');credit.href=study.illustration.source;credit.textContent=`Gustave Doré · ${study.illustration.title}`;credit.hidden=false}
   const displayArt=study.illustration?`<figure class="chapter-illustration"><a href="${study.illustration.source}" target="_blank" rel="noopener"><img src="${study.illustration.src}" alt="${study.illustration.alt}" loading="eager"></a><figcaption>Gustave Doré · ${study.illustration.title}</figcaption></figure>`:'';
   const zh=`https://rcuv.hkbs.org.hk/CUNP1/${volume.zhCode}/${number}/`,en=`https://www.bible.com/bible/111/${volume.enCode}.${number}.NIV`,osm=`https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(study.map?.bbox||'')}&layer=mapnik&marker=${encodeURIComponent(study.map?.marker||'')}`;
   const timeline=study.timeline||{title:'書卷時序',range:study.passage,note:'把本章放回整卷書的時間與處境。',url:'https://bibleeveryone.com/bible-timeline.php',events:[[study.passage,study.title,'本章']]};
