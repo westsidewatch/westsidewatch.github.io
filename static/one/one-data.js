@@ -96,15 +96,19 @@ window.ONE_DATA = {
     }
   },
   resources: [
-    ["DL-BST-001","信望愛聖經工具","多版本、Strong 編號、原文字典與串珠","https://bible.fhl.net/","經文工具","開啟"],
-    ["DL-BST-002","香港聖經公會網路聖經","和合本修訂版經文閱讀，可開啟雙視窗並同步兩側內容，適合對照查經","https://rcuv.hkbs.org.hk/","經文工具","閱讀"],
-    ["DL-BST-003","華人基督徒查經資料網站","按書卷整理的中文參考資料","https://www.ccbiblestudy.org/index-T.htm","背景與解經","開啟"],
-    ["DL-BST-004","聖經綜合解讀","書卷導讀、結構與逐段解讀","https://cmcbiblereading.com/","背景與解經","開啟"],
-    ["DL-BST-005","微讀聖經","下載微讀聖經 App，使用多版本經文、聽經、筆記與讀經計畫","https://wd.bible/","應用程式下載","下載"],
-    ["DL-MAP-001","聖光聖經地理","按書卷章節查找中文聖經地圖，並閱讀地名、路線、照片與史地背景的詳細解說","https://biblegeography.holylight.org.tw/index/condensedbible_list","中文聖經地圖","查閱"],
-    ["DL-MAP-002","Bible Mapper WebViewer","按地名或經文搜尋地點、比較距離，適合逐章伴讀","https://biblemapper.com/web/","聖經地圖","開啟"],
-    ["DL-MAP-003","STEP Bible · Biblical Locations","把聖經地點、地圖與相關經文放在同一個查考入口","https://www.stepbible.org/html/places.html","聖經地圖","開啟"],
-    ["DL-MAP-004","OpenBible.info · Bible Geocoding","按書卷與章節查看聖經地點，並說明古地名定位的不確定性","https://www.openbible.info/geo/","聖經地圖","開啟"]
-    ,["DL-TIM-001","聖經共享 · 聖經書卷時間軸","串連聖經書卷、主要事件與地緣政治，可拖動和縮放查閱","https://bibleeveryone.com/bible-timeline.php","聖經時間軸","查看"]
+    {id:"DL-BST-008",name:"Logos 聖經軟體",nameEn:"Logos Bible Study",description:"按經文整合註釋、串珠、平行經文、人物地點、Atlas 與研究館藏。",url:"https://www.logos.com/",category:"Bible Study",spectrum:"專業研讀",access:"Mixed",core:true},
+    {id:"DL-BST-009",name:"Accordance 聖經軟體",nameEn:"Accordance Bible Software",description:"以經文為中心，整合原文分析、互動地圖、時間軸與專業電子館藏。",url:"https://www.accordancebible.com/",category:"Bible Study",spectrum:"專業研讀",access:"Paid / Trial",core:true},
+    {id:"DL-BST-010",name:"STEP Bible",nameEn:"Scripture Tools for Every Person",description:"免費多語研經平台，具原文、串珠、地名人物、四福音合參與年表。",url:"https://www.stepbible.org/",category:"Bible Study",spectrum:"深入研讀",access:"Free",core:true},
+    {id:"DL-BST-001",name:"信望愛聖經工具",nameEn:"FHL Bible Tools",description:"中文多版本、Strong 編號、原文字典、字彙分析、註釋與串珠工作台。",url:"https://bible.fhl.net/",category:"Bible Study",spectrum:"中階研讀",access:"Free",core:true},
+    {id:"DL-BST-011",name:"BibleProject",nameEn:"BibleProject",description:"以視覺導讀、書卷結構與聖經神學主題呈現整本聖經的統一故事。",url:"https://bibleproject.com/",category:"Bible Study",spectrum:"入門至中階",access:"Free",core:true},
+    {id:"DL-BST-012",name:"Olive Tree 聖經",nameEn:"Olive Tree Bible App",description:"跨裝置整合版本對照、串珠、原文、註釋、地圖與個人筆記。",url:"https://www.olivetree.com/",category:"Bible Study",spectrum:"入門至深入",access:"Mixed",core:true},
+    {id:"DL-BT-002",name:"香港聖經公會網路聖經",nameEn:"HKBS Online Bible",description:"和合本修訂版經文閱讀與雙視窗對照，讓逐章查考返回完整經文。",url:"https://rcuv.hkbs.org.hk/",category:"經文文本",spectrum:"入門閱讀",access:"Free"},
+    {id:"DL-BST-003",name:"華人基督徒查經資料網站",nameEn:"Chinese Christian Bible Study",description:"按書卷整理註解、拾穗、例證、信息與綱目的中文參考庫。",url:"https://www.ccbiblestudy.org/index-T.htm",category:"背景與解經",spectrum:"深入參考",access:"Free"},
+    {id:"DL-BST-004",name:"聖經綜合解讀",nameEn:"CMC Bible Reading",description:"提供書卷導讀、結構、歷史文化背景與逐段解讀。",url:"https://cmcbiblereading.com/",category:"背景與解經",spectrum:"中階研讀",access:"Free"},
+    {id:"DL-BST-002",name:"微讀聖經",nameEn:"WeDevote Bible",description:"多版本經文、聽經、筆記與讀經計畫的日常讀經應用程式。",url:"https://wd.bible/",category:"經文文本",spectrum:"入門閱讀",access:"Free"},
+    {id:"DL-MAP-001",name:"聖光聖經地理",nameEn:"Holy Light Bible Geography",description:"按書卷章節查找中文地圖，並閱讀地名、路線、照片與史地解說。",url:"https://biblegeography.holylight.org.tw/index/condensedbible_list",category:"聖經地圖",spectrum:"中階研讀",access:"Free"},
+    {id:"DL-MAP-002",name:"Bible Mapper WebViewer",nameEn:"Bible Mapper",description:"按地名或經文探索地點、地形與距離，補充逐章空間背景。",url:"https://biblemapper.com/web/",category:"聖經地圖",spectrum:"中階研讀",access:"Free"},
+    {id:"DL-MAP-004",name:"OpenBible.info 地理索引",nameEn:"OpenBible Geocoding",description:"按書卷章節查看地點，並保留古地名定位的不確定性。",url:"https://www.openbible.info/geo/",category:"聖經地圖",spectrum:"深入參考",access:"Free"},
+    {id:"DL-TIM-001",name:"聖經書卷時間軸",nameEn:"Bible Book Timeline",description:"串連書卷、主要事件與地緣政治，可拖動和縮放建立時序背景。",url:"https://bibleeveryone.com/bible-timeline.php",category:"聖經時間軸",spectrum:"中階研讀",access:"Free"}
   ]
 };
