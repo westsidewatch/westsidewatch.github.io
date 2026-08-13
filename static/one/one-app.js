@@ -76,11 +76,11 @@ function renderCover(){
     item.setAttribute('role','option');
     item.setAttribute('aria-label',`第 ${book[0]} 卷，${book[1]}，${available?'可開始查考':'研讀內容製作中'}`);
     item.innerHTML=`<span aria-hidden="true">${String(book[0]).padStart(2,'0')}</span><strong aria-hidden="true"><b>${book[1]}</b><i>${book[2]}</i></strong>`;
-    item.onclick=event=>{
-      if(coverRail?.consumeClick){event.preventDefault();coverRail.consumeClick=false;return}
+    item.addEventListener('click',event=>{
+      if(coverRail?.shouldSuppressClick(event)){event.preventDefault();return}
       if(!item.classList.contains('rail-current')){coverRail?.settleTo(item,{reveal:true});return}
       selectCoverBook(book);
-    };
+    });
     list.append(item);
   });
   coverRail=createCoverRail(list,activeBook?.[0]||1);
@@ -89,7 +89,7 @@ function renderCover(){
 
 function createCoverRail(list,startBook){
   const items=[...list.querySelectorAll('.cover-book')],step=38,reducedMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let position=Math.max(0,Math.min(items.length-1,startBook-1)),target=position,dragging=false,startY=0,startPosition=position,lastY=0,lastTime=0,velocity=0,frame=0,paintFrame=0,wheelTimer=0,didDrag=false,consumeClick=false,revealTimer=0,destroyed=false;
+  let position=Math.max(0,Math.min(items.length-1,startBook-1)),target=position,dragging=false,startY=0,startPosition=position,lastY=0,lastTime=0,velocity=0,frame=0,paintFrame=0,wheelTimer=0,didDrag=false,suppressClickUntil=0,revealTimer=0,destroyed=false;
   const clamp=value=>Math.max(0,Math.min(items.length-1,value));
   const paint=()=>{
     items.forEach((item,index)=>{
@@ -124,22 +124,22 @@ function createCoverRail(list,startBook){
   const settleTo=(item,options)=>settle(items.indexOf(item),options);
   const onDown=event=>{
     if(frame)cancelAnimationFrame(frame);frame=0;clearTimeout(wheelTimer);wheelTimer=0;
-    dragging=true;didDrag=false;consumeClick=false;startY=lastY=event.clientY;startPosition=position;lastTime=performance.now();velocity=0;
-    list.setPointerCapture?.(event.pointerId);
+    dragging=true;didDrag=false;startY=lastY=event.clientY;startPosition=position;lastTime=performance.now();velocity=0;
   };
   const onMove=event=>{
     if(!dragging)return;
     const now=performance.now(),dy=event.clientY-lastY,elapsed=Math.max(8,now-lastTime);
-    if(!didDrag&&Math.abs(event.clientY-startY)>5){didDrag=true;list.classList.add('is-dragging');list.classList.remove('is-settled');items.forEach(item=>item.classList.remove('rail-current'))}
+    if(!didDrag&&Math.abs(event.clientY-startY)>5){didDrag=true;list.setPointerCapture?.(event.pointerId);list.classList.add('is-dragging');list.classList.remove('is-settled');items.forEach(item=>item.classList.remove('rail-current'))}
     if(!didDrag)return;
     velocity=dy/elapsed;position=clamp(startPosition-(event.clientY-startY)/step);target=position;
     lastY=event.clientY;lastTime=now;schedulePaint();
   };
   const onUp=event=>{
     if(!dragging)return;
-    dragging=false;list.classList.remove('is-dragging');list.releasePointerCapture?.(event.pointerId);
+    dragging=false;list.classList.remove('is-dragging');
+    if(list.hasPointerCapture?.(event.pointerId))list.releasePointerCapture(event.pointerId);
     if(!didDrag)return;
-    const projected=clamp(position-velocity*6.4);consumeClick=true;settle(Math.round(projected));
+    const projected=clamp(position-velocity*6.4);suppressClickUntil=performance.now()+360;settle(Math.round(projected));
   };
   const onWheel=event=>{
     if(Math.abs(event.deltaY)<Math.abs(event.deltaX))return;
@@ -155,7 +155,8 @@ function createCoverRail(list,startBook){
   };
   list.addEventListener('pointerdown',onDown);list.addEventListener('pointermove',onMove);list.addEventListener('pointerup',onUp);list.addEventListener('pointercancel',onUp);list.addEventListener('wheel',onWheel,{passive:false});list.addEventListener('keydown',onKey);
   paint();revealTimer=setTimeout(reveal,850);
-  return {get consumeClick(){return consumeClick},set consumeClick(value){consumeClick=value},settleTo,destroy(){destroyed=true;cancelAnimationFrame(frame);cancelAnimationFrame(paintFrame);clearTimeout(wheelTimer);clearTimeout(revealTimer);list.removeEventListener('pointerdown',onDown);list.removeEventListener('pointermove',onMove);list.removeEventListener('pointerup',onUp);list.removeEventListener('pointercancel',onUp);list.removeEventListener('wheel',onWheel);list.removeEventListener('keydown',onKey)}};
+  const shouldSuppressClick=event=>event.detail!==0&&performance.now()<suppressClickUntil;
+  return {shouldSuppressClick,settleTo,destroy(){destroyed=true;cancelAnimationFrame(frame);cancelAnimationFrame(paintFrame);clearTimeout(wheelTimer);clearTimeout(revealTimer);list.removeEventListener('pointerdown',onDown);list.removeEventListener('pointermove',onMove);list.removeEventListener('pointerup',onUp);list.removeEventListener('pointercancel',onUp);list.removeEventListener('wheel',onWheel);list.removeEventListener('keydown',onKey)}};
 }
 
 function selectCoverBook(book){
