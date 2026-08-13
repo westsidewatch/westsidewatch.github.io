@@ -1,0 +1,78 @@
+/* Simplified ONE opening: quiet, legible, and status-led. */
+.cover-books{
+  position:relative;
+  display:grid;
+  grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:.38rem .25rem;
+  height:auto;
+  margin-top:3.6rem;
+  overflow:visible;
+  cursor:default;
+  touch-action:auto;
+  user-select:auto;
+  contain:none;
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+.cover-books.is-dragging{cursor:default}
+.cover-book{
+  position:relative;
+  top:auto;
+  left:auto;
+  z-index:auto;
+  display:grid;
+  place-items:center;
+  width:100%;
+  min-height:2rem;
+  margin:0;
+  padding:.18rem 0;
+  opacity:1;
+  transform:none!important;
+  transition:opacity .18s ease,color .18s ease;
+  will-change:auto;
+}
+.cover-book:before{display:none}
+.cover-book>span{
+  color:rgba(34,42,45,.23);
+  font:400 .76rem/1 var(--display);
+  letter-spacing:.08em;
+  transform:none!important;
+  text-shadow:none;
+  transition:color .18s ease,opacity .18s ease;
+  will-change:auto;
+}
+.cover-book strong{display:none!important}
+.cover-book.rail-near,.cover-book.rail-current{z-index:auto;opacity:1!important}
+.cover-book.rail-near>span,.cover-book.rail-current>span{color:rgba(34,42,45,.23);text-shadow:none}
+.cover-book.active>span,
+.cover-book.completed>span{
+  color:var(--one-gilt-light)!important;
+  text-shadow:0 0 .7rem rgba(228,200,93,.22)!important;
+}
+.cover-book.selected>span{
+  color:var(--one-gilt)!important;
+  text-shadow:0 0 .8rem rgba(228,200,93,.32)!important;
+}
+.cover-book:hover>span,.cover-book:focus-visible>span{color:var(--one-gilt-dark)}
+.cover-book.active:hover>span,.cover-book.completed:hover>span{color:var(--one-gilt)!important}
+.cover-book:focus-visible{outline:1px solid rgba(117,85,31,.45);outline-offset:1px}
+.cover-book.forthcoming{cursor:default}
+.cover-book.forthcoming:hover>span{color:rgba(34,42,45,.34)}
+
+.cover-book-caption{
+  grid-column:1/-1;
+  min-height:2.2rem;
+  margin:.7rem 0 0;
+  color:var(--one-gilt-dark);
+  font:400 .72rem/1.6 var(--text);
+  letter-spacing:.08em;
+  text-align:center;
+}
+.cover-book-caption strong{color:var(--one-gilt);font-weight:500}
+.cover-book-caption i{margin-left:.5rem;color:rgba(117,85,31,.72);font:italic .76rem var(--display)}
+
+@media(max-width:650px){
+  .cover-books{grid-template-columns:repeat(6,minmax(0,1fr));gap:.32rem .18rem;margin-top:3rem}
+  .cover-book{min-height:1.85rem}
+  .cover-book>span{font-size:.72rem}
+}
