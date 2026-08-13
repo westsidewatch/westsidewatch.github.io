@@ -46,6 +46,12 @@ function showChapter(n,name){
   const f=D.matthew.chapterStudies[String(n)];
   if(!f){$('#chapter-detail').innerHTML=`<section class="chapter-section"><h3>第 ${n} 章</h3><div><p>${name}</p></div></section>`;return}
   const now=$('.now');
+  const chapterTab=$('[data-view="view-chapter"]');
+  const chapterStatus=now.querySelector('.status');
+  chapterTab.textContent=`馬太福音 ${n}`;
+  chapterStatus.querySelector('span').textContent=n===1?'起點':'本章';
+  chapterStatus.querySelector('strong').textContent=`第 ${n} 章`;
+  chapterStatus.querySelector('p').textContent=f.title;
   if(f.illustration){
     now.style.setProperty('--chapter-engraving',`url("${f.illustration.src}")`);
     const credit=$('#chapter-art-credit');
@@ -60,7 +66,7 @@ function showChapter(n,name){
     2:{title:'君王與流亡',range:'馬太福音 2:1–23',note:'從伯利恆的星光，經埃及的逃難，返回拿撒勒。',url:'https://bibleeveryone.com/jesus-trip1.php',events:[['5–4 BC','博士抵達耶路撒冷','太 2:1–8'],['5–4 BC','在伯利恆敬拜','太 2:9–12'],['約 4 BC','逃往埃及','太 2:13–15'],['約 4–1 BC','回到拿撒勒','太 2:19–23']]},
     3:{title:'曠野中的起點',range:'馬太福音 3:1–17',note:'約翰在曠野預備道路；耶穌在約旦河受洗，公開事奉開始。',url:'https://bibleeveryone.com/jesus-trip2.php',events:[['約 AD 26','約翰在曠野傳道','太 3:1–6'],['約 AD 26','悔改的呼召','太 3:7–12'],['約 AD 26/27','耶穌來到約旦河','太 3:13–15'],['約 AD 26/27','天開了','太 3:16–17']]}
   };
-  const timelineView=timelineByChapter[n]||{title:'四福音事奉時序',range:f.passage,note:'在四福音共同的耶穌生平中定位本章事件。',url:'https://bibleeveryone.com/jesus-trip2.php',events:[[f.passage,f.title,'本章'],['四福音時期','耶穌的事奉','約 5 BC–AD 30']]};
+  const timelineView=f.timeline||timelineByChapter[n]||{title:'四福音事奉時序',range:f.passage,note:'在四福音共同的耶穌生平中定位本章事件。',url:'https://bibleeveryone.com/jesus-trip2.php',events:[[f.passage,f.title,'本章'],['四福音時期','耶穌的事奉','約 5 BC–AD 30']]};
   const map=f.map?`<section class="chapter-section map-reading">
     <div class="map-reading__head"><h3>01 · 地圖</h3><p class="map-reading__reference">${f.map.reference}</p><h4>${f.map.title}</h4><p>${f.map.guide}</p><ul>${f.map.places.map(x=>`<li>${x}</li>`).join('')}</ul></div>
     <figure class="map-reading__plate"><a href="${f.map.source}" target="_blank" rel="noopener"><img src="${f.map.image}" alt="${f.map.imageTitle}" loading="lazy"></a><figcaption><strong>${f.map.imageTitle}</strong><span>地圖來源：聖光聖經地理 · 《簡明聖經史地圖解》</span></figcaption></figure>
