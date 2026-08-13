@@ -1,0 +1,44 @@
+/* ONE engraving background repair — full-bleed artwork, paper-integrated edges. */
+
+/* Book frontispiece: the engraving belongs to the whole leaf, not a central column. */
+.book-frontispiece::after{
+  inset:0;
+  background-image:
+    linear-gradient(90deg,rgba(222,208,150,.58) 0%,rgba(222,208,150,.12) 18%,rgba(222,208,150,.06) 50%,rgba(222,208,150,.12) 82%,rgba(222,208,150,.58) 100%),
+    var(--one-chapter-engraving);
+  background-position:center,center;
+  background-size:100% 100%,cover;
+  background-repeat:no-repeat;
+  background-blend-mode:normal,multiply;
+  opacity:.20;
+  -webkit-mask-image:none;
+  mask-image:none;
+}
+
+/* Chronology scroll: stretch the active engraving across the parchment instead of
+   rendering its intrinsic aspect ratio as a narrow vertical strip. */
+.one-scroll{
+  background:
+    linear-gradient(90deg,rgba(85,51,19,.24),transparent 4%,transparent 96%,rgba(85,51,19,.24)),
+    linear-gradient(rgba(230,214,158,.46),rgba(205,179,104,.50)),
+    linear-gradient(90deg,rgba(222,208,150,.56),rgba(222,208,150,.08) 20%,rgba(222,208,150,.04) 50%,rgba(222,208,150,.08) 80%,rgba(222,208,150,.56)),
+    var(--one-chapter-engraving) center/cover no-repeat,
+    url('/images/temple-stone-light.png') center/460px auto;
+  background-blend-mode:normal,normal,normal,multiply,normal;
+}
+
+/* Keep the chronology rail readable without turning it into an opaque panel. */
+.one-scroll__rail{
+  background:radial-gradient(ellipse at center,rgba(245,232,181,.70),rgba(225,205,142,.32) 72%,rgba(225,205,142,.08));
+}
+
+@media (max-width:760px){
+  .book-frontispiece::after{
+    background-size:100% 100%,cover;
+    background-position:center,center top;
+  }
+  .one-scroll{
+    background-position:center,center,center,center top,center;
+    background-size:auto,auto,auto,cover,460px auto;
+  }
+}
