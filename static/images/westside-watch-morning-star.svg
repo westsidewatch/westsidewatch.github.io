@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 360" role="img" aria-labelledby="title desc">
+  <title id="title">Westside Watch 明亮的晨星</title>
+  <desc id="desc">一顆以伯利恆之星、黎明地平線與城門為意象的金色長芒星。</desc>
+  <defs>
+    <radialGradient id="dawn" cx="50%" cy="42%" r="58%">
+      <stop offset="0" stop-color="#fffdf0"/>
+      <stop offset=".18" stop-color="#ead888"/>
+      <stop offset=".52" stop-color="#c4a43a"/>
+      <stop offset="1" stop-color="#a2872a"/>
+    </radialGradient>
+    <filter id="glow" x="-80%" y="-55%" width="260%" height="230%">
+      <feGaussianBlur stdDeviation="10"/>
+    </filter>
+  </defs>
+  <g fill="#c4a43a" opacity=".16" filter="url(#glow)">
+    <ellipse cx="120" cy="151" rx="62" ry="60"/>
+  </g>
+  <g fill="url(#dawn)">
+    <path d="M120 8 130 130 120 151 110 130Z"/>
+    <path d="M120 151 134 184 120 352 106 184Z"/>
+    <path d="m12 151 91-10 17 10-17 10Z"/>
+    <path d="m228 151-91 10-17-10 17-10Z"/>
+    <path d="m50 81 57 48 13 22-22-13Z" opacity=".72"/>
+    <path d="m190 81-48 57-22 13 13-22Z" opacity=".72"/>
+    <path d="m50 221 48-57 22-13-13 22Z" opacity=".72"/>
+    <path d="m190 221-57-48-13-22 22 13Z" opacity=".72"/>
+    <path d="m120 119 32 32-32 32-32-32Z"/>
+  </g>
+  <path d="M111 165v-19c0-7 4-12 9-16 5 4 9 9 9 16v19Z" fill="#102a43" opacity=".92"/>
+  <path d="M117 165v-18c0-3 1-6 3-8 2 2 3 5 3 8v18Z" fill="#fffdf0"/>
+  <circle cx="120" cy="151" r="3.5" fill="#fffdf0"/>
+</svg>
