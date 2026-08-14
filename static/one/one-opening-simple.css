@@ -1,5 +1,9 @@
-/* ONE opening — centered single-column index, preserving the original order. */
+/* ONE opening — restore the original vertical rail interaction while keeping the refined status language. */
 .one-cover{
+  width:min(430px,calc(100vw - 2rem));
+  max-width:100%;
+  margin:40px auto;
+  overflow:hidden;
   background-color:#c9bc7b;
   background-image:
     linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
@@ -7,65 +11,70 @@
   background-size:auto,520px auto;
 }
 .cover-content{
-  background-color:#c9bc7b;
-  background-image:
-    linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
-    url('/images/temple-stone-light.png');
-  background-size:auto,520px auto;
+  width:100%;
+  min-width:0;
+  margin-inline:auto;
+  background:transparent;
 }
+
+/* The rail itself stays centred. Unvisited books remain numbers until they reach the focal position. */
 .cover-books{
   position:relative;
   display:block;
-  height:auto;
-  margin-top:3.6rem;
-  overflow:visible;
-  cursor:default;
-  touch-action:auto;
-  user-select:auto;
-  contain:none;
-  -webkit-mask-image:none;
-  mask-image:none;
+  width:100%;
+  height:32rem;
+  margin:3.6rem auto 0;
+  overflow:hidden;
+  cursor:grab;
+  touch-action:none;
+  user-select:none;
+  contain:layout paint;
   text-align:center;
+  -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 12%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(to bottom,transparent 0,#000 12%,#000 88%,transparent 100%);
 }
-.cover-books.is-dragging{cursor:default}
+.cover-books.is-dragging{cursor:grabbing}
 .cover-book{
-  position:relative;
-  top:auto;
-  left:auto;
-  z-index:auto;
+  position:absolute;
+  top:50%;
+  left:50%;
+  z-index:1;
   display:grid;
   justify-items:center;
   align-items:center;
-  width:100%;
-  min-height:1.8rem;
+  width:min(100%,24rem);
+  min-height:2rem;
   margin:0;
-  padding:.12rem 0;
-  opacity:1!important;
-  transform:none!important;
-  transition:transform .22s ease,color .18s ease,opacity .18s ease;
-  will-change:auto;
+  padding:.16rem .5rem;
+  border:0;
+  background:transparent!important;
+  box-shadow:none!important;
+  opacity:var(--rail-opacity,.18)!important;
+  transform:translate(-50%,-50%) translateY(var(--rail-y,0)) scale(var(--rail-scale,1))!important;
+  transform-origin:center;
+  transition:color .2s ease,opacity .18s linear;
   text-align:center;
+  will-change:transform,opacity;
 }
-.cover-book:before{display:none}
+.cover-book:before{display:none!important}
 .cover-book>span{
-  color:rgba(34,42,45,.24);
-  font:400 .84rem/1.15 var(--display);
+  color:rgba(34,42,45,.28);
+  font:400 .84rem/1.1 var(--display);
   letter-spacing:.08em;
-  transform:none!important;
   text-shadow:none!important;
-  transition:color .18s ease,transform .22s ease;
-  will-change:auto;
+  transform:none!important;
+  transition:color .18s ease;
 }
 .cover-book strong{
   position:static;
   display:none;
-  width:auto;
-  max-width:100%;
-  margin:.24rem 0 .18rem;
+  max-width:22rem;
+  margin:.18rem auto 0;
+  color:var(--one-gilt);
   opacity:1;
   pointer-events:none;
-  transform:none!important;
   text-align:center;
+  transform:none!important;
 }
 .cover-book strong b{
   display:block;
@@ -75,58 +84,56 @@
 }
 .cover-book strong i{
   display:block;
-  margin-top:.06rem;
+  margin-top:.04rem;
   color:inherit;
   font:italic .88rem/1.3 var(--display);
 }
+
+/* Reaching the centre reveals the book name. No card, no extra glow. */
+.cover-book.rail-current{
+  z-index:4;
+  opacity:1!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.cover-book.rail-current>span{color:var(--one-gilt)!important}
+.cover-book.rail-current strong{display:block;color:var(--one-gilt)!important}
+
+/* Books already under study / completed remain named and dawn-gold when encountered. */
 .cover-book.active,
 .cover-book.completed{
-  padding:.35rem 0 .45rem;
+  background:transparent!important;
+  box-shadow:none!important;
 }
 .cover-book.active>span,
 .cover-book.completed>span,
 .cover-book.active strong,
-.cover-book.completed strong{
-  color:var(--one-gilt)!important;
-}
+.cover-book.completed strong{color:var(--one-gilt)!important}
 .cover-book.active strong,
-.cover-book.completed strong{
-  display:block;
-}
-.cover-book:hover,
-.cover-book:focus-visible,
-.cover-book.rail-current{
-  transform:scale(1.12)!important;
-}
-.cover-book:hover>span,
-.cover-book:focus-visible>span,
-.cover-book.rail-current>span{
-  color:var(--one-gilt-dark)!important;
-}
-.cover-book:hover strong,
-.cover-book:focus-visible strong,
-.cover-book.rail-current strong{
-  display:block;
-  color:var(--one-gilt-dark)!important;
-}
-.cover-book.selected{
-  transform:scale(1.16)!important;
-}
+.cover-book.completed strong{display:block}
+
 .cover-book.selected>span,
-.cover-book.selected strong{
-  color:var(--one-gilt)!important;
-}
-.cover-book.rail-near{z-index:auto}
-.cover-book.rail-near>span{color:rgba(34,42,45,.24);text-shadow:none!important}
+.cover-book.selected strong{color:var(--one-gilt)!important}
+.cover-book:hover>span,.cover-book:focus-visible>span{color:var(--one-gilt-dark)!important}
+.cover-book:hover strong,.cover-book:focus-visible strong{display:block;color:var(--one-gilt-dark)!important}
 .cover-book:focus-visible{outline:0}
 .cover-book.forthcoming{cursor:default}
-.cover-book.forthcoming:not(:hover):not(:focus-visible) strong{display:none}
-.cover-book.forthcoming:hover>span{color:var(--one-gilt-dark)!important}
+.cover-book.forthcoming:not(.rail-current):not(:hover):not(:focus-visible) strong{display:none}
 
 @media(max-width:650px){
-  .cover-books{margin-top:3rem}
-  .cover-book{min-height:1.65rem;padding:.1rem 0}
+  html,body{max-width:100%;overflow-x:hidden}
+  .one-cover{
+    width:calc(100vw - 1.25rem);
+    max-width:430px;
+    margin:10px auto 20px;
+    padding:45px 22px;
+  }
+  .cover-content{width:100%;max-width:100%;margin:0 auto;text-align:center}
+  .cover-brand,.cover-one-trigger,.cover-one-cn,.cover-motto,.cover-scripture,.cover-church,.cover-portals{margin-left:auto;margin-right:auto}
+  .cover-books{width:100%;height:29rem;margin-top:3rem}
+  .cover-book{left:50%;width:100%;max-width:100%;padding-inline:.25rem}
   .cover-book>span{font-size:.78rem}
+  .cover-book strong{max-width:calc(100% - 1rem)}
   .cover-book strong b{font-size:.94rem}
   .cover-book strong i{font-size:.82rem}
 }
