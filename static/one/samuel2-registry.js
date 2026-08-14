@@ -19,4 +19,14 @@
     nowCards: [["應許","你的家和你的國必在我面前永遠堅立"],["辨別","王也在神的話語之下 · 恩典不取消責任"]]
   };
   D.studyBooks = { ...(D.studyBooks || {}), 10: D.secondSamuel };
+
+  const availableText = "目前已備妥：撒母耳記上、撒母耳記下、馬太福音、帖撒羅尼迦前書、帖撒羅尼迦後書。";
+  const context = document.getElementById("book-dialog-context");
+  if (context) {
+    const syncAvailability = () => {
+      if (context.textContent.startsWith("目前已備妥：")) context.textContent = availableText;
+    };
+    new MutationObserver(syncAvailability).observe(context, { childList: true, characterData: true, subtree: true });
+    syncAvailability();
+  }
 })();
