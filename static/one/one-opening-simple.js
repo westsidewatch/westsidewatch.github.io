@@ -4,8 +4,8 @@
  * only when they reach the rail focus; visited books keep their status treatment.
  *
  * When the rail settles, keep the focused book name visible but let the temporary
- * enlargement ease back to its resting size. This restores the original
- * "focus, confirm, rebound" rhythm without changing rail order or selection.
+ * enlargement ease back quickly to its resting size. Any new interaction cancels
+ * that rebound immediately so stale focus styling cannot linger under the pointer.
  *
  * The Psalm 36:9 block on the cover is display-only. The former button and
  * full-screen scripture interaction are removed without touching the cover layout.
@@ -46,10 +46,10 @@
       if(!current||!list.classList.contains("is-settled"))return;
       current.style.setProperty(
         "transition",
-        reducedMotion?"none":"transform .52s cubic-bezier(.22,.8,.3,1), color .2s ease, opacity .18s linear"
+        reducedMotion?"none":"transform .26s cubic-bezier(.22,.8,.3,1), color .14s ease, opacity .14s linear"
       );
       current.style.setProperty("--rail-scale","1.12");
-    },reducedMotion?0:420);
+    },reducedMotion?0:140);
   };
 
   const observer=new MutationObserver(records=>{
@@ -58,6 +58,11 @@
     else clearRebound();
   });
   observer.observe(list,{attributes:true,attributeFilter:["class"]});
+
+  const cancelOnInteraction=()=>clearRebound();
+  list.addEventListener("pointerdown",cancelOnInteraction,{passive:true});
+  list.addEventListener("wheel",cancelOnInteraction,{passive:true});
+  list.addEventListener("keydown",cancelOnInteraction);
 
   if(list.classList.contains("is-settled"))scheduleRebound();
 })();
