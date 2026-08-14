@@ -1,0 +1,6 @@
+/* ONE cover scripture is display-only: no trigger, no expand interaction. */
+.cover-scripture-static{margin-top:90px;text-align:center}
+.cover-scripture-static p{font-size:16px}
+.cover-scripture-static strong{display:block;margin-top:10px;font-family:var(--display);font-size:20px;font-weight:400}
+.cover-scripture-static i{display:block;margin-top:10px;font-family:var(--display);font-size:14px}
+@media(max-width:650px){.cover-scripture-static{margin-left:auto;margin-right:auto}}
