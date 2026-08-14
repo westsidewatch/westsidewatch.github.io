@@ -1,8 +1,9 @@
 /* ONE opening — centered single-column index, preserving the original order. */
 .one-cover{
-  background:
-    linear-gradient(rgba(238,226,181,.34),rgba(238,226,181,.34)),
-    var(--one-page-surface);
+  background:#c9bc7b;
+}
+.cover-content{
+  background:#c9bc7b;
 }
 .cover-books{
   position:relative;
