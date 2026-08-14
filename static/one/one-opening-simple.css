@@ -120,6 +120,12 @@
 .cover-book.forthcoming{cursor:default}
 .cover-book.forthcoming:not(.rail-current):not(:hover):not(:focus-visible) strong{display:none}
 
+/* Psalm 36:9 on the cover is display-only. Preserve the established spacing and typography. */
+.cover-scripture-static{margin-top:90px;text-align:center}
+.cover-scripture-static p{font-size:16px}
+.cover-scripture-static strong{display:block;margin-top:10px;font-family:var(--display);font-size:20px;font-weight:400}
+.cover-scripture-static i{display:block;margin-top:10px;font-family:var(--display);font-size:14px}
+
 @media(max-width:650px){
   html,body{max-width:100%;overflow-x:hidden}
   .one-cover{
@@ -129,7 +135,7 @@
     padding:45px 22px;
   }
   .cover-content{width:100%;max-width:100%;margin:0 auto;text-align:center}
-  .cover-brand,.cover-one-trigger,.cover-one-cn,.cover-motto,.cover-scripture,.cover-church,.cover-portals{margin-left:auto;margin-right:auto}
+  .cover-brand,.cover-one-trigger,.cover-one-cn,.cover-motto,.cover-scripture-static,.cover-church,.cover-portals{margin-left:auto;margin-right:auto}
   .cover-books{width:100%;height:29rem;margin-top:3rem}
   .cover-book{left:50%;width:100%;max-width:100%;padding-inline:.25rem}
   .cover-book>span{font-size:.78rem}
