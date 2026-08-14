@@ -13,6 +13,15 @@
 (() => {
   "use strict";
 
+  /* Luke was initially registered with chapters: 24, while ONE expects an array.
+   * Normalize it after all Luke chapter files have loaded and before the visitor
+   * can open a book. This keeps chapter navigation consistent with other books. */
+  const D=window.ONE_DATA;
+  if(D?.luke&&D.luke.chapters===24){
+    D.luke.chapters=Array.from({length:24},(_,index)=>D.luke.chapterStudies?.[String(index+1)]?.title||`第 ${index+1} 章`);
+    if(D.studyBooks)D.studyBooks[42]=D.luke;
+  }
+
   const scriptureTrigger=document.getElementById("open-scripture");
   if(scriptureTrigger){
     const staticScripture=document.createElement("div");
