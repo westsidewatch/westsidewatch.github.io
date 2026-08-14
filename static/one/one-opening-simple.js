@@ -6,9 +6,23 @@
  * When the rail settles, keep the focused book name visible but let the temporary
  * enlargement ease back to its resting size. This restores the original
  * "focus, confirm, rebound" rhythm without changing rail order or selection.
+ *
+ * The Psalm 36:9 block on the cover is display-only. The former button and
+ * full-screen scripture interaction are removed without touching the cover layout.
  */
 (() => {
   "use strict";
+
+  const scriptureTrigger=document.getElementById("open-scripture");
+  if(scriptureTrigger){
+    const staticScripture=document.createElement("div");
+    staticScripture.className="cover-scripture-static";
+    staticScripture.setAttribute("aria-label","詩篇 36:9");
+    staticScripture.innerHTML=scriptureTrigger.innerHTML;
+    scriptureTrigger.replaceWith(staticScripture);
+    document.getElementById("light-reading")?.remove();
+  }
+
   const list=document.getElementById("cover-books");
   if(!list)return;
   list.classList.add("one-rail-enabled");
