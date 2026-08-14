@@ -4,11 +4,12 @@
   max-width:100%;
   margin:40px auto;
   overflow:hidden;
-  background-color:#c9bc7b;
+  background-color:#cebd74;
   background-image:
-    linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
-    url('/images/temple-stone-light.png');
-  background-size:auto,520px auto;
+    linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),
+    url('/background.jpg');
+  background-size:cover;
+  background-position:center;
 }
 .cover-content{
   width:100%;
