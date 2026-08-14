@@ -1,14 +1,39 @@
+/* ONE surface system — JOIN is the immutable reference: #CEBD74 at 78% over /background.jpg. */
+body{
+  background-color:#cebd74;
+  background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url('/background.jpg');
+  background-size:cover;
+  background-position:center;
+  background-attachment:scroll;
+}
+.scripture-panel{
+  background-color:#cebd74;
+  background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url('/background.jpg');
+  background-size:cover;
+  background-position:center;
+}
+.one-scroll{
+  background:
+    linear-gradient(90deg,rgba(85,51,19,.24),transparent 4%,transparent 96%,rgba(85,51,19,.24)),
+    linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),
+    linear-gradient(90deg,rgba(222,208,150,.56),rgba(222,208,150,.08) 20%,rgba(222,208,150,.04) 50%,rgba(222,208,150,.08) 80%,rgba(222,208,150,.56)),
+    var(--one-chapter-engraving) center/cover no-repeat,
+    url('/background.jpg') center/cover no-repeat;
+  background-blend-mode:normal,normal,normal,multiply,normal;
+}
+
 /* ONE opening — restore the original vertical rail interaction while keeping the refined status language. */
 .one-cover{
   width:min(430px,calc(100vw - 2rem));
   max-width:100%;
   margin:40px auto;
   overflow:hidden;
-  background-color:#c9bc7b;
+  background-color:#cebd74;
   background-image:
-    linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
-    url('/images/temple-stone-light.png');
-  background-size:auto,520px auto;
+    linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),
+    url('/background.jpg');
+  background-size:cover;
+  background-position:center;
 }
 .cover-content{
   width:100%;
