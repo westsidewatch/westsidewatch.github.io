@@ -8,6 +8,28 @@
     source: `https://commons.wikimedia.org/wiki/File:${file.replaceAll(" ", "_")}`
   });
 
+  const bindMapFallback = () => {
+    if (window.__ONE_MAP_FALLBACK_BOUND) return;
+    window.__ONE_MAP_FALLBACK_BOUND = true;
+    const fallbackImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png/960px-Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png";
+    const fallbackSource = "https://commons.wikimedia.org/wiki/File:Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png";
+    document.addEventListener("error", (event) => {
+      const image = event.target;
+      if (!(image instanceof HTMLImageElement) || !image.closest(".map-reading__plate") || image.dataset.oneFallbackApplied) return;
+      image.dataset.oneFallbackApplied = "true";
+      image.src = fallbackImage;
+      image.alt = "Biblica Open Bible：掃羅、大衛與所羅門王國地圖";
+      const figure = image.closest(".map-reading__plate");
+      const link = image.closest("a");
+      if (link) link.href = fallbackSource;
+      const title = figure?.querySelector("figcaption strong");
+      const credit = figure?.querySelector("figcaption span");
+      if (title) title.textContent = "Biblica Open Bible · The Kingdoms of Saul, David and Solomon";
+      if (credit) credit.textContent = "替代地圖：Biblica Open Bible · Wikimedia Commons · CC BY-SA 4.0";
+    }, true);
+  };
+  bindMapFallback();
+
   const mapDef = (id, title, places, bbox, marker, reference, guide) => ({
     image: `https://biblegeography.holylight.org.tw/images/index/condensedbible/map/${id}.GIF`,
     imageTitle: `撒上圖 · ${title}`,
