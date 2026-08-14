@@ -1,9 +1,17 @@
 /* ONE opening — centered single-column index, preserving the original order. */
 .one-cover{
-  background:#c9bc7b;
+  background-color:#c9bc7b;
+  background-image:
+    linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
+    url('/images/temple-stone-light.png');
+  background-size:auto,520px auto;
 }
 .cover-content{
-  background:#c9bc7b;
+  background-color:#c9bc7b;
+  background-image:
+    linear-gradient(rgba(201,188,123,.88),rgba(201,188,123,.88)),
+    url('/images/temple-stone-light.png');
+  background-size:auto,520px auto;
 }
 .cover-books{
   position:relative;
