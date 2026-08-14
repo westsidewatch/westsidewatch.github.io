@@ -8,24 +8,40 @@
     source: `https://commons.wikimedia.org/wiki/File:${file.replaceAll(" ", "_")}`
   });
 
+  const fallbackMap = (id) => {
+    const maps = {
+      55: ["Biblica Open Bible Map 06 The Kingdoms of Saul David and Solomon.png", "Biblica Open Bible · The Kingdoms of Saul, David and Solomon"],
+      56: ["Kingdom of Israel 1020 map mk.svg", "Kingdom of Israel c. 1020 BC"],
+      57: ["Biblica Open Bible Map 06 The Kingdoms of Saul David and Solomon.png", "Biblica Open Bible · The Kingdoms of Saul, David and Solomon"],
+      58: ["Biblica Open Bible Map 05 The Twelve Tribes of Israel.png", "Biblica Open Bible · The Twelve Tribes of Israel"],
+      59: ["1759 map Holy Land and 12 Tribes.jpg", "Holy Land and the Twelve Tribes · 1759"]
+    };
+    const [file, title] = maps[id] || maps[55];
+    return {
+      image: `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file)}?width=960`,
+      source: `https://commons.wikimedia.org/wiki/File:${file.replaceAll(" ", "_")}`,
+      title
+    };
+  };
+
   const bindMapFallback = () => {
     if (window.__ONE_MAP_FALLBACK_BOUND) return;
     window.__ONE_MAP_FALLBACK_BOUND = true;
-    const fallbackImage = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png/960px-Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png";
-    const fallbackSource = "https://commons.wikimedia.org/wiki/File:Biblica_Open_Bible_Map_06_The_Kingdoms_of_Saul_David_and_Solomon.png";
     document.addEventListener("error", (event) => {
       const image = event.target;
       if (!(image instanceof HTMLImageElement) || !image.closest(".map-reading__plate") || image.dataset.oneFallbackApplied) return;
+      const id = Number((image.currentSrc || image.src).match(/map_thumbs\/(\d+)/)?.[1]);
+      const fallback = fallbackMap(id);
       image.dataset.oneFallbackApplied = "true";
-      image.src = fallbackImage;
-      image.alt = "Biblica Open Bible：掃羅、大衛與所羅門王國地圖";
+      image.src = fallback.image;
+      image.alt = fallback.title;
       const figure = image.closest(".map-reading__plate");
       const link = image.closest("a");
-      if (link) link.href = fallbackSource;
+      if (link) link.href = fallback.source;
       const title = figure?.querySelector("figcaption strong");
       const credit = figure?.querySelector("figcaption span");
-      if (title) title.textContent = "Biblica Open Bible · The Kingdoms of Saul, David and Solomon";
-      if (credit) credit.textContent = "替代地圖：Biblica Open Bible · Wikimedia Commons · CC BY-SA 4.0";
+      if (title) title.textContent = fallback.title;
+      if (credit) credit.textContent = "替代地圖：Wikimedia Commons；僅在聖光原圖載入失敗時使用";
     }, true);
   };
   bindMapFallback();
@@ -43,9 +59,10 @@
   };
 
   const mapDef = (id, title, places, bbox, marker, reference, guide) => ({
-    image: `https://biblegeography.holylight.org.tw/images/index/condensedbible/map/${id}.GIF`,
+    image: `https://biblegeography.holylight.org.tw/images/index/condensedbible/map_thumbs/${String(id).padStart(3, "0")}.jpg`,
     imageTitle: `撒下圖 · ${title}`,
-    source: `https://biblegeography.holylight.org.tw/index/condensedbible_map_detail?m_id=${id}`,
+    source: `https://biblegeography.holylight.org.tw/index/condensedbible_map_detail?m_id=${String(id).padStart(3, "0")}`,
+    mapId: id,
     bbox, marker, places, reference, title, guide
   });
 
