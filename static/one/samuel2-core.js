@@ -8,6 +8,18 @@
     source: `https://commons.wikimedia.org/wiki/File:${file.replaceAll(" ", "_")}`
   });
 
+  const illustrationFor = (chapter) => {
+    const c = Number(chapter);
+    if (c === 1) return art("077.Jabesh-Gileadites Recover the Bodies of Saul and His Sons.jpg", "Jabesh-Gileadites Recover the Bodies of Saul and His Sons");
+    if (c >= 2 && c <= 9) return art("078.Combat between Soldiers of Ish-bosheth and David.jpg", "Combat between Soldiers of Ish-bosheth and David");
+    if (c >= 10 && c <= 14) return art("079.David Attacks the Ammonites.jpg", "David Attacks the Ammonites");
+    if (c >= 15 && c <= 18) return art("080.The Death of Absalom.jpg", "The Death of Absalom");
+    if (c >= 19 && c <= 20) return art("081.David Mourns the Death of Absalom.jpg", "David Mourns the Death of Absalom");
+    if (c === 21) return art("082.Rizpah’s Kindness toward the Dead.jpg", "Rizpah’s Kindness toward the Dead");
+    if (c >= 22 && c <= 23) return art("083.Abishai Saves David's Life.jpg", "Abishai Saves David's Life");
+    return art("102A.The Plague of Jerusalem.jpg", "The Plague of Jerusalem");
+  };
+
   const mapDef = (id, title, places, bbox, marker, reference, guide) => ({
     image: `https://biblegeography.holylight.org.tw/images/index/condensedbible/map/${id}.GIF`,
     imageTitle: `撒下圖 · ${title}`,
@@ -36,6 +48,7 @@
     }
     return {
       ...study,
+      illustration: study.illustration || illustrationFor(number),
       prepare: study.prepare || [
         `完整閱讀撒母耳記下第 ${number} 章，圈出王權、約、罪、審判與恩典的敘事線索`,
         "沿地圖找出本章城市、山地、河谷與戰線，說明地理如何推動故事",
@@ -46,5 +59,5 @@
   };
 
   const studies = {};
-  window.ONE_SAMUEL2 = { art, mapDef, timeline, compare, finish, studies };
+  window.ONE_SAMUEL2 = { art, illustrationFor, mapDef, timeline, compare, finish, studies };
 })();
