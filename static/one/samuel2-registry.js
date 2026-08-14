@@ -1,0 +1,32 @@
+/* ONE · 2 Samuel registry */
+(() => {
+  "use strict";
+  const D = window.ONE_DATA;
+  const S = window.ONE_SAMUEL2;
+  if (!D || !S) return;
+  D.secondSamuel = {
+    number: 10,
+    code: "2SA",
+    zhCode: "2SA",
+    enCode: "2SA",
+    name: "撒母耳記下",
+    nameEn: "2 Samuel",
+    summary: "從大衛在希伯崙作王、統一以色列、定都耶路撒冷與領受大衛之約，到拔示巴事件、王家裂痕、押沙龍與示巴叛變，最後以得救之歌、勇士名錄與亞勞拿禾場收束；全卷把王權、罪、恩典與神守約的信實放在一起。",
+    meta: [["位置","舊約第 10 卷 · 歷史書"],["文體","王國敘事 · 宮廷史 · 詩歌"],["章數","24章"],["核心線索","大衛之約 · 耶路撒冷 · 王權 · 罪與悔改 · 神守約"]],
+    movements: [["01","1–4","希伯崙與王國分裂"],["02","5–10","耶路撒冷與王國建立"],["03","11–12","王的犯罪與先知責備"],["04","13–18","王家裂痕與押沙龍叛變"],["05","19–20","復位與示巴叛變"],["06","21–24","王朝附錄：公義、詩歌、勇士與祭壇"]],
+    chapters: ["掃羅與約拿單之死的消息","大衛在希伯崙受膏","押尼珥轉向大衛","伊施波設被殺","耶路撒冷：大衛之城","約櫃進入大衛之城","大衛之約","大衛四境得勝","向米非波設施恩","亞捫與亞蘭之戰","大衛、拔示巴與烏利亞","你就是那人","暗嫩、他瑪與押沙龍","押沙龍回耶路撒冷","押沙龍叛變，大衛出逃","示每咒罵與押沙龍入城","戶篩破壞亞希多弗計謀","押沙龍之死","大衛回耶路撒冷","示巴叛變","饑荒、基遍人與勇士","大衛的得救之歌","末了的話與勇士名錄","數點百姓與亞勞拿禾場"],
+    chapterStudies: S.studies,
+    nowCards: [["應許","你的家和你的國必在我面前永遠堅立"],["辨別","王也在神的話語之下 · 恩典不取消責任"]]
+  };
+  D.studyBooks = { ...(D.studyBooks || {}), 10: D.secondSamuel };
+
+  const availableText = "目前已備妥：撒母耳記上、撒母耳記下、馬太福音、帖撒羅尼迦前書、帖撒羅尼迦後書。";
+  const context = document.getElementById("book-dialog-context");
+  if (context) {
+    const syncAvailability = () => {
+      if (context.textContent.startsWith("目前已備妥：")) context.textContent = availableText;
+    };
+    new MutationObserver(syncAvailability).observe(context, { childList: true, characterData: true, subtree: true });
+    syncAvailability();
+  }
+})();
