@@ -31,7 +31,7 @@
   document.documentElement.dataset.lukeReady=allReady?"true":"partial";
 
   /* index.html 目前在 parser 階段載入本檔；在 ONE app 初始化前同步接入約翰福音
-   * 全卷資料與註冊。待 index.html 日後可安全改為直接 script 標籤時再移除此橋接。
+   * 全卷資料、註冊與逐章插圖。待 index.html 日後可安全改為直接 script 標籤時再移除此橋接。
    */
   if(!document.documentElement.dataset.johnLoader){
     document.documentElement.dataset.johnLoader="true";
@@ -42,7 +42,8 @@
       '<script src="./john-13-16.js?v=20260815a"><\\/script>',
       '<script src="./john-17-20.js?v=20260815a"><\\/script>',
       '<script src="./john-21.js?v=20260815a"><\\/script>',
-      '<script src="./john-registry.js?v=20260815a"><\\/script>'
+      '<script src="./john-registry.js?v=20260815a"><\\/script>',
+      '<script src="./john-illustrations.js?v=20260815b"><\\/script>'
     ].join(''));
   }
 
