@@ -7,18 +7,17 @@
 
   john.illustrationPolicy={artist:"Gustave Doré",source:"Wikimedia Commons",rule:"direct 優先；無直接約翰場景時才使用 related；卷內不得重複。"};
   const gallery="https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations";
-  const mediaSearch=title=>`https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=${encodeURIComponent(`Gustave Doré ${title}`)}`;
   const file=(filename,title,alt,relation="direct",source=gallery)=>({src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(filename)}`,alt:`古斯塔夫・多雷版畫：${alt}`,title,source,catalog:gallery,relation});
 
   const illustrations={
     1:file("DoreJohntheBaptistPreachingintheWilderness.jpg","John the Baptist Preaching in the Wilderness","施洗約翰在曠野傳道","related"),
-    2:file("Gustave Dore - The Marriage at Cana.jpg","The Marriage at Cana","迦拿婚宴"),
+    2:file("Marriage at Cana engraving by Gustave Doré.jpg","The Marriage at Cana","迦拿婚宴"),
     3:file("The Brazen Serpent.jpg","The Brazen Serpent","銅蛇與仰望得生","related"),
-    4:file("Gustave Dore - Jesus and the Woman of Samaria.jpg","Jesus and the Woman of Samaria","耶穌與撒瑪利亞婦人"),
+    4:file("Jesus asks the Samaritan woman for a draft from the well.jpg","Jesus and the Woman of Samaria","耶穌與撒瑪利亞婦人"),
     5:file("Jésus guérit les malades, par Gustave Doré.jpg","Jesus Healing the Sick","耶穌醫治病人","related"),
-    6:file("Jesus walking on the sea by Gustave Doré.jpg","Jesus Walking on the Sea","耶穌在海面行走"),
+    6:file("Jesus walks on the sea.jpg","Jesus Walking on the Sea","耶穌在海面行走"),
     7:file("Dore Bible Sermon on the Mount.jpg","Jesus Preaching to the Multitude","耶穌向眾人教導","related"),
-    8:file("Gustave Dore - The Woman Taken in Adultery.jpg","The Woman Taken in Adultery","行淫時被拿的婦人"),
+    8:file("Dore adultress.jpg","The Woman Taken in Adultery","行淫時被拿的婦人"),
     9:file("HealingGustaveDore.jpg","Healing in Gennesaret","耶穌醫治","related","https://commons.wikimedia.org/wiki/File:HealingGustaveDore.jpg"),
     10:file("DoreJesusSeaGalilee.jpg","Jesus Preaching at the Sea of Galilee","耶穌向羊群般的百姓教導","related"),
     11:file("The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598514637).jpg","The Resurrection of Lazarus","拉撒路復活"),
@@ -28,10 +27,10 @@
     15:file("Dore Bible Sermon on the Mount 2.jpg","The Sermon on the Mount","耶穌教導門徒","related"),
     16:file("Jesus suffers agony in the garden of Gethseman.jpg","The Agony in the Garden","客西馬尼的禱告","related","https://commons.wikimedia.org/wiki/File:Jesus_suffers_agony_in_the_garden_of_Gethseman.jpg"),
     17:file("Gustave Dore - Jesus converses with the learned ones in the Temple.jpg","Jesus Converses with the Learned Ones in the Temple","耶穌談論父與子的事","related","https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"),
-    18:file("Gustave Dore - Peter Denying Christ.jpg","Peter Denying Christ","彼得不認主"),
+    18:file("Peter denies that he is one of Jesus’ disciples.jpg","Peter Denying Christ","彼得不認主"),
     19:file("Christ Presented to the PeopleDore.jpg","Christ Presented to the People","彼拉多將耶穌帶到眾人面前"),
-    20:file("Gustave Dore - The Resurrection.jpg","The Resurrection","復活的主","related"),
-    21:file("Gustave Dore - The Miraculous Draught of Fishes.jpg","The Miraculous Draught of Fishes","提比哩亞海邊的一網魚")
+    20:file("Gusta Dore - The Ascension.jpg","The Resurrection","復活的主","related"),
+    21:file("La pêche miraculeuse de Gustave Doré.jpg","The Miraculous Draught of Fishes","提比哩亞海邊的一網魚")
   };
 
   const seen=new Set();
