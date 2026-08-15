@@ -26,9 +26,9 @@
 
   /* 約翰福音沿用 ONE 共用聖光福音地圖。
    * 108：事奉初期（約 1–5）；109：加利利海／提比哩亞海（約 6）；
-   * 110：住棚節後至伯大尼前後（約 7 起）。
+   * 110：住棚節後至伯大尼前後（約 7–11）；111：進入耶路撒冷與受難週（約 12 起）。
    */
-  const mapAssignments={5:108,6:109,7:110,8:110};
+  const mapAssignments={5:108,6:109,7:110,8:110,9:110,10:110,11:110,12:111};
   for(const [chapter,mapId] of Object.entries(mapAssignments)){
     const study=studies[chapter];
     if(study?.map)study.map.mapId=mapId;
