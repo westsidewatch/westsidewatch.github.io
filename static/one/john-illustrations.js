@@ -12,7 +12,7 @@
   const illustrations={
     1:file("DoreJohntheBaptistPreachingintheWilderness.jpg","John the Baptist Preaching in the Wilderness","施洗約翰在曠野傳道","related"),
     2:file("Marriage at Cana engraving by Gustave Doré.jpg","The Marriage at Cana","迦拿婚宴"),
-    3:file("The Brazen Serpent.jpg","The Brazen Serpent","銅蛇與仰望得生","related"),
+    3:file("042.The Bronze Serpent.jpg","The Bronze Serpent","摩西在曠野舉起銅蛇","related","https://commons.wikimedia.org/wiki/File:042.The_Bronze_Serpent.jpg"),
     4:file("Jesus asks the Samaritan woman for a draft from the well.jpg","Jesus and the Woman of Samaria","耶穌與撒瑪利亞婦人"),
     5:file("Jesus healing the sick (89476181).jpg","Jesus Healing the Sick","耶穌醫治病人","related","https://commons.wikimedia.org/wiki/File:Jesus_healing_the_sick_(89476181).jpg"),
     6:file("Jesus walks on the sea.jpg","Jesus Walking on the Sea","耶穌在海面行走"),
