@@ -3,43 +3,47 @@
   "use strict";
   const D=window.ONE_DATA;
   const john=D?.john;
-  if(!john)return;
+  if(!john?.chapterStudies)return;
 
-  john.illustrations=john.illustrations||{};
-  john.illustrationPolicy={
-    artist:"Gustave Doré",
-    source:"Wikimedia Commons",
-    rule:"direct 優先；無直接約翰場景時才使用 related；卷內不得重複。"
+  john.illustrationPolicy={artist:"Gustave Doré",source:"Wikimedia Commons",rule:"direct 優先；無直接約翰場景時才使用 related；卷內不得重複。"};
+  const gallery="https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations";
+  const mediaSearch=title=>`https://commons.wikimedia.org/wiki/Special:MediaSearch?type=image&search=${encodeURIComponent(`Gustave Doré ${title}`)}`;
+  const file=(filename,title,alt,relation="direct",source=gallery)=>({src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(filename)}`,alt:`古斯塔夫・多雷版畫：${alt}`,title,source,catalog:gallery,relation});
+
+  const illustrations={
+    1:file("DoreJohntheBaptistPreachingintheWilderness.jpg","John the Baptist Preaching in the Wilderness","施洗約翰在曠野傳道","related"),
+    2:file("Gustave Dore - The Marriage at Cana.jpg","The Marriage at Cana","迦拿婚宴"),
+    3:file("The Brazen Serpent.jpg","The Brazen Serpent","銅蛇與仰望得生","related"),
+    4:file("Gustave Dore - Jesus and the Woman of Samaria.jpg","Jesus and the Woman of Samaria","耶穌與撒瑪利亞婦人"),
+    5:file("Jésus guérit les malades, par Gustave Doré.jpg","Jesus Healing the Sick","耶穌醫治病人","related"),
+    6:file("Jesus walking on the sea by Gustave Doré.jpg","Jesus Walking on the Sea","耶穌在海面行走"),
+    7:file("Dore Bible Sermon on the Mount.jpg","Jesus Preaching to the Multitude","耶穌向眾人教導","related"),
+    8:file("Gustave Dore - The Woman Taken in Adultery.jpg","The Woman Taken in Adultery","行淫時被拿的婦人"),
+    9:file("HealingGustaveDore.jpg","Healing in Gennesaret","耶穌醫治","related","https://commons.wikimedia.org/wiki/File:HealingGustaveDore.jpg"),
+    10:file("DoreJesusSeaGalilee.jpg","Jesus Preaching at the Sea of Galilee","耶穌向羊群般的百姓教導","related"),
+    11:file("The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598514637).jpg","The Resurrection of Lazarus","拉撒路復活"),
+    12:file("Gustave Dore - Jesus rides into Jerusalem on a donkey on Palm Sunday.jpg","Entry of Jesus Into Jerusalem","耶穌進入耶路撒冷","related"),
+    13:file("Jesus and the disciples at the Last Supper.jpg","The Last Supper","耶穌與門徒最後的晚餐","related","https://commons.wikimedia.org/wiki/File:Jesus_and_the_disciples_at_the_Last_Supper.jpg"),
+    14:file("DoreJesusPrayingintheGarden.jpg","Jesus Praying in the Garden","耶穌禱告","related","https://commons.wikimedia.org/wiki/File:DoreJesusPrayingintheGarden.jpg"),
+    15:file("Dore Bible Sermon on the Mount 2.jpg","The Sermon on the Mount","耶穌教導門徒","related"),
+    16:file("Jesus suffers agony in the garden of Gethseman.jpg","The Agony in the Garden","客西馬尼的禱告","related","https://commons.wikimedia.org/wiki/File:Jesus_suffers_agony_in_the_garden_of_Gethseman.jpg"),
+    17:file("Gustave Dore - Jesus converses with the learned ones in the Temple.jpg","Jesus Converses with the Learned Ones in the Temple","耶穌談論父與子的事","related","https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"),
+    18:file("Gustave Dore - Peter Denying Christ.jpg","Peter Denying Christ","彼得不認主"),
+    19:file("Christ Presented to the PeopleDore.jpg","Christ Presented to the People","彼拉多將耶穌帶到眾人面前"),
+    20:file("Gustave Dore - The Resurrection.jpg","The Resurrection","復活的主","related"),
+    21:file("Gustave Dore - The Miraculous Draught of Fishes.jpg","The Miraculous Draught of Fishes","提比哩亞海邊的一網魚")
   };
 
-  const dore="https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations";
-  Object.assign(john.illustrations,{
-    "1":{title:"John the Baptist Preaching in the Wilderness",ref:"Mark 1:6–7; related to John 1:19–34",match:"related",sourcePage:dore},
-    "2":{title:"The Marriage in Cana",ref:"John 2:5–7",match:"direct",sourcePage:dore},
-    "3":{title:"The Bronze Serpent",ref:"Numbers 21; related to John 3:14–15",match:"related",sourcePage:dore},
-    "4":{title:"Jesus and the Woman of Samaria",ref:"John 4:13–14",match:"direct",sourcePage:dore},
-    "5":{title:"Jesus Healing the Sick",ref:"Matthew 15:31; related to John 5:1–18",match:"related",sourcePage:dore},
-    "6":{title:"Jesus Walking on the Sea",ref:"John 6:19–20",match:"direct",sourcePage:dore},
-    "7":{title:"Jesus Preaching to the Multitude",ref:"Luke 12:29–31; related to John 7",match:"related",sourcePage:dore},
-    "8":{title:"Jesus and the Woman Taken in Adultery",ref:"John 8:3–5",match:"direct",sourcePage:dore},
-    "9":{title:"Healing in Gennesaret",ref:"Gospel healing scene; related to John 9 healing of the man born blind",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:HealingGustaveDore.jpg"},
-    "10":{title:"Jesus Preaching at the Sea of Galilee",ref:"Luke 5:3; related teaching image for John 10",match:"related",sourcePage:dore},
-    "11":{title:"Resurrection of Lazarus",ref:"John 11:41–43",match:"direct",sourcePage:dore},
-    "12":{title:"Entry of Jesus Into Jerusalem",ref:"Matthew 21:7–8; same event as John 12:12–19",match:"related",sourcePage:dore},
-    "13":{title:"The Last Supper",ref:"Mark 14:22–24; related to John 13",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Jesus_and_the_disciples_at_the_Last_Supper.jpg"},
-    "14":{title:"Jesus Praying in the Garden",ref:"Matthew 26:40–41; related to the farewell setting",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:DoreJesusPrayingintheGarden.jpg"},
-    "15":{title:"The Sermon on the Mount",ref:"Matthew 5:7–10; related teaching image for John 15",match:"related",sourcePage:dore},
-    "16":{title:"The Agony in the Garden",ref:"Luke 22:43–44; related to the approaching passion in John 16",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Jesus_suffers_agony_in_the_garden_of_Gethseman.jpg"},
-    "17":{title:"Jesus Converses with the Learned Ones in the Temple",ref:"Temple teaching scene; related to John 17's revelation of the Father and the Son",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"},
-    "18":{title:"Peter Denying Christ",ref:"John 18:26–27",match:"direct",sourcePage:dore},
-    "19":{title:"Christ Presented to the People",ref:"John 19:15",match:"direct",sourcePage:dore},
-    "20":{title:"The Resurrection",ref:"Matthew 28:5–6; related to John 20",match:"related",sourcePage:dore},
-    "21":{title:"The Miraculous Draught of Fishes",ref:"John 21:10–11",match:"direct",sourcePage:dore}
-  });
-
-  const entries=Object.values(john.illustrations);
-  const placeholders=entries.filter(item=>item.match.includes("placeholder")).length;
-  const titles=entries.map(item=>item.title);
-  const uniqueTitles=new Set(titles).size===titles.length;
-  document.documentElement.dataset.johnIllustrations=entries.length===21&&placeholders===0&&uniqueTitles?"ready":"review";
+  const seen=new Set();
+  let complete=true;
+  for(let chapter=1;chapter<=21;chapter++){
+    const illustration=illustrations[chapter];
+    const study=john.chapterStudies[String(chapter)];
+    if(!illustration||!study){complete=false;console.error(`ONE John illustration missing chapter ${chapter}`);continue;}
+    if(seen.has(illustration.src)){complete=false;console.error(`ONE John duplicate illustration: chapter ${chapter}`,illustration.src);}
+    seen.add(illustration.src);
+    study.illustration=illustration;
+  }
+  john.illustrations=illustrations;
+  document.documentElement.dataset.johnIllustrations=complete&&seen.size===21?"complete":"partial";
 })();
