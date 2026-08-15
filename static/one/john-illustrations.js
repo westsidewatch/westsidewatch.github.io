@@ -24,7 +24,7 @@
     12:file("Gustave Dore - Jesus rides into Jerusalem on a donkey on Palm Sunday.jpg","Entry of Jesus Into Jerusalem","耶穌進入耶路撒冷","related"),
     13:file("Jesus and the disciples at the Last Supper.jpg","The Last Supper","耶穌與門徒最後的晚餐","related","https://commons.wikimedia.org/wiki/File:Jesus_and_the_disciples_at_the_Last_Supper.jpg"),
     14:file("DoreJesusPrayingintheGarden.jpg","Jesus Praying in the Garden","耶穌禱告","related","https://commons.wikimedia.org/wiki/File:DoreJesusPrayingintheGarden.jpg"),
-    15:file("Dore Bible Sermon on the Mount 2.jpg","The Sermon on the Mount","耶穌教導門徒","related"),
+    15:file("The Bible panorama, or The Holy Scriptures in picture and story (1891) (14598376288).jpg","Jesus Preaching to the Multitude","耶穌向眾人教導","related","https://commons.wikimedia.org/wiki/File:The_Bible_panorama,_or_The_Holy_Scriptures_in_picture_and_story_(1891)_(14598376288).jpg"),
     16:file("Jesus suffers agony in the garden of Gethseman.jpg","The Agony in the Garden","客西馬尼的禱告","related","https://commons.wikimedia.org/wiki/File:Jesus_suffers_agony_in_the_garden_of_Gethseman.jpg"),
     17:file("Gustave Dore - Jesus converses with the learned ones in the Temple.jpg","Jesus Converses with the Learned Ones in the Temple","耶穌談論父與子的事","related","https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"),
     18:file("Peter denies that he is one of Jesus’ disciples.jpg","Peter Denying Christ","彼得不認主"),
