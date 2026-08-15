@@ -30,6 +30,15 @@
   const allReady=Array.from({length:expected},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   document.documentElement.dataset.lukeReady=allReady?"true":"partial";
 
+  /* index.html 目前在 parser 階段載入本檔；用 document.write 同步插入唯一的
+   * 馬可／路加插圖配置，保證它在 one-map-catalog 與 one-app 初始化前完成。
+   * 後續若 index.html 改為直接載入該檔，data 標記會阻止重複插入。
+   */
+  if(!document.documentElement.dataset.markLukeIllustrationsLoader){
+    document.documentElement.dataset.markLukeIllustrationsLoader="true";
+    document.write('<script src="./mark-luke-illustrations.js?v=20260815c"><\/script>');
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     const item=document.querySelector('.cover-book[data-book="42"]');
     if(!item)return;
