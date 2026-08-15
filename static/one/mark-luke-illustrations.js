@@ -32,6 +32,7 @@
     jairus: 'Gustave Dore - Jesus raises the daughter of Jairus from the dead.jpg',
     lastSupper: 'Jesus and the disciples at the Last Supper.jpg',
     gethsemane: 'Jesus suffers agony in the garden of Gethseman.jpg',
+    prayerGarden: 'DoreJesusPrayingintheGarden.jpg',
     ascension: 'Gusta Dore - The Ascension.jpg',
     pharisee: 'The Pharisee and the publican.jpg',
     prodigal: "Le retour de l'enfant prodigue, par Gustave Doré.jpg",
@@ -53,7 +54,7 @@
     10: file('Gustave Dore - Jesus Blessing the Little Children.jpg', 'Jesus Blessing the Little Children', '耶穌為小孩子祝福'),
     11: file(known.entry, 'Entry of Jesus Into Jerusalem', '耶穌進入耶路撒冷'),
     12: file('Gustave Dore - The Widows Mite.jpg', "The Widow's Mite", '寡婦的兩個小錢'),
-    13: file('Gustave Dore - Jesus Praying in the Garden.jpg', 'Jesus Praying in the Garden', '橄欖山上的耶穌','related'),
+    13: file(known.prayerGarden, 'Jesus Praying in the Garden', '橄欖山上的耶穌','related'),
     14: file(known.lastSupper, 'The Last Supper', '耶穌與門徒最後的晚餐'),
     15: file('Gustave Dore - Jesus Falling Beneath the Cross.jpg', 'Jesus Falling Beneath the Cross', '耶穌背十字架走向各各他'),
     16: file(known.ascension, 'The Ascension', '復活的主升天')
