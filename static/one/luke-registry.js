@@ -30,13 +30,29 @@
   const allReady=Array.from({length:expected},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   document.documentElement.dataset.lukeReady=allReady?"true":"partial";
 
+  /* index.html 目前在 parser 階段載入本檔；在 ONE app 初始化前同步接入約翰福音
+   * 全卷資料與註冊。待 index.html 日後可安全改為直接 script 標籤時再移除此橋接。
+   */
+  if(!document.documentElement.dataset.johnLoader){
+    document.documentElement.dataset.johnLoader="true";
+    document.write([
+      '<script src="./john-core.js?v=20260815a"><\\/script>',
+      '<script src="./john-5-8.js?v=20260815a"><\\/script>',
+      '<script src="./john-9-12.js?v=20260815a"><\\/script>',
+      '<script src="./john-13-16.js?v=20260815a"><\\/script>',
+      '<script src="./john-17-20.js?v=20260815a"><\\/script>',
+      '<script src="./john-21.js?v=20260815a"><\\/script>',
+      '<script src="./john-registry.js?v=20260815a"><\\/script>'
+    ].join(''));
+  }
+
   /* index.html 目前在 parser 階段載入本檔；用 document.write 同步插入唯一的
    * 馬可／路加插圖配置，保證它在 one-map-catalog 與 one-app 初始化前完成。
    * 後續若 index.html 改為直接載入該檔，data 標記會阻止重複插入。
    */
   if(!document.documentElement.dataset.markLukeIllustrationsLoader){
     document.documentElement.dataset.markLukeIllustrationsLoader="true";
-    document.write('<script src="./mark-luke-illustrations.js?v=20260815c"><\/script>');
+    document.write('<script src="./mark-luke-illustrations.js?v=20260815c"><\\/script>');
   }
 
   document.addEventListener("DOMContentLoaded",()=>{
