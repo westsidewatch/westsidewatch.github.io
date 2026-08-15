@@ -1,5 +1,6 @@
 /* 路加福音 ONE：開卷註冊與入口保護
  * 必須在所有 Luke 章資料載入完成後、one-map-catalog / one-app 之前執行。
+ * 插圖配置由 mark-luke-illustrations.js 單一負責，避免舊映射覆蓋新資料。
  */
 (() => {
   "use strict";
@@ -29,17 +30,21 @@
   const allReady=Array.from({length:expected},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   document.documentElement.dataset.lukeReady=allReady?"true":"partial";
 
+  /* index.html 目前在 parser 階段載入本檔；用 document.write 同步插入唯一的
+   * 馬可／路加插圖配置，保證它在 one-map-catalog 與 one-app 初始化前完成。
+   * 後續若 index.html 改為直接載入該檔，data 標記會阻止重複插入。
+   */
+  if(!document.documentElement.dataset.markLukeIllustrationsLoader){
+    document.documentElement.dataset.markLukeIllustrationsLoader="true";
+    document.write('<script src="./mark-luke-illustrations.js?v=20260815c"><\/script>');
+  }
+
   document.addEventListener("DOMContentLoaded",()=>{
     const item=document.querySelector('.cover-book[data-book="42"]');
     if(!item)return;
-
     item.classList.remove("forthcoming");
     item.classList.add("has-study");
     item.setAttribute("aria-label","第 42 卷，路加福音，可開始查考");
-
-    /* ONE 原本的 click handler 先執行；如果它沒有打開選卷對話框，
-     * 才退回 canonical deep link，避免使用者停在看似可點卻無反應的狀態。
-     */
     item.addEventListener("click",()=>{
       if(!item.classList.contains("rail-current"))return;
       requestAnimationFrame(()=>{
