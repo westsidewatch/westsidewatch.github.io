@@ -22,15 +22,15 @@
     "6":{title:"Jesus Walking on the Sea",ref:"John 6:19–20",match:"direct",sourcePage:dore},
     "7":{title:"Jesus Preaching to the Multitude",ref:"Luke 12:29–31; related to John 7",match:"related",sourcePage:dore},
     "8":{title:"Jesus and the Woman Taken in Adultery",ref:"John 8:3–5",match:"direct",sourcePage:dore},
-    "9":{title:"Jesus Healing the Sick",ref:"Matthew 15:31; thematic placeholder for John 9; must be replaced to avoid duplication",match:"related-placeholder",sourcePage:dore},
+    "9":{title:"Healing in Gennesaret",ref:"Gospel healing scene; related to John 9 healing of the man born blind",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:HealingGustaveDore.jpg"},
     "10":{title:"Jesus Preaching at the Sea of Galilee",ref:"Luke 5:3; related teaching image for John 10",match:"related",sourcePage:dore},
     "11":{title:"Resurrection of Lazarus",ref:"John 11:41–43",match:"direct",sourcePage:dore},
     "12":{title:"Entry of Jesus Into Jerusalem",ref:"Matthew 21:7–8; same event as John 12:12–19",match:"related",sourcePage:dore},
-    "13":{title:"The Last Supper",ref:"Mark 14:22–24; related to John 13",match:"related",sourcePage:dore},
-    "14":{title:"Jesus Praying in the Garden",ref:"Matthew 26:40–41; related to the farewell setting",match:"related",sourcePage:dore},
+    "13":{title:"The Last Supper",ref:"Mark 14:22–24; related to John 13",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Jesus_and_the_disciples_at_the_Last_Supper.jpg"},
+    "14":{title:"Jesus Praying in the Garden",ref:"Matthew 26:40–41; related to the farewell setting",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:DoreJesusPrayingintheGarden.jpg"},
     "15":{title:"The Sermon on the Mount",ref:"Matthew 5:7–10; related teaching image for John 15",match:"related",sourcePage:dore},
-    "16":{title:"The Agony in the Garden",ref:"Luke 22:43–44; related to the approaching passion in John 16",match:"related",sourcePage:dore},
-    "17":{title:"Jesus Praying in the Garden",ref:"Matthew 26:40–41; thematic placeholder for John 17; must be replaced to avoid duplication",match:"related-placeholder",sourcePage:dore},
+    "16":{title:"The Agony in the Garden",ref:"Luke 22:43–44; related to the approaching passion in John 16",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Jesus_suffers_agony_in_the_garden_of_Gethseman.jpg"},
+    "17":{title:"Jesus Converses with the Learned Ones in the Temple",ref:"Temple teaching scene; related to John 17's revelation of the Father and the Son",match:"related",sourcePage:"https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"},
     "18":{title:"Peter Denying Christ",ref:"John 18:26–27",match:"direct",sourcePage:dore},
     "19":{title:"Christ Presented to the People",ref:"John 19:15",match:"direct",sourcePage:dore},
     "20":{title:"The Resurrection",ref:"Matthew 28:5–6; related to John 20",match:"related",sourcePage:dore},
@@ -39,5 +39,7 @@
 
   const entries=Object.values(john.illustrations);
   const placeholders=entries.filter(item=>item.match.includes("placeholder")).length;
-  document.documentElement.dataset.johnIllustrations=entries.length===21&&placeholders===0?"ready":"review";
+  const titles=entries.map(item=>item.title);
+  const uniqueTitles=new Set(titles).size===titles.length;
+  document.documentElement.dataset.johnIllustrations=entries.length===21&&placeholders===0&&uniqueTitles?"ready":"review";
 })();
