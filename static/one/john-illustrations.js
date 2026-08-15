@@ -29,7 +29,7 @@
     17:file("Gustave Dore - Jesus converses with the learned ones in the Temple.jpg","Jesus Converses with the Learned Ones in the Temple","耶穌談論父與子的事","related","https://commons.wikimedia.org/wiki/File:Gustave_Dore_-_Jesus_converses_with_the_learned_ones_in_the_Temple.jpg"),
     18:file("Peter denies that he is one of Jesus’ disciples.jpg","Peter Denying Christ","彼得不認主"),
     19:file("Christ Presented to the PeopleDore.jpg","Christ Presented to the People","彼拉多將耶穌帶到眾人面前"),
-    20:file("Gusta Dore - The Ascension.jpg","The Resurrection","復活的主","related"),
+    20:file("The Bible panorama, or The Holy Scriptures in picture and story (1891) (14785046505).jpg","The Resurrection","復活的主","related","https://commons.wikimedia.org/wiki/File:The_Bible_panorama,_or_The_Holy_Scriptures_in_picture_and_story_(1891)_(14785046505).jpg"),
     21:file("La pêche miraculeuse de Gustave Doré.jpg","The Miraculous Draught of Fishes","提比哩亞海邊的一網魚")
   };
 
