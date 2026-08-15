@@ -14,7 +14,7 @@
     2:file("Marriage at Cana engraving by Gustave Doré.jpg","The Marriage at Cana","迦拿婚宴"),
     3:file("The Brazen Serpent.jpg","The Brazen Serpent","銅蛇與仰望得生","related"),
     4:file("Jesus asks the Samaritan woman for a draft from the well.jpg","Jesus and the Woman of Samaria","耶穌與撒瑪利亞婦人"),
-    5:file("Jésus guérit les malades, par Gustave Doré.jpg","Jesus Healing the Sick","耶穌醫治病人","related"),
+    5:file("Jesus healing the sick (89476181).jpg","Jesus Healing the Sick","耶穌醫治病人","related","https://commons.wikimedia.org/wiki/File:Jesus_healing_the_sick_(89476181).jpg"),
     6:file("Jesus walks on the sea.jpg","Jesus Walking on the Sea","耶穌在海面行走"),
     7:file("Dore Bible Sermon on the Mount.jpg","Jesus Preaching to the Multitude","耶穌向眾人教導","related"),
     8:file("Dore adultress.jpg","The Woman Taken in Adultery","行淫時被拿的婦人"),
