@@ -24,6 +24,16 @@
   john.summary=john.summary||"約翰以記號與見證引人看見道成肉身的耶穌是基督、神的兒子，使信的人因祂的名得生命；從光與生命、節期與『我是』宣告，直到十字架、復活與彼得再次蒙召。";
   john.meta=john.meta||[["位置","新約第四卷 · 第43卷"],["文體","福音書 · 記號、見證與神學敘事"],["章數","21章"],["核心線索","生命 · 光 · 記號 · 見證 · 我是 · 榮耀 · 相愛 · 信"]];
 
+  /* 約翰福音沿用 ONE 共用聖光福音地圖。
+   * 108：事奉初期（約 1–5）；109：加利利海／提比哩亞海（約 6）；
+   * 110：住棚節後至伯大尼前後（約 7 起）。
+   */
+  const mapAssignments={5:108,6:109,7:110,8:110};
+  for(const [chapter,mapId] of Object.entries(mapAssignments)){
+    const study=studies[chapter];
+    if(study?.map)study.map.mapId=mapId;
+  }
+
   D.studyBooks={...(D.studyBooks||{}),43:john};
 
   const allReady=Array.from({length:expected},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
