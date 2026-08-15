@@ -9,6 +9,11 @@
  *
  * The Psalm 36:9 block on the cover is display-only. The former button and
  * full-screen scripture interaction are removed without touching the cover layout.
+ *
+ * YouVersion is a cross-origin application and can occasionally render its own
+ * transient error page inside an otherwise valid chapter iframe. ONE therefore
+ * gives every English chapter a fresh navigation and an explicit reload control,
+ * while retaining the canonical "Open at YouVersion" link as the final fallback.
  */
 (() => {
   "use strict";
@@ -21,6 +26,86 @@
     staticScripture.innerHTML=scriptureTrigger.innerHTML;
     scriptureTrigger.replaceWith(staticScripture);
     document.getElementById("light-reading")?.remove();
+  }
+
+  /* Cross-origin scripture resilience.
+   * We cannot inspect YouVersion's iframe DOM, so an application-level error does
+   * not surface as iframe.onerror. Instead each freshly rendered chapter receives
+   * a unique navigation URL, plus a manual reload that rebuilds only that frame.
+   */
+  const scriptureStyle=document.createElement("style");
+  scriptureStyle.textContent=`
+    .one-scripture-reload{
+      margin-left:.65rem;
+      padding:0;
+      border:0;
+      color:inherit;
+      background:transparent;
+      font:inherit;
+      text-decoration:underline;
+      text-underline-offset:.18em;
+      cursor:pointer;
+    }
+    .one-scripture-reload:hover{opacity:.68}
+    .one-scripture-reload:focus-visible{outline:1px solid currentColor;outline-offset:.2rem}
+  `;
+  document.head.append(scriptureStyle);
+
+  const freshYouVersionUrl=source=>{
+    try{
+      const url=new URL(source,location.href);
+      url.searchParams.set("one_embed",String(Date.now()));
+      return url.toString();
+    }catch(error){
+      return source+(source.includes("?")?"&":"?")+"one_embed="+Date.now();
+    }
+  };
+
+  const enhanceEnglishScripture=root=>{
+    root.querySelectorAll?.('.scripture-reading__pages article[lang="en"]').forEach(article=>{
+      if(article.dataset.oneEnglishReady==="true")return;
+      const frame=article.querySelector("iframe");
+      const head=article.querySelector(":scope > div");
+      const canonical=head?.querySelector('a[href*="bible.com"]');
+      const source=frame?.dataset.src||frame?.getAttribute("src")||canonical?.href;
+      if(!frame||!head||!source)return;
+
+      article.dataset.oneEnglishReady="true";
+      frame.dataset.oneBaseSrc=source;
+      frame.removeAttribute("data-src");
+      frame.loading="eager";
+      frame.src=freshYouVersionUrl(source);
+
+      const reload=document.createElement("button");
+      reload.type="button";
+      reload.className="one-scripture-reload";
+      reload.textContent="Reload English";
+      reload.setAttribute("aria-label","重新載入本章英文 NIV 經文");
+      reload.addEventListener("click",()=>{
+        reload.disabled=true;
+        const oldText=reload.textContent;
+        reload.textContent="Reloading…";
+        frame.src="about:blank";
+        requestAnimationFrame(()=>requestAnimationFrame(()=>{
+          frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source);
+          setTimeout(()=>{reload.disabled=false;reload.textContent=oldText},900);
+        }));
+      });
+      head.append(reload);
+
+      frame.addEventListener("error",()=>{
+        if(frame.dataset.oneNetworkRetry==="true")return;
+        frame.dataset.oneNetworkRetry="true";
+        frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source);
+      });
+    });
+  };
+
+  const chapterDetail=document.getElementById("chapter-detail");
+  if(chapterDetail){
+    enhanceEnglishScripture(chapterDetail);
+    const scriptureObserver=new MutationObserver(()=>enhanceEnglishScripture(chapterDetail));
+    scriptureObserver.observe(chapterDetail,{childList:true,subtree:true});
   }
 
   const list=document.getElementById("cover-books");
