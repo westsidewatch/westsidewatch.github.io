@@ -1,0 +1,29 @@
+name: Wire Isaiah illustrations
+on:
+  push:
+    branches: [feat/one-isaiah]
+permissions:
+  contents: write
+jobs:
+  wire:
+    if: ${{ !contains(github.event.head_commit.message, 'attach Isaiah illustrations') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/one-isaiah
+      - run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/index.html');s=p.read_text()
+          old='<script src="./isaiah-connections-extra.js?v=20260816d"></script><script src="./isaiah-audit.js?v=20260816e"></script>'
+          new='<script src="./isaiah-connections-extra.js?v=20260816d"></script><script src="./isaiah-illustrations.js?v=20260816f"></script><script src="./isaiah-audit.js?v=20260816f"></script>'
+          if old not in s: raise SystemExit('Isaiah script sequence not found')
+          p.write_text(s.replace(old,new,1))
+          PY
+      - run: |
+          git config user.name 'WATCHMAN'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/one/index.html
+          git commit -m 'feat(one): attach Isaiah illustrations'
+          git push origin HEAD:feat/one-isaiah
