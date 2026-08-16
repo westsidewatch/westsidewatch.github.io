@@ -1,0 +1,1 @@
+Restore plan marker: use original ONE cross-reference method where each connection entry is [reference, topic, scriptureText] and one-app.js renders item[2] directly. Do not add runtime Scripture loaders or semantic post-processors. This file is temporary and may be removed after the rollback is complete.
