@@ -1,0 +1,72 @@
+name: Check Genesis integrity
+
+on:
+  push:
+    branches:
+      - fix/one-genesis-never-unregister
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check Genesis modules
+        run: |
+          for f in static/one/genesis-core.js static/one/genesis-5-8.js static/one/genesis-9-12.js static/one/genesis-13-16.js static/one/genesis-17-20.js static/one/genesis-21-24.js static/one/genesis-25-28.js static/one/genesis-29-32.js static/one/genesis-33-36.js static/one/genesis-37-40.js static/one/genesis-41-44.js static/one/genesis-45-48.js static/one/genesis-49-50.js static/one/genesis-registry.js static/one/genesis-audit.js static/one/genesis-postfix.js; do
+            echo "Checking $f"
+            node --check "$f"
+          done
+      - name: Runtime smoke test
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const vm=require('vm');
+          global.window=global;
+          global.document={
+            documentElement:{dataset:{}},
+            addEventListener(){},
+            querySelector(){return null},
+            getElementById(){return null}
+          };
+          const files=[
+            'static/one/one-data.js',
+            'static/one/genesis-core.js',
+            'static/one/genesis-5-8.js',
+            'static/one/genesis-9-12.js',
+            'static/one/genesis-13-16.js',
+            'static/one/genesis-17-20.js',
+            'static/one/genesis-21-24.js',
+            'static/one/genesis-25-28.js',
+            'static/one/genesis-29-32.js',
+            'static/one/genesis-33-36.js',
+            'static/one/genesis-37-40.js',
+            'static/one/genesis-41-44.js',
+            'static/one/genesis-45-48.js',
+            'static/one/genesis-49-50.js',
+            'static/one/genesis-registry.js',
+            'static/one/genesis-audit.js',
+            'static/one/genesis-postfix.js'
+          ];
+          for(const file of files){
+            try{
+              vm.runInThisContext(fs.readFileSync(file,'utf8'),{filename:file});
+              console.log('OK',file);
+            }catch(error){
+              console.error('FAIL',file,error.stack||error);
+              process.exit(1);
+            }
+          }
+          const D=global.ONE_DATA;
+          if(!D?.genesis)throw new Error('Genesis object missing');
+          const studies=D.genesis.chapterStudies||{};
+          const missing=[];
+          for(let i=1;i<=50;i++)if(!studies[String(i)])missing.push(i);
+          if(missing.length)throw new Error('Missing chapters: '+missing.join(','));
+          if(!Array.isArray(D.genesis.chapters)||D.genesis.chapters.length!==50)throw new Error('Genesis chapter title array invalid');
+          if(D.studyBooks?.[1]!==D.genesis)throw new Error('Book 01 not registered in studyBooks');
+          console.log('GENESIS_OK chapters=',Object.keys(studies).filter(k=>/^\d+$/.test(k)).length,'registered=',Boolean(D.studyBooks?.[1]));
+          NODE
