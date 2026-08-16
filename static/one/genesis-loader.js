@@ -3,7 +3,7 @@
   "use strict";
   if(document.documentElement.dataset.genesisLoader)return;
   document.documentElement.dataset.genesisLoader="true";
-  const version="20260815d";
+  const version="20260815e";
   const files=[
     "genesis-core.js",
     "genesis-5-8.js",
@@ -19,6 +19,7 @@
     "genesis-45-48.js",
     "genesis-49-50.js",
     "genesis-registry.js",
+    "genesis-audit.js",
     "genesis-postfix.js"
   ];
   document.write(files.map(file=>'<script src="./'+file+'?v='+version+'"></'+'script>').join(''));
