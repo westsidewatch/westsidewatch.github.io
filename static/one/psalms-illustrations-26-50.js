@@ -1,0 +1,7 @@
+/* 詩篇 26–50：逐篇顯式插圖映射。禁止 fallback。 */
+(()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P)return;
+const W="https://commons.wikimedia.org/wiki/Category:Illustrations_to_the_Bible_by_Gustave_Dor%C3%A9";
+const images={
+26:["David Praying","大衛禱告"],27:["David Playing the Harp","大衛彈琴"],28:["David Praying","大衛呼求"],29:["The Deluge","風暴與眾水"],30:["David Playing the Harp","大衛稱謝"],31:["David Escaping","大衛逃難"],32:["Nathan Rebukes David","拿單責備大衛"],33:["Creation of Light","創造之光"],34:["David before Achish","大衛在亞吉面前"],35:["David Escaping","受追趕的大衛"],36:["Creation of Light","生命與光"],37:["David Playing the Harp","等候耶和華"],38:["Nathan Rebukes David","罪與痛苦"],39:["David Playing the Harp","人生短暫的默想"],40:["David Playing the Harp","新歌與遵行旨意"],41:["David and Absalom","大衛的患難"],42:["The Hart at the Brook","鹿切慕溪水"],43:["Pilgrims Going to Jerusalem","往神祭壇"],44:["Israelites in Captivity","百姓受苦"],45:["Solomon and His Court","君王婚禮"],46:["Jerusalem","神的城"],47:["David Bringing the Ark","歡呼迎接君王"],48:["Jerusalem","錫安之城"],49:["The Rich Man and Lazarus","財富與死亡"],50:["The Glory of the Lord","神顯現審判"]};
+Object.entries(images).forEach(([n,[title,alt]])=>{const s=P.chapterStudies[n];if(!s)return;s.illustration={src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(title)}.jpg`,alt:`古斯塔夫・多雷版畫：${alt}`,title:alt,source:W,artist:"Gustave Doré"};});
+})();
