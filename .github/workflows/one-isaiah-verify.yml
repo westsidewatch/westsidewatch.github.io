@@ -1,0 +1,39 @@
+name: Verify Isaiah ONE
+on:
+  push:
+    branches: [feat/one-isaiah]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/one-isaiah
+      - name: Run Isaiah data audit
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          global.window=global;
+          global.document={documentElement:{dataset:{}}};
+          const files=[
+            'static/one/one-data.js',
+            'static/one/isaiah-complete.js',
+            'static/one/isaiah-context.js',
+            'static/one/isaiah-connections-extra.js',
+            'static/one/isaiah-illustrations.js',
+            'static/one/isaiah-audit.js',
+            'static/one/isaiah-registry.js'
+          ];
+          for(const f of files) vm.runInThisContext(fs.readFileSync(f,'utf8'),{filename:f});
+          const I=global.ONE_DATA?.isaiah;
+          if(!I) throw new Error('Isaiah data missing');
+          if(Object.keys(I.chapterStudies||{}).length!==66) throw new Error('Isaiah chapter count is not 66');
+          if(!I.audit?.ok) throw new Error('Isaiah audit failed: '+JSON.stringify(I.audit));
+          if(global.ONE_DATA?.studyBooks?.[23]!==I) throw new Error('Isaiah not registered as study book 23');
+          if(document.documentElement.dataset.isaiahAudit!=='pass') throw new Error('Isaiah audit dataset not pass');
+          if(document.documentElement.dataset.isaiahReady!=='true') throw new Error('Isaiah registry not ready');
+          console.log(JSON.stringify(I.audit,null,2));
+          console.log('ISAIAH_VERIFY_PASS');
+          NODE
