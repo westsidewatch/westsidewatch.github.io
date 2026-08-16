@@ -20,15 +20,27 @@
    * Completeness and map/content audits are diagnostics only: they must never
    * remove Book 01 from the ONE cover or block the open-book flow. */
   const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
-  D.studyBooks=D.studyBooks||{};
-  D.studyBooks[1]=genesis;
-  document.documentElement.dataset.genesisReady=complete?"true":"partial";
+  const registerGenesis=()=>{
+    D.studyBooks=D.studyBooks||{};
+    D.studyBooks[1]=genesis;
+    document.documentElement.dataset.genesisReady=complete?"true":"partial";
+  };
+  registerGenesis();
 
   const mapAudit=document.documentElement.dataset.genesisMapAudit;
   const contentAudit=document.documentElement.dataset.genesisContentAudit;
   if(!complete||mapAudit!=="ok"||contentAudit!=="ok"){
     console.warn("[ONE Genesis] advisory audit warning",{complete,mapAudit,contentAudit});
   }
+
+  const syncGenesisCoverEntry=()=>{
+    registerGenesis();
+    const item=document.querySelector('.cover-book[data-book="1"]');
+    if(!item)return;
+    item.classList.add("has-study");
+    item.classList.remove("forthcoming");
+    item.setAttribute("aria-label","第 1 卷，創世記，可開始查考");
+  };
 
   const clearStaleArtwork=()=>{
     const detail=document.getElementById("chapter-detail");
@@ -43,6 +55,9 @@
   };
 
   document.addEventListener("DOMContentLoaded",()=>{
+    /* Some later book bundles rebuild D.studyBooks. Reconcile Genesis after every
+     * synchronous bundle has loaded, then align the already-rendered cover item. */
+    syncGenesisCoverEntry();
     const detail=document.getElementById("chapter-detail");
     if(!detail)return;
     const observer=new MutationObserver(clearStaleArtwork);
