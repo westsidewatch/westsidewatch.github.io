@@ -1,7 +1,8 @@
 /* 創世記：沒有可靠旅行地圖時不渲染地圖；沒有獨立插圖時清掉上一章殘影。 */
 (() => {
   "use strict";
-  const studies=window.ONE_DATA?.genesis?.chapterStudies;
+  const D=window.ONE_DATA;
+  const studies=D?.genesis?.chapterStudies;
   if(!studies)return;
 
   ["1","5"].forEach(chapter=>{
@@ -13,6 +14,14 @@
       study.map.routes=null;
     }
   });
+
+  const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
+  const mapAudit=document.documentElement.dataset.genesisMapAudit;
+  if(!complete||mapAudit&&mapAudit!=="ok"){
+    if(D.studyBooks)delete D.studyBooks[1];
+    document.documentElement.dataset.genesisReady="partial";
+    console.error("[ONE Genesis] fail-closed: Book 01 was not exposed because chapter/map audit is incomplete.");
+  }
 
   const clearStaleArtwork=()=>{
     const detail=document.getElementById("chapter-detail");
