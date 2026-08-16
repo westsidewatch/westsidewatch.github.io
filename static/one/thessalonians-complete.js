@@ -213,6 +213,7 @@
 
   D.matthew.nowCards = [["君王", "大衛的子孫，亞伯拉罕的子孫"], ["名字", "耶穌 · 以馬內利"]];
   D.studyBooks = {
+    ...(D.studyBooks || {}),
     40: D.matthew,
     52: D.firstThessalonians,
     53: D.secondThessalonians
