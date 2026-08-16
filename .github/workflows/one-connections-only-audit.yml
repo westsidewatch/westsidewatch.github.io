@@ -1,0 +1,27 @@
+name: ONE connections-only Scripture audit
+on:
+  push:
+    branches: [restore/one-original-cross-reference]
+permissions:
+  contents: write
+jobs:
+  repair:
+    if: ${{ !contains(github.event.head_commit.message, 'apply scoped Scripture audit') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: restore/one-original-cross-reference
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Replace only connections third fields with actual Scripture
+        run: python scripts/fix_one_connections_only.py
+      - name: Commit repaired connection data
+        run: |
+          git config user.name 'WATCHMAN'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/one
+          git diff --cached --quiet && exit 1
+          git commit -m 'fix(one): apply scoped Scripture audit to all connections'
+          git push origin HEAD:restore/one-original-cross-reference
