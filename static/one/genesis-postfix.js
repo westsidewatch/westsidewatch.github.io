@@ -1,4 +1,4 @@
-/* 創世記：註冊保護、逐章 Doré 插圖與 ONE 經文版面修復。 */
+/* 創世記：註冊保護與逐章 Doré 插圖。 */
 (() => {
   "use strict";
   const D=window.ONE_DATA;
@@ -78,19 +78,28 @@
     console.error("[ONE Genesis] published chapters missing illustrations",missingIllustrations);
   }
 
-  /* Give the HKBS Chinese page the full ONE reading width on desktop so its own
-   * responsive layout can return to the two-column scripture presentation.
-   * English NIV remains directly below it; mobile is unchanged as a single column. */
-  const scriptureLayout=document.createElement("style");
-  scriptureLayout.dataset.oneScriptureWidth="full";
-  scriptureLayout.textContent=`
-    @media (min-width:651px){
-      .scripture-reading__pages{grid-template-columns:minmax(0,1fr)!important}
-      .scripture-reading__pages article+article{border-left:0!important;border-top:1px solid var(--line)!important}
-      .scripture-reading iframe{width:100%!important}
-    }
-  `;
-  document.head.append(scriptureLayout);
+  /* HKBS Chinese scripture must use the official dual-window CUNP1s page.
+   * Preserve ONE's existing Chinese/English side-by-side layout; do not inject
+   * any scripture grid override here. */
+  const useDualWindowHKBS=root=>{
+    const scope=root?.querySelectorAll?root:document;
+    scope.querySelectorAll('a[href*="rcuv.hkbs.org.hk/CUNP1/"], iframe[data-src*="rcuv.hkbs.org.hk/CUNP1/"], iframe[src*="rcuv.hkbs.org.hk/CUNP1/"]').forEach(node=>{
+      for(const attribute of ["href","data-src","src"]){
+        const value=node.getAttribute(attribute);
+        if(value?.includes("rcuv.hkbs.org.hk/CUNP1/"))node.setAttribute(attribute,value.replace("/CUNP1/","/CUNP1s/"));
+      }
+    });
+  };
+  const scriptureObserver=new MutationObserver(records=>{
+    records.forEach(record=>record.addedNodes.forEach(node=>{
+      if(node.nodeType===1){
+        useDualWindowHKBS(node);
+        if(node.matches?.('a[href*="rcuv.hkbs.org.hk/CUNP1/"], iframe[data-src*="rcuv.hkbs.org.hk/CUNP1/"], iframe[src*="rcuv.hkbs.org.hk/CUNP1/"]'))useDualWindowHKBS(node.parentElement||document);
+      }
+    }));
+  });
+  scriptureObserver.observe(document.documentElement,{childList:true,subtree:true});
+  useDualWindowHKBS(document);
 
   /* ONE study-book registry guard.
    * Book bundles may add registrations, but assigning D.studyBooks must never
@@ -144,6 +153,7 @@
 
   document.addEventListener("DOMContentLoaded",()=>{
     syncGenesisCoverEntry();
+    useDualWindowHKBS(document);
     const cover=document.getElementById("chapter-cover-art");
     if(cover){
       const restoreCoverVisibility=()=>{
