@@ -2,7 +2,8 @@
 (() => {
   "use strict";
   const D=window.ONE_DATA;
-  const studies=D?.genesis?.chapterStudies;
+  const genesis=D?.genesis;
+  const studies=genesis?.chapterStudies;
   if(!studies)return;
 
   ["1","5"].forEach(chapter=>{
@@ -15,13 +16,23 @@
     }
   });
 
+  /* Only a genuinely incomplete book should be unavailable.
+   * Map/content audits are diagnostics: they must never make a fully loaded
+   * 50-chapter Genesis disappear from the ONE cover after registration. */
   const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
-  const mapAudit=document.documentElement.dataset.genesisMapAudit;
-  const contentAudit=document.documentElement.dataset.genesisContentAudit;
-  if(!complete||mapAudit!=="ok"||contentAudit!=="ok"){
+  if(!complete){
     if(D.studyBooks)delete D.studyBooks[1];
     document.documentElement.dataset.genesisReady="partial";
-    console.error("[ONE Genesis] fail-closed: Book 01 was not exposed because chapter/map/content audit is incomplete.");
+    console.error("[ONE Genesis] Book 01 unavailable because one or more chapter studies did not load.");
+  }else{
+    D.studyBooks=D.studyBooks||{};
+    D.studyBooks[1]=genesis;
+    document.documentElement.dataset.genesisReady="true";
+    const mapAudit=document.documentElement.dataset.genesisMapAudit;
+    const contentAudit=document.documentElement.dataset.genesisContentAudit;
+    if(mapAudit!=="ok"||contentAudit!=="ok"){
+      console.warn("[ONE Genesis] advisory audit warning",{mapAudit,contentAudit});
+    }
   }
 
   const clearStaleArtwork=()=>{

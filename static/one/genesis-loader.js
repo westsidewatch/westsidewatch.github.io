@@ -3,7 +3,7 @@
   "use strict";
   if(document.documentElement.dataset.genesisLoader)return;
   document.documentElement.dataset.genesisLoader="true";
-  const version="20260815e";
+  const version="20260815f";
   const files=[
     "genesis-core.js",
     "genesis-5-8.js",

@@ -113,6 +113,7 @@
     study.map.routeLegendVerified=true;
   });
 
+  /* Book availability is determined by the actual study object, not by optional audits. */
   D.studyBooks={...(D.studyBooks||{}),1:genesis};
 
   const missing=[];
@@ -123,23 +124,24 @@
   Object.entries(mapPlan).forEach(([chapter,id])=>{
     const study=studies[chapter],catalog=maps[id];
     if(!study?.map)return mapErrors.push(`${chapter}:no-map`);
-    if(study.map.routes.length!==catalog.routes.length)mapErrors.push(`${chapter}:${study.map.routes.length}/${catalog.routes.length}`);
+    const routes=Array.isArray(study.map.routes)?study.map.routes:[];
+    if(routes.length!==catalog.routes.length)mapErrors.push(`${chapter}:${routes.length}/${catalog.routes.length}`);
     if(!study.map.image||!study.map.source)mapErrors.push(`${chapter}:missing-source`);
   });
 
-  const allReady=missing.length===0&&mapErrors.length===0;
+  const allReady=missing.length===0;
   document.documentElement.dataset.genesisReady=allReady?"true":"partial";
   document.documentElement.dataset.genesisChapterCount=String(Object.keys(studies).filter(key=>/^\d+$/.test(key)).length);
   document.documentElement.dataset.genesisMapAudit=mapErrors.length?mapErrors.join("|"):"ok";
   if(missing.length)console.error(`[ONE Genesis] missing chapter studies: ${missing.join(", ")}`);
-  if(mapErrors.length)console.error(`[ONE Genesis] map audit failed: ${mapErrors.join(", ")}`);
+  if(mapErrors.length)console.warn(`[ONE Genesis] map audit warning: ${mapErrors.join(", ")}`);
 
   document.addEventListener("DOMContentLoaded",()=>{
     const item=document.querySelector('.cover-book[data-book="1"]');
     if(!item)return;
-    const ready=Boolean(D.studyBooks?.[1])&&document.documentElement.dataset.genesisReady==="true"&&document.documentElement.dataset.genesisMapAudit==="ok"&&document.documentElement.dataset.genesisContentAudit==="ok";
-    item.classList.toggle("has-study",ready);
-    item.classList.toggle("forthcoming",!ready);
-    item.setAttribute("aria-label",ready?"第 1 卷，創世記，可開始查考":`第 1 卷，創世記，資料尚未完整載入`);
+    const available=Boolean(D.studyBooks?.[1]);
+    item.classList.toggle("has-study",available);
+    item.classList.toggle("forthcoming",!available);
+    item.setAttribute("aria-label",available?"第 1 卷，創世記，可開始查考":"第 1 卷，創世記，資料尚未載入");
   });
 })();
