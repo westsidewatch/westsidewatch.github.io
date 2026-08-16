@@ -81,6 +81,15 @@
   document.addEventListener("DOMContentLoaded",()=>{
     syncGenesisCoverEntry();
     const detail=document.getElementById("chapter-detail");
+    const cover=document.getElementById("chapter-cover-art");
+    if(cover){
+      const restoreCoverVisibility=()=>{
+        if(cover.hasAttribute("src")&&cover.getAttribute("src"))cover.hidden=false;
+      };
+      const coverObserver=new MutationObserver(restoreCoverVisibility);
+      coverObserver.observe(cover,{attributes:true,attributeFilter:["src"]});
+      restoreCoverVisibility();
+    }
     if(!detail)return;
     const observer=new MutationObserver(clearStaleArtwork);
     observer.observe(detail,{attributes:true,attributeFilter:["data-book","data-chapter"]});
