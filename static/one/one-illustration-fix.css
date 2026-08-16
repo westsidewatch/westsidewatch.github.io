@@ -30,10 +30,11 @@
   text-align:right;
 }
 
-/* Cross-reference typography hierarchy, shared by every ONE book.
- * 1. Scripture reference = metadata, one step smaller.
- * 2. Cross-reference line and explanatory reading line = the same body size.
- * No oversized display treatment inside the cross-reference cards.
+/* Cross-reference hierarchy, shared by every ONE book.
+ * Reference = metadata, one step smaller.
+ * Theme = normal reading size.
+ * Scripture = quoted Scripture only.
+ * Note = editorial explanation, never presented as Scripture.
  */
 .connection-section .connection-grid strong{
   display:block;
@@ -45,8 +46,8 @@
   letter-spacing:.01em;
 }
 .connection-section .connection-grid small,
-.connection-section blockquote{
-  color:var(--one-ink);
+.connection-section .connection-scripture,
+.connection-section .connection-note{
   font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
   font-size:var(--one-body-size);
   font-weight:400;
@@ -58,9 +59,15 @@
   margin-top:.45rem;
   color:var(--one-gilt-dark);
 }
-.connection-section blockquote{
+.connection-section .connection-scripture{
   max-width:56rem;
   margin:1rem 0 0;
+  color:var(--one-ink);
+}
+.connection-section .connection-note{
+  max-width:56rem;
+  margin:1rem 0 0;
+  color:rgba(16,42,67,.72);
 }
 
 @media(max-width:650px){
@@ -72,5 +79,6 @@
   .chapter-illustration a{aspect-ratio:5/8}
   .connection-section .connection-grid strong{font-size:.9rem}
   .connection-section .connection-grid small,
-  .connection-section blockquote{font-size:1rem}
+  .connection-section .connection-scripture,
+  .connection-section .connection-note{font-size:1rem}
 }
