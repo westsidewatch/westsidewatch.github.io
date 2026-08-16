@@ -4,7 +4,7 @@
   const D=window.ONE_DATA;
   const genesis=D?.genesis;
   const studies=genesis?.chapterStudies;
-  if(!studies)return;
+  if(!D||!genesis||!studies)return;
 
   ["1","5"].forEach(chapter=>{
     if(studies[chapter])studies[chapter].map=null;
@@ -16,23 +16,29 @@
     }
   });
 
-  /* Only a genuinely incomplete book should be unavailable.
-   * Map/content audits are diagnostics: they must never make a fully loaded
-   * 50-chapter Genesis disappear from the ONE cover after registration. */
-  const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
+  /* Genesis availability must not be coupled to diagnostics or to a single
+   * chapter-batch failure. If the core book object exists, keep Book 01
+   * registered so the cover can always enter the book. Missing chapter data is
+   * reported separately and the chapter grid can expose only what actually
+   * loaded. This prevents one bad optional module from making the whole book
+   * impossible to open. */
+  D.studyBooks=D.studyBooks||{};
+  D.studyBooks[1]=genesis;
+
+  const missing=[];
+  for(let number=1;number<=50;number+=1){
+    if(!studies[String(number)])missing.push(number);
+  }
+  const complete=missing.length===0;
+  document.documentElement.dataset.genesisReady=complete?"true":"partial";
   if(!complete){
-    if(D.studyBooks)delete D.studyBooks[1];
-    document.documentElement.dataset.genesisReady="partial";
-    console.error("[ONE Genesis] Book 01 unavailable because one or more chapter studies did not load.");
-  }else{
-    D.studyBooks=D.studyBooks||{};
-    D.studyBooks[1]=genesis;
-    document.documentElement.dataset.genesisReady="true";
-    const mapAudit=document.documentElement.dataset.genesisMapAudit;
-    const contentAudit=document.documentElement.dataset.genesisContentAudit;
-    if(mapAudit!=="ok"||contentAudit!=="ok"){
-      console.warn("[ONE Genesis] advisory audit warning",{mapAudit,contentAudit});
-    }
+    console.error(`[ONE Genesis] missing chapter studies: ${missing.join(", ")}. Book 01 remains available for diagnosis and access.`);
+  }
+
+  const mapAudit=document.documentElement.dataset.genesisMapAudit;
+  const contentAudit=document.documentElement.dataset.genesisContentAudit;
+  if(mapAudit!=="ok"||contentAudit!=="ok"){
+    console.warn("[ONE Genesis] advisory audit warning",{mapAudit,contentAudit});
   }
 
   const clearStaleArtwork=()=>{
