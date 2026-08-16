@@ -137,8 +137,9 @@
   document.addEventListener("DOMContentLoaded",()=>{
     const item=document.querySelector('.cover-book[data-book="1"]');
     if(!item)return;
-    item.classList.toggle("has-study",allReady);
-    item.classList.toggle("forthcoming",!allReady);
-    item.setAttribute("aria-label",allReady?"第 1 卷，創世記，可開始查考":`第 1 卷，創世記，資料尚未完整載入`);
+    const ready=Boolean(D.studyBooks?.[1])&&document.documentElement.dataset.genesisReady==="true"&&document.documentElement.dataset.genesisMapAudit==="ok"&&document.documentElement.dataset.genesisContentAudit==="ok";
+    item.classList.toggle("has-study",ready);
+    item.classList.toggle("forthcoming",!ready);
+    item.setAttribute("aria-label",ready?"第 1 卷，創世記，可開始查考":`第 1 卷，創世記，資料尚未完整載入`);
   });
 })();
