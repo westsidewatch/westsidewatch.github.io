@@ -30,27 +30,37 @@
   text-align:right;
 }
 
-/* Cross-reference typography hierarchy.
- * The scripture text is the primary reading voice; the reference is metadata.
+/* Cross-reference typography hierarchy, shared by every ONE book.
+ * 1. Scripture reference = metadata, one step smaller.
+ * 2. Cross-reference line and explanatory reading line = the same body size.
+ * No oversized display treatment inside the cross-reference cards.
  */
 .connection-section .connection-grid strong{
   display:block;
   color:var(--one-gilt-dark);
   font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
-  font-size:clamp(.88rem,1.15vw,1rem);
+  font-size:clamp(.9rem,1vw,1.02rem);
   font-weight:500;
-  line-height:1.5;
-  letter-spacing:.02em;
+  line-height:1.55;
+  letter-spacing:.01em;
+}
+.connection-section .connection-grid small,
+.connection-section blockquote{
+  color:var(--one-ink);
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:var(--one-body-size);
+  font-weight:400;
+  line-height:1.95;
+  letter-spacing:0;
+}
+.connection-section .connection-grid small{
+  display:block;
+  margin-top:.45rem;
+  color:var(--one-gilt-dark);
 }
 .connection-section blockquote{
   max-width:56rem;
-  margin:1.1rem 0 0 4rem;
-  color:var(--one-ink);
-  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
-  font-size:clamp(1.2rem,1.8vw,1.5rem);
-  font-weight:400;
-  line-height:1.95;
-  letter-spacing:.01em;
+  margin:1rem 0 0;
 }
 
 @media(max-width:650px){
@@ -60,8 +70,7 @@
     padding:.65rem;
   }
   .chapter-illustration a{aspect-ratio:5/8}
-  .connection-section blockquote{
-    margin-left:0;
-    font-size:1.15rem;
-  }
+  .connection-section .connection-grid strong{font-size:.9rem}
+  .connection-section .connection-grid small,
+  .connection-section blockquote{font-size:1rem}
 }
