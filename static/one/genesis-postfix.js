@@ -16,13 +16,37 @@
     }
   });
 
+  /* ONE study-book registry guard.
+   * Book bundles may add registrations, but assigning D.studyBooks must never
+   * replace registrations that earlier bundles already installed. */
+  const registry=(D.studyBooks&&typeof D.studyBooks==="object")?D.studyBooks:{};
+  const descriptor=Object.getOwnPropertyDescriptor(D,"studyBooks");
+  if(!descriptor||descriptor.configurable!==false){
+    Object.defineProperty(D,"studyBooks",{
+      enumerable:true,
+      configurable:false,
+      get(){return registry;},
+      set(next){
+        if(next&&typeof next==="object")Object.assign(registry,next);
+      }
+    });
+  }
+  D.registerStudyBook=(number,book)=>{
+    const key=Number(number);
+    if(!Number.isInteger(key)||key<1||key>66||!book){
+      console.warn("[ONE Registry] invalid study book registration",{number,book});
+      return false;
+    }
+    registry[key]=book;
+    return true;
+  };
+
   /* Keep Genesis registered whenever its study object exists.
    * Completeness and map/content audits are diagnostics only: they must never
    * remove Book 01 from the ONE cover or block the open-book flow. */
   const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   const registerGenesis=()=>{
-    D.studyBooks=D.studyBooks||{};
-    D.studyBooks[1]=genesis;
+    D.registerStudyBook(1,genesis);
     document.documentElement.dataset.genesisReady=complete?"true":"partial";
   };
   registerGenesis();
@@ -55,8 +79,6 @@
   };
 
   document.addEventListener("DOMContentLoaded",()=>{
-    /* Some later book bundles rebuild D.studyBooks. Reconcile Genesis after every
-     * synchronous bundle has loaded, then align the already-rendered cover item. */
     syncGenesisCoverEntry();
     const detail=document.getElementById("chapter-detail");
     if(!detail)return;
