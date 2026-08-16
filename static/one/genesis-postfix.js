@@ -17,10 +17,11 @@
 
   const complete=Array.from({length:50},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   const mapAudit=document.documentElement.dataset.genesisMapAudit;
-  if(!complete||mapAudit&&mapAudit!=="ok"){
+  const contentAudit=document.documentElement.dataset.genesisContentAudit;
+  if(!complete||mapAudit!=="ok"||contentAudit!=="ok"){
     if(D.studyBooks)delete D.studyBooks[1];
     document.documentElement.dataset.genesisReady="partial";
-    console.error("[ONE Genesis] fail-closed: Book 01 was not exposed because chapter/map audit is incomplete.");
+    console.error("[ONE Genesis] fail-closed: Book 01 was not exposed because chapter/map/content audit is incomplete.");
   }
 
   const clearStaleArtwork=()=>{
