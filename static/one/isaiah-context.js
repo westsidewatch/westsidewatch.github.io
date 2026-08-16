@@ -19,7 +19,18 @@
   const timeFor=n=>timeline.find(x=>n>=x[0]&&n<=x[1]);
   Object.keys(S).forEach(k=>{
     const n=Number(k),c=S[k],t=timeFor(n),places=geo[n]||[];
-    c.timeline=t?[{period:t[2],event:t[3],note:t[4]}]:[];
+    if(t){
+      c.timeline={
+        title:t[3],
+        range:t[2],
+        note:t[4],
+        url:"https://bibleeveryone.com/bible-timeline.php",
+        events:[[t[2],t[3],`以賽亞書 ${n} 章`]]
+      };
+    }
     c.geography=places.map(name=>({name,note:`閱讀以賽亞書第 ${n} 章時定位「${name}」，觀察它與猶大、列國、被擄／歸回或錫安盼望的關係。`}));
+    if(places.length){
+      c.background=[...(c.background||[]),["本章地理",places.join(" · "),`先辨認${places.join("、")}在本章中的角色，再讀先知的信息。`]];
+    }
   });
 })();

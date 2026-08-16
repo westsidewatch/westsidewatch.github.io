@@ -6,7 +6,8 @@
   for(let n=1;n<=66;n+=1){
     const c=S[String(n)];
     if(!c){report.missing.push(n);continue;}
-    if(!Array.isArray(c.timeline)||!c.timeline.length||!Array.isArray(c.geography)||!c.geography.length)report.missingContext.push(n);
+    const timelineOk=c.timeline&&typeof c.timeline==="object"&&!Array.isArray(c.timeline)&&String(c.timeline.title||"").trim()&&String(c.timeline.range||"").trim()&&Array.isArray(c.timeline.events)&&c.timeline.events.length;
+    if(!timelineOk||!Array.isArray(c.geography)||!c.geography.length)report.missingContext.push(n);
     if(!c.illustration||!String(c.illustration.src||"").trim()||!String(c.illustration.source||"").trim()||!String(c.illustration.title||"").trim())report.missingIllustrations.push(n);
     const links=Array.isArray(c.connections)?c.connections:[];
     if(!links.length)report.invalidConnections.push({chapter:n,reason:"empty"});
