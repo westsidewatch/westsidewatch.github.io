@@ -6,7 +6,6 @@ permissions:
   contents: write
 jobs:
   wire:
-    if: ${{ !contains(github.event.head_commit.message, 'wire Isaiah context and registry') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -29,5 +28,5 @@ jobs:
           git config user.email 'westsidewatchca@gmail.com'
           git add static/one/index.html
           git diff --cached --quiet && exit 0
-          git commit -m 'feat(one): wire Isaiah context and registry'
+          git commit -m 'feat(one): attach Isaiah context registry'
           git push origin HEAD:feat/one-isaiah
