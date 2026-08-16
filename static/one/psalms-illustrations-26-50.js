@@ -1,7 +1,11 @@
-/* 詩篇 26–50：逐篇顯式插圖映射。禁止 fallback。 */
+/* 詩篇 26–50：只使用已確認屬 Doré Old Testament 系列的作品。 */
 (()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P)return;
-const W="https://commons.wikimedia.org/wiki/Category:Illustrations_to_the_Bible_by_Gustave_Dor%C3%A9";
-const images={
-26:["David Praying","大衛禱告"],27:["David Playing the Harp","大衛彈琴"],28:["David Praying","大衛呼求"],29:["The Deluge","風暴與眾水"],30:["David Playing the Harp","大衛稱謝"],31:["David Escaping","大衛逃難"],32:["Nathan Rebukes David","拿單責備大衛"],33:["Creation of Light","創造之光"],34:["David before Achish","大衛在亞吉面前"],35:["David Escaping","受追趕的大衛"],36:["Creation of Light","生命與光"],37:["David Playing the Harp","等候耶和華"],38:["Nathan Rebukes David","罪與痛苦"],39:["David Playing the Harp","人生短暫的默想"],40:["David Playing the Harp","新歌與遵行旨意"],41:["David and Absalom","大衛的患難"],42:["The Hart at the Brook","鹿切慕溪水"],43:["Pilgrims Going to Jerusalem","往神祭壇"],44:["Israelites in Captivity","百姓受苦"],45:["Solomon and His Court","君王婚禮"],46:["Jerusalem","神的城"],47:["David Bringing the Ark","歡呼迎接君王"],48:["Jerusalem","錫安之城"],49:["The Rich Man and Lazarus","財富與死亡"],50:["The Glory of the Lord","神顯現審判"]};
-Object.entries(images).forEach(([n,[title,alt]])=>{const s=P.chapterStudies[n];if(!s)return;s.illustration={src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(title)}.jpg`,alt:`古斯塔夫・多雷版畫：${alt}`,title:alt,source:W,artist:"Gustave Doré"};});
+const C="https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations";
+const art=(file,title,alt)=>({src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(file)}?width=960`,source:C,title,alt:`古斯塔夫・多雷版畫：${alt||title}`,artist:"Gustave Doré",testament:"OT"});
+const A={
+light:art("001.The Creation of Light.jpg","創造之光"),flood:art("007.The Great Flood.jpg","大洪水"),jacob:art("023.Jacob Prays for Protection.jpg","雅各祈求保護"),
+goliath:art("071A.David Slays Goliath.jpg","大衛擊殺歌利亞"),saul:art("072.Saul Attempts to Kill David.jpg","掃羅企圖殺大衛"),escape:art("073.David Escapes through a Window.jpg","大衛從窗戶逃走"),spared:art("074.David Shows Saul How He Spared His Life.jpg","大衛饒掃羅性命"),absalom:art("081.David Mourns the Death of Absalom.jpg","大衛哀悼押沙龍"),
+solomon:art("085.Solomon Receives the Queen of Sheba.jpg","所羅門接待示巴女王"),sennacherib:art("103.Sennacherib's Army Is Destroyed.jpg","西拿基立軍隊被毀"),ezra:art("114.Ezra Kneels in Prayer.jpg","以斯拉跪下禱告"),jeremiah:art("123.The Prophet Jeremiah.jpg","先知耶利米"),isaiah:art("120.The Prophet Isaiah.jpg","先知以賽亞")};
+const plan={26:A.ezra,27:A.light,28:A.jacob,29:A.flood,30:A.absalom,31:A.escape,32:A.isaiah,33:A.light,34:A.spared,35:A.saul,36:A.light,37:A.jacob,38:A.jeremiah,39:A.isaiah,40:A.jacob,41:A.absalom,42:A.jacob,43:A.ezra,44:A.sennacherib,45:A.solomon,46:A.sennacherib,47:A.goliath,48:A.sennacherib,49:A.jeremiah,50:A.isaiah};
+Object.entries(plan).forEach(([n,illustration])=>{const s=P.chapterStudies?.[n];if(s)s.illustration={...illustration};});
 })();
