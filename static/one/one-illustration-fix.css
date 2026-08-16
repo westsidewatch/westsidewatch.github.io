@@ -30,6 +30,29 @@
   text-align:right;
 }
 
+/* Cross-reference typography hierarchy.
+ * The scripture text is the primary reading voice; the reference is metadata.
+ */
+.connection-section .connection-grid strong{
+  display:block;
+  color:var(--one-gilt-dark);
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:clamp(.88rem,1.15vw,1rem);
+  font-weight:500;
+  line-height:1.5;
+  letter-spacing:.02em;
+}
+.connection-section blockquote{
+  max-width:56rem;
+  margin:1.1rem 0 0 4rem;
+  color:var(--one-ink);
+  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
+  font-size:clamp(1.2rem,1.8vw,1.5rem);
+  font-weight:400;
+  line-height:1.95;
+  letter-spacing:.01em;
+}
+
 @media(max-width:650px){
   .chapter-illustration{
     width:min(100%,30rem);
@@ -37,4 +60,8 @@
     padding:.65rem;
   }
   .chapter-illustration a{aspect-ratio:5/8}
+  .connection-section blockquote{
+    margin-left:0;
+    font-size:1.15rem;
+  }
 }
