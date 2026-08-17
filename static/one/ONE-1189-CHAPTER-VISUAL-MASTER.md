@@ -1,78 +1,46 @@
 # ONE — 1,189 Chapter Visual Master Inventory
 
-Status: ACTIVE · DORÉ BASELINE LOCKED · NO IMAGE GENERATION DURING AUDIT
+Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 205 LOCKED · NO IMAGE GENERATION DURING AUDIT
 
-ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260). Every chapter must ultimately have one canonical artwork identity, one portrait cover composition, one horizontal illustrated-Scripture spread, and one theme verse from that chapter.
+ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260).
 
-## Locked Doré baseline — 184 chapters
+## Locked Doré coverage checkpoint — 205 chapters
 
-The first Doré allocation pass is now frozen as a protected baseline:
+The current verified working checkpoint is frozen at **205 / 1,189 chapters** covered through the adopted Doré allocation/reuse audit.
 
-- `181` unique Protestant-canon chapters have a direct Doré chapter/verse assignment in the adopted Doré catalog audit.
-- `3` additional chapters are covered by explicit alternate/cross-reference assignments in the adopted catalog rather than by subjective thematic reuse.
-- Locked baseline: `184 / 1189` chapters.
-- Remaining chapters before semantic reuse audit: `1005`.
+- Earlier protected direct/catalog baseline: `184` chapters.
+- Additional defensible canonical reuse accumulated after deduplication: `21` chapters.
+- Current locked checkpoint: `205` chapters.
+- Chapters still uncovered at this checkpoint: `984`.
 
-These 184 chapter allocations are **protected historical mappings**. Later reuse analysis must not remove, overwrite, regenerate, or silently replace their canonical Doré assignment.
+This checkpoint must not be silently reduced, overwritten, regenerated, or recomputed from an incompatible counting convention. Any correction must be explicit and documented.
 
-For a locked chapter with multiple Doré plates:
+## Canonical Doré plate accounting
 
-1. one representative plate is selected for the portrait cover;
-2. all other directly assigned plates remain attached to that same chapter for its illustrated section;
-3. each plate receives its own title/caption and Scripture reference;
-4. surplus plates may be evaluated later for reuse elsewhere, but their original chapter association is never deleted.
+Adopted working corpus:
 
-The three catalog-supported alternate mappings are treated as `DORÉ-CROSSREF`, distinct from later editorial `DORÉ-REUSE`, so provenance remains auditable.
+- Complete Doré corpus: `241` plates.
+- Deuterocanonical/apocryphal/addition pool: `21` plates.
+- Protestant-canon-related Doré plates: `220` plates.
+- Canonical plates initially selected as native/direct cover representatives: `181` plates.
+- Canonical surplus/non-native-cover plates: `39` plates.
+
+The `39` canonical surplus plates have now all been dispositioned. Some created defensible new cover mappings; some are supporting illustrations in their original or parallel-event chapters. A plate that remains supporting-only is **not** falsely counted as a new chapter cover.
 
 ## Required chapter record
 
-Each of the 1,189 records must eventually contain:
+Each chapter record ultimately contains artwork status/provenance, mapping type, source/native aspect, theme verse, cover focal metadata, illustrated-spread layout, and audit notes.
 
-- book number / code / Chinese + English book name
-- chapter number
-- `artStatus`: `HISTORICAL` | `DORÉ-CROSSREF` | `DORÉ-REUSE` | `GENERATE-ONCE` | `FIXED-GENERATED` | `REVISION-REQUESTED`
-- verified Doré / historical artwork title, if applicable
-- exact Scripture reference depicted by the historical artwork
-- mapping type: `direct` | `catalog-crossref` | `semantic-reuse`
-- source URL / provenance
-- source/native aspect ratio (`portrait` | `landscape`)
-- canonical ONE asset path (for fixed local assets)
-- chapter theme verse reference + approved text
-- portrait-cover focal/crop metadata
-- horizontal spread layout (`landscape-with-verse` | `portrait-with-verse`)
-- Morning Star eligibility (only when compositionally appropriate)
-- audit notes
+Mapping states include `HISTORICAL`, `DORÉ-CROSSREF`, `DORÉ-REUSE`, `GENERATE-ONCE`, `FIXED-GENERATED`, and `REVISION-REQUESTED`.
 
 ## Doré reuse sequence
 
-Only after the locked 184-chapter baseline is preserved:
-
-1. evaluate Doré plates that have **not** been selected as a cover first, including additional plates from multi-plate chapters and deuterocanonical/apocryphal plates;
-2. map them to still-uncovered chapters only when the image meaning genuinely fits that chapter;
-3. after that pool is exhausted, evaluate Doré plates already used as covers for defensible semantic reuse;
-4. every reuse must preserve the original plate provenance and record a concrete `reuseReason`;
-5. visual mood alone is not sufficient evidence;
-6. only after this reuse audit is complete may the remaining uncovered chapter count become the ONE Studio generation count.
-
-## Canon structure / chapter totals
-
-Old Testament — 929 chapters.
-New Testament — 260 chapters.
-Total — 1,189 chapters.
-
-The canonical book/chapter totals remain those of the Protestant 66-book canon already established for ONE.
-
-## Historical source baseline
-
-Primary mapping baseline: chapter/verse-indexed catalogs of Gustave Doré's Bible illustrations, cross-checked where assignments are ambiguous. The complete Doré corpus is commonly cataloged as 241 Bible plates and includes deuterocanonical/apocryphal material. Those non-Protestant-canon plates remain available to the semantic reuse pool even though they do not create a direct canonical chapter mapping.
+1. Preserve the locked 205-chapter checkpoint.
+2. Next evaluate the `21` deuterocanonical/apocryphal/addition plates for defensible new cover mappings.
+3. After unused/non-cover pools are exhausted, evaluate Doré plates already used as covers for additional same-event or otherwise strongly defensible reuse.
+4. Every reuse records a concrete reason; visual mood alone is insufficient.
+5. Only after all Doré reuse auditing is complete may the remaining chapter count become the ONE Studio generation count.
 
 ## Production gate
 
-No bulk ONE Studio generation starts until the reuse audit yields exact counts for:
-
-- locked direct/cross-reference Doré chapters;
-- additional chapters covered by unused-plate semantic reuse;
-- additional chapters covered by already-used-plate semantic reuse;
-- final uncovered chapters requiring ONE Studio artwork.
-
-Generation then proceeds chapter-by-chapter from `GENERATE-ONCE`, never as an uncontrolled batch.
+No bulk ONE Studio generation starts during this audit.
