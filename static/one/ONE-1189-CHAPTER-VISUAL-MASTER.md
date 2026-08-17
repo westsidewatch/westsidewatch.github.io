@@ -1,84 +1,65 @@
 # ONE — 1,189 Chapter Visual Master Inventory
 
-Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 235 LOCKED · NO IMAGE GENERATION DURING AUDIT
+Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 254 LOCKED · NO IMAGE GENERATION DURING AUDIT
 
 ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260).
 
-## Locked checkpoint — 235 chapters
+## Locked checkpoint — 254 chapters
 
-The Doré coverage audit is now deduplicated through the canonical surplus-allocation stage.
+The Doré coverage audit is now deduplicated through the canonical-surplus and deuterocanonical/apocryphal/addition allocation stages.
 
-- Previous locked checkpoint: `205` unique chapters.
-- Canonical surplus plates audited: `39 / 39`.
-- The final 31 surplus plates were allocated into `30` unique wisdom/poetry cover targets because two plates share Psalm 44.
-- None of those 30 targets duplicated the previous 205-chapter ledger.
-- New locked total: **235 / 1,189 chapters**.
-- Remaining uncovered chapters at this checkpoint: **954**.
+- Previous locked checkpoint: `235` unique chapters.
+- Deuterocanonical/apocryphal/addition plates audited: `21 / 21`.
+- New unique chapter targets from those 21 plates after deduplication: `19`.
+- Two proposed targets were already covered by native Doré chapters: `1 Kings 18` and `2 Kings 6`.
+- New locked total: **254 / 1,189 chapters**.
+- Remaining uncovered chapters: **935**.
 
-This 235 count is now protected. Future audit stages may only add defensible new unique chapter mappings unless an explicit correction is documented.
+## 21 deuterocanonical/apocryphal/addition allocations
 
-## Canonical Doré corpus accounting
+1. Tobias and the Angel → Hebrews 13
+2. Raphael and the family of Tobit → Psalm 91
+3. Judith and Holofernes → Psalm 68
+4. Judith shows Holofernes' head → Psalm 149
+5. Esther Before the King → Esther 5
+6. Mattathias and the Apostate → 1 Kings 18 — DUPLICATE TARGET; chapter already covered by native Doré plate
+7. Mattathias appeals to Jewish refugees → Joel 3
+8. Judas Maccabeus pursues Timotheus → Psalm 144
+9. Death of Eleazar → Ecclesiastes 9
+10. Jonathan destroys the temple of Dagon → Isaiah 46
+11. Heliodorus cast down → Psalm 76
+12. Army appears in the heavens → 2 Kings 6 — DUPLICATE TARGET; chapter already covered by native Doré plate
+13. Martyrdom of Eleazar the Scribe → Revelation 2
+14. Courage of a Mother → Proverbs 31
+15. Punishment of Antiochus → Daniel 11
+16. Angel sent to deliver Israel → Psalm 34
+17. Judas Maccabeus before Nicanor → Psalm 20
+18. Baruch → Jeremiah 45
+19. Susanna in the Bath → Psalm 26
+20. Justification of Susanna → Psalm 7
+21. Daniel confounds the priests of Bel → Jeremiah 10
 
-- Complete adopted Doré corpus: `241` plates.
-- Protestant-canon-related plates: `220`.
-- Deuterocanonical/apocryphal/addition pool: `21`.
-- Canonical surplus pool audited/dispositioned: `39 / 39`.
-- Canonical surplus pool unaudited: `0`.
-
-## Locked wisdom/poetry cover allocations from the final 31 canonical surplus plates
-
-The following `30` unique chapter targets are now canonical `DORÉ-REUSE` cover mappings:
-
-### Psalms — 28 unique chapters
-
-- Psalm 3 — David mourning Absalom
-- Psalm 10 — death of Gideon's sons
-- Psalm 16 — burial of Jesus
-- Psalm 18 — Samson carrying the gates of Gaza
-- Psalm 22 — Crown of Thorns
-- Psalm 27 — Martha and Mary
-- Psalm 31 — Jesus arrives at Calvary
-- Psalm 33 — Gideon's 300
-- Psalm 37 — Jezebel's remains
-- Psalm 38 — Jesus falls beneath the cross
-- Psalm 39 — mourning Jephthah's daughter
-- Psalm 41 — Samson and Delilah
-- Psalm 42 — disciples mourning the dead Jesus
-- Psalm 44 — Amorite army destroyed; Massacre at Bethlehem is retained as a second/supporting plate for the same Psalm and does not create another chapter
-- Psalm 45 — Isaac meets Rebekah
-- Psalm 51 — Prodigal Son embraced by his father
-- Psalm 54 — Abishai saves David
-- Psalm 58 — children destroyed by bears
-- Psalm 69 — Jesus mocked
-- Psalm 79 — Levite carrying the woman's body
-- Psalm 88 — Jesus removed from the cross
-- Psalm 96 — apostles preach the Gospel
-- Psalm 103 — Good Samaritan at the inn
-- Psalm 107 — healing the demoniac
-- Psalm 118 — remaining Passion parallel plate
-- Psalm 119 — Jesus among the doctors
-- Psalm 121 — Flight into Egypt
-- Psalm 124 — child Moses on the Nile
-
-### Ecclesiastes — 2 unique chapters
-
-- Ecclesiastes 1 — Cross lifted up
-- Ecclesiastes 3 — Jesus nailed to the cross
-
-These are editorial ONE `DORÉ-REUSE` mappings. Original Doré provenance and original biblical assignment remain attached to every plate.
+All 21 plates retain their original Doré provenance. These are editorial ONE `DORÉ-REUSE` cover allocations, not claims about Doré's original canonical assignment.
 
 ## Deduplication result
 
-The final-31 allocation produces `28 Psalms + 2 Ecclesiastes = 30 unique new chapters`.
+The Doré OT catalog confirms native plates already exist for `1 Kings 18` (Prophets of Baal) and `2 Kings 6` (Famine in Samaria), so those two chapter targets cannot increase unique chapter coverage. The other 19 targets do not overlap the locked 235-chapter set.
 
-Psalm 44 receives two plates but counts only once. The previously locked 205 ledger contained Psalm 105 as a different reuse target, not any of the 28 Psalms listed above; therefore there is no overlap between this 30-chapter set and the 205 checkpoint.
+`235 + 19 = 254` unique covered chapters.
 
-`205 + 30 = 235` unique covered chapters.
+## Corpus accounting
+
+- Complete adopted Doré corpus: `241` plates.
+- Protestant-canon-related plates: `220`.
+- Canonical surplus pool: `39 / 39` audited/dispositioned.
+- Deuterocanonical/apocryphal/addition pool: `21 / 21` audited/dispositioned.
+- Unallocated plates in these two surplus pools: `0`.
 
 ## Next audit gate
 
-1. Preserve the locked 235-chapter checkpoint.
-2. Audit the `21` deuterocanonical/apocryphal/addition Doré plates for defensible new cover mappings.
-3. Then evaluate already-used Doré cover plates for further same-event or strongly defensible reuse.
-4. Only after Doré reuse is exhausted may the remaining uncovered chapter count become the ONE Studio generation count.
-5. No ONE Studio bulk image generation during this audit.
+1. Preserve the locked 254-chapter checkpoint.
+2. Evaluate Doré plates already used as covers for further same-event or strongly defensible reuse in still-uncovered chapters.
+3. Prefer explicit parallel passages, direct quotation/allusion, historical identity, or unusually strong thematic correspondence.
+4. Do not count a target chapter twice.
+5. Only after Doré reuse is exhausted may the remaining uncovered chapter count become the ONE Studio generation count.
+6. No ONE Studio bulk image generation during this audit.
