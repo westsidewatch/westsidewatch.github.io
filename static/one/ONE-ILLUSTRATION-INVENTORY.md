@@ -13,6 +13,21 @@ This inventory implements `ONE-VISUAL-STANDARD.md`. It exists to prevent duplica
 
 Runtime code must never generate images. Generation is an editorial production step; accepted images are repository assets.
 
+## Artwork / cover separation
+
+ONE produces **chapter artwork, not precomposed cover images**.
+
+Each chapter has at most one canonical artwork asset. That same artwork is reused in two contexts:
+
+1. the shared ONE cover renderer places it beneath the canonical ornate frame, book/chapter typography, brand gold and any contextually appropriate Morning Star;
+2. the chapter body may display the same artwork as an illustration without duplicating or regenerating the image.
+
+Historical Doré/approved engravings and ONE Studio generated engravings are therefore equivalent at the renderer boundary: both are canonical chapter artwork. Their provenance differs, but the cover system does not.
+
+Never generate title typography, chapter numbers, production metadata, asset paths, status labels, dates, ornate UI frames or other cover-template elements inside a generated artwork asset. Those belong to the shared renderer.
+
+Do not create separate `cover` and `illustration` generated files for one chapter. **One chapter artwork asset feeds both uses.**
+
 ## Current priority inventory
 
 ### Psalms — 150 chapters
