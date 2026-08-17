@@ -115,4 +115,8 @@
   };
 
   applyAll();
+  /* Round 3 is mapping data only. It replaces R.maps and calls this same policy
+   * to reapply covers, preserving ONE_COVER_POLICY as the sole illustration writer.
+   */
+  document.write('<script src="./one-dore-round3-maps.js?v=20260817a"><\/script>');
 })();
