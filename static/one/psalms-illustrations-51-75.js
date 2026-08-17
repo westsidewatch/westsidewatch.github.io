@@ -1,2 +1,9 @@
-/* Psalms 51-75: OT only. */
-(()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P?.chapterStudies)return;const W="https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations";const pool={repent:["The Prophet Isaiah","先知呼召悔改"],refuge:["Jacob Prays for Protection","雅各祈求保護"],exile:["Daniel among the Exiles","被擄中的百姓"],deliver:["The Egyptians Drown in the Sea","耶和華施行拯救"],ark:["The Ark Is Returned to Beth-shemesh","約櫃與神的同在"],king:["The Judgment of Solomon","君王與公義"],jerusalem:["Nehemiah Views the Ruins of Jerusalem's Walls","耶路撒冷與聖城"],law:["Ezra Reads the Law to the People","律法與敬拜"],wilderness:["Hagar and Ishmael in the Wilderness","曠野中的呼求"],judgment:["The Death of Korah, Dathan, and Abiram","神施行審判"]};const map={51:"repent",52:"judgment",53:"repent",54:"refuge",55:"refuge",56:"refuge",57:"refuge",58:"judgment",59:"refuge",60:"deliver",61:"refuge",62:"refuge",63:"wilderness",64:"refuge",65:"law",66:"deliver",67:"law",68:"ark",69:"refuge",70:"refuge",71:"refuge",72:"king",73:"law",74:"jerusalem",75:"judgment"};Object.entries(map).forEach(([n,k])=>{const s=P.chapterStudies[n],x=pool[k];if(!s||!x)return;s.illustration={src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(x[0])}.jpg`,alt:`古斯塔夫・多雷舊約版畫：${x[1]}`,title:x[1],source:W,artist:"Gustave Doré",testament:"OT"};});})();
+/* Psalms ONE · 51–75.
+ * The former mood/theme pool (refuge, judgment, law, etc.) recycled unrelated
+ * Doré scenes and is retired. Historical art must be chapter-specific; otherwise
+ * the Psalm intentionally remains without an illustration until its canonical
+ * chapter-specific engraving is generated.
+ */
+(()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P?.chapterStudies)return;
+for(let n=51;n<=75;n+=1){const s=P.chapterStudies[n];if(s)delete s.illustration;}
+})();
