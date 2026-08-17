@@ -1,33 +1,11 @@
-/* ONE Doré cover registry.
- * Generated from the rebuilt Doré mapping tables.
- * Priority: original/direct > direct parallel > canonical parallel > semantic > deuterocanonical semantic.
- * This registry is intentionally data-only; one-dore-cover-apply.js resolves it against loaded ONE books.
- */
+/* ONE Doré cover registry — authoritative cover layer for completed study chapters. */
 (() => {
   "use strict";
-  window.ONE_DORE_COVER_REGISTRY = window.ONE_DORE_COVER_REGISTRY || {
-    version: "2026-08-17",
-    mappingBranch: "data/dore-241-master-mapping",
-    completedBooks: {
-      Genesis: 50,
-      "1 Samuel": 31,
-      "2 Samuel": 24,
-      Psalms: 150,
-      Isaiah: 66,
-      Matthew: 28,
-      Mark: 16,
-      Luke: 24,
-      John: 21,
-      "1 Thessalonians": 5,
-      "2 Thessalonians": 3
-    },
-    totalCompletedChapters: 418,
-    mappingFiles: [
-      "ONE-DORE-STAGE2-PRIMARY-COVERS.tsv",
-      "ONE-DORE-STAGE3A-DIRECT-PARALLELS.tsv",
-      "ONE-DORE-STAGE3B-CANONICAL-PARALLELS.tsv",
-      "ONE-DORE-STAGE4-SEMANTIC-EXPANSION.tsv",
-      "ONE-DORE-STAGE5-DEUTEROCANON-TO-CANON.tsv"
-    ]
-  };
+  const D=window.ONE_DATA;
+  if(!D)return;
+  const MASTER={1:"The Creation of Light",7:"The Deluge",11:"Abraham Journeying into the Land of Canaan",15:"Hagar and Ishmael in the Wilderness",23:"The Prayer of Jacob",28:"Joseph Makes Himself Known to His Brethren",36:"The Egyptians Urge Moses to Depart",37:"The Egyptians Drowned in the Red Sea",38:"Moses Striking the Rock in Horeb",39:"The Giving of the Law Upon Mt. Sinai",40:"Moses Coming Down From Mt. Sinai",43:"Death of Korah, Dathan, and Abiram",46:"The Children of Israel Crossing Jordan",57:"The Midianites Put to Flight",70:"Naomi and Her Daughters-In-Law",71:"Boaz and Ruth",72:"Return of the Ark to Bethshemesh",75:"David and Goliath",76:"Saul Attempts the Life of David",77:"The Escape of David Through the Window",78:"David and Jonathan",79:"David Showing Saul that He had Spared His Life",85:"David Mourning the Death of Absalom",88:"Judgment of Solomon",89:"Cutting Down Cedars for the Construction of the Temple",93:"Elijah Nourished by an Angel",103:"Destruction of the Army of Sennacherib",108:"Solomon Receiving the Queen of Sheba",111:"Cyrus Restoring the Vessels of the Temple",112:"The Rebuilding of the Temple",114:"Ezra in Prayer",115:"Nehemiah Viewing Secretly the Ruins of the Walls of Jerusalem",116:"Ezra Reading the Law in the Hearing of the People",121:"Job and His Friends",122:"Isaiah",125:"Jeremiah",127:"The People Mourning Over the Ruins of Jerusalem",130:"Daniel"};
+  const psalms={1:75,2:75,3:85,4:85,5:23,6:85,7:79,8:75,9:75,10:76,11:77,12:76,13:77,14:76,15:78,16:78,17:79,18:75,19:75,20:75,21:75,22:122,23:78,24:75,25:23,26:114,27:1,28:23,29:7,30:85,31:77,32:122,33:1,34:79,35:76,36:1,37:23,38:125,39:122,40:23,41:85,42:23,43:114,44:103,45:108,46:103,47:75,48:103,49:125,50:122,51:122,52:43,53:122,54:23,55:23,56:23,57:23,58:43,59:23,60:37,61:23,62:23,63:15,64:23,65:116,66:37,67:116,68:72,69:23,70:23,71:23,72:88,73:116,74:115,75:43,76:103,77:37,78:38,79:127,80:127,81:111,82:88,83:57,84:111,85:111,86:23,87:127,88:121,89:88,90:40,91:93,92:122,93:7,94:88,95:38,96:72,97:122,98:72,99:40,100:72,101:88,102:127,103:23,104:1,105:28,106:39,107:46,108:23,109:23,110:88,111:39,112:116,113:70,114:37,115:39,116:23,117:116,118:46,119:116,120:11,121:11,122:115,123:23,124:46,125:115,126:111,127:89,128:71,129:36,130:115,131:71,132:72,133:39,134:89,135:57,136:37,137:130,138:23,139:1,140:23,141:39,142:23,143:23,144:75,145:23,146:15,147:112,148:1,149:57,150:72};
+  const attach=(study,id,stage)=>{if(!study||!id)return false;study.doreCover={id:String(id).padStart(3,"0"),title:MASTER[id]||study.illustration?.title||"Gustave Doré",stage};if(study.illustration){study.illustration={...study.illustration,doreId:study.doreCover.id,title:study.doreCover.title,artist:"Gustave Doré"};return true}return false};
+  let linked=0;const P=D.psalms;if(P?.chapterStudies)Object.entries(psalms).forEach(([chapter,id])=>{if(attach(P.chapterStudies[chapter],id,"STAGE6_PSALMS"))linked+=1});
+  window.ONE_DORE_COVER_REGISTRY={version:"2026-08-17",master:MASTER,completedBooks:{Genesis:50,"1 Samuel":31,"2 Samuel":24,Psalms:150,Isaiah:66,Matthew:28,Mark:16,Luke:24,John:21,"1 Thessalonians":5,"2 Thessalonians":3},totalCompletedChapters:418,linkedChapters:linked,psalms};document.documentElement.dataset.doreRegistry="active";document.documentElement.dataset.doreLinked=String(linked);
 })();
