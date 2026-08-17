@@ -1,6 +1,6 @@
-/* ONE Cover + Illustration Visual System v2 — CANONICAL PRESENTATION LAYER.
- * Loaded last by index.html. No legacy illustration/fix stylesheet may override it.
- * Presentation only: never changes chapter -> Doré asset mapping.
+/* ONE Cover + Illustration Visual System v2 — CANONICAL PRESENTATION LAYER
+ * Single authority for chapter cover + chapter illustration presentation.
+ * Never changes chapter -> Doré asset mapping.
  */
 :root{
   --one-brand-gold:#cebd74;
@@ -11,149 +11,67 @@
   --one-gilt-foil:linear-gradient(92deg,#8e7430 0%,#cebd74 24%,#e7d99a 47%,#cebd74 72%,#8e7430 100%);
 }
 
-/* APPROVED COVER — full image under type. The renderer writes the fixed asset to
- * --chapter-engraving; that variable is the canonical visual source.
+/* COVER — the semantic fixed-asset <img> is itself the full-bleed artwork.
+ * This removes dependency on a CSS custom-property background for visibility.
  */
+.now{display:block!important;padding:clamp(1rem,3vw,3rem) 0!important;}
 .now__intro{
-  position:relative;
+  position:relative!important;
+  display:block!important;
   isolation:isolate;
   overflow:hidden;
-  min-height:clamp(42rem,76vw,64rem);
-  border:1px solid rgba(231,217,154,.98);
-  background-color:var(--one-binding-deep);
-  background-image:
-    linear-gradient(180deg,rgba(6,7,5,.01) 0%,rgba(6,7,5,.03) 38%,rgba(6,7,5,.14) 56%,rgba(6,7,5,.62) 79%,rgba(6,7,5,.86) 100%),
-    var(--chapter-engraving);
-  background-position:center,center;
-  background-size:100% 100%,cover;
-  background-repeat:no-repeat;
-  box-shadow:
-    inset 0 0 0 4px rgba(8,9,6,.84),
-    inset 0 0 0 5px rgba(231,217,154,.94),
-    inset 0 0 0 11px rgba(8,9,6,.68),
-    inset 0 0 0 12px rgba(206,189,116,.62),
-    0 1.6rem 4rem rgba(20,15,6,.2),
-    0 0 1.1rem rgba(206,189,116,.12);
-}
-.now__intro::before,
-.now__intro::after{
-  position:absolute;
-  z-index:7;
-  pointer-events:none;
-  content:"";
+  width:min(100%,62rem)!important;
+  min-height:clamp(42rem,76vw,64rem)!important;
+  padding:0!important;
+  border:1px solid rgba(231,217,154,.98)!important;
+  background:var(--one-binding-deep)!important;
+  box-shadow:inset 0 0 0 4px rgba(8,9,6,.84),inset 0 0 0 5px rgba(231,217,154,.94),inset 0 0 0 11px rgba(8,9,6,.68),inset 0 0 0 12px rgba(206,189,116,.62),0 1.6rem 4rem rgba(20,15,6,.2),0 0 1.1rem rgba(206,189,116,.12)!important;
 }
 .now__intro::before{
-  inset:1.02rem;
-  border:1px solid rgba(231,217,154,.94);
-  box-shadow:
-    0 0 .35rem rgba(231,217,154,.24),
-    inset 0 0 0 5px rgba(8,9,6,.16),
-    inset 0 0 0 6px rgba(206,189,116,.48);
+  display:block!important;position:absolute;z-index:7;inset:1.02rem;border:1px solid rgba(231,217,154,.94);box-shadow:0 0 .35rem rgba(231,217,154,.24),inset 0 0 0 5px rgba(8,9,6,.16),inset 0 0 0 6px rgba(206,189,116,.48);content:"";pointer-events:none;
 }
-/* Four gilt corner ornaments. Brighter than the former patch, but still antique foil. */
 .now__intro::after{
-  inset:1.12rem;
-  opacity:1;
-  background:
-    radial-gradient(ellipse 1.7rem .36rem at 1.25rem 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),
-    radial-gradient(ellipse .36rem 1.7rem at 1.25rem 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),
-    radial-gradient(circle at 1.25rem 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),
-    radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),
-    radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),
-    radial-gradient(circle at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),
-    radial-gradient(ellipse 1.7rem .36rem at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),
-    radial-gradient(ellipse .36rem 1.7rem at 1.25rem calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),
-    radial-gradient(circle at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),
-    radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),
-    radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),
-    radial-gradient(circle at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem);
+  display:block!important;position:absolute;z-index:7;inset:1.12rem;opacity:1;content:"";pointer-events:none;
+  background:radial-gradient(ellipse 1.7rem .36rem at 1.25rem 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at 1.25rem 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at 1.25rem 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at 1.25rem calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem);
   filter:drop-shadow(0 0 .22rem rgba(231,217,154,.3));
 }
-
-/* Semantic image remains available for alt/source behavior but does not control cover layout. */
 .chapter-cover-art:not([hidden]){
-  display:block;
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  min-height:100%;
-  object-fit:cover;
-  object-position:center;
-  opacity:.001;
-  pointer-events:none;
+  display:block!important;position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;opacity:1!important;pointer-events:none;filter:grayscale(1) sepia(.25) saturate(.72) contrast(1.13) brightness(.68)!important;
 }
 .chapter-cover-overlay{
-  position:relative;
-  z-index:3;
-  min-height:clamp(42rem,76vw,64rem);
-  display:flex;
-  flex-direction:column;
-  justify-content:flex-end;
-  align-items:center;
-  gap:clamp(.65rem,1.6vw,1.15rem);
-  padding:clamp(5rem,12vw,10rem) clamp(2.2rem,7vw,6rem) clamp(4rem,8vw,6.5rem);
-  text-align:center;
-  background:linear-gradient(180deg,transparent 0 48%,rgba(6,7,5,.12) 58%,rgba(6,7,5,.42) 74%,rgba(6,7,5,.72) 100%);
+  position:relative!important;z-index:3!important;min-height:clamp(42rem,76vw,64rem)!important;display:flex!important;flex-direction:column;justify-content:flex-end!important;align-items:center!important;gap:clamp(.65rem,1.6vw,1.15rem)!important;padding:clamp(5rem,12vw,10rem) clamp(2.2rem,7vw,6rem) clamp(4rem,8vw,6.5rem)!important;text-align:center;background:linear-gradient(180deg,rgba(6,7,5,.02) 0 42%,rgba(6,7,5,.14) 58%,rgba(6,7,5,.52) 78%,rgba(6,7,5,.82) 100%)!important;
 }
-.chapter-cover-book,.chapter-cover-chapter{
-  position:relative;width:min(100%,46rem);margin-inline:auto;text-shadow:0 2px 12px rgba(0,0,0,.78);
-}
-.chapter-cover-book h2{
-  display:flex;flex-direction:column;gap:.12em;margin:0;
-  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
-  font-size:clamp(2.7rem,6.8vw,6.4rem);font-weight:500;line-height:1.08;letter-spacing:.06em;text-wrap:balance;
-  background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent;
-  filter:drop-shadow(0 0 .16rem rgba(231,217,154,.24));
-}
-.chapter-cover-book h2 i{
-  margin-top:.48rem;font-family:"Cormorant Garamond",serif;font-size:clamp(1rem,1.8vw,1.35rem);font-weight:400;letter-spacing:.17em;color:rgba(245,233,188,.96);-webkit-text-fill-color:rgba(245,233,188,.96);
-}
-.chapter-cover-book p{
-  margin:.72rem 0 0;color:rgba(231,217,154,.92);font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(.82rem,1.2vw,1rem);letter-spacing:.14em;
-}
-.chapter-cover-chapter{padding-top:clamp(.9rem,1.8vw,1.35rem);background:none;}
-.chapter-cover-chapter::before{top:0;right:18%;left:18%;height:1px;border:0;background:var(--one-gilt-foil);box-shadow:0 0 .32rem rgba(231,217,154,.32);}
-.chapter-cover-chapter::after{display:none}
+.chapter-cover-book,.chapter-cover-chapter{position:relative;width:min(100%,46rem);margin-inline:auto;text-shadow:0 2px 12px rgba(0,0,0,.78)}
+.chapter-cover-book h2{display:flex;flex-direction:column;gap:.12em;margin:0;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(2.7rem,6.8vw,6.4rem);font-weight:500;line-height:1.08;letter-spacing:.06em;background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 .16rem rgba(231,217,154,.24))}
+.chapter-cover-book h2 i{margin-top:.48rem;font-family:"Cormorant Garamond",serif;font-size:clamp(1rem,1.8vw,1.35rem);font-weight:400;letter-spacing:.17em;color:rgba(245,233,188,.96);-webkit-text-fill-color:rgba(245,233,188,.96)}
+.chapter-cover-book p{margin:.72rem 0 0;color:rgba(231,217,154,.92);font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(.82rem,1.2vw,1rem);letter-spacing:.14em}
+.chapter-cover-chapter{padding-top:clamp(.9rem,1.8vw,1.35rem)!important;background:none!important;border:0!important}
+.chapter-cover-chapter::before{top:0!important;right:18%!important;left:18%!important;height:1px!important;border:0!important;background:var(--one-gilt-foil)!important;box-shadow:0 0 .32rem rgba(231,217,154,.32)}
+.chapter-cover-chapter::after{display:none!important}
 .chapter-cover-chapter span{font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:.76rem;letter-spacing:.22em;color:rgba(231,217,154,.9)}
-.chapter-cover-chapter strong{
-  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(1.35rem,2.6vw,2.1rem);font-weight:500;
-  background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent;
-}
+.chapter-cover-chapter strong{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(1.35rem,2.6vw,2.1rem);font-weight:500;background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent}
 .chapter-cover-chapter p{margin:.35rem 0 0;font-size:clamp(1rem,1.6vw,1.22rem);color:rgba(255,249,224,.96)}
+.morning-star{position:relative;width:clamp(2.5rem,4.5vw,4rem);margin:.15rem auto 0;opacity:1;filter:drop-shadow(0 0 .48rem rgba(231,217,154,.3))}
+.morning-star img{display:block;width:100%;height:auto}.morning-star figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
-/* Canonical Dawn Morning Star. */
-.morning-star{position:relative;width:clamp(2.5rem,4.5vw,4rem);margin:.15rem auto 0;opacity:1;filter:drop-shadow(0 0 .48rem rgba(231,217,154,.3));}
-.morning-star img{display:block;width:100%;height:auto}
-.morning-star figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-
-/* APPROVED BODY ILLUSTRATION — archival 5:8 engraving plate. */
-.chapter-illustration{
-  position:relative;display:grid;justify-items:center;overflow:visible;
-  width:min(100%,46rem);margin:clamp(2.5rem,5vw,4.5rem) auto 0;padding:clamp(.9rem,1.8vw,1.35rem);
-  border:1px solid rgba(142,116,48,.84);border-radius:0;
-  background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface);
-  box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12);
+/* FRONTISPIECE — chapter artwork must fill the whole inner leaf, not sit as a narrow contained strip. */
+.book-frontispiece::after{
+  inset:0!important;
+  background-image:linear-gradient(rgba(222,208,150,.72),rgba(222,208,150,.72)),var(--one-chapter-engraving)!important;
+  background-position:center,center!important;
+  background-size:cover,cover!important;
+  background-repeat:no-repeat!important;
+  opacity:.42!important;
+  filter:grayscale(1) sepia(.28) contrast(1.05)!important;
+  -webkit-mask-image:none!important;mask-image:none!important;
 }
-.chapter-illustration::before{position:absolute;inset:.48rem;border:1px solid rgba(231,217,154,.5);content:"";pointer-events:none;}
-.chapter-illustration a{display:grid;place-items:center;width:100%;aspect-ratio:5/8;overflow:hidden;background:#1a1913;}
-.chapter-illustration img{display:block;width:100%;height:100%;max-width:100%;max-height:none;object-fit:contain;object-position:center;filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.92);}
-.chapter-illustration figcaption{justify-self:end;width:100%;padding:.75rem .2rem .05rem;text-align:right;color:rgba(101,76,27,.86);font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif;letter-spacing:.04em;}
 
-/* Shared cross-reference hierarchy retained as canonical study typography, not a patch. */
-.connection-section .connection-grid strong{display:block;color:var(--one-gilt-dark);font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(.9rem,1vw,1.02rem);font-weight:500;line-height:1.55;letter-spacing:.01em;}
-.connection-section .connection-grid small,.connection-section .connection-scripture,.connection-section .connection-note{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:var(--one-body-size);font-weight:400;line-height:1.95;letter-spacing:0;}
-.connection-section .connection-grid small{display:block;margin-top:.45rem;color:var(--one-gilt-dark)}
-.connection-section .connection-scripture{max-width:56rem;margin:1rem 0 0;color:var(--one-ink)}
-.connection-section .connection-note{max-width:56rem;margin:1rem 0 0;color:rgba(16,42,67,.72)}
+/* BODY ILLUSTRATION — approved archival 5:8 engraving plate. */
+.chapter-illustration{position:relative;display:grid!important;justify-items:center;overflow:visible;width:min(100%,46rem)!important;margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;padding:clamp(.9rem,1.8vw,1.35rem)!important;border:1px solid rgba(142,116,48,.84)!important;border-radius:0!important;background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12)!important}
+.chapter-illustration::before{position:absolute;inset:.48rem;border:1px solid rgba(231,217,154,.5);content:"";pointer-events:none}
+.chapter-illustration a{display:grid!important;place-items:center;width:100%!important;aspect-ratio:5/8!important;overflow:hidden!important;background:#1a1913!important}
+.chapter-illustration img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.92)!important}
+.chapter-illustration figcaption{justify-self:end;width:100%;padding:.75rem .2rem .05rem;text-align:right;color:rgba(101,76,27,.86);font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif;letter-spacing:.04em}
 
-@media(max-width:650px){
-  .now__intro::before{inset:.7rem}.now__intro::after{inset:.8rem}
-  .chapter-cover-overlay{min-height:78svh;padding:4rem 1.5rem 3.5rem}
-  .chapter-cover-book h2{font-size:clamp(2.3rem,12vw,4rem)}
-  .chapter-illustration{width:min(100%,30rem);padding:.65rem}
-  .chapter-illustration a{aspect-ratio:5/8}
-  .connection-section .connection-grid strong{font-size:.9rem}
-  .connection-section .connection-grid small,.connection-section .connection-scripture,.connection-section .connection-note{font-size:1rem}
-}
+@media(max-width:650px){.now__intro::before{inset:.7rem}.now__intro::after{inset:.8rem}.chapter-cover-overlay{min-height:78svh!important;padding:4rem 1.5rem 3.5rem!important}.chapter-cover-book h2{font-size:clamp(2.3rem,12vw,4rem)}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}
