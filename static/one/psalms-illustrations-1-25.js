@@ -1,5 +1,5 @@
 /* 詩篇 ONE：第 1–25 篇插圖。只使用舊約 Doré；不使用 NT fallback。 */
-(()=>{"use strict";const P=window.ONE_DATA?.studyBooks?.[19];if(!P?.chapterStudies)return;
+(()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P?.chapterStudies)return;
 const commons=(file,title,alt)=>({src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(file)}?width=960`,source:`https://commons.wikimedia.org/wiki/File:${file.replaceAll(' ','_')}`,title,alt:`古斯塔夫・多雷版畫：${alt||title}`,artist:"Gustave Doré",testament:"OT"});
 const A={g:commons("071A.David Slays Goliath.jpg","大衛擊殺歌利亞"),s:commons("072.Saul Attempts to Kill David.jpg","掃羅企圖殺大衛"),e:commons("073.David Escapes through a Window.jpg","大衛從窗戶逃走"),j:commons("073A.David and Jonathan.jpg","大衛與約拿單"),p:commons("074.David Shows Saul How He Spared His Life.jpg","大衛饒掃羅性命"),a:commons("081.David Mourns the Death of Absalom.jpg","大衛哀悼押沙龍"),r:commons("025.Jacob Prays for Protection.jpg","雅各祈求保護"),i:commons("120.The Prophet Isaiah.jpg","先知以賽亞")};
 const plan={1:A.g,2:A.g,3:A.a,4:A.a,5:A.r,6:A.a,7:A.p,8:A.g,9:A.g,10:A.s,11:A.e,12:A.s,13:A.e,14:A.s,15:A.j,16:A.j,17:A.p,18:A.g,19:A.g,20:A.g,21:A.g,22:A.i,23:A.j,24:A.g,25:A.r};Object.entries(plan).forEach(([n,a])=>{if(P.chapterStudies[n])P.chapterStudies[n].illustration={...a}});})();
