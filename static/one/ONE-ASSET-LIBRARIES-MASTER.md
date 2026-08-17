@@ -4,6 +4,20 @@ Status: **LOCKED / CANONICAL / PROJECT-WIDE**
 
 This document is the binding asset-library companion to `ONE-COVER-ILLUSTRATION-MASTER.md` and `one-cover-policy.js`.
 
+## 0. Mandatory Living Studio gate
+
+Before **every** attempt to generate, regenerate or substantially revise a Doré-continuation image, the working process must first review the current:
+
+- `ONE-DORE-LIVING-STUDIO.md`;
+- `ONE-DORE-VISUAL-GRAMMAR.md`;
+- relevant accumulated Scripture-to-image studies, reference ancestry and lessons from earlier generations.
+
+This gate cannot be skipped because a chapter was generated before, because a prompt already exists, or because the subject appears simple.
+
+The master rule is stable: **always consult the Living Studio before generation.**
+
+The Living Studio itself is deliberately allowed to grow. Its artistic conclusions, Scripture-image observations, failures and specialist grammars should become more precise as the project studies more canonical Doré plates and reviews more ONE Studio work.
+
 ## 1. Two libraries, one resolver
 
 ONE permanently separates illustration provenance into two asset libraries.
@@ -126,3 +140,9 @@ Revelation establishes the first full use of this architecture:
 - all assets, regardless of library, are presented by the same canonical full-bleed cover and 5:8 body-plate system.
 
 Any local book rule that writes a generated/non-Doré image into the Doré 241 library is invalid.
+
+## 7. Long-term product boundary
+
+The ONE Studio library is also the asset foundation for a future standalone Scripture-image product. Therefore every new generated plate should progressively accumulate Scripture reference, scene rationale, visual ancestry, revision history and provenance sufficient to be presented independently from the ONE reader.
+
+The canonical Doré Original Library remains separate permanently. The standalone product may present the two bodies of work together editorially, but must preserve truthful authorship and provenance metadata.
