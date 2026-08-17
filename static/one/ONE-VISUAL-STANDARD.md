@@ -66,6 +66,27 @@ Do **not** continue creatively drifting the style. The approved examples are the
 
 The generated scene must be derived from the chapter's actual subject, people, geography, action, prophetic imagery and theological emphasis. Do not invent a generic biblical scene simply to fill space.
 
+### One-generation / fixed-asset rule
+
+Generated chapter illustrations are **persistent production assets, not disposable runtime output**.
+
+For every chapter that requires a generated illustration:
+
+1. Read and understand the actual chapter content first.
+2. Generate **one deliberate candidate** in the canonical ONE / Doré-like style.
+3. Once that candidate is accepted into the repository, it becomes the fixed canonical illustration for that chapter.
+4. Store and reference the accepted image as a stable asset; page loads, builds, future sessions and new book work must reuse that exact asset.
+5. **Never automatically regenerate an accepted illustration.**
+6. **Never generate multiple alternatives by default.** Do not create batches, exploratory variants, alternate compositions or repeated generations merely to “improve” a chapter.
+7. If the accepted image is not satisfactory, wait for explicit editorial feedback describing what should change. Only then create a revised version addressing that feedback.
+8. After a revision is explicitly approved, that revised image replaces the earlier asset and becomes the new fixed canonical version. Do not continue generating more versions after approval.
+9. A code refactor, renderer change, metadata cleanup, book rebuild, cache change or new session must never trigger illustration regeneration.
+10. `pendingGeneratedIllustrations` means “a chapter still needs its first canonical asset”; it must never mean “regenerate an existing asset”.
+
+This rule applies to **all current and future ONE books and all 66-book production work**. Illustration generation is an editorial creation step performed once per missing chapter, not an ongoing automated process.
+
+The purpose is stability, cost/control, visual continuity and editorial traceability: each chapter should have one known illustration identity unless a human explicitly requests a revision.
+
 ## 5. Canonical ornate frame
 
 The newly approved dark antique cover with the fine **brand-gold double-line frame and floral/baroque corner ornaments** is the canonical frame for ONE chapter covers.
@@ -306,6 +327,8 @@ When fixing a bug, first inspect the load order and reuse the previously working
 - Historical source images may retain source attribution, but production behavior should not depend on unstable redirects if a local approved copy is legally/practically appropriate.
 - The approved antique textures are retained as ONE library assets for title pages, dividers, empty/loading states, resource cards and editorial interstitials.
 - A chapter illustration must be explicitly associated with its own chapter.
+- **Every approved generated chapter illustration must be stored/referenced as a fixed canonical asset and reused exactly; it must not be regenerated on demand.**
+- Replacing a generated illustration requires explicit editorial revision, not automatic variation.
 - Missing data must not inherit stale assets from a previous book/chapter.
 - Keep `illustration`, `map`, `timeline`, `scripture`, `connections` and study fields semantically separate.
 
@@ -345,7 +368,7 @@ The antique texture backgrounds created during development are retained as reusa
 For finished chapter covers:
 
 - verified suitable illustration → use it;
-- otherwise → generate a chapter-specific illustration in the canonical ONE style.
+- otherwise → generate a chapter-specific illustration in the canonical ONE style **once**, save it as the chapter's fixed asset, and reuse it thereafter.
 
 Antique textures remain valid where illustration is intentionally not the content.
 
@@ -378,6 +401,7 @@ Before a book/change is considered complete, verify at minimum:
 - no unrelated or stale image is inherited;
 - historical image, if used, is genuinely relevant;
 - generated image, if used, reflects the actual chapter;
+- generated image is the fixed approved chapter asset and is not being regenerated automatically;
 - historical and generated covers belong to the same ONE family;
 - canonical ornate gold frame is present;
 - brand gold is consistent;
