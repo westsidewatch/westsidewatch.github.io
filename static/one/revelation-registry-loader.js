@@ -1,1 +1,0 @@
-/* Temporary loader is intentionally not used. Revelation is loaded explicitly by index.html. */
