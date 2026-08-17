@@ -1,6 +1,24 @@
 /* ONE cover policy — the central Doré registry is the only cover authority.
  * Book/chapter files may contain legacy illustration fields, but they are ignored and cleared here.
  * Future books must register Book+Chapter -> Doré ID in ONE_DORE_COVER_REGISTRY.maps.
+ *
+ * MASTER DORÉ ALLOCATION RULE — applies to the whole Bible, including chapters not yet built in ONE.
+ * Existing/earlier-produced ONE pages NEVER outrank the Doré source relationship.
+ * Priority is permanently:
+ *   P1 ORIGINAL_LOCKED       Doré's original/canonical scripture placement. Immutable.
+ *   P2 OFFICIAL_PARALLEL     Official/direct parallel scripture use.
+ *   P3 HISTORICAL_MATCH      Same person, event, or historical setting.
+ *   P4 TYPOLOGY              Clear theological/typological/fulfilment relationship.
+ *   P5 SEMANTIC_EXPANSION    Strong match by the actual meaning of the illustration.
+ *   P6 DEUTEROCANON_EXPANSION Deuterocanonical Doré plate reused by meaning.
+ *   P7 VISUAL_DIVERSITY      De-duplication, opening-cover variety, and local spacing only.
+ *
+ * P1 is a permanent lock: no later round, de-duplication pass, visual adjustment,
+ * already-built-page preference, or future-book implementation may overwrite it.
+ * P2-P6 may only be replaced by a STRICTLY HIGHER priority relationship.
+ * P7 may never override P1-P6; it is only a tie-breaker among otherwise valid candidates.
+ * The 241 fixed Doré asset IDs/files are likewise stable and must never be renumbered
+ * or rematched merely to accommodate pages already present in ONE.
  */
 (() => {
   "use strict";
@@ -108,6 +126,17 @@
   window.ONE_COVER_POLICY = {
     mode: "CENTRAL_DORE_ONLY",
     legacyCoverRulesEnabled: false,
+    allocationPriority: Object.freeze({
+      ORIGINAL_LOCKED: 1,
+      OFFICIAL_PARALLEL: 2,
+      HISTORICAL_MATCH: 3,
+      TYPOLOGY: 4,
+      SEMANTIC_EXPANSION: 5,
+      DEUTEROCANON_EXPANSION: 6,
+      VISUAL_DIVERSITY: 7
+    }),
+    originalDoréPlacementLocked: true,
+    builtPagesHavePriority: false,
     clearLegacyCovers,
     applyBook,
     applyAll,
