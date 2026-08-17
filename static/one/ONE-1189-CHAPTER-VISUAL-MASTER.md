@@ -1,82 +1,49 @@
 # ONE — 1,189 Chapter Visual Master Inventory
 
-Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 367 LOCKED · NO IMAGE GENERATION DURING AUDIT
+Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 376 LOCKED · NO IMAGE GENERATION DURING AUDIT
 
 ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260).
 
-## Locked checkpoint — 367 chapters
+## Locked checkpoint — 376 chapters
 
-The Doré allocation/reuse audit is now locked through direct/native coverage, canonical surplus allocation, deuterocanonical/addition reuse, strict second-use reuse, and the Psalms/Proverbs/Song of Songs wisdom-literature image-meaning pass.
+The previous deduplicated checkpoint was **367 / 1,189**. Ecclesiastes already had three covered chapters in that ledger: Ecclesiastes 1, 3, and 9. The Ecclesiastes precision pass assigns Doré imagery to the other nine chapters: 2, 4, 5, 6, 7, 8, 10, 11, and 12. Because these nine targets are distinct from the three previously covered Ecclesiastes chapters, the pass adds **9 unique chapters**.
 
-### Deduplicated checkpoint arithmetic
+**367 + 9 = 376 / 1,189 chapters.**
 
-- Previously locked checkpoint: `254` unique chapters.
+Remaining uncovered chapters: **813**.
+
+## Ecclesiastes — 12 / 12 covered
+
+1. Ecclesiastes 1 → Cross Lifted Up — established earlier; vanity under the sun / visual theological counterpoint
+2. Ecclesiastes 2 → Solomon — wealth, works, wisdom, pleasure, and vanity
+3. Ecclesiastes 3 → Jesus Nailed to the Cross — established earlier; a time to be born and a time to die
+4. Ecclesiastes 4 → Israelites in Egypt / forced-labor imagery — oppression, tears, toil
+5. Ecclesiastes 5 → Cedars Destined for the Temple — house of God, vows, labor and wealth
+6. Ecclesiastes 6 → Belshazzar's Feast — riches, honor and abundance without the power truly to enjoy them
+7. Ecclesiastes 7 → Burial of Sarah — house of mourning; death and wisdom
+8. Ecclesiastes 8 → Judgment of Solomon — king, wisdom, justice and judgment
+9. Ecclesiastes 9 → Death of Eleazar — established earlier; death comes to all, strength cannot escape it
+10. Ecclesiastes 10 → Death of Saul — folly in high places and destructive leadership
+11. Ecclesiastes 11 → Sower / agricultural imagery — sowing, uncertainty, diligence and future harvest
+12. Ecclesiastes 12 → Solomon — old age, remembering the Creator, death and the book's conclusion
+
+All reused Doré works retain their original title, biblical provenance and source metadata. These are ONE editorial image-meaning assignments, not claims that Doré originally illustrated Ecclesiastes with these plates.
+
+## Completed books by Doré allocation
+
+- Proverbs: **31 / 31**
+- Ecclesiastes: **12 / 12**
+- Song of Songs: **8 / 8**
+
+## Previous locked layers retained
+
+- Locked checkpoint before Ecclesiastes precision pass: `367` unique chapters.
 - Strict second-use reuse: `+34` unique chapters after duplicate/weak-match removal.
-- Intermediate unique checkpoint: `288`.
-- Wisdom-literature pass initially added `71` unique targets: Psalms `+41`, Proverbs `+22`, Song of Songs `+8`.
-- Intermediate candidate checkpoint: `359`.
-- Proverbs precision pass solved the remaining `8` Proverbs chapters: Proverbs 7, 13, 20, 23, 24, 26, 29, 30.
-- Those eight were explicitly outside the earlier `+22` Proverbs set, so they add eight new unique chapters.
-- **New locked total: `367 / 1,189`.**
-- Remaining uncovered chapters: **822**.
-
-## Strict second-use reuse — +34 unique chapters
-
-The strict reuse layer uses same-event parallels, explicit textual recollection, direct quotation/allusion, or comparably strong historical identity. The first verified tranche included 2 Corinthians 4, 1 Corinthians 11, Romans 5, 1 John 3, 1 Peter 3, 2 Peter 2, Hebrews 6, 1 Corinthians 5, 1 Corinthians 10, Hebrews 3, John 3, Acts 13, James 5, Luke 11, John 6, John 12, Mark 14, Mark 15, Mark 16, and John 20. The remainder of this layer was deduplicated against the 254 checkpoint before the `+34` total was accepted. Weak thematic-only proposals were excluded from the strict count.
-
-## Wisdom-literature image-meaning reuse
-
-This layer permits reuse by strong image meaning rather than claiming Doré originally illustrated the target chapter. Original Doré provenance remains attached to every asset.
-
-### Psalms — +41 unique chapters in this pass
-
-Psalms 1, 2, 4, 5, 6, 8, 9, 11, 12, 14, 17, 19, 23, 24, 28, 29, 30, 32, 35, 40, 43, 46, 47, 52, 55, 56, 57, 59, 61, 62, 63, 64, 70, 71, 73, 74, 84, 90, 104, 110, 130.
-
-These are in addition to Psalm targets already locked in earlier canonical-surplus/deuterocanonical passes.
-
-### Song of Songs — 8 / 8 covered in this pass
-
-- Song 1 → Rebekah / bride imagery
-- Song 2 → Ruth and Boaz / field-love imagery
-- Song 3 → Isaac and Rebekah / bridal-procession imagery
-- Song 4 → Solomon / king-and-bride imagery
-- Song 5 → Rebekah / searching-at-night relational imagery
-- Song 6 → Ruth and Boaz / garden-field imagery
-- Song 7 → Solomon / royal praise-of-the-bride imagery
-- Song 8 → Jacob/Rachel or covenant-embrace imagery; love strong as death
-
-### Proverbs — 31 / 31 covered
-
-Earlier locked material already included Proverbs 31. The wisdom pass plus precision pass completes the whole book.
-
-Initial wisdom-pass Proverbs targets (`22`):
-Proverbs 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 21, 22, 25, 27, 28.
-
-Previously covered:
-Proverbs 31.
-
-Precision-pass remaining eight:
-- Proverbs 7 → Samson and Delilah — seduction leading toward destruction
-- Proverbs 13 → Joseph Sold into Egypt — choices, companions, discipline and consequences
-- Proverbs 20 → Belshazzar's Feast — wine, kingship, judgment
-- Proverbs 23 → Belshazzar's Feast — feast/drunkenness warning
-- Proverbs 24 → Cedars Destined for the Temple — by wisdom a house is built
-- Proverbs 26 → Noah Cursing Ham — folly, shame, speech and consequences
-- Proverbs 29 → Judgment of Solomon — kingly justice and righteous governance
-- Proverbs 30 → Prophet Amos — wisdom/oracle speaker imagery
-
-Thus Proverbs is now a completed visual-cover book: **31 / 31 chapters**.
-
-## Corpus / allocation status
-
-- Complete adopted Doré corpus: `241` plates.
-- Protestant-canon-related plates: `220`.
+- Psalms wisdom pass: `+41` unique chapters.
+- Proverbs: `31 / 31` covered after precision pass.
+- Song of Songs: `8 / 8` covered.
 - Canonical surplus pool: `39 / 39` audited/dispositioned.
 - Deuterocanonical/apocryphal/addition pool: `21 / 21` audited/dispositioned.
-- Canonical surplus unaudited: `0`.
-- Deuterocanonical/addition unaudited: `0`.
-- Current unique covered chapters: `367`.
-- Current uncovered chapters: `822`.
 
 ## Counting and provenance rules
 
@@ -89,4 +56,4 @@ Thus Proverbs is now a completed visual-cover book: **31 / 31 chapters**.
 
 ## Next audit gate
 
-Continue high-quality image-meaning reuse in still-uncovered wisdom/poetry chapters or other books where Doré imagery provides a defensible cover. Preserve **367** as the locked baseline until another deduplicated batch is explicitly accepted.
+Preserve **376** as the locked baseline. Continue high-quality image-meaning reuse in still-uncovered chapters before any ONE Studio bulk generation.
