@@ -1,7 +1,7 @@
 /* Isaiah maps: use ONE's registered study-book object and existing map renderer schema. */
 (() => {
   "use strict";
-  const I=window.ONE_DATA?.studyBooks?.[23];if(!I?.chapterStudies)return;
+  const I=window.ONE_DATA?.isaiah;if(!I?.chapterStudies)return;
   const holy=(id,title,reference,guide,places)=>({reference,title,guide,places,source:`https://biblegeography.holylight.org.tw/index/condensedbible_map_detail?m_id=${String(id).padStart(3,'0')}`,image:`https://biblegeography.holylight.org.tw/images/index/condensedbible/map/${String(id).padStart(3,'0')}.GIF`,imageTitle:title});
   const maps={
     israel:holy(95,"賽圖一（095）以賽亞書中的以色列地各地","以賽亞書 7–12","先定位耶路撒冷、猶大、撒馬利亞與大馬士革，再看亞述壓力如何進入先知的信息。",["耶路撒冷／錫安","猶大","撒馬利亞／以法蓮","大馬士革／亞蘭","亞述方向"]),
