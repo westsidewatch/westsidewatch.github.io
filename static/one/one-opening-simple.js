@@ -108,6 +108,126 @@
     scriptureObserver.observe(chapterDetail,{childList:true,subtree:true});
   }
 
+  /* Canonical 66-book illustration runtime.
+   * This deliberately lives in the shared layer, never in a book-specific patch.
+   * Data may identify an illustration as historical or generated, but either kind
+   * receives exactly the same ONE cover/frame treatment. Missing or broken art is
+   * presentation-only: it can never disable a book, a chapter, or chapter navigation.
+   */
+  const illustrationStyle=document.createElement("style");
+  illustrationStyle.textContent=`
+    .chapter-illustration.is-missing a{display:none}
+    .chapter-illustration__fallback{
+      display:block;
+      width:100%;
+      aspect-ratio:5/8;
+      background:
+        radial-gradient(ellipse at 50% 36%,rgba(206,189,116,.16),transparent 58%),
+        linear-gradient(145deg,rgba(38,31,20,.96),rgba(13,15,14,.99));
+    }
+    .chapter-illustration.is-missing figcaption{display:none}
+  `;
+  document.head.append(illustrationStyle);
+
+  const chapterContext=()=>{
+    const data=window.ONE_DATA;
+    const book=Number(document.body.dataset.book);
+    const chapter=Number(chapterDetail?.dataset.chapter);
+    const study=data?.studyBooks?.[book]?.chapterStudies?.[String(chapter)];
+    return Number.isInteger(book)&&Number.isInteger(chapter)&&study?{book,chapter,study}:null;
+  };
+
+  const normalizeIllustration=illustration=>{
+    if(!illustration||typeof illustration!=="object")return null;
+    const src=typeof illustration.src==="string"?illustration.src.trim():"";
+    if(!src)return null;
+    const kind=illustration.kind==="generated"?"generated":"historical";
+    const creator=String(illustration.creator||illustration.artist||(kind==="historical"?"Gustave Doré":"ONE")).trim();
+    const title=String(illustration.title||"").trim();
+    const source=typeof illustration.source==="string"?illustration.source.trim():"";
+    const alt=String(illustration.alt||title||"本章插圖").trim();
+    return {src,kind,creator,title,source,alt,morningStar:Boolean(illustration.morningStar)};
+  };
+
+  const clearCoverArt=()=>{
+    const now=document.querySelector(".now");
+    const intro=document.querySelector(".now__intro");
+    const cover=document.getElementById("chapter-cover-art");
+    const credit=document.getElementById("chapter-art-credit");
+    now?.style.removeProperty("--chapter-engraving");
+    document.documentElement.style.removeProperty("--one-chapter-engraving");
+    intro?.classList.remove("has-morning-star");
+    if(cover){cover.removeAttribute("src");cover.alt="";cover.hidden=true}
+    if(credit){credit.removeAttribute("href");credit.textContent="";credit.hidden=true}
+  };
+
+  const applyIllustrationRuntime=()=>{
+    const context=chapterContext();
+    if(!context)return;
+    const {study}=context;
+    const art=normalizeIllustration(study.illustration);
+    const now=document.querySelector(".now");
+    const intro=document.querySelector(".now__intro");
+    const cover=document.getElementById("chapter-cover-art");
+    const credit=document.getElementById("chapter-art-credit");
+    const figure=chapterDetail?.querySelector(".chapter-illustration");
+
+    intro?.classList.toggle("has-morning-star",Boolean(study.morningStar||art?.morningStar));
+
+    if(!art){
+      clearCoverArt();
+      return;
+    }
+
+    const engraving=`url("${art.src.replaceAll('"','%22')}")`;
+    now?.style.setProperty("--chapter-engraving",engraving);
+    document.documentElement.style.setProperty("--one-chapter-engraving",engraving);
+
+    if(cover){
+      cover.hidden=false;
+      cover.alt=art.alt;
+      if(cover.getAttribute("src")!==art.src)cover.src=art.src;
+      cover.onerror=()=>clearCoverArt();
+    }
+
+    const creditText=[art.creator,art.title].filter(Boolean).join(" · ");
+    if(credit){
+      credit.textContent=creditText;
+      if(art.source){credit.href=art.source;credit.hidden=false}
+      else{credit.removeAttribute("href");credit.hidden=!creditText}
+    }
+
+    if(!figure)return;
+    figure.dataset.illustrationKind=art.kind;
+    const image=figure.querySelector("img");
+    const link=figure.querySelector("a");
+    const caption=figure.querySelector("figcaption");
+    if(caption)caption.textContent=creditText;
+    if(link){
+      if(art.source){link.href=art.source;link.target="_blank";link.rel="noopener"}
+      else{link.removeAttribute("href");link.removeAttribute("target");link.removeAttribute("rel")}
+    }
+    if(image){
+      image.alt=art.alt;
+      image.onerror=()=>{
+        figure.classList.add("is-missing");
+        if(!figure.querySelector(".chapter-illustration__fallback")){
+          const fallback=document.createElement("span");
+          fallback.className="chapter-illustration__fallback";
+          fallback.setAttribute("aria-hidden","true");
+          figure.insertBefore(fallback,figure.firstChild);
+        }
+        clearCoverArt();
+      };
+    }
+  };
+
+  if(chapterDetail){
+    applyIllustrationRuntime();
+    const illustrationObserver=new MutationObserver(()=>requestAnimationFrame(applyIllustrationRuntime));
+    illustrationObserver.observe(chapterDetail,{childList:true,subtree:false,attributes:true,attributeFilter:["data-chapter","data-book"]});
+  }
+
   const list=document.getElementById("cover-books");
   if(!list)return;
   list.classList.add("one-rail-enabled");
