@@ -1,14 +1,14 @@
-# ONE — Canonical Visual Standard
+# ONE — Canonical Visual & System Standard
 
 Status: **LOCKED / CANONICAL**
 
-This document is the permanent visual and illustration standard for **all 66 books and all chapters in ONE**. New books and future revisions MUST follow this standard. Do not restart visual exploration book-by-book and do not introduce a new illustration language without an explicit project-wide decision to revise this document.
+This document is the permanent design, content-structure and interaction standard for **all 66 books and all chapters in ONE**. New books and future revisions MUST follow this standard. Do not restart visual, map, timeline, navigation or chapter-structure exploration book-by-book. Any change to these rules is a project-wide ONE system change, not a local book tweak.
 
 ## 1. Core principle
 
-ONE is one visual system, not 66 independently designed books.
+ONE is one visual and reading system, not 66 independently designed books.
 
-Every chapter cover must belong to the same family: **classical engraved biblical imagery + dark antique book texture + Westside Watch brand gold + ornate antique frame + restrained typography**.
+Every chapter must belong to the same family: **classical engraved biblical imagery + dark antique book texture + Westside Watch brand gold + ornate antique frame + restrained typography + shared chapter architecture**.
 
 Consistency takes priority over novelty.
 
@@ -131,66 +131,274 @@ Forbidden visible production text includes phrases such as:
 
 Such information may exist only in internal metadata/documentation.
 
-## 9. Maps are independent from covers
+## 9. Canonical map rules
 
-A chapter map and a chapter cover illustration are different content types.
+Maps are a shared ONE study system and are **content-driven, not mandatory decoration**.
 
-- A map must never be used as a substitute for a cover illustration.
-- A cover illustration must never suppress a chapter map.
-- Geography-heavy books/chapters should show maps in the established chapter study/map renderer when useful.
-- Books that do not materially benefit from maps do not need maps merely for symmetry.
+### When to use a map
 
-Examples: Isaiah requires contextual maps in relevant sections; Psalms generally does not; Acts will require especially strong map support.
+Use a map when geography materially improves understanding, especially for:
 
-## 10. No-image fallback policy is retired
+- journeys and migrations;
+- military campaigns and invasions;
+- borders, tribal territories and land division;
+- exile and return;
+- prophetic oracles involving multiple nations/regions;
+- ministry routes;
+- missionary journeys;
+- city-to-city narrative movement;
+- empire relationships where location explains the text.
+
+Do not add a map merely because a place name appears.
+
+### Book-level flexibility
+
+Different books require different map density:
+
+- Genesis / Exodus / Joshua / Judges / Kings / Chronicles: frequent maps where narrative movement requires them.
+- Psalms: generally no map; only exceptional teaching need would justify one.
+- Isaiah and other prophets: contextual regional/empire maps for relevant sections, not one forced map per chapter.
+- Gospels: maps where ministry movement or geography materially helps.
+- Acts: map support is especially important and should be extensive for missionary routes and major movements.
+- Epistles: generally no chapter map unless historical route/context is genuinely useful.
+- Revelation: symbolic geography must not be falsely presented as a literal travel map.
+
+### Shared maps
+
+A historical unit may share one map across several chapters. Reuse is correct when the geography is genuinely the same. Do not manufacture 66 different maps merely to create visual variety.
+
+### Map data and renderer
+
+- Maps use ONE's canonical map schema and common renderer.
+- Do not create book-specific map renderers unless the shared renderer truly cannot represent the content.
+- `map` is independent from `illustration`.
+- A map never substitutes for a chapter cover.
+- A cover never suppresses the map.
+- Keep source, title, reference, guide, places and route notes explicit.
+- Prefer approved stable sources and locally controlled assets where practical.
+- If using an external historical map image, verify the exact map ID/URL before release.
+
+## 10. Canonical Biblical Chronology / 時光卷軸 rules
+
+The ONE time scroll is a **context device**, not decorative filler.
+
+### Purpose
+
+It answers: **Where is this chapter in biblical history, and what major events surround it?**
+
+### When to use
+
+Every completed chapter should have a chronology context, but its density varies by genre:
+
+- Narrative/history books: concrete historical events and movement.
+- Prophets: anchor the chapter to kings, empires, exile, return and prophetic ministry periods.
+- Psalms: use known superscription/historical setting when reliable; otherwise place within the Psalter/book context rather than inventing a precise date.
+- Wisdom books: use broad canonical/historical placement when exact dating is uncertain.
+- Gospels/Acts: use ministry sequence and major events.
+- Epistles: use ministry/mission/church context when historically supportable.
+- Revelation: use canonical/apocalyptic context without pretending symbolic visions are ordinary calendar events.
+
+### Accuracy rule
+
+Never create false precision. If the date is disputed or unknown, use a broad period or relative sequence instead of an invented year.
+
+### Shared timeline language
+
+All books use the same visual time-scroll component, typography, horizontal scrolling behavior and event hierarchy. Do not redesign the timeline per book.
+
+### Event selection
+
+Include only events that help orient the chapter. Prefer a small number of meaningful milestones over a crowded list.
+
+The current chapter/event must be visually identifiable as the focus.
+
+### Historical and canonical distinction
+
+When a timeline event is theological/canonical rather than strictly datable, label it appropriately. Do not mix literary sequence and historical date as though they were identical.
+
+## 11. Canonical chapter content order
+
+ONE chapter pages should preserve a predictable study rhythm across all books. The exact presence of optional modules may vary, but the relative architecture should remain stable.
+
+Canonical order:
+
+1. Cover / chapter identity
+2. Map — only when materially useful
+3. Biblical Chronology / 時光卷軸
+4. Scripture
+5. 本章故事 / chapter narrative or argument
+6. Story route / structure
+7. Background
+8. Observation
+9. Cross references
+10. Comparison / harmony when applicable
+11. Questions
+12. Preparation
+13. Previous / next chapter turn
+
+Do not arbitrarily reorder modules book-by-book.
+
+If a module is genuinely inapplicable, omit it cleanly rather than filling it with meaningless content.
+
+## 12. Scripture rules
+
+The Scripture area is sacred source content and must never be confused with editorial explanation.
+
+- Chinese and English Scripture keep their established sources/versions.
+- Scripture text, references and source links must be visually distinct from commentary.
+- Editorial notes such as instructions, summaries or explanations must never appear in a position styled as Scripture.
+- If embedded Scripture fails, provide a working official source link; do not replace Scripture with explanatory text.
+- Chapter data must not satisfy a 'Scripture slot' with non-Scripture prose.
+
+## 13. Cross-reference rules
+
+Cross references use one common hierarchy across 66 books:
+
+- reference = metadata;
+- theme/relationship = editorial label;
+- Scripture quotation = Scripture styling;
+- explanation/note = commentary styling.
+
+Never present an editorial sentence as though it were Scripture.
+
+Cross references should quote or link the actual referenced Scripture when the design promises Scripture content.
+
+## 14. Comparison / harmony rules
+
+Use comparison tables only when the genre benefits:
+
+- Gospel harmony: appropriate and important.
+- Samuel/Kings/Chronicles parallels: useful where genuine.
+- Prophetic or epistle comparison: only when it adds real interpretive value.
+
+Do not force a generic comparison table into every book.
+
+The common renderer and typography should remain shared.
+
+## 15. Navigation and book-entry rules
+
+Book entry behavior is part of the ONE system and must not be modified casually while editing content modules.
+
+- A registered/ready book must remain clickable from the 66-book interface and its cover/frontispiece.
+- Chapter availability is determined by valid chapter study data, not by whether an illustration exists.
+- Missing optional illustration/map data must never block book registration.
+- Registry completeness must validate essential study content only; it must not require fake images or fake maps.
+- A content patch must never silently alter book-selection, group-selection or chapter-entry behavior.
+
+## 16. Data registration and load-order rules
+
+This is a critical technical rule.
+
+Book supplements that execute **before a book registry** must write into that book's source object (for example `ONE_DATA.psalms`, `ONE_DATA.isaiah`). They must not assume `ONE_DATA.studyBooks[n]` already exists.
+
+The registry is responsible for exposing the completed source object to `studyBooks`.
+
+After registration, common renderers read from the registered book.
+
+Do not change this pattern book-by-book.
+
+When fixing a bug, first inspect the load order and reuse the previously working pattern before inventing a new data path.
+
+## 17. Asset rules
+
+- Store approved reusable ONE UI assets locally in the repository.
+- Avoid canonical UI dependence on remote hotlinks.
+- Historical source images may retain source attribution, but production behavior should not depend on unstable redirects if a local approved copy is legally/practically appropriate.
+- The approved antique textures are retained as ONE library assets for title pages, dividers, empty/loading states, resource cards and editorial interstitials.
+- A chapter illustration must be explicitly associated with its own chapter.
+- Missing data must not inherit stale assets from a previous book/chapter.
+- Keep `illustration`, `map`, `timeline`, `scripture`, `connections` and study fields semantically separate.
+
+## 18. Responsive and interaction rules
+
+Desktop and mobile are the same ONE experience, not separate designs.
+
+- Preserve cover identity and hierarchy on both.
+- Never allow mobile to show only the left half of a chapter/frontispiece.
+- Fixed aspect-ratio media must scale without distortion.
+- Horizontal time-scroll/map content may scroll where appropriate but must remain usable by touch.
+- Drag/scroll interactions should be smooth and must not become noticeably heavier after visual scaling.
+- Links/buttons that visually appear interactive must actually work.
+- Respect reduced-motion preferences.
+
+## 19. Typography, naming and visible terminology
+
+- Use the established ONE Chinese/English typography system across books.
+- Do not expose internal implementation terms (`vol`, fallback, generated, registry, etc.) in reader-facing UI.
+- Book naming and numbering follow the established format, e.g. `01 創世紀` where that template is used.
+- Do not introduce arbitrary colors such as deep blue book names when the ONE system calls for First Light gold.
+- Reader-facing labels must describe content, not developer state.
+
+## 20. Resources / Dawn Library rules
+
+Resources are supplementary and must not interrupt the chapter's canonical reading sequence.
+
+- Core Bible-study resources remain in the shared resource system.
+- Resource cards must be clickable if presented as links.
+- Dawn Library remains the curated resource destination.
+- Book-specific resources may be added, but should use the common resource-card system rather than inventing new visual cards per book.
+
+## 21. No-image fallback policy is retired
 
 The antique texture backgrounds created during development are retained as reusable ONE library assets, but **a plain texture is no longer the normal final substitute for a missing chapter illustration**.
 
-For chapter covers:
+For finished chapter covers:
 
 - verified suitable illustration → use it;
 - otherwise → generate a chapter-specific illustration in the canonical ONE style.
 
-The antique textures may still be used for title pages, section dividers, loading/empty states, editorial pages, resource cards, interstitials or other places where an illustration is intentionally not required.
+Antique textures remain valid where illustration is intentionally not the content.
 
-## 11. Asset and data rules
+## 22. Cross-book application
 
-- Store approved reusable visual assets locally in the repository; do not depend on remote hotlinks for canonical UI assets.
-- A chapter illustration must be explicitly associated with its own chapter.
-- Missing data must not inherit a stale image from a previous chapter/book.
-- Illustration data is optional during authoring, but a finished book should follow the source hierarchy above and receive a proper chapter cover treatment.
-- Do not require fake/recycled illustrations merely to satisfy a registry completeness check.
-- Keep illustration, map and study data as separate semantic fields.
-
-## 12. Cross-book application
-
-This standard applies retroactively and prospectively to every ONE book, including but not limited to:
+This standard applies retroactively and prospectively to every ONE book, including:
 
 Pentateuch; Joshua; Judges; Ruth; Samuel; Kings; Chronicles; Ezra–Esther; Job; Psalms; Proverbs; Ecclesiastes; Song of Songs; Isaiah; Jeremiah; Lamentations; Ezekiel; Daniel; the Twelve Minor Prophets; the Gospels; Acts; Pauline epistles; Hebrews; James; 1–2 Peter; 1–3 John; Jude; Revelation.
 
-Do not begin a new visual exploration when a new book is produced. Start from this standard.
+Do not begin a new design-system exploration when a new book is produced. Start from this standard.
 
-## 13. Quality-control checklist
+## 23. Regression-first debugging rule
 
-Before a book/cover change is considered complete, verify:
+When something that previously worked breaks:
 
-- chapter can actually be entered from the book interface;
+1. Check whether the earlier version worked.
+2. Inspect the earlier working implementation.
+3. Restore/reuse the proven pattern before introducing a new architecture.
+4. Avoid repeated experimental rewrites of stable shared systems.
+
+A local content issue must not trigger unnecessary changes to global navigation, registry, renderer or interaction logic.
+
+## 24. Quality-control checklist
+
+Before a book/change is considered complete, verify at minimum:
+
+- book can be entered from the ONE cover/66-book interface;
+- chapter can be selected and entered;
 - cover image belongs to the correct chapter;
 - no unrelated or stale image is inherited;
 - historical image, if used, is genuinely relevant;
 - generated image, if used, reflects the actual chapter;
-- historical and generated covers visibly belong to the same ONE family;
+- historical and generated covers belong to the same ONE family;
 - canonical ornate gold frame is present;
 - brand gold is consistent;
-- Morning Star is used only where compositionally appropriate;
+- Morning Star is used only where appropriate;
+- map appears where geography materially helps and is absent where unnecessary;
+- map data uses the shared renderer/schema;
+- chronology is meaningful and does not invent false precision;
+- Scripture slot contains Scripture/source links, not editorial prose;
+- cross-reference Scripture and commentary are visually distinct;
+- optional modules do not block book registration;
 - no production/debug wording is visible;
-- map, when required, renders independently in the chapter content;
-- desktop and mobile preserve the same cover identity.
+- previous/next chapter navigation works;
+- desktop and mobile preserve the same identity and functionality;
+- no change has accidentally broken another completed book.
 
-## 14. Change control
+For shared-system changes, test representative genres rather than one book only: at least one Pentateuch/history book, Psalms/wisdom, a prophet, a Gospel, an epistle, and—once available—Acts/Revelation.
+
+## 25. Change control
 
 **This is a locked project-level rule.**
 
-Future implementation work should solve technical problems by returning to this standard and to previously working ONE patterns—not by inventing a new visual system.
+Future implementation work should solve technical problems by returning to this standard and to previously working ONE patterns—not by inventing a new visual or data system.
 
-If a future change appears to require a different art direction, frame, palette, Morning Star, illustration philosophy or fallback philosophy, stop and treat that as a proposed change to the entire ONE design system. Do not silently change one book.
+If a future change appears to require a different art direction, frame, palette, Morning Star, map philosophy, timeline philosophy, chapter order, registry model, interaction pattern or fallback philosophy, stop and treat that as a proposed change to the entire ONE design system. Do not silently change one book.
