@@ -1,8 +1,94 @@
-@import url('./one-cover-visual-v2.css?v=20260817a');
+@import url('./one-cover-visual-v2.css?v=20260817c');
 
-/* Cross-reference hierarchy, shared by every ONE book.
- * Illustration/cover presentation now lives only in one-cover-visual-v2.css.
+/* Regression guard for the approved ONE cover + illustration system.
+ * The renderer already writes the fixed chapter asset into --chapter-engraving.
+ * Use that asset directly as the full-bleed cover background so cover visibility
+ * never depends on <img> sizing/positioning. This file is intentionally the
+ * hard presentation guard for every completed book.
  */
+.now__intro{
+  background-color:#080906!important;
+  background-image:
+    linear-gradient(180deg,rgba(6,7,5,.02) 0%,rgba(6,7,5,.04) 38%,rgba(6,7,5,.18) 56%,rgba(6,7,5,.68) 78%,rgba(6,7,5,.88) 100%),
+    var(--chapter-engraving)!important;
+  background-position:center,center!important;
+  background-size:100% 100%,cover!important;
+  background-repeat:no-repeat!important;
+}
+/* The semantic image remains in the DOM, but the fixed asset background is the
+ * canonical visual layer. This avoids the disappearing-cover regression caused
+ * by absolute image sizing while preserving alt/source behavior in JS.
+ */
+.chapter-cover-art:not([hidden]){
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  min-height:100%!important;
+  object-fit:cover!important;
+  object-position:center!important;
+  opacity:.001!important;
+  pointer-events:none!important;
+}
+.chapter-cover-overlay{
+  position:relative!important;
+  z-index:3!important;
+  min-height:clamp(42rem,76vw,64rem)!important;
+}
+
+/* Approved chapter-body illustration = archival 5:8 engraving plate.
+ * Keep the complete source composition inside the plate. Never crop or stretch.
+ */
+.chapter-illustration{
+  position:relative!important;
+  display:grid!important;
+  justify-items:center!important;
+  overflow:visible!important;
+  width:min(100%,46rem)!important;
+  margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;
+  padding:clamp(.9rem,1.8vw,1.35rem)!important;
+  border:1px solid rgba(142,116,48,.74)!important;
+  border-radius:0!important;
+  background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;
+  box-shadow:inset 0 0 0 5px rgba(255,249,220,.1),inset 0 0 0 6px rgba(206,189,116,.44),0 1rem 2.5rem rgba(61,42,15,.12)!important;
+}
+.chapter-illustration::before{
+  position:absolute!important;
+  inset:.48rem!important;
+  border:1px solid rgba(206,189,116,.27)!important;
+  content:""!important;
+  pointer-events:none!important;
+}
+.chapter-illustration a{
+  display:grid!important;
+  place-items:center!important;
+  width:100%!important;
+  aspect-ratio:5/8!important;
+  overflow:hidden!important;
+  background:#1a1913!important;
+}
+.chapter-illustration img{
+  display:block!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:100%!important;
+  max-height:none!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.9)!important;
+}
+.chapter-illustration figcaption{
+  justify-self:end!important;
+  width:100%!important;
+  padding:.75rem .2rem .05rem!important;
+  text-align:right!important;
+  color:rgba(101,76,27,.82)!important;
+  font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif!important;
+  letter-spacing:.04em!important;
+}
+
+/* Cross-reference hierarchy, shared by every ONE book. */
 .connection-section .connection-grid strong{
   display:block;
   color:var(--one-gilt-dark);
@@ -26,6 +112,9 @@
 .connection-section .connection-note{max-width:56rem;margin:1rem 0 0;color:rgba(16,42,67,.72)}
 
 @media(max-width:650px){
+  .chapter-cover-overlay{min-height:78svh!important;padding:4rem 1.5rem 3.5rem!important}
+  .chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}
+  .chapter-illustration a{aspect-ratio:5/8!important}
   .connection-section .connection-grid strong{font-size:.9rem}
   .connection-section .connection-grid small,
   .connection-section .connection-scripture,
