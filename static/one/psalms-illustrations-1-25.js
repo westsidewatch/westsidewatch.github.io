@@ -1,5 +1,32 @@
-/* 詩篇 ONE：第 1–25 篇插圖。只使用舊約 Doré；不使用 NT fallback。 */
+/* Psalms ONE · 1–25.
+ * Historical engravings are attached only when the scene is defensibly related
+ * to the Psalm's superscription/context. Generic OT and NT image recycling is
+ * forbidden. Chapters without a reliable historical match remain intentionally
+ * unillustrated until their canonical chapter-specific engraving is generated.
+ */
 (()=>{"use strict";const P=window.ONE_DATA?.psalms;if(!P?.chapterStudies)return;
-const commons=(file,title,alt)=>({src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(file)}?width=960`,source:`https://commons.wikimedia.org/wiki/File:${file.replaceAll(' ','_')}`,title,alt:`古斯塔夫・多雷版畫：${alt||title}`,artist:"Gustave Doré",testament:"OT"});
-const A={g:commons("071A.David Slays Goliath.jpg","大衛擊殺歌利亞"),s:commons("072.Saul Attempts to Kill David.jpg","掃羅企圖殺大衛"),e:commons("073.David Escapes through a Window.jpg","大衛從窗戶逃走"),j:commons("073A.David and Jonathan.jpg","大衛與約拿單"),p:commons("074.David Shows Saul How He Spared His Life.jpg","大衛饒掃羅性命"),a:commons("081.David Mourns the Death of Absalom.jpg","大衛哀悼押沙龍"),r:commons("025.Jacob Prays for Protection.jpg","雅各祈求保護"),i:commons("120.The Prophet Isaiah.jpg","先知以賽亞")};
-const plan={1:A.g,2:A.g,3:A.a,4:A.a,5:A.r,6:A.a,7:A.p,8:A.g,9:A.g,10:A.s,11:A.e,12:A.s,13:A.e,14:A.s,15:A.j,16:A.j,17:A.p,18:A.g,19:A.g,20:A.g,21:A.g,22:A.i,23:A.j,24:A.g,25:A.r};Object.entries(plan).forEach(([n,a])=>{if(P.chapterStudies[n])P.chapterStudies[n].illustration={...a}});})();
+const historical=(file,title,alt)=>({
+  src:`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(file)}?width=960`,
+  source:`https://commons.wikimedia.org/wiki/File:${file.replaceAll(' ','_')}`,
+  title,
+  alt:`古斯塔夫・多雷版畫：${alt||title}`,
+  artist:"Gustave Doré",
+  type:"historical",
+  testament:"OT",
+  morningStar:false
+});
+Object.values(P.chapterStudies).slice(0,25).forEach(s=>{if(s)delete s.illustration});
+const A={
+  s:historical("072.Saul Attempts to Kill David.jpg","Saul Attempts to Kill David","掃羅企圖殺大衛"),
+  e:historical("073.David Escapes through a Window.jpg","David Escapes through a Window","大衛從窗戶逃走"),
+  j:historical("073A.David and Jonathan.jpg","David and Jonathan","大衛與約拿單"),
+  p:historical("074.David Shows Saul How He Spared His Life.jpg","David Shows Saul How He Spared His Life","大衛饒掃羅性命"),
+  a:historical("081.David Mourns the Death of Absalom.jpg","David Mourns the Death of Absalom","大衛哀悼押沙龍")
+};
+/* Only Psalms whose historical setting can be responsibly associated with the
+ * selected David scenes receive them here. Others deliberately use the shared
+ * canonical no-image cover until a chapter-specific generated engraving exists.
+ */
+const plan={3:A.a,7:A.p,11:A.e,13:A.e};
+Object.entries(plan).forEach(([n,a])=>{if(P.chapterStudies[n])P.chapterStudies[n].illustration={...a}});
+})();
