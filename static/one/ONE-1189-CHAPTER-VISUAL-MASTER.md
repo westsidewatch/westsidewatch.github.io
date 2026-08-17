@@ -1,65 +1,92 @@
 # ONE — 1,189 Chapter Visual Master Inventory
 
-Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 254 LOCKED · NO IMAGE GENERATION DURING AUDIT
+Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 367 LOCKED · NO IMAGE GENERATION DURING AUDIT
 
 ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260).
 
-## Locked checkpoint — 254 chapters
+## Locked checkpoint — 367 chapters
 
-The Doré coverage audit is now deduplicated through the canonical-surplus and deuterocanonical/apocryphal/addition allocation stages.
+The Doré allocation/reuse audit is now locked through direct/native coverage, canonical surplus allocation, deuterocanonical/addition reuse, strict second-use reuse, and the Psalms/Proverbs/Song of Songs wisdom-literature image-meaning pass.
 
-- Previous locked checkpoint: `235` unique chapters.
-- Deuterocanonical/apocryphal/addition plates audited: `21 / 21`.
-- New unique chapter targets from those 21 plates after deduplication: `19`.
-- Two proposed targets were already covered by native Doré chapters: `1 Kings 18` and `2 Kings 6`.
-- New locked total: **254 / 1,189 chapters**.
-- Remaining uncovered chapters: **935**.
+### Deduplicated checkpoint arithmetic
 
-## 21 deuterocanonical/apocryphal/addition allocations
+- Previously locked checkpoint: `254` unique chapters.
+- Strict second-use reuse: `+34` unique chapters after duplicate/weak-match removal.
+- Intermediate unique checkpoint: `288`.
+- Wisdom-literature pass initially added `71` unique targets: Psalms `+41`, Proverbs `+22`, Song of Songs `+8`.
+- Intermediate candidate checkpoint: `359`.
+- Proverbs precision pass solved the remaining `8` Proverbs chapters: Proverbs 7, 13, 20, 23, 24, 26, 29, 30.
+- Those eight were explicitly outside the earlier `+22` Proverbs set, so they add eight new unique chapters.
+- **New locked total: `367 / 1,189`.**
+- Remaining uncovered chapters: **822**.
 
-1. Tobias and the Angel → Hebrews 13
-2. Raphael and the family of Tobit → Psalm 91
-3. Judith and Holofernes → Psalm 68
-4. Judith shows Holofernes' head → Psalm 149
-5. Esther Before the King → Esther 5
-6. Mattathias and the Apostate → 1 Kings 18 — DUPLICATE TARGET; chapter already covered by native Doré plate
-7. Mattathias appeals to Jewish refugees → Joel 3
-8. Judas Maccabeus pursues Timotheus → Psalm 144
-9. Death of Eleazar → Ecclesiastes 9
-10. Jonathan destroys the temple of Dagon → Isaiah 46
-11. Heliodorus cast down → Psalm 76
-12. Army appears in the heavens → 2 Kings 6 — DUPLICATE TARGET; chapter already covered by native Doré plate
-13. Martyrdom of Eleazar the Scribe → Revelation 2
-14. Courage of a Mother → Proverbs 31
-15. Punishment of Antiochus → Daniel 11
-16. Angel sent to deliver Israel → Psalm 34
-17. Judas Maccabeus before Nicanor → Psalm 20
-18. Baruch → Jeremiah 45
-19. Susanna in the Bath → Psalm 26
-20. Justification of Susanna → Psalm 7
-21. Daniel confounds the priests of Bel → Jeremiah 10
+## Strict second-use reuse — +34 unique chapters
 
-All 21 plates retain their original Doré provenance. These are editorial ONE `DORÉ-REUSE` cover allocations, not claims about Doré's original canonical assignment.
+The strict reuse layer uses same-event parallels, explicit textual recollection, direct quotation/allusion, or comparably strong historical identity. The first verified tranche included 2 Corinthians 4, 1 Corinthians 11, Romans 5, 1 John 3, 1 Peter 3, 2 Peter 2, Hebrews 6, 1 Corinthians 5, 1 Corinthians 10, Hebrews 3, John 3, Acts 13, James 5, Luke 11, John 6, John 12, Mark 14, Mark 15, Mark 16, and John 20. The remainder of this layer was deduplicated against the 254 checkpoint before the `+34` total was accepted. Weak thematic-only proposals were excluded from the strict count.
 
-## Deduplication result
+## Wisdom-literature image-meaning reuse
 
-The Doré OT catalog confirms native plates already exist for `1 Kings 18` (Prophets of Baal) and `2 Kings 6` (Famine in Samaria), so those two chapter targets cannot increase unique chapter coverage. The other 19 targets do not overlap the locked 235-chapter set.
+This layer permits reuse by strong image meaning rather than claiming Doré originally illustrated the target chapter. Original Doré provenance remains attached to every asset.
 
-`235 + 19 = 254` unique covered chapters.
+### Psalms — +41 unique chapters in this pass
 
-## Corpus accounting
+Psalms 1, 2, 4, 5, 6, 8, 9, 11, 12, 14, 17, 19, 23, 24, 28, 29, 30, 32, 35, 40, 43, 46, 47, 52, 55, 56, 57, 59, 61, 62, 63, 64, 70, 71, 73, 74, 84, 90, 104, 110, 130.
+
+These are in addition to Psalm targets already locked in earlier canonical-surplus/deuterocanonical passes.
+
+### Song of Songs — 8 / 8 covered in this pass
+
+- Song 1 → Rebekah / bride imagery
+- Song 2 → Ruth and Boaz / field-love imagery
+- Song 3 → Isaac and Rebekah / bridal-procession imagery
+- Song 4 → Solomon / king-and-bride imagery
+- Song 5 → Rebekah / searching-at-night relational imagery
+- Song 6 → Ruth and Boaz / garden-field imagery
+- Song 7 → Solomon / royal praise-of-the-bride imagery
+- Song 8 → Jacob/Rachel or covenant-embrace imagery; love strong as death
+
+### Proverbs — 31 / 31 covered
+
+Earlier locked material already included Proverbs 31. The wisdom pass plus precision pass completes the whole book.
+
+Initial wisdom-pass Proverbs targets (`22`):
+Proverbs 1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 21, 22, 25, 27, 28.
+
+Previously covered:
+Proverbs 31.
+
+Precision-pass remaining eight:
+- Proverbs 7 → Samson and Delilah — seduction leading toward destruction
+- Proverbs 13 → Joseph Sold into Egypt — choices, companions, discipline and consequences
+- Proverbs 20 → Belshazzar's Feast — wine, kingship, judgment
+- Proverbs 23 → Belshazzar's Feast — feast/drunkenness warning
+- Proverbs 24 → Cedars Destined for the Temple — by wisdom a house is built
+- Proverbs 26 → Noah Cursing Ham — folly, shame, speech and consequences
+- Proverbs 29 → Judgment of Solomon — kingly justice and righteous governance
+- Proverbs 30 → Prophet Amos — wisdom/oracle speaker imagery
+
+Thus Proverbs is now a completed visual-cover book: **31 / 31 chapters**.
+
+## Corpus / allocation status
 
 - Complete adopted Doré corpus: `241` plates.
 - Protestant-canon-related plates: `220`.
 - Canonical surplus pool: `39 / 39` audited/dispositioned.
 - Deuterocanonical/apocryphal/addition pool: `21 / 21` audited/dispositioned.
-- Unallocated plates in these two surplus pools: `0`.
+- Canonical surplus unaudited: `0`.
+- Deuterocanonical/addition unaudited: `0`.
+- Current unique covered chapters: `367`.
+- Current uncovered chapters: `822`.
+
+## Counting and provenance rules
+
+1. A chapter counts once regardless of how many Doré plates are assigned to it.
+2. Reusing a Doré plate in another chapter is allowed when the image meaning is strongly appropriate.
+3. Every reused plate retains its original Doré title/source/provenance; ONE reuse is editorial and must never be represented as Doré's original chapter assignment.
+4. Weak mood-only matches do not enter the locked count.
+5. Generated ONE Studio artwork remains generate-once/fixed: do not regenerate automatically after it has been accepted.
+6. No bulk image generation while Doré reuse auditing continues.
 
 ## Next audit gate
 
-1. Preserve the locked 254-chapter checkpoint.
-2. Evaluate Doré plates already used as covers for further same-event or strongly defensible reuse in still-uncovered chapters.
-3. Prefer explicit parallel passages, direct quotation/allusion, historical identity, or unusually strong thematic correspondence.
-4. Do not count a target chapter twice.
-5. Only after Doré reuse is exhausted may the remaining uncovered chapter count become the ONE Studio generation count.
-6. No ONE Studio bulk image generation during this audit.
+Continue high-quality image-meaning reuse in still-uncovered wisdom/poetry chapters or other books where Doré imagery provides a defensible cover. Preserve **367** as the locked baseline until another deduplicated batch is explicitly accepted.
