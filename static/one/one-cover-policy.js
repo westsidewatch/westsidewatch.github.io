@@ -1,17 +1,21 @@
 /* ONE canonical cover policy — SOLE runtime illustration writer.
- * Load order is explicit in index.html:
- * one-dore-cover-registry.js -> one-dore-assets-241.js -> one-dore-round3-maps.js -> this file -> one-app.js.
- * No document.write, no fallback search, no secondary writer.
  *
- * Priority: P1 ORIGINAL_LOCKED > P2 OFFICIAL_PARALLEL > P3 HISTORICAL_MATCH >
- * P4 TYPOLOGY > P5 SEMANTIC_EXPANSION > P6 DEUTEROCANON_EXPANSION > P7 VISUAL_DIVERSITY.
- * P1 is immutable. Existing pages never outrank source correspondence.
+ * Asset architecture:
+ * 1) ONE_DORE_COVER_REGISTRY: canonical 241 Gustave Doré originals only.
+ * 2) ONE_STUDIO_ASSET_REGISTRY: reviewed/frozen generated and other approved non-Doré fixed assets.
+ * 3) ONE_COVER_POLICY: the only layer allowed to write study.illustration.
+ *
+ * No fallback search, no fuzzy matching, no secondary writer.
+ * Doré assignments always resolve before ONE Studio. A generated/non-Doré asset may only fill a chapter
+ * for which the canonical Doré/master allocation has no approved assignment.
  */
 (() => {
   "use strict";
   const D=window.ONE_DATA;
   const R=window.ONE_DORE_COVER_REGISTRY;
   if(!D||!R?.files||!R?.maps)return;
+
+  const studioRegistry=()=>window.ONE_STUDIO_ASSET_REGISTRY||null;
 
   const parseMap=raw=>{
     if(!raw)return {};
@@ -22,7 +26,7 @@
     }));
   };
 
-  const makeArt=id=>{
+  const makeDoreArt=id=>{
     const file=R.files?.[id];
     if(!file)return null;
     const title=R.titles?.[id]||`Doré plate ${String(id).padStart(3,"0")}`;
@@ -32,8 +36,27 @@
       title,
       source:R.gallery||"https://commons.wikimedia.org/wiki/Dor%C3%A9%27s_Bible_Illustrations",
       artist:"Gustave Doré",
+      origin:"DORE_ORIGINAL_LIBRARY",
       doreId:String(id).padStart(3,"0"),
       master:"ONE-DORE-241-MASTER-MAPPING"
+    };
+  };
+
+  const makeStudioArt=resolved=>{
+    const asset=resolved?.asset;
+    const assignment=resolved?.assignment;
+    if(!asset||!assignment)return null;
+    return {
+      src:asset.src,
+      alt:asset.alt,
+      title:asset.title,
+      source:asset.source,
+      artist:asset.artist||"ONE Studio",
+      origin:asset.origin||"ONE_STUDIO",
+      studioAssetId:asset.id,
+      fixedStatus:asset.status||"FIXED_GENERATED",
+      palette:asset.palette||"MONOCHROME_ENGRAVING",
+      master:"ONE-STUDIO-FIXED-ASSET-LIBRARY"
     };
   };
 
@@ -45,50 +68,130 @@
         delete study.illustrations;
         delete study.coverIllustration;
         delete study.coverImage;
+        delete study.doreCover;
+        delete study.studioCover;
       });
     });
   };
 
   const applyBook=bookNumber=>{
-    const book=D.studyBooks?.[Number(bookNumber)];
-    if(!book)return {applied:0,unresolved:[]};
-    const mapping=parseMap(R.maps?.[Number(bookNumber)]??R.maps?.[String(bookNumber)]);
+    const numericBook=Number(bookNumber);
+    const book=D.studyBooks?.[numericBook];
+    if(!book)return {applied:0,doreApplied:0,studioApplied:0,unresolved:[]};
+
+    const mapping=parseMap(R.maps?.[numericBook]??R.maps?.[String(numericBook)]);
     let applied=0;
+    let doreApplied=0;
+    let studioApplied=0;
     const unresolved=[];
+
     Object.values(book.chapterStudies||{}).forEach(study=>{
       if(!study||typeof study!=="object")return;
-      delete study.illustration;delete study.illustrations;delete study.coverIllustration;delete study.coverImage;
+      delete study.illustration;
+      delete study.illustrations;
+      delete study.coverIllustration;
+      delete study.coverImage;
+      delete study.doreCover;
+      delete study.studioCover;
     });
+
+    /* First authority: canonical Doré/master allocation. */
     Object.entries(mapping).forEach(([chapter,id])=>{
       const study=book.chapterStudies?.[chapter];
       if(!study)return;
-      const art=makeArt(Number(id));
-      study.doreCover={id:String(id).padStart(3,"0"),title:R.titles?.[id],stage:"CANONICAL_MASTER",assetVerified:Boolean(art)};
-      if(art){study.illustration=art;applied+=1;}else unresolved.push(`${bookNumber}:${chapter}:${String(id).padStart(3,"0")}`);
+      const art=makeDoreArt(Number(id));
+      study.doreCover={
+        id:String(id).padStart(3,"0"),
+        title:R.titles?.[id],
+        stage:"CANONICAL_MASTER",
+        assetVerified:Boolean(art)
+      };
+      if(art){study.illustration=art;applied+=1;doreApplied+=1;}
+      else unresolved.push(`${numericBook}:${chapter}:DORE:${String(id).padStart(3,"0")}`);
     });
-    return {applied,unresolved};
+
+    /* Second library: frozen ONE Studio/non-Doré assets. Never overrides a Doré assignment. */
+    const S=studioRegistry();
+    if(S?.resolve){
+      Object.entries(book.chapterStudies||{}).forEach(([chapter,study])=>{
+        if(!study||typeof study!=="object"||study.illustration)return;
+        const resolved=S.resolve(numericBook,Number(chapter));
+        if(!resolved)return;
+        const art=makeStudioArt(resolved);
+        study.studioCover={
+          id:resolved.assignment.assetId,
+          stage:"FIXED_GENERATED",
+          priority:resolved.assignment.priority,
+          basis:resolved.assignment.basis,
+          assetVerified:Boolean(art)
+        };
+        if(art){study.illustration=art;applied+=1;studioApplied+=1;}
+        else unresolved.push(`${numericBook}:${chapter}:STUDIO:${resolved.assignment.assetId}`);
+      });
+    }
+
+    return {applied,doreApplied,studioApplied,unresolved};
   };
 
   const applyAll=()=>{
     clearLegacyCovers();
-    let applied=0;const unresolved=[];
-    Object.keys(D.studyBooks||{}).forEach(bookNumber=>{const result=applyBook(bookNumber);applied+=result.applied;unresolved.push(...result.unresolved);});
-    R.appliedVerifiedAssets=applied;R.unresolvedAssets=unresolved;
-    document.documentElement.dataset.oneCoverPolicy="canonical-master-only";
+    let applied=0,doreApplied=0,studioApplied=0;
+    const unresolved=[];
+    Object.keys(D.studyBooks||{}).forEach(bookNumber=>{
+      const result=applyBook(bookNumber);
+      applied+=result.applied;
+      doreApplied+=result.doreApplied;
+      studioApplied+=result.studioApplied;
+      unresolved.push(...result.unresolved);
+    });
+    R.appliedVerifiedAssets=applied;
+    R.appliedDoréAssets=doreApplied;
+    R.appliedStudioAssets=studioApplied;
+    R.unresolvedAssets=unresolved;
+    document.documentElement.dataset.oneCoverPolicy="canonical-two-library-one-resolver";
     document.documentElement.dataset.oneCoverApplied=String(applied);
+    document.documentElement.dataset.oneCoverDore=String(doreApplied);
+    document.documentElement.dataset.oneCoverStudio=String(studioApplied);
     document.documentElement.dataset.oneCoverUnresolved=unresolved.join(",");
-    return {applied,unresolved};
+    return {applied,doreApplied,studioApplied,unresolved};
+  };
+
+  const getCover=(bookNumber,chapter)=>{
+    const numericBook=Number(bookNumber);
+    const numericChapter=Number(chapter);
+    const mapping=parseMap(R.maps?.[numericBook]??R.maps?.[String(numericBook)]);
+    const id=Number(mapping[String(numericChapter)]);
+    if(id){
+      const art=makeDoreArt(id);
+      if(art)return art;
+    }
+    const resolved=studioRegistry()?.resolve?.(numericBook,numericChapter);
+    return resolved?makeStudioArt(resolved):null;
   };
 
   window.ONE_COVER_POLICY={
-    mode:"CANONICAL_MASTER_ONLY",
+    mode:"CANONICAL_TWO_LIBRARY_ONE_RESOLVER",
     legacyCoverRulesEnabled:false,
     originalDoréPlacementLocked:true,
+    doreLibraryExclusiveToOriginals:true,
+    studioLibrarySeparate:true,
     builtPagesHavePriority:false,
-    allocationPriority:Object.freeze({ORIGINAL_LOCKED:1,OFFICIAL_PARALLEL:2,HISTORICAL_MATCH:3,TYPOLOGY:4,SEMANTIC_EXPANSION:5,DEUTEROCANON_EXPANSION:6,VISUAL_DIVERSITY:7}),
-    clearLegacyCovers,applyBook,applyAll,
+    allocationPriority:Object.freeze({
+      ORIGINAL_LOCKED:1,
+      OFFICIAL_PARALLEL:2,
+      HISTORICAL_MATCH:3,
+      TYPOLOGY:4,
+      SEMANTIC_EXPANSION:5,
+      DEUTEROCANON_EXPANSION:6,
+      ONE_STUDIO_FIXED:7,
+      VISUAL_DIVERSITY:8
+    }),
+    clearLegacyCovers,
+    applyBook,
+    applyAll,
     registerBookMapping(bookNumber,mapping){R.maps[Number(bookNumber)]=mapping;return applyBook(Number(bookNumber));},
-    getCover(bookNumber,chapter){const mapping=parseMap(R.maps?.[Number(bookNumber)]??R.maps?.[String(bookNumber)]);const id=Number(mapping[String(Number(chapter))]);return id?makeArt(id):null;}
+    refreshStudioBook(bookNumber){return applyBook(Number(bookNumber));},
+    getCover
   };
 
   applyAll();
