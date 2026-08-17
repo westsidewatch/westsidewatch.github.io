@@ -2,15 +2,23 @@
 
 Status: **FOUNDATION / LIVING SYSTEM**
 
-The Westside Watch Engraving Studio is the brand's Scripture-to-engraving intelligence and production library.
+## Doré
 
-Its first artistic intelligence is the Doré Living Studio. The Studio studies the canonical Gustave Doré Bible corpus, studies Scripture itself, records how biblical text becomes pictorial narrative, learns from every generated plate and revision, and produces versioned Westside Watch / ONE Studio plates without ever confusing them with Doré originals.
+**Doré** is the formal name of Westside Watch's dedicated Scripture visual intelligence.
+
+Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
+
+Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.
+
+The aspiration is not merely to imitate surface engraving texture. Doré should learn to read Scripture, choose the right instant, viewing distance, composition, figures, gesture, landscape, light and line system, and then improve through review and revision.
 
 ## Core architecture
 
 ### 1. Original Corpus
 
-Canonical Doré originals remain immutable source material. The 241 original assets stay in the existing Doré Original Library. This Studio may study and index them but may not alter their identity, IDs, provenance or canonical placement.
+Canonical Gustave Doré originals remain immutable source material. The 241 Bible assets stay in the existing Doré Original Library. Doré may study and index them but may not alter their identity, IDs, provenance or canonical placement.
+
+Research extends beyond the Bible corpus through `corpus/EXTENDED-DORE-CORPUS.md`, including authenticated non-Bible Doré works when they clarify his artistic intelligence. These works are research references, not automatic Scripture assets.
 
 Research records belong under:
 
@@ -24,7 +32,7 @@ Growing artistic and Scripture-image knowledge belongs under:
 
 It includes visual grammar, Scripture-to-image observations, visual ancestry, specialist subject grammars, lessons learned and promoted principles.
 
-The intelligence layer is expected to change. Its purpose is cumulative learning.
+This is Doré's living memory. It is expected to change, deepen and become more specific as more original works are studied and more Westside Watch plates are generated, rejected, revised and approved.
 
 ### 3. Plate Workshop
 
@@ -34,13 +42,20 @@ Generation briefs, drafts, reviews, revision decisions and approved Westside Wat
 
 Every Doré-continuation plate follows:
 
-`Scripture -> Corpus study -> Visual ancestry -> Scene choice -> Generation brief -> Draft -> Evaluation -> Lessons -> Intelligence update -> Revision/Approval`
+`Scripture -> Doré reads Living Memory -> Corpus study -> Visual ancestry -> Scene choice -> Generation brief -> Draft -> Doré evaluation -> Human editorial review -> Lessons -> Intelligence update -> Revision/Approval`
 
-A plate is not merely an output. It is also a training event for the Living Studio.
+Doré therefore stands both **before** and **after** image generation:
+
+- before generation, Doré reads Scripture, researches precedents and decides how the scene should be constructed;
+- after generation, Doré evaluates Scripture fidelity, Doré continuity, anatomy, composition, value, line and product suitability;
+- review findings are written back into Living Intelligence so future work begins from a more mature state.
+
+A plate is not merely an output. It is also a training event for Doré.
 
 ## Foundation files
 
-- `corpus/PLATE-STUDY-TEMPLATE.md` — one canonical Doré plate research record.
+- `corpus/PLATE-STUDY-TEMPLATE.md` — one canonical Gustave Doré work research record.
+- `corpus/EXTENDED-DORE-CORPUS.md` — research beyond the Bible illustration cycle.
 - `intelligence/SCRIPTURE-TO-IMAGE.md` — accumulated rules for translating Scripture into a selected pictorial moment.
 - `intelligence/VISUAL-ANCESTRY.md` — how new subjects inherit from actual Doré precedents.
 - `intelligence/LEARNING-LOG.md` — chronological successes, failures and lessons.
@@ -48,8 +63,93 @@ A plate is not merely an output. It is also a training event for the Living Stud
 - `workshop/GENERATION-BRIEF-TEMPLATE.md` — mandatory pre-generation brief.
 - `workshop/PLATE-EVALUATION-TEMPLATE.md` — post-generation review and Lost Plate Test.
 
-## Product horizon
+## Doré as Westside Watch's primary original illustrator
 
-The Studio is not limited to filling ONE's missing chapter illustrations. Its structured plate records are designed to support future Westside Watch products: an engraving gallery, Scripture plate collection, print series, devotional/editorial images and other brand publishing.
+Doré is intended to become the primary original illustration intelligence for Westside Watch publishing. This includes original illustration work for:
 
-The long-term capability is a Westside Watch-specific Scripture illustration intelligence: it learns Scripture and learns how Doré transformed Scripture into visual narrative, then develops that knowledge through sustained human editorial review.
+- ONE Scripture chapters and covers;
+- Westside Watch Journal articles, openings, features, theology, devotionals, testimonies, interviews, mission and prayer sections;
+- daily devotional Scripture visuals;
+- social-media image systems;
+- posters and church campaign graphics;
+- apparel and T-shirt artwork;
+- print plates, cards and collectible/editorial products;
+- future Scripture animation and motion storytelling.
+
+This does **not** mean historical photographs, documentary church photography, archival material, maps, primary-source artworks or other evidence-bearing materials should be redrawn by Doré. Illustration and documentation remain distinct editorial categories.
+
+## One Scripture, many media
+
+The preferred production model is:
+
+`Scripture -> Doré reading/research -> Master Plate / Master Visual -> medium-specific derivations`
+
+A strong master visual should be capable of becoming multiple coordinated outputs without random reinvention.
+
+### ONE
+
+Doré supplies chapter art and cover art through the canonical fixed-asset system. The same approved asset may be presented as a full-bleed cover and as a 5:8 body plate.
+
+### Westside Watch Journal
+
+Original Journal illustration should normally be commissioned through Doré so that the magazine develops one coherent visual bloodline with ONE. Editorial illustration may include intimate human moments, theology, testimony, church life, mission, interviews, prayer and conceptual visual essays, not only direct Scripture scenes.
+
+Every Journal commission should also train Doré in editorial scale: small spot illustration, chapter opening, full page, 5:8 plate, spread and cover composition.
+
+### Daily devotional / social media
+
+Doré master visuals may be adapted for daily Scripture and devotional publishing on Instagram, Threads and related platforms.
+
+Platform derivations may include 1:1, 4:5, 9:16 and other required formats. They should not be careless crops. Doré should learn how to preserve narrative hierarchy, negative space and Scripture legibility when the composition changes shape.
+
+Daily devotional work is itself training: it teaches Doré how to communicate Scripture atmosphere and visual meaning quickly at small mobile scale.
+
+### YouTube / motion
+
+Doré may later develop Scripture animation and short visual Bible stories for YouTube, Shorts/Reels and related channels.
+
+The motion system should grow from the same intelligence rather than from a separate generic animation style. The conceptual evolution is:
+
+`Scripture-to-Image -> Scripture-to-Sequence -> Scripture-to-Motion`
+
+Doré should first learn to select one decisive biblical instant. Later it can learn to select a sequence of decisive moments, maintain character/location continuity, control pacing and decide when an image should remain nearly still versus when movement is narratively necessary.
+
+A Doré motion piece should feel like engraved biblical storytelling acquiring time, not a modern cinematic production with an engraving filter applied afterward.
+
+### Apparel / T-shirts
+
+Doré may produce church and Westside Watch apparel graphics. Apparel output should not simply print a rectangular full illustration on a shirt.
+
+Doré should develop an **Apparel Grammar** that learns how to derive strong silhouettes, selected figures, symbols, Scripture relationships and limited-print versions from a master plate while respecting screen-printing, embroidery or other production constraints.
+
+The goal is recognizably Westside Watch Christian visual language rather than generic Christian merchandise.
+
+### Print and standalone plates
+
+Approved Doré · Westside Watch plates may become posters, devotional cards, prints, exhibitions, editorial collections and a standalone Scripture engraving product.
+
+## Product identity
+
+Doré should eventually support a product family in which the same visual intelligence is recognizable across:
+
+**Scripture · Editorial · Social · Print · Apparel · Motion**
+
+The visual treatment may adapt to each medium, but the Scripture reading, scene intelligence and Westside Watch visual ancestry should remain connected.
+
+## The training value of scale
+
+The large number of unillustrated Bible chapters is not only backlog. It is a long-form training curriculum for Doré.
+
+Each missing chapter can teach a different problem: intimate conversation, battle, horse, crowd, city, wilderness, prophecy, parable, ritual, grief, worship, monster, angel, landscape, architecture, miracle, judgment or quiet human detail.
+
+As hundreds of research/generation/revision cycles accumulate, Doré should need progressively less generic prompting and should increasingly rely on its own mature Living Intelligence.
+
+Revelation is the first planned full-book test of this method, not the endpoint.
+
+## Long-term capability
+
+The long-term objective is a Westside Watch-specific **Bible Visual Storytelling Intelligence**.
+
+Doré should be capable of receiving a passage without being told what picture to make, reading the passage in context, consulting its accumulated visual memory, proposing a pictorial interpretation, producing/revising the work and explaining why that particular moment and composition were chosen.
+
+The most meaningful maturity test is not whether Doré can imitate cross-hatching. It is whether Doré's visual reading can make a careful reader notice something true and important in Scripture while remaining clearly accountable to the text and to truthful provenance.
