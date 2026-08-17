@@ -19,5 +19,8 @@
     else D.studyBooks={...(D.studyBooks||{}),23:I};
   }else console.error(`[ONE Isaiah] registration blocked: missing=${missing.join(",")||"none"}`);
 })();
-/* The Doré registry must execute after every completed book dataset and before one-app.js. */
-document.write('<script src="./one-dore-cover-registry.js?v=20260817a"><\/script>');
+/* Load the authoritative Doré registry synchronously before one-app.js.
+ * Version is intentionally bumped whenever the fixed 241-asset registry changes,
+ * so GitHub Pages/browser caches cannot keep an older fuzzy-search implementation alive.
+ */
+document.write('<script src="./one-dore-cover-registry.js?v=20260817c"><\/script>');
