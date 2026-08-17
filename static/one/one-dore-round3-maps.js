@@ -1,9 +1,10 @@
-/* ONE Doré Round 3 mapping data — generated from ONE-DORE-STAGE6-ROUND3-CONSOLIDATED-418.tsv. */
+/* ONE Doré Round 3 mapping data — generated from ONE-DORE-STAGE6-ROUND3-CONSOLIDATED-418.tsv.
+ * DATA ONLY: this file never writes chapter illustrations. ONE_COVER_POLICY is the sole writer.
+ */
 (() => {
   "use strict";
   const R = window.ONE_DORE_COVER_REGISTRY;
-  const P = window.ONE_COVER_POLICY;
-  if (!R || !P) return;
+  if (!R) return;
   R.maps = {
     1:"1:001,2:002,3:003,4:004,5:004,6:005,7:006,8:007,9:009,10:008,11:010,12:011,13:011,14:011,15:016,16:014,17:016,18:012,19:013,20:012,21:015,22:016,23:017,24:018,25:017,26:019,27:020,28:021,29:022,30:022,31:023,32:024,33:025,34:005,35:021,36:025,37:026,38:026,39:026,40:027,41:027,42:027,43:027,44:028,45:028,46:029,47:029,48:028,49:029,50:017",
     9:"1:114,2:070,3:195,4:072,5:149,6:072,7:073,8:073,9:073,10:073,11:075,12:073,13:074,14:078,15:074,16:075,17:075,18:076,19:077,20:078,21:077,22:076,23:077,24:079,25:079,26:079,27:077,28:080,29:077,30:147,31:081",
@@ -21,8 +22,5 @@
   R.mappingSource = "ONE-DORE-STAGE6-ROUND3-CONSOLIDATED-418.tsv";
   R.uniqueDoreIds = 155;
   R.totalCompletedChapters = 418;
-  const result = P.applyAll();
-  R.appliedVerifiedAssets = result.applied;
-  R.unresolvedAssets = result.unresolved;
-  document.documentElement.dataset.doreRegistry = "round3-418-opening-distinct";
+  document.documentElement.dataset.doreMapping = "round3-418";
 })();
