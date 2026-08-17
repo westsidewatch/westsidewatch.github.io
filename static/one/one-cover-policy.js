@@ -8,6 +8,11 @@
   const R = window.ONE_DORE_COVER_REGISTRY;
   if (!D || !R) return;
 
+  /* Complete the fixed asset registry first. one-dore-assets-241.js only fills
+   * missing R.files IDs and never overwrites an existing locked asset entry.
+   */
+  document.write('<script src="./one-dore-assets-241.js?v=20260817a"><\/script>');
+
   const parseMap = raw => {
     if (!raw) return {};
     if (typeof raw === "object") return raw;
@@ -115,4 +120,8 @@
   };
 
   applyAll();
+  /* Round 3 is mapping data only. It replaces R.maps and calls this same policy
+   * to reapply covers, preserving ONE_COVER_POLICY as the sole illustration writer.
+   */
+  document.write('<script src="./one-dore-round3-maps.js?v=20260817a"><\/script>');
 })();
