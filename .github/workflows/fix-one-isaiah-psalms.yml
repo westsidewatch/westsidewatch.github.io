@@ -1,0 +1,68 @@
+name: Fix ONE Isaiah and Psalms
+on:
+  push:
+    branches: [fix/one-isaiah-sticky-art-psalms-entry]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: ${{ !contains(github.event.head_commit.message, 'apply renderer and registry fix') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/one-isaiah-sticky-art-psalms-entry
+      - name: Apply targeted fixes
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          # Supplements execute before their registries. They must mutate the source book
+          # object, not studyBooks, which does not exist yet for that book at this point.
+          for name in ['psalms-illustrations-1-25.js','psalms-illustrations-26-50.js','psalms-illustrations-51-75.js','psalms-illustrations-76-100.js','psalms-illustrations-101-125.js','psalms-illustrations-126-150.js']:
+              p=Path('static/one')/name
+              s=p.read_text()
+              s=s.replace('window.ONE_DATA?.studyBooks?.[19]', 'window.ONE_DATA?.psalms')
+              p.write_text(s)
+
+          for name in ['isaiah-maps.js','isaiah-illustrations.js']:
+              p=Path('static/one')/name
+              s=p.read_text()
+              s=s.replace('window.ONE_DATA?.studyBooks?.[23]', 'window.ONE_DATA?.isaiah')
+              p.write_text(s)
+
+          # Never retain a previous book/chapter illustration when the current chapter
+          # intentionally has no illustration.
+          p=Path('static/one/one-app.js')
+          s=p.read_text()
+          old='''if(study.illustration){const engraving=`url("${study.illustration.src}")`,coverArt=$(\'#chapter-cover-art\');now.style.setProperty(\'--chapter-engraving\',engraving);document.documentElement.style.setProperty(\'--one-chapter-engraving\',engraving);coverArt.src=study.illustration.src;coverArt.alt=study.illustration.alt;const credit=$(\'#chapter-art-credit\');credit.href=study.illustration.source;credit.textContent=`Gustave Doré · ${study.illustration.title}`;credit.hidden=false}'''
+          new='''{const coverArt=$(\'#chapter-cover-art\'),credit=$(\'#chapter-art-credit\');if(study.illustration){const engraving=`url("${study.illustration.src}")`;now.style.setProperty(\'--chapter-engraving\',engraving);document.documentElement.style.setProperty(\'--one-chapter-engraving\',engraving);coverArt.src=study.illustration.src;coverArt.alt=study.illustration.alt;coverArt.hidden=false;credit.href=study.illustration.source;credit.textContent=`Gustave Doré · ${study.illustration.title}`;credit.hidden=false}else{now.style.removeProperty(\'--chapter-engraving\');document.documentElement.style.removeProperty(\'--one-chapter-engraving\');coverArt.removeAttribute(\'src\');coverArt.alt=\'\';coverArt.hidden=true;credit.removeAttribute(\'href\');credit.textContent=\'\';credit.hidden=true}}'''
+          if old not in s:
+              raise SystemExit('showChapter illustration block not found')
+          s=s.replace(old,new,1)
+          p.write_text(s)
+
+          # Remove the global Matthew birth-image fallback from initial HTML.
+          p=Path('static/one/index.html')
+          s=p.read_text()
+          s=s.replace('<img class="chapter-cover-art" id="chapter-cover-art" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/The_Birth_of_Jesus.jpg/960px-The_Birth_of_Jesus.jpg" alt="古斯塔夫・多雷版畫：耶穌降生">','<img class="chapter-cover-art" id="chapter-cover-art" alt="" hidden>')
+          s=s.replace('<a class="chapter-art-credit" id="chapter-art-credit" href="https://commons.wikimedia.org/wiki/File:The_Birth_of_Jesus.jpg" target="_blank" rel="noopener">Gustave Doré · The Holy Bible</a>','<a class="chapter-art-credit" id="chapter-art-credit" target="_blank" rel="noopener" hidden></a>')
+          s=s.replace('one-app.js?v=20260813b','one-app.js?v=20260817a')
+          s=s.replace('psalms-illustrations-1-25.js?v=20260816a','psalms-illustrations-1-25.js?v=20260817a')
+          s=s.replace('psalms-illustrations-26-50.js?v=20260816a','psalms-illustrations-26-50.js?v=20260817a')
+          s=s.replace('psalms-illustrations-51-75.js?v=20260816a','psalms-illustrations-51-75.js?v=20260817a')
+          s=s.replace('psalms-illustrations-76-100.js?v=20260816a','psalms-illustrations-76-100.js?v=20260817a')
+          s=s.replace('psalms-illustrations-101-125.js?v=20260816a','psalms-illustrations-101-125.js?v=20260817a')
+          s=s.replace('psalms-illustrations-126-150.js?v=20260816a','psalms-illustrations-126-150.js?v=20260817a')
+          s=s.replace('isaiah-maps.js?v=20260817a','isaiah-maps.js?v=20260817b')
+          s=s.replace('isaiah-illustrations.js?v=20260817a','isaiah-illustrations.js?v=20260817b')
+          p.write_text(s)
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'WATCHMAN'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/one
+          git diff --cached --quiet && exit 0
+          git commit -m 'fix(one): apply renderer and registry fix'
+          git push origin HEAD:fix/one-isaiah-sticky-art-psalms-entry
