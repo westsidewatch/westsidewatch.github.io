@@ -8,67 +8,15 @@
     radial-gradient(ellipse at 50% 38%,rgba(255,246,195,.2),transparent 58%),
     var(--one-page-surface);
 }
-.chapter-illustration a{
-  display:grid;
-  place-items:center;
-  width:100%;
-  aspect-ratio:5/8;
-  overflow:hidden;
-  background:rgba(117,85,31,.055);
-}
-.chapter-illustration img{
-  display:block;
-  width:100%;
-  height:100%;
-  max-width:100%;
-  max-height:none;
-  object-fit:contain;
-  object-position:center;
-}
-.chapter-illustration figcaption{
-  width:100%;
-  text-align:right;
-}
+.chapter-illustration a{display:grid;place-items:center;width:100%;aspect-ratio:5/8;overflow:hidden;background:rgba(117,85,31,.055)}
+.chapter-illustration img{display:block;width:100%;height:100%;max-width:100%;max-height:none;object-fit:contain;object-position:center}
+.chapter-illustration figcaption{width:100%;text-align:right}
 
-/* Cross-reference hierarchy, shared by every ONE book.
- * Reference = metadata, one step smaller.
- * Theme = normal reading size.
- * Scripture = quoted Scripture only.
- * Note = editorial explanation, never presented as Scripture.
- */
-.connection-section .connection-grid strong{
-  display:block;
-  color:var(--one-gilt-dark);
-  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
-  font-size:clamp(.9rem,1vw,1.02rem);
-  font-weight:500;
-  line-height:1.55;
-  letter-spacing:.01em;
-}
-.connection-section .connection-grid small,
-.connection-section .connection-scripture,
-.connection-section .connection-note{
-  font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;
-  font-size:var(--one-body-size);
-  font-weight:400;
-  line-height:1.95;
-  letter-spacing:0;
-}
-.connection-section .connection-grid small{
-  display:block;
-  margin-top:.45rem;
-  color:var(--one-gilt-dark);
-}
-.connection-section .connection-scripture{
-  max-width:56rem;
-  margin:1rem 0 0;
-  color:var(--one-ink);
-}
-.connection-section .connection-note{
-  max-width:56rem;
-  margin:1rem 0 0;
-  color:rgba(16,42,67,.72);
-}
+.connection-section .connection-grid strong{display:block;color:var(--one-gilt-dark);font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(.9rem,1vw,1.02rem);font-weight:500;line-height:1.55;letter-spacing:.01em}
+.connection-section .connection-grid small,.connection-section .connection-scripture,.connection-section .connection-note{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:var(--one-body-size);font-weight:400;line-height:1.95;letter-spacing:0}
+.connection-section .connection-grid small{display:block;margin-top:.45rem;color:var(--one-gilt-dark)}
+.connection-section .connection-scripture{max-width:56rem;margin:1rem 0 0;color:var(--one-ink)}
+.connection-section .connection-note{max-width:56rem;margin:1rem 0 0;color:rgba(16,42,67,.72)}
 
 /* ==========================================================
    ONE CANONICAL 66-BOOK COVER SYSTEM
@@ -76,88 +24,56 @@
    Do not fork these rules book-by-book.
    ========================================================== */
 
-/* Canonical ornate frame: one asset for every chapter cover and plate. */
-.now__intro:after{
-  inset:.72rem!important;
-  border:0!important;
-  background:url('./one-ornate-frame.svg') center/100% 100% no-repeat;
-  opacity:.94;
-}
-
-.chapter-illustration{
-  position:relative;
+.now__intro{
   isolation:isolate;
-  padding:1rem;
-  border:1px solid rgba(206,189,116,.86);
+  max-width:100%;
+  overflow:hidden;
   background:
-    linear-gradient(rgba(22,19,15,.08),rgba(22,19,15,.22)),
-    radial-gradient(ellipse at 50% 40%,rgba(206,189,116,.18),transparent 60%),
-    var(--one-page-surface);
-  box-shadow:inset 0 0 0 7px rgba(206,189,116,.08),inset 0 0 0 8px rgba(206,189,116,.34);
+    radial-gradient(ellipse at 50% 35%,rgba(206,189,116,.13),transparent 48%),
+    linear-gradient(145deg,#17150f 0%,#292319 48%,#12110d 100%);
 }
-.chapter-illustration:after{
-  position:absolute;
-  z-index:3;
-  inset:.42rem;
-  background:url('./one-ornate-frame.svg') center/100% 100% no-repeat;
-  content:"";
-  pointer-events:none;
+/* If a chapter has no approved art yet, the cover remains a complete canonical
+ * antique cover rather than collapsing, going blank, or inheriting stale art. */
+.now__intro:before{
+  background:
+    linear-gradient(rgba(20,18,14,.18),rgba(20,18,14,.5)),
+    var(--chapter-engraving),
+    radial-gradient(ellipse at 50% 34%,rgba(206,189,116,.14),transparent 48%),
+    repeating-linear-gradient(7deg,rgba(255,255,255,.012) 0 1px,rgba(0,0,0,.018) 1px 3px),
+    linear-gradient(145deg,#2b251b,#15130e)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
 }
-.chapter-illustration a{position:relative;z-index:1;background:#17150f}
-.chapter-illustration img{
-  filter:grayscale(.92) sepia(.22) contrast(1.08) brightness(.9);
-}
-.chapter-illustration figcaption{
-  position:relative;
-  z-index:4;
-  margin-top:.65rem;
-  color:var(--gold);
-  font-family:"Cormorant Garamond","Noto Serif TC",serif;
-  font-size:.78rem;
-  letter-spacing:.04em;
-}
+.now__intro:after{inset:.72rem!important;border:0!important;background:url('./one-ornate-frame.svg') center/100% 100% no-repeat;opacity:.94}
 
-/* Morning Star is optional by the mother rule. Until a chapter explicitly opts in,
- * it must not appear as a compulsory badge on every cover. */
+.chapter-illustration{position:relative;isolation:isolate;padding:1rem;border:1px solid rgba(206,189,116,.86);background:linear-gradient(rgba(22,19,15,.08),rgba(22,19,15,.22)),radial-gradient(ellipse at 50% 40%,rgba(206,189,116,.18),transparent 60%),var(--one-page-surface);box-shadow:inset 0 0 0 7px rgba(206,189,116,.08),inset 0 0 0 8px rgba(206,189,116,.34)}
+.chapter-illustration:after{position:absolute;z-index:3;inset:.42rem;background:url('./one-ornate-frame.svg') center/100% 100% no-repeat;content:"";pointer-events:none}
+.chapter-illustration a{position:relative;z-index:1;background:#17150f}
+.chapter-illustration img{filter:grayscale(.92) sepia(.22) contrast(1.08) brightness(.9)}
+.chapter-illustration figcaption{position:relative;z-index:4;margin-top:.65rem;color:var(--gold);font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:.78rem;letter-spacing:.04em}
+
+/* Morning Star is opt-in, never compulsory. */
 .now__intro .morning-star{display:none}
 .now__intro.has-morning-star .morning-star{display:block}
 
-/* Mobile headings: never widen the viewport. Horizontal scrolling is reserved
- * for components that are intentionally horizontal (timeline/table/map rails). */
-.now h2,.head h2,.study-intro h2,.book-frontispiece .head h2,
-.chapter-section>h3,.timeline-reading h3,.map-reading h3,.map-reading h4,
-.scripture-reading h3,.calendar-card h3,.book-detail h3{
-  max-width:100%;
-  min-width:0;
-}
+/* Global overflow contract: prose and headings may wrap; only dedicated rails,
+ * timelines and comparison tables may intentionally scroll horizontally. */
+html,body,#main,.views,.view,.chapter-detail,.book-frontispiece,.study-intro,.chapter-section{max-width:100%}
+body{overflow-x:hidden}
+.now h2,.head h2,.study-intro h2,.book-frontispiece .head h2,.chapter-section>h3,.timeline-reading h3,.map-reading h3,.map-reading h4,.scripture-reading h3,.calendar-card h3,.book-detail h3{max-width:100%;min-width:0}
 
 @media(max-width:650px){
-  .chapter-illustration{
-    width:min(100%,30rem);
-    margin-top:2rem;
-    padding:.65rem;
-  }
+  .chapter-illustration{width:min(100%,30rem);margin-top:2rem;padding:.65rem}
   .chapter-illustration:after{inset:.3rem}
   .chapter-illustration a{aspect-ratio:5/8}
   .connection-section .connection-grid strong{font-size:.9rem}
-  .connection-section .connection-grid small,
-  .connection-section .connection-scripture,
-  .connection-section .connection-note{font-size:1rem}
-
-  .now h2,.head h2,.study-intro h2,.book-frontispiece .head h2,
-  .chapter-section>h3,.timeline-reading h3,.map-reading h3,.map-reading h4,
-  .scripture-reading h3,.calendar-card h3,.book-detail h3{
-    max-width:100%!important;
-    width:auto;
-    white-space:normal!important;
-    word-break:normal!important;
-    overflow-wrap:anywhere!important;
-    hyphens:auto;
-  }
-  .now h2{font-size:clamp(2.45rem,12vw,3.5rem)!important;line-height:.98!important}
-  .head h2,.book-frontispiece .head h2{font-size:clamp(2.15rem,10.5vw,3.25rem)!important;line-height:1.05!important}
-  .study-intro h2{font-size:clamp(2rem,9.8vw,3rem)!important;line-height:1.08!important}
-  .chapter-section>h3,.timeline-reading h3,.map-reading h3,.scripture-reading h3{font-size:clamp(1.65rem,8vw,2.35rem)!important;line-height:1.15!important}
-  .map-reading h4{font-size:clamp(1.45rem,7vw,2rem)!important;line-height:1.18!important}
-  .now__intro{max-width:100%;overflow:hidden}
+  .connection-section .connection-grid small,.connection-section .connection-scripture,.connection-section .connection-note{font-size:1rem}
+  .now h2,.head h2,.study-intro h2,.book-frontispiece .head h2,.chapter-section>h3,.timeline-reading h3,.map-reading h3,.map-reading h4,.scripture-reading h3,.calendar-card h3,.book-detail h3{max-width:100%!important;width:auto;white-space:normal!important;word-break:normal!important;overflow-wrap:anywhere!important;hyphens:auto}
+  .now h2{font-size:clamp(2.15rem,11vw,3.25rem)!important;line-height:1!important}
+  .head h2,.book-frontispiece .head h2{font-size:clamp(1.95rem,9.8vw,3rem)!important;line-height:1.06!important}
+  .study-intro h2{font-size:clamp(1.85rem,9vw,2.8rem)!important;line-height:1.1!important}
+  .chapter-section>h3,.timeline-reading h3,.map-reading h3,.scripture-reading h3{font-size:clamp(1.55rem,7.5vw,2.2rem)!important;line-height:1.16!important}
+  .map-reading h4{font-size:clamp(1.4rem,6.8vw,1.9rem)!important;line-height:1.2!important}
+  .now__intro{padding-left:clamp(1.2rem,6vw,2rem)!important;padding-right:clamp(1.2rem,6vw,2rem)!important}
 }
