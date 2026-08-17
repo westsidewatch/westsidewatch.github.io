@@ -1,45 +1,52 @@
 # ONE — 1,189 Chapter Visual Master Inventory
 
-Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 376 LOCKED · NO IMAGE GENERATION DURING AUDIT
+Status: ACTIVE · DORÉ COVERAGE CHECKPOINT 447 LOCKED · NO IMAGE GENERATION DURING AUDIT
 
 ONE's visual production unit is the **chapter**, not the book. The Protestant 66-book canon contains 1,189 chapters (OT 929 + NT 260).
 
-## Locked checkpoint — 376 chapters
+## Locked checkpoint — 447 chapters
 
-The previous deduplicated checkpoint was **367 / 1,189**. Ecclesiastes already had three covered chapters in that ledger: Ecclesiastes 1, 3, and 9. The Ecclesiastes precision pass assigns Doré imagery to the other nine chapters: 2, 4, 5, 6, 7, 8, 10, 11, and 12. Because these nine targets are distinct from the three previously covered Ecclesiastes chapters, the pass adds **9 unique chapters**.
+Previous locked checkpoint: **376 / 1,189**.
 
-**367 + 9 = 376 / 1,189 chapters.**
+The Psalms concentration pass was deduplicated against all previously locked Psalm allocations. Before this pass, **79 / 150 Psalms** were already covered. The full rescan produced **70 genuinely new Psalm targets** after duplicate removal, bringing Psalms to **149 / 150**. The sole missing Psalm was Psalm 109.
 
-Remaining uncovered chapters: **813**.
+Psalm 109 was then precision-audited and assigned **The Death of Ahab** (original Doré provenance: 1 Kings 22) as an editorial ONE image-meaning reuse: the image presents the terminal judgment of a wicked ruler and strongly supports Psalm 109's themes of accusation, divine judgment, shortened days, lost office, and the downfall of the wicked.
 
-## Ecclesiastes — 12 / 12 covered
+Thus the Psalms pass adds **71 unique chapters** to the previous locked checkpoint:
 
-1. Ecclesiastes 1 → Cross Lifted Up — established earlier; vanity under the sun / visual theological counterpoint
-2. Ecclesiastes 2 → Solomon — wealth, works, wisdom, pleasure, and vanity
-3. Ecclesiastes 3 → Jesus Nailed to the Cross — established earlier; a time to be born and a time to die
-4. Ecclesiastes 4 → Israelites in Egypt / forced-labor imagery — oppression, tears, toil
-5. Ecclesiastes 5 → Cedars Destined for the Temple — house of God, vows, labor and wealth
-6. Ecclesiastes 6 → Belshazzar's Feast — riches, honor and abundance without the power truly to enjoy them
-7. Ecclesiastes 7 → Burial of Sarah — house of mourning; death and wisdom
-8. Ecclesiastes 8 → Judgment of Solomon — king, wisdom, justice and judgment
-9. Ecclesiastes 9 → Death of Eleazar — established earlier; death comes to all, strength cannot escape it
-10. Ecclesiastes 10 → Death of Saul — folly in high places and destructive leadership
-11. Ecclesiastes 11 → Sower / agricultural imagery — sowing, uncertainty, diligence and future harvest
-12. Ecclesiastes 12 → Solomon — old age, remembering the Creator, death and the book's conclusion
+**376 + 71 = 447 / 1,189 chapters.**
 
-All reused Doré works retain their original title, biblical provenance and source metadata. These are ONE editorial image-meaning assignments, not claims that Doré originally illustrated Ecclesiastes with these plates.
+Remaining uncovered chapters: **742**.
+
+## Psalms — 150 / 150 covered
+
+The complete Psalter now has a fixed Doré cover allocation. Existing earlier allocations remain unchanged. The concentration pass adds the following new Psalm targets after deduplication:
+
+Psalms 13, 15, 21, 25, 36, 48, 49, 50, 53, 60, 65, 66, 67, 72, 75, 77, 78, 80, 81, 82, 83, 85, 86, 87, 89, 92, 93, 94, 95, 97, 98, 99, 100, 101, 102, 106, 108, 111, 112, 113, 114, 115, 116, 117, 120, 122, 123, 125, 126, 127, 128, 129, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 145, 146, 147, 148, 150, and Psalm 109.
+
+Note: the broad scan also surfaced Psalms 18, 20, 22, 27, 31, 33, 38, 39, 41, 45, 103, 105, 107, 118, and 119, but those were already present in the locked ledger and therefore were removed as duplicate targets rather than counted again.
+
+### Psalm 109 precision allocation
+
+- Psalm 109 → **The Death of Ahab**
+- Doré original provenance: **1 Kings 22**
+- ONE reuse class: `DORÉ-REUSE / IMAGE-MEANING`
+- Editorial rationale: accusation and hostile speech; appeal to divine judgment; shortened days; another taking the offender's office; downfall and judgment of the wicked.
+- This is not represented as Doré's original Psalm 109 illustration.
 
 ## Completed books by Doré allocation
 
+- Psalms: **150 / 150**
 - Proverbs: **31 / 31**
 - Ecclesiastes: **12 / 12**
 - Song of Songs: **8 / 8**
 
 ## Previous locked layers retained
 
-- Locked checkpoint before Ecclesiastes precision pass: `367` unique chapters.
+- Locked checkpoint before Psalms concentration pass: `376` unique chapters.
+- Ecclesiastes precision pass: `+9` unique chapters at the preceding checkpoint.
 - Strict second-use reuse: `+34` unique chapters after duplicate/weak-match removal.
-- Psalms wisdom pass: `+41` unique chapters.
+- Earlier Psalms wisdom pass: `+41` unique chapters.
 - Proverbs: `31 / 31` covered after precision pass.
 - Song of Songs: `8 / 8` covered.
 - Canonical surplus pool: `39 / 39` audited/dispositioned.
@@ -56,4 +63,4 @@ All reused Doré works retain their original title, biblical provenance and sour
 
 ## Next audit gate
 
-Preserve **376** as the locked baseline. Continue high-quality image-meaning reuse in still-uncovered chapters before any ONE Studio bulk generation.
+Preserve **447** as the locked baseline. Continue high-quality Doré image-meaning reuse in still-uncovered books before any ONE Studio bulk generation.
