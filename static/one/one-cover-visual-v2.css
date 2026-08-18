@@ -10,37 +10,27 @@
   --one-binding-deep:#080906;
   --one-gilt-foil:linear-gradient(92deg,#8e7430 0%,#cebd74 24%,#e7d99a 47%,#cebd74 72%,#8e7430 100%);
 }
-
-/* COVER — the semantic fixed-asset <img> is itself the full-bleed artwork.
- * This removes dependency on a CSS custom-property background for visibility.
- */
 .now{display:block!important;padding:clamp(1rem,3vw,3rem) 0!important;}
 .now__intro{
-  position:relative!important;
-  display:block!important;
-  isolation:isolate;
-  overflow:hidden;
-  width:min(100%,62rem)!important;
-  min-height:clamp(42rem,76vw,64rem)!important;
-  padding:0!important;
-  border:1px solid rgba(231,217,154,.98)!important;
-  background:var(--one-binding-deep)!important;
-  box-shadow:inset 0 0 0 4px rgba(8,9,6,.84),inset 0 0 0 5px rgba(231,217,154,.94),inset 0 0 0 11px rgba(8,9,6,.68),inset 0 0 0 12px rgba(206,189,116,.62),0 1.6rem 4rem rgba(20,15,6,.2),0 0 1.1rem rgba(206,189,116,.12)!important;
+  position:relative!important;display:block!important;isolation:isolate;overflow:hidden;
+  width:min(100%,62rem)!important;min-height:clamp(42rem,76vw,64rem)!important;padding:0!important;
+  border:1px solid rgba(206,189,116,.72)!important;background:var(--one-binding-deep)!important;
+  box-shadow:inset 0 0 0 3px rgba(8,9,6,.78),inset 0 0 0 4px rgba(206,189,116,.38),0 1.6rem 4rem rgba(20,15,6,.2)!important;
 }
+/* Canonical antique-book gilt: flat double rule, restrained engraved acanthus corners,
+ * deliberately imperfect/aged. No star badges, bevel, plaster relief or glowing frame. */
 .now__intro::before{
-  display:block!important;position:absolute;z-index:7;inset:1.02rem;border:1px solid rgba(231,217,154,.94);box-shadow:0 0 .35rem rgba(231,217,154,.24),inset 0 0 0 5px rgba(8,9,6,.16),inset 0 0 0 6px rgba(206,189,116,.48);content:"";pointer-events:none;
+  display:block!important;position:absolute;z-index:7;inset:.92rem;border:1px solid rgba(206,189,116,.58);
+  box-shadow:inset 0 0 0 9px rgba(8,9,6,.08),inset 0 0 0 10px rgba(142,116,48,.26);
+  content:"";pointer-events:none;
 }
 .now__intro::after{
-  display:block!important;position:absolute;z-index:7;inset:1.12rem;opacity:1;content:"";pointer-events:none;
-  background:radial-gradient(ellipse 1.7rem .36rem at 1.25rem 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at 1.25rem 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at 1.25rem 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) 1.25rem,rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at calc(100% - 1.25rem) 1.25rem,rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at 1.25rem calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at 1.25rem calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem),radial-gradient(ellipse 1.7rem .36rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,.98) 0 38%,transparent 44%),radial-gradient(ellipse .36rem 1.7rem at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(206,189,116,.94) 0 38%,transparent 44%),radial-gradient(circle at calc(100% - 1.25rem) calc(100% - 1.25rem),rgba(231,217,154,1) 0 .2rem,rgba(142,116,48,.92) .22rem .34rem,transparent .36rem);
-  filter:drop-shadow(0 0 .22rem rgba(231,217,154,.3));
+  display:block!important;position:absolute;z-index:8;inset:0;content:"";pointer-events:none;
+  background:url("./one-cover-gilt-frame.svg") center/100% 100% no-repeat;
+  opacity:.92;mix-blend-mode:normal;filter:none;
 }
-.chapter-cover-art:not([hidden]){
-  display:block!important;position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;opacity:1!important;pointer-events:none;filter:grayscale(1) sepia(.25) saturate(.72) contrast(1.13) brightness(.68)!important;
-}
-.chapter-cover-overlay{
-  position:relative!important;z-index:3!important;min-height:clamp(42rem,76vw,64rem)!important;display:flex!important;flex-direction:column;justify-content:flex-end!important;align-items:center!important;gap:clamp(.65rem,1.6vw,1.15rem)!important;padding:clamp(5rem,12vw,10rem) clamp(2.2rem,7vw,6rem) clamp(4rem,8vw,6.5rem)!important;text-align:center;background:linear-gradient(180deg,rgba(6,7,5,.02) 0 42%,rgba(6,7,5,.14) 58%,rgba(6,7,5,.52) 78%,rgba(6,7,5,.82) 100%)!important;
-}
+.chapter-cover-art:not([hidden]){display:block!important;position:absolute!important;z-index:0!important;inset:0!important;width:100%!important;height:100%!important;min-height:100%!important;object-fit:cover!important;object-position:center!important;opacity:1!important;pointer-events:none;filter:grayscale(1) sepia(.25) saturate(.72) contrast(1.13) brightness(.68)!important;}
+.chapter-cover-overlay{position:relative!important;z-index:3!important;min-height:clamp(42rem,76vw,64rem)!important;display:flex!important;flex-direction:column;justify-content:flex-end!important;align-items:center!important;gap:clamp(.65rem,1.6vw,1.15rem)!important;padding:clamp(5rem,12vw,10rem) clamp(2.2rem,7vw,6rem) clamp(4rem,8vw,6.5rem)!important;text-align:center;background:linear-gradient(180deg,rgba(6,7,5,.02) 0 42%,rgba(6,7,5,.14) 58%,rgba(6,7,5,.52) 78%,rgba(6,7,5,.82) 100%)!important;}
 .chapter-cover-book,.chapter-cover-chapter{position:relative;width:min(100%,46rem);margin-inline:auto;text-shadow:0 2px 12px rgba(0,0,0,.78)}
 .chapter-cover-book h2{display:flex;flex-direction:column;gap:.12em;margin:0;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(2.7rem,6.8vw,6.4rem);font-weight:500;line-height:1.08;letter-spacing:.06em;background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 .16rem rgba(231,217,154,.24))}
 .chapter-cover-book h2 i{margin-top:.48rem;font-family:"Cormorant Garamond",serif;font-size:clamp(1rem,1.8vw,1.35rem);font-weight:400;letter-spacing:.17em;color:rgba(245,233,188,.96);-webkit-text-fill-color:rgba(245,233,188,.96)}
@@ -53,25 +43,11 @@
 .chapter-cover-chapter p{margin:.35rem 0 0;font-size:clamp(1rem,1.6vw,1.22rem);color:rgba(255,249,224,.96)}
 .morning-star{position:relative;width:clamp(2.5rem,4.5vw,4rem);margin:.15rem auto 0;opacity:1;filter:drop-shadow(0 0 .48rem rgba(231,217,154,.3))}
 .morning-star img{display:block;width:100%;height:auto}.morning-star figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-
-/* FRONTISPIECE — chapter artwork must fill the whole inner leaf, not sit as a narrow contained strip. */
-.book-frontispiece::after{
-  inset:0!important;
-  background-image:linear-gradient(rgba(222,208,150,.72),rgba(222,208,150,.72)),var(--one-chapter-engraving)!important;
-  background-position:center,center!important;
-  background-size:cover,cover!important;
-  background-repeat:no-repeat!important;
-  opacity:.42!important;
-  filter:grayscale(1) sepia(.28) contrast(1.05)!important;
-  -webkit-mask-image:none!important;mask-image:none!important;
-}
-
-/* BODY ILLUSTRATION — approved archival 5:8 engraving plate. */
+.book-frontispiece::after{inset:0!important;background-image:linear-gradient(rgba(222,208,150,.72),rgba(222,208,150,.72)),var(--one-chapter-engraving)!important;background-position:center,center!important;background-size:cover,cover!important;background-repeat:no-repeat!important;opacity:.42!important;filter:grayscale(1) sepia(.28) contrast(1.05)!important;-webkit-mask-image:none!important;mask-image:none!important;}
 .chapter-illustration{position:relative;display:grid!important;justify-items:center;overflow:visible;width:min(100%,46rem)!important;margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;padding:clamp(.9rem,1.8vw,1.35rem)!important;border:1px solid rgba(142,116,48,.84)!important;border-radius:0!important;background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12)!important}
 .chapter-illustration::before{position:absolute;inset:.48rem;border:1px solid rgba(231,217,154,.5);content:"";pointer-events:none}
 .chapter-illustration a{display:grid!important;place-items:center;width:100%!important;aspect-ratio:5/8!important;overflow:hidden!important;background:#1a1913!important}
 .chapter-illustration img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.92)!important}
 .chapter-illustration figcaption{justify-self:end;width:100%;padding:.75rem .2rem .05rem;text-align:right;color:rgba(101,76,27,.86);font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif;letter-spacing:.04em}
-
-@media(max-width:650px){.now__intro::before{inset:.7rem}.now__intro::after{inset:.8rem}.chapter-cover-overlay{min-height:78svh!important;padding:4rem 1.5rem 3.5rem!important}.chapter-cover-book h2{font-size:clamp(2.3rem,12vw,4rem)}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
+@media(max-width:650px){.now__intro::before{inset:.62rem}.chapter-cover-overlay{min-height:78svh!important;padding:4rem 1.5rem 3.5rem!important}.chapter-cover-book h2{font-size:clamp(2.3rem,12vw,4rem)}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}

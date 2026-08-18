@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1600" fill="none">
+  <g stroke="#CEBD74" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="18" y="18" width="964" height="1564" stroke-width="1.8" opacity=".78"/>
+    <rect x="31" y="31" width="938" height="1538" stroke-width=".85" opacity=".48"/>
+    <g id="corner" opacity=".82">
+      <path d="M31 112V31h81" stroke-width="1.35"/>
+      <path d="M31 83c13-2 24-8 31-18 7-10 8-21 7-34" stroke-width="1.05"/>
+      <path d="M43 70c11 0 20-4 27-12 7-8 10-17 10-27" stroke-width=".78" opacity=".72"/>
+      <path d="M54 59c-2-10 2-18 11-24-1 10-4 18-11 24Z" stroke-width=".72" opacity=".68"/>
+      <path d="M59 64c9 1 17-2 24-10-10 0-18 3-24 10Z" stroke-width=".72" opacity=".58"/>
+      <path d="M34 96c17-2 31-9 42-20" stroke-width=".62" opacity=".46" stroke-dasharray="16 3 7 2"/>
+      <path d="M31 49h25M49 31v25" stroke-width=".58" opacity=".4" stroke-dasharray="7 2"/>
+    </g>
+    <use href="#corner" transform="translate(1000 0) scale(-1 1)"/>
+    <use href="#corner" transform="translate(0 1600) scale(1 -1)"/>
+    <use href="#corner" transform="translate(1000 1600) scale(-1 -1)"/>
+  </g>
+  <g stroke="#8E7430" stroke-width=".5" opacity=".34" stroke-dasharray="9 5 2 7">
+    <path d="M19 242v312M19 812v346M981 174v278M981 694v382"/>
+    <path d="M168 19h246M588 19h218M125 1581h318M625 1581h236"/>
+  </g>
+</svg>
