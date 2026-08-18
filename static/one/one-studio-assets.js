@@ -136,5 +136,22 @@
     resolve
   });
 
+  registerAsset("REV-02-DORE-STUDIO-001", {
+    src:"./studio/revelation-02-dore-final.jpg",
+    alt:"啟示錄第二章：基督在燈臺中間向教會說話，約翰俯伏在前",
+    title:"Among the Lampstands",
+    source:"ONE Studio Doré continuation",
+    artist:"Doré · Westside Watch Engraving Studio",
+    origin:"ONE_STUDIO_DORE_CONTINUATION",
+    palette:"MONOCHROME_ENGRAVING",
+    scripture:"Revelation 2:1–29",
+    approvedAt:"2026-08-17",
+    note:"Editorial FINAL. Preserve the approved Christ-and-John composition, natural foreground steps, and non-mechanical lampstand staging. Generated continuation; never attribute as an original Gustave Doré plate."
+  });
+  registerChapter(66,2,"REV-02-DORE-STUDIO-001",{
+    priority:"P7_ONE_STUDIO_FIXED",
+    basis:"EDITORIAL_FINAL_DORE_CONTINUATION"
+  });
+
   document.documentElement.dataset.oneStudioAssets = "separate-versioned-library";
 })();
