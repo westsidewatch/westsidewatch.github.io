@@ -9,6 +9,7 @@
   --one-binding:#11120f;
   --one-binding-deep:#080906;
   --one-gilt-foil:linear-gradient(92deg,#8e7430 0%,#cebd74 24%,#e7d99a 47%,#cebd74 72%,#8e7430 100%);
+  --one-cover-gold-frame-master:url("./cover-gold-frame-master.png?v=20260818i");
 }
 .now{display:block!important;padding:clamp(1rem,3vw,3rem) 0!important;}
 .now__intro{
@@ -18,12 +19,12 @@
   background-color:var(--one-binding-deep)!important;background-image:none!important;background-size:auto!important;
   box-shadow:0 1.35rem 3.2rem rgba(20,15,6,.18)!important;
 }
-/* ONE v7: one reusable antique hot-stamped SVG is the complete cover ornament.
- * No second CSS frame, no modern corner stars, no relief effect. */
+/* ONE master gilt policy: every chapter cover uses this single shared PNG.
+ * Do not introduce book- or chapter-specific frame artwork. Replace the master asset only. */
 .now__intro::before{display:none!important;content:none!important;}
 .now__intro::after{
   display:block!important;position:absolute!important;z-index:8!important;inset:0!important;border:0!important;box-shadow:none!important;content:""!important;pointer-events:none!important;
-  background-image:url("./one-cover-gilt-frame.svg?v=20260818h")!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;
+  background-image:var(--one-cover-gold-frame-master)!important;background-position:center!important;background-size:100% 100%!important;background-repeat:no-repeat!important;
   opacity:.92!important;mix-blend-mode:normal!important;filter:none!important;
 }
 .chapter-cover-art,
@@ -40,22 +41,22 @@
   background:linear-gradient(180deg,rgba(6,7,5,.01) 0 44%,rgba(6,7,5,.1) 60%,rgba(6,7,5,.46) 79%,rgba(6,7,5,.78) 100%)!important;
 }
 .chapter-cover-book,.chapter-cover-chapter{position:relative;width:min(100%,36rem);margin-inline:auto;text-shadow:0 2px 10px rgba(0,0,0,.72)}
-.chapter-cover-book h2{display:flex;flex-direction:column;gap:.12em;margin:0;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(2.45rem,6vw,5.3rem);font-weight:500;line-height:1.08;letter-spacing:.06em;background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent;filter:none}
-.chapter-cover-book h2 i{margin-top:.42rem;font-family:"Cormorant Garamond",serif;font-size:clamp(.9rem,1.65vw,1.2rem);font-weight:400;letter-spacing:.17em;color:rgba(245,233,188,.94);-webkit-text-fill-color:rgba(245,233,188,.94)}
-.chapter-cover-book p{margin:.62rem 0 0;color:rgba(231,217,154,.88);font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(.76rem,1.05vw,.92rem);letter-spacing:.14em}
+.chapter-cover-book h2{display:flex!important;flex-direction:column!important;gap:.12em!important;margin:0!important;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;font-size:clamp(2.45rem,6vw,5.3rem)!important;font-weight:500!important;line-height:1.08!important;letter-spacing:.06em!important;background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;filter:none!important}
+.chapter-cover-book h2 i{margin-top:.42rem!important;font-family:"Cormorant Garamond",serif!important;font-size:clamp(.9rem,1.65vw,1.2rem)!important;font-weight:400!important;letter-spacing:.17em!important;color:rgba(245,233,188,.94)!important;-webkit-text-fill-color:rgba(245,233,188,.94)!important}
+.chapter-cover-book p{margin:.62rem 0 0!important;color:rgba(231,217,154,.88)!important;font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:clamp(.76rem,1.05vw,.92rem)!important;letter-spacing:.14em!important}
 .chapter-cover-chapter{padding-top:clamp(.8rem,1.5vw,1.15rem)!important;background:none!important;border:0!important}
 .chapter-cover-chapter::before{top:0!important;right:20%!important;left:20%!important;height:1px!important;border:0!important;background:rgba(206,189,116,.62)!important;box-shadow:none!important}
 .chapter-cover-chapter::after{display:none!important}
-.chapter-cover-chapter span{font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:.7rem;letter-spacing:.22em;color:rgba(231,217,154,.84)}
-.chapter-cover-chapter strong{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;font-size:clamp(1.2rem,2.25vw,1.8rem);font-weight:500;background:var(--one-gilt-foil);-webkit-background-clip:text;background-clip:text;color:transparent}
-.chapter-cover-chapter p{margin:.3rem 0 0;font-size:clamp(.92rem,1.45vw,1.1rem);color:rgba(255,249,224,.94)}
-.morning-star{position:relative;width:clamp(2.1rem,3.8vw,3.2rem);margin:.1rem auto 0;opacity:.86;filter:none}
-.morning-star img{display:block;width:100%;height:auto}.morning-star figcaption{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.chapter-cover-chapter span{font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:.7rem!important;letter-spacing:.22em!important;color:rgba(231,217,154,.84)!important}
+.chapter-cover-chapter strong{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;font-size:clamp(1.2rem,2.25vw,1.8rem)!important;font-weight:500!important;background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
+.chapter-cover-chapter p{margin:.3rem 0 0!important;font-size:clamp(.92rem,1.45vw,1.1rem)!important;color:rgba(255,249,224,.94)!important}
+.morning-star{position:relative!important;width:clamp(2.1rem,3.8vw,3.2rem)!important;margin:.1rem auto 0!important;opacity:.86!important;filter:none!important}
+.morning-star img{display:block!important;width:100%!important;height:auto!important}.morning-star figcaption{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
 .book-frontispiece::after{inset:0!important;background-image:linear-gradient(rgba(222,208,150,.72),rgba(222,208,150,.72)),var(--one-chapter-engraving)!important;background-position:center,center!important;background-size:cover,cover!important;background-repeat:no-repeat!important;opacity:.42!important;filter:grayscale(1) sepia(.28) contrast(1.05)!important;-webkit-mask-image:none!important;mask-image:none!important;}
-.chapter-illustration{position:relative;display:grid!important;justify-items:center;overflow:visible;width:min(100%,46rem)!important;margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;padding:clamp(.9rem,1.8vw,1.35rem)!important;border:1px solid rgba(142,116,48,.84)!important;border-radius:0!important;background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12)!important}
-.chapter-illustration::before{position:absolute;inset:.48rem;border:1px solid rgba(231,217,154,.5);content:"";pointer-events:none}
-.chapter-illustration a{display:grid!important;place-items:center;width:100%!important;aspect-ratio:5/8!important;overflow:hidden!important;background:#1a1913!important}
+.chapter-illustration{position:relative!important;display:grid!important;justify-items:center!important;overflow:visible!important;width:min(100%,46rem)!important;margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;padding:clamp(.9rem,1.8vw,1.35rem)!important;border:1px solid rgba(142,116,48,.84)!important;border-radius:0!important;background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12)!important}
+.chapter-illustration::before{position:absolute!important;inset:.48rem!important;border:1px solid rgba(231,217,154,.5)!important;content:""!important;pointer-events:none!important}
+.chapter-illustration a{display:grid!important;place-items:center!important;width:100%!important;aspect-ratio:5/8!important;overflow:hidden!important;background:#1a1913!important}
 .chapter-illustration img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.92)!important}
-.chapter-illustration figcaption{justify-self:end;width:100%;padding:.75rem .2rem .05rem;text-align:right;color:rgba(101,76,27,.86);font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif;letter-spacing:.04em}
-@media(max-width:650px){.now__intro{width:min(94vw,30rem,56.25svh)!important}.chapter-cover-overlay{padding:3.6rem 1.35rem 2.8rem!important}.chapter-cover-book h2{font-size:clamp(2.15rem,11vw,3.55rem)}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
+.chapter-illustration figcaption{justify-self:end!important;width:100%!important;padding:.75rem .2rem .05rem!important;text-align:right!important;color:rgba(101,76,27,.86)!important;font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif!important;letter-spacing:.04em!important}
+@media(max-width:650px){.now__intro{width:min(94vw,30rem,56.25svh)!important}.chapter-cover-overlay{padding:3.6rem 1.35rem 2.8rem!important}.chapter-cover-book h2{font-size:clamp(2.15rem,11vw,3.55rem)!important}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}
