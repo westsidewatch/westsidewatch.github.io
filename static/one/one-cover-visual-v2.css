@@ -105,4 +105,76 @@
   .chapter-cover-chapter p{font-size:clamp(.7rem,3.1cqw,.88rem)!important}
   .morning-star{width:6.2cqw!important}
 }
+
+/* Modern lower-third cover composition — approved reference 2026-08-18.
+ * Keep the image dominant; typography occupies the lower ~31% of the 5:8 cover.
+ * English book name precedes the Chinese display name; chapter rule and all subordinate copy stay below it.
+ */
+.chapter-cover-overlay{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  align-items:center!important;
+  gap:0!important;
+  padding:0 10.5% 6.6%!important;
+  background:linear-gradient(180deg,rgba(6,7,5,0) 0 55%,rgba(6,7,5,.12) 64%,rgba(6,7,5,.55) 77%,rgba(6,7,5,.88) 100%)!important;
+}
+.chapter-cover-book{order:2!important;width:100%!important;margin:0!important;}
+.chapter-cover-book h2{
+  flex-direction:column-reverse!important;
+  gap:clamp(.22rem,1.4cqw,.5rem)!important;
+  font-size:clamp(2rem,10.7cqw,4.25rem)!important;
+  line-height:1!important;
+  letter-spacing:.035em!important;
+}
+.chapter-cover-book h2 i{
+  margin:0!important;
+  font-size:clamp(.7rem,2.7cqw,1rem)!important;
+  line-height:1!important;
+  letter-spacing:.31em!important;
+  text-transform:uppercase!important;
+}
+.chapter-cover-book p{
+  margin:clamp(.32rem,1.3cqw,.5rem) 0 0!important;
+  font-size:clamp(.54rem,1.85cqw,.72rem)!important;
+  letter-spacing:.11em!important;
+  opacity:.86!important;
+}
+.chapter-cover-chapter{
+  order:3!important;
+  width:min(100%,27rem)!important;
+  margin:clamp(.52rem,2.1cqw,.78rem) auto 0!important;
+  padding-top:clamp(.54rem,2cqw,.75rem)!important;
+}
+.chapter-cover-chapter::before{
+  left:12%!important;
+  right:12%!important;
+  background:linear-gradient(90deg,transparent,rgba(206,189,116,.78) 14%,rgba(231,217,154,.9) 50%,rgba(206,189,116,.78) 86%,transparent)!important;
+}
+.chapter-cover-chapter span{font-size:clamp(.52rem,1.8cqw,.66rem)!important;letter-spacing:.19em!important;}
+.chapter-cover-chapter strong{font-size:clamp(.9rem,4.1cqw,1.35rem)!important;margin-top:.08rem!important;}
+.chapter-cover-chapter p{
+  margin:clamp(.2rem,.9cqw,.34rem) auto 0!important;
+  max-width:92%!important;
+  font-size:clamp(.68rem,2.7cqw,.9rem)!important;
+  line-height:1.22!important;
+}
+.morning-star{
+  order:1!important;
+  width:clamp(1.35rem,5.4cqw,2.1rem)!important;
+  margin:0 auto clamp(.28rem,1.3cqw,.48rem)!important;
+}
+@media(max-width:650px){
+  .chapter-cover-overlay{padding:0 9.5% 6.2%!important;}
+  .chapter-cover-book h2{font-size:clamp(1.85rem,10.6cqw,3.2rem)!important;}
+  .chapter-cover-book h2 i{font-size:clamp(.64rem,2.75cqw,.88rem)!important;letter-spacing:.27em!important;}
+  .chapter-cover-book p{font-size:clamp(.5rem,1.9cqw,.66rem)!important;}
+  .chapter-cover-chapter{margin-top:clamp(.44rem,2cqw,.68rem)!important;padding-top:clamp(.48rem,1.9cqw,.66rem)!important;}
+}
+@container (max-width:360px){
+  .chapter-cover-overlay{padding:0 9% 5.8%!important;}
+  .chapter-cover-book h2{font-size:clamp(1.58rem,10.2cqw,2.55rem)!important;}
+  .chapter-cover-book h2 i{letter-spacing:.23em!important;}
+  .chapter-cover-chapter p{max-width:96%!important;font-size:clamp(.64rem,2.85cqw,.82rem)!important;}
+}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}
