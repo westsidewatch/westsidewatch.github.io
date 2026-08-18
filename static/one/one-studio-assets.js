@@ -118,7 +118,7 @@
 
   window.ONE_STUDIO_ASSET_REGISTRY = Object.freeze({
     mode: "ONE_STUDIO_VERSIONED_ASSETS",
-    version: "2026-08-18-v7",
+    version: "2026-08-18-v8",
     doreAssetsAllowed: false,
     generatedAssetsAllowed: true,
     nonDoréHistoricalAssetsAllowed: true,
@@ -137,16 +137,16 @@
   });
 
   registerAsset("REV-02-DORE-STUDIO-001", {
-    src:"/one/studio/revelation-02-dore-approved-v7.jpg?v=20260818h",
-    alt:"啟示錄第二章：基督在七燈臺中間，約翰俯伏在前方石階",
+    src:"/one/studio/revelation-02-dore-final-v6.jpg?v=20260818i",
+    alt:"啟示錄第二章：基督在燈臺中間向教會說話，約翰俯伏在前",
     title:"Among the Lampstands",
-    source:"/one/studio/revelation-02-dore-approved-v7.jpg?v=20260818h",
+    source:"/one/studio/revelation-02-dore-final-v6.jpg?v=20260818i",
     artist:"Westside Watch Engraving Studio · Doré",
     origin:"ONE_STUDIO_DORE_CONTINUATION",
     palette:"MONOCHROME_ENGRAVING",
     scripture:"Revelation 2:1–29",
     approvedAt:"2026-08-17",
-    note:"Editorial FINAL selected by the user: Christ among seven lampstands, John in foreground, natural worn stone steps. This v7 path is intentionally new so no previous New Testament placeholder can be reused by cache or stale asset identity."
+    note:"Editorial FINAL restored. Use the approved Christ-and-John composition with natural foreground steps and non-mechanical lampstand staging. The incorrect v7 binary is not used."
   });
   registerChapter(66,2,"REV-02-DORE-STUDIO-001",{
     priority:"P7_ONE_STUDIO_FIXED",
