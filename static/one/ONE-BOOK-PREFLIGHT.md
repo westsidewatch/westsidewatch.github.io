@@ -58,6 +58,27 @@ Every new book automatically inherits, without redesign:
 
 A new book is new **content**, not a new ONE design system.
 
+## Doré illustration lane — mandatory but non-blocking
+
+Doré is the canonical production path for **new generated Bible illustration**, but Doré must never become a publication dependency for a Bible book.
+
+During book production, perform only the illustration audit needed to establish the correct state:
+
+1. Identify every Gustave Doré original plate belonging to the book/chapter and preserve every `ORIGINAL_LOCKED` placement. Original Doré always has first priority and may not be regenerated, replaced, reassigned or displaced by a generated asset.
+2. Identify any other fixed historical asset that is valid under `ONE-COVER-ILLUSTRATION-MASTER.md`.
+3. Record chapters that still lack a sufficiently strong illustration as the Missing Plate backlog. **Do not fill those gaps with provisional AI images, fuzzy matches, inherited media or batch-generated placeholders.**
+4. Continue the Bible-book production and publication pipeline. Missing generated plates do not block completion or release of the book.
+
+Only when a specific missing plate is actually selected for creation does that plate enter the Doré Studio workflow. Before generating it, read the current Doré living rules, visual grammar, Scripture-to-image reasoning, visual ancestry research and learning log. The plate must pass through Scripture reading → visual ancestry → composition reasoning → generation → human evaluation → learning update. It must never go directly from a chapter reference to an image prompt.
+
+Generated Doré work belongs to the separate ONE Studio / Doré generated-asset library and must never be written into, confused with or used to mutate the Gustave Doré original-plate library. A generated plate remains replaceable and improvable; an `ORIGINAL_LOCKED` plate does not.
+
+Doré's learning may continue independently across books and over time. Human critique, failures and successful discoveries should be fed back into the Doré learning record so later plates inherit accumulated visual knowledge.
+
+**Doré is an illustration-production dependency, never a Bible-book publication dependency.**
+
+**No new generated Bible illustration may enter ONE outside the Doré workflow.**
+
 ## Shared-system change gate
 
 If implementation appears to require changing any shared renderer, navigation logic, registry model, CSS system, map schema, timeline schema, cover framework, typography hierarchy or responsive behavior:
@@ -83,6 +104,8 @@ Before PR/merge, verify:
 - illustrations belong to the correct chapters;
 - `ORIGINAL_LOCKED` Doré placements remain unchanged;
 - no fuzzy-search or inherited image fallback exists;
+- missing Doré-generated plates do not block book publication;
+- no provisional or batch-generated AI placeholder has been introduced to make the book appear visually complete;
 - cover uses the canonical gilt frame / title / Morning Star system;
 - body illustration uses the canonical engraving-plate presentation without distortion;
 - maps appear only where useful and render independently;
