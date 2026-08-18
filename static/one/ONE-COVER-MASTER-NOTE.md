@@ -1,0 +1,1 @@
+The canonical ONE cover is a book cover, not a square card. Use the 5:8 master and the aged flat gilt frame. This note exists only to make the project-level decision explicit for future implementation work.
