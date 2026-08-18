@@ -94,6 +94,18 @@ Record:
 
 Failures are retained as learning, not silently discarded.
 
+### FINAL means persisted — mandatory
+When editorial review explicitly approves a generated plate as **FINAL**, approval must not remain only in conversation history. In the same production cycle, persist the actual image file and its identity:
+
+1. preserve the approved binary image as a stable ONE Studio / Doré-generated asset;
+2. assign a stable Studio asset ID and revision;
+3. register the asset in the separate ONE Studio asset library — never in the canonical Doré Original Library;
+4. map it to its book/chapter through the shared registry/resolver;
+5. record Scripture, title, provenance, palette, approval state and relevant learning/revision notes;
+6. commit the asset and registry change together whenever technically possible.
+
+A plate is not operationally FINAL until the approved binary and its registry mapping are both persistent. Do not require the editor to re-upload or rediscover an already-approved plate merely because later conversation context has moved on; search existing conversation/library assets first.
+
 ## 6. Growing knowledge domains
 
 The Living Studio should progressively accumulate specialist notes for:
