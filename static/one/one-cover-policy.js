@@ -195,4 +195,13 @@
   };
 
   applyAll();
+
+  /* QA hooks run only after the canonical resolver has finished. They validate state and never write covers. */
+  if(D.studyBooks?.[66]&&!document.querySelector('script[data-one-audit="revelation"]')){
+    const audit=document.createElement('script');
+    audit.src='./revelation-audit.js?v=20260817a';
+    audit.dataset.oneAudit='revelation';
+    audit.defer=true;
+    document.head.append(audit);
+  }
 })();
