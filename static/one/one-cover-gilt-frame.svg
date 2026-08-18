@@ -1,15 +1,23 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1600" fill="none">
+  <!-- ONE canonical gilt binding frame v5.
+       Direction selected from reference 4: restrained double-rule bookbinding,
+       compact classical corner foliage, no side ornaments, no modern stars. -->
   <g stroke="#CEBD74" stroke-linecap="round" stroke-linejoin="round">
-    <rect x="18" y="18" width="964" height="1564" stroke-width="1.15" opacity=".58"/>
-    <rect x="30" y="30" width="940" height="1540" stroke-width=".55" opacity=".34"/>
+    <rect x="31" y="31" width="938" height="1538" stroke-width="1.05" opacity=".70"/>
+    <rect x="43" y="43" width="914" height="1514" stroke-width=".52" opacity=".42"/>
 
-    <g id="corner" opacity=".64">
-      <path d="M30 94V30h64" stroke-width=".82"/>
-      <path d="M30 72c10-1 18-5 23-12 5-7 7-16 6-30" stroke-width=".68"/>
-      <path d="M40 61c8 0 14-3 19-8 5-6 7-13 7-23" stroke-width=".48" opacity=".72"/>
-      <path d="M48 52c-1-7 2-13 8-17-1 7-3 12-8 17Z" stroke-width=".42" opacity=".66"/>
-      <path d="M51 56c7 0 12-2 17-8-7 0-13 3-17 8Z" stroke-width=".42" opacity=".54"/>
-      <path d="M31 82c13-1 23-6 31-14" stroke-width=".38" opacity=".38" stroke-dasharray="11 4 5 7"/>
+    <g id="corner" opacity=".76">
+      <!-- structural corner turn -->
+      <path d="M43 151V43h108" stroke-width=".78"/>
+      <!-- primary acanthus curl: compact, attached to the rule -->
+      <path d="M45 112c22-1 38-8 49-22 10-13 14-29 12-47" stroke-width=".72"/>
+      <path d="M57 99c14 0 25-5 34-14 8-9 12-20 12-34" stroke-width=".52" opacity=".82"/>
+      <path d="M72 87c-3-13 2-24 14-31-1 13-5 23-14 31Z" stroke-width=".46" opacity=".82"/>
+      <path d="M78 92c13 1 23-3 31-14-14 0-24 5-31 14Z" stroke-width=".44" opacity=".68"/>
+      <!-- second leaf, reduced from the reference so the cover stays quiet -->
+      <path d="M91 68c2-10 8-17 18-21-3 10-9 17-18 21Z" stroke-width=".40" opacity=".58"/>
+      <!-- fine foil-loss interruption -->
+      <path d="M43 132c19-1 35-7 49-18" stroke-width=".34" opacity=".34" stroke-dasharray="12 5 3 8"/>
     </g>
 
     <use href="#corner" transform="translate(1000 0) scale(-1 1)"/>
@@ -17,8 +25,9 @@
     <use href="#corner" transform="translate(1000 1600) scale(-1 -1)"/>
   </g>
 
-  <g stroke="#8E7430" stroke-width=".38" opacity=".23" stroke-dasharray="7 6 2 11">
-    <path d="M18 186v208M18 726v301M982 245v236M982 836v279"/>
-    <path d="M148 18h205M517 18h246M191 1582h238M624 1582h190"/>
+  <!-- aged hot-stamp loss: sparse and nearly invisible at reading distance -->
+  <g stroke="#8E7430" stroke-width=".34" opacity=".20" stroke-dasharray="10 8 2 13">
+    <path d="M31 258v214M31 806v326M969 205v251M969 872v297"/>
+    <path d="M190 31h227M602 31h194M165 1569h256M635 1569h181"/>
   </g>
 </svg>
