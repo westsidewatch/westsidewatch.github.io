@@ -118,7 +118,7 @@
 
   window.ONE_STUDIO_ASSET_REGISTRY = Object.freeze({
     mode: "ONE_STUDIO_VERSIONED_ASSETS",
-    version: "2026-08-18-v9",
+    version: "2026-08-18-v10",
     doreAssetsAllowed: false,
     generatedAssetsAllowed: true,
     nonDoréHistoricalAssetsAllowed: true,
@@ -137,20 +137,20 @@
   });
 
   registerAsset("REV-02-DORE-STUDIO-001", {
-    src:"/one/studio/revelation-02-dore-final-full.jpg?v=20260818j",
+    src:"/one/studio/revelation-02-dore-final-full.png?v=20260818k",
     alt:"啟示錄第二章：基督在七燈臺中間向教會說話，約翰俯伏在前",
     title:"Among the Lampstands",
-    source:"/one/studio/revelation-02-dore-final-full.jpg?v=20260818j",
+    source:"/one/studio/revelation-02-dore-final-full.png?v=20260818k",
     artist:"Westside Watch Engraving Studio · Doré continuation",
     origin:"ONE_STUDIO_DORE_CONTINUATION",
     palette:"MONOCHROME_ENGRAVING",
     scripture:"Revelation 2:1–29",
     approvedAt:"2026-08-18",
-    note:"Editorial FINAL FULL. Canonical Revelation 2 artwork: Christ among seven lampstands with John in the foreground. Supersedes all previous v6/v7 Revelation 2 runtime asset paths."
+    note:"Editorial FINAL FULL PNG. Canonical Revelation 2 artwork: Christ among seven lampstands with John in the foreground. Supersedes all previous JPG, v6 and v7 Revelation 2 runtime asset paths."
   });
   registerChapter(66,2,"REV-02-DORE-STUDIO-001",{
     priority:"P7_ONE_STUDIO_FIXED",
-    basis:"EDITORIAL_FINAL_FULL"
+    basis:"EDITORIAL_FINAL_FULL_PNG"
   });
 
   document.documentElement.dataset.oneStudioAssets = "separate-versioned-library";
