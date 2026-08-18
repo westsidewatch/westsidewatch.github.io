@@ -9,7 +9,7 @@
   --one-binding:#11120f;
   --one-binding-deep:#080906;
   --one-gilt-foil:linear-gradient(92deg,#8e7430 0%,#cebd74 24%,#e7d99a 47%,#cebd74 72%,#8e7430 100%);
-  --one-cover-gold-frame-master:url("./cover-gold-frame-master.png?v=20260818i");
+  --one-cover-gold-frame-master:url("./cover-gold-frame-master.png?v=20260818k");
 }
 .now{display:block!important;padding:clamp(1rem,3vw,3rem) 0!important;}
 .now__intro{
@@ -18,6 +18,7 @@
   margin-inline:auto!important;padding:0!important;border:0!important;
   background-color:var(--one-binding-deep)!important;background-image:none!important;background-size:auto!important;
   box-shadow:0 1.35rem 3.2rem rgba(20,15,6,.18)!important;
+  container-type:inline-size!important;
 }
 /* ONE master gilt policy: every chapter cover uses this single shared PNG.
  * Do not introduce book- or chapter-specific frame artwork. Replace the master asset only. */
@@ -34,23 +35,54 @@
   object-fit:cover!important;object-position:center center!important;opacity:1!important;pointer-events:none!important;
   filter:grayscale(1) sepia(.2) saturate(.7) contrast(1.09) brightness(.72)!important;
 }
+/* Typography lives in its own protected safe area. It must never scale/stretch with the artwork. */
 .chapter-cover-overlay{
   position:absolute!important;z-index:3!important;inset:0!important;width:100%!important;height:100%!important;min-height:0!important;
-  display:flex!important;flex-direction:column!important;justify-content:flex-end!important;align-items:center!important;gap:clamp(.55rem,1.4vw,1rem)!important;
-  padding:clamp(4.5rem,10vw,8rem) clamp(1.8rem,6vw,4.8rem) clamp(3.2rem,7vw,5.2rem)!important;text-align:center!important;
-  background:linear-gradient(180deg,rgba(6,7,5,.01) 0 44%,rgba(6,7,5,.1) 60%,rgba(6,7,5,.46) 79%,rgba(6,7,5,.78) 100%)!important;
+  display:grid!important;grid-template-rows:1fr auto!important;align-items:end!important;justify-items:center!important;
+  padding:8% 11% 9.5%!important;text-align:center!important;box-sizing:border-box!important;
+  background:linear-gradient(180deg,rgba(6,7,5,.01) 0 42%,rgba(6,7,5,.08) 58%,rgba(6,7,5,.44) 78%,rgba(6,7,5,.8) 100%)!important;
+  overflow:hidden!important;
 }
-.chapter-cover-book,.chapter-cover-chapter{position:relative;width:min(100%,36rem);margin-inline:auto;text-shadow:0 2px 10px rgba(0,0,0,.72)}
-.chapter-cover-book h2{display:flex!important;flex-direction:column!important;gap:.12em!important;margin:0!important;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;font-size:clamp(2.45rem,6vw,5.3rem)!important;font-weight:500!important;line-height:1.08!important;letter-spacing:.06em!important;background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;filter:none!important}
-.chapter-cover-book h2 i{margin-top:.42rem!important;font-family:"Cormorant Garamond",serif!important;font-size:clamp(.9rem,1.65vw,1.2rem)!important;font-weight:400!important;letter-spacing:.17em!important;color:rgba(245,233,188,.94)!important;-webkit-text-fill-color:rgba(245,233,188,.94)!important}
-.chapter-cover-book p{margin:.62rem 0 0!important;color:rgba(231,217,154,.88)!important;font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:clamp(.76rem,1.05vw,.92rem)!important;letter-spacing:.14em!important}
-.chapter-cover-chapter{padding-top:clamp(.8rem,1.5vw,1.15rem)!important;background:none!important;border:0!important}
-.chapter-cover-chapter::before{top:0!important;right:20%!important;left:20%!important;height:1px!important;border:0!important;background:rgba(206,189,116,.62)!important;box-shadow:none!important}
+.chapter-cover-book,.chapter-cover-chapter{
+  position:relative!important;width:min(100%,32rem)!important;max-width:100%!important;margin-inline:auto!important;
+  text-shadow:0 2px 10px rgba(0,0,0,.72)!important;box-sizing:border-box!important;overflow-wrap:anywhere!important;
+}
+.chapter-cover-book{align-self:end!important;min-width:0!important;}
+.chapter-cover-book h2{
+  display:flex!important;flex-direction:column!important;align-items:center!important;gap:.1em!important;margin:0!important;
+  max-width:100%!important;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;
+  font-size:clamp(2rem,10cqw,4.45rem)!important;font-weight:500!important;line-height:1.04!important;letter-spacing:.045em!important;
+  background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;filter:none!important;
+  text-wrap:balance!important;word-break:keep-all!important;
+}
+.chapter-cover-book h2>span{display:block!important;max-width:100%!important;}
+.chapter-cover-book h2 i{
+  display:block!important;max-width:100%!important;margin-top:.34rem!important;font-family:"Cormorant Garamond",serif!important;
+  font-size:clamp(.78rem,3.1cqw,1.08rem)!important;font-weight:400!important;line-height:1.15!important;letter-spacing:.14em!important;
+  color:rgba(245,233,188,.94)!important;-webkit-text-fill-color:rgba(245,233,188,.94)!important;white-space:normal!important;text-wrap:balance!important;
+}
+.chapter-cover-book p{
+  max-width:100%!important;margin:.5rem 0 0!important;color:rgba(231,217,154,.88)!important;
+  font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:clamp(.66rem,2.35cqw,.86rem)!important;
+  line-height:1.25!important;letter-spacing:.09em!important;white-space:normal!important;text-wrap:balance!important;
+}
+.chapter-cover-chapter{
+  width:min(100%,29rem)!important;margin-top:clamp(.58rem,2.2cqw,.9rem)!important;padding-top:clamp(.62rem,2.4cqw,.9rem)!important;
+  background:none!important;border:0!important;min-width:0!important;
+}
+.chapter-cover-chapter::before{top:0!important;right:18%!important;left:18%!important;height:1px!important;border:0!important;background:rgba(206,189,116,.62)!important;box-shadow:none!important}
 .chapter-cover-chapter::after{display:none!important}
-.chapter-cover-chapter span{font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:.7rem!important;letter-spacing:.22em!important;color:rgba(231,217,154,.84)!important}
-.chapter-cover-chapter strong{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;font-size:clamp(1.2rem,2.25vw,1.8rem)!important;font-weight:500!important;background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important}
-.chapter-cover-chapter p{margin:.3rem 0 0!important;font-size:clamp(.92rem,1.45vw,1.1rem)!important;color:rgba(255,249,224,.94)!important}
-.morning-star{position:relative!important;width:clamp(2.1rem,3.8vw,3.2rem)!important;margin:.1rem auto 0!important;opacity:.86!important;filter:none!important}
+.chapter-cover-chapter span{font-family:"Cormorant Garamond","Noto Serif TC",serif!important;font-size:clamp(.58rem,2cqw,.7rem)!important;line-height:1.2!important;letter-spacing:.18em!important;color:rgba(231,217,154,.84)!important}
+.chapter-cover-chapter strong{
+  display:block!important;max-width:100%!important;margin-top:.12rem!important;font-family:"Noto Serif TC","Songti TC","PMingLiU",serif!important;
+  font-size:clamp(1.02rem,4.8cqw,1.55rem)!important;line-height:1.12!important;font-weight:500!important;
+  background:var(--one-gilt-foil)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;text-wrap:balance!important;
+}
+.chapter-cover-chapter p{
+  max-width:100%!important;margin:.26rem auto 0!important;font-size:clamp(.76rem,3.15cqw,1rem)!important;line-height:1.25!important;
+  color:rgba(255,249,224,.94)!important;white-space:normal!important;text-wrap:balance!important;overflow-wrap:anywhere!important;
+}
+.morning-star{position:relative!important;width:clamp(1.75rem,7cqw,2.65rem)!important;margin:.22rem auto 0!important;opacity:.86!important;filter:none!important;flex:0 0 auto!important}
 .morning-star img{display:block!important;width:100%!important;height:auto!important}.morning-star figcaption{position:absolute!important;width:1px!important;height:1px!important;overflow:hidden!important;clip:rect(0 0 0 0)!important;white-space:nowrap!important}
 .book-frontispiece::after{inset:0!important;background-image:linear-gradient(rgba(222,208,150,.72),rgba(222,208,150,.72)),var(--one-chapter-engraving)!important;background-position:center,center!important;background-size:cover,cover!important;background-repeat:no-repeat!important;opacity:.42!important;filter:grayscale(1) sepia(.28) contrast(1.05)!important;-webkit-mask-image:none!important;mask-image:none!important;}
 .chapter-illustration{position:relative!important;display:grid!important;justify-items:center!important;overflow:visible!important;width:min(100%,46rem)!important;margin:clamp(2.5rem,5vw,4.5rem) auto 0!important;padding:clamp(.9rem,1.8vw,1.35rem)!important;border:1px solid rgba(142,116,48,.84)!important;border-radius:0!important;background:linear-gradient(rgba(232,219,164,.15),rgba(197,177,105,.07)),var(--one-page-surface)!important;box-shadow:inset 0 0 0 5px rgba(255,249,220,.12),inset 0 0 0 6px rgba(206,189,116,.62),0 1rem 2.5rem rgba(61,42,15,.12)!important}
@@ -58,5 +90,19 @@
 .chapter-illustration a{display:grid!important;place-items:center!important;width:100%!important;aspect-ratio:5/8!important;overflow:hidden!important;background:#1a1913!important}
 .chapter-illustration img{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:none!important;object-fit:contain!important;object-position:center!important;filter:grayscale(1) sepia(.22) contrast(1.08) brightness(.92)!important}
 .chapter-illustration figcaption{justify-self:end!important;width:100%!important;padding:.75rem .2rem .05rem!important;text-align:right!important;color:rgba(101,76,27,.86)!important;font:italic .7rem/1.4 "Cormorant Garamond","Noto Serif TC",serif!important;letter-spacing:.04em!important}
-@media(max-width:650px){.now__intro{width:min(94vw,30rem,56.25svh)!important}.chapter-cover-overlay{padding:3.6rem 1.35rem 2.8rem!important}.chapter-cover-book h2{font-size:clamp(2.15rem,11vw,3.55rem)!important}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
+@media(max-width:650px){
+  .now__intro{width:min(94vw,30rem,56.25svh)!important}
+  .chapter-cover-overlay{padding:8.5% 10% 9%!important}
+  .chapter-cover-book h2{font-size:clamp(1.85rem,11cqw,3.35rem)!important;letter-spacing:.035em!important}
+  .chapter-cover-book h2 i{letter-spacing:.11em!important}
+  .chapter-cover-chapter{width:min(100%,25rem)!important}
+  .chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}
+}
+@container (max-width:360px){
+  .chapter-cover-overlay{padding:8% 9% 8.5%!important}
+  .chapter-cover-book h2{font-size:clamp(1.65rem,10.5cqw,2.6rem)!important;letter-spacing:.025em!important}
+  .chapter-cover-book p{letter-spacing:.06em!important}
+  .chapter-cover-chapter p{font-size:clamp(.7rem,3.1cqw,.88rem)!important}
+  .morning-star{width:6.2cqw!important}
+}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}
