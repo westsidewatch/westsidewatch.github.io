@@ -118,7 +118,7 @@
 
   window.ONE_STUDIO_ASSET_REGISTRY = Object.freeze({
     mode: "ONE_STUDIO_VERSIONED_ASSETS",
-    version: "2026-08-17-v2",
+    version: "2026-08-18-v3",
     doreAssetsAllowed: false,
     generatedAssetsAllowed: true,
     nonDoréHistoricalAssetsAllowed: true,
@@ -137,7 +137,7 @@
   });
 
   registerAsset("REV-02-DORE-STUDIO-001", {
-    src:"./studio/revelation-02-dore-final.jpg",
+    src:"/one/studio/revelation-02-dore-final.jpg",
     alt:"啟示錄第二章：基督在燈臺中間向教會說話，約翰俯伏在前",
     title:"Among the Lampstands",
     source:"Westside Watch Engraving Studio",
