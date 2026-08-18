@@ -137,10 +137,10 @@
   });
 
   registerAsset("REV-02-DORE-STUDIO-001", {
-    src:"/one/studio/revelation-02-dore-final.jpg?v=20260818g",
+    src:"/one/studio/revelation-02-dore-final-v6.jpg",
     alt:"啟示錄第二章：基督在燈臺中間向教會說話，約翰俯伏在前",
     title:"Among the Lampstands",
-    source:"/one/studio/revelation-02-dore-final.jpg?v=20260818g",
+    source:"/one/studio/revelation-02-dore-final-v6.jpg",
     artist:"Westside Watch Engraving Studio · Doré",
     origin:"ONE_STUDIO_DORE_CONTINUATION",
     palette:"MONOCHROME_ENGRAVING",
