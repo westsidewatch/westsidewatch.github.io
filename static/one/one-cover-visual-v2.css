@@ -15,7 +15,7 @@
   --one-cover-fallback-texture:url("./cover-texture-fallback.png?v=20260819a");
   --one-cover-book-top:60.5%;
   --one-cover-chapter-top:74.8%;
-  --one-cover-lower-text-lift:clamp(.12rem,.55cqw,.22rem);
+  --one-cover-lower-text-lift:clamp(.24rem,1.1cqw,.44rem);
 }
 .now{display:block!important;padding:clamp(1rem,3vw,3rem) 0!important}
 .now__intro{position:relative!important;display:block!important;isolation:isolate!important;overflow:hidden!important;width:min(92vw,44rem,51.25svh)!important;height:auto!important;aspect-ratio:5/8!important;min-height:0!important;max-height:none!important;margin-inline:auto!important;padding:0!important;border:0!important;background-color:var(--one-binding-deep)!important;background-image:linear-gradient(180deg,rgba(6,7,5,.04),rgba(6,7,5,.22)),var(--one-cover-fallback-texture)!important;background-position:center,center!important;background-size:cover,cover!important;background-repeat:no-repeat,no-repeat!important;box-shadow:0 1.35rem 3.2rem rgba(20,15,6,.18)!important;container-type:inline-size!important}
