@@ -2,57 +2,27 @@
   "temporary": true,
   "purpose": "Machine-readable Doré AI production progress companion to ONE-PRODUCTION-ROADMAP-TEMP.md. Delete with the roadmap after final completion.",
   "runtimeIsolation": true,
-  "baseline": {
-    "canonChapters": 1189,
-    "covered": 206,
-    "missing": 983,
-    "postLedgerDone": 0
-  },
-  "verifiedPrecedents": [
-    {
-      "key": "066-002",
-      "book": "啟示錄",
-      "chapter": 2,
-      "status": "DONE",
-      "assetId": "REV-02-DORE-STUDIO-001",
-      "revision": "r1",
-      "assignment": "ONE Studio registry; book 66 chapter 2; P7_ONE_STUDIO_FIXED",
-      "route": "/one/?book=66&chapter=2",
-      "verifiedDate": "2026-08-19",
-      "verification": "User-supplied live rendered screenshot confirms the intended Christ-among-the-lampstands Studio plate is displayed on Revelation 2; no stale boat/shore artwork and no star-corner frame.",
-      "countsAgainst983": false,
-      "note": "First Doré AI self-generated ONE Studio plate; already included in the 206-covered baseline."
-    }
-  ],
-  "w1": {
-    "totalMissing": 36,
-    "exactKeysConfirmed": 36,
-    "status": "READY_FOR_PRODUCTION",
-    "books": [
-      {"order":1,"book":25,"name":"耶利米哀歌","missing":1,"keys":["025-003"],"status":"TODO"},
-      {"order":2,"book":41,"name":"馬可福音","missing":3,"keys":["041-003","041-007","041-013"],"status":"TODO"},
-      {"order":3,"book":8,"name":"路得記","missing":2,"keys":["008-003","008-004"],"status":"TODO"},
-      {"order":4,"book":32,"name":"約拿書","missing":2,"keys":["032-001","032-004"],"status":"TODO"},
-      {"order":5,"book":31,"name":"俄巴底亞書","missing":1,"keys":["031-001"],"status":"TODO"},
-      {"order":6,"book":57,"name":"腓利門書","missing":1,"keys":["057-001"],"status":"TODO"},
-      {"order":7,"book":63,"name":"約翰二書","missing":1,"keys":["063-001"],"status":"TODO"},
-      {"order":8,"book":64,"name":"約翰三書","missing":1,"keys":["064-001"],"status":"TODO"},
-      {"order":9,"book":65,"name":"猶大書","missing":1,"keys":["065-001"],"status":"TODO"},
-      {"order":10,"book":37,"name":"哈該書","missing":2,"keys":["037-001","037-002"],"status":"TODO"},
-      {"order":11,"book":29,"name":"約珥書","missing":3,"keys":["029-001","029-002","029-003"],"status":"TODO"},
-      {"order":12,"book":34,"name":"那鴻書","missing":3,"keys":["034-001","034-002","034-003"],"status":"TODO"},
-      {"order":13,"book":35,"name":"哈巴谷書","missing":3,"keys":["035-001","035-002","035-003"],"status":"TODO"},
-      {"order":14,"book":36,"name":"西番雅書","missing":3,"keys":["036-001","036-002","036-003"],"status":"TODO"},
-      {"order":15,"book":53,"name":"帖撒羅尼迦後書","missing":3,"keys":["053-001","053-002","053-003"],"status":"TODO"},
-      {"order":16,"book":56,"name":"提多書","missing":3,"keys":["056-001","056-002","056-003"],"status":"TODO"},
-      {"order":17,"book":61,"name":"彼得後書","missing":3,"keys":["061-001","061-002","061-003"],"status":"TODO"}
-    ]
-  },
-  "rules": {
-    "doneMeans": "LIVE_VERIFIED only",
-    "counterRule": "Only a post-baseline Missing Plate that first reaches DONE decrements 983.",
-    "reconciliation": "Delta check per plate; book audit at book completion; global checksum at wave completion.",
-    "exactKeySource": "Current canonical cover backlog audit; never infer a missing chapter from memory.",
-    "runtime": "This JSON is Doré AI operational memory only and must never be loaded by ONE reader/runtime."
-  }
+  "baseline": {"canonChapters":1189,"covered":206,"missing":983,"postLedgerDone":0},
+  "verifiedPrecedents": [{"key":"066-002","book":"啟示錄","chapter":2,"status":"DONE","assetId":"REV-02-DORE-STUDIO-001","revision":"r1","assignment":"ONE Studio registry; book 66 chapter 2; P7_ONE_STUDIO_FIXED","route":"/one/?book=66&chapter=2","verifiedDate":"2026-08-19","verification":"User-supplied live rendered screenshot confirms the intended Christ-among-the-lampstands Studio plate is displayed on Revelation 2; no stale boat/shore artwork and no star-corner frame.","countsAgainst983":false,"note":"First Doré AI self-generated ONE Studio plate; already included in the 206-covered baseline."}],
+  "activeProduction": {"key":"025-003","book":25,"name":"耶利米哀歌","chapter":3,"status":"APPROVED_V1","assetId":"LAM-03-DORE-STUDIO-001","revision":"r1","approval":"Usable now; explicitly eligible for later Doré AI self-iteration/replacement.","subject":"Lament amid Jerusalem ruins; restrained morning light as the turn toward hope in Lamentations 3:21–24.","coverFormat":"5:8 portrait derivative approved","countsAgainst983":true,"nextGate":"PERSISTED: binary asset must exist in GitHub before registry assignment."},
+  "w1": {"totalMissing":36,"exactKeysConfirmed":36,"status":"IN_PRODUCTION","books":[
+    {"order":1,"book":25,"name":"耶利米哀歌","missing":1,"keys":["025-003"],"status":"APPROVED_V1"},
+    {"order":2,"book":41,"name":"馬可福音","missing":3,"keys":["041-003","041-007","041-013"],"status":"TODO"},
+    {"order":3,"book":8,"name":"路得記","missing":2,"keys":["008-003","008-004"],"status":"TODO"},
+    {"order":4,"book":32,"name":"約拿書","missing":2,"keys":["032-001","032-004"],"status":"TODO"},
+    {"order":5,"book":31,"name":"俄巴底亞書","missing":1,"keys":["031-001"],"status":"TODO"},
+    {"order":6,"book":57,"name":"腓利門書","missing":1,"keys":["057-001"],"status":"TODO"},
+    {"order":7,"book":63,"name":"約翰二書","missing":1,"keys":["063-001"],"status":"TODO"},
+    {"order":8,"book":64,"name":"約翰三書","missing":1,"keys":["064-001"],"status":"TODO"},
+    {"order":9,"book":65,"name":"猶大書","missing":1,"keys":["065-001"],"status":"TODO"},
+    {"order":10,"book":37,"name":"哈該書","missing":2,"keys":["037-001","037-002"],"status":"TODO"},
+    {"order":11,"book":29,"name":"約珥書","missing":3,"keys":["029-001","029-002","029-003"],"status":"TODO"},
+    {"order":12,"book":34,"name":"那鴻書","missing":3,"keys":["034-001","034-002","034-003"],"status":"TODO"},
+    {"order":13,"book":35,"name":"哈巴谷書","missing":3,"keys":["035-001","035-002","035-003"],"status":"TODO"},
+    {"order":14,"book":36,"name":"西番雅書","missing":3,"keys":["036-001","036-002","036-003"],"status":"TODO"},
+    {"order":15,"book":53,"name":"帖撒羅尼迦後書","missing":3,"keys":["053-001","053-002","053-003"],"status":"TODO"},
+    {"order":16,"book":56,"name":"提多書","missing":3,"keys":["056-001","056-002","056-003"],"status":"TODO"},
+    {"order":17,"book":61,"name":"彼得後書","missing":3,"keys":["061-001","061-002","061-003"],"status":"TODO"}
+  ]},
+  "rules": {"doneMeans":"LIVE_VERIFIED only","counterRule":"Only a post-baseline Missing Plate that first reaches DONE decrements 983.","reconciliation":"Delta check per plate; book audit at book completion; global checksum at wave completion.","exactKeySource":"Current canonical cover backlog audit; never infer a missing chapter from memory.","binaryAssetGate":"APPROVED does not imply PERSISTED. The image must physically exist as a binary GitHub blob/file before registry assignment, deployment, or DONE.","runtime":"This JSON is Doré AI operational memory only and must never be loaded by ONE reader/runtime."}
 }
