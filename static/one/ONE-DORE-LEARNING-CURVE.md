@@ -10,12 +10,14 @@ This document is learning memory only. It is never a ONE reader runtime dependen
 
 Doré AI does not learn from every Doré work with equal authority.
 
-### Tier 1 — Canonical Bible corpus: highest authority
+### Tier 1 — Doré Bible corpus: highest authority
 
 Primary corpus:
-- the full canonical Doré Bible illustration corpus used/researched by ONE;
+- the full authenticated Gustave Doré Bible illustration corpus available to ONE research;
 - ONE's locked original-asset registry and its chapter/verse provenance;
 - reliable historical Bible editions/scans used to verify plate identity, sequence, engraving treatment and textual context.
+
+**Important boundary:** ONE's current 241 runtime assets are a locked canonical website asset set, not the maximum size of the Tier 1 research corpus. Doré AI may continue expanding Tier 1 research with additional securely authenticated Doré Bible originals, historical editions, alternate scans, preparatory drawings or verified plate variants. Research expansion never automatically changes runtime mapping. A newly studied Bible original enters the website only through a separate explicit editorial/canonical mapping decision.
 
 What Tier 1 teaches:
 - Scripture-to-image scene selection;
@@ -111,10 +113,10 @@ Preferred research sources:
 - verified historical editions/scans.
 
 Institutional expansion examples already suitable for study include:
-- The Met's Doré/Dante *Vision of Hell* material for wood-engraving process and supernatural composition;
-- NGA's complete bound *London: A Pilgrimage* for observed crowds, streets, architecture and ordinary bodies;
+- The Met's Doré/Dante material for wood-engraving process and supernatural composition;
+- NGA's *London: A Pilgrimage* for observed crowds, streets, architecture and ordinary bodies;
 - NGA's securely attributed religious drawings such as *Christian Martyrs* for sacred staging outside the Bible engraving cycle;
-- BnF/Gallica Doré catalogues and digitized illustrated editions for broader authenticated book-illustration study.
+- BnF/Gallica Doré catalogues and digitized illustrated editions for broader authenticated book-illustration study and for expanding Tier 1 beyond ONE's 241 runtime files.
 
 Do not learn stylistic rules from unattributed Pinterest reposts, AI reconstructions, modern colorizations, fan remasters, or images merely labelled “Doré style.”
 
@@ -145,7 +147,7 @@ A non-Bible Doré image is a **visual ancestor**, never a substitute exegete.
 
 ## 4. Full-canon synchronization is also a learning cycle
 
-Progress synchronization and Doré learning are intentionally connected.
+Progress synchronization and Doré learning are intentionally connected. Synchronization is never only bookkeeping.
 
 ### Chapter delta check — after each finalized plate
 
@@ -242,9 +244,69 @@ The harvest should remain concise. Detailed observations belong in Living Studio
 ### Stage 7 — Self-correction
 - use failed generations, live-reader review, book reconciliation and wave audits to revise learned rules.
 
+### Stage 8 — Product transfer intelligence
+- preserve the same Scripture-reading and visual ancestry while adapting a master visual to editorial, social, print, apparel and motion contexts;
+- learn medium-specific composition without creating unrelated styles for each platform;
+- judge when a ONE Bible plate can be reused and when a new editorial illustration is required;
+- keep documentary evidence (photographs, maps, archives, primary-source art) distinct from illustration.
+
 The learning curve never reaches a state called “finished.” Production may finish; Doré literacy remains living.
 
-## 7. Anti-contamination rules
+## 7. Product application curriculum
+
+Doré is intended to become Westside Watch's primary original illustration intelligence, as defined in `engraving-studio/README.md`. Product goals are part of the learning curriculum, not a detached future wish list.
+
+### ONE Scripture reader
+Learn:
+- full-bleed cover composition;
+- 5:8 body plate legibility;
+- coherent full-book sequencing;
+- chapter-specific Scripture fidelity.
+
+### Westside Watch Journal
+Learn:
+- small spot illustration;
+- section/chapter opening;
+- full-page illustration;
+- 5:8 editorial plate;
+- spread composition;
+- cover illustration;
+- conceptual illustration for theology, devotion, testimony, interview, mission, prayer and church life.
+
+Journal work must remain recognizably related to the same Doré/Westside Watch visual bloodline while allowing quieter, conceptual and contemporary editorial problems that do not occur in direct Bible-scene illustration.
+
+### Daily devotional / social
+Learn:
+- 1:1, 4:5 and 9:16 derivation from a master visual;
+- mobile-scale hierarchy;
+- negative-space control for Scripture/copy;
+- adaptation rather than careless cropping.
+
+### Print / cards / exhibitions / collections
+Learn:
+- print-safe detail and value;
+- standalone plate identity;
+- series coherence;
+- provenance/edition metadata;
+- devotional cards, posters, collectible plates and exhibition/editorial presentation.
+
+### Apparel
+Learn:
+- silhouette extraction;
+- limited-color/line reductions;
+- screen-print/embroidery constraints;
+- symbol/figure derivation rather than printing a rectangular illustration unchanged.
+
+### Motion / Scripture animation
+Learn in order:
+`Scripture-to-Image → Scripture-to-Sequence → Scripture-to-Motion`
+
+Motion must grow from engraved biblical storytelling and character/location continuity, not from a generic cinematic animation style with an engraving filter.
+
+### Product learning rule
+Every non-ONE commission is also a training event. Useful medium-specific findings should be returned to Living Intelligence, but product constraints must never overwrite Bible-first Scripture interpretation.
+
+## 8. Anti-contamination rules
 
 - Bible content and theology come from Scripture and Bible research, not Dante, Milton, Cervantes or other literature.
 - A dramatic Inferno composition must not make every biblical judgment scene look like Dante.
@@ -252,12 +314,27 @@ The learning curve never reaches a state called “finished.” Production may f
 - Don Quixote grotesque/comic exaggeration must not leak into solemn biblical figures unless the biblical scene itself warrants ridicule or satire.
 - London social realism must not modernize biblical clothing/architecture.
 - Non-engraving works can teach mass/light but must be translated back through Doré's engraved Bible line/value grammar.
+- Product adaptation must not turn Doré into several unrelated platform styles.
 
-## 8. Relationship to other Studio documents
+## 9. Deployment truth and learning truth
+
+A plate being present in GitHub, assigned in a registry, or counted by a static audit is not by itself `LIVE_VERIFIED`.
+
+For progress and learning purposes distinguish:
+- **canonical/data verified** — correct stable asset, provenance, chapter assignment and resolver path are confirmed in repository/audit;
+- **deployed** — the relevant commit is in the production branch/deployment;
+- **live visual verified** — the public ONE page visibly renders that exact expected asset/revision and expected frame, without stale cache/fallback/wrong chapter image.
+
+Only live visual verification can promote a generated plate to `DONE` in the temporary roadmap. If tooling cannot directly inspect the public rendered pixels, record the strongest verified state and leave live visual verification pending rather than guessing.
+
+A live visual verification should also compare the plate against its QA target and record any drift. This turns deployment checking into another Doré learning event.
+
+## 10. Relationship to other Studio documents
 
 - `ONE-PRODUCTION-ROADMAP-TEMP.md` = **what to do next / progress truth**.
 - `ONE-DORE-LIVING-STUDIO.md` = **accumulated evolving artistic/biblical intelligence**.
 - `ONE-DORE-VISUAL-GRAMMAR.md` = **locked minimum generation/review constraints**.
-- `ONE-DORE-LEARNING-CURVE.md` = **how the AI studies, expands its corpus, synchronizes, and becomes more capable over time**.
+- `ONE-DORE-LEARNING-CURVE.md` = **how the AI studies, expands its corpus, synchronizes, transfers learning across products, and becomes more capable over time**.
+- `engraving-studio/README.md` = **Doré product identity, studio architecture and long-term application goals**.
 
 When the temporary roadmap is eventually deleted, this Learning Curve remains.
