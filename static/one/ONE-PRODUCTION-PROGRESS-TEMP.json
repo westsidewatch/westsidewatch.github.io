@@ -24,29 +24,35 @@
       "note": "First Doré AI self-generated ONE Studio plate; already included in the 206-covered baseline."
     }
   ],
-  "w1": [
-    {"order":1,"book":25,"name":"耶利米哀歌","missing":1,"keys":["025-003"],"status":"TODO"},
-    {"order":2,"book":41,"name":"馬可福音","missing":3,"keys":["041-003","041-007","041-013"],"status":"TODO"},
-    {"order":3,"book":8,"name":"路得記","missing":2,"keys":[],"status":"EXACT_KEYS_TO_RECONCILE_BEFORE_GENERATION"},
-    {"order":4,"book":32,"name":"約拿書","missing":2,"keys":[],"status":"EXACT_KEYS_TO_RECONCILE_BEFORE_GENERATION"},
-    {"order":5,"book":31,"name":"俄巴底亞書","missing":1,"keys":["031-001"],"status":"TODO"},
-    {"order":6,"book":57,"name":"腓利門書","missing":1,"keys":["057-001"],"status":"TODO"},
-    {"order":7,"book":63,"name":"約翰二書","missing":1,"keys":["063-001"],"status":"TODO"},
-    {"order":8,"book":64,"name":"約翰三書","missing":1,"keys":["064-001"],"status":"TODO"},
-    {"order":9,"book":65,"name":"猶大書","missing":1,"keys":["065-001"],"status":"TODO"},
-    {"order":10,"book":37,"name":"哈該書","missing":2,"keys":["037-001","037-002"],"status":"TODO"},
-    {"order":11,"book":29,"name":"約珥書","missing":3,"keys":["029-001","029-002","029-003"],"status":"TODO"},
-    {"order":12,"book":34,"name":"那鴻書","missing":3,"keys":["034-001","034-002","034-003"],"status":"TODO"},
-    {"order":13,"book":35,"name":"哈巴谷書","missing":3,"keys":["035-001","035-002","035-003"],"status":"TODO"},
-    {"order":14,"book":36,"name":"西番雅書","missing":3,"keys":["036-001","036-002","036-003"],"status":"TODO"},
-    {"order":15,"book":53,"name":"帖撒羅尼迦後書","missing":3,"keys":["053-001","053-002","053-003"],"status":"TODO"},
-    {"order":16,"book":56,"name":"提多書","missing":3,"keys":["056-001","056-002","056-003"],"status":"TODO"},
-    {"order":17,"book":61,"name":"彼得後書","missing":3,"keys":["061-001","061-002","061-003"],"status":"TODO"}
-  ],
+  "w1": {
+    "totalMissing": 36,
+    "exactKeysConfirmed": 36,
+    "status": "READY_FOR_PRODUCTION",
+    "books": [
+      {"order":1,"book":25,"name":"耶利米哀歌","missing":1,"keys":["025-003"],"status":"TODO"},
+      {"order":2,"book":41,"name":"馬可福音","missing":3,"keys":["041-003","041-007","041-013"],"status":"TODO"},
+      {"order":3,"book":8,"name":"路得記","missing":2,"keys":["008-003","008-004"],"status":"TODO"},
+      {"order":4,"book":32,"name":"約拿書","missing":2,"keys":["032-001","032-004"],"status":"TODO"},
+      {"order":5,"book":31,"name":"俄巴底亞書","missing":1,"keys":["031-001"],"status":"TODO"},
+      {"order":6,"book":57,"name":"腓利門書","missing":1,"keys":["057-001"],"status":"TODO"},
+      {"order":7,"book":63,"name":"約翰二書","missing":1,"keys":["063-001"],"status":"TODO"},
+      {"order":8,"book":64,"name":"約翰三書","missing":1,"keys":["064-001"],"status":"TODO"},
+      {"order":9,"book":65,"name":"猶大書","missing":1,"keys":["065-001"],"status":"TODO"},
+      {"order":10,"book":37,"name":"哈該書","missing":2,"keys":["037-001","037-002"],"status":"TODO"},
+      {"order":11,"book":29,"name":"約珥書","missing":3,"keys":["029-001","029-002","029-003"],"status":"TODO"},
+      {"order":12,"book":34,"name":"那鴻書","missing":3,"keys":["034-001","034-002","034-003"],"status":"TODO"},
+      {"order":13,"book":35,"name":"哈巴谷書","missing":3,"keys":["035-001","035-002","035-003"],"status":"TODO"},
+      {"order":14,"book":36,"name":"西番雅書","missing":3,"keys":["036-001","036-002","036-003"],"status":"TODO"},
+      {"order":15,"book":53,"name":"帖撒羅尼迦後書","missing":3,"keys":["053-001","053-002","053-003"],"status":"TODO"},
+      {"order":16,"book":56,"name":"提多書","missing":3,"keys":["056-001","056-002","056-003"],"status":"TODO"},
+      {"order":17,"book":61,"name":"彼得後書","missing":3,"keys":["061-001","061-002","061-003"],"status":"TODO"}
+    ]
+  },
   "rules": {
     "doneMeans": "LIVE_VERIFIED only",
     "counterRule": "Only a post-baseline Missing Plate that first reaches DONE decrements 983.",
     "reconciliation": "Delta check per plate; book audit at book completion; global checksum at wave completion.",
+    "exactKeySource": "Current canonical cover backlog audit; never infer a missing chapter from memory.",
     "runtime": "This JSON is Doré AI operational memory only and must never be loaded by ONE reader/runtime."
   }
 }
