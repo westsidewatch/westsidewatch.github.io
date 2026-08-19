@@ -18,6 +18,25 @@ Before writing book data, illustration mappings, map data, timeline data, render
 
 Do not start a new book by designing from scratch.
 
+## Canonical new-book production order
+
+For every new Bible book, use this order unless a canonical project-wide rule explicitly requires otherwise:
+
+1. **Audit and activate Gustave Doré originals first.** Before building new visual assets, search the canonical 241-plate Doré Original Library for every plate genuinely belonging to the book and map each verified plate to its correct chapter as `P1 ORIGINAL_LOCKED`. If more than one original belongs to a chapter, retain all originals in the immutable library and deliberately select the strongest chapter-cover assignment without discarding the others.
+2. **Build the complete book/chapter study structure.** Register the whole book and all chapters in the shared ONE schema so the book can go online independently of missing generated artwork.
+3. **Add geography where the text genuinely requires it.** Maps are a study tool, not a quota. Route-heavy books such as Acts may use geography as a major structural layer; visionary, poetic or epistolary chapters may omit maps when geography adds no real interpretive value.
+4. **Add chronology, comparison/harmony, cross-references and other genre-appropriate modules.** Use only modules that genuinely illuminate the text.
+5. **Run the canonical cover/body presentation through the shared renderer.** Doré originals already mapped in step 1 must appear automatically through the central cover policy and may never be displaced by local book code.
+6. **Record the remaining illustration gaps.** Chapters without a valid Doré original or other approved fixed historical asset enter the Missing Plate backlog; they do not receive provisional substitutes merely to make the book look complete.
+7. **Publish the book.** Missing ONE Studio plates do not block book publication.
+8. **Only later, when the project enters the visual-production phase, create ONE Studio Doré-continuation plates for the recorded gaps.** Generated plates may fill only genuinely unassigned chapters and must pass the full Doré Studio workflow.
+
+The operational shorthand is:
+
+**Doré originals → complete book data → maps/chronology/other study modules → canonical rendering → missing-plate backlog → publication → later ONE Studio generation.**
+
+The Doré-original audit is therefore not a finishing pass. It is the **first visual action for every new book**.
+
 ## Preflight questions
 
 Before implementation begins, answer internally:
@@ -64,7 +83,7 @@ Doré is the canonical production path for **new generated Bible illustration**,
 
 During book production, perform only the illustration audit needed to establish the correct state:
 
-1. Identify every Gustave Doré original plate belonging to the book/chapter and preserve every `ORIGINAL_LOCKED` placement. Original Doré always has first priority and may not be regenerated, replaced, reassigned or displaced by a generated asset.
+1. Identify every Gustave Doré original plate belonging to the book/chapter and preserve every `ORIGINAL_LOCKED` placement. Original Doré always has first priority and may not be regenerated, replaced, reassigned or displaced by a generated asset. **This audit and activation happens before any generated-art decision and before treating the book as visually incomplete.**
 2. Identify any other fixed historical asset that is valid under `ONE-COVER-ILLUSTRATION-MASTER.md`.
 3. Record chapters that still lack a sufficiently strong illustration as the Missing Plate backlog. **Do not fill those gaps with provisional AI images, fuzzy matches, inherited media or batch-generated placeholders.**
 4. Continue the Bible-book production and publication pipeline. Missing generated plates do not block completion or release of the book.
@@ -97,6 +116,8 @@ A new book is not complete merely because its own pages look correct.
 
 Before PR/merge, verify:
 
+- Doré-original audit was completed before any generated-art decision;
+- every verified Doré original belonging to the book is retained in the canonical original library and every selected chapter assignment is `ORIGINAL_LOCKED`;
 - book entry works;
 - chapter entry works;
 - mobile titles remain inside the viewport;
