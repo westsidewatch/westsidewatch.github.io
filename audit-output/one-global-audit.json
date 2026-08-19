@@ -1,0 +1,493 @@
+{
+  "generatedAt": "2026-08-19T17:33:53.576Z",
+  "executedScripts": 89,
+  "canon": {
+    "expectedBooks": 66,
+    "expectedChapters": 1189,
+    "registeredBooks": 66,
+    "registeredChapters": 1189,
+    "failures": [],
+    "extraBooks": [],
+    "ok": true
+  },
+  "schema": {
+    "ok": true,
+    "errors": [],
+    "warnings": []
+  },
+  "quality": {
+    "structuralOk": true,
+    "actionableOk": true,
+    "needsReview": false,
+    "coverBacklog": 983,
+    "byStatus": {
+      "PASS": 206,
+      "BACKLOG": 983
+    },
+    "topReasons": [],
+    "books": {
+      "01 創世記": {
+        "PASS": 24,
+        "BACKLOG": 26,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 50
+      },
+      "02 出埃及記": {
+        "PASS": 9,
+        "BACKLOG": 31,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 40
+      },
+      "03 利未記": {
+        "PASS": 0,
+        "BACKLOG": 27,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 27
+      },
+      "04 民數記": {
+        "PASS": 4,
+        "BACKLOG": 32,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 36
+      },
+      "05 申命記": {
+        "PASS": 3,
+        "BACKLOG": 31,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 34
+      },
+      "06 約書亞記": {
+        "PASS": 5,
+        "BACKLOG": 19,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 24
+      },
+      "07 士師記": {
+        "PASS": 10,
+        "BACKLOG": 11,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 21
+      },
+      "08 路得記": {
+        "PASS": 2,
+        "BACKLOG": 2,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "09 撒母耳記上": {
+        "PASS": 10,
+        "BACKLOG": 21,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 31
+      },
+      "10 撒母耳記下": {
+        "PASS": 6,
+        "BACKLOG": 18,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 24
+      },
+      "11 列王紀上": {
+        "PASS": 9,
+        "BACKLOG": 13,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 22
+      },
+      "12 列王紀下": {
+        "PASS": 9,
+        "BACKLOG": 16,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 25
+      },
+      "13 歷代志上": {
+        "PASS": 3,
+        "BACKLOG": 26,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 29
+      },
+      "14 歷代志下": {
+        "PASS": 8,
+        "BACKLOG": 28,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 36
+      },
+      "15 以斯拉記": {
+        "PASS": 4,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 10
+      },
+      "16 尼希米記": {
+        "PASS": 2,
+        "BACKLOG": 11,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 13
+      },
+      "17 以斯帖記": {
+        "PASS": 4,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 10
+      },
+      "18 約伯記": {
+        "PASS": 2,
+        "BACKLOG": 40,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 42
+      },
+      "19 詩篇": {
+        "PASS": 0,
+        "BACKLOG": 150,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 150
+      },
+      "20 箴言": {
+        "PASS": 0,
+        "BACKLOG": 31,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 31
+      },
+      "21 傳道書": {
+        "PASS": 0,
+        "BACKLOG": 12,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 12
+      },
+      "22 雅歌": {
+        "PASS": 0,
+        "BACKLOG": 8,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 8
+      },
+      "23 以賽亞書": {
+        "PASS": 1,
+        "BACKLOG": 65,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 66
+      },
+      "24 耶利米書": {
+        "PASS": 4,
+        "BACKLOG": 48,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 52
+      },
+      "25 耶利米哀歌": {
+        "PASS": 4,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 5
+      },
+      "26 以西結書": {
+        "PASS": 2,
+        "BACKLOG": 46,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 48
+      },
+      "27 但以理書": {
+        "PASS": 5,
+        "BACKLOG": 7,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 12
+      },
+      "28 何西阿書": {
+        "PASS": 0,
+        "BACKLOG": 14,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 14
+      },
+      "29 約珥書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "30 阿摩司書": {
+        "PASS": 1,
+        "BACKLOG": 8,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 9
+      },
+      "31 俄巴底亞書": {
+        "PASS": 0,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 1
+      },
+      "32 約拿書": {
+        "PASS": 2,
+        "BACKLOG": 2,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "33 彌迦書": {
+        "PASS": 1,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 7
+      },
+      "34 那鴻書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "35 哈巴谷書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "36 西番雅書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "37 哈該書": {
+        "PASS": 0,
+        "BACKLOG": 2,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 2
+      },
+      "38 撒迦利亞書": {
+        "PASS": 1,
+        "BACKLOG": 13,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 14
+      },
+      "39 瑪拉基書": {
+        "PASS": 0,
+        "BACKLOG": 4,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "40 馬太福音": {
+        "PASS": 14,
+        "BACKLOG": 14,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 28
+      },
+      "41 馬可福音": {
+        "PASS": 13,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 16
+      },
+      "42 路加福音": {
+        "PASS": 15,
+        "BACKLOG": 9,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 24
+      },
+      "43 約翰福音": {
+        "PASS": 12,
+        "BACKLOG": 9,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 21
+      },
+      "44 使徒行傳": {
+        "PASS": 10,
+        "BACKLOG": 18,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 28
+      },
+      "45 羅馬書": {
+        "PASS": 0,
+        "BACKLOG": 16,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 16
+      },
+      "46 哥林多前書": {
+        "PASS": 0,
+        "BACKLOG": 16,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 16
+      },
+      "47 哥林多後書": {
+        "PASS": 0,
+        "BACKLOG": 13,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 13
+      },
+      "48 加拉太書": {
+        "PASS": 0,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 6
+      },
+      "49 以弗所書": {
+        "PASS": 0,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 6
+      },
+      "50 腓立比書": {
+        "PASS": 0,
+        "BACKLOG": 4,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "51 歌羅西書": {
+        "PASS": 0,
+        "BACKLOG": 4,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "52 帖撒羅尼迦前書": {
+        "PASS": 0,
+        "BACKLOG": 5,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 5
+      },
+      "53 帖撒羅尼迦後書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "54 提摩太前書": {
+        "PASS": 0,
+        "BACKLOG": 6,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 6
+      },
+      "55 提摩太後書": {
+        "PASS": 0,
+        "BACKLOG": 4,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 4
+      },
+      "56 提多書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "57 腓利門書": {
+        "PASS": 0,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 1
+      },
+      "58 希伯來書": {
+        "PASS": 0,
+        "BACKLOG": 13,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 13
+      },
+      "59 雅各書": {
+        "PASS": 0,
+        "BACKLOG": 5,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 5
+      },
+      "60 彼得前書": {
+        "PASS": 0,
+        "BACKLOG": 5,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 5
+      },
+      "61 彼得後書": {
+        "PASS": 0,
+        "BACKLOG": 3,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 3
+      },
+      "62 約翰一書": {
+        "PASS": 0,
+        "BACKLOG": 5,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 5
+      },
+      "63 約翰二書": {
+        "PASS": 0,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 1
+      },
+      "64 約翰三書": {
+        "PASS": 0,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 1
+      },
+      "65 猶大書": {
+        "PASS": 0,
+        "BACKLOG": 1,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 1
+      },
+      "66 啟示錄": {
+        "PASS": 7,
+        "BACKLOG": 15,
+        "WARNING": 0,
+        "FAIL": 0,
+        "total": 22
+      }
+    }
+  }
+}
