@@ -1,7 +1,8 @@
 /* ONE opening rail compatibility layer.
  * The actual wheel / pointer / keyboard rail interaction belongs to one-app.js.
- * Do not intercept it here: unvisited books stay as numbers and reveal their names
- * only when they reach the rail focus; visited books keep their status treatment.
+ * This layer preserves the visual rail and guarantees that one deliberate click
+ * completes one book selection after the rail settles. Pointer drags never promote
+ * into selections.
  *
  * When the rail settles, keep the focused book name visible but let the temporary
  * enlargement ease back quickly to its resting size. Any new interaction cancels
@@ -114,6 +115,9 @@
 
   const reducedMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;
   let reboundTimer=0;
+  let autoSelectTimer=0;
+  let pointerStart=null;
+  let pointerDragged=false;
 
   const clearRebound=()=>{
     clearTimeout(reboundTimer);
@@ -121,6 +125,11 @@
     list.querySelectorAll(".cover-book").forEach(item=>{
       item.style.removeProperty("transition");
     });
+  };
+
+  const cancelAutoSelect=()=>{
+    clearTimeout(autoSelectTimer);
+    autoSelectTimer=0;
   };
 
   const scheduleRebound=()=>{
@@ -144,10 +153,61 @@
   });
   observer.observe(list,{attributes:true,attributeFilter:["class"]});
 
-  const cancelOnInteraction=()=>clearRebound();
-  list.addEventListener("pointerdown",cancelOnInteraction,{passive:true});
-  list.addEventListener("wheel",cancelOnInteraction,{passive:true});
-  list.addEventListener("keydown",cancelOnInteraction);
+  /* A pointer click on a non-current book is first consumed by one-app to settle
+   * the rail. Continue that same deliberate action only after the clicked item has
+   * become rail-current. A synthetic keyboard-style click (detail 0) then reaches
+   * one-app's canonical selection path. Any >5px pointer move cancels continuation,
+   * matching the rail's own drag threshold on desktop and touch devices.
+   */
+  const finishSelectionWhenSettled=item=>{
+    cancelAutoSelect();
+    const started=performance.now();
+    const check=()=>{
+      if(!item.isConnected||pointerDragged)return;
+      if(item.classList.contains("rail-current")&&list.classList.contains("is-settled")){
+        item.click();
+        return;
+      }
+      if(performance.now()-started<1400)autoSelectTimer=setTimeout(check,reducedMotion?0:24);
+    };
+    autoSelectTimer=setTimeout(check,reducedMotion?0:24);
+  };
+
+  list.addEventListener("pointerdown",event=>{
+    clearRebound();
+    cancelAutoSelect();
+    pointerStart={id:event.pointerId,x:event.clientX,y:event.clientY};
+    pointerDragged=false;
+  },{passive:true});
+  list.addEventListener("pointermove",event=>{
+    if(!pointerStart||event.pointerId!==pointerStart.id)return;
+    if(Math.hypot(event.clientX-pointerStart.x,event.clientY-pointerStart.y)>5){
+      pointerDragged=true;
+      cancelAutoSelect();
+    }
+  },{passive:true});
+  list.addEventListener("pointerup",()=>{
+    setTimeout(()=>{pointerStart=null;pointerDragged=false},0);
+  },{passive:true});
+  list.addEventListener("pointercancel",()=>{
+    pointerStart=null;
+    pointerDragged=false;
+    cancelAutoSelect();
+  },{passive:true});
+  list.addEventListener("click",event=>{
+    if(event.detail===0||pointerDragged)return;
+    const item=event.target.closest(".cover-book");
+    if(!item||item.classList.contains("rail-current"))return;
+    finishSelectionWhenSettled(item);
+  });
+  list.addEventListener("wheel",()=>{
+    clearRebound();
+    cancelAutoSelect();
+  },{passive:true});
+  list.addEventListener("keydown",()=>{
+    clearRebound();
+    cancelAutoSelect();
+  });
 
   if(list.classList.contains("is-settled"))scheduleRebound();
 })();
