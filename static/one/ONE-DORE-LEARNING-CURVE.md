@@ -120,6 +120,16 @@ Do not learn stylistic rules from unattributed Pinterest reposts, AI reconstruct
 
 Record source, work, date/edition when available, medium, and what visual problem the item teaches.
 
+### External corpus acquisition cadence
+
+Do not attempt to ingest all non-Bible Doré work at once. Expand deliberately:
+
+1. **Need-driven acquisition** — when a production task exposes a weak visual problem (for example sea storm, urban crowd, supernatural abyss, intimate domestic grouping), study 3–12 authenticated non-Bible originals specifically addressing that weakness.
+2. **Book harvest acquisition** — when a book reaches 100% coverage, add external originals only for repeated weaknesses observed across that book.
+3. **Wave curriculum acquisition** — at W1/W2/W3/W4 boundaries, choose one or two broader Doré corpora for structured study and record what they teach better than the Bible set.
+4. **Gap map** — maintain a conceptual list of underlearned domains (hands, horses, infants, interiors, storm sea, desert, city crowds, architecture, grief, battle, celestial bodies, etc.). External study should reduce those gaps.
+5. **No-volume-for-volume's-sake rule** — the value of a corpus is measured by reusable visual understanding, not by number of images viewed.
+
 ## 3. Bible-first transfer rule
 
 For every ONE Bible generation:
