@@ -4,6 +4,39 @@ Status: **LIVING / EVOLVING / REQUIRED RESEARCH MEMORY**
 
 This is not a static image folder. It is the accumulating visual, biblical and editorial intelligence behind ONE Studio's Doré continuation work.
 
+## Mandatory reading order
+
+Before every ONE Studio / Doré-continuation production cycle, Doré AI must read:
+
+1. `ONE-PRODUCTION-ROADMAP-TEMP.md` — current production truth and next task;
+2. `ONE-DORE-LEARNING-CURVE.md` — how to study, expand the source corpus, synchronize progress, and harvest learning;
+3. this `ONE-DORE-LIVING-STUDIO.md` — accumulated evolving intelligence;
+4. `ONE-DORE-VISUAL-GRAMMAR.md` — locked minimum generation/review constraints.
+
+The Learning Curve is permanent learning architecture. The temporary roadmap is deleted after production is complete.
+
+## Temporary production memory — mandatory while backlog remains
+
+While `ONE-PRODUCTION-ROADMAP-TEMP.md` exists, it is the Studio's temporary execution memory. Before every ONE Studio / Doré-continuation production cycle, read it together with the Learning Curve, this Living Studio and `ONE-DORE-VISUAL-GRAMMAR.md`, then take the first unchecked task that is ready.
+
+The ledger is the normal fast path for production progress. Doré AI must not repeatedly rescan all 66 books merely to rediscover which Missing Plates are finished. It should trust ledger entries that are already `DONE`, inspect the active/changed chapter, and use the ledger's delta/book/global reconciliation protocol. A full-canon recount is reserved for mismatch recovery, major gates, and final completion.
+
+But synchronization is not merely bookkeeping. At book, wave, and final-canon reconciliation gates, Doré AI must also perform the learning harvest defined in `ONE-DORE-LEARNING-CURVE.md`: revisit canonical Doré originals, review the completed visual sequence, identify stable grammar, detect Studio drift, and persist reusable discoveries into this Living Studio or the Visual Grammar. Progress checking and corpus learning therefore reinforce each other without requiring a full 1,189-chapter scan after every plate.
+
+### Doré AI progress recognition
+
+Doré AI must recognize that an image moves through distinct production states:
+
+`TODO → GENERATED → APPROVED → PERSISTED → ASSIGNED → DEPLOYED → LIVE_VERIFIED/DONE`
+
+Only `LIVE_VERIFIED` is complete. The AI must not infer completion from any earlier state, from a successful generation, from an editor saying the artwork looks right, from a local registry entry, or from a commit existing. Completion requires the exact final asset/revision to be visibly resolved by the intended public ONE chapter after deployment.
+
+Every generated chapter uses a stable zero-padded `BOOK-CHAPTER` key such as `025-003`. For a completed chapter, Doré AI must be able to identify the compact proof record in the ledger: chapter key, `DONE`, stable asset ID, revision, assignment source, deploy commit/PR, live route, and verification date. If the live route or registry no longer matches that proof, the AI must downgrade/reconcile the entry rather than silently trusting an obsolete checkmark.
+
+After each newly verified chapter, update the ledger counters and proof row immediately. At the end of a book, reconcile that book only. At the end of a production wave, reconcile global totals only. This keeps ledger progress and live-site progress equivalent without a full-canon scan after every plate.
+
+The temporary ledger is research/production memory only. It must never be imported, fetched or referenced by the ONE reader runtime, `index.html`, loaders, scripts, styles, service workers, `ONE_DATA`, `ONE_COVER_POLICY` or Canon Index. When its completion/deletion gate is reached, delete it; this Living Studio remains.
+
 ## Product vision
 
 The long-term goal is not merely to fill chapters that Gustave Doré did not illustrate. The Studio must learn how Doré translated Scripture into images: what textual moment he selected, what he omitted, where he placed the viewer, how theology became scale/light/gesture/space, and how one plate relates to the biblical passage around it.
@@ -59,7 +92,7 @@ Background people are never filler. Every group must have a narrative function: 
 
 ## 4. Visual ancestry
 
-Before inventing something Doré did not directly illustrate, locate its **visual ancestors** in his actual corpus.
+Before inventing something Doré did not directly illustrate, locate its **visual ancestors** in his actual corpus. Follow the corpus tiers and anti-contamination rules in `ONE-DORE-LEARNING-CURVE.md`: Bible originals first; non-Bible Doré works may solve visual problems but never interpret Scripture in place of the Bible corpus.
 
 Examples:
 
@@ -75,11 +108,13 @@ A generated subject should feel genetically related to Doré's existing picture-
 Every generation cycle adds knowledge back into the Studio.
 
 ### Before generation
+- read `ONE-PRODUCTION-ROADMAP-TEMP.md` when it exists and take the first ready unchecked production task;
+- read `ONE-DORE-LEARNING-CURVE.md` and apply its source hierarchy;
 - read the current Living Studio;
 - read the current Doré Visual Grammar;
 - study the Scripture in context;
-- select 3–8 canonical Doré references;
-- write the reference ancestry and scene-choice rationale.
+- select 3–8 canonical Doré references first, then add non-Bible Doré visual ancestors only when a specific visual problem remains unresolved;
+- write the reference ancestry, transfer boundary and scene-choice rationale.
 
 ### After generation
 Record:
@@ -90,7 +125,9 @@ Record:
 - Scripture interpretation problems;
 - line/light/value problems;
 - what a next revision should change;
-- any new general principle worth promoting into the Visual Grammar.
+- any new general principle worth promoting into the Visual Grammar;
+- after FINAL persistence, assignment, deployment and live verification, update `ONE-PRODUCTION-ROADMAP-TEMP.md` before starting the next production item;
+- at book/wave reconciliation, perform the Learning Curve's required learning harvest.
 
 Failures are retained as learning, not silently discarded.
 
@@ -104,7 +141,7 @@ When editorial review explicitly approves a generated plate as **FINAL**, approv
 5. record Scripture, title, provenance, palette, approval state and relevant learning/revision notes;
 6. commit the asset and registry change together whenever technically possible.
 
-A plate is not operationally FINAL until the approved binary and its registry mapping are both persistent. Do not require the editor to re-upload or rediscover an already-approved plate merely because later conversation context has moved on; search existing conversation/library assets first.
+A plate is not operationally `DONE` until the approved binary and registry mapping are persistent, the deployment containing them is live, and the public chapter has been checked to render that exact asset/revision. Do not require the editor to re-upload or rediscover an already-approved plate merely because later conversation context has moved on; search existing conversation/library assets first.
 
 ## 6. Growing knowledge domains
 
@@ -174,6 +211,6 @@ Canonical Doré originals and ONE Studio works remain separate libraries permane
 
 This document is intentionally not `LOCKED` in its artistic conclusions. It must improve as more Doré plates are studied and more Studio images are reviewed.
 
-Stable architectural rules belong in the master policy. Growing artistic intelligence belongs here.
+Stable architectural rules belong in the master policy. Growing artistic intelligence belongs here. The method for acquiring and validating that intelligence belongs in `ONE-DORE-LEARNING-CURVE.md`.
 
 The Studio is expected to become stricter, more specific and more Doré-literate over time.

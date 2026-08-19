@@ -4,15 +4,21 @@ Status: **LOCKED / REQUIRED BEFORE GENERATION**
 
 This document governs all ONE Studio illustrations intended to live beside Gustave Doré Bible engravings. It does not ask for a generic "engraving look". It requires study of Doré's actual pictorial grammar before an image may be generated, reviewed, or registered.
 
+`ONE-DORE-LEARNING-CURVE.md` governs how references are acquired and weighted. Its hierarchy is mandatory: canonical Doré Bible originals are Tier 1 and always outrank non-Bible Doré works for biblical interpretation and Bible-specific visual grammar. Non-Bible Doré works may supplement a specific unsolved visual problem but may never replace Scripture context or Bible-corpus precedent.
+
 Primary visual reference set:
 
 - the canonical 241 Doré Bible assets already fixed in ONE;
 - Wikimedia Commons `Doré's Bible Illustrations` gallery (complete 1866 Bible illustration set);
 - historical Doré Bible Gallery scans for comparison of plate rhythm, line density, figure scale and composition.
 
+Secondary reference families are allowed only under the Learning Curve's transfer/anti-contamination rules. Examples include Doré's Dante, Milton, Cervantes, Coleridge, London/social observation, landscapes and securely attributed religious works. These teach transferable visual solutions—composition, value, crowd, anatomy, atmosphere, terrain, architecture—not the meaning of Scripture.
+
 ## 1. Research before prompt
 
-Before generating a chapter image, select 3–8 Doré reference plates that match the chapter's **visual problem**, not merely its subject. References should be chosen by categories such as:
+Before generating a chapter image, select 3–8 Doré Bible reference plates that match the chapter's **visual problem**, not merely its subject. If a specific visual problem remains underrepresented in the Bible corpus, add carefully identified non-Bible Doré visual ancestors according to `ONE-DORE-LEARNING-CURVE.md` and record the transfer boundary.
+
+References should be chosen by categories such as:
 
 - horse / rider / cavalry;
 - solitary prophet or apostle;
@@ -153,16 +159,17 @@ No generation call should be made until these are written:
 
 1. Scripture passage and theological center.
 2. Primary visible action.
-3. 3–8 Doré reference plates.
-4. Human-figure grammar reference.
-5. Horse/animal reference if applicable.
-6. Primary composition type.
-7. Light source and value plan.
-8. Foreground / middle / background structure.
-9. Engraving-line strategy.
-10. Explicit exclusions (modern cinema, fantasy concept art, glossy digital painting, etc.).
-11. Cover-safe title zone without baking typography into the source image.
-12. Body 5:8 plate legibility check.
+3. 3–8 canonical Doré Bible reference plates.
+4. Non-Bible Doré visual ancestors, if needed, with corpus tier and explicit transfer boundary.
+5. Human-figure grammar reference.
+6. Horse/animal reference if applicable.
+7. Primary composition type.
+8. Light source and value plan.
+9. Foreground / middle / background structure.
+10. Engraving-line strategy.
+11. Explicit exclusions (modern cinema, fantasy concept art, glossy digital painting, forbidden cross-corpus transfer, etc.).
+12. Cover-safe title zone without baking typography into the source image.
+13. Body 5:8 plate legibility check.
 
 ## 12. Review gate
 
@@ -170,6 +177,7 @@ A generated image may enter `ONE_STUDIO_ASSET_REGISTRY` only when all are true:
 
 - Scripture content is correct;
 - the image resembles Doré at the level of pictorial grammar, not merely monochrome texture;
+- Bible-corpus precedent remains the controlling authority and any non-Bible transfer respects the Learning Curve boundary;
 - anatomy is sound;
 - horses/animals pass structural review where applicable;
 - figure gestures and crowd flow are intentional;
