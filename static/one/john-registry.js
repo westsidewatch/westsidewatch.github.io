@@ -10,32 +10,55 @@
   const expected=D.books?.find(book=>book[0]===43)?.[3]||21;
   const studies=john.chapterStudies||{};
 
-  /* John 17–21 were originally authored in the older ONE_JOHN_CHAPTERS shape.
-   * Convert them once at registration time into the canonical shared-renderer schema.
-   * This preserves the authored content while removing the 16/21 registration gap.
+  /* John 17–21 were authored before the canonical shared study schema existed.
+   * 17–20 live in ONE_JOHN_CHAPTERS; 21 lives in ONE_JOHN.chapters.
+   * Convert both legacy containers once at registration time rather than keeping
+   * parallel renderer paths or rewriting already-authored chapter content.
    */
-  const legacy=window.ONE_JOHN_CHAPTERS||{};
+  const legacy={...(window.ONE_JOHN_CHAPTERS||{}),...(window.ONE_JOHN?.chapters||{})};
   const asRows=(items,mapper)=>Array.isArray(items)?items.map(mapper):[];
+  const storyText=raw=>{
+    if(typeof raw?.story==="string")return raw.story;
+    if(Array.isArray(raw?.story))return raw.story.map(item=>[item?.title,item?.text].filter(Boolean).join("：")).filter(Boolean).join(" ");
+    return "";
+  };
   for(const [chapter,raw] of Object.entries(legacy)){
     if(studies[chapter]||!raw||typeof raw!=="object")continue;
     const n=Number(chapter);
+    const routeSource=Array.isArray(raw.storyPath)?raw.storyPath:Array.isArray(raw.route)?raw.route:[];
+    const crossSource=Array.isArray(raw.crossReferences)?raw.crossReferences:Array.isArray(raw.crossRefs)?raw.crossRefs:[];
     studies[chapter]={
       title:String(raw.title||`第 ${n} 章`),
-      passage:`約翰福音 ${n}`,
+      passage:String(raw.range||`約翰福音 ${n}`),
       movement:String(raw.subtitle||raw.theme||"受難、復活與見證"),
-      story:String(raw.story||""),
+      story:storyText(raw),
       position:String(raw.subtitle||raw.theme||`約翰福音第 ${n} 章`),
-      route:asRows(raw.storyPath,item=>[String(item?.ref||""),[item?.title,item?.note].filter(Boolean).join("：")]),
-      background:asRows(raw.background,item=>["背景",String(item||""),""]),
+      route:asRows(routeSource,item=>[
+        String(item?.ref||item?.range||""),
+        [item?.title,item?.label,item?.note,item?.from&&item?.to?`${item.from} → ${item.to}`:""].filter(Boolean).join("：")
+      ]),
+      background:asRows(raw.background,item=>[
+        String(item?.title||"背景"),
+        String(item?.text||item||""),
+        ""
+      ]),
       scout:asRows(raw.observations,item=>String(item||"")),
-      connections:asRows(raw.crossReferences,item=>[String(item?.ref||""),"串珠",String(item?.note||"")]),
-      harmony:asRows(raw.harmony,item=>[String(item?.ref||""),String(item?.note||""),""]),
+      connections:asRows(crossSource,item=>[
+        String(item?.ref||item?.to||""),
+        String(item?.from||"串珠"),
+        String(item?.note||"")
+      ]),
+      harmony:asRows(raw.harmony,item=>[
+        String(item?.ref||item?.john||""),
+        Array.isArray(item?.parallels)?item.parallels.join("；"):String(item?.note||""),
+        Array.isArray(item?.parallels)?String(item?.note||""):""
+      ]),
       questions:asRows(raw.questions,item=>String(item||"")),
       prepare:Array.isArray(raw.prepare)?raw.prepare.map(String):raw.prepare?[String(raw.prepare)]:[],
       map:raw.map?{
         reference:`約翰福音 ${n}`,
-        title:`約翰福音 ${n} 地理`,
-        guide:"按經文明示辨認本章移動與地點；具體建築位置不作過度確定。",
+        title:String(raw.map.focus||`約翰福音 ${n} 地理`),
+        guide:String(raw.map.note||"按經文明示辨認本章移動與地點；具體建築位置不作過度確定。"),
         places:asRows(raw.map.places,item=>String(item||"")),
         routes:asRows(raw.map.routes,item=>[String(item?.from||""),String(item?.to||""),String(item?.note||"")])
       }:undefined
@@ -57,29 +80,10 @@
   john.summary=john.summary||"約翰以記號與見證引人看見道成肉身的耶穌是基督、神的兒子，使信的人因祂的名得生命；從光與生命、節期與『我是』宣告，直到十字架、復活與彼得再次蒙召。";
   john.meta=john.meta||[["位置","新約第四卷 · 第43卷"],["文體","福音書 · 記號、見證與神學敘事"],["章數","21章"],["核心線索","生命 · 光 · 記號 · 見證 · 我是 · 榮耀 · 相愛 · 信"]];
 
-  /* Doré-original audit is the first visual action for a new book.
-   * Only exact Gustave Doré originals belonging to John are selected here.
-   * Additional originals for the same chapter remain recorded in the immutable 241 library.
-   */
-  john.canonicalDoreMapping=Object.freeze({
-    2:213,
-    4:215,
-    6:216,
-    8:217,
-    11:218,
-    18:219,
-    19:222,
-    21:223
-  });
+  john.canonicalDoreMapping=Object.freeze({2:213,4:215,6:216,8:217,11:218,18:219,19:222,21:223});
   john.doreOriginalLibrary=Object.freeze({
-    2:Object.freeze([213,214]),
-    4:Object.freeze([215]),
-    6:Object.freeze([216]),
-    8:Object.freeze([217]),
-    11:Object.freeze([218]),
-    18:Object.freeze([219]),
-    19:Object.freeze([220,221,222]),
-    21:Object.freeze([223])
+    2:Object.freeze([213,214]),4:Object.freeze([215]),6:Object.freeze([216]),8:Object.freeze([217]),
+    11:Object.freeze([218]),18:Object.freeze([219]),19:Object.freeze([220,221,222]),21:Object.freeze([223])
   });
   john.missingPlateBacklog=Object.freeze([1,3,5,7,9,10,12,13,14,15,16,17,20]);
   john.doreAuditStatus="P1_ORIGINALS_AUDITED";
