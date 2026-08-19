@@ -134,3 +134,91 @@
   if(errors.length)console.error("ONE study schema errors",errors);
   if(warnings.length)console.warn("ONE study schema normalized warnings",warnings);
 })();
+
+/* ONE — 66-BOOK / 1,189-CHAPTER QUALITY MATRIX
+ * Read-only second-layer audit. It never mutates study content and therefore cannot
+ * change book availability, chapter rendering, illustration allocation, or navigation.
+ * Structural failures remain release-blocking; content-quality gaps are surfaced as
+ * warnings so Canon Complete can be improved systematically without hiding gaps.
+ */
+(()=>{
+  "use strict";
+  const D=window.ONE_DATA;
+  if(!D?.studyBooks)return;
+  const schema=window.ONE_STUDY_SCHEMA_AUDIT||{};
+  const canonical=window.ONE_CANON_66_AUDIT||{};
+  const coverPolicy=window.ONE_COVER_POLICY;
+  const books=[];
+  const chapters=[];
+  const failures=[];
+  const warnings=[];
+  const counts={books:0,chapters:0,pass:0,warning:0,fail:0,withCover:0,missingCover:0,withTimeline:0,missingTimeline:0,withMap:0,withConnections:0,withQuestions:0,withPreparation:0};
+  const nonEmpty=value=>typeof value==="string"&&value.trim().length>0;
+  const hasRows=value=>Array.isArray(value)&&value.length>0;
+  const issue=(level,bookNumber,chapter,message)=>({level,bookNumber:Number(bookNumber),chapter:Number(chapter)||null,message});
+
+  Object.entries(D.studyBooks).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([bookNumber,book])=>{
+    if(!book||typeof book!=="object")return;
+    counts.books++;
+    const bookIssues=[];
+    const bookStats={number:Number(bookNumber),name:book.name||`Book ${bookNumber}`,nameEn:book.nameEn||"",chapters:Array.isArray(book.chapters)?book.chapters.length:0,pass:0,warning:0,fail:0,withCover:0,missingCover:0,withTimeline:0,missingTimeline:0,withMap:0};
+    Object.entries(book.chapterStudies||{}).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([chapterNumber,study])=>{
+      counts.chapters++;
+      const local=[];
+      const fail=message=>{const row=issue("FAIL",bookNumber,chapterNumber,message);local.push(row);failures.push(row);};
+      const warn=message=>{const row=issue("WARNING",bookNumber,chapterNumber,message);local.push(row);warnings.push(row);};
+
+      if(!study||typeof study!=="object")fail("chapter study object missing");
+      else{
+        if(!nonEmpty(study.title))fail("chapter title missing");
+        if(!nonEmpty(study.passage))fail("passage missing");
+        if(!nonEmpty(study.story))warn("chapter story is empty");
+        if(!nonEmpty(study.position))warn("chapter position/context is empty");
+        if(!hasRows(study.background))warn("background module is empty");
+        if(!hasRows(study.scout))warn("observation/scout module is empty");
+        if(!hasRows(study.questions))warn("questions module is empty"); else counts.withQuestions++;
+        if(!hasRows(study.prepare))warn("preparation module is empty"); else counts.withPreparation++;
+        if(hasRows(study.connections))counts.withConnections++;
+        if(study.map)counts.withMap++;
+
+        const timelineEvents=study.timeline?.events;
+        if(study.timeline&&hasRows(timelineEvents))counts.withTimeline++;
+        else warn("biblical chronology missing or has no events");
+
+        const cover=study.illustration||coverPolicy?.getCover?.(Number(bookNumber),Number(chapterNumber));
+        if(cover?.src){
+          counts.withCover++;
+          if(!cover.origin)warn("cover exists but origin metadata is missing");
+        }else{
+          counts.missingCover++;
+          warn("no canonical Doré/ONE Studio chapter cover assigned");
+        }
+
+        if(study.map&&(!study.map.image||!study.map.source))fail("map survived runtime gate without image/source pair");
+      }
+
+      const level=local.some(item=>item.level==="FAIL")?"FAIL":local.length?"WARNING":"PASS";
+      if(level==="FAIL"){counts.fail++;bookStats.fail++;}
+      else if(level==="WARNING"){counts.warning++;bookStats.warning++;}
+      else{counts.pass++;bookStats.pass++;}
+      if(study?.timeline&&hasRows(study.timeline.events))bookStats.withTimeline++;else bookStats.missingTimeline++;
+      if(study?.map)bookStats.withMap++;
+      const cover=study?.illustration||coverPolicy?.getCover?.(Number(bookNumber),Number(chapterNumber));
+      if(cover?.src)bookStats.withCover++;else bookStats.missingCover++;
+      chapters.push({bookNumber:Number(bookNumber),book:bookStats.name,chapter:Number(chapterNumber),title:study?.title||"",level,issues:local,modules:{cover:Boolean(cover?.src),timeline:Boolean(study?.timeline&&hasRows(study.timeline.events)),map:Boolean(study?.map),connections:hasRows(study?.connections),questions:hasRows(study?.questions),prepare:hasRows(study?.prepare)}});
+    });
+    if(!book.nameEn)bookIssues.push("English book name missing");
+    if(!book.zhCode||!book.enCode)bookIssues.push("Scripture code incomplete");
+    bookStats.issues=bookIssues;
+    books.push(bookStats);
+  });
+
+  counts.missingTimeline=counts.chapters-counts.withTimeline;
+  const structuralOk=Boolean(schema.ok&&canonical.ok&&counts.books===66&&counts.chapters===1189&&failures.length===0);
+  const summary={status:structuralOk?(warnings.length?"WARNING":"PASS"):"FAIL",structuralOk,generatedAt:new Date().toISOString(),counts,schemaErrors:Array.isArray(schema.errors)?schema.errors.slice():[],schemaWarnings:Array.isArray(schema.warnings)?schema.warnings.slice():[],canonicalFailures:Array.isArray(canonical.failures)?canonical.failures.slice():[],failures,warnings};
+  window.ONE_GLOBAL_QUALITY_AUDIT={summary,books,chapters};
+  document.documentElement.dataset.oneGlobalQuality=`${summary.status}:${counts.pass}-pass-${counts.warning}-warning-${counts.fail}-fail`;
+  if(summary.status==="FAIL")console.error("ONE global quality audit",summary);
+  else if(summary.status==="WARNING")console.warn("ONE global quality audit",summary);
+  else console.info("ONE global quality audit",summary);
+})();
