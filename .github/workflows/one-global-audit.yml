@@ -6,6 +6,7 @@ on:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
       - 'scripts/one-cover-backlog-audit.mjs'
+      - 'scripts/one-canon-index-audit.mjs'
       - '.github/workflows/one-global-audit.yml'
   push:
     branches: [ main ]
@@ -13,6 +14,7 @@ on:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
       - 'scripts/one-cover-backlog-audit.mjs'
+      - 'scripts/one-canon-index-audit.mjs'
       - '.github/workflows/one-global-audit.yml'
 
 permissions:
@@ -34,6 +36,10 @@ jobs:
         id: cover_audit
         continue-on-error: true
         run: node scripts/one-cover-backlog-audit.mjs
+      - name: Audit shared Canon Index
+        id: canon_index
+        continue-on-error: true
+        run: node scripts/one-canon-index-audit.mjs
       - name: Upload audit reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -46,9 +52,10 @@ jobs:
         run: |
           test -f audit-output/one-global-audit.json
           test -f audit-output/one-cover-backlog.json
+          test -f audit-output/one-canon-index.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audit-output/one-global-audit.json audit-output/one-global-audit.md audit-output/one-cover-backlog.json audit-output/one-cover-backlog.md
+          git add audit-output/one-global-audit.json audit-output/one-global-audit.md audit-output/one-cover-backlog.json audit-output/one-cover-backlog.md audit-output/one-canon-index.json audit-output/one-canon-index.md
           if git diff --cached --quiet; then
             echo 'Audit reports unchanged.'
           else
@@ -56,5 +63,5 @@ jobs:
             git push
           fi
       - name: Enforce audit failures
-        if: steps.audit.outcome == 'failure' || steps.cover_audit.outcome == 'failure'
+        if: steps.audit.outcome == 'failure' || steps.cover_audit.outcome == 'failure' || steps.canon_index.outcome == 'failure'
         run: exit 1
