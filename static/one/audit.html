@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>ONE · 66-Book Global Audit</title>
+<style>
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:light dark}body{margin:0;padding:24px;line-height:1.5}main{max-width:1280px;margin:auto}h1{margin:0 0 4px}.muted{opacity:.7}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}.card{border:1px solid currentColor;border-radius:8px;padding:12px}.card strong{display:block;font-size:1.6rem}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.toolbar button{padding:7px 12px}.status{font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);text-align:left;vertical-align:top}th{position:sticky;top:0;background:Canvas}.PASS{opacity:.65}.WARNING .status{color:#a66a00}.FAIL .status{color:#b00020}.issues{max-width:520px}iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0}.notice{padding:12px;border:1px solid currentColor;border-radius:8px;margin:16px 0}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+</style>
+</head>
+<body>
+<main>
+<h1>ONE · 66-Book Global Audit</h1>
+<p class="muted">只讀開發體檢頁。載入正常 ONE runtime，讀取 <code>ONE_GLOBAL_QUALITY_AUDIT</code>；不修改書卷、章節、插圖或本機查經進度。</p>
+<div id="state" class="notice">正在載入 ONE 全局資料……</div>
+<section id="report" hidden>
+<div class="summary" id="summary"></div>
+<div class="toolbar" role="group" aria-label="Filter audit rows">
+<button data-filter="ALL">全部</button><button data-filter="FAIL">FAIL</button><button data-filter="WARNING">WARNING</button><button data-filter="PASS">PASS</button><button id="copy-summary">複製摘要</button>
+</div>
+<table>
+<thead><tr><th>卷</th><th>章</th><th>狀態</th><th>Cover</th><th>Chronology</th><th>Map</th><th>Connections</th><th>Issues</th></tr></thead>
+<tbody id="rows"></tbody>
+</table>
+</section>
+</main>
+<iframe id="runtime" src="./" title="ONE runtime audit source"></iframe>
+<script>
+(()=>{
+  const iframe=document.getElementById('runtime'),state=document.getElementById('state'),report=document.getElementById('report'),summaryEl=document.getElementById('summary'),rowsEl=document.getElementById('rows');
+  let audit=null,filter='ALL';
+  const yes=value=>value?'✓':'—';
+  const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  const renderRows=()=>{
+    if(!audit)return;
+    rowsEl.innerHTML=audit.chapters.filter(row=>filter==='ALL'||row.level===filter).map(row=>`<tr class="${row.level}"><td>${String(row.bookNumber).padStart(2,'0')} ${esc(row.book)}</td><td>${row.chapter}</td><td class="status">${row.level}</td><td>${yes(row.modules.cover)}</td><td>${yes(row.modules.timeline)}</td><td>${yes(row.modules.map)}</td><td>${yes(row.modules.connections)}</td><td class="issues">${row.issues.map(item=>esc(item.message)).join('<br>')}</td></tr>`).join('');
+  };
+  const render=()=>{
+    const s=audit.summary,c=s.counts;
+    state.textContent=`${s.status} · ${c.books} 卷 · ${c.chapters} 章`;
+    summaryEl.innerHTML=[['Books',c.books],['Chapters',c.chapters],['PASS',c.pass],['WARNING',c.warning],['FAIL',c.fail],['Cover',`${c.withCover}/${c.chapters}`],['Chronology',`${c.withTimeline}/${c.chapters}`],['Maps',c.withMap],['Connections',c.withConnections]].map(([label,value])=>`<div class="card"><span>${label}</span><strong>${value}</strong></div>`).join('');
+    report.hidden=false;renderRows();
+  };
+  const readAudit=()=>{
+    try{audit=iframe.contentWindow.ONE_GLOBAL_QUALITY_AUDIT;}catch(error){state.textContent='無法讀取 ONE runtime：'+error.message;return;}
+    if(audit){render();return;}
+    state.textContent='ONE runtime 已載入，但尚未產生品質矩陣。請確認 global audit gate 已載入。';
+  };
+  iframe.addEventListener('load',()=>setTimeout(readAudit,50));
+  document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{filter=button.dataset.filter;renderRows();}));
+  document.getElementById('copy-summary').addEventListener('click',async()=>{
+    if(!audit)return;const s=audit.summary,c=s.counts;
+    const text=`ONE Global Audit ${s.status}\nBooks ${c.books}/66\nChapters ${c.chapters}/1189\nPASS ${c.pass}\nWARNING ${c.warning}\nFAIL ${c.fail}\nCover ${c.withCover}/${c.chapters}\nChronology ${c.withTimeline}/${c.chapters}\nMaps ${c.withMap}\nConnections ${c.withConnections}`;
+    try{await navigator.clipboard.writeText(text);state.textContent='摘要已複製。';}catch{state.textContent=text;}
+  });
+})();
+</script>
+</body>
+</html>
