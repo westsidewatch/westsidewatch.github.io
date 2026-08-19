@@ -1,6 +1,6 @@
 /* 路加福音 ONE：開卷註冊與入口保護
  * 必須在所有 Luke 章資料載入完成後、one-map-catalog / one-app 之前執行。
- * 插圖配置由 mark-luke-illustrations.js 單一負責，避免舊映射覆蓋新資料。
+ * 章封面由後續 one-cover-policy.js 統一分配；本註冊檔不得動態載入插圖腳本。
  */
 (() => {
   "use strict";
@@ -30,14 +30,11 @@
   const allReady=Array.from({length:expected},(_,index)=>Boolean(studies[String(index+1)])).every(Boolean);
   document.documentElement.dataset.lukeReady=allReady?"true":"partial";
 
-  /* index.html 目前在 parser 階段載入本檔；用 document.write 同步插入唯一的
-   * 馬可／路加插圖配置，保證它在 one-map-catalog 與 one-app 初始化前完成。
-   * 後續若 index.html 改為直接載入該檔，data 標記會阻止重複插入。
+  /* Legacy document.write loader removed.
+   * ONE-RUNTIME-LOAD-ORDER-MASTER requires explicit book-data registration before the
+   * canonical cover policy. one-cover-policy.js is the sole runtime illustration writer,
+   * so loading mark-luke-illustrations.js here was both redundant and cache-sensitive.
    */
-  if(!document.documentElement.dataset.markLukeIllustrationsLoader){
-    document.documentElement.dataset.markLukeIllustrationsLoader="true";
-    document.write('<script src="./mark-luke-illustrations.js?v=20260815c"><\/script>');
-  }
 
   document.addEventListener("DOMContentLoaded",()=>{
     const item=document.querySelector('.cover-book[data-book="42"]');
