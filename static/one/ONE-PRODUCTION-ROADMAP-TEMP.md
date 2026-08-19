@@ -2,7 +2,7 @@
 
 > Status: TEMPORARY EXECUTION LEDGER — DORÉ STUDIO MEMORY ONLY
 >
-> Doré AI rule: before every ONE Studio / Doré-continuation production cycle, read this file together with `ONE-DORE-LIVING-STUDIO.md` and `ONE-DORE-VISUAL-GRAMMAR.md`, take the first unchecked task that is ready, and update this ledger after the approved asset is persisted and audited.
+> Doré AI rule: before every ONE Studio / Doré-continuation production cycle, read this file together with `ONE-DORE-LEARNING-CURVE.md`, `ONE-DORE-LIVING-STUDIO.md` and `ONE-DORE-VISUAL-GRAMMAR.md`, take the first unchecked task that is ready, and update this ledger after the approved asset is persisted and audited.
 >
 > Runtime isolation: this is Markdown research/production memory only. It must never be referenced by `static/one/index.html`, any `<script>`, `<link>`, preload, loader, service worker, `ONE_DATA`, `ONE_COVER_POLICY`, Canon Index, or reader code. Its presence beside the Doré Studio documents does not make it a runtime dependency.
 >
@@ -23,6 +23,8 @@
 ## Progress protocol — this ledger is the fast path
 
 The purpose of this ledger is to eliminate repeated full-canon recounting during normal production. Doré AI should normally trust the last **LIVE_VERIFIED** ledger state and inspect only the active/changed chapter. A full-canon progress recount is required only when a reconciliation check fails, at a major phase gate, or before final deletion of this ledger.
+
+Synchronization is also part of the Doré learning curriculum. At book, wave and final-canon checkpoints, follow `ONE-DORE-LEARNING-CURVE.md`: revisit canonical Doré originals, compare the completed sequence, identify stable visual rules and Studio drift, and promote reusable findings into Living Studio / Visual Grammar. The goal is to avoid a full 1,189-chapter recount after every plate **without** losing repeated exposure to the original Doré Bible corpus.
 
 ### Stable chapter identity
 
@@ -63,10 +65,10 @@ If any proof field is missing or contradicts the current registry/live route, Do
 
 Use a two-level check instead of rereading all 1189 chapters after every plate:
 
-1. **Delta check after each completed plate** — verify only the changed chapter key against the final Studio asset registry/resolver and the live route. If it matches, mark `DONE` and decrement `Missing Plate BACKLOG` by exactly 1.
-2. **Book checkpoint** — when the last missing child task in a book becomes `DONE`, compare that book's ledger DONE keys/count with the canonical cover audit for that book only. Do not rescan other books.
-3. **Global checksum checkpoint** — at the end of each production wave, compare only global totals: `Covered + Missing = 1189`, structural FAIL = 0, and the audit Missing count must equal this ledger's Missing count. If those totals agree, the ledger remains authoritative for day-to-day work.
-4. **Escalation rule** — perform a full 66-book/1189-chapter recount only if a delta/book/global checkpoint disagrees, if registry identity is ambiguous, or at the final completion gate.
+1. **Delta check after each completed plate** — verify only the changed chapter key against the final Studio asset registry/resolver and the live route. If it matches, mark `DONE` and decrement `Missing Plate BACKLOG` by exactly 1. Also perform the chapter-level learning comparison required by the Learning Curve against neighboring/canonical Doré precedents.
+2. **Book checkpoint** — when the last missing child task in a book becomes `DONE`, compare that book's ledger DONE keys/count with the canonical cover audit for that book only. Then review that book's complete visual sequence and record a learning harvest; do not rescan unrelated books merely for progress counting.
+3. **Global checksum checkpoint** — at the end of each production wave, compare only global totals: `Covered + Missing = 1189`, structural FAIL = 0, and the audit Missing count must equal this ledger's Missing count. Separately perform the Learning Curve's cross-genre canonical sample so Doré AI continues learning from original Bible plates across the canon.
+4. **Escalation rule** — perform a full 66-book/1189-chapter recount only if a delta/book/global checkpoint disagrees, if registry identity is ambiguous, or at the final completion gate. A full-canon learning review is also required at final completion even if counts already match.
 
 This makes the normal relationship:
 
@@ -92,7 +94,8 @@ Doré AI must update these four counters whenever a chapter first reaches `DONE`
 5. Every newly `DONE` chapter must update this ledger before moving to the next task.
 6. Atlas, Scripture Graph, and Search must all consume the shared Canon Index rather than creating separate book/chapter identities.
 7. This ledger is Doré Studio operational memory only and remains outside reader runtime/load behavior.
-8. Final cleanup task after all work is complete: delete this file.
+8. Book/wave/final synchronization must include the Learning Curve's required Doré-original study harvest, not only progress counting.
+9. Final cleanup task after all work is complete: delete this file.
 
 # Phase A — Missing Plate production
 
@@ -146,6 +149,7 @@ Gate after each book:
 - [ ] Reader cover rendering checked on the deployed site.
 - [ ] Mobile cover rendering checked on the deployed site.
 - [ ] Book-level canonical cover audit agrees with ledger child keys/count.
+- [ ] Required book-level Doré learning harvest completed and reusable findings persisted where appropriate.
 - [ ] Global structural audit remains 66/1189 with 0 structural FAIL.
 - [ ] Missing Plate count reduced by exactly the number of newly LIVE_VERIFIED chapters.
 - [ ] This ledger updated with completion date / PR or commit / new backlog count.
@@ -191,6 +195,7 @@ Current target: 211 plates.
 - [ ] No fuzzy Doré mappings introduced.
 - [ ] All generated plates have provenance/version metadata.
 - [ ] One final full 66-book / 1189-chapter reader regression pass.
+- [ ] One final full-canon Doré learning synthesis completed before deleting this temporary ledger.
 
 # Phase B — Atlas
 
@@ -251,9 +256,10 @@ Completion gate:
 Only after all prior gates pass:
 1. [ ] Confirm Missing Plate BACKLOG = 0.
 2. [ ] Confirm ledger DONE generated backlog = 983/983 and final full-canon reconciliation passes.
-3. [ ] Confirm Atlas shipped and audited.
-4. [ ] Confirm Scripture Graph shipped and audited.
-5. [ ] Confirm Search shipped and audited.
-6. [ ] Confirm global ONE audit is green.
-7. [ ] Archive any useful permanent rules into the appropriate canonical specification if necessary.
-8. [ ] DELETE `static/one/ONE-PRODUCTION-ROADMAP-TEMP.md` because its list/progress function is finished.
+3. [ ] Confirm final full-canon Doré learning synthesis has been harvested into permanent Studio learning documents.
+4. [ ] Confirm Atlas shipped and audited.
+5. [ ] Confirm Scripture Graph shipped and audited.
+6. [ ] Confirm Search shipped and audited.
+7. [ ] Confirm global ONE audit is green.
+8. [ ] Archive any useful permanent rules into the appropriate canonical specification if necessary.
+9. [ ] DELETE `static/one/ONE-PRODUCTION-ROADMAP-TEMP.md` because its list/progress function is finished.
