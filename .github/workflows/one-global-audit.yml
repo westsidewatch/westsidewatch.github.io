@@ -5,12 +5,14 @@ on:
     paths:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
+      - 'scripts/one-cover-backlog-audit.mjs'
       - '.github/workflows/one-global-audit.yml'
   push:
     branches: [ main ]
     paths:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
+      - 'scripts/one-cover-backlog-audit.mjs'
       - '.github/workflows/one-global-audit.yml'
 
 permissions:
@@ -28,26 +30,31 @@ jobs:
         id: audit
         continue-on-error: true
         run: node scripts/one-global-audit.mjs
-      - name: Upload audit report
+      - name: Classify cover backlog and quality
+        id: cover_audit
+        continue-on-error: true
+        run: node scripts/one-cover-backlog-audit.mjs
+      - name: Upload audit reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: one-global-audit
           path: audit-output/
           if-no-files-found: error
-      - name: Persist latest audit report on main
+      - name: Persist latest audit reports on main
         if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           test -f audit-output/one-global-audit.json
+          test -f audit-output/one-cover-backlog.json
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add audit-output/one-global-audit.json audit-output/one-global-audit.md
+          git add audit-output/one-global-audit.json audit-output/one-global-audit.md audit-output/one-cover-backlog.json audit-output/one-cover-backlog.md
           if git diff --cached --quiet; then
-            echo 'Audit report unchanged.'
+            echo 'Audit reports unchanged.'
           else
-            git commit -m 'chore: update ONE global audit report'
+            git commit -m 'chore: update ONE audit reports'
             git push
           fi
       - name: Enforce audit failures
-        if: steps.audit.outcome == 'failure'
+        if: steps.audit.outcome == 'failure' || steps.cover_audit.outcome == 'failure'
         run: exit 1
