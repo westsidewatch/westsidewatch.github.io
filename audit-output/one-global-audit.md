@@ -2,8 +2,8 @@
 
 - Canon: **PASS** — 66/66 books, 1189/1189 chapters
 - Schema: **PASS** — 0 errors, 0 normalization warnings
-- Quality: **PASS** — PASS 206, BACKLOG 983, WARNING 0, FAIL 0
-- Missing Plate backlog: **983 chapters**
+- Quality: **PASS** — PASS 207, BACKLOG 982, WARNING 0, FAIL 0
+- Missing Plate backlog: **982 chapters**
 
 ## Top actionable issues
 
@@ -37,7 +37,7 @@
 | 22 雅歌 | 0 | 8 | 0 | 0 | 8 |
 | 23 以賽亞書 | 1 | 65 | 0 | 0 | 66 |
 | 24 耶利米書 | 4 | 48 | 0 | 0 | 52 |
-| 25 耶利米哀歌 | 4 | 1 | 0 | 0 | 5 |
+| 25 耶利米哀歌 | 5 | 0 | 0 | 0 | 5 |
 | 26 以西結書 | 2 | 46 | 0 | 0 | 48 |
 | 27 但以理書 | 5 | 7 | 0 | 0 | 12 |
 | 28 何西阿書 | 0 | 14 | 0 | 0 | 14 |
