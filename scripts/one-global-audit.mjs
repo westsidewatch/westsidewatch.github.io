@@ -47,10 +47,12 @@ const topReasons=Object.entries(reasonCounts).sort((a,b)=>b[1]-a[1]).slice(0,30)
 const books={};
 for(const row of rows){const key=`${String(row.bookNumber).padStart(2,'0')} ${row.book||''}`;books[key]||={PASS:0,BACKLOG:0,WARNING:0,FAIL:0,total:0};books[key][row.effectiveLevel]=(books[key][row.effectiveLevel]||0)+1;books[key].total++;}
 
-const report={generatedAt:new Date().toISOString(),executedScripts:executed,canon,schema:{ok:schema.ok,errors:schema.errors,warnings:schema.warnings},quality:{structuralOk:quality.structuralOk,needsReview:(byStatus.WARNING||0)>0||(byStatus.FAIL||0)>0,coverBacklog:rows.filter(row=>row.backlog).length,byStatus,topReasons,books}};
+const structuralOk=Boolean(quality.summary?.structuralOk);
+const actionableOk=structuralOk&&(byStatus.WARNING||0)===0&&(byStatus.FAIL||0)===0;
+const report={generatedAt:new Date().toISOString(),executedScripts:executed,canon,schema:{ok:schema.ok,errors:schema.errors,warnings:schema.warnings},quality:{structuralOk,actionableOk,needsReview:!actionableOk,coverBacklog:rows.filter(row=>row.backlog).length,byStatus,topReasons,books}};
 fs.mkdirSync(path.join(root,'audit-output'),{recursive:true});
 fs.writeFileSync(path.join(root,'audit-output','one-global-audit.json'),JSON.stringify(report,null,2));
-let md=`# ONE Global Audit\n\n- Canon: **${canon.ok?'PASS':'FAIL'}** — ${canon.registeredBooks}/66 books, ${canon.registeredChapters}/1189 chapters\n- Schema: **${schema.ok?'PASS':'FAIL'}** — ${schema.errors.length} errors, ${schema.warnings.length} normalization warnings\n- Quality: **${quality.structuralOk?'STRUCTURALLY PASS':'FAIL'}** — PASS ${byStatus.PASS||0}, BACKLOG ${byStatus.BACKLOG||0}, WARNING ${byStatus.WARNING||0}, FAIL ${byStatus.FAIL||0}\n- Missing Plate backlog: **${report.quality.coverBacklog} chapters**\n\n## Top actionable issues\n\n`;
+let md=`# ONE Global Audit\n\n- Canon: **${canon.ok?'PASS':'FAIL'}** — ${canon.registeredBooks}/66 books, ${canon.registeredChapters}/1189 chapters\n- Schema: **${schema.ok?'PASS':'FAIL'}** — ${schema.errors.length} errors, ${schema.warnings.length} normalization warnings\n- Quality: **${actionableOk?'PASS':structuralOk?'REVIEW':'FAIL'}** — PASS ${byStatus.PASS||0}, BACKLOG ${byStatus.BACKLOG||0}, WARNING ${byStatus.WARNING||0}, FAIL ${byStatus.FAIL||0}\n- Missing Plate backlog: **${report.quality.coverBacklog} chapters**\n\n## Top actionable issues\n\n`;
 if(!topReasons.length)md+='- None\n';
 for(const [reason,count] of topReasons)md+=`- ${count} × ${reason}\n`;
 md+=`\n## Books\n\n| Book | PASS | BACKLOG | WARNING | FAIL | Total |\n|---|---:|---:|---:|---:|---:|\n`;
