@@ -4,6 +4,12 @@ Status: **LIVING / EVOLVING / REQUIRED RESEARCH MEMORY**
 
 This is not a static image folder. It is the accumulating visual, biblical and editorial intelligence behind ONE Studio's Doré continuation work.
 
+## Temporary production memory — mandatory while backlog remains
+
+While `ONE-PRODUCTION-ROADMAP-TEMP.md` exists, it is the Studio's temporary execution memory. Before every ONE Studio / Doré-continuation production cycle, read it together with this Living Studio and `ONE-DORE-VISUAL-GRAMMAR.md`, then take the first unchecked task that is ready. After an approved asset is persisted, assigned and audited, update the temporary ledger before moving to the next item.
+
+The temporary ledger is research/production memory only. It must never be imported, fetched or referenced by the ONE reader runtime, `index.html`, loaders, scripts, styles, service workers, `ONE_DATA`, `ONE_COVER_POLICY` or Canon Index. When its completion/deletion gate is reached, delete it; this Living Studio remains.
+
 ## Product vision
 
 The long-term goal is not merely to fill chapters that Gustave Doré did not illustrate. The Studio must learn how Doré translated Scripture into images: what textual moment he selected, what he omitted, where he placed the viewer, how theology became scale/light/gesture/space, and how one plate relates to the biblical passage around it.
@@ -75,6 +81,7 @@ A generated subject should feel genetically related to Doré's existing picture-
 Every generation cycle adds knowledge back into the Studio.
 
 ### Before generation
+- read `ONE-PRODUCTION-ROADMAP-TEMP.md` when it exists and take the first ready unchecked production task;
 - read the current Living Studio;
 - read the current Doré Visual Grammar;
 - study the Scripture in context;
@@ -90,7 +97,8 @@ Record:
 - Scripture interpretation problems;
 - line/light/value problems;
 - what a next revision should change;
-- any new general principle worth promoting into the Visual Grammar.
+- any new general principle worth promoting into the Visual Grammar;
+- after FINAL persistence and audit, update `ONE-PRODUCTION-ROADMAP-TEMP.md` before starting the next production item.
 
 Failures are retained as learning, not silently discarded.
 
