@@ -110,6 +110,12 @@ Preferred research sources:
 - Musée d'Orsay and other museum/institutional catalogues;
 - verified historical editions/scans.
 
+Institutional expansion examples already suitable for study include:
+- The Met's Doré/Dante *Vision of Hell* material for wood-engraving process and supernatural composition;
+- NGA's complete bound *London: A Pilgrimage* for observed crowds, streets, architecture and ordinary bodies;
+- NGA's securely attributed religious drawings such as *Christian Martyrs* for sacred staging outside the Bible engraving cycle;
+- BnF/Gallica Doré catalogues and digitized illustrated editions for broader authenticated book-illustration study.
+
 Do not learn stylistic rules from unattributed Pinterest reposts, AI reconstructions, modern colorizations, fan remasters, or images merely labelled “Doré style.”
 
 Record source, work, date/edition when available, medium, and what visual problem the item teaches.
@@ -136,6 +142,7 @@ Progress synchronization and Doré learning are intentionally connected.
 When one Missing Plate becomes `LIVE_VERIFIED / DONE`:
 - verify the exact chapter assignment and live asset;
 - compare the new plate against the neighboring canonical Doré/ONE plates in that book;
+- revisit the relevant Tier 1 Doré originals used as ancestry rather than only checking technical registry state;
 - record one or more observations about continuity, mismatch, or newly learned grammar;
 - update the temporary roadmap proof line.
 
@@ -146,6 +153,7 @@ This is the fast path and does not require rereading all 1,189 chapters.
 When an entire biblical book becomes complete:
 - reread/review the book's full cover sequence in canonical chapter order;
 - compare original Doré, approved reuse and ONE Studio plates as one visual sequence;
+- revisit the original Doré Bible plates that establish that book's/genre's closest pictorial grammar;
 - identify recurring Doré solutions and any Studio drift;
 - promote genuinely reusable findings into `ONE-DORE-LIVING-STUDIO.md` or `ONE-DORE-VISUAL-GRAMMAR.md`;
 - reconcile the book's list status against the actual registry/live reader.
@@ -160,6 +168,7 @@ At W1/W2/W3/W4 boundaries:
 - revisit canonical Doré originals, not just newly generated images;
 - compare which learned rules remain stable across genres;
 - demote rules that proved genre-specific;
+- deliberately add a small number of authenticated Tier 2–5 originals that address weaknesses discovered during the wave;
 - add a short “learning harvest” record.
 
 ### Final full-canon study
