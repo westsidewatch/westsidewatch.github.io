@@ -20,13 +20,76 @@
 - Fuzzy semantic Doré expansion: DISABLED.
 - Canon Index: 1189/1189 searchable chapters, 441 explicit places, 71 map IDs, 715 chapters with explicit places, 2290 normalized chapter-to-chapter Scripture edges, 0 broken graph edges.
 
+## Progress protocol — this ledger is the fast path
+
+The purpose of this ledger is to eliminate repeated full-canon recounting during normal production. Doré AI should normally trust the last **LIVE_VERIFIED** ledger state and inspect only the active/changed chapter. A full-canon progress recount is required only when a reconciliation check fails, at a major phase gate, or before final deletion of this ledger.
+
+### Stable chapter identity
+
+Every generated Missing Plate task must use a stable chapter key:
+
+`BOOK-CHAPTER`, zero padded, for example `025-003` = Lamentations 3.
+
+Before generating a multi-chapter/book row, Doré AI must expand that row into chapter-key child tasks. A book row is complete only when every child chapter key is `DONE`.
+
+### Recognized states
+
+Doré AI must distinguish these states and never collapse them prematurely:
+
+- `TODO` — no accepted plate yet.
+- `GENERATED` — candidate image exists; still editable.
+- `APPROVED` — editor explicitly says the image itself needs no more modification.
+- `PERSISTED` — approved binary has a stable file/asset ID and revision.
+- `ASSIGNED` — chapter key explicitly resolves to that stable asset through the Studio registry/resolver.
+- `DEPLOYED` — the commit containing the final asset + assignment is on the production branch/site deployment.
+- `LIVE_VERIFIED` — the public ONE chapter actually renders the expected asset/revision with no fallback, cache substitution, broken cover, or wrong chapter mapping.
+- `DONE` — synonym for `LIVE_VERIFIED`; only now may `[x]` be written in this ledger.
+
+**Hard rule:** editorial approval alone is not completion. A plate cannot be marked `[x]` until public/live verification succeeds.
+
+### Required proof for every DONE chapter
+
+When a chapter becomes `DONE`, its ledger record must contain enough compact evidence for Doré AI to recognize it without rescanning the whole canon:
+
+`KEY | DONE | asset_id | revision | assignment_source | deploy_commit_or_PR | live_url_or_route | verified_date`
+
+Example format only:
+
+`025-003 | DONE | studio-lam-003 | r1 | Studio registry | PR/commit | /one/?book=25&chapter=3 | YYYY-MM-DD`
+
+If any proof field is missing or contradicts the current registry/live route, Doré AI must downgrade the entry from `DONE` and reconcile it.
+
+### Simple synchronization with the full-canon state
+
+Use a two-level check instead of rereading all 1189 chapters after every plate:
+
+1. **Delta check after each completed plate** — verify only the changed chapter key against the final Studio asset registry/resolver and the live route. If it matches, mark `DONE` and decrement `Missing Plate BACKLOG` by exactly 1.
+2. **Book checkpoint** — when the last missing child task in a book becomes `DONE`, compare that book's ledger DONE keys/count with the canonical cover audit for that book only. Do not rescan other books.
+3. **Global checksum checkpoint** — at the end of each production wave, compare only global totals: `Covered + Missing = 1189`, structural FAIL = 0, and the audit Missing count must equal this ledger's Missing count. If those totals agree, the ledger remains authoritative for day-to-day work.
+4. **Escalation rule** — perform a full 66-book/1189-chapter recount only if a delta/book/global checkpoint disagrees, if registry identity is ambiguous, or at the final completion gate.
+
+This makes the normal relationship:
+
+`Ledger DONE keys ↔ explicit registry assignment ↔ deployed live chapter`
+
+The three must stay one-to-one. A mismatch is an error, not a reason to guess.
+
+### Current progress counters
+
+- Generated backlog completed after this ledger baseline: **0 / 983**.
+- Missing Plate remaining: **983 / 983**.
+- Missing Plate completion: **0.00%**.
+- Covered total: **206 / 1189**.
+
+Doré AI must update these four counters whenever a chapter first reaches `DONE`. Do not change them for `GENERATED`, `APPROVED`, `PERSISTED`, `ASSIGNED`, or `DEPLOYED` states.
+
 ## Non-negotiable production rules
 
 1. Never fill a Missing Plate by fuzzy thematic similarity to a Doré image.
 2. Source-locked Doré originals outrank generated assets.
 3. Canonical parallel, historical match, and typology reuse must remain explicit policy data.
-4. ONE Studio plates become COVERED only after editorial approval, stable asset registration, explicit chapter assignment, and audit verification.
-5. Every completed batch must update this temporary ledger before moving to the next batch.
+4. ONE Studio plates become COVERED only after editorial approval, stable asset registration, explicit chapter assignment, deployment, and live verification.
+5. Every newly `DONE` chapter must update this ledger before moving to the next task.
 6. Atlas, Scripture Graph, and Search must all consume the shared Canon Index rather than creating separate book/chapter identities.
 7. This ledger is Doré Studio operational memory only and remains outside reader runtime/load behavior.
 8. Final cleanup task after all work is complete: delete this file.
@@ -55,33 +118,37 @@ Backlog routes:
 Goal: close nearly complete books before large-volume generation. Total current W1 target: 36 plates.
 
 Execution order:
-1. [ ] 25 耶利米哀歌 — 1 missing, 4/5 covered. **Exact gap confirmed: chapter 3.** Existing coverage: ch.1 Doré 127; ch.2/4/5 explicit historical match 127. Next action: ONE Studio plate for ch.3 only.
-2. [ ] 41 馬可福音 — 3 missing, 13/16 covered. High reader visibility; finish immediately after Lamentations.
-3. [ ] 08 路得記 — 2 missing, 2/4 covered.
-4. [ ] 32 約拿書 — 2 missing, 2/4 covered.
-5. [ ] 31 俄巴底亞書 — 1 missing.
-6. [ ] 57 腓利門書 — 1 missing.
-7. [ ] 63 約翰二書 — 1 missing.
-8. [ ] 64 約翰三書 — 1 missing.
-9. [ ] 65 猶大書 — 1 missing.
-10. [ ] 37 哈該書 — 2 missing.
-11. [ ] 29 約珥書 — 3 missing.
-12. [ ] 34 那鴻書 — 3 missing.
-13. [ ] 35 哈巴谷書 — 3 missing.
-14. [ ] 36 西番雅書 — 3 missing.
-15. [ ] 53 帖撒羅尼迦後書 — 3 missing.
-16. [ ] 56 提多書 — 3 missing.
-17. [ ] 61 彼得後書 — 3 missing.
+1. [ ] 25 耶利米哀歌 — 1 missing, 4/5 covered. **Exact gap confirmed: `025-003`.** Existing coverage: ch.1 Doré 127; ch.2/4/5 explicit historical match 127. Next action: ONE Studio plate for ch.3 only.
+   - `025-003 | TODO | asset_id:- | revision:- | assignment:- | deploy:- | live:- | verified:-`
+2. [ ] 41 馬可福音 — 3 missing, 13/16 covered. High reader visibility; before generation expand this row into the three exact missing chapter keys from the current book audit.
+3. [ ] 08 路得記 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
+4. [ ] 32 約拿書 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
+5. [ ] 31 俄巴底亞書 — 1 missing. Expand into exact child key before generation.
+6. [ ] 57 腓利門書 — 1 missing. Expand into exact child key before generation.
+7. [ ] 63 約翰二書 — 1 missing. Expand into exact child key before generation.
+8. [ ] 64 約翰三書 — 1 missing. Expand into exact child key before generation.
+9. [ ] 65 猶大書 — 1 missing. Expand into exact child key before generation.
+10. [ ] 37 哈該書 — 2 missing. Expand into exact missing child keys before generation.
+11. [ ] 29 約珥書 — 3 missing. Expand into exact missing child keys before generation.
+12. [ ] 34 那鴻書 — 3 missing. Expand into exact missing child keys before generation.
+13. [ ] 35 哈巴谷書 — 3 missing. Expand into exact missing child keys before generation.
+14. [ ] 36 西番雅書 — 3 missing. Expand into exact missing child keys before generation.
+15. [ ] 53 帖撒羅尼迦後書 — 3 missing. Expand into exact missing child keys before generation.
+16. [ ] 56 提多書 — 3 missing. Expand into exact missing child keys before generation.
+17. [ ] 61 彼得後書 — 3 missing. Expand into exact missing child keys before generation.
 
 Gate after each book:
+- [ ] Every missing chapter has a stable child key.
+- [ ] Every checked child is `LIVE_VERIFIED` with full proof fields.
 - [ ] Plate provenance recorded.
 - [ ] ONE Studio registry updated if generated.
 - [ ] Chapter assignment explicit.
-- [ ] Reader cover rendering checked.
-- [ ] Mobile cover rendering checked.
-- [ ] Global audit remains 66/1189 with 0 structural FAIL.
-- [ ] Missing Plate count reduced by exactly the approved number.
-- [ ] This ledger updated with completion date / PR / new backlog count.
+- [ ] Reader cover rendering checked on the deployed site.
+- [ ] Mobile cover rendering checked on the deployed site.
+- [ ] Book-level canonical cover audit agrees with ledger child keys/count.
+- [ ] Global structural audit remains 66/1189 with 0 structural FAIL.
+- [ ] Missing Plate count reduced by exactly the number of newly LIVE_VERIFIED chapters.
+- [ ] This ledger updated with completion date / PR or commit / new backlog count.
 
 ## A2 — W2 HIGH VISIBILITY
 
@@ -119,9 +186,11 @@ Current target: 211 plates.
 
 - [ ] Covered = 1189.
 - [ ] Missing Plate BACKLOG = 0.
+- [ ] Ledger generated-backlog DONE = 983/983.
+- [ ] Ledger DONE keys reconcile one-to-one with explicit final registry/live assignments.
 - [ ] No fuzzy Doré mappings introduced.
 - [ ] All generated plates have provenance/version metadata.
-- [ ] Full reader regression pass.
+- [ ] One final full 66-book / 1189-chapter reader regression pass.
 
 # Phase B — Atlas
 
@@ -181,9 +250,10 @@ Completion gate:
 
 Only after all prior gates pass:
 1. [ ] Confirm Missing Plate BACKLOG = 0.
-2. [ ] Confirm Atlas shipped and audited.
-3. [ ] Confirm Scripture Graph shipped and audited.
-4. [ ] Confirm Search shipped and audited.
-5. [ ] Confirm global ONE audit is green.
-6. [ ] Archive any useful permanent rules into the appropriate canonical specification if necessary.
-7. [ ] DELETE `static/one/ONE-PRODUCTION-ROADMAP-TEMP.md` because its list/progress function is finished.
+2. [ ] Confirm ledger DONE generated backlog = 983/983 and final full-canon reconciliation passes.
+3. [ ] Confirm Atlas shipped and audited.
+4. [ ] Confirm Scripture Graph shipped and audited.
+5. [ ] Confirm Search shipped and audited.
+6. [ ] Confirm global ONE audit is green.
+7. [ ] Archive any useful permanent rules into the appropriate canonical specification if necessary.
+8. [ ] DELETE `static/one/ONE-PRODUCTION-ROADMAP-TEMP.md` because its list/progress function is finished.
