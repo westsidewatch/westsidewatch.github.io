@@ -5,12 +5,17 @@
 (() => {
   "use strict";
   const D=window.ONE_DATA;
+  const R=window.ONE_DORE_COVER_REGISTRY;
   if(!D?.studyBooks)return;
 
   const apply=(bookNumber,mapping,inventory,alternates={})=>{
     const book=D.studyBooks[bookNumber];
     if(!book)return;
     book.canonicalDoreMapping={...mapping};
+    /* Publish the audited mapping into the central registry immediately as well.
+     * This removes any dependency on later studyBooks lookups or render timing.
+     */
+    if(R){R.maps=R.maps||{};R.maps[bookNumber]={...mapping};}
     book.doreAudit={
       ...(book.doreAudit||{}),
       status:"AUDITED_241_FILE_INVENTORY_ORIGINALS_FIRST",
@@ -54,8 +59,15 @@
 })();
 
 /* Geography correction belongs to the same preflight lane: load the actual Holy Light
- * source maps before ONE renders chapter modules. This prevents placeholder map objects
- * from producing empty/broken map cards. */
+ * source maps before ONE renders chapter modules. */
 if(!window.ONE_PENTATEUCH_REAL_MAPS_READY&&document.readyState==="loading"){
   document.write('<script src="./pentateuch-real-maps.js?v=20260818c"><\/script>');
+}
+
+/* Final cover synchronization is deliberately last. It re-applies the audited
+ * mappings after the canonical policy/app have initialized, eliminating the race
+ * that left valid Doré originals absent from visible Pentateuch covers. */
+if(!window.ONE_PENTATEUCH_COVER_SYNC_LOADING&&document.readyState==="loading"){
+  window.ONE_PENTATEUCH_COVER_SYNC_LOADING=true;
+  document.write('<script src="./pentateuch-cover-runtime-sync.js?v=20260818d"><\/script>');
 }
