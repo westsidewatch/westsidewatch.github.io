@@ -20,6 +20,28 @@
 - Fuzzy semantic Doré expansion: DISABLED.
 - Canon Index: 1189/1189 searchable chapters, 441 explicit places, 71 map IDs, 715 chapters with explicit places, 2290 normalized chapter-to-chapter Scripture edges, 0 broken graph edges.
 
+### Pre-ledger Studio precedent — Revelation 2
+
+The one B1 Studio asset already included in the 206-covered baseline is Revelation 2. It predates this 983-item production ledger and therefore **does not decrement the 983 backlog counters again**.
+
+Canonical/data verification completed:
+- chapter key: `066-002`;
+- expected asset ID: `REV-02-DORE-STUDIO-001`;
+- file: `/one/studio/revelation-02-dore-final-full.png?v=20260818k`;
+- title: `Among the Lampstands`;
+- Scripture: `Revelation 2:1–29`;
+- provenance: `ONE_STUDIO_DORE_CONTINUATION` / Westside Watch Engraving Studio · Doré continuation;
+- registry assignment: book 66, chapter 2;
+- resolver priority: `P7_ONE_STUDIO_FIXED`;
+- canonical QA target: no historical Doré original for chapter 2; Studio asset must render inside the corrected flat First Light gilt frame with minimal foliate corner turns and no star corners;
+- canonical cover audit already counts Revelation as 7 covered chapters = 6 Doré originals + this 1 Studio plate.
+
+Current ledger state:
+
+`066-002 | DEPLOYED/CANONICAL_VERIFIED | REV-02-DORE-STUDIO-001 | asset r1 / assignment r1 | ONE Studio registry | main | /one/?book=66&chapter=2 | LIVE_VISUAL_VERIFICATION_PENDING`
+
+Do **not** mark this precedent `DONE` solely because the file/registry exists or because the static audit counts it as covered. Promote it to `LIVE_VERIFIED/DONE` only after the public rendered chapter is visually checked against `ONE-COVER-REVELATION2-QA.md` and confirmed not to show stale boat/shore imagery, star corners, wrong artwork, broken asset or cache substitution. Once visually verified, retain this row as the first completed Studio learning precedent, but do not alter the 983 post-ledger backlog counters because it was already part of the 206 baseline.
+
 ## Progress protocol — this ledger is the fast path
 
 The purpose of this ledger is to eliminate repeated full-canon recounting during normal production. Doré AI should normally trust the last **LIVE_VERIFIED** ledger state and inspect only the active/changed chapter. A full-canon progress recount is required only when a reconciliation check fails, at a major phase gate, or before final deletion of this ledger.
