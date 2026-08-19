@@ -26,6 +26,18 @@
     }));
   };
 
+  /* A book may publish an audited canonicalDoreMapping during its preflight.
+   * This is more specific than the older project-wide round mapping and therefore wins.
+   * It lets each newly completed book lock exact originals without mutating the immutable 241 asset library.
+   */
+  const canonicalMappingFor=bookNumber=>{
+    const numericBook=Number(bookNumber);
+    const book=D.studyBooks?.[numericBook];
+    const local=book?.canonicalDoreMapping;
+    if(local&&typeof local==="object")return parseMap(local);
+    return parseMap(R.maps?.[numericBook]??R.maps?.[String(numericBook)]);
+  };
+
   const makeDoreArt=id=>{
     const file=R.files?.[id];
     if(!file)return null;
@@ -79,7 +91,7 @@
     const book=D.studyBooks?.[numericBook];
     if(!book)return {applied:0,doreApplied:0,studioApplied:0,unresolved:[]};
 
-    const mapping=parseMap(R.maps?.[numericBook]??R.maps?.[String(numericBook)]);
+    const mapping=canonicalMappingFor(numericBook);
     let applied=0;
     let doreApplied=0;
     let studioApplied=0;
@@ -159,7 +171,7 @@
   const getCover=(bookNumber,chapter)=>{
     const numericBook=Number(bookNumber);
     const numericChapter=Number(chapter);
-    const mapping=parseMap(R.maps?.[numericBook]??R.maps?.[String(numericBook)]);
+    const mapping=canonicalMappingFor(numericBook);
     const id=Number(mapping[String(numericChapter)]);
     if(id){
       const art=makeDoreArt(id);
@@ -189,6 +201,7 @@
     clearLegacyCovers,
     applyBook,
     applyAll,
+    canonicalMappingFor,
     registerBookMapping(bookNumber,mapping){R.maps[Number(bookNumber)]=mapping;return applyBook(Number(bookNumber));},
     refreshStudioBook(bookNumber){return applyBook(Number(bookNumber));},
     getCover
