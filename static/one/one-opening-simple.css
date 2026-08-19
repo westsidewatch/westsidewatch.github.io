@@ -41,8 +41,6 @@ body{
   margin-inline:auto;
   background:transparent;
 }
-
-/* The rail itself stays centred. Unvisited books remain numbers until they reach the focal position. */
 .cover-books{
   position:relative;
   display:block;
@@ -82,82 +80,39 @@ body{
   will-change:transform,opacity;
 }
 .cover-book:before{display:none!important}
-.cover-book>span{
-  color:rgba(34,42,45,.28);
-  font:400 .84rem/1.1 var(--display);
-  letter-spacing:.08em;
-  text-shadow:none!important;
-  transform:none!important;
-  transition:color .14s ease;
-}
-.cover-book strong{
-  position:static;
-  display:none;
-  max-width:22rem;
-  margin:.18rem auto 0;
-  color:var(--one-gilt);
-  opacity:1;
-  pointer-events:none;
-  text-align:center;
-  transform:none!important;
-}
-.cover-book strong b{
-  display:block;
-  color:inherit;
-  font:500 1rem/1.35 var(--text);
-  letter-spacing:.04em;
-}
-.cover-book strong i{
-  display:block;
-  margin-top:.04rem;
-  color:inherit;
-  font:italic .88rem/1.3 var(--display);
-}
-
-/* Reaching the centre reveals the one temporary focus name. Pointer hover alone never reveals another name. */
-.cover-book.rail-current{
-  z-index:4;
-  opacity:1!important;
-  background:transparent!important;
-  box-shadow:none!important;
-}
+.cover-book>span{color:rgba(34,42,45,.28);font:400 .84rem/1.1 var(--display);letter-spacing:.08em;text-shadow:none!important;transform:none!important;transition:color .14s ease}
+.cover-book strong{position:static;display:none;max-width:22rem;margin:.18rem auto 0;color:var(--one-gilt);opacity:1;pointer-events:none;text-align:center;transform:none!important}
+.cover-book strong b{display:block;color:inherit;font:500 1rem/1.35 var(--text);letter-spacing:.04em}
+.cover-book strong i{display:block;margin-top:.04rem;color:inherit;font:italic .88rem/1.3 var(--display)}
+.cover-book.rail-current{z-index:4;opacity:1!important;background:transparent!important;box-shadow:none!important}
 .cover-book.rail-current>span{color:var(--one-gilt)!important}
 .cover-book.rail-current strong{display:block;color:var(--one-gilt)!important}
-
-/* Books already under study / completed keep their established dawn-gold status treatment. */
-.cover-book.active,
-.cover-book.completed{
-  background:transparent!important;
-  box-shadow:none!important;
-}
-.cover-book.active>span,
-.cover-book.completed>span,
-.cover-book.active strong,
-.cover-book.completed strong{color:var(--one-gilt)!important}
-.cover-book.active strong,
-.cover-book.completed strong{display:block}
-
-.cover-book.selected>span,
-.cover-book.selected strong{color:var(--one-gilt)!important}
+.cover-book.active,.cover-book.completed{background:transparent!important;box-shadow:none!important}
+.cover-book.active>span,.cover-book.completed>span,.cover-book.active strong,.cover-book.completed strong{color:var(--one-gilt)!important}
+.cover-book.active strong,.cover-book.completed strong{display:block}
+.cover-book.selected>span,.cover-book.selected strong{color:var(--one-gilt)!important}
 .cover-book:focus-visible>span{color:var(--one-gilt-dark)!important}
 .cover-book:focus-visible{outline:0}
 .cover-book.forthcoming{cursor:default}
 .cover-book.forthcoming:not(.rail-current):not(:focus-visible) strong{display:none}
-
-/* Psalm 36:9 on the cover is display-only. Preserve the established spacing and typography. */
 .cover-scripture-static{margin-top:90px;text-align:center}
 .cover-scripture-static p{font-size:16px}
 .cover-scripture-static strong{display:block;margin-top:10px;font-family:var(--display);font-size:20px;font-weight:400}
 .cover-scripture-static i{display:block;margin-top:10px;font-family:var(--display);font-size:14px}
 
+/* Global leaf containment: long chapter titles must scale/wrap inside the page, never break the screen. */
+.chapter-detail>.study-intro,.chapter-detail>.chapter-section,.chapter-detail>.scripture-reading{min-width:0;overflow:hidden}
+.study-intro>*{min-width:0;max-width:100%}
+.study-intro h2{max-width:100%;margin-inline:0;font-size:clamp(2.6rem,6.15vw,6.25rem);line-height:1.08;letter-spacing:-.035em;overflow-wrap:anywhere;word-break:normal;text-wrap:balance}
+.study-intro p,.study-intro .kicker{max-width:100%;overflow-wrap:anywhere}
+
+@media(max-width:900px){
+  .chapter-detail>.study-intro,.chapter-detail>.chapter-section,.chapter-detail>.scripture-reading{padding:clamp(2rem,7vw,4rem)}
+  .study-intro h2{font-size:clamp(2.35rem,9vw,4.8rem);line-height:1.1}
+}
 @media(max-width:650px){
   html,body{max-width:100%;overflow-x:hidden}
-  .one-cover{
-    width:calc(100vw - 1.25rem);
-    max-width:430px;
-    margin:10px auto 20px;
-    padding:45px 22px;
-  }
+  .one-cover{width:calc(100vw - 1.25rem);max-width:430px;margin:10px auto 20px;padding:45px 22px}
   .cover-content{width:100%;max-width:100%;margin:0 auto;text-align:center}
   .cover-brand,.cover-one-trigger,.cover-one-cn,.cover-motto,.cover-scripture-static,.cover-church,.cover-portals{margin-left:auto;margin-right:auto}
   .cover-books{width:100%;height:29rem;margin-top:3rem}
@@ -167,3 +122,4 @@ body{
   .cover-book strong b{font-size:.94rem}
   .cover-book strong i{font-size:.82rem}
 }
+@media(max-width:560px){.study-intro h2{font-size:clamp(2rem,10.5vw,3.45rem);letter-spacing:-.025em}}

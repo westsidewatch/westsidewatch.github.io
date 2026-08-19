@@ -1,0 +1,32 @@
+/* ONE responsive containment master — typography must remain inside every leaf. */
+.chapter-detail>.study-intro,
+.chapter-detail>.chapter-section,
+.chapter-detail>.scripture-reading{
+  min-width:0;
+  overflow:hidden;
+}
+.study-intro>*{min-width:0;max-width:100%}
+.study-intro h2{
+  max-width:100%;
+  margin-inline:0;
+  font-size:clamp(2.6rem,6.15vw,6.25rem);
+  line-height:1.08;
+  letter-spacing:-.035em;
+  overflow-wrap:anywhere;
+  word-break:normal;
+  text-wrap:balance;
+}
+.study-intro p,
+.study-intro .kicker{
+  max-width:100%;
+  overflow-wrap:anywhere;
+}
+@media (max-width:900px){
+  .chapter-detail>.study-intro,
+  .chapter-detail>.chapter-section,
+  .chapter-detail>.scripture-reading{padding:clamp(2rem,7vw,4rem)}
+  .study-intro h2{font-size:clamp(2.35rem,9vw,4.8rem);line-height:1.1}
+}
+@media (max-width:560px){
+  .study-intro h2{font-size:clamp(2rem,10.5vw,3.45rem);letter-spacing:-.025em}
+}
