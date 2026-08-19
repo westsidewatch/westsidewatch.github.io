@@ -6,7 +6,21 @@ This is not a static image folder. It is the accumulating visual, biblical and e
 
 ## Temporary production memory — mandatory while backlog remains
 
-While `ONE-PRODUCTION-ROADMAP-TEMP.md` exists, it is the Studio's temporary execution memory. Before every ONE Studio / Doré-continuation production cycle, read it together with this Living Studio and `ONE-DORE-VISUAL-GRAMMAR.md`, then take the first unchecked task that is ready. After an approved asset is persisted, assigned and audited, update the temporary ledger before moving to the next item.
+While `ONE-PRODUCTION-ROADMAP-TEMP.md` exists, it is the Studio's temporary execution memory. Before every ONE Studio / Doré-continuation production cycle, read it together with this Living Studio and `ONE-DORE-VISUAL-GRAMMAR.md`, then take the first unchecked task that is ready.
+
+The ledger is the normal fast path for production progress. Doré AI must not repeatedly rescan all 66 books merely to rediscover which Missing Plates are finished. It should trust ledger entries that are already `DONE`, inspect the active/changed chapter, and use the ledger's delta/book/global reconciliation protocol. A full-canon recount is reserved for mismatch recovery, major gates, and final completion.
+
+### Doré AI progress recognition
+
+Doré AI must recognize that an image moves through distinct production states:
+
+`TODO → GENERATED → APPROVED → PERSISTED → ASSIGNED → DEPLOYED → LIVE_VERIFIED/DONE`
+
+Only `LIVE_VERIFIED` is complete. The AI must not infer completion from any earlier state, from a successful generation, from an editor saying the artwork looks right, from a local registry entry, or from a commit existing. Completion requires the exact final asset/revision to be visibly resolved by the intended public ONE chapter after deployment.
+
+Every generated chapter uses a stable zero-padded `BOOK-CHAPTER` key such as `025-003`. For a completed chapter, Doré AI must be able to identify the compact proof record in the ledger: chapter key, `DONE`, stable asset ID, revision, assignment source, deploy commit/PR, live route, and verification date. If the live route or registry no longer matches that proof, the AI must downgrade/reconcile the entry rather than silently trusting an obsolete checkmark.
+
+After each newly verified chapter, update the ledger counters and proof row immediately. At the end of a book, reconcile that book only. At the end of a production wave, reconcile global totals only. This keeps ledger progress and live-site progress equivalent without a full-canon scan after every plate.
 
 The temporary ledger is research/production memory only. It must never be imported, fetched or referenced by the ONE reader runtime, `index.html`, loaders, scripts, styles, service workers, `ONE_DATA`, `ONE_COVER_POLICY` or Canon Index. When its completion/deletion gate is reached, delete it; this Living Studio remains.
 
@@ -98,7 +112,7 @@ Record:
 - line/light/value problems;
 - what a next revision should change;
 - any new general principle worth promoting into the Visual Grammar;
-- after FINAL persistence and audit, update `ONE-PRODUCTION-ROADMAP-TEMP.md` before starting the next production item.
+- after FINAL persistence, assignment, deployment and live verification, update `ONE-PRODUCTION-ROADMAP-TEMP.md` before starting the next production item.
 
 Failures are retained as learning, not silently discarded.
 
@@ -112,7 +126,7 @@ When editorial review explicitly approves a generated plate as **FINAL**, approv
 5. record Scripture, title, provenance, palette, approval state and relevant learning/revision notes;
 6. commit the asset and registry change together whenever technically possible.
 
-A plate is not operationally FINAL until the approved binary and its registry mapping are both persistent. Do not require the editor to re-upload or rediscover an already-approved plate merely because later conversation context has moved on; search existing conversation/library assets first.
+A plate is not operationally `DONE` until the approved binary and registry mapping are persistent, the deployment containing them is live, and the public chapter has been checked to render that exact asset/revision. Do not require the editor to re-upload or rediscover an already-approved plate merely because later conversation context has moved on; search existing conversation/library assets first.
 
 ## 6. Growing knowledge domains
 
