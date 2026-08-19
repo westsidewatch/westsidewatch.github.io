@@ -52,3 +52,10 @@
   window.ONE_PENTATEUCH_DORE_AUDIT_READY=true;
   document.documentElement.dataset.pentateuchDoreAudit="241-file-inventory-complete";
 })();
+
+/* Geography correction belongs to the same preflight lane: load the actual Holy Light
+ * source maps before ONE renders chapter modules. This prevents placeholder map objects
+ * from producing empty/broken map cards. */
+if(!window.ONE_PENTATEUCH_REAL_MAPS_READY&&document.readyState==="loading"){
+  document.write('<script src="./pentateuch-real-maps.js?v=20260818c"><\/script>');
+}
