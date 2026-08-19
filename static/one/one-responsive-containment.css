@@ -1,17 +1,31 @@
-/* ONE responsive containment master — typography must remain inside every leaf. */
+/* ONE RESPONSIVE TITLE MASTER — SOLE AUTHORITY
+ * Loaded by one-opening-simple.css after one-book.css.
+ * Historical title-size declarations in earlier stylesheets are intentionally shadowed here.
+ * Do not add book-specific or patch-level .study-intro h2 sizing elsewhere.
+ */
+:root{
+  --one-study-title-size:clamp(2.6rem,6.15vw,6.25rem);
+  --one-study-title-leading:1.08;
+  --one-study-title-tracking:-.035em;
+  --one-study-leaf-padding:clamp(3.25rem,7vw,7rem);
+}
+
 .chapter-detail>.study-intro,
 .chapter-detail>.chapter-section,
 .chapter-detail>.scripture-reading{
   min-width:0;
   overflow:hidden;
 }
-.study-intro>*{min-width:0;max-width:100%}
+.study-intro>*{
+  min-width:0;
+  max-width:100%;
+}
 .study-intro h2{
   max-width:100%;
   margin-inline:0;
-  font-size:clamp(2.6rem,6.15vw,6.25rem);
-  line-height:1.08;
-  letter-spacing:-.035em;
+  font-size:var(--one-study-title-size);
+  line-height:var(--one-study-title-leading);
+  letter-spacing:var(--one-study-title-tracking);
   overflow-wrap:anywhere;
   word-break:normal;
   text-wrap:balance;
@@ -21,12 +35,23 @@
   max-width:100%;
   overflow-wrap:anywhere;
 }
+
 @media (max-width:900px){
+  :root{
+    --one-study-title-size:clamp(2.35rem,9vw,4.8rem);
+    --one-study-title-leading:1.1;
+    --one-study-leaf-padding:clamp(2rem,7vw,4rem);
+  }
   .chapter-detail>.study-intro,
   .chapter-detail>.chapter-section,
-  .chapter-detail>.scripture-reading{padding:clamp(2rem,7vw,4rem)}
-  .study-intro h2{font-size:clamp(2.35rem,9vw,4.8rem);line-height:1.1}
+  .chapter-detail>.scripture-reading{
+    padding:var(--one-study-leaf-padding);
+  }
 }
+
 @media (max-width:560px){
-  .study-intro h2{font-size:clamp(2rem,10.5vw,3.45rem);letter-spacing:-.025em}
+  :root{
+    --one-study-title-size:clamp(2rem,10.5vw,3.45rem);
+    --one-study-title-tracking:-.025em;
+  }
 }
