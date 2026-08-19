@@ -27,15 +27,16 @@ The cover artwork must retain the upper and middle field for the illustration. T
 Canonical production parameters:
 
 - desktop book/title block starts at `64.5%` of cover height;
-- desktop chapter block starts at `82%` of cover height;
-- mobile book/title block starts at `63.5%`, chapter block at `82%`;
-- very narrow 5:8 covers may use `62.5% / 82.5%` to preserve the same visual hierarchy without clipping;
+- desktop chapter block starts at `78.8%` of cover height;
+- mobile book/title block starts at `63.5%`, chapter block at `79.2%`;
+- very narrow 5:8 covers may use `62.5% / 79.6%` to preserve the same visual hierarchy without clipping;
 - the Chinese title, English title and book metadata remain one book/title block;
 - the separator, chapter label/number and chapter subtitle remain one chapter block;
+- the Morning Star sits higher with the chapter block, preserving a clear lower safe area inside the gilt border;
 - both anchors belong only to the shared master; no individual Bible book may introduce a local `top`, `bottom`, `translate`, negative margin or private font-size patch to reposition them;
 - if a long title clips or collides, fix the shared responsive type scale or shared anchors rather than moving one book independently.
 
-The objective is the same as the approved reference: **the main Doré action remains dominant while the title sits around the lower third and the chapter information settles close to the lower cover field without falling outside the gilt frame.**
+The objective is the same as the approved reference: **the main Doré action remains dominant while the title sits around the lower third and the chapter information remains clearly inside the lower gilt field rather than sinking toward the edge.**
 
 ## 3. One Dawn Gold
 
