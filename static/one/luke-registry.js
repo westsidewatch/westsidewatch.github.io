@@ -10,6 +10,27 @@
 
   const expected=D.books?.find(book=>book[0]===42)?.[3]||24;
   const studies=luke.chapterStudies||{};
+
+  /* Luke chronology follows the Gospel's own narrative geography and ministry phases.
+   * Absolute dates are kept broad where chronology is debated; the stable anchors are
+   * infancy, preparation, Galilean ministry, the Jerusalem journey, Passion and Resurrection.
+   */
+  const lukeChronology=number=>{
+    let range,phase,note;
+    if(number<=2){range="耶穌降生與童年 · 路加福音 1–2";phase="施洗約翰與耶穌的降生、聖殿與拿撒勒";note="本段置於希律與羅馬帝國背景；對人口登記等細節不製造超出經文與史料共識的精確日期。";}
+    else if(number<=4){range="預備與事奉起點 · 路加福音 3–4";phase="施洗約翰、受洗、家譜、試探與拿撒勒宣告";note="耶穌公開事奉開始；以路加敘事順序為主，不把每一事件鎖定到單一月份。";}
+    else if(number<=9){range="加利利事奉 · 路加福音 5–9";phase="呼召、教導、醫治、神蹟與門徒身份逐步顯明";note="本段主要位於加利利；路9:51是全卷重要轉折。";}
+    else if(number<=19){range="上耶路撒冷的旅程 · 路加福音 9:51–19";phase="耶穌定意往耶路撒冷去，在路上集中教導門徒";note="路加以長篇旅程框架組織大量獨有材料；地理次序不應被過度強行重建。";}
+    else if(number<=23){range="耶路撒冷與受難週 · 路加福音 20–23";phase="聖殿教導、最後晚餐、客西馬尼、審判與十字架";note="敘事集中於耶路撒冷最後數日，與四福音受難敘事互相對照。";}
+    else{range="復活日與升天前夕 · 路加福音 24";phase="空墳墓、以馬忤斯、向門徒顯現與差遣";note="第24章在復活日展開，並把路加福音直接引向使徒行傳的見證使命。";}
+    const study=studies[String(number)];
+    return{title:"路加福音事奉時序",range,note,events:[[range,`路加福音 ${number}`,study?.title||phase],["全卷位置",phase,"以福音書敘事階段定位，不製造不必要的日期精確度。"]],url:"https://bibleeveryone.com/bible-timeline.php"};
+  };
+  for(let number=1;number<=expected;number+=1){
+    const study=studies[String(number)];
+    if(study&&(!study.timeline||!Array.isArray(study.timeline.events)||!study.timeline.events.length))study.timeline=lukeChronology(number);
+  }
+
   const chapters=Array.from({length:expected},(_,index)=>{
     const number=index+1;
     return studies[String(number)]?.title||`第 ${number} 章`;
