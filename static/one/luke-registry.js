@@ -8,6 +8,28 @@
   const luke=D?.luke;
   if(!D||!luke)return;
 
+  /* Mark has no dedicated registry file yet; by the time Luke's registry runs, all Mark
+   * chapter files are already loaded and Book 41 is registered. Add only missing chronology
+   * here as a compatibility bridge, without changing Mark content or cover ownership.
+   */
+  const mark=D.studyBooks?.[41]||D.mark;
+  const markStudies=mark?.chapterStudies||{};
+  const markChronology=number=>{
+    let range,phase,note;
+    if(number===1){range="福音起頭 · 馬可福音 1";phase="施洗約翰、耶穌受洗、受試探與加利利事奉開始";note="馬可直接從公開事奉起頭，不提供降生敘事；時序以敘事階段為主。";}
+    else if(number<=8){range="加利利事奉 · 馬可福音 2–8";phase="權柄、比喻、神蹟與門徒逐步認識耶穌身份";note="主要舞台在加利利及周邊；第8章彼得認信形成重要轉折。";}
+    else if(number<=10){range="往耶路撒冷的門徒道路 · 馬可福音 9–10";phase="三次受難預告背景下學習捨己、服事與跟從";note="敘事逐步由北方轉向耶路撒冷，重點是十字架式門徒訓練。";}
+    else if(number<=13){range="進入耶路撒冷與聖殿 · 馬可福音 11–13";phase="進城、潔淨聖殿、爭辯與橄欖山講論";note="本段集中於耶路撒冷最後一週前半，經文次序比推測精確日期更可靠。";}
+    else if(number<=15){range="受難敘事 · 馬可福音 14–15";phase="最後晚餐、客西馬尼、審判、十字架與安葬";note="敘事集中於逾越節背景下耶穌受難的最後時段。";}
+    else{range="空墳墓與復活宣告 · 馬可福音 16";phase="婦女到墳墓、耶穌已經復活的宣告與福音使命";note="第16章位於復活敘事；ONE 不用 chronology 模塊處理馬可結尾的文本批判問題。";}
+    const study=markStudies[String(number)];
+    return{title:"馬可福音事奉時序",range,note,events:[[range,`馬可福音 ${number}`,study?.title||phase],["全卷位置",phase,"按馬可敘事與地理轉折定位，不製造不必要的日期精確度。"]],url:"https://bibleeveryone.com/bible-timeline.php"};
+  };
+  for(let number=1;number<=16;number+=1){
+    const study=markStudies[String(number)];
+    if(study&&(!study.timeline||!Array.isArray(study.timeline.events)||!study.timeline.events.length))study.timeline=markChronology(number);
+  }
+
   const expected=D.books?.find(book=>book[0]===42)?.[3]||24;
   const studies=luke.chapterStudies||{};
 
