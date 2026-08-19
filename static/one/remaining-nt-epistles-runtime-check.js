@@ -1,7 +1,7 @@
-/* ONE — GLOBAL STUDY SCHEMA GATE
+/* ONE — GLOBAL STUDY SCHEMA + 66-BOOK RELEASE GATE
  * Runs after all book-data files and before one-app.js.
- * Purpose: malformed book/chapter data must never render as broken characters,
- * undefined labels, invalid Scripture URLs, or empty shells.
+ * Purpose: malformed or missing book/chapter data must never render as broken characters,
+ * undefined labels, invalid Scripture URLs, empty shells, or a falsely complete canon.
  * Legacy filename retained to avoid disturbing the proven load order.
  */
 (()=>{
@@ -104,12 +104,33 @@
     queueMicrotask(cleanEmptyOptionalModules);
   }
 
-  const expected={45:16,46:16,47:13,48:6,49:6,50:4,51:4,54:6,55:4,56:3,57:1,59:5,60:5,61:3,62:5,63:1,64:1,65:1};
-  const missing=Object.entries(expected).filter(([n,c])=>{const b=D.studyBooks?.[n];return !b||b.chapters?.length!==c||Object.keys(b.chapterStudies||{}).length!==c;});
-  window.ONE_REMAINING_NT_EPISTLES_AUDIT={expectedBooks:18,expectedChapters:100,missing:missing.map(([n])=>Number(n)),ok:missing.length===0};
-  window.ONE_STUDY_SCHEMA_AUDIT={books:Object.keys(D.studyBooks||{}).length,errors,warnings,ok:errors.length===0};
-  document.documentElement.dataset.remainingNtEpistlesAudit=missing.length?'FAIL:'+missing.map(([n])=>n).join(','):'PASS:18-books-100-chapters';
-  document.documentElement.dataset.oneStudySchema=errors.length?`FAIL:${errors.length}`:`PASS:${Object.keys(D.studyBooks||{}).length}-books`;
+  /* Legacy 18-epistle audit retained for regression history. */
+  const expectedEpistles={45:16,46:16,47:13,48:6,49:6,50:4,51:4,54:6,55:4,56:3,57:1,59:5,60:5,61:3,62:5,63:1,64:1,65:1};
+  const missingEpistles=Object.entries(expectedEpistles).filter(([n,c])=>{const b=D.studyBooks?.[n];return !b||b.chapters?.length!==c||Object.keys(b.chapterStudies||{}).length!==c;});
+  window.ONE_REMAINING_NT_EPISTLES_AUDIT={expectedBooks:18,expectedChapters:100,missing:missingEpistles.map(([n])=>Number(n)),ok:missingEpistles.length===0};
+  document.documentElement.dataset.remainingNtEpistlesAudit=missingEpistles.length?'FAIL:'+missingEpistles.map(([n])=>n).join(','):'PASS:18-books-100-chapters';
+
+  /* Canonical Protestant 66-book release gate. A future book batch cannot claim
+   * completion merely because its files exist: every canonical book and all 1,189
+   * chapters must be registered before the shared renderer starts. */
+  const canonicalChapterCounts={1:50,2:40,3:27,4:36,5:34,6:24,7:21,8:4,9:31,10:24,11:22,12:25,13:29,14:36,15:10,16:13,17:10,18:42,19:150,20:31,21:12,22:8,23:66,24:52,25:5,26:48,27:12,28:14,29:3,30:9,31:1,32:4,33:7,34:3,35:3,36:3,37:2,38:14,39:4,40:28,41:16,42:24,43:21,44:28,45:16,46:16,47:13,48:6,49:6,50:4,51:4,52:5,53:3,54:6,55:4,56:3,57:1,58:13,59:5,60:5,61:3,62:5,63:1,64:1,65:1,66:22};
+  const canonFailures=[];
+  let registeredChapters=0;
+  Object.entries(canonicalChapterCounts).forEach(([number,expectedCount])=>{
+    const book=D.studyBooks?.[number],chapterCount=book?.chapters?.length||0,studyCount=Object.keys(book?.chapterStudies||{}).length;
+    registeredChapters+=chapterCount;
+    if(!book)canonFailures.push(`${number}:missing`);
+    else if(chapterCount!==expectedCount||studyCount!==expectedCount)canonFailures.push(`${number}:${chapterCount}/${studyCount}/${expectedCount}`);
+  });
+  const extraBooks=Object.keys(D.studyBooks||{}).map(Number).filter(number=>!canonicalChapterCounts[number]);
+  if(extraBooks.length)warn("Canon",null,`non-canonical studyBooks registered: ${extraBooks.join(",")}`);
+  canonFailures.forEach(failure=>errors.push(`Canon 66: ${failure}`));
+  const canonOk=canonFailures.length===0&&Object.keys(canonicalChapterCounts).length===66&&registeredChapters===1189;
+  window.ONE_CANON_66_AUDIT={expectedBooks:66,expectedChapters:1189,registeredBooks:Object.keys(canonicalChapterCounts).filter(n=>D.studyBooks?.[n]).length,registeredChapters,failures:canonFailures,extraBooks,ok:canonOk};
+  document.documentElement.dataset.oneCanon66=canonOk?'PASS:66-books-1189-chapters':`FAIL:${canonFailures.join(',')||registeredChapters+'-chapters'}`;
+
+  window.ONE_STUDY_SCHEMA_AUDIT={books:Object.keys(D.studyBooks||{}).length,errors,warnings,canon66:window.ONE_CANON_66_AUDIT,ok:errors.length===0&&canonOk};
+  document.documentElement.dataset.oneStudySchema=(errors.length||!canonOk)?`FAIL:${errors.length||canonFailures.length}`:`PASS:66-books-1189-chapters`;
   if(errors.length)console.error("ONE study schema errors",errors);
   if(warnings.length)console.warn("ONE study schema normalized warnings",warnings);
 })();
