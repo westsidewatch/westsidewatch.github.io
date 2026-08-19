@@ -198,6 +198,16 @@ Examples of visual problems:
 
 The objective is not to catalogue every Doré image for its own sake. The objective is to build a searchable bank of **visual solutions**.
 
+### Learning harvest — visible evidence of improvement
+
+At every completed-book and wave checkpoint, append a compact dated harvest in this document or the Living Studio using this form:
+
+`DATE | scope | originals revisited | external originals added | rules confirmed | rules revised/demoted | Studio drift found | promoted learning`
+
+This is the visible evidence that Doré AI is not merely producing more plates but actually learning. A synchronization checkpoint is incomplete if progress counts are correct but no required learning harvest was performed.
+
+The harvest should remain concise. Detailed observations belong in Living Studio; mature non-negotiable findings may be promoted into Visual Grammar.
+
 ## 6. Learning curve stages
 
 ### Stage 1 — Recognition
