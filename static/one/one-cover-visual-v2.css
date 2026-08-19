@@ -29,9 +29,9 @@
 .chapter-cover-book h2>span{display:block!important;max-width:100%!important;color:var(--one-dawn-gold)!important;-webkit-text-fill-color:var(--one-dawn-gold)!important}
 .chapter-cover-book h2 i{display:block!important;max-width:100%!important;margin:0!important;font-family:"Cormorant Garamond",serif!important;font-size:clamp(.7rem,2.7cqw,1rem)!important;font-weight:500!important;line-height:1!important;letter-spacing:.31em!important;color:var(--one-dawn-gold)!important;-webkit-text-fill-color:var(--one-dawn-gold)!important;white-space:normal!important;text-wrap:balance!important;text-transform:uppercase!important;text-shadow:0 2px 7px rgba(0,0,0,.96)!important}
 .chapter-cover-book p{display:none!important}
-/* Divider is the top boundary; chapter number + title are flex-centered in the live field ending above the morning star. */
+/* Chapter text stays in its existing field; divider is offset downward into the gap so it never crosses the book title. */
 .chapter-cover-chapter{top:var(--one-cover-divider-top)!important;bottom:var(--one-cover-star-field-top)!important;display:flex!important;flex-direction:column!important;justify-content:center!important;align-items:center!important;padding:0!important;background:none!important;border:0!important;min-width:0!important}
-.chapter-cover-chapter::before{position:absolute!important;top:0!important;left:12%!important;right:12%!important;height:1px!important;border:0!important;background:var(--one-dawn-gold)!important;opacity:.84!important;box-shadow:0 0 4px color-mix(in srgb,var(--one-dawn-gold) 30%,transparent)!important}
+.chapter-cover-chapter::before{position:absolute!important;top:12%!important;left:12%!important;right:12%!important;height:1px!important;border:0!important;background:var(--one-dawn-gold)!important;opacity:.84!important;box-shadow:0 0 4px color-mix(in srgb,var(--one-dawn-gold) 30%,transparent)!important}
 .chapter-cover-chapter::after{display:none!important}
 .chapter-cover-chapter>span{display:none!important}
 .chapter-cover-chapter>strong,.chapter-cover-chapter>p{position:static!important;top:auto!important}
