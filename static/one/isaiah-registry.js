@@ -19,9 +19,8 @@
     else D.studyBooks={...(D.studyBooks||{}),23:I};
   }else console.error(`[ONE Isaiah] registration blocked: missing=${missing.join(",")||"none"}`);
 })();
-/* The cover system is centralized. These two scripts must execute synchronously
- * after all book datasets and before one-app.js. Book-specific illustration
- * fields are cleared by one-cover-policy.js and can no longer control covers.
+/* Legacy document.write cover loaders removed.
+ * index.html explicitly loads the canonical Doré registry and one-cover-policy.js
+ * after all Bible-book datasets. Keeping that single load order prevents duplicate
+ * policy execution, cache-sensitive book availability, and audit/runtime divergence.
  */
-document.write('<script src="./one-dore-cover-registry.js?v=20260817c"><\/script>');
-document.write('<script src="./one-cover-policy.js?v=20260817a"><\/script>');
