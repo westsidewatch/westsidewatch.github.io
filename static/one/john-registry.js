@@ -9,6 +9,39 @@
 
   const expected=D.books?.find(book=>book[0]===43)?.[3]||21;
   const studies=john.chapterStudies||{};
+
+  /* John 17–21 were originally authored in the older ONE_JOHN_CHAPTERS shape.
+   * Convert them once at registration time into the canonical shared-renderer schema.
+   * This preserves the authored content while removing the 16/21 registration gap.
+   */
+  const legacy=window.ONE_JOHN_CHAPTERS||{};
+  const asRows=(items,mapper)=>Array.isArray(items)?items.map(mapper):[];
+  for(const [chapter,raw] of Object.entries(legacy)){
+    if(studies[chapter]||!raw||typeof raw!=="object")continue;
+    const n=Number(chapter);
+    studies[chapter]={
+      title:String(raw.title||`第 ${n} 章`),
+      passage:`約翰福音 ${n}`,
+      movement:String(raw.subtitle||raw.theme||"受難、復活與見證"),
+      story:String(raw.story||""),
+      position:String(raw.subtitle||raw.theme||`約翰福音第 ${n} 章`),
+      route:asRows(raw.storyPath,item=>[String(item?.ref||""),[item?.title,item?.note].filter(Boolean).join("：")]),
+      background:asRows(raw.background,item=>["背景",String(item||""),""]),
+      scout:asRows(raw.observations,item=>String(item||"")),
+      connections:asRows(raw.crossReferences,item=>[String(item?.ref||""),"串珠",String(item?.note||"")]),
+      harmony:asRows(raw.harmony,item=>[String(item?.ref||""),String(item?.note||""),""]),
+      questions:asRows(raw.questions,item=>String(item||"")),
+      prepare:Array.isArray(raw.prepare)?raw.prepare.map(String):raw.prepare?[String(raw.prepare)]:[],
+      map:raw.map?{
+        reference:`約翰福音 ${n}`,
+        title:`約翰福音 ${n} 地理`,
+        guide:"按經文明示辨認本章移動與地點；具體建築位置不作過度確定。",
+        places:asRows(raw.map.places,item=>String(item||"")),
+        routes:asRows(raw.map.routes,item=>[String(item?.from||""),String(item?.to||""),String(item?.note||"")])
+      }:undefined
+    };
+  }
+
   const chapters=Array.from({length:expected},(_,index)=>{
     const number=index+1;
     return studies[String(number)]?.title||`第 ${number} 章`;
@@ -29,14 +62,14 @@
    * Additional originals for the same chapter remain recorded in the immutable 241 library.
    */
   john.canonicalDoreMapping=Object.freeze({
-    2:213,  // The Marriage in Cana
-    4:215,  // Jesus and the Woman of Samaria
-    6:216,  // Jesus Walking on the Sea
-    8:217,  // Jesus and the Woman Taken in Adultery
-    11:218, // Resurrection of Lazarus
-    18:219, // St. Peter Denying Christ
-    19:222, // Nailing Christ to the Cross
-    21:223  // The Miraculous Draught of Fishes
+    2:213,
+    4:215,
+    6:216,
+    8:217,
+    11:218,
+    18:219,
+    19:222,
+    21:223
   });
   john.doreOriginalLibrary=Object.freeze({
     2:Object.freeze([213,214]),
@@ -51,11 +84,6 @@
   john.missingPlateBacklog=Object.freeze([1,3,5,7,9,10,12,13,14,15,16,17,20]);
   john.doreAuditStatus="P1_ORIGINALS_AUDITED";
 
-  /* 約翰福音沿用 ONE 共用聖光福音地圖。
-   * 108：事奉初期（約 1–5）；109：加利利海／提比哩亞海（約 6、21）；
-   * 110：住棚節後至伯大尼前後（約 7–11）；111：進入耶路撒冷與受難週（約 12–19）；
-   * 106：主前四年至主後三十年間的巴勒斯坦總圖，用於復活顯現（約 20）。
-   */
   const mapAssignments={1:108,2:108,3:108,4:108,5:108,6:109,7:110,8:110,9:110,10:110,11:110,12:111,13:111,14:111,15:111,16:111,17:111,18:111,19:111,20:106,21:109};
   for(const [chapter,mapId] of Object.entries(mapAssignments)){
     const study=studies[chapter];
