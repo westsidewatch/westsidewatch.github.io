@@ -2,7 +2,7 @@
 
 Status: **LOCKED / CANONICAL**
 
-This document supersedes any earlier implementation that allowed the chapter cover to drift toward a square card or picture-frame appearance.
+This document supersedes any earlier implementation that allowed the chapter cover to drift toward a square card, picture-frame appearance, or per-book typography placement.
 
 ## 1. Cover proportion
 
@@ -18,7 +18,46 @@ Implementation rule:
 - mobile uses the same 5:8 identity;
 - image cropping must be deliberate and may not destroy essential figures or theological action.
 
-## 2. Frame concept
+## 2. Approved visual-reference geometry
+
+The approved concept/reference image is now treated as a **measurement reference**, not merely a moodboard.
+
+The cover artwork must retain the upper and middle field for the illustration. The typography uses two shared proportional anchors rather than free-flowing flex-end placement or book-specific offsets.
+
+Canonical production parameters:
+
+- desktop book/title block starts at `64.5%` of cover height;
+- desktop chapter block starts at `82%` of cover height;
+- mobile book/title block starts at `63.5%`, chapter block at `82%`;
+- very narrow 5:8 covers may use `62.5% / 82.5%` to preserve the same visual hierarchy without clipping;
+- the Chinese title, English title and book metadata remain one book/title block;
+- the separator, chapter label/number and chapter subtitle remain one chapter block;
+- both anchors belong only to the shared master; no individual Bible book may introduce a local `top`, `bottom`, `translate`, negative margin or private font-size patch to reposition them;
+- if a long title clips or collides, fix the shared responsive type scale or shared anchors rather than moving one book independently.
+
+The objective is the same as the approved reference: **the main Doré action remains dominant while the title sits around the lower third and the chapter information settles close to the lower cover field without falling outside the gilt frame.**
+
+## 3. One Dawn Gold
+
+All cover gilt is one colour token:
+
+`--one-dawn-gold: #cebd74`
+
+This token is the sole colour authority for:
+
+- Chinese book title;
+- English book title;
+- book metadata;
+- separator rule;
+- chapter label and number;
+- chapter subtitle;
+- double border and corner ornament.
+
+Older independent gold values such as highlight/lowlight variants may remain only as aliases to `--one-dawn-gold`; they must not produce visibly different golds on the cover. Difference in visual weight may come from opacity, size or line weight, not from changing hue.
+
+The transparent frame master is rendered as a mask filled by `--one-dawn-gold`, so the frame and typography cannot drift into different gold colours.
+
+## 4. Frame concept
 
 The gold treatment is **hot-stamped bookbinding**, not a picture frame.
 
@@ -26,7 +65,7 @@ The border must feel printed/tooled into an old cloth or leather book cover:
 
 - two very fine gold rules;
 - low visual weight;
-- muted First Light / ONE gold;
+- Dawn Gold / ONE gold only;
 - no glow;
 - no bevel;
 - no relief;
@@ -34,7 +73,7 @@ The border must feel printed/tooled into an old cloth or leather book cover:
 - no metallic 3D gradient;
 - no heavy Baroque or Rococo mass.
 
-## 3. Corner ornament
+## 5. Corner ornament
 
 The four-corner modern star device is retired.
 
@@ -49,7 +88,7 @@ Canonical corner language:
 
 The corner must never become the subject.
 
-## 4. Age and material
+## 6. Age and material
 
 The gilt is allowed to show restrained age:
 
@@ -60,13 +99,13 @@ The gilt is allowed to show restrained age:
 
 Age is texture, not distress decoration. Do not simulate large scratches, fake dirt or theatrical antiquing.
 
-## 5. Morning Star
+## 7. Morning Star
 
 The Morning Star is not part of the four-corner frame system.
 
-It remains an independent Westside Watch theological/brand symbol and may be used once where composition and meaning justify it. It must never be repeated as four corner ornaments.
+It remains an independent Westside Watch theological/brand symbol and may be used once where composition and meaning justify it. It must never be repeated as four corner ornaments. In the approved lower-field geometry it sits below the chapter text and inside the lower gilt border, never between or on top of title lines.
 
-## 6. Illustration authority
+## 8. Illustration authority
 
 The cover container and frame never determine chapter artwork identity. Illustration selection remains the responsibility of the canonical cover resolver.
 
@@ -76,18 +115,22 @@ For Revelation 2, the approved Studio · Doré FINAL asset is:
 
 No historical Doré plate is assigned to Revelation 2. Therefore the Studio FINAL must resolve there and must not be replaced by an unrelated historical scene.
 
-## 7. Cache/version discipline
+## 9. Cache/version discipline
 
 Whenever a canonical cover CSS, frame asset or fixed Studio illustration changes, the production page asset version must be advanced or the deployment must otherwise force revalidation. A visually obsolete cached frame/image must not be mistaken for the current master.
 
-## 8. Acceptance test
+## 10. Acceptance test
 
 A cover passes only when:
 
 1. proportion reads immediately as a book at 5:8;
 2. gold reads as flat aged hot-stamping, not a picture frame;
-3. corners are quieter than the title and image;
-4. no modern star remains in the four corners;
-5. the chapter-specific image is the correct canonical asset;
-6. desktop and mobile preserve the same identity;
-7. Doré originals and Studio · Doré continuations use the same cover grammar.
+3. frame and every cover text element visibly use the same Dawn Gold;
+4. the book/title block and chapter block sit on the shared approved lower-field anchors and do not unnecessarily cover the main Doré action;
+5. title, chapter subtitle and Morning Star remain inside the lower gilt border on desktop and mobile;
+6. corners are quieter than the title and image;
+7. no modern star remains in the four corners;
+8. the chapter-specific image is the correct canonical asset;
+9. desktop and mobile preserve the same identity;
+10. Doré originals and Studio · Doré continuations use the same cover grammar;
+11. no book-specific positioning patch is required to pass.
