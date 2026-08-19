@@ -22,18 +22,20 @@ Implementation rule:
 
 The approved concept/reference image is now treated as a **measurement reference**, not merely a moodboard.
 
-The cover artwork must retain the upper and middle field for the illustration. The complete typography stack belongs in the lower field. The production master therefore uses one proportional shift token, `--one-cover-type-shift`, rather than book-specific offsets.
+The cover artwork must retain the upper and middle field for the illustration. The typography uses two shared proportional anchors rather than free-flowing flex-end placement or book-specific offsets.
 
 Canonical production parameters:
 
-- desktop typography stack shift: `5.4cqw` downward from the previous baseline;
-- mobile typography stack shift: `4.7cqw`;
-- very narrow covers inherit the mobile rule and may reduce the shift only to prevent clipping;
-- title, English book name, book metadata, separator, chapter number and chapter subtitle move as one system;
-- no individual Bible book may introduce a local `top`, `bottom`, `translate`, negative margin or private font-size patch to reposition this stack;
-- if the stack clips, fix the shared master or responsive type scale rather than moving one book independently.
+- desktop book/title block starts at `64.5%` of cover height;
+- desktop chapter block starts at `82%` of cover height;
+- mobile book/title block starts at `63.5%`, chapter block at `82%`;
+- very narrow 5:8 covers may use `62.5% / 82.5%` to preserve the same visual hierarchy without clipping;
+- the Chinese title, English title and book metadata remain one book/title block;
+- the separator, chapter label/number and chapter subtitle remain one chapter block;
+- both anchors belong only to the shared master; no individual Bible book may introduce a local `top`, `bottom`, `translate`, negative margin or private font-size patch to reposition them;
+- if a long title clips or collides, fix the shared responsive type scale or shared anchors rather than moving one book independently.
 
-The objective is the same as the approved reference: **the image remains dominant and the typography occupies the lower portion without covering the principal action unnecessarily.**
+The objective is the same as the approved reference: **the main Doré action remains dominant while the title sits around the lower third and the chapter information settles close to the lower cover field without falling outside the gilt frame.**
 
 ## 3. One Dawn Gold
 
@@ -101,7 +103,7 @@ Age is texture, not distress decoration. Do not simulate large scratches, fake d
 
 The Morning Star is not part of the four-corner frame system.
 
-It remains an independent Westside Watch theological/brand symbol and may be used once where composition and meaning justify it. It must never be repeated as four corner ornaments.
+It remains an independent Westside Watch theological/brand symbol and may be used once where composition and meaning justify it. It must never be repeated as four corner ornaments. In the approved lower-field geometry it sits below the chapter text and inside the lower gilt border, never between or on top of title lines.
 
 ## 8. Illustration authority
 
@@ -124,10 +126,11 @@ A cover passes only when:
 1. proportion reads immediately as a book at 5:8;
 2. gold reads as flat aged hot-stamping, not a picture frame;
 3. frame and every cover text element visibly use the same Dawn Gold;
-4. the full typography stack sits in the approved lower field and does not unnecessarily cover the main Doré action;
-5. corners are quieter than the title and image;
-6. no modern star remains in the four corners;
-7. the chapter-specific image is the correct canonical asset;
-8. desktop and mobile preserve the same identity;
-9. Doré originals and Studio · Doré continuations use the same cover grammar;
-10. no book-specific positioning patch is required to pass.
+4. the book/title block and chapter block sit on the shared approved lower-field anchors and do not unnecessarily cover the main Doré action;
+5. title, chapter subtitle and Morning Star remain inside the lower gilt border on desktop and mobile;
+6. corners are quieter than the title and image;
+7. no modern star remains in the four corners;
+8. the chapter-specific image is the correct canonical asset;
+9. desktop and mobile preserve the same identity;
+10. Doré originals and Studio · Doré continuations use the same cover grammar;
+11. no book-specific positioning patch is required to pass.
