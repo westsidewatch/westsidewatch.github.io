@@ -9,6 +9,13 @@
  * Doré assignments always resolve before ONE Studio. A generated/non-Doré asset may only fill a chapter
  * for which the canonical Doré/master allocation has no approved assignment.
  */
+/* Temporary parser-time preload for the remaining Pentateuch books.
+ * Keeps books 2–5 available before the canonical cover resolver and ONE app initialize.
+ * This can move into index.html when the next script-order consolidation is done.
+ */
+if(!window.ONE_PENTATEUCH_REMAINING_READY&&document.readyState==="loading"){
+  document.write('<script src="./pentateuch-remaining-complete.js?v=20260818a"><\/script>');
+}
 (() => {
   "use strict";
   const D=window.ONE_DATA;
