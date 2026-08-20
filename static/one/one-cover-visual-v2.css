@@ -43,3 +43,52 @@
 @media(max-width:650px){:root{--one-cover-book-top:59.5%;--one-cover-chapter-top:75.8%;--one-cover-star-field-top:10.2%}.now__intro{width:min(94vw,30rem,56.25svh)!important}.chapter-cover-book,.chapter-cover-chapter{left:9.5%!important;right:9.5%!important}.chapter-cover-book h2{font-size:clamp(1.85rem,10.6cqw,3.2rem)!important}.chapter-cover-book h2 i{font-size:clamp(.64rem,2.75cqw,.88rem)!important;letter-spacing:.27em!important}.morning-star{bottom:6.2%!important;width:3.8cqw!important}.chapter-illustration{width:min(100%,30rem)!important;padding:.65rem!important}.chapter-illustration a{aspect-ratio:5/8!important}}
 @container (max-width:360px){.chapter-cover-book{top:58.5%!important;left:9%!important;right:9%!important}.chapter-cover-chapter{top:75.8%!important;left:9%!important;right:9%!important}.chapter-cover-book h2{font-size:clamp(1.58rem,10.2cqw,2.55rem)!important;letter-spacing:.025em!important}.chapter-cover-book h2 i{letter-spacing:.23em!important}.chapter-cover-chapter>p{max-width:96%!important;font-size:clamp(.64rem,2.85cqw,.82rem)!important}.morning-star{bottom:6%!important;width:3.6cqw!important}}
 @media(prefers-reduced-motion:reduce){.now__intro,.chapter-cover-art,.morning-star{transition:none!important;animation:none!important}}
+
+/* Global cover text-flow fix: keep all cover typography in one natural stack.
+ * Long book names and chapter titles may wrap, but can no longer overlap each other.
+ */
+.chapter-cover-overlay{
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-end!important;
+  align-items:stretch!important;
+  gap:clamp(.6rem,2.25cqw,.95rem)!important;
+  padding:0 10.5% 13.5%!important;
+}
+.chapter-cover-book,.chapter-cover-chapter{
+  position:static!important;
+  inset:auto!important;
+  left:auto!important;
+  right:auto!important;
+  top:auto!important;
+  bottom:auto!important;
+  width:100%!important;
+  max-width:100%!important;
+}
+.chapter-cover-book h2{
+  line-height:1.08!important;
+  gap:clamp(.3rem,1.3cqw,.48rem)!important;
+}
+.chapter-cover-book h2>span{
+  line-height:1.08!important;
+}
+.chapter-cover-book h2 i{
+  line-height:1.18!important;
+}
+.chapter-cover-chapter{
+  flex:0 0 auto!important;
+  min-height:0!important;
+}
+.chapter-cover-chapter>strong{
+  line-height:1.18!important;
+}
+.chapter-cover-chapter>p{
+  line-height:1.3!important;
+  margin-top:clamp(.28rem,1.1cqw,.42rem)!important;
+}
+@media(max-width:650px){
+  .chapter-cover-overlay{padding-left:9.5%!important;padding-right:9.5%!important;padding-bottom:13%!important;gap:clamp(.52rem,2.1cqw,.8rem)!important}
+}
+@container (max-width:360px){
+  .chapter-cover-overlay{padding-left:9%!important;padding-right:9%!important;padding-bottom:12.8%!important;gap:.48rem!important}
+}
