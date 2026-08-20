@@ -62,4 +62,12 @@
 
   if(!report.ok)console.error("[ONE Revelation audit]",report);
   else console.info(`[ONE Revelation audit] pass: 22 chapters, ${report.connectionCount} connections; ${report.missingPlates.length} missing plates are non-blocking`);
+
+  if(!document.querySelector('script[data-one-studio-binary-runtime]')){
+    const runtime=document.createElement('script');
+    runtime.src='./studio-binary-runtime.js?v=20260819a';
+    runtime.dataset.oneStudioBinaryRuntime='true';
+    runtime.defer=true;
+    document.head.append(runtime);
+  }
 })();
