@@ -24,12 +24,24 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p static/one/studio
-          cat .dore-upload/lam03-hq/part-*.b64 | base64 --decode --ignore-garbage > static/one/studio/lamentations-03-dore-studio-v1.avif
-          bytes=$(wc -c < static/one/studio/lamentations-03-dore-studio-v1.avif | tr -d ' ')
-          sha=$(sha256sum static/one/studio/lamentations-03-dore-studio-v1.avif | awk '{print $1}')
-          echo "bytes=$bytes sha256=$sha"
-          test "$bytes" = "92695"
-          test "$sha" = "0716c9147109a93fd3ab1743a7e39d26c6a17b2844d0fea16274c0949cd61836"
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, re
+          files=sorted(Path('.dore-upload/lam03-hq').glob('part-*.b64'))
+          parts=[]
+          for f in files:
+              s=re.sub(rb'\s+',b'',f.read_bytes())
+              print(f.name, 'chars=',len(s),'mod4=',len(s)%4,'pads=',s.count(b'='),'tail=',s[-12:])
+              parts.append(s)
+          joined=b''.join(parts)
+          print('joined chars=',len(joined),'mod4=',len(joined)%4,'pads=',joined.count(b'='))
+          out=base64.b64decode(joined, validate=False)
+          target=Path('static/one/studio/lamentations-03-dore-studio-v1.avif')
+          target.write_bytes(out)
+          print('bytes=',len(out),'sha256=',hashlib.sha256(out).hexdigest())
+          assert len(out)==92695
+          assert hashlib.sha256(out).hexdigest()=='0716c9147109a93fd3ab1743a7e39d26c6a17b2844d0fea16274c0949cd61836'
+          PY
       - name: Commit binary if changed
         shell: bash
         run: |
