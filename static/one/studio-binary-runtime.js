@@ -1,7 +1,7 @@
 /* ONE Studio binary runtime — quarantine compatibility stub.
  * The first direct-binary Lamentations 3 AVIF proved the upload path, but is not production-safe.
  * Keep ONE stable by removing only that experimental 25:3 override.
- * No MutationObserver, timer, DOM writer loop, navigation listener, or typography injection.
+ * No MutationObserver, timer, DOM writer loop, or navigation listener.
  */
 (()=>{
   "use strict";
@@ -20,6 +20,12 @@
     delete study.coverImage;
     delete study.doreCover;
     delete study.studioCover;
+  }
+  if(!document.getElementById("one-cover-no-divider")){
+    const style=document.createElement("style");
+    style.id="one-cover-no-divider";
+    style.textContent=".chapter-cover-chapter::before{display:none!important;content:none!important;}";
+    document.head.append(style);
   }
   document.documentElement.dataset.oneStudioBinaryRuntime="lam03-quarantined";
 })();
