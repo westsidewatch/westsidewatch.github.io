@@ -33,6 +33,54 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Reconstruct and verify staged Doré assets
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, json
+
+          for ready in sorted(Path('.dore-upload').glob('*/READY')):
+              package = ready.parent
+              manifest = json.loads((package / 'manifest.json').read_text())
+              parts = sorted(package.glob('part-*.b64'))
+              expected_parts = int(manifest['parts'])
+              if len(parts) != expected_parts:
+                  raise SystemExit(f"part count mismatch: {len(parts)} != {expected_parts}")
+
+              encoded = ''.join(p.read_text().strip() for p in parts)
+              data = base64.b64decode(encoded, validate=True)
+              expected_bytes = int(manifest['bytes'])
+              if len(data) != expected_bytes:
+                  raise SystemExit(f"byte size mismatch: {len(data)} != {expected_bytes}")
+
+              digest = hashlib.sha256(data).hexdigest()
+              if digest != manifest['sha256']:
+                  raise SystemExit(f"sha256 mismatch: {digest} != {manifest['sha256']}")
+
+              kind = manifest.get('kind')
+              if kind == 'avif' and not (len(data) > 12 and data[4:12] == b'ftypavif'):
+                  raise SystemExit('invalid AVIF signature')
+              if kind == 'webp' and not (data[:4] == b'RIFF' and data[8:12] == b'WEBP'):
+                  raise SystemExit('invalid WEBP signature')
+
+              target = Path(manifest['target'])
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+              print(f"verified {target}: {len(data)} bytes sha256={digest}")
+
+              for replacement in manifest.get('text_replacements', []):
+                  path = Path(replacement['path'])
+                  text = path.read_text()
+                  old = replacement['old']
+                  new = replacement['new']
+                  expected = int(replacement.get('expected', 1))
+                  count = text.count(old)
+                  if count != expected:
+                      raise SystemExit(f"{path}: expected {expected} occurrences, found {count}")
+                  path.write_text(text.replace(old, new))
+                  print(f"wired {path}: {old} -> {new}")
+          PY
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
