@@ -3,5 +3,13 @@
   "kind": "avif",
   "bytes": 92695,
   "sha256": "0716c9147109a93fd3ab1743a7e39d26c6a17b2844d0fea16274c0949cd61836",
-  "parts": 13
+  "parts": 13,
+  "text_replacements": [
+    {
+      "path": "static/one/one-cover-policy.js",
+      "old": "/one/studio/lamentations-03-dore-studio-v1.webp?v=20260819a",
+      "new": "/one/studio/lamentations-03-dore-studio-v1.avif?v=20260819c",
+      "expected": 2
+    }
+  ]
 }
