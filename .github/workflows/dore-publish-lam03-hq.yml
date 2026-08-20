@@ -3,6 +3,10 @@ name: Doré publish Lamentations 3 HQ
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
+    paths:
+      - '.dore-upload/lam03-hq/**'
 
 permissions:
   contents: write
@@ -13,6 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
+          ref: ${{ github.event_name == 'pull_request' && github.head_ref || github.ref_name }}
           fetch-depth: 0
       - name: Rebuild verified AVIF
         shell: bash
@@ -36,4 +41,4 @@ jobs:
           git config user.email "westsidewatchca@gmail.com"
           git add static/one/studio/lamentations-03-dore-studio-v1.avif
           git commit -m "asset(one): publish Lamentations 3 HQ Doré cover"
-          git push
+          git push origin HEAD
