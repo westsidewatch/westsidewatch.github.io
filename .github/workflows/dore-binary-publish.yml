@@ -3,6 +3,7 @@ name: Doré Binary Publisher
 on:
   push:
     branches:
+      - main
       - 'dore/binary-publisher-*'
       - 'dore/upload-*'
     paths:
@@ -19,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reconstruct and verify binary assets
+      - name: Reconstruct, verify and wire binary assets
         shell: bash
         run: |
           python3 - <<'PY'
@@ -53,6 +54,18 @@ jobs:
               target.parent.mkdir(parents=True, exist_ok=True)
               target.write_bytes(data)
               print(f"verified {target}: {len(data)} bytes sha256={digest}")
+
+              for replacement in manifest.get('text_replacements', []):
+                  path = Path(replacement['path'])
+                  text = path.read_text()
+                  old = replacement['old']
+                  new = replacement['new']
+                  expected = int(replacement.get('expected', 1))
+                  count = text.count(old)
+                  if count != expected:
+                      raise SystemExit(f"{path}: expected {expected} occurrences, found {count}")
+                  path.write_text(text.replace(old, new))
+                  print(f"wired {path}: {old} -> {new}")
           PY
 
       - name: Commit verified assets and remove staging packages
@@ -60,7 +73,7 @@ jobs:
         run: |
           git config user.name 'dore-binary-publisher[bot]'
           git config user.email 'dore-binary-publisher@users.noreply.github.com'
-          git add static/one/studio
+          git add static/one
           git rm -r .dore-upload
           git commit -m 'publish(dore): verified binary studio assets'
           git push
