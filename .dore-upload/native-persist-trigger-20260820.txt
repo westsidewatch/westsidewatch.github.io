@@ -1,0 +1,1 @@
+Trigger the main Hugo workflow after contents:write was enabled. The workflow must reconstruct the verified 025-003 AVIF, persist it into static/one/studio/, commit it back to main, and continue Pages deployment.
