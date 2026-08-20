@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -76,11 +76,26 @@ jobs:
                   new = replacement['new']
                   expected = int(replacement.get('expected', 1))
                   count = text.count(old)
-                  if count != expected:
-                      raise SystemExit(f"{path}: expected {expected} occurrences, found {count}")
-                  path.write_text(text.replace(old, new))
-                  print(f"wired {path}: {old} -> {new}")
+                  if count == expected:
+                      path.write_text(text.replace(old, new))
+                      print(f"wired {path}: {old} -> {new}")
+                  elif count == 0 and new in text:
+                      print(f"already wired {path}: {new}")
+                  else:
+                      raise SystemExit(f"{path}: expected {expected} old occurrences or existing new value; old={count}, new={text.count(new)}")
           PY
+      - name: Persist verified Doré assets to repository
+        shell: bash
+        run: |
+          git config user.name "Westside Watch Doré Publisher"
+          git config user.email "westsidewatchca@gmail.com"
+          git add static/one/studio static/one/one-cover-policy.js
+          if git diff --cached --quiet; then
+            echo "No verified Doré binary changes to persist."
+          else
+            git commit -m "chore(dore): persist verified Studio binary assets [skip ci]"
+            git push origin HEAD:main
+          fi
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
