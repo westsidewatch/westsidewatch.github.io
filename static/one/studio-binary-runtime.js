@@ -24,15 +24,21 @@
     return bytes;
   };
   const validAvif=bytes=>bytes.length>12&&String.fromCharCode(...bytes.slice(4,12))==="ftypavif";
-  const applyDom=(manifest,url)=>{
+  const activeKey=()=>{
     const title=document.querySelector("#current-book-title")?.textContent?.trim();
     const chapter=document.querySelector(".chapter-cover-chapter strong")?.textContent||"";
-    if(title!=="耶利米哀歌"||!chapter.includes("3"))return;
+    if(title==="耶利米哀歌"&&/第\s*3\s*章/.test(chapter))return "25:3";
+    return null;
+  };
+  const applyActive=()=>{
+    const key=activeKey(),url=key&&urls[key];
+    if(!url)return;
     const art=document.querySelector("#chapter-cover-art"),now=document.querySelector(".now");
     if(art){art.src=url;art.alt="耶利米哀歌第三章：多雷式黑白版畫";art.hidden=false;}
     const engraving=`url("${url}")`;
     now?.style.setProperty("--chapter-engraving",engraving);
     document.documentElement.style.setProperty("--one-chapter-engraving",engraving);
+    document.documentElement.dataset.oneStudioRuntimeApplied=key;
   };
   const hydrate=async manifest=>{
     try{
@@ -47,18 +53,17 @@
       const url=URL.createObjectURL(new Blob([bytes],{type:manifest.mime}));
       urls[manifest.key]=url;
       const study=window.ONE_DATA?.studyBooks?.[manifest.book]?.chapterStudies?.[manifest.chapter];
-      if(study?.illustration){
-        study.illustration.src=url;
-        study.illustration.source=manifest.source;
-        study.illustration.assetVerified=true;
-        study.illustration.runtimeBinary=true;
-      }
-      applyDom(manifest,url);
+      if(study?.illustration){study.illustration.src=url;study.illustration.source=manifest.source;study.illustration.assetVerified=true;study.illustration.runtimeBinary=true;}
       document.documentElement.dataset.oneStudioRuntimeBinary=manifest.key;
+      applyActive();
     }catch(error){
       console.error("[ONE Studio binary runtime]",manifest.key,error);
       document.documentElement.dataset.oneStudioRuntimeBinaryError=manifest.key;
     }
   };
+  const observer=new MutationObserver(()=>applyActive());
+  const startObserver=()=>{const root=document.querySelector(".now")||document.body;if(root)observer.observe(root,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:["src","hidden"]});};
+  if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",startObserver,{once:true});else startObserver();
+  document.addEventListener("click",()=>queueMicrotask(applyActive),true);
   manifests.forEach(hydrate);
 })();
