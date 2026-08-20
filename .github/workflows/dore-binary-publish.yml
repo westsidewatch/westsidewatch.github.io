@@ -1,0 +1,69 @@
+name: Doré Binary Publisher
+
+on:
+  push:
+    branches:
+      - 'dore/binary-publisher-*'
+      - 'dore/upload-*'
+    paths:
+      - '.dore-upload/**/READY'
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Reconstruct and verify binary asset
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import base64, hashlib, json, sys
+
+          ready_files = sorted(Path('.dore-upload').glob('*/READY'))
+          if not ready_files:
+              print('No READY package; nothing to publish.')
+              raise SystemExit(0)
+
+          for ready in ready_files:
+              package = ready.parent
+              manifest = json.loads((package / 'manifest.json').read_text())
+              parts = sorted(package.glob('part-*.b64'))
+              if len(parts) != int(manifest['parts']):
+                  raise SystemExit(f"part count mismatch: {len(parts)} != {manifest['parts']}")
+              encoded = ''.join(p.read_text().strip() for p in parts)
+              data = base64.b64decode(encoded, validate=True)
+              if len(data) != int(manifest['bytes']):
+                  raise SystemExit(f"byte size mismatch: {len(data)} != {manifest['bytes']}")
+              digest = hashlib.sha256(data).hexdigest()
+              if digest != manifest['sha256']:
+                  raise SystemExit(f"sha256 mismatch: {digest} != {manifest['sha256']}")
+              kind = manifest.get('kind')
+              if kind == 'avif' and not (len(data) > 12 and data[4:12] == b'ftypavif'):
+                  raise SystemExit('invalid AVIF signature')
+              if kind == 'webp' and not (data[:4] == b'RIFF' and data[8:12] == b'WEBP'):
+                  raise SystemExit('invalid WEBP signature')
+              target = Path(manifest['target'])
+              target.parent.mkdir(parents=True, exist_ok=True)
+              target.write_bytes(data)
+              print(f"verified {target}: {len(data)} bytes sha256={digest}")
+          PY
+
+      - name: Commit verified asset and remove staging package
+        shell: bash
+        run: |
+          if ! find .dore-upload -name READY -print -quit | grep -q .; then
+            exit 0
+          fi
+          git config user.name 'dore-binary-publisher[bot]'
+          git config user.email 'dore-binary-publisher@users.noreply.github.com'
+          git add static/one/studio
+          git rm -r .dore-upload
+          git commit -m 'publish(dore): verified binary studio asset'
+          git push
