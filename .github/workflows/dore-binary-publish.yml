@@ -3,6 +3,7 @@ name: Doré Binary Publisher
 on:
   push:
     branches:
+      - main
       - 'dore/binary-publisher-*'
       - 'dore/upload-*'
     paths:
@@ -19,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Reconstruct and verify binary asset
+      - name: Reconstruct, verify and wire binary assets
         shell: bash
         run: |
           python3 - <<'PY'
@@ -53,33 +54,26 @@ jobs:
               target.parent.mkdir(parents=True, exist_ok=True)
               target.write_bytes(data)
               print(f"verified {target}: {len(data)} bytes sha256={digest}")
+
+              for replacement in manifest.get('text_replacements', []):
+                  path = Path(replacement['path'])
+                  text = path.read_text()
+                  old = replacement['old']
+                  new = replacement['new']
+                  expected = int(replacement.get('expected', 1))
+                  count = text.count(old)
+                  if count != expected:
+                      raise SystemExit(f"{path}: expected {expected} occurrences, found {count}")
+                  path.write_text(text.replace(old, new))
+                  print(f"wired {path}: {old} -> {new}")
           PY
 
-      - name: Point Lamentations 3 cover to verified asset
+      - name: Commit verified assets and remove staging packages
         shell: bash
         run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          path = Path('static/one/one-cover-policy.js')
-          text = path.read_text()
-          old = '/one/studio/lamentations-03-dore-studio-v1.webp?v=20260819a'
-          new = '/one/studio/lamentations-03-dore-studio-v1.avif?v=20260819c'
-          count = text.count(old)
-          if count != 2:
-              raise SystemExit(f'expected exactly 2 cover URL occurrences, found {count}')
-          path.write_text(text.replace(old, new))
-          print(f'updated Lamentations 3 cover URL: {new}')
-          PY
-
-      - name: Commit verified asset and remove staging package
-        shell: bash
-        run: |
-          if ! find .dore-upload -name READY -print -quit | grep -q .; then
-            exit 0
-          fi
           git config user.name 'dore-binary-publisher[bot]'
           git config user.email 'dore-binary-publisher@users.noreply.github.com'
-          git add static/one/studio static/one/one-cover-policy.js
+          git add static/one
           git rm -r .dore-upload
-          git commit -m 'publish(dore): verified binary studio asset'
+          git commit -m 'publish(dore): verified binary studio assets'
           git push
