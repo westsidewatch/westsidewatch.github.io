@@ -4,6 +4,130 @@ Status: **FUTURE ARCHITECTURE MEMO — NOT CURRENT IMPLEMENTATION**
 
 Purpose: preserve a possible long-term extension of Doré beyond illustration so this idea does not remain only in chat. This memo is descriptive, not a runtime contract, and must not be loaded by ONE reader/runtime.
 
+## Highest visual objective — a living Bible across time
+
+The long-term goal of Doré image-making is not a collection of isolated AI covers. Every chapter of Scripture should eventually be capable of appearing through the same convincing, historically grounded engraved world and, where appropriate, becoming a short restrained animation whose authentic classical strokes remain intact.
+
+Doré is the **living Bible growing out of ONE**. ONE is not merely the first consumer of Doré images; it is the chapter-by-chapter canonical and study root from which the visual world grows. Doré carries that life beyond the reader into plates, editorial work, print and motion while remaining answerable to ONE's Scripture structure.
+
+Doré should therefore develop as one of Westside Watch's shared **brand core units**: a reusable center of Scripture reading, visual memory, historical world-building, pictorial judgment and medium adaptation. It gives ONE, Journal, devotionals, social publishing, print, exhibitions and motion a common visual bloodline; learning from each of those expressions returns to the same intelligence. Standalone product status must not fragment Doré from ONE or turn it into a generic asset service.
+
+### Name theology — gold points to glory and light
+
+The French adjective `doré` means “golden” or “gilded.” Westside Watch receives this meaning within its already established theology of God's glory, God's light and new life—not as luxury branding and not as devotion to gold, art or the historical illustrator.
+
+- the Holy of Holies and ark use gold as consecrated material language, while God's presence—not the metal—makes the sanctuary holy;
+- the New Jerusalem is described with transparent-gold radiance, while God's glory gives it light and the Lamb is its lamp;
+- Doré's gold therefore belongs to the same symbolic family as Westside Watch's Bright Morning Star, dawn, daylight and city of light;
+- gold frame, illumination and visual beauty must direct attention through the artwork toward God and Scripture, never back toward the product as spectacle;
+- “divine light” in an image must remain pictorially restrained: theological centrality does not authorize AI sunbursts, portals, beams or constant visual grandiosity;
+- new-life radiance is expressed through truth, presence, transformed human life and meaningful light, not by making every scene bright or gilded.
+
+Permanent center: **God's glory, God's light and new life in that light remain the brand core; Doré is a visual core unit ordered toward that center, not a replacement center.**
+
+### Christological emblem — the Golden Shoot
+
+The preferred core emblem for Doré is **the Golden Shoot**.
+
+Evidence levels must remain explicit:
+
+1. **TEXTUALLY CERTAIN — Isaiah 11:1:** the Hebrew text uses `נֵצֶר` (*nēṣer*, shoot/branch) for growth from Jesse's roots after the preceding image of felling. The following verses describe the Spirit of the Lord resting on this figure and his righteous, peace-bearing rule.
+2. **TEXTUALLY CERTAIN — Matthew 2:23:** Matthew says Jesus lived in Nazareth so that what was spoken through “the prophets” would be fulfilled: he would be called a Nazarene. No surviving Old Testament verse reproduces this line verbatim, and Matthew uses the plural “prophets.”
+3. **CREDIBLE CHRISTOLOGICAL INTERTEXT:** a historic and widely discussed explanation hears phonetic/conceptual resonance between Isaiah's *nēṣer* and Nazareth/Nazarene. This fits Matthew's fulfillment pattern and Jesus as the messianic shoot, but it is not the only scholarly explanation and must not be presented as a universally established etymology.
+4. **BRAND CONFESSION:** Westside Watch intentionally receives the resonance as a Christological emblem. The Golden Shoot is Jesus: the messianic new life from Jesse's cut-down stock, the humble Nazarene, the Spirit-bearing righteous king.
+
+Visual/theological grammar:
+
+- gold = God's glory and light, never luxury for its own sake;
+- shoot = living emergence from apparent cutting-down, never generic wellness branding;
+- Jesse's root = canonical history and promise, not rootless visual novelty;
+- fruit = righteousness, peace and renewed creation in Isaiah 11, not commercial growth metrics;
+- the Golden Shoot = Jesus Christ, not Doré, Gustave Doré, the AI system or Westside Watch itself.
+
+Do not turn the emblem into a compulsory literal twig placed in every illustration. It may govern product mark, transitions, gilt ornament, timeline growth and long-scroll continuity; within chapter art, it appears only when compositionally and scripturally responsible.
+
+### Motion concept — darkness, gold stroke, canonical growth
+
+The first major brand-motion concept is **Golden Shoot / Nazareth**: begin in the engraved darkness over the deep, then allow one restrained gold line to grow like a living shoot. As stem, branches and leaves extend, the product reveals Scripture in successive stages.
+
+Storyboard grammar:
+
+1. **Darkness over the deep:** near-black field with barely perceptible, slow engraved water structure; no stars, particles, portal or premature spectacle.
+2. **First gold mark:** a very small stroke appears with clear direction and material restraint. It is not a lens flare, lightning strike or glowing paint splash.
+3. **Shoot growth:** the line lengthens with plant-like causality—node, taper, slight turn, branch tension—without rubbery AI morphing.
+4. **Canonical structure:** the main stem represents continuous Scripture/time; major branch joints reveal canonical eras or books without implying that canon grew randomly or that later revelation cancels earlier Scripture.
+5. **Timeline nodes:** buds correspond to stable ONE timeline events. Selecting a bud reveals date status, Scripture and place before motion begins.
+6. **Leaves/plates:** a leaf or bud unfolds into an immutable approved engraving; unfolding must not redraw its figures or replace its stroke system.
+7. **Living detail:** only after the still plate is established do restrained causal motions begin inside it.
+8. **Continuous journey:** completion returns the viewer to the gold branch at the same node, ready to continue through the canonical long scroll.
+
+Technical guardrails:
+
+- animate the gold shoot with deterministic paths/masks or another reproducible line-preserving system;
+- do not generate every animation transition anew, because identity and branch topology must remain stable;
+- the gold line may illuminate navigation but must not wash the monochrome plates in decorative gold;
+- reduced-motion mode shows the completed branch and still plates without growth animation;
+- nodes require keyboard/focus semantics, captions and a stable URL/ONE anchor;
+- darkness is the Genesis opening image, not a claim that Christ came into existence at that moment. The Son is not created by the animation; the growing shoot is a canonical sign by which the story is progressively disclosed to the viewer;
+- the branch represents Christological/canonical unity, never corporate expansion, product metrics or the autonomous growth of Doré AI.
+
+This becomes the preferred transition language for ONE timeline integration and the future complete-Bible scroll, while remaining optional inside individual chapter compositions.
+
+The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
+
+This objective creates several permanent requirements:
+
+- **One Bible, not 1,189 unrelated posters.** Every plate must be individually faithful to its book and chapter while remaining compatible with a larger canonical sequence.
+- **Continuity without homogenization.** Shared stroke discipline, historical credibility and visual gravity provide unity; each biblical book, geography, period, literary form and theological atmosphere retains its own fine differences.
+- **An inhabited world.** Architecture, landscape, weather, clothing, tools, animals, work, food, vessels, roads and background human activity create historical life. They must be meaningful and layered, not repeated AI clutter.
+- **Temporal continuity.** Character age, recurring locations, empires, building traditions, material culture, seasons and historical transitions must be tracked so adjacent scenes can belong to a believable unfolding history.
+- **Scroll-like transitions.** Future sequences should connect through geography, light, movement, sound and recurring visual motifs rather than behaving as abrupt galleries of disconnected thumbnails.
+- **Still-image integrity comes first.** A chapter plate must pass Scripture, history, composition, anatomy and engraved-stroke gates before animation is considered. Motion cannot rescue an inadequate still image.
+- **Animation must reveal life, not advertise technology.** Prefer small causal motions—breath, cloth weight, walking, water, smoke, flame, leaves, animals, crowd labor, shifting attention and restrained light. Avoid camera spectacle, morphing anatomy, elastic cloth, sliding hatch texture, cinematic portals and ornamental particle effects.
+- **The engraved surface is structurally locked.** Motion must preserve the direction, density, weight and material meaning of the approved lines. Hatching may move only with the form it describes; it must never crawl independently across skin, wall, sky or cloth.
+- **No identity drift.** Faces, hands, body proportions, clothing construction, objects and architecture must remain stable across frames. A short animation that changes the person or redraws the world is rejected.
+- **Human time remains visible.** The final work should include ordinary waiting, labor, travel, domestic care, weather and inhabited silence alongside miracles and monumental events. This prevents the Bible from collapsing into nonstop spectacle.
+- **Canonical coherence requires memory.** Every approved plate and animation must accumulate reusable records for characters, locations, period material culture, palette/value structure, stroke grammar, motion limits, provenance and editorial decisions.
+
+The governing sequence is:
+
+`Scripture and historical research -> approved still engraving -> line/anatomy lock -> restrained motion study -> chapter short animation -> book-level continuity -> canonical long-scroll work`
+
+Success means that a viewer can enter any chapter and encounter a credible classical world, then continue across chapters and centuries without feeling that the people, places or engraved hand have been regenerated from nothing each time.
+
+### Future contract — ONE timeline × Doré motion
+
+ONE's chapter timelines should eventually interoperate with Doré animation. The timeline is the chronological/canonical navigation layer; Doré is the approved visual-time layer. Neither replaces the other.
+
+Each motion-capable timeline event should be able to carry or resolve:
+
+- stable book/chapter/passage identity;
+- event title and canonical sequence position;
+- exact, approximate, relative or disputed date status;
+- people and persistent character identities;
+- geographic place and persistent location identity;
+- historical period/material-culture profile;
+- approved still plate ID and immutable master hash;
+- optional approved motion asset ID, duration, aspect variants and motion limits;
+- provenance, editorial approval and revision history;
+- preceding/following timeline events and the ONE return anchor.
+
+Expected interaction:
+
+`select ONE timeline node -> open the matched Doré plate/motion in context -> retain Scripture and chronology metadata -> return to the same chapter/timeline position`
+
+Hard rules:
+
+- do not turn the timeline into an autoplay video feed or a gallery detached from Scripture;
+- animation availability is progressive enhancement; the timeline and chapter remain complete without it;
+- the ONE timeline owns chronology labels and uncertainty. Doré may visualize a selected editorial hypothesis but may not silently harden it into fact;
+- playback must never change the canonical order, chapter identity or provenance of the underlying plate;
+- reuse one approved motion asset where events genuinely share identity; do not regenerate duplicate variants merely for each timeline occurrence;
+- preserve reading control, reduced-motion preferences, captions, pause/seek behavior and a still-image fallback;
+- future cross-book timeline playback should reveal continuity across Scripture while retaining each book's distinct atmosphere and historical world.
+
+This integration is the practical bridge between ONE as the root and Doré as the living Bible growing from it.
+
 ## Core idea
 
 Doré may eventually evolve from Westside Watch's dedicated Bible visual intelligence into a broader **Westside Watch Scripture Intelligence Layer**.

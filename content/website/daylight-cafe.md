@@ -2,7 +2,7 @@
 title: "白晝咖啡館"
 subtitle: "Daylight Café"
 description: "A common room for faith and work, city life, culture, conversation, and the ordinary daylight hours."
-weight: 2
+weight: 3
 aliases:
   - "/resources/daylight-cafe/"
 ---

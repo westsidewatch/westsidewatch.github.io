@@ -1,14 +1,42 @@
 # Westside Watch Engraving Studio
 
-Status: **FOUNDATION / LIVING SYSTEM**
+Status: **STANDALONE WESTSIDE WATCH PRODUCT / LIVING SYSTEM**
 
 ## Doré
 
 **Doré** is the formal name of Westside Watch's dedicated Scripture visual intelligence.
 
+The French adjective **doré** means “golden” or “gilded.” Within Westside Watch, that linguistic meaning belongs to the existing brand theology of God's glory and light: the gold of the Holy of Holies and the ark, the glory that makes the sanctuary holy, the radiant new life given in Christ, and the New Jerusalem whose light is God's glory and whose lamp is the Lamb. Gold is a material sign, never the object of devotion; it points to God and must never replace him.
+
+This is continuity, not a new brand center. Doré's gold, the Bright Morning Star, dawn, daylight and the city of light all remain ordered toward the same center: **the glory of God, the light of God and life made new in that light.** Visual beauty, engraved craft and future motion serve that witness rather than advertising themselves.
+
+### The Golden Shoot
+
+Doré's central emblem may be expressed as **the Golden Shoot**. Isaiah 11:1 uses the Hebrew `נֵצֶר` (*nēṣer*, shoot/branch) for the new growth from Jesse's apparently cut-down stock. In Christian reading this messianic figure is Jesus: humble new life from Jesse and David's root, bearing the Spirit of the Lord and bringing righteous rule and peace.
+
+Matthew 2:23 says that Jesus' residence in Nazareth fulfills what was spoken “through the prophets,” that he would be called a Nazarene. No extant Old Testament verse contains that sentence verbatim. A historic and widely discussed interpretation hears a wordplay or conceptual resonance between *nēṣer* and Nazareth/Nazarene; other interpretations emphasize the prophets' broader themes of messianic humility and reproach. Doré may use the *nēṣer* connection as an accountable Christological resonance, but must not present the precise linguistic derivation or Matthew's intended source as undisputed fact.
+
+The emblem's meaning is therefore explicit: gold points to God's glory; the living shoot points to resurrection-like new life from what appeared cut down; the shoot is not generic vitality but points to Jesus Christ. This joins the Golden Shoot to Westside Watch's existing Morning Star, dawn and city-of-light imagery without creating a second theological center.
+
+### Golden Shoot opening sequence
+
+A future Doré / ONE motion experience may open over the engraved darkness of the deep. A single restrained gold stroke appears and grows organically as the *nēṣer* shoot. Its main stem becomes canonical/time continuity; branch joints resolve to timeline events; side branches resolve to books; buds and leaves resolve to chapters and approved plates; an opened plate may then acquire limited causal motion.
+
+The sequence is both brand opening and navigation model:
+
+`darkness over the deep -> first gold stroke -> living shoot -> canonical branch structure -> timeline nodes -> chapter plates -> restrained motion -> continuous Bible scroll`
+
+The gold line must grow through controlled vector/path or similarly stable motion, not AI morphing. It does not wriggle randomly, shed particles, become a magic vine or erase the approved engraving. Growth direction follows the canonical/navigation structure, and every opened leaf retains a stable ONE return location.
+
 Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.
+
+Doré is now a standalone Westside Watch product rather than only an internal ONE production subsystem. It is the **living Bible growing out of ONE**: ONE supplies the chapter-by-chapter canonical and study foundation, while Doré develops that foundation into a continuous visible world capable of still plates, restrained motion and a time-spanning complete-Bible work.
+
+Doré is also intended to become one of Westside Watch's shared **brand core units**. It is not merely an illustration vendor for separate products. Its Scripture reading, visual memory, historical world-building and master-visual system should provide a recognizable visual and narrative bloodline across ONE, Journal, devotionals, print, exhibitions, social publishing and future motion. Learning in those media should return to the same living intelligence rather than fragment into unrelated styles.
+
+The product identity encompasses the Original Library, Living Intelligence, Plate Workshop, future short animation and the complete-Bible visual scroll. Its public product entrance is `/website/dore/`, with `/dore/` retained as a direct alias.
 
 The aspiration is not merely to imitate surface engraving texture. Doré should learn to read Scripture, choose the right instant, viewing distance, composition, figures, gesture, landscape, light and line system, and then improve through review and revision.
 
@@ -115,6 +143,16 @@ The motion system should grow from the same intelligence rather than from a sepa
 Doré should first learn to select one decisive biblical instant. Later it can learn to select a sequence of decisive moments, maintain character/location continuity, control pacing and decide when an image should remain nearly still versus when movement is narratively necessary.
 
 A Doré motion piece should feel like engraved biblical storytelling acquiring time, not a modern cinematic production with an engraving filter applied afterward.
+
+### ONE timeline integration
+
+ONE's existing chapter timelines may later become the primary navigation and synchronization surface for Doré motion. A timeline event can resolve to an approved Doré plate or short animation while preserving its book, chapter, passage, approximate/contested date status, people, place and surrounding canonical sequence.
+
+This is not a video carousel. The governing interaction is:
+
+`ONE timeline event -> Scripture/context payload -> approved Doré scene or motion -> return to the same ONE chapter position`
+
+The timeline remains the authority for chronology and uncertainty; Doré supplies the visual-time expression. Motion must never turn an approximate date, compressed chronology or disputed reconstruction into false precision. A single approved animation may be linked from several timeline views, but its canonical identity and provenance remain stable.
 
 ### Apparel / T-shirts
 
