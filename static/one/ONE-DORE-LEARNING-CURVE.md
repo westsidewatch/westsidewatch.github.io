@@ -316,7 +316,150 @@ Every non-ONE commission is also a training event. Useful medium-specific findin
 - Non-engraving works can teach mass/light but must be translated back through Doré's engraved Bible line/value grammar.
 - Product adaptation must not turn Doré into several unrelated platform styles.
 
-## 9. Deployment truth and learning truth
+## 9. Missing-cover batch training protocol
+
+Large-scale production for uncovered ONE chapters is a curriculum, not a blind image-generation queue. The objective is to increase coverage while leaving Doré with stronger, reviewable Living Intelligence after every batch.
+
+### 9.1 Build the production queue from repository truth
+
+- derive the missing-cover list from the canonical registry/audit rather than from memory or chat;
+- record the exact book, chapter key, current fallback state and priority;
+- group candidates by different visual problems so one batch does not repeat the same composition;
+- do not regenerate a chapter already assigned or awaiting live verification;
+- begin with a five-plate pilot batch; expand toward ten-plate batches only after the pilot's learning harvest and human review pass.
+
+### 9.2 Research before generation
+
+For every queued chapter:
+
+1. read the passage and its chapter/book context;
+2. identify one exact narrative instant or governing visual proposition;
+3. study Tier 1 Bible precedents first;
+4. identify the unsolved visual problem;
+5. study 3–12 authenticated Tier 2–5 Doré originals when needed, including non-Bible work that addresses that specific problem;
+6. record what may transfer and what must not transfer;
+7. write a generation brief before requesting any draft.
+
+The brief must define Scripture scope, scene choice, historical setting, principal figures, gesture relationships, viewer position, foreground/middle/background structure, primary light source, black/white hierarchy, line strategy, required omissions and forbidden elements. A book or chapter name alone is never a sufficient prompt.
+
+### 9.2.1 Book Visual Grammar — mandatory book-level layer
+
+Doré must not treat all biblical books as interchangeable applications of one general style. The working hierarchy is:
+
+`Doré pictorial grammar -> biblical genre grammar -> Book Visual Grammar -> chapter scene -> plate revision`
+
+Before producing the first new Studio plate for a biblical book:
+
+1. review the authenticated Doré originals and approved ONE mappings already associated with that book;
+2. review the closest canonical Doré plates for that book's recurring people, places, actions and theological pressures;
+3. examine the existing cover sequence in chapter order rather than studying isolated images only;
+4. record the book's recurring viewing distances, composition types, figure relationships, environments, value rhythm, light behavior, gesture vocabulary and degree of spectacle;
+5. record how this book differs visually from neighboring books of the same genre;
+6. create or update a compact **Book Visual Grammar** before generating the chapter brief.
+
+The Book Visual Grammar is evidence-led and provisional. It may describe recurring tendencies, but it must never force every chapter into one template or claim a distinction that the corpus does not support.
+
+For every later plate in the same book:
+
+- compare the proposed scene with the book grammar and its neighboring chapter covers before generation;
+- preserve recognizable book-level continuity without repeating the same pose, crowd arrangement, light aperture or value pattern;
+- record whether the new plate confirms, refines or contradicts the current book grammar;
+- revise the book grammar when Scripture or stronger Doré evidence exposes an overgeneralization.
+
+At the final chapter of the book, review the full cover sequence in canonical order. A plate may pass as an isolated Doré-like image and still fail if it looks foreign to its own book. Book completion therefore requires both individual plate approval and full-sequence coherence.
+
+#### Mark example
+
+Before approving a new Mark plate, study Mark's authenticated/assigned Doré sequence for evidence about narrative urgency, Christ-to-crowd distance, disciples/opponents, synagogue/road/sea/wilderness settings, compressed action, gesture and black/white pacing. Compare these findings with Matthew, Luke and John so generic “Gospel imagery” does not erase Mark's finer distinctions. Do not assume any proposed Mark trait is true merely because it sounds exegetically plausible; retain it only when Scripture, Doré evidence and sequence review support it.
+
+### 9.3 Generate in small revision sets
+
+- create 2–4 exploratory candidates per chapter rather than mass-producing finished images;
+- use the candidates to choose or revise the strongest compositional structure;
+- reject candidates with repeated poses, generic spectacle, false architecture or unsupported decorative detail before expensive final rendering;
+- produce the final master only after the direction passes Doré evaluation;
+- preserve meaningful revision evidence (`r1`, `r2`, rejection reason and correction), not merely the winning prompt.
+
+### 9.4 Two mandatory approval gates
+
+Every candidate must pass both gates independently:
+
+1. **Scripture gate** — correct passage identity, narrative instant, people, place, action and theological hierarchy; no imported event or iconography from another chapter or external literary source.
+2. **Engraving gate** — credible nineteenth-century engraved pictorial construction: anatomy, weight, gesture, depth, value architecture, directional line systems, material distinction and Doré visual ancestry. Generic monochrome texture does not pass.
+
+Failure at either gate returns the plate to revision. No failed or unreviewed plate may enter the Studio registry.
+
+### 9.5 Scored evaluation
+
+Use a 100-point review alongside written judgment:
+
+| Criterion | Weight |
+| --- | ---: |
+| Scripture fidelity and chapter specificity | 25 |
+| Narrative clarity and composition | 20 |
+| Doré visual ancestry and pictorial grammar | 20 |
+| Anatomy, physical weight and spatial credibility | 15 |
+| Line, material and value structure | 15 |
+| Absence of generative-image artifacts | 5 |
+
+The default approval target is at least **85/100**, with no criterion below **70% of its available points**. A score never overrules a concrete Scripture, anatomy, provenance or artifact failure; evaluators must record the reason for rejection or approval.
+
+### 9.6 Anti-generative-artifact inspection
+
+Before approval, inspect the rendered pixels rather than trusting prompt language. Reject or revise:
+
+- extra, missing, fused or structurally impossible hands, fingers, limbs, faces or bodies;
+- cloned faces, repeated poses, evenly spaced crowd figures and pattern-like population filler;
+- arbitrary stairs, windows, masonry, weapons, ornaments or fragments without structural support;
+- meaningless inscriptions, pseudo-lettering or accidental modern symbols;
+- plastic or airbrushed surfaces, uniform digital sharpness and decorative hatch noise unrelated to form;
+- mirrored/symmetrical template compositions, halo-like lighting without a physical or narrative source, and excessive detail without hierarchy;
+- inconsistent scale, perspective, gravity, contact, occlusion, costume or material behavior.
+
+The goal is not to conceal that the plate is AI-assisted; provenance must remain truthful. The visual goal is to remove recognizable generative shortcuts and build the image with the disciplined decisions expected of a Doré/Westside Watch engraving.
+
+### 9.7 Every plate must update memory
+
+For each approved or rejected production cycle, preserve:
+
+- authenticated originals studied and their corpus tiers;
+- the visual problem each precedent addressed;
+- generation brief and meaningful prompt decisions;
+- candidate/revision identifiers;
+- failures found, corrections attempted and the human decision;
+- evaluation scores plus written reasons;
+- reusable lesson promoted to `engraving-studio/intelligence/LEARNING-LOG.md`, or an explicit statement that no new transferable lesson was found;
+- approved asset ID, PNG path, SHA-256, publisher receipt, chapter mapping and deployment/live-verification result.
+
+This repository record is Doré's persistent memory. Generation alone does not create durable learning; future work improves only when it reloads the recorded corpus studies, rules, failures and editorial decisions.
+
+### 9.8 Batch learning harvest and expansion rule
+
+After each batch:
+
+1. compare recurring failures and successful corrections across the batch;
+2. identify prompt rules that generalized and rules that were genre-specific;
+3. update the gap map for anatomy, crowds, landscape, architecture, atmosphere and subject grammars;
+4. promote stable findings into Living Studio or Visual Grammar only when evidence supports them;
+5. audit for visual sameness across the batch;
+6. reconcile repository coverage and live-reader truth;
+7. require human approval of the learning harvest before increasing batch size.
+
+Volume never substitutes for learning evidence. If quality falls, repeated AI artifacts increase, or the same staging spreads across unrelated chapters, reduce the next batch and repair the relevant grammar before continuing.
+
+### 9.9 Native publication contract
+
+Approved ONE plates use the established native publisher flow:
+
+- final deliverable is PNG;
+- store the master under `static/one/studio/`;
+- assign a unique Studio asset ID and exact book/chapter mapping;
+- create the publisher receipt with byte count and SHA-256;
+- commit through a reviewed pull request;
+- verify deployment and the exact public asset/page mapping;
+- mark the roadmap item `DONE` only after live visual verification.
+
+## 10. Deployment truth and learning truth
 
 A plate being present in GitHub, assigned in a registry, or counted by a static audit is not by itself `LIVE_VERIFIED`.
 
@@ -329,7 +472,7 @@ Only live visual verification can promote a generated plate to `DONE` in the tem
 
 A live visual verification should also compare the plate against its QA target and record any drift. This turns deployment checking into another Doré learning event.
 
-## 10. Relationship to other Studio documents
+## 11. Relationship to other Studio documents
 
 - `ONE-PRODUCTION-ROADMAP-TEMP.md` = **what to do next / progress truth**.
 - `ONE-DORE-LIVING-STUDIO.md` = **accumulated evolving artistic/biblical intelligence**.
