@@ -1,7 +1,9 @@
 from pathlib import Path
-import json,re,urllib.request,zipfile,io
+import json,re,zipfile,io,os
 refs=json.loads(Path('audit-output/one-crossref-summary.json').read_text(encoding='utf-8'))['uniqueReferences']
-with urllib.request.urlopen('https://ebible.org/Scriptures/cmn-cu89t_usfm.zip',timeout=45) as r:data=r.read()
+archive=Path(os.environ.get('CUVT_USFM_ZIP','/tmp/cmn-cu89t_usfm.zip'))
+if not archive.is_file(): raise SystemExit(f'CUV archive missing: {archive}')
+data=archive.read_bytes()
 z=zipfile.ZipFile(io.BytesIO(data));book_files={}
 for name in z.namelist():
     if not name.lower().endswith(('.usfm','.sfm')):continue
