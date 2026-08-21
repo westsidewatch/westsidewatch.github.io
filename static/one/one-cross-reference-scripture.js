@@ -40,7 +40,11 @@
     '詩篇 147:2':'耶和華建造耶路撒冷，聚集以色列中被趕散的人。',
     '以賽亞書 58:12':'那些出於你的人必修造久已荒廢之處；你要建立拆毀累代的根基。你必稱為補破口的，和重修路徑與人居住的。',
     '以斯拉記 4:6':'在亞哈隨魯才登基的時候，上本控告猶大和耶路撒冷的居民。',
-    '箴言 21:1':'王的心在耶和華手中，好像隴溝的水隨意流轉。'
+    '箴言 21:1':'王的心在耶和華手中，好像隴溝的水隨意流轉。',
+    '哈該書 1:1–15':'大流士王第二年六月初一日，耶和華的話藉先知哈該向猶大省長撒拉鐵的兒子所羅巴伯和約撒答的兒子大祭司約書亞說：萬軍之耶和華如此說：「這百姓說，建造耶和華殿的時候尚未來到。」那時耶和華的話臨到先知哈該說：「這殿仍然荒涼，你們自己還住天花板的房屋嗎？現在萬軍之耶和華如此說：你們要省察自己的行為。你們撒的種多，收的卻少；你們吃，卻不得飽；喝，卻不得足；穿衣服，卻不得暖；得工錢的，將工錢裝在破漏的囊中。」萬軍之耶和華如此說：「你們要省察自己的行為。你們要上山取木料，建造這殿，我就因此喜樂，且得榮耀。這是耶和華說的。你們盼望多得，所得的卻少；你們收到家中，我就吹去。這是為甚麼呢？因為我的殿荒涼，你們各人卻顧自己的房屋。這是萬軍之耶和華說的。所以為你們的緣故，天就不降甘露，地也不出土產。我命乾旱臨到地土、山岡、五穀、新酒，和油，並地上的出產、人民、牲畜，以及人手一切勞碌得來的。」那時，撒拉鐵的兒子所羅巴伯和約撒答的兒子大祭司約書亞，並剩下的百姓，都聽從耶和華－他們上帝的話和先知哈該奉耶和華－他們上帝差來所說的話；百姓也在耶和華面前存敬畏的心。耶和華的使者哈該奉耶和華差遣對百姓說：「耶和華說：我與你們同在。」耶和華激動猶大省長撒拉鐵的兒子所羅巴伯和約撒答的兒子大祭司約書亞，並剩下之百姓的心，他們就來為萬軍之耶和華－他們上帝的殿做工。這是在大流士王第二年六月二十四日。',
+    '尼希米記 8:1–8':'到了七月，以色列人住在自己的城裡。那時，他們如同一人聚集在水門前的寬闊處，請文士以斯拉將耶和華藉摩西傳給以色列人的律法書帶來。七月初一日，祭司以斯拉將律法書帶到聽了能明白的男女會眾面前。在水門前的寬闊處，從清早到晌午，在眾男女、一切聽了能明白的人面前讀這律法書。眾民側耳而聽。文士以斯拉站在為這事特備的木台上。瑪他提雅、示瑪、亞奈雅、烏利亞、希勒家，和瑪西雅站在他的右邊；毗大雅、米沙利、瑪基雅、哈順、哈拔大拿、撒迦利亞，和米書蘭站在他的左邊。以斯拉站在眾民以上，在眾民眼前展開這書。他一展開，眾民就都站起來。以斯拉稱頌耶和華至大的上帝；眾民都舉手應聲說：「阿們！阿們！」就低頭，面伏於地，敬拜耶和華。耶書亞、巴尼、示利比、雅憫、亞谷、沙比太、荷第雅、瑪西雅、基利他、亞撒利雅、約撒拔、哈難、毗萊雅，和利未人使百姓明白律法；百姓都站在自己的地方。他們清清楚楚地念上帝的律法書，講明意思，使百姓明白所念的。',
+    '以斯拉記 7:6–10':'這以斯拉從巴比倫上來，他是敏捷的文士，通達耶和華－以色列上帝所賜摩西的律法書。王允准他一切所求的，是因耶和華－他上帝的手幫助他。亞達薛西王第七年，以色列人、祭司、利未人、歌唱的、守門的、尼提寧，有上耶路撒冷的。王第七年五月，以斯拉到了耶路撒冷。正月初一日，他從巴比倫起程；因他上帝施恩的手幫助他，五月初一日就到了耶路撒冷。以斯拉定志考究遵行耶和華的律法，又將律例典章教訓以色列人。',
+    '詩篇 30:11':'你已將我的哀哭變為跳舞，將我的麻衣脫去，給我披上喜樂。'
   };
   const reviewedExplanationBooks=[6,7,8,11,12,13,14,15,16,17];
   let filledFromReference=0;
@@ -49,6 +53,6 @@
 
   const psalm8=D.studyBooks?.[1]?.chapterStudies?.['1']?.connections?.[0];if(Array.isArray(psalm8)&&String(psalm8[3]||'').includes('aa耶和華'))psalm8[3]=String(psalm8[3]).replace('aa耶和華','耶和華');
   let total=0,verified=0,commentaryOnly=0;Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;else if(String(row[2]||'').trim())commentaryOnly++;})));
-  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'history-reference-fill-through-esther-partial',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
+  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'history-reference-fill-postexile-gaps-complete',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
   document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;
 })();
