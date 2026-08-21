@@ -16,8 +16,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Generate and audit with diagnostics
+      - name: Download public-domain traditional CUV USFM
         shell: bash
+        run: |
+          set -euo pipefail
+          curl -L --fail --retry 4 --retry-delay 2 -A 'WestsideWatch-ONE/1.0' https://ebible.org/Scriptures/cmn-cu89t_usfm.zip -o /tmp/cmn-cu89t_usfm.zip
+          test -s /tmp/cmn-cu89t_usfm.zip
+          unzip -t /tmp/cmn-cu89t_usfm.zip >/dev/null
+      - name: Generate and audit all remaining Scripture
+        shell: bash
+        env:
+          CUVT_USFM_ZIP: /tmp/cmn-cu89t_usfm.zip
         run: |
           set +e
           mkdir -p audit-output
@@ -37,11 +46,11 @@ jobs:
           fi
           printf '{"fillExit":%s,"checkExit":%s,"auditCheckExit":%s,"missingExit":%s,"preflightExit":%s}\n' "$fill" "$check" "$check2" "$miss" "$pre" > audit-output/one-crossref-run-status.json
           exit 0
-      - name: Commit diagnostics or completed result to work branch
+      - name: Commit completed result and diagnostics to work branch
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add -A audit-output static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh 2>/dev/null || true
           git diff --cached --quiet && exit 0
-          git commit -m "Run final cross-reference Scripture fill diagnostics"
+          git commit -m "Complete all remaining cross-reference Scripture and audit globally"
           git push origin HEAD:one/wisdom-major-prophets-scripture
