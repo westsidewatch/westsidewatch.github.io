@@ -4,12 +4,12 @@ set -euo pipefail
 APP="static/one/one-app.js"
 INDEX="static/one/index.html"
 AUDIT="static/one/one-cross-reference-scripture-global-audit.js"
-HEBREWS="static/one/one-cross-reference-scripture-hebrews.js"
+COMPLETE="static/one/one-cross-reference-scripture-complete.js"
 MAJOR="static/one/one-cross-reference-scripture-major-prophets.js"
 WISDOM="static/one/one-cross-reference-scripture-wisdom.js"
 CANONICAL="static/one/one-cross-reference-scripture.js"
 
-for f in "$APP" "$INDEX" "$AUDIT" "$HEBREWS" "$MAJOR" "$WISDOM" "$CANONICAL"; do
+for f in "$APP" "$INDEX" "$AUDIT" "$COMPLETE" "$MAJOR" "$WISDOM" "$CANONICAL"; do
   test -s "$f" || { echo "FAIL missing required file: $f"; exit 1; }
 done
 
@@ -43,7 +43,7 @@ required=[
  'one-cross-reference-scripture.js',
  'one-cross-reference-scripture-wisdom.js',
  'one-cross-reference-scripture-major-prophets.js',
- 'one-cross-reference-scripture-hebrews.js',
+ 'one-cross-reference-scripture-complete.js',
  'one-cross-reference-scripture-global-audit.js',
  'one-app.js',
 ]
@@ -63,7 +63,7 @@ grep -Fq 'conflicts' "$AUDIT" || { echo 'FAIL audit no longer checks conflicting
 grep -Fq 'missingRows' "$AUDIT" || { echo 'FAIL audit no longer checks missing Scripture'; exit 1; }
 
 # Explanation-only Scripture layers may never promote commentary into Scripture.
-if grep -Eq 'row\[3\][[:space:]]*=[[:space:]]*row\[2\]' "$WISDOM" "$MAJOR" "$HEBREWS"; then
+if grep -Eq 'row\[3\][[:space:]]*=[[:space:]]*row\[2\]' "$WISDOM" "$MAJOR" "$COMPLETE"; then
   echo 'FAIL explanation-only Scripture layer promotes commentary into Scripture'
   exit 1
 fi
