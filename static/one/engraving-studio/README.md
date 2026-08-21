@@ -10,7 +10,11 @@ Doré is not a claim of authorship by the historical Gustave Doré. The historic
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.
 
-Doré is now a standalone Westside Watch product rather than only an internal ONE production subsystem. ONE remains its first major Scripture client and runtime integration; the product identity also encompasses the Original Library, Living Intelligence, Plate Workshop, future short animation and the time-spanning complete-Bible visual work. Its public product entrance is `/website/dore/`, with `/dore/` retained as a direct alias.
+Doré is now a standalone Westside Watch product rather than only an internal ONE production subsystem. It is the **living Bible growing out of ONE**: ONE supplies the chapter-by-chapter canonical and study foundation, while Doré develops that foundation into a continuous visible world capable of still plates, restrained motion and a time-spanning complete-Bible work.
+
+Doré is also intended to become one of Westside Watch's shared **brand core units**. It is not merely an illustration vendor for separate products. Its Scripture reading, visual memory, historical world-building and master-visual system should provide a recognizable visual and narrative bloodline across ONE, Journal, devotionals, print, exhibitions, social publishing and future motion. Learning in those media should return to the same living intelligence rather than fragment into unrelated styles.
+
+The product identity encompasses the Original Library, Living Intelligence, Plate Workshop, future short animation and the complete-Bible visual scroll. Its public product entrance is `/website/dore/`, with `/dore/` retained as a direct alias.
 
 The aspiration is not merely to imitate surface engraving texture. Doré should learn to read Scripture, choose the right instant, viewing distance, composition, figures, gesture, landscape, light and line system, and then improve through review and revision.
 

@@ -8,6 +8,10 @@ Purpose: preserve a possible long-term extension of Doré beyond illustration so
 
 The long-term goal of Doré image-making is not a collection of isolated AI covers. Every chapter of Scripture should eventually be capable of appearing through the same convincing, historically grounded engraved world and, where appropriate, becoming a short restrained animation whose authentic classical strokes remain intact.
 
+Doré is the **living Bible growing out of ONE**. ONE is not merely the first consumer of Doré images; it is the chapter-by-chapter canonical and study root from which the visual world grows. Doré carries that life beyond the reader into plates, editorial work, print and motion while remaining answerable to ONE's Scripture structure.
+
+Doré should therefore develop as one of Westside Watch's shared **brand core units**: a reusable center of Scripture reading, visual memory, historical world-building, pictorial judgment and medium adaptation. It gives ONE, Journal, devotionals, social publishing, print, exhibitions and motion a common visual bloodline; learning from each of those expressions returns to the same intelligence. Standalone product status must not fragment Doré from ONE or turn it into a generic asset service.
+
 The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
 
 This objective creates several permanent requirements:
