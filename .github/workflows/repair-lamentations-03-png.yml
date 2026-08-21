@@ -24,7 +24,7 @@ jobs:
           im = Image.open(io.BytesIO(raw))
           out = Path('static/one/studio/lamentations-03-dore-final.png')
           im.save(out, 'PNG', optimize=True)
-          print(im.size, out.stat().st_size)
+          print('PNG ready:', im.size, out.stat().st_size)
           PY
       - name: Commit real PNG
         run: |
