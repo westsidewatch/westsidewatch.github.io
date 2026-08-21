@@ -16,30 +16,32 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Generate all remaining Scripture from public-domain CUV
-        run: python3 scripts/one-crossref-fill-final.py
-      - name: Validate generated layers
-        run: |
-          node --check static/one/one-cross-reference-scripture-complete.js
-          node --check static/one/one-cross-reference-scripture-global-audit.js
-      - name: Run exhaustive cross-reference audit
+      - name: Generate and audit with diagnostics
         shell: bash
         run: |
           set +e
-          node scripts/one-crossref-missing-audit.mjs > /tmp/missing.log 2>&1
-          miss=$?
-          bash scripts/one-crossref-preflight.sh > /tmp/preflight.log 2>&1
-          pre=$?
           mkdir -p audit-output
-          cp /tmp/missing.log audit-output/one-crossref-missing-run.log
-          cp /tmp/preflight.log audit-output/one-crossref-preflight.log
-          printf '{"missingExit":%s,"preflightExit":%s}\n' "$miss" "$pre" > audit-output/one-crossref-run-status.json
+          python3 scripts/one-crossref-fill-final.py > audit-output/one-crossref-fill.log 2>&1
+          fill=$?
+          if [ "$fill" -eq 0 ]; then
+            node --check static/one/one-cross-reference-scripture-complete.js > audit-output/one-crossref-jscheck.log 2>&1
+            check=$?
+            node --check static/one/one-cross-reference-scripture-global-audit.js >> audit-output/one-crossref-jscheck.log 2>&1
+            check2=$?
+            node scripts/one-crossref-missing-audit.mjs > audit-output/one-crossref-missing-run.log 2>&1
+            miss=$?
+            bash scripts/one-crossref-preflight.sh > audit-output/one-crossref-preflight.log 2>&1
+            pre=$?
+          else
+            check=99; check2=99; miss=99; pre=99
+          fi
+          printf '{"fillExit":%s,"checkExit":%s,"auditCheckExit":%s,"missingExit":%s,"preflightExit":%s}\n' "$fill" "$check" "$check2" "$miss" "$pre" > audit-output/one-crossref-run-status.json
           exit 0
-      - name: Commit completed Scripture and audit results to work branch
+      - name: Commit diagnostics or completed result to work branch
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh audit-output
+          git add -A audit-output static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh 2>/dev/null || true
           git diff --cached --quiet && exit 0
-          git commit -m "Complete all remaining cross-reference Scripture and audit globally"
+          git commit -m "Run final cross-reference Scripture fill diagnostics"
           git push origin HEAD:one/wisdom-major-prophets-scripture
