@@ -24,7 +24,7 @@ jobs:
           global.location={search:'',href:'https://example.invalid/one/'};
           global.matchMedia=()=>({matches:true});
           global.MutationObserver=class{observe(){}};
-          global.document={documentElement:{dataset:{},classList:{add(){}}},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []},createElement(){return {style:{},dataset:{},append(){},appendChild(){},setAttribute(){},addEventListener(){},classList:{add(){},remove(){},toggle(){}}}},head:{append(){},appendChild(){}},body:{classList:{add(){},remove(){}}}};
+          global.document={readyState:'complete',addEventListener(){},documentElement:{dataset:{},classList:{add(){}}},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []},createElement(){return {style:{},dataset:{},append(){},appendChild(){},setAttribute(){},addEventListener(){},classList:{add(){},remove(){},toggle(){}}}},head:{append(){},appendChild(){}},body:{classList:{add(){},remove(){}}}};
           const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
           const scripts=[...html.matchAll(/<script\s+src="\.\/([^"?]+)(?:\?[^" ]*)?"/g)].map(m=>m[1]);
           const stop=scripts.indexOf('one-studio-assets.js');
@@ -75,5 +75,5 @@ jobs:
           git config user.name 'westsidewatch-audit-bot'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add static/one/index.html static/one/one-cross-reference-audit.json
-          git commit -m 'Record global cross-reference audit and bust integrity loader cache'
+          git commit -m 'Record global cross-reference audit and bust integrity loader cache' || exit 0
           git push
