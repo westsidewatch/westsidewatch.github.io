@@ -12,6 +12,19 @@ Doré is the **living Bible growing out of ONE**. ONE is not merely the first co
 
 Doré should therefore develop as one of Westside Watch's shared **brand core units**: a reusable center of Scripture reading, visual memory, historical world-building, pictorial judgment and medium adaptation. It gives ONE, Journal, devotionals, social publishing, print, exhibitions and motion a common visual bloodline; learning from each of those expressions returns to the same intelligence. Standalone product status must not fragment Doré from ONE or turn it into a generic asset service.
 
+### Name theology — gold points to glory and light
+
+The French adjective `doré` means “golden” or “gilded.” Westside Watch receives this meaning within its already established theology of God's glory, God's light and new life—not as luxury branding and not as devotion to gold, art or the historical illustrator.
+
+- the Holy of Holies and ark use gold as consecrated material language, while God's presence—not the metal—makes the sanctuary holy;
+- the New Jerusalem is described with transparent-gold radiance, while God's glory gives it light and the Lamb is its lamp;
+- Doré's gold therefore belongs to the same symbolic family as Westside Watch's Bright Morning Star, dawn, daylight and city of light;
+- gold frame, illumination and visual beauty must direct attention through the artwork toward God and Scripture, never back toward the product as spectacle;
+- “divine light” in an image must remain pictorially restrained: theological centrality does not authorize AI sunbursts, portals, beams or constant visual grandiosity;
+- new-life radiance is expressed through truth, presence, transformed human life and meaningful light, not by making every scene bright or gilded.
+
+Permanent center: **God's glory, God's light and new life in that light remain the brand core; Doré is a visual core unit ordered toward that center, not a replacement center.**
+
 The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
 
 This objective creates several permanent requirements:

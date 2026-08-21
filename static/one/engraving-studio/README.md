@@ -6,6 +6,10 @@ Status: **STANDALONE WESTSIDE WATCH PRODUCT / LIVING SYSTEM**
 
 **Doré** is the formal name of Westside Watch's dedicated Scripture visual intelligence.
 
+The French adjective **doré** means “golden” or “gilded.” Within Westside Watch, that linguistic meaning belongs to the existing brand theology of God's glory and light: the gold of the Holy of Holies and the ark, the glory that makes the sanctuary holy, the radiant new life given in Christ, and the New Jerusalem whose light is God's glory and whose lamp is the Lamb. Gold is a material sign, never the object of devotion; it points to God and must never replace him.
+
+This is continuity, not a new brand center. Doré's gold, the Bright Morning Star, dawn, daylight and the city of light all remain ordered toward the same center: **the glory of God, the light of God and life made new in that light.** Visual beauty, engraved craft and future motion serve that witness rather than advertising themselves.
+
 Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.
