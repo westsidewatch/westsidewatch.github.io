@@ -1,0 +1,39 @@
+name: Temp load Hebrews Scripture and global audit
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  patch:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: one/wisdom-major-prophets-scripture
+      - name: Add Hebrews and global audit loaders
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/index.html')
+          s=p.read_text(encoding='utf-8')
+          major='<script src="./one-cross-reference-scripture-major-prophets.js?v=20260821a"></script>'
+          heb='<script src="./one-cross-reference-scripture-hebrews.js?v=20260821a"></script>'
+          audit='<script src="./one-cross-reference-scripture-global-audit.js?v=20260821a"></script>'
+          if heb not in s:
+              if major not in s: raise SystemExit('major Scripture marker missing')
+              s=s.replace(major,major+heb,1)
+          if audit not in s:
+              if heb not in s: raise SystemExit('Hebrews Scripture marker missing')
+              s=s.replace(heb,heb+audit,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Commit load order to work branch
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add static/one/index.html
+          git diff --cached --quiet && exit 0
+          git commit -m "Load Hebrews Scripture and global audit"
+          git push origin HEAD:one/wisdom-major-prophets-scripture
