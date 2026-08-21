@@ -7,14 +7,16 @@ on:
       - 'scripts/one-global-audit.mjs'
       - 'scripts/one-cover-backlog-audit.mjs'
       - 'scripts/one-canon-index-audit.mjs'
+      - 'scripts/one-crossref-preflight.sh'
       - '.github/workflows/one-global-audit.yml'
   push:
-    branches: [ main ]
+    branches: [ main, one/wisdom-major-prophets-scripture ]
     paths:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
       - 'scripts/one-cover-backlog-audit.mjs'
       - 'scripts/one-canon-index-audit.mjs'
+      - 'scripts/one-crossref-preflight.sh'
       - '.github/workflows/one-global-audit.yml'
 
 permissions:
@@ -90,6 +92,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Cross-reference preflight
+        run: bash scripts/one-crossref-preflight.sh
       - name: Run 66-book / 1189-chapter audit
         id: audit
         continue-on-error: true
@@ -116,7 +120,7 @@ jobs:
           test -f audit-output/one-cover-backlog.json
           test -f audit-output/one-canon-index.json
           git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add -A audit-output static/one .dore-upload
           if git diff --cached --quiet; then
             echo 'Audit reports and Doré assets unchanged.'
