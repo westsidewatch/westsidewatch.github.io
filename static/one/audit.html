@@ -6,18 +6,18 @@
 <meta name="robots" content="noindex,nofollow">
 <title>ONE · 66-Book Global Audit</title>
 <style>
-:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:light dark}body{margin:0;padding:24px;line-height:1.5}main{max-width:1280px;margin:auto}h1{margin:0 0 4px}.muted{opacity:.7}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}.card{border:1px solid currentColor;border-radius:8px;padding:12px}.card strong{display:block;font-size:1.6rem}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.toolbar button{padding:7px 12px}.status{font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);text-align:left;vertical-align:top}th{position:sticky;top:0;background:Canvas}.PASS{opacity:.65}.BACKLOG .status{color:#726134}.WARNING .status{color:#a66a00}.FAIL .status{color:#b00020}.issues{max-width:520px}iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0}.notice{padding:12px;border:1px solid currentColor;border-radius:8px;margin:16px 0}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+:root{font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color-scheme:light dark}body{margin:0;padding:24px;line-height:1.5}main{max-width:1280px;margin:auto}h1{margin:0 0 4px}.muted{opacity:.7}.summary{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:24px 0}.card{border:1px solid currentColor;border-radius:8px;padding:12px}.card strong{display:block;font-size:1.6rem}.toolbar{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0}.toolbar button{padding:7px 12px}.status{font-weight:700}table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:8px;border-bottom:1px solid color-mix(in srgb,currentColor 20%,transparent);text-align:left;vertical-align:top}th{position:sticky;top:0;background:Canvas}.PASS{opacity:.65}.WARNING .status{color:#a66a00}.FAIL .status{color:#b00020}.issues{max-width:520px}iframe{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;border:0}.notice{padding:12px;border:1px solid currentColor;border-radius:8px;margin:16px 0}code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
 </style>
 </head>
 <body>
 <main>
 <h1>ONE · 66-Book Global Audit</h1>
-<p class="muted">只讀開發體檢頁。FAIL / WARNING 是需要修正的品質問題；BACKLOG 只表示尚待製作的 Missing Plate，不阻塞書卷發佈。</p>
+<p class="muted">只讀開發體檢頁。插圖封面與純書籍封面都是正式有效的封面模式；只有 FAIL / WARNING 表示品質問題。</p>
 <div id="state" class="notice">正在載入 ONE 全局資料……</div>
 <section id="report" hidden>
 <div class="summary" id="summary"></div>
 <div class="toolbar" role="group" aria-label="Filter audit rows">
-<button data-filter="ALL">全部</button><button data-filter="FAIL">FAIL</button><button data-filter="WARNING">WARNING</button><button data-filter="BACKLOG">BACKLOG</button><button data-filter="PASS">PASS</button><button id="copy-summary">複製摘要</button>
+<button data-filter="ALL">全部</button><button data-filter="FAIL">FAIL</button><button data-filter="WARNING">WARNING</button><button data-filter="PASS">PASS</button><button id="copy-summary">複製摘要</button>
 </div>
 <table>
 <thead><tr><th>卷</th><th>章</th><th>狀態</th><th>Cover</th><th>Chronology</th><th>Map</th><th>Connections</th><th>Issues</th></tr></thead>
@@ -28,19 +28,18 @@
 <iframe id="runtime" src="./" title="ONE runtime audit source"></iframe>
 <script>
 (()=>{
-  const COVER_BACKLOG='no canonical Doré/ONE Studio chapter cover assigned';
   const iframe=document.getElementById('runtime'),state=document.getElementById('state'),report=document.getElementById('report'),summaryEl=document.getElementById('summary'),rowsEl=document.getElementById('rows');
   let audit=null,filter='ALL',derived=[];
   const yes=value=>value?'✓':'—';
   const esc=value=>String(value??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
-  const derive=row=>{const issues=Array.isArray(row.issues)?row.issues:[],backlog=issues.some(item=>item.message===COVER_BACKLOG),qualityIssues=issues.filter(item=>item.message!==COVER_BACKLOG),level=qualityIssues.some(item=>item.level==='FAIL')?'FAIL':qualityIssues.length?'WARNING':backlog?'BACKLOG':'PASS';return {...row,backlog,qualityIssues,effectiveLevel:level};};
-  const counts=()=>derived.reduce((a,row)=>{a[row.effectiveLevel]=(a[row.effectiveLevel]||0)+1;return a;},{PASS:0,BACKLOG:0,WARNING:0,FAIL:0});
-  const renderRows=()=>{if(!audit)return;rowsEl.innerHTML=derived.filter(row=>filter==='ALL'||row.effectiveLevel===filter).map(row=>`<tr class="${row.effectiveLevel}"><td>${String(row.bookNumber).padStart(2,'0')} ${esc(row.book)}</td><td>${row.chapter}</td><td class="status">${row.effectiveLevel}</td><td>${yes(row.modules.cover)}</td><td>${yes(row.modules.timeline)}</td><td>${yes(row.modules.map)}</td><td>${yes(row.modules.connections)}</td><td class="issues">${row.qualityIssues.map(item=>esc(item.message)).join('<br>')}${row.backlog?`${row.qualityIssues.length?'<br>':''}<span class="muted">Missing Plate backlog</span>`:''}</td></tr>`).join('');};
-  const render=()=>{derived=audit.chapters.map(derive);const s=audit.summary,c=s.counts,k=counts();state.textContent=`${s.status} · ${c.books} 卷 · ${c.chapters} 章`;summaryEl.innerHTML=[['Books',c.books],['Chapters',c.chapters],['PASS',k.PASS],['BACKLOG',k.BACKLOG],['WARNING',k.WARNING],['FAIL',k.FAIL],['Cover',`${c.withCover}/${c.chapters}`],['Chronology',`${c.withTimeline}/${c.chapters}`],['Maps',c.withMap],['Connections',c.withConnections]].map(([label,value])=>`<div class="card"><span>${label}</span><strong>${value}</strong></div>`).join('');report.hidden=false;renderRows();};
+  const derive=row=>{const qualityIssues=Array.isArray(row.issues)?row.issues:[],level=qualityIssues.some(item=>item.level==='FAIL')?'FAIL':qualityIssues.length?'WARNING':'PASS';return {...row,qualityIssues,effectiveLevel:level};};
+  const counts=()=>derived.reduce((a,row)=>{a[row.effectiveLevel]=(a[row.effectiveLevel]||0)+1;return a;},{PASS:0,WARNING:0,FAIL:0});
+  const renderRows=()=>{if(!audit)return;rowsEl.innerHTML=derived.filter(row=>filter==='ALL'||row.effectiveLevel===filter).map(row=>`<tr class="${row.effectiveLevel}"><td>${String(row.bookNumber).padStart(2,'0')} ${esc(row.book)}</td><td>${row.chapter}</td><td class="status">${row.effectiveLevel}</td><td>${row.coverMode==='ILLUSTRATION_COVER'?'插圖':'書籍'}</td><td>${yes(row.modules.timeline)}</td><td>${yes(row.modules.map)}</td><td>${yes(row.modules.connections)}</td><td class="issues">${row.qualityIssues.map(item=>esc(item.message)).join('<br>')}</td></tr>`).join('');};
+  const render=()=>{derived=audit.chapters.map(derive);const s=audit.summary,c=s.counts,k=counts();state.textContent=`${s.status} · ${c.books} 卷 · ${c.chapters} 章`;summaryEl.innerHTML=[['Books',c.books],['Chapters',c.chapters],['PASS',k.PASS],['WARNING',k.WARNING],['FAIL',k.FAIL],['Valid covers',`${c.validCovers}/${c.chapters}`],['Illustrated',c.illustrationCovers],['Chronology',`${c.withTimeline}/${c.chapters}`],['Maps',c.withMap],['Connections',c.withConnections]].map(([label,value])=>`<div class="card"><span>${label}</span><strong>${value}</strong></div>`).join('');report.hidden=false;renderRows();};
   const readAudit=()=>{try{audit=iframe.contentWindow.ONE_GLOBAL_QUALITY_AUDIT;}catch(error){state.textContent='無法讀取 ONE runtime：'+error.message;return;}if(audit){render();return;}state.textContent='ONE runtime 已載入，但尚未產生品質矩陣。';};
   iframe.addEventListener('load',()=>setTimeout(readAudit,50));
   document.querySelectorAll('[data-filter]').forEach(button=>button.addEventListener('click',()=>{filter=button.dataset.filter;renderRows();}));
-  document.getElementById('copy-summary').addEventListener('click',async()=>{if(!audit)return;const s=audit.summary,c=s.counts,k=counts(),text=`ONE Global Audit ${s.status}\nBooks ${c.books}/66\nChapters ${c.chapters}/1189\nPASS ${k.PASS}\nBACKLOG ${k.BACKLOG}\nWARNING ${k.WARNING}\nFAIL ${k.FAIL}\nCover ${c.withCover}/${c.chapters}\nChronology ${c.withTimeline}/${c.chapters}\nMaps ${c.withMap}\nConnections ${c.withConnections}`;try{await navigator.clipboard.writeText(text);state.textContent='摘要已複製。';}catch{state.textContent=text;}});
+  document.getElementById('copy-summary').addEventListener('click',async()=>{if(!audit)return;const s=audit.summary,c=s.counts,k=counts(),text=`ONE Global Audit ${s.status}\nBooks ${c.books}/66\nChapters ${c.chapters}/1189\nPASS ${k.PASS}\nWARNING ${k.WARNING}\nFAIL ${k.FAIL}\nValid covers ${c.validCovers}/${c.chapters}\nIllustrated ${c.illustrationCovers}\nChronology ${c.withTimeline}/${c.chapters}\nMaps ${c.withMap}\nConnections ${c.withConnections}`;try{await navigator.clipboard.writeText(text);state.textContent='摘要已複製。';}catch{state.textContent=text;}});
 })();
 </script>
 </body>

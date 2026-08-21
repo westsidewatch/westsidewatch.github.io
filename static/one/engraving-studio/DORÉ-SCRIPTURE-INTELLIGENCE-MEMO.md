@@ -706,7 +706,7 @@ This lexicon should be versioned, explicit and reviewable. Doré should consult 
 
 ## Maturity rule
 
-This extension should happen only after the current Doré visual system and ONE production workflow remain stable. The memo records the direction; it does **not** expand the current Missing Plate list or interrupt `025-003` production.
+This extension should happen only after the current Doré visual system and ONE production workflow remain stable. The memo records the direction; it does **not** expand the current first-chapter illustration candidate list or interrupt an approved active production task.
 
 Potential maturity sequence:
 
@@ -737,4 +737,4 @@ Natural sublimity follows the same rule. Waterless clouds, uprooted trees, wild 
 - Do not mix FFmpeg/video processing into Engraving Studio runtime.
 - Do not let future subtitle corrections train visual grammar automatically.
 - Do not treat the memo as permission for automatic theological rewriting.
-- Do not interrupt the current Missing Plate execution order.
+- Do not interrupt the current first-chapter illustration production order.

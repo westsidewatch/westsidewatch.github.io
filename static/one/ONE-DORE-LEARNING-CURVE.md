@@ -151,7 +151,7 @@ Progress synchronization and Doré learning are intentionally connected. Synchro
 
 ### Chapter delta check — after each finalized plate
 
-When one Missing Plate becomes `LIVE_VERIFIED / DONE`:
+When one illustration candidate becomes `LIVE_VERIFIED / DONE`:
 - verify the exact chapter assignment and live asset;
 - compare the new plate against the neighboring canonical Doré/ONE plates in that book;
 - revisit the relevant Tier 1 Doré originals used as ancestry rather than only checking technical registry state;

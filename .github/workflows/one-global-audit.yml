@@ -5,7 +5,7 @@ on:
     paths:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
-      - 'scripts/one-cover-backlog-audit.mjs'
+      - 'scripts/one-cover-mode-audit.mjs'
       - 'scripts/one-canon-index-audit.mjs'
       - 'scripts/one-crossref-preflight.sh'
       - '.github/workflows/one-global-audit.yml'
@@ -14,7 +14,7 @@ on:
     paths:
       - 'static/one/**'
       - 'scripts/one-global-audit.mjs'
-      - 'scripts/one-cover-backlog-audit.mjs'
+      - 'scripts/one-cover-mode-audit.mjs'
       - 'scripts/one-canon-index-audit.mjs'
       - 'scripts/one-crossref-preflight.sh'
       - '.github/workflows/one-global-audit.yml'
@@ -98,10 +98,10 @@ jobs:
         id: audit
         continue-on-error: true
         run: node scripts/one-global-audit.mjs
-      - name: Classify cover backlog and quality
+      - name: Audit cover coexistence modes
         id: cover_audit
         continue-on-error: true
-        run: node scripts/one-cover-backlog-audit.mjs
+        run: node scripts/one-cover-mode-audit.mjs
       - name: Audit shared Canon Index
         id: canon_index
         continue-on-error: true
@@ -117,7 +117,7 @@ jobs:
         if: always() && github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
           test -f audit-output/one-global-audit.json
-          test -f audit-output/one-cover-backlog.json
+          test -f audit-output/one-cover-modes.json
           test -f audit-output/one-canon-index.json
           git config user.name 'github-actions[bot]'
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com

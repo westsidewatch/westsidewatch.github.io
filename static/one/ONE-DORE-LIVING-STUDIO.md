@@ -19,7 +19,7 @@ The Learning Curve is permanent learning architecture. The temporary roadmap is 
 
 While `ONE-PRODUCTION-ROADMAP-TEMP.md` exists, it is the Studio's temporary execution memory. Before every ONE Studio / Doré-continuation production cycle, read it together with the Learning Curve, this Living Studio and `ONE-DORE-VISUAL-GRAMMAR.md`, then take the first unchecked task that is ready.
 
-The ledger is the normal fast path for production progress. Doré AI must not repeatedly rescan all 66 books merely to rediscover which Missing Plates are finished. It should trust ledger entries that are already `DONE`, inspect the active/changed chapter, and use the ledger's delta/book/global reconciliation protocol. A full-canon recount is reserved for mismatch recovery, major gates, and final completion.
+The ledger is the normal fast path for production progress. Doré AI must not repeatedly rescan all 66 books merely to rediscover which approved illustration candidates are finished. It should trust ledger entries that are already `DONE`, inspect the active/changed chapter, and use the ledger's exact-key reconciliation protocol. The canonical candidate source is the current first-chapter list produced by the cover-mode audit.
 
 But synchronization is not merely bookkeeping. At book, wave, and final-canon reconciliation gates, Doré AI must also perform the learning harvest defined in `ONE-DORE-LEARNING-CURVE.md`: revisit canonical Doré originals, review the completed visual sequence, identify stable grammar, detect Studio drift, and persist reusable discoveries into this Living Studio or the Visual Grammar. Progress checking and corpus learning therefore reinforce each other without requiring a full 1,189-chapter scan after every plate.
 
