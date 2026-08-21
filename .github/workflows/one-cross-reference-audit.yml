@@ -1,0 +1,67 @@
+name: ONE Cross Reference Audit
+on:
+  push:
+    paths:
+      - '.github/workflows/one-cross-reference-audit.yml'
+      - 'static/one/**'
+  workflow_dispatch:
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit all ONE cross references
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm'),path=require('path');
+          const root='static/one';
+          global.window=globalThis;
+          global.location={search:'',href:'https://example.invalid/one/'};
+          global.matchMedia=()=>({matches:true});
+          global.MutationObserver=class{observe(){}};
+          global.document={documentElement:{dataset:{},classList:{add(){}}},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []},createElement(){return {style:{},dataset:{},append(){},appendChild(){},setAttribute(){},addEventListener(){},classList:{add(){},remove(){},toggle(){}}}},head:{append(){},appendChild(){}},body:{classList:{add(){},remove(){}}}};
+          const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+          const scripts=[...html.matchAll(/<script\s+src="\.\/([^"?]+)(?:\?[^" ]*)?"/g)].map(m=>m[1]);
+          const stop=scripts.indexOf('one-studio-assets.js');
+          const dataScripts=scripts.slice(0,stop<0?scripts.length:stop);
+          const errors=[];
+          for(const file of dataScripts){
+            const p=path.join(root,file);
+            if(!fs.existsSync(p))continue;
+            try{vm.runInThisContext(fs.readFileSync(p,'utf8'),{filename:file});}
+            catch(e){errors.push(file+': '+e.message);}
+          }
+          const D=global.ONE_DATA;
+          if(!D?.studyBooks)throw new Error('ONE_DATA.studyBooks not built');
+          const local={
+            '約書亞記 1:8':1,
+            '耶利米書 17:5–8':1,
+            '馬太福音 7:13–27':1
+          };
+          let total=0,withFourth=0,withLocal=0,missing=0,chapters=0;
+          const affected=[];
+          for(const [bn,book] of Object.entries(D.studyBooks)){
+            for(const [cn,study] of Object.entries(book.chapterStudies||{})){
+              const rows=Array.isArray(study?.connections)?study.connections:[];
+              if(rows.length)chapters++;
+              rows.forEach((item,i)=>{
+                if(!Array.isArray(item))return;
+                total++;
+                const ref=String(item[0]||'').trim();
+                const fourth=String(item[3]||'').trim();
+                if(fourth)withFourth++;
+                else if(local[ref])withLocal++;
+                else{missing++;affected.push(`${bn}.${cn}.${i+1} ${book.name||''} ${ref}`);}
+              });
+            }
+          }
+          console.log(`ONE_CROSS_REFERENCE_AUDIT total=${total} chaptersWithConnections=${chapters} withExplicitFourth=${withFourth} withVerifiedLocal=${withLocal} missingVerifiedScripture=${missing}`);
+          console.log('AFFECTED_BEGIN');
+          affected.forEach(x=>console.log(x));
+          console.log('AFFECTED_END');
+          if(errors.length){console.log('LOAD_WARNINGS_BEGIN');errors.forEach(x=>console.log(x));console.log('LOAD_WARNINGS_END');}
+          NODE
