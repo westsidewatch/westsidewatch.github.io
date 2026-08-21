@@ -1,8 +1,9 @@
 from pathlib import Path
 import json,re,zipfile,io,os
-summary=json.loads(Path('audit-output/one-crossref-summary.json').read_text(encoding='utf-8'))
+# Fixed from the exhaustive zero-gap audit. Do not derive this set from a mutable audit output.
+missing_refs=['申命記 7:1–5','撒母耳記下 5–7','列王紀上 6–8','申命記 30:1–10','列王紀下 22–25','列王紀下 25:1–21','耶利米書 52','啟示錄 21–22','啟示錄 13','撒母耳記下 7:14','詩篇 8:4–6','詩篇 22:22','以賽亞書 8:18','民數記 12:7','詩篇 95:7–11','出埃及記 17:1–7','創世記 2:2','約書亞記 21:43–45','創世記 14:18–20','創世記 22:16–18','利未記 16:2','民數記 18:21','出埃及記 24:7–8','出埃及記 25:8–9','出埃及記 25–26','利未記 16','詩篇 40:6–8','耶利米書 31:33–34','申命記 32:35–36','創世記 22:1–18','出埃及記 2–14','約書亞記 2','箴言 3:11–12','哈該書 2:6','申命記 4:24','利未記 16:27','詩篇 118:6','申命記 31:6']
 conflict_refs=['創世記 1:26–28','創世記 12:3','詩篇 110:4','創世記 12:1–4','啟示錄 5:5','路加福音 1:46–55','希伯來書 12:28–29','申命記 17:14–20','以賽亞書 40:31','彌迦書 6:6–8','羅馬書 12:19','詩篇 2:6','路加福音 1:32–33','民數記 24:17','撒母耳記下 7:12–16','民數記 6:24–26','羅馬書 3:13','路加福音 1:51–53','雅各書 3:5–10','羅馬書 3:10–12','提摩太後書 3:15–17','以西結書 34:11–16','約翰福音 10:11','約翰福音 8:12','創世記 1章','出埃及記 14章','以賽亞書 5:1–7','以賽亞書 44:9–20','以賽亞書 55:1','以賽亞書 25:8','以賽亞書 61:1','以賽亞書 42:1','耶利米書 31:31–34','以賽亞書 40:3–5','詩篇 2:7','以賽亞書 22:22','但以理書 7:13–14','創世記 3:15','出埃及記 24:8','詩篇 110:1','申命記 6:5']
-refs=sorted(set(summary['uniqueReferences'])|set(conflict_refs))
+refs=sorted(set(missing_refs)|set(conflict_refs))
 archive=Path(os.environ.get('CUVT_USFM_ZIP','/tmp/cmn-cu89t_usfm.zip'))
 if not archive.is_file(): raise SystemExit(f'CUV archive missing: {archive}')
 z=zipfile.ZipFile(io.BytesIO(archive.read_bytes()));book_files={}
