@@ -20,7 +20,16 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Download public-domain traditional CUV USFM
+        run: |
+          curl -L --fail --retry 4 --retry-delay 2 -A 'WestsideWatch-ONE/1.0' \
+            https://ebible.org/Scriptures/cmn-cu89t_usfm.zip \
+            -o /tmp/cmn-cu89t_usfm.zip
+          test -s /tmp/cmn-cu89t_usfm.zip
+          unzip -t /tmp/cmn-cu89t_usfm.zip >/dev/null
       - name: Generate all remaining public-domain CUV cross-reference Scripture
+        env:
+          CUVT_USFM_ZIP: /tmp/cmn-cu89t_usfm.zip
         run: python3 scripts/one-crossref-fill-final.py
       - name: Validate Scripture layers
         run: |
