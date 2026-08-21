@@ -148,7 +148,8 @@ Execution order:
 2. [ ] 41 馬可福音 — 3 missing, 13/16 covered. High reader visibility; before generation expand this row into the three exact missing chapter keys from the current book audit.
 3. [ ] 08 路得記 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
 4. [ ] 32 約拿書 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
-5. [ ] 31 俄巴底亞書 — 1 missing. Expand into exact child key before generation.
+5. [ ] 31 俄巴底亞書 — 1 missing. Exact child `031-001`; Doré r2 human-approved and natively persisted/assigned, pending deployment and live visual verification.
+   - `031-001 | ASSIGNED_PENDING_DEPLOYMENT | asset_id:OBA-01-DORE-STUDIO-002 | revision:r2 | assignment:ONE_STUDIO_ASSET_REGISTRY 31:1 | deploy:pending | live:/one/?book=31&chapter=1 | verified:pending`
 6. [ ] 57 腓利門書 — 1 missing. Expand into exact child key before generation.
 7. [ ] 63 約翰二書 — 1 missing. Expand into exact child key before generation.
 8. [ ] 64 約翰三書 — 1 missing. Expand into exact child key before generation.
