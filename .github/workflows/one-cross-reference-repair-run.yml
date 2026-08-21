@@ -1,0 +1,75 @@
+name: ONE Cross Reference Canonical Repair Run
+on:
+  push:
+    paths:
+      - '.github/workflows/one-cross-reference-repair-run.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch renderer and schema
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          root=Path('static/one')
+
+          p=root/'one-app.js'; s=p.read_text()
+          helper="""\nfunction connectionMarkup(item,index){\n  const reference=String(item?.[0]||'').trim(),relationship=String(item?.[1]||'').trim(),explanation=String(item?.[2]||'').trim(),scripture=String(item?.[3]||'').trim();\n  const quote=scripture?`<blockquote data-one-scripture=\"true\">${scripture}</blockquote>`:`<p class=\"connection-scripture-missing\"><span>Scripture pending · 經文待補</span>本條目前只保留串珠關係與說明，不以說明文字冒充經文引用。</p>`;\n  const note=explanation?`<p class=\"connection-note\"><span>Cross-reference note · 串珠說明</span>${explanation}</p>`:'';\n  return `<article><header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${reference}</strong><small>${relationship}</small></div></header>${quote}${note}</article>`;\n}\n"""
+          if 'function connectionMarkup(item,index)' not in s:
+            s=s.replace('\nfunction showChapter(number,name,{sync=true}={}){',helper+'\nfunction showChapter(number,name,{sync=true}={}){',1)
+          old='${study.connections.map((item,index)=>`<article><header><span>${String(index+1).padStart(2,\'0\')}</span><div><strong>${item[0]}</strong><small>${item[1]}</small></div></header><blockquote>${item[2]}</blockquote></article>`).join(\'\')}'
+          if old not in s: raise SystemExit('unsafe renderer not found')
+          s=s.replace(old,'${study.connections.map(connectionMarkup).join(\'\')}',1)
+          p.write_text(s)
+
+          p=root/'remaining-nt-epistles-runtime-check.js'; s=p.read_text()
+          old='study.connections=array(study.connections).map(item=>row(item,3,"connections",bookName,n));'
+          if old not in s: raise SystemExit('runtime 3-field truncation not found')
+          p.write_text(s.replace(old,'study.connections=array(study.connections).map(item=>row(item,4,"connections",bookName,n));',1))
+
+          p=root/'ONE-STUDY-SCHEMA-MASTER.md'; s=p.read_text()
+          s=s.replace('- `connections`: array of rows `[reference, relationship, explanatory text]`. **Never pass a bare string.** A bare string is indexable character data in JavaScript and will render as broken one-character columns.','- `connections`: array of rows `[reference, relationship, explanatory text, scripture quotation]`. **Field 3 is commentary only; field 4 is the only field permitted to render as a Bible quotation. Never infer or copy field 3 into a quotation.** Never pass a bare string.',1)
+          guard='9a. Cross-reference guard: verify the renderer quotes only `connections[][3]`; `connections[][2]` must remain explanatory prose even when field 4 is empty.\n'
+          if guard not in s: s=s.replace('9. Confirm **no new schema-normalization warnings** are introduced by the new book.\n','9. Confirm **no new schema-normalization warnings** are introduced by the new book.\n'+guard,1)
+          p.write_text(s)
+
+          (root/'one-cross-reference-scripture.js').write_text("""/* ONE canonical cross-reference Scripture layer.\n * Row shape: [reference, relationship, explanation, scripture].\n * Explicit batches only; commentary is never auto-promoted into a quotation.\n */\n(()=>{\n  \"use strict\";\n  const D=window.ONE_DATA;if(!D?.studyBooks)return;\n  const migrate=(book,chapter,index,explanation)=>{const row=D.studyBooks?.[book]?.chapterStudies?.[String(chapter)]?.connections?.[index];if(!Array.isArray(row)||!String(row[2]||'').trim())return false;if(!String(row[3]||'').trim())row[3]=String(row[2]).trim();row[2]=explanation;return true;};\n  const batch=[\n    [19,1,0,'與詩篇 1:2 同樣把蒙福的道路連於持續默想並遵行神的話。'],\n    [19,1,1,'與詩篇 1:3 相同，以栽在水旁、持續結果的樹描寫倚靠耶和華的人。'],\n    [19,1,2,'耶穌把兩條道路、兩種果子與兩種根基並置，呼應詩篇 1 的義人／惡人兩路。'],\n    [19,2,0,'大衛之約提供「父／子」與永遠國位的背景，連到詩篇 2 的受膏君王。'],\n    [19,2,1,'初代教會直接以詩篇 2 解釋希律、彼拉多、外邦人和以色列民敵擋耶穌。'],\n    [19,2,2,'希伯來書把詩篇 2:7 的「你是我的兒子」用於基督。'],\n    [19,2,3,'啟示錄沿用詩篇 2 的鐵杖治理圖像，指向基督所賜的王權。']\n  ];\n  const migrated=batch.reduce((n,args)=>n+(migrate(...args)?1:0),0);let total=0,verified=0;Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;})));window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'psalms-1-2',migrated,total,verified,remaining:total-verified};document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;\n})();\n""")
+
+          p=root/'index.html'; s=p.read_text()
+          gate='<script src="./remaining-nt-epistles-runtime-check.js?v=20260819a"></script>'
+          if 'one-cross-reference-scripture.js' not in s:
+            if gate not in s: raise SystemExit('gate loader not found')
+            s=s.replace(gate,'<script src="./one-cross-reference-scripture.js?v=20260821a"></script><script src="./remaining-nt-epistles-runtime-check.js?v=20260821a"></script>',1)
+          s=s.replace('one-app.js?v=20260817d','one-app.js?v=20260821a').replace('pentateuch-cover-runtime-sync.js?v=20260821e','pentateuch-cover-runtime-sync.js?v=20260821f')
+          p.write_text(s)
+
+          p=root/'pentateuch-cover-runtime-sync.js'; s=p.read_text(); cut=s.find('\n/* Global cross-reference integrity layer.')
+          if cut!=-1: s=s[:cut].rstrip()+"\n"
+          p.write_text(s)
+
+          p=root/'one-book.css'; s=p.read_text()
+          if 'Cross-reference integrity:' not in s: s+='''\n/* Cross-reference integrity: commentary and Scripture are separate. */\n.connection-note{margin:.8rem 0 0;color:var(--ink);font-size:var(--one-body-size);line-height:1.8}\n.connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}\n.connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}\n.connection-section blockquote[data-one-scripture=\"true\"]{margin:.85rem 0 0}\n'''
+          p.write_text(s)
+
+          obsolete=root/'one-cross-reference-inline.js'
+          if obsolete.exists(): obsolete.unlink()
+          PY
+      - name: Verify
+        run: |
+          ! grep -F '<blockquote>${item[2]}</blockquote>' static/one/one-app.js
+          grep -F 'row(item,4,"connections"' static/one/remaining-nt-epistles-runtime-check.js
+          grep -F 'study.connections.map(connectionMarkup)' static/one/one-app.js
+          test ! -f static/one/one-cross-reference-inline.js
+      - name: Commit
+        run: |
+          git config user.name 'westsidewatch-repair-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Canonicalize ONE cross-reference Scripture handling'
+          git push
