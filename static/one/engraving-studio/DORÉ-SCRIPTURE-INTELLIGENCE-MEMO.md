@@ -730,6 +730,192 @@ Natural sublimity follows the same rule. Waterless clouds, uprooted trees, wild 
 - `ONE-PRODUCTION-ROADMAP-TEMP.md` + progress JSON — current temporary ONE production state.
 - **This memo** — possible future non-visual Scripture/editorial/service expansion. It should remain a memo until a separate implementation project is intentionally started.
 
+## Matthew 3 reconstruction learning record — Baptism of Jesus
+
+The 2026-08-21 Matthew 3 exercise began because the canonical Doré plate 184, *The Baptism of Jesus*, was available to the reader only as a 475 × 602 public-domain scan. The first research error confused an older `one-data.js` illustration field with the later canonical cover resolver. The final runtime mapping is authoritative: Matthew 3 is plate 184, while plate 183, *John the Baptist Preaching in the Wilderness*, belongs to Mark 1. Future research must resolve the final writer and canonical plate ID before searching or generating.
+
+### Source hierarchy learned in this exercise
+
+1. Search first for an authenticated public-domain high-resolution scan of the exact plate.
+2. A commercial page that advertises a large master proves that a high-resolution scan exists, but an unpurchased thumbnail is not the master and must not be described as if its hidden lines had been inspected.
+3. Public antique-print photographs may be studied for visible stroke direction and printing character, but may not be republished as ONE assets when their reuse rights are not established.
+4. If the exact plate has no usable free high-resolution scan, lock its low-resolution original as the composition/identity blueprint and study other authenticated high-resolution Doré originals for technique only.
+5. A generated reconstruction is a new derivative candidate, not an original scan. It requires human visual approval before publication and must never erase the original provenance.
+
+The high-resolution public-domain *Birth of Jesus* scan (4596 × 5640) became the main technical teacher for plate 184. It demonstrates that Doré's light is built from reserved paper white and progressively denser line systems, not from smooth glow; facial expression is carried by head angle, gaze, eyelid, brow, nose plane, mouth corner and surrounding light rather than enlarged facial description; deep shadow remains readable as strokes; and sky, cloud, skin, hair, fur, cloth, water, rock and distance require distinct mark vocabularies.
+
+### Reference-role separation
+
+- exact low-resolution plate: composition, identity, crop, figure count, gesture and value-map authority only;
+- antique impression of the same plate: local line direction, print character and relative value evidence only;
+- high-resolution authenticated Doré plate: stroke grammar, paper-white light, facial economy and material differentiation only;
+- earlier generated candidate: evaluation evidence only, never the pixel ancestor of the next candidate.
+
+Text labels cannot create true internal layers in the generator. A full-image technical reference may still leak its global visual statistics into the result. Therefore reference roles reduce confusion but do not guarantee faithful transfer; every fresh output must be judged again against the exact plate.
+
+### R1–R4 evidence
+
+- R1 recovered nominal detail but used repetitive sky and water texture, overmodelled Jesus, made the rays too regular and allowed John's garment to approach a black mass.
+- R2 improved paper white, robe breathing and water interruption, yet retained mechanically even sky lines and insufficiently differentiated material hatching.
+- R3 used the high-resolution Nativity as a technical teacher. Faces became more restrained, distance separated better and water improved, but upper-sky banding, rigid rays, dense fur and overly explicit torso modelling remained.
+- R4 separated three reference roles and set a final-candidate gate. It improved facial restraint, distant crowd hierarchy, water reflection and robe light. It still failed publication because the upper sky remained an almost uniform horizontal field and John's animal-skin garment remained too dark and congested. A promised or expected “final” status must never override visible failure evidence.
+
+### R4 eye-scale correction — every visible figure is reviewed
+
+Human enlarged review found an important split inside the same candidate: John the Baptist's eye treatment remains close to the original engraving, but several figures behind him have characteristic AI eyes. Passing the principal face is therefore insufficient; every visible head must pass at its actual printed scale.
+
+- Preserve John's successful treatment as evidence: the eye is embedded in brow, socket, nose plane and directional hatch rather than drawn as a freestanding dark symbol.
+- Background figures must not receive miniature portrait eyes. At that scale, Doré normally lets head angle, brow/nose silhouette, a short lid indication, cheek shadow and group direction carry expression.
+- Reject black circular sockets, paired dark dots, white-ring pupils, symmetrical “goggle” contours, duplicated eye shapes, face-like scribbles and eyes whose contrast is stronger than the surrounding head plane.
+- A distant eye may be one tapered interruption or may disappear into a coherent shadow plane. Omission is preferable to invented high-contrast anatomy.
+- Review principal, secondary and background heads separately at enlargement, then return to cover size. If an eye only looks plausible while enlarged but becomes a black puncture at cover size, it fails.
+- Do not repair the R4 background faces by editing R4. Carry this evidence into a completely fresh generation together with the sky and fur corrections, preserving the permanent regenerate-never-edit rule.
+
+### R5 fresh-generation eye evidence
+
+R5 was generated afresh from the original Baptism plate, the public antique-print study image and the high-resolution *Birth of Jesus* plate; no generated candidate was used as a pixel parent. The explicit distant-eye instruction improved the crowd: many background eyes became short interruptions or coherent head-plane shadow instead of uniformly hollow sockets. The improvement proves that eye scale must be specified by depth tier, not merely by naming an overall Doré facial style.
+
+R5 still fails publication. Several frontal heads in the left/rear crowd retain paired black-dot eyes, while the nearer elderly witness at right has bright, high-contrast eyes that read as a modern emotional close-up rather than Doré's subordinated facial construction. John's raised hand also has an unstable finger silhouette. These defects show that “background faces improved” is not equivalent to an all-head pass.
+
+Next fresh-generation instruction must divide faces into three explicit scales: principal faces built from anatomical planes; secondary faces limited to lid/brow/nose relationships without isolated pupils; distant faces reduced to silhouette, one tapered lid interruption or no eye mark. Review must enumerate every visible frontal head rather than sampling the two biblical principals. R5 is learning evidence only and must not be published or edited.
+
+### R6 three-scale face result
+
+R6 applied the principal/secondary/distant face hierarchy in a new generation. The background crowd improved materially: most distant heads now read through head direction, nose shadow, veil, posture and short lid interruption, with substantially fewer hollow or paired-dot eyes. The nearer elderly witness no longer uses bright eye whites to seize attention. This supports retaining the three-scale method as the default eye protocol.
+
+R6 is not automatically approved. John's raised hand is more legible than R5 but its palm/finger silhouette remains somewhat rigid; the composition has become more orderly than the historical plate, and the right-side cross staff carries excessive graphic emphasis. Record the eye lesson separately from whole-image acceptance: a successful local learning objective must never conceal regression in Doré's compositional asymmetry or object hierarchy. Status: eye lesson near-pass; complete plate pending human review; do not publish or edit without approval.
+
+Human approval was subsequently withheld for publication because the essential baptismal water action disappeared. John's raised hand no longer releases a visible stream onto Jesus, so the gesture can read as blessing or proclamation rather than the act of baptizing. This is a narrative-causality failure, not a minor decorative omission. The next fresh candidate must show an unbroken causal chain: John's anatomically credible hand contains/releases water -> a restrained, gravity-driven stream visibly descends -> the water reaches Jesus's bowed head/hair -> small runoff or droplets join the Jordan. The stream must remain engraved water, using broken tapering light/dark strokes rather than a solid white ribbon, glowing beam or rigid tube. Do not patch R6; regenerate the complete plate while retaining the approved clothing and improved three-scale eye lessons.
+
+R7 restored the missing physical action successfully: water visibly leaves John's hand, descends under gravity, reaches Jesus's head and continues as runoff. It nevertheless fails the whole-plate gate. The sky regressed into a large theatrical cloud aperture with concentrated radiance—a characteristic AI sacred-image device—and John's animal-skin garment again compressed toward an over-dark mass. Figure arrangement and bodily pose also drifted away from the stronger R6 balance. This is another controlled lesson: solving narrative causality does not authorize losses in restraint, garment differentiation, composition or black ratio. Preserve R7 only as evidence for the water-action chain; regenerate from the written specification and original Doré sources, not from R7 pixels.
+
+### Separate reconstruction fidelity from original-work craft quality
+
+Human review sharpened the diagnosis of R7. Matthew 3 is an **original-plate reconstruction**, not a new interpretation. R7 changed Jesus's posture, face, hand position, bodily bearing and relationship to John; it also redesigned the surrounding staging. Those changes are categorically disqualifying even where the new image is visually accomplished. In a reconstruction, the original plate controls not only subject identity and approximate composition but the recognizable pose, silhouette, head angle, expression economy, gesture, figure-to-figure relationship, crowd structure, major value masses and narrative instant. Technique may be recovered; authorship decisions may not be replaced.
+
+At the same time, R7 contains a different kind of successful evidence. Judged only as a newly composed Doré-continuation image, its garment construction, grouped hair, layered figures, water, rocks, reeds, crowd differentiation and density of meaningful environmental detail approach the human editor's 90/100 target. This craft evidence is valuable for a future original Studio plate such as Philemon, where the composition must be invented rather than reconstructed.
+
+Permanent two-track evaluation:
+
+1. **Historical Doré reconstruction:** exact recognizable original decisions are locked; score fidelity before beauty. A technically excellent but re-authored Jesus, John, pose or composition fails.
+2. **New Doré-continuation composition:** no historical plate is being copied; score historical/scriptural responsibility, Doré pictorial mind and craft richness. R7-level material detail, layered clothing, hair grouping, environment and spatial population represent approximately a 90-point craft benchmark, while its AI sky device remains excluded.
+
+Never transfer the wrong conclusion between tracks. Do not accept invention as restoration because it is beautiful; do not reject useful craft learning merely because the reconstruction itself failed. For Philemon, pursue R7's density and material finish while retaining the previously approved r2 spatial concept, historical restraint, papyrus rules and prohibition on theatrical AI light.
+
+### Why the invented Baptism remains visibly AI despite high detail
+
+Human comparison between Doré's original *Baptism of Jesus* and the freely re-composed R7 exposes a distinction that line quality alone cannot solve. R7 contains abundant detail and several technically attractive materials, yet its total aesthetic judgment is markedly weaker and carries a difficult-to-name but unmistakable AI character. Future evaluation must name the causes instead of treating “AI feeling” as an unsupported reaction.
+
+1. **Pose is designed for instant legibility rather than observed human weight.** R7 places Jesus in a generalized devotional pose with neatly crossed hands, symmetrically bowed head and an evenly displayed torso. The body reads as an icon assembled to say “humility.” Doré's original pose is less diagrammatic: weight, water, cloth, head inclination and John's action produce a specific bodily instant rather than a reusable pious symbol.
+2. **The relationship becomes two isolated display figures.** AI tends to perfect each person separately, then arrange them side by side. Doré makes gesture, interval, overlap, scale and surrounding witnesses bind John and Jesus into one event. If the figures remain convincing when cut apart, the relational composition may be too weak.
+3. **Every feature asks to be noticed.** R7 gives the face, hands, torso, fur, staff, witnesses, water, reeds, rocks and sky similarly assertive finish. Doré distributes attention unequally: some passages are decisive, others compressed, interrupted, obscured or left quiet. Equal elaboration produces visual abundance without hierarchy.
+4. **The sacred is announced by an effect.** The large torn cloud and concentrated beam tell the viewer exactly where transcendence is located. This is a common AI shortcut because it makes the theme immediately recognizable. Doré's grandeur is usually carried by scale, darkness, silence, spacing, witness response and controlled light; it does not need a spectacular portal to certify holiness.
+5. **The composition is too self-completing.** AI favors centered balance, readable silhouettes, complete objects, clean role separation and a satisfying closed arrangement. Doré often allows obstruction, awkward natural intervals, asymmetrical pressure, incomplete contours and space continuing beyond the frame. Those resist the feeling of a generated poster.
+6. **Detail is ornamental rather than causal.** R7's many curls, folds, clouds and rock marks can be admired individually, but some exist because the model associates “Doré” with richness. In the original, marks more consistently answer a cause: gravity, anatomy, material, light, depth, action or narrative emphasis. Detail without a cause makes a crowded image still feel empty.
+7. **Emotion is prepackaged.** R7's lowered face, folded hands and solemn witnesses arrive as familiar sacred-image signals. Doré more often lets emotion emerge from bodily strain, distance, group movement, withheld faces and the surrounding world. The viewer discovers feeling instead of receiving a finished emotive label.
+8. **Irregularity is cosmetic, not structural.** AI can vary individual lines and objects while retaining a highly regular underlying design. Doré's irregularity affects the deep structure: unequal figure scale, changing spatial compression, displaced centers, interrupted routes, competing masses and selective darkness.
+9. **Local polish conceals global genericness.** Hair and cloth may approach the desired engraving standard while the scene remains an interchangeable “biblical baptism.” A Doré-like image requires both high-frequency stroke craft and low-frequency pictorial thought. Passing only the first gate still produces an AI illustration.
+
+Operational comparison method: before examining engraving detail, blur or reduce both candidate and original to large value masses; compare silhouette, weight, interval, attention order, asymmetry, negative space and relational action. Then inspect medium-scale folds, crowd groups and environmental causes; inspect eyes, hair and individual strokes last. If the candidate fails at the blurred or medium scale, more detail cannot repair its aesthetic judgment.
+
+Permanent reconstruction warning: the goal is not “a better-looking version of the same subject.” It is recovery of the original plate's decisions at higher usable resolution. Any impulse to improve the pose, clarify devotion, beautify Jesus, dramatize heaven, complete silhouettes or balance the crowd must be treated as unauthorized invention.
+
+### R8 local-water edit rejection — composition preservation is not stroke preservation
+
+After the human requested returning to R6 and adding only the missing water, a tightly worded image edit appeared to retain the major composition and supplied a faint hand-to-head water line. Enlarged human review nevertheless detected renewed AI-ization of the engraving. Garment, animal skin, sky and background figures were re-synthesized into softer, more even and more repetitive wave-like marks; the previously accepted variation in weight, spacing, material direction and tonal layering weakened across the frame.
+
+R8 is therefore rejected. It confirms the Philemon lesson under an even stricter test: a generative edit may preserve low-frequency composition while silently replacing high-frequency stroke language everywhere. “Only add water” in the prompt is not a pixel lock. Similar silhouettes and object positions must never be mistaken for unchanged engraving.
+
+Permanent consequence for this plate: do not send R6 through image generation again. Preserve the exact R6 binary as the sole visual master. If the baptismal water must be added, use an actually deterministic pixel-preserving overlay or mask whose unchanged region can be verified as byte/pixel identical; otherwise leave the plate unpublished. The allowed overlay must add only a narrow engraved trickle between the existing hand and Jesus's head and must not resample, resize, denoise, sharpen or recompress the untouched image.
+
+### Final Matthew 3 rollback decision — publish R5, not the later revisions
+
+The human editor selected `exec-1c5fd94e-7146-49c6-8810-4b2fd50a7f3c.png` as the formal Matthew 3 illustration and cover. Verification SHA-256: `31ffb05945b3fcb3ad493929b9a55118d26001112366f18e41aba48522237501`; dimensions: 998 × 1576. This decision supersedes the later R6–R8 discussion and the proposed water overlay. Do not add or regenerate the missing hand-to-head water line. The selected binary is locked.
+
+Why this earlier candidate is preferred:
+
+- its strokes remain comparatively crisp, narrow and decisively directional instead of softening into generalized gray texture;
+- line weight and spacing still change across sky, skin, hair, animal skin, linen, rock, crowd and water, preserving material separation;
+- dark passages retain visible cut-line structure and paper intervals instead of merging into blurred or glossy masses;
+- drapery folds are carried by long load-bearing strokes and subordinate cross-hatch rather than later uniform waves;
+- water reflection uses broken intervals and local contrast rather than becoming a repeated horizontal screen;
+- faces and hair remain more legible as anatomical and grouped forms, before later revisions began smoothing or repeating their marks;
+- the overall image preserves a stronger engraved edge hierarchy at cover scale, even where a later candidate may solve an isolated object more explicitly.
+
+Why the later versions are rejected:
+
+- repeated generation and attempted local editing re-synthesized the whole plate, even when composition appeared stable;
+- line systems became increasingly even in thickness, spacing and curvature, producing the characteristic AI “all surfaces share one texture” effect;
+- small forms lost edge decisions and dissolved into soft, fuzzy, low-contrast bundles;
+- curls, fur, cloth, clouds and background faces acquired repeated wave/loop behavior;
+- accumulated smoothing reduced the distinction between cut line, paper gap, half-tone and deep shadow;
+- local gains such as improved eyes, hands or visible water did not compensate for the global loss of engraving integrity.
+
+Permanent rollback rule: always preserve immutable binaries of promising early candidates. Compare every later output against the earliest strong stroke benchmark at full frame and enlargement. When revisions improve a named detail but progressively soften, homogenize or blur the line language, return to the earlier binary and publish it if the human editor approves. Never assume a higher revision number represents higher quality.
+
+### Primary benchmark for new Studio compositions
+
+The same locked Matthew 3 binary (`31ffb05945b3fcb3ad493929b9a55118d26001112366f18e41aba48522237501`) is also the **first technical benchmark for future original Doré-continuation compositions**, including the next Philemon attempt. This corrects the earlier provisional statement that R7 represented the general 90-point craft target.
+
+R7 may retain isolated lessons about environmental abundance or the physical water-action chain, but it must not control the global aesthetic because its invented pose, theatrical sky, overly self-completing arrangement and later AI-like tendencies contaminate the example. The selected earlier Matthew 3 candidate is the safer integrated benchmark for crisp directional strokes, material separation, readable darks, cloth hierarchy, hair grouping, water intervals, crowd recession and cover-scale edge clarity.
+
+For original compositions, use this benchmark together with authenticated Doré originals: the benchmark defines the minimum generated line integrity currently achieved by the Studio; historical Doré plates still control higher-level composition, restraint, attention hierarchy and pictorial judgment. Meeting the benchmark does not by itself prove a work is Doré-like, but falling below its line clarity or material differentiation is an automatic rejection.
+
+### R6 clothing benchmark — layered hatch constructs cloth
+
+The human editor identifies R6's clothing treatment as a new minimum-quality benchmark, independently of the unresolved hand and compositional questions. Benchmark file SHA-256: `f53c7b76298c4ab4d2f28c273a8343a66ecf9ad25d544adb61dacaaabf902873`.
+
+The successful property is not merely “many lines.” Cloth volume is built through several interacting line layers:
+
+- long primary strokes follow the load-bearing direction and main fold from shoulder, elbow, waist, knee or gathered edge;
+- shorter secondary strokes turn across the form to describe rounded volume, compression, overlap and the reverse plane of a fold;
+- selective cross-hatching deepens occlusion and cast shadow without filling the entire garment with equal black;
+- line weight, spacing and length change gradually between lit ridge, half-tone slope, fold trough and deepest overlap;
+- reserved paper gaps keep highlights and midtones breathable, while broken contours prevent cloth from looking cut out or metallic;
+- adjacent garments distinguish material, weight and distance through different stroke rhythms rather than through one global texture;
+- folds originate from bodily structure, gravity, tension and contact. They must not be decorative waves pasted over an undefined body.
+
+The rejected Philemon revisions are the controlling negative comparison. Their clothing accumulated dense, uniform, curling or worm-like marks; line direction ceased to explain shoulder, arm, lap and garment weight; midtones collapsed; cloth, wall, beard and shadow began sharing the same surface texture. That is AI texture, not Doré engraving, regardless of how detailed or dark it appears.
+
+Permanent garment gate: future Doré candidates do not pass unless their principal and secondary clothing reaches at least the R6 level of layered directional construction, tonal graduation, fold causality, material differentiation and breathable paper. Review clothing at full frame and enlargement. If the garment reads only because of a dark silhouette, uniform texture or arbitrary crease inventory, reject the whole candidate and regenerate; do not repair it through serial editing.
+
+### Hair construction gate — mass, grouped locks and engraved light
+
+Hair is a separate high-risk AI region and must be reviewed independently from the face. A plausible face does not pass if its hair is a synthetic black cap, glossy plastic curls, repeated waves, noodles, wire loops or a uniform fur-like texture.
+
+- Construct the cranial mass and hairline first. Hair must wrap a believable skull, emerge from plausible growth directions and preserve the silhouette of forehead, temple, ear, nape, beard and neck.
+- Organize hair into a few large directional masses, then divide only selected masses into medium locks and sparse fine accents. Never draw every strand with equal weight or resolution.
+- Use overlapping, tapered and interrupted strokes. Vary curvature, length, thickness, spacing and convergence according to the turning form; avoid identical S-curves, closed loops and evenly repeated ringlets.
+- Model light by reserving irregular paper gaps across the crest of a mass and increasing hatch overlap toward roots, undersides and occlusion. Do not create digital white highlights, glossy bands or isolated bright dots.
+- Deep hair shadow must remain readable as layered strokes with occasional paper breathing through it. A featureless black helmet or beard is a failure even when the outer silhouette is correct.
+- Hair, beard, camel hair, wool, fur and cloth require related but distinct mark vocabularies. Human hair must not merge into John's animal-skin garment, and beard must not share the wall's or cloud's texture.
+- Facial hair follows jaw, mouth and cheek anatomy. It must not erase the mouth, fuse nose to beard, produce symmetrical tendrils or turn the face into the looped black mask seen in rejected Philemon revisions.
+- Scale controls detail. Principal hair may show grouped locks and a few accents; secondary figures receive simplified directional masses; distant heads receive silhouette and one or two structural interruptions, never miniature rows of curls.
+- Natural irregularity is structured, not random: vary lock size and spacing while maintaining gravity, growth, head turn and the overall light source.
+
+Permanent hair gate: enlarge every principal and visible secondary head, then inspect again at cover size. Reject black caps, cloned curls, concentric ringlets, embossed/worm-like strokes, floating hairlines, hair growing across anatomy, hair-beard-fur fusion or contrast that makes hair look pasted onto the face. Carry the diagnosis into a fresh generation; never repair hair through serial generative editing.
+
+### Stable gates learned
+
+- no global engraving texture may wrap the whole frame;
+- line weight, length, spacing, direction and overlap must vary locally and materially;
+- every dark passage must remain visibly constructed from strokes and paper gaps;
+- sky lines must form unequal interrupted bands and yield to cloud structure;
+- divine rays must be corridors of reserved paper white with dissolving irregular edges, not rigid tubes;
+- faces stay small; expression comes from posture, gaze and a few decisive marks;
+- animal skin uses irregular hooked/broken clusters with paper flecks and must remain distinct from hair, beard and shadow;
+- water uses unequal broken horizontal strokes, broad white interruptions and local curved ripples, never repeated bands or stamps;
+- lower-cover readability should be solved at layout level with restrained local value support, not by crushing the entire engraving darker;
+- regenerate a complete fresh candidate after failure; never serially edit a generated plate and accumulate texture drift.
+
+### Global original-resolution workflow
+
+Before scheduling further generated covers, audit the canonical Doré original library for actual source dimensions. For every low-resolution original:
+
+`verify plate identity -> search authenticated free high-resolution source -> replace canonical source globally -> verify every chapter sharing that plate -> only if unavailable, enter reconstruction study -> generate fresh PNG -> human approval -> publish with derivative/provenance metadata`
+
+The free original always outranks reconstruction. A reconstruction is justified only by the absence of a usable free high-resolution scan, never merely for visual novelty.
+
 ## Do not do yet
 
 - Do not make this memo a ONE runtime dependency.
