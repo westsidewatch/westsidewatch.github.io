@@ -1,0 +1,31 @@
+name: ONE Cross Reference Cache Refresh
+on:
+  push:
+    paths:
+      - '.github/workflows/one-cross-reference-cache-bust-20260821.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Refresh cross-reference Scripture asset
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/index.html')
+          s=p.read_text()
+          old='one-cross-reference-scripture.js?v=20260821b'
+          new='one-cross-reference-scripture.js?v=20260821c'
+          if old not in s:
+              raise SystemExit('expected cache marker not found')
+          p.write_text(s.replace(old,new,1))
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'westsidewatch-scripture-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/one/index.html
+          git commit -m 'Refresh validated cross-reference Scripture cache'
+          git push
