@@ -35,15 +35,20 @@
     '列王紀上 19:19–21':'於是，以利亞離開那裡走了，遇見沙法的兒子以利沙耕地。在他前頭有十二對牛，自己趕著第十二對。以利亞到他那裡去，將自己的外衣搭在他身上。以利沙就離開牛，跑到以利亞那裡，說：「求你容我先與父母親嘴，然後我便跟隨你。」以利亞對他說：「你回去吧，我向你做了什麼呢？」以利沙就離開他回去，宰了一對牛，用套牛的器具煮肉給民吃，隨後就起身跟隨以利亞，服侍他。',
     '路加福音 4:25–27':'我對你們說實話，當以利亞的時候，天閉塞了三年零六個月，遍地有大饑荒，那時，以色列中有許多寡婦，以利亞並沒有奉差往她們一個人那裏去，只奉差往西頓的撒勒法一個寡婦那裏去。先知以利沙的時候，以色列中有許多長大痲瘋的，但內中除了敘利亞國的乃縵，沒有一個得潔淨的。',
     '詩篇 105:1–15':'你們要稱謝耶和華，求告他的名，在萬民中傳揚他的作為！要向他唱詩歌頌，談論他一切奇妙的作為！要以他的聖名誇耀！尋求耶和華的人，心中應當歡喜！要尋求耶和華與他的能力，時常尋求他的面。他僕人亞伯拉罕的後裔，他所揀選雅各的子孫哪，你們要記念他奇妙的作為和他的奇事，並他口中的判語。他是耶和華－我們的上帝；全地都有他的判斷。他記念他的約，直到永遠；他所吩咐的話，直到千代－就是與亞伯拉罕所立的約，向以撒所起的誓。他又將這約向雅各定為律例，向以色列定為永遠的約，說：我必將迦南地賜給你，作你產業的分。當時，他們人丁有限，數目稀少，並且在那地為寄居的。他們從這邦遊到那邦，從這國行到那國。他不容甚麼人欺負他們，為他們的緣故責備君王，說：不可難為我受膏的人，也不可惡待我的先知。',
-    '以斯拉記 1:1–4':'波斯王塞魯士元年，耶和華為要應驗藉耶利米口所說的話，就激動波斯王塞魯士的心，使他下詔通告全國說：波斯王塞魯士如此說：耶和華天上的上帝已將天下萬國賜給我，又囑咐我在猶大的耶路撒冷為他建造殿宇。在你們中間凡作他子民的，可以上猶大的耶路撒冷，在耶路撒冷重建耶和華－以色列上帝的殿（只有他是上帝）。願上帝與這人同在。凡剩下的人，無論寄居何處，那地的人要用金銀、財物、牲畜幫助他，另外也要為耶路撒冷上帝的殿甘心獻上禮物。'
+    '以斯拉記 1:1–4':'波斯王塞魯士元年，耶和華為要應驗藉耶利米口所說的話，就激動波斯王塞魯士的心，使他下詔通告全國說：波斯王塞魯士如此說：耶和華天上的上帝已將天下萬國賜給我，又囑咐我在猶大的耶路撒冷為他建造殿宇。在你們中間凡作他子民的，可以上猶大的耶路撒冷，在耶路撒冷重建耶和華－以色列上帝的殿（只有他是上帝）。願上帝與這人同在。凡剩下的人，無論寄居何處，那地的人要用金銀、財物、牲畜幫助他，另外也要為耶路撒冷上帝的殿甘心獻上禮物。',
+    '歷代志下 36:22–23':'波斯王塞魯士元年，耶和華為要應驗藉耶利米口所說的話，就激動波斯王塞魯士的心，使他下詔通告全國，說：波斯王塞魯士如此說：耶和華－天上的上帝已將天下萬國賜給我，又囑咐我在猶大的耶路撒冷為他建造殿宇。你們中間凡作他子民的，可以上去，願耶和華－他的上帝與他同在。',
+    '詩篇 147:2':'耶和華建造耶路撒冷，聚集以色列中被趕散的人。',
+    '以賽亞書 58:12':'那些出於你的人必修造久已荒廢之處；你要建立拆毀累代的根基。你必稱為補破口的，和重修路徑與人居住的。',
+    '以斯拉記 4:6':'在亞哈隨魯才登基的時候，上本控告猶大和耶路撒冷的居民。',
+    '箴言 21:1':'王的心在耶和華手中，好像隴溝的水隨意流轉。'
   };
-  const reviewedExplanationBooks=[6,7,8,11,12,13,14];
+  const reviewedExplanationBooks=[6,7,8,11,12,13,14,15,16,17];
   let filledFromReference=0;
   const filledByBook={};
   for(const bookNo of reviewedExplanationBooks){let n=0;const book=D.studyBooks?.[bookNo];Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row)||String(row[3]||'').trim())return;const scripture=scriptureByReference[String(row[0]||'').trim()];if(!scripture)return;row[3]=scripture;n++;filledFromReference++;}));filledByBook[bookNo]=n;}
 
   const psalm8=D.studyBooks?.[1]?.chapterStudies?.['1']?.connections?.[0];if(Array.isArray(psalm8)&&String(psalm8[3]||'').includes('aa耶和華'))psalm8[3]=String(psalm8[3]).replace('aa耶和華','耶和華');
   let total=0,verified=0,commentaryOnly=0;Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;else if(String(row[2]||'').trim())commentaryOnly++;})));
-  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'history-reference-fill-through-chronicles',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
+  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'history-reference-fill-through-esther-partial',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
   document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;
 })();
