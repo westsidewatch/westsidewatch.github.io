@@ -38,6 +38,10 @@ jobs:
           }
           const D=global.ONE_DATA;
           if(!D?.studyBooks)throw new Error('ONE_DATA.studyBooks not built');
+          if(D.mark&&!D.studyBooks[41]){
+            D.mark.number=41;D.mark.code='MRK';D.mark.zhCode=D.mark.zhCode||'MRK';D.mark.enCode=D.mark.enCode||'MRK';D.mark.name='馬可福音';D.mark.nameEn='Mark';
+            D.studyBooks[41]=D.mark;
+          }
           const verifiedLocal=new Set(['約書亞記 1:8','耶利米書 17:5–8','馬太福音 7:13–27']);
           let total=0,chaptersWithConnections=0,withExplicitFourth=0,withVerifiedLocal=0,missingVerifiedScripture=0;
           const affected=[];
