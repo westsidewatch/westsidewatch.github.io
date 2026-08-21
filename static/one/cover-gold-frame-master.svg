@@ -1,52 +1,60 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1600" fill="none">
   <defs>
     <style>
-      .line{stroke:#000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
-      .fine{stroke:#000;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
-      .fill{fill:#000}
+      .outer{stroke:#000;stroke-width:3.2;stroke-linecap:square;stroke-linejoin:miter}
+      .inner{stroke:#000;stroke-width:1.45;stroke-linecap:round;stroke-linejoin:round}
+      .hair{stroke:#000;stroke-width:1.05;stroke-linecap:round;stroke-linejoin:round}
+      .solid{fill:#000}
     </style>
     <g id="corner">
-      <path class="line" d="M42 180V42h138"/>
-      <path class="fine" d="M58 196V58h138"/>
-      <path class="line" d="M42 42h170c0 26-17 45-43 47-1 25-18 43-43 44-4 31-26 51-57 51"/>
-      <path class="fine" d="M66 66c27 3 50 18 61 42 8 17 9 35 3 52"/>
-      <path class="fine" d="M76 79c23 4 43 17 53 36"/>
-      <path class="fine" d="M88 103c19 0 32 10 39 28"/>
-      <path class="fine" d="M58 142c22-3 39-14 50-32"/>
-      <path class="fine" d="M58 166c32-5 56-23 68-52"/>
-      <path class="fine" d="M112 61c-8 20-8 39 1 58"/>
-      <path class="fine" d="M139 58c-14 17-19 36-15 58"/>
-      <path class="fine" d="M162 62c-12 12-18 26-18 42"/>
-      <path class="fine" d="M60 114c15-2 27-9 36-20"/>
-      <path class="fine" d="M62 90c11 0 20-5 27-14"/>
-      <path class="fine" d="M63 68c8 1 14-1 20-7"/>
-      <path class="fine" d="M101 77c-6-14-17-23-33-27"/>
-      <path class="fine" d="M123 91c2-18-3-34-16-48"/>
-      <path class="fine" d="M146 103c9-16 10-33 4-50"/>
-      <path class="fine" d="M85 133c-9-6-18-8-28-5"/>
-      <path class="fine" d="M103 155c-15-7-30-7-45 0"/>
-      <path class="fine" d="M120 174c-20-5-39-1-56 12"/>
-      <ellipse class="fill" cx="74" cy="73" rx="5" ry="9" transform="rotate(-48 74 73)"/>
-      <ellipse class="fill" cx="93" cy="92" rx="5" ry="10" transform="rotate(-28 93 92)"/>
-      <ellipse class="fill" cx="111" cy="111" rx="5" ry="10" transform="rotate(-12 111 111)"/>
-      <ellipse class="fill" cx="132" cy="127" rx="5" ry="10" transform="rotate(18 132 127)"/>
-      <ellipse class="fill" cx="151" cy="86" rx="5" ry="10" transform="rotate(34 151 86)"/>
-      <ellipse class="fill" cx="126" cy="70" rx="5" ry="10" transform="rotate(22 126 70)"/>
-      <ellipse class="fill" cx="71" cy="118" rx="5" ry="10" transform="rotate(-70 71 118)"/>
-      <path class="fill" d="M95 64c7-11 17-17 30-17-2 12-9 21-21 26-4-1-7-4-9-9Z"/>
-      <path class="fill" d="M120 84c9-10 20-14 33-11-4 12-13 19-26 22-4-2-6-5-7-11Z"/>
-      <path class="fill" d="M78 99c-10-7-20-8-31-3 5 10 14 16 26 17 4-3 6-7 5-14Z"/>
-      <path class="fill" d="M100 122c-12-4-23-1-32 7 8 8 18 12 30 9 3-4 4-9 2-16Z"/>
-      <path class="fine" d="M61 187c25-11 47-10 67 2"/>
-      <path class="fine" d="M73 174c13-20 30-33 53-37"/>
+      <!-- Binding rules terminate cleanly before the ornament. -->
+      <path class="outer" d="M31 214V31h183"/>
+      <path class="inner" d="M48 229V48h181"/>
+      <path class="hair" d="M61 207V61h146"/>
+
+      <!-- Restrained nineteenth-century acanthus: weight stays at the corner. -->
+      <path class="outer" d="M61 61c31 1 57 11 76 30 19 19 29 45 30 76"/>
+      <path class="inner" d="M61 83c24 1 44 9 58 24 15 15 23 35 24 59"/>
+      <path class="inner" d="M83 61c1 24 9 44 24 59 15 14 35 22 59 23"/>
+      <path class="hair" d="M75 75c35 14 63 42 77 77"/>
+
+      <!-- Three leaves, individually drawn rather than a repeated vine texture. -->
+      <path class="solid" d="M82 73c16-10 31-10 46-1-5 15-16 25-34 29-9-7-13-16-12-28Z"/>
+      <path class="solid" d="M111 103c17-7 32-4 45 8-8 14-21 22-39 22-8-8-10-18-6-30Z"/>
+      <path class="solid" d="M73 82c-10 16-10 31-1 46 15-5 25-16 29-34-7-9-16-13-28-12Z"/>
+
+      <!-- Fine stems and a small terminal bud keep the foil airy. -->
+      <path class="hair" d="M69 153c29-9 52-26 68-51M153 69c-9 29-26 52-51 68"/>
+      <path class="inner" d="M62 183c28-4 50-17 66-40M183 62c-4 28-17 50-40 66"/>
+      <path class="solid" d="M153 153l7-7 7 7-7 7Z"/>
+      <circle class="solid" cx="61" cy="61" r="3.6"/>
+    </g>
+
+    <g id="horizontal-knot">
+      <path class="inner" d="M-42 0h29M13 0h29"/>
+      <path class="solid" d="M0-9 10 0 0 9-10 0Z"/>
+      <circle class="solid" cx="0" cy="0" r="2.4"/>
+    </g>
+    <g id="vertical-knot">
+      <path class="inner" d="M0-42v29M0 13v29"/>
+      <path class="solid" d="M-9 0 0-10 9 0 0 10Z"/>
+      <circle class="solid" cx="0" cy="0" r="2.4"/>
     </g>
   </defs>
 
-  <rect x="28" y="28" width="944" height="1544" rx="0" class="line"/>
-  <rect x="44" y="44" width="912" height="1512" rx="0" class="fine"/>
+  <!-- Double bookbinding frame with generous image breathing room. -->
+  <rect x="31" y="31" width="938" height="1538" class="outer"/>
+  <rect x="48" y="48" width="904" height="1504" class="inner"/>
+  <rect x="61" y="61" width="878" height="1478" class="hair"/>
 
   <use href="#corner"/>
   <use href="#corner" transform="translate(1000 0) scale(-1 1)"/>
   <use href="#corner" transform="translate(0 1600) scale(1 -1)"/>
   <use href="#corner" transform="translate(1000 1600) scale(-1 -1)"/>
+
+  <!-- Tiny binder's knots articulate the long empty rules without becoming a border pattern. -->
+  <use href="#horizontal-knot" transform="translate(500 48)"/>
+  <use href="#horizontal-knot" transform="translate(500 1552)"/>
+  <use href="#vertical-knot" transform="translate(48 800)"/>
+  <use href="#vertical-knot" transform="translate(952 800)"/>
 </svg>
