@@ -16,6 +16,26 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
+      - name: Repair canonical Scripture map syntax
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/one-cross-reference-scripture.js')
+          lines=p.read_text(encoding='utf-8').splitlines()
+          out=[]
+          for line in lines:
+              stripped=line.lstrip()
+              if stripped.startswith("'") and "':" in stripped and out:
+                  j=len(out)-1
+                  while j>=0 and not out[j].strip(): j-=1
+                  prev=out[j].rstrip()
+                  if prev.lstrip().startswith("'") and prev.endswith("'") and not prev.endswith("',"):
+                      out[j]=prev+','
+              out.append(line)
+          p.write_text('\n'.join(out)+'\n',encoding='utf-8')
+          PY
+          node --check static/one/one-cross-reference-scripture.js
       - name: Run exhaustive cross-reference audit
         shell: bash
         run: |
@@ -32,11 +52,11 @@ jobs:
           cp /tmp/global.log audit-output/one-global-audit-run.log
           printf '{"missingExit":%s,"preflightExit":%s,"globalExit":%s}\n' "$miss" "$pre" "$glob" > audit-output/one-crossref-run-status.json
           exit 0
-      - name: Commit audit results to work branch
+      - name: Commit repairs and audit results to work branch
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add audit-output
+          git add static/one/one-cross-reference-scripture.js audit-output
           git diff --cached --quiet && exit 0
-          git commit -m "Audit all remaining cross-reference Scripture gaps"
+          git commit -m "Repair canonical Scripture map and audit remaining gaps"
           git push origin HEAD:one/wisdom-major-prophets-scripture
