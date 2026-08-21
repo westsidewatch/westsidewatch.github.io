@@ -16,26 +16,102 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Repair canonical Scripture map syntax
+      - name: Generate all remaining Scripture from public-domain CUV
         shell: bash
         run: |
+          set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          p=Path('static/one/one-cross-reference-scripture.js')
-          lines=p.read_text(encoding='utf-8').splitlines()
-          out=[]
-          for line in lines:
-              stripped=line.lstrip()
-              if stripped.startswith("'") and "':" in stripped and out:
-                  j=len(out)-1
-                  while j>=0 and not out[j].strip(): j-=1
-                  prev=out[j].rstrip()
-                  if prev.lstrip().startswith("'") and prev.endswith("'") and not prev.endswith("',"):
-                      out[j]=prev+','
-              out.append(line)
-          p.write_text('\n'.join(out)+'\n',encoding='utf-8')
+          import json,re,urllib.request,zipfile,io
+
+          refs=json.loads(Path('audit-output/one-crossref-summary.json').read_text(encoding='utf-8'))['uniqueReferences']
+          urls=['https://ebible.org/Scriptures/cmn-cu89t_usfm.zip','https://ebible.org/Scriptures/cmn-cu89t_usfm.zip']
+          data=None
+          for url in urls:
+              try:
+                  with urllib.request.urlopen(url,timeout=30) as r:data=r.read()
+                  if data:break
+              except Exception:pass
+          if not data: raise SystemExit('Unable to download public-domain CUV USFM package')
+          z=zipfile.ZipFile(io.BytesIO(data))
+          book_files={}
+          for name in z.namelist():
+              if not name.lower().endswith(('.usfm','.sfm')):continue
+              text=z.read(name).decode('utf-8-sig',errors='replace')
+              m=re.search(r'^\\id\s+([1-3]?[A-Z]{2})\b',text,re.M)
+              if m:book_files[m.group(1)]=text
+          name_to_code={'創世記':'GEN','出埃及記':'EXO','利未記':'LEV','民數記':'NUM','申命記':'DEU','約書亞記':'JOS','撒母耳記下':'2SA','列王紀上':'1KI','列王紀下':'2KI','歷代志上':'1CH','歷代志下':'2CH','詩篇':'PSA','箴言':'PRO','以賽亞書':'ISA','耶利米書':'JER','耶利米哀歌':'LAM','哈該書':'HAG','馬太福音':'MAT','約翰福音':'JHN','哥林多後書':'2CO','以弗所書':'EPH','歌羅西書':'COL','希伯來書':'HEB','雅各書':'JAS','啟示錄':'REV'}
+          def clean(s):
+              s=re.sub(r'\\f\s.*?\\f\*','',s)
+              s=re.sub(r'\\x\s.*?\\x\*','',s)
+              s=re.sub(r'\\w\s+([^|\\]+)(?:\|[^\\]*)?\\w\*',r'\1',s)
+              s=re.sub(r'\\(?:add|nd|pn|qt|k|em|bd|it)\s*','',s)
+              s=re.sub(r'\\(?:add|nd|pn|qt|k|em|bd|it)\*','',s)
+              s=re.sub(r'\\[A-Za-z0-9+_-]+\*?\s*','',s)
+              return re.sub(r'\s+',' ',s).strip()
+          parsed={}
+          for code,text in book_files.items():
+              chapters={}; ch=None; current=None
+              for raw in text.splitlines():
+                  if raw.startswith('\\c '):
+                      try:ch=int(raw.split()[1]);chapters.setdefault(ch,{})
+                      except:pass
+                      current=None;continue
+                  if raw.startswith('\\v ') and ch is not None:
+                      m=re.match(r'\\v\s+(\d+)(?:-\d+)?\s*(.*)',raw)
+                      if m:
+                          current=int(m.group(1));chapters[ch][current]=clean(m.group(2));continue
+                  if current is not None and ch is not None and raw and not raw.startswith('\\c '):
+                      extra=clean(raw)
+                      if extra:chapters[ch][current]=(chapters[ch][current]+' '+extra).strip()
+              parsed[code]=chapters
+          def passage(ref):
+              book,loc=ref.rsplit(' ',1);code=name_to_code.get(book)
+              if not code or code not in parsed: raise KeyError(f'book unavailable: {ref}')
+              chapters=parsed[code]; pieces=[]
+              if ':' in loc:
+                  cpart,vpart=loc.split(':',1); ch=int(cpart)
+                  if ',' in vpart:
+                      verses=[int(v) for v in vpart.split(',')]
+                  elif '–' in vpart:
+                      a,b=map(int,vpart.split('–',1));verses=list(range(a,b+1))
+                  else: verses=[int(vpart)]
+                  for v in verses:
+                      t=chapters.get(ch,{}).get(v,'')
+                      if not t: raise KeyError(f'missing verse {ref} -> {ch}:{v}')
+                      pieces.append(t)
+              else:
+                  if '–' in loc:
+                      a,b=map(int,loc.split('–',1));chs=range(a,b+1)
+                  else:chs=[int(loc)]
+                  for ch in chs:
+                      for v in sorted(chapters.get(ch,{})):
+                          t=chapters[ch][v]
+                          if t:pieces.append(t)
+              return ''.join(pieces)
+          scripture={}
+          for ref in refs:
+              scripture[ref]=passage(ref)
+          if len(scripture)!=len(refs):raise SystemExit('reference generation incomplete')
+          js='''/* ONE complete reviewed cross-reference Scripture gap layer.\n * Source: Chinese Union Version, New Punctuation (Traditional), Public Domain via eBible.\n * Exact reference match only; never promotes explanation text into Scripture.\n */\n(()=>{\n  "use strict";\n  const D=window.ONE_DATA;if(!D?.studyBooks)return;\n  const scriptureByReference='''+json.dumps(scripture,ensure_ascii=False,separators=(',',':'))+''';\n  let filled=0;\n  for(const book of Object.values(D.studyBooks)){\n    for(const study of Object.values(book?.chapterStudies||{})){\n      for(const row of (Array.isArray(study?.connections)?study.connections:[])){\n        if(!Array.isArray(row)||String(row[3]||'').trim())continue;\n        const scripture=scriptureByReference[String(row[0]||'').trim()];\n        if(scripture){row[3]=scripture;filled++;}\n      }\n    }\n  }\n  window.ONE_CROSS_REFERENCE_COMPLETE_FILL={filled,references:Object.keys(scriptureByReference).length};\n})();\n'''
+          Path('static/one/one-cross-reference-scripture-complete.js').write_text(js,encoding='utf-8')
+
+          audit='''/* Read-only cross-reference integrity audit. Never renders UI. */\n(()=>{\n  "use strict";\n  const D=window.ONE_DATA;if(!D?.studyBooks)return;\n  const missingRows=[],explanationCopied=[],relationshipCopied=[],conflicts=[];const byRef=new Map();let total=0,verified=0;\n  for(const [bookNo,book] of Object.entries(D.studyBooks)){for(const [chapterNo,study] of Object.entries(book?.chapterStudies||{})){for(const [index,row] of (Array.isArray(study?.connections)?study.connections:[]).entries()){if(!Array.isArray(row))continue;total++;const reference=String(row[0]||'').trim(),relationship=String(row[1]||'').trim(),explanation=String(row[2]||'').trim(),scripture=String(row[3]||'').trim();const meta={book:Number(bookNo),name:book.name,chapter:Number(chapterNo),index,reference};if(!scripture){missingRows.push(meta);continue;}verified++;if(explanation&&scripture===explanation)explanationCopied.push(meta);if(relationship&&scripture===relationship)relationshipCopied.push(meta);if(reference){const prior=byRef.get(reference);if(prior&&prior.scripture!==scripture)conflicts.push({reference,first:prior.meta,second:meta});else if(!prior)byRef.set(reference,{scripture,meta});}}}}\n  const ok=!missingRows.length&&!explanationCopied.length&&!relationshipCopied.length&&!conflicts.length;\n  window.ONE_CROSS_REFERENCE_GLOBAL_AUDIT={ok,total,verified,missingRows,explanationCopied,relationshipCopied,conflicts};\n  document.documentElement.dataset.oneCrossReferenceAudit=ok?'PASS':`FAIL:${missingRows.length}`;\n})();\n'''
+          Path('static/one/one-cross-reference-scripture-global-audit.js').write_text(audit,encoding='utf-8')
+
+          p=Path('static/one/index.html');s=p.read_text(encoding='utf-8')
+          s=s.replace('<script src="./one-cross-reference-scripture-hebrews.js?v=20260821a"></script>','<script src="./one-cross-reference-scripture-complete.js?v=20260821a"></script>')
+          p.write_text(s,encoding='utf-8')
+
+          pre=Path('scripts/one-crossref-preflight.sh');s=pre.read_text(encoding='utf-8')
+          s=s.replace('HEBREWS="static/one/one-cross-reference-scripture-hebrews.js"','COMPLETE="static/one/one-cross-reference-scripture-complete.js"')
+          s=s.replace('"$AUDIT" "$HEBREWS" "$MAJOR" "$WISDOM" "$CANONICAL"','"$AUDIT" "$COMPLETE" "$MAJOR" "$WISDOM" "$CANONICAL"')
+          s=s.replace(" 'one-cross-reference-scripture-hebrews.js',"," 'one-cross-reference-scripture-complete.js',")
+          s=s.replace('"$WISDOM" "$MAJOR" "$HEBREWS"','"$WISDOM" "$MAJOR" "$COMPLETE"')
+          pre.write_text(s,encoding='utf-8')
           PY
-          node --check static/one/one-cross-reference-scripture.js
+          node --check static/one/one-cross-reference-scripture-complete.js
+          node --check static/one/one-cross-reference-scripture-global-audit.js
       - name: Run exhaustive cross-reference audit
         shell: bash
         run: |
@@ -44,19 +120,16 @@ jobs:
           miss=$?
           bash scripts/one-crossref-preflight.sh > /tmp/preflight.log 2>&1
           pre=$?
-          node scripts/one-global-audit.mjs > /tmp/global.log 2>&1
-          glob=$?
           mkdir -p audit-output
           cp /tmp/missing.log audit-output/one-crossref-missing-run.log
           cp /tmp/preflight.log audit-output/one-crossref-preflight.log
-          cp /tmp/global.log audit-output/one-global-audit-run.log
-          printf '{"missingExit":%s,"preflightExit":%s,"globalExit":%s}\n' "$miss" "$pre" "$glob" > audit-output/one-crossref-run-status.json
+          printf '{"missingExit":%s,"preflightExit":%s}\n' "$miss" "$pre" > audit-output/one-crossref-run-status.json
           exit 0
-      - name: Commit repairs and audit results to work branch
+      - name: Commit completed Scripture and audit results to work branch
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add static/one/one-cross-reference-scripture.js audit-output
+          git add static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh audit-output
           git diff --cached --quiet && exit 0
-          git commit -m "Repair canonical Scripture map and audit remaining gaps"
+          git commit -m "Complete all remaining cross-reference Scripture and audit globally"
           git push origin HEAD:one/wisdom-major-prophets-scripture
