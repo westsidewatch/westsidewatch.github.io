@@ -1,4 +1,4 @@
-name: Load ONE wisdom Scripture layer
+name: Load ONE wisdom and major-prophet Scripture layers
 on:
   push:
     branches: [one/wisdom-major-prophets-scripture]
@@ -12,18 +12,22 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: one/wisdom-major-prophets-scripture
-      - name: Load wisdom Scripture after canonical layer
+      - name: Load reviewed Scripture layers after canonical layer
         run: |
           python - <<'PY'
           from pathlib import Path
           p=Path('static/one/index.html')
           s=p.read_text()
-          marker='<script src="./one-cross-reference-scripture.js?v=20260821g"></script>'
-          add=marker+'<script src="./one-cross-reference-scripture-wisdom.js?v=20260821a"></script>'
-          if 'one-cross-reference-scripture-wisdom.js' not in s:
-              if marker not in s:
-                  raise SystemExit('canonical Scripture marker not found')
-              p.write_text(s.replace(marker,add,1))
+          wisdom='<script src="./one-cross-reference-scripture-wisdom.js?v=20260821a"></script>'
+          major='<script src="./one-cross-reference-scripture-major-prophets.js?v=20260821a"></script>'
+          if wisdom not in s:
+              marker='<script src="./one-cross-reference-scripture.js?v=20260821g"></script>'
+              if marker not in s: raise SystemExit('canonical Scripture marker not found')
+              s=s.replace(marker,marker+wisdom,1)
+          if major not in s:
+              if wisdom not in s: raise SystemExit('wisdom layer marker not found')
+              s=s.replace(wisdom,wisdom+major,1)
+          p.write_text(s)
           PY
       - name: Commit index load order
         run: |
@@ -31,5 +35,5 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add static/one/index.html
-          git commit -m "Load wisdom cross-reference Scripture layer"
+          git commit -m "Load major-prophet cross-reference Scripture layer"
           git push origin HEAD:one/wisdom-major-prophets-scripture
