@@ -17,7 +17,7 @@
   const migratedByBook={};
   for(const [book,start,end] of validatedBooks){let bookCount=0;for(let chapter=start;chapter<=end;chapter++){const rows=D.studyBooks?.[book]?.chapterStudies?.[String(chapter)]?.connections;if(!Array.isArray(rows))continue;rows.forEach((row,index)=>{if(!Array.isArray(row)||!String(row[2]||'').trim()||String(row[3]||'').trim())return;if(migrate(book,chapter,index,explanationFor(row))){migrated++;bookCount++;}});}migratedByBook[book]=bookCount;}
 
-  /* Reviewed public-domain Chinese Union Version passages for explanation-only books.
+  /* Reviewed Chinese Union Version passages for explanation-only books.
    * Exact-reference lookup only: no commentary-to-Scripture promotion and no fuzzy matching.
    */
   const scriptureByReference={
@@ -28,15 +28,19 @@
     '詩篇 106:34–46':'他們不照耶和華所吩咐的滅絕外邦人，反與他們混雜相合，學習他們的行為，事奉他們的偶像，這就成了自己的網羅，把自己的兒女祭祀鬼魔，流無辜人的血，就是自己兒女的血，把他們祭祀迦南的偶像，那地就被血污穢了。這樣，他們被自己所做的污穢了，在行為上犯了邪淫。所以，耶和華的怒氣向他的百姓發作，憎惡他的產業，將他們交在外邦人的手裡；恨他們的人就轄制他們。他們的仇敵也欺壓他們，他們就伏在敵人手下。他屢次搭救他們，他們卻設謀背逆，因自己的罪孽降為卑下。然而，他聽見他們哀告的時候，就眷顧他們的急難，為他們記念他的約，照他豐盛的慈愛後悔。他也使他們在凡擄掠他們的人面前蒙憐恤。',
     '利未記 19:9–10':'在你們的地收割莊稼，不可割盡田角，也不可拾取所遺落的。不可摘盡葡萄園的果子，也不可拾取葡萄園所掉的果子；要留給窮人和寄居的。我是耶和華－你們的神。',
     '申命記 25:5–10':'弟兄同居，若死了一個，沒有兒子，死人的妻不可出嫁外人，他丈夫的兄弟當盡弟兄的本分，娶他為妻，與他同房。婦人生的長子必歸死兄的名下，免得他的名在以色列中塗抹了。那人若不願意娶他哥哥的妻，他哥哥的妻就要到城門長老那裡，說：我丈夫的兄弟不肯在以色列中興起他哥哥的名字，不給我盡弟兄的本分。本城的長老就要召那人來問他，他若執意說：我不願意娶他，他哥哥的妻就要當著長老到那人的跟前，脫了他的鞋，吐唾沫在他臉上，說：凡不為哥哥建立家室的都要這樣待他。在以色列中，他的名必稱為脫鞋之家。',
-    '馬太福音 1:5–6':'撒門從喇合氏生波阿斯；波阿斯從路得氏生俄備得；俄備得生耶西；耶西生大衛王。大衛從烏利亞的妻子生所羅門。'
+    '馬太福音 1:5–6':'撒門從喇合氏生波阿斯；波阿斯從路得氏生俄備得；俄備得生耶西；耶西生大衛王。大衛從烏利亞的妻子生所羅門。',
+    '申命記 17:14–20':'到了耶和華－你神所賜你的地，得了那地居住的時候，若說：我要立王治理我，像四圍的國一樣。你總要立耶和華－你神所揀選的人為王。必從你弟兄中立一人；不可立你弟兄以外的人為王。只是王不可為自己加添馬匹，也不可使百姓回埃及去，為要加添他的馬匹，因耶和華曾吩咐你們說：不可再回那條路去。他也不可為自己多立妃嬪，恐怕他的心偏邪；也不可為自己多積金銀。他登了國位，就要將祭司利未人面前的這律法書，為自己抄錄一本，存在他那裡，要平生誦讀，好學習敬畏耶和華－他的神，謹守遵行這律法書上的一切言語和這些律例，免得他向弟兄心高氣傲，偏左偏右，離了這誡命。這樣，他和他的子孫便可在以色列中，在國位上年長日久。',
+    '撒母耳記下 7:12–16':'你壽數滿足、與你列祖同睡的時候，我必使你的後裔接續你的位；我也必堅定他的國。他必為我的名建造殿宇；我必堅定他的國位，直到永遠。我要作他的父，他要作我的子；他若犯了罪，我必用人的杖責打他，用人的鞭責罰他。但我的慈愛仍不離開他，像離開在你面前所廢棄的掃羅一樣。你的家和你的國必在我面前永遠堅立。你的國位也必堅定，直到永遠。',
+    '馬太福音 6:29':'然而我告訴你們，就是所羅門極榮華的時候，他所穿戴的，還不如這花一朵呢！',
+    '列王紀上 19:19–21':'於是，以利亞離開那裡走了，遇見沙法的兒子以利沙耕地。在他前頭有十二對牛，自己趕著第十二對。以利亞到他那裡去，將自己的外衣搭在他身上。以利沙就離開牛，跑到以利亞那裡，說：「求你容我先與父母親嘴，然後我便跟隨你。」以利亞對他說：「你回去吧，我向你做了什麼呢？」以利沙就離開他回去，宰了一對牛，用套牛的器具煮肉給民吃，隨後就起身跟隨以利亞，服侍他。'
   };
-  const reviewedExplanationBooks=[6,7,8];
+  const reviewedExplanationBooks=[6,7,8,11,12];
   let filledFromReference=0;
   const filledByBook={};
   for(const bookNo of reviewedExplanationBooks){let n=0;const book=D.studyBooks?.[bookNo];Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row)||String(row[3]||'').trim())return;const scripture=scriptureByReference[String(row[0]||'').trim()];if(!scripture)return;row[3]=scripture;n++;filledFromReference++;}));filledByBook[bookNo]=n;}
 
   const psalm8=D.studyBooks?.[1]?.chapterStudies?.['1']?.connections?.[0];if(Array.isArray(psalm8)&&String(psalm8[3]||'').includes('aa耶和華'))psalm8[3]=String(psalm8[3]).replace('aa耶和華','耶和華');
   let total=0,verified=0,commentaryOnly=0;Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;else if(String(row[2]||'').trim())commentaryOnly++;})));
-  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'validated-major-books-plus-acts-plus-joshua-judges-ruth',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
+  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'history-reference-fill-through-kings-start',migrated,migratedByBook,filledFromReference,filledByBook,total,verified,remaining:total-verified,commentaryOnly,validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end})),reviewedExplanationBooks};
   document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;
 })();
