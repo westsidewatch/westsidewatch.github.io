@@ -1,0 +1,37 @@
+name: Assemble Lamentations 3 Studio master
+
+on:
+  push:
+    branches:
+      - fix/lamentations-03-final
+    paths:
+      - '.github/workflows/assemble-lam03.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  assemble:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: fix/lamentations-03-final
+          fetch-depth: 0
+      - name: Rebuild verified AVIF from staged chunks
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat static/one/studio-packs/lam03/part-*.b64 | tr -d '\n\r ' | base64 -d > static/one/studio/lamentations-03-dore-studio-v1.avif
+          test "$(wc -c < static/one/studio/lamentations-03-dore-studio-v1.avif | tr -d ' ')" = "92695"
+          echo "0716c9147109a93fd3ab1743a7e39d26c6a17b2844d0fea16274c0949cd61836  static/one/studio/lamentations-03-dore-studio-v1.avif" | sha256sum -c -
+      - name: Commit binary and remove one-off assembler
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "WATCHMAN"
+          git config user.email "westsidewatchca@gmail.com"
+          git add static/one/studio/lamentations-03-dore-studio-v1.avif
+          git rm .github/workflows/assemble-lam03.yml
+          git commit -m "asset(one): publish Lamentations 3 Studio master"
+          git push origin HEAD:fix/lamentations-03-final
