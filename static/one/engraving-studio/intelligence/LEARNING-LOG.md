@@ -63,3 +63,13 @@ Finding: requesting a “thin ascending line of deliverers” produced mechanica
 Correction: state a small exact figure count with irregular spacing and atmospheric loss; require fewer, larger, weight-bearing planes for carved paths and stairs.
 
 Retain: crowd and architecture prompts must specify narrative count, irregularity, support and omission—not merely mood or direction.
+
+### L010 — Aligned AI eyes can still read as black holes
+
+Finding: Mark 3 r4 corrected eye alignment but still failed human enlargement review because the pupils remained isolated, high-contrast black ovals. Whole-plate and thumbnail review concealed the defect.
+
+Evidence: comparison of `041-003` r4/r5 with Doré's *Christ in the Synagogue*, *Jesus Healing the Sick* and *Jesus Healing the Lunatic*; the Met's public-domain Doré drawing *Male figure in classical costume* was used as a drawing-process cross-check, not Bible iconography.
+
+Correction: at plate scale, construct gaze through head turn, brow ridge, upper lid and eye-socket value. Treat the iris/pupil as a short dark wedge integrated beneath the upper lid; leave the lower lid incomplete, minimize sclera and avoid an independently outlined circular pupil.
+
+Retain: every principal face requires enlarged review. Eye alignment alone does not pass; reject black-dot pupils, bright almond-shaped sclera, separately generated gaze directions and expressions carried by eyeballs rather than the full facial structure.

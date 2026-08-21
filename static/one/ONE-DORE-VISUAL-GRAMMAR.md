@@ -47,6 +47,25 @@ Doré figures are theatrical but structurally clear. ONE Studio must study and r
 
 Reject: fashion-model anatomy, superhero anatomy, cinematic close-up acting, glossy skin, contemporary portrait posing, random crowds.
 
+### Eyes and gaze — locked Doré grammar
+
+At normal plate scale, Doré eyes are structural accents inside the brow/eye-socket system, not separately rendered glossy eyeballs.
+
+Required:
+
+- establish gaze through head turn, brow ridge, nasal bridge, upper lid and cheek structure before adding iris/pupil detail;
+- place the principal dark accent as a short wedge integrated beneath the upper lid, not as an isolated circular black pupil;
+- keep the lower lid incomplete and lighter than the upper lid;
+- minimize visible sclera; it may be an unaccented paper tone or a narrow broken sliver, never a bright white almond;
+- in three-quarter view, make the far eye naturally narrower and more absorbed by nasal/brow shadow;
+- ensure both eyes share one anatomically plausible gaze and sit consistently inside the perspective of the skull;
+- express grief, anger, attention and authority through the complete facial structure rather than enlarged eye openings;
+- inspect every principal face at enlarged resolution before approval, even when the face reads correctly at cover size.
+
+Reject: black-dot or black-hole pupils, separately outlined circular irises, bright eye whites, complete almond outlines, mismatched eye sizes, crossed or divergent gaze, mirrored eyes, staring digital intensity, and expressions created by eyeballs without corresponding brow/cheek/head structure.
+
+**Hard publication gate:** a principal face with any of these eye defects remains `REVISION_REQUIRED`, regardless of whole-plate composition score or thumbnail quality.
+
 ## 3. Horse grammar
 
 When horses appear, generation must be based on Doré's actual equestrian plates rather than generic fantasy horses.
