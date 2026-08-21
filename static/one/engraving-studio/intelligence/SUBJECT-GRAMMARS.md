@@ -97,3 +97,14 @@ Evidence: Doré's *Christ in the Synagogue*, *Jesus Healing the Sick* and *Jesus
 - Three-quarter faces require unequal visible eye widths but one shared gaze direction.
 - Whole-image approval is forbidden until principal eyes are inspected enlarged.
 - A failed enlarged eye check must be recorded as a generative artifact and returned to revision.
+
+Eyes/gaze remain under continuous corpus study. Future records must compare additional Doré originals across frontal, profile, three-quarter, lowered and upward gazes; near and distant figures; age, role and emotion. The purpose is to deepen a flexible grammar, not to repeat one corrected eye formula.
+
+### Hands / gesture — first promoted specialist rule
+
+- Begin from the whole action chain and skeletal axis, never from isolated fingers.
+- Expose only the amount of hand anatomy required to communicate the Scripture action.
+- Prefer side or three-quarter views, overlap and shadow when a frontal palm is not textually necessary.
+- A sleeve may conceal part of a nonessential hand; this must look compositionally motivated, not like accidental amputation.
+- Essential Scripture hands remain visible enough to read, but still require thumb/finger/wrist enlargement review.
+- Record recurring failures by type: extra/fused digits, reversed thumb, fan spacing, rubber wrist, disconnected arm, repeated hand pose and purposeless display palm.

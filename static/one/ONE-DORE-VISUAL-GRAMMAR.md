@@ -66,6 +66,28 @@ Reject: black-dot or black-hole pupils, separately outlined circular irises, bri
 
 **Hard publication gate:** a principal face with any of these eye defects remains `REVISION_REQUIRED`, regardless of whole-plate composition score or thumbnail quality.
 
+Eye grammar remains a continuing research domain, not a completed rule set. Every new principal-face problem should add authenticated Doré evidence across different head angles, distances, ages, roles and emotions. Stable minimum prohibitions stay locked, while finer observations must continue to be tested, recorded and refined rather than forcing every figure into the same “Doré eye.”
+
+### Hands and gesture — structure before exposure
+
+Hands carry Scripture action but are also a high-risk generative failure area. The Studio must not make a hand large or fully exposed merely to prove that it can draw one.
+
+Required:
+
+- derive each hand from shoulder -> upper arm -> elbow -> forearm -> wrist before designing fingers;
+- give every visible hand one explicit narrative function: command, blessing, healing, receiving, recoil, prayer, grasp, support or rest;
+- choose the least exposed view that still communicates that function: side plane, three-quarter hand, partial occlusion, sleeve overlap, contact with an object/body or silhouette against a value mass;
+- use a frontal open palm or foreshortened spread fingers only when Scripture and composition truly require them and authenticated Doré hand evidence has been studied;
+- verify one thumb, four fingers, believable knuckle rhythm, palm width, wrist axis, tendon direction and finger overlap at enlarged resolution;
+- let sleeves, shadow, another figure or the frame naturally conceal nonessential digits when full exposure adds risk but no narrative information;
+- preserve the hand required by Scripture even when another supporting gesture can be simplified or concealed.
+
+Reject: display-palm posing without textual purpose, evenly spread “fan” fingers, duplicated fingertips, merged digits, reversed thumb, extra knuckles, rubber wrist, disconnected forearm, identical paired hands and hands designed independently from the body's weight/action.
+
+**Visibility fallback:** if repeated generation cannot solve a nonessential hand at enlarged scale, redesign the gesture so that the hand is smaller, side-on, partly occluded or absorbed into shadow. This is legitimate pictorial omission, not permission to hide a hand whose action is essential to the passage.
+
+**Hard publication gate:** every principal hand must pass enlarged anatomy and narrative-function review. A composition score cannot compensate for a malformed or purposeless hand.
+
 ## 3. Horse grammar
 
 When horses appear, generation must be based on Doré's actual equestrian plates rather than generic fantasy horses.
