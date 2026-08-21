@@ -19,18 +19,54 @@
   };
   Object.assign(known,reviewed);
   const books=[24,25,26,27];
-  let filled=0;
-  const missing={};
-  for(const bookNo of books){
-    missing[bookNo]=new Set();
-    Object.values(D.studyBooks?.[bookNo]?.chapterStudies||{}).forEach(study=>{
-      (Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{
-        if(!Array.isArray(row)||String(row[3]||'').trim())return;
-        const ref=String(row[0]||'').trim(),scripture=known[ref];
-        if(scripture){row[3]=scripture;filled++;}else if(ref)missing[bookNo].add(ref);
+  const fillFrom=(map)=>{
+    let filled=0;
+    for(const bookNo of books){
+      Object.values(D.studyBooks?.[bookNo]?.chapterStudies||{}).forEach(study=>{
+        (Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{
+          if(!Array.isArray(row)||String(row[3]||'').trim())return;
+          const scripture=map[String(row[0]||'').trim()];
+          if(scripture){row[3]=scripture;filled++;}
+        });
       });
+    }
+    return filled;
+  };
+  let filled=fillFrom(known);
+  const missing=()=>{
+    const result={};
+    for(const bookNo of books){const set=new Set();Object.values(D.studyBooks?.[bookNo]?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(Array.isArray(row)&&!String(row[3]||'').trim()&&String(row[0]||'').trim())set.add(String(row[0]).trim());}));result[bookNo]=[...set];}
+    return result;
+  };
+  window.ONE_MAJOR_PROPHETS_CROSS_REFERENCE_SCRIPTURE={status:'loading-long-references',filled,books,missing:missing()};
+
+  /* Five long passages are loaded from the Public Domain Chinese Union Traditional
+   * getBible endpoint. Exact references only; failures leave field 4 empty. */
+  const API='https://api.getbible.net/v2/cut';
+  const chapter=async(book,ch)=>{
+    const response=await fetch(`${API}/${book}/${ch}.json`,{mode:'cors'});
+    if(!response.ok)throw new Error(`CUV ${book}/${ch} ${response.status}`);
+    const data=await response.json();
+    return Array.isArray(data?.verses)?data.verses:[];
+  };
+  const text=verses=>verses.map(v=>String(v?.text||'').trim()).join('');
+  Promise.all([chapter(12,22),chapter(12,23),chapter(12,24),chapter(12,25),chapter(24,52),chapter(66,13),chapter(66,21),chapter(66,22)])
+    .then(([k22,k23,k24,k25,jer52,rev13,rev21,rev22])=>{
+      const longRefs={
+        '列王紀下 22–25':text([...k22,...k23,...k24,...k25]),
+        '列王紀下 25:1–21':text(k25.filter(v=>Number(v?.verse)<=21)),
+        '耶利米書 52':text(jer52),
+        '啟示錄 21–22':text([...rev21,...rev22]),
+        '啟示錄 13':text(rev13)
+      };
+      if(Object.values(longRefs).some(v=>!v))throw new Error('empty long-reference Scripture payload');
+      const longFilled=fillFrom(longRefs);filled+=longFilled;
+      window.ONE_MAJOR_PROPHETS_CROSS_REFERENCE_SCRIPTURE={status:'ready',filled,longFilled,books,missing:missing(),longReferences:Object.keys(longRefs)};
+      document.documentElement.dataset.oneMajorProphetsScripture=`PASS:${filled}`;
+    })
+    .catch(error=>{
+      window.ONE_MAJOR_PROPHETS_CROSS_REFERENCE_SCRIPTURE={status:'long-reference-error',filled,books,missing:missing(),error:String(error)};
+      document.documentElement.dataset.oneMajorProphetsScripture='PARTIAL';
+      console.error('ONE major-prophet long Scripture load failed',error);
     });
-    missing[bookNo]=[...missing[bookNo]];
-  }
-  window.ONE_MAJOR_PROPHETS_CROSS_REFERENCE_SCRIPTURE={filled,books,missing};
 })();
