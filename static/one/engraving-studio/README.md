@@ -18,6 +18,16 @@ Matthew 2:23 says that Jesus' residence in Nazareth fulfills what was spoken “
 
 The emblem's meaning is therefore explicit: gold points to God's glory; the living shoot points to resurrection-like new life from what appeared cut down; the shoot is not generic vitality but points to Jesus Christ. This joins the Golden Shoot to Westside Watch's existing Morning Star, dawn and city-of-light imagery without creating a second theological center.
 
+### Golden Shoot opening sequence
+
+A future Doré / ONE motion experience may open over the engraved darkness of the deep. A single restrained gold stroke appears and grows organically as the *nēṣer* shoot. Its main stem becomes canonical/time continuity; branch joints resolve to timeline events; side branches resolve to books; buds and leaves resolve to chapters and approved plates; an opened plate may then acquire limited causal motion.
+
+The sequence is both brand opening and navigation model:
+
+`darkness over the deep -> first gold stroke -> living shoot -> canonical branch structure -> timeline nodes -> chapter plates -> restrained motion -> continuous Bible scroll`
+
+The gold line must grow through controlled vector/path or similarly stable motion, not AI morphing. It does not wriggle randomly, shed particles, become a magic vine or erase the approved engraving. Growth direction follows the canonical/navigation structure, and every opened leaf retains a stable ONE return location.
+
 Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.

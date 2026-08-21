@@ -46,6 +46,33 @@ Visual/theological grammar:
 
 Do not turn the emblem into a compulsory literal twig placed in every illustration. It may govern product mark, transitions, gilt ornament, timeline growth and long-scroll continuity; within chapter art, it appears only when compositionally and scripturally responsible.
 
+### Motion concept — darkness, gold stroke, canonical growth
+
+The first major brand-motion concept is **Golden Shoot / Nazareth**: begin in the engraved darkness over the deep, then allow one restrained gold line to grow like a living shoot. As stem, branches and leaves extend, the product reveals Scripture in successive stages.
+
+Storyboard grammar:
+
+1. **Darkness over the deep:** near-black field with barely perceptible, slow engraved water structure; no stars, particles, portal or premature spectacle.
+2. **First gold mark:** a very small stroke appears with clear direction and material restraint. It is not a lens flare, lightning strike or glowing paint splash.
+3. **Shoot growth:** the line lengthens with plant-like causality—node, taper, slight turn, branch tension—without rubbery AI morphing.
+4. **Canonical structure:** the main stem represents continuous Scripture/time; major branch joints reveal canonical eras or books without implying that canon grew randomly or that later revelation cancels earlier Scripture.
+5. **Timeline nodes:** buds correspond to stable ONE timeline events. Selecting a bud reveals date status, Scripture and place before motion begins.
+6. **Leaves/plates:** a leaf or bud unfolds into an immutable approved engraving; unfolding must not redraw its figures or replace its stroke system.
+7. **Living detail:** only after the still plate is established do restrained causal motions begin inside it.
+8. **Continuous journey:** completion returns the viewer to the gold branch at the same node, ready to continue through the canonical long scroll.
+
+Technical guardrails:
+
+- animate the gold shoot with deterministic paths/masks or another reproducible line-preserving system;
+- do not generate every animation transition anew, because identity and branch topology must remain stable;
+- the gold line may illuminate navigation but must not wash the monochrome plates in decorative gold;
+- reduced-motion mode shows the completed branch and still plates without growth animation;
+- nodes require keyboard/focus semantics, captions and a stable URL/ONE anchor;
+- darkness is the Genesis opening image, not a claim that Christ came into existence at that moment. The Son is not created by the animation; the growing shoot is a canonical sign by which the story is progressively disclosed to the viewer;
+- the branch represents Christological/canonical unity, never corporate expansion, product metrics or the autonomous growth of Doré AI.
+
+This becomes the preferred transition language for ONE timeline integration and the future complete-Bible scroll, while remaining optional inside individual chapter compositions.
+
 The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
 
 This objective creates several permanent requirements:
