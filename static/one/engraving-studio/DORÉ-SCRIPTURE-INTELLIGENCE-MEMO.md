@@ -4,6 +4,32 @@ Status: **FUTURE ARCHITECTURE MEMO — NOT CURRENT IMPLEMENTATION**
 
 Purpose: preserve a possible long-term extension of Doré beyond illustration so this idea does not remain only in chat. This memo is descriptive, not a runtime contract, and must not be loaded by ONE reader/runtime.
 
+## Highest visual objective — a living Bible across time
+
+The long-term goal of Doré image-making is not a collection of isolated AI covers. Every chapter of Scripture should eventually be capable of appearing through the same convincing, historically grounded engraved world and, where appropriate, becoming a short restrained animation whose authentic classical strokes remain intact.
+
+The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
+
+This objective creates several permanent requirements:
+
+- **One Bible, not 1,189 unrelated posters.** Every plate must be individually faithful to its book and chapter while remaining compatible with a larger canonical sequence.
+- **Continuity without homogenization.** Shared stroke discipline, historical credibility and visual gravity provide unity; each biblical book, geography, period, literary form and theological atmosphere retains its own fine differences.
+- **An inhabited world.** Architecture, landscape, weather, clothing, tools, animals, work, food, vessels, roads and background human activity create historical life. They must be meaningful and layered, not repeated AI clutter.
+- **Temporal continuity.** Character age, recurring locations, empires, building traditions, material culture, seasons and historical transitions must be tracked so adjacent scenes can belong to a believable unfolding history.
+- **Scroll-like transitions.** Future sequences should connect through geography, light, movement, sound and recurring visual motifs rather than behaving as abrupt galleries of disconnected thumbnails.
+- **Still-image integrity comes first.** A chapter plate must pass Scripture, history, composition, anatomy and engraved-stroke gates before animation is considered. Motion cannot rescue an inadequate still image.
+- **Animation must reveal life, not advertise technology.** Prefer small causal motions—breath, cloth weight, walking, water, smoke, flame, leaves, animals, crowd labor, shifting attention and restrained light. Avoid camera spectacle, morphing anatomy, elastic cloth, sliding hatch texture, cinematic portals and ornamental particle effects.
+- **The engraved surface is structurally locked.** Motion must preserve the direction, density, weight and material meaning of the approved lines. Hatching may move only with the form it describes; it must never crawl independently across skin, wall, sky or cloth.
+- **No identity drift.** Faces, hands, body proportions, clothing construction, objects and architecture must remain stable across frames. A short animation that changes the person or redraws the world is rejected.
+- **Human time remains visible.** The final work should include ordinary waiting, labor, travel, domestic care, weather and inhabited silence alongside miracles and monumental events. This prevents the Bible from collapsing into nonstop spectacle.
+- **Canonical coherence requires memory.** Every approved plate and animation must accumulate reusable records for characters, locations, period material culture, palette/value structure, stroke grammar, motion limits, provenance and editorial decisions.
+
+The governing sequence is:
+
+`Scripture and historical research -> approved still engraving -> line/anatomy lock -> restrained motion study -> chapter short animation -> book-level continuity -> canonical long-scroll work`
+
+Success means that a viewer can enter any chapter and encounter a credible classical world, then continue across chapters and centuries without feeling that the people, places or engraved hand have been regenerated from nothing each time.
+
 ## Core idea
 
 Doré may eventually evolve from Westside Watch's dedicated Bible visual intelligence into a broader **Westside Watch Scripture Intelligence Layer**.

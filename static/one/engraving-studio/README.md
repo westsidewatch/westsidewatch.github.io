@@ -1,6 +1,6 @@
 # Westside Watch Engraving Studio
 
-Status: **FOUNDATION / LIVING SYSTEM**
+Status: **STANDALONE WESTSIDE WATCH PRODUCT / LIVING SYSTEM**
 
 ## Doré
 
@@ -9,6 +9,8 @@ Status: **FOUNDATION / LIVING SYSTEM**
 Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.
+
+Doré is now a standalone Westside Watch product rather than only an internal ONE production subsystem. ONE remains its first major Scripture client and runtime integration; the product identity also encompasses the Original Library, Living Intelligence, Plate Workshop, future short animation and the time-spanning complete-Bible visual work. Its public product entrance is `/website/dore/`, with `/dore/` retained as a direct alias.
 
 The aspiration is not merely to imitate surface engraving texture. Doré should learn to read Scripture, choose the right instant, viewing distance, composition, figures, gesture, landscape, light and line system, and then improve through review and revision.
 
