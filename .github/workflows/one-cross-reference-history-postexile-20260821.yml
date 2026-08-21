@@ -1,0 +1,43 @@
+name: ONE Post-Exile Cross Reference Fill
+on:
+  push:
+    paths:
+      - '.github/workflows/one-cross-reference-history-postexile-20260821.yml'
+permissions:
+  contents: write
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Add reviewed post-exile Scripture references
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/one-cross-reference-scripture.js')
+          s=p.read_text()
+          needle="    '以斯拉記 1:1–4':'波斯王塞魯士元年，耶和華為要應驗藉耶利米口所說的話，就激動波斯王塞魯士的心，使他下詔通告全國說：波斯王塞魯士如此說：耶和華天上的上帝已將天下萬國賜給我，又囑咐我在猶大的耶路撒冷為他建造殿宇。在你們中間凡作他子民的，可以上猶大的耶路撒冷，在耶路撒冷重建耶和華－以色列上帝的殿（只有他是上帝）。願上帝與這人同在。凡剩下的人，無論寄居何處，那地的人要用金銀、財物、牲畜幫助他，另外也要為耶路撒冷上帝的殿甘心獻上禮物。'"
+          add=",\n    '歷代志下 36:22–23':'波斯王塞魯士元年，耶和華為要應驗藉耶利米口所說的話，就激動波斯王塞魯士的心，使他下詔通告全國，說：波斯王塞魯士如此說：耶和華－天上的上帝已將天下萬國賜給我，又囑咐我在猶大的耶路撒冷為他建造殿宇。你們中間凡作他子民的，可以上去，願耶和華－他的上帝與他同在。',\n    '詩篇 147:2':'耶和華建造耶路撒冷，聚集以色列中被趕散的人。',\n    '以賽亞書 58:12':'那些出於你的人必修造久已荒廢之處；你要建立拆毀累代的根基。你必稱為補破口的，和重修路徑與人居住的。',\n    '以斯拉記 4:6':'在亞哈隨魯才登基的時候，上本控告猶大和耶路撒冷的居民。',\n    '箴言 21:1':'王的心在耶和華手中，好像隴溝的水隨意流轉。'"
+          if needle not in s: raise SystemExit('insert point not found')
+          s=s.replace(needle,needle+add,1)
+          old='const reviewedExplanationBooks=[6,7,8,11,12,13,14];'
+          new='const reviewedExplanationBooks=[6,7,8,11,12,13,14,15,16,17];'
+          if old not in s: raise SystemExit('reviewed list not found')
+          s=s.replace(old,new,1)
+          s=s.replace("batch:'history-reference-fill-through-chronicles'","batch:'history-reference-fill-through-esther-partial'",1)
+          p.write_text(s)
+
+          idx=Path('static/one/index.html')
+          t=idx.read_text()
+          import re
+          t,n=re.subn(r'one-cross-reference-scripture\.js\?v=([0-9A-Za-z]+)', 'one-cross-reference-scripture.js?v=20260821e', t, count=1)
+          if n!=1: raise SystemExit('script cache reference not found')
+          idx.write_text(t)
+          PY
+      - name: Commit
+        run: |
+          git config user.name 'westsidewatch-scripture-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/one/one-cross-reference-scripture.js static/one/index.html
+          git commit -m 'Fill post-exile history cross-reference Scripture'
+          git push
