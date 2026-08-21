@@ -6,13 +6,50 @@ on:
     paths:
       - 'static/one/**'
       - 'scripts/one-crossref-preflight.sh'
+      - 'scripts/one-crossref-missing-audit.mjs'
+      - 'scripts/one-crossref-fill-final.py'
       - '.github/workflows/one-crossref-preflight.yml'
 permissions:
-  contents: read
+  contents: write
 jobs:
   preflight:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Check cross-reference renderer and audit guards
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Generate all remaining public-domain CUV cross-reference Scripture
+        run: python3 scripts/one-crossref-fill-final.py
+      - name: Validate Scripture layers
+        run: |
+          node --check static/one/one-cross-reference-scripture.js
+          node --check static/one/one-cross-reference-scripture-wisdom.js
+          node --check static/one/one-cross-reference-scripture-major-prophets.js
+          node --check static/one/one-cross-reference-scripture-complete.js
+          node --check static/one/one-cross-reference-scripture-global-audit.js
+      - name: Run exhaustive cross-reference audit
+        run: node scripts/one-crossref-missing-audit.mjs
+      - name: Check renderer and audit guards
         run: bash scripts/one-crossref-preflight.sh
+      - name: Require zero missing or corrupted Scripture rows
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const r=JSON.parse(fs.readFileSync('audit-output/one-crossref-summary.json','utf8'));
+          if(r.missingCount!==0||r.badCount!==0){console.error(r);process.exit(1)}
+          console.log(`PASS ${r.filled}/${r.total} cross-reference Scripture rows; missing=0 bad=0`);
+          NODE
+      - name: Persist completed Scripture and audit report
+        if: github.event_name == 'push'
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh audit-output
+          if git diff --cached --quiet; then
+            echo 'Cross-reference Scripture already complete.'
+          else
+            git commit -m 'Complete all cross-reference Scripture and publish zero-gap audit'
+            git push
+          fi
