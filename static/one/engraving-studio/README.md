@@ -10,6 +10,14 @@ The French adjective **doré** means “golden” or “gilded.” Within Westsi
 
 This is continuity, not a new brand center. Doré's gold, the Bright Morning Star, dawn, daylight and the city of light all remain ordered toward the same center: **the glory of God, the light of God and life made new in that light.** Visual beauty, engraved craft and future motion serve that witness rather than advertising themselves.
 
+### The Golden Shoot
+
+Doré's central emblem may be expressed as **the Golden Shoot**. Isaiah 11:1 uses the Hebrew `נֵצֶר` (*nēṣer*, shoot/branch) for the new growth from Jesse's apparently cut-down stock. In Christian reading this messianic figure is Jesus: humble new life from Jesse and David's root, bearing the Spirit of the Lord and bringing righteous rule and peace.
+
+Matthew 2:23 says that Jesus' residence in Nazareth fulfills what was spoken “through the prophets,” that he would be called a Nazarene. No extant Old Testament verse contains that sentence verbatim. A historic and widely discussed interpretation hears a wordplay or conceptual resonance between *nēṣer* and Nazareth/Nazarene; other interpretations emphasize the prophets' broader themes of messianic humility and reproach. Doré may use the *nēṣer* connection as an accountable Christological resonance, but must not present the precise linguistic derivation or Matthew's intended source as undisputed fact.
+
+The emblem's meaning is therefore explicit: gold points to God's glory; the living shoot points to resurrection-like new life from what appeared cut down; the shoot is not generic vitality but points to Jesus Christ. This joins the Golden Shoot to Westside Watch's existing Morning Star, dawn and city-of-light imagery without creating a second theological center.
+
 Doré is not a claim of authorship by the historical Gustave Doré. The historical artist and his verified works remain identified as **Gustave Doré**. New AI-assisted Westside Watch works must retain truthful provenance such as **Doré · Westside Watch**, **Westside Watch Plate**, or another approved project credit.
 
 Doré's purpose is to learn how Scripture becomes visual narrative, study how Gustave Doré made pictorial decisions, accumulate human editorial corrections, and gradually develop a coherent Westside Watch engraving language.

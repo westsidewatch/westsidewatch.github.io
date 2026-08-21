@@ -25,6 +25,27 @@ The French adjective `doré` means “golden” or “gilded.” Westside Watch 
 
 Permanent center: **God's glory, God's light and new life in that light remain the brand core; Doré is a visual core unit ordered toward that center, not a replacement center.**
 
+### Christological emblem — the Golden Shoot
+
+The preferred core emblem for Doré is **the Golden Shoot**.
+
+Evidence levels must remain explicit:
+
+1. **TEXTUALLY CERTAIN — Isaiah 11:1:** the Hebrew text uses `נֵצֶר` (*nēṣer*, shoot/branch) for growth from Jesse's roots after the preceding image of felling. The following verses describe the Spirit of the Lord resting on this figure and his righteous, peace-bearing rule.
+2. **TEXTUALLY CERTAIN — Matthew 2:23:** Matthew says Jesus lived in Nazareth so that what was spoken through “the prophets” would be fulfilled: he would be called a Nazarene. No surviving Old Testament verse reproduces this line verbatim, and Matthew uses the plural “prophets.”
+3. **CREDIBLE CHRISTOLOGICAL INTERTEXT:** a historic and widely discussed explanation hears phonetic/conceptual resonance between Isaiah's *nēṣer* and Nazareth/Nazarene. This fits Matthew's fulfillment pattern and Jesus as the messianic shoot, but it is not the only scholarly explanation and must not be presented as a universally established etymology.
+4. **BRAND CONFESSION:** Westside Watch intentionally receives the resonance as a Christological emblem. The Golden Shoot is Jesus: the messianic new life from Jesse's cut-down stock, the humble Nazarene, the Spirit-bearing righteous king.
+
+Visual/theological grammar:
+
+- gold = God's glory and light, never luxury for its own sake;
+- shoot = living emergence from apparent cutting-down, never generic wellness branding;
+- Jesse's root = canonical history and promise, not rootless visual novelty;
+- fruit = righteousness, peace and renewed creation in Isaiah 11, not commercial growth metrics;
+- the Golden Shoot = Jesus Christ, not Doré, Gustave Doré, the AI system or Westside Watch itself.
+
+Do not turn the emblem into a compulsory literal twig placed in every illustration. It may govern product mark, transitions, gilt ornament, timeline growth and long-scroll continuity; within chapter art, it appears only when compositionally and scripturally responsible.
+
 The desired total work is analogous in continuity—not in Chinese style or subject matter—to the viewing experience of *Along the River During the Qingming Festival*: numerous local scenes, people, dwellings, roads, waters, occupations, gestures and small incidents belong to one extended inhabited world. Individual chapter images should be able to connect into a time-spanning visual scroll of the complete Bible, allowing Scripture to “live” while retaining the gravity and material truth of classical engraving.
 
 This objective creates several permanent requirements:
