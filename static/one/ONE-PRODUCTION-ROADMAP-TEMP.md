@@ -143,17 +143,19 @@ Backlog routes:
 Goal: close nearly complete books before large-volume generation. Total current W1 target: 36 plates.
 
 Execution order:
-1. [ ] 25 耶利米哀歌 — 1 missing, 4/5 covered. **Exact gap confirmed: `025-003`.** Existing coverage: ch.1 Doré 127; ch.2/4/5 explicit historical match 127. Next action: ONE Studio plate for ch.3 only.
-   - `025-003 | TODO | asset_id:- | revision:- | assignment:- | deploy:- | live:- | verified:-`
+1. [x] 25 耶利米哀歌 — 0 missing, 5/5 covered. **Stale gap corrected:** canonical cover policy explicitly maps ch.2/3/4/5 to historical match Doré 127, while ch.1 carries the book-local Doré 127 mapping. Human editorial direction requires the same original plate across these chapters; do not generate a separate ch.3 imitation.
+   - `025-003 | COVERED / P3 HISTORICAL_MATCH | Doré 127 exact shared original | generation:- | assignment:one-cover-policy.js HISTORICAL_MATCH | deploy:existing canonical policy | live:- | verified:-`
 2. [ ] 41 馬可福音 — 3 missing, 13/16 covered. High reader visibility; before generation expand this row into the three exact missing chapter keys from the current book audit.
 3. [ ] 08 路得記 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
 4. [ ] 32 約拿書 — 2 missing, 2/4 covered. Expand into exact missing child keys before generation.
 5. [ ] 31 俄巴底亞書 — 1 missing. Exact child `031-001`; Doré r2 human-approved and natively persisted/assigned, pending deployment and live visual verification.
    - `031-001 | ASSIGNED_PENDING_DEPLOYMENT | asset_id:OBA-01-DORE-STUDIO-002 | revision:r2 | assignment:ONE_STUDIO_ASSET_REGISTRY 31:1 | deploy:pending | live:/one/?book=31&chapter=1 | verified:pending`
-6. [ ] 57 腓利門書 — 1 missing. Expand into exact child key before generation.
+6. [ ] 57 腓利門書 — 1 missing. **Exact gap confirmed: `057-001`.** New learning cycle active; generation requires an epistle-specific visual grammar and human approval.
+   - `057-001 | LEARNING / r1 pending | asset_id:PHM-01-DORE-STUDIO-001 | revision:- | assignment:- | deploy:- | live:- | verified:-`
 7. [ ] 63 約翰二書 — 1 missing. Expand into exact child key before generation.
 8. [ ] 64 約翰三書 — 1 missing. Expand into exact child key before generation.
-9. [ ] 65 猶大書 — 1 missing. Expand into exact child key before generation.
+9. [ ] 65 猶大書 — 1 missing. **Exact gap confirmed: `065-001`.** Jude 9 r2 human-approved; native PNG persisted and assigned in the ONE Studio registry. Live verification remains required before DONE.
+   - `065-001 | APPROVED / PERSISTED / ASSIGNED | asset_id:JUD-01-DORE-STUDIO-001 | revision:r2 | assignment:P7_ONE_STUDIO_FIXED | deploy:- | live:- | verified:-`
 10. [ ] 37 哈該書 — 2 missing. Expand into exact missing child keys before generation.
 11. [ ] 29 約珥書 — 3 missing. Expand into exact missing child keys before generation.
 12. [ ] 34 那鴻書 — 3 missing. Expand into exact missing child keys before generation.

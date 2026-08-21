@@ -19,6 +19,560 @@ The common core would not be "image generation." The common core would be Doré'
 
 The existing Engraving Studio remains the first mature specialization of that intelligence.
 
+## Historical-geographic and material-culture memory
+
+This section applies to the current `Doré / Visual` specialization now; it is not deferred future API work.
+
+Every Scripture illustration must research the event's historical geography and period before generation. “Biblical interior,” “ancient city,” “prison,” “house,” “table” or “road” are not sufficient descriptions. Rome, Ephesus, Caesarea, Jerusalem, Colossae and Galilean lakeside towns must not collapse into one interchangeable visual setting.
+
+For each plate, preserve a compact research record with:
+
+- textually certain location and date evidence;
+- scholarly location/date alternatives when Scripture is silent or disputed;
+- the selected editorial hypothesis and why it was selected;
+- details that must remain visually noncommittal because certainty is insufficient;
+- geography, climate and available light;
+- urban, village, harbor, rural or wilderness settlement type;
+- architecture, construction materials, wall/floor treatment, doors, windows and circulation;
+- household scale, social status and whether the space is domestic, civic, sacred, commercial, military or custodial;
+- furniture, vessels, lamps, tools, writing materials and other everyday objects;
+- clothing and bodily practice appropriate to the time/place;
+- nearby regions or later periods whose visual grammar must be explicitly excluded;
+- archaeological, museum, textual and scholarly sources used;
+- unresolved questions requiring human review.
+
+Historical reconstruction must distinguish three evidence levels:
+
+1. **TEXTUALLY CERTAIN** — stated or securely entailed by Scripture;
+2. **EDITORIAL HYPOTHESIS** — a disclosed choice among credible historical/scholarly options;
+3. **VISUALLY WITHHELD** — disputed or unsupported detail deliberately omitted from the image.
+
+Do not make a disputed hypothesis look like a biblical fact by adding identifying landmarks, inscriptions or over-specific scenery. Conversely, uncertainty is not permission to use generic fantasy antiquity. Use well-supported material culture for the selected hypothesis and omit the features that would falsely claim more certainty than the evidence allows.
+
+### Philemon 1 case record — 2026-08-21
+
+- Textually certain: Paul writes as a prisoner; Onesimus is with him and is being sent back; the letter does not identify Paul's city.
+- Main location proposals reviewed: Rome, Ephesus and Caesarea.
+- Current editorial hypothesis for r2: Rome, c. AD 60–62, under restrained custody in rented lodging, aligned with the repository date range and the traditional Colossians/Philemon grouping. This remains a hypothesis, not an explicit claim of Philemon.
+- Recipient geography: Philemon's setting is associated with the Lycus Valley / Colossae and must remain distinct from Paul's writing room.
+- r1 failure learned: a feather quill, heavy later-looking four-legged writing desk and generalized rough-stone dungeon silently combined several eras and settings.
+- r2 material grammar: cut reed pen, ink and papyrus or a plausible thin wooden writing surface; small portable Greco-Roman table/support or lap-supported writing; modest Roman urban domestic lodging capable of receiving visitors; restrained custody rather than subterranean punishment architecture.
+- Explicit geographic exclusions: Galilean fishing-town stone house, Jerusalem sacred/temple cues, Ephesian elite marble residence, Colossian recipient house presented as Paul's room, medieval monastery and Renaissance/Victorian prison-study imagery.
+- Research evidence consulted: Acts 28 as textual comparison for Roman custody; scholarly discussions of Rome/Ephesus/Caesarea; British Museum and Metropolitan Museum Roman-period reed pens and writing-tablet evidence; archaeological/domestic-furniture research used only for material grammar, not for choosing the biblical interpretation.
+- Review status: r1 rejected; r2 generation remains pending location-specific visual research.
+
+### First-century letter-material correction — Philemon r2 review, 2026-08-21
+
+The original act of composing a New Testament letter must not be visualized as a later bound Bible. First-century Greek-Roman writing culture used papyrus rolls and individual papyrus sheets; surviving private letters are often small, thin sheets with the message on one face and an address on the reverse, and could be rolled or folded for delivery. Later Christian manuscript copies frequently used the codex, but that later transmission form must not be projected backward into Paul's writing room.
+
+For Philemon, a short personal letter of twenty-five verses, the safest material reconstruction is a **thin, flexible papyrus sheet or short roll segment**, not a massive literary roll and never a sideways modern book.
+
+- The writing surface must have negligible page-block thickness: no cover, spine, binding, stacked leaves or rigid rectangular book body.
+- Show one continuous flexible sheet, possibly with one loose curled/rolled end or a restrained delivery fold. Avoid the symmetrical double-roll silhouette familiar from modern “scroll” icons.
+- Papyrus should be warm light-brown rather than modern white; edges may be lightly irregular, trimmed or frayed, and the sheet must bend and sag instead of behaving like a board.
+- On the normal recto writing face, the visible papyrus fibres run horizontally beneath the ink. A joined short roll may show a plausible sheet join, but Philemon does not require a long multi-column literary scroll.
+- Use a cut reed pen and a small ink vessel. Support the sheet on Paul's lap or a low support without allowing the support to merge visually into a book cover.
+- Writing must remain non-readable: sparse, broken horizontal ink rhythm only—no generated pseudo-Greek, calligraphic title, large characters or repeated typographic marks.
+- Delivery may be implied by rolling/folding and an address on the verso; do not add a modern envelope.
+
+Human r2 correction: the current papyrus has a hard rectangular body, visually heavy support and regular curled profile that together read as a modern book laid sideways. This is a material-anachronism failure in addition to the already recorded pseudo-writing failure. r3 must preserve r2's successful spatial architecture while replacing that object completely.
+
+Research basis: Metropolitan Museum papyrus-manufacture and writing-material records; British Museum Roman-period private papyrus letters; British Library papyrus-letter and early-codex records. Museum evidence is being used for material grammar, not to claim that a surviving object is the autograph of Philemon.
+
+### Philemon handwriting decision — 2026-08-21
+
+- Textually certain: Philemon 19 states that Paul writes the repayment undertaking in his own hand.
+- Scholarly alternatives: the common amanuensis reading holds that a scribe wrote most of the letter and Paul personally added the guarantee; a published holograph argument holds that the personal nature of the short letter and the documentary force of verse 19 make it more likely that the whole letter was in Paul's hand.
+- No textual or external evidence identifies Silas, Timothy, Luke or another named coworker as the physical scribe of Philemon. Timothy is named as co-sender, not as amanuensis.
+- Selected editorial hypothesis: **the complete Letter to Philemon is written personally by Paul.** This accords with the human editor's judgment and a credible scholarly position, but it must remain labelled an editorial hypothesis because the autograph does not survive.
+- Visual consequence: retain Paul as the sole visible writer. Do not add a named or anonymous amanuensis merely to illustrate a general Pauline practice. The exact depicted instant may remain anchored in verses 18–19, where Paul's own hand is explicit, while the whole scene may consistently treat the surrounding letter as his personal handwriting.
+
+### Philemon papyrus reference correction — human-selected object evidence
+
+The human editor selected the Roman-period private papyrus-letter example displayed by the Oxyrhynchus Papyri project as the controlling visual reference for the Philemon writing surface. This replaces the generic modern “scroll” mental model.
+
+- Treat the letter primarily as a tall, narrow, single papyrus sheet: long axis away from the writer, short horizontal writing lines progressing down the sheet.
+- Preserve visible horizontal fibre structure, thinness, modest tonal variation and hand-cut edge irregularity.
+- The archaeological example's holes, major tears, missing corners, museum backing and ruler are evidence of survival and display, not features of Paul's newly written letter; do not copy them.
+- Do not add a decorative rolled end merely to signal antiquity. A fresh sheet may bend or hang beyond its support under gravity without becoming a scroll icon.
+- The reference's historical handwriting controls density, rhythm and imperfect alignment only. Generated output must not imitate its legible letterforms; at cover scale writing remains an unreadable engraved texture.
+
+### Occlusion correction — do not display the evidence object
+
+The historically researched object must not automatically become a displayed pictorial subject. Philemon r4–r5 showed that separately editing a pale papyrus can make it look pasted into the scene even when its format is accurate. The human correction is to move the sheet inward beneath Paul's writing arm.
+
+- Paul's sleeve, forearm and hand should cover most of the papyrus; reveal only the nib contact patch and a short thin edge sufficient to establish the act of writing.
+- The paper must not present a complete bright rectangle, hang toward the viewer or compete with the Paul-to-Onesimus-to-threshold narrative.
+- Test the causal chain at enlargement: fingers grip reed -> reed ends in nib -> nib touches the exposed paper patch -> a fresh stroke begins at that point. A generic writing pose with the nib outside the sheet is a characteristic AI failure and is disqualifying.
+- Occlusion is not evasion: the small visible contact area must remain spatially exact, while unnecessary paper anatomy and pseudo-writing are subordinated in shadow.
+
+### Iterative-edit texture drift — Philemon r2 versus r5
+
+Human comparison identified a severe whole-image regression hidden by successive object corrections. Philemon r2 retains comparatively plausible engraving strokes: line direction follows wall planes, floor recession, drapery weight and figure volume; open midtone intervals allow the large dark masses to breathe. By r5, repeated generative edits have re-synthesized the whole frame into dense, uniformly curled, high-frequency marks.
+
+This is not increased Doré fidelity. It is characteristic AI texture drift:
+
+- wall, floor, skin, cloth and shadow inherit the same looped/worm-like surface mark;
+- directional hatching no longer describes material or form;
+- midtones collapse toward black and the image becomes progressively darker;
+- edge separation and atmospheric depth weaken even though object-level instructions appear to improve;
+- each nominally “local” edit silently alters the global line system.
+
+Operational rule: after any generated edit, compare the entire result directly with its accepted ancestor, not only the requested object. Review global black ratio, midtone breathing room, material-specific hatch direction, line frequency and preserved quiet areas. If the global engraving system drifts, reject the edit regardless of local success.
+
+Do not continue editing r5. The next attempt must restart from the original r2 image as the sole composition/line-quality master and apply the accumulated papyrus, occlusion and nib-contact corrections in one generation pass. Never use a chain of generative edits as training memory; preserve lessons in the written brief and return to the cleanest accepted visual ancestor.
+
+Enlarged facial evidence makes the rejection categorical. In r5, Paul's eye socket, nose bridge, cheek, mouth, beard and hair cease to be separable anatomical structures and fuse into glossy black looping bands. Specular-looking highlights create a plastic/metal surface, while similar closed loops contaminate the background. This must never be misclassified as Doré shadow simplification: Doré can subordinate a small face, but remaining strokes still describe bone plane, lid, hair mass and directional form. If facial anatomy dissolves into the same texture as wall or cloth, the image has failed before any eye-detail review begins.
+
+### Highest visual gate — preserve Doré's engraved stroke language
+
+The human editor identifies Doré's engraved stroke language as the single most important visual characteristic. Monochrome color, nineteenth-century subject matter, deep blacks or abundant marks do not constitute Doré when the strokes themselves are wrong.
+
+- Every stroke must describe something: form turning, material, weight, light falloff, atmospheric depth or directed movement.
+- Hatch direction must vary by anatomical plane, drapery fold, masonry face, wood grain, floor recession and air; never cover the whole plate with one repeated texture token.
+- Preserve open intervals and breathable midtones. More lines and more black are not automatic improvements.
+- Do not continue serial generative edits on an accepted plate. Each edit can re-synthesize the whole image and progressively destroy the original stroke system even when the requested change is local.
+- Accumulate corrections in the written brief, then return to the cleanest accepted ancestor and attempt them together in one controlled generation. Never use a degraded revision as the next visual parent.
+- After every generation, compare full-frame and enlarged crops directly against the accepted ancestor. **Doré-stroke continuity is reviewed before paper, hand, eye, costume or other local correctness.**
+- If a local correction changes global mark shape, density, black ratio, midtone spacing or material differentiation, reject the entire result and revert. Do not attempt to repair the drift through another generative edit.
+
+### Permanent generation rule — regenerate, never generatively edit
+
+Human editorial directive: **future Doré candidates must not be generatively edited. Every revision is a completely new generation.**
+
+- A generated candidate is an evaluation artifact, never the pixel source for the next candidate.
+- Record every accepted and rejected finding in the existing brief/memo, then combine the accumulated requirements into a fresh prompt.
+- A new candidate may consult the same Scripture, historical research, Doré corpus plates and non-generated material references, but must not use the previous generated candidate as an edit target or visual parent.
+- “Change only the hand/paper/eye” is forbidden when it invokes generative image editing; the apparent locality is false because the model can re-synthesize the whole plate and warp its stroke system.
+- Compare each fresh generation with the strongest earlier candidate for learning, but never feed that candidate back for modification.
+- If a fresh generation solves one defect but loses Doré stroke, composition, anatomy or history elsewhere, reject it and generate afresh from the written specification. Do not patch it.
+
+This rule supersedes earlier proposals for masked or pixel-preserving generative correction in the Doré workshop. Deterministic non-generative production operations such as crop, resize, file conversion or approved layout placement are not image revisions and remain separate.
+
+Clarification after human review: “regenerate” forbids editing a candidate and serially inheriting its altered pixels; it does not forbid using approved earlier candidates as separated references in a fresh generation. A near-success image may control composition and another may control stroke, provided the prompt assigns non-overlapping roles and the result is generated afresh. For Philemon, r2 composition is the 90/100 baseline: do not invent a different composition unless it is demonstrably better. r7 may inform stroke/chain behavior only and must not transfer its enlarged foreground figure or rigid room grid.
+
+Philemon r8 exposes a limitation in that clarification: text labels such as “composition reference only” and “stroke reference only” do not create true internal layers. The generator can blend the complete visual statistics of both images. When full-resolution r2 is supplied to enforce composition, its weaker wall/texture behavior can return together with its layout and compete with r7's cleaner stroke reference. Reference-role wording reduces confusion but cannot guarantee independent transfer.
+
+The scale/resolution burden also changes: r7's large foreground Paul and broad simple planes allow longer, clearer hatch systems at 992 × 1586, while r2's smaller figures, deeper room and more numerous lived details require the same pixel budget to carry more materials and depth layers. This makes disciplined fine engraving harder, though not conceptually impossible.
+
+Future technical direction: separate low-frequency composition from high-frequency stroke evidence more honestly. Use a texture-neutral structural study/map of the approved r2 arrangement (masses, silhouettes, apertures, depth and object locations) rather than feeding its full texture as the composition control; let clean Doré corpus/r7 evidence control the high-frequency engraved line language. The resulting candidate must still be a fresh generation, never an edit of an earlier plate.
+
+### Final Philemon stop decision
+
+The human editor ended the Philemon cover effort after r8. Do not continue trying to solve the current composition/stroke transfer impasse. No candidate is approved and the chapter remains uncovered. Preserve r2 as composition evidence, r7 as stroke/chain evidence, the historical and papyrus research, the holograph decision, the occlusion/contact rules and the multi-reference limitation for future Doré learning. The correct outcome here is retained intelligence without a published image.
+
+### Lamentations 3 correction — reuse the exact original
+
+Do not generate a Studio cover for Lamentations 3. The human editor had already directed the shared use of Doré 127, *People Mourn over the Destruction of Jerusalem*, and the canonical cover policy maps Lamentations 2, 3, 4 and 5 to that exact historical-match asset while chapter 1 carries the book-local mapping. “Match the style exactly” here means use the identical original plate binary and common cover renderer—not create a generated imitation. The temporary roadmap's `025-003` missing-plate row was stale and has been corrected.
+
+### Philemon future restart protocol — avoid another deadlock
+
+Human directive: when Philemon is attempted again, do not repeat this workshop's loop.
+
+1. Load this complete case record before any generation; do not rediscover the authorship, papyrus, hand/contact, composition or stroke conclusions.
+2. Begin with a texture-neutral composition study derived from the r2 principles: small Paul, foreground obstruction, unequal depth, inhabited right-side detail and restrained outward route. Do not begin by generating a finished plate.
+3. Validate the composition study independently before asking for engraved finish. If it is not at least as strong as the r2 90/100 benchmark, reject it before full rendering.
+4. Use canonical Doré plates and the accepted r7 stroke evidence to specify material-specific hatch, but do not ask one full-resolution generated reference to carry both composition and texture.
+5. Generate every finished candidate afresh; never edit a candidate.
+6. Review the two independent gates first: Doré pictorial mind and Doré engraved stroke. Only after both pass may paper, nib, eyes, hands and other local details be considered.
+7. If the same composition-versus-stroke conflict recurs in two fresh finished candidates, stop immediately. Do not enter a serial prompt loop; defer until the workflow or model has materially changed.
+8. Never publish a compromise merely to complete the missing cover.
+
+The restart goal is not “try more times.” It is to remove known ambiguity before the expensive finished generation and exit early when the known technical barrier returns.
+
+### Stroke correctness is necessary but not sufficient — Philemon r7
+
+Human review found r7's engraving strokes and restrained chain acceptable while rejecting the complete image as AI rather than Doré. The cause is compositional regression: an oversized foreground Paul, compressed depth, rigid vertical/horizontal grid, loss of domestic semantic detail and a generic generated “ancient city” outside the door.
+
+Therefore the highest stroke gate does not replace the composition gate. A plate must pass both independently:
+
+1. **Engraved-stroke gate:** directional, material-specific, breathable, anatomically descriptive marks without AI texture.
+2. **Doré pictorial-mind gate:** subordinate figure scale, unequal depth, asymmetrical obstruction, directed discovery, environmental consequence, lived detail and resistance to flat modern staging.
+
+An image with good hatch applied to a modern/AI composition remains an AI image. Do not allow large foreground figures, clean orthogonal room grids or a conventional bright old-city vista to simulate narrative clarity. Preserve human scale by making the chamber, objects, thresholds and receding circulation participate in the story.
+
+### Approved stroke benchmark — Philemon r7
+
+The human editor explicitly approved the **stroke language** of `work/candidates/057-001-philemon-r7.png` while rejecting its composition. Preserve this distinction permanently.
+
+- Verification SHA-256: `1bb5391476ed7896b166cdc7d55e666d7f7bfdee119c0b42ae3eab29c5407342`
+- Approved evidence: directional wall-plane hatch; receding floor lines; material differentiation among drapery, wood, pottery, skin and masonry; breathable midtones; absence of loop/maze texture; comparatively natural chain gravity.
+- Rejected evidence: oversized foreground Paul, compressed space, rigid orthogonal room grid, reduced domestic semantic detail and generic AI exterior city.
+
+Future work may use r7 as a stroke/chain reference only. Never call r7 an approved plate, composition or cover, and never allow its rejected spatial decisions to hitchhike with its accepted line language.
+
+Philemon r6 establishes a stricter technical limit: even a single clean generative edit from r2 can re-synthesize untouched regions. The upper-left and rear wall planes changed from restrained plane-following engraving into bent, embossed, maze-like texture. Therefore “one pass from the clean ancestor” reduces cumulative drift but does not guarantee stroke preservation. A claim that architecture is locked in a prompt is not pixel preservation.
+
+For a correction whose success requires the accepted r2 wall/floor/figure strokes to remain exact, do not authorize another full-frame generative edit. The unchanged region must be protected by an actually local, masked/pixel-preserving workflow, or the candidate must remain rejected until such a workflow is available. Never accept warped wall strokes merely because the paper object improved.
+
+### Philemon workshop closure
+
+The 2026-08-21 Philemon attempt ended without an approved asset. This is a deliberate quality decision, not a reason to relax the standards. r2's composition remains useful learning evidence, but no r1–r6 image may be published. Retain the research and failure analysis; wait for a workflow that can preserve accepted engraved pixels outside a tightly bounded edit area rather than degrading the plate through repeated global synthesis.
+
+Human assessment: the attempt was close to a successful result. Treat r2 as a near-success benchmark for composition, scale, depth, environmental hierarchy and emerging Doré character. The decisive failure occurred in the unresolved letter object and in destructive revision drift; do not misdiagnose it as failure of the complete visual concept.
+
+## Composition intelligence and facial-restraint memory
+
+Historical correctness does not rescue a composition that merely lays out the requested people and objects. Doré composition must be learned as narrative architecture: foreground obstruction, unequal depth, compressed or released space, directional masses, light apertures, thresholds, diagonals, vertical hierarchy, partial concealment and delayed discovery must determine how the Scripture is read.
+
+Reject the following event-diagram habit:
+
+`person A + person B + identifying object + plain room = finished biblical scene`
+
+That formula produces a literal inventory, not a Doré plate. Before generation, the brief must state:
+
+- the primary Doré compositional structure and the exact canonical plates supporting it;
+- how foreground, middle ground and background create unequal depth;
+- what blocks, frames, compresses or redirects the viewer's sight;
+- which action or theological relationship is discovered first, second and late;
+- where large dark and light masses carry narrative pressure;
+- why the selected viewing distance is Doré-like rather than a modern two-person portrait;
+- which apparently important object or face is deliberately subordinated or withheld.
+
+### Facial scale and invented-identity risk
+
+Doré's biblical plates commonly make faces serve silhouette, bodily gesture, group direction, light and spatial hierarchy rather than treating every principal figure as a large, fully specified portrait. This restraint is especially important when Scripture supplies no historical likeness.
+
+- Do not imply that a generated face is the historically recoverable appearance of Paul, Onesimus, Philemon or another biblical person.
+- Do not invent precise age, ethnicity, facial proportions, hair pattern or psychological expression beyond what Scripture and reliable historical context support.
+- A large, highly resolved face creates false evidentiary claims: viewers reasonably ask why the person has that age, appearance or expression.
+- Prefer medium or smaller figure scale, three-quarter/profile/back views, partial shadow, interrupted contours and expression carried by the whole body.
+- When age is textually relevant, communicate it first through bodily bearing, posture, garment weight and relational placement; avoid turning “aged” into an unsupported portrait reconstruction.
+- Enlarged face review remains mandatory for anatomical defects, but technical correction must not increase portrait specificity. A face can be anatomically plausible and still be too assertive for the evidence.
+- Facial differentiation is necessary to prevent cloned identities; facial portraiture is not. Distinguish figures through silhouette, height, posture, movement, clothing mass, position and value before facial micro-detail.
+
+### Philemon r1 composition/facial failure
+
+- The two-person-plus-table arrangement is too direct, shallow and illustrative. It reports the situation but does not transform intercession, debt, sending and hoped-for reception into Doré-like spatial drama.
+- Both figures occupy a clean modern tableau with insufficient foreground obstruction, depth layering, directional pressure or late discovery.
+- The faces are too large and individuated relative to the available historical evidence. The right-hand figure was intended as Onesimus, not Philemon, yet the portrait scale invites precisely the unsupported identity and age questions the plate should avoid.
+- Paul's textually relevant status as “aged” does not authorize a highly specific invented likeness.
+- r2 must restart at a wider or more deeply layered viewing distance and derive its full composition from canonical Doré structures before deciding where any face appears.
+
+## Doré face scale, viewpoint and composition study — 2026-08-21
+
+Research question: why do Doré's biblical figures often have comparatively small/simple faces; why does he frequently avoid a neutral eye-level tableau; what is the most reusable compositional principle?
+
+Evidence compared includes *The Creation of Light*, *Abraham Goes to the Land of Canaan*, *Jacob Prays for Protection*, *Sennacherib's Army Is Destroyed*, *Isaiah's Vision of the Destruction of Babylon*, *Baruch Writes Jeremiah's Prophecies*, *Christ in the Synagogue*, *St. Paul Preaching to the Thessalonians*, *Peter's Escape from Prison*, *The Prodigal Son Decides to Return* and *Joseph Reveals Himself to His Brothers*.
+
+### Finding 1 — face simplification is primarily hierarchy, not inability
+
+End-grain wood engraving could reproduce very fine detail, and Doré's 1866 Bible used full-page illustrations. Therefore small or restrained faces cannot be explained simply as a technical inability to engrave them.
+
+The more stable explanation from the plates is pictorial hierarchy:
+
+- the body silhouette establishes role before facial identity;
+- posture and gesture establish action before expression;
+- group direction establishes response before individual psychology;
+- light and shadow select a figure without requiring a portrait close-up;
+- landscape and architecture place the human being inside providence, judgment, pilgrimage, revelation or history;
+- small faces preserve ambiguity where Scripture does not provide a recoverable likeness.
+
+Doré can render a face strongly when the plate needs it, but even then the face normally remains integrated into brow, hair, drapery, gesture and surrounding value. It rarely floats as the sole carrier of meaning in the manner of a modern cinematic close-up.
+
+Operational conclusion: a face is not the starting point of a biblical figure. Build in this order:
+
+`silhouette -> weight/posture -> relation/direction -> light placement -> head turn -> minimal facial structure`
+
+If blanking the eyes and mouth destroys the scene's meaning, the composition depends too heavily on facial acting.
+
+### Finding 2 — neutral eye level is not forbidden, but it is rarely left neutral
+
+Doré does use approximately eye-level views in intimate or social scenes. The actual rule is not “never eye level.” The recurring practice is that the viewer receives a spatial role rather than standing before a flat stage.
+
+He changes or destabilizes the neutral view through:
+
+- low placement beneath a prophet, angel, cliff, architecture or elevated crowd;
+- high/oblique placement to reveal routes, bodies, armies, ruins or a whole moral field;
+- foreground backs, rocks, bodies, walls, animals or architecture that place the viewer inside/behind the event;
+- strong recession, stairs, roads, processions or crowd funnels that pull vision through depth;
+- cropped forms that imply the world continues outside the plate;
+- unequal figure scale that separates near witness, principal action and distant consequence.
+
+An eye-level plate can still be Doré-like when a light aperture, crowd funnel, foreground witness or processional depth prevents it from becoming a row of figures. What fails is the neutral eye-level tableau in which all subjects are fully visible, similarly scaled and arranged parallel to the picture plane.
+
+### Finding 3 — the largest compositional characteristic is directed environmental drama
+
+Doré's most reusable characteristic is not “dramatic lighting,” “many people,” “low angle” or “engraving texture” by itself. It is the conversion of the entire environment into one directed narrative force.
+
+In successful plates:
+
+- one dominant value event organizes the plate: aperture, horizon, storm break, radiant opening or pale path;
+- one dominant directional system carries the reading: ascent, descent, procession, recoil, convergence, expulsion or return;
+- figures, terrain, architecture, cloud and shadow participate in the same direction;
+- foreground, middle ground and background do different narrative jobs;
+- the principal figure is often not the largest or most detailed object, but occupies the decisive junction of direction and value;
+- the image unfolds in sequence rather than presenting every fact simultaneously.
+
+Compact rule:
+
+`Doré composition = directed space + unequal scale + value event + narrative sequence`
+
+The figure is not placed in front of a background. Figure and environment become one pictorial argument.
+
+### Practical application protocol
+
+Before drawing faces or objects:
+
+1. Write the passage's principal change as a verb pair: separated -> received; bound -> sent; accused -> restored; proud -> brought low.
+2. Choose one spatial verb matching that change: approach, return, ascent, descent, convergence, dispersal, opening or crossing.
+3. Assign the viewer a position and role: behind a witness, below authority, above a field of consequence, inside a threshold or at the edge of a procession.
+4. Make a three-value thumbnail using only black, middle gray and paper white. No faces, fingers, furniture detail or hatch.
+5. Establish three unequal depth layers. Each layer must perform a different narrative function rather than merely add scenery.
+6. Add one foreground interruption and one off-frame continuation so the scene is entered rather than displayed.
+7. Place the principal figure at the junction of the dominant direction and value event; do not automatically center or enlarge the face.
+8. Add heads only as directional masses. Decide profile, three-quarter, back view or shadow before adding eyes.
+9. Apply the blank-face test: cover facial features. If Scripture meaning and figure relations remain legible, facial restraint is working.
+10. Apply the small-plate test: at cover size, verify silhouette, depth, direction and value sequence before inspecting engraving detail.
+
+### Philemon r2 application
+
+The controlling change is `separated / indebted -> sent toward reception as brother`. The composition should therefore be designed around **return/crossing**, not around two men conversing across a table.
+
+Candidate Doré structure for research, not yet authorization:
+
+- primary structure: light aperture joined to processional depth;
+- viewer: partially behind a dark architectural foreground edge inside the lodging;
+- Paul: smaller midground seated figure, identified by aged bodily bearing and writing action, face oblique and partly absorbed in shadow;
+- Onesimus: turned partly away/profile at a threshold or passage, body beginning an outward route rather than posing for a portrait;
+- letter: small earned light plane linking Paul's interior position to Onesimus's route;
+- background: a receding courtyard/passage that implies departure without claiming to depict Colossae;
+- faces: subordinate to head turn, silhouette, distance and value; neither face may function as an invented historical portrait;
+- material culture: Rome c. AD 60–62 editorial hypothesis remains controlling, with reed pen, plausible writing support and modest rented-lodging grammar.
+
+r2 remains blocked until this structure is compared against exact canonical Doré plates and reduced to a successful three-value / no-face composition plan.
+
+## Environmental detail and lived-world density
+
+A Doré scene is rarely exhausted by the minimum nouns required to identify the event. A room is not merely two figures and one table; a street is not merely figures against masonry. Secondary material evidence enriches the viewing experience, creates depth, establishes social life and lets the viewer discover the world gradually.
+
+The relevant lesson is visible in plates such as *Lazarus at the Rich Man's House*: food, vessels, furniture, animals, thresholds, servants/guests and differences of bodily position do more than decorate the scene. They make wealth, exclusion, appetite, neglect and social distance physically legible.
+
+Possible lived-world details include:
+
+- appropriate objects on and beneath a table;
+- vessels, lamps, baskets, textiles, tools, writing materials and storage;
+- a wheel or implement being repaired beside ongoing work;
+- dogs, tethered animals, feed/water vessels or other animals warranted by the setting;
+- wear, debris, food remains, folded cloth, door hardware and traces of repeated human use;
+- partly seen labor, household circulation or another small action continuing beyond the main event;
+- objects interrupted by foreground cropping or partially lost in shadow.
+
+But detail must never become random AI clutter. Every secondary detail must pass at least one of these functions:
+
+1. **Scripture evidence** — clarifies an explicit or securely entailed textual condition;
+2. **historical-geographic evidence** — belongs to the selected place, date, household and social class;
+3. **human activity evidence** — shows what inhabitants were doing before, during or after the selected instant;
+4. **spatial evidence** — creates foreground/middle/background depth, scale, obstruction or circulation;
+5. **theological/social contrast** — makes mercy, wealth, exclusion, labor, captivity, hospitality or neglect visible;
+6. **compositional function** — reinforces the dominant direction, value event or delayed discovery.
+
+Details must be distributed by hierarchy:
+
+- principal action remains readable first;
+- supporting objects appear second;
+- small lived-world discoveries reward prolonged viewing;
+- distant objects simplify and merge into value masses;
+- no object receives equal outline, contrast or micro-detail merely because it was named in a prompt.
+
+Operational rule: before generation, list 5–12 candidate environmental details, record each detail's function, reject unsupported items, and assign the retained details to depth layers. During review, remove any detail that looks copied, repeated, physically unsupported, historically misplaced or unrelated to Scripture meaning.
+
+For Philemon r2, environmental research must go beyond “Paul + Onesimus + table.” Candidate details may include a reed pen/ink vessel, papyrus preparation/storage, a low portable writing support, stool or bench wear, restrained chain attachment, lamp niche, folded travel cloth, doorway/courtyard circulation and one plausible sign that visitors can enter the rented lodging. No dog, food vessel, wheel or workshop tool should be added merely because such details occur effectively in another Doré plate; each requires evidence from the selected Roman domestic/custodial setting and the scene's activity.
+
+### Semantic density, not object density
+
+This explains a recurring generative-image failure: an AI image can be crowded with furniture, vessels, tools, people, food and texture yet still feel empty and repetitive. The problem is not insufficient quantity. It is insufficient causality and relationship.
+
+Generative clutter commonly has these traits:
+
+- objects are interchangeable tokens with no identifiable user;
+- repeated bowls, jars, fabrics, faces or tools vary superficially but perform the same non-function;
+- nothing shows what happened immediately before or what will happen next;
+- objects do not affect posture, circulation, wear, shadow, balance or other objects;
+- every area receives similar detail density, so no discovery has priority;
+- additions fill pixels without increasing Scripture meaning, history, space or human life.
+
+Doré-like richness instead requires **semantic density**:
+
+- an object belongs to someone or to a specific shared activity;
+- its placement follows use, gravity, reach and circulation;
+- wear, displacement, remains or interruption imply time;
+- one detail explains another detail;
+- repeated forms vary by role, distance and condition rather than decorative randomness;
+- details accumulate toward the passage's social, emotional or theological relation;
+- omission and shadow preserve hierarchy so the scene remains readable.
+
+Review test: for every visible secondary detail, ask `whose is it?`, `what is it doing here?`, `what changed it?`, `what does it affect?`, and `what does it add to Scripture, history or depth?` If these questions have no answer, removing the detail should improve the plate.
+
+Compact rule:
+
+`visual fullness = relationships + causality + time + hierarchy`, not `number of objects`.
+
+## Doré-era drawing, painting movements and teaching curriculum study — 2026-08-21
+
+Research question: can the drawing instruction and major visual currents circulating in Doré's nineteenth-century environment strengthen the Studio's reconstruction of his pictorial intelligence?
+
+### Historical boundary
+
+Doré was a precocious, substantially self-taught draftsman who entered illustrated journalism as a teenager rather than completing the standard École des Beaux-Arts sequence. He exhibited at the Salon and worked inside the same French visual culture, but contemporary teaching methods must not be falsely presented as courses Doré personally completed.
+
+The Bargue–Gérôme *Cours de dessin*, published beginning in 1866, is especially relevant as evidence of period teaching and coincides with the publication year of Doré's Bible. There is no current evidence in this study that Doré trained from Bargue's plates. Use Bargue as a contemporary curriculum witness, not as Doré provenance.
+
+### Conclusion
+
+Doré-era teaching is highly useful when divided into **foundation training**, **composition training**, **observation training** and **contamination risks**. It cannot replace direct study of authenticated Doré originals.
+
+Source priority remains:
+
+`Doré originals -> Doré drawings/working process -> contemporary foundational exercises -> wider nineteenth-century visual context`
+
+Contemporary schools explain available skills and problems; only Doré's own works establish Doré's final pictorial decisions.
+
+### 1. Academic drawing — useful foundation, dangerous final style
+
+Common academic progression moved from copying drawings/prints to plaster casts, anatomical/écorché study and finally the living model. The aim was accuracy, proportion, contour, light-and-shadow modeling and command of the human figure.
+
+Useful transfers:
+
+- block-in of large proportion before features;
+- straight-line envelope and major-angle comparison;
+- anatomy beneath drapery;
+- weight-bearing pelvis, rib cage, shoulder, elbow, wrist, knee and ankle relationships;
+- cast/light studies that simplify a head or hand into large shadow planes;
+- live-model gesture and balance;
+- correction by comparison rather than decorative patching.
+
+This directly addresses Studio failures in eyes, hands, wrists, fused limbs, weightless poses and unsupported folds.
+
+Forbidden transfer into final Doré plates:
+
+- polished cast-like faces as invented biblical portraits;
+- isolated anatomy displays;
+- static contrapposto unrelated to Scripture action;
+- idealized salon bodies, smooth academic finish and equal contour clarity;
+- central model-on-platform staging;
+- treating technical anatomical finish as sufficient composition.
+
+### 2. History painting — useful narrative hierarchy, dangerous theatrical tableau
+
+The French Academy ranked biblical, classical and historical subjects highly. History painting trained artists to select an intelligible instant, arrange multiple figures, use gesture, costume and architecture, and establish moral hierarchy.
+
+Useful transfers:
+
+- select the decisive moment rather than illustrate every noun;
+- assign every figure a response role;
+- organize gesture and gaze into a readable action chain;
+- plan costume/architecture as historical evidence;
+- compose large groups around one moral/theological center.
+
+Risks:
+
+- figures arranged parallel to the picture plane like actors on a stage;
+- rhetorical display gestures and over-clear facial acting;
+- academic grandeur replacing Scripture intimacy;
+- symmetrical pyramids and central heroes used automatically.
+
+### 3. Romantic drawing and painting — highly useful for Doré's directed drama
+
+Romantic practice, exemplified in Delacroix's drawing process, treated the first compositional thought as the germ of the finished work and developed observed, remembered and imagined material through repeated figure/composition studies.
+
+Useful transfers:
+
+- begin with the total directional movement, not finished objects;
+- preserve energy and asymmetry from the first thumbnail;
+- make light, cloud, landscape and gesture participate in one emotional force;
+- create multiple compositional alternatives before committing;
+- use memory and imagination only after observation has supplied structural truth;
+- allow imbalance, cropping and diagonal pressure when the narrative demands them.
+
+This is closer to Doré's compositional intelligence than copying a finished academic pose, but Delacroix or Romanticism must not be treated as direct evidence for a specific Doré plate.
+
+### 4. Illustrated press and caricature — essential to Doré's narrative speed
+
+Doré's early professional formation in illustrated journalism and caricature helps explain abilities that a purely academic curriculum does not:
+
+- immediate silhouette and gesture readability;
+- condensation of a narrative into one arresting image;
+- rapid variation of viewpoint and composition;
+- expressive but economical faces;
+- crowd types distinguished through posture and role;
+- integration of topical observation, architecture and small social details;
+- willingness to crop, exaggerate scale and disturb balance for clarity.
+
+Transfer boundary: learn economy, observation and narrative timing; do not import comic distortion, mockery or grotesque stereotypes into solemn Scripture unless the text itself warrants satire or humiliation.
+
+### 5. Realist/observational drawing — essential for semantic density
+
+Nineteenth-century observation of streets, labor, poverty, interiors and ordinary bodies is especially useful for correcting generative emptiness.
+
+Useful transfers:
+
+- objects connected to actual work and domestic routines;
+- non-heroic bodies with fatigue, age, weight and social position;
+- wear, repair, storage, food, animals and circulation as causal evidence;
+- asymmetrical, partly obstructed lived spaces;
+- distinction between elite, modest and impoverished material environments.
+
+Transfer boundary: observed-world material truth may support a biblical setting only after historical-geographic translation. Victorian London, modern Paris or contemporary clothing/architecture must never leak into first-century Scripture imagery.
+
+### 6. Old-master copying and print study — useful visual vocabulary
+
+Copying earlier drawings, prints and paintings was a standard training method. For the Studio, selective comparison can strengthen:
+
+- Rembrandt-like chiaroscuro and figures submerged in shadow where Doré's own works show a related solution;
+- Rubens-like bodily movement and group flow where authenticated Doré studies demonstrate compatible inheritance;
+- Dürer/older print economy, contour and material differentiation;
+- classical and Renaissance figure organization as historical context for nineteenth-century history painting.
+
+These artists are contextual ancestors, not substitutes for Doré. No rule enters Doré memory merely because it is effective in an old master; it must be confirmed against Doré originals.
+
+### Recommended Studio curriculum
+
+Use short, problem-driven exercises rather than copying an entire nineteenth-century academy syllabus:
+
+1. **Value block-in** — reduce a cast/head/hand to 3–5 large light planes; no eyes, eyelashes or finger creases.
+2. **Gesture and weight** — 30–120 second whole-body action studies emphasizing rib cage, pelvis, support leg and direction.
+3. **Anatomical junctions** — focused studies of shoulder/elbow/wrist/hand and hip/knee/ankle; review connection before surface detail.
+4. **Drapery over structure** — draw the body/action first, then gravity/tension folds; reject unsupported decorative folds.
+5. **First-thought thumbnails** — produce 6–12 black/white compositional alternatives for one Scripture change before selecting objects.
+6. **History-action chain** — map each figure's role, gaze and gesture; remove figures that perform no narrative function.
+7. **Observed interior inventory** — document ownership, use, wear, access and circulation for every retained object.
+8. **Doré translation** — compare the exercise with 3–8 authenticated Doré works and translate it through Doré's scale, value, viewpoint, environment and engraving logic.
+9. **Anti-academic correction** — deliberately remove portrait specificity, salon posing, symmetry and polished isolated anatomy that compete with Scripture.
+10. **Cover test** — verify directed space, unequal scale, value event and narrative sequence at small size before line detail.
+
+### Adoption decision
+
+Adopt Doré-era teaching for:
+
+- anatomy and proportion repair;
+- large-value simplification;
+- live weight and gesture;
+- drapery structure;
+- compositional iteration;
+- historical narrative organization;
+- observation of lived material detail.
+
+Do not adopt it as:
+
+- proof that Doré personally followed a particular course;
+- a replacement for Doré corpus study;
+- permission for academic portraiture or idealized bodies;
+- a finished visual style;
+- a reason to return to centered, flat, theatrical tableaux.
+
+Compact conclusion:
+
+`period teaching supplies disciplined eyes and hands; Doré originals supply the pictorial mind.`
+
+## Philemon r2 learning confirmation — 2026-08-21
+
+Human comparison against the earlier failed Philemon and Mark attempts judged Philemon r2 to be the first candidate in this sequence that begins to read as Doré rather than as an AI engraving imitation.
+
+Confirmed cause: improvement came from directed space, foreground obstruction, unequal depth, small/subordinate faces, historical material culture, semantic environmental detail and an outward narrative route—not from adding more hatch texture.
+
+Retain the r2 composition direction for revision. Correct pseudo-writing and any enlarged hand/limb/foot defects locally only if the directed architecture, value sequence, facial restraint and lived-world hierarchy can remain intact. If correction collapses those structures, regenerate from the accepted r2 grammar rather than reverting to the r1 tableau.
+
 ## Proposed capability separation
 
 Do not collapse every Doré function into one undifferentiated prompt. A future shared core should expose separate profiles/capabilities:
@@ -159,6 +713,14 @@ Potential maturity sequence:
 `Doré Visual (current) -> shared Scripture core -> Scripture Editor -> Editorial Lexicon -> Subtitle profile -> reusable Doré service/API`
 
 Each stage requires its own tests and human-review boundaries.
+
+## Visual memory: restrained grandeur
+
+Doré's monumentality is not synonymous with spectacle. Large-scale spiritual or natural scenes should first obtain their force from unequal depth, human-to-environment scale, weight-bearing masses, gesture, atmospheric recession and deliberate value hierarchy. The common generated-image shortcut—a sun or brilliant opening behind clouds, radial light, divine spotlight, lightning or automatic supernatural glow—must be treated as a prohibited default rather than a sign of sacredness.
+
+The approved Jude 9 Studio plate demonstrates the useful direction: a vast wilderness, small separated figures, an independently resting shrouded body, an adversary withheld in shadow and Michael's restrained appeal to higher authority. Its drama comes from spatial and moral relation, not physical combat or optical effects.
+
+Natural sublimity follows the same rule. Waterless clouds, uprooted trees, wild waves and darkness must retain material cause and distinct mark languages. Do not turn a storm sky into repeated ribbons, a hard black star cap or swirling decorative texture. A local generative correction that damages passed engraving strokes is a failed correction even when its object list is more accurate.
 
 ## Relationship to current Doré documents
 
