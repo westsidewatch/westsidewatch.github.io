@@ -1,0 +1,62 @@
+name: Temp crossref branch audit
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/.trigger-crossref-branch-audit'
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: one/wisdom-major-prophets-scripture
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Download, generate, and audit with diagnostics
+        shell: bash
+        env:
+          CUVT_USFM_ZIP: /tmp/cmn-cu89t_usfm.zip
+        run: |
+          set +e
+          mkdir -p audit-output
+          curl -L --fail --retry 2 --retry-delay 1 -A 'Mozilla/5.0 WestsideWatch-ONE' https://ebible.org/Scriptures/cmn-cu89t_usfm.zip -o /tmp/cmn-cu89t_usfm.zip > audit-output/one-crossref-download.log 2>&1
+          dl=$?
+          if [ "$dl" -ne 0 ]; then
+            wget -O /tmp/cmn-cu89t_usfm.zip https://ebible.org/Scriptures/cmn-cu89t_usfm.zip >> audit-output/one-crossref-download.log 2>&1
+            dl=$?
+          fi
+          if [ "$dl" -eq 0 ]; then
+            ls -l /tmp/cmn-cu89t_usfm.zip >> audit-output/one-crossref-download.log
+            unzip -t /tmp/cmn-cu89t_usfm.zip >> audit-output/one-crossref-download.log 2>&1
+            zipok=$?
+          else
+            zipok=99
+          fi
+          if [ "$dl" -eq 0 ] && [ "$zipok" -eq 0 ]; then
+            python3 scripts/one-crossref-fill-final.py > audit-output/one-crossref-fill.log 2>&1
+            fill=$?
+          else
+            fill=99
+          fi
+          if [ "$fill" -eq 0 ]; then
+            node --check static/one/one-cross-reference-scripture-complete.js > audit-output/one-crossref-jscheck.log 2>&1; check=$?
+            node --check static/one/one-cross-reference-scripture-global-audit.js >> audit-output/one-crossref-jscheck.log 2>&1; check2=$?
+            node scripts/one-crossref-missing-audit.mjs > audit-output/one-crossref-missing-run.log 2>&1; miss=$?
+            bash scripts/one-crossref-preflight.sh > audit-output/one-crossref-preflight.log 2>&1; pre=$?
+          else
+            check=99;check2=99;miss=99;pre=99
+          fi
+          printf '{"downloadExit":%s,"zipExit":%s,"fillExit":%s,"checkExit":%s,"auditCheckExit":%s,"missingExit":%s,"preflightExit":%s}\n' "$dl" "$zipok" "$fill" "$check" "$check2" "$miss" "$pre" > audit-output/one-crossref-run-status.json
+          exit 0
+      - name: Commit completed result and diagnostics to work branch
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add -A audit-output static/one/one-cross-reference-scripture-complete.js static/one/one-cross-reference-scripture-global-audit.js static/one/index.html scripts/one-crossref-preflight.sh 2>/dev/null || true
+          git diff --cached --quiet && exit 0
+          git commit -m "Run deterministic cross-reference completion diagnostics"
+          git push origin HEAD:one/wisdom-major-prophets-scripture
