@@ -27,7 +27,7 @@
   /* Validated legacy Scripture books.
    * Representative source files were checked before inclusion: their connections[][2]
    * contain quoted Bible text, not commentary. Books built from generic summary schemas
-   * (for example Hebrews and the auto-generated remaining canon books) are intentionally excluded.
+   * or explanation-only cross-reference tables are intentionally excluded.
    */
   const validatedBooks=[
     [1,1,50],      // Genesis
@@ -39,6 +39,7 @@
     [41,1,16],     // Mark
     [42,1,24],     // Luke
     [43,1,21],     // John
+    [44,1,28],     // Acts
     [52,1,5],      // 1 Thessalonians
     [53,1,3],      // 2 Thessalonians
     [66,1,22]      // Revelation
@@ -69,7 +70,7 @@
     if(String(row[3]||'').trim())verified++;else if(String(row[2]||'').trim())commentaryOnly++;
   })));
   window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={
-    batch:'validated-major-books',migrated,migratedByBook,total,verified,remaining:total-verified,commentaryOnly,
+    batch:'validated-major-books-plus-acts',migrated,migratedByBook,total,verified,remaining:total-verified,commentaryOnly,
     validatedBooks:validatedBooks.map(([book,start,end])=>({book,start,end}))
   };
   document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;
