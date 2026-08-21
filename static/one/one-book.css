@@ -1032,3 +1032,9 @@ main,.views{background:transparent}
   .now .chapter-cover-overlay .chapter-cover-chapter{min-height:9rem}
   .now .chapter-cover-overlay .morning-star{transform:scale(.78)}
 }
+
+/* Cross-reference integrity: commentary and Scripture are separate. */
+.connection-note{margin:.8rem 0 0;color:var(--ink);font-size:var(--one-body-size);line-height:1.8}
+.connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
+.connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}
+.connection-section blockquote[data-one-scripture="true"]{margin:.85rem 0 0}

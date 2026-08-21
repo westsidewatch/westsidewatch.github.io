@@ -59,7 +59,7 @@
       study.route=array(study.route).map(item=>row(item,2,"route",bookName,n));
       study.background=array(study.background).map(item=>row(item,3,"background",bookName,n));
       study.scout=array(study.scout).map(text);
-      study.connections=array(study.connections).map(item=>row(item,3,"connections",bookName,n));
+      study.connections=array(study.connections).map(item=>row(item,4,"connections",bookName,n));
       study.harmony=array(study.harmony).map(item=>row(item,3,"harmony",bookName,n));
       study.questions=array(study.questions).map(text);
       study.prepare=array(study.prepare).map(text);

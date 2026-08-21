@@ -30,7 +30,7 @@ Every `chapterStudies[n]` uses the shared ONE renderer and must provide these sh
 - `route`: array of rows `[reference, description]`.
 - `background`: array of rows `[heading, explanation, geographic/application note]`.
 - `scout`: array of strings.
-- `connections`: array of rows `[reference, relationship, explanatory text]`. **Never pass a bare string.** A bare string is indexable character data in JavaScript and will render as broken one-character columns.
+- `connections`: array of rows `[reference, relationship, explanatory text, scripture quotation]`. **Field 3 is commentary only; field 4 is the only field permitted to render as a Bible quotation. Never infer or copy field 3 into a quotation.** Never pass a bare string.
 - `harmony`: array of table rows. Each row is an array; never a bare string.
 - `questions`, `prepare`: arrays of strings.
 - `timeline.events`: array of rows `[time/range, event, note]`.
@@ -76,6 +76,7 @@ Before merge, every new book or batch must satisfy all of the following:
 7. Confirm `window.ONE_STUDY_SCHEMA_AUDIT.ok === true`.
 8. When the release target is the full canon, confirm `window.ONE_CANON_66_AUDIT.ok === true`, `expectedBooks === 66`, and `expectedChapters === 1189`.
 9. Confirm **no new schema-normalization warnings** are introduced by the new book.
+9a. Cross-reference guard: verify the renderer quotes only `connections[][3]`; `connections[][2]` must remain explanatory prose even when field 4 is empty.
 10. Test chapter 1, a middle chapter, and the final chapter.
 11. Test at least one populated Cross References module and one intentionally omitted optional module.
 12. Verify desktop and mobile rendering.
