@@ -47,6 +47,39 @@ The governing sequence is:
 
 Success means that a viewer can enter any chapter and encounter a credible classical world, then continue across chapters and centuries without feeling that the people, places or engraved hand have been regenerated from nothing each time.
 
+### Future contract — ONE timeline × Doré motion
+
+ONE's chapter timelines should eventually interoperate with Doré animation. The timeline is the chronological/canonical navigation layer; Doré is the approved visual-time layer. Neither replaces the other.
+
+Each motion-capable timeline event should be able to carry or resolve:
+
+- stable book/chapter/passage identity;
+- event title and canonical sequence position;
+- exact, approximate, relative or disputed date status;
+- people and persistent character identities;
+- geographic place and persistent location identity;
+- historical period/material-culture profile;
+- approved still plate ID and immutable master hash;
+- optional approved motion asset ID, duration, aspect variants and motion limits;
+- provenance, editorial approval and revision history;
+- preceding/following timeline events and the ONE return anchor.
+
+Expected interaction:
+
+`select ONE timeline node -> open the matched Doré plate/motion in context -> retain Scripture and chronology metadata -> return to the same chapter/timeline position`
+
+Hard rules:
+
+- do not turn the timeline into an autoplay video feed or a gallery detached from Scripture;
+- animation availability is progressive enhancement; the timeline and chapter remain complete without it;
+- the ONE timeline owns chronology labels and uncertainty. Doré may visualize a selected editorial hypothesis but may not silently harden it into fact;
+- playback must never change the canonical order, chapter identity or provenance of the underlying plate;
+- reuse one approved motion asset where events genuinely share identity; do not regenerate duplicate variants merely for each timeline occurrence;
+- preserve reading control, reduced-motion preferences, captions, pause/seek behavior and a still-image fallback;
+- future cross-book timeline playback should reveal continuity across Scripture while retaining each book's distinct atmosphere and historical world.
+
+This integration is the practical bridge between ONE as the root and Doré as the living Bible growing from it.
+
 ## Core idea
 
 Doré may eventually evolve from Westside Watch's dedicated Bible visual intelligence into a broader **Westside Watch Scripture Intelligence Layer**.

@@ -126,6 +126,16 @@ Doré should first learn to select one decisive biblical instant. Later it can l
 
 A Doré motion piece should feel like engraved biblical storytelling acquiring time, not a modern cinematic production with an engraving filter applied afterward.
 
+### ONE timeline integration
+
+ONE's existing chapter timelines may later become the primary navigation and synchronization surface for Doré motion. A timeline event can resolve to an approved Doré plate or short animation while preserving its book, chapter, passage, approximate/contested date status, people, place and surrounding canonical sequence.
+
+This is not a video carousel. The governing interaction is:
+
+`ONE timeline event -> Scripture/context payload -> approved Doré scene or motion -> return to the same ONE chapter position`
+
+The timeline remains the authority for chronology and uncertainty; Doré supplies the visual-time expression. Motion must never turn an approximate date, compressed chronology or disputed reconstruction into false precision. A single approved animation may be linked from several timeline views, but its canonical identity and provenance remain stable.
+
 ### Apparel / T-shirts
 
 Doré may produce church and Westside Watch apparel graphics. Apparel output should not simply print a rectangular full illustration on a shirt.
