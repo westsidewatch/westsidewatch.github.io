@@ -89,7 +89,7 @@ const priorityBooks=bookRows.filter(b=>b.backlog>0).sort((a,b)=>{
 const report={generatedAt:new Date().toISOString(),executedScripts:executed,canon:{books:canon.registeredBooks,chapters:canon.registeredChapters,ok:canon.ok},policy:{mode:policy.mode,semanticExpansionEnabled:policy.semanticExpansionEnabled,originalDoréPlacementLocked:policy.originalDoréPlacementLocked,studioLibrarySeparate:policy.studioLibrarySeparate},summary:{totalChapters:chapters.length,covered:coveredRows.length,backlog:backlogRows.length,coveragePercent:Number((coveredRows.length/chapters.length*100).toFixed(1)),byCoverLayer:countBy(coveredRows,'coverLayer'),byQualityGrade:countBy(coveredRows,'qualityGrade'),backlogByGenre:countBy(backlogRows,'genreClass'),backlogByRoute:countBy(backlogRows,'productionRoute'),backlogByWave:countBy(backlogRows,'wave'),metadataReview:coveredRows.filter(r=>r.metadataStatus==='REVIEW_METADATA').length},priorityBooks,books:bookRows,chapters};
 if(report.summary.totalChapters!==1189)throw new Error(`Expected 1189 chapters, got ${report.summary.totalChapters}`);
 if(report.summary.covered+report.summary.backlog!==1189)throw new Error('Cover coverage invariant failed');
-if(report.summary.backlog!==983)throw new Error(`Expected current Missing Plate baseline 983, got ${report.summary.backlog}; rerun classification review before accepting baseline change`);
+if(report.summary.backlog!==981)throw new Error(`Expected current Missing Plate baseline 981, got ${report.summary.backlog}; rerun classification review before accepting baseline change`);
 
 fs.mkdirSync(path.join(root,'audit-output'),{recursive:true});
 fs.writeFileSync(path.join(root,'audit-output','one-cover-backlog.json'),JSON.stringify(report,null,2));

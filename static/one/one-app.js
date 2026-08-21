@@ -441,7 +441,7 @@ function comparisonMarkup(study,volume){
 
 function connectionMarkup(item,index){
   const reference=String(item?.[0]||'').trim(),relationship=String(item?.[1]||'').trim(),explanation=String(item?.[2]||'').trim(),scripture=String(item?.[3]||'').trim();
-  const quote=scripture?`<blockquote data-one-scripture="true">${scripture}</blockquote>`:`<p class="connection-scripture-missing"><span>Scripture pending · 經文待補</span>本條目前只保留串珠關係與說明，不以說明文字冒充經文引用。</p>`;
+  const quote=scripture?`<blockquote data-one-scripture="true">${scripture}</blockquote>`:'';
   const note=explanation?`<p class="connection-note"><span>Cross-reference note · 串珠說明</span>${explanation}</p>`:'';
   return `<article><header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${reference}</strong><small>${relationship}</small></div></header>${quote}${note}</article>`;
 }
