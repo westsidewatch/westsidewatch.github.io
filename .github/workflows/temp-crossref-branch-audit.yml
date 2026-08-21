@@ -16,18 +16,21 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      - name: Run cross-reference preflight and global audit
+      - name: Run exhaustive cross-reference audit
         shell: bash
         run: |
           set +e
+          node scripts/one-crossref-missing-audit.mjs > /tmp/missing.log 2>&1
+          miss=$?
           bash scripts/one-crossref-preflight.sh > /tmp/preflight.log 2>&1
           pre=$?
           node scripts/one-global-audit.mjs > /tmp/global.log 2>&1
           glob=$?
           mkdir -p audit-output
+          cp /tmp/missing.log audit-output/one-crossref-missing-run.log
           cp /tmp/preflight.log audit-output/one-crossref-preflight.log
           cp /tmp/global.log audit-output/one-global-audit-run.log
-          printf '{"preflightExit":%s,"globalExit":%s}\n' "$pre" "$glob" > audit-output/one-crossref-run-status.json
+          printf '{"missingExit":%s,"preflightExit":%s,"globalExit":%s}\n' "$miss" "$pre" "$glob" > audit-output/one-crossref-run-status.json
           exit 0
       - name: Commit audit results to work branch
         run: |
