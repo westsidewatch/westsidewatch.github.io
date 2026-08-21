@@ -27,7 +27,7 @@ jobs:
           global.document={readyState:'complete',addEventListener(){},documentElement:{dataset:{},classList:{add(){}}},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []},createElement(){return {style:{},dataset:{},append(){},appendChild(){},setAttribute(){},addEventListener(){},classList:{add(){},remove(){},toggle(){}}}},head:{append(){},appendChild(){}},body:{classList:{add(){},remove(){}}}};
           const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
           const scripts=[...html.matchAll(/<script\s+src="\.\/([^"?]+)(?:\?[^" ]*)?"/g)].map(m=>m[1]);
-          const stop=scripts.indexOf('one-studio-assets.js');
+          const stop=scripts.indexOf('remaining-nt-epistles-runtime-check.js');
           const dataScripts=scripts.slice(0,stop<0?scripts.length:stop);
           const loadWarnings=[];
           for(const file of dataScripts){
@@ -59,7 +59,9 @@ jobs:
               });
             }
           }
-          const result={generatedAt:new Date().toISOString(),books:Object.keys(D.studyBooks).length,total,chaptersWithConnections,withExplicitFourth,withVerifiedLocal,missingVerifiedScripture,affected,loadWarnings};
+          const registeredBookNumbers=Object.keys(D.studyBooks).map(Number).sort((a,b)=>a-b);
+          const missingBooks=Array.from({length:66},(_,i)=>i+1).filter(n=>!registeredBookNumbers.includes(n));
+          const result={generatedAt:new Date().toISOString(),books:registeredBookNumbers.length,registeredBookNumbers,missingBooks,total,chaptersWithConnections,withExplicitFourth,withVerifiedLocal,missingVerifiedScripture,affected,loadWarnings};
           fs.writeFileSync(path.join(root,'one-cross-reference-audit.json'),JSON.stringify(result,null,2)+'\n');
           console.log(JSON.stringify({...result,affected:`${affected.length} rows`},null,2));
           NODE
