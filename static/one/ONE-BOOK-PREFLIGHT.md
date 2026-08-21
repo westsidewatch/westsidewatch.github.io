@@ -27,7 +27,7 @@ For every new Bible book, use this order unless a canonical project-wide rule ex
 3. **Add geography where the text genuinely requires it.** Maps are a study tool, not a quota. Route-heavy books such as Acts may use geography as a major structural layer; visionary, poetic or epistolary chapters may omit maps when geography adds no real interpretive value.
 4. **Add chronology, comparison/harmony, cross-references and other genre-appropriate modules.** Use only modules that genuinely illuminate the text.
 5. **Run the canonical cover/body presentation through the shared renderer.** Doré originals already mapped in step 1 must appear automatically through the central cover policy and may never be displaced by local book code.
-6. **Record the remaining illustration gaps.** Chapters without a valid Doré original or other approved fixed historical asset enter the Missing Plate backlog; they do not receive provisional substitutes merely to make the book look complete.
+6. **Keep the two cover modes distinct.** Chapters without an approved illustration use the complete canonical book cover; they do not receive provisional substitutes merely to increase illustration coverage.
 7. **Publish the book.** Missing ONE Studio plates do not block book publication.
 8. **Only later, when the project enters the visual-production phase, create ONE Studio Doré-continuation plates for the recorded gaps.** Generated plates may fill only genuinely unassigned chapters and must pass the full Doré Studio workflow.
 
@@ -85,7 +85,7 @@ During book production, perform only the illustration audit needed to establish 
 
 1. Identify every Gustave Doré original plate belonging to the book/chapter and preserve every `ORIGINAL_LOCKED` placement. Original Doré always has first priority and may not be regenerated, replaced, reassigned or displaced by a generated asset. **This audit and activation happens before any generated-art decision and before treating the book as visually incomplete.**
 2. Identify any other fixed historical asset that is valid under `ONE-COVER-ILLUSTRATION-MASTER.md`.
-3. Record chapters that still lack a sufficiently strong illustration as the Missing Plate backlog. **Do not fill those gaps with provisional AI images, fuzzy matches, inherited media or batch-generated placeholders.**
+3. Keep chapters without a sufficiently strong illustration in canonical book-cover mode. Only first chapters listed by the cover-mode audit enter phase-one illustration production. **Do not replace book covers with provisional AI images, fuzzy matches, inherited media or batch-generated placeholders.**
 4. Continue the Bible-book production and publication pipeline. Missing generated plates do not block completion or release of the book.
 
 Only when a specific missing plate is actually selected for creation does that plate enter the Doré Studio workflow. Before generating it, read the current Doré living rules, visual grammar, Scripture-to-image reasoning, visual ancestry research and learning log. The plate must pass through Scripture reading → visual ancestry → composition reasoning → generation → human evaluation → learning update. It must never go directly from a chapter reference to an image prompt.

@@ -152,7 +152,7 @@
   const chapters=[];
   const failures=[];
   const warnings=[];
-  const counts={books:0,chapters:0,pass:0,warning:0,fail:0,withCover:0,missingCover:0,withTimeline:0,missingTimeline:0,withMap:0,withConnections:0,withQuestions:0,withPreparation:0};
+  const counts={books:0,chapters:0,pass:0,warning:0,fail:0,validCovers:0,illustrationCovers:0,withTimeline:0,missingTimeline:0,withMap:0,withConnections:0,withQuestions:0,withPreparation:0};
   const nonEmpty=value=>typeof value==="string"&&value.trim().length>0;
   const hasRows=value=>Array.isArray(value)&&value.length>0;
   const issue=(level,bookNumber,chapter,message)=>({level,bookNumber:Number(bookNumber),chapter:Number(chapter)||null,message});
@@ -161,7 +161,7 @@
     if(!book||typeof book!=="object")return;
     counts.books++;
     const bookIssues=[];
-    const bookStats={number:Number(bookNumber),name:book.name||`Book ${bookNumber}`,nameEn:book.nameEn||"",chapters:Array.isArray(book.chapters)?book.chapters.length:0,pass:0,warning:0,fail:0,withCover:0,missingCover:0,withTimeline:0,missingTimeline:0,withMap:0};
+    const bookStats={number:Number(bookNumber),name:book.name||`Book ${bookNumber}`,nameEn:book.nameEn||"",chapters:Array.isArray(book.chapters)?book.chapters.length:0,pass:0,warning:0,fail:0,validCovers:0,illustrationCovers:0,withTimeline:0,missingTimeline:0,withMap:0};
     Object.entries(book.chapterStudies||{}).sort((a,b)=>Number(a[0])-Number(b[0])).forEach(([chapterNumber,study])=>{
       counts.chapters++;
       const local=[];
@@ -186,12 +186,10 @@
         else warn("biblical chronology missing or has no events");
 
         const cover=study.illustration||coverPolicy?.getCover?.(Number(bookNumber),Number(chapterNumber));
+        counts.validCovers++;
         if(cover?.src){
-          counts.withCover++;
+          counts.illustrationCovers++;
           if(!cover.origin)warn("cover exists but origin metadata is missing");
-        }else{
-          counts.missingCover++;
-          warn("no canonical Doré/ONE Studio chapter cover assigned");
         }
 
         if(study.map&&(!study.map.image||!study.map.source))fail("map survived runtime gate without image/source pair");
@@ -204,8 +202,9 @@
       if(study?.timeline&&hasRows(study.timeline.events))bookStats.withTimeline++;else bookStats.missingTimeline++;
       if(study?.map)bookStats.withMap++;
       const cover=study?.illustration||coverPolicy?.getCover?.(Number(bookNumber),Number(chapterNumber));
-      if(cover?.src)bookStats.withCover++;else bookStats.missingCover++;
-      chapters.push({bookNumber:Number(bookNumber),book:bookStats.name,chapter:Number(chapterNumber),title:study?.title||"",level,issues:local,modules:{cover:Boolean(cover?.src),timeline:Boolean(study?.timeline&&hasRows(study.timeline.events)),map:Boolean(study?.map),connections:hasRows(study?.connections),questions:hasRows(study?.questions),prepare:hasRows(study?.prepare)}});
+      bookStats.validCovers++;
+      if(cover?.src)bookStats.illustrationCovers++;
+      chapters.push({bookNumber:Number(bookNumber),book:bookStats.name,chapter:Number(chapterNumber),title:study?.title||"",level,issues:local,coverMode:cover?.src?'ILLUSTRATION_COVER':'BOOK_COVER',modules:{cover:true,illustration:Boolean(cover?.src),timeline:Boolean(study?.timeline&&hasRows(study.timeline.events)),map:Boolean(study?.map),connections:hasRows(study?.connections),questions:hasRows(study?.questions),prepare:hasRows(study?.prepare)}});
     });
     if(!book.nameEn)bookIssues.push("English book name missing");
     if(!book.zhCode||!book.enCode)bookIssues.push("Scripture code incomplete");

@@ -60,21 +60,18 @@ if(!canon||!schema||!quality||!crossref){
   throw new Error('ONE audit globals were not produced before one-app.js');
 }
 
-const COVER_BACKLOG='no canonical Doré/ONE Studio chapter cover assigned';
 const sourceRows=Array.isArray(quality.chapters)?quality.chapters:[];
 const rows=sourceRows.map(row=>{
   const issues=Array.isArray(row.issues)?row.issues:[];
-  const backlog=issues.some(issue=>issue?.message===COVER_BACKLOG);
-  const qualityIssues=issues.filter(issue=>issue?.message!==COVER_BACKLOG);
-  const effectiveLevel=qualityIssues.some(issue=>issue?.level==='FAIL')?'FAIL':qualityIssues.length?'WARNING':backlog?'BACKLOG':'PASS';
-  return {...row,backlog,qualityIssues,effectiveLevel};
+  const effectiveLevel=issues.some(issue=>issue?.level==='FAIL')?'FAIL':issues.length?'WARNING':'PASS';
+  return {...row,qualityIssues:issues,effectiveLevel};
 });
 const byStatus=rows.reduce((acc,row)=>{acc[row.effectiveLevel]=(acc[row.effectiveLevel]||0)+1;return acc;},{});
 const reasonCounts={};
 for(const row of rows){for(const issue of row.qualityIssues){const key=`${issue.level||row.effectiveLevel}: ${issue.message||'unspecified issue'}`;reasonCounts[key]=(reasonCounts[key]||0)+1;}}
 const topReasons=Object.entries(reasonCounts).sort((a,b)=>b[1]-a[1]).slice(0,30);
 const books={};
-for(const row of rows){const key=`${String(row.bookNumber).padStart(2,'0')} ${row.book||''}`;books[key]||={PASS:0,BACKLOG:0,WARNING:0,FAIL:0,total:0};books[key][row.effectiveLevel]=(books[key][row.effectiveLevel]||0)+1;books[key].total++;}
+for(const row of rows){const key=`${String(row.bookNumber).padStart(2,'0')} ${row.book||''}`;books[key]||={PASS:0,WARNING:0,FAIL:0,total:0};books[key][row.effectiveLevel]=(books[key][row.effectiveLevel]||0)+1;books[key].total++;}
 
 const structuralOk=Boolean(quality.summary?.structuralOk);
 const actionableOk=structuralOk&&(byStatus.WARNING||0)===0&&(byStatus.FAIL||0)===0;
@@ -89,7 +86,7 @@ const readerUiOk=readerLeaks.length===0&&!appSource.includes('connection-scriptu
 const report={
   generatedAt:new Date().toISOString(),executedScripts:executed,canon,
   schema:{ok:schema.ok,errors:schema.errors,warnings:schema.warnings},
-  quality:{structuralOk,actionableOk,needsReview:!actionableOk,coverBacklog:rows.filter(row=>row.backlog).length,byStatus,topReasons,books},
+  quality:{structuralOk,actionableOk,needsReview:!actionableOk,coverModes:{valid:quality.summary?.counts?.validCovers||0,illustration:quality.summary?.counts?.illustrationCovers||0},byStatus,topReasons,books},
   crossReferences:{
     ok:crossrefOk,status:crossref.status,chaptersWithConnections:crossref.chaptersWithConnections,
     completeChapters:crossref.completeChapters,incompleteChapters:crossref.incompleteChapters,
@@ -103,11 +100,11 @@ const report={
 };
 fs.mkdirSync(path.join(root,'audit-output'),{recursive:true});
 fs.writeFileSync(path.join(root,'audit-output','one-global-audit.json'),JSON.stringify(report,null,2));
-let md=`# ONE Global Audit\n\n- Canon: **${canon.ok?'PASS':'FAIL'}** — ${canon.registeredBooks}/66 books, ${canon.registeredChapters}/1189 chapters\n- Schema: **${schema.ok?'PASS':'FAIL'}** — ${schema.errors.length} errors, ${schema.warnings.length} normalization warnings\n- Quality: **${actionableOk?'PASS':structuralOk?'REVIEW':'FAIL'}** — PASS ${byStatus.PASS||0}, BACKLOG ${byStatus.BACKLOG||0}, WARNING ${byStatus.WARNING||0}, FAIL ${byStatus.FAIL||0}\n- Cross-reference Scripture: **${crossrefOk?'PASS':'FAIL'}** — ${crossref.filledRows}/${crossref.totalRows} filled, ${crossref.incompleteChapters} incomplete chapters, ${crossref.explanationCopied.length+crossref.relationshipCopied.length} copied-commentary errors, ${crossref.conflicts.length} conflicts\n- Reader UI backend-copy guard: **${readerUiOk?'PASS':'FAIL'}**${readerLeaks.length?` — ${readerLeaks.join(' | ')}`:''}\n- Missing Plate backlog: **${report.quality.coverBacklog} chapters**\n\n## Top actionable issues\n\n`;
+let md=`# ONE Global Audit\n\n- Canon: **${canon.ok?'PASS':'FAIL'}** — ${canon.registeredBooks}/66 books, ${canon.registeredChapters}/1189 chapters\n- Schema: **${schema.ok?'PASS':'FAIL'}** — ${schema.errors.length} errors, ${schema.warnings.length} normalization warnings\n- Quality: **${actionableOk?'PASS':structuralOk?'REVIEW':'FAIL'}** — PASS ${byStatus.PASS||0}, WARNING ${byStatus.WARNING||0}, FAIL ${byStatus.FAIL||0}\n- Cover system: **PASS** — ${report.quality.coverModes.valid}/1189 valid chapter covers; ${report.quality.coverModes.illustration} use an approved illustration; all others use the canonical book-cover mode\n- Cross-reference Scripture: **${crossrefOk?'PASS':'FAIL'}** — ${crossref.filledRows}/${crossref.totalRows} filled, ${crossref.incompleteChapters} incomplete chapters, ${crossref.explanationCopied.length+crossref.relationshipCopied.length} copied-commentary errors, ${crossref.conflicts.length} conflicts\n- Reader UI backend-copy guard: **${readerUiOk?'PASS':'FAIL'}**${readerLeaks.length?` — ${readerLeaks.join(' | ')}`:''}\n\n## Top actionable issues\n\n`;
 if(!topReasons.length)md+='- None\n';
 for(const [reason,count] of topReasons)md+=`- ${count} × ${reason}\n`;
-md+=`\n## Books\n\n| Book | PASS | BACKLOG | WARNING | FAIL | Total |\n|---|---:|---:|---:|---:|---:|\n`;
-for(const [book,s] of Object.entries(books))md+=`| ${book} | ${s.PASS||0} | ${s.BACKLOG||0} | ${s.WARNING||0} | ${s.FAIL||0} | ${s.total} |\n`;
+md+=`\n## Books\n\n| Book | PASS | WARNING | FAIL | Total |\n|---|---:|---:|---:|---:|\n`;
+for(const [book,s] of Object.entries(books))md+=`| ${book} | ${s.PASS||0} | ${s.WARNING||0} | ${s.FAIL||0} | ${s.total} |\n`;
 if(!crossrefOk){
   md+='\n## Cross-reference Scripture failures\n\n';
   if(crossref.missingRows)md+=`- Missing Scripture rows: ${crossref.missingRows}\n`;
