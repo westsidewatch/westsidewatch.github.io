@@ -35,7 +35,10 @@ for(const [bookNo,book] of Object.entries(D.studyBooks||{})){
   }
 }
 const uniqueMissing={}; for(const r of missing){const k=r.reference||'(blank)';(uniqueMissing[k]??=[]).push({book:r.book,name:r.name,chapter:r.chapter,index:r.index});}
+const byBook={}; for(const r of missing){const k=`${String(r.book).padStart(2,'0')} ${r.name}`;byBook[k]=(byBook[k]||0)+1;}
 const report={executed,skipped,errors,total,filled,missingCount:missing.length,badCount:bad.length,missing,bad,uniqueMissing};
+const summary={total,filled,missingCount:missing.length,badCount:bad.length,uniqueMissingCount:Object.keys(uniqueMissing).length,byBook,uniqueReferences:Object.keys(uniqueMissing),skipped,errors};
 fs.mkdirSync(path.join(root,'audit-output'),{recursive:true});
 fs.writeFileSync(path.join(root,'audit-output','one-crossref-missing.json'),JSON.stringify(report,null,2));
-console.log(JSON.stringify({total,filled,missingCount:missing.length,badCount:bad.length,uniqueMissingCount:Object.keys(uniqueMissing).length,skipped,errors},null,2));
+fs.writeFileSync(path.join(root,'audit-output','one-crossref-summary.json'),JSON.stringify(summary,null,2));
+console.log(JSON.stringify(summary,null,2));
