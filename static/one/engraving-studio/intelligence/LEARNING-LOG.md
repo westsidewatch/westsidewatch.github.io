@@ -47,3 +47,19 @@ Promote: retain revision history and feed review findings back into Living Intel
 Finding: studying only how Doré draws misses why his plate works as biblical illustration.
 
 Promote: each canonical plate study records passage context, selected instant, omissions, theological hierarchy and relationship between text and pictorial decision.
+
+### L008 — Prophetic reversal can be staged before catastrophe
+
+Finding: Obadiah 1 became more Scripture-specific when judgment was expressed through low viewer position, false height, descending cliff geometry and a distant counter-path toward Zion rather than through an exploding city.
+
+Evidence: `031-001` revision cycle; comparison with *Isaiah's Vision of the Destruction of Babylon*, *Nehemiah Views the Ruins of Jerusalem's Walls* and *The Walls of Jericho Falling Down*.
+
+Retain: for prophetic oracles, test whether spatial hierarchy and the instant before reversal can carry judgment more truthfully than visible destruction.
+
+### L009 — Plural path instructions trigger generative repetition
+
+Finding: requesting a “thin ascending line of deliverers” produced mechanically spaced miniature figures, while requesting a “broken path” produced excessive unsupported masonry. Both were recognizable AI population/detail habits.
+
+Correction: state a small exact figure count with irregular spacing and atmospheric loss; require fewer, larger, weight-bearing planes for carved paths and stairs.
+
+Retain: crowd and architecture prompts must specify narrative count, irregularity, support and omission—not merely mood or direction.
