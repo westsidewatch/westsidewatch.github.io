@@ -1,0 +1,79 @@
+name: ONE Cross Reference Integrity Audit
+on:
+  push:
+    paths:
+      - '.github/workflows/one-cross-reference-audit.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Audit all ONE cross references and record result
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm'),path=require('path');
+          const root='static/one';
+          global.window=globalThis;
+          global.location={search:'',href:'https://example.invalid/one/'};
+          global.matchMedia=()=>({matches:true});
+          global.MutationObserver=class{observe(){}};
+          global.document={documentElement:{dataset:{},classList:{add(){}}},getElementById(){return null},querySelector(){return null},querySelectorAll(){return []},createElement(){return {style:{},dataset:{},append(){},appendChild(){},setAttribute(){},addEventListener(){},classList:{add(){},remove(){},toggle(){}}}},head:{append(){},appendChild(){}},body:{classList:{add(){},remove(){}}}};
+          const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+          const scripts=[...html.matchAll(/<script\s+src="\.\/([^"?]+)(?:\?[^" ]*)?"/g)].map(m=>m[1]);
+          const stop=scripts.indexOf('one-studio-assets.js');
+          const dataScripts=scripts.slice(0,stop<0?scripts.length:stop);
+          const loadWarnings=[];
+          for(const file of dataScripts){
+            const p=path.join(root,file);
+            if(!fs.existsSync(p))continue;
+            try{vm.runInThisContext(fs.readFileSync(p,'utf8'),{filename:file});}
+            catch(e){loadWarnings.push(file+': '+e.message);}
+          }
+          const D=global.ONE_DATA;
+          if(!D?.studyBooks)throw new Error('ONE_DATA.studyBooks not built');
+          const verifiedLocal=new Set(['約書亞記 1:8','耶利米書 17:5–8','馬太福音 7:13–27']);
+          let total=0,chaptersWithConnections=0,withExplicitFourth=0,withVerifiedLocal=0,missingVerifiedScripture=0;
+          const affected=[];
+          for(const [bn,book] of Object.entries(D.studyBooks)){
+            for(const [cn,study] of Object.entries(book.chapterStudies||{})){
+              const rows=Array.isArray(study?.connections)?study.connections:[];
+              if(rows.length)chaptersWithConnections++;
+              rows.forEach((item,i)=>{
+                if(!Array.isArray(item))return;
+                total++;
+                const reference=String(item[0]||'').trim();
+                const fourth=String(item[3]||'').trim();
+                if(fourth)withExplicitFourth++;
+                else if(verifiedLocal.has(reference))withVerifiedLocal++;
+                else{
+                  missingVerifiedScripture++;
+                  affected.push({bookNumber:Number(bn),book:book.name||'',chapter:Number(cn),connection:i+1,reference});
+                }
+              });
+            }
+          }
+          const result={generatedAt:new Date().toISOString(),books:Object.keys(D.studyBooks).length,total,chaptersWithConnections,withExplicitFourth,withVerifiedLocal,missingVerifiedScripture,affected,loadWarnings};
+          fs.writeFileSync(path.join(root,'one-cross-reference-audit.json'),JSON.stringify(result,null,2)+'\n');
+          console.log(JSON.stringify({...result,affected:`${affected.length} rows`},null,2));
+          NODE
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/index.html')
+          s=p.read_text()
+          s=s.replace('pentateuch-cover-runtime-sync.js?v=20260819a','pentateuch-cover-runtime-sync.js?v=20260821e')
+          p.write_text(s)
+          PY
+      - name: Commit audit and cache-bust
+        run: |
+          git config user.name 'westsidewatch-audit-bot'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/one/index.html static/one/one-cross-reference-audit.json
+          git commit -m 'Record global cross-reference audit and bust integrity loader cache'
+          git push
