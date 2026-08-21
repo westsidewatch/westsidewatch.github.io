@@ -1,5 +1,5 @@
 (()=>{
-  const gif='/one/share/matthew-03-baptism-motion-r2.gif';
+  const gif='/one/share/matthew-03-baptism-motion-r3-mobile.gif';
   const intro=document.querySelector('.now__intro');
   if(!intro)return;
   intro.insertAdjacentHTML('beforeend',`<div class="baptism-motion" aria-hidden="true"><span class="baptism-motion__light"></span><span class="baptism-motion__dove-blank"></span><span class="baptism-motion__dove"></span><span class="baptism-motion__river baptism-motion__river--one"></span><span class="baptism-motion__river baptism-motion__river--two"></span><svg class="baptism-motion__water" viewBox="0 0 100 160" preserveAspectRatio="none"><path pathLength="1" d="M46.8 22.8 C46.5 26.8 47.6 30.1 47.2 33.7"/><path pathLength="1" d="M47.6 22.9 C48.1 26.9 47.4 30.4 47.9 34.1"/><path pathLength="1" d="M48.3 23.2 C48.9 27.1 48.4 30.7 48.6 33.8"/><circle cx="47.2" cy="34.4" r=".25"/><circle cx="48" cy="35" r=".21"/><circle cx="48.7" cy="34.3" r=".18"/></svg></div>`);
