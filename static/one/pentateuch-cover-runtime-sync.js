@@ -49,3 +49,12 @@
   else setTimeout(refresh,0);
   window.addEventListener("load",()=>setTimeout(refresh,0),{once:true});
 })();
+
+/* Global cross-reference integrity layer. Kept here as a late loader so it runs
+ * after every book has registered and after one-app owns the initial renderer. */
+(()=>{
+  const script=document.createElement('script');
+  script.src='./one-cross-reference-inline.js?v=20260821d';
+  script.async=false;
+  document.head.append(script);
+})();
