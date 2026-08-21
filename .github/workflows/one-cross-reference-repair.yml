@@ -12,101 +12,90 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Remove unsafe cross-reference rule and install canonical scripture field
+      - name: Canonicalize cross-reference Scripture handling
         run: |
           python - <<'PY'
           from pathlib import Path
 
           root=Path('static/one')
 
-          # 1) Core renderer: Scripture may come ONLY from connection item[3].
+          # Core renderer: remove the legacy rule that quoted item[2].
           p=root/'one-app.js'
           s=p.read_text()
-          old="""function comparisonMarkup(study,volume){\n  const model=study.comparison||{title:volume.comparisonTitle||'書卷互照',headers:volume.comparisonHeaders||['主題','本章','相關經文'],rows:study.harmony||[]};\n  return `<section class=\"chapter-section\"><h3>${model.title}</h3><div><table class=\"harmony\"><thead><tr>${model.headers.map(header=>`<th>${header}</th>`).join('')}</tr></thead><tbody>${model.rows.map(row=>`<tr>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;\n}\n"""
-          new="""function comparisonMarkup(study,volume){\n  const model=study.comparison||{title:volume.comparisonTitle||'書卷互照',headers:volume.comparisonHeaders||['主題','本章','相關經文'],rows:study.harmony||[]};\n  return `<section class=\"chapter-section\"><h3>${model.title}</h3><div><table class=\"harmony\"><thead><tr>${model.headers.map(header=>`<th>${header}</th>`).join('')}</tr></thead><tbody>${model.rows.map(row=>`<tr>${row.map(cell=>`<td>${cell}</td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`;\n}\nfunction connectionMarkup(item,index){\n  const reference=String(item?.[0]||'').trim(),relationship=String(item?.[1]||'').trim(),explanation=String(item?.[2]||'').trim(),scripture=String(item?.[3]||'').trim();\n  const quote=scripture?`<blockquote data-one-scripture=\"true\">${scripture}</blockquote>`:`<p class=\"connection-scripture-missing\"><span>Scripture pending · 經文待補</span>本條目前只保留串珠關係與說明，不以說明文字冒充經文引用。</p>`;\n  const note=explanation?`<p class=\"connection-note\"><span>Cross-reference note · 串珠說明</span>${explanation}</p>`:'';\n  return `<article><header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${reference}</strong><small>${relationship}</small></div></header>${quote}${note}</article>`;\n}\n"""
-          if old not in s:
-            raise SystemExit('comparisonMarkup insertion point not found')
+          helper="""\nfunction connectionMarkup(item,index){\n  const reference=String(item?.[0]||'').trim(),relationship=String(item?.[1]||'').trim(),explanation=String(item?.[2]||'').trim(),scripture=String(item?.[3]||'').trim();\n  const quote=scripture?`<blockquote data-one-scripture=\"true\">${scripture}</blockquote>`:`<p class=\"connection-scripture-missing\"><span>Scripture pending · 經文待補</span>本條目前只保留串珠關係與說明，不以說明文字冒充經文引用。</p>`;\n  const note=explanation?`<p class=\"connection-note\"><span>Cross-reference note · 串珠說明</span>${explanation}</p>`:'';\n  return `<article><header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${reference}</strong><small>${relationship}</small></div></header>${quote}${note}</article>`;\n}\n"""
+          if 'function connectionMarkup(item,index)' not in s:
+            needle='\nfunction showChapter(number,name,{sync=true}={}){'
+            if needle not in s: raise SystemExit('showChapter insertion point missing')
+            s=s.replace(needle,helper+needle,1)
+          old='<div class="connection-grid">${study.connections.map((item,index)=>`<article><header><span>${String(index+1).padStart(2,\'0\')}</span><div><strong>${item[0]}</strong><small>${item[1]}</small></div></header><blockquote>${item[2]}</blockquote></article>`).join(\'\')}</div>'
+          new='<div class="connection-grid">${study.connections.map(connectionMarkup).join(\'\')}</div>'
+          if old not in s: raise SystemExit('legacy item[2] quote rule missing')
           s=s.replace(old,new,1)
-          unsafe="${study.connections.map((item,index)=>`<article><header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${item[0]}</strong><small>${item[1]}</small></div></header><blockquote>${item[2]}</blockquote></article>`).join('')}"
-          safe="${study.connections.map(connectionMarkup).join('')}"
-          if unsafe not in s:
-            raise SystemExit('unsafe connection renderer not found')
-          s=s.replace(unsafe,safe,1)
           p.write_text(s)
 
-          # 2) Runtime schema gate: preserve the fourth Scripture field instead of truncating it.
+          # Runtime gate must preserve four fields; the old 3-field normalizer erased Scripture.
           p=root/'remaining-nt-epistles-runtime-check.js'
           s=p.read_text()
           old='study.connections=array(study.connections).map(item=>row(item,3,"connections",bookName,n));'
-          new='study.connections=array(study.connections).map(item=>row(item,4,"connections",bookName,n));'
-          if old not in s:
-            raise SystemExit('connections row-size rule not found')
-          s=s.replace(old,new,1)
+          if old not in s: raise SystemExit('3-field runtime rule missing')
+          s=s.replace(old,'study.connections=array(study.connections).map(item=>row(item,4,"connections",bookName,n));',1)
           p.write_text(s)
 
-          # 3) Canonical schema: fourth field is the only quotation field.
+          # Canonical contract now states that only field 4 can be a quotation.
           p=root/'ONE-STUDY-SCHEMA-MASTER.md'
           s=p.read_text()
           old='- `connections`: array of rows `[reference, relationship, explanatory text]`. **Never pass a bare string.** A bare string is indexable character data in JavaScript and will render as broken one-character columns.'
           new='- `connections`: array of rows `[reference, relationship, explanatory text, scripture quotation]`. **Field 3 is commentary only; field 4 is the only field permitted to render as a Bible quotation. Never infer or copy field 3 into a quotation.** Never pass a bare string.'
-          if old not in s:
-            raise SystemExit('schema connections contract not found')
-          s=s.replace(old,new,1)
-          anchor='9. Confirm **no new schema-normalization warnings** are introduced by the new book.\n'
+          if old in s: s=s.replace(old,new,1)
           guard='9a. Cross-reference guard: verify the renderer quotes only `connections[][3]`; `connections[][2]` must remain explanatory prose even when field 4 is empty.\n'
           if guard not in s:
+            anchor='9. Confirm **no new schema-normalization warnings** are introduced by the new book.\n'
             s=s.replace(anchor,anchor+guard,1)
           p.write_text(s)
 
-          # 4) Dedicated pre-render Scripture progress layer. First verified migration batch: Psalm 1–2 (7 rows).
-          scripture="""/* ONE canonical cross-reference Scripture layer.\n * Runs after all book data and before the global schema gate / renderer.\n * Every connection row is [reference, relationship, explanation, scripture].\n * Only verified rows are migrated here; work proceeds in explicit batches.\n */\n(()=>{\n  \"use strict\";\n  const D=window.ONE_DATA;if(!D?.studyBooks)return;\n  const migrate=(book,chapter,index,explanation)=>{\n    const row=D.studyBooks?.[book]?.chapterStudies?.[String(chapter)]?.connections?.[index];\n    if(!Array.isArray(row)||!String(row[2]||'').trim())return false;\n    if(!String(row[3]||'').trim())row[3]=String(row[2]).trim();\n    row[2]=explanation;\n    return true;\n  };\n  const batch=[\n    [19,1,0,'與詩篇 1:2 同樣把蒙福的道路連於持續默想並遵行神的話。'],\n    [19,1,1,'與詩篇 1:3 相同，以栽在水旁、持續結果的樹描寫倚靠耶和華的人。'],\n    [19,1,2,'耶穌把兩條道路、兩種果子與兩種根基並置，呼應詩篇 1 的義人／惡人兩路。'],\n    [19,2,0,'大衛之約提供「父／子」與永遠國位的背景，連到詩篇 2 的受膏君王。'],\n    [19,2,1,'初代教會直接以詩篇 2 解釋希律、彼拉多、外邦人和以色列民敵擋耶穌。'],\n    [19,2,2,'希伯來書把詩篇 2:7 的「你是我的兒子」用於基督。'],\n    [19,2,3,'啟示錄沿用詩篇 2 的鐵杖治理圖像，指向基督所賜的王權。']\n  ];\n  const migrated=batch.reduce((n,args)=>n+(migrate(...args)?1:0),0);\n  let total=0,verified=0;\n  Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{\n    if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;\n  })));\n  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'psalms-1-2',migrated,total,verified,remaining:total-verified};\n  document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;\n})();\n"""
-          (root/'one-cross-reference-scripture.js').write_text(scripture)
+          # First explicit Scripture migration batch: Psalm 1–2, seven verified rows already containing verse text.
+          (root/'one-cross-reference-scripture.js').write_text("""/* ONE canonical cross-reference Scripture layer.\n * Runs after book data and before the schema gate / renderer.\n * Row shape: [reference, relationship, explanation, scripture].\n * Migrations are explicit and incremental; field 3 is never promoted automatically.\n */\n(()=>{\n  \"use strict\";\n  const D=window.ONE_DATA;if(!D?.studyBooks)return;\n  const migrate=(book,chapter,index,explanation)=>{\n    const row=D.studyBooks?.[book]?.chapterStudies?.[String(chapter)]?.connections?.[index];\n    if(!Array.isArray(row)||!String(row[2]||'').trim())return false;\n    if(!String(row[3]||'').trim())row[3]=String(row[2]).trim();\n    row[2]=explanation;return true;\n  };\n  const batch=[\n    [19,1,0,'與詩篇 1:2 同樣把蒙福的道路連於持續默想並遵行神的話。'],\n    [19,1,1,'與詩篇 1:3 相同，以栽在水旁、持續結果的樹描寫倚靠耶和華的人。'],\n    [19,1,2,'耶穌把兩條道路、兩種果子與兩種根基並置，呼應詩篇 1 的義人／惡人兩路。'],\n    [19,2,0,'大衛之約提供「父／子」與永遠國位的背景，連到詩篇 2 的受膏君王。'],\n    [19,2,1,'初代教會直接以詩篇 2 解釋希律、彼拉多、外邦人和以色列民敵擋耶穌。'],\n    [19,2,2,'希伯來書把詩篇 2:7 的「你是我的兒子」用於基督。'],\n    [19,2,3,'啟示錄沿用詩篇 2 的鐵杖治理圖像，指向基督所賜的王權。']\n  ];\n  const migrated=batch.reduce((n,args)=>n+(migrate(...args)?1:0),0);\n  let total=0,verified=0;\n  Object.values(D.studyBooks).forEach(book=>Object.values(book?.chapterStudies||{}).forEach(study=>(Array.isArray(study?.connections)?study.connections:[]).forEach(row=>{if(!Array.isArray(row))return;total++;if(String(row[3]||'').trim())verified++;})));\n  window.ONE_CROSS_REFERENCE_SCRIPTURE_PROGRESS={batch:'psalms-1-2',migrated,total,verified,remaining:total-verified};\n  document.documentElement.dataset.oneCrossReferenceScripture=`${verified}/${total}`;\n})();\n""")
 
-          # 5) Load the canonical layer before the schema gate and renderer.
+          # Load the explicit data layer before the normalizer and renderer.
           p=root/'index.html'
           s=p.read_text()
-          needle='<script src="./remaining-nt-epistles-runtime-check.js?v=20260819a"></script>'
-          insert='<script src="./one-cross-reference-scripture.js?v=20260821a"></script>'+needle.replace('20260819a','20260821a')
+          gate='<script src="./remaining-nt-epistles-runtime-check.js?v=20260819a"></script>'
           if 'one-cross-reference-scripture.js' not in s:
-            if needle not in s:
-              raise SystemExit('runtime gate loader not found')
-            s=s.replace(needle,insert,1)
+            if gate not in s: raise SystemExit('runtime gate loader missing')
+            s=s.replace(gate,'<script src="./one-cross-reference-scripture.js?v=20260821a"></script><script src="./remaining-nt-epistles-runtime-check.js?v=20260821a"></script>',1)
           else:
             s=s.replace('remaining-nt-epistles-runtime-check.js?v=20260819a','remaining-nt-epistles-runtime-check.js?v=20260821a')
           s=s.replace('one-app.js?v=20260817d','one-app.js?v=20260821a')
           s=s.replace('pentateuch-cover-runtime-sync.js?v=20260821e','pentateuch-cover-runtime-sync.js?v=20260821f')
           p.write_text(s)
 
-          # 6) Remove the late post-render repair loader. It was masking the core bug.
+          # Delete the late loader that used to repair the DOM after the unsafe renderer ran.
           p=root/'pentateuch-cover-runtime-sync.js'
           s=p.read_text()
-          marker='\n/* Global cross-reference integrity layer. Kept here as a late loader so it runs\n * after every book has registered and after one-app owns the initial renderer. */\n(()=>{\n  const script=document.createElement(\'script\');\n  script.src=\'./one-cross-reference-inline.js?v=20260821d\';\n  script.async=false;\n  document.head.append(script);\n})();'
-          if marker in s:
-            s=s.replace(marker,'')
+          cut=s.find('\n/* Global cross-reference integrity layer.')
+          if cut!=-1: s=s[:cut].rstrip()+"\n"
           p.write_text(s)
 
-          # 7) Styling belongs to the shared renderer, not a late DOM repair script.
+          # Shared styles replace the obsolete late-injected styles.
           p=root/'one-book.css'
           s=p.read_text()
-          css='''\n/* Cross-reference integrity: commentary and Scripture are visually and semantically separate. */\n.connection-note{margin:.8rem 0 0;color:var(--ink);font-size:var(--one-body-size);line-height:1.8}\n.connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}\n.connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}\n.connection-section blockquote[data-one-scripture=\"true\"]{margin:.85rem 0 0}\n'''
           if 'Cross-reference integrity:' not in s:
-            s += css
+            s+='''\n/* Cross-reference integrity: commentary and Scripture are separate. */\n.connection-note{margin:.8rem 0 0;color:var(--ink);font-size:var(--one-body-size);line-height:1.8}\n.connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}\n.connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}\n.connection-section blockquote[data-one-scripture=\"true\"]{margin:.85rem 0 0}\n'''
           p.write_text(s)
 
-          # Remove obsolete post-render patch entirely.
           obsolete=root/'one-cross-reference-inline.js'
           if obsolete.exists(): obsolete.unlink()
 
-          # Turn this workflow into manual-only after its one-time run.
+          # Make this one-time workflow manual-only after the repair commit.
           w=Path('.github/workflows/one-cross-reference-repair.yml')
-          ws=w.read_text()
-          ws=ws.replace("on:\n  push:\n    paths:\n      - '.github/workflows/one-cross-reference-repair.yml'", "on:\n  workflow_dispatch:")
+          ws=w.read_text().replace("on:\n  push:\n    paths:\n      - '.github/workflows/one-cross-reference-repair.yml'", "on:\n  workflow_dispatch:")
           w.write_text(ws)
           PY
-      - name: Verify unsafe renderer is gone
+      - name: Verify repair invariants
         run: |
           ! grep -F '<blockquote>${item[2]}</blockquote>' static/one/one-app.js
-          grep -F 'row(item,4,"connections"' static/one/remaining-nt-epistles-runtime-check.js
+          grep -F 'study.connections=array(study.connections).map(item=>row(item,4,"connections"' static/one/remaining-nt-epistles-runtime-check.js
+          grep -F 'study.connections.map(connectionMarkup)' static/one/one-app.js
           grep -F 'one-cross-reference-scripture.js?v=20260821a' static/one/index.html
           test ! -f static/one/one-cross-reference-inline.js
       - name: Commit repair
