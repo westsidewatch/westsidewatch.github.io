@@ -342,6 +342,36 @@ For every queued chapter:
 
 The brief must define Scripture scope, scene choice, historical setting, principal figures, gesture relationships, viewer position, foreground/middle/background structure, primary light source, black/white hierarchy, line strategy, required omissions and forbidden elements. A book or chapter name alone is never a sufficient prompt.
 
+### 9.2.1 Book Visual Grammar — mandatory book-level layer
+
+Doré must not treat all biblical books as interchangeable applications of one general style. The working hierarchy is:
+
+`Doré pictorial grammar -> biblical genre grammar -> Book Visual Grammar -> chapter scene -> plate revision`
+
+Before producing the first new Studio plate for a biblical book:
+
+1. review the authenticated Doré originals and approved ONE mappings already associated with that book;
+2. review the closest canonical Doré plates for that book's recurring people, places, actions and theological pressures;
+3. examine the existing cover sequence in chapter order rather than studying isolated images only;
+4. record the book's recurring viewing distances, composition types, figure relationships, environments, value rhythm, light behavior, gesture vocabulary and degree of spectacle;
+5. record how this book differs visually from neighboring books of the same genre;
+6. create or update a compact **Book Visual Grammar** before generating the chapter brief.
+
+The Book Visual Grammar is evidence-led and provisional. It may describe recurring tendencies, but it must never force every chapter into one template or claim a distinction that the corpus does not support.
+
+For every later plate in the same book:
+
+- compare the proposed scene with the book grammar and its neighboring chapter covers before generation;
+- preserve recognizable book-level continuity without repeating the same pose, crowd arrangement, light aperture or value pattern;
+- record whether the new plate confirms, refines or contradicts the current book grammar;
+- revise the book grammar when Scripture or stronger Doré evidence exposes an overgeneralization.
+
+At the final chapter of the book, review the full cover sequence in canonical order. A plate may pass as an isolated Doré-like image and still fail if it looks foreign to its own book. Book completion therefore requires both individual plate approval and full-sequence coherence.
+
+#### Mark example
+
+Before approving a new Mark plate, study Mark's authenticated/assigned Doré sequence for evidence about narrative urgency, Christ-to-crowd distance, disciples/opponents, synagogue/road/sea/wilderness settings, compressed action, gesture and black/white pacing. Compare these findings with Matthew, Luke and John so generic “Gospel imagery” does not erase Mark's finer distinctions. Do not assume any proposed Mark trait is true merely because it sounds exegetically plausible; retain it only when Scripture, Doré evidence and sequence review support it.
+
 ### 9.3 Generate in small revision sets
 
 - create 2–4 exploratory candidates per chapter rather than mass-producing finished images;
