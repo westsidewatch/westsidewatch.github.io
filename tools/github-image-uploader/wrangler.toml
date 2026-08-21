@@ -1,0 +1,10 @@
+name = "westsidewatch-image-uploader"
+main = "src/index.js"
+compatibility_date = "2026-08-20"
+
+[vars]
+GITHUB_OWNER = "westsidewatch"
+GITHUB_REPO = "westsidewatch.github.io"
+GITHUB_BRANCH = "main"
+DESTINATION_PREFIX = "static/one/studio/"
+MAX_BYTES = "10485760"
