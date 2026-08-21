@@ -74,6 +74,12 @@ The border must feel printed/tooled into an old cloth or leather book cover:
 - no metallic 3D gradient;
 - no heavy Baroque or Rococo mass.
 
+The cover uses a nested antique-binding hierarchy: fine outer rules, a broad exposed field of green binding cloth, then an inset foliate gilt panel. When chapter art is present, it is mounted beneath that inset panel rather than bleeding to the physical cover edge; the inward-facing leaves overlap only the image margin. A book-only cover removes the image but preserves exactly the same green field and frame geometry.
+
+Typography has two shared modes within that fixed frame. Illustration covers keep the book and chapter text in the lower field so the central action remains readable. Book-only covers center the complete title group within the empty green field. This is a global two-mode rule, never a per-book positioning exception.
+
+Gold typography and gold ornament must never overlap, touch or visually merge. Illustration-cover text stays inside the dark central safe field above the inward-pointing bottom leaves and between the side-leaf tips. Book-only centered text obeys the same inner safe field. A clear band of uncovered binding or image tone must remain between every glyph and the nearest gilt ornament.
+
 ## 5. Corner ornament
 
 The four-corner modern star device is retired.
