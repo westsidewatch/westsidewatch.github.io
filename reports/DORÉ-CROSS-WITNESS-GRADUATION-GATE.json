@@ -1,20 +1,42 @@
 {
   "category_counts": {
-    "anchor_only_reference": 39,
+    "anchor_only_reference": 38,
     "multi_witness_extra_reference_candidate": 1014,
     "single_witness_extra_reference": 425,
-    "translation_reference_divergence": 1660
+    "translation_reference_divergence": 1661
   },
-  "engineering_failures": [],
-  "engineering_suspect_count": 464,
-  "milestone": "CROSS_WITNESS_ENGINEERING_REVIEW_REQUIRED",
-  "research_boundary": "No verdict in this file asserts textual originality, inspiration, authenticity, or automatic versification equivalence.",
-  "research_exception_count": 2674,
+  "engineering_failures": [
+    "missing_expected_witness:witness.original.oshb",
+    "missing_expected_witness:witness.original.morphgnt_sblgnt",
+    "missing_expected_witness:witness.lxx.rahlfs1935.centerblc",
+    "missing_expected_witness:witness.latin.vulgate.bible_api_io",
+    "missing_expected_witness:witness.chinese.cuv.traditional.1919",
+    "missing_expected_witness:witness.english.webu",
+    "missing_expected_witness:bible.asv.1901",
+    "missing_expected_witness:bible.kjv.1769"
+  ],
+  "engineering_suspect_count": 8,
+  "milestone": "CROSS_WITNESS_GRADUATION_FAILED",
+  "research_boundary": "Single-witness, anchor-only, multi-witness, translation-divergence and source-specific reference patterns are not automatically engineering defects or textual judgments.",
+  "research_exception_count": 3138,
   "rules": {
-    "FAIL": "pipeline/inventory failure or unresolved engineering-suspect reference patterns remain",
-    "PASS": "all inventories/audits pass and no unresolved structural exceptions remain",
-    "RESEARCH_EXCEPTIONS_ONLY": "engineering is clean; remaining differences are classified research phenomena only"
+    "FAIL": "pipeline, inventory, canonical-scope, or identity invariant failed",
+    "PASS": "all ingestion/inventory/alignment invariants pass and no structural reference exceptions remain",
+    "RESEARCH_EXCEPTIONS_ONLY": "engineering invariants pass; all remaining reference differences are preserved as research phenomena"
   },
-  "schema": "dore.cross-witness-graduation-gate.v0.1",
+  "schema": "dore.cross-witness-graduation-gate.v0.2",
+  "scope_invariants": {
+    "expected": {
+      "bible.asv.1901": 66,
+      "bible.kjv.1769": 66,
+      "witness.chinese.cuv.traditional.1919": 66,
+      "witness.english.webu": 66,
+      "witness.latin.vulgate.bible_api_io": 66,
+      "witness.lxx.rahlfs1935.centerblc": 37,
+      "witness.original.morphgnt_sblgnt": 27,
+      "witness.original.oshb": 39
+    },
+    "observed": {}
+  },
   "verdict": "FAIL"
 }

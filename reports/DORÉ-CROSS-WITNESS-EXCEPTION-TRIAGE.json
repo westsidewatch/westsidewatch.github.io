@@ -454,17 +454,6 @@
         ],
         "note": "all loaded translation witnesses in scope omit this anchor reference",
         "ref": "bible.ref.PSA.89.53"
-      },
-      {
-        "missing_from": [
-          "asv",
-          "cuv",
-          "kjv",
-          "vulgate",
-          "webu"
-        ],
-        "note": "all loaded translation witnesses in scope omit this anchor reference",
-        "ref": "bible.ref.SNG.7.14"
       }
     ],
     "multi_witness_extra_reference_candidate": [
@@ -34317,9 +34306,24 @@
           "asv",
           "cuv",
           "kjv",
+          "lxx",
           "webu"
         ],
         "ref": "bible.ref.SNG.1.17"
+      },
+      {
+        "missing": [
+          "asv",
+          "cuv",
+          "kjv",
+          "vulgate",
+          "webu"
+        ],
+        "note": "reference-level divergence only; classify before normalization",
+        "present": [
+          "lxx"
+        ],
+        "ref": "bible.ref.SNG.7.14"
       },
       {
         "missing": [
@@ -34394,10 +34398,10 @@
     ]
   },
   "category_counts": {
-    "anchor_only_reference": 39,
+    "anchor_only_reference": 38,
     "multi_witness_extra_reference_candidate": 1014,
     "single_witness_extra_reference": 425,
-    "translation_reference_divergence": 1660
+    "translation_reference_divergence": 1661
   },
   "principle": "classification is structural evidence, never automatic textual judgment",
   "review_priority": [
@@ -35849,17 +35853,6 @@
       ],
       "note": "all loaded translation witnesses in scope omit this anchor reference",
       "ref": "bible.ref.PSA.89.53"
-    },
-    {
-      "missing_from": [
-        "asv",
-        "cuv",
-        "kjv",
-        "vulgate",
-        "webu"
-      ],
-      "note": "all loaded translation witnesses in scope omit this anchor reference",
-      "ref": "bible.ref.SNG.7.14"
     },
     {
       "note": "structural candidate for versification/textual-history review; not a conclusion",
