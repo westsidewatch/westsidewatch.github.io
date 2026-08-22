@@ -1,0 +1,33 @@
+name: Doré Cross-Witness Alignment
+
+on:
+  push:
+    paths:
+      - 'dore_core/language/alignment.py'
+      - 'dore_core/language/__init__.py'
+      - 'dore-core/tests/test_cross_witness_alignment.py'
+      - 'dore-core/knowledge/foundation/language-text/CROSS-WITNESS-ALIGNMENT-v0.1.md'
+      - '.github/workflows/dore-cross-witness-alignment.yml'
+  pull_request:
+    paths:
+      - 'dore_core/language/alignment.py'
+      - 'dore_core/language/__init__.py'
+      - 'dore-core/tests/test_cross_witness_alignment.py'
+      - 'dore-core/knowledge/foundation/language-text/CROSS-WITNESS-ALIGNMENT-v0.1.md'
+      - '.github/workflows/dore-cross-witness-alignment.yml'
+  workflow_dispatch:
+
+jobs:
+  alignment-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run cross-witness alignment tests
+        env:
+          PYTHONPATH: .
+        run: python -m unittest discover -s dore-core/tests -p 'test_cross_witness_alignment.py' -v
