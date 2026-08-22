@@ -5,11 +5,13 @@ on:
     paths:
       - 'dore_core/**'
       - 'tests/**'
+      - 'scripts/ingest_pinned_corpora.py'
       - '.github/workflows/dore-foundation-tests.yml'
   pull_request:
     paths:
       - 'dore_core/**'
       - 'tests/**'
+      - 'scripts/ingest_pinned_corpora.py'
       - '.github/workflows/dore-foundation-tests.yml'
   workflow_dispatch:
 
@@ -26,5 +28,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run Doré Foundation tests
+      - name: Run Doré Foundation unit tests
         run: python -m unittest discover -s tests -v
+      - name: Read real pinned biblical corpora
+        run: python scripts/ingest_pinned_corpora.py
