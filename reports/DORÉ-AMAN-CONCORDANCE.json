@@ -1,33 +1,59 @@
 {
   "book_distribution": {
-    "1CH": 1,
+    "1CH": 2,
     "1KI": 3,
-    "1SA": 5,
-    "2CH": 6,
-    "2KI": 1,
-    "2SA": 2,
-    "DEU": 3,
+    "1SA": 6,
+    "2CH": 7,
+    "2KI": 3,
+    "2SA": 3,
+    "DEU": 6,
     "EST": 1,
-    "EXO": 5,
-    "GEN": 1,
+    "EXO": 8,
+    "GEN": 3,
     "HAB": 1,
     "HOS": 2,
-    "ISA": 12,
+    "ISA": 15,
     "JDG": 1,
-    "JER": 3,
-    "JOB": 8,
-    "LAM": 1,
+    "JER": 4,
+    "JOB": 10,
+    "JON": 1,
+    "LAM": 2,
     "MIC": 1,
     "NEH": 2,
-    "NUM": 3,
-    "PRO": 4,
-    "PSA": 15
+    "NUM": 4,
+    "PRO": 5,
+    "PSA": 17,
+    "RUT": 1
   },
   "interpretive_status": "CORPUS_DATA_ONLY",
   "lexical_id": "539",
   "morphology_distribution": {
     "HAampa": 2,
     "HAampc": 1,
+    "HC/Td/Vqrmpa": 1,
+    "HC/VNi2mp": 1,
+    "HC/VNi3mp": 1,
+    "HC/VNi3ms": 1,
+    "HC/VNq3ms": 1,
+    "HC/VNrfpa": 1,
+    "HC/VNrmpa": 1,
+    "HC/VNrmsc": 1,
+    "HC/VNsmsa": 1,
+    "HC/Vhi2mp": 1,
+    "HC/Vhp3ms": 1,
+    "HC/Vhq3cp": 1,
+    "HC/Vhw3mp": 3,
+    "HC/Vhw3ms": 2,
+    "HR/VNrmpa": 1,
+    "HR/VNrmpc": 1,
+    "HR/Vqrfsa": 1,
+    "HTd/VNrmpa": 1,
+    "HTd/VNrmsa": 1,
+    "HTd/Vhrmsa": 1,
+    "HTd/Vqrmpa": 1,
+    "HTd/Vqrmsa": 1,
+    "HTd/Vqsmpa": 1,
+    "HTi/Vhi2ms": 1,
     "HVNi2mp": 1,
     "HVNi3fp": 1,
     "HVNi3ms": 2,
@@ -55,7 +81,7 @@
     "HVqrmpc/Sp2fs": 1,
     "HVqrmsa": 1
   },
-  "occurrence_count": 81,
+  "occurrence_count": 108,
   "occurrences": [
     {
       "canonical_ref_id": "bible.ref.1CH.17.23",
@@ -65,6 +91,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "יֵאָמֵ֖ן"
+    },
+    {
+      "canonical_ref_id": "bible.ref.1CH.17.24",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNi3ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ֠/יֵֽאָמֵן"
     },
     {
       "canonical_ref_id": "bible.ref.1KI.10.7",
@@ -130,6 +165,15 @@
       "surface": "נֶאֱמָ֗ן"
     },
     {
+      "canonical_ref_id": "bible.ref.1SA.27.12",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhw3ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וַ/יַּאֲמֵ֥ן"
+    },
+    {
       "canonical_ref_id": "bible.ref.1SA.3.20",
       "language": "he",
       "lemma": "539",
@@ -155,6 +199,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "הַאֲמִ֜ינוּ"
+    },
+    {
+      "canonical_ref_id": "bible.ref.2CH.20.20",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNi2mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/תֵ֣אָמֵ֔נוּ"
     },
     {
       "canonical_ref_id": "bible.ref.2CH.20.20",
@@ -193,6 +246,24 @@
       "surface": "הֶאֱמַ֣נְתִּי"
     },
     {
+      "canonical_ref_id": "bible.ref.2KI.10.1",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/Vqrmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הָ/אֹמְנִ֥ים"
+    },
+    {
+      "canonical_ref_id": "bible.ref.2KI.10.5",
+      "language": "he",
+      "lemma": "c/d/539",
+      "morphology": "HC/Td/Vqrmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/הָ/אֹמְנִ֨ים"
+    },
+    {
       "canonical_ref_id": "bible.ref.2KI.17.14",
       "language": "he",
       "lemma": "539",
@@ -220,6 +291,15 @@
       "surface": "אֹֽמַנְתּ/וֹ֙"
     },
     {
+      "canonical_ref_id": "bible.ref.2SA.7.16",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNq3ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/נֶאְמַ֨ן"
+    },
+    {
       "canonical_ref_id": "bible.ref.DEU.1.32",
       "language": "he",
       "lemma": "539",
@@ -229,6 +309,24 @@
       "surface": "מַאֲמִינִ֔ם"
     },
     {
+      "canonical_ref_id": "bible.ref.DEU.28.59",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNrfpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/נֶ֣אֱמָנ֔וֹת"
+    },
+    {
+      "canonical_ref_id": "bible.ref.DEU.28.59",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNrmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/נֶאֱמָנִֽים"
+    },
+    {
       "canonical_ref_id": "bible.ref.DEU.28.66",
       "language": "he",
       "lemma": "539",
@@ -236,6 +334,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "תַאֲמִ֖ין"
+    },
+    {
+      "canonical_ref_id": "bible.ref.DEU.7.9",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/VNrmsa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הַֽ/נֶּאֱמָ֔ן"
     },
     {
       "canonical_ref_id": "bible.ref.DEU.9.23",
@@ -256,6 +363,15 @@
       "surface": "אֹמֵ֜ן"
     },
     {
+      "canonical_ref_id": "bible.ref.EXO.14.31",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhw3mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וַ/יַּֽאֲמִ֨ינוּ֙"
+    },
+    {
       "canonical_ref_id": "bible.ref.EXO.19.9",
       "language": "he",
       "lemma": "539",
@@ -272,6 +388,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "יַאֲמִ֣ינוּ"
+    },
+    {
+      "canonical_ref_id": "bible.ref.EXO.4.31",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhw3ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וַֽ/יַּאֲמֵ֖ן"
     },
     {
       "canonical_ref_id": "bible.ref.EXO.4.5",
@@ -292,6 +417,15 @@
       "surface": "יַאֲמִ֣ינוּ"
     },
     {
+      "canonical_ref_id": "bible.ref.EXO.4.8",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhq3cp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/הֶֽאֱמִ֔ינוּ"
+    },
+    {
       "canonical_ref_id": "bible.ref.EXO.4.9",
       "language": "he",
       "lemma": "539",
@@ -299,6 +433,24 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "יַאֲמִ֡ינוּ"
+    },
+    {
+      "canonical_ref_id": "bible.ref.GEN.15.6",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhp3ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/הֶאֱמִ֖ן"
+    },
+    {
+      "canonical_ref_id": "bible.ref.GEN.42.20",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNi3mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/יֵאָמְנ֥וּ"
     },
     {
       "canonical_ref_id": "bible.ref.GEN.45.26",
@@ -373,6 +525,15 @@
       "surface": "נֶאֱמָ֑ן"
     },
     {
+      "canonical_ref_id": "bible.ref.ISA.28.16",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/Vhrmsa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הַֽ/מַּאֲמִ֖ין"
+    },
+    {
       "canonical_ref_id": "bible.ref.ISA.33.16",
       "language": "he",
       "lemma": "539",
@@ -380,6 +541,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "נֶאֱמָנִֽים"
+    },
+    {
+      "canonical_ref_id": "bible.ref.ISA.43.10",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhi2mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/תַאֲמִ֨ינוּ"
     },
     {
       "canonical_ref_id": "bible.ref.ISA.49.23",
@@ -407,6 +577,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "הֶאֱמִ֖ין"
+    },
+    {
+      "canonical_ref_id": "bible.ref.ISA.55.3",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/VNrmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הַ/נֶּאֱמָנִֽים"
     },
     {
       "canonical_ref_id": "bible.ref.ISA.60.4",
@@ -481,6 +660,24 @@
       "surface": "הֶאֱמִ֣ין"
     },
     {
+      "canonical_ref_id": "bible.ref.JER.42.5",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNsmsa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/נֶאֱמָ֑ן"
+    },
+    {
+      "canonical_ref_id": "bible.ref.JOB.12.20",
+      "language": "he",
+      "lemma": "l/539",
+      "morphology": "HR/VNrmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "לְ/נֶאֱמָנִ֑ים"
+    },
+    {
       "canonical_ref_id": "bible.ref.JOB.15.15",
       "language": "he",
       "lemma": "539",
@@ -526,6 +723,15 @@
       "surface": "יַאֲמִ֑ינוּ"
     },
     {
+      "canonical_ref_id": "bible.ref.JOB.39.12",
+      "language": "he",
+      "lemma": "i/539",
+      "morphology": "HTi/Vhi2ms",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הֲ/תַאֲמִ֣ין"
+    },
+    {
       "canonical_ref_id": "bible.ref.JOB.39.24",
       "language": "he",
       "lemma": "539",
@@ -553,6 +759,15 @@
       "surface": "אַ֝אֲמִ֗ין"
     },
     {
+      "canonical_ref_id": "bible.ref.JON.3.5",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhw3mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וַֽ/יַּאֲמִ֛ינוּ"
+    },
+    {
       "canonical_ref_id": "bible.ref.LAM.4.12",
       "language": "he",
       "lemma": "539",
@@ -560,6 +775,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "הֶאֱמִ֨ינוּ֙"
+    },
+    {
+      "canonical_ref_id": "bible.ref.LAM.4.5",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/Vqsmpa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הָ/אֱמֻנִים֙"
     },
     {
       "canonical_ref_id": "bible.ref.MIC.7.5",
@@ -589,6 +813,15 @@
       "surface": "נֶאֱמָ֣ן"
     },
     {
+      "canonical_ref_id": "bible.ref.NUM.11.12",
+      "language": "he",
+      "lemma": "d/539",
+      "morphology": "HTd/Vqrmsa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "הָ/אֹמֵן֙"
+    },
+    {
       "canonical_ref_id": "bible.ref.NUM.12.7",
       "language": "he",
       "lemma": "539",
@@ -614,6 +847,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "הֶאֱמַנְתֶּ֣ם"
+    },
+    {
+      "canonical_ref_id": "bible.ref.PRO.11.13",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/VNrmsc",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וְ/נֶאֱמַן"
     },
     {
       "canonical_ref_id": "bible.ref.PRO.14.15",
@@ -650,6 +892,24 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "נֶ֭אֱמָנִים"
+    },
+    {
+      "canonical_ref_id": "bible.ref.PSA.101.6",
+      "language": "he",
+      "lemma": "b/539",
+      "morphology": "HR/VNrmpc",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "בְּ/נֶֽאֶמְנֵי"
+    },
+    {
+      "canonical_ref_id": "bible.ref.PSA.106.12",
+      "language": "he",
+      "lemma": "c/539",
+      "morphology": "HC/Vhw3mp",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "וַ/יַּאֲמִ֥ינוּ"
     },
     {
       "canonical_ref_id": "bible.ref.PSA.106.24",
@@ -785,6 +1045,15 @@
       "normalized": null,
       "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
       "surface": "נֶאֶמְנ֬וּ"
+    },
+    {
+      "canonical_ref_id": "bible.ref.RUT.4.16",
+      "language": "he",
+      "lemma": "l/539",
+      "morphology": "HR/Vqrfsa",
+      "normalized": null,
+      "provenance": "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f",
+      "surface": "לְ/אֹמֶֽנֶת"
     }
   ],
   "resolved_lexeme": "אָמַן",
@@ -799,6 +1068,8 @@
     "אֹֽמְנַ֗יִ/ךְ": 1,
     "אֹֽמַנְתּ/וֹ֙": 1,
     "אֹמֵ֜ן": 1,
+    "בְּ/נֶֽאֶמְנֵי": 1,
+    "הֲ/תַאֲמִ֣ין": 1,
     "הֶ֝אֱמִ֗ינוּ": 2,
     "הֶ֭אֱמִינוּ": 1,
     "הֶ֭אֱמַנְתִּי": 2,
@@ -811,8 +1082,31 @@
     "הֶאֱמַ֣נְתִּי": 2,
     "הֶאֱמַנְתֶּ֣ם": 1,
     "הֶאֱמָֽנְתִּי": 1,
+    "הַ/נֶּאֱמָנִֽים": 1,
+    "הַֽ/מַּאֲמִ֖ין": 1,
+    "הַֽ/נֶּאֱמָ֔ן": 1,
     "הַאֲמִ֜ינוּ": 1,
     "הַאֲמִ֥ינוּ": 1,
+    "הָ/אֱמֻנִים֙": 1,
+    "הָ/אֹמְנִ֥ים": 1,
+    "הָ/אֹמֵן֙": 1,
+    "וְ/הֶֽאֱמִ֔ינוּ": 1,
+    "וְ/הֶאֱמִ֖ן": 1,
+    "וְ/הָ/אֹמְנִ֨ים": 1,
+    "וְ/יֵאָמְנ֥וּ": 1,
+    "וְ/נֶ֣אֱמָנ֔וֹת": 1,
+    "וְ/נֶאְמַ֨ן": 1,
+    "וְ/נֶאֱמַן": 1,
+    "וְ/נֶאֱמָ֑ן": 1,
+    "וְ/נֶאֱמָנִֽים": 1,
+    "וְ/תֵ֣אָמֵ֔נוּ": 1,
+    "וְ/תַאֲמִ֨ינוּ": 1,
+    "וְ֠/יֵֽאָמֵן": 1,
+    "וַ/יַּאֲמִ֥ינוּ": 1,
+    "וַ/יַּאֲמֵ֥ן": 1,
+    "וַ/יַּֽאֲמִ֨ינוּ֙": 1,
+    "וַֽ/יַּאֲמִ֛ינוּ": 1,
+    "וַֽ/יַּאֲמֵ֖ן": 1,
     "יֵֽאָמֵן֙": 2,
     "יֵאָ֤מֶן": 1,
     "יֵאָמֵ֖ן": 1,
@@ -825,6 +1119,8 @@
     "יַאֲמִ֣ינוּ": 4,
     "יַאֲמִ֥ין": 1,
     "יַאֲמֵ֣ן": 1,
+    "לְ/אֹמֶֽנֶת": 1,
+    "לְ/נֶאֱמָנִ֑ים": 1,
     "מַאֲמִינִ֔ם": 1,
     "נֶ֝אֱמָנִ֗ים": 1,
     "נֶ֝אֱמָנָ֗ה": 1,
