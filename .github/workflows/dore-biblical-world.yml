@@ -17,14 +17,22 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fetch pinned STEPBible educational witness
+      - name: Fetch pinned STEPBible TIPNR witness only
         run: |
-          git clone --filter=blob:none https://github.com/STEPBible/STEPBible-Data.git .cache/stepbible
-          git -C .cache/stepbible checkout efe428a0047bf7b9c3ce2624f60c252c6e435945
+          mkdir -p .cache/stepbible
+          python - <<'PY'
+          from pathlib import Path
+          from urllib.request import urlopen
+          url='https://raw.githubusercontent.com/STEPBible/STEPBible-Data/efe428a0047bf7b9c3ce2624f60c252c6e435945/Proper%20Nouns/TIPNR%20-%20Translators%20Individualised%20Proper%20Names%20with%20all%20References%20-%20STEPBible.org%20CC%20BY.txt'
+          target=Path('.cache/stepbible/TIPNR.txt')
+          with urlopen(url,timeout=120) as r: target.write_bytes(r.read())
+          assert target.stat().st_size > 8_000_000
+          print({'TIPNR_bytes':target.stat().st_size})
+          PY
       - name: Run Biblical Entity Recognition checkpoint
         env:
           PYTHONPATH: .
-          DORE_TIPNR_FILE: .cache/stepbible/Proper Nouns/TIPNR - Translators Individualised Proper Names with all References - STEPBible.org CC BY.txt
+          DORE_TIPNR_FILE: .cache/stepbible/TIPNR.txt
         run: python scripts/run_biblical_entity_recognition_checkpoint.py
       - uses: actions/upload-artifact@v4
         if: always()
