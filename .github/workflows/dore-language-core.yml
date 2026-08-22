@@ -6,6 +6,7 @@ on:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
+      - 'scripts/run_english_baseline_routes.py'
       - 'scripts/ingest_lxx_language_core.py'
       - 'scripts/ingest_vulgate_language_core.py'
       - 'scripts/ingest_webu_language_core.py'
@@ -18,6 +19,7 @@ on:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
+      - 'scripts/run_english_baseline_routes.py'
       - 'scripts/ingest_lxx_language_core.py'
       - 'scripts/ingest_vulgate_language_core.py'
       - 'scripts/ingest_webu_language_core.py'
@@ -101,6 +103,15 @@ jobs:
         continue-on-error: true
         env: {PYTHONPATH: ., DORE_KJV_JSON: .cache/kjv/KJV.json}
         run: python scripts/ingest_kjv_language_core.py
+      - name: Run complete English baseline witness gate
+        id: english_baseline
+        if: always()
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+          DORE_API_BIBLE_KEY: ${{ secrets.DORE_API_BIBLE_KEY }}
+          DORE_ESV_API_KEY: ${{ secrets.DORE_ESV_API_KEY }}
+        run: python scripts/run_english_baseline_routes.py
       - name: Ingest complete Traditional Chinese CUV witness
         id: cuv_traditional
         if: always()
@@ -117,6 +128,7 @@ jobs:
           test -f reports/DORÉ-WEBU-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-WEBU-INGESTION.json
           test -f reports/DORÉ-ASV-INGESTION.json || printf '{"status":"INFRA_FAIL","asv_source":"${{ steps.asv_source.outcome }}","asv":"${{ steps.asv.outcome }}"}\n' > reports/DORÉ-ASV-INGESTION.json
           test -f reports/DORÉ-KJV-INGESTION.json || printf '{"status":"INFRA_FAIL","kjv_source":"${{ steps.kjv_source.outcome }}","kjv":"${{ steps.kjv.outcome }}"}\n' > reports/DORÉ-KJV-INGESTION.json
+          test -f reports/DORÉ-ENGLISH-BASELINE.json || printf '{"status":"INFRA_FAIL","english_baseline":"${{ steps.english_baseline.outcome }}"}\n' > reports/DORÉ-ENGLISH-BASELINE.json
           test -f reports/DORÉ-CUV-TRADITIONAL-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
       - name: Upload language-core reports
         if: always()
@@ -147,4 +159,5 @@ jobs:
           test "${{ steps.asv.outcome }}" = "success"
           test "${{ steps.kjv_source.outcome }}" = "success"
           test "${{ steps.kjv.outcome }}" = "success"
+          test "${{ steps.english_baseline.outcome }}" = "success"
           test "${{ steps.cuv_traditional.outcome }}" = "success"
