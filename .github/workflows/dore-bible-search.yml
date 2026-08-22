@@ -19,7 +19,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Build browser Scripture index
+      - name: Build browser Scripture indexes
         env:
           PYTHONPATH: .
         run: python scripts/build_dore_browser_search_index.py
@@ -28,31 +28,36 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          p=Path('static/dore/search-index.json')
-          d=json.loads(p.read_text(encoding='utf-8'))
-          assert d['schema']=='dore.browser-search-index.v0.2'
-          assert len(d['verses']) >= 31000
-          assert d['lemma'] and d['morphology'] and d['original_surface']
-          refs={v['r'] for v in d['verses']}
+          core_path=Path('static/dore/search-index.json')
+          original_path=Path('static/dore/original-index.json')
+          core=json.loads(core_path.read_text(encoding='utf-8'))
+          original=json.loads(original_path.read_text(encoding='utf-8'))
+          assert core['schema']=='dore.browser-search-core.v1'
+          assert original['schema']=='dore.browser-original-index.v1'
+          assert len(core['verses']) >= 31000
+          assert original['lemma'] and original['morphology'] and original['original_surface']
+          refs={v['r'] for v in core['verses']}
           assert 'bible.ref.JHN.3.16' in refs
           assert 'bible.ref.JER.33.3' in refs
-          assert all(isinstance(i,int) for refs_ in list(d['lemma'].values())[:20] for i in refs_)
+          assert all(isinstance(i,int) for refs_ in list(original['lemma'].values())[:20] for i in refs_)
           html=Path('static/dore/index.html').read_text(encoding='utf-8')
           assert 'Jeremiah 33:3' in html and '/background.jpg' in html
-          print({'status':'PASS','verses':len(d['verses']),'lemmas':len(d['lemma']),'bytes':p.stat().st_size})
+          print({'status':'PASS','verses':len(core['verses']),'lemmas':len(original['lemma']),'core_bytes':core_path.stat().st_size,'original_bytes':original_path.stat().st_size})
           PY
       - uses: actions/upload-artifact@v4
         with:
-          name: dore-bible-search-index
-          path: static/dore/search-index.json
-      - name: Persist public search index
+          name: dore-bible-search-indexes
+          path: |
+            static/dore/search-index.json
+            static/dore/original-index.json
+      - name: Persist public search indexes
         if: github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add static/dore/search-index.json
+          git add static/dore/search-index.json static/dore/original-index.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): publish Bible Search index [skip ci]'
+            git commit -m 'chore(dore): publish Bible Search indexes [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin main
