@@ -1,6 +1,6 @@
 {
-  "schema": "dore.english-baseline.v1",
-  "policy": "local_corpus_for_open_witnesses; licensed_api_or_external_reader_for_copyrighted_witnesses; no_unlicensed_bulk_storage",
+  "schema": "dore.english-baseline.v2",
+  "policy": "local_corpus_for_open_witnesses; licensed_api_preferred; licensed_external_reader_fallback; no_unlicensed_bulk_storage",
   "witnesses": {
     "webu": {
       "name": "World English Bible Updated",
@@ -28,89 +28,139 @@
     },
     "rsv": {
       "name": "Revised Standard Version",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "Bible Gateway",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.biblegateway.com/passage/?search=Genesis%201%3A1&version=RSV",
+        "final_url": "https://www.biblegateway.com/passage/?search=Genesis%201%3A1&version=RSV",
+        "text_retained": false
+      },
+      "reader_url": "https://www.biblegateway.com/passage/?search=Genesis%201%3A1&version=RSV",
+      "version_id": null,
+      "copyright_text_stored": false
     },
     "nrsvue": {
       "name": "New Revised Standard Version Updated Edition",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/3523/GEN.1.1.NRSVUE",
+        "final_url": "https://www.bible.com/bible/3523/GEN.1.1.NRSVUE",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/3523/GEN.1.1.NRSVUE",
+      "version_id": "3523",
+      "copyright_text_stored": false
     },
     "nasb": {
-      "name": "New American Standard Bible",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "name": "New American Standard Bible 2020",
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/2692/GEN.1.1.NASB2020",
+        "final_url": "https://www.bible.com/bible/2692/GEN.1.1.NASB2020",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/2692/GEN.1.1.NASB2020",
+      "version_id": "2692",
+      "copyright_text_stored": false
     },
     "esv": {
       "name": "English Standard Version",
-      "access": "licensed_api",
-      "provider": "Crossway ESV API",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_ESV_API_KEY",
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/59/GEN.1.1.ESV",
+        "final_url": "https://www.bible.com/bible/59/GEN.1.1.ESV",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/59/GEN.1.1.ESV",
+      "version_id": "59",
+      "copyright_text_stored": false
     },
     "niv": {
       "name": "New International Version",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/111/GEN.1.1.NIV",
+        "final_url": "https://www.bible.com/bible/111/GEN.1.1.NIV",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/111/GEN.1.1.NIV",
+      "version_id": "111",
+      "copyright_text_stored": false
     },
     "nlt": {
       "name": "New Living Translation",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/116/GEN.1.1.NLT",
+        "final_url": "https://www.bible.com/bible/116/GEN.1.1.NLT",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/116/GEN.1.1.NLT",
+      "version_id": "116",
+      "copyright_text_stored": false
     },
     "net": {
       "name": "NET Bible",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/107/GEN.1.1.NET",
+        "final_url": "https://www.bible.com/bible/107/GEN.1.1.NET",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/107/GEN.1.1.NET",
+      "version_id": "107",
+      "copyright_text_stored": false
     },
     "csb": {
       "name": "Christian Standard Bible",
-      "access": "licensed_api",
-      "provider": "API.Bible",
-      "status": "CREDENTIAL_REQUIRED",
-      "credential": "DORE_API_BIBLE_KEY",
-      "bible_id": null,
-      "authorized_name": null,
-      "diagnostic": null
+      "access": "external_reader",
+      "provider": "YouVersion",
+      "status": "PASS",
+      "diagnostic": {
+        "http_status": 200,
+        "canonical_probe": "GEN.1.1",
+        "reader_url": "https://www.bible.com/bible/1713/GEN.1.1.CSB",
+        "final_url": "https://www.bible.com/bible/1713/GEN.1.1.CSB",
+        "text_retained": false
+      },
+      "reader_url": "https://www.bible.com/bible/1713/GEN.1.1.CSB",
+      "version_id": "1713",
+      "copyright_text_stored": false
     }
   },
   "summary": {
     "total": 11,
     "status_counts": {
-      "PASS": 3,
-      "CREDENTIAL_REQUIRED": 8
+      "PASS": 11
     }
   },
-  "status": "PARTIAL"
+  "status": "PASS",
+  "milestone": "ENGLISH_BIBLICAL_WITNESS_BASELINE_COMPLETE"
 }
