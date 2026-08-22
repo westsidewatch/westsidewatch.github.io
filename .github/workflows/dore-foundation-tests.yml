@@ -36,6 +36,8 @@ jobs:
         id: corpus_reading
         if: always()
         continue-on-error: true
+        env:
+          PYTHONPATH: .
         run: python scripts/ingest_pinned_corpora.py
       - name: Upload Doré corpus reading report
         if: always()
