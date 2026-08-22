@@ -51,6 +51,15 @@ BOOK_ALIASES = {
     "tobias":"TOB","tobit":"TOB","judith":"JDT","iudith":"JDT","sapientia":"WIS",
     "ecclesiasticus":"SIR","baruch":"BAR","i machabaeorum":"1MA","ii machabaeorum":"2MA",
     "1 machabaeorum":"1MA","2 machabaeorum":"2MA","i maccabees":"1MA","ii maccabees":"2MA",
+
+    # Exact titles in bible-api-io/bible-api-version-vulgate snapshot.
+    "aggæus":"HAG","esdræ":"EZR","joannis i":"1JN","joannis ii":"2JN","joannis iii":"3JN",
+    "joël":"JOL","judæ":"JUD","matthæus":"MAT","michæa":"MIC","nehemiæ":"NEH",
+    "paralipomenon i":"1CH","paralipomenon ii":"2CH","petri i":"1PE","petri ii":"2PE",
+    "regum i":"1SA","regum ii":"2SA","regum iii":"1KI","regum iv":"2KI",
+    "ad corinthios i":"1CO","ad corinthios ii":"2CO","ad hebræos":"HEB",
+    "ad thessalonicenses i":"1TH","ad thessalonicenses ii":"2TH",
+    "ad timotheum i":"1TI","ad timotheum ii":"2TI",
 }
 
 TOKEN_RE = re.compile(r"\w+(?:['’\-]\w+)*|[^\w\s]", re.UNICODE)
