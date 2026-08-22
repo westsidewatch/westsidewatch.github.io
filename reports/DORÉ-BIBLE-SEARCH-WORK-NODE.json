@@ -1,0 +1,27 @@
+{
+  "capabilities": [
+    "canonical_reference",
+    "cuv_webu_keyword",
+    "fuzzy_recall_candidates",
+    "original_surface",
+    "lemma",
+    "morphology",
+    "provenance_display"
+  ],
+  "entrances": [
+    "JOIN",
+    "ONE",
+    "WESTSIDE_WATCH_MAIN"
+  ],
+  "failures": [],
+  "governance": "This is an external work-node acceptance, not an educational milestone.",
+  "performance": {
+    "core_index_bytes": 10235111,
+    "original_index_bytes": 10184152,
+    "original_index_loading": "lazy"
+  },
+  "schema": "dore.work-node.bible-search.v1",
+  "status": "AVAILABLE",
+  "verdict": "PASS",
+  "work_node": "DORE_BIBLE_SEARCH"
+}
