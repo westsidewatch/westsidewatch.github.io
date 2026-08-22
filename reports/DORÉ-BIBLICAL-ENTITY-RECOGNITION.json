@@ -11,18 +11,16 @@
   ],
   "checkpoint": "BIBLICAL_ENTITY_RECOGNITION",
   "counts": {
-    "aliases": 16331,
+    "aliases": 16109,
     "ambiguous_surface_labels": 592,
-    "entities": 4154,
+    "entities": 4153,
     "other": 148,
-    "people": 3151,
+    "people": 3150,
     "places": 1003,
-    "records": 4302,
+    "records": 4301,
     "scripture_attestations": 30050
   },
-  "failures": [
-    "entity_validation_errors:2"
-  ],
+  "failures": [],
   "milestone": false,
   "product_relevance": {
     "bible_search": "entity/person/place query foundation",
@@ -60,11 +58,6 @@
           "kind": "source_form",
           "language": "grc",
           "value": "Μωϋσῆς"
-        },
-        {
-          "kind": "source_form",
-          "language": "grc",
-          "value": "Μωσῆς"
         }
       ],
       "canonical_ref_count": 786,
@@ -150,17 +143,17 @@
         {
           "kind": "source_form",
           "language": "grc",
-          "value": "G0068H«G0068=ἀγρός"
+          "value": "ἀγρός"
         },
         {
           "kind": "translation_form",
           "language": "en",
-          "value": "Field of"
+          "value": "Field of Blood"
         },
         {
-          "kind": "translation_form",
-          "language": "en",
-          "value": "Blood"
+          "kind": "source_form",
+          "language": "grc",
+          "value": "χωρίον"
         }
       ],
       "canonical_ref_count": 4,
@@ -182,9 +175,6 @@
     "raw_source_redistributed": false,
     "snapshot": "efe428a0047bf7b9c3ce2624f60c252c6e435945"
   },
-  "status": "FAIL",
-  "validation_errors": [
-    "missing_preferred_label",
-    "invalid_alias:bible.person.tipnr.8d74846b8584"
-  ]
+  "status": "PASS",
+  "validation_errors": []
 }
