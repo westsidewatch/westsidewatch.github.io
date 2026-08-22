@@ -30,15 +30,16 @@ jobs:
           from pathlib import Path
           p=Path('static/dore/search-index.json')
           d=json.loads(p.read_text(encoding='utf-8'))
-          assert d['schema']=='dore.browser-search-index.v0.1'
+          assert d['schema']=='dore.browser-search-index.v0.2'
           assert len(d['verses']) >= 31000
           assert d['lemma'] and d['morphology'] and d['original_surface']
           refs={v['r'] for v in d['verses']}
           assert 'bible.ref.JHN.3.16' in refs
           assert 'bible.ref.JER.33.3' in refs
+          assert all(isinstance(i,int) for refs_ in list(d['lemma'].values())[:20] for i in refs_)
           html=Path('static/dore/index.html').read_text(encoding='utf-8')
           assert 'Jeremiah 33:3' in html and '/background.jpg' in html
-          print({'status':'PASS','verses':len(d['verses']),'lemmas':len(d['lemma'])})
+          print({'status':'PASS','verses':len(d['verses']),'lemmas':len(d['lemma']),'bytes':p.stat().st_size})
           PY
       - uses: actions/upload-artifact@v4
         with:
