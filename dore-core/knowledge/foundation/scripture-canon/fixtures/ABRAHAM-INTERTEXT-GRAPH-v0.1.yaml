@@ -1,0 +1,123 @@
+fixture_version: dore.intertext_graph.fixture.v0.1
+status: training
+scope: Abraham across Genesis, Matthew, Romans, Galatians
+
+entities:
+  - id: person.abraham
+    type: person
+    preferred_label: Abraham
+    aliases: [Abram]
+    attestations: [GEN.11.26, GEN.17.5, MAT.1.1, ROM.4.1, GAL.3.6]
+  - id: person.isaac
+    type: person
+    preferred_label: Isaac
+    attestations: [GEN.21.3, MAT.1.2]
+  - id: person.jacob
+    type: person
+    preferred_label: Jacob
+    aliases: [Israel]
+    attestations: [GEN.25.26, MAT.1.2]
+  - id: person.jesus_christ
+    type: person
+    preferred_label: Jesus Christ
+    attestations: [MAT.1.1]
+  - id: genealogical_line.abraham_to_christ
+    type: genealogical_line
+    preferred_label: Abraham-to-Christ genealogy
+    attestations: [MAT.1.1, MAT.1.17]
+
+claims:
+  - id: claim.matthew_abraham_genealogy
+    subject_id: person.abraham
+    predicate: associated_with
+    object_id: genealogical_line.abraham_to_christ
+    claim_class: TEXT_EXPLICIT
+    references: [MAT.1.1, MAT.1.2, MAT.1.17]
+    provenance: [scripture.matthew]
+    note: Matthew explicitly places Abraham in the genealogy culminating in Jesus Christ.
+
+  - id: claim.matthew_genealogy_christ
+    subject_id: person.jesus_christ
+    predicate: associated_with
+    object_id: genealogical_line.abraham_to_christ
+    claim_class: TEXT_EXPLICIT
+    references: [MAT.1.1, MAT.1.17]
+    provenance: [scripture.matthew]
+
+  - id: claim.romans_abraham_father
+    subject_id: person.abraham
+    predicate: associated_with
+    literal_value: father in Paul's faith argument
+    claim_class: TEXT_EXPLICIT
+    references: [ROM.4.11, ROM.4.12, ROM.4.16]
+    provenance: [scripture.romans]
+    note: Preserve Paul's own argument before later theological systematization.
+
+  - id: claim.romans_genesis15_quote
+    subject_id: person.abraham
+    predicate: explicit_quote
+    literal_value: Genesis 15:6 used in Romans 4:3
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.15.6, ROM.4.3]
+    provenance: [scripture.genesis, scripture.romans]
+    note: Romans 4:3 introduces the citation with a Scripture formula; this is not merely lexical similarity.
+
+  - id: claim.galatians_genesis15_quote
+    subject_id: person.abraham
+    predicate: explicit_quote
+    literal_value: Genesis 15:6 used in Galatians 3:6
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.15.6, GAL.3.6]
+    provenance: [scripture.genesis, scripture.galatians]
+
+  - id: claim.galatians_abraham_blessing
+    subject_id: person.abraham
+    predicate: associated_with
+    literal_value: blessing of Abraham in Paul's argument concerning the nations and faith
+    claim_class: TEXT_EXPLICIT
+    references: [GAL.3.7, GAL.3.8, GAL.3.9, GAL.3.14]
+    provenance: [scripture.galatians]
+
+  - id: claim.galatians_genesis12_intertext
+    subject_id: person.abraham
+    predicate: explicit_quote
+    literal_value: blessing of the nations promise used in Galatians 3:8
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.12.3, GAL.3.8]
+    provenance: [scripture.genesis, scripture.galatians]
+    note: Galatians explicitly introduces the cited promise as Scripture speaking beforehand.
+
+  - id: claim.galatians_seed_argument
+    subject_id: person.abraham
+    predicate: associated_with
+    literal_value: promise-to-seed argument applied to Christ
+    claim_class: TEXT_EXPLICIT
+    references: [GAL.3.16]
+    provenance: [scripture.galatians]
+    note: The graph records Paul's textual argument as explicit; evaluation of its hermeneutical method is a separate scholarly layer.
+
+intertext_edges:
+  - id: intertext.gen15_6.rom4_3
+    source_ref: GEN.15.6
+    target_ref: ROM.4.3
+    relation: explicit_quote
+    claim_class: TEXT_EXPLICIT
+    provenance: [scripture.romans]
+  - id: intertext.gen15_6.gal3_6
+    source_ref: GEN.15.6
+    target_ref: GAL.3.6
+    relation: explicit_quote
+    claim_class: TEXT_EXPLICIT
+    provenance: [scripture.galatians]
+  - id: intertext.gen12_3.gal3_8
+    source_ref: GEN.12.3
+    target_ref: GAL.3.8
+    relation: explicit_quote
+    claim_class: TEXT_EXPLICIT
+    provenance: [scripture.galatians]
+
+training_notes:
+  - Matthew 1 is a genealogical/textual connection, not itself classified as a quotation of Genesis.
+  - Romans 4 and Galatians 3 must retain their distinct argumentative contexts even when both use Genesis 15:6.
+  - Paul's interpretation is recorded first as Paul's explicit textual argument; later theological conclusions require their own claim layer.
+  - Shared Abraham vocabulary alone never creates an intertext edge.
