@@ -38,12 +38,21 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/run_language_core_parity.py
+      - name: Clone pinned LXX witness
+        id: lxx_source
+        if: always()
+        continue-on-error: true
+        run: |
+          rm -rf .cache/centerblc-lxx
+          git clone --no-checkout https://github.com/CenterBLC/LXX.git .cache/centerblc-lxx
+          git -C .cache/centerblc-lxx checkout 4829f3746c84d75576702498e75a68856358f289
       - name: Ingest complete LXX witness
         id: lxx
         if: always()
         continue-on-error: true
         env:
           PYTHONPATH: .
+          DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935
         run: python scripts/ingest_lxx_language_core.py
       - name: Ensure reports exist
         if: always()
@@ -53,7 +62,7 @@ jobs:
             printf '{"status":"INFRA_FAIL","error":"language core parity report was not produced","parity":"%s"}\n' "${{ steps.parity.outcome }}" > reports/DORÉ-LANGUAGE-CORE-PARITY.json
           fi
           if [ ! -f reports/DORÉ-LXX-INGESTION.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx":"%s"}\n' "${{ steps.lxx.outcome }}" > reports/DORÉ-LXX-INGESTION.json
+            printf '{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx_source":"%s","lxx":"%s"}\n' "${{ steps.lxx_source.outcome }}" "${{ steps.lxx.outcome }}" > reports/DORÉ-LXX-INGESTION.json
           fi
       - name: Upload language-core reports
         if: always()
@@ -78,4 +87,5 @@ jobs:
         if: always()
         run: |
           test "${{ steps.parity.outcome }}" = "success"
+          test "${{ steps.lxx_source.outcome }}" = "success"
           test "${{ steps.lxx.outcome }}" = "success"
