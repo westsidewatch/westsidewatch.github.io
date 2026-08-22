@@ -11,6 +11,7 @@ on:
       - 'scripts/ingest_webu_language_core.py'
       - 'scripts/ingest_cuv_traditional_language_core.py'
       - 'scripts/ingest_asv_language_core.py'
+      - 'scripts/ingest_kjv_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   pull_request:
     paths:
@@ -22,6 +23,7 @@ on:
       - 'scripts/ingest_webu_language_core.py'
       - 'scripts/ingest_cuv_traditional_language_core.py'
       - 'scripts/ingest_asv_language_core.py'
+      - 'scripts/ingest_kjv_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   workflow_dispatch:
 
@@ -85,6 +87,20 @@ jobs:
         continue-on-error: true
         env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx}
         run: python scripts/ingest_asv_language_core.py
+      - name: Clone pinned KJV witness
+        id: kjv_source
+        if: always()
+        continue-on-error: true
+        run: |
+          rm -rf .cache/kjv
+          git clone --no-checkout https://github.com/TheologyCommons/Bible.TEI.KJV.git .cache/kjv
+          git -C .cache/kjv checkout 014f6966aad1dc8888b088cd11ea8216a46fa738
+      - name: Ingest complete English KJV witness
+        id: kjv
+        if: always()
+        continue-on-error: true
+        env: {PYTHONPATH: ., DORE_KJV_JSON: .cache/kjv/KJV.json}
+        run: python scripts/ingest_kjv_language_core.py
       - name: Ingest complete Traditional Chinese CUV witness
         id: cuv_traditional
         if: always()
@@ -100,6 +116,7 @@ jobs:
           test -f reports/DORÉ-VULGATE-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-VULGATE-INGESTION.json
           test -f reports/DORÉ-WEBU-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-WEBU-INGESTION.json
           test -f reports/DORÉ-ASV-INGESTION.json || printf '{"status":"INFRA_FAIL","asv_source":"${{ steps.asv_source.outcome }}","asv":"${{ steps.asv.outcome }}"}\n' > reports/DORÉ-ASV-INGESTION.json
+          test -f reports/DORÉ-KJV-INGESTION.json || printf '{"status":"INFRA_FAIL","kjv_source":"${{ steps.kjv_source.outcome }}","kjv":"${{ steps.kjv.outcome }}"}\n' > reports/DORÉ-KJV-INGESTION.json
           test -f reports/DORÉ-CUV-TRADITIONAL-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
       - name: Upload language-core reports
         if: always()
@@ -128,4 +145,6 @@ jobs:
           test "${{ steps.webu.outcome }}" = "success"
           test "${{ steps.asv_source.outcome }}" = "success"
           test "${{ steps.asv.outcome }}" = "success"
+          test "${{ steps.kjv_source.outcome }}" = "success"
+          test "${{ steps.kjv.outcome }}" = "success"
           test "${{ steps.cuv_traditional.outcome }}" = "success"
