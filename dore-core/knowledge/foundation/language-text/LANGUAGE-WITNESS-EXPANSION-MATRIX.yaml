@@ -1,0 +1,83 @@
+matrix_version: dore.language.witness.expansion.v0.1
+status: active
+strategy: bulk-onboarding
+
+principle:
+  audited_sample: validate adapter method
+  corpus_scale: ingest full witness
+  benchmark: measure coverage and parity
+  exception_queue: isolate unresolved cases
+  refinement: improve shared method rather than hand-feed items
+
+witness_families:
+  - id: biblical_hebrew_aramaic
+    language: [he, arc]
+    reference_adapter: adapter.biblical.oshb
+    status: validated_reference
+    capabilities: [canonical_alignment, lemma, morphology, concordance, provenance]
+
+  - id: koine_greek_nt
+    language: [grc]
+    reference_adapter: adapter.biblical.morphgnt
+    status: validated_reference
+    capabilities: [canonical_alignment, normalization, lemma, morphology, concordance, provenance]
+
+  - id: septuagint_greek
+    language: [grc]
+    witness_role: ancient_translation
+    status: source_selection
+    requirements:
+      - full corpus
+      - stable canonical mapping
+      - license/provenance verified
+      - morphology preferred but not required for first ingestion
+      - independent witness identity from Hebrew Bible
+
+  - id: latin
+    language: [la]
+    witness_role: ancient_translation_and_church_history_language
+    status: source_selection
+    requirements:
+      - Vulgate-class biblical witness
+      - license/provenance verified
+      - inflection/lemma layer added through reusable analyzer
+
+  - id: chinese
+    language: [zh-Hant, zh-Hans]
+    witness_role: modern_translation_and_ministry_language
+    status: source_selection
+    requirements:
+      - each Bible edition remains a distinct TextWitness
+      - traditional/simplified normalization is reversible
+      - biblical names and church terminology lexicon
+      - segmentation benchmark
+
+  - id: cantonese
+    language: [yue]
+    witness_role: ministry_speech_and_text
+    status: adapter_design
+    requirements:
+      - spoken and written Cantonese distinguished
+      - Jyutping is sourced metadata, not guessed evidence
+      - speech transcript timestamps preserved
+      - alignment to written Chinese/Mandarin translation kept as separate claims
+      - subtitle correction use case supported
+
+  - id: english
+    language: [en]
+    witness_role: modern_translation_and_research_language
+    status: source_selection
+    requirements:
+      - public/open first benchmark witness
+      - multiple editions remain distinct witnesses
+      - historical/modern comparison supported
+
+bulk_milestones:
+  - language_core_parity_66_books
+  - onboard_lxx_full_witness
+  - onboard_latin_full_witness
+  - onboard_one_open_chinese_witness
+  - onboard_cantonese_transcript_pipeline
+  - onboard_one_open_english_witness
+  - cross_witness_alignment_engine
+  - corpus_wide_coverage_dashboard
