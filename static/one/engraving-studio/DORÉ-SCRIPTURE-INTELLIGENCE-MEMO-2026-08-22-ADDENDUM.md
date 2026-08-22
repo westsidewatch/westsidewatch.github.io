@@ -97,6 +97,187 @@ Each product receives only the behavior appropriate to it.
 
 Product-specific rules must remain isolated at the adapter/profile layer so that subtitle habits do not contaminate ONE's reader behavior and visual-generation rules do not leak into ordinary editorial correction.
 
+## 2026-08-22 continuation — what exists now versus what must be built
+
+The conversation clarified that Doré is **not currently an independently executable intelligence product**. It is also not imaginary from zero. Its raw capability already exists in three forms:
+
+1. a practiced Doré / Visual workflow developed through real ONE production;
+2. accumulated research, corrections, visual judgment, Scripture/historical reasoning and evidence discipline in repository records;
+3. architectural/product ideas that have now been made explicit but are not yet implemented as software services.
+
+Therefore the correct distinction is:
+
+> **The capability material already exists; the capability has not yet been engineered into an independent reusable system.**
+
+The subtitle proofreader, shared cross-product API, central machine-readable Doré Knowledge Store and reusable service calls such as `Dore.refine_subtitles()` remain future implementation rather than present runtime ability.
+
+## First software form — `dore-core`, not an app
+
+The first true Doré software project should not begin as a website, chat UI, visual brand shell or subtitle-only feature. It should begin as an independent, UI-less **Doré Core — Westside Watch Scripture Intelligence Engine**.
+
+Conceptual structure:
+
+```text
+DORÉ
+├── Core
+│   ├── scripture
+│   ├── entities
+│   ├── context
+│   ├── correction
+│   ├── evidence
+│   └── provenance
+├── Knowledge
+│   ├── bible
+│   ├── history
+│   ├── church
+│   ├── brand
+│   ├── language
+│   └── learned-corrections
+├── Profiles / Adapters
+│   ├── visual
+│   ├── subtitles
+│   ├── one
+│   └── editorial
+└── API
+```
+
+The separation is fundamental:
+
+- **Core = how Doré reasons and judges.**
+- **Knowledge = what Doré knows and remembers.**
+- **Profile/Adapter = what Doré is allowed and expected to do for a particular product.**
+
+Example: “do not improve fluency by changing a speaker's meaning” is a Core rule. “Gethsemane / 客西馬尼 and its canonical relationships” belongs to Knowledge. “For subtitles, never change `start`/`end` timing” belongs to the Westside Stories subtitle adapter.
+
+## Doré must not equal one giant prompt
+
+A major architectural guardrail was established: Doré must not be implemented as merely a long system prompt attached to one current AI model.
+
+The intended composition is closer to:
+
+`Knowledge + Rules + Memory + Retrieval + Model provider(s) + Product Profiles`
+
+The model is replaceable infrastructure. Doré's durable identity resides in its accumulated structured knowledge, evidence, editorial memory, rules and interfaces.
+
+This supports the permanent principle:
+
+> **Models may change; Doré must not lose its memory.**
+
+Doré 0.1 should therefore be capable of deterministic knowledge/rule work even before every function depends on an LLM. A model can later act as a reasoning provider where contextual interpretation is required, without becoming the sole location of Doré's knowledge.
+
+## Minimal proof for Doré 0.1
+
+The first implementation should prove a small number of real capabilities rather than attempt every discussed future function at once:
+
+1. **Recognize Scripture context** — identify likely books, chapters, people, places, events and quotations/references from supplied content.
+2. **Explain epistemic basis** — return source/evidence/confidence and preserve the existing Doré discipline of distinguishing textual certainty, editorial hypothesis and uncertainty.
+3. **Serve one real external consumer** — use a genuine Westside Stories subtitle sample to prove that another product can call Doré and receive a contextual correction without surrendering timestamp ownership.
+
+The third proof is strategically important: it is the point at which Doré stops being only an intelligence workflow living around ONE and becomes a reusable Westside Watch capability.
+
+## 2026-08-22 continuation — persistent learning layer across the whole brand
+
+The conversation then advanced the Core definition further. Because Westside Watch's products are church/ministry products and Scripture/church context is pervasive across them, Doré should not require a separate manual “feeding session” after normal work. The long-term goal is for Doré to become a **persistent learning layer that accompanies Westside Watch's ordinary product work by default**.
+
+This does **not** mean every product must expose a Doré button or that Doré controls every product. It means that appropriate adapters can allow work to flow bidirectionally:
+
+`product work <-> Doré shared intelligence`
+
+Examples:
+
+- ONE production uses Doré while its approved research and editorial decisions can become reusable Doré knowledge.
+- Westside Stories uses Doré for contextual proofreading while human-confirmed corrections teach Doré real church speech, pronunciation and ASR failure patterns.
+- Journal/editorial work can use Doré for Scripture/entity/editorial consistency while approved language decisions enrich shared memory.
+- Main-site work can use Doré for Scripture/church/brand naming and information relationships while approved production content contributes current brand knowledge.
+- Future Westside Watch products should be able to join the same shared layer through their own bounded adapters.
+
+The principle is:
+
+> **Feeding Doré should increasingly become a by-product of doing Westside Watch's real work, not a separate recurring clerical task.**
+
+## Learning is not automatic truth — knowledge promotion gates
+
+Persistent participation creates a major risk: if Doré permanently learns every draft, suggestion or temporary idea, its knowledge will become polluted and contradictory.
+
+Therefore Doré should be able to observe broadly while promoting knowledge cautiously. A conceptual lifecycle is:
+
+`Observed -> Candidate -> Approved -> Canonical`
+
+- **Observed:** encountered in a conversation, draft, repository, transcript or product workflow; preserved with provenance but not treated as truth.
+- **Candidate:** repeated, contextually supported or explicitly proposed for reuse, but still subject to review.
+- **Approved:** human/editorially accepted for Westside Watch use.
+- **Canonical:** reserved for knowledge whose authority warrants that status, especially stable Scripture/canonical facts; not merely a stronger synonym for “approved brand preference.”
+
+The exact schema can change during implementation, but the distinction must survive. Doré should remember disagreement, revision and supersession rather than flatten successive ideas into simultaneous truth.
+
+This mirrors the existing Doré evidence discipline: a hypothesis must never silently harden into fact.
+
+## Existing Westside Watch work as Doré's bootstrap corpus
+
+Doré should not begin learning from an empty database. Existing completed and in-progress Westside Watch work is the first major knowledge pool from which Doré can be bootstrapped.
+
+Potential sources include ONE content and research, Doré / Visual records, main-site production content, Journal/editorial materials, Westside Stories material, brand specifications, approved church terminology, dated working conversations and relevant repository history.
+
+However, repository ingestion must be provenance-aware. Existing content is not one homogeneous truth source. Doré must distinguish at minimum:
+
+- current production data;
+- superseded/legacy versions;
+- approved brand specification;
+- research/evidence records;
+- architecture memo;
+- dated working conversation;
+- draft or proposal;
+- human-confirmed correction;
+- model-generated suggestion not yet approved.
+
+Git history can therefore be useful not merely as content storage but as evidence of how a decision evolved, provided Doré does not treat every historical revision as simultaneously current.
+
+## Brand-wide bidirectional model
+
+The earlier one-way consumer model is superseded by a bidirectional relationship:
+
+```text
+                DORÉ
+        ┌─────────────────┐
+        │ Core            │
+        │ Knowledge       │
+        │ Memory          │
+        │ Provenance      │
+        └────────┬────────┘
+                 │
+          shared intelligence
+                 │
+      ┌──────────┼──────────┐
+      ↕          ↕          ↕
+     ONE      Stories    Journal
+      ↕          ↕          ↕
+      └──────────┼──────────┘
+                 ↕
+              Main Site
+                 ↕
+          Future Products
+```
+
+All arrows are intentionally bidirectional. Doré serves products and products, through reviewed outcomes, enrich Doré.
+
+Different products teach different dimensions of the same shared intelligence:
+
+- ONE deepens canonical, historical, geographic and study context;
+- Westside Stories adds spoken language, pronunciation, code-switching and ASR correction experience;
+- Journal adds theological/editorial expression and long-form language judgment;
+- the main site adds current church/brand naming, information architecture and public-facing terminology;
+- future products add new dimensions through bounded adapters.
+
+Doré therefore should not have a meaningful state called “training complete.” Its architecture should permit it to grow alongside Westside Watch while retaining provenance, review gates and historical memory.
+
+## Refined product definition from today's discussion
+
+The working definition has advanced from simply “Westside Watch Scripture Intelligence Engine” to:
+
+> **Doré Core is Westside Watch's persistent Scripture-and-church intelligence and learning layer: a shared, provenance-aware system that accompanies appropriate brand workflows, learns from reviewed real work, preserves durable knowledge independently of any single AI model, and returns that accumulated knowledge to ONE, Westside Stories, the main site, Journal and future ministry products through bounded product adapters.**
+
+This is a working 2026-08-22 definition, not yet the final pre-build specification. It must remain available for comparison with later dated conversations.
+
 ## Future API/service contract
 
 Doré should eventually expose stable service contracts rather than requiring every product to know its internal model or prompt implementation.
