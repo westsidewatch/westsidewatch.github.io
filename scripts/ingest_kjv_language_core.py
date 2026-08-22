@@ -110,6 +110,10 @@ def tei_units(data: dict[str, Any], witness: TextWitness):
             continue
         body = node.get("body")
         chapters = body.get("div") if isinstance(body, dict) else None
+        # TheologyCommons emits a single object rather than a list for one-chapter
+        # books (Obadiah, Philemon, 2 John, 3 John, Jude). Normalize both shapes.
+        if isinstance(chapters, dict):
+            chapters = [chapters]
         if not isinstance(chapters, list):
             continue
         for chapter_number, chapter_node in enumerate(chapters, 1):
