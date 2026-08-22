@@ -1,7 +1,8 @@
 {
   "books_expected": 66,
-  "books_read": 66,
-  "failures": 0,
+  "books_read": 22,
+  "error": "URLError: <urlopen error [Errno 104] Connection reset by peer>",
+  "failures": 1,
   "reports": {
     "1CH": {
       "emitted_tokens": 10790,
@@ -11,26 +12,6 @@
         "he"
       ],
       "source_records": 10790,
-      "warnings": 0
-    },
-    "1CO": {
-      "emitted_tokens": 6812,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 6812,
-      "warnings": 0
-    },
-    "1JN": {
-      "emitted_tokens": 2137,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 2137,
       "warnings": 0
     },
     "1KI": {
@@ -43,16 +24,6 @@
       "source_records": 13186,
       "warnings": 0
     },
-    "1PE": {
-      "emitted_tokens": 1678,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1678,
-      "warnings": 0
-    },
     "1SA": {
       "emitted_tokens": 13335,
       "excluded_records": 0,
@@ -61,26 +32,6 @@
         "he"
       ],
       "source_records": 13335,
-      "warnings": 0
-    },
-    "1TH": {
-      "emitted_tokens": 1473,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1473,
-      "warnings": 0
-    },
-    "1TI": {
-      "emitted_tokens": 1591,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1591,
       "warnings": 0
     },
     "2CH": {
@@ -93,26 +44,6 @@
       "source_records": 13354,
       "warnings": 0
     },
-    "2CO": {
-      "emitted_tokens": 4473,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 4473,
-      "warnings": 0
-    },
-    "2JN": {
-      "emitted_tokens": 245,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 245,
-      "warnings": 0
-    },
     "2KI": {
       "emitted_tokens": 12354,
       "excluded_records": 0,
@@ -121,16 +52,6 @@
         "he"
       ],
       "source_records": 12354,
-      "warnings": 0
-    },
-    "2PE": {
-      "emitted_tokens": 1098,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1098,
       "warnings": 0
     },
     "2SA": {
@@ -142,78 +63,6 @@
       ],
       "source_records": 11130,
       "warnings": 0
-    },
-    "2TH": {
-      "emitted_tokens": 820,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 820,
-      "warnings": 0
-    },
-    "2TI": {
-      "emitted_tokens": 1235,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1235,
-      "warnings": 0
-    },
-    "3JN": {
-      "emitted_tokens": 219,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 219,
-      "warnings": 0
-    },
-    "ACT": {
-      "emitted_tokens": 18412,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 18412,
-      "warnings": 0
-    },
-    "AMO": {
-      "emitted_tokens": 2045,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 2045,
-      "warnings": 0
-    },
-    "COL": {
-      "emitted_tokens": 1580,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1580,
-      "warnings": 0
-    },
-    "DAN": {
-      "emitted_tokens": 6035,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "arc",
-        "he",
-        "und"
-      ],
-      "source_records": 6035,
-      "warnings": 13
     },
     "DEU": {
       "emitted_tokens": 14320,
@@ -233,16 +82,6 @@
         "he"
       ],
       "source_records": 2999,
-      "warnings": 0
-    },
-    "EPH": {
-      "emitted_tokens": 2416,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 2416,
       "warnings": 0
     },
     "EST": {
@@ -265,16 +104,6 @@
       "source_records": 16726,
       "warnings": 0
     },
-    "EZK": {
-      "emitted_tokens": 18866,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 18866,
-      "warnings": 0
-    },
     "EZR": {
       "emitted_tokens": 3791,
       "excluded_records": 0,
@@ -284,16 +113,6 @@
         "he"
       ],
       "source_records": 3791,
-      "warnings": 0
-    },
-    "GAL": {
-      "emitted_tokens": 2226,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 2226,
       "warnings": 0
     },
     "GEN": {
@@ -306,66 +125,6 @@
       "source_records": 20629,
       "warnings": 0
     },
-    "HAB": {
-      "emitted_tokens": 672,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 672,
-      "warnings": 0
-    },
-    "HAG": {
-      "emitted_tokens": 601,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 601,
-      "warnings": 0
-    },
-    "HEB": {
-      "emitted_tokens": 4935,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 4935,
-      "warnings": 0
-    },
-    "HOS": {
-      "emitted_tokens": 2386,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 2386,
-      "warnings": 0
-    },
-    "ISA": {
-      "emitted_tokens": 16988,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 16988,
-      "warnings": 0
-    },
-    "JAS": {
-      "emitted_tokens": 1739,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1739,
-      "warnings": 0
-    },
     "JDG": {
       "emitted_tokens": 9905,
       "excluded_records": 0,
@@ -374,26 +133,6 @@
         "he"
       ],
       "source_records": 9905,
-      "warnings": 0
-    },
-    "JER": {
-      "emitted_tokens": 21976,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 21976,
-      "warnings": 0
-    },
-    "JHN": {
-      "emitted_tokens": 15438,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 15438,
       "warnings": 0
     },
     "JOB": {
@@ -406,26 +145,6 @@
       "source_records": 8399,
       "warnings": 0
     },
-    "JOL": {
-      "emitted_tokens": 958,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 958,
-      "warnings": 0
-    },
-    "JON": {
-      "emitted_tokens": 688,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 688,
-      "warnings": 0
-    },
     "JOS": {
       "emitted_tokens": 10083,
       "excluded_records": 0,
@@ -436,26 +155,6 @@
       "source_records": 10083,
       "warnings": 0
     },
-    "JUD": {
-      "emitted_tokens": 459,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 459,
-      "warnings": 0
-    },
-    "LAM": {
-      "emitted_tokens": 1564,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 1564,
-      "warnings": 0
-    },
     "LEV": {
       "emitted_tokens": 11955,
       "excluded_records": 0,
@@ -464,66 +163,6 @@
         "he"
       ],
       "source_records": 11955,
-      "warnings": 0
-    },
-    "LUK": {
-      "emitted_tokens": 19446,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 19446,
-      "warnings": 0
-    },
-    "MAL": {
-      "emitted_tokens": 876,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 876,
-      "warnings": 0
-    },
-    "MAT": {
-      "emitted_tokens": 18329,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 18329,
-      "warnings": 0
-    },
-    "MIC": {
-      "emitted_tokens": 1400,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 1400,
-      "warnings": 0
-    },
-    "MRK": {
-      "emitted_tokens": 11286,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 11286,
-      "warnings": 0
-    },
-    "NAM": {
-      "emitted_tokens": 562,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 562,
       "warnings": 0
     },
     "NEH": {
@@ -546,36 +185,6 @@
       "source_records": 16422,
       "warnings": 0
     },
-    "OBA": {
-      "emitted_tokens": 292,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 292,
-      "warnings": 0
-    },
-    "PHM": {
-      "emitted_tokens": 334,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 334,
-      "warnings": 0
-    },
-    "PHP": {
-      "emitted_tokens": 1626,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 1626,
-      "warnings": 0
-    },
     "PRO": {
       "emitted_tokens": 6984,
       "excluded_records": 0,
@@ -594,26 +203,6 @@
         "he"
       ],
       "source_records": 19657,
-      "warnings": 0
-    },
-    "REV": {
-      "emitted_tokens": 9833,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 9833,
-      "warnings": 0
-    },
-    "ROM": {
-      "emitted_tokens": 7055,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 7055,
       "warnings": 0
     },
     "RUT": {
@@ -635,44 +224,13 @@
       ],
       "source_records": 1255,
       "warnings": 0
-    },
-    "TIT": {
-      "emitted_tokens": 659,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "grc"
-      ],
-      "source_records": 659,
-      "warnings": 0
-    },
-    "ZEC": {
-      "emitted_tokens": 3134,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 3134,
-      "warnings": 0
-    },
-    "ZEP": {
-      "emitted_tokens": 769,
-      "excluded_records": 0,
-      "failures": 0,
-      "languages": [
-        "he"
-      ],
-      "source_records": 769,
-      "warnings": 0
     }
   },
-  "silent_token_loss": 0,
   "snapshots": {
     "morphgnt_sblgnt": "aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d",
     "oshb": "3d15126fb1ef74867fc1434be1942e837932691f"
   },
-  "status": "PASS",
-  "tokens_read": 444339,
-  "warnings": 13
+  "status": "FAIL",
+  "tokens_read": 226973,
+  "warnings": 0
 }
