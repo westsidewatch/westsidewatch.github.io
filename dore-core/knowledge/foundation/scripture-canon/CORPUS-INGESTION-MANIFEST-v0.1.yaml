@@ -1,0 +1,73 @@
+schema_version: dore.corpus_ingestion_manifest.v0.1
+status: foundation_verified_sources
+purpose: Define the first real original-language corpora Doré will ingest after Lesson 03 contracts.
+
+corpora:
+  - id: corpus.oshb
+    name: Open Scriptures Hebrew Bible
+    upstream_repository: openscriptures/morphhb
+    upstream_branch: master
+    source_path_pattern: wlc/*.xml
+    witness_id: witness.oshb.wlc
+    languages: [he, arc]
+    format: OSIS_XML
+    observed_metadata:
+      osis_id_work: OSHB
+      base_text: Westminster Leningrad Codex
+      reference_system: Bible.MT
+      wlc_version_observed_in_source_history: '4.20'
+      oshb_rights_observed: Creative Commons Attribution 4.0
+      wlc_rights_observed: Public Domain
+    ingest_layers:
+      - source_native_reference
+      - surface_token
+      - lemma_when_present
+      - morphology_when_present
+      - language_metadata
+      - textual_metadata_when_present
+    rules:
+      - preserve_OSIS_source_reference
+      - preserve_Hebrew_and_Aramaic_distinction
+      - preserve_surface_before_normalization
+      - provenance_per_analytical_layer
+
+  - id: corpus.morphgnt.sblgnt
+    name: MorphGNT SBLGNT
+    upstream_repository: morphgnt/sblgnt
+    upstream_branch: master
+    source_path_pattern: '*-morphgnt.txt'
+    witness_id: witness.sblgnt
+    languages: [grc]
+    format: MorphGNT_text
+    observed_structure:
+      - one_morphology_file_per_New_Testament_book
+      - Matthew_file_observed_as_61-Mt-morphgnt.txt
+    ingest_layers:
+      - source_native_reference
+      - surface_token
+      - normalized_token_when_supplied
+      - lemma
+      - morphology
+    rules:
+      - distinguish_SBLGNT_text_from_MorphGNT_analysis
+      - provenance_per_analytical_layer
+      - preserve_inflected_surface_and_lemma
+
+verification:
+  performed_2026_08_26:
+    - upstream_repository_structure_checked
+    - OSHB_wlc_book_files_confirmed
+    - OSHB_Obadiah_OSIS_header_inspected
+    - MorphGNT_New_Testament_book_files_confirmed
+  still_required:
+    - pin_upstream_commit_SHAs_before_reproducible_ingestion
+    - parse_sample_tokens_into_Dore_contract
+    - validate_language_detection_for_Biblical_Aramaic
+    - validate_full_corpus_book_reference_mapping
+    - run_Lesson_03_provenance_tests
+
+policy:
+  - Upstream corpora are external scholarly datasets, not Westside-authored canonical truth.
+  - Doré stores source identity and version/commit so future updates are auditable.
+  - No source update silently replaces an already-ingested corpus snapshot.
+  - Corpus ingestion does not itself promote scholarly analysis to canonical fact.
