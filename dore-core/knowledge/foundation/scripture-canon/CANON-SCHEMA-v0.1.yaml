@@ -1,0 +1,108 @@
+schema: dore.scripture.canon.v0.1
+status: foundation
+
+principles:
+  stable_identity: true
+  display_language_independent: true
+  provenance_required_for_claims: true
+  interpretation_separate_from_text: true
+
+claim_classes:
+  - TEXT_EXPLICIT
+  - TEXTUAL_DATA
+  - CANONICAL_RELATION
+  - SCHOLARLY_INFERENCE
+  - EDITORIAL_RECONSTRUCTION
+  - TRADITIONAL_INTERPRETATION
+  - UNKNOWN_DISPUTED
+
+canonical_object:
+  required:
+    - id
+    - kind
+  kinds:
+    - canon
+    - testament
+    - book
+    - chapter
+    - verse
+    - token
+
+book:
+  id_pattern: "bible.book.{OSIS}"
+  required:
+    - id
+    - osis
+    - operational_canon
+    - order
+    - testament
+    - chapter_count
+    - names
+  optional:
+    - aliases
+    - original_title
+    - source_refs
+
+reference:
+  id_pattern: "bible.ref.{OSIS}.{chapter}.{verse}"
+  required:
+    - id
+    - book_id
+    - chapter
+    - verse
+  optional:
+    - versification_system
+    - mapped_references
+
+entity:
+  id_pattern: "bible.entity.{kind}.{stable_key}"
+  kinds:
+    - person
+    - place
+    - people
+    - event
+    - object
+    - institution
+  required:
+    - id
+    - kind
+    - names
+  optional:
+    - aliases
+    - scripture_occurrences
+    - relations
+    - source_refs
+
+claim:
+  required:
+    - id
+    - subject_id
+    - predicate
+    - object
+    - claim_class
+    - source_refs
+    - confidence
+  confidence:
+    type: number
+    minimum: 0
+    maximum: 1
+  optional:
+    - tradition
+    - notes
+    - competing_claims
+    - supersedes
+
+source_ref:
+  required:
+    - source_id
+  optional:
+    - source_version
+    - locator
+    - retrieved_at
+    - license_component
+
+rule:
+  - "Imported data never becomes canonical truth merely by ingestion."
+  - "Every scholarly inference must point to evidence."
+  - "Every disputed claim must preserve competing claims when known."
+  - "Westside editorial reconstruction must never be emitted as TEXT_EXPLICIT."
