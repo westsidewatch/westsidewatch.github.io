@@ -6,12 +6,14 @@ on:
       - 'dore_core/**'
       - 'tests/**'
       - 'scripts/ingest_pinned_corpora.py'
+      - 'scripts/run_abraham_intertext_experiment.py'
       - '.github/workflows/dore-foundation-tests.yml'
   pull_request:
     paths:
       - 'dore_core/**'
       - 'tests/**'
       - 'scripts/ingest_pinned_corpora.py'
+      - 'scripts/run_abraham_intertext_experiment.py'
       - '.github/workflows/dore-foundation-tests.yml'
   workflow_dispatch:
 
@@ -39,26 +41,38 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/ingest_pinned_corpora.py
-      - name: Upload Doré corpus reading report
+      - name: Run Abraham cross-language intertext experiment
+        id: abraham_intertext
+        if: always()
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+        run: python scripts/run_abraham_intertext_experiment.py
+      - name: Upload Doré reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dore-corpus-reading-report
-          path: reports/DORÉ-CORPUS-READING-REPORT.json
+          name: dore-foundation-reports
+          path: |
+            reports/DORÉ-CORPUS-READING-REPORT.json
+            reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json
           if-no-files-found: warn
           retention-days: 30
-      - name: Persist Doré corpus reading report
+      - name: Persist Doré reports
         if: always() && github.event_name == 'push'
         run: |
+          mkdir -p reports
           if [ ! -f reports/DORÉ-CORPUS-READING-REPORT.json ]; then
-            mkdir -p reports
             printf '{"status":"INFRA_FAIL","error":"corpus report was not produced","unit_tests":"%s","corpus_reading":"%s"}\n' "${{ steps.unit_tests.outcome }}" "${{ steps.corpus_reading.outcome }}" > reports/DORÉ-CORPUS-READING-REPORT.json
+          fi
+          if [ ! -f reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json ]; then
+            printf '{"status":"INFRA_FAIL","error":"Abraham intertext report was not produced","experiment":"%s"}\n' "${{ steps.abraham_intertext.outcome }}" > reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json
           fi
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-CORPUS-READING-REPORT.json
+          git add reports/DORÉ-CORPUS-READING-REPORT.json reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist corpus reading report [skip ci]'
+            git commit -m 'chore(dore): persist foundation reports [skip ci]'
             git push
           fi
       - name: Enforce Doré Foundation result
@@ -66,3 +80,4 @@ jobs:
         run: |
           test "${{ steps.unit_tests.outcome }}" = "success"
           test "${{ steps.corpus_reading.outcome }}" = "success"
+          test "${{ steps.abraham_intertext.outcome }}" = "success"
