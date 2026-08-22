@@ -1,0 +1,28 @@
+schema_version: dore.corpus_snapshot.v0.1
+snapshot_date: 2026-08-26
+status: pinned_for_foundation_reading
+
+upstreams:
+  - corpus_id: corpus.oshb
+    repository: openscriptures/morphhb
+    commit: 3d15126fb1ef74867fc1434be1942e837932691f
+    observed_latest_commit_date: 2024-08-27T13:19:54Z
+    reading_target: wlc/*.xml
+    first_inspected_book: Obad
+    notes:
+      - OSIS header identifies OSHB and WLC separately.
+      - WLC source history records version 4.20.
+      - OSHB analytical work declares CC BY 4.0 in inspected source metadata.
+      - WLC base text declares Public Domain in inspected source metadata.
+
+  - corpus_id: corpus.morphgnt.sblgnt
+    repository: morphgnt/sblgnt
+    commit: aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d
+    observed_latest_commit_date: 2024-01-21T23:43:25Z
+    reading_target: '*-morphgnt.txt'
+    first_inspected_book: Matthew
+    first_inspected_reference: Matt.1.1
+
+reproducibility_rule:
+  - Foundation reading uses these pinned commits until an explicit corpus-upgrade review occurs.
+  - A future upstream change must create a new snapshot record rather than silently mutate this one.
