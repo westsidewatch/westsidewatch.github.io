@@ -1,0 +1,59 @@
+{
+  "case_passed": 30,
+  "cases": 30,
+  "failures": [],
+  "genres": [
+    "acts_textual_boundary",
+    "apocalypse",
+    "apocalyptic_prophet",
+    "general_epistle",
+    "gospel",
+    "history",
+    "homily_epistle",
+    "pauline",
+    "poetry",
+    "prophet",
+    "torah",
+    "wisdom"
+  ],
+  "intertext_tests": [
+    {
+      "actual": "explicit_quotation",
+      "confidence": "high",
+      "expected": "explicit_quotation",
+      "pass": true
+    },
+    {
+      "actual": "strong_allusion",
+      "confidence": "medium_high",
+      "expected": "strong_allusion",
+      "pass": true
+    },
+    {
+      "actual": "possible_echo",
+      "confidence": "medium",
+      "expected": "possible_echo",
+      "pass": true
+    },
+    {
+      "actual": "thematic_parallel",
+      "confidence": "medium_low",
+      "expected": "thematic_parallel",
+      "pass": true
+    }
+  ],
+  "policy": "Passing this exam demonstrates independent reading capability across the canon; it does not claim exhaustive interpretation of every passage.",
+  "required_capabilities": [
+    "canonical_location",
+    "original_language_surface",
+    "lemma",
+    "morphology",
+    "context_hierarchy",
+    "cross_witness_alignment",
+    "intertext_classification",
+    "provenance",
+    "uncertainty_boundary"
+  ],
+  "schema": "dore.scripture-reading-final-exam.v0.1",
+  "status": "PASS"
+}
