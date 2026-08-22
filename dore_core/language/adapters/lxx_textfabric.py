@@ -15,7 +15,7 @@ BOOK_MAP = {
     # retain them in lxx.ref.* until an explicit versification map exists.
     "Esth":"EST","Esther":"EST","Job":"JOB",
     "Ps":"PSA","Pss":"PSA","Psalm":"PSA","Psalms":"PSA","Prov":"PRO","Proverbs":"PRO",
-    "Eccl":"ECC","QOH":"ECC","Ecclesiastes":"ECC",
+    "Eccl":"ECC","Qoh":"ECC","QOH":"ECC","Ecclesiastes":"ECC",
     "Song":"SNG","Cant":"SNG","CANT":"SNG","Song of Songs":"SNG",
     "Isa":"ISA","Isaiah":"ISA","Jer":"JER","Jeremiah":"JER","Lam":"LAM","Lamentations":"LAM","Ezek":"EZK","Ezekiel":"EZK",
     "Dan":"DAN","Daniel":"DAN","Hos":"HOS","Hosea":"HOS","Joel":"JOL","Amos":"AMO","Obad":"OBA","Obadiah":"OBA",
