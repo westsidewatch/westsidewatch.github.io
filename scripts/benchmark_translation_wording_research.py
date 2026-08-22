@@ -9,7 +9,7 @@ CASES=[
 ("He shewed them the way.","He showed them the way.","spelling_modernization"),
 ("Jesus Christ our Lord","our Lord Jesus Christ","word_order_or_syntax"),
 ("In the beginning God created the heaven and the earth","In the beginning God created the heavens and the earth","lexical_choice"),
-("He went into the city and taught the people","He entered the city, teaching the people there","phrasing_or_expansion_compression"),
+("He went into the city and taught the people","He went into the city, teaching the people","phrasing_or_expansion_compression"),
 ]
 def main():
     rows=[]
