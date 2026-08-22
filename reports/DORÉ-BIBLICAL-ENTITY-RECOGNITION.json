@@ -1,0 +1,190 @@
+{
+  "boundary": "This checkpoint recognises evidence-bearing biblical proper-name identities. It does not yet graduate geography, chronology, historical reconstruction, or Biblical World as a whole.",
+  "capabilities_demonstrated": [
+    "individualised_same-name_entities",
+    "english_aliases",
+    "hebrew_aliases",
+    "greek_aliases",
+    "canonical_attestations",
+    "source_provenance",
+    "editorial_ai_prose_exclusion"
+  ],
+  "checkpoint": "BIBLICAL_ENTITY_RECOGNITION",
+  "counts": {
+    "aliases": 16331,
+    "ambiguous_surface_labels": 592,
+    "entities": 4154,
+    "other": 148,
+    "people": 3151,
+    "places": 1003,
+    "records": 4302,
+    "scripture_attestations": 30050
+  },
+  "failures": [
+    "entity_validation_errors:2"
+  ],
+  "milestone": false,
+  "product_relevance": {
+    "bible_search": "entity/person/place query foundation",
+    "subtitle_proofreader": "proper-name and transliteration disambiguation foundation"
+  },
+  "samples": [
+    {
+      "aliases": [
+        {
+          "kind": "preferred_source_label",
+          "language": "en",
+          "value": "Moses"
+        },
+        {
+          "kind": "source_form",
+          "language": "he",
+          "value": "מֹשֶׁה"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Moses"
+        },
+        {
+          "kind": "source_form",
+          "language": "he",
+          "value": "מְנַשֶּׁה"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Manasseh"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "Μωϋσῆς"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "Μωσῆς"
+        }
+      ],
+      "canonical_ref_count": 786,
+      "canonical_ref_sample": [
+        "bible.ref.EXO.2.10",
+        "bible.ref.EXO.2.11",
+        "bible.ref.EXO.2.14",
+        "bible.ref.EXO.2.15",
+        "bible.ref.EXO.2.17",
+        "bible.ref.EXO.2.21",
+        "bible.ref.EXO.3.1",
+        "bible.ref.EXO.3.3"
+      ],
+      "category": "PERSON",
+      "label": "Moses",
+      "source_unique_name": "Moses@Exo.2.10-Rev"
+    },
+    {
+      "aliases": [
+        {
+          "kind": "preferred_source_label",
+          "language": "en",
+          "value": "Aaron"
+        },
+        {
+          "kind": "source_form",
+          "language": "he",
+          "value": "אַהֲרֹן"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Aaron"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "Ἀαρών"
+        }
+      ],
+      "canonical_ref_count": 333,
+      "canonical_ref_sample": [
+        "bible.ref.EXO.4.14",
+        "bible.ref.EXO.4.27",
+        "bible.ref.EXO.4.28",
+        "bible.ref.EXO.4.29",
+        "bible.ref.EXO.4.30",
+        "bible.ref.EXO.5.1",
+        "bible.ref.EXO.5.4",
+        "bible.ref.EXO.5.20"
+      ],
+      "category": "PERSON",
+      "label": "Aaron",
+      "source_unique_name": "Aaron@Exo.4.14-Heb"
+    },
+    {
+      "aliases": [
+        {
+          "kind": "preferred_source_label",
+          "language": "en",
+          "value": "Akeldama"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "Ἀκελδαμά"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Akeldama"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Aceldama"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "αἷμα"
+        },
+        {
+          "kind": "source_form",
+          "language": "grc",
+          "value": "G0068H«G0068=ἀγρός"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Field of"
+        },
+        {
+          "kind": "translation_form",
+          "language": "en",
+          "value": "Blood"
+        }
+      ],
+      "canonical_ref_count": 4,
+      "canonical_ref_sample": [
+        "bible.ref.MAT.27.7",
+        "bible.ref.ACT.1.19",
+        "bible.ref.MAT.27.8",
+        "bible.ref.MAT.27.10"
+      ],
+      "category": "PLACE",
+      "label": "Akeldama",
+      "source_unique_name": "Akeldama@Mat.27.7-Act"
+    }
+  ],
+  "schema": "dore.biblical-entity-recognition-checkpoint.v0.1",
+  "source": {
+    "id": "STEPBible/TIPNR",
+    "license": "CC BY 4.0",
+    "raw_source_redistributed": false,
+    "snapshot": "efe428a0047bf7b9c3ce2624f60c252c6e435945"
+  },
+  "status": "FAIL",
+  "validation_errors": [
+    "missing_preferred_label",
+    "invalid_alias:bible.person.tipnr.8d74846b8584"
+  ]
+}
