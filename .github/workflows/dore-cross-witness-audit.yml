@@ -21,6 +21,9 @@ on:
       - 'scripts/build_cross_witness_correspondence_map.py'
       - 'scripts/benchmark_cross_witness_research.py'
       - 'scripts/run_cross_witness_research_graduation_gate.py'
+      - 'scripts/analyze_open_english_wording_differences.py'
+      - 'scripts/benchmark_translation_wording_research.py'
+      - 'scripts/run_why_versions_differ_full_graduation.py'
       - '.github/workflows/dore-cross-witness-audit.yml'
 permissions: {contents: write}
 jobs:
@@ -70,43 +73,49 @@ jobs:
       - name: Engineering graduation
         env: {PYTHONPATH: .}
         run: python scripts/run_cross_witness_graduation_gate.py
-      - name: Explain difference causes
+      - name: Explain reference-difference causes
         env: {PYTHONPATH: .}
         run: python scripts/research_cross_witness_difference_causes.py
       - name: Build correspondence map
         env: {PYTHONPATH: .}
         run: python scripts/build_cross_witness_correspondence_map.py
-      - name: Research benchmark
+      - name: Reference research benchmark
         env: {PYTHONPATH: .}
         run: python scripts/benchmark_cross_witness_research.py
-      - name: Why-versions-differ graduation
+      - name: Reference research graduation
         env: {PYTHONPATH: .}
         run: python scripts/run_cross_witness_research_graduation_gate.py
+      - name: Analyze aligned English wording differences
+        env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx, DORE_KJV_JSON: .cache/kjv/KJV.json}
+        run: python scripts/analyze_open_english_wording_differences.py
+      - name: Translation-wording benchmark
+        env: {PYTHONPATH: .}
+        run: python scripts/benchmark_translation_wording_research.py
+      - name: Full why-versions-differ graduation
+        env: {PYTHONPATH: .}
+        run: python scripts/run_why_versions_differ_full_graduation.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dore-why-versions-differ-graduation
+          name: dore-why-versions-differ-full-graduation
           path: |
             reports/inventories/*.json
-            reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json
-            reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json
-            reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
-            reports/DORÉ-CROSS-WITNESS-DIFFERENCE-CAUSES.json
-            reports/DORÉ-CROSS-WITNESS-CORRESPONDENCE-MAP.json
-            reports/DORÉ-CROSS-WITNESS-RESEARCH-BENCHMARK.json
-            reports/DORÉ-CROSS-WITNESS-RESEARCH-GRADUATION.json
+            reports/DORÉ-CROSS-WITNESS-*.json
+            reports/DORÉ-ENGLISH-WORDING-DIFFERENCES.json
+            reports/DORÉ-TRANSLATION-WORDING-RESEARCH-BENCHMARK.json
+            reports/DORÉ-WHY-VERSIONS-DIFFER-FULL-GRADUATION.json
       - name: Persist all graduation evidence
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-*.json
+          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-*.json reports/DORÉ-ENGLISH-WORDING-DIFFERENCES.json reports/DORÉ-TRANSLATION-WORDING-RESEARCH-BENCHMARK.json reports/DORÉ-WHY-VERSIONS-DIFFER-FULL-GRADUATION.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist why-versions-differ graduation evidence [skip ci]'
+            git commit -m 'chore(dore): persist full why-versions-differ graduation evidence [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin main
             done
-            echo 'failed to persist research graduation evidence after retries' >&2
+            echo 'failed to persist full graduation evidence after retries' >&2
             exit 1
           fi
