@@ -1,0 +1,40 @@
+{
+  "benchmark": {
+    "passed": 6,
+    "status": "PASS",
+    "total": 6
+  },
+  "boundary": "Graduation explains validated reference-level differences. Translation-wording differences remain a distinct downstream layer requiring aligned textual content; they are never inferred from numbering alone.",
+  "capability_statement": "Doré can distinguish reference differences caused by versification, canon/source scope, ancient textual traditions, New Testament textual-base differences, and witness-specific reference traditions, while preserving uncertainty and provenance.",
+  "cause_counts": {
+    "chapter_partition_difference": 54,
+    "expanded_ancient_text_tradition": 109,
+    "hebrew_or_critical_versification_boundary": 9,
+    "new_testament_textual_base_difference": 38,
+    "psalm_superscription_or_numbering": 1674,
+    "septuagint_source_versification": 331,
+    "shared_non_anchor_reference_tradition": 103,
+    "translation_versification_divergence": 804,
+    "vulgate_versification": 16
+  },
+  "confidence_counts": {
+    "high": 1837,
+    "medium": 804,
+    "medium_high": 497
+  },
+  "correspondence_clusters": 90,
+  "failures": [],
+  "family_counts": {
+    "textual_tradition": 38,
+    "textual_tradition_and_versification": 109,
+    "versification": 1753,
+    "versification_or_source_scope": 331,
+    "versification_or_textual_base": 804,
+    "versification_or_textual_tradition": 103
+  },
+  "generic_unclassified": 0,
+  "milestone": "WHY_VERSIONS_DIFFER_RESEARCH_GRADUATED",
+  "phenomena_explained": 3138,
+  "schema": "dore.cross-witness-research-graduation.v0.2",
+  "verdict": "PASS"
+}

@@ -1,0 +1,50 @@
+{
+  "passed": 6,
+  "results": [
+    {
+      "actual": "psalm_superscription_or_numbering",
+      "category": "anchor_only_reference",
+      "expected": "psalm_superscription_or_numbering",
+      "pass": true,
+      "ref": "bible.ref.PSA.12.9"
+    },
+    {
+      "actual": "chapter_partition_difference",
+      "category": "anchor_only_reference",
+      "expected": "chapter_partition_difference",
+      "pass": true,
+      "ref": "bible.ref.JOL.4.1"
+    },
+    {
+      "actual": "new_testament_textual_base_difference",
+      "category": "multi_witness_extra_reference_candidate",
+      "expected": "new_testament_textual_base_difference",
+      "pass": true,
+      "ref": "bible.ref.JHN.7.53"
+    },
+    {
+      "actual": "new_testament_textual_base_difference",
+      "category": "multi_witness_extra_reference_candidate",
+      "expected": "new_testament_textual_base_difference",
+      "pass": true,
+      "ref": "bible.ref.ACT.8.37"
+    },
+    {
+      "actual": "expanded_ancient_text_tradition",
+      "category": "multi_witness_extra_reference_candidate",
+      "expected": "expanded_ancient_text_tradition",
+      "pass": true,
+      "ref": "bible.ref.DAN.3.31"
+    },
+    {
+      "actual": "source_specific_identity",
+      "category": "source_specific_reference",
+      "expected": "source_specific_identity",
+      "pass": true,
+      "ref": "lxx.ref.1ESDR.1.1"
+    }
+  ],
+  "schema": "dore.cross-witness-research-benchmark.v0.1",
+  "status": "PASS",
+  "total": 6
+}
