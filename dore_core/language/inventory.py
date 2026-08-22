@@ -7,12 +7,15 @@ from .base import LanguageUnit, TextWitness
 
 
 def canonical_refs(units: Iterable[LanguageUnit]) -> list[str]:
-    return sorted({u.canonical_ref_id for u in units if u.canonical_ref_id})
+    """Return only refs already mapped into Doré's shared bible.ref namespace."""
+    return sorted({u.canonical_ref_id for u in units if u.canonical_ref_id and u.canonical_ref_id.startswith("bible.ref.")})
 
 
 def write_inventory(path: str | Path, witness: TextWitness, units: Iterable[LanguageUnit]) -> dict:
+    units = tuple(units)
     refs = canonical_refs(units)
-    books = sorted({ref.split(".")[2] for ref in refs if ref.startswith("bible.ref.")})
+    books = sorted({ref.split(".")[2] for ref in refs})
+    source_specific_refs = sorted({u.canonical_ref_id for u in units if u.canonical_ref_id and not u.canonical_ref_id.startswith("bible.ref.")})
     payload = {
         "schema": "dore.canonical-inventory.v0.1",
         "witness_id": witness.witness_id,
@@ -24,6 +27,8 @@ def write_inventory(path: str | Path, witness: TextWitness, units: Iterable[Lang
         "book_ids": books,
         "canonical_ref_count": len(refs),
         "canonical_refs": refs,
+        "source_specific_ref_count": len(source_specific_refs),
+        "source_specific_ref_sample": source_specific_refs[:100],
     }
     target = Path(path)
     target.parent.mkdir(parents=True, exist_ok=True)
