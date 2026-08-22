@@ -1,1 +1,20 @@
-{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx":"failure"}
+{
+  "error": "'NoneType' object has no attribute 'F'",
+  "error_type": "AttributeError",
+  "snapshot": "4829f3746c84d75576702498e75a68856358f289",
+  "status": "INFRA_FAIL",
+  "study": "language_core.lxx.full_witness_ingestion",
+  "traceback": [
+    "Traceback (most recent call last):",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/scripts/ingest_lxx_language_core.py\", line 55, in main",
+    "    result = run()",
+    "             ^^^^^",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/scripts/ingest_lxx_language_core.py\", line 32, in run",
+    "    units = tuple(adapter.ingest(app, witness))",
+    "            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/dore_core/language/adapters/lxx_textfabric.py\", line 51, in ingest",
+    "    F, T = api.F, api.T",
+    "           ^^^^^",
+    "AttributeError: 'NoneType' object has no attribute 'F'"
+  ]
+}
