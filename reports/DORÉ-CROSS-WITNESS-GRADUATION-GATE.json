@@ -6,25 +6,18 @@
     "translation_reference_divergence": 1661
   },
   "engineering_failures": [
-    "missing_expected_witness:witness.original.oshb",
-    "missing_expected_witness:witness.original.morphgnt_sblgnt",
-    "missing_expected_witness:witness.lxx.rahlfs1935.centerblc",
-    "missing_expected_witness:witness.latin.vulgate.bible_api_io",
-    "missing_expected_witness:witness.chinese.cuv.traditional.1919",
-    "missing_expected_witness:witness.english.webu",
-    "missing_expected_witness:bible.asv.1901",
-    "missing_expected_witness:bible.kjv.1769"
+    "scope_mismatch:witness.lxx.rahlfs1935.centerblc:36!=37"
   ],
-  "engineering_suspect_count": 8,
+  "engineering_suspect_count": 1,
   "milestone": "CROSS_WITNESS_GRADUATION_FAILED",
   "research_boundary": "Single-witness, anchor-only, multi-witness, translation-divergence and source-specific reference patterns are not automatically engineering defects or textual judgments.",
   "research_exception_count": 3138,
   "rules": {
-    "FAIL": "pipeline, inventory, canonical-scope, or identity invariant failed",
+    "FAIL": "pipeline, inventory, canonical-scope, identity, or audit-shape invariant failed",
     "PASS": "all ingestion/inventory/alignment invariants pass and no structural reference exceptions remain",
     "RESEARCH_EXCEPTIONS_ONLY": "engineering invariants pass; all remaining reference differences are preserved as research phenomena"
   },
-  "schema": "dore.cross-witness-graduation-gate.v0.2",
+  "schema": "dore.cross-witness-graduation-gate.v0.3",
   "scope_invariants": {
     "expected": {
       "bible.asv.1901": 66,
@@ -36,7 +29,16 @@
       "witness.original.morphgnt_sblgnt": 27,
       "witness.original.oshb": 39
     },
-    "observed": {}
+    "observed": {
+      "bible.asv.1901": 66,
+      "bible.kjv.1769": 66,
+      "witness.chinese.cuv.traditional.1919": 66,
+      "witness.english.webu": 66,
+      "witness.latin.vulgate.bible_api_io": 66,
+      "witness.lxx.rahlfs1935.centerblc": 36,
+      "witness.original.morphgnt_sblgnt": 27,
+      "witness.original.oshb": 39
+    }
   },
   "verdict": "FAIL"
 }
