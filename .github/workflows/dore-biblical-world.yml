@@ -6,47 +6,57 @@ on:
       - 'dore_core/world/**'
       - 'dore-core/knowledge/foundation/biblical-world/**'
       - 'scripts/run_biblical_entity_recognition_checkpoint.py'
+      - 'scripts/run_biblical_geography_checkpoint.py'
       - '.github/workflows/dore-biblical-world.yml'
 permissions:
   contents: write
 jobs:
-  entity-recognition:
+  foundation:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Fetch pinned STEPBible TIPNR witness only
+      - name: Fetch pinned educational witnesses
         run: |
-          mkdir -p .cache/stepbible
+          mkdir -p .cache/stepbible .cache/openbible
           python - <<'PY'
           from pathlib import Path
           from urllib.request import urlopen
-          url='https://raw.githubusercontent.com/STEPBible/STEPBible-Data/efe428a0047bf7b9c3ce2624f60c252c6e435945/Proper%20Nouns/TIPNR%20-%20Translators%20Individualised%20Proper%20Names%20with%20all%20References%20-%20STEPBible.org%20CC%20BY.txt'
-          target=Path('.cache/stepbible/TIPNR.txt')
-          with urlopen(url,timeout=120) as r: target.write_bytes(r.read())
-          assert target.stat().st_size > 8_000_000
-          print({'TIPNR_bytes':target.stat().st_size})
+          files={
+            Path('.cache/stepbible/TIPNR.txt'):'https://raw.githubusercontent.com/STEPBible/STEPBible-Data/efe428a0047bf7b9c3ce2624f60c252c6e435945/Proper%20Nouns/TIPNR%20-%20Translators%20Individualised%20Proper%20Names%20with%20all%20References%20-%20STEPBible.org%20CC%20BY.txt',
+            Path('.cache/openbible/ancient.jsonl'):'https://raw.githubusercontent.com/openbibleinfo/Bible-Geocoding-Data/7eb18a5ee62f27b9b93bd6689ea272d76dd23b8f/data/ancient.jsonl'}
+          for target,url in files.items():
+            with urlopen(url,timeout=120) as r:target.write_bytes(r.read())
+            assert target.stat().st_size>1_000_000
+            print(target,target.stat().st_size)
           PY
-      - name: Run Biblical Entity Recognition checkpoint
+      - name: Biblical Entity Recognition checkpoint
         env:
           PYTHONPATH: .
           DORE_TIPNR_FILE: .cache/stepbible/TIPNR.txt
         run: python scripts/run_biblical_entity_recognition_checkpoint.py
+      - name: Biblical Geography checkpoint
+        env:
+          PYTHONPATH: .
+          DORE_OPENBIBLE_ANCIENT: .cache/openbible/ancient.jsonl
+        run: python scripts/run_biblical_geography_checkpoint.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dore-biblical-entity-recognition
-          path: reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json
+          name: dore-biblical-world-checkpoints
+          path: |
+            reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json
+            reports/DORÉ-BIBLICAL-GEOGRAPHY.json
       - name: Persist educational checkpoint evidence
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json 2>/dev/null || true
+          git add reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json reports/DORÉ-BIBLICAL-GEOGRAPHY.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist Biblical Entity Recognition evidence [skip ci]'
+            git commit -m 'chore(dore): persist Biblical World checkpoint evidence [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin main
