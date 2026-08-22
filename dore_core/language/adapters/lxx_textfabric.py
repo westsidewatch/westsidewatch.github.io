@@ -46,8 +46,11 @@ class LXXTextFabricAdapter:
         slug = re.sub(r"[^A-Za-z0-9]+", "_", str(book)).strip("_").upper() or "UNKNOWN"
         return f"lxx.ref.{slug}.{chapter}.{verse}"
 
-    def ingest(self, app: Any, witness: TextWitness) -> Iterable[LanguageUnit]:
-        api = app.api
+    def ingest(self, app_or_api: Any, witness: TextWitness) -> Iterable[LanguageUnit]:
+        # Accept either a Text-Fabric app (with .api) or a loaded API directly.
+        api = getattr(app_or_api, "api", None) or app_or_api
+        if api is None or not hasattr(api, "F") or not hasattr(api, "T"):
+            raise ValueError("LXX Text-Fabric API is not loaded")
         F, T = api.F, api.T
         orders: dict[str, int] = defaultdict(int)
         for node in F.otype.s("word"):
