@@ -44,8 +44,6 @@ def canon_book(value: Any) -> str | None:
     direct = BOOK_ALIASES.get(low)
     if direct:
         return direct
-    # TEI headings are verbose (for example, "The First Book of Moses:
-    # Called Genesis"). Prefer the longest unambiguous canonical name found.
     matches = [(len(name), code) for name, code in BOOK_ALIASES.items()
                if re.search(rf"(?<![a-z]){re.escape(name)}(?![a-z])", low)]
     if matches:
@@ -100,13 +98,14 @@ def tei_units(data: dict[str, Any], witness: TextWitness):
     books = tei_book_nodes(data)
     if not books:
         return
+    canonical_order = len(books) == len(CANON_66)
     for book_index, node in enumerate(books):
         heading = ((node.get("front") or {}).get("head") if isinstance(node.get("front"), dict) else None)
-        book = canon_book(heading)
-        # The pinned source is Protestant-canon KJV in canonical order. Heading
-        # parsing is primary; order is a guarded fallback for verbose headings.
-        if not book and len(books) == len(CANON_66):
-            book = CANON_66[book_index]
+        # The pinned KJV source is exactly the 66-book Protestant canon in canonical
+        # order. Use that stable order as authoritative for this pinned witness;
+        # verbose headings remain diagnostic only because names such as "John"
+        # collide with 1/2/3 John and previously produced duplicate refs.
+        book = CANON_66[book_index] if canonical_order else canon_book(heading)
         if not book:
             continue
         body = node.get("body")
@@ -124,9 +123,7 @@ def tei_units(data: dict[str, Any], witness: TextWitness):
             for verse_number, text in enumerate(verses, 1):
                 if not isinstance(text, str):
                     continue
-                yield from emit_text_units(
-                    text, witness, f"bible.ref.{book}.{chapter_number}.{verse_number}"
-                )
+                yield from emit_text_units(text, witness, f"bible.ref.{book}.{chapter_number}.{verse_number}")
 
 
 def nested_units(data: Any, witness: TextWitness):
