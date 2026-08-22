@@ -8,18 +8,19 @@ from dore_core.readers.original_language import (
 
 class OriginalLanguageReaderTests(unittest.TestCase):
     def test_matthew_1_1_greek_token(self):
-        token = parse_morphgnt_line("610101 N- ----NSF- Βίβλος Βίβλος βίβλος", 1)
+        token = parse_morphgnt_line("010101 N- ----NSF- Βίβλος Βίβλος βίβλος βίβλος", 1)
         self.assertEqual(token.canonical_ref_id, "bible.ref.MAT.1.1")
         self.assertEqual(token.surface, "Βίβλος")
+        self.assertEqual(token.normalized, "βίβλος")
         self.assertEqual(token.analyses[-1].value, "βίβλος")
         self.assertEqual(validate_token(token), [])
 
     def test_revelation_mapping_exists(self):
-        token = parse_morphgnt_line("870101 N- ----NSF- Ἀποκάλυψις Ἀποκάλυψις ἀποκάλυψις", 1)
+        token = parse_morphgnt_line("270101 N- ----NSF- Ἀποκάλυψις Ἀποκάλυψις ἀποκάλυψις ἀποκάλυψις", 1)
         self.assertEqual(token.canonical_ref_id, "bible.ref.REV.1.1")
 
     def test_missing_textual_provenance_fails(self):
-        token = parse_morphgnt_line("610101 N- ----NSF- Βίβλος Βίβλος βίβλος", 1)
+        token = parse_morphgnt_line("010101 N- ----NSF- Βίβλος Βίβλος βίβλος βίβλος", 1)
         token.textual_source_id = ""
         self.assertIn("missing_textual_provenance", validate_token(token))
 
