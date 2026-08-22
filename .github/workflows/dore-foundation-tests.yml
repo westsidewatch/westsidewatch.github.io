@@ -29,8 +29,13 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run Doré Foundation unit tests
+        id: unit_tests
+        continue-on-error: true
         run: python -m unittest discover -s tests -v
       - name: Read real pinned biblical corpora
+        id: corpus_reading
+        if: always()
+        continue-on-error: true
         run: python scripts/ingest_pinned_corpora.py
       - name: Upload Doré corpus reading report
         if: always()
@@ -44,15 +49,18 @@ jobs:
         if: always() && github.event_name == 'push'
         run: |
           if [ ! -f reports/DORÉ-CORPUS-READING-REPORT.json ]; then
-            echo 'No corpus report produced; nothing to persist.'
-            exit 0
+            mkdir -p reports
+            printf '{"status":"INFRA_FAIL","error":"corpus report was not produced","unit_tests":"%s","corpus_reading":"%s"}\n' "${{ steps.unit_tests.outcome }}" "${{ steps.corpus_reading.outcome }}" > reports/DORÉ-CORPUS-READING-REPORT.json
           fi
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
           git add reports/DORÉ-CORPUS-READING-REPORT.json
-          if git diff --cached --quiet; then
-            echo 'Corpus report unchanged.'
-            exit 0
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): persist corpus reading report [skip ci]'
+            git push
           fi
-          git commit -m 'chore(dore): persist corpus reading report'
-          git push
+      - name: Enforce Doré Foundation result
+        if: always()
+        run: |
+          test "${{ steps.unit_tests.outcome }}" = "success"
+          test "${{ steps.corpus_reading.outcome }}" = "success"
