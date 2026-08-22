@@ -2,6 +2,7 @@
 """Ingest the full CenterBLC Rahlfs 1935 LXX witness through Doré Language Core."""
 from __future__ import annotations
 import json
+import traceback
 from collections import Counter
 from pathlib import Path
 from tf.app import use
@@ -11,8 +12,12 @@ from dore_core.language.adapters.lxx_textfabric import LXXTextFabricAdapter
 SNAPSHOT = "4829f3746c84d75576702498e75a68856358f289"
 OUT = Path("reports/DORÉ-LXX-INGESTION.json")
 
-def main() -> None:
-    # Text-Fabric downloads the public repository data; the corpus itself is not vendored into Doré.
+def write_result(result: dict) -> None:
+    OUT.parent.mkdir(parents=True, exist_ok=True)
+    OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
+    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+
+def run() -> dict:
     app = use("CenterBLC/LXX", version="1935", checkout=SNAPSHOT, silent="deep")
     witness = TextWitness(
         witness_id="witness.lxx.rahlfs1935.centerblc",
@@ -30,7 +35,7 @@ def main() -> None:
     lemma_units = sum(any(k == "lemma" and v for k, v in u.analyses) for u in units)
     morphology_units = sum(any(k == "morphology" and v for k, v in u.analyses) for u in units)
     translit_units = sum(any(k == "transliteration" and v for k, v in u.analyses) for u in units)
-    result = {
+    return {
         "status":"PASS" if units and not errors else "FAIL",
         "study":"language_core.lxx.full_witness_ingestion",
         "witness_id":witness.witness_id,
@@ -44,9 +49,20 @@ def main() -> None:
         "validation_errors":errors[:100],
         "source_policy":"remote pinned witness; no full corpus vendored into Doré repository",
     }
-    OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
-    print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+
+def main() -> None:
+    try:
+        result = run()
+    except Exception as exc:
+        result = {
+            "status":"INFRA_FAIL",
+            "study":"language_core.lxx.full_witness_ingestion",
+            "snapshot":SNAPSHOT,
+            "error_type":type(exc).__name__,
+            "error":str(exc),
+            "traceback":traceback.format_exc().splitlines()[-20:],
+        }
+    write_result(result)
     if result["status"] != "PASS":
         raise AssertionError(result)
 
