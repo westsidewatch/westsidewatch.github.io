@@ -7,6 +7,7 @@ on:
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
       - 'scripts/ingest_lxx_language_core.py'
+      - 'scripts/ingest_vulgate_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   pull_request:
     paths:
@@ -14,6 +15,7 @@ on:
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
       - 'scripts/ingest_lxx_language_core.py'
+      - 'scripts/ingest_vulgate_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   workflow_dispatch:
 
@@ -54,6 +56,13 @@ jobs:
           PYTHONPATH: .
           DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935
         run: python scripts/ingest_lxx_language_core.py
+      - name: Ingest complete Latin Vulgate witness
+        id: vulgate
+        if: always()
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+        run: python scripts/ingest_vulgate_language_core.py
       - name: Ensure reports exist
         if: always()
         run: |
@@ -64,6 +73,9 @@ jobs:
           if [ ! -f reports/DORÉ-LXX-INGESTION.json ]; then
             printf '{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx_source":"%s","lxx":"%s"}\n' "${{ steps.lxx_source.outcome }}" "${{ steps.lxx.outcome }}" > reports/DORÉ-LXX-INGESTION.json
           fi
+          if [ ! -f reports/DORÉ-VULGATE-INGESTION.json ]; then
+            printf '{"status":"INFRA_FAIL","error":"Vulgate ingestion report was not produced","vulgate":"%s"}\n' "${{ steps.vulgate.outcome }}" > reports/DORÉ-VULGATE-INGESTION.json
+          fi
       - name: Upload language-core reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -72,13 +84,14 @@ jobs:
           path: |
             reports/DORÉ-LANGUAGE-CORE-PARITY.json
             reports/DORÉ-LXX-INGESTION.json
+            reports/DORÉ-VULGATE-INGESTION.json
           retention-days: 30
       - name: Persist language-core reports
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json reports/DORÉ-LXX-INGESTION.json
+          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json reports/DORÉ-LXX-INGESTION.json reports/DORÉ-VULGATE-INGESTION.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): persist language core reports [skip ci]'
             git push
@@ -89,3 +102,4 @@ jobs:
           test "${{ steps.parity.outcome }}" = "success"
           test "${{ steps.lxx_source.outcome }}" = "success"
           test "${{ steps.lxx.outcome }}" = "success"
+          test "${{ steps.vulgate.outcome }}" = "success"
