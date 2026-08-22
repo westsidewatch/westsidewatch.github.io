@@ -1,0 +1,61 @@
+version: 0.1
+status: foundation_in_progress
+purpose: >-
+  Candidate source registry for Doré Course 01. Inclusion here authorizes evaluation,
+  not automatic ingestion or promotion to canonical truth.
+
+sources:
+  - id: stepbible_data
+    name: STEPBible Data
+    organization: STEPBible.org
+    origin_note: Data initially created with Tyndale House Cambridge and now curated by STEPBible.org.
+    source_url: https://github.com/STEPBible/STEPBible-Data
+    candidate_uses:
+      - original_language_tagged_text
+      - lexicons
+      - morphology
+      - proper_names
+      - references
+      - versification
+    repository_license_claim: CC BY 4.0
+    ingestion_rule: verify_individual_dataset_metadata
+    attribution_required: true
+    status: approved_for_evaluation
+
+  - id: oshb
+    name: Open Scriptures Hebrew Bible
+    organization: Open Scriptures
+    source_url: https://github.com/openscriptures/morphhb
+    candidate_uses:
+      - hebrew_text
+      - hebrew_lemmas
+      - hebrew_morphology
+      - stable_word_ids
+    rights:
+      base_wlc_text: public_domain
+      lemma_morphology: CC BY 4.0
+    attribution_required: true
+    status: approved_for_evaluation
+
+  - id: morphgnt_sblgnt
+    name: MorphGNT SBLGNT
+    organization: MorphGNT / SBL
+    source_url: https://github.com/morphgnt/sblgnt
+    candidate_uses:
+      - greek_nt_text
+      - greek_lemmas
+      - greek_morphology
+    rights:
+      morphology_lemmatization: CC-BY-SA
+      sblgnt_text: separate_SBLGNT_terms
+    attribution_required: true
+    ingestion_rule: preserve_component_level_rights_and_provenance
+    status: approved_for_evaluation
+
+principles:
+  - source_registry_is_not_truth_registry
+  - preserve_component_level_licenses
+  - preserve_dataset_version_or_retrieval_date
+  - distinguish_text_from_analysis
+  - never_remove_attribution_during_normalization
+  - derived_corrections_require_provenance
