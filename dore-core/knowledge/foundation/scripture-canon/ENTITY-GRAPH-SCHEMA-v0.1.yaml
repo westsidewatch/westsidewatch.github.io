@@ -1,0 +1,118 @@
+schema_version: dore.entity_graph.v0.1
+status: foundation
+
+entity_types:
+  - person
+  - place
+  - people_group
+  - kingdom_or_polity
+  - office_or_role
+  - event
+  - artifact_or_object
+  - institution
+  - genealogical_line
+
+claim_classes:
+  - TEXT_EXPLICIT
+  - TEXTUAL_DATA
+  - SCHOLARLY_INFERENCE
+  - TRADITIONAL_INTERPRETATION
+  - EDITORIAL_NORMALIZATION
+
+relation_types:
+  genealogical:
+    - parent_of
+    - child_of
+    - ancestor_of
+    - descendant_of
+    - spouse_of
+    - sibling_of
+  political_and_role:
+    - ruler_of
+    - priest_of
+    - prophet_to
+    - apostle_of
+    - member_of
+    - associated_with
+  geographic:
+    - born_at
+    - lived_at
+    - traveled_to
+    - died_at
+    - event_at
+  temporal:
+    - preceded
+    - succeeded
+    - contemporary_with
+  naming:
+    - named_as
+    - renamed_as
+  event:
+    - participant_in
+    - caused
+    - resulted_in
+  textual:
+    - explicit_quote
+    - explicit_citation_formula
+    - strong_allusion
+    - probable_allusion
+    - lexical_echo
+    - thematic_parallel
+    - typological_reading
+    - traditional_connection
+
+entity_contract:
+  required_fields:
+    - id
+    - type
+    - preferred_label
+    - attestations
+  optional_fields:
+    - aliases
+    - language_forms
+    - temporal_scope
+    - geographic_metadata
+    - notes
+    - dispute_status
+
+claim_contract:
+  required_fields:
+    - id
+    - subject_id
+    - predicate
+    - claim_class
+    - references
+    - provenance
+  optional_fields:
+    - object_id
+    - literal_value
+    - confidence
+    - dispute_status
+    - temporal_scope
+    - note
+
+identity_rules:
+  - id: E001
+    statement: Shared surface name does not imply shared entity identity.
+  - id: E002
+    statement: Multiple names may refer to one entity only when evidence supports the mapping.
+  - id: E003
+    statement: Traditional harmonization never silently upgrades to TEXT_EXPLICIT.
+  - id: E004
+    statement: Geographic coordinates are scholarly metadata and require provenance.
+  - id: E005
+    statement: Genealogical omissions or compressed generations must remain representable.
+  - id: E006
+    statement: Disputed identity remains disputed until evidence justifies resolution.
+
+intertext_rules:
+  - id: I001
+    statement: Explicit quotation and probable allusion are distinct relation classes.
+  - id: I002
+    statement: Lexical overlap alone does not prove quotation.
+  - id: I003
+    statement: New Testament use of an Old Testament text retains both source and target references.
+  - id: I004
+    statement: Witness differences relevant to a quotation must not be erased.
+  - id: I005
+    statement: Typological readings must identify whether they are text-explicit or interpretive.
