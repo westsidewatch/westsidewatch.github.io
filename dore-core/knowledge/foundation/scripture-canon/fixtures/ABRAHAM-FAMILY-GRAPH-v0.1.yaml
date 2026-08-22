@@ -1,0 +1,170 @@
+fixture_version: dore.entity_graph.fixture.v0.1
+status: training
+scope: Abraham-Isaac-Jacob foundation graph
+
+entities:
+  - id: person.abraham
+    type: person
+    preferred_label: Abraham
+    aliases: [Abram]
+    attestations: [GEN.11.26, GEN.17.5]
+  - id: person.sarah
+    type: person
+    preferred_label: Sarah
+    aliases: [Sarai]
+    attestations: [GEN.11.29, GEN.17.15]
+  - id: person.isaac
+    type: person
+    preferred_label: Isaac
+    attestations: [GEN.17.19, GEN.21.3]
+  - id: person.rebekah
+    type: person
+    preferred_label: Rebekah
+    attestations: [GEN.24.15, GEN.24.67]
+  - id: person.jacob
+    type: person
+    preferred_label: Jacob
+    aliases: [Israel]
+    attestations: [GEN.25.26, GEN.32.28]
+  - id: person.esau
+    type: person
+    preferred_label: Esau
+    attestations: [GEN.25.25]
+  - id: place.ur_chaldeans
+    type: place
+    preferred_label: Ur of the Chaldeans
+    attestations: [GEN.11.31]
+  - id: place.haran
+    type: place
+    preferred_label: Haran
+    attestations: [GEN.11.31, GEN.12.4]
+  - id: place.canaan
+    type: place
+    preferred_label: Canaan
+    attestations: [GEN.12.5]
+  - id: place.bethel
+    type: place
+    preferred_label: Bethel
+    attestations: [GEN.12.8, GEN.28.19]
+  - id: event.abraham_call
+    type: event
+    preferred_label: Call of Abram
+    attestations: [GEN.12.1]
+  - id: event.binding_isaac
+    type: event
+    preferred_label: Binding of Isaac
+    attestations: [GEN.22.1, GEN.22.9]
+
+claims:
+  - id: claim.abraham_spouse_sarah
+    subject_id: person.abraham
+    predicate: spouse_of
+    object_id: person.sarah
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.11.29]
+    provenance: [scripture.genesis]
+  - id: claim.abraham_parent_isaac
+    subject_id: person.abraham
+    predicate: parent_of
+    object_id: person.isaac
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.21.3]
+    provenance: [scripture.genesis]
+  - id: claim.sarah_parent_isaac
+    subject_id: person.sarah
+    predicate: parent_of
+    object_id: person.isaac
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.21.2, GEN.21.3]
+    provenance: [scripture.genesis]
+  - id: claim.isaac_spouse_rebekah
+    subject_id: person.isaac
+    predicate: spouse_of
+    object_id: person.rebekah
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.24.67]
+    provenance: [scripture.genesis]
+  - id: claim.isaac_parent_jacob
+    subject_id: person.isaac
+    predicate: parent_of
+    object_id: person.jacob
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.25.26]
+    provenance: [scripture.genesis]
+  - id: claim.rebekah_parent_jacob
+    subject_id: person.rebekah
+    predicate: parent_of
+    object_id: person.jacob
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.25.21, GEN.25.26]
+    provenance: [scripture.genesis]
+  - id: claim.isaac_parent_esau
+    subject_id: person.isaac
+    predicate: parent_of
+    object_id: person.esau
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.25.25, GEN.25.26]
+    provenance: [scripture.genesis]
+  - id: claim.jacob_sibling_esau
+    subject_id: person.jacob
+    predicate: sibling_of
+    object_id: person.esau
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.25.24, GEN.25.26]
+    provenance: [scripture.genesis]
+  - id: claim.abram_renamed_abraham
+    subject_id: person.abraham
+    predicate: renamed_as
+    literal_value: Abraham
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.17.5]
+    provenance: [scripture.genesis]
+  - id: claim.sarai_renamed_sarah
+    subject_id: person.sarah
+    predicate: renamed_as
+    literal_value: Sarah
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.17.15]
+    provenance: [scripture.genesis]
+  - id: claim.jacob_renamed_israel
+    subject_id: person.jacob
+    predicate: renamed_as
+    literal_value: Israel
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.32.28]
+    provenance: [scripture.genesis]
+  - id: claim.abraham_call_participant
+    subject_id: person.abraham
+    predicate: participant_in
+    object_id: event.abraham_call
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.12.1, GEN.12.4]
+    provenance: [scripture.genesis]
+  - id: claim.abraham_haran
+    subject_id: person.abraham
+    predicate: lived_at
+    object_id: place.haran
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.11.31, GEN.12.4]
+    provenance: [scripture.genesis]
+  - id: claim.abraham_canaan
+    subject_id: person.abraham
+    predicate: traveled_to
+    object_id: place.canaan
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.12.5]
+    provenance: [scripture.genesis]
+  - id: claim.jacob_bethel
+    subject_id: person.jacob
+    predicate: event_at
+    object_id: place.bethel
+    claim_class: TEXT_EXPLICIT
+    references: [GEN.28.19]
+    provenance: [scripture.genesis]
+
+training_notes:
+  - Abram and Abraham are modeled as one entity because Genesis explicitly records the renaming.
+  - Sarai and Sarah are modeled as one entity for the same reason.
+  - Jacob and Israel are modeled as one entity because the text explicitly supplies the new name.
+  - No geographic coordinates are supplied: coordinates would be scholarly metadata requiring separate provenance.
+  - The fixture intentionally begins small; graph expansion must preserve evidence per edge.
