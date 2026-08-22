@@ -19,6 +19,16 @@
 (() => {
   "use strict";
 
+  const coverPortals=document.querySelector(".cover-portals");
+  if(coverPortals&&!coverPortals.querySelector(".dore-search-mark")){
+    const dore=document.createElement("a");
+    dore.className="dore-search-mark";
+    dore.href="/dore/";
+    dore.setAttribute("aria-label","Doré Bible Search 聖經搜索");
+    dore.innerHTML='<span>DORÉ</span><strong>BIBLE SEARCH</strong><i>聖經搜索</i>';
+    coverPortals.prepend(dore);
+  }
+
   const scriptureTrigger=document.getElementById("open-scripture");
   if(scriptureTrigger){
     const staticScripture=document.createElement("div");
@@ -29,13 +39,13 @@
     document.getElementById("light-reading")?.remove();
   }
 
-  /* Cross-origin scripture resilience.
-   * We cannot inspect YouVersion's iframe DOM, so an application-level error does
-   * not surface as iframe.onerror. Instead each freshly rendered chapter receives
-   * a unique navigation URL, plus a manual reload that rebuilds only that frame.
-   */
   const scriptureStyle=document.createElement("style");
   scriptureStyle.textContent=`
+    .dore-search-mark{display:grid;justify-items:center;gap:.08rem;color:inherit;text-decoration:none;min-width:8.5rem;opacity:.9}
+    .dore-search-mark span{color:var(--dawn,#c7a858);font:500 1.5rem/1 "Cormorant Garamond",serif;letter-spacing:.12em}
+    .dore-search-mark strong{font:500 .64rem/1.2 "Cormorant Garamond",serif;letter-spacing:.16em}
+    .dore-search-mark i{font:normal .65rem/1.2 "Noto Serif TC",serif;letter-spacing:.12em}
+    .dore-search-mark:hover,.dore-search-mark:focus-visible{opacity:.62}
     .one-scripture-reload{
       margin-left:.65rem;
       padding:0;
@@ -145,12 +155,6 @@
   });
   observer.observe(list,{attributes:true,attributeFilter:["class"]});
 
-  /* one-app owns drag suppression and marks a suppressed post-drag click as
-   * defaultPrevented. For a genuine pointer click on a non-current book, one-app's
-   * target listener first starts the settle animation and returns. This bubbling
-   * listener then completes that same user action through the canonical selector.
-   * This removes the old timer/synthetic-click race that could leave books inert.
-   */
   list.addEventListener("click",event=>{
     if(event.defaultPrevented||event.detail===0)return;
     const item=event.target.closest(".cover-book");
