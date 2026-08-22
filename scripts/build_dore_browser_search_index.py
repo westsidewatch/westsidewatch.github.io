@@ -6,7 +6,7 @@ language lemma and morphology inverted indexes. It contains no restricted Bible
 corpora and preserves source/snapshot metadata for every layer.
 """
 from __future__ import annotations
-import json, re, subprocess
+import json, subprocess
 from collections import defaultdict
 from pathlib import Path
 from urllib.request import urlopen
@@ -42,15 +42,15 @@ def fetch(url: str) -> str:
     with urlopen(url,timeout=90) as r:return r.read().decode('utf-8')
 
 def verse_text(units):
-    grouped=defaultdict(list)
+    grouped=defaultdict(list); languages={}
     for u in units:
-        if u.canonical_ref_id: grouped[u.canonical_ref_id].append((u.order,u.surface))
+        if u.canonical_ref_id:
+            grouped[u.canonical_ref_id].append((u.order,u.surface))
+            languages.setdefault(u.canonical_ref_id,u.language)
     out={}
     for ref,parts in grouped.items():
-        # English tokens need spaces; Han punctuation/source units are safe joined without inserted spaces.
-        lang=next((u.language for u in units if u.canonical_ref_id==ref), '')
         ordered=[x[1] for x in sorted(parts)]
-        out[ref]=(' ' if lang.startswith('en') else '').join(ordered)
+        out[ref]=(' ' if languages.get(ref,'').startswith('en') else '').join(ordered)
     return out
 
 def compact_refs(refs): return sorted(set(refs))
@@ -60,8 +60,7 @@ def main():
     clone(WEBU_REPO,WEBU_SHA,webu_dir); clone(CUV_REPO,CUV_SHA,cuv_dir)
     webu_source=json.loads((webu_dir/'json/complete-bible.json').read_text(encoding='utf-8'))
     webu_w=TextWitness('witness.english.webu','en','WEBU','ringletech/webu-open-bible',WEBU_SHA,'CC0-1.0')
-    webu_units=list(VerseListJSONAdapter('en').ingest(webu_source,webu_w))
-    webu=verse_text(webu_units)
+    webu_units=list(VerseListJSONAdapter('en').ingest(webu_source,webu_w)); webu=verse_text(webu_units)
     cuv_w=TextWitness('witness.chinese.cuv.traditional.1919','zh-Hant','CUV Traditional','midvash/bible-data',CUV_SHA,'public-domain')
     cuv_adapter=MidvashBookJSONAdapter(language='zh-Hant'); cuv_units=[]
     for p in sorted((cuv_dir/'versions/zh/cuv/books').glob('*.json')):
@@ -84,8 +83,7 @@ def main():
                 if a.type=='lemma': lemma[a.value].append(t.canonical_ref_id)
                 elif a.type=='morphology': morph[a.value].append(t.canonical_ref_id)
 
-    refs=sorted(set(webu)|set(cuv))
-    verses=[]
+    refs=sorted(set(webu)|set(cuv)); verses=[]
     for ref in refs:
         parts=ref.split('.'); book,ch,v=parts[2],int(parts[3]),int(parts[4]); names=BOOK_NAMES.get(book,[book,book])
         verses.append({'r':ref,'b':book,'c':ch,'v':v,'z':cuv.get(ref,''),'e':webu.get(ref,''),'n':names})
@@ -99,8 +97,7 @@ def main():
       'verses':verses,
       'lemma':{k:compact_refs(v) for k,v in sorted(lemma.items())},
       'morphology':{k:compact_refs(v) for k,v in sorted(morph.items())},
-      'original_surface':{k:compact_refs(v) for k,v in sorted(original_surface.items())},
-    }
+      'original_surface':{k:compact_refs(v) for k,v in sorted(original_surface.items())}}
     OUT.parent.mkdir(parents=True,exist_ok=True)
     OUT.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':')),encoding='utf-8')
     print(json.dumps({'status':'PASS','verses':len(verses),'lemmas':len(payload['lemma']),'morphologies':len(payload['morphology']),'surfaces':len(payload['original_surface']),'bytes':OUT.stat().st_size},ensure_ascii=False))
