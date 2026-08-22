@@ -1,10 +1,12 @@
-name: Doré Cross-Witness Graduation Gate
+name: Doré Why Versions Differ Graduation
 on:
   workflow_dispatch:
   push:
     paths:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
+      - 'dore_core/research/**'
+      - 'docs/dore/TEXTUAL-DIFFERENCE-RESEARCH-v0.1.md'
       - 'scripts/ingest_pinned_corpora.py'
       - 'scripts/ingest_lxx_language_core.py'
       - 'scripts/ingest_vulgate_language_core.py'
@@ -15,10 +17,14 @@ on:
       - 'scripts/run_cross_witness_alignment_audit.py'
       - 'scripts/triage_cross_witness_exceptions.py'
       - 'scripts/run_cross_witness_graduation_gate.py'
+      - 'scripts/research_cross_witness_difference_causes.py'
+      - 'scripts/build_cross_witness_correspondence_map.py'
+      - 'scripts/benchmark_cross_witness_research.py'
+      - 'scripts/run_cross_witness_research_graduation_gate.py'
       - '.github/workflows/dore-cross-witness-audit.yml'
 permissions: {contents: write}
 jobs:
-  graduation-gate:
+  why-versions-differ:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -61,32 +67,46 @@ jobs:
       - name: Triage structural exceptions
         env: {PYTHONPATH: .}
         run: python scripts/triage_cross_witness_exceptions.py
-      - name: End-to-end graduation verdict
+      - name: Engineering graduation
         env: {PYTHONPATH: .}
         run: python scripts/run_cross_witness_graduation_gate.py
+      - name: Explain difference causes
+        env: {PYTHONPATH: .}
+        run: python scripts/research_cross_witness_difference_causes.py
+      - name: Build correspondence map
+        env: {PYTHONPATH: .}
+        run: python scripts/build_cross_witness_correspondence_map.py
+      - name: Research benchmark
+        env: {PYTHONPATH: .}
+        run: python scripts/benchmark_cross_witness_research.py
+      - name: Why-versions-differ graduation
+        env: {PYTHONPATH: .}
+        run: python scripts/run_cross_witness_research_graduation_gate.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dore-cross-witness-graduation-gate
+          name: dore-why-versions-differ-graduation
           path: |
             reports/inventories/*.json
             reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json
             reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json
             reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
-      - name: Persist graduation evidence
+            reports/DORÉ-CROSS-WITNESS-DIFFERENCE-CAUSES.json
+            reports/DORÉ-CROSS-WITNESS-CORRESPONDENCE-MAP.json
+            reports/DORÉ-CROSS-WITNESS-RESEARCH-BENCHMARK.json
+            reports/DORÉ-CROSS-WITNESS-RESEARCH-GRADUATION.json
+      - name: Persist all graduation evidence
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
+          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-*.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist cross-witness graduation evidence [skip ci]'
+            git commit -m 'chore(dore): persist why-versions-differ graduation evidence [skip ci]'
             for attempt in 1 2 3 4; do
-              if git push; then
-                exit 0
-              fi
+              if git push; then exit 0; fi
               git pull --rebase origin main
             done
-            echo 'failed to persist graduation evidence after retries' >&2
+            echo 'failed to persist research graduation evidence after retries' >&2
             exit 1
           fi
