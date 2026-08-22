@@ -1,0 +1,20 @@
+{
+  "category_counts": {
+    "anchor_only_reference": 39,
+    "multi_witness_extra_reference_candidate": 1014,
+    "single_witness_extra_reference": 425,
+    "translation_reference_divergence": 1660
+  },
+  "engineering_failures": [],
+  "engineering_suspect_count": 464,
+  "milestone": "CROSS_WITNESS_ENGINEERING_REVIEW_REQUIRED",
+  "research_boundary": "No verdict in this file asserts textual originality, inspiration, authenticity, or automatic versification equivalence.",
+  "research_exception_count": 2674,
+  "rules": {
+    "FAIL": "pipeline/inventory failure or unresolved engineering-suspect reference patterns remain",
+    "PASS": "all inventories/audits pass and no unresolved structural exceptions remain",
+    "RESEARCH_EXCEPTIONS_ONLY": "engineering is clean; remaining differences are classified research phenomena only"
+  },
+  "schema": "dore.cross-witness-graduation-gate.v0.1",
+  "verdict": "FAIL"
+}
