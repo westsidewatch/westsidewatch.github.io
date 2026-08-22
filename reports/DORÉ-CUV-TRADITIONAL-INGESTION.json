@@ -1,0 +1,16 @@
+{
+  "canonical_verses": 31021,
+  "coverage_policy": "PASS requires all 66 source books and all 66 canonical book ids with no silent dropping",
+  "license": "public-domain",
+  "mapped_book_ids": 66,
+  "missing_canonical_books": [],
+  "segmentation_policy": "Han character / alphanumeric run / punctuation; Chinese word segmentation is a later enrichment layer",
+  "snapshot": "d9fe1779447717bbfcb578e505b893125cad581c",
+  "source_books": 66,
+  "status": "PASS",
+  "study": "language_core.chinese_cuv_traditional.full_witness_ingestion",
+  "units": 1065550,
+  "unknown_osis_books": [],
+  "validation_errors": [],
+  "witness_id": "witness.chinese.cuv.traditional.1919"
+}
