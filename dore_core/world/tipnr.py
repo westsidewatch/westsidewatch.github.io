@@ -13,7 +13,7 @@ from .model import Alias,Attestation,WorldEntity
 TIPNR_SOURCE='STEPBible/TIPNR'
 BOOK_MAP={
 'Gen':'GEN','Exo':'EXO','Lev':'LEV','Num':'NUM','Deu':'DEU','Jos':'JOS','Jdg':'JDG','Rut':'RUT','1Sa':'1SA','2Sa':'2SA','1Ki':'1KI','2Ki':'2KI','1Ch':'1CH','2Ch':'2CH','Ezr':'EZR','Neh':'NEH','Est':'EST','Job':'JOB','Psa':'PSA','Pro':'PRO','Ecc':'ECC','Sng':'SNG','Isa':'ISA','Jer':'JER','Lam':'LAM','Ezk':'EZK','Dan':'DAN','Hos':'HOS','Jol':'JOL','Amo':'AMO','Oba':'OBA','Jon':'JON','Mic':'MIC','Nah':'NAM','Hab':'HAB','Zep':'ZEP','Hag':'HAG','Zec':'ZEC','Mal':'MAL','Mat':'MAT','Mrk':'MRK','Luk':'LUK','Jhn':'JHN','Act':'ACT','Rom':'ROM','1Co':'1CO','2Co':'2CO','Gal':'GAL','Eph':'EPH','Php':'PHP','Col':'COL','1Th':'1TH','2Th':'2TH','1Ti':'1TI','2Ti':'2TI','Tit':'TIT','Phm':'PHM','Heb':'HEB','Jas':'JAS','1Pe':'1PE','2Pe':'2PE','1Jn':'1JN','2Jn':'2JN','3Jn':'3JN','Jud':'JUD','Rev':'REV'}
-REF_RE=re.compile(r'\b(1?[A-Z][a-z]{1,2})\.(\d+)\.(\d+)[a-z]?\b')
+REF_RE=re.compile(r'\b([1-3]?[A-Z][a-z]{1,2})\.(\d+)\.(\d+)[a-z]?\b')
 
 @dataclass(frozen=True)
 class TIPNRRecord:
@@ -47,7 +47,6 @@ def _label(unique:str)->str:
 
 def _alias_from_form(form_field:str,translated:str)->list[Alias]:
     out=[]
-    # dStrong«eStrong=source-script form(s)
     if '=' in form_field:
         forms=form_field.split('=',1)[1]
         for value in re.split(r'[,;+]',forms):
@@ -55,7 +54,6 @@ def _alias_from_form(form_field:str,translated:str)->list[Alias]:
             if value and len(value)<100:
                 lang='he' if re.search(r'[\u0590-\u05ff]',value) else 'grc' if re.search(r'[\u0370-\u03ff\u1f00-\u1fff]',value) else 'und'
                 out.append(Alias(value=value,language=lang,source_id=TIPNR_SOURCE,kind='source_form'))
-    # Translation column can include variant labels followed by =ESV/KJV/etc.
     for part in re.split(r'[;/]',translated or ''):
         value=part.split('=',1)[0].strip().strip('()')
         if value and len(value)<100 and not value.lower() in {'his','her','their'}:
@@ -67,9 +65,7 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
     def flush():
         nonlocal current,aliases,refs
         if current is None:return None
-        unique,strong=current
-        label=_label(unique)
-        # preferred English label is itself also a provenance-bearing alias
+        unique,strong=current;label=_label(unique)
         all_aliases=[Alias(label,'en',TIPNR_SOURCE,'preferred_source_label'),*aliases]
         dedup=[];seen=set()
         for a in all_aliases:
@@ -83,22 +79,18 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
         if line.startswith('$=========='):
             old=flush()
             if old:yield old
-            marker=line.upper()
-            category='PERSON' if 'PERSON' in marker else 'PLACE' if 'PLACE' in marker else 'OTHER' if 'OTHER' in marker else None
+            marker=line.upper();category='PERSON' if 'PERSON' in marker else 'PLACE' if 'PLACE' in marker else 'OTHER' if 'OTHER' in marker else None
             continue
         if not category or not line.strip():continue
-        if line.startswith('@'):continue  # generated/editorial descriptions excluded
+        if line.startswith('@'):continue
         if line.startswith('–') or line.startswith('-'):
             if current is None:continue
             cols=line.split('\t')
             if len(cols)>=6:
-                aliases.extend(_alias_from_form(cols[2].strip(),cols[3].strip()))
-                refs.extend(refs_from_text(cols[5]))
+                aliases.extend(_alias_from_form(cols[2].strip(),cols[3].strip()));refs.extend(refs_from_text(cols[5]))
             continue
         if line.startswith('‖') or line.startswith('=') or line.startswith('UnifiedName') or line.startswith('Header '):continue
-        cols=line.split('\t')
-        first=cols[0].strip()
-        # Main records always have an individualised name with @ and optional =uStrong.
+        first=line.split('\t')[0].strip()
         if '@' in first:
             old=flush()
             if old:yield old
@@ -113,6 +105,5 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
 def to_world_entity(record:TIPNRRecord,snapshot:str)->WorldEntity:
     entity_type='person' if record.category=='PERSON' else 'place' if record.category=='PLACE' else 'artifact_or_object'
     attestations=tuple(Attestation(TIPNR_SOURCE,ref,'SCRIPTURE_EXPLICIT',1.0,'TIPNR proper-name attestation') for ref in record.canonical_refs)
-    # If a source record has no parsed verse, keep source-record provenance rather than inventing one.
     if not attestations:attestations=(Attestation(TIPNR_SOURCE,record.source_unique_name,'EDITORIAL_NORMALIZATION',1.0,'TIPNR individualised identity record'),)
     return WorldEntity(stable_id(record.category,record.source_unique_name),entity_type,record.label,record.aliases,attestations)
