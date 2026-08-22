@@ -1,0 +1,78 @@
+{
+  "witness": "KJV-1769",
+  "source": "TheologyCommons/Bible.TEI.KJV",
+  "snapshot": "014f6966aad1dc8888b088cd11ea8216a46fa738",
+  "license": "Public Domain",
+  "source_shape": {
+    "type": "dict",
+    "keys": [
+      "TEI"
+    ],
+    "sample": {
+      "TEI": {
+        "type": "dict",
+        "keys": [
+          "teiHeader",
+          "text"
+        ],
+        "sample": {
+          "teiHeader": {
+            "type": "dict",
+            "keys": [
+              "fileDesc"
+            ],
+            "sample": {
+              "fileDesc": {
+                "type": "dict",
+                "keys": [
+                  "titleStmt",
+                  "publicationStmt",
+                  "sourceDesc"
+                ],
+                "sample": {
+                  "titleStmt": "dict",
+                  "publicationStmt": "dict",
+                  "sourceDesc": "dict"
+                }
+              }
+            }
+          },
+          "text": {
+            "type": "dict",
+            "keys": [
+              "front",
+              "group"
+            ],
+            "sample": {
+              "front": {
+                "type": "dict",
+                "keys": [
+                  "head"
+                ],
+                "sample": {
+                  "head": "str"
+                }
+              },
+              "group": {
+                "type": "dict",
+                "keys": [
+                  "text"
+                ],
+                "sample": {
+                  "text": "list"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "units": 0,
+  "verses": 0,
+  "books": 0,
+  "book_ids": [],
+  "validation_errors": [],
+  "status": "FAIL",
+  "diagnostic": "No supported verse structure recognized; inspect source_shape and extend parser."
+}
