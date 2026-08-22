@@ -4,6 +4,8 @@ Status: **ARCHITECTURE MEMO — FUTURE PRODUCT DIRECTION, NOT CURRENT RUNTIME**
 
 This addendum belongs with `DORÉ-SCRIPTURE-INTELLIGENCE-MEMO.md` and records the 2026-08-22 product discussion. It does not replace the main memo. It makes explicit a direction already latent there: Doré is becoming Westside Watch's next product/project and a shared brand-level Scripture intelligence unit rather than remaining only an illustration subsystem inside ONE.
 
+**Working-conversation status:** this is the first explicitly date-separated Doré product-definition conversation record. It is intentionally preserved as a record of developing thought, not treated as the final build specification. The cross-day workflow and chronological index are maintained in `DORÉ-WORKING-CONVERSATIONS.md`. Future substantial conversations (for example 2026-08-23) should receive separate dated records. Before implementation begins, the master memo and all dated records must be read together and synthesized into the current product definition.
+
 ## Product decision — Doré as the next Westside Watch project
 
 Doré should be developed as a distinct Westside Watch product/project while preserving its root in ONE. Its accumulated knowledge must not be trapped inside one consumer. The purpose of separation is reuse and compounding memory, not fragmentation from Scripture or from the brand.
