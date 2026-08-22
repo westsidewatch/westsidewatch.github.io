@@ -1,0 +1,75 @@
+name: Doré Cross-Witness Audit
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'dore_core/language/**'
+      - 'dore_core/readers/**'
+      - 'scripts/ingest_pinned_corpora.py'
+      - 'scripts/ingest_lxx_language_core.py'
+      - 'scripts/ingest_vulgate_language_core.py'
+      - 'scripts/ingest_webu_language_core.py'
+      - 'scripts/ingest_cuv_traditional_language_core.py'
+      - 'scripts/ingest_asv_language_core.py'
+      - 'scripts/ingest_kjv_language_core.py'
+      - 'scripts/run_cross_witness_alignment_audit.py'
+      - '.github/workflows/dore-cross-witness-audit.yml'
+permissions: {contents: write}
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --upgrade pip text-fabric
+      - name: Original-language inventories
+        env: {PYTHONPATH: .}
+        run: python scripts/ingest_pinned_corpora.py
+      - run: |
+          git clone --no-checkout https://github.com/CenterBLC/LXX.git .cache/centerblc-lxx
+          git -C .cache/centerblc-lxx checkout 4829f3746c84d75576702498e75a68856358f289
+      - name: LXX inventory
+        env: {PYTHONPATH: ., DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935}
+        run: python scripts/ingest_lxx_language_core.py
+      - name: Vulgate inventory
+        env: {PYTHONPATH: .}
+        run: python scripts/ingest_vulgate_language_core.py
+      - name: WEBU inventory
+        env: {PYTHONPATH: .}
+        run: python scripts/ingest_webu_language_core.py
+      - run: |
+          git clone --no-checkout https://github.com/openbibleinfo/American-Standard-Version-Bible.git .cache/asv
+          git -C .cache/asv checkout 5c83ee265c75b3b1c056435eff622a875f1edc45
+      - name: ASV inventory
+        env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx}
+        run: python scripts/ingest_asv_language_core.py
+      - run: |
+          git clone --no-checkout https://github.com/TheologyCommons/Bible.TEI.KJV.git .cache/kjv
+          git -C .cache/kjv checkout 014f6966aad1dc8888b088cd11ea8216a46fa738
+      - name: KJV inventory
+        env: {PYTHONPATH: ., DORE_KJV_JSON: .cache/kjv/KJV.json}
+        run: python scripts/ingest_kjv_language_core.py
+      - name: CUV Traditional inventory
+        env: {PYTHONPATH: .}
+        run: python scripts/ingest_cuv_traditional_language_core.py
+      - name: Corpus-wide alignment audit
+        env: {PYTHONPATH: .}
+        run: python scripts/run_cross_witness_alignment_audit.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dore-cross-witness-audit
+          path: |
+            reports/inventories/*.json
+            reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json
+      - name: Persist audit
+        if: github.event_name == 'push'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): persist cross-witness audit [skip ci]'
+            git push
+          fi
