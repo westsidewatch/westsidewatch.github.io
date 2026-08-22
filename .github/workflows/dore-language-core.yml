@@ -6,12 +6,14 @@ on:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
+      - 'scripts/ingest_lxx_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   pull_request:
     paths:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'scripts/run_language_core_parity.py'
+      - 'scripts/ingest_lxx_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   workflow_dispatch:
 
@@ -19,7 +21,7 @@ permissions:
   contents: write
 
 jobs:
-  parity:
+  language-core:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,36 +30,52 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install Text-Fabric
+        run: python -m pip install --upgrade pip text-fabric
       - name: Run 66-book language-core parity benchmark
         id: parity
         continue-on-error: true
         env:
           PYTHONPATH: .
         run: python scripts/run_language_core_parity.py
-      - name: Ensure report exists
+      - name: Ingest complete LXX witness
+        id: lxx
+        if: always()
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+        run: python scripts/ingest_lxx_language_core.py
+      - name: Ensure reports exist
         if: always()
         run: |
           mkdir -p reports
           if [ ! -f reports/DORÉ-LANGUAGE-CORE-PARITY.json ]; then
             printf '{"status":"INFRA_FAIL","error":"language core parity report was not produced","parity":"%s"}\n' "${{ steps.parity.outcome }}" > reports/DORÉ-LANGUAGE-CORE-PARITY.json
           fi
-      - name: Upload language-core report
+          if [ ! -f reports/DORÉ-LXX-INGESTION.json ]; then
+            printf '{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx":"%s"}\n' "${{ steps.lxx.outcome }}" > reports/DORÉ-LXX-INGESTION.json
+          fi
+      - name: Upload language-core reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: dore-language-core-report
-          path: reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          name: dore-language-core-reports
+          path: |
+            reports/DORÉ-LANGUAGE-CORE-PARITY.json
+            reports/DORÉ-LXX-INGESTION.json
           retention-days: 30
-      - name: Persist language-core report
+      - name: Persist language-core reports
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json reports/DORÉ-LXX-INGESTION.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist language core parity [skip ci]'
+            git commit -m 'chore(dore): persist language core reports [skip ci]'
             git push
           fi
-      - name: Enforce language-core parity
+      - name: Enforce language-core result
         if: always()
-        run: test "${{ steps.parity.outcome }}" = "success"
+        run: |
+          test "${{ steps.parity.outcome }}" = "success"
+          test "${{ steps.lxx.outcome }}" = "success"
