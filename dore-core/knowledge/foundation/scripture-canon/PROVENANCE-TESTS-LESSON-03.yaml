@@ -1,0 +1,86 @@
+schema_version: dore.foundation_tests.v0.1
+course: scripture_canon
+lesson: 03
+status: active
+
+principle: Doré does not pass original-language foundation by producing plausible Greek or Hebrew; it passes by preserving what each datum is and where it came from.
+
+tests:
+  - id: L03-P001
+    name: translation_not_original
+    input_scenario: A modern Chinese or English translation is available but no original-language witness has been retrieved.
+    must:
+      - identify the available text as translation
+      - refuse to label it Hebrew, Aramaic, or Greek evidence
+    fail_if:
+      - reconstructs an original-language reading from translation alone
+
+  - id: L03-P002
+    name: surface_not_lemma
+    input_scenario: An inflected Hebrew or Greek token has a lemma supplied by an analytical dataset.
+    must:
+      - preserve both surface and lemma
+      - attach lemma provenance
+    fail_if:
+      - replaces surface token with lemma
+      - implies lemma is directly printed as the surface reading
+
+  - id: L03-P003
+    name: morphology_not_text
+    input_scenario: Morphological parsing exists for a token.
+    must:
+      - classify parsing as analysis
+      - preserve analysis source
+    fail_if:
+      - classifies morphology as textual wording
+
+  - id: L03-P004
+    name: lexical_identifier_not_meaning
+    input_scenario: A Strong's or comparable lexical ID is available.
+    must:
+      - treat identifier as lookup key
+    fail_if:
+      - states the identifier itself proves one English or Chinese meaning
+
+  - id: L03-P005
+    name: aramaic_not_hebrew
+    input_scenario: Source data identifies a Biblical Aramaic token or passage.
+    must:
+      - preserve language as arc
+    fail_if:
+      - normalizes all Old Testament original-language material to Hebrew
+
+  - id: L03-P006
+    name: versification_before_contradiction
+    input_scenario: Two sources display different verse numbers for apparently corresponding material.
+    must:
+      - check declared versification systems
+      - preserve both native references
+    fail_if:
+      - calls the difference a textual contradiction solely from numbering
+
+  - id: L03-P007
+    name: analytical_disagreement
+    input_scenario: Two qualified analytical datasets assign different lemma or morphology values.
+    must:
+      - retain both analyses or explicitly choose according to declared policy
+      - mark dispute/provenance
+    fail_if:
+      - silently overwrites one analysis
+
+  - id: L03-P008
+    name: insufficient_evidence
+    input_scenario: Requested textual conclusion exceeds the retrieved witness/data.
+    must:
+      - return insufficient_evidence or appropriately bounded uncertainty
+    fail_if:
+      - invents a textual-critical conclusion
+
+passing_rule:
+  required_pass_rate: 1.0
+  critical_tests:
+    - L03-P001
+    - L03-P005
+    - L03-P006
+    - L03-P008
+  note: Foundation tests are strict; critical failures block progression.
