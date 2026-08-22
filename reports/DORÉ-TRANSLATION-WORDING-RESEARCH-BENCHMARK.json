@@ -1,0 +1,43 @@
+{
+  "passed": 5,
+  "results": [
+    {
+      "actual": "archaic_language_modernization",
+      "confidence": "high",
+      "expected": "archaic_language_modernization",
+      "pass": true,
+      "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+    },
+    {
+      "actual": "spelling_modernization",
+      "confidence": "high",
+      "expected": "spelling_modernization",
+      "pass": true,
+      "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+    },
+    {
+      "actual": "word_order_or_syntax",
+      "confidence": "medium_high",
+      "expected": "word_order_or_syntax",
+      "pass": true,
+      "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+    },
+    {
+      "actual": "lexical_choice",
+      "confidence": "medium_high",
+      "expected": "lexical_choice",
+      "pass": true,
+      "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+    },
+    {
+      "actual": "phrasing_or_expansion_compression",
+      "confidence": "medium",
+      "expected": "phrasing_or_expansion_compression",
+      "pass": true,
+      "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+    }
+  ],
+  "schema": "dore.translation-wording-research-benchmark.v0.1",
+  "status": "PASS",
+  "total": 5
+}

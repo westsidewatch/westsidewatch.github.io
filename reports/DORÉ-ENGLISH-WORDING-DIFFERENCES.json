@@ -1,0 +1,2021 @@
+{
+  "boundary": "A wording classifier does not decide which translation is best or which reading is original.",
+  "cause_counts": {
+    "archaic_language_modernization": 536,
+    "lexical_choice": 35971,
+    "phrasing_or_expansion_compression": 36417,
+    "punctuation_or_formatting": 2397,
+    "spelling_modernization": 12,
+    "substantial_rendering_difference": 15050,
+    "word_order_or_syntax": 382
+  },
+  "examples": {
+    "archaic_language_modernization": [
+      {
+        "a": "Go and get thee in unto king David , and say unto him , Didst not thou , my lord , O king , swear unto thine handmaid , saying , Assuredly Solomon thy son shall reign after me , and he shall sit upon my throne ? why then doth Adonijah reign",
+        "b": "Go and get thee in unto king David , and say unto him , Didst not thou , my lord , O king , swear unto thy handmaid , saying , Assuredly Solomon thy son shall reign after me , and he shall sit upon my throne ? why then doth Adonijah reign ?",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.1.13",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And the man of God said unto the king , If thou wilt give me half thine house , I will not go in with thee , neither will I eat bread nor drink water in this place :",
+        "b": "And the man of God said unto the king , If thou wilt give me half thy house , I will not go in with thee , neither will I eat bread nor drink water in this place ;",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.13.8",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And as she was going to fetch it , he called to her , and said , Bring me , I pray thee , a morsel of bread in thine hand .",
+        "b": "And as she was going to fetch it , he called to her , and said , Bring me , I pray thee , a morsel of bread in thy hand .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.17.11",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And Jezebel his wife said unto him , Dost thou now govern the kingdom of Israel ? arise , and eat bread , and let thine heart be merry : I will give thee the vineyard of Naboth the Jezreelite .",
+        "b": "And Jezebel his wife said unto him , Dost thou now govern the kingdom of Israel ? arise , and eat bread , and let thy heart be merry : I will give thee the vineyard of Naboth the Jezreelite .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.21.7",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And she arose at midnight , and took my son from beside me , while thine handmaid slept , and laid it in her bosom , and laid her dead child in my bosom .",
+        "b": "And she arose at midnight , and took my son from beside me , while thy handmaid slept , and laid it in her bosom , and laid her dead child in my bosom .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.3.20",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "To an inheritance incorruptible , and undefiled , and that fadeth not away , reserved in heaven for you ,",
+        "b": "unto an inheritance incorruptible , and undefiled , and that fadeth not away , reserved in heaven for you ,",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1PE.1.4",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And thou shalt go down before me to Gilgal ; and , behold , I will come down unto thee , to offer burnt offerings , and to sacrifice sacrifices of peace offerings : seven days shalt thou tarry , till I come to thee , and shew thee what thou",
+        "b": "And thou shalt go down before me to Gilgal ; and , behold , I will come down unto thee , to offer burnt-offerings , and to sacrifice sacrifices of peace-offerings : seven days shalt thou tarry , till I come unto thee , and show thee what th",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1SA.10.8",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And Saul said unto the Kenites , Go , depart , get you down from among the Amalekites , lest I destroy you with them : for ye shewed kindness to all the children of Israel , when they came up out of Egypt . So the Kenites departed from amon",
+        "b": "And Saul said unto the Kenites , Go , depart , get you down from among the Amalekites , lest I destroy you with them ; for ye showed kindness to all the children of Israel , when they came up out of Egypt . So the Kenites departed from amon",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1SA.15.6",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And call Jesse to the sacrifice , and I will shew thee what thou shalt do : and thou shalt anoint unto me him whom I name unto thee .",
+        "b": "And call Jesse to the sacrifice , and I will show thee what thou shalt do : and thou shalt anoint unto me him whom I name unto thee .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1SA.16.3",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now therefore , I pray thee , hearken thou also unto the voice of thine handmaid , and let me set a morsel of bread before thee ; and eat , that thou mayest have strength , when thou goest on thy way .",
+        "b": "Now therefore , I pray thee , hearken thou also unto the voice of thy handmaid , and let me set a morsel of bread before thee ; and eat , that thou mayest have strength , when thou goest on thy way .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1SA.28.22",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now it came to pass , when the kingdom was established to him , that he slew his servants that had killed the king his father .",
+        "b": "Now it came to pass , when the kingdom was established unto him , that he slew his servants that had killed the king his father .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.25.3",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Thanks be unto God for his unspeakable gift .",
+        "b": "Thanks be to God for his unspeakable gift .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CO.9.15",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And when he was departed thence , he lighted on Jehonadab the son of Rechab coming to meet him : and he saluted him , and said to him , Is thine heart right , as my heart is with thy heart ? And Jehonadab answered , It is . If it be , give ",
+        "b": "And when he was departed thence , he lighted on Jehonadab the son of Rechab coming to meet him ; and he saluted him , and said to him , Is thy heart right , as my heart is with thy heart ? And Jehonadab answered , It is . If it be , give me",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.10.15",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Then he said to Gehazi , Gird up thy loins , and take my staff in thine hand , and go thy way : if thou meet any man , salute him not ; and if any salute thee , answer him not again : and lay my staff upon the face of the child .",
+        "b": "Then he said to Gehazi , Gird up thy loins , and take my staff in thy hand , and go thy way : if thou meet any man , salute him not ; and if any salute thee , answer him not again : and lay my staff upon the face of the child .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.4.29",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now therefore the sword shall never depart from thine house ; because thou hast despised me , and hast taken the wife of Uriah the Hittite to be thy wife .",
+        "b": "Now therefore the sword shall never depart from thy house , because thou hast despised me , and hast taken the wife of Uriah the Hittite to be thy wife .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.12.10",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And the king said unto the woman , Go to thine house , and I will give charge concerning thee .",
+        "b": "And the king said unto the woman , Go to thy house , and I will give charge concerning thee .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.14.8",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Also Amaziah said unto Amos , O thou seer , go , flee thee away into the land of Judah , and there eat bread , and prophesy there :",
+        "b": "Also Amaziah said unto Amos , O thou seer , go , flee thou away into the land of Judah , and there eat bread , and prophesy there :",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.AMO.7.12",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Thou , O king , hast made a decree , that every man that shall hear the sound of the cornet , flute , harp , sackbut , psaltery , and dulcimer , and all kinds of musick , shall fall down and worship the golden image :",
+        "b": "Thou , O king , hast made a decree , that every man that shall hear the sound of the cornet , flute , harp , sackbut , psaltery , and dulcimer , and all kinds of music , shall fall down and worship the golden image ;",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DAN.3.10",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now if ye be ready that at what time ye hear the sound of the cornet , flute , harp , sackbut , psaltery , and dulcimer , and all kinds of musick , ye fall down and worship the image which I have made ; well : but if ye worship not , ye sha",
+        "b": "Now if ye be ready that at what time ye hear the sound of the cornet , flute , harp , sackbut , psaltery , and dulcimer , and all kinds of music , ye fall down and worship the image which I have made , well : but if ye worship not , ye shal",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DAN.3.15",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And thou his son , O Belshazzar , hast not humbled thine heart , though thou knewest all this ;",
+        "b": "And thou his son , O Belshazzar , hast not humbled thy heart , though thou knewest all this ,",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DAN.5.22",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And thou shalt write them upon the door posts of thine house , and upon thy gates :",
+        "b": "And thou shalt write them upon the door-posts of thy house , and upon thy gates ;",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DEU.11.20",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "But thou shalt surely kill him ; thine hand shall be first upon him to put him to death , and afterwards the hand of all the people .",
+        "b": "but thou shalt surely kill him ; thy hand shall be first upon him to put him to death , and afterwards the hand of all the people .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DEU.13.9",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Then thou shalt bring her home to thine house , and she shall shave her head , and pare her nails ;",
+        "b": "then thou shalt bring her home to thy house ; and she shall shave her head , and pare her nails ;",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DEU.21.12",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And she shall put the raiment of her captivity from off her , and shall remain in thine house , and bewail her father and her mother a full month : and after that thou shalt go in unto her , and be her husband , and she shall be thy wife .",
+        "b": "and she shall put the raiment of her captivity from off her , and shall remain in thy house , and bewail her father and her mother a full month : and after that thou shalt go in unto her , and be her husband , and she shall be thy wife .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DEU.21.13",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "When thou buildest a new house , then thou shalt make a battlement for thy roof , that thou bring not blood upon thine house , if any man fall from thence .",
+        "b": "When thou buildest a new house , then thou shalt make a battlement for thy roof , that thou bring not blood upon thy house , if any man fall from thence .",
+        "cause": "archaic_language_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.DEU.22.8",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      }
+    ],
+    "lexical_choice": [
+      {
+        "a": "The Jebusite also , and the Amorite , and the Girgashite ,",
+        "b": "and the Jebusite , and the Amorite , and the Girgashite ,",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.14",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And unto Eber were born two sons : the name of the one was Peleg ; because in his days the earth was divided : and his brother's name was Joktan .",
+        "b": "And unto Eber were born two sons : the name of the one was Peleg ; for in his days the earth was divided ; and his brother’s name was Joktan .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.19",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Hadoram also , and Uzal , and Diklah ,",
+        "b": "and Hadoram , and Uzal , and Diklah ,",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.21",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "These are their generations : The firstborn of Ishmael , Nebaioth ; then Kedar , and Adbeel , and Mibsam ,",
+        "b": "These are their generations : the first-born of Ishmael , Nebaioth ; then Kedar , and Adbeel , and Mibsam ,",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.29",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Now the sons of Keturah , Abraham's concubine : she bare Zimran , and Jokshan , and Medan , and Midian , and Ishbak , and Shuah . And the sons of Jokshan ; Sheba , and Dedan .",
+        "b": "And the sons of Keturah , Abraham’s concubine : she bare Zimran , and Jokshan , and Medan , and Midian , and Ishbak , and Shuah . And the sons of Jokshan : Sheba , and Dedan .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.32",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And the sons of Midian ; Ephah , and Epher , and Henoch , and Abida , and Eldaah . All these are the sons of Keturah .",
+        "b": "And the sons of Midian : Ephah , and Epher , and Hanoch , and Abida , and Eldaah . All these were the sons of Keturah .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.33",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "The sons of Esau ; Eliphaz , Reuel , and Jeush , and Jaalam , and Korah .",
+        "b": "The sons of Esau : Eliphaz , Reuel , and Jeush , and Jalam , and Korah .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.35",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And the sons of Seir ; Lotan , and Shobal , and Zibeon , and Anah , and Dishon , and Ezar , and Dishan .",
+        "b": "And the sons of Seir : Lotan , and Shobal , and Zibeon , and Anah , and Dishon , and Ezer , and Dishan .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.38",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Now these are the kings that reigned in the land of Edom before any king reigned over the children of Israel ; Bela the son of Beor : and the name of his city was Dinhabah .",
+        "b": "Now these are the kings that reigned in the land of Edom , before there reigned any king over the children of Israel : Bela the son of Beor ; and the name of his city was Dinhabah .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.43",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when Bela was dead , Jobab the son of Zerah of Bozrah reigned in his stead .",
+        "b": "And Bela died , and Jobab the son of Zerah of Bozrah reigned in his stead .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.44",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when Husham was dead , Hadad the son of Bedad , which smote Midian in the field of Moab , reigned in his stead : and the name of his city was Avith .",
+        "b": "And Husham died , and Hadad the son of Bedad , who smote Midian in the field of Moab , reigned in his stead ; and the name of his city was Avith .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.46",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when Samlah was dead , Shaul of Rehoboth by the river reigned in his stead .",
+        "b": "And Samlah died , and Shaul of Rehoboth by the River reigned in his stead .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.48",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And the sons of Cush ; Seba , and Havilah , and Sabta , and Raamah , and Sabtecha . And the sons of Raamah ; Sheba , and Dedan .",
+        "b": "And the sons of Cush : Seba , and Havilah , and Sabta , and Raama , and Sabteca . And the sons of Raamah : Sheba , and Dedan .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.9",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Now the Philistines fought against Israel ; and the men of Israel fled from before the Philistines , and fell down slain in mount Gilboa .",
+        "b": "Now the Philistines fought against Israel : and the men of Israel fled from before the Philistines , and fell down slain in mount Gilboa . Or , wounded",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.1",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And they put his armour in the house of their gods , and fastened his head in the temple of Dagon .",
+        "b": "And they put his armor in the house of their gods , and fastened his head in the house of Dagon .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.10",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when all Jabeshgilead heard all that the Philistines had done to Saul ,",
+        "b": "And when all Jabesh-gilead heard all that the Philistines had done to Saul ,",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.11",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "They arose , all the valiant men , and took away the body of Saul , and the bodies of his sons , and brought them to Jabesh , and buried their bones under the oak in Jabesh , and fasted seven days .",
+        "b": "all the valiant men arose , and took away the body of Saul , and the bodies of his sons , and brought them to Jabesh , and buried their bones under the oak in Jabesh , and fasted seven days . Or , terebinth",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.12",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And enquired not of the LORD : therefore he slew him , and turned the kingdom unto David the son of Jesse .",
+        "b": "and inquired not of Jehovah : therefore he slew him , and turned the kingdom unto David the son of Jesse .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.14",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Then said Saul to his armourbearer , Draw thy sword , and thrust me through therewith ; lest these uncircumcised come and abuse me . But his armourbearer would not ; for he was sore afraid . So Saul took a sword , and fell upon it .",
+        "b": "Then said Saul unto his armorbearer , Draw thy sword , and thrust me through therewith , lest these uncircumcised come and abuse me . But his armorbearer would not ; for he was sore afraid . Therefore Saul took his sword , and fell upon it ",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.4",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when all the men of Israel that were in the valley saw that they fled , and that Saul and his sons were dead , then they forsook their cities , and fled : and the Philistines came and dwelt in them .",
+        "b": "And when all the men of Israel that were in the valley saw that they fled , and that Saul and his sons were dead , they forsook their cities , and fled ; and the Philistines came and dwelt in them .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.7",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And when they had stripped him , they took his head , and his armour , and sent into the land of the Philistines round about , to carry tidings unto their idols , and to the people .",
+        "b": "And they stripped him , and took his head , and his armor , and sent into the land of the Philistines round about , to carry the tidings unto their idols , and to the people .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.9",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And after him was Eleazar the son of Dodo , the Ahohite , who was one of the three mighties .",
+        "b": "And after him was Eleazar the son of Dodo , the Ahohite , who was one of the three mighty men .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.12",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "He was with David at Pasdammim , and there the Philistines were gathered together to battle , where was a parcel of ground full of barley ; and the people fled from before the Philistines .",
+        "b": "He was with David at Pasdammim , and there the Philistines were gathered together to battle , where was a plot of ground full of barley ; and the people fled from before the Philistines . In 1 Sam . 17 : 1 , Ephes-dammim .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.13",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "Now three of the thirty captains went down to the rock to David , into the cave of Adullam ; and the host of the Philistines encamped in the valley of Rephaim .",
+        "b": "And three of the thirty chief men went down to the rock to David , into the cave of Adullam ; and the host of the Philistines were encamped in the valley of Rephaim .",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.15",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      },
+      {
+        "a": "And the three brake through the host of the Philistines , and drew water out of the well of Bethlehem , that was by the gate , and took it , and brought it to David : but David would not drink of it , but poured it out to the LORD .",
+        "b": "And the three brake through the host of the Philistines , and drew water out of the well of Beth-lehem , that was by the gate , and took it , and brought it to David : but David would not drink thereof , but poured it out unto Jehovah ,",
+        "cause": "lexical_choice",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.18",
+        "why": "Most aligned vocabulary is shared, with a limited set of substitutions consistent with lexical or idiomatic translation choice."
+      }
+    ],
+    "phrasing_or_expansion_compression": [
+      {
+        "a": "And Cush begat Nimrod : he began to be mighty upon the earth .",
+        "b": "And Cush begat Nimrod ; he began to be a mighty one in the earth .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.10",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "The sons of Shem ; Elam , and Asshur , and Arphaxad , and Lud , and Aram , and Uz , and Hul , and Gether , and Meshech .",
+        "b": "The sons of Shem : Elam , and Asshur , and Arpachshad , and Lud , and Aram , and Uz , and Hul , and Gether , and Meshech . In Gen . 10 : 23 , Mash .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.17",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And Arphaxad begat Shelah , and Shelah begat Eber .",
+        "b": "And Arpachshad begat Shelah , and Shelah begat Eber .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.18",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "The sons of Eliphaz ; Teman , and Omar , Zephi , and Gatam , Kenaz , and Timna , and Amalek .",
+        "b": "The sons of Eliphaz : Teman , and Omar , Zephi , and Gatam , Kenaz , and Timna , and Amalek . In Gen . 36 : 11 , Zepho .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.36",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And the sons of Lotan ; Hori , and Homam : and Timna was Lotan's sister .",
+        "b": "And the sons of Lotan : Hori , and Homam ; and Timna was Lotan’s sister . In Gen . 36 : 22 , Hemam .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.39",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "The sons of Shobal ; Alian , and Manahath , and Ebal , Shephi , and Onam . and the sons of Zibeon ; Aiah , and Anah .",
+        "b": "The sons of Shobal : Alian , and Manahath , and Ebal , In Gen . 36 : 23 , Alvan . Shephi , and Onam . And the sons of Zibeon : Aiah , and Anah . In Gen . 36 : 23 , Shepho .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.40",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "The sons of Anah ; Dishon . And the sons of Dishon ; Amram , and Eshban , and Ithran , and Cheran .",
+        "b": "The sons of Anah : Dishon . And the sons of Dishon : Hamran , and Eshban , and Ithran , and Cheran . In Gen . 36 : 26 , Hemdan .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.41",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And when Jobab was dead , Husham of the land of the Temanites reigned in his stead .",
+        "b": "And Jobab died , and Husham of the land of the Temanites reigned in his stead .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.45",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And when Hadad was dead , Samlah of Masrekah reigned in his stead .",
+        "b": "And Hadad died , and Samlah of Masrekah reigned in his stead .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.47",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And when Shaul was dead , Baalhanan the son of Achbor reigned in his stead .",
+        "b": "And Shaul died , and Baal-hanan the son of Achbor reigned in his stead .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.49",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Duke Kenaz , duke Teman , duke Mibzar ,",
+        "b": "chief Kenaz , chief Teman , chief Mibzar ,",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.53",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Duke Magdiel , duke Iram . These are the dukes of Edom .",
+        "b": "chief Magdiel , chief Iram . These are the chiefs of Edom .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.54",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And the sons of Javan ; Elishah , and Tarshish , Kittim , and Dodanim .",
+        "b": "And the sons of Javan : Elishah , and Tarshish , Kittim , and Rodanim . In Gen . 10 : 4 , Dodanim .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.7",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "So Saul died for his transgression which he committed against the LORD , even against the word of the LORD , which he kept not , and also for asking counsel of one that had a familiar spirit , to enquire of it ;",
+        "b": "So Saul died for his trespass which he committed against Jehovah , because of the word of Jehovah , which he kept not ; and also for that he asked counsel of one that had a familiar spirit , to inquire Or , in thereby ,",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.13",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And the Philistines followed hard after Saul , and after his sons ; and the Philistines slew Jonathan , and Abinadab , and Malchishua , the sons of Saul .",
+        "b": "And the Philistines followed hard after Saul and after his sons ; and the Philistines slew Jonathan , and Abinadab , and Malchi-shua , the sons of Saul . In 1 Sam . 14 : 49 , Ishvi .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.2",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And the battle went sore against Saul , and the archers hit him , and he was wounded of the archers .",
+        "b": "And the battle went sore against Saul , and the archers overtook him ; and he was distressed by reason of the archers .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.3",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And when his armourbearer saw that Saul was dead , he fell likewise on the sword , and died .",
+        "b": "And when his armorbearer saw that Saul was dead , he likewise fell upon his sword , and died .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.5",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "These also are the chief of the mighty men whom David had , who strengthened themselves with him in his kingdom , and with all Israel , to make him king , according to the word of the LORD concerning Israel .",
+        "b": "Now these are the chief of the mighty men whom David had , who showed themselves strong with him in his kingdom , together with all Israel , to make him king , according to the word of Jehovah concerning Israel . Or , held strongly with him",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.10",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And this is the number of the mighty men whom David had ; Jashobeam , an Hachmonite , the chief of the captains : he lifted up his spear against three hundred slain by him at one time .",
+        "b": "And this is the number of the mighty men whom David had : Jashobeam , the son of a Hachmonite , the chief of the thirty ; he lifted up his spear against three hundred Another reading is , captains . and slew them at one time . Hebrew slain ",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.11",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And David longed , and said , Oh that one would give me drink of the water of the well of Bethlehem , that is at the gate !",
+        "b": "And David longed , and said , Oh that one would give me water to drink of the well of Beth-lehem , which is by the gate !",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.17",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "And moreover in time past , even when Saul was king , thou wast he that leddest out and broughtest in Israel : and the LORD thy God said unto thee , Thou shalt feed my people Israel , and thou shalt be ruler over my people Israel .",
+        "b": "In times past , even when Saul was king , it was thou that leddest out and broughtest in Israel : and Jehovah thy God said unto thee , Thou shalt be shepherd of my people Israel , and thou shalt be prince over my people Israel . Or , leader",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.2",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Of the three , he was more honourable than the two ; for he was their captain : howbeit he attained not to the first three .",
+        "b": "Of the three , he was more honorable than the two , and was made their captain : howbeit he attained not to the Or , Of the three in the second rank he was the most honorable first three .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.21",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Benaiah the son of Jehoiada , the son of a valiant man of Kabzeel , who had done many acts ; he slew two lionlike men of Moab : also he went down and slew a lion in a pit in a snowy day .",
+        "b": "Benaiah the son of Jehoiada , the son of a valiant man of Kabzeel , who had done mighty deeds , he slew the two sons of Ariel of Moab : he went down also and slew a lion in the midst of a pit in time of snow .",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.22",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Behold , he was honourable among the thirty , but attained not to the first three : and David set him over his guard .",
+        "b": "Behold , he was more honorable than the thirty , but he attained not to the first three : and David set him over his guard . Or , council",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.25",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      },
+      {
+        "a": "Also the valiant men of the armies were , Asahel the brother of Joab , Elhanan the son of Dodo of Bethlehem ,",
+        "b": "Also the mighty men of the armies : Asahel the brother of Joab , Elhanan the son of Dodo of Beth-lehem ,",
+        "cause": "phrasing_or_expansion_compression",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.26",
+        "why": "The translations share the passage core but differ in phrase shape or explicitness, consistent with expansion/compression, syntax, or idiom."
+      }
+    ],
+    "punctuation_or_formatting": [
+      {
+        "a": "And the Hivite , and the Arkite , and the Sinite ,",
+        "b": "and the Hivite , and the Arkite , and the Sinite ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.15",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And the Arvadite , and the Zemarite , and the Hamathite .",
+        "b": "and the Arvadite , and the Zemarite , and the Hamathite .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.16",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Ophir , and Havilah , and Jobab . All these were the sons of Joktan .",
+        "b": "and Ophir , and Havilah , and Jobab . All these were the sons of Joktan .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.23",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "Abram ; the same is Abraham .",
+        "b": "Abram ( the same is Abraham ) .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.27",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "The sons of Abraham ; Isaac , and Ishmael .",
+        "b": "The sons of Abraham : Isaac , and Ishmael .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.28",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Abraham begat Isaac . The sons of Isaac ; Esau and Israel .",
+        "b": "And Abraham begat Isaac . The sons of Isaac : Esau , and Israel .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.34",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "The sons of Reuel ; Nahath , Zerah , Shammah , and Mizzah .",
+        "b": "The sons of Reuel : Nahath , Zerah , Shammah , and Mizzah .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.37",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "The sons of Japheth ; Gomer , and Magog , and Madai , and Javan , and Tubal , and Meshech , and Tiras .",
+        "b": "The sons of Japheth : Gomer , and Magog , and Madai , and Javan , and Tubal , and Meshech , and Tiras .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.5",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "The sons of Ham ; Cush , and Mizraim , Put , and Canaan .",
+        "b": "The sons of Ham : Cush , and Mizraim , Put , and Canaan .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.8",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "So Saul died , and his three sons , and all his house died together .",
+        "b": "So Saul died , and his three sons ; and all his house died together .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.10.6",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Joelah , and Zebadiah , the sons of Jeroham of Gedor .",
+        "b": "and Joelah , and Zebadiah , the sons of Jeroham of Gedor .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.12.7",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And David took more wives at Jerusalem : and David begat more sons and daughters .",
+        "b": "And David took more wives at Jerusalem ; and David begat more sons and daughters .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.14.3",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Nogah , and Nepheg , and Japhia ,",
+        "b": "and Nogah , and Nepheg , and Japhia ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.14.6",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "Of the sons of Merari ; Asaiah the chief , and his brethren two hundred and twenty :",
+        "b": "of the sons of Merari , Asaiah the chief , and his brethren two hundred and twenty ;",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.15.6",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "Of the sons of Elizaphan ; Shemaiah the chief , and his brethren two hundred :",
+        "b": "of the sons of Elizaphan , Shemaiah the chief , and his brethren two hundred ;",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.15.8",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "Of the sons of Hebron ; Eliel the chief , and his brethren fourscore :",
+        "b": "of the sons of Hebron , Eliel the chief , and his brethren fourscore ;",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.15.9",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "Remember his marvellous works that he hath done , his wonders , and the judgments of his mouth ;",
+        "b": "Remember his marvellous works that he hath done , His wonders , and the judgments of his mouth ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.16.12",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "O ye seed of Israel his servant , ye children of Jacob , his chosen ones .",
+        "b": "O ye seed of Israel his servant , Ye children of Jacob , his chosen ones .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.16.13",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "He suffered no man to do them wrong : yea , he reproved kings for their sakes ,",
+        "b": "He suffered no man to do them wrong ; Yea , he reproved kings for their sakes ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.16.21",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Benaiah the son of Jehoiada was over the Cherethites and the Pelethites ; and the sons of David were chief about the king .",
+        "b": "and Benaiah the son of Jehoiada was over the Cherethites and the Pelethites ; and the sons of David were chief about the king .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.18.17",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And he said , If the Syrians be too strong for me , then thou shalt help me : but if the children of Ammon be too strong for thee , then I will help thee .",
+        "b": "And he said , If the Syrians be too strong for me , then thou shalt help me ; but if the children of Ammon be too strong for thee , then I will help thee .",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.19.12",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "These are the sons of Israel ; Reuben , Simeon , Levi , and Judah , Issachar , and Zebulun ,",
+        "b": "These are the sons of Israel : Reuben , Simeon , Levi , and Judah , Issachar , and Zebulun ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.2.1",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Ram begat Amminadab ; and Amminadab begat Nahshon , prince of the children of Judah ;",
+        "b": "And Ram begat Amminadab , and Amminadab begat Nahshon , prince of the children of Judah ;",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.2.10",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Nahshon begat Salma , and Salma begat Boaz ,",
+        "b": "and Nahshon begat Salma , and Salma begat Boaz ,",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.2.11",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      },
+      {
+        "a": "And Boaz begat Obed , and Obed begat Jesse ,",
+        "b": "and Boaz begat Obed , and Obed begat Jesse ;",
+        "cause": "punctuation_or_formatting",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.2.12",
+        "why": "Lexical token sequence is identical; the visible difference is punctuation, capitalization, or formatting."
+      }
+    ],
+    "spelling_modernization": [
+      {
+        "a": "Now the rest of the acts of Omri which he did , and his might that he shewed , are they not written in the book of the chronicles of the kings of Israel ?",
+        "b": "Now the rest of the acts of Omri which he did , and his might that he showed , are they not written in the book of the chronicles of the kings of Israel ?",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.16.27",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now the rest of the acts of Jehoshaphat , and his might that he shewed , and how he warred , are they not written in the book of the chronicles of the kings of Judah ?",
+        "b": "Now the rest of the acts of Jehoshaphat , and his might that he showed , and how he warred , are they not written in the book of the chronicles of the kings of Judah ?",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.22.45",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "So the messenger went , and came and shewed David all that Joab had sent him for .",
+        "b": "So the messenger went , and came and showed David all that Joab had sent him for .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.11.22",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "I will scatter them as with an east wind before the enemy ; I will shew them the back , and not the face , in the day of their calamity .",
+        "b": "I will scatter them as with an east wind before the enemy ; I will show them the back , and not the face , in the day of their calamity .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.JER.18.17",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "And I will shew wonders in the heavens and in the earth , blood , and fire , and pillars of smoke .",
+        "b": "And I will show wonders in the heavens and in the earth : blood , and fire , and pillars of smoke .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.JOL.2.30",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "The elders have ceased from the gate , the young men from their musick .",
+        "b": "The elders have ceased from the gate , The young men from their music .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.LAM.5.14",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Now his elder son was in the field : and as he came and drew nigh to the house , he heard musick and dancing .",
+        "b": "Now his elder son was in the field : and as he came and drew nigh to the house , he heard music and dancing .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.LUK.15.25",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "Wash me throughly from mine iniquity , and cleanse me from my sin .",
+        "b": "Wash me thoroughly from mine iniquity , And cleanse me from my sin .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.PSA.51.2",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "With long life will I satisfy him , and shew him my salvation .",
+        "b": "With long life will I satisfy him , And show him my salvation .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.PSA.91.16",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "So the messenger went , and came and shewed David all that Joab had sent him for .",
+        "b": "So the messenger went , and came and showed David all that Joab had sent him for .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "WEBU"
+        ],
+        "ref": "bible.ref.2SA.11.22",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "I will scatter them as with an east wind before the enemy ; I will shew them the back , and not the face , in the day of their calamity .",
+        "b": "I will scatter them as with an east wind before the enemy . I will show them the back , and not the face , in the day of their calamity .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "WEBU"
+        ],
+        "ref": "bible.ref.JER.18.17",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      },
+      {
+        "a": "To shew that the LORD is upright : he is my rock , and there is no unrighteousness in him .",
+        "b": "to show that the LORD is upright . He is my rock , and there is no unrighteousness in him .",
+        "cause": "spelling_modernization",
+        "confidence": "high",
+        "pair": [
+          "KJV",
+          "WEBU"
+        ],
+        "ref": "bible.ref.PSA.92.15",
+        "why": "The aligned wording differs by recognized archaic/modern English forms or spelling rather than textual content."
+      }
+    ],
+    "substantial_rendering_difference": [
+      {
+        "a": "Adam , Sheth , Enosh ,",
+        "b": "Adam , Seth , Enosh ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.1",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And Pathrusim , and Casluhim , ( of whom came the Philistines , ) and Caphthorim .",
+        "b": "and Pathrusim , and Casluhim ( from whence came the Philistines ) , and Caphtorim . Hebrew Pelishtim .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.12",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And Canaan begat Zidon his firstborn , and Heth ,",
+        "b": "And Canaan begat Sidon his first-born , and Heth ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.13",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Kenan , Mahalaleel , Jered ,",
+        "b": "Kenan , Mahalalel , Jared ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.2",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And Ebal , and Abimael , and Sheba ,",
+        "b": "and Ebal , and Abimael , and Sheba , In Gen . 10 : 28 , Obal .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.22",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Shem , Arphaxad , Shelah ,",
+        "b": "Shem , Arpachshad , Shelah ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.24",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Henoch , Methuselah , Lamech ,",
+        "b": "Enoch , Methuselah , Lamech ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.3",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "The sons of Ezer ; Bilhan , and Zavan , and Jakan . The sons of Dishan ; Uz , and Aran .",
+        "b": "The sons of Ezer : Bilhan , and Zaavan , Jaakan . The sons of Dishan : Uz , and Aran . In Gen . 36 : 27 , and Akan .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.42",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And when Baalhanan was dead , Hadad reigned in his stead : and the name of his city was Pai ; and his wife's name was Mehetabel , the daughter of Matred , the daughter of Mezahab .",
+        "b": "And Baal-hanan died , and Hadad reigned in his stead ; and the name of his city was In Gen . 36 : 39 , Hadar . Pai : and his wife’s name was Mehetabel , the daughter of Matred , the daughter of Me-zahab . In Gen . 36 : 39 , Pau .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.50",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Hadad died also . And the dukes of Edom were ; duke Timnah , duke Aliah , duke Jetheth ,",
+        "b": "And Hadad died . And the chiefs of Edom were : chief Timna , chief Aliah , chief Jetheth , In Gen . 36 : 40 , Alvah .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.51",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Duke Aholibamah , duke Elah , duke Pinon ,",
+        "b": "chief Oholibamah , chief Elah , chief Pinon ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.52",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And the sons of Gomer ; Ashchenaz , and Riphath , and Togarmah .",
+        "b": "And the sons of Gomer : Ashkenaz , and Diphath , and Togarmah . In Gen . 10 : 3 , Riphath .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.1.6",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And they set themselves in the midst of that parcel , and delivered it , and slew the Philistines ; and the LORD saved them by a great deliverance .",
+        "b": "And they stood in the midst of the plot , and defended it , and slew the Philistines ; and Jehovah saved them by a great victory . Hebrew salvation .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.14",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And David was then in the hold , and the Philistines ' garrison was then at Bethlehem .",
+        "b": "And David was then in the stronghold , and the garrison of the Philistines was then in Beth-lehem .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.16",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Shammoth the Harorite , Helez the Pelonite ,",
+        "b": "Shammoth the Harorite , Helez the In 2 Sam . 23 : 25 , Shammath the Harodite . Pelonite , In 2 Sam . 23 : 26 , Paltite .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.27",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Sibbecai the Hushathite , Ilai the Ahohite ,",
+        "b": "Sibbecai the Hushathite , In 2 Sam . 23 : 27 , Mebunnai . Ilai the Ahohite , In 2 Sam . 23 : 28 , Zalmon .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.29",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Maharai the Netophathite , Heled the son of Baanah the Netophathite ,",
+        "b": "Maharai the Netophathite , Heled the son of Baanah the Netophathite , In 2 Sam . 23 : 29 , Heleb .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.30",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Hurai of the brooks of Gaash , Abiel the Arbathite ,",
+        "b": "Hurai of the brooks of Gaash , In 2 Sam . 23 : 30 , Hiddai . Abiel the Arbathite , In 2 Sam . 23 : 31 , Abi-albon .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.32",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "The sons of Hashem the Gizonite , Jonathan the son of Shage the Hararite ,",
+        "b": "the sons of Hashem the Gizonite , Jonathan the son of Shagee the Hararite , In 2 Sam . 23 : 32 , Jashen .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.34",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Ahiam the son of Sacar the Hararite , Eliphal the son of Ur ,",
+        "b": "Ahiam the son of Sacar the Hararite , In 2 Sam . 23 : 33 , Sharar . Eliphal the son of Ur , In 2 Sam . 23 : 34 , Eliphelet the son of Ahasbai .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.35",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Hezro the Carmelite , Naarai the son of Ezbai ,",
+        "b": "Hezro the Carmelite , Naarai the son of Ezbai , In 2 Sam . 23 : 35 , Paarai the Arbite .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.37",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Eliel , and Obed , and Jasiel the Mesobaite .",
+        "b": "Eliel , and Obed , and Jaasiel the Mezobaite .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.11.47",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Of Zebulun , such as went forth to battle , expert in war , with all instruments of war , fifty thousand , which could keep rank : they were not of double heart .",
+        "b": "Of Zebulun , such as were able to go out in the host , that could set the battle in array , with all manner of instruments of war , fifty thousand , and that could order the battle array , and were not of double heart .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.12.33",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "And of Asher , such as went forth to battle , expert in war , forty thousand .",
+        "b": "And of Asher , such as were able to go out in the host , that could set the battle in array , forty thousand .",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.12.36",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      },
+      {
+        "a": "Elkanah , and Jesiah , and Azareel , and Joezer , and Jashobeam , the Korhites ,",
+        "b": "Elkanah , and Isshiah , and Azarel , and Joezer , and Jashobeam , the Korahites ,",
+        "cause": "substantial_rendering_difference",
+        "confidence": "medium",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1CH.12.6",
+        "why": "The aligned verse is rendered with substantially different vocabulary; explanation requires lexical/syntactic study rather than a reference-level inference."
+      }
+    ],
+    "word_order_or_syntax": [
+      {
+        "a": "Beloved , if God so loved us , we ought also to love one another .",
+        "b": "Beloved , if God so loved us , we also ought to love one another .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1JN.4.11",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Then came there two women , that were harlots , unto the king , and stood before him .",
+        "b": "Then there came two women that were harlots , unto the king , and stood before him .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.3.16",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "It stood upon twelve oxen , three looking toward the north , and three looking toward the west , and three looking toward the south , and three looking toward the east : and the sea was set above upon them , and all their hinder parts were ",
+        "b": "It stood upon twelve oxen , three looking toward the north , and three looking toward the west , and three looking toward the south , and three looking toward the east ; and the sea was set upon them above , and all their hinder parts were ",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.7.25",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And the work of the wheels was like the work of a chariot wheel : their axletrees , and their naves , and their felloes , and their spokes , were all molten .",
+        "b": "And the work of the wheels was like the work of a chariot wheel : their axletrees , and their felloes , and their spokes , and their naves , were all molten .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1KI.7.33",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And when Saul saw the host of the Philistines , he was afraid , and his heart greatly trembled .",
+        "b": "And when Saul saw the host of the Philistines , he was afraid , and his heart trembled greatly .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1SA.28.5",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Knowing , brethren beloved , your election of God .",
+        "b": "knowing , brethren beloved of God , your election ,",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1TH.1.4",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Faithful is he that calleth you , who also will do it .",
+        "b": "Faithful is he that calleth you , who will also do it .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1TH.5.24",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "For some are already turned aside after Satan .",
+        "b": "for already some are turned aside after Satan .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.1TI.5.15",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And Rehoboam went to Shechem : for to Shechem were all Israel come to make him king .",
+        "b": "And Rehoboam went to Shechem ; for all Israel were come to Shechem to make him king .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.10.1",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "So they strengthened the kingdom of Judah , and made Rehoboam the son of Solomon strong , three years : for three years they walked in the way of David and Solomon .",
+        "b": "So they strengthened the kingdom of Judah , and made Rehoboam the son of Solomon strong , three years ; for they walked three years in the way of David and Solomon .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.11.17",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "They smote also the tents of cattle , and carried away sheep and camels in abundance , and returned to Jerusalem .",
+        "b": "They smote also the tents of cattle , and carried away sheep in abundance , and camels , and returned to Jerusalem .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.14.15",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Moreover he provided him cities , and possessions of flocks and herds in abundance : for God had given him substance very much .",
+        "b": "Moreover he provided him cities , and possessions of flocks and herds in abundance ; for God had given him very much substance .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.32.29",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Josiah was eight years old when he began to reign , and he reigned in Jerusalem one and thirty years .",
+        "b": "Josiah was eight years old when he began to reign ; and he reigned thirty and one years in Jerusalem .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.34.1",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "It stood upon twelve oxen , three looking toward the north , and three looking toward the west , and three looking toward the south , and three looking toward the east : and the sea was set above upon them , and all their hinder parts were ",
+        "b": "It stood upon twelve oxen , three looking toward the north , and three looking toward the west , and three looking toward the south , and three looking toward the east : and the sea was set upon them above , and all their hinder parts were ",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.4.4",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And three hundred shields made he of beaten gold : three hundred shekels of gold went to one shield . And the king put them in the house of the forest of Lebanon .",
+        "b": "And he made three hundred shields of beaten gold ; three hundred shekels of gold went to one shield : and the king put them in the house of the forest of Lebanon .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CH.9.16",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Thrice was I beaten with rods , once was I stoned , thrice I suffered shipwreck , a night and a day I have been in the deep ;",
+        "b": "Thrice was I beaten with rods , once was I stoned , thrice I suffered shipwreck , a night and a day have I been in the deep ;",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CO.11.25",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And through a window in a basket was I let down by the wall , and escaped his hands .",
+        "b": "and through a window was I let down in a basket by the wall , and escaped his hands .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2CO.11.33",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And he sent again a captain of the third fifty with his fifty . And the third captain of fifty went up , and came and fell on his knees before Elijah , and besought him , and said unto him , O man of God , I pray thee , let my life , and th",
+        "b": "And again he sent the captain of a third fifty with his fifty . And the third captain of fifty went up , and came and fell on his knees before Elijah , and besought him , and said unto him , O man of God , I pray thee , let my life , and th",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.1.13",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Seven years old was Jehoash when he began to reign .",
+        "b": "Jehoash was seven years old when he began to reign .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.11.21",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Run now , I pray thee , to meet her , and say unto her , Is it well with thee ? is it well with thy husband ? is it well with the child ? And she answered , It is well :",
+        "b": "run , I pray thee , now to meet her , and say unto her , Is it well with thee ? is it well with thy husband ? is it well with the child ? And she answered , It is well .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.4.26",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Then he said , God do so and more also to me , if the head of Elisha the son of Shaphat shall stand on him this day .",
+        "b": "Then he said , God do so to me , and more also , if the head of Elisha the son of Shaphat shall stand on him this day .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.6.31",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "And when he came , behold , the captains of the host were sitting ; and he said , I have an errand to thee , O captain . And Jehu said , Unto which of all us ? And he said , To thee , O captain .",
+        "b": "And when he came , behold , the captains of the host were sitting ; and he said , I have an errand to thee , O captain . And Jehu said , Unto which of us all ? And he said , To thee , O captain .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2KI.9.5",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "But if he thus say , I have no delight in thee ; behold , here am I , let him do to me as seemeth good unto him .",
+        "b": "but if he say thus , I have no delight in thee ; behold , here am I , let him do to me as seemeth good unto him .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.15.26",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "For thy servant doth know that I have sinned : therefore , behold , I am come the first this day of all the house of Joseph to go down to meet my lord the king .",
+        "b": "For thy servant doth know that I have sinned : therefore , behold , I am come this day the first of all the house of Joseph to go down to meet my lord the king .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.19.20",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      },
+      {
+        "a": "Now there was long war between the house of Saul and the house of David : but David waxed stronger and stronger , and the house of Saul waxed weaker and weaker .",
+        "b": "Now there was long war between the house of Saul and the house of David : and David waxed stronger and stronger , but the house of Saul waxed weaker and weaker .",
+        "cause": "word_order_or_syntax",
+        "confidence": "medium_high",
+        "pair": [
+          "KJV",
+          "ASV"
+        ],
+        "ref": "bible.ref.2SA.3.1",
+        "why": "The normalized lexical inventory is the same but its order differs, indicating syntax or word-order translation choice."
+      }
+    ]
+  },
+  "model": "Reference/textual-base alignment happens first. Wording causes are then classified as formatting, modernization, syntax/word order, lexical choice, phrasing/expansion-compression, or substantial rendering requiring deeper lexical study.",
+  "pairs": {
+    "ASV__WEBU": {
+      "cause_counts": {
+        "archaic_language_modernization": 299,
+        "lexical_choice": 11994,
+        "phrasing_or_expansion_compression": 12878,
+        "punctuation_or_formatting": 364,
+        "substantial_rendering_difference": 4998,
+        "word_order_or_syntax": 141
+      },
+      "differing_refs": 30674,
+      "shared_refs": 31079
+    },
+    "KJV__ASV": {
+      "cause_counts": {
+        "archaic_language_modernization": 77,
+        "lexical_choice": 14830,
+        "phrasing_or_expansion_compression": 9856,
+        "punctuation_or_formatting": 1741,
+        "spelling_modernization": 9,
+        "substantial_rendering_difference": 2501,
+        "word_order_or_syntax": 152
+      },
+      "differing_refs": 29166,
+      "shared_refs": 31086
+    },
+    "KJV__WEBU": {
+      "cause_counts": {
+        "archaic_language_modernization": 160,
+        "lexical_choice": 9147,
+        "phrasing_or_expansion_compression": 13683,
+        "punctuation_or_formatting": 292,
+        "spelling_modernization": 3,
+        "substantial_rendering_difference": 7551,
+        "word_order_or_syntax": 89
+      },
+      "differing_refs": 30925,
+      "shared_refs": 31095
+    }
+  },
+  "schema": "dore.english-wording-differences.v0.1",
+  "status": "PASS",
+  "substantial_rendering_difference_count": 15050,
+  "witnesses": {
+    "ASV": 31157,
+    "KJV": 31102,
+    "WEBU": 31098
+  }
+}

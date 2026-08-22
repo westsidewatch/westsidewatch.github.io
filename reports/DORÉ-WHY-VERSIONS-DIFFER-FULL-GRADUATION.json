@@ -1,0 +1,74 @@
+{
+  "capability_statement": "Doré now separates why Bible versions differ at two levels: (1) reference/textual structure—versification, canon/source scope, ancient textual tradition, and textual-base differences; and (2) aligned wording—formatting, archaic or spelling modernization, word order/syntax, lexical choice, expansion/compression, and substantial renderings routed to deeper lexical/textual study.",
+  "failures": [],
+  "milestone": "WHY_VERSIONS_DIFFER_FULL_GRADUATED",
+  "reference_cause_counts": {
+    "chapter_partition_difference": 54,
+    "expanded_ancient_text_tradition": 109,
+    "hebrew_or_critical_versification_boundary": 9,
+    "new_testament_textual_base_difference": 38,
+    "psalm_superscription_or_numbering": 1674,
+    "septuagint_source_versification": 331,
+    "shared_non_anchor_reference_tradition": 103,
+    "translation_versification_divergence": 804,
+    "vulgate_versification": 16
+  },
+  "reference_phenomena_explained": 3138,
+  "safety_boundary": "This explains causes of difference; it does not automatically declare one witness original, inspired, superior, or erroneous. Restricted translations remain external-reader witnesses rather than copied Core corpora.",
+  "schema": "dore.why-versions-differ-full-graduation.v0.1",
+  "verdict": "PASS",
+  "wording_benchmark": {
+    "passed": 5,
+    "status": "PASS",
+    "total": 5
+  },
+  "wording_cause_counts": {
+    "archaic_language_modernization": 536,
+    "lexical_choice": 35971,
+    "phrasing_or_expansion_compression": 36417,
+    "punctuation_or_formatting": 2397,
+    "spelling_modernization": 12,
+    "substantial_rendering_difference": 15050,
+    "word_order_or_syntax": 382
+  },
+  "wording_pair_reports": {
+    "ASV__WEBU": {
+      "cause_counts": {
+        "archaic_language_modernization": 299,
+        "lexical_choice": 11994,
+        "phrasing_or_expansion_compression": 12878,
+        "punctuation_or_formatting": 364,
+        "substantial_rendering_difference": 4998,
+        "word_order_or_syntax": 141
+      },
+      "differing_refs": 30674,
+      "shared_refs": 31079
+    },
+    "KJV__ASV": {
+      "cause_counts": {
+        "archaic_language_modernization": 77,
+        "lexical_choice": 14830,
+        "phrasing_or_expansion_compression": 9856,
+        "punctuation_or_formatting": 1741,
+        "spelling_modernization": 9,
+        "substantial_rendering_difference": 2501,
+        "word_order_or_syntax": 152
+      },
+      "differing_refs": 29166,
+      "shared_refs": 31086
+    },
+    "KJV__WEBU": {
+      "cause_counts": {
+        "archaic_language_modernization": 160,
+        "lexical_choice": 9147,
+        "phrasing_or_expansion_compression": 13683,
+        "punctuation_or_formatting": 292,
+        "spelling_modernization": 3,
+        "substantial_rendering_difference": 7551,
+        "word_order_or_syntax": 89
+      },
+      "differing_refs": 30925,
+      "shared_refs": 31095
+    }
+  }
+}
