@@ -1,4 +1,4 @@
-name: Doré Why Versions Differ Graduation
+name: Doré Scripture Reading Milestone
 on:
   workflow_dispatch:
   push:
@@ -6,7 +6,7 @@ on:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'dore_core/research/**'
-      - 'docs/dore/TEXTUAL-DIFFERENCE-RESEARCH-v0.1.md'
+      - 'scripts/**scripture_reading*.py'
       - 'scripts/ingest_pinned_corpora.py'
       - 'scripts/ingest_lxx_language_core.py'
       - 'scripts/ingest_vulgate_language_core.py'
@@ -27,95 +27,92 @@ on:
       - '.github/workflows/dore-cross-witness-audit.yml'
 permissions: {contents: write}
 jobs:
-  why-versions-differ:
+  scripture-reading:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
       - run: python -m pip install --upgrade pip text-fabric
-      - name: Original-language inventories
+      - name: Read complete original-language canon
         env: {PYTHONPATH: .}
         run: python scripts/ingest_pinned_corpora.py
       - run: |
           git clone --no-checkout https://github.com/CenterBLC/LXX.git .cache/centerblc-lxx
           git -C .cache/centerblc-lxx checkout 4829f3746c84d75576702498e75a68856358f289
-      - name: LXX inventory
+      - name: Read LXX witness
         env: {PYTHONPATH: ., DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935}
         run: python scripts/ingest_lxx_language_core.py
-      - name: Vulgate inventory
+      - name: Read Vulgate witness
         env: {PYTHONPATH: .}
         run: python scripts/ingest_vulgate_language_core.py
-      - name: WEBU inventory
+      - name: Read WEBU witness
         env: {PYTHONPATH: .}
         run: python scripts/ingest_webu_language_core.py
       - run: |
           git clone --no-checkout https://github.com/openbibleinfo/American-Standard-Version-Bible.git .cache/asv
           git -C .cache/asv checkout 5c83ee265c75b3b1c056435eff622a875f1edc45
-      - name: ASV inventory
+      - name: Read ASV witness
         env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx}
         run: python scripts/ingest_asv_language_core.py
       - run: |
           git clone --no-checkout https://github.com/TheologyCommons/Bible.TEI.KJV.git .cache/kjv
           git -C .cache/kjv checkout 014f6966aad1dc8888b088cd11ea8216a46fa738
-      - name: KJV inventory
+      - name: Read KJV witness
         env: {PYTHONPATH: ., DORE_KJV_JSON: .cache/kjv/KJV.json}
         run: python scripts/ingest_kjv_language_core.py
-      - name: CUV Traditional inventory
+      - name: Read CUV Traditional witness
         env: {PYTHONPATH: .}
         run: python scripts/ingest_cuv_traditional_language_core.py
-      - name: Corpus-wide alignment audit
+      - name: Cross-witness alignment and triage
         env: {PYTHONPATH: .}
-        run: python scripts/run_cross_witness_alignment_audit.py
-      - name: Triage structural exceptions
+        run: |
+          python scripts/run_cross_witness_alignment_audit.py
+          python scripts/triage_cross_witness_exceptions.py
+          python scripts/run_cross_witness_graduation_gate.py
+      - name: Understand reference differences
         env: {PYTHONPATH: .}
-        run: python scripts/triage_cross_witness_exceptions.py
-      - name: Engineering graduation
-        env: {PYTHONPATH: .}
-        run: python scripts/run_cross_witness_graduation_gate.py
-      - name: Explain reference-difference causes
-        env: {PYTHONPATH: .}
-        run: python scripts/research_cross_witness_difference_causes.py
-      - name: Build correspondence map
-        env: {PYTHONPATH: .}
-        run: python scripts/build_cross_witness_correspondence_map.py
-      - name: Reference research benchmark
-        env: {PYTHONPATH: .}
-        run: python scripts/benchmark_cross_witness_research.py
-      - name: Reference research graduation
-        env: {PYTHONPATH: .}
-        run: python scripts/run_cross_witness_research_graduation_gate.py
-      - name: Analyze aligned English wording differences
+        run: |
+          python scripts/research_cross_witness_difference_causes.py
+          python scripts/build_cross_witness_correspondence_map.py
+          python scripts/benchmark_cross_witness_research.py
+          python scripts/run_cross_witness_research_graduation_gate.py
+      - name: Understand wording differences
         env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx, DORE_KJV_JSON: .cache/kjv/KJV.json}
-        run: python scripts/analyze_open_english_wording_differences.py
-      - name: Translation-wording benchmark
+        run: |
+          python scripts/analyze_open_english_wording_differences.py
+          python scripts/benchmark_translation_wording_research.py
+          python scripts/run_why_versions_differ_full_graduation.py
+      - name: Canon-spanning final examination
         env: {PYTHONPATH: .}
-        run: python scripts/benchmark_translation_wording_research.py
-      - name: Full why-versions-differ graduation
+        run: python scripts/run_scripture_reading_final_exam.py
+      - name: SCRIPTURE READING COMPLETE milestone gate
         env: {PYTHONPATH: .}
-        run: python scripts/run_why_versions_differ_full_graduation.py
+        run: python scripts/run_scripture_reading_milestone_gate.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dore-why-versions-differ-full-graduation
+          name: dore-scripture-reading-milestone
           path: |
             reports/inventories/*.json
+            reports/DORÉ-CORPUS-READING-REPORT.json
             reports/DORÉ-CROSS-WITNESS-*.json
             reports/DORÉ-ENGLISH-WORDING-DIFFERENCES.json
             reports/DORÉ-TRANSLATION-WORDING-RESEARCH-BENCHMARK.json
             reports/DORÉ-WHY-VERSIONS-DIFFER-FULL-GRADUATION.json
-      - name: Persist all graduation evidence
+            reports/DORÉ-SCRIPTURE-READING-FINAL-EXAM.json
+            reports/DORÉ-SCRIPTURE-READING-MILESTONE.json
+      - name: Persist milestone evidence
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-*.json reports/DORÉ-ENGLISH-WORDING-DIFFERENCES.json reports/DORÉ-TRANSLATION-WORDING-RESEARCH-BENCHMARK.json reports/DORÉ-WHY-VERSIONS-DIFFER-FULL-GRADUATION.json 2>/dev/null || true
+          git add reports/*.json reports/inventories/*.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist full why-versions-differ graduation evidence [skip ci]'
+            git commit -m 'chore(dore): persist Scripture Reading milestone evidence [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin main
             done
-            echo 'failed to persist full graduation evidence after retries' >&2
             exit 1
           fi
