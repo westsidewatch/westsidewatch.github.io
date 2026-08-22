@@ -1,4 +1,4 @@
-"""Doré original-language corpus reader v0.2."""
+"""Doré original-language corpus reader v0.3."""
 from __future__ import annotations
 from dataclasses import dataclass, asdict
 from typing import Optional, Iterable
@@ -9,13 +9,14 @@ OSHB_SNAPSHOT = "3d15126fb1ef74867fc1434be1942e837932691f"
 MORPHGNT_SNAPSHOT = "aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d"
 OSIS = "{http://www.bibletechnologies.net/2003/OSIS/namespace}"
 
+# MorphGNT's in-file reference prefix is 01-27 for Matthew-Revelation.
 MORPHGNT_BOOK_MAP = {
-    "61": "MAT", "62": "MRK", "63": "LUK", "64": "JHN", "65": "ACT",
-    "66": "ROM", "67": "1CO", "68": "2CO", "69": "GAL", "70": "EPH",
-    "71": "PHP", "72": "COL", "73": "1TH", "74": "2TH", "75": "1TI",
-    "76": "2TI", "77": "TIT", "78": "PHM", "79": "HEB", "80": "JAS",
-    "81": "1PE", "82": "2PE", "83": "1JN", "84": "2JN", "85": "3JN",
-    "86": "JUD", "87": "REV",
+    "01": "MAT", "02": "MRK", "03": "LUK", "04": "JHN", "05": "ACT",
+    "06": "ROM", "07": "1CO", "08": "2CO", "09": "GAL", "10": "EPH",
+    "11": "PHP", "12": "COL", "13": "1TH", "14": "2TH", "15": "1TI",
+    "16": "2TI", "17": "TIT", "18": "PHM", "19": "HEB", "20": "JAS",
+    "21": "1PE", "22": "2PE", "23": "1JN", "24": "2JN", "25": "3JN",
+    "26": "JUD", "27": "REV",
 }
 
 @dataclass
@@ -45,12 +46,7 @@ def canonical_id(book: str, chapter: str, verse: str) -> str:
     return f"bible.ref.{book.upper()}.{int(chapter)}.{int(verse)}"
 
 def resolve_ot_language(book_code: str, chapter: int, verse: int) -> tuple[str, str]:
-    """Resolve safe verse-level language labels for the OSHB foundation corpus.
-
-    Daniel 2:4 contains the Hebrew-to-Aramaic transition inside one verse, so it
-    deliberately remains unresolved at verse level until token-level boundary
-    logic is added.
-    """
+    """Resolve safe verse-level language labels for the OSHB foundation corpus."""
     book = book_code.upper()
     if book == "DAN":
         if chapter == 2 and verse == 4:
@@ -59,21 +55,27 @@ def resolve_ot_language(book_code: str, chapter: int, verse: int) -> tuple[str, 
             return "arc", "pass"
         return "he", "pass"
     if book == "EZR":
-        in_first = (chapter == 4 and verse >= 8) or chapter in {5, 6} or (chapter == 6 and verse <= 18)
-        # Refine chapter 6: only vv. 1-18 are Aramaic.
-        if chapter == 6:
-            in_first = verse <= 18
-        in_second = chapter == 7 and 12 <= verse <= 26
-        if in_first or in_second:
+        first_aramaic = (chapter == 4 and verse >= 8) or chapter == 5 or (chapter == 6 and verse <= 18)
+        second_aramaic = chapter == 7 and 12 <= verse <= 26
+        if first_aramaic or second_aramaic:
             return "arc", "pass"
         return "he", "pass"
     return "he", "pass"
 
 def parse_morphgnt_line(line: str, order: int) -> TokenRecord:
+    """Parse one pinned MorphGNT/SBLGNT token line.
+
+    Current pinned corpus has seven whitespace-separated fields:
+    ref, POS, morphology, surface-with-apparatus/punctuation, display form,
+    normalized form, lemma.
+    """
     cols = line.rstrip("\n").split()
-    if len(cols) < 6:
+    if len(cols) < 7:
         raise ValueError("MorphGNT record has insufficient columns")
-    ref, pos, morph, surface, normalized, lemma = cols[:6]
+    ref, pos, morph = cols[:3]
+    surface = cols[3]
+    normalized = cols[-2]
+    lemma = cols[-1]
     if not re.fullmatch(r"\d{6}", ref):
         raise ValueError(f"Unexpected MorphGNT reference: {ref}")
     book_num, chapter, verse = ref[:2], ref[2:4], ref[4:6]
