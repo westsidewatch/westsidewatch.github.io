@@ -11,10 +11,13 @@ BOOK_MAP = {
     "Num":"NUM","Numbers":"NUM","Deut":"DEU","Deuteronomy":"DEU","Josh":"JOS","Joshua":"JOS",
     "Judg":"JDG","Judges":"JDG","Ruth":"RUT","1Sam":"1SA","1 Samuel":"1SA","2Sam":"2SA","2 Samuel":"2SA",
     "1Kgs":"1KI","1 Kings":"1KI","2Kgs":"2KI","2 Kings":"2KI","1Chr":"1CH","1 Chronicles":"1CH","2Chr":"2CH","2 Chronicles":"2CH",
-    "Ezra":"EZR","Neh":"NEH","Nehemiah":"NEH","Esth":"EST","Esther":"EST","Job":"JOB",
+    # Rahlfs Esdras A/B are not naively equivalent to modern Ezra+Nehemiah chapter identities;
+    # retain them in lxx.ref.* until an explicit versification map exists.
+    "Esth":"EST","Esther":"EST","Job":"JOB",
     "Ps":"PSA","Pss":"PSA","Psalm":"PSA","Psalms":"PSA","Prov":"PRO","Proverbs":"PRO",
-    "Eccl":"ECC","Ecclesiastes":"ECC","Song":"SNG","Song of Songs":"SNG","Isa":"ISA","Isaiah":"ISA",
-    "Jer":"JER","Jeremiah":"JER","Lam":"LAM","Lamentations":"LAM","Ezek":"EZK","Ezekiel":"EZK",
+    "Eccl":"ECC","QOH":"ECC","Ecclesiastes":"ECC",
+    "Song":"SNG","Cant":"SNG","CANT":"SNG","Song of Songs":"SNG",
+    "Isa":"ISA","Isaiah":"ISA","Jer":"JER","Jeremiah":"JER","Lam":"LAM","Lamentations":"LAM","Ezek":"EZK","Ezekiel":"EZK",
     "Dan":"DAN","Daniel":"DAN","Hos":"HOS","Hosea":"HOS","Joel":"JOL","Amos":"AMO","Obad":"OBA","Obadiah":"OBA",
     "Jonah":"JON","Mic":"MIC","Micah":"MIC","Nah":"NAM","Nahum":"NAM","Hab":"HAB","Habakkuk":"HAB",
     "Zeph":"ZEP","Zephaniah":"ZEP","Hag":"HAG","Haggai":"HAG","Zech":"ZEC","Zechariah":"ZEC","Mal":"MAL","Malachi":"MAL",
