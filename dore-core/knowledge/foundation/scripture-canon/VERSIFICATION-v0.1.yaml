@@ -1,0 +1,56 @@
+schema_version: dore.versification.v0.1
+status: foundation
+
+principle: canonical passage identity must not be hard-coded to one display numbering tradition
+
+systems:
+  - id: versification.westside.operational
+    role: primary_display_reference
+    description: Westside Watch operational Protestant reference system; exact dataset mapping must be declared before production use.
+
+  - id: versification.source.native
+    role: source_specific
+    description: Placeholder class for numbering native to an ingested textual dataset or translation.
+
+mapping_relations:
+  - equivalent
+  - split
+  - merged
+  - shifted
+  - omitted_in_target
+  - added_in_target
+  - disputed
+
+mapping_contract:
+  required_fields:
+    - source_system
+    - source_ref
+    - target_system
+    - target_ref
+    - relation
+    - provenance
+  optional_fields:
+    - note
+    - confidence
+
+rules:
+  - id: V001
+    statement: Different numbering is not by itself a textual contradiction.
+  - id: V002
+    statement: Mapping must identify both source and target systems.
+  - id: V003
+    statement: A split or merged mapping may relate one source reference to multiple target references or vice versa.
+  - id: V004
+    statement: Doré must preserve source-native numbering when ingesting data.
+  - id: V005
+    statement: Display normalization must never destroy the original source reference.
+
+example_only:
+  source_system: versification.example.A
+  source_ref: ExampleBook.1.1
+  target_system: versification.example.B
+  target_ref: ExampleBook.1.1
+  relation: equivalent
+  provenance:
+    - source.example
+  note: This record demonstrates schema only and asserts no biblical mapping fact.
