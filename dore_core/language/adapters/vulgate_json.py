@@ -107,5 +107,28 @@ class VulgateJSONAdapter:
                                     yielded += 1
                                     yield unit
 
+        # Shape C: bible-api-io witness:
+        # {"booksData": {"Genesis": {"name":"Genesis", "chaptersData":[null, [null, "Gen 1:1", ...], ...]}}}
+        books_data = source.get("booksData") if isinstance(source, dict) else None
+        if isinstance(books_data, dict):
+            for book_key, book_obj in books_data.items():
+                if not isinstance(book_obj, dict):
+                    continue
+                book = book_obj.get("name") or book_key
+                if not self._book_code(str(book)):
+                    continue
+                chapters = book_obj.get("chaptersData")
+                if not isinstance(chapters, list):
+                    continue
+                for ch, verses in enumerate(chapters):
+                    if ch == 0 or not isinstance(verses, list):
+                        continue
+                    for vs, text in enumerate(verses):
+                        if vs == 0 or not isinstance(text, str):
+                            continue
+                        for unit in self._emit_verse(str(book), ch, vs, text, witness):
+                            yielded += 1
+                            yield unit
+
         if yielded == 0:
             raise ValueError("unrecognized Vulgate JSON structure or no canonical verses found")
