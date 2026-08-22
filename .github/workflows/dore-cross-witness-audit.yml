@@ -81,5 +81,12 @@ jobs:
           git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): persist cross-witness graduation evidence [skip ci]'
-            git push
+            for attempt in 1 2 3 4; do
+              if git push; then
+                exit 0
+              fi
+              git pull --rebase origin main
+            done
+            echo 'failed to persist graduation evidence after retries' >&2
+            exit 1
           fi
