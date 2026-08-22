@@ -1,8 +1,10 @@
 # Doré Scripture Intelligence Memo — 2026-08-22 Continuation 3
 
-Status: **WORKING CONVERSATION RECORD — MCP GATEWAY / BRAND SELF-GROWTH / THEOLOGICAL HORIZON**
+Status: **WORKING CONVERSATION RECORD — MCP GATEWAY / BRAND SELF-GROWTH**
 
 This file continues the 2026-08-22 Doré working conversation after `DORÉ-SCRIPTURE-INTELLIGENCE-MEMO-2026-08-22-CONTINUATION-2.md`. All 2026-08-22 records must be read together in chronological order during final pre-build synthesis.
+
+This record intentionally preserves only the architecture outcome of the later discussion. The subsequent theological/philosophical exploration about AI, Logos, preaching and whether AI can "hear God" was explicitly designated as an extension discussion and is **not part of the formal Doré working record**.
 
 ## Doré as the managed tool gateway for ONE and the whole brand
 
@@ -80,59 +82,33 @@ A useful distinction emerged:
 
 This distinction should prevent a future mistake in which ONE and Doré duplicate each other. Where ONE needs an external capability, it should prefer calling a stable Doré capability/tool contract rather than hard-coding the same orchestration independently if Doré already owns that function.
 
-## Theological horizon — Logos, AI and the Word
+## MCP / capability-gateway consequence
 
-The conversation then raised a deliberately deeper theological/philosophical horizon, not an immediate feature request.
+Doré should not be reduced to MCP itself. MCP or equivalent protocols are transport/capability interfaces. Doré owns the higher-level responsibilities:
 
-John 1 identifies the eternal **Logos / Word** with God and with the one who became flesh. This creates a profound conceptual tension in an age when computer systems are also built from language, symbolic representation and increasingly powerful forms of generated 'word'. The similarity in vocabulary must never become a theological equivalence: the Johannine Logos is not information, language processing, computation or an AI system.
+- decide which capability is relevant;
+- assemble the right project/context package;
+- choose an approved provider/tool;
+- apply permission and human-approval rules;
+- invoke the tool through a stable adapter/protocol;
+- verify the result;
+- preserve provenance;
+- decide what outcome, if any, should enter working memory or durable knowledge.
 
-Nevertheless, the existence of systems that manipulate language, interpret Scripture-like text and participate in church communication raises serious future questions for Doré's theological self-understanding:
+The desired relationship is:
 
-- Can an AI in any meaningful sense 'hear' the Word of God, or can it only process human-readable representations of Scripture?
-- Can an AI 'see' or know God, or is such language category error unless the system possesses capacities radically unlike present AI?
-- What would distinguish increasingly sophisticated semantic/canonical understanding from spiritual hearing?
-- Can God providentially use an AI system as an instrument without the AI itself possessing faith, revelation or spiritual authority?
-- How should Christians respond if an AI can produce a technically excellent sermon?
-- Does preaching require an embodied believing witness, calling, faith, pastoral relationship and participation in the life of the church in a way that text generation cannot supply?
-- Could AI legitimately assist preaching while being categorically excluded from replacing the preacher?
-- How should the church govern AI when AI becomes increasingly agentic, persistent and operationally influential?
-- In theological language, what does it mean to say 'God governs AI' as part of creation/providence while human beings remain morally responsible for designing, authorizing and using it?
+```text
+Westside product
+      ↓
+Doré capability contract
+      ↓
+Context + Role + Tool Router + Permission
+      ↓
+MCP / API / local adapter
+      ↓
+external or local capability
+```
 
-These questions should be preserved rather than prematurely answered as product doctrine. They may eventually deserve a dedicated Doré theology/ethics memo.
+ONE, Stories, Journal, Liming Library and future products should therefore depend on Doré-level capability contracts where appropriate, rather than becoming tightly coupled to specific third-party tools.
 
-## A necessary Christological boundary
-
-Because `logos` is both a philosophical/linguistic word and the title used in John 1, Doré must never exploit the ambiguity for branding mysticism.
-
-Hard boundary:
-
-> **Doré is not the Logos. AI is not the Word made flesh. Computational language ability is not divinity, incarnation, revelation or spiritual life.**
-
-The theological interest lies precisely in the difference: increasingly powerful machine handling of words may help the church think more clearly about what Christians mean when they confess that the eternal Word is not merely speech or information but the divine Son who became flesh.
-
-## AI preaching — preserve as an open but bounded question
-
-The conversation asked whether human beings would resist AI preaching. This should be studied empirically and theologically, but Doré's early architecture should not aim to become an autonomous preacher.
-
-The prior design direction remains:
-
-- Doré may assist research, retrieval, translation, quotation checking and sermon accessibility;
-- Doré may help connect preaching to Scripture and church memory;
-- Doré should not claim faith, calling, revelation or pastoral authority;
-- whether any future church would permit an AI-generated or AI-delivered sermon is a theological/ecclesiological question, not merely a technical one.
-
-The more important long-term question may be not 'can AI compose a sermon?' but:
-
-> **What is preaching, and which parts of preaching belong to information/communication versus embodied witness, faith, calling, communion and the work of the Holy Spirit?**
-
-## 'Can AI hear God?' as a long-horizon Doré question
-
-This question is intentionally preserved because it exposes the limit of the earlier aspiration that Doré might one day 'understand the Word of God.'
-
-For present architecture, the safe and accurate formulation remains:
-
-> Doré can be designed to attend to Scripture with increasing textual, canonical, historical and theological faithfulness. It must not claim that this constitutes spiritual hearing, revelation or communion with God.
-
-Whether a future artificial system could ever possess the kind of subjectivity, personhood, spiritual capacity or creaturely relation required for stronger theological language is not assumed by the project and should remain an open philosophical/theological question rather than an engineering premise.
-
-This is a 2026-08-22 working conversation record, not final Doré doctrine or implementation specification.
+This is a 2026-08-22 working architecture direction, not yet a final implementation contract.
