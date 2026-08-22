@@ -1,0 +1,70 @@
+schema_version: dore.first_reading.v0.1
+student: Dore
+course: Scripture Canon
+lesson: 03
+reading_language: grc
+canonical_ref_id: bible.ref.MAT.1.1
+source:
+  corpus_id: corpus.morphgnt.sblgnt
+  repository: morphgnt/sblgnt
+  commit: aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d
+  source_native_ref: '010101'
+
+observed_tokens:
+  - order: 1
+    part_of_speech: N-
+    morphology: '----NSF-'
+    surface: 'Βίβλος'
+    normalized: 'Βίβλος'
+    lemma: 'βίβλος'
+  - order: 2
+    part_of_speech: N-
+    morphology: '----GSF-'
+    surface: 'γενέσεως'
+    normalized: 'γενέσεως'
+    lemma: 'γένεσις'
+  - order: 3
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'Ἰησοῦ'
+    normalized: 'Ἰησοῦ'
+    lemma: 'Ἰησοῦς'
+  - order: 4
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'χριστοῦ'
+    normalized: 'χριστοῦ'
+    lemma: 'Χριστός'
+  - order: 5
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'υἱοῦ'
+    normalized: 'υἱοῦ'
+    lemma: 'υἱός'
+  - order: 6
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'Δαυὶδ'
+    normalized: 'Δαυὶδ'
+    lemma: 'Δαυίδ'
+  - order: 7
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'υἱοῦ'
+    normalized: 'υἱοῦ'
+    lemma: 'υἱός'
+  - order: 8
+    part_of_speech: N-
+    morphology: '----GSM-'
+    surface: 'Ἀβραάμ.'
+    normalized: 'Ἀβραάμ'
+    lemma: 'Ἀβραάμ'
+
+learning_notes:
+  - The inflected surface γενέσεως is retained separately from lemma γένεσις.
+  - The inflected surface χριστοῦ is retained separately from lemma Χριστός.
+  - Morphological labels are analytical metadata, not biblical wording.
+  - Source-native reference 010101 is retained alongside Westside canonical identity.
+  - Punctuation-bearing surface data is not silently substituted by normalized data.
+
+status: first_real_original_language_reading_recorded
