@@ -1,4 +1,4 @@
-name: Doré Cross-Witness Audit
+name: Doré Cross-Witness Graduation Gate
 on:
   workflow_dispatch:
   push:
@@ -14,10 +14,11 @@ on:
       - 'scripts/ingest_kjv_language_core.py'
       - 'scripts/run_cross_witness_alignment_audit.py'
       - 'scripts/triage_cross_witness_exceptions.py'
+      - 'scripts/run_cross_witness_graduation_gate.py'
       - '.github/workflows/dore-cross-witness-audit.yml'
 permissions: {contents: write}
 jobs:
-  audit:
+  graduation-gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -60,21 +61,25 @@ jobs:
       - name: Triage structural exceptions
         env: {PYTHONPATH: .}
         run: python scripts/triage_cross_witness_exceptions.py
+      - name: End-to-end graduation verdict
+        env: {PYTHONPATH: .}
+        run: python scripts/run_cross_witness_graduation_gate.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: dore-cross-witness-audit
+          name: dore-cross-witness-graduation-gate
           path: |
             reports/inventories/*.json
             reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json
             reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json
-      - name: Persist audit
-        if: github.event_name == 'push'
+            reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
+      - name: Persist graduation evidence
+        if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json
+          git add reports/inventories/*.json reports/DORÉ-CROSS-WITNESS-ALIGNMENT-AUDIT.json reports/DORÉ-CROSS-WITNESS-EXCEPTION-TRIAGE.json reports/DORÉ-CROSS-WITNESS-GRADUATION-GATE.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dore): persist cross-witness audit [skip ci]'
+            git commit -m 'chore(dore): persist cross-witness graduation evidence [skip ci]'
             git push
           fi
