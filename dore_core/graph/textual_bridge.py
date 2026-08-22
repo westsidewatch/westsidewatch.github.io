@@ -1,7 +1,7 @@
-"""Bridge Doré original-language readers and intertext graph v0.1."""
+"""Bridge Doré original-language readers and intertext graph v0.2."""
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import Iterable
+from typing import Iterable, Optional
 from dore_core.readers.original_language import TokenRecord
 
 @dataclass(frozen=True)
@@ -9,9 +9,9 @@ class VerseWitness:
     reference: str
     language: str
     surface: tuple[str, ...]
-    normalized: tuple[str, ...]
-    lemmas: tuple[str, ...]
-    morphology: tuple[str, ...]
+    normalized: tuple[Optional[str], ...]
+    lemmas: tuple[Optional[str], ...]
+    morphology: tuple[Optional[str], ...]
     provenance: tuple[str, ...]
 
 @dataclass(frozen=True)
@@ -23,21 +23,44 @@ class IntertextWitnessBridge:
     edge_id: str
 
 
+def _analysis(token: TokenRecord, analysis_type: str) -> Optional[str]:
+    for analysis in token.analyses:
+        if analysis.type == analysis_type:
+            return analysis.value
+    return None
+
+
+def _canonical_ref(reference: str) -> str:
+    if reference.startswith("bible.ref."):
+        return reference
+    parts = reference.split(".")
+    if len(parts) != 3:
+        raise ValueError(f"invalid reference: {reference}")
+    book, chapter, verse = parts
+    return f"bible.ref.{book.upper()}.{int(chapter)}.{int(verse)}"
+
+
 def build_verse_witness(tokens: Iterable[TokenRecord], reference: str) -> VerseWitness:
-    selected = [t for t in tokens if t.reference == reference]
+    canonical_ref = _canonical_ref(reference)
+    selected = [t for t in tokens if t.canonical_ref_id == canonical_ref]
     if not selected:
         raise ValueError(f"no tokens for reference: {reference}")
     selected.sort(key=lambda t: t.order)
     languages = {t.language for t in selected}
     language = next(iter(languages)) if len(languages) == 1 else "mixed"
+    provenance = []
+    for token in selected:
+        marker = f"{token.textual_source_id}@{token.corpus_snapshot}"
+        if marker not in provenance:
+            provenance.append(marker)
     return VerseWitness(
         reference=reference,
         language=language,
         surface=tuple(t.surface for t in selected),
         normalized=tuple(t.normalized for t in selected),
-        lemmas=tuple(t.lemma for t in selected),
-        morphology=tuple(t.morphology for t in selected),
-        provenance=tuple(dict.fromkeys(t.provenance for t in selected)),
+        lemmas=tuple(_analysis(t, "lemma") for t in selected),
+        morphology=tuple(_analysis(t, "morphology") for t in selected),
+        provenance=tuple(provenance),
     )
 
 
