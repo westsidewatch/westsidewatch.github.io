@@ -1,0 +1,90 @@
+{
+  "boundary": "Coordinates describe modern candidate locations; they are never promoted to biblical-location certainty. Competing identifications remain visible.",
+  "checkpoint": "BIBLICAL_GEOGRAPHY_FOUNDATION",
+  "counts": {
+    "ancient_places": 1342,
+    "competing_identification_places": 748,
+    "geocoded_candidates": 3115,
+    "places_with_modern_candidates": 1342,
+    "scripture_attestations": 8742,
+    "tipnr_crosswalks": 1172
+  },
+  "evidence_separation": {
+    "ancient_place_attestation": "SCRIPTURE_EXPLICIT",
+    "ancient_to_modern_identification": "SCHOLARLY_RECONSTRUCTION",
+    "modern_coordinate": "GEOSPATIAL_OBSERVATION"
+  },
+  "failures": [],
+  "milestone": false,
+  "product_relevance": {
+    "bible_search": "place search and candidate geography foundation",
+    "subtitle_proofreader": "place-name identity and contextual disambiguation foundation"
+  },
+  "samples": [
+    {
+      "ancient_id": "a15257a",
+      "canonical_ref_count": 955,
+      "modern_candidates": [
+        {
+          "confidence": 1.0,
+          "description": "Jerusalem",
+          "lat": 31.776667,
+          "lon": 35.234167,
+          "modern_id": "m66c5b8",
+          "type": "settlement"
+        }
+      ],
+      "name": "Jerusalem",
+      "tipnr_source_id": "Jerusalem@Jos.10.1",
+      "types": [
+        "settlement"
+      ]
+    },
+    {
+      "ancient_id": "aea17b7",
+      "canonical_ref_count": 1,
+      "modern_candidates": [
+        {
+          "confidence": 1.0,
+          "description": "Barada River",
+          "lat": 33.513542,
+          "lon": 36.305,
+          "modern_id": "m39ac0b",
+          "type": "river"
+        }
+      ],
+      "name": "Abana",
+      "tipnr_source_id": "Abana@2Ki.5.12",
+      "types": [
+        "river"
+      ]
+    },
+    {
+      "ancient_id": "aa8275b",
+      "canonical_ref_count": 5,
+      "modern_candidates": [
+        {
+          "confidence": 1.0,
+          "description": "Abarim",
+          "lat": 31.7539,
+          "lon": 35.7152,
+          "modern_id": "m207993",
+          "type": "mountain range"
+        }
+      ],
+      "name": "Abarim",
+      "tipnr_source_id": "Nebo_Mount@Deu.32.49",
+      "types": [
+        "mountain range"
+      ]
+    }
+  ],
+  "schema": "dore.biblical-geography-checkpoint.v0.1",
+  "source": {
+    "id": "openbibleinfo/Bible-Geocoding-Data",
+    "license": "CC BY 4.0",
+    "raw_source_redistributed": false,
+    "snapshot": "7eb18a5ee62f27b9b93bd6689ea272d76dd23b8f"
+  },
+  "status": "PASS"
+}
