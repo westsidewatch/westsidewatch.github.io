@@ -1,0 +1,19 @@
+{
+  "error": "unrecognized Vulgate JSON structure or no canonical verses found",
+  "error_type": "ValueError",
+  "snapshot": "06fddfc6e4c09c522271d77cd1ab3b5d924d84a5",
+  "status": "INFRA_FAIL",
+  "study": "language_core.latin_vulgate.full_witness_ingestion",
+  "traceback": [
+    "Traceback (most recent call last):",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/scripts/ingest_vulgate_language_core.py\", line 56, in main",
+    "    result = run()",
+    "             ^^^^^",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/scripts/ingest_vulgate_language_core.py\", line 36, in run",
+    "    units = tuple(VulgateJSONAdapter().ingest(source, witness))",
+    "            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",
+    "  File \"/home/runner/work/westsidewatch.github.io/westsidewatch.github.io/dore_core/language/adapters/vulgate_json.py\", line 111, in ingest",
+    "    raise ValueError(\"unrecognized Vulgate JSON structure or no canonical verses found\")",
+    "ValueError: unrecognized Vulgate JSON structure or no canonical verses found"
+  ]
+}
