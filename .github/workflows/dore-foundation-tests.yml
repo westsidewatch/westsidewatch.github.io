@@ -9,6 +9,7 @@ on:
       - 'scripts/run_abraham_intertext_experiment.py'
       - 'scripts/ingest_oshb_hebrew_lexicon.py'
       - 'scripts/run_aman_concordance.py'
+      - 'scripts/run_language_core_parity.py'
       - '.github/workflows/dore-foundation-tests.yml'
   pull_request:
     paths:
@@ -18,6 +19,7 @@ on:
       - 'scripts/run_abraham_intertext_experiment.py'
       - 'scripts/ingest_oshb_hebrew_lexicon.py'
       - 'scripts/run_aman_concordance.py'
+      - 'scripts/run_language_core_parity.py'
       - '.github/workflows/dore-foundation-tests.yml'
   workflow_dispatch:
 
@@ -66,6 +68,13 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/run_aman_concordance.py
+      - name: Verify universal language-core parity
+        id: language_core_parity
+        if: always()
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+        run: python scripts/run_language_core_parity.py
       - name: Upload Doré reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -76,6 +85,7 @@ jobs:
             reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json
             reports/DORÉ-HEBREW-LEXICON-INGESTION.json
             reports/DORÉ-AMAN-CONCORDANCE.json
+            reports/DORÉ-LANGUAGE-CORE-PARITY.json
           if-no-files-found: warn
           retention-days: 30
       - name: Persist Doré reports
@@ -94,9 +104,12 @@ jobs:
           if [ ! -f reports/DORÉ-AMAN-CONCORDANCE.json ]; then
             printf '{"status":"INFRA_FAIL","error":"aman concordance report was not produced","aman_concordance":"%s"}\n' "${{ steps.aman_concordance.outcome }}" > reports/DORÉ-AMAN-CONCORDANCE.json
           fi
+          if [ ! -f reports/DORÉ-LANGUAGE-CORE-PARITY.json ]; then
+            printf '{"status":"INFRA_FAIL","error":"language core parity report was not produced","language_core_parity":"%s"}\n' "${{ steps.language_core_parity.outcome }}" > reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          fi
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-CORPUS-READING-REPORT.json reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json reports/DORÉ-HEBREW-LEXICON-INGESTION.json reports/DORÉ-AMAN-CONCORDANCE.json
+          git add reports/DORÉ-CORPUS-READING-REPORT.json reports/DORÉ-ABRAHAM-INTERTEXT-EXPERIMENT.json reports/DORÉ-HEBREW-LEXICON-INGESTION.json reports/DORÉ-AMAN-CONCORDANCE.json reports/DORÉ-LANGUAGE-CORE-PARITY.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): persist foundation reports [skip ci]'
             git push
@@ -109,3 +122,4 @@ jobs:
           test "${{ steps.abraham_intertext.outcome }}" = "success"
           test "${{ steps.hebrew_lexicon.outcome }}" = "success"
           test "${{ steps.aman_concordance.outcome }}" = "success"
+          test "${{ steps.language_core_parity.outcome }}" = "success"
