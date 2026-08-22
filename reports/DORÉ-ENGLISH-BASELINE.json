@@ -1,0 +1,116 @@
+{
+  "schema": "dore.english-baseline.v1",
+  "policy": "local_corpus_for_open_witnesses; licensed_api_or_external_reader_for_copyrighted_witnesses; no_unlicensed_bulk_storage",
+  "witnesses": {
+    "webu": {
+      "name": "World English Bible Updated",
+      "access": "local_corpus",
+      "status": "PASS",
+      "source_report": "reports/DORÉ-WEBU-INGESTION.json",
+      "books": null,
+      "verses": null
+    },
+    "asv": {
+      "name": "American Standard Version",
+      "access": "local_corpus",
+      "status": "PASS",
+      "source_report": "reports/DORÉ-ASV-INGESTION.json",
+      "books": 66,
+      "verses": 31157
+    },
+    "kjv": {
+      "name": "King James Version",
+      "access": "local_corpus",
+      "status": "PASS",
+      "source_report": "reports/DORÉ-KJV-INGESTION.json",
+      "books": 66,
+      "verses": 31102
+    },
+    "rsv": {
+      "name": "Revised Standard Version",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "nrsvue": {
+      "name": "New Revised Standard Version Updated Edition",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "nasb": {
+      "name": "New American Standard Bible",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "esv": {
+      "name": "English Standard Version",
+      "access": "licensed_api",
+      "provider": "Crossway ESV API",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_ESV_API_KEY",
+      "diagnostic": null
+    },
+    "niv": {
+      "name": "New International Version",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "nlt": {
+      "name": "New Living Translation",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "net": {
+      "name": "NET Bible",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    },
+    "csb": {
+      "name": "Christian Standard Bible",
+      "access": "licensed_api",
+      "provider": "API.Bible",
+      "status": "CREDENTIAL_REQUIRED",
+      "credential": "DORE_API_BIBLE_KEY",
+      "bible_id": null,
+      "authorized_name": null,
+      "diagnostic": null
+    }
+  },
+  "summary": {
+    "total": 11,
+    "status_counts": {
+      "PASS": 3,
+      "CREDENTIAL_REQUIRED": 8
+    }
+  },
+  "status": "PARTIAL"
+}
