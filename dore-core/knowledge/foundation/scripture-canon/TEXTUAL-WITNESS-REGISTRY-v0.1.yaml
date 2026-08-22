@@ -1,0 +1,67 @@
+schema_version: dore.textual_witness_registry.v0.1
+status: foundation
+principles:
+  - witness_identity_is_not_canonical_identity
+  - translation_is_not_original_language_witness
+  - textual_wording_and_analysis_keep_separate_provenance
+  - licenses_attach_to_components_not_assumptions
+
+witnesses:
+  - id: witness.oshb.wlc
+    tradition: masoretic
+    language: [he, arc]
+    role: original_language_foundation
+    dataset: Open Scriptures Hebrew Bible
+    textual_component: Westminster Leningrad Codex
+    source_id: source.oshb
+    provenance_required: true
+    notes:
+      - Hebrew Bible foundation candidate.
+      - Preserve distinction between base WLC text and analytical lemma/morphology data.
+      - Biblical Aramaic language identification must be retained where supported.
+
+  - id: witness.sblgnt
+    tradition: greek_new_testament_edited_text
+    language: [grc]
+    role: original_language_foundation
+    dataset: SBLGNT
+    source_id: source.sblgnt
+    provenance_required: true
+    notes:
+      - Greek New Testament foundation candidate.
+      - Text edition and MorphGNT analytical layers must retain separate provenance.
+
+analytical_layers:
+  - id: analysis.oshb.lemma_morphology
+    witness_id: witness.oshb.wlc
+    kind: [lemma, morphology]
+    source_id: source.oshb
+    provenance_required: true
+
+  - id: analysis.morphgnt.sblgnt
+    witness_id: witness.sblgnt
+    kind: [lemma, morphology]
+    source_id: source.morphgnt
+    provenance_required: true
+
+future_witness_classes:
+  - septuagint
+  - dead_sea_scrolls
+  - samaritan_pentateuch
+  - greek_nt_manuscript_and_critical_apparatus
+  - syriac_versions
+  - latin_versions
+  - other_ancient_versions
+  - modern_translations
+
+rules:
+  - id: TW001
+    statement: A canonical reference may point to multiple witnesses.
+  - id: TW002
+    statement: A witness reading must always identify its witness or edition when textual precision matters.
+  - id: TW003
+    statement: Lemma and morphology are analytical metadata and require their own provenance.
+  - id: TW004
+    statement: Ancient-version and manuscript evidence may inform textual criticism but must not be silently merged into one reconstructed string.
+  - id: TW005
+    statement: Modern translations are valid translation witnesses but are not original-language textual evidence.
