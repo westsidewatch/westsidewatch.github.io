@@ -187,6 +187,8 @@ def main() -> None:
     REPORT.parent.mkdir(exist_ok=True)
     REPORT.write_text(json.dumps(result, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(result, ensure_ascii=False, indent=2))
+    if not all_pass:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":
