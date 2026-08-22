@@ -24,39 +24,35 @@ class TIPNRRecord:
     aliases:tuple[Alias,...]
     canonical_refs:tuple[str,...]
 
-
 def canonical_ref(raw:str)->str|None:
     m=REF_RE.search(raw)
     if not m or m.group(1) not in BOOK_MAP:return None
     return f'bible.ref.{BOOK_MAP[m.group(1)]}.{int(m.group(2))}.{int(m.group(3))}'
-
 def refs_from_text(text:str)->tuple[str,...]:
     refs=[]
     for m in REF_RE.finditer(text):
         book=BOOK_MAP.get(m.group(1))
         if book:refs.append(f'bible.ref.{book}.{int(m.group(2))}.{int(m.group(3))}')
     return tuple(dict.fromkeys(refs))
-
 def stable_id(category:str,source_unique_name:str)->str:
     digest=hashlib.sha1(f'{category}|{source_unique_name}'.encode()).hexdigest()[:12]
     prefix='person' if category=='PERSON' else 'place' if category=='PLACE' else 'entity'
     return f'bible.{prefix}.tipnr.{digest}'
-
-def _label(unique:str)->str:
-    return unique.split('@',1)[0].replace('_',' ').replace('|',' / ').strip()
-
+def _label(unique:str)->str:return unique.split('@',1)[0].replace('_',' ').replace('|',' / ').strip()
 def _alias_from_form(form_field:str,translated:str)->list[Alias]:
     out=[]
-    if '=' in form_field:
-        forms=form_field.split('=',1)[1]
-        for value in re.split(r'[,;+]',forms):
-            value=value.strip()
-            if value and len(value)<100:
-                lang='he' if re.search(r'[\u0590-\u05ff]',value) else 'grc' if re.search(r'[\u0370-\u03ff\u1f00-\u1fff]',value) else 'und'
-                out.append(Alias(value=value,language=lang,source_id=TIPNR_SOURCE,kind='source_form'))
-    for part in re.split(r'[;/]',translated or ''):
-        value=part.split('=',1)[0].strip().strip('()')
-        if value and len(value)<100 and not value.lower() in {'his','her','their'}:
+    # Compound fields look like H123«H123=word+H456«H456=word. Capture only
+    # the source-script material after each '=', never the embedded tag itself.
+    for value in re.findall(r'=([^+;,]+)',form_field):
+        value=value.strip()
+        if value and len(value)<100:
+            lang='he' if re.search(r'[\u0590-\u05ff]',value) else 'grc' if re.search(r'[\u0370-\u03ff\u1f00-\u1fff]',value) else 'und'
+            out.append(Alias(value=value,language=lang,source_id=TIPNR_SOURCE,kind='source_form'))
+    # '/' in TIPNR often marks parts of one translated compound name, so join it.
+    for part in (translated or '').split(';'):
+        value=part.split('=',1)[0].replace('/',' ').strip().strip('()')
+        value=re.sub(r'\s+',' ',value)
+        if value and len(value)<100 and value.lower() not in {'his','her','their'}:
             out.append(Alias(value=value,language='en',source_id=TIPNR_SOURCE,kind='translation_form'))
     return out
 
@@ -66,9 +62,13 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
         nonlocal current,aliases,refs
         if current is None:return None
         unique,strong=current;label=_label(unique)
+        if not label:
+            current=None;aliases=[];refs=[]
+            return None
         all_aliases=[Alias(label,'en',TIPNR_SOURCE,'preferred_source_label'),*aliases]
         dedup=[];seen=set()
         for a in all_aliases:
+            if not a.value.strip():continue
             key=(a.value,a.language,a.kind)
             if key not in seen:seen.add(key);dedup.append(a)
         rec=TIPNRRecord(category,unique,label,strong,tuple(dedup),tuple(dict.fromkeys(refs)))
@@ -91,7 +91,8 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
             continue
         if line.startswith('‖') or line.startswith('=') or line.startswith('UnifiedName') or line.startswith('Header '):continue
         first=line.split('\t')[0].strip()
-        if '@' in first:
+        # A valid individualised record has a non-empty label before '@'.
+        if '@' in first and first.split('@',1)[0].strip():
             old=flush()
             if old:yield old
             if '=' in first:unique,strong=first.rsplit('=',1)
