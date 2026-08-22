@@ -1,0 +1,220 @@
+{
+  "status": "PASS",
+  "experiment": "lesson04.abraham.cross_language_intertext",
+  "snapshots": {
+    "oshb": "3d15126fb1ef74867fc1434be1942e837932691f",
+    "morphgnt_sblgnt": "aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d"
+  },
+  "bridges": [
+    {
+      "edge_id": "intertext.gen15_6.rom4_3",
+      "relation": "explicit_quote",
+      "claim_class": "TEXT_EXPLICIT",
+      "source": {
+        "reference": "GEN.15.6",
+        "language": "he",
+        "surface": [
+          "וְ/הֶאֱמִ֖ן",
+          "בַּֽ/יהוָ֑ה",
+          "וַ/יַּחְשְׁבֶ֥/הָ",
+          "לּ֖/וֹ",
+          "צְדָקָֽה"
+        ],
+        "normalized": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "lemmas": [
+          "c/539",
+          "b/3068",
+          "c/2803",
+          "l",
+          "6666"
+        ],
+        "morphology": [
+          "HC/Vhp3ms",
+          "HR/Np",
+          "HC/Vqw3ms/Sp3fs",
+          "HR/Sp3ms",
+          "HNcfsa"
+        ],
+        "provenance": [
+          "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f"
+        ]
+      },
+      "target": {
+        "reference": "ROM.4.3",
+        "language": "grc",
+        "surface": [
+          "τί",
+          "γὰρ",
+          "ἡ",
+          "γραφὴ",
+          "λέγει;",
+          "Ἐπίστευσεν",
+          "δὲ",
+          "Ἀβραὰμ",
+          "τῷ",
+          "θεῷ",
+          "καὶ",
+          "ἐλογίσθη",
+          "αὐτῷ",
+          "εἰς",
+          "δικαιοσύνην."
+        ],
+        "normalized": [
+          "τί",
+          "γάρ",
+          "ἡ",
+          "γραφή",
+          "λέγει",
+          "ἐπίστευσε(ν)",
+          "δέ",
+          "Ἀβραάμ",
+          "τῷ",
+          "θεῷ",
+          "καί",
+          "ἐλογίσθη",
+          "αὐτῷ",
+          "εἰς",
+          "δικαιοσύνην"
+        ],
+        "lemmas": [
+          "τίς",
+          "γάρ",
+          "ὁ",
+          "γραφή",
+          "λέγω",
+          "πιστεύω",
+          "δέ",
+          "Ἀβραάμ",
+          "ὁ",
+          "θεός",
+          "καί",
+          "λογίζομαι",
+          "αὐτός",
+          "εἰς",
+          "δικαιοσύνη"
+        ],
+        "morphology": [
+          "----ASN-",
+          "--------",
+          "----NSF-",
+          "----NSF-",
+          "3PAI-S--",
+          "3AAI-S--",
+          "--------",
+          "----NSM-",
+          "----DSM-",
+          "----DSM-",
+          "--------",
+          "3API-S--",
+          "----DSM-",
+          "--------",
+          "----ASF-"
+        ],
+        "provenance": [
+          "source.sblgnt@aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d"
+        ]
+      }
+    },
+    {
+      "edge_id": "intertext.gen15_6.gal3_6",
+      "relation": "explicit_quote",
+      "claim_class": "TEXT_EXPLICIT",
+      "source": {
+        "reference": "GEN.15.6",
+        "language": "he",
+        "surface": [
+          "וְ/הֶאֱמִ֖ן",
+          "בַּֽ/יהוָ֑ה",
+          "וַ/יַּחְשְׁבֶ֥/הָ",
+          "לּ֖/וֹ",
+          "צְדָקָֽה"
+        ],
+        "normalized": [
+          null,
+          null,
+          null,
+          null,
+          null
+        ],
+        "lemmas": [
+          "c/539",
+          "b/3068",
+          "c/2803",
+          "l",
+          "6666"
+        ],
+        "morphology": [
+          "HC/Vhp3ms",
+          "HR/Np",
+          "HC/Vqw3ms/Sp3fs",
+          "HR/Sp3ms",
+          "HNcfsa"
+        ],
+        "provenance": [
+          "source.oshb@3d15126fb1ef74867fc1434be1942e837932691f"
+        ]
+      },
+      "target": {
+        "reference": "GAL.3.6",
+        "language": "grc",
+        "surface": [
+          "καθὼς",
+          "Ἀβραὰμ",
+          "ἐπίστευσεν",
+          "τῷ",
+          "θεῷ,",
+          "καὶ",
+          "ἐλογίσθη",
+          "αὐτῷ",
+          "εἰς",
+          "δικαιοσύνην."
+        ],
+        "normalized": [
+          "καθώς",
+          "Ἀβραάμ",
+          "ἐπίστευσε(ν)",
+          "τῷ",
+          "θεῷ",
+          "καί",
+          "ἐλογίσθη",
+          "αὐτῷ",
+          "εἰς",
+          "δικαιοσύνην"
+        ],
+        "lemmas": [
+          "καθώς",
+          "Ἀβραάμ",
+          "πιστεύω",
+          "ὁ",
+          "θεός",
+          "καί",
+          "λογίζομαι",
+          "αὐτός",
+          "εἰς",
+          "δικαιοσύνη"
+        ],
+        "morphology": [
+          "--------",
+          "----NSM-",
+          "3AAI-S--",
+          "----DSM-",
+          "----DSM-",
+          "--------",
+          "3API-S--",
+          "----DSM-",
+          "--------",
+          "----ASF-"
+        ],
+        "provenance": [
+          "source.sblgnt@aaed91e57c8e4a8dc9a2383e129ca5e75fe6393d"
+        ]
+      }
+    }
+  ]
+}
