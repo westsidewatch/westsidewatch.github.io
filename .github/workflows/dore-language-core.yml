@@ -1,0 +1,63 @@
+name: Doré Language Core
+
+on:
+  push:
+    paths:
+      - 'dore_core/language/**'
+      - 'dore_core/readers/**'
+      - 'scripts/run_language_core_parity.py'
+      - '.github/workflows/dore-language-core.yml'
+  pull_request:
+    paths:
+      - 'dore_core/language/**'
+      - 'dore_core/readers/**'
+      - 'scripts/run_language_core_parity.py'
+      - '.github/workflows/dore-language-core.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run 66-book language-core parity benchmark
+        id: parity
+        continue-on-error: true
+        env:
+          PYTHONPATH: .
+        run: python scripts/run_language_core_parity.py
+      - name: Ensure report exists
+        if: always()
+        run: |
+          mkdir -p reports
+          if [ ! -f reports/DORÉ-LANGUAGE-CORE-PARITY.json ]; then
+            printf '{"status":"INFRA_FAIL","error":"language core parity report was not produced","parity":"%s"}\n' "${{ steps.parity.outcome }}" > reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          fi
+      - name: Upload language-core report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-language-core-report
+          path: reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          retention-days: 30
+      - name: Persist language-core report
+        if: always() && github.event_name == 'push'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): persist language core parity [skip ci]'
+            git push
+          fi
+      - name: Enforce language-core parity
+        if: always()
+        run: test "${{ steps.parity.outcome }}" = "success"
