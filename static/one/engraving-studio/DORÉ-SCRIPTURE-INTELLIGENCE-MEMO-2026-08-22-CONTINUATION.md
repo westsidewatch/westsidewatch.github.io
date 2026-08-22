@@ -185,4 +185,131 @@ FOUNDATION / PRE-BIRTH
 
 Doré therefore has both **inheritance** and **experience**. It inherits Scripture knowledge and Westside Watch's existing body of work before deployment; it then develops lived operational knowledge by accompanying future ministry/product work.
 
+## 2026-08-22 continuation — Doré enters real church life
+
+The discussion expanded Doré's purpose beyond brand/product production. If Doré remains only a system that improves ONE, Westside Stories, Journal and the main site, it is still primarily brand infrastructure. A deeper aspiration is for Doré to become useful **inside actual church and ministry life**, while remaining a tool rather than a pastor, spiritual authority or substitute for human relationships.
+
+A useful working definition is:
+
+> **Doré is not the church's brain. It may become part of the church's memory, library, research room, archive and collaboration layer.**
+
+Potential real-church contributions include:
+
+- **Bible-study and teaching preparation:** retrieve passage structure, people, places, parallels, historical context, original-language questions, major interpretive differences, relevant Liming Library resources and previous Westside teaching without forcing a theological conclusion.
+- **Institutional memory:** connect sermons, Bible studies, testimonies, courses, ministry history, recordings, photographs and approved decisions so useful church knowledge does not disappear after a few years.
+- **Pastoral-support research:** prepare relevant Scripture, church materials and reading resources for human pastors/workers while not autonomously making sensitive pastoral judgments.
+- **Newcomer/discipleship navigation:** help connect gospel, Bible-reading, baptism, study, fellowship and service resources using the church's own approved material.
+- **Ministry bridge:** connect a Sunday sermon or study passage with relevant ONE chapters, Liming Library books, Westside Stories transcripts and Journal material.
+- **Low-risk consistency checks:** surface wrong references, outdated public information, inconsistent names and missing indexes for human review.
+
+The principle is to begin with knowledge, retrieval, connection and assistance before moving toward higher-risk pastoral or corrective behavior.
+
+## Liming Library as an early Doré responsibility
+
+Doré's Librarian faculty should eventually take substantial responsibility for organizing and developing **黎明書局 / Liming Library**, which is currently in need of major structural cleanup and fuller development.
+
+This is especially suitable as an early real-world Doré assignment because it exercises several Core abilities with comparatively low risk:
+
+- inventory and classification;
+- metadata normalization;
+- source/provenance management;
+- Scripture/topic/person/place linking;
+- duplicate and edition detection;
+- resource relationships;
+- retrieval and recommendation;
+- connection between books and actual Westside teaching/ONE/Stories/Journal content.
+
+The aim is not merely to make shelves or files tidy. Doré should help turn Liming Library from a collection of resources into a usable church knowledge hub.
+
+A strong candidate for Doré's **first post-foundation work set** is therefore:
+
+1. **Liming Library reorganization / Librarian** — broad but relatively safe knowledge-management work;
+2. **Westside Stories subtitle proofreading / Proofreader** — technically bounded and likely the simplest first external product call if the Core architecture is sound;
+3. **Doré / Visual Director** — continuation and formalization of the capability already developed through ONE.
+
+These three provide complementary tests: knowledge organization, language correction and visual intelligence.
+
+## From backstage to frontstage — live church presence
+
+A new question was raised: how Doré moves from mostly backstage brand infrastructure into a form that people can encounter in real church life.
+
+A concrete first frontstage vision is **live sermon interpretation/captioning**:
+
+- Cantonese sermon audio -> live Mandarin Chinese subtitles;
+- Chinese sermon audio -> live Chinese + English bilingual subtitles;
+- potentially other approved language combinations later.
+
+The physical interface can be extremely ordinary: a computer receives church audio, Doré's speech/language adapter uses its church/Bible vocabulary and contextual knowledge, and the output appears on a sanctuary/projector/secondary display or approved attendee-facing screen.
+
+Doré's advantage over generic live translation should be contextual: it already knows Scripture names, book names, church terminology, sermon series, speakers and likely passage context. The live system should still preserve uncertainty and avoid silently changing theological meaning merely to make a translation smoother.
+
+This is an important example of **frontstage Doré**: people do not need to understand the Core architecture. They experience Doré as better access to the sermon.
+
+## Physical/digital surfaces for church-life interaction
+
+Doré should not require one universal “Doré app” to enter real life. Different church activities can expose Doré through the surface that already belongs to that activity.
+
+Potential surfaces include:
+
+- sanctuary/projector screens for live captions and bilingual sermon text;
+- a desktop control panel for workers operating live services, Stories, library and production workflows;
+- the Westside Watch website / ONE / Liming Library as public or member-facing retrieval surfaces;
+- mobile web for quick questions, resource lookup, schedules and reading links;
+- QR entry points in church spaces or printed material that open a context-specific Doré view;
+- email/calendar notifications for operational assistance where explicitly authorized;
+- post-sermon transcript/search pages linking sermon text to Scripture and church resources;
+- future voice interaction for hands-busy ministry situations, if accuracy and privacy are sufficient.
+
+The architectural principle is:
+
+> **Doré is one persistent intelligence with many appropriate surfaces, not one interface forced onto every church activity.**
+
+This is the practical meaning of moving from backstage to frontstage.
+
+## Tool orchestration as a future Doré faculty
+
+The conversation also identified a major future capability: Doré may use and coordinate external network/cloud tools on behalf of approved Westside workflows. This would turn Doré from a knowledge assistant into a **tool-aware ministry operations collaborator**.
+
+Examples of tool domains that may eventually be connected through explicit adapters and permissions include:
+
+- **Cloudflare:** domains, DNS, Pages/Workers, routing, deployment/status information and selected infrastructure operations;
+- **Google Calendar:** church events, teaching schedules, meetings, reminders and availability-aware planning;
+- **GitHub:** repositories, issues, PRs, releases, deployment history and project memory;
+- **Google Drive / Docs / Sheets:** approved church documents, teaching resources, planning records and structured operational data;
+- **Gmail / approved mail systems:** drafting, retrieval and explicitly authorized communication workflows;
+- **Zoom / meeting platforms:** meeting links, approved scheduling/context and potentially transcript ingestion where permissions allow;
+- **YouTube / media hosting:** sermon/media metadata, publishing workflows, transcript/resource linking where APIs and permissions allow;
+- **storage/CDN/media services:** approved asset management for Stories, ONE, Journal and live-caption outputs;
+- **translation/speech services:** ASR, translation and text-to-speech providers as replaceable engines behind Doré's adapters;
+- **search/research services:** evidence retrieval with source/provenance capture rather than untraceable copy-paste.
+
+Doré should not receive blanket credentials or unrestricted authority. Tool use must be governed by **least privilege, explicit adapter scopes, action classes and human confirmation rules**. Reading a calendar, proposing an event and actually creating/deleting an event are different authority levels. The same applies to DNS, publishing, email and repository writes.
+
+This suggests a future Core distinction between:
+
+`Know -> Suggest -> Prepare -> Act -> Verify -> Remember`
+
+Doré may know and suggest broadly; higher-impact external actions require explicit permission appropriate to the action. After an authorized action, Doré should verify the real result and record the outcome/provenance rather than assuming success.
+
+## Emerging life-integration model
+
+The current direction can be summarized as three concentric modes:
+
+```text
+DORÉ CORE
+   ↓
+BACKSTAGE
+knowledge / memory / research / library / proofreading / visual direction
+   ↓
+FRONTSTAGE
+live captions / bilingual sermon access / resource discovery / church-facing interfaces
+   ↓
+CONNECTED ACTION
+calendar / publishing / repositories / infrastructure / communications / media tools
+```
+
+These are not three different Dorés. They are increasing levels of presence and authority for the same Core.
+
+The order matters. Doré should first become knowledgeable and reliable backstage; then useful and understandable at frontstage surfaces; then increasingly capable of coordinated action through external tools under explicit permission boundaries.
+
 This is a 2026-08-22 working architecture direction and must be compared with later dated discussions before final implementation.
