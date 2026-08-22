@@ -36,11 +36,18 @@ def _book(ref: str) -> str:
     return parts[2] if len(parts) >= 5 and parts[:2] == ["bible", "ref"] else "UNKNOWN"
 
 
+def _lemma_components(raw_lemma: str | None) -> tuple[str, ...]:
+    if not raw_lemma:
+        return ()
+    return tuple(part for part in raw_lemma.split("/") if part)
+
+
 def build_concordance(tokens: Iterable[TokenRecord], lemma: str) -> ConcordanceReport:
+    """Find a lexical id even when OSHB stores it in a composite lemma like c/539."""
     hits = []
     for token in tokens:
         token_lemma = _analysis(token, "lemma")
-        if token_lemma != lemma:
+        if lemma not in _lemma_components(token_lemma):
             continue
         hits.append(ConcordanceOccurrence(
             canonical_ref_id=token.canonical_ref_id,
