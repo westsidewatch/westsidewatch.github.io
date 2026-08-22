@@ -1,0 +1,129 @@
+schema: dore.witness-registry.v1
+status: ACTIVE
+selection_rule: >-
+  Include mainstream circulating witnesses and versions a researcher of Doré's
+  intended identity must know. Do not optimize for a predetermined count.
+  Additional/specialized witnesses become research_on_demand after baseline completion.
+
+chinese:
+  - id: cuv
+    name: 和合本
+    role: baseline
+    access: local_corpus
+    state: ingested
+    notes: Existing traditional CUV corpus; retain provenance and copyright/licensing evidence.
+  - id: cunp
+    name: 新標點和合本
+    role: baseline
+    access: human_only
+    state: source_verified_access_pending
+    provider: 香港聖經公會
+    notes: Official publisher confirms 1988 edition and current circulation; automated/full-text permission not yet established.
+  - id: rcuv
+    name: 和合本修訂版
+    role: baseline
+    access: human_only
+    state: source_verified_access_pending
+    provider: 香港聖經公會
+    notes: Published 2010 after long UBS/HKBS revision project; automated/full-text permission not yet established.
+  - id: tcv
+    name: 現代中文譯本
+    role: baseline
+    access: human_only
+    state: source_verified_access_pending
+    provider: 聖經公會體系
+    notes: Official HKBS history identifies the 1979 translation and its translation approach.
+  - id: lzz
+    name: 呂振中譯本
+    role: baseline
+    access: human_only
+    state: source_verified_access_pending
+    provider: 香港聖經公會
+    notes: Official HKBS history identifies the 1970 translation and its close-to-source orientation.
+  - id: cnv
+    name: 新譯本
+    role: baseline
+    access: human_only
+    state: access_survey_required
+  - id: recovery
+    name: 恢復本
+    role: baseline
+    access: human_only
+    state: access_survey_required
+  - id: ncb
+    name: 新漢語譯本
+    role: baseline
+    access: human_only
+    state: access_survey_required
+  - id: sigao
+    name: 思高譯本
+    role: baseline
+    access: human_only
+    state: access_survey_required
+
+english:
+  - id: webu
+    name: World English Bible Updated
+    role: baseline
+    access: local_corpus
+    state: ingested
+  - id: kjv
+    name: King James Version
+    role: baseline
+    access: local_corpus_candidate
+    state: source_and_license_survey_required
+  - id: asv
+    name: American Standard Version
+    role: baseline
+    access: local_corpus_candidate
+    state: source_and_license_survey_required
+  - id: rsv
+    name: Revised Standard Version
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: nrsvue
+    name: New Revised Standard Version Updated Edition
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: nasb
+    name: New American Standard Bible
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: esv
+    name: English Standard Version
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: niv
+    name: New International Version
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: nlt
+    name: New Living Translation
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: net
+    name: NET Bible
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+  - id: csb
+    name: Christian Standard Bible
+    role: baseline
+    access: human_only
+    state: licensed_access_survey_required
+
+completion_gate:
+  requires:
+    - every baseline witness has a sourced version dossier
+    - every baseline witness has a verified lawful access policy
+    - every local_corpus witness passes canonical coverage validation
+    - every licensed_api/external_reader witness has a tested canonical-reference route
+    - comparison benchmarks span Chinese, English, and original-language evidence
+  on_pass: BIBLICAL_CORPUS_READING_COMPLETE
+  after_pass_default_for_new_versions: research_on_demand
