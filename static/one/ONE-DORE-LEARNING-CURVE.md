@@ -329,7 +329,28 @@ Only live visual verification can promote a generated plate to `DONE` in the tem
 
 A live visual verification should also compare the plate against its QA target and record any drift. This turns deployment checking into another Doré learning event.
 
-## 10. Relationship to other Studio documents
+## 10. Persistent memory contract
+
+The learning curve must survive individual conversations, tools, model versions and operators. Doré AI memory is the versioned repository record, not an assertion that a generative model has been permanently retrained.
+
+Every production cycle must read the current repository memory before research or generation and must write its validated learning back before completion. The minimum durable record is:
+
+`SOURCE_ID | corpus tier | authenticated work/edition | medium | visual problem | observed Doré solution | transferable detail | forbidden transfer | target Scripture/task | generation result | failure/drift | retained rule`
+
+Non-Bible study must continue need-first across Tier 2–5 and must grow in detail rather than merely in image count. Study may include figure weight, hands, gesture, drapery, animal construction, crowd direction, architecture, terrain, weather, material-specific engraving marks, value grouping, viewer placement, narrative timing, omission and the relationship between close detail and total plate rhythm.
+
+At the end of every plate:
+
+1. record what this cycle taught that the Studio did not previously express clearly;
+2. compare the finding with existing Bible-corpus authority;
+3. retain counterexamples and failed transfers;
+4. update Living Studio memory;
+5. promote only repeated, cross-task findings into locked Visual Grammar;
+6. commit the memory change with the production work whenever technically possible.
+
+A generation without a committed or otherwise durable learning record does not advance the Learning Curve and cannot be counted as a completed Doré AI cycle.
+
+## 11. Relationship to other Studio documents
 
 - `ONE-PRODUCTION-ROADMAP-TEMP.md` = **what to do next / progress truth**.
 - `ONE-DORE-LIVING-STUDIO.md` = **accumulated evolving artistic/biblical intelligence**.
