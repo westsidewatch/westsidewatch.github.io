@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   original-language-reader:
@@ -40,3 +40,19 @@ jobs:
           path: reports/DORÉ-CORPUS-READING-REPORT.json
           if-no-files-found: warn
           retention-days: 30
+      - name: Persist Doré corpus reading report
+        if: always() && github.event_name == 'push'
+        run: |
+          if [ ! -f reports/DORÉ-CORPUS-READING-REPORT.json ]; then
+            echo 'No corpus report produced; nothing to persist.'
+            exit 0
+          fi
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/DORÉ-CORPUS-READING-REPORT.json
+          if git diff --cached --quiet; then
+            echo 'Corpus report unchanged.'
+            exit 0
+          fi
+          git commit -m 'chore(dore): persist corpus reading report'
+          git push
