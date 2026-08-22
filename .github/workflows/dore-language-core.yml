@@ -10,6 +10,7 @@ on:
       - 'scripts/ingest_vulgate_language_core.py'
       - 'scripts/ingest_webu_language_core.py'
       - 'scripts/ingest_cuv_traditional_language_core.py'
+      - 'scripts/ingest_asv_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   pull_request:
     paths:
@@ -20,6 +21,7 @@ on:
       - 'scripts/ingest_vulgate_language_core.py'
       - 'scripts/ingest_webu_language_core.py'
       - 'scripts/ingest_cuv_traditional_language_core.py'
+      - 'scripts/ingest_asv_language_core.py'
       - '.github/workflows/dore-language-core.yml'
   workflow_dispatch:
 
@@ -41,8 +43,7 @@ jobs:
       - name: Run 66-book language-core parity benchmark
         id: parity
         continue-on-error: true
-        env:
-          PYTHONPATH: .
+        env: {PYTHONPATH: .}
         run: python scripts/run_language_core_parity.py
       - name: Clone pinned LXX witness
         id: lxx_source
@@ -56,68 +57,63 @@ jobs:
         id: lxx
         if: always()
         continue-on-error: true
-        env:
-          PYTHONPATH: .
-          DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935
+        env: {PYTHONPATH: ., DORE_LXX_TF_DIR: .cache/centerblc-lxx/tf/1935}
         run: python scripts/ingest_lxx_language_core.py
       - name: Ingest complete Latin Vulgate witness
         id: vulgate
         if: always()
         continue-on-error: true
-        env:
-          PYTHONPATH: .
+        env: {PYTHONPATH: .}
         run: python scripts/ingest_vulgate_language_core.py
       - name: Ingest complete English WEBU witness
         id: webu
         if: always()
         continue-on-error: true
-        env:
-          PYTHONPATH: .
+        env: {PYTHONPATH: .}
         run: python scripts/ingest_webu_language_core.py
+      - name: Clone pinned ASV witness
+        id: asv_source
+        if: always()
+        continue-on-error: true
+        run: |
+          rm -rf .cache/asv
+          git clone --no-checkout https://github.com/openbibleinfo/American-Standard-Version-Bible.git .cache/asv
+          git -C .cache/asv checkout 5c83ee265c75b3b1c056435eff622a875f1edc45
+      - name: Ingest complete English ASV witness
+        id: asv
+        if: always()
+        continue-on-error: true
+        env: {PYTHONPATH: ., DORE_ASV_USX_DIR: .cache/asv/usx}
+        run: python scripts/ingest_asv_language_core.py
       - name: Ingest complete Traditional Chinese CUV witness
         id: cuv_traditional
         if: always()
         continue-on-error: true
-        env:
-          PYTHONPATH: .
+        env: {PYTHONPATH: .}
         run: python scripts/ingest_cuv_traditional_language_core.py
       - name: Ensure reports exist
         if: always()
         run: |
           mkdir -p reports
-          if [ ! -f reports/DORÉ-LANGUAGE-CORE-PARITY.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"language core parity report was not produced","parity":"%s"}\n' "${{ steps.parity.outcome }}" > reports/DORÉ-LANGUAGE-CORE-PARITY.json
-          fi
-          if [ ! -f reports/DORÉ-LXX-INGESTION.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"LXX ingestion report was not produced","lxx_source":"%s","lxx":"%s"}\n' "${{ steps.lxx_source.outcome }}" "${{ steps.lxx.outcome }}" > reports/DORÉ-LXX-INGESTION.json
-          fi
-          if [ ! -f reports/DORÉ-VULGATE-INGESTION.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"Vulgate ingestion report was not produced","vulgate":"%s"}\n' "${{ steps.vulgate.outcome }}" > reports/DORÉ-VULGATE-INGESTION.json
-          fi
-          if [ ! -f reports/DORÉ-WEBU-INGESTION.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"WEBU ingestion report was not produced","webu":"%s"}\n' "${{ steps.webu.outcome }}" > reports/DORÉ-WEBU-INGESTION.json
-          fi
-          if [ ! -f reports/DORÉ-CUV-TRADITIONAL-INGESTION.json ]; then
-            printf '{"status":"INFRA_FAIL","error":"Traditional Chinese CUV ingestion report was not produced","cuv_traditional":"%s"}\n' "${{ steps.cuv_traditional.outcome }}" > reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
-          fi
+          test -f reports/DORÉ-LANGUAGE-CORE-PARITY.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-LANGUAGE-CORE-PARITY.json
+          test -f reports/DORÉ-LXX-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-LXX-INGESTION.json
+          test -f reports/DORÉ-VULGATE-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-VULGATE-INGESTION.json
+          test -f reports/DORÉ-WEBU-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-WEBU-INGESTION.json
+          test -f reports/DORÉ-ASV-INGESTION.json || printf '{"status":"INFRA_FAIL","asv_source":"${{ steps.asv_source.outcome }}","asv":"${{ steps.asv.outcome }}"}\n' > reports/DORÉ-ASV-INGESTION.json
+          test -f reports/DORÉ-CUV-TRADITIONAL-INGESTION.json || printf '{"status":"INFRA_FAIL"}\n' > reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
       - name: Upload language-core reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: dore-language-core-reports
-          path: |
-            reports/DORÉ-LANGUAGE-CORE-PARITY.json
-            reports/DORÉ-LXX-INGESTION.json
-            reports/DORÉ-VULGATE-INGESTION.json
-            reports/DORÉ-WEBU-INGESTION.json
-            reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
+          path: reports/DORÉ-*.json
           retention-days: 30
       - name: Persist language-core reports
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-LANGUAGE-CORE-PARITY.json reports/DORÉ-LXX-INGESTION.json reports/DORÉ-VULGATE-INGESTION.json reports/DORÉ-WEBU-INGESTION.json reports/DORÉ-CUV-TRADITIONAL-INGESTION.json
+          git add reports/DORÉ-*.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): persist language core reports [skip ci]'
             git push
@@ -130,4 +126,6 @@ jobs:
           test "${{ steps.lxx.outcome }}" = "success"
           test "${{ steps.vulgate.outcome }}" = "success"
           test "${{ steps.webu.outcome }}" = "success"
+          test "${{ steps.asv_source.outcome }}" = "success"
+          test "${{ steps.asv.outcome }}" = "success"
           test "${{ steps.cuv_traditional.outcome }}" = "success"
