@@ -278,6 +278,181 @@ The working definition has advanced from simply “Westside Watch Scripture Inte
 
 This is a working 2026-08-22 definition, not yet the final pre-build specification. It must remain available for comparison with later dated conversations.
 
+## 2026-08-22 continuation — cognitive loop: observer before recorder
+
+The discussion then moved below the product-feature layer into Doré Core's **cognitive architecture**. The central question is no longer whether Doré is a secretary, Bible database, image maker, visual director, subtitle proofreader or brand archivist. Those are possible faculties/roles. The deeper question is how Doré notices brand activity, understands context, decides whether it is relevant, selects an appropriate role, acts, observes the result and decides what—if anything—should become memory.
+
+A key distinction was established:
+
+> **Observe is not the same as Remember.**
+
+Doré may observe a broad range of appropriate Westside Watch workflows without permanently promoting every sentence, draft, experiment or passing idea into durable knowledge. Observation is the intake layer; memory is a later judgment.
+
+A conceptual cognitive loop is:
+
+```text
+Brand activity
+    ↓
+Observe
+    ↓
+Understand / contextualize / relate
+    ↓
+Is Doré relevant here?
+    ├── no  → remain present, do not intervene
+    └── yes → select an appropriate bounded role
+                 ↓
+              Assist
+                 ↓
+           Observe outcome
+                 ↓
+          Should this be remembered?
+                 ↓
+        classify / review / promote
+```
+
+This refines the earlier persistent-learning principle. **Presence does not imply intervention.** Doré can remain contextually present while acting only when relevance, confidence and product permission justify action.
+
+## Doré's roles are faculties, not its identity
+
+The conversation explicitly tested several possible identities:
+
+- recorder of everything;
+- recorder of important matters;
+- observer of brand actions;
+- secretary for production and AI conversations;
+- Bible database;
+- image maker;
+- brand visual director/master;
+- subtitle proofreader.
+
+The working conclusion is that none of these alone should define Doré. They are bounded faculties exposed through roles/adapters. Doré Core instead decides:
+
+- what is happening;
+- which project/workstream/context it belongs to;
+- what existing knowledge is relevant;
+- whether Doré should participate;
+- which faculty/role is appropriate;
+- what level of certainty applies;
+- whether the result deserves memory;
+- what memory class/status it should receive;
+- whether new work confirms, conflicts with or supersedes earlier understanding.
+
+This implies a deeper Core shape than only `Core + Knowledge + Adapters`. The cognitive center now appears to require at least the concepts of **Observer, Context, Judgment, Memory and Role Routing**, with Evidence/Provenance available throughout.
+
+Conceptually:
+
+```text
+                    DORÉ
+
+               ┌── OBSERVER ──┐
+               │              │
+               ↓              │
+             CONTEXT           │
+               ↓              │
+           REASONING           │
+          ↙    ↓    ↘          │
+    Knowledge Memory Evidence  │
+          ↘    ↓    ↙          │
+            JUDGMENT           │
+               ↓              │
+          ROLE ROUTER          │
+        ↙      ↓       ↘       │
+     Visual  Steward  Subtitle ...
+        \       │       /
+               ↓
+             ACTION
+               ↓
+             RESULT
+               │
+               └────────→ OBSERVER
+```
+
+This diagram is exploratory, not yet an implementation contract, but the cognitive responsibilities it exposes must be considered before initial code structure is fixed.
+
+## Working memory and durable knowledge must be distinct
+
+Today's own conversation became the test case. At present the human must explicitly tell the current AI to write an important discussion into the 2026-08-22 Doré working record, identify whether it belongs to the dated record or master memo, and trigger the repository update.
+
+A mature Doré should improve this workflow. If the active context is already known as:
+
+`Westside Watch -> Doré -> Cognitive Architecture -> Working Conversation -> 2026-08-22`
+
+then Doré should be capable of recognizing that a statement such as “Doré must not be one giant prompt” is potentially an `architecture_decision_candidate`, without requiring the human to restate the date, file hierarchy and project context every time.
+
+However, Doré must **not** simply write every utterance into permanent knowledge. Two memory forms are therefore required conceptually:
+
+### Working memory / work history
+
+Preserves development and sequence: ideas proposed, questions raised, alternatives explored, later rejection, revision and supersession. This is where the dated 08-22 / 08-23 conversation records belong.
+
+### Durable knowledge
+
+Represents the current promoted understanding: approved/candidate principles, their provenance, what they supersede, and their current status.
+
+A discarded idea may remain visible in work history while no longer being active durable knowledge. This distinction is necessary if Doré is to learn from the brand without confusing the history of thought with the current truth/state of the product.
+
+## Doré / Steward — conversation and work-context faculty
+
+The discussion identified a likely future faculty tentatively called **Doré / Steward**. This is not Doré Core itself. It is the role through which Doré can assist ongoing human–AI and production workflows.
+
+Potential Steward behavior:
+
+- at the start of a work session, recover the relevant project phase, prior decisions, open questions and authoritative sources;
+- during work, observe without constant interruption;
+- identify candidate decisions, possible supersessions, conflicts with existing approved knowledge and missing evidence;
+- at the end or appropriate checkpoint, organize the work into new ideas, decisions, open questions, superseded ideas, conflicts, verification needs and possible Core/Knowledge changes;
+- route those records to the correct dated working record and knowledge-promotion process.
+
+This would reduce the human's current burden of repeatedly instructing an AI which memo to read, which date to use, which prior decision matters and which kind of record a new idea belongs to.
+
+## Doré as context provider to other AI systems
+
+A further consequence is that Doré's value is not only remembering for itself. It can become the layer that gives whichever AI/model is currently doing Westside Watch work the **right bounded context**.
+
+Rather than loading an ever-growing giant prompt or every historical document, Doré could assemble a task-context package such as:
+
+```text
+Project: Doré
+Current phase: Cognitive Architecture
+Current workstream: Core memory model
+
+Relevant approved principles:
+- model-independent durable knowledge
+- provenance required
+- Observe != Remember
+- product adapters remain bounded
+
+Recent working decisions:
+- relevant dated records only
+
+Open questions:
+- memory-promotion authority
+- observation scope
+- automatic participation boundary
+
+Relevant sources:
+- master memo
+- dated working record(s)
+- relevant ONE / Visual experience
+
+Do not assume:
+- candidate ideas are approved architecture
+```
+
+This means Doré may eventually function as a **context broker/steward** between Westside Watch's durable institutional memory and replaceable AI models. The AI provider can change while the project enters each session with coherent, provenance-aware context.
+
+## Cognitive principle emerging from 2026-08-22
+
+The discussion produced a concise working principle:
+
+> **Doré observes broadly, assists selectively, records faithfully, promotes cautiously.**
+>
+> **多雷廣泛觀察，選擇參與，忠實記錄，謹慎沉澱。**
+
+This should be treated as a strong candidate Core principle, not yet silently promoted to final architecture before later dated discussions and the pre-build synthesis.
+
+The practical aspiration is equally important: if Doré is implemented correctly, the human should no longer need to repeatedly tell the active AI, “this belongs in Doré's 08-22 working record rather than the master memo.” Doré should understand the active work context well enough to assist with classification and recording, while final authority over important product decisions and promotion remains human.
+
 ## Future API/service contract
 
 Doré should eventually expose stable service contracts rather than requiring every product to know its internal model or prompt implementation.
