@@ -6,11 +6,11 @@ source does not provide.
 """
 from __future__ import annotations
 import re
-from collections import defaultdict
 from typing import Any, Iterable
 from dore_core.language.base import AdapterCapabilities, LanguageUnit, TextWitness
 
 BOOK_ALIASES = {
+    # English/common names
     "genesis":"GEN","exodus":"EXO","leviticus":"LEV","numbers":"NUM","deuteronomy":"DEU",
     "joshua":"JOS","judges":"JDG","ruth":"RUT","1 samuel":"1SA","2 samuel":"2SA",
     "1 kings":"1KI","2 kings":"2KI","1 chronicles":"1CH","2 chronicles":"2CH",
@@ -24,6 +24,33 @@ BOOK_ALIASES = {
     "2 thessalonians":"2TH","1 timothy":"1TI","2 timothy":"2TI","titus":"TIT","philemon":"PHM",
     "hebrews":"HEB","james":"JAS","1 peter":"1PE","2 peter":"2PE","1 john":"1JN","2 john":"2JN",
     "3 john":"3JN","jude":"JUD","revelation":"REV",
+
+    # Latin / traditional Vulgate titles used by common Vulgate datasets
+    "numeri":"NUM","deuteronomium":"DEU","josue":"JOS","judicum":"JDG",
+    "i regum":"1SA","ii regum":"2SA","iii regum":"1KI","iv regum":"2KI",
+    "1 regum":"1SA","2 regum":"2SA","3 regum":"1KI","4 regum":"2KI",
+    "i paralipomenon":"1CH","ii paralipomenon":"2CH","1 paralipomenon":"1CH","2 paralipomenon":"2CH",
+    "i esdrae":"EZR","ii esdrae":"NEH","1 esdrae":"EZR","2 esdrae":"NEH",
+    "psalmi":"PSA","proverbia":"PRO","canticum canticorum":"SNG","isaias":"ISA","jeremias":"JER",
+    "lamentationes":"LAM","ezechiel":"EZK","osee":"HOS","abdias":"OBA","jonas":"JON","michaeas":"MIC",
+    "habacuc":"HAB","sophonias":"ZEP","aggaeus":"HAG","zacharias":"ZEC","malachias":"MAL",
+    "matthaeus":"MAT","marcus":"MRK","lucas":"LUK","joannes":"JHN","ioannes":"JHN",
+    "actus apostolorum":"ACT","ad romanos":"ROM",
+    "i ad corinthios":"1CO","ii ad corinthios":"2CO","1 ad corinthios":"1CO","2 ad corinthios":"2CO",
+    "ad galatas":"GAL","ad ephesios":"EPH","ad philippenses":"PHP","ad colossenses":"COL",
+    "i ad thessalonicenses":"1TH","ii ad thessalonicenses":"2TH","1 ad thessalonicenses":"1TH","2 ad thessalonicenses":"2TH",
+    "i ad timotheum":"1TI","ii ad timotheum":"2TI","1 ad timotheum":"1TI","2 ad timotheum":"2TI",
+    "ad titum":"TIT","ad philemonem":"PHM","ad hebraeos":"HEB","jacobi":"JAS","iacobi":"JAS",
+    "i petri":"1PE","ii petri":"2PE","1 petri":"1PE","2 petri":"2PE",
+    "i joannis":"1JN","ii joannis":"2JN","iii joannis":"3JN",
+    "i ioannis":"1JN","ii ioannis":"2JN","iii ioannis":"3JN",
+    "1 joannis":"1JN","2 joannis":"2JN","3 joannis":"3JN",
+    "judae":"JUD","iudae":"JUD","apocalypsis":"REV","apocalypsis joannis":"REV","apocalypsis ioannis":"REV",
+
+    # Deuterocanonical / Vulgate witnesses retained as distinct canonical-like ids.
+    "tobias":"TOB","tobit":"TOB","judith":"JDT","iudith":"JDT","sapientia":"WIS",
+    "ecclesiasticus":"SIR","baruch":"BAR","i machabaeorum":"1MA","ii machabaeorum":"2MA",
+    "1 machabaeorum":"1MA","2 machabaeorum":"2MA","i maccabees":"1MA","ii maccabees":"2MA",
 }
 
 TOKEN_RE = re.compile(r"\w+(?:['’\-]\w+)*|[^\w\s]", re.UNICODE)
@@ -43,30 +70,46 @@ class VulgateJSONAdapter:
         key = re.sub(r"\s+", " ", name.strip().lower())
         return BOOK_ALIASES.get(key)
 
+    def recognized_book_names(self, source: Any) -> tuple[str, ...]:
+        books_data = source.get("booksData") if isinstance(source, dict) else None
+        if not isinstance(books_data, dict):
+            return ()
+        return tuple(sorted(
+            str((obj.get("name") if isinstance(obj, dict) else None) or key)
+            for key, obj in books_data.items()
+            if self._book_code(str((obj.get("name") if isinstance(obj, dict) else None) or key))
+        ))
+
+    def unrecognized_book_names(self, source: Any) -> tuple[str, ...]:
+        books_data = source.get("booksData") if isinstance(source, dict) else None
+        if not isinstance(books_data, dict):
+            return ()
+        return tuple(sorted(
+            str((obj.get("name") if isinstance(obj, dict) else None) or key)
+            for key, obj in books_data.items()
+            if not self._book_code(str((obj.get("name") if isinstance(obj, dict) else None) or key))
+        ))
+
     def _emit_verse(self, book: str, chapter: int, verse: int, text: str, witness: TextWitness) -> Iterable[LanguageUnit]:
         code = self._book_code(book)
         if not code:
             return ()
         ref = f"bible.ref.{code}.{int(chapter)}.{int(verse)}"
-        result = []
-        for order, surface in enumerate(TOKEN_RE.findall(text), start=1):
-            result.append(LanguageUnit(
-                witness_id=witness.witness_id,
-                canonical_ref_id=ref,
-                order=order,
-                surface=surface,
-                normalized=self.normalize(surface),
-                language="la",
-                analyses=(),
-                provenance=(f"textual_source:{witness.source_id}", f"snapshot:{witness.snapshot}"),
-            ))
-        return tuple(result)
+        return tuple(LanguageUnit(
+            witness_id=witness.witness_id,
+            canonical_ref_id=ref,
+            order=order,
+            surface=surface,
+            normalized=self.normalize(surface),
+            language="la",
+            analyses=(),
+            provenance=(f"textual_source:{witness.source_id}", f"snapshot:{witness.snapshot}"),
+        ) for order, surface in enumerate(TOKEN_RE.findall(text), start=1))
 
     def ingest(self, source: Any, witness: TextWitness) -> Iterable[LanguageUnit]:
         """Detect common nested Bible JSON shapes and emit all recognized verses."""
         yielded = 0
 
-        # Shape A: {"Genesis": {"1": {"1": "..."}}}
         if isinstance(source, dict):
             for book, chapters in source.items():
                 if self._book_code(str(book)) and isinstance(chapters, (dict, list)):
@@ -83,7 +126,6 @@ class VulgateJSONAdapter:
                                 yielded += 1
                                 yield unit
 
-        # Shape B: [{"name"/"book":"Genesis", "chapters":[["verse", ...], ...]}]
         books = source if isinstance(source, list) else source.get("books") if isinstance(source, dict) else None
         if isinstance(books, list):
             for book_obj in books:
@@ -107,8 +149,6 @@ class VulgateJSONAdapter:
                                     yielded += 1
                                     yield unit
 
-        # Shape C: bible-api-io witness:
-        # {"booksData": {"Genesis": {"name":"Genesis", "chaptersData":[null, [null, "Gen 1:1", ...], ...]}}}
         books_data = source.get("booksData") if isinstance(source, dict) else None
         if isinstance(books_data, dict):
             for book_key, book_obj in books_data.items():
