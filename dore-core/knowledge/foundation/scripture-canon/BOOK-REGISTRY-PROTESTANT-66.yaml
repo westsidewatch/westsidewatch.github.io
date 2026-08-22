@@ -1,0 +1,70 @@
+schema: dore.scripture.books.v0.1
+operational_canon: protestant_66
+status: foundation
+books:
+  - {osis: Gen, order: 1, testament: OT, chapters: 50, zh_Hant: 創世記, en: Genesis, aliases: [創, Gen]}
+  - {osis: Exod, order: 2, testament: OT, chapters: 40, zh_Hant: 出埃及記, en: Exodus, aliases: [出, Exod, Ex]}
+  - {osis: Lev, order: 3, testament: OT, chapters: 27, zh_Hant: 利未記, en: Leviticus, aliases: [利, Lev]}
+  - {osis: Num, order: 4, testament: OT, chapters: 36, zh_Hant: 民數記, en: Numbers, aliases: [民, Num]}
+  - {osis: Deut, order: 5, testament: OT, chapters: 34, zh_Hant: 申命記, en: Deuteronomy, aliases: [申, Deut]}
+  - {osis: Josh, order: 6, testament: OT, chapters: 24, zh_Hant: 約書亞記, en: Joshua, aliases: [書, Josh]}
+  - {osis: Judg, order: 7, testament: OT, chapters: 21, zh_Hant: 士師記, en: Judges, aliases: [士, Judg]}
+  - {osis: Ruth, order: 8, testament: OT, chapters: 4, zh_Hant: 路得記, en: Ruth, aliases: [得, Ruth]}
+  - {osis: 1Sam, order: 9, testament: OT, chapters: 31, zh_Hant: 撒母耳記上, en: 1 Samuel, aliases: [撒上, 1Sam]}
+  - {osis: 2Sam, order: 10, testament: OT, chapters: 24, zh_Hant: 撒母耳記下, en: 2 Samuel, aliases: [撒下, 2Sam]}
+  - {osis: 1Kgs, order: 11, testament: OT, chapters: 22, zh_Hant: 列王紀上, en: 1 Kings, aliases: [王上, 1Kgs]}
+  - {osis: 2Kgs, order: 12, testament: OT, chapters: 25, zh_Hant: 列王紀下, en: 2 Kings, aliases: [王下, 2Kgs]}
+  - {osis: 1Chr, order: 13, testament: OT, chapters: 29, zh_Hant: 歷代志上, en: 1 Chronicles, aliases: [代上, 1Chr]}
+  - {osis: 2Chr, order: 14, testament: OT, chapters: 36, zh_Hant: 歷代志下, en: 2 Chronicles, aliases: [代下, 2Chr]}
+  - {osis: Ezra, order: 15, testament: OT, chapters: 10, zh_Hant: 以斯拉記, en: Ezra, aliases: [拉, Ezra]}
+  - {osis: Neh, order: 16, testament: OT, chapters: 13, zh_Hant: 尼希米記, en: Nehemiah, aliases: [尼, Neh]}
+  - {osis: Esth, order: 17, testament: OT, chapters: 10, zh_Hant: 以斯帖記, en: Esther, aliases: [斯, Esth]}
+  - {osis: Job, order: 18, testament: OT, chapters: 42, zh_Hant: 約伯記, en: Job, aliases: [伯, Job]}
+  - {osis: Ps, order: 19, testament: OT, chapters: 150, zh_Hant: 詩篇, en: Psalms, aliases: [詩, Ps, Psalm, Psalms]}
+  - {osis: Prov, order: 20, testament: OT, chapters: 31, zh_Hant: 箴言, en: Proverbs, aliases: [箴, Prov]}
+  - {osis: Eccl, order: 21, testament: OT, chapters: 12, zh_Hant: 傳道書, en: Ecclesiastes, aliases: [傳, Eccl]}
+  - {osis: Song, order: 22, testament: OT, chapters: 8, zh_Hant: 雅歌, en: Song of Songs, aliases: [歌, Song, Canticles]}
+  - {osis: Isa, order: 23, testament: OT, chapters: 66, zh_Hant: 以賽亞書, en: Isaiah, aliases: [賽, Isa]}
+  - {osis: Jer, order: 24, testament: OT, chapters: 52, zh_Hant: 耶利米書, en: Jeremiah, aliases: [耶, Jer]}
+  - {osis: Lam, order: 25, testament: OT, chapters: 5, zh_Hant: 耶利米哀歌, en: Lamentations, aliases: [哀, Lam]}
+  - {osis: Ezek, order: 26, testament: OT, chapters: 48, zh_Hant: 以西結書, en: Ezekiel, aliases: [結, Ezek]}
+  - {osis: Dan, order: 27, testament: OT, chapters: 12, zh_Hant: 但以理書, en: Daniel, aliases: [但, Dan]}
+  - {osis: Hos, order: 28, testament: OT, chapters: 14, zh_Hant: 何西阿書, en: Hosea, aliases: [何, Hos]}
+  - {osis: Joel, order: 29, testament: OT, chapters: 3, zh_Hant: 約珥書, en: Joel, aliases: [珥, Joel]}
+  - {osis: Amos, order: 30, testament: OT, chapters: 9, zh_Hant: 阿摩司書, en: Amos, aliases: [摩, Amos]}
+  - {osis: Obad, order: 31, testament: OT, chapters: 1, zh_Hant: 俄巴底亞書, en: Obadiah, aliases: [俄, Obad]}
+  - {osis: Jonah, order: 32, testament: OT, chapters: 4, zh_Hant: 約拿書, en: Jonah, aliases: [拿, Jonah]}
+  - {osis: Mic, order: 33, testament: OT, chapters: 7, zh_Hant: 彌迦書, en: Micah, aliases: [彌, Mic]}
+  - {osis: Nah, order: 34, testament: OT, chapters: 3, zh_Hant: 那鴻書, en: Nahum, aliases: [鴻, Nah]}
+  - {osis: Hab, order: 35, testament: OT, chapters: 3, zh_Hant: 哈巴谷書, en: Habakkuk, aliases: [哈, Hab]}
+  - {osis: Zeph, order: 36, testament: OT, chapters: 3, zh_Hant: 西番雅書, en: Zephaniah, aliases: [番, Zeph]}
+  - {osis: Hag, order: 37, testament: OT, chapters: 2, zh_Hant: 哈該書, en: Haggai, aliases: [該, Hag]}
+  - {osis: Zech, order: 38, testament: OT, chapters: 14, zh_Hant: 撒迦利亞書, en: Zechariah, aliases: [亞, Zech]}
+  - {osis: Mal, order: 39, testament: OT, chapters: 4, zh_Hant: 瑪拉基書, en: Malachi, aliases: [瑪, Mal]}
+  - {osis: Matt, order: 40, testament: NT, chapters: 28, zh_Hant: 馬太福音, en: Matthew, aliases: [太, Matt]}
+  - {osis: Mark, order: 41, testament: NT, chapters: 16, zh_Hant: 馬可福音, en: Mark, aliases: [可, Mark]}
+  - {osis: Luke, order: 42, testament: NT, chapters: 24, zh_Hant: 路加福音, en: Luke, aliases: [路, Luke]}
+  - {osis: John, order: 43, testament: NT, chapters: 21, zh_Hant: 約翰福音, en: John, aliases: [約, John]}
+  - {osis: Acts, order: 44, testament: NT, chapters: 28, zh_Hant: 使徒行傳, en: Acts, aliases: [徒, Acts]}
+  - {osis: Rom, order: 45, testament: NT, chapters: 16, zh_Hant: 羅馬書, en: Romans, aliases: [羅, Rom]}
+  - {osis: 1Cor, order: 46, testament: NT, chapters: 16, zh_Hant: 哥林多前書, en: 1 Corinthians, aliases: [林前, 1Cor]}
+  - {osis: 2Cor, order: 47, testament: NT, chapters: 13, zh_Hant: 哥林多後書, en: 2 Corinthians, aliases: [林後, 2Cor]}
+  - {osis: Gal, order: 48, testament: NT, chapters: 6, zh_Hant: 加拉太書, en: Galatians, aliases: [加, Gal]}
+  - {osis: Eph, order: 49, testament: NT, chapters: 6, zh_Hant: 以弗所書, en: Ephesians, aliases: [弗, Eph]}
+  - {osis: Phil, order: 50, testament: NT, chapters: 4, zh_Hant: 腓立比書, en: Philippians, aliases: [腓, Phil]}
+  - {osis: Col, order: 51, testament: NT, chapters: 4, zh_Hant: 歌羅西書, en: Colossians, aliases: [西, Col]}
+  - {osis: 1Thess, order: 52, testament: NT, chapters: 5, zh_Hant: 帖撒羅尼迦前書, en: 1 Thessalonians, aliases: [帖前, 1Thess]}
+  - {osis: 2Thess, order: 53, testament: NT, chapters: 3, zh_Hant: 帖撒羅尼迦後書, en: 2 Thessalonians, aliases: [帖後, 2Thess]}
+  - {osis: 1Tim, order: 54, testament: NT, chapters: 6, zh_Hant: 提摩太前書, en: 1 Timothy, aliases: [提前, 1Tim]}
+  - {osis: 2Tim, order: 55, testament: NT, chapters: 4, zh_Hant: 提摩太後書, en: 2 Timothy, aliases: [提後, 2Tim]}
+  - {osis: Titus, order: 56, testament: NT, chapters: 3, zh_Hant: 提多書, en: Titus, aliases: [多, Titus]}
+  - {osis: Phlm, order: 57, testament: NT, chapters: 1, zh_Hant: 腓利門書, en: Philemon, aliases: [門, Phlm]}
+  - {osis: Heb, order: 58, testament: NT, chapters: 13, zh_Hant: 希伯來書, en: Hebrews, aliases: [來, Heb]}
+  - {osis: Jas, order: 59, testament: NT, chapters: 5, zh_Hant: 雅各書, en: James, aliases: [雅, Jas]}
+  - {osis: 1Pet, order: 60, testament: NT, chapters: 5, zh_Hant: 彼得前書, en: 1 Peter, aliases: [彼前, 1Pet]}
+  - {osis: 2Pet, order: 61, testament: NT, chapters: 3, zh_Hant: 彼得後書, en: 2 Peter, aliases: [彼後, 2Pet]}
+  - {osis: 1John, order: 62, testament: NT, chapters: 5, zh_Hant: 約翰一書, en: 1 John, aliases: [約一, 1John]}
+  - {osis: 2John, order: 63, testament: NT, chapters: 1, zh_Hant: 約翰二書, en: 2 John, aliases: [約二, 2John]}
+  - {osis: 3John, order: 64, testament: NT, chapters: 1, zh_Hant: 約翰三書, en: 3 John, aliases: [約三, 3John]}
+  - {osis: Jude, order: 65, testament: NT, chapters: 1, zh_Hant: 猶大書, en: Jude, aliases: [猶, Jude]}
+  - {osis: Rev, order: 66, testament: NT, chapters: 22, zh_Hant: 啟示錄, en: Revelation, aliases: [啟, Rev]}
