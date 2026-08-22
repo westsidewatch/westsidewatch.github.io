@@ -1,0 +1,17 @@
+schema_version: dore.corpus_reader_acceptance.v0.1
+status: foundation
+acceptance_gates:
+  - {id: CR001, name: pinned_snapshot_only, requirement: "Only approved pinned corpus snapshots may be ingested.", severity: critical}
+  - {id: CR002, name: complete_reference_mapping, requirement: "Every token retains source-native and Doré canonical references.", severity: critical}
+  - {id: CR003, name: zero_silent_token_loss, requirement: "Token counts reconcile; exclusions are explicitly logged.", severity: critical}
+  - {id: CR004, name: textual_provenance, requirement: "Every textual surface has witness and snapshot provenance.", severity: critical}
+  - {id: CR005, name: analytical_provenance, requirement: "Every lemma/morphology/lexical ID retains analytical provenance.", severity: critical}
+  - {id: CR006, name: mixed_language_integrity, requirement: "Biblical Aramaic remains distinguishable from Hebrew; Daniel and Ezra are fixtures.", severity: critical}
+  - {id: CR007, name: reversible_normalization, requirement: "Normalization never destroys source surface forms.", severity: critical}
+  - {id: CR008, name: witness_analysis_separation, requirement: "Textual witnesses and analytical datasets remain separately attributable.", severity: critical}
+  - {id: CR009, name: uncertainty_preserved, requirement: "Unresolved classification is surfaced for review rather than guessed.", severity: critical}
+  - {id: CR010, name: lesson_03_suite, requirement: "All Lesson 03 provenance tests pass.", severity: critical}
+passing_rule:
+  critical_failures_allowed: 0
+  completion_status_on_pass: LESSON_03_CORPUS_FOUNDATION_COMPLETE
+  completion_status_on_fail: LESSON_03_REMAINS_IN_PROGRESS
