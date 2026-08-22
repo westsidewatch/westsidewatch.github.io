@@ -1,0 +1,89 @@
+schema_version: dore.original_language_ingestion.v0.1
+status: foundation
+purpose: Preserve textual, linguistic, analytical, and provenance layers without collapse.
+
+supported_foundation_languages:
+  - code: he
+    name: Biblical Hebrew
+  - code: arc
+    name: Biblical Aramaic
+  - code: grc
+    name: Koine/Biblical Greek
+
+record_contract:
+  required:
+    - token_id
+    - witness_id
+    - canonical_ref_id
+    - language
+    - surface
+    - source_native_ref
+    - provenance
+  optional:
+    - normalized
+    - lemma
+    - morphology
+    - lexical_ids
+    - word_order
+    - punctuation
+    - textual_notes
+    - analysis_confidence
+
+provenance_contract:
+  textual_surface:
+    required: true
+    description: Identifies source/edition responsible for the token wording.
+  lemma:
+    required_when_present: true
+    description: Identifies analytical dataset responsible for lemma assignment.
+  morphology:
+    required_when_present: true
+    description: Identifies analytical dataset responsible for morphological parsing.
+  lexical_ids:
+    required_when_present: true
+    description: Identifies numbering/lexicon system; identifiers are pointers, not definitions.
+
+normalization_rules:
+  - preserve_source_surface_exactly_in_surface_field
+  - normalization_must_be_reversible_or_non_destructive
+  - never_remove_language_information
+  - never_replace_source_native_reference_with_display_reference
+  - unicode_normalization_must_not_silently_change_semantic_or_textual_data
+
+semantic_rules:
+  - id: OL001
+    statement: Surface form is not lemma.
+  - id: OL002
+    statement: Lemma is not lexical meaning.
+  - id: OL003
+    statement: Morphology constrains interpretation but does not determine theology.
+  - id: OL004
+    statement: Strong's or other lexical identifiers are lookup keys, not definitions.
+  - id: OL005
+    statement: Translation glosses must never overwrite original-language data.
+  - id: OL006
+    statement: Biblical Hebrew and Biblical Aramaic must remain distinguishable.
+  - id: OL007
+    statement: Analytical disagreement must be representable rather than overwritten.
+
+conflict_model:
+  allow_multiple_analyses_per_token: true
+  resolution_modes:
+    - retain_parallel
+    - prefer_declared_foundation_dataset
+    - mark_disputed
+    - require_research_review
+  forbidden:
+    - silent_overwrite
+    - invented_consensus
+
+output_expectation:
+  research_answer_should_be_able_to_return:
+    - canonical_reference
+    - original_surface
+    - transliteration_when_available
+    - lemma
+    - morphology
+    - lexical_links
+    - source_provenance
+    - confidence_or_dispute_status
