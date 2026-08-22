@@ -1,0 +1,60 @@
+name: Doré Bible Search
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'dore_core/search/**'
+      - 'dore_core/language/**'
+      - 'dore_core/readers/**'
+      - 'scripts/build_dore_browser_search_index.py'
+      - 'static/dore/**'
+      - '.github/workflows/dore-bible-search.yml'
+permissions:
+  contents: write
+jobs:
+  build-search:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build browser Scripture index
+        env:
+          PYTHONPATH: .
+        run: python scripts/build_dore_browser_search_index.py
+      - name: Verify index and page contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('static/dore/search-index.json')
+          d=json.loads(p.read_text(encoding='utf-8'))
+          assert d['schema']=='dore.browser-search-index.v0.1'
+          assert len(d['verses']) >= 31000
+          assert d['lemma'] and d['morphology'] and d['original_surface']
+          refs={v['r'] for v in d['verses']}
+          assert 'bible.ref.JHN.3.16' in refs
+          assert 'bible.ref.JER.33.3' in refs
+          html=Path('static/dore/index.html').read_text(encoding='utf-8')
+          assert 'Jeremiah 33:3' in html and '/background.jpg' in html
+          print({'status':'PASS','verses':len(d['verses']),'lemmas':len(d['lemma'])})
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dore-bible-search-index
+          path: static/dore/search-index.json
+      - name: Persist public search index
+        if: github.event_name == 'push'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/dore/search-index.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): publish Bible Search index [skip ci]'
+            for attempt in 1 2 3 4; do
+              if git push; then exit 0; fi
+              git pull --rebase origin main
+            done
+            exit 1
+          fi
