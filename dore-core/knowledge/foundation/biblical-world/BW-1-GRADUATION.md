@@ -16,6 +16,7 @@ The graduated route is:
 Capabilities included in the gate:
 
 - full-source entity ingestion from pinned STEPBible TIPNR;
+- TIPNR format/documentation lines are rejected rather than admitted as entities;
 - stable individualised identities and canonical attestations;
 - person/place type separation;
 - equal-looking names remain distinct unless evidence resolves them;
@@ -23,23 +24,27 @@ Capabilities included in the gate:
 - conservative Chinese translation aliases derived from CUV + TIPNR canonical co-attestation;
 - ONE chapter scope may rank an entity without erasing global candidates;
 - canon-wide same-name aggregation;
+- translated names can resolve to a source-name identity cluster without merging those individual identities;
 - natural-language entity-count intent such as `聖經有幾位馬利亞？`;
 - browser Doré Search connection to the entity corpus;
 - exact entity routing prevents substring identity pollution such as `馬利亞` being treated as `撒馬利亞`.
 
 ## Real-corpus gate evidence
 
-The end-to-end report `reports/DORÉ-BW1-ENTITY-GRADUATION.json` records PASS with:
+The final end-to-end report `reports/DORÉ-BW1-ENTITY-GRADUATION.json` records PASS with:
 
-- 4,301 derived entities;
-- 3,592 conservative Chinese aligned aliases;
+- **4,293** cleaned derived entities;
+- **3,592** conservative Chinese aligned aliases;
 - Mary person resolution PASS;
 - Samaria place resolution PASS;
 - Mary/Samaria identity separation PASS;
+- translated-name → source-name cluster expansion PASS;
 - person-only count aggregation PASS;
 - natural-language count intent PASS;
 - unseen count-intent transfer PASS;
 - public entity runtime connection PASS.
+
+For the diagnostic Mary stimulus, only two individualised records carried a direct inferred Chinese alias `馬利亞`, but the evidence route correctly resolves that translated name to the source-name cluster of **six individualised Mary person records**. This is source-identity aggregation, not a theological assertion that all later identity questions are settled.
 
 The browser corpus is persisted as `static/dore/entity-index.json`; raw TIPNR is not redistributed.
 
