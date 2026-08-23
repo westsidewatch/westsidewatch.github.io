@@ -89,11 +89,49 @@ class BibleSearchIndex:
             if not b:return 0.0
             if a==b:return 1.0
             if b in a:return 0.9
-            return 0.0
+            # Automatic phrase-aware fallback for natural-language Bible search.
+            return self._fuzzy_text_score(a,b)
         a,b=self._norm(surface),self._norm(q)
         if not a or not b:return 0.0
+        return self._fuzzy_text_score(a,b)
+
+    @classmethod
+    def _fuzzy_text_score(cls,a:str,b:str)->float:
+        """Score partial/remembered phrases without promoting weak matches.
+
+        Favors long contiguous fragments, then character n-gram coverage, with
+        SequenceMatcher as a final backstop. This makes queries such as
+        '耶和華啊我終日等候你' match a verse containing '我終日等候你' while
+        keeping short incidental overlaps below threshold.
+        """
+        if not a or not b:return 0.0
+        if a==b:return 1.0
+        if b in a:return 0.9
+        if a in b:
+            coverage=len(a)/max(1,len(b))
+            return min(0.88,0.72+0.16*coverage)
+
+        shorter,longer=(a,b) if len(a)<=len(b) else (b,a)
+        match=SequenceMatcher(None,a,b).find_longest_match(0,len(a),0,len(b))
+        contiguous=match.size/max(1,len(shorter))
+
+        # Character n-grams handle inserted/deleted words and slight reordering.
+        n=3 if min(len(a),len(b))>=6 else 2
+        def grams(s:str)->set[str]:
+            return {s[i:i+n] for i in range(max(0,len(s)-n+1))}
+        ga,gb=grams(a),grams(b)
+        gram_coverage=(len(ga&gb)/max(1,len(gb))) if gb else 0.0
+
         ratio=SequenceMatcher(None,a,b).ratio()
-        return ratio if ratio>=0.55 else 0.0
+        score=max(
+            ratio,
+            0.52*contiguous+0.38*gram_coverage+0.10*ratio,
+        )
+
+        # Require meaningful phrase evidence; isolated common words should not hit.
+        if match.size>=4 and contiguous>=0.45:
+            score=max(score,0.58+0.28*contiguous)
+        return score if score>=0.55 else 0.0
 
     @staticmethod
     def _norm(s:str)->str:
