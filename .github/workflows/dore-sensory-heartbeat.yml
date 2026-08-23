@@ -1,0 +1,41 @@
+name: Doré Sensory Heartbeat
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-sensory-heartbeat
+  cancel-in-progress: false
+
+jobs:
+  sensory:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Claim/close sensory signals
+        env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+          DORE_SENSORY_BASE_URL: ${{ vars.DORE_SENSORY_BASE_URL }}
+        run: node scripts/dore/sensory-heartbeat.mjs
+      - name: Persist sensory work queue
+        run: |
+          git config user.name 'Doré Heartbeat'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/memory/sensory-active.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore(dore): persist sensory heartbeat state [skip ci]'
+          for attempt in 1 2 3 4; do
+            if git push origin HEAD:main; then exit 0; fi
+            git pull --rebase origin main
+          done
+          exit 1
