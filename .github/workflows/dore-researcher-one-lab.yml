@@ -1,0 +1,40 @@
+name: Doré Researcher 01 ONE Lab
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'dore-core/knowledge/researcher/RESEARCHER-01-ONE-LAB.md'
+      - 'scripts/run_researcher_one_lab_exam.py'
+      - 'static/one/**'
+      - '.github/workflows/dore-researcher-one-lab.yml'
+permissions:
+  contents: write
+jobs:
+  one-lab:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run ONE first-pass research exam
+        run: python scripts/run_researcher_one_lab_exam.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dore-researcher-01-one-lab
+          path: reports/DORÉ-RESEARCHER-01-ONE-LAB.json
+      - name: Persist ONE lab graduation evidence
+        if: success() && github.event_name == 'push'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/DORÉ-RESEARCHER-01-ONE-LAB.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): persist Researcher 01 ONE lab evidence [skip ci]'
+            for attempt in 1 2 3 4; do
+              if git push; then exit 0; fi
+              git pull --rebase origin main
+            done
+            exit 1
+          fi
