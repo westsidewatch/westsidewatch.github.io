@@ -1,18 +1,61 @@
 (()=>{
 'use strict';
-const state={data:null,original:null,originalLoading:null,byRef:new Map(),aliases:new Map(),ready:false};
+const state={data:null,original:null,originalLoading:null,byRef:new Map(),byChapter:new Map(),aliases:new Map(),ready:false};
 const $=s=>document.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 const norm=s=>String(s??'').toLowerCase().replace(/[\s.,;:!?，。；：！？「」『』()（）\-–—]/g,'');
 const refLabel=v=>`${v.n?.[0]||v.b} ${v.c}:${v.v}`;
-function buildAliases(){for(const v of state.data.verses){state.byRef.set(v.r,v);for(const name of [v.b,...(v.n||[])])for(const k of [name,String(name).replace(/\s+/g,''),String(name).replace(/s$/i,'')])if(k)state.aliases.set(k.toLowerCase(),v.b);}const short=[['psalm','PSA'],['ps','PSA'],['詩','PSA'],['太','MAT'],['可','MRK'],['路','LUK'],['約','JHN'],['徒','ACT'],['羅','ROM'],['林前','1CO'],['林後','2CO'],['加','GAL'],['弗','EPH'],['腓','PHP'],['西','COL'],['帖前','1TH'],['帖後','2TH'],['提前','1TI'],['提後','2TI'],['多','TIT'],['門','PHM'],['來','HEB'],['雅','JAS'],['彼前','1PE'],['彼後','2PE'],['約一','1JN'],['約二','2JN'],['約三','3JN'],['猶','JUD'],['啟','REV']];for(const [alias,code] of short)state.aliases.set(alias,code);}
-function parseReference(q){const clean=q.trim().replace(/[：]/g,':').replace(/[．]/g,'.'),m=clean.match(/^(.+?)\s*(\d+)\s*[:.]\s*(\d+)$/);if(!m)return null;const raw=m[1].trim().toLowerCase().replace(/\s+/g,' ');let book=state.aliases.get(raw)||state.aliases.get(raw.replace(/\s+/g,''));if(!book)for(const [alias,code] of state.aliases)if(raw===alias||raw.replace(/\s+/g,'')===alias.replace(/\s+/g,'')){book=code;break;}return book?`bible.ref.${book}.${Number(m[2])}.${Number(m[3])}`:null;}
+const chapterKey=(book,chapter)=>`${book}.${Number(chapter)}`;
+const ZH_NUM={零:0,'〇':0,一:1,二:2,三:3,四:4,五:5,六:6,七:7,八:8,九:9,兩:2,两:2};
+function chineseNumber(value){
+  const s=String(value||'').trim();
+  if(/^\d+$/.test(s))return Number(s);
+  if(!s)return NaN;
+  if(s.includes('百')){const [a,b='']=s.split('百');const hundreds=a?ZH_NUM[a]:1;return hundreds*100+(b?chineseNumber(b):0);}
+  if(s.includes('十')){const [a,b='']=s.split('十');const tens=a?ZH_NUM[a]:1;return tens*10+(b?ZH_NUM[b]:0);}
+  if(s.length===1&&s in ZH_NUM)return ZH_NUM[s];
+  return NaN;
+}
+function addAlias(alias,code){if(alias)state.aliases.set(String(alias).trim().toLowerCase().replace(/\s+/g,''),code);}
+function buildAliases(){
+  for(const v of state.data.verses){
+    state.byRef.set(v.r,v);
+    const key=chapterKey(v.b,v.c);if(!state.byChapter.has(key))state.byChapter.set(key,[]);state.byChapter.get(key).push(v);
+    for(const name of [v.b,...(v.n||[])]){addAlias(name,v.b);addAlias(String(name).replace(/s$/i,''),v.b);}
+  }
+  const extra={
+    'genesis':'GEN','創世記':'GEN','创世记':'GEN','出埃及記':'EXO','出埃及记':'EXO','leviticus':'LEV','利未記':'LEV','利未记':'LEV','numbers':'NUM','民數記':'NUM','民数记':'NUM','deuteronomy':'DEU','申命記':'DEU','申命记':'DEU',
+    'joshua':'JOS','約書亞記':'JOS','约书亚记':'JOS','judges':'JDG','士師記':'JDG','士师记':'JDG','ruth':'RUT','路得記':'RUT','路得记':'RUT',
+    'psalm':'PSA','psalms':'PSA','詩篇':'PSA','诗篇':'PSA','proverbs':'PRO','箴言':'PRO','ecclesiastes':'ECC','傳道書':'ECC','传道书':'ECC','songofsolomon':'SNG','雅歌':'SNG','isaiah':'ISA','以賽亞書':'ISA','以赛亚书':'ISA','jeremiah':'JER','耶利米書':'JER','耶利米书':'JER','lamentations':'LAM','耶利米哀歌':'LAM','ezekiel':'EZK','以西結書':'EZK','以西结书':'EZK','daniel':'DAN','但以理書':'DAN','但以理书':'DAN',
+    'matthew':'MAT','matt':'MAT','馬太福音':'MAT','马太福音':'MAT','mark':'MRK','馬可福音':'MRK','马可福音':'MRK','luke':'LUK','路加福音':'LUK','john':'JHN','約翰福音':'JHN','约翰福音':'JHN','acts':'ACT','使徒行傳':'ACT','使徒行传':'ACT','romans':'ROM','羅馬書':'ROM','罗马书':'ROM',
+    '1corinthians':'1CO','哥林多前書':'1CO','哥林多前书':'1CO','2corinthians':'2CO','哥林多後書':'2CO','哥林多后书':'2CO','galatians':'GAL','加拉太書':'GAL','加拉太书':'GAL','ephesians':'EPH','以弗所書':'EPH','以弗所书':'EPH','philippians':'PHP','腓立比書':'PHP','腓立比书':'PHP','colossians':'COL','歌羅西書':'COL','歌罗西书':'COL',
+    'revelation':'REV','啟示錄':'REV','启示录':'REV','太':'MAT','可':'MRK','路':'LUK','約':'JHN','约':'JHN','徒':'ACT','羅':'ROM','罗':'ROM','詩':'PSA','诗':'PSA'
+  };
+  for(const [a,c] of Object.entries(extra))addAlias(a,c);
+}
+function resolveBook(raw){return state.aliases.get(String(raw||'').trim().toLowerCase().replace(/\s+/g,''))||null;}
+function parseReference(q){
+  const clean=q.trim().replace(/[：]/g,':').replace(/[．]/g,'.').replace(/\s+/g,' ');
+  let m=clean.match(/^(.+?)\s*(\d+)\s*[:.]\s*(\d+)$/);
+  if(m){const book=resolveBook(m[1]);return book?{kind:'verse',ref:`bible.ref.${book}.${Number(m[2])}.${Number(m[3])}`} : null;}
+  m=clean.match(/^(.+?)第?([零〇一二三四五六七八九十百兩两\d]+)章(?:第?([零〇一二三四五六七八九十百兩两\d]+)節?)?$/);
+  if(m){const book=resolveBook(m[1]),chapter=chineseNumber(m[2]),verse=m[3]?chineseNumber(m[3]):null;if(!book||!Number.isFinite(chapter))return null;return Number.isFinite(verse)?{kind:'verse',ref:`bible.ref.${book}.${chapter}.${verse}`}:{kind:'chapter',book,chapter};}
+  m=clean.match(/^(.+?)\s+(\d+)$/);
+  if(m){const book=resolveBook(m[1]);return book?{kind:'chapter',book,chapter:Number(m[2])}:null;}
+  return null;
+}
 const looksOriginal=q=>/[\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff]/.test(q)||/^([GH]\d+|[@A-Z][A-Za-z0-9@/+:.-]{2,})$/.test(q);
 async function ensureOriginal(){if(state.original)return state.original;if(state.originalLoading)return state.originalLoading;const status=$('#search-status'),old=status.textContent;status.textContent='正在載入原文詞彙與詞形索引…';state.originalLoading=fetch('/dore/original-index.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(d=>{if(d.schema!=='dore.browser-original-index.v1')throw new Error('unsupported original index');state.original=d;status.textContent=old+' · 原文索引已就緒';return d}).catch(e=>{status.textContent='原文索引載入失敗；經文與關鍵詞搜索仍可使用。';console.error(e);return null});return state.originalLoading;}
 function idsFromOriginal(q){const d=state.original;if(!d)return[];const ids=[];for(const bucket of ['lemma','original_surface']){if(d[bucket]?.[q])ids.push(...d[bucket][q]);const folded=Object.keys(d[bucket]||{}).find(k=>k.toLowerCase()===q.toLowerCase());if(folded)ids.push(...d[bucket][folded]);}if(/^([GH]\d+|[A-Za-z0-9@/+:.-]{3,})$/.test(q))for(const [morph,refs] of Object.entries(d.morphology||{}))if(morph.toLowerCase().includes(q.toLowerCase()))ids.push(...refs);return[...new Set(ids)];}
 function scoreFuzzy(text,q){const a=norm(text),b=norm(q);if(!a||!b)return 0;if(a.includes(b))return .9;if(b.length<4)return 0;const grams=s=>{const x=new Set();for(let i=0;i<s.length-1;i++)x.add(s.slice(i,i+2));return x},A=grams(a),B=grams(b);let hit=0;for(const g of B)if(A.has(g))hit++;return(2*hit)/(A.size+B.size||1);}
-function search(q){const ref=parseReference(q);if(ref){const v=state.byRef.get(ref);return v?[{v,score:1,type:'reference'}]:[];}const ids=idsFromOriginal(q);if(ids.length)return ids.slice(0,50).map(i=>state.data.verses[i]).filter(Boolean).map(v=>({v,score:1,type:'original-language'}));const n=norm(q),hits=[];for(const v of state.data.verses){const zh=norm(v.z),en=norm(v.e);let score=0,type='text';if(n&&(zh.includes(n)||en.includes(n)))score=.92;else{score=Math.max(scoreFuzzy(v.z,q),scoreFuzzy(v.e,q));type='fuzzy';}if(score>=.42)hits.push({v,score,type});}hits.sort((a,b)=>b.score-a.score||a.v.r.localeCompare(b.v.r));return hits.slice(0,30);}
-function render(hits){const box=$('#results'),count=$('#result-count');if(!hits.length){count.textContent='沒有可靠結果';box.innerHTML='<div class="empty">找不到足夠可靠的候選。可嘗試經文位置、完整關鍵詞、原文字詞，或換一種記憶方式。</div>';return;}count.textContent=`${hits.length} 個候選`;box.innerHTML=hits.map(({v,score,type})=>{const confidence=type==='fuzzy'?` · fuzzy ${Math.round(score*100)}%`:'';return `<article class="result-card"><header><strong>${esc(refLabel(v))}</strong><span>${esc(v.n?.[1]||v.b)} ${v.c}:${v.v}</span></header>${v.z?`<p lang="zh-Hant">${esc(v.z)}</p>`:''}${v.e?`<p class="english" lang="en">${esc(v.e)}</p>`:''}<footer><span>${esc(type)}${confidence}</span><span>CUV / WEBU · Doré provenance</span></footer></article>`}).join('');$('#results-wrap').scrollIntoView({behavior:'smooth',block:'start'});}
+function search(q){
+  const parsed=parseReference(q);
+  if(parsed?.kind==='verse'){const v=state.byRef.get(parsed.ref);return v?[{v,score:1,type:'reference'}]:[];}
+  if(parsed?.kind==='chapter'){return (state.byChapter.get(chapterKey(parsed.book,parsed.chapter))||[]).slice().sort((a,b)=>Number(a.v)-Number(b.v)).map(v=>({v,score:1,type:'chapter-reference'}));}
+  const ids=idsFromOriginal(q);if(ids.length)return ids.slice(0,50).map(i=>state.data.verses[i]).filter(Boolean).map(v=>({v,score:1,type:'original-language'}));
+  const n=norm(q),hits=[];for(const v of state.data.verses){const zh=norm(v.z),en=norm(v.e);let score=0,type='text';if(n&&(zh.includes(n)||en.includes(n)))score=.92;else{score=Math.max(scoreFuzzy(v.z,q),scoreFuzzy(v.e,q));type='fuzzy';}if(score>=.42)hits.push({v,score,type});}hits.sort((a,b)=>b.score-a.score||a.v.r.localeCompare(b.v.r));return hits.slice(0,30);
+}
+function render(hits){const box=$('#results'),count=$('#result-count');if(!hits.length){count.textContent='沒有可靠結果';box.innerHTML='<div class="empty">找不到足夠可靠的候選。可直接輸入「馬太福音第三章」、經文位置、完整關鍵詞或原文字詞。</div>';return;}count.textContent=`${hits.length} 個結果`;box.innerHTML=hits.map(({v,score,type})=>{const confidence=type==='fuzzy'?` · fuzzy ${Math.round(score*100)}%`:'';return `<article class="result-card"><header><strong>${esc(refLabel(v))}</strong><span>${esc(v.n?.[1]||v.b)} ${v.c}:${v.v}</span></header>${v.z?`<p lang="zh-Hant">${esc(v.z)}</p>`:''}${v.e?`<p class="english" lang="en">${esc(v.e)}</p>`:''}<footer><span>${esc(type)}${confidence}</span><span>CUV / WEBU · Doré provenance</span></footer></article>`}).join('');$('#results-wrap').scrollIntoView({behavior:'smooth',block:'start'});}
 async function load(){const status=$('#search-status');try{const res=await fetch('/dore/search-index.json',{cache:'no-cache'});if(!res.ok)throw new Error(`HTTP ${res.status}`);state.data=await res.json();if(state.data.schema!=='dore.browser-search-core.v1')throw new Error('unsupported search index');buildAliases();state.ready=true;status.textContent=`已載入 ${state.data.verses.length.toLocaleString()} 節 · CUV / WEBU`;$('#search-input').disabled=false;$('#search-button').disabled=false;}catch(e){status.textContent='搜索索引正在部署；請稍後重新整理。';console.error(e);}}
 async function submit(e){e?.preventDefault();if(!state.ready)return;const q=$('#search-input').value.trim();if(!q)return;if(looksOriginal(q))await ensureOriginal();render(search(q));history.replaceState(null,'',`#q=${encodeURIComponent(q)}`);}
 document.addEventListener('DOMContentLoaded',()=>{const slides=[...document.querySelectorAll('.dore-art')];let i=0;if(slides.length>1)setInterval(()=>{slides[i].classList.remove('is-active');i=(i+1)%slides.length;slides[i].classList.add('is-active')},9000);$('#search-form').addEventListener('submit',submit);document.querySelectorAll('[data-example]').forEach(a=>a.addEventListener('click',e=>{e.preventDefault();$('#search-input').value=a.dataset.example;submit();}));const hash=new URLSearchParams(location.hash.replace(/^#/,'')).get('q');if(hash)$('#search-input').value=hash;load().then(()=>{if(hash&&state.ready)submit()});});
