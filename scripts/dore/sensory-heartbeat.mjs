@@ -39,3 +39,5 @@ try{
   if(changed){active.updated_at=new Date().toISOString();await writeJson(activePath,active)}
   await writeJson(diagPath,{ok:true,at:new Date().toISOString(),base,signal:next.signal||null,changed});
 }catch(e){await fail(e)}
+
+// touch: retrigger after production sensory routing repair
