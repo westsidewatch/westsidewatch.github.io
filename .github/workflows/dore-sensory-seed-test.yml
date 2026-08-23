@@ -1,0 +1,43 @@
+name: Doré Sensory Seed Test
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-sensory-seed-test.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  seed-and-claim:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Seed exact user question through public sensory endpoint
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -X POST 'https://westsidewatch-github-io.pages.dev/api/dore/sensory' \
+            -H 'content-type: application/json' \
+            --data '{"query":"馬利亞有幾位？"}'
+      - name: Claim sensory signal
+        env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+          DORE_SENSORY_BASE_URL: https://westsidewatch-github-io.pages.dev
+        run: node scripts/dore/sensory-heartbeat.mjs
+      - name: Persist sensory evidence
+        if: always()
+        run: |
+          git config user.name 'Doré Heartbeat'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/memory/sensory-active.json dore-core/memory/sensory-heartbeat-diagnostic.json 2>/dev/null || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore(dore): persist Mary sensory loop test [skip ci]'
+          git pull --rebase origin main || true
+          git push origin HEAD:main
