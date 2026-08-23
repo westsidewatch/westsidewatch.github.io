@@ -9,6 +9,21 @@ def test_reference_search():
     hits=idx.search(SearchQuery("MAT 5:17",mode="reference"))
     assert hits and hits[0].canonical_ref_id=="bible.ref.MAT.5.17"
 
+def test_rc1_reference_reflex_transfer_forms():
+    idx=BibleSearchIndex.from_units([
+        unit("bible.ref.MAT.3.1","In those days"),
+        unit("bible.ref.MAT.3.2","Repent"),
+        unit("bible.ref.MAT.5.3","Blessed are the poor in spirit"),
+        unit("bible.ref.JHN.3.16","For God so loved the world"),
+    ])
+    # Graduation stimuli: natural Chinese chapter, English book reference, Chinese abbreviation.
+    chapter=idx.search(SearchQuery("馬太福音第三章",mode="reference"))
+    assert [h.canonical_ref_id for h in chapter]==["bible.ref.MAT.3.1","bible.ref.MAT.3.2"]
+    assert idx.search(SearchQuery("Matthew 5:3",mode="reference"))[0].canonical_ref_id=="bible.ref.MAT.5.3"
+    assert idx.search(SearchQuery("太5:3",mode="reference"))[0].canonical_ref_id=="bible.ref.MAT.5.3"
+    # Unseen alias verifies route transfer rather than one memorized Matthew answer.
+    assert idx.search(SearchQuery("約翰福音 3:16",mode="reference"))[0].canonical_ref_id=="bible.ref.JHN.3.16"
+
 def test_text_and_fuzzy_search():
     idx=BibleSearchIndex.from_units([unit("bible.ref.JHN.1.1","In the beginning was the Word")])
     assert idx.search(SearchQuery("beginning was the Word",mode="text"))
