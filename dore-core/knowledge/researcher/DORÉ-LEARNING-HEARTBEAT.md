@@ -15,27 +15,30 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 ### Researcher 04 — Autonomous Learning I
 `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`. State: `COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
 
+### Researcher 05 — Biblical Concept Development I
+`RESEARCHER-05 — BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`: `PASS / GRADUATED → RETENTION_WATCH`.
+Source stack and Units 01–07 passed. Unit 08 independent integrated transfer on resurrection passed 6/6 adversarial gate. Competence demonstrated across adversary, Spirit, canon/Scripture, and independent resurrection transfer without flattening corpora or retrojecting later formulations into earlier witnesses.
+
 ## Sensory-first status
 Required first read this wake: `dore-core/memory/sensory-active.json`.
 Result: file absent on `main`.
 Decision: absence does not prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains an infrastructure dependency; this did not block authorized researcher education.
 
-## Active course
-`RESEARCHER-05 — BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`
+## Latest completed action
+`UNIT_08_INTEGRATED_FINAL_TRANSFER`: PASS.
+Evidence: `RESEARCHER-05-UNIT-08-RESURRECTION-INTEGRATED-FINAL.md`.
 
-### Completed
-- Source stack: PASS.
-- Units 1–4: PASS.
-- Unit 05 Practicum A: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection.
-- Unit 06 Practicum B: PASS, 5/5 adversarial examination. Hebrew-Bible baseline + diverse Second Temple witnesses were stratified against Synoptic/Lukan, Pauline and Johannine Spirit discourse. The passed model preserves explicit prophetic/anointing/promise continuity while recognizing corpus-specific development in communal, eschatological, Christological and enduring-presence configurations. Flattening, rupture, retrojection and single-line Second Temple evolution models all failed.
-- Unit 07 Canon / Scripture Concept Development: PASS, 5/5 adversarial examination. The passed model distinguishes authoritative text, inherited collection/category, explicit corpus boundary, and later canonical closure. Sirach's Law/Prophets/other-books witness and Josephus's twenty-two-book corpus were stratified rather than flattened; NT γραφή/γραφαί usage is treated as evidence of scriptural authority whose exact corpus boundaries require separate contextual evidence. Uniform-linear and retrojected-closed-canon models failed.
+Transfer model passed with:
+- Hebrew-Bible baseline and explicit distinction between national-restoration imagery and individual eschatological resurrection;
+- Second Temple plurality rather than a uniform evolutionary line;
+- Synoptic/Johannine/Pauline/Acts comparison;
+- counter-evidence and anti-retrojection controls;
+- provenance and bounded uncertainty;
+- 6/6 adversarial examination.
 
-### Current wake
-- Required sensory-first check repeated: `sensory-active.json` remains absent on `main`; no live user question was invented.
-- Unit 07 evidence and adversarial gate persisted as `RESEARCHER-05-UNIT-07-CANON-SCRIPTURE-STRATIFICATION-EXAM.md`.
-- Product promotion remains deliberately deferred: Unit 07 is a reusable method competence and does not by itself justify a new user-facing knowledge node. Known connector limitations also still make large brain-index replacement unsafe; no truncated brain write and no false Brain → Product regression were claimed.
+Product promotion was deliberately not fabricated: passing a reusable method final does not itself require a new resurrection answer node. Existing known connector limitations still make large `static/dore/brain/knowledge-index.json` replacement unsafe in this execution path; no truncated brain write and no false Brain → Product regression were claimed.
 
 ## Current next action
-`UNIT_08_INTEGRATED_FINAL_TRANSFER`.
+`POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`.
 
-Run an independent transfer practicum on a concept not used as the primary Unit 05–07 target. Require Hebrew-Bible baseline, Second Temple evidence where relevant, multiple NT corpora, counter-evidence, provenance, uncertainty and explicit anti-retrojection controls. If the transfer gate passes, evaluate Researcher 05 for graduation and consolidate only genuinely reusable method nodes. Separately, when a safe full-file edit path is available, apply bounded Unit 05/06 product-node updates and run Brain → Product regression.
+On next authorized wake, run a fresh capability-gap diagnosis against live research jobs and product needs. Open a new course only if a repeated, evidence-backed blocker cannot be solved by already graduated Biblical Languages I, Autonomous Learning I, and Biblical Concept Development I. Otherwise perform retention/transfer work or a live sensory task first. Separately, when a safe full-file edit path is available, apply only justified bounded product-node updates and run Brain → Product regression.
