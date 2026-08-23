@@ -7,16 +7,27 @@ export async function onRequestPost({request,env}){
   let body;try{body=await request.json()}catch{return json({ok:false,error:'invalid_json'},400)}
   const query=normalize(body?.query);
   if(query.length<2)return json({ok:false,error:'query_too_short'},400);
-  const fp=await fingerprint(query);
-  const now=new Date().toISOString();
-  const id=crypto.randomUUID();
-  const existing=await env.DORE_SENSORY.prepare('SELECT id,state,heard_count FROM sensory_signals WHERE fingerprint=?1 LIMIT 1').bind(fp).first();
-  if(existing){
-    await env.DORE_SENSORY.prepare('UPDATE sensory_signals SET heard_count=heard_count+1,last_heard_at=?1 WHERE id=?2').bind(now,existing.id).run();
-    return json({ok:true,signal_id:existing.id,state:existing.state,heard_count:Number(existing.heard_count||1)+1,deduplicated:true});
+  let stage='fingerprint',schema=[];
+  try{
+    const fp=await fingerprint(query);
+    const now=new Date().toISOString();
+    const id=crypto.randomUUID();
+    stage='schema_probe';
+    const info=await env.DORE_SENSORY.prepare('PRAGMA table_info(sensory_signals)').all();
+    schema=(info?.results||[]).map(r=>r.name);
+    stage='dedupe_select';
+    const existing=await env.DORE_SENSORY.prepare('SELECT id,state,heard_count FROM sensory_signals WHERE fingerprint=?1 LIMIT 1').bind(fp).first();
+    if(existing){
+      stage='dedupe_update';
+      await env.DORE_SENSORY.prepare('UPDATE sensory_signals SET heard_count=heard_count+1,last_heard_at=?1,updated_at=?1 WHERE id=?2').bind(now,existing.id).run();
+      return json({ok:true,signal_id:existing.id,state:existing.state,heard_count:Number(existing.heard_count||1)+1,deduplicated:true});
+    }
+    stage='insert';
+    await env.DORE_SENSORY.prepare(`INSERT INTO sensory_signals (id,fingerprint,query,state,heard_count,first_heard_at,last_heard_at,updated_at) VALUES (?1,?2,?3,'QUEUED',1,?4,?4,?4)`).bind(id,fp,query,now).run();
+    return json({ok:true,signal_id:id,state:'QUEUED',heard_count:1,deduplicated:false},201);
+  }catch(error){
+    return json({ok:false,error:'sensory_post_failed',stage,detail:String(error?.message||error),schema},500);
   }
-  await env.DORE_SENSORY.prepare(`INSERT INTO sensory_signals (id,fingerprint,query,state,heard_count,first_heard_at,last_heard_at,updated_at) VALUES (?1,?2,?3,'QUEUED',1,?4,?4,?4)`).bind(id,fp,query,now).run();
-  return json({ok:true,signal_id:id,state:'QUEUED',heard_count:1,deduplicated:false},201);
 }
 
 export async function onRequestGet({request,env}){
