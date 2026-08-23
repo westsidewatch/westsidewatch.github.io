@@ -30,5 +30,6 @@ async function handler(ev){
  const es=exactEntities(raw);if(es.length){renderEntities(raw,es,'entity');history.replaceState(null,'',`#q=${encodeURIComponent(raw)}`);return}
  bypass=true;$('#search-form')?.requestSubmit();
 }
-document.addEventListener('DOMContentLoaded',()=>{$('#search-form')?.addEventListener('submit',handler,true)});
+function init(){const form=$('#search-form');if(form&&!form.dataset.doreEntityBound){form.dataset.doreEntityBound='1';form.addEventListener('submit',handler,true)}}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
