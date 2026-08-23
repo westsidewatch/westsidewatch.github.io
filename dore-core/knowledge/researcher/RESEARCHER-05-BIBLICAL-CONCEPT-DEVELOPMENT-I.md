@@ -1,16 +1,14 @@
 # Researcher 05 — Biblical Concept Development I
 
-Status: ACTIVE — UNITS_01_04_PASS
+Status: ACTIVE — UNITS_01_05_PASS
 Started: 2026-08-23
 Selected by: `RESEARCHER-04-POST-COURSE-DIAGNOSIS.md`
 Prerequisite: `BIBLICAL-LANGUAGES-I_GRADUATED`
 
 ## Course
-
 `BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`
 
 ## Why this is a curriculum
-
 Three materially different open research conclusions share the same post-language bottleneck:
 - Job/Hebrew-Bible `שָׂטָן` → Second Temple → NT Satan/Devil;
 - Hebrew-Bible divine Spirit → NT pneumatology → later canonical/doctrinal synthesis;
@@ -21,29 +19,12 @@ The missing faculty is not another lexical lookup. It is the ability to reconstr
 Classification: `DOMAIN_GAP + SKILL_GAP + CURRICULUM_GAP`.
 
 ## Competencies
-
-Doré must learn to:
-1. stratify evidence by composition, date, witness, corpus, language and provenance;
-2. distinguish manuscript date from composition date;
-3. distinguish lexical continuity from conceptual continuity;
-4. classify direct continuity, development-with-continuity, competing/discontinuous trajectories and superficial similarity;
-5. treat Second Temple Judaism as diverse rather than homogeneous;
-6. compare Hebrew/Aramaic/Greek evidence through translation/borrowing without one-to-one assumptions;
-7. track author/community-level evidence before generalization;
-8. distinguish historical reconstruction from Christian canonical/theological synthesis;
-9. handle dating/authorship uncertainty as evidence rather than nuisance;
-10. transfer the method to an unseen concept.
+Doré must learn to stratify evidence by composition/date/witness/corpus/language/provenance; distinguish manuscript from composition date and lexical from conceptual continuity; classify continuity/development/discontinuity; preserve Second Temple diversity; compare Hebrew/Aramaic/Greek evidence without one-to-one assumptions; track author/community evidence before generalization; distinguish historical reconstruction from canonical/theological synthesis; preserve dating/authorship uncertainty; and transfer the method to unseen concepts.
 
 ## Source policy
-
-Source stack: `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-SOURCE-STACK.md`.
-
-Required roles include primary biblical texts, manuscript-level Dead Sea Scrolls evidence, selected Second Temple primary corpora, historically accountable scholarship, concept-development method and explicit counterpoints against homogeneous or linear-evolution stories.
-
-No popular apologetic, anti-apologetic, denominational explainer or AI summary may serve as course authority.
+Source stack: `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-SOURCE-STACK.md`. Primary biblical texts, manuscript-level DSS evidence, selected Second Temple primary corpora, historically accountable scholarship and explicit counterpoints are required. Popular apologetic/anti-apologetic/denominational explainers or AI summaries cannot serve as course authority.
 
 ## Sequence
-
 1. Evidence stratification, dating and corpus boundaries.
 2. Continuity / development / discontinuity method.
 3. Second Temple source families and non-homogeneity.
@@ -55,53 +36,20 @@ No popular apologetic, anti-apologetic, denominational explainer or AI summary m
 9. Historical-vs-canonical synthesis exam.
 10. Retention / reopen gate.
 
-## Examination design
-
-### Local self exams
-Each unit must detect category errors and record counter-evidence.
-
-### Transfer exams
-Use a concept or corpus not used to teach the rule.
-
-### Practicum gates
-Prior `WORKING` / `CANDIDATE_FOR_EXAM` product nodes may change status only if the practicum materially resolves their remaining evidence layer.
-
-### Blind final exam
-Doré receives a user-like developmental/theological claim without supplied decomposition and must independently:
-- stratify evidence;
-- identify relevant corpora;
-- test continuity and competing trajectories;
-- preserve dating/source uncertainty;
-- distinguish historical and canonical claims;
-- refuse overclaiming where evidence is insufficient.
-
 ## Automatic fails
-
-- “Second Temple Judaism believed X” from one text;
-- manuscript date = composition date;
-- shared word = identical concept;
-- later elaboration = proven linear evolution;
-- historical development = theological falsification by definition;
-- canonical continuity = historical identity by definition;
-- Qumran findspot = Yahad authorship;
-- Josephus' categories = exhaustive map of Judaism;
-- NT = one authorial voice;
-- later rabbinic/Christian system projected backward unchanged.
-
-## Consolidation rule
-
-Method knowledge can become product-readable only after transfer. Claim-specific nodes retain independent states. Course graduation must never bulk-promote all associated claims.
+Second Temple homogeneity from one text; manuscript date = composition date; shared word = identical concept; later elaboration = proven linear evolution; historical development = theological falsification; canonical continuity = historical identity; Qumran findspot = Yahad authorship; Josephus' categories = exhaustive Judaism; NT = one authorial voice; later systems projected backward unchanged.
 
 ## Progress
-
-- Source stack: PASS — minimum viable method stack.
+- Source stack: PASS.
 - Unit 1: PASS — evidence stratification/dating/corpus boundaries.
 - Unit 2: PASS — continuity/development/discontinuity method.
 - Unit 3: PASS — source-family map/non-homogeneity.
-- Unit 4: PASS — translation/language mediation; 4/4 transfer gate. Established separate lexical-vs-conceptual relation tracking, Vorlage-before-translation-intent check, and translation/transliteration/borrowing distinctions. Evidence: `RESEARCHER-05-UNIT-04-TRANSLATION-LANGUAGE-MEDIATION.md`.
+- Unit 4: PASS — translation/language mediation; 4/4 transfer gate.
+- Unit 5 Practicum A: PASS — direct sampling of Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation's explicit Devil/Satan identification supports a bounded development-with-continuity conclusion while rejecting historical identity flattening. Examination 5/5 PASS. Evidence: `RESEARCHER-05-UNIT-05-PRACTICUM-A-PRIMARY-CORPUS.md`.
+
+`research.job.satan-identity` remains WORKING pending an exact product-node wording audit; practicum passage does not itself authorize overpromotion.
 
 ## Current next action
+`UNIT_05_NODE_AUDIT_THEN_UNIT_06_PRACTICUM_B_DIVINE_SPIRIT`.
 
-`UNIT_05_PRACTICUM_A_SATAN_ADVERSARY_SOURCE_SUFFICIENCY_CHECK`.
-
-Before changing `research.job.satan-identity`, obtain sufficient targeted primary/specialist evidence for Hebrew-Bible → diverse Second Temple corpora → NT comparison. If that evidence layer cannot be responsibly assembled with available sources, record the dependency and do not promote the node.
+Audit the exact Job/Satan node against the passed practicum. If its previously recorded diachronic dependency is now materially resolved, update only the bounded conclusion and run bridge regression. Then begin Unit 06 with OT → diverse Second Temple → NT Spirit evidence; do not jump directly from Hebrew ruach to later Trinitarian formulation.
