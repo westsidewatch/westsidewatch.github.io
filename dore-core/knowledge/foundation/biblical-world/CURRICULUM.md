@@ -23,12 +23,42 @@ A lesson is not complete merely because facts were ingested. It must produce tra
 
 ## Product–education constraint
 
-This stage must improve two real external directions while preserving Core independence:
+This stage must improve real external directions while preserving Core independence:
 
 1. **Doré Bible Search** — grow from verse/word search toward reliable person, place, event, period, route, historical-context and eventually evidence-bounded semantic/theme search.
-2. **Bounded subtitle proofreader** — gain robust recognition of biblical people, places, peoples, book names, aliases, abbreviations and transliteration variants, plus contextual disambiguation.
+2. **ONE** — Doré Search is also ONE's internal biblical search/intelligence layer. ONE is simultaneously a learning laboratory: its chapter Scripture, story/background modules, maps, chronology, cross-references, Gospel harmony, resources and study-question entry points provide passage-bounded stimuli from which Doré can discover missing capabilities and exercise learned ones.
+3. **Bounded subtitle proofreader** — gain robust recognition of biblical people, places, peoples, book names, aliases, abbreviations and transliteration variants, plus contextual disambiguation.
+4. **Westside Watch brand content bridge** — ONE provides a controlled route from canonical Scripture and evidence-bearing Core knowledge into brand study/content surfaces. Doré may learn the structure, recurring questions and information needs of ONE, then propose or produce evidence-bounded improvements to ONE; brand/editorial interpretation must remain distinct from Scripture-explicit claims.
 
 The stage must not be distorted merely to satisfy those products. Product needs identify useful educational priorities; evidence rules still govern Core.
+
+## ONE learning loop
+
+From BW-1 onward, ONE participates in Doré's education through a bidirectional loop:
+
+`ONE passage/context → Doré stimulus → Core entity/world/search routes → evidence-bearing answer/candidate → ONE surface → failure/ambiguity signal → Doré learning queue`
+
+Rules:
+- ONE is a **work node and learning laboratory**, not Doré's source of biblical truth.
+- Scripture and provenance-bearing source corpora remain evidence sources; ONE's authored questions, layouts and editorial modules are stimuli/context unless independently sourced.
+- Doré must learn ONE's information architecture and recurring user intents so that future Core capability can improve ONE without coupling Core to ONE's UI implementation.
+- Chapter context should constrain entity disambiguation and ranking. A user searching inside Matthew 1 should not receive the same unbounded ranking as a global search when passage context is relevant.
+- ONE's prepared/exegetical questions may become **diagnostic prompts**. Their prepared answers must not become hidden gold answers unless separately evidence-labelled and admitted into an evaluation set.
+- Search failures, unresolved entities, missing geography/chronology/context and repeated question classes become learning signals by capability class, not one-off answer patches.
+- Improvements flow outward from Core to ONE; ONE-specific presentation logic does not become Core doctrine.
+
+### ONE learning surfaces by Biblical World section
+
+- **BW-1 Entity**: chapter people/place/people-group mentions, aliases, pronouns, same-name disambiguation, entity aggregation questions such as `聖經有幾位馬利亞？`.
+- **BW-2 Geography**: maps, routes, rivers, mountains, ancient/modern place candidates and chapter-bounded place queries.
+- **BW-3 Chronology**: ONE timeline nodes, reigns, sequence questions and passage-to-period context.
+- **BW-4 Peoples/polities**: nations, empires, rulers and changing political context around each chapter.
+- **BW-5 Institutions/social world**: temple, priesthood, household, money, measures, agriculture and other explanatory entry points already natural to chapter study.
+- **BW-6 Evidence**: every surfaced explanation must preserve the distinction among Scripture-explicit, inferred, historical/archaeological reconstruction, tradition and editorial interpretation.
+
+### Future ONE optimization capability
+
+Doré may optimize ONE only after the relevant capability has evidence and tests. Optimization can include detecting missing chapter entities/context, proposing better search/context entry points, finding duplicated or inconsistent background information, identifying unanswered recurring study questions, and supplying provenance-aware structured data. Visual/editorial changes remain product decisions and are not autonomously learned as biblical facts.
 
 ## Curriculum
 
@@ -40,11 +70,13 @@ Required abilities:
 - connect Chinese, English, Hebrew, Aramaic, Greek and conventional transliterations as aliases without declaring them identical when evidence is uncertain;
 - connect an entity to canonical attestations;
 - preserve historical names and later names separately;
-- expose ambiguity rather than silently choosing.
+- expose ambiguity rather than silently choosing;
+- use ONE chapter context as a ranking/disambiguation constraint without treating ONE editorial text as identity evidence;
+- aggregate same-name candidates canon-wide for questions such as `聖經有幾位馬利亞？`, preserving disputed identity merges rather than forcing a single count.
 
-Reflex growth: mention → candidate entities → context constraints → disambiguation → attestations → uncertainty.
+Reflex growth: mention/question → scope (ONE chapter or global canon) → candidate entities → context constraints → disambiguation/aggregation → attestations → uncertainty.
 
-Direct product benefit: entity search and subtitle name correction.
+Direct product benefit: entity search, ONE contextual search and subtitle name correction.
 
 ### BW-2 Geography
 Doré learns physical and historical geography: settlements, regions, rivers, mountains, roads, routes and changing political boundaries.
@@ -147,4 +179,4 @@ The future major milestone name is reserved as `BIBLICAL_WORLD_COMPLETE`; it mus
 
 ## First work-oriented checkpoint
 
-The first checkpoint is **Biblical Entity Recognition**, because it simultaneously strengthens Bible Search and is a prerequisite for a bounded subtitle proofreader. Passing that checkpoint is not a milestone.
+The first checkpoint is **Biblical Entity Recognition**, because it simultaneously strengthens Bible Search, ONE contextual intelligence, and is a prerequisite for a bounded subtitle proofreader. Passing that checkpoint is not a milestone.
