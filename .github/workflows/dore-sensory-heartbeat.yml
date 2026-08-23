@@ -28,22 +28,46 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Seed Mary sensory acceptance question
+      - name: Seed Mary sensory acceptance question with diagnostic
+        id: seed
+        shell: bash
         run: |
-          curl --fail-with-body --silent --show-error \
+          mkdir -p dore-core/memory
+          set +e
+          body=$(mktemp)
+          status=$(curl --silent --show-error \
+            -o "$body" -w '%{http_code}' \
             -X POST 'https://westsidewatch-github-io.pages.dev/api/dore/sensory' \
             -H 'content-type: application/json' \
-            --data '{"query":"馬利亞有幾位？"}'
-      - name: Claim/close sensory signals
+            --data '{"query":"馬利亞有幾位？"}')
+          rc=$?
+          response=$(cat "$body" 2>/dev/null || true)
+          node -e 'const fs=require("fs");const out={at:new Date().toISOString(),stage:"seed",curl_rc:Number(process.argv[1]),http_status:Number(process.argv[2]||0),response:process.argv[3]||""};fs.writeFileSync("dore-core/memory/sensory-seed-diagnostic.json",JSON.stringify(out,null,2)+"\n")' "$rc" "$status" "$response"
+          echo "curl_rc=$rc" >> "$GITHUB_OUTPUT"
+          echo "http_status=$status" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Claim sensory signal with diagnostic
+        id: claim
+        continue-on-error: true
         env:
           DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
           DORE_SENSORY_BASE_URL: https://westsidewatch-github-io.pages.dev
         run: node scripts/dore/sensory-heartbeat.mjs
+      - name: Write claim step diagnostic
+        if: always()
+        shell: bash
+        run: |
+          mkdir -p dore-core/memory
+          node -e 'const fs=require("fs");const out={at:new Date().toISOString(),stage:"claim",outcome:process.argv[1],seed_curl_rc:process.argv[2],seed_http_status:process.argv[3]};fs.writeFileSync("dore-core/memory/sensory-claim-step-diagnostic.json",JSON.stringify(out,null,2)+"\n")' \
+            '${{ steps.claim.outcome }}' '${{ steps.seed.outputs.curl_rc }}' '${{ steps.seed.outputs.http_status }}'
       - name: Persist sensory state and diagnostics
         if: always()
+        shell: bash
         run: |
           git config user.name 'Doré Heartbeat'
           git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/memory/sensory-seed-diagnostic.json 2>/dev/null || true
+          git add dore-core/memory/sensory-claim-step-diagnostic.json 2>/dev/null || true
           git add dore-core/memory/sensory-heartbeat-diagnostic.json 2>/dev/null || true
           git add dore-core/memory/sensory-active.json 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
@@ -53,5 +77,3 @@ jobs:
             git pull --rebase origin main
           done
           exit 1
-
-# retrigger-after-actions-probe-pass-20260823
