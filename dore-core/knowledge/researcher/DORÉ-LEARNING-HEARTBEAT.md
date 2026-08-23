@@ -26,10 +26,15 @@ Decision: absence does not prove D1 has no live signal. No user question was fab
 ### Completed
 - Source stack: PASS.
 - Units 1–4: PASS.
-- Unit 05 initial source-sufficiency gate: correctly FAIL-SAFE pending direct corpus assembly.
-- Unit 05 Practicum A primary corpus assembly: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection. Evidence: `RESEARCHER-05-UNIT-05-PRACTICUM-A-PRIMARY-CORPUS.md`.
+- Unit 05 Practicum A: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection.
 
-The exact product node was read after the practicum. Its old boundary says Second Temple and NT comparison are still required; that dependency has now been materially addressed, but promotion/editing requires a careful full-file update plus bridge regression. No product-readable change was made in this wake, so no regression was falsely claimed.
+### Current wake
+- Exact `research.job.satan-identity` node audited. Its old boundary is now stale because the named Second Temple + NT dependency has been materially researched. However, the current connector response truncates the full `knowledge-index.json`, so a safe whole-file replacement cannot be guaranteed in this wake. No partial/truncated product file was written and no false bridge regression was claimed.
+- Unit 06 Practicum B opened.
+- Second Temple primary gate 1: 4/4 PASS. Jubilees 1 supplies eschatological holy-spirit/restoration language; 1QS 3–4 supplies distinct two-spirit and purification configurations. Shared vocabulary was not treated as identical ontology, and Second Temple diversity was preserved.
+- Evidence persisted: `RESEARCHER-05-UNIT-06-PRACTICUM-B-DIVINE-SPIRIT.md`.
 
 ## Current next action
-`UNIT_05_PRODUCT_NODE_BOUNDED_UPDATE_AND_BRIDGE_REGRESSION`, followed by `UNIT_06_PRACTICUM_B_DIVINE_SPIRIT` if the node update passes. Preserve historical-vs-canonical distinction and do not upgrade beyond the evidence.
+`UNIT_06_NT_CORPUS_STRATIFICATION_AND_ADVERSARIAL_EXAM`.
+
+Assemble representative Synoptic/Lukan, Pauline and Johannine Spirit evidence, compare against Hebrew-Bible and diverse Second Temple layers, and test continuity/development/discontinuity. Do not promote `research.ot.divine-spirit` until this gate passes. Separately, when a safe full-file edit path is available, apply the bounded Unit 05 Job/Satan node update and run Brain → Product regression.
