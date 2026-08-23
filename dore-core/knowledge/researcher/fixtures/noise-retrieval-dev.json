@@ -1,0 +1,10 @@
+{
+  "split": "dev",
+  "policy": "May be used for implementation debugging/calibration; never report as held-out final test.",
+  "fixtures": [
+    {"id":"dev-exact-zh","observed":"耶和華是我的牧者","language":"zh","noise_class":"exact","gold_text":"耶和華是我的牧者","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"dev-entity-zh","observed":"耶利米","language":"zh","noise_class":"biblical_entity","gold_entity":"耶利米","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"dev-negative-zh","observed":"今天下午記得買牛奶","language":"zh","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"},
+    {"id":"dev-negative-en","observed":"please move the meeting to Tuesday","language":"en","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"}
+  ]
+}
