@@ -36,3 +36,5 @@ jobs:
           git add dore-core/memory/actions-probe-diagnostic.json
           git commit -m 'chore(dore): persist Actions probe evidence [skip ci]'
           git push origin HEAD:main
+
+# retrigger-existing-probe-20260823
