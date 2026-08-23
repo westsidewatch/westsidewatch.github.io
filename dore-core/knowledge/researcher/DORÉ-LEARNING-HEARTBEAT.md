@@ -10,39 +10,35 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 
 ## Major completed milestones
 ### Biblical Languages I
-`BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`: `PASS / GRADUATED`. Units 1–11, Hebrew/Greek practica and integrated finals passed. Reusable method nodes consolidated. Brain bridge regressions 01–06 passed.
+`PASS / GRADUATED`. Units 1–11, Hebrew/Greek practica and integrated finals passed. Reusable method nodes consolidated.
 
 ### Researcher 04 — Autonomous Learning I
-`RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`. State: `COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
+`COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
 
 ### Researcher 05 — Biblical Concept Development I
-`RESEARCHER-05 — BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`: `PASS / GRADUATED → RETENTION_WATCH`.
-Source stack and Units 01–07 passed. Unit 08 independent integrated transfer on resurrection passed 6/6 adversarial gate. Competence demonstrated across adversary, Spirit, canon/Scripture, and independent resurrection transfer without flattening corpora or retrojecting later formulations into earlier witnesses.
+`PASS / GRADUATED → RETENTION_WATCH`. Independent resurrection transfer passed 6/6 adversarial gate.
 
-## Sensory-first status
-Required first read this wake: `dore-core/memory/sensory-active.json`.
-Result: file absent on `main`.
-No user question was fabricated into repository memory.
+### First durable sensory → research → brain consolidation
+Signal `5cf2c608-e66f-4176-a3f8-b3284819158a`, query `馬利亞有幾位?`, was durably claimed as `RESEARCHING`, independently researched, counter-checked, passed a 7/7 gate, promoted generically as `research.nt.mary-count`, and written back to `sensory-active.json` as `CONSOLIDATED` with a real `brain_node`.
 
-The infrastructure failure remains bounded: `dore-core/memory/sensory-seed-diagnostic.json` records HTTP 500 / Cloudflare error 1101 from POST `/api/dore/sensory`; the claim step itself succeeds but receives no signal. Therefore the current blocker is PRODUCT → sensory ingestion runtime, not researcher knowledge.
+This proves the previously missing middle of the closed loop: **durable sensory memory → autonomous research → examination → product-readable brain consolidation**. It does not by itself prove that every Search browser deployment is posting correctly; browser-side ingestion remains a separate acceptance surface.
 
-## Latest completed actions
-`POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`: COMPLETE.
-`SUBTITLE_PROOFREADER_PREREQUISITE_DIAGNOSTIC_01`: COMPLETE.
+Evidence: `dore-core/knowledge/researcher/live/SENSORY-5cf2c608-MARY-COUNT.md`, `dore-core/memory/sensory-active.json`, `static/dore/brain/knowledge-index.json`.
 
-### Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–02 PASS.
+## Researcher 06 — Noise-Aware Scripture Retrieval I
+Status: ACTIVE — UNITS 01–03 PASS.
 Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`.
 
-Unit 01 established a ten-class noise taxonomy, four-layer provenance model (`observed` / `candidate` / `source` / `confidence`), and passed 8/8.
+Unit 01: noise taxonomy + observed/candidate/source/confidence model, 8/8 PASS.
+Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/10 PASS.
+Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS. No numeric threshold was fabricated without held-out calibration data.
 
-Unit 02 established bounded multi-channel candidate generation for Chinese/English noisy Scripture retrieval: lexical + phonetic neighborhoods, variable-length spans, biblical entity/transliteration candidates, adjacent-verse windows, N-best preservation, provenance, and pre-reranking pruning. It is grounded against ACL/NAACL/ROCLING evidence on Chinese homophone correction, phonological variable-length correction, multiple ASR hypotheses, named-entity denoising, and bounded phonetic candidate graphs. Adversarial gate: 10/10 PASS.
-
-No product brain node has been promoted because ranking calibration and abstention are not yet proven.
+No Researcher-06 product capability is promoted yet because implementation-level phonetic indexing and fixture measurements remain unproven.
 
 ## Current next action
-`RESEARCHER_06_UNIT_03_RANKING_CALIBRATION_AND_ABSTENTION`.
+`RESEARCHER_06_UNIT_04_PHONETIC_INDEX_IMPLEMENTATION_AND_TEST_FIXTURES`.
 
-Develop and adversarially test ranking principles combining lexical, phonetic, entity, local context, verse-window continuity, and corpus evidence. Explicitly prevent semantic/domain priors from overwhelming contradictory observed evidence. Define uncertainty margins and abstention behavior before product promotion.
+Build and test a reusable Chinese/English Scripture/entity phonetic-candidate index with explicit provenance, transliteration aliases, variable-length spans, bounded neighborhoods, and fixture-level retrieval measurements. Do not wire it into production until its failure modes and abstention behavior are measured.
 
-Separately, PRODUCT → BRAIN closed-loop acceptance remains false until Cloudflare sensory POST stops returning 500/1101 and a signal is durably written then claimed into `sensory-active.json`.
+## Closed-loop next acceptance
+Run Brain → Product regression for `research.nt.mary-count`: verify a generic Search brain lookup can surface the new node without per-question UI logic. Separately verify a current Search browser deployment can itself POST a fresh unknown query into sensory memory; do not infer that browser acceptance solely from the successful durable signal.
