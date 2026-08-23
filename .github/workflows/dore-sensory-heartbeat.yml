@@ -31,7 +31,7 @@ jobs:
       - name: Claim/close sensory signals
         env:
           DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
-          DORE_SENSORY_BASE_URL: https://main.westsidewatch-github-io.pages.dev
+          DORE_SENSORY_BASE_URL: https://westsidewatch-github-io.pages.dev
         run: node scripts/dore/sensory-heartbeat.mjs
       - name: Persist sensory work queue
         run: |
