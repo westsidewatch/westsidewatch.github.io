@@ -28,21 +28,21 @@ The infrastructure failure remains bounded: `dore-core/memory/sensory-seed-diagn
 
 ## Latest completed actions
 `POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`: COMPLETE.
-Initial decision was not to manufacture a course without a repeated deficit.
-
 `SUBTITLE_PROOFREADER_PREREQUISITE_DIAGNOSTIC_01`: COMPLETE.
-Evidence: `SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
-
-The bounded transfer benchmark found repeated independent failures in phonetic ASR substitution, biblical entity confusion, transliteration normalization, English phonetic retrieval, and uncertainty-calibrated correction. These share a reusable skill deficit not covered by Biblical Languages I or Biblical Concept Development I. This satisfies the Autonomous Learning I course-opening rule.
 
 ### Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNIT 01 PASS.
+Status: ACTIVE — UNITS 01–02 PASS.
 Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`.
-Unit 01 established a ten-class noise taxonomy, a four-layer provenance model (`observed` / `candidate` / `source` / `confidence`), and passed an 8/8 examination gate. No product brain node was promoted because candidate generation/ranking has not yet been proven.
+
+Unit 01 established a ten-class noise taxonomy, four-layer provenance model (`observed` / `candidate` / `source` / `confidence`), and passed 8/8.
+
+Unit 02 established bounded multi-channel candidate generation for Chinese/English noisy Scripture retrieval: lexical + phonetic neighborhoods, variable-length spans, biblical entity/transliteration candidates, adjacent-verse windows, N-best preservation, provenance, and pre-reranking pruning. It is grounded against ACL/NAACL/ROCLING evidence on Chinese homophone correction, phonological variable-length correction, multiple ASR hypotheses, named-entity denoising, and bounded phonetic candidate graphs. Adversarial gate: 10/10 PASS.
+
+No product brain node has been promoted because ranking calibration and abstention are not yet proven.
 
 ## Current next action
-`RESEARCHER_06_UNIT_02_CANDIDATE_GENERATION_AND_PHONETIC_EVIDENCE`.
+`RESEARCHER_06_UNIT_03_RANKING_CALIBRATION_AND_ABSTENTION`.
 
-Develop and test generic candidate-generation principles for Chinese/English noisy Scripture retrieval, including biblical entity/transliteration candidates. Preserve abstention and provenance. Do not change production subtitle-correction behavior or promote a product-readable node until an adversarial capability gate justifies it.
+Develop and adversarially test ranking principles combining lexical, phonetic, entity, local context, verse-window continuity, and corpus evidence. Explicitly prevent semantic/domain priors from overwhelming contradictory observed evidence. Define uncertainty margins and abstention behavior before product promotion.
 
 Separately, PRODUCT → BRAIN closed-loop acceptance remains false until Cloudflare sensory POST stops returning 500/1101 and a signal is durably written then claimed into `sensory-active.json`.
