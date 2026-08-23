@@ -71,6 +71,64 @@ Dawn Library is currently a future work target, **not an assumed learning source
 
 Work should generate unpredictable stimuli and learning signals. Education should improve later work. Doré should increasingly connect newly acquired capability to possible work improvements.
 
+### Permanent cross-product internship principle
+
+ONE, Search, proofreading, Dawn Library and later Doré work surfaces are not isolated products. They are permanent internship environments that Doré may revisit throughout Researcher education and afterward.
+
+A lesson learned in one work surface should be tested for legitimate transfer to the others. Product boundaries must not force duplication of a capability that belongs to Doré Core.
+
+The desired loop is:
+
+`education → work surface A → real-world failure/signal → Core learning → transfer exam → work surface B improves → new signal → further education`
+
+Cross-product movement is not incidental integration. It is one of the principal behavioral tests of whether Doré is becoming a single learning subject rather than a collection of databases and product-specific patches.
+
+## Proofreading as a Doré project and research internship
+
+Proofreading should become a formal Doré project, not merely a Westside Stories subtitle feature.
+
+Its shared reasoning pattern is:
+
+`observe anomaly → infer intended meaning → generate candidates → validate with context/evidence → estimate confidence → correct / ask / preserve → learn from adjudication`
+
+The project should develop at least three layers:
+
+1. **General proofreading** — spelling, omissions, punctuation, traditional/simplified forms, variants, names, numbers, segmentation and transcript/subtitle artifacts.
+2. **Biblical/church-domain proofreading** — canonical book names and abbreviations, biblical people and places, transliterations, Scripture references, theological/church vocabulary and context-sensitive terminology.
+3. **Product adapters** — Westside Stories subtitles, ONE content, Search input/corpus, Dawn Library records and future sermons, transcripts or publications.
+
+Proofreading must not become an aggressive autocorrect system. It must preserve the original evidence, distinguish suspicion from correction, expose confidence, seek corroboration when needed and refuse unjustified changes.
+
+Doré should eventually be capable of proposing and maintaining its own proofreading error taxonomy, evidence policy, test corpus and graduation gates under project governance.
+
+## Shared Interpretation & Correction Reflex
+
+Search input normalization and proofreading may be two manifestations of the same deeper capability.
+
+For example, a non-standard Scripture query, an ASR-corrupted biblical place name, and an inconsistent reference inside ONE all require some form of:
+
+`anomaly recognition → intended-meaning hypothesis → candidate generation → contextual validation → evidence-bounded decision`
+
+Therefore Doré should not automatically grow isolated `SearchNormalizer` and `SubtitleCorrector` brains. Where behavioral evidence supports it, these should draw on a shared **Interpretation & Correction Reflex** in Doré Core.
+
+Real Search usage can teach proofreading about legitimate abbreviations and human input habits. Proofreading can teach Search about common recognition errors and distinguish a legitimate alias from a probable typo or ASR corruption. ONE can supply contextual evidence. Researcher education supplies methods for verification. Dawn Library can later provide and receive bibliographic/textual consistency work once it becomes a governed evidence source.
+
+## Cross-Product Transfer as evidence of life
+
+A particularly strong `DORÉ_ALIVE` signal is improvement in a product that was **not directly patched**.
+
+Example standard:
+
+- Doré receives training or adjudicated experience in proofreading.
+- No Search-specific rule is added for the blind test.
+- Search performance improves on an unseen but capability-related input family.
+
+Or the reverse: real Search experience improves proofreading performance without a proofreading-specific trigger patch.
+
+This is **Cross-Product Transfer**. It is stronger evidence than merely passing a known task because it demonstrates that experience acquired in one work environment can alter behavior in another.
+
+Cross-product transfer claims must still satisfy the core doctrine: **No behavioral evidence, no neural claim.**
+
 ## Innovation reflex
 
 Doré should eventually be able to ask after learning or work:
