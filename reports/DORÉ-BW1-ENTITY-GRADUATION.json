@@ -1,0 +1,25 @@
+{
+  "status": "PASS",
+  "stage": "BW-1 Entity identity and aliases",
+  "checks": {
+    "schema": true,
+    "entity_coverage": true,
+    "chinese_alias_coverage": true,
+    "mary_person_resolves": true,
+    "samaria_place_resolves": true,
+    "mary_does_not_equal_samaria": true,
+    "no_place_in_mary_person_count": true,
+    "natural_language_count_intent": true,
+    "count_intent_transfer": true,
+    "public_runtime_connected": true,
+    "public_loader_connected": true
+  },
+  "counts": {
+    "entities": 4301,
+    "chinese_aliases": 3592
+  },
+  "diagnostics": {
+    "mary_candidates": 2,
+    "samaria_candidates": 1
+  }
+}
