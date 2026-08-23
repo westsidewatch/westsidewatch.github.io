@@ -16,99 +16,59 @@
       "confidence": "high-textual-mixed-theological",
       "questions": ["舊約有聖靈嗎", "舊約有沒有聖靈", "舊約中有聖靈嗎", "old testament holy spirit", "spirit in the old testament"],
       "concepts": ["舊約", "聖靈", "神的靈", "耶和華的靈", "ruach", "רוח"],
-      "answer": {
-        "lead": "如果你問的是『舊約是否談到神的靈，以及神藉著靈的工作』，答案是：是。",
-        "body": [
-          "舊約多處使用『神的靈／耶和華的靈』的語言，並把創造與生命、能力、先知性工作、同在與更新等活動與之相連。",
-          "但希伯來文 ruach（רוּחַ）並不等於每次都指基督教教義中的『聖靈』；它也可依上下文表示風、氣息或其他的靈。",
-          "若問題進一步是『舊約本身是否已完整陳述後來尼西亞／三位一體意義上的聖靈論』，目前這個結論不能只靠 ruach 的出現直接成立，需要另做正典與神學層研究。"
-        ],
-        "boundary": "目前可高置信度回答文本層；完整三位一體神學綜合仍屬後續研究。"
-      },
+      "answer": {"lead": "如果你問的是『舊約是否談到神的靈，以及神藉著靈的工作』，答案是：是。", "body": ["舊約多處使用『神的靈／耶和華的靈』的語言，並把創造與生命、能力、先知性工作、同在與更新等活動與之相連。", "但希伯來文 ruach（רוּחַ）並不等於每次都指基督教教義中的『聖靈』；它也可依上下文表示風、氣息或其他的靈。", "若問題進一步是『舊約本身是否已完整陳述後來尼西亞／三位一體意義上的聖靈論』，目前這個結論不能只靠 ruach 的出現直接成立，需要另做正典與神學層研究。"], "boundary": "目前可高置信度回答文本層；完整三位一體神學綜合仍屬後續研究。"},
       "scripture": ["GEN 1:2", "NUM 24:2", "JDG 3:10", "1SA 16:13-14", "PSA 51:11", "ISA 11:2", "ISA 61:1", "ISA 63:10-11", "EZK 36:26-27", "JOL 2:28-29"],
       "provenance": ["dore-core/knowledge/researcher/practicum/02-01-A-OLD-TESTAMENT-SPIRIT.md"],
       "next_research": ["lexicon comparison for ruach", "OT-to-NT canonical transfer study"]
     },
     {
-      "id": "research.job.satan-identity",
-      "type": "research_answer",
-      "status": "WORKING",
-      "confidence": "bounded",
+      "id": "research.job.satan-identity", "type": "research_answer", "status": "WORKING", "confidence": "bounded",
       "questions": ["約伯記中的撒但就是新約的魔鬼嗎", "約伯記的撒但就是魔鬼嗎", "job satan devil", "is the satan in job the devil"],
       "concepts": ["約伯記", "撒但", "魔鬼", "satan", "הסטן", "第二聖殿"],
-      "answer": {
-        "lead": "這個問題目前不能只靠名字相同就下定論。",
-        "body": [
-          "需要分開約伯記自身的希伯來文與敘事角色、希伯來聖經其他用法、第二聖殿時期的概念發展、新約用語，以及後來基督教正典神學的綜合。",
-          "目前應避免兩個捷徑：『名字一樣所以各歷史層完全相同』，以及『概念有發展所以後來完全不能建立正典關聯』。"
-        ],
-        "boundary": "仍是 WORKING 研究；需要詞典、撒迦利亞書3章及第二聖殿資料後才能形成更強的歷史判斷。"
-      },
-      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"],
-      "next_research": ["Hebrew satan lexicography", "Zechariah 3 comparison", "Second Temple development"]
+      "answer": {"lead": "這個問題目前不能只靠名字相同就下定論。", "body": ["需要分開約伯記自身的希伯來文與敘事角色、希伯來聖經其他用法、第二聖殿時期的概念發展、新約用語，以及後來基督教正典神學的綜合。", "目前應避免兩個捷徑：『名字一樣所以各歷史層完全相同』，以及『概念有發展所以後來完全不能建立正典關聯』。"], "boundary": "仍是 WORKING 研究；需要詞典、撒迦利亞書3章及第二聖殿資料後才能形成更強的歷史判斷。"},
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"], "next_research": ["Hebrew satan lexicography", "Zechariah 3 comparison", "Second Temple development"]
     },
     {
-      "id": "research.matthew.2.23-nazarene",
-      "type": "research_answer",
-      "status": "WORKING",
-      "confidence": "bounded",
+      "id": "research.matthew.2.23-nazarene", "type": "research_answer", "status": "WORKING", "confidence": "bounded",
       "questions": ["他必稱為拿撒勒人舊約在哪裡", "馬太福音2:23舊約找不到", "matthew 2:23 nazarene prophecy", "where is he shall be called a nazarene in the old testament"],
       "concepts": ["馬太福音2:23", "拿撒勒人", "先知", "引用", "暗引", "netser"],
-      "answer": {
-        "lead": "舊約沒有找到一句與馬太福音2:23逐字相同的經文；這個『找不到』本身就是需要解釋的資料。",
-        "body": [
-          "研究必須注意馬太使用的是複數『眾先知』式表述，不能因沒有逐字來源就虛構一節遺失經文。",
-          "拿細耳人、枝子 netser、被藐視的主題或更廣泛先知性綜合等解釋，都必須分別接受原文與上下文檢驗，不能因發音相似就直接定案。"
-        ],
-        "boundary": "目前保留多個假說，未把任何一個解釋升格為確定答案。"
-      },
-      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"],
-      "next_research": ["Greek quotation formula analysis", "Hebrew lexical testing", "intertextuality study"]
+      "answer": {"lead": "舊約沒有找到一句與馬太福音2:23逐字相同的經文；這個『找不到』本身就是需要解釋的資料。", "body": ["研究必須注意馬太使用的是複數『眾先知』式表述，不能因沒有逐字來源就虛構一節遺失經文。", "拿細耳人、枝子 netser、被藐視的主題或更廣泛先知性綜合等解釋，都必須分別接受原文與上下文檢驗，不能因發音相似就直接定案。"], "boundary": "目前保留多個假說，未把任何一個解釋升格為確定答案。"},
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"], "next_research": ["Greek quotation formula analysis", "Hebrew lexical testing", "intertextuality study"]
     },
     {
-      "id": "research.method.lemma-surface-form",
-      "type": "research_method_answer",
-      "status": "CANDIDATE_FOR_EXAM",
-      "confidence": "high-method-low-semantic-scope",
+      "id": "research.method.lemma-surface-form", "type": "research_method_answer", "status": "CANDIDATE_FOR_EXAM", "confidence": "high-method-low-semantic-scope",
       "questions": ["原文中的詞形和詞元有什麼不同", "詞形和 lemma 有什麼不同", "lemma 和 surface form 有什麼不同", "聖經原文 lemma 是什麼", "what is the difference between lemma and surface form"],
       "concepts": ["lemma", "surface form", "詞元", "詞形", "原文", "morphology", "形態學", "transliteration", "音譯"],
-      "answer": {
-        "lead": "詞形、lemma、音譯和意義是不同層次，不能互相替代。",
-        "body": [
-          "surface form（詞形）是經文中實際出現的拼寫／屈折形式；lemma 是詞典或語料庫用來歸類相關詞形的引用形式。",
-          "音譯只是把希伯來文或希臘文換成另一套字母來表示，方便閱讀或定位；它不是原文形態，也不能自行證明上下文中的意思。",
-          "同一 lemma 可以對應不同詞形和不同形態特徵。真正的語義判斷還需要形態、句法、上下文與可靠詞典，不可從 lemma 編號直接跳到神學結論。"
-        ],
-        "boundary": "這是 Biblical Languages I Unit 1 已通過自測與小型轉移測試的方法性結論；尚未等同整門課或特定詞義研究已完成。"
-      },
-      "provenance": [
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"
-      ],
-      "next_research": ["Unit 2 morphology and parsing foundations", "full transfer/blind exam later in Biblical Languages I"]
+      "answer": {"lead": "詞形、lemma、音譯和意義是不同層次，不能互相替代。", "body": ["surface form（詞形）是經文中實際出現的拼寫／屈折形式；lemma 是詞典或語料庫用來歸類相關詞形的引用形式。", "音譯只是把希伯來文或希臘文換成另一套字母來表示，方便閱讀或定位；它不是原文形態，也不能自行證明上下文中的意思。", "同一 lemma 可以對應不同詞形和不同形態特徵。真正的語義判斷還需要形態、句法、上下文與可靠詞典，不可從 lemma 編號直接跳到神學結論。"], "boundary": "這是 Biblical Languages I Unit 1 已通過自測與小型轉移測試的方法性結論；尚未等同整門課或特定詞義研究已完成。"},
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"],
+      "next_research": ["later Biblical Languages transfer/blind exam"]
     },
     {
-      "id": "research.method.morphology-syntax-boundary",
-      "type": "research_method_answer",
-      "status": "CANDIDATE_FOR_EXAM",
-      "confidence": "high-method-elementary-syntax-scope",
+      "id": "research.method.morphology-syntax-boundary", "type": "research_method_answer", "status": "CANDIDATE_FOR_EXAM", "confidence": "high-method-elementary-syntax-scope",
       "questions": ["聖經原文 morphology 是什麼", "原文形態標籤可以直接告訴我意思嗎", "希臘文 case 是不是等於固定翻譯", "希伯來文 construct state 是不是就是所有格", "can morphology tags determine meaning", "does Greek case determine translation", "does Hebrew construct state mean possession"],
       "concepts": ["morphology", "形態學", "parsing", "case", "nominative", "genitive", "dative", "accusative", "construct state", "absolute state", "syntax", "句法", "OSHB", "MorphGNT"],
+      "answer": {"lead": "形態標籤、格和 Hebrew noun state 都是重要的文法證據，但不能直接等同上下文意義或固定英文翻譯。", "body": ["MorphGNT 與 OSHB 的 parsing code 必須按照各自的 schema／版本解碼；它們是資料集所提供的文法分析，不是不可錯的詮釋。", "希臘文 nominative、genitive、dative、accusative 會限制可能的句法關係，但常見功能不能被改寫成『永遠只有一種功能』，也不能機械映射成固定的 of／to／for 或英文語序。", "希伯來文 construct state 表示與後項形成文法鏈接，但可承載所有、材料、屬性、目的、施事／工具等多種關係；有些形式在 construct 與 absolute 中外觀相同，必須看句法上下文。", "因此可靠的原文研究順序應保持：詞形 → lemma → morphology → syntax → discourse/context → lexicography/semantic judgment。"], "boundary": "這是 Biblical Languages I Units 2–3 已通過本地自測與轉移測試的方法性結論；仍未完成整門課，也不授權僅憑 morphology 對具體爭議詞義作定案。"},
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md"], "next_research": ["later Biblical Languages blind/retention exam"]
+    },
+    {
+      "id": "research.method.verbal-morphology-boundary",
+      "type": "research_method_answer",
+      "status": "CANDIDATE_FOR_EXAM",
+      "confidence": "high-method-elementary-verbal-scope",
+      "questions": ["希臘文 aorist 是不是表示一次完成", "aorist 是不是 once for all", "希伯來文 perfect 是不是過去式", "Piel 是不是一定表示加強語氣", "does the Greek aorist mean once for all", "does Hebrew perfect always mean past tense", "does Piel always mean intensive"],
+      "concepts": ["aorist", "不定過去式", "once for all", "Greek tense", "verbal aspect", "Hebrew perfect", "Perfect", "Piel", "Qal", "Niphal", "Hiphil", "stem", "conjugation", "verb morphology"],
       "answer": {
-        "lead": "形態標籤、格和 Hebrew noun state 都是重要的文法證據，但不能直接等同上下文意義或固定英文翻譯。",
+        "lead": "原文動詞的 tense／aspect／stem／conjugation 標籤能限制文法分析，但不能單獨證明『一次完成』、固定時間或固定詞義。",
         "body": [
-          "MorphGNT 與 OSHB 的 parsing code 必須按照各自的 schema／版本解碼；它們是資料集所提供的文法分析，不是不可錯的詮釋。",
-          "希臘文 nominative、genitive、dative、accusative 會限制可能的句法關係，但常見功能不能被改寫成『永遠只有一種功能』，也不能機械映射成固定的 of／to／for 或英文語序。",
-          "希伯來文 construct state 表示與後項形成文法鏈接，但可承載所有、材料、屬性、目的、施事／工具等多種關係；有些形式在 construct 與 absolute 中外觀相同，必須看句法上下文。",
-          "因此可靠的原文研究順序應保持：詞形 → lemma → morphology → syntax → discourse/context → lexicography/semantic judgment。"
+          "希臘文 aorist 本身不能推出 once-for-all、瞬間、只發生一次或某個神學結論；若上下文確實表示『一次永遠』，證據必須來自更完整的語境、詞彙或修飾語，而不是僅從 aorist 標籤。",
+          "希臘文的 tense/aspect 在不同 mood 中不能機械等同時間；而且學界對古希臘文 tense/aspect 的精確模型存在不同分析，因此應保留理論邊界。",
+          "希伯來文 Perfect 常與完成／過去行動相關，但也可依上下文有現在或未來的翻譯值；不能簡化為 English past tense。",
+          "Qal、Niphal、Piel、Hiphil 等 stem 反映常見的語態／動作類型模式，但不是單字本身的固定詞義。尤其 Piel 並不等於永遠『加強／intensive』，必須查具體 lexeme 與上下文。"
         ],
-        "boundary": "這是 Biblical Languages I Units 2–3 已通過本地自測與轉移測試的方法性結論；仍未完成整門課，也不授權僅憑 morphology 對具體爭議詞義作定案。"
+        "boundary": "這是 Biblical Languages I Unit 4 已通過本地自測與轉移測試的方法性結論；完整語義與釋經結論仍需要句法、上下文和可靠詞典，整門課也尚未完成。"
       },
-      "provenance": [
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md"
-      ],
-      "next_research": ["Unit 4 verbal system foundations", "full blind/retention exam later in Biblical Languages I"]
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md"],
+      "next_research": ["Unit 5 lexicon use and semantic range", "later blind/retention exam"]
     }
   ]
 }
