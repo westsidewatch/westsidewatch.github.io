@@ -24,19 +24,25 @@ Required first read this wake: `dore-core/memory/sensory-active.json`.
 Result: file absent on `main`.
 No user question was fabricated into repository memory.
 
-The infrastructure failure is now bounded more precisely: `dore-core/memory/sensory-seed-diagnostic.json` records HTTP 500 / Cloudflare error 1101 from POST `/api/dore/sensory`; the claim step itself succeeds but receives no signal. Therefore the current blocker is PRODUCT → sensory ingestion runtime, not researcher knowledge.
+The infrastructure failure remains bounded: `dore-core/memory/sensory-seed-diagnostic.json` records HTTP 500 / Cloudflare error 1101 from POST `/api/dore/sensory`; the claim step itself succeeds but receives no signal. Therefore the current blocker is PRODUCT → sensory ingestion runtime, not researcher knowledge.
 
-## Latest completed action
+## Latest completed actions
 `POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`: COMPLETE.
-Evidence: `RESEARCHER-06-DIAGNOSIS.md`.
+Initial decision was not to manufacture a course without a repeated deficit.
 
-Decision: no evidence-backed repeated research-method deficit currently justifies opening Researcher 06. Do not manufacture a course merely to keep educational motion.
+`SUBTITLE_PROOFREADER_PREREQUISITE_DIAGNOSTIC_01`: COMPLETE.
+Evidence: `SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
 
-The next real-work prerequisite comes from the persistent Product–Education Loop: subtitle proofreader. Before opening another course, test whether existing graduated capabilities plus the Bible Search work node can already handle noisy/partial Scripture quotation retrieval, biblical names/transliteration variants, ASR-like confusions, ranking and uncertainty-safe correction suggestions.
+The bounded transfer benchmark found repeated independent failures in phonetic ASR substitution, biblical entity confusion, transliteration normalization, English phonetic retrieval, and uncertainty-calibrated correction. These share a reusable skill deficit not covered by Biblical Languages I or Biblical Concept Development I. This satisfies the Autonomous Learning I course-opening rule.
+
+### Researcher 06 — Noise-Aware Scripture Retrieval I
+Status: ACTIVE — UNIT 01 PASS.
+Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`.
+Unit 01 established a ten-class noise taxonomy, a four-layer provenance model (`observed` / `candidate` / `source` / `confidence`), and passed an 8/8 examination gate. No product brain node was promoted because candidate generation/ranking has not yet been proven.
 
 ## Current next action
-`SUBTITLE_PROOFREADER_PREREQUISITE_DIAGNOSTIC_01`.
+`RESEARCHER_06_UNIT_02_CANDIDATE_GENERATION_AND_PHONETIC_EVIDENCE`.
 
-Run a bounded transfer benchmark against existing Doré Bible Search capabilities. Classify failures as implementation defect, corpus/index gap, missing reusable linguistic/retrieval skill, or already-covered higher-order research judgment. Open a new course only if missing reusable skill failures repeat independently and cannot be solved by applying graduated methods.
+Develop and test generic candidate-generation principles for Chinese/English noisy Scripture retrieval, including biblical entity/transliteration candidates. Preserve abstention and provenance. Do not change production subtitle-correction behavior or promote a product-readable node until an adversarial capability gate justifies it.
 
 Separately, PRODUCT → BRAIN closed-loop acceptance remains false until Cloudflare sensory POST stops returning 500/1101 and a signal is durably written then claimed into `sensory-active.json`.
