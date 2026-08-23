@@ -15,7 +15,9 @@
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [],
+  "failures": [
+    "main_site_direct_search_entry"
+  ],
   "function_url": "/dore/search/",
   "governance": "This is an external work-node acceptance, not an educational milestone.",
   "performance": {
@@ -25,7 +27,7 @@
     "original_index_loading": "lazy"
   },
   "schema": "dore.work-node.bible-search.v1",
-  "status": "AVAILABLE",
-  "verdict": "PASS",
+  "status": "NOT_READY",
+  "verdict": "FAIL",
   "work_node": "DORE_BIBLE_SEARCH"
 }
