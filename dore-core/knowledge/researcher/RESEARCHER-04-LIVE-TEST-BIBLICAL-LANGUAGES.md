@@ -1,6 +1,6 @@
 # Autonomous Learning I — Live Test: Biblical Languages Curriculum
 
-Status: EXECUTED
+Status: IN_PROGRESS — SOURCE STACK SELECTED; UNIT 01 PASS
 Date: 2026-08-23
 Initiated by: Doré's own next-action decision
 
@@ -82,8 +82,38 @@ Automatic fail conditions:
 
 Vocabulary lists are not neural completion. Durable consolidation requires demonstrated method transfer. Individual lexical claims remain claim-ledger entries with provenance and context.
 
-## Next autonomous action
+## Executed autonomous actions
 
-`SOURCE_DISCOVERY_FOR_BIBLICAL_LANGUAGES_I`
+### Source discovery
 
-Doré should now locate candidate teaching/reference materials, evaluate them under the material-selection protocol, choose a minimal source stack, and begin Unit 1 without waiting for a human to name textbooks.
+Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`.
+
+Selected operational stack:
+- Ewald 2022 and Dongell 2014 for inspectable Greek pedagogy;
+- MorphGNT/SBLGNT for Greek text/morphology practice;
+- OSHB v2.2 for Hebrew text/morphology practice;
+- Cook & Holmstedt as Hebrew textbook anchor with an explicit full-content access boundary;
+- licensed academic lexica retained as later semantic-study dependencies rather than silently replaced by open morphology datasets.
+
+### Unit 1
+
+Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`.
+
+Local result: `UNIT_01_PASS — TRANSFER_PENDING`.
+
+Learned method boundary:
+`SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
+
+The unit passed self and mini-transfer checks in both Hebrew/Greek research contexts. This does not constitute course completion or authorize contested lexical conclusions.
+
+### Product bridge consequence
+
+Materially reusable method knowledge was exported as `research.method.lemma-surface-form` in `static/dore/brain/knowledge-index.json` with `CANDIDATE_FOR_EXAM` status, provenance, confidence boundary, questions/concepts and next research actions.
+
+Generic bridge regression: PASS, recorded in `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`. No per-question UI handler was added.
+
+## Current next autonomous action
+
+`BIBLICAL_LANGUAGES_I_UNIT_02_MORPHOLOGY_AND_PARSING_FOUNDATIONS`
+
+Unit 2 must inspect the actual OSHB/MorphGNT parsing schemas and grammar explanations, teach parsing as evidence rather than infallible interpretation, run a self/transfer test, and derive the next action without human confirmation.
