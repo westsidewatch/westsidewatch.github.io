@@ -8,6 +8,7 @@
     "mary_person_resolves": true,
     "samaria_place_resolves": true,
     "mary_does_not_equal_samaria": true,
+    "translated_name_expands_to_source_identity_cluster": true,
     "no_place_in_mary_person_count": true,
     "natural_language_count_intent": true,
     "count_intent_transfer": true,
@@ -19,7 +20,8 @@
     "chinese_aliases": 3592
   },
   "diagnostics": {
-    "mary_candidates": 2,
+    "mary_direct_alias_candidates": 2,
+    "mary_source_name_cluster": 6,
     "samaria_candidates": 1
   }
 }
