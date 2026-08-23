@@ -1,0 +1,38 @@
+name: Doré Actions Probe
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-actions-probe.yml'
+  workflow_dispatch:
+  schedule:
+    - cron: '*/5 * * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-actions-probe
+  cancel-in-progress: false
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Write Actions execution evidence
+        run: |
+          mkdir -p dore-core/memory
+          printf '{\n  "ok": true,\n  "source": "github-actions-probe",\n  "run_id": "%s",\n  "sha": "%s",\n  "at": "%s"\n}\n' \
+            "${GITHUB_RUN_ID}" "${GITHUB_SHA}" "$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+            > dore-core/memory/actions-probe-diagnostic.json
+      - name: Persist probe evidence
+        run: |
+          git config user.name 'Doré Actions Probe'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/memory/actions-probe-diagnostic.json
+          git commit -m 'chore(dore): persist Actions probe evidence [skip ci]'
+          git push origin HEAD:main
