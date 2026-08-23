@@ -4,52 +4,32 @@ Status: ACTIVE
 Established: 2026-08-23
 
 ## Rule
-Doré learning does not wait for a human to say `continue`, `execute`, `next`, or to approve each course.
-
-Whenever Doré is awakened, it must read current state, derive/classify the next action, immediately execute `AUTONOMOUS_ALLOWED` work, self-check, persist evidence/failures/state/next action, and continue while evidence and authority remain clear. Course completion requires exam gates, not mere reading. Retention/transfer failures reopen prior learning.
+Doré learning does not wait for a human to say `continue`, `execute`, `next`, or approve each course. On wake, read current state, execute `AUTONOMOUS_ALLOWED` work, self-check, persist evidence/failures/state/next action, and continue while evidence and authority remain clear. Course completion requires exam gates. Retention/transfer failures reopen learning.
 
 Human approval is reserved for irreversible/destructive external actions, paid obligations, official outward doctrinal/editorial publication, brand/governance changes, new private credentials/access, material legal/security/privacy consequences, or genuine unresolved value conflicts.
 
-A wake cycle stops only when all derivable autonomous work in the current evidence chain is complete, a real evidence/source/tool dependency blocks progress, human approval is required, or further work would fabricate progress rather than learn/test something.
-
 ## Major completed milestones
 ### Biblical Languages I
-`BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`: `PASS / GRADUATED`.
-
-Units 1–11, Hebrew/Greek practica and integrated final exams passed. Reusable method nodes consolidated: `research.method.lemma-surface-form`, `research.method.morphology-syntax-boundary`, `research.method.verbal-morphology-boundary`, `research.method.original-language-evidence-ladder`.
-
-Claim-specific nodes remain independently bounded: `research.ot.divine-spirit` — `CANDIDATE_FOR_EXAM`; `research.job.satan-identity` — `WORKING`; `research.nt.graphe-scripture-scope` — `CANDIDATE_FOR_EXAM`; `research.matthew.2.23-nazarene` — `WORKING`.
-
-Brain bridge regressions 01–06 passed.
+`BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`: `PASS / GRADUATED`. Units 1–11, Hebrew/Greek practica and integrated finals passed. Reusable method nodes consolidated. Brain bridge regressions 01–06 passed.
 
 ### Researcher 04 — Autonomous Learning I
 `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`. State: `COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
 
-## Sensory-first status from this wake cycle
-Required first read: `dore-core/memory/sensory-active.json`.
-Result at wake start: file absent on `main`.
-
-Decision: absence does **not** prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains an infrastructure dependency; live sensory closure is not declared complete.
-
-This dependency did not block researcher education.
+## Sensory-first status
+Required first read this wake: `dore-core/memory/sensory-active.json`.
+Result: file absent on `main`.
+Decision: absence does not prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains an infrastructure dependency; this did not block authorized researcher education.
 
 ## Active course
 `RESEARCHER-05 — BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`
 
-### Completed Researcher 05 work
-- Source stack: PASS — minimum viable method foundation, with explicit access limits.
-- Unit 1 — Evidence stratification, dating, corpus boundaries: PASS.
-- Unit 2 — Continuity / development / discontinuity: PASS.
-- Unit 3 — Second Temple source families / non-homogeneity: PASS.
-- Unit 4 — Translation / language mediation: PASS, 4/4 examination gate.
-- Unit 05 source-sufficiency gate executed: Hebrew-Bible baseline sufficient; Second Temple layer materially expanded but direct primary sampling and NT corpus-level comparison remain insufficient for claim promotion. The fail-safe gate correctly refused to collapse Job's `הַשטן`, Mastema, Belial, Enochic opponent figures and NT Satan/Devil into a single historically identical profile.
+### Completed
+- Source stack: PASS.
+- Units 1–4: PASS.
+- Unit 05 initial source-sufficiency gate: correctly FAIL-SAFE pending direct corpus assembly.
+- Unit 05 Practicum A primary corpus assembly: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection. Evidence: `RESEARCHER-05-UNIT-05-PRACTICUM-A-PRIMARY-CORPUS.md`.
 
-Unit 05 evidence record: `RESEARCHER-05-UNIT-05-SATAN-ADVERSARY-SOURCE-SUFFICIENCY.md`.
-Course charter: `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-I.md`.
-
-`research.job.satan-identity` remains `WORKING`. No product-readable knowledge was promoted; no bridge regression was required this wake.
+The exact product node was read after the practicum. Its old boundary says Second Temple and NT comparison are still required; that dependency has now been materially addressed, but promotion/editing requires a careful full-file update plus bridge regression. No product-readable change was made in this wake, so no regression was falsely claimed.
 
 ## Current next action
-`UNIT_05_PRACTICUM_A_PRIMARY_SECOND_TEMPLE_AND_NT_CORPUS_ASSEMBLY`.
-
-Obtain direct primary samples from Jubilees / selected Qumran / Enochic corpora plus NT primary Greek and specialist corpus-level comparison across Synoptic, Pauline and Revelation evidence. Then rerun the practicum examination. Do not promote the claim node merely because lexical/function parallels exist.
+`UNIT_05_PRODUCT_NODE_BOUNDED_UPDATE_AND_BRIDGE_REGRESSION`, followed by `UNIT_06_PRACTICUM_B_DIVINE_SPIRIT` if the node update passes. Preserve historical-vs-canonical distinction and do not upgrade beyond the evidence.
