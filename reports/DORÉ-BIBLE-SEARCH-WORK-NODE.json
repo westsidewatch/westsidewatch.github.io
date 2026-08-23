@@ -7,25 +7,25 @@
     "original_surface",
     "lemma",
     "morphology",
-    "provenance_display"
+    "provenance_display",
+    "dore_original_archive_241"
   ],
   "entrances": [
     "JOIN",
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [
-    "join_background_contract"
-  ],
+  "failures": [],
   "function_url": "/dore/search/",
   "governance": "This is an external work-node acceptance, not an educational milestone.",
   "performance": {
     "core_index_bytes": 10235111,
+    "dore_archive_loading": "two-slot_lazy_cycle",
     "original_index_bytes": 10184152,
     "original_index_loading": "lazy"
   },
   "schema": "dore.work-node.bible-search.v1",
-  "status": "NOT_READY",
-  "verdict": "FAIL",
+  "status": "AVAILABLE",
+  "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
 }
