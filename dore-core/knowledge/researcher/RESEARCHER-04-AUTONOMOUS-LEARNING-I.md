@@ -1,7 +1,8 @@
 # Researcher 04 — Autonomous Learning I
 
-Status: ACTIVE — EXECUTION STARTED
+Status: COMPLETE — RETENTION_WATCH
 Started: 2026-08-23
+Graduated: 2026-08-23
 Selected by: Doré self-diagnosis
 Prerequisites: `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`, `SELF_DIAGNOSIS_PASS`
 
@@ -9,13 +10,13 @@ Prerequisites: `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`, `SELF_DIAGNOSIS_PASS`
 
 Do not wait for a human to provide the next lesson when Doré already has enough evidence to choose and execute the next learning action.
 
-## Faculty being trained
+## Faculty trained
 
 `GAP SIGNAL → GAP CLASSIFICATION → CURRICULUM DECISION → MATERIAL REQUIREMENTS → SOURCE DISCOVERY → SOURCE EVALUATION → UNIT DESIGN → STUDY → SELF EXAM → TRANSFER EXAM → BLIND EXAM → RETENTION CHECK → REOPEN IF FAILURE`
 
-## Lesson 1 — Gap classification
+## Gap classification retained
 
-Doré must distinguish:
+Doré distinguishes:
 - `QUERY_GAP`: one question needs research, not a whole course;
 - `SKILL_GAP`: repeated inability to perform a method;
 - `DOMAIN_GAP`: missing body of prerequisite knowledge;
@@ -23,34 +24,11 @@ Doré must distinguish:
 - `RETENTION_GAP`: previously passed knowledge no longer transfers;
 - `CURRICULUM_GAP`: repeated failures imply structured study is required.
 
-### Immediate exercise using Doré's own evidence
+A new course may be opened autonomously when recurrence, blocked prerequisites, repeated exam failure or work-surface evidence demonstrates structured need. A topic being interesting is not sufficient.
 
-Observed: `ruach`, `satan`, `γραφή`, Matthew 2:23 repeatedly require original-language analysis.
-Classification: `SKILL_GAP + DOMAIN_GAP + CURRICULUM_GAP`.
-Decision: a structured Biblical Languages course is justified; ad-hoc lookup is insufficient.
+## Material selection protocol retained
 
-Observed: whole-chapter Search currently renders verse-by-verse.
-Classification: `TOOL/PRODUCT_GAP`, not a Doré knowledge curriculum gap.
-Decision: retain in Search backlog; do not derail Researcher education.
-
-Observed: uncertainty about a single proposed geography identification.
-Classification rule: begin as `QUERY_GAP`; promote to curriculum only if repeated failures reveal missing geography method.
-
-## Lesson 2 — Curriculum decision protocol
-
-A new course may be opened autonomously when at least one condition holds:
-1. the same skill/domain failure recurs across three materially different tasks;
-2. a missing prerequisite blocks a higher-priority course or work role;
-3. a blind/transfer exam fails for the same underlying reason;
-4. a work surface (ONE, Search, proofreading, Dawn Library, visual center) repeatedly produces the same learning deficit.
-
-Do not open a course merely because a topic is interesting.
-
-## Lesson 3 — Material selection protocol
-
-Before studying a new course Doré must define what kinds of teaching materials are required. It must not simply collect URLs.
-
-For each candidate material record:
+For candidate materials record:
 - authority/competence;
 - provenance and edition;
 - pedagogical level;
@@ -62,7 +40,7 @@ For each candidate material record:
 
 A single source cannot certify its own authority.
 
-## Lesson 4 — Course construction protocol
+## Course construction protocol retained
 
 Every autonomous course requires:
 - prerequisite statement;
@@ -77,34 +55,66 @@ Every autonomous course requires:
 
 Completion by reading alone is forbidden.
 
-## Lesson 5 — Retention and false mastery
+## Live-test evidence
+
+The first live test was `BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`.
+
+Doré autonomously:
+1. recognized repeated original-language bottlenecks across unrelated research tasks;
+2. classified them as `SKILL_GAP + DOMAIN_GAP + CURRICULUM_GAP`;
+3. built the competency map, source requirements, unit sequence and exam design;
+4. discovered/evaluated sources and retained access limitations instead of fabricating authority;
+5. changed the curriculum when verbal-system prerequisites emerged;
+6. completed Units 1–11;
+7. passed Hebrew/Greek practica and integrated final exams;
+8. consolidated only method knowledge that survived transfer while leaving unresolved claims provisional;
+9. ran generic product-bridge regressions after material brain changes;
+10. performed a post-course diagnosis instead of continuing the same subject by inertia.
+
+`BIBLICAL-LANGUAGES-I` graduated on 2026-08-23.
+
+## Final exam
+
+Record: `RESEARCHER-04-AUTONOMOUS-LEARNING-I-FINAL-EXAM.md`.
+
+Result: 12/12 criteria PASS.
+Milestone: `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`.
+
+The exam demonstrated independent gap classification, curriculum construction, source evaluation, adaptive prerequisite handling, execution persistence, transfer/blind testing, selective consolidation, product integration, failure honesty, post-course diagnosis, subsequent-course selection/initiation and retention/reopen discipline.
+
+## Second-course transfer proof
+
+Post-course diagnosis compared remaining evidence rather than choosing the last topic automatically.
+
+Selected subsequent curriculum:
+`BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`.
+
+Reason: the same higher-order deficit appears across at least three materially different open research conclusions—Satan/adversary development, OT Spirit → NT/canonical development, and Scripture → canon-history development.
+
+Doré then independently:
+- produced `RESEARCHER-04-POST-COURSE-DIAGNOSIS.md`;
+- selected/evaluated `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-SOURCE-STACK.md`;
+- began and passed the local gate for `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-UNIT-01.md`.
+
+This satisfies the live requirement that Autonomous Learning I must transfer beyond merely designing its first course.
+
+## Retention and reopen rule
 
 A `COMPLETE` course is not immutable.
 
-Reopen when:
-- later transfer fails twice for the same underlying competency;
-- a newer/better source materially overturns a consolidated claim;
-- Doré cannot reconstruct the method without copying the old answer;
-- product/internship work exposes a contradiction with the supposed competency.
+Reopen Researcher 04 when:
+- later transfer fails twice for the same underlying autonomous-learning competency;
+- Doré begins asking the human for obvious next lesson steps despite sufficient internal evidence;
+- courses are opened for curiosity rather than demonstrated gaps;
+- reading is again confused with mastery;
+- source/tool limitations are hidden;
+- product/internship evidence contradicts the claimed autonomous-learning faculty.
 
-Possible states:
-`ACTIVE → CANDIDATE_FOR_EXAM → COMPLETE → RETENTION_WATCH → REOPENED`.
+State: `COMPLETE → RETENTION_WATCH`.
 
-## Immediate autonomous action
+## Current learning state
 
-Doré applies this course to itself now rather than waiting for another instruction.
+Researcher 04 itself is complete and no longer the active lesson.
 
-Next curriculum candidate: `BIBLICAL-LANGUAGES-I`.
-
-Before opening that course, Doré must independently produce:
-1. competency map for researcher-level biblical-language use;
-2. Hebrew vs Greek scope decision;
-3. material requirements and source-quality rubric;
-4. minimum viable sequence;
-5. exams that test actual interpretation rather than vocabulary memorization.
-
-This is the first live test of Autonomous Learning I.
-
-## Pass condition
-
-Autonomous Learning I passes only when Doré can use this protocol to design, justify, begin, test and later reopen a real subsequent course without a human supplying the curriculum structure.
+Active subsequent course: `BIBLICAL-CONCEPT-DEVELOPMENT-I`.
+Current next action: `UNIT_02_CONTINUITY_DEVELOPMENT_DISCONTINUITY_METHOD`.
