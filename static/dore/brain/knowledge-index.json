@@ -64,6 +64,28 @@
       },
       "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"],
       "next_research": ["Greek quotation formula analysis", "Hebrew lexical testing", "intertextuality study"]
+    },
+    {
+      "id": "research.method.lemma-surface-form",
+      "type": "research_method_answer",
+      "status": "CANDIDATE_FOR_EXAM",
+      "confidence": "high-method-low-semantic-scope",
+      "questions": ["原文中的詞形和詞元有什麼不同", "詞形和 lemma 有什麼不同", "lemma 和 surface form 有什麼不同", "聖經原文 lemma 是什麼", "what is the difference between lemma and surface form"],
+      "concepts": ["lemma", "surface form", "詞元", "詞形", "原文", "morphology", "形態學", "transliteration", "音譯"],
+      "answer": {
+        "lead": "詞形、lemma、音譯和意義是不同層次，不能互相替代。",
+        "body": [
+          "surface form（詞形）是經文中實際出現的拼寫／屈折形式；lemma 是詞典或語料庫用來歸類相關詞形的引用形式。",
+          "音譯只是把希伯來文或希臘文換成另一套字母來表示，方便閱讀或定位；它不是原文形態，也不能自行證明上下文中的意思。",
+          "同一 lemma 可以對應不同詞形和不同形態特徵。真正的語義判斷還需要形態、句法、上下文與可靠詞典，不可從 lemma 編號直接跳到神學結論。"
+        ],
+        "boundary": "這是 Biblical Languages I Unit 1 已通過自測與小型轉移測試的方法性結論；尚未等同整門課或特定詞義研究已完成。"
+      },
+      "provenance": [
+        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md",
+        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"
+      ],
+      "next_research": ["Unit 2 morphology and parsing foundations", "full transfer/blind exam later in Biblical Languages I"]
     }
   ]
 }
