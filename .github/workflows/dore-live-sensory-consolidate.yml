@@ -1,0 +1,57 @@
+name: Doré Live Sensory Consolidate
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/dore-live-sensory-consolidate.yml']
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  consolidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: main}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Consolidate generic brain node and sensory state
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          kp=Path('static/dore/brain/knowledge-index.json')
+          brain=json.loads(kp.read_text())
+          node={
+            'id':'research.nt.mary-count','type':'research_answer','status':'CONSOLIDATED','confidence':'high-with-identification-boundary',
+            'questions':['馬利亞有幾位','馬利亞有幾位?','馬利亞有幾位？','新約有幾個馬利亞','聖經中有幾位馬利亞','how many Marys are in the New Testament'],
+            'concepts':['馬利亞','Mary','Maria','Mariam','新約人物','Mary Magdalene','Mary of Bethany','John Mark'],
+            'answer':{
+              'lead':'如果你問的是「新約中可區分的、名叫馬利亞（Mary/Maria/Mariam）的女性有幾位」，常見的辨認方式是六位；但福音書中部分稱謂的身分合併仍有討論。',
+              'body':['六位通常辨認為：耶穌的母親馬利亞、抹大拉的馬利亞、伯大尼的馬利亞、受難敘事中與雅各／約西及革羅罷相關的馬利亞、馬可約翰的母親馬利亞（徒12:12）、以及保羅在羅16:6問安的馬利亞。','這不是把經文中每一次「馬利亞」逐字相加；同一人會被多次提及。相反，徒12:12與羅16:6提供了福音書著名幾位之外可獨立辨認的馬利亞。','若問題是「四福音中有幾位」或採取不同的福音人物身分合併方案，數字需要重新限定，不能把六當成沒有前提的絕對值。'],
+              'boundary':'Six is the common NT distinct-person count under a stated harmonization; some Gospel identity equations are debated, so scope must remain visible.'},
+            'scripture':['MAT 27:56','MRK 15:40','LUK 8:2','JHN 11:1-2','JHN 19:25','ACT 12:12','ROM 16:6'],
+            'provenance':['dore-core/knowledge/researcher/live/SENSORY-5cf2c608-MARY-COUNT.md'],
+            'next_research':['reopen if a product asks for Gospel-only count or challenges the identity harmonization']}
+          nodes=brain.setdefault('nodes',[])
+          for i,n in enumerate(nodes):
+            if n.get('id')==node['id']:
+              nodes[i]=node; break
+          else: nodes.append(node)
+          brain['generated_at']='2026-08-23'
+          kp.write_text(json.dumps(brain,ensure_ascii=False,indent=2)+'\n')
+          sp=Path('dore-core/memory/sensory-active.json')
+          s=json.loads(sp.read_text())
+          for x in s.get('signals',[]):
+            if x.get('signal_id')=='5cf2c608-e66f-4176-a3f8-b3284819158a':
+              x['brain_node']='research.nt.mary-count'; x['state']='CONSOLIDATED'; x['consolidated_at']='2026-08-23T20:06:00Z'
+          s['updated_at']='2026-08-23T20:06:00Z'
+          sp.write_text(json.dumps(s,ensure_ascii=False,indent=2)+'\n')
+          PY
+      - name: Persist
+        run: |
+          git config user.name 'Doré Learning Heartbeat'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/dore/brain/knowledge-index.json dore-core/memory/sensory-active.json
+          git commit -m 'learn(dore): consolidate heard Mary question into brain [skip ci]' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
