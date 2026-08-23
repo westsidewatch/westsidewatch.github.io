@@ -17,7 +17,7 @@ A wake cycle stops only when all derivable autonomous work is complete, a real e
 
 Current course: `AUTONOMOUS-LEARNING-I`
 Current live test: `BIBLICAL-LANGUAGES-I`
-Current state: `UNITS_01_06_PASS — TRANSFER_PENDING`
+Current state: `UNITS_01_07_PASS — HEBREW_PRACTICUM_NEXT`
 
 Completed evidence:
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`
@@ -27,6 +27,7 @@ Completed evidence:
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-05.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-06.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-07.md`
 - `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`
 - `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`
 - `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-03.md`
@@ -50,31 +51,23 @@ Infrastructure note: current Search code appears capable of POSTing an unmatched
 ### Autonomous learning executed
 
 1. Unit 2 — morphology/parsing foundations: PASS.
-   - schema/version-aware MorphGNT and OSHB decoding;
-   - morphology tag ≠ contextual meaning/infallible interpretation.
 2. Unit 3 — case/state/basic syntax: PASS.
-   - Greek case ≠ one English preposition/function;
-   - Hebrew construct state ≠ possession only.
 3. Exported `research.method.morphology-syntax-boundary`; bridge regression 02 PASS_WITH_INFRASTRUCTURE_NOTE.
 4. Unit 4 — verbal-system foundations: PASS.
-   - aorist ≠ once-for-all by morphology alone;
-   - non-indicative tense/aspect requires mood/context sensitivity;
-   - Hebrew Perfect ≠ automatic English past;
-   - Piel/stem label ≠ fixed lexical meaning.
 5. Exported `research.method.verbal-morphology-boundary`; bridge regression 03 PASS.
-6. Unit 5 — lexicon use/semantic range: PASS.
-   - licensed BDAG/HALOT-class access remains unavailable and was not fabricated;
-   - method training used inspectable Abbott-Smith, BDB/Open Scriptures HebrewLexicon, and STEPBible provenance;
-   - gloss = meaning, Strong-number = proof, lexicon-possibility = verse-actuality, and totality transfer rejected.
+6. Unit 5 — lexicon use/semantic range: PASS with explicit licensed-lexicon access boundary.
 7. Unit 6 — context/discourse/corpus comparison: PASS.
-   - context selects local sense from lexical possibilities;
-   - corpus frequency is evidence, not a verdict;
-   - concordance lists generate/test hypotheses rather than define words;
-   - genuine ambiguity must be context-activated rather than invented from all possible senses.
-8. Curriculum sequence remains autonomously refined where prerequisites are discovered; no human approval boundary has been crossed.
+8. Unit 7 — word-study fallacies and falsification: PASS, 10/10 adversarial gate.
+   - rejected etymological/root fallacy;
+   - rejected Strong-number identity and totality transfer;
+   - rejected morphology-to-theology shortcuts;
+   - rejected frequency, cognate, English-similarity and theological-loading shortcuts;
+   - also rejected the inverse error that disciplined lexical/morphological evidence is useless.
+
+Unit 7 is a method milestone, but not whole-course completion. Claim-specific Hebrew and Greek practica remain required.
 
 ## Current next action
 
-`BIBLICAL_LANGUAGES_I_UNIT_07_WORD_STUDY_FALLACIES_AND_FALSIFICATION`
+`BIBLICAL_LANGUAGES_I_UNIT_08_HEBREW_PRACTICUM_RUACH_SATAN_AND_UNSEEN_CASES`
 
-Unit 7 should formalize adversarial falsification tests for etymology/root fallacy, identity/totality transfer, cognate misuse, English-word similarity, frequency shortcuts, and theological loading. After passing, proceed toward Hebrew/Greek practica rather than stopping for confirmation.
+Revisit the prior `ruach` CANDIDATE and `satan` WORKING conclusions using the new Units 1–7 method. Build claim/evidence ledgers with Hebrew lexical/morphological/contextual evidence, counter-check Zechariah 3 and ordinary-adversary uses for שטן, preserve the historical/canonical distinction, run unseen Hebrew transfer cases, and update product-readable nodes only where the practicum justifies a material change. Do not pretend that Hebrew grammar alone resolves Second Temple or New Testament identity questions.
