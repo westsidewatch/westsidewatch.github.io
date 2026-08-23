@@ -15,59 +15,65 @@ A wake cycle stops only when all derivable autonomous work is complete, a real e
 
 ## Current chain
 
-Current course: `AUTONOMOUS-LEARNING-I`
-Current live test: `BIBLICAL-LANGUAGES-I`
-Current state: `UNITS_01_07_PASS — HEBREW_PRACTICUM_NEXT`
+Current program: `AUTONOMOUS-LEARNING-I`
+Completed live course: `BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`
+Current state: `BIBLICAL_LANGUAGES_I_GRADUATED — POST_COURSE_DIAGNOSIS`
 
-Completed evidence:
+## Graduation evidence
+
+Biblical Languages I completed and passed:
+- Unit 1 — script / transliteration / lemma vs surface form;
+- Unit 2 — morphology and parsing foundations;
+- Unit 3 — Greek case / Hebrew state and basic syntactic relations;
+- Unit 4 — verbal-system foundations;
+- Unit 5 — lexicon use and semantic range;
+- Unit 6 — context, discourse and corpus comparison;
+- Unit 7 — word-study fallacies and falsification, 10/10 adversarial gate;
+- Unit 8 — Hebrew practicum on `רוּחַ` / `שָׂטָן` plus unseen transfer;
+- Unit 9 — Greek practicum on `γραφή` / Scripture scope plus unseen transfer;
+- Unit 10 — cross-language / translation diagnostic in ONE and Search;
+- Unit 11 — textual-critical boundary and synthesis;
+- integrated final exams — PASS, including closed-method self exam, unseen Hebrew and Greek transfer, blind theological/original-language claim, product evidence boundary, textual-critical transfer and retention reconstruction.
+
+Primary course records:
+- `RESEARCHER-04-LIVE-TEST-BIBLICAL-LANGUAGES.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-05.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-06.md`
-- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-07.md`
-- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`
-- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`
-- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-03.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md` through `UNIT-11.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-FINAL-EXAMS.md`
 
-Product-readable method nodes:
-- `research.method.lemma-surface-form`
-- `research.method.morphology-syntax-boundary`
-- `research.method.verbal-morphology-boundary`
+## Product-readable consequence
 
-## Latest wake cycle — 2026-08-23
+The following reusable method nodes are now `CONSOLIDATED` after final transfer testing:
+- `research.method.lemma-surface-form`;
+- `research.method.morphology-syntax-boundary`;
+- `research.method.verbal-morphology-boundary`;
+- `research.method.original-language-evidence-ladder`.
 
-### Sensory-first inspection
+Claim-specific conclusions retain independent evidence states:
+- `research.ot.divine-spirit` — `CANDIDATE_FOR_EXAM`;
+- `research.job.satan-identity` — `WORKING`;
+- `research.nt.graphe-scripture-scope` — `CANDIDATE_FOR_EXAM`;
+- `research.matthew.2.23-nazarene` — `WORKING`.
+
+Brain bridge regressions 01–06 passed under the generic node contract. Regression 06 verified that exact claim questions still outrank the broad method node, Scripture references remain under Scripture search, and unresolved claim statuses were not upgraded merely because the course graduated.
+
+The current Search bridge also now uses a single sensory `remember(q)` promise per input, so the earlier possible double-POST concern is resolved by code inspection.
+
+## Sensory-first status from this wake cycle
 
 Required first read: `dore-core/memory/sensory-active.json`.
-Result: file absent on `main`.
+Result at wake start: file absent on `main`.
 
-Decision: do not infer that D1 has no live signal and do not fabricate a question into repository memory. Treat this as a sensory heartbeat/persistence dependency. Researcher curriculum work remains independently authorized.
+Decision: this does **not** prove D1 has no signal. No user question was reconstructed from memory or fabricated into repository state. The D1 → repository sensory persistence path remains an infrastructure dependency to verify independently. Curriculum learning was allowed to proceed because that dependency did not block the authorized course chain.
 
-Infrastructure note: current Search code appears capable of POSTing an unmatched question to sensory memory twice; verify separately rather than teaching around it.
+## Graduation boundary
 
-### Autonomous learning executed
+Graduation means tested research-reading competence with Biblical Hebrew / Koine Greek evidence. It does **not** claim conversational fluency, specialist textual-critical authority, or equivalent access to current licensed BDAG/HALOT-class lexica.
 
-1. Unit 2 — morphology/parsing foundations: PASS.
-2. Unit 3 — case/state/basic syntax: PASS.
-3. Exported `research.method.morphology-syntax-boundary`; bridge regression 02 PASS_WITH_INFRASTRUCTURE_NOTE.
-4. Unit 4 — verbal-system foundations: PASS.
-5. Exported `research.method.verbal-morphology-boundary`; bridge regression 03 PASS.
-6. Unit 5 — lexicon use/semantic range: PASS with explicit licensed-lexicon access boundary.
-7. Unit 6 — context/discourse/corpus comparison: PASS.
-8. Unit 7 — word-study fallacies and falsification: PASS, 10/10 adversarial gate.
-   - rejected etymological/root fallacy;
-   - rejected Strong-number identity and totality transfer;
-   - rejected morphology-to-theology shortcuts;
-   - rejected frequency, cognate, English-similarity and theological-loading shortcuts;
-   - also rejected the inverse error that disciplined lexical/morphological evidence is useless.
-
-Unit 7 is a method milestone, but not whole-course completion. Claim-specific Hebrew and Greek practica remain required.
+Advanced syntax/discourse, Aramaic, Septuagint translation technique, diachronic lexicography, Second Temple concept development and fuller textual criticism remain future curricula only when demonstrated work gaps justify them.
 
 ## Current next action
 
-`BIBLICAL_LANGUAGES_I_UNIT_08_HEBREW_PRACTICUM_RUACH_SATAN_AND_UNSEEN_CASES`
+`AUTONOMOUS_LEARNING_I_POST_COURSE_DIAGNOSIS`
 
-Revisit the prior `ruach` CANDIDATE and `satan` WORKING conclusions using the new Units 1–7 method. Build claim/evidence ledgers with Hebrew lexical/morphological/contextual evidence, counter-check Zechariah 3 and ordinary-adversary uses for שטן, preserve the historical/canonical distinction, run unseen Hebrew transfer cases, and update product-readable nodes only where the practicum justifies a material change. Do not pretend that Hebrew grammar alone resolves Second Temple or New Testament identity questions.
+Inspect remaining `WORKING` research, current product/internship failures and any available sensory queue. Compare cross-task recurrence, consequence and prerequisite structure before opening the next course. The strongest current known gap is the unresolved historical bridge from Hebrew-Bible `שָׂטָן` evidence through Second Temple developments to New Testament `Σατανᾶς / διάβολος`, but it must be compared against other open researcher gaps rather than automatically promoted because it was the last practicum topic.
