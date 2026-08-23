@@ -1,8 +1,7 @@
 """Reader for STEPBible TIPNR proper-name records.
 
 Only source-explicit identity/name/reference fields are admitted. Upstream @Brief,
-@Short and @Article prose are deliberately ignored because those descriptions may
-contain generated/editorial synthesis rather than direct textual evidence.
+@Short and @Article prose and file-format documentation are deliberately ignored.
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -41,14 +40,11 @@ def stable_id(category:str,source_unique_name:str)->str:
 def _label(unique:str)->str:return unique.split('@',1)[0].replace('_',' ').replace('|',' / ').strip()
 def _alias_from_form(form_field:str,translated:str)->list[Alias]:
     out=[]
-    # Compound fields look like H123«H123=word+H456«H456=word. Capture only
-    # the source-script material after each '=', never the embedded tag itself.
     for value in re.findall(r'=([^+;,]+)',form_field):
         value=value.strip()
         if value and len(value)<100:
             lang='he' if re.search(r'[\u0590-\u05ff]',value) else 'grc' if re.search(r'[\u0370-\u03ff\u1f00-\u1fff]',value) else 'und'
             out.append(Alias(value=value,language=lang,source_id=TIPNR_SOURCE,kind='source_form'))
-    # '/' in TIPNR often marks parts of one translated compound name, so join it.
     for part in (translated or '').split(';'):
         value=part.split('=',1)[0].replace('/',' ').strip().strip('()')
         value=re.sub(r'\s+',' ',value)
@@ -56,13 +52,21 @@ def _alias_from_form(form_field:str,translated:str)->list[Alias]:
             out.append(Alias(value=value,language='en',source_id=TIPNR_SOURCE,kind='translation_form'))
     return out
 
+def _is_format_metadata(first:str)->bool:
+    """Reject TIPNR file documentation/examples that contain '@' like records."""
+    s=first.strip()
+    if not s:return True
+    if s.startswith(('*','^','@','#','\\')):return True
+    if any(x in s for x in ('UnifiedName═','UniqueName is ','Parents - the UniqueNames','@Briefest','@ShortDef','\\t','\\r\\n')):return True
+    return False
+
 def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
     category=None;current=None;aliases=[];refs=[]
     def flush():
         nonlocal current,aliases,refs
         if current is None:return None
         unique,strong=current;label=_label(unique)
-        if not label:
+        if not label or _is_format_metadata(unique):
             current=None;aliases=[];refs=[]
             return None
         all_aliases=[Alias(label,'en',TIPNR_SOURCE,'preferred_source_label'),*aliases]
@@ -91,7 +95,7 @@ def iter_tipnr_records(text:str)->Iterable[TIPNRRecord]:
             continue
         if line.startswith('‖') or line.startswith('=') or line.startswith('UnifiedName') or line.startswith('Header '):continue
         first=line.split('\t')[0].strip()
-        # A valid individualised record has a non-empty label before '@'.
+        if _is_format_metadata(first):continue
         if '@' in first and first.split('@',1)[0].strip():
             old=flush()
             if old:yield old
