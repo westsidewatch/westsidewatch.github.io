@@ -31,6 +31,10 @@
   const boot=()=>{unlockSearch();placeSearchMeta()};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 
+  const brainRuntime=document.createElement('script');
+  brainRuntime.src='/dore/dore-brain-bridge.js?v=brain-bridge-20260823a';
+  document.head.appendChild(brainRuntime);
+
   const parserRuntime=document.createElement('script');
   parserRuntime.src='/dore/dore-scripture-reference-parser.js?v=ssl1-20260823a';
   parserRuntime.onload=()=>{
