@@ -1,8 +1,8 @@
 {{ define "main" }}
   <style>
-    .hero__dore-search{display:inline-flex;align-items:center;gap:.7rem;margin-top:1rem;color:#d2bc69;text-decoration:none;font-family:"Cormorant Garamond",serif;letter-spacing:.1em;text-transform:uppercase;font-size:.78rem;opacity:.88;transition:opacity .18s ease}
-    .hero__dore-search::before,.hero__dore-search::after{content:"";width:2.2rem;height:1px;background:currentColor;opacity:.5}
-    .hero__dore-search strong{font-size:1.05rem;font-weight:500;letter-spacing:.13em}.hero__dore-search span{font-family:"Noto Serif TC",serif;font-size:.68rem;letter-spacing:.16em}.hero__dore-search:hover,.hero__dore-search:focus-visible{opacity:.58}
+    .hero__dore-search{display:inline-flex;align-items:center;gap:.75rem;margin-top:1.1rem;padding:.72rem 1rem;border:1px solid rgba(210,188,105,.52);background:rgba(22,26,31,.34);color:#d2bc69;text-decoration:none;font-family:"Cormorant Garamond",serif;letter-spacing:.1em;text-transform:uppercase;font-size:.8rem;opacity:.96;transition:opacity .18s ease,background .18s ease}
+    .hero__dore-search::before,.hero__dore-search::after{content:"";width:2.1rem;height:1px;background:currentColor;opacity:.5}
+    .hero__dore-search strong{font-size:1.15rem;font-weight:500;letter-spacing:.13em}.hero__dore-search span{font-family:"Noto Serif TC",serif;font-size:.7rem;letter-spacing:.16em}.hero__dore-search:hover,.hero__dore-search:focus-visible{opacity:1;background:rgba(210,188,105,.1)}
   </style>
   <section class="hero" aria-labelledby="hero-title">
     <div class="hero__masthead">
@@ -15,7 +15,7 @@
     <div class="hero__center">
       <p class="hero__star" aria-hidden="true">✦</p>
       <p class="hero__watchword"><span></span><em>Watch for the Dawn</em><span></span></p>
-      <a class="hero__dore-search" href="/dore/" aria-label="Doré Bible Search 聖經搜索"><strong>DORÉ</strong> Bible Search <span>聖經搜索</span></a>
+      <a class="hero__dore-search" href="/dore/search/" aria-label="Doré Bible Search 聖經搜索"><strong>DORÉ</strong> Bible Search <span>聖經搜索</span></a>
     </div>
     <div class="hero__scripture">
       <p lang="zh-Hant">黑夜已深，白晝將近。</p>
@@ -61,48 +61,15 @@
     <div class="stone-intro__body">
       <p class="kicker">Founding Volume · 創刊號</p>
       {{ $volumeTitleParts := split site.Params.volumeTitle "，" }}
-      <h2 id="volume-title">
-        <span lang="zh-Hant">{{ index $volumeTitleParts 0 }}，</span>
-        <span lang="zh-Hant">{{ index $volumeTitleParts 1 }}</span>
-      </h2>
+      <h2 id="volume-title"><span lang="zh-Hant">{{ index $volumeTitleParts 0 }}，</span><span lang="zh-Hant">{{ index $volumeTitleParts 1 }}</span></h2>
       <div class="opening-scriptures" aria-label="Opening scriptures">
-        <blockquote class="proclamation__scripture proclamation__scripture--foundation editorial-card editorial-card--portrait">
-          <span class="proclamation__index">01 · Foundation</span>
-          <p><em>“For he looked for a city which hath foundations, whose builder and maker is God.”</em></p>
-          <p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p>
-          <cite>希伯來書 11:10 · KJV</cite>
-        </blockquote>
-        <blockquote class="proclamation__scripture proclamation__scripture--watch editorial-card editorial-card--portrait" lang="zh-Hant">
-          <span class="proclamation__index">02 · Watch</span>
-          <p>「若不是耶和華建造房屋，建造的人就枉然勞力；若不是耶和華看守城池，看守的人就枉然警醒。」</p>
-          <cite>詩篇 127:1</cite>
-        </blockquote>
+        <blockquote class="proclamation__scripture proclamation__scripture--foundation editorial-card editorial-card--portrait"><span class="proclamation__index">01 · Foundation</span><p><em>“For he looked for a city which hath foundations, whose builder and maker is God.”</em></p><p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p><cite>希伯來書 11:10 · KJV</cite></blockquote>
+        <blockquote class="proclamation__scripture proclamation__scripture--watch editorial-card editorial-card--portrait" lang="zh-Hant"><span class="proclamation__index">02 · Watch</span><p>「若不是耶和華建造房屋，建造的人就枉然勞力；若不是耶和華看守城池，看守的人就枉然警醒。」</p><cite>詩篇 127:1</cite></blockquote>
       </div>
-      <div class="proclamation__thesis" lang="zh-Hant">
-        <p class="section-label">Opening declaration · 卷首宣言</p>
-        <p class="proclamation__lead">在這個黑暗的世界，守望黎明，是教會應有的姿態；而守望這座光明之城的兵器，就是讚美。</p>
-        <p class="proclamation__watchman">我們不是第一位守望者。<strong>耶和華才是。</strong></p>
-      </div>
-      <div class="proclamation__cycle" lang="zh-Hant" aria-label="屬靈循環">
-        <p class="section-label">屬靈循環</p>
-        <ol>
-          <li><span>01</span><p><b>神先呼召，</b><strong>我們才回應；</strong></p></li>
-          <li><span>02</span><p><b>神先守望，</b><strong>我們才守望；</strong></p></li>
-          <li><span>03</span><p><b>神先愛，</b><strong>我們才愛；</strong></p></li>
-          <li><span>04</span><p><b>神先立約，</b><strong>我們才得以活在約中。</strong></p></li>
-        </ol>
-      </div>
-      <div class="proclamation__creed">
-        <p class="section-label">The ground of our watch · 守望的根基</p>
-        <p><strong>We do not watch for God.<br>We watch because God first watched over us.</strong></p>
-        <p lang="zh-Hant">我們不是因尋見神而開始守望；<br>我們乃是因神先尋見我們，才得以站在城牆之上。</p>
-        <p class="proclamation__promise"><em>We watch for the city because God is its builder.<br>We wait because He has promised the Dawn.</em></p>
-      </div>
-      <a class="opening-continue" href="#contents">
-        <span>Continue reading</span>
-        <strong>Contents · 目錄</strong>
-        <b aria-hidden="true">↓</b>
-      </a>
+      <div class="proclamation__thesis" lang="zh-Hant"><p class="section-label">Opening declaration · 卷首宣言</p><p class="proclamation__lead">在這個黑暗的世界，守望黎明，是教會應有的姿態；而守望這座光明之城的兵器，就是讚美。</p><p class="proclamation__watchman">我們不是第一位守望者。<strong>耶和華才是。</strong></p></div>
+      <div class="proclamation__cycle" lang="zh-Hant" aria-label="屬靈循環"><p class="section-label">屬靈循環</p><ol><li><span>01</span><p><b>神先呼召，</b><strong>我們才回應；</strong></p></li><li><span>02</span><p><b>神先守望，</b><strong>我們才守望；</strong></p></li><li><span>03</span><p><b>神先愛，</b><strong>我們才愛；</strong></p></li><li><span>04</span><p><b>神先立約，</b><strong>我們才得以活在約中。</strong></p></li></ol></div>
+      <div class="proclamation__creed"><p class="section-label">The ground of our watch · 守望的根基</p><p><strong>We do not watch for God.<br>We watch because God first watched over us.</strong></p><p lang="zh-Hant">我們不是因尋見神而開始守望；<br>我們乃是因神先尋見我們，才得以站在城牆之上。</p><p class="proclamation__promise"><em>We watch for the city because God is its builder.<br>We wait because He has promised the Dawn.</em></p></div>
+      <a class="opening-continue" href="#contents"><span>Continue reading</span><strong>Contents · 目錄</strong><b aria-hidden="true">↓</b></a>
     </div>
     <p class="watch-rhythm" aria-label="End of section"><span></span><b aria-hidden="true">✦</b><span></span></p>
   </section>
