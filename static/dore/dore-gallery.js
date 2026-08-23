@@ -1,5 +1,17 @@
 (()=>{
   'use strict';
+  // Visible deployment probe. Remove after Pages propagation is confirmed.
+  const deployProbe=()=>{
+    if(document.getElementById('dore-deploy-probe'))return;
+    const el=document.createElement('div');
+    el.id='dore-deploy-probe';
+    el.textContent='build: chapter-reading-v4';
+    Object.assign(el.style,{position:'fixed',right:'10px',bottom:'10px',zIndex:'99999',padding:'5px 8px',background:'rgba(255,253,246,.92)',border:'1px solid rgba(140,104,24,.45)',color:'#8c6818',font:'12px monospace',borderRadius:'4px'});
+    document.body.appendChild(el);
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deployProbe,{once:true});
+  else deployProbe();
+
   // Keep the Search UI usable even while capability runtimes are loading.
   const unlockSearch=()=>{
     const input=document.getElementById('search-input');
