@@ -27,7 +27,7 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/build_dore_browser_search_index.py
-      - name: Verify index and page contract
+      - name: Verify index and dedicated function page
         run: |
           python - <<'PY'
           import json
@@ -44,9 +44,11 @@ jobs:
           assert 'bible.ref.JHN.3.16' in refs
           assert 'bible.ref.JER.33.3' in refs
           assert all(isinstance(i,int) for refs_ in list(original['lemma'].values())[:20] for i in refs_)
-          html=Path('static/dore/index.html').read_text(encoding='utf-8')
-          assert 'Jeremiah 33:3' in html and '/background.jpg' in html
-          print({'status':'PASS','verses':len(core['verses']),'lemmas':len(original['lemma']),'core_bytes':core_path.stat().st_size,'original_bytes':original_path.stat().st_size})
+          html=Path('static/dore/search/index.html').read_text(encoding='utf-8')
+          redirect=Path('static/dore/index.html').read_text(encoding='utf-8')
+          assert '耶利米書 33:3' in html and '/background.jpg' in html and 'id="search-form"' in html
+          assert '/dore/search/' in redirect
+          print({'status':'PASS','function_url':'/dore/search/','verses':len(core['verses']),'lemmas':len(original['lemma']),'core_bytes':core_path.stat().st_size,'original_bytes':original_path.stat().st_size})
           PY
       - name: Accept Doré Bible Search work node
         run: python scripts/verify_dore_bible_search_product.py
