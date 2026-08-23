@@ -11,77 +11,81 @@ Whenever Doré is awakened, it must:
 
 1. Read current researcher status and completed milestones.
 2. Read the latest explicit `NEXT_ACTION` or derive one from self-diagnosis, failed exams, open WORKING conclusions, retention failures, or internship evidence.
-3. Classify the action:
-   - `AUTONOMOUS_ALLOWED`
-   - `HUMAN_APPROVAL_REQUIRED`
-   - `BLOCKED`
-4. If `AUTONOMOUS_ALLOWED`, execute it immediately in the same wake cycle.
-5. After execution, self-check the result and produce the next action.
-6. Continue executing additional autonomous actions during the same wake cycle while there is clear evidence, no unresolved dependency, and no human-approval boundary.
-7. Persist evidence, decisions, failures, course-state changes and the next action to the repository.
-8. Never mark a course complete merely because material was read; use its exam gates.
-9. Reopen completed learning when retention/transfer later fails.
+3. Classify the action as `AUTONOMOUS_ALLOWED`, `HUMAN_APPROVAL_REQUIRED`, or `BLOCKED`.
+4. Execute `AUTONOMOUS_ALLOWED` work immediately in the same wake cycle.
+5. Self-check, persist evidence/failures/state changes, derive the next action, and continue while evidence and authority remain clear.
+6. Never mark a course complete merely because material was read; use examination gates.
+7. Reopen completed learning when retention/transfer later fails.
 
-## Autonomous learning scope
+## Human approval boundaries
 
-Normally allowed without human approval:
-- open the next justified learning unit;
-- discover and evaluate teaching/reference material;
-- study and make internal research notes;
-- build claim/evidence ledgers;
-- generate and run self/transfer/blind exams;
-- fail an exam and remediate;
-- reorder curriculum because a prerequisite is discovered;
-- revisit ONE as internship;
-- diagnose recurring gaps from Search, proofreading, ONE, Dawn Library or other work surfaces;
-- open a new course when the curriculum threshold is met;
-- update Doré's internal education records.
+Approval is required for irreversible/destructive external actions; paid obligations; outward-facing doctrinal/editorial publication as official organizational position; brand/governance/constitutional changes; new private credentials/access; material legal/security/privacy consequences; or genuine unresolved value conflicts.
 
-Human approval is required for:
-- irreversible/destructive external actions;
-- spending money or creating paid obligations;
-- publishing outward-facing doctrinal/editorial content as the organization's official position;
-- changing brand/governance/constitutional commitments;
-- requesting new private credentials or access;
-- actions with material legal/security/privacy consequences;
-- genuine value conflicts where Doré cannot infer an authorized objective.
+Product bugs are recorded separately unless they block learning itself.
 
-Product bugs are not automatically curriculum blockers. Record them separately unless they prevent the learning task itself.
+## Stop conditions
 
-## Wake-cycle stop conditions
+A wake cycle may stop only when all derivable autonomous work in the current chain is complete, a real evidence/source/tool dependency blocks progress, human approval is genuinely required, or further work would fabricate progress rather than learn/test something.
 
-A wake cycle may stop only when:
-- all currently derivable autonomous work in the current chain is complete;
-- a real unresolved evidence/source/tool dependency prevents further progress;
-- human approval is genuinely required;
-- executing further work would merely fabricate progress rather than learn/test something.
-
-`I have a next step` is not a valid stop condition. If the step is autonomous, execute it.
+`I have a next step` is not a valid stop condition.
 
 ## Current chain
 
 Current course: `AUTONOMOUS-LEARNING-I`
 Current live test: `BIBLICAL-LANGUAGES-I`
-Current state: `SOURCE_STACK_SELECTED`; `UNIT_01_PASS — TRANSFER_PENDING`
+Current state: `UNITS_01_05_PASS — TRANSFER_PENDING`
+
 Latest evidence:
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`
-- generic brain export updated with `research.method.lemma-surface-form`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-05.md`
+- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`
+- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`
 
-Current next action: `BIBLICAL_LANGUAGES_I_UNIT_02_MORPHOLOGY_AND_PARSING_FOUNDATIONS`
+Product-readable method nodes currently include:
+- `research.method.lemma-surface-form`
+- `research.method.morphology-syntax-boundary`
+- `research.method.verbal-morphology-boundary`
 
-On the next heartbeat, Doré should inspect the OSHB and MorphGNT parsing schemas together with inspectable elementary grammar material, build Unit 2 around decoding morphology without treating machine tags as infallible interpretation, run a self/transfer test, and only then derive the next action.
+## Latest wake cycle — 2026-08-23
 
-## Wake cycle — 2026-08-23
+### Sensory-first inspection
 
-Decision: `SOURCE_DISCOVERY_FOR_BIBLICAL_LANGUAGES_I` was `AUTONOMOUS_ALLOWED` and executed immediately.
+Required first read: `dore-core/memory/sensory-active.json`.
+Result: file absent on `main`.
 
-Completed in this cycle:
-1. discovered and evaluated a minimal source stack;
-2. recorded access/licensing boundaries rather than fabricating inaccessible lexicon/textbook study;
-3. began and completed Unit 1 on script/form/lemma/transliteration distinctions;
-4. ran self and mini-transfer checks; Unit 1 passed its local gate;
-5. exported the resulting method node to the generic product-readable brain;
-6. ran the brain-bridge regression check recorded in `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`.
+Decision: do not infer that D1 has no signal and do not fabricate a live question into repository memory. Record this as a sensory heartbeat/persistence dependency. Researcher learning can continue independently because this infrastructure gap does not block the authorized curriculum chain.
 
-Stop reason for this cycle: Unit 2 is clearly authorized, but completing it responsibly requires deeper inspection of parsing schemas and grammar explanations than was performed in this cycle. Advancing it without that inspection would be fabricated progress. It remains the next autonomous action.
+Also recorded in bridge regression evidence: current Search code may POST an unmatched question to sensory memory twice; verify separately as an infrastructure behavior rather than teaching around it.
+
+### Executed autonomous actions
+
+1. Unit 2 — morphology/parsing foundations: PASS.
+   - inspected MorphGNT parsing dimensions and OSHB morphology/parsing principles;
+   - preserved schema/version and ambiguity boundaries;
+   - rejected morphology-tag = contextual-meaning/infallible-interpretation shortcuts.
+2. Unit 3 — Greek case / Hebrew state and basic syntax: PASS.
+   - rejected case = one English preposition/function;
+   - rejected construct state = possession only;
+   - preserved syntactic-context requirements for morphologically ambiguous forms.
+3. Exported `research.method.morphology-syntax-boundary` and ran generic bridge regression 02: PASS_WITH_INFRASTRUCTURE_NOTE.
+4. Unit 4 — verbal-system foundations: PASS.
+   - Greek aorist does not itself prove once-for-all/instantaneous action;
+   - non-indicative tense/aspect requires mood/context sensitivity;
+   - Hebrew Perfect is not mechanically English past tense;
+   - Hebrew stem labels, especially Piel, are not fixed lexical meanings.
+5. Exported `research.method.verbal-morphology-boundary`.
+6. Unit 5 — lexicon use and semantic range: PASS.
+   - licensed BDAG/HALOT-class access remains unavailable and is explicitly not fabricated;
+   - method training used inspectable Abbott-Smith, BDB/Open Scriptures HebrewLexicon, and STEPBible provenance;
+   - rejected gloss = meaning, Strong-number = proof, lexicon-possibility = verse-actuality, and illegitimate totality transfer.
+7. Curriculum sequence was refined to insert verbal-system foundations before lexicon consolidation because direct schema/grammar study revealed it as a prerequisite.
+
+## Current next action
+
+`BIBLICAL_LANGUAGES_I_UNIT_06_CONTEXT_DISCOURSE_AND_CORPUS_COMPARISON`
+
+Unit 6 should test how immediate syntax/discourse and corpus comparison constrain lexical possibilities, with explicit protection against frequency fallacies, decontextualized concordance reasoning, and illegitimate totality transfer. Continue without human confirmation if adequate inspectable sources/examples are available.
