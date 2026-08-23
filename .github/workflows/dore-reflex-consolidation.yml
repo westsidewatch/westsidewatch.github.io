@@ -1,0 +1,25 @@
+name: Doré Reflex Consolidation 1.0
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore_core/**'
+      - 'dore-core/reflex/**'
+      - 'tests/test_reflex_consolidation.py'
+      - '.github/workflows/dore-reflex-consolidation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  graduation-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Reflex Consolidation 1.0 end-to-end gate
+        run: python -m pytest -q tests/test_reflex_consolidation.py tests/test_dore_bible_search.py
