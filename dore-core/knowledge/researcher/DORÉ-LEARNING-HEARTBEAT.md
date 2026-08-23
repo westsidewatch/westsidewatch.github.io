@@ -21,23 +21,25 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 ### First durable sensory → research → brain consolidation
 Signal `5cf2c608-e66f-4176-a3f8-b3284819158a`, query `馬利亞有幾位?`, was durably claimed as `RESEARCHING`, independently researched, counter-checked, passed a 7/7 gate, promoted generically as `research.nt.mary-count`, and written back to `sensory-active.json` as `CONSOLIDATED` with a real `brain_node`.
 
-This proves the previously missing middle of the closed loop: **durable sensory memory → autonomous research → examination → product-readable brain consolidation**. It does not by itself prove that every Search browser deployment is posting correctly; browser-side ingestion remains a separate acceptance surface.
+This proves **durable sensory memory → autonomous research → examination → product-readable brain consolidation**. Browser-side ingestion remains a separate acceptance surface.
 
-Evidence: `dore-core/knowledge/researcher/live/SENSORY-5cf2c608-MARY-COUNT.md`, `dore-core/memory/sensory-active.json`, `static/dore/brain/knowledge-index.json`.
+### Brain → Product generic bridge acceptance
+The generic bridge now loads the live brain endpoint rather than a frozen deployment-local snapshot. `scripts/dore/brain-bridge-regression.mjs` tests three Mary question variants against `research.nt.mary-count` plus a Scripture-routing probe, using the same generic normalization/scoring contract as `static/dore/dore-brain-bridge.js`. No Mary-specific answer branch exists in the product bridge; the only Mary strings in the regression are test inputs/expected node ids. This establishes the repository-level Brain → Product regression surface. Live browser acceptance remains separate from repository-level regression.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–04 PASS.
-Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`.
+Status: ACTIVE — UNITS 01–05 PASS.
+Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md` and `RESEARCHER-06-UNIT-05-HARNESS-SPEC.md`.
 
 Unit 01: noise taxonomy + observed/candidate/source/confidence model, 8/8 PASS.
 Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/10 PASS.
 Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS.
-Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS. Production parameters remain uncalibrated and no capability was promoted to brain.
+Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS.
+Unit 05: executable non-production measurement harness + separated dev/sealed-test fixtures + tuning guard, 8/8 PASS. Phonetic measurement is explicitly pending reproducible encoders; no production parameters/capability were fabricated or promoted.
 
 ## Current next action
-`RESEARCHER_06_UNIT_05_BUILD_EXECUTABLE_FIXTURE_HARNESS_AND_MEASURE_BASELINE`.
+`RESEARCHER_06_UNIT_06_IMPLEMENT_VERSIONED_PHONETIC_ENCODERS_AND_RUN_DEV_CALIBRATION`.
 
-Implement a non-production reference harness and separated dev/test fixtures against existing Scripture/entity data. Measure candidate recall@K, candidate-set growth/latency, negative false-candidate behavior, alias normalization and abstention. Do not tune on the final test set and do not wire into production yet.
+Implement reproducible Mandarin pinyin and English phonetic-key channels with explicit versions. Use only dev fixtures to calibrate bounded candidate parameters, freeze them, then open the sealed final test only for evaluation. Do not wire into production before held-out evidence passes.
 
-## Closed-loop next acceptance
-Run Brain → Product regression for `research.nt.mary-count`: verify a generic Search brain lookup can surface the new node without per-question UI logic. Separately verify a current Search browser deployment can itself POST a fresh unknown query into sensory memory; do not infer that browser acceptance solely from the successful durable signal.
+## Closed-loop remaining acceptance
+Repository-level durable sensory → research → brain and generic Brain → Product regression are now evidenced. The remaining product acceptance is browser-level: verify a current Search deployment itself POSTs a fresh unknown query into sensory memory and, after consolidation, surfaces the live brain result without per-question UI logic.
