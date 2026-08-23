@@ -26,10 +26,7 @@
         "boundary": "Hebrew lexical/textual layer has passed the Biblical Languages I Hebrew practicum. Full OT-to-NT canonical/Trinitarian synthesis remains a separate exam, so the node stays CANDIDATE_FOR_EXAM."
       },
       "scripture": ["GEN 1:2", "NUM 24:2", "JDG 3:10", "1SA 16:13-14", "PSA 51:11", "ISA 11:2", "ISA 61:1", "ISA 63:10-11", "EZK 36:26-27", "JOL 2:28-29"],
-      "provenance": [
-        "dore-core/knowledge/researcher/practicum/02-01-A-OLD-TESTAMENT-SPIRIT.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-08.md"
-      ],
+      "provenance": ["dore-core/knowledge/researcher/practicum/02-01-A-OLD-TESTAMENT-SPIRIT.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-08.md"],
       "next_research": ["OT-to-NT canonical transfer study", "current licensed Hebrew lexicon counter-check when access becomes available"]
     },
     {
@@ -49,10 +46,7 @@
         "boundary": "Hebrew lexical/narrative comparison has passed the Unit 8 practicum. The identity question remains WORKING because Second Temple development and NT διάβολος/Σατανᾶς comparison are still required for the diachronic/canonical layer."
       },
       "scripture": ["JOB 1:6-12", "JOB 2:1-7", "ZEC 3:1-2", "1CH 21:1", "NUM 22:22,32", "1SA 29:4"],
-      "provenance": [
-        "dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-08.md"
-      ],
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-08.md"],
       "next_research": ["Second Temple satan/adversary development", "NT diabolos/Satanas comparison", "current Hebrew lexicon counter-check when licensed access is available"]
     },
     {
@@ -64,10 +58,7 @@
       "concepts": ["馬太福音2:23", "拿撒勒人", "先知", "引用", "暗引", "netser"],
       "answer": {
         "lead": "舊約沒有找到一句與馬太福音2:23逐字相同的經文；這個『找不到』本身就是需要解釋的資料。",
-        "body": [
-          "研究必須注意馬太使用的是複數『眾先知』式表述，不能因沒有逐字來源就虛構一節遺失經文。",
-          "拿細耳人、枝子 netser、被藐視的主題或更廣泛先知性綜合等解釋，都必須分別接受原文與上下文檢驗，不能因發音相似就直接定案。"
-        ],
+        "body": ["研究必須注意馬太使用的是複數『眾先知』式表述，不能因沒有逐字來源就虛構一節遺失經文。", "拿細耳人、枝子 netser、被藐視的主題或更廣泛先知性綜合等解釋，都必須分別接受原文與上下文檢驗，不能因發音相似就直接定案。"],
         "boundary": "目前保留多個假說，未把任何一個解釋升格為確定答案。"
       },
       "provenance": ["dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md"],
@@ -82,17 +73,10 @@
       "concepts": ["lemma", "surface form", "詞元", "詞形", "原文", "morphology", "形態學", "transliteration", "音譯"],
       "answer": {
         "lead": "詞形、lemma、音譯和意義是不同層次，不能互相替代。",
-        "body": [
-          "surface form（詞形）是經文中實際出現的拼寫／屈折形式；lemma 是詞典或語料庫用來歸類相關詞形的引用形式。",
-          "音譯只是把希伯來文或希臘文換成另一套字母來表示，方便閱讀或定位；它不是原文形態，也不能自行證明上下文中的意思。",
-          "同一 lemma 可以對應不同詞形和不同形態特徵。真正的語義判斷還需要形態、句法、上下文與可靠詞典，不可從 lemma 編號直接跳到神學結論。"
-        ],
+        "body": ["surface form（詞形）是經文中實際出現的拼寫／屈折形式；lemma 是詞典或語料庫用來歸類相關詞形的引用形式。", "音譯只是把希伯來文或希臘文換成另一套字母來表示，方便閱讀或定位；它不是原文形態，也不能自行證明上下文中的意思。", "同一 lemma 可以對應不同詞形和不同形態特徵。真正的語義判斷還需要形態、句法、上下文與可靠詞典，不可從 lemma 編號直接跳到神學結論。"],
         "boundary": "這是 Biblical Languages I Unit 1 已通過自測與小型轉移測試的方法性結論；尚未等同整門課或特定詞義研究已完成。"
       },
-      "provenance": [
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"
-      ],
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"],
       "next_research": ["later Biblical Languages transfer/blind exam"]
     },
     {
@@ -104,18 +88,10 @@
       "concepts": ["morphology", "形態學", "parsing", "case", "nominative", "genitive", "dative", "accusative", "construct state", "absolute state", "syntax", "句法", "OSHB", "MorphGNT"],
       "answer": {
         "lead": "形態標籤、格和 Hebrew noun state 都是重要的文法證據，但不能直接等同上下文意義或固定英文翻譯。",
-        "body": [
-          "MorphGNT 與 OSHB 的 parsing code 必須按照各自的 schema／版本解碼；它們是資料集所提供的文法分析，不是不可錯的詮釋。",
-          "希臘文 nominative、genitive、dative、accusative 會限制可能的句法關係，但常見功能不能被改寫成『永遠只有一種功能』，也不能機械映射成固定的 of／to／for 或英文語序。",
-          "希伯來文 construct state 表示與後項形成文法鏈接，但可承載所有、材料、屬性、目的、施事／工具等多種關係；有些形式在 construct 與 absolute 中外觀相同，必須看句法上下文。",
-          "因此可靠的原文研究順序應保持：詞形 → lemma → morphology → syntax → discourse/context → lexicography/semantic judgment。"
-        ],
+        "body": ["MorphGNT 與 OSHB 的 parsing code 必須按照各自的 schema／版本解碼；它們是資料集所提供的文法分析，不是不可錯的詮釋。", "希臘文 nominative、genitive、dative、accusative 會限制可能的句法關係，但常見功能不能被改寫成『永遠只有一種功能』，也不能機械映射成固定的 of／to／for 或英文語序。", "希伯來文 construct state 表示與後項形成文法鏈接，但可承載所有、材料、屬性、目的、施事／工具等多種關係；有些形式在 construct 與 absolute 中外觀相同，必須看句法上下文。", "因此可靠的原文研究順序應保持：詞形 → lemma → morphology → syntax → discourse/context → lexicography/semantic judgment。"],
         "boundary": "這是 Biblical Languages I Units 2–3 已通過本地自測與轉移測試的方法性結論；仍未完成整門課，也不授權僅憑 morphology 對具體爭議詞義作定案。"
       },
-      "provenance": [
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md",
-        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md"
-      ],
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md", "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md"],
       "next_research": ["later Biblical Languages blind/retention exam"]
     },
     {
@@ -127,16 +103,31 @@
       "concepts": ["aorist", "不定過去式", "once for all", "Greek tense", "verbal aspect", "Hebrew perfect", "Perfect", "Piel", "Qal", "Niphal", "Hiphil", "stem", "conjugation", "verb morphology"],
       "answer": {
         "lead": "原文動詞的 tense／aspect／stem／conjugation 標籤能限制文法分析，但不能單獨證明『一次完成』、固定時間或固定詞義。",
-        "body": [
-          "希臘文 aorist 本身不能推出 once-for-all、瞬間、只發生一次或某個神學結論；若上下文確實表示『一次永遠』，證據必須來自更完整的語境、詞彙或修飾語，而不是僅從 aorist 標籤。",
-          "希臘文的 tense/aspect 在不同 mood 中不能機械等同時間；而且學界對古希臘文 tense/aspect 的精確模型存在不同分析，因此應保留理論邊界。",
-          "希伯來文 Perfect 常與完成／過去行動相關，但也可依上下文有現在或未來的翻譯值；不能簡化為 English past tense。",
-          "Qal、Niphal、Piel、Hiphil 等 stem 反映常見的語態／動作類型模式，但不是單字本身的固定詞義。尤其 Piel 並不等於永遠『加強／intensive』，必須查具體 lexeme 與上下文。"
-        ],
+        "body": ["希臘文 aorist 本身不能推出 once-for-all、瞬間、只發生一次或某個神學結論；若上下文確實表示『一次永遠』，證據必須來自更完整的語境、詞彙或修飾語，而不是僅從 aorist 標籤。", "希臘文的 tense/aspect 在不同 mood 中不能機械等同時間；而且學界對古希臘文 tense/aspect 的精確模型存在不同分析，因此應保留理論邊界。", "希伯來文 Perfect 常與完成／過去行動相關，但也可依上下文有現在或未來的翻譯值；不能簡化為 English past tense。", "Qal、Niphal、Piel、Hiphil 等 stem 反映常見的語態／動作類型模式，但不是單字本身的固定詞義。尤其 Piel 並不等於永遠『加強／intensive』，必須查具體 lexeme 與上下文。"],
         "boundary": "這是 Biblical Languages I Unit 4 已通過本地自測與轉移測試的方法性結論；完整語義與釋經結論仍需要句法、上下文和可靠詞典，整門課也尚未完成。"
       },
       "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md"],
       "next_research": ["later blind/retention exam"]
+    },
+    {
+      "id": "research.nt.graphe-scripture-scope",
+      "type": "research_answer",
+      "status": "CANDIDATE_FOR_EXAM",
+      "confidence": "high-lexical-contextual-bounded-canon-history",
+      "questions": ["使徒時代就有聖經了嗎", "保羅說照聖經所說當時已有聖經嗎", "林前15章照聖經所說是什麼聖經", "林前十五章的聖經是什麼", "what scriptures does Paul mean in 1 Corinthians 15", "did the apostles already have scripture"],
+      "concepts": ["使徒時代", "聖經", "經上", "照聖經所說", "林前15", "哥林多前書15", "γραφή", "γραφαί", "graphē", "Scripture", "canon", "正典", "2 Peter 3:16", "彼得後書3:16"],
+      "answer": {
+        "lead": "有『聖經／Scriptures』，但這不等於當時已經有後來完整的新舊約正典。",
+        "body": [
+          "保羅在哥林多前書15:3–4兩次說 κατὰ τὰς γραφάς（『照著／按照眾聖經』）。這說明使徒時代已經有被早期基督徒視為權威 Scripture 的經卷傳統；在保羅這個語境中，主要指他與早期教會承受的以色列／猶太聖經。",
+          "γραφή 的新約用法可以指『寫下來的東西』，而在特定搭配與語境中指聖經；單數常可指某一段或 Scripture 作權威，複數常指眾聖經，但單複數本身都不能列出當時正典究竟包含哪些書。",
+          "因此不能從林前15一句話推出『當時已有今天這一本完整66卷聖經』。另一方面，彼後3:16把保羅書信與『其餘的 γραφαί』並列，是後來早期基督教把使徒著作放進 Scripture 類別的重要資料；這反映正典形成的歷史過程，而不是證明林前15已經指整套新約。"
+        ],
+        "boundary": "Greek lexical/contextual layer passed Biblical Languages I Unit 9. Exact first-century canon boundaries and the dating/authorship implications of 2 Peter remain historical/canonical questions beyond the lexical claim, so the node remains CANDIDATE_FOR_EXAM."
+      },
+      "scripture": ["1CO 15:3-4", "ROM 1:2", "JHN 10:35", "2TI 3:15-16", "2PE 3:15-16"],
+      "provenance": ["dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-09.md"],
+      "next_research": ["canon-history source comparison", "current Greek lexicon counter-check when licensed access is available"]
     }
   ]
 }
