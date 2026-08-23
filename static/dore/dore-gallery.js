@@ -5,14 +5,13 @@
     if(document.getElementById('dore-deploy-probe'))return;
     const el=document.createElement('div');
     el.id='dore-deploy-probe';
-    el.textContent='build: chapter-reading-v4';
+    el.textContent='build: chapter-reading-v5';
     Object.assign(el.style,{position:'fixed',right:'10px',bottom:'10px',zIndex:'99999',padding:'5px 8px',background:'rgba(255,253,246,.92)',border:'1px solid rgba(140,104,24,.45)',color:'#8c6818',font:'12px monospace',borderRadius:'4px'});
     document.body.appendChild(el);
   };
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deployProbe,{once:true});
   else deployProbe();
 
-  // Keep the Search UI usable even while capability runtimes are loading.
   const unlockSearch=()=>{
     const input=document.getElementById('search-input');
     const button=document.getElementById('search-button');
@@ -22,26 +21,20 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',unlockSearch,{once:true});
   else unlockSearch();
 
-  // Scripture Search Input Literacy is a learnable, maintainable input corpus.
-  // Load the pure parser reflex first so it can be tested independently in CI.
   const parserRuntime=document.createElement('script');
   parserRuntime.src='/dore/dore-scripture-reference-parser.js?v=ssl1-20260823a';
   parserRuntime.onload=()=>{
     const inputLiteracyRuntime=document.createElement('script');
-    inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823b';
+    inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823c';
     document.head.appendChild(inputLiteracyRuntime);
   };
   document.head.appendChild(parserRuntime);
 
-  // Final presentation guard for whole-chapter searches. This runs after the
-  // main Search renderer and collapses verse cards into one continuous chapter.
   const chapterReadingRuntime=document.createElement('script');
   chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823a';
   chapterReadingRuntime.defer=true;
   document.head.appendChild(chapterReadingRuntime);
 
-  // BW-1 entity intelligence is a separate runtime so it can evolve without
-  // coupling the Scripture reader/search implementation to Biblical World.
   const entityRuntime=document.createElement('script');
   entityRuntime.src='/dore/dore-entity-search.js?v=bw1-20260822b';
   entityRuntime.defer=true;
