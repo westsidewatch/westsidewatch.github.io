@@ -1,0 +1,42 @@
+name: Doré Scripture Search Input Literacy
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'static/dore/scripture-input-literacy.json'
+      - 'static/dore/dore-scripture-reference-parser.js'
+      - 'static/dore/dore-search-input-literacy.js'
+      - 'static/dore/dore-gallery.js'
+      - 'scripts/run_scripture_input_literacy_exam.js'
+      - '.github/workflows/dore-scripture-input-literacy.yml'
+permissions:
+  contents: write
+jobs:
+  graduate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Self + transfer + blind exam
+        run: node scripts/run_scripture_input_literacy_exam.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: dore-scripture-input-literacy
+          path: reports/DORÉ-SCRIPTURE-INPUT-LITERACY.json
+      - name: Persist graduation evidence
+        if: success() && github.event_name == 'push'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/DORÉ-SCRIPTURE-INPUT-LITERACY.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dore): persist Scripture Input Literacy graduation [skip ci]'
+            for attempt in 1 2 3 4; do
+              if git push; then exit 0; fi
+              git pull --rebase origin main
+            done
+            exit 1
+          fi
