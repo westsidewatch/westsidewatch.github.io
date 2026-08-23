@@ -1,9 +1,7 @@
 {
-  "schema": "dore.sensory-experiment.v1",
-  "mode": "experiment-only",
-  "token_id": "451850a4-e6e4-491c-bc0d-e945d0fec658",
-  "write_url": "https://webhook.site/451850a4-e6e4-491c-bc0d-e945d0fec658",
-  "created_at": "2026-08-23T07:31:28.522443+00:00",
-  "expires_at": "2026-08-30T07:31:28.522443+00:00",
-  "privacy": "Only enabled when dore_experiment=1. Do not treat as production storage."
+  "schema": "dore.sensory.v1",
+  "mode": "first-party-cloudflare",
+  "endpoint": "/api/dore/sensory",
+  "storage": "Cloudflare D1",
+  "status": "binding-required"
 }
