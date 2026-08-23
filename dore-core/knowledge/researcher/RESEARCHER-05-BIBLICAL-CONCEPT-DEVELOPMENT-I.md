@@ -1,6 +1,6 @@
 # Researcher 05 — Biblical Concept Development I
 
-Status: ACTIVE — UNITS_01_03_PASS
+Status: ACTIVE — UNITS_01_04_PASS
 Started: 2026-08-23
 Selected by: `RESEARCHER-04-POST-COURSE-DIAGNOSIS.md`
 Prerequisite: `BIBLICAL-LANGUAGES-I_GRADUATED`
@@ -98,9 +98,10 @@ Method knowledge can become product-readable only after transfer. Claim-specific
 - Unit 1: PASS — evidence stratification/dating/corpus boundaries.
 - Unit 2: PASS — continuity/development/discontinuity method.
 - Unit 3: PASS — source-family map/non-homogeneity.
+- Unit 4: PASS — translation/language mediation; 4/4 transfer gate. Established separate lexical-vs-conceptual relation tracking, Vorlage-before-translation-intent check, and translation/transliteration/borrowing distinctions. Evidence: `RESEARCHER-05-UNIT-04-TRANSLATION-LANGUAGE-MEDIATION.md`.
 
 ## Current next action
 
-`UNIT_04_TRANSLATION_LANGUAGE_MEDIATION`.
+`UNIT_05_PRACTICUM_A_SATAN_ADVERSARY_SOURCE_SUFFICIENCY_CHECK`.
 
-After Unit 4, begin the Satan/adversary practicum only if targeted primary/specialist sources are sufficient to keep Second Temple and NT evidence accountable.
+Before changing `research.job.satan-identity`, obtain sufficient targeted primary/specialist evidence for Hebrew-Bible → diverse Second Temple corpora → NT comparison. If that evidence layer cannot be responsibly assembled with available sources, record the dependency and do not promote the node.
