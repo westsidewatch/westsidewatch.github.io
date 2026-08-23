@@ -28,6 +28,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Seed Mary sensory acceptance question
+        run: |
+          curl --fail-with-body --silent --show-error \
+            -X POST 'https://westsidewatch-github-io.pages.dev/api/dore/sensory' \
+            -H 'content-type: application/json' \
+            --data '{"query":"馬利亞有幾位？"}'
       - name: Claim/close sensory signals
         env:
           DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
@@ -47,5 +53,3 @@ jobs:
             git pull --rebase origin main
           done
           exit 1
-
-# test-trigger: mary-count-20260823
