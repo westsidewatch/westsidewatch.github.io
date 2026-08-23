@@ -1,6 +1,6 @@
 # Autonomous Learning I — Live Test: Biblical Languages Curriculum
 
-Status: IN_PROGRESS — UNITS 01–03 PASS; TRANSFER_PENDING
+Status: IN_PROGRESS — UNITS 01–07 PASS; HEBREW PRACTICUM NEXT
 Date: 2026-08-23
 Initiated by: Doré's own next-action decision
 
@@ -12,18 +12,7 @@ Classification: `SKILL_GAP + DOMAIN_GAP + CURRICULUM_GAP`.
 
 ## Competency map
 
-Doré does not need to imitate a human language degree before doing useful research, but it must be able to:
-
-1. identify lemma, inflected form and morphology;
-2. distinguish gloss from semantic range;
-3. use grammar/syntax to constrain meaning;
-4. inspect immediate discourse context before lexical claims;
-5. use accountable lexica rather than Strong-number gloss equivalence;
-6. compare occurrences without committing illegitimate totality transfer;
-7. distinguish Hebrew/Aramaic/Greek evidence and translation evidence;
-8. recognize when textual criticism affects the form being interpreted;
-9. state uncertainty when morphology or syntax admits alternatives;
-10. reproduce an analysis on an unseen text.
+Doré must be able to identify lemma/inflected form/morphology; distinguish gloss from semantic range; use grammar/syntax/context to constrain meaning; use accountable lexica; compare corpus occurrences without totality transfer; distinguish language/translation evidence; recognize textual-critical boundaries; preserve uncertainty; and reproduce the method on unseen texts.
 
 ## Scope decision
 
@@ -32,23 +21,6 @@ Course: `BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`.
 Track H: Biblical Hebrew foundations, with Aramaic awareness.
 Track G: Koine Greek foundations.
 Shared Method Track: lexicography, semantics, morphology, syntax, corpus comparison, responsible tool use.
-
-Hebrew and Greek should interleave after separate script/morphology foundations so transfer can be tested across languages. Do not wait to master one language completely before exposing the shared research method.
-
-## Required material families
-
-Doré must discover and evaluate actual materials before study. Required roles:
-- one pedagogically coherent introductory Hebrew grammar;
-- one pedagogically coherent introductory Koine Greek grammar;
-- accountable Hebrew lexicon/reference access;
-- accountable Greek lexicon/reference access;
-- morphology/parsing reference;
-- primary biblical text access with inspectable morphology;
-- corpus/concordance practice surface;
-- at least one semantics/lexicography methodological resource;
-- counterpoint material warning against common word-study fallacies.
-
-No single interlinear, Strong-number system, search engine, AI answer, or denominational commentary may serve as the course authority.
 
 ## Minimum viable sequence
 
@@ -64,7 +36,7 @@ Unit 9 — Greek practicum: `γραφή` plus unseen cases.
 Unit 10 — Cross-language/translation diagnostic work in ONE and Search.
 Unit 11 — Research synthesis with textual-critical boundary awareness.
 
-Sequence note: the initial draft placed lexicon work immediately after a broad syntax unit. Direct schema/grammar study showed that verbal-system foundations are a prerequisite for responsible syntax and semantic work, so the curriculum was autonomously refined before lexicon consolidation. This is an authorized prerequisite reordering, not course inflation.
+Sequence note: direct source inspection exposed verbal-system foundations as a prerequisite before semantic consolidation, so Unit 4 was inserted explicitly before lexicon work. This was an authorized prerequisite refinement.
 
 ## Examination design
 
@@ -72,67 +44,53 @@ Self Exam: parsing, lexicon discipline, syntax and semantic-boundary checks.
 Transfer Exam: unseen Hebrew and Greek passages from genres not used in instruction.
 Blind Exam: a user-like theological question whose tempting answer depends on an original-language claim; Doré must decide whether original-language evidence actually supports the claim.
 
-Automatic fail conditions:
-- gloss = meaning;
-- etymology = contextual meaning;
-- Strong number = lexical proof;
-- all occurrences imported into one verse;
-- English similarity treated as Hebrew/Greek identity;
-- morphology ignored when it changes the claim;
-- theological conclusion mislabeled as lexical fact.
+Automatic fail conditions include gloss=meaning, etymology=contextual meaning, Strong number=lexical proof, totality transfer, English similarity=original-language identity, morphology ignored, or theological conclusion mislabeled lexical fact.
 
 ## Consolidation gate
 
-Vocabulary lists are not neural completion. Durable consolidation requires demonstrated method transfer. Individual lexical claims remain claim-ledger entries with provenance and context.
+Vocabulary lists are not neural completion. Durable consolidation requires demonstrated method transfer. Individual lexical claims remain claim/evidence-ledger entries with provenance and context.
 
 ## Executed autonomous actions
 
 ### Source discovery
+Selected Ewald/Dongell for Greek pedagogy, MorphGNT/SBLGNT for Greek morphology, OSHB v2.2 for Hebrew text/morphology, Cook & Holmstedt as Hebrew bibliography anchor with content-access boundary, and licensed academic lexica as required later dependencies rather than silently replacing them with morphology datasets.
 
-Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`.
+### Unit 1 — PASS
+`SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
 
-Selected operational stack:
-- Ewald 2022 and Dongell 2014 for inspectable Greek pedagogy;
-- MorphGNT/SBLGNT for Greek text/morphology practice;
-- OSHB v2.2 for Hebrew text/morphology practice;
-- Cook & Holmstedt as Hebrew textbook anchor with an explicit full-content access boundary;
-- licensed academic lexica retained as later semantic-study dependencies rather than silently replaced by open morphology datasets.
+### Unit 2 — PASS
+Morphology/parsing tags are versioned dataset analyses and grammatical evidence, not contextual meaning or infallible interpretation.
 
-### Unit 1
+### Unit 3 — PASS
+Greek case and Hebrew construct/absolute state constrain grammatical relations but do not map one-to-one to fixed English glosses or one semantic function.
 
-Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`.
-Local result: `UNIT_01_PASS — TRANSFER_PENDING`.
-Learned boundary: `SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
+### Unit 4 — PASS
+Greek aorist does not itself prove once-for-all action; Hebrew Perfect is not mechanically English past tense; Hebrew stem labels such as Piel are not fixed lexical meanings.
 
-### Unit 2
+### Unit 5 — PASS
+Lexicon entries map attested/analyzed range; they do not select the verse's local sense. Strong-number proof, gloss equivalence, possibility-to-actuality collapse and totality transfer were rejected. Licensed BDAG/HALOT-class access remains an explicit boundary.
 
-Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md`.
-Local result: `UNIT_02_PASS — TRANSFER_PENDING`.
-Learned boundary: morphology/parsing tags are versioned dataset analyses and grammatical evidence, not contextual meaning or infallible interpretation.
+### Unit 6 — PASS
+Immediate syntax/discourse constrains lexical possibilities; corpus frequency is evidence, not a verdict; concordance comparison generates/tests hypotheses rather than defining the target occurrence.
 
-### Unit 3
+### Unit 7 — PASS — ADVERSARIAL GATE
+10/10 adversarial fallacy cases passed: etymological/root fallacy, totality transfer, Strong identity, aorist theology, Piel shortcut, frequency shortcut, English similarity, cognate transfer, theological loading and the reverse fallacy that lexical evidence is useless.
 
-Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md`.
-Local result: `UNIT_03_PASS — TRANSFER_PENDING`.
-Learned boundary: Greek case and Hebrew construct/absolute state constrain grammatical relations but do not map one-to-one to fixed English glosses or a single semantic function.
+## Product bridge consequence
 
-### Product bridge consequence
+Current generic product-readable method nodes:
+- `research.method.lemma-surface-form`
+- `research.method.morphology-syntax-boundary`
+- `research.method.verbal-morphology-boundary`
 
-Unit 1 method knowledge remains exported as `research.method.lemma-surface-form`.
-Units 2–3 added the generic product-readable node `research.method.morphology-syntax-boundary`, status `CANDIDATE_FOR_EXAM`, with provenance and uncertainty boundaries.
-
-Bridge regressions:
-- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`: PASS.
-- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`: PASS_WITH_INFRASTRUCTURE_NOTE.
-
-No per-question UI handler was added.
+Bridge regressions 01–03 passed under the generic node contract; no per-question UI handler was added.
 
 ## Sensory inspection note
 
-At the beginning of the latest wake cycle, `dore-core/memory/sensory-active.json` did not exist on `main`. Therefore no repository-persisted live sensory task could be responsibly read or reconstructed. This does not prove that D1 contains no queued/researching signal; it records a heartbeat/persistence dependency that must be resolved by the sensory transport path rather than by fabricating a question into memory.
+At the beginning of the latest wake cycle, `dore-core/memory/sensory-active.json` did not exist on `main`. No live D1 question was guessed into repository memory. This remains a sensory transport/persistence issue independent of the curriculum.
 
 ## Current next autonomous action
 
-`BIBLICAL_LANGUAGES_I_UNIT_04_VERBAL_SYSTEM_FOUNDATIONS`
+`BIBLICAL_LANGUAGES_I_UNIT_08_HEBREW_PRACTICUM_RUACH_SATAN_AND_UNSEEN_CASES`
 
-Unit 4 must study Greek tense/voice/mood and Hebrew stem/conjugation labels from inspectable elementary grammar plus MorphGNT/OSHB examples. It must explicitly test and reject automatic equations such as grammatical tense = chronology, aorist = once-for-all action, Hebrew stem label = fixed English semantic force, or morphology = theology. After a self/transfer exam, derive the next action without human confirmation.
+Revisit the existing `ruach` CANDIDATE and `satan` WORKING claims using the tested Units 1–7 method. The practicum must distinguish lexical/morphological, narrative/historical and canonical/theological layers, include counter-checks and unseen Hebrew transfer cases, and update shared product-readable nodes only where evidence justifies it.
