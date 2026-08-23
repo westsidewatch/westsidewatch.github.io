@@ -7,45 +7,31 @@ Established: 2026-08-23
 
 Doré learning does not wait for a human to say `continue`, `execute`, `next`, or to approve each course.
 
-Whenever Doré is awakened, it must:
+Whenever Doré is awakened, it must read current state, derive/classify the next action, immediately execute `AUTONOMOUS_ALLOWED` work, self-check, persist evidence/failures/state/next action, and continue while evidence and authority remain clear. Course completion requires exam gates, not mere reading. Retention/transfer failures reopen prior learning.
 
-1. Read current researcher status and completed milestones.
-2. Read the latest explicit `NEXT_ACTION` or derive one from self-diagnosis, failed exams, open WORKING conclusions, retention failures, or internship evidence.
-3. Classify the action as `AUTONOMOUS_ALLOWED`, `HUMAN_APPROVAL_REQUIRED`, or `BLOCKED`.
-4. Execute `AUTONOMOUS_ALLOWED` work immediately in the same wake cycle.
-5. Self-check, persist evidence/failures/state changes, derive the next action, and continue while evidence and authority remain clear.
-6. Never mark a course complete merely because material was read; use examination gates.
-7. Reopen completed learning when retention/transfer later fails.
+Human approval is reserved for irreversible/destructive external actions, paid obligations, official outward doctrinal/editorial publication, brand/governance changes, new private credentials/access, material legal/security/privacy consequences, or genuine unresolved value conflicts.
 
-## Human approval boundaries
-
-Approval is required for irreversible/destructive external actions; paid obligations; outward-facing doctrinal/editorial publication as official organizational position; brand/governance/constitutional changes; new private credentials/access; material legal/security/privacy consequences; or genuine unresolved value conflicts.
-
-Product bugs are recorded separately unless they block learning itself.
-
-## Stop conditions
-
-A wake cycle may stop only when all derivable autonomous work in the current chain is complete, a real evidence/source/tool dependency blocks progress, human approval is genuinely required, or further work would fabricate progress rather than learn/test something.
-
-`I have a next step` is not a valid stop condition.
+A wake cycle stops only when all derivable autonomous work is complete, a real evidence/source/tool dependency blocks progress, human approval is required, or further work would fabricate progress.
 
 ## Current chain
 
 Current course: `AUTONOMOUS-LEARNING-I`
 Current live test: `BIBLICAL-LANGUAGES-I`
-Current state: `UNITS_01_05_PASS — TRANSFER_PENDING`
+Current state: `UNITS_01_06_PASS — TRANSFER_PENDING`
 
-Latest evidence:
+Completed evidence:
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-04.md`
 - `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-05.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-06.md`
 - `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`
 - `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`
+- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-03.md`
 
-Product-readable method nodes currently include:
+Product-readable method nodes:
 - `research.method.lemma-surface-form`
 - `research.method.morphology-syntax-boundary`
 - `research.method.verbal-morphology-boundary`
@@ -57,35 +43,38 @@ Product-readable method nodes currently include:
 Required first read: `dore-core/memory/sensory-active.json`.
 Result: file absent on `main`.
 
-Decision: do not infer that D1 has no signal and do not fabricate a live question into repository memory. Record this as a sensory heartbeat/persistence dependency. Researcher learning can continue independently because this infrastructure gap does not block the authorized curriculum chain.
+Decision: do not infer that D1 has no live signal and do not fabricate a question into repository memory. Treat this as a sensory heartbeat/persistence dependency. Researcher curriculum work remains independently authorized.
 
-Also recorded in bridge regression evidence: current Search code may POST an unmatched question to sensory memory twice; verify separately as an infrastructure behavior rather than teaching around it.
+Infrastructure note: current Search code appears capable of POSTing an unmatched question to sensory memory twice; verify separately rather than teaching around it.
 
-### Executed autonomous actions
+### Autonomous learning executed
 
 1. Unit 2 — morphology/parsing foundations: PASS.
-   - inspected MorphGNT parsing dimensions and OSHB morphology/parsing principles;
-   - preserved schema/version and ambiguity boundaries;
-   - rejected morphology-tag = contextual-meaning/infallible-interpretation shortcuts.
-2. Unit 3 — Greek case / Hebrew state and basic syntax: PASS.
-   - rejected case = one English preposition/function;
-   - rejected construct state = possession only;
-   - preserved syntactic-context requirements for morphologically ambiguous forms.
-3. Exported `research.method.morphology-syntax-boundary` and ran generic bridge regression 02: PASS_WITH_INFRASTRUCTURE_NOTE.
+   - schema/version-aware MorphGNT and OSHB decoding;
+   - morphology tag ≠ contextual meaning/infallible interpretation.
+2. Unit 3 — case/state/basic syntax: PASS.
+   - Greek case ≠ one English preposition/function;
+   - Hebrew construct state ≠ possession only.
+3. Exported `research.method.morphology-syntax-boundary`; bridge regression 02 PASS_WITH_INFRASTRUCTURE_NOTE.
 4. Unit 4 — verbal-system foundations: PASS.
-   - Greek aorist does not itself prove once-for-all/instantaneous action;
+   - aorist ≠ once-for-all by morphology alone;
    - non-indicative tense/aspect requires mood/context sensitivity;
-   - Hebrew Perfect is not mechanically English past tense;
-   - Hebrew stem labels, especially Piel, are not fixed lexical meanings.
-5. Exported `research.method.verbal-morphology-boundary`.
-6. Unit 5 — lexicon use and semantic range: PASS.
-   - licensed BDAG/HALOT-class access remains unavailable and is explicitly not fabricated;
+   - Hebrew Perfect ≠ automatic English past;
+   - Piel/stem label ≠ fixed lexical meaning.
+5. Exported `research.method.verbal-morphology-boundary`; bridge regression 03 PASS.
+6. Unit 5 — lexicon use/semantic range: PASS.
+   - licensed BDAG/HALOT-class access remains unavailable and was not fabricated;
    - method training used inspectable Abbott-Smith, BDB/Open Scriptures HebrewLexicon, and STEPBible provenance;
-   - rejected gloss = meaning, Strong-number = proof, lexicon-possibility = verse-actuality, and illegitimate totality transfer.
-7. Curriculum sequence was refined to insert verbal-system foundations before lexicon consolidation because direct schema/grammar study revealed it as a prerequisite.
+   - gloss = meaning, Strong-number = proof, lexicon-possibility = verse-actuality, and totality transfer rejected.
+7. Unit 6 — context/discourse/corpus comparison: PASS.
+   - context selects local sense from lexical possibilities;
+   - corpus frequency is evidence, not a verdict;
+   - concordance lists generate/test hypotheses rather than define words;
+   - genuine ambiguity must be context-activated rather than invented from all possible senses.
+8. Curriculum sequence remains autonomously refined where prerequisites are discovered; no human approval boundary has been crossed.
 
 ## Current next action
 
-`BIBLICAL_LANGUAGES_I_UNIT_06_CONTEXT_DISCOURSE_AND_CORPUS_COMPARISON`
+`BIBLICAL_LANGUAGES_I_UNIT_07_WORD_STUDY_FALLACIES_AND_FALSIFICATION`
 
-Unit 6 should test how immediate syntax/discourse and corpus comparison constrain lexical possibilities, with explicit protection against frequency fallacies, decontextualized concordance reasoning, and illegitimate totality transfer. Continue without human confirmation if adequate inspectable sources/examples are available.
+Unit 7 should formalize adversarial falsification tests for etymology/root fallacy, identity/totality transfer, cognate misuse, English-word similarity, frequency shortcuts, and theological loading. After passing, proceed toward Hebrew/Greek practica rather than stopping for confirmation.
