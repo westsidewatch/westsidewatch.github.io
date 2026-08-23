@@ -6,10 +6,11 @@ let applying=false;
 function chapterRef(){
   const q=$('#search-input')?.value?.trim();
   if(!q)return null;
+  const parsed=window.DORE_SCRIPTURE_INPUT_LITERACY?.parseQuery?.(q);
+  if(Array.isArray(parsed)&&parsed.length===1&&parsed[0]?.kind==='chapter')return parsed[0];
   const refs=window.DoreReferenceGrammar?.parseAll?.(q)||[];
-  if(refs.length!==1)return null;
-  const ref=refs[0];
-  return ref.start==null?ref:null;
+  if(refs.length!==1||refs[0].start!=null)return null;
+  return refs[0];
 }
 function enforce(){
   if(applying)return;
@@ -19,8 +20,7 @@ function enforce(){
   if(cards.length<2)return;
   const rows=cards.map(card=>{
     const label=card.querySelector('header strong')?.textContent?.trim()||'';
-    const m=label.match(/(\d+)\s*$/);
-    const verse=m?m[1]:'';
+    const verse=(label.match(/:(\d+)\s*$/)||label.match(/(\d+)\s*$/)||[])[1]||'';
     const zh=card.querySelector('p[lang="zh-Hant"]')?.textContent?.trim()||'';
     const en=card.querySelector('p.english')?.textContent?.trim()||'';
     return{verse,zh,en};
