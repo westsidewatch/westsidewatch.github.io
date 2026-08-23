@@ -21,30 +21,14 @@
       const style=document.createElement('style');style.id='dore-search-meta-style';style.textContent=`
         .dore-search-meta{width:min(68vw,1080px);margin:3.7vw auto 0;text-align:center;position:relative;z-index:4}
         .dore-search-meta .examples{margin:0;font-size:clamp(.7rem,.74vw,.82rem);line-height:2}
-        .dore-search-meta #search-status{margin:.45vw 0 0;font-size:clamp(.62rem,.65vw,.74rem);opacity:.58}
+        .dore-search-meta #search-status{display:none!important}
         .cap span{white-space:nowrap}
-        @media(max-width:820px){.dore-search-meta{width:calc(100% - 24px);margin-top:28px}.dore-search-meta #search-status{margin-top:6px}.cap span{white-space:normal}}
+        @media(max-width:820px){.dore-search-meta{width:calc(100% - 24px);margin-top:28px}.cap span{white-space:normal}}
       `;document.head.appendChild(style)
     }
   };
 
-  let scriptureIndexReady=false;
-  const reconcileSearchStatus=()=>{
-    const status=document.getElementById('search-status');
-    if(!status||!scriptureIndexReady)return;
-    const text=status.textContent||'';
-    if(/搜索索引載入失敗|搜索索引加载失败|search index.*failed/i.test(text)){
-      status.textContent='Doré Scripture index 已就緒';
-    }
-  };
-  const watchSearchStatus=()=>{
-    const status=document.getElementById('search-status');
-    if(!status)return;
-    new MutationObserver(reconcileSearchStatus).observe(status,{childList:true,characterData:true,subtree:true});
-    reconcileSearchStatus();
-  };
-
-  const boot=()=>{unlockSearch();placeSearchMeta();watchSearchStatus()};
+  const boot=()=>{unlockSearch();placeSearchMeta()};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 
   const parserRuntime=document.createElement('script');
@@ -53,8 +37,6 @@
     const inputLiteracyRuntime=document.createElement('script');
     inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823c';
     inputLiteracyRuntime.onload=()=>{
-      scriptureIndexReady=true;
-      reconcileSearchStatus();
       const chapterReadingRuntime=document.createElement('script');
       chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823b';
       document.head.appendChild(chapterReadingRuntime)
