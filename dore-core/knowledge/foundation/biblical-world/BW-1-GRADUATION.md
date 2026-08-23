@@ -1,0 +1,67 @@
+# Doré Biblical World — BW-1 Graduation
+
+Status: **COMPLETE — PASS**
+Completed: 2026-08-22
+Section: **BW-1 Entity identity and aliases**
+Major milestone: **NO** — `BIBLICAL_WORLD_COMPLETE` remains reserved for BW-1 through BW-6 plus the canon-spanning blind exam.
+
+## What graduated
+
+Doré now has an evidence-bearing entity layer rather than a proper-name string list.
+
+The graduated route is:
+
+`mention/question → scope (ONE chapter or global canon) → exact entity/alias candidates → type separation → context ranking → canonical attestations → ambiguity/aggregation → bounded result`
+
+Capabilities included in the gate:
+
+- full-source entity ingestion from pinned STEPBible TIPNR;
+- stable individualised identities and canonical attestations;
+- person/place type separation;
+- equal-looking names remain distinct unless evidence resolves them;
+- cross-language source aliases;
+- conservative Chinese translation aliases derived from CUV + TIPNR canonical co-attestation;
+- ONE chapter scope may rank an entity without erasing global candidates;
+- canon-wide same-name aggregation;
+- natural-language entity-count intent such as `聖經有幾位馬利亞？`;
+- browser Doré Search connection to the entity corpus;
+- exact entity routing prevents substring identity pollution such as `馬利亞` being treated as `撒馬利亞`.
+
+## Real-corpus gate evidence
+
+The end-to-end report `reports/DORÉ-BW1-ENTITY-GRADUATION.json` records PASS with:
+
+- 4,301 derived entities;
+- 3,592 conservative Chinese aligned aliases;
+- Mary person resolution PASS;
+- Samaria place resolution PASS;
+- Mary/Samaria identity separation PASS;
+- person-only count aggregation PASS;
+- natural-language count intent PASS;
+- unseen count-intent transfer PASS;
+- public entity runtime connection PASS.
+
+The browser corpus is persisted as `static/dore/entity-index.json`; raw TIPNR is not redistributed.
+
+## Evidence boundary
+
+A Chinese aligned alias is a routing aid produced from repeated canonical co-attestation. It is not independent proof that two identities are identical. Source identity and canonical attestations remain primary.
+
+A canon-wide count is a count of source-individualised identity candidates. If later research/tradition disputes whether candidates should be merged, Doré must expose that dispute rather than silently force one number.
+
+ONE editorial material may provide passage scope and user-intent stimuli, but is not automatically identity evidence.
+
+## Live work tests
+
+Primary known live checks:
+
+- `馬利亞` — entity route must not be polluted by `撒馬利亞`.
+- `聖經有幾位馬利亞？` — must trigger canon-wide person aggregation, not raw substring search.
+
+These examples are diagnostic stimuli, not hard-coded answer keys. Transfer behavior is required for other names.
+
+## Next education section
+
+Proceed to **BW-2 Geography**, carrying the same dual-learning rule:
+
+**Knowledge + Reflex**, with Doré Search and ONE continuing as work/learning nodes.
