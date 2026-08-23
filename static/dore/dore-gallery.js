@@ -1,5 +1,12 @@
 (()=>{
   'use strict';
+  // BW-1 entity intelligence is a separate runtime so it can evolve without
+  // coupling the Scripture reader/search implementation to Biblical World.
+  const entityRuntime=document.createElement('script');
+  entityRuntime.src='/dore/dore-entity-search.js?v=bw1-20260822';
+  entityRuntime.defer=true;
+  document.head.appendChild(entityRuntime);
+
   const R=window.ONE_DORE_COVER_REGISTRY;
   if(!R?.files)return;
   const front=document.getElementById('dore-plate-a');
