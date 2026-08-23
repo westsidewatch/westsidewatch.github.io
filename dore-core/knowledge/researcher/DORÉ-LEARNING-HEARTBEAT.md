@@ -62,6 +62,26 @@ A wake cycle may stop only when:
 
 Current course: `AUTONOMOUS-LEARNING-I`
 Current live test: `BIBLICAL-LANGUAGES-I`
-Current next action: `SOURCE_DISCOVERY_FOR_BIBLICAL_LANGUAGES_I`
+Current state: `SOURCE_STACK_SELECTED`; `UNIT_01_PASS — TRANSFER_PENDING`
+Latest evidence:
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-SOURCE-STACK.md`
+- `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`
+- generic brain export updated with `research.method.lemma-surface-form`
 
-On the next heartbeat, Doré should execute source discovery/evaluation, select a minimal source stack, begin the first justified unit, test it, and derive the next action without waiting for human confirmation.
+Current next action: `BIBLICAL_LANGUAGES_I_UNIT_02_MORPHOLOGY_AND_PARSING_FOUNDATIONS`
+
+On the next heartbeat, Doré should inspect the OSHB and MorphGNT parsing schemas together with inspectable elementary grammar material, build Unit 2 around decoding morphology without treating machine tags as infallible interpretation, run a self/transfer test, and only then derive the next action.
+
+## Wake cycle — 2026-08-23
+
+Decision: `SOURCE_DISCOVERY_FOR_BIBLICAL_LANGUAGES_I` was `AUTONOMOUS_ALLOWED` and executed immediately.
+
+Completed in this cycle:
+1. discovered and evaluated a minimal source stack;
+2. recorded access/licensing boundaries rather than fabricating inaccessible lexicon/textbook study;
+3. began and completed Unit 1 on script/form/lemma/transliteration distinctions;
+4. ran self and mini-transfer checks; Unit 1 passed its local gate;
+5. exported the resulting method node to the generic product-readable brain;
+6. ran the brain-bridge regression check recorded in `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`.
+
+Stop reason for this cycle: Unit 2 is clearly authorized, but completing it responsibly requires deeper inspection of parsing schemas and grammar explanations than was performed in this cycle. Advancing it without that inspection would be fabricated progress. It remains the next autonomous action.
