@@ -1,16 +1,5 @@
 (()=>{
   'use strict';
-  // Visible deployment probe. Remove after Pages propagation is confirmed.
-  const deployProbe=()=>{
-    if(document.getElementById('dore-deploy-probe'))return;
-    const el=document.createElement('div');
-    el.id='dore-deploy-probe';
-    el.textContent='build: chapter-reading-v5';
-    Object.assign(el.style,{position:'fixed',right:'10px',bottom:'10px',zIndex:'99999',padding:'5px 8px',background:'rgba(255,253,246,.92)',border:'1px solid rgba(140,104,24,.45)',color:'#8c6818',font:'12px monospace',borderRadius:'4px'});
-    document.body.appendChild(el);
-  };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',deployProbe,{once:true});
-  else deployProbe();
 
   const unlockSearch=()=>{
     const input=document.getElementById('search-input');
@@ -18,22 +7,50 @@
     if(input)input.disabled=false;
     if(button)button.disabled=false;
   };
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',unlockSearch,{once:true});
-  else unlockSearch();
+
+  const placeSearchMeta=()=>{
+    const shell=document.querySelector('.search-shell');
+    const examples=shell?.querySelector('.examples');
+    const status=shell?.querySelector('#search-status');
+    if(!shell||(!examples&&!status))return;
+    let meta=document.querySelector('.dore-search-meta');
+    if(!meta){
+      meta=document.createElement('div');
+      meta.className='dore-search-meta';
+      shell.insertAdjacentElement('afterend',meta);
+    }
+    if(examples)meta.appendChild(examples);
+    if(status)meta.appendChild(status);
+    if(!document.getElementById('dore-search-meta-style')){
+      const style=document.createElement('style');
+      style.id='dore-search-meta-style';
+      style.textContent=`
+        .dore-search-meta{width:min(68vw,1080px);margin:3.7vw auto 0;text-align:center;position:relative;z-index:4}
+        .dore-search-meta .examples{margin:0;font-size:clamp(.7rem,.74vw,.82rem);line-height:2}
+        .dore-search-meta #search-status{margin:.45vw 0 0;font-size:clamp(.62rem,.65vw,.74rem);opacity:.58}
+        @media(max-width:820px){.dore-search-meta{width:calc(100% - 24px);margin-top:28px}.dore-search-meta #search-status{margin-top:6px}}
+      `;
+      document.head.appendChild(style);
+    }
+  };
+
+  const boot=()=>{unlockSearch();placeSearchMeta();};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});
+  else boot();
 
   const parserRuntime=document.createElement('script');
   parserRuntime.src='/dore/dore-scripture-reference-parser.js?v=ssl1-20260823a';
   parserRuntime.onload=()=>{
     const inputLiteracyRuntime=document.createElement('script');
     inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823c';
+    inputLiteracyRuntime.onload=()=>{
+      const chapterReadingRuntime=document.createElement('script');
+      chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823b';
+      document.head.appendChild(chapterReadingRuntime);
+    };
     document.head.appendChild(inputLiteracyRuntime);
   };
   document.head.appendChild(parserRuntime);
-
-  const chapterReadingRuntime=document.createElement('script');
-  chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823a';
-  chapterReadingRuntime.defer=true;
-  document.head.appendChild(chapterReadingRuntime);
 
   const entityRuntime=document.createElement('script');
   entityRuntime.src='/dore/dore-entity-search.js?v=bw1-20260822b';
