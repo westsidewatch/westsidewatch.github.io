@@ -1,5 +1,15 @@
 (()=>{
   'use strict';
+  // Keep the Search UI usable even while capability runtimes are loading.
+  const unlockSearch=()=>{
+    const input=document.getElementById('search-input');
+    const button=document.getElementById('search-button');
+    if(input)input.disabled=false;
+    if(button)button.disabled=false;
+  };
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',unlockSearch,{once:true});
+  else unlockSearch();
+
   // BW-1 entity intelligence is a separate runtime so it can evolve without
   // coupling the Scripture reader/search implementation to Biblical World.
   const entityRuntime=document.createElement('script');
