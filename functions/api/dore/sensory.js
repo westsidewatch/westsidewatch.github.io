@@ -34,7 +34,7 @@ export async function onRequestPost({request,env}){
       return json({ok:true,signal_id:existing.id,state:existing.state,heard_count:Number(existing.heard_count||1)+1,deduplicated:true,schema_reconciled:true});
     }
     stage='insert';
-    await env.DORE_SENSORY.prepare(`INSERT INTO sensory_signals (id,fingerprint,query,state,heard_count,first_heard_at,last_heard_at,updated_at) VALUES (?1,?2,?3,'QUEUED',1,?4,?4,?4)`).bind(id,fp,query,now).run();
+    await env.DORE_SENSORY.prepare(`INSERT INTO sensory_signals (id,fingerprint,query,normalized_query,state,heard_count,first_heard_at,last_heard_at,updated_at) VALUES (?1,?2,?3,?3,'QUEUED',1,?4,?4,?4)`).bind(id,fp,query,now).run();
     return json({ok:true,signal_id:id,state:'QUEUED',heard_count:1,deduplicated:false,schema_reconciled:true},201);
   }catch(error){
     return json({ok:false,error:'sensory_post_failed',stage,detail:String(error?.message||error),schema},500);
