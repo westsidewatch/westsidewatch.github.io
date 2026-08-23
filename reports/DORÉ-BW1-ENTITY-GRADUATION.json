@@ -1,5 +1,5 @@
 {
-  "status": "FAIL",
+  "status": "PASS",
   "stage": "BW-1 Entity identity and aliases",
   "checks": {
     "schema": true,
@@ -10,9 +10,12 @@
     "mary_does_not_equal_samaria": true,
     "translated_name_expands_to_source_identity_cluster": true,
     "no_place_in_mary_person_count": true,
+    "no_fragmentary_mary_aliases": true,
+    "complete_name_preferred_when_available": true,
     "natural_language_count_intent": true,
     "count_intent_transfer": true,
-    "public_runtime_connected": false,
+    "public_runtime_connected": true,
+    "scripture_search_preserved": true,
     "public_loader_connected": true
   },
   "counts": {
@@ -22,6 +25,7 @@
   "diagnostics": {
     "mary_direct_alias_candidates": 2,
     "mary_source_name_cluster": 6,
-    "samaria_candidates": 1
+    "samaria_candidates": 1,
+    "fragment_aliases_found": []
   }
 }
