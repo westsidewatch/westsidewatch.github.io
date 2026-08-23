@@ -46,34 +46,51 @@
   if(!front||!back)return;
   const ids=Array.from({length:241},(_,i)=>i+1).filter(id=>R.files[id]);
   if(!ids.length)return;
-  const SCAN_MS=15000,FADE_MS=900;
+  const SCAN_MS=15000;
   let pos=0,active=front,inactive=back,timer=0,generation=0;
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   const srcFor=id=>`https://commons.wikimedia.org/wiki/Special:Redirect/file/${encodeURIComponent(R.files[id])}?width=1600`;
   const titleFor=id=>R.titles?.[id]||String(R.files[id]).replace(/^\d+[A-Z]?\.?/,'').replace(/\.(?:jpg|jpeg|png|gif)$/i,'');
   const preload=id=>{const img=new Image();img.src=srcFor(id)};
   const showCredit=id=>{if(credit)credit.textContent=`Doré ${String(id).padStart(3,'0')} · ${titleFor(id)}`};
+
   const resetPlate=img=>{
     img.classList.remove('is-active');
-    img.style.transition='opacity .9s ease, transform 15s linear';
-    img.style.objectPosition='center center';
-    img.style.transform='scale(1.12) translateY(-3.8%)';
+    img.style.transition='none';
+    img.style.objectPosition='center top';
+    img.style.transformOrigin='center top';
+    img.style.transform='translateY(0) scale(1.10)';
+    void img.offsetHeight;
   };
+
   const beginScan=img=>{
     img.classList.add('is-active');
-    if(reduced){img.style.transform='scale(1.04) translateY(0)';return}
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{img.style.transform='scale(1.12) translateY(3.8%)'}));
+    if(reduced){img.style.transition='opacity .35s ease';img.style.transform='translateY(0) scale(1.04)';return}
+    img.style.transition='opacity .9s ease, transform 15s linear';
+    void img.offsetHeight;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      img.style.transform='translateY(-9%) scale(1.10)';
+    }));
   };
+
   const loadPlate=(img,id,token,done)=>{
     resetPlate(img);
     img.alt=`Gustave Doré — ${titleFor(id)}`;
     img.dataset.doreId=String(id).padStart(3,'0');
-    const ready=()=>{if(token!==generation)return;img.onload=null;img.onerror=null;done()};
+    let fired=false;
+    const ready=()=>{
+      if(fired||token!==generation)return;
+      fired=true;
+      img.onload=null;img.onerror=null;
+      resetPlate(img);
+      requestAnimationFrame(()=>done());
+    };
     img.onload=ready;
-    img.onerror=()=>{if(token!==generation)return;img.onload=null;img.onerror=null;setTimeout(done,250)};
+    img.onerror=()=>{if(token!==generation)return;img.onload=null;img.onerror=null;setTimeout(ready,250)};
     img.src=srcFor(id);
     if(img.complete&&img.naturalWidth)queueMicrotask(ready);
   };
+
   const scheduleNext=()=>{clearTimeout(timer);timer=setTimeout(advance,SCAN_MS)};
   const advance=()=>{
     const token=++generation;
@@ -85,9 +102,10 @@
       [active,inactive]=[inactive,active];
       showCredit(id);
       preload(next);
-      scheduleNext();
+      if(!reduced)scheduleNext();
     });
   };
+
   const firstToken=++generation;
   loadPlate(active,ids[0],firstToken,()=>{
     beginScan(active);
