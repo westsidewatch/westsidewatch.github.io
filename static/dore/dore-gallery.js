@@ -10,6 +10,13 @@
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',unlockSearch,{once:true});
   else unlockSearch();
 
+  // Scripture Search Input Literacy is a learnable, maintainable input corpus.
+  // It handles ordinary real-world Bible-reference notation before higher reasoning.
+  const inputLiteracyRuntime=document.createElement('script');
+  inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823a';
+  inputLiteracyRuntime.defer=true;
+  document.head.appendChild(inputLiteracyRuntime);
+
   // BW-1 entity intelligence is a separate runtime so it can evolve without
   // coupling the Scripture reader/search implementation to Biblical World.
   const entityRuntime=document.createElement('script');
