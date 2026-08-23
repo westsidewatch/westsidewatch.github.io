@@ -41,16 +41,25 @@ def main():
     checks['mary_does_not_equal_samaria']=bool(mary) and bool(samaria) and not ({e['id'] for e in mary_cluster}&{e['id'] for e in samaria})
     checks['translated_name_expands_to_source_identity_cluster']=bool(mary_cluster) and len(mary_cluster)>=len(mary)
     checks['no_place_in_mary_person_count']=all(e.get('t')=='person' for e in mary_cluster)
+    # Known fragment-shaped aliases exposed by the live page must never survive
+    # regeneration. This is a class gate for internal fragments, not a display patch.
+    all_zh=[a.get('v','') for e in d['entities'] for a in e.get('a',[]) if a.get('l')=='zh-Hant']
+    bad={'拉的馬利亞','抹大拉的馬','大拉的馬利'}
+    checks['no_fragmentary_mary_aliases']=not (bad & set(all_zh))
+    # If the complete Magdalene expression is derivable, prefer it over fragments.
+    magdalene_full='抹大拉的馬利亞' in set(all_zh)
+    checks['complete_name_preferred_when_available']=magdalene_full or not any('抹大拉' in x and x!='抹大拉的馬利亞' for x in all_zh)
     q=parse_entity_question('聖經有幾位馬利亞？')
     checks['natural_language_count_intent']=bool(q and q.mention=='馬利亞' and q.kind=='entity_count')
     q2=parse_entity_question('圣经中有多少个犹大?')
     checks['count_intent_transfer']=bool(q2 and q2.mention=='犹大')
     runtime=Path('static/dore/dore-entity-search.js').read_text(encoding='utf-8')
     gallery=Path('static/dore/dore-gallery.js').read_text(encoding='utf-8')
-    checks['public_runtime_connected']='entity-index.json' in runtime and 'parseCount' in runtime and 'countEntities' in runtime
+    checks['public_runtime_connected']='entity-index.json' in runtime and 'parseCount' in runtime and 'sourceNameCluster' in runtime
+    checks['scripture_search_preserved']='preventDefault' not in runtime and 'stopImmediatePropagation' not in runtime
     checks['public_loader_connected']='dore-entity-search.js' in gallery
     passed=all(checks.values())
-    report={'status':'PASS' if passed else 'FAIL','stage':'BW-1 Entity identity and aliases','checks':checks,'counts':d.get('counts',{}),'diagnostics':{'mary_direct_alias_candidates':len(mary),'mary_source_name_cluster':len(mary_cluster),'samaria_candidates':len(samaria)}}
+    report={'status':'PASS' if passed else 'FAIL','stage':'BW-1 Entity identity and aliases','checks':checks,'counts':d.get('counts',{}),'diagnostics':{'mary_direct_alias_candidates':len(mary),'mary_source_name_cluster':len(mary_cluster),'samaria_candidates':len(samaria),'fragment_aliases_found':sorted(bad & set(all_zh))}}
     REPORT.parent.mkdir(parents=True,exist_ok=True);REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2),encoding='utf-8')
     print(json.dumps(report,ensure_ascii=False,indent=2))
     if not passed:sys.exit(1)
