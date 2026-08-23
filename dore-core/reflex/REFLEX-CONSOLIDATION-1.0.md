@@ -1,7 +1,8 @@
 # Doré Reflex Consolidation 1.0
 
-Status: GATE RUNNING — PASS requires CI confirmation
+Status: **GRADUATED — PASS**
 Started: 2026-08-22
+Graduated: 2026-08-22
 
 ## Purpose
 
@@ -24,7 +25,7 @@ Human references, Chinese/English book names, abbreviations, Chinese chapter num
 Strict normalized exact matches suppress containment pollution; containment is secondary; bounded fuzzy retrieval is fallback only and remains candidate evidence. Canonical failure guarded: `馬利亞` must not be polluted by `撒馬利亞` when a strict match exists.
 
 ### RC3 — Original Language Reflex
-Translated phrase → canonical passage → Hebrew/Greek evidence → lemma/morphology. Verse-level co-attestation is explicitly prevented from becoming a word-level equivalence claim. Word-level upgrade requires explicit `translation_alignment` evidence. Transfer stimuli: `耶西的本`, `虛心`, `太初/起初` pattern.
+Translated phrase → canonical passage → Hebrew/Greek evidence → lemma/morphology. Verse-level co-attestation is explicitly prevented from becoming a word-level equivalence claim. Word-level upgrade requires explicit `translation_alignment` evidence. Transfer stimuli include `耶西的本`, `虛心/虚心`, and `太初/起初` patterns. Chinese simplified/traditional script variants are normalized as a transferable routing capability rather than phrase-specific aliases.
 
 ### RC4 — Cross-Witness Reflex
 Canonical passage → aligned witnesses → difference characterization. Missing witnesses are never synthesized and no witness is presumed the winner.
@@ -58,16 +59,30 @@ PASS conditions:
 
 No hard-coded answer to one user query is sufficient for graduation.
 
-## Current gate state
+## Graduation evidence
 
-- RC1: IMPLEMENTED + GATED
-- RC2: IMPLEMENTED + GATED
-- RC3: IMPLEMENTED + GATED; word-level claims require explicit alignment evidence
-- RC4: IMPLEMENTED + GATED
-- RC5: IMPLEMENTED + GATED
-- RC6: IMPLEMENTED + GATED
-- End-to-end workflow: INSTALLED
-- Final milestone: **NOT YET DECLARED PASS until the GitHub Actions run is observed green.**
+Observable PR gate: **#233**.
+
+- Run #5 exposed a CI-environment defect: pytest was not installed. The gate correctly failed before testing capability.
+- Run #6 installed pytest and exposed a real transfer defect: simplified `这` did not normalize to traditional `這`; result was **13 passed, 1 failed**.
+- The Chinese script-variant reflex was corrected at the class level, not with a verse-specific patch.
+- Run #7: **Doré Reflex Consolidation 1.0 — SUCCESS**.
+- Doré Foundation Tests run #87 on the same head: **SUCCESS**.
+
+The verified green head was `142f2426acf0bdee2bf34cb3addb1a6d5127ad97`, merged to main through PR #233 as `533801ada388029362e9ed21bc2cc6310c84ccbf`.
+
+## Final state
+
+- RC1: PASS
+- RC2: PASS
+- RC3: PASS at current evidence boundary; word-level equivalence still requires explicit alignment evidence
+- RC4: PASS
+- RC5: PASS
+- RC6: PASS
+- End-to-end graduation workflow: PASS
+- Foundation regression: PASS
+
+**Reflex Consolidation 1.0 is graduated.**
 
 ## Learning-loop consequence
 
