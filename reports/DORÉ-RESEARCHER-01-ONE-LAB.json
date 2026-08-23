@@ -1,0 +1,127 @@
+{
+  "exam": "RESEARCHER_01_ONE_LAB_FIRST_PASS",
+  "status": "PASS",
+  "milestone": "RESEARCHER_01_ONE_LAB_COMPLETE",
+  "summary": {
+    "passed": 22,
+    "failed": 0,
+    "total": 22
+  },
+  "checks": [
+    {
+      "name": "66-book-shell",
+      "pass": true,
+      "note": "ONE exposes the full canonical shell."
+    },
+    {
+      "name": "genesis-study-family",
+      "pass": true,
+      "note": "Genesis supplies chapter study material and registry."
+    },
+    {
+      "name": "matthew-study-family",
+      "pass": true,
+      "note": "Matthew supplies chapter studies with research prompts."
+    },
+    {
+      "name": "thessalonians-study-family",
+      "pass": true,
+      "note": "Thessalonians supplies epistolary/comparative study structure."
+    },
+    {
+      "name": "samuel-study-family",
+      "pass": true,
+      "note": "Samuel supplies geography/chronology study pressure."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-story",
+      "pass": true,
+      "note": "ONE exposes story for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-position",
+      "pass": true,
+      "note": "ONE exposes position for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-background",
+      "pass": true,
+      "note": "ONE exposes background for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-scout",
+      "pass": true,
+      "note": "ONE exposes scout for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-connections",
+      "pass": true,
+      "note": "ONE exposes connections for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "editorial-or-diagnostic-field-questions",
+      "pass": true,
+      "note": "ONE exposes questions for classification rather than automatic Core ingestion."
+    },
+    {
+      "name": "external-map-source-pointers",
+      "pass": true,
+      "note": "ONE contains external map source pointers that require source evaluation."
+    },
+    {
+      "name": "map-route-provenance-guard",
+      "pass": true,
+      "note": "ONE distinguishes source-map route legends from chapter story routes."
+    },
+    {
+      "name": "uncertainty-boundary-example",
+      "pass": true,
+      "note": "Genesis includes explicit examples of refusing unsupported geographic precision."
+    },
+    {
+      "name": "cross-book-comparison",
+      "pass": true,
+      "note": "ONE exposes comparative-reading structures across genres."
+    },
+    {
+      "name": "product-state-not-evidence",
+      "pass": true,
+      "note": "ONE contains local product state that the researcher must keep outside evidence."
+    },
+    {
+      "name": "blind-story_is_not_scripture_evidence",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    },
+    {
+      "name": "blind-question_is_not_answer",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    },
+    {
+      "name": "blind-external_link_requires_evaluation",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    },
+    {
+      "name": "blind-local_progress_is_not_research_evidence",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    },
+    {
+      "name": "blind-editorial_cross_reference_requires_classification",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    },
+    {
+      "name": "blind-unsupported_route_must_not_be_invented",
+      "pass": true,
+      "note": "Researcher 01 evidence-boundary invariant."
+    }
+  ],
+  "doctrine": {
+    "ONE_role": "internship_and_diagnostic_surface",
+    "ONE_editorial_prose": "not_core_evidence",
+    "research_reflex": "question -> evidence requirements -> source evaluation -> competing interpretation -> bounded conclusion"
+  }
+}
