@@ -19,39 +19,22 @@ A wake cycle stops only when all derivable autonomous work in the current eviden
 
 `BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`: `PASS / GRADUATED`.
 
-Units 1–11, Hebrew/Greek practica and integrated final exams passed. The following reusable method nodes are now `CONSOLIDATED`:
-- `research.method.lemma-surface-form`;
-- `research.method.morphology-syntax-boundary`;
-- `research.method.verbal-morphology-boundary`;
-- `research.method.original-language-evidence-ladder`.
+Units 1–11, Hebrew/Greek practica and integrated final exams passed. Reusable method nodes consolidated: `research.method.lemma-surface-form`, `research.method.morphology-syntax-boundary`, `research.method.verbal-morphology-boundary`, `research.method.original-language-evidence-ladder`.
 
-Claim-specific nodes remain independently bounded:
-- `research.ot.divine-spirit` — `CANDIDATE_FOR_EXAM`;
-- `research.job.satan-identity` — `WORKING`;
-- `research.nt.graphe-scripture-scope` — `CANDIDATE_FOR_EXAM`;
-- `research.matthew.2.23-nazarene` — `WORKING`.
+Claim-specific nodes remain independently bounded: `research.ot.divine-spirit` — `CANDIDATE_FOR_EXAM`; `research.job.satan-identity` — `WORKING`; `research.nt.graphe-scripture-scope` — `CANDIDATE_FOR_EXAM`; `research.matthew.2.23-nazarene` — `WORKING`.
 
-Brain bridge regressions 01–06 passed. Regression 06 also confirmed the current Search bridge uses a single sensory `remember(q)` request per input, resolving the earlier possible double-POST concern by code inspection.
+Brain bridge regressions 01–06 passed.
 
 ### Researcher 04 — Autonomous Learning I
 
-`RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`.
-State: `COMPLETE → RETENTION_WATCH`.
-
-Final exam: 12/12 PASS.
-
-The live proof was not merely building Biblical Languages I. After that course graduated, Doré independently compared remaining gaps, rejected narrower/weaker curriculum candidates, selected a new cross-task curriculum, evaluated its source stack and began its first units without human-supplied lesson structure.
-
-Records:
-- `RESEARCHER-04-AUTONOMOUS-LEARNING-I-FINAL-EXAM.md`;
-- `RESEARCHER-04-POST-COURSE-DIAGNOSIS.md`.
+`RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`. State: `COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
 
 ## Sensory-first status from this wake cycle
 
 Required first read: `dore-core/memory/sensory-active.json`.
 Result at wake start: file absent on `main`.
 
-Decision: this does **not** prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains a separate infrastructure dependency and the live sensory closed loop must not be declared complete until repository state is inspectable.
+Decision: absence does **not** prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains an infrastructure dependency; live sensory closure is not declared complete.
 
 This dependency did not block researcher education.
 
@@ -59,32 +42,27 @@ This dependency did not block researcher education.
 
 `RESEARCHER-05 — BIBLICAL-CONCEPT-DEVELOPMENT-I — Diachronic and Canonical Research Method`
 
-Selection reason: the same higher-order deficit recurs across at least three materially different open conclusions:
-1. Hebrew-Bible `שָׂטָן` → Second Temple evidence → NT `Σατανᾶς / διάβολος`;
-2. Hebrew-Bible divine Spirit → NT/canonical pneumatological synthesis;
-3. authoritative Jewish Scriptures → apostolic usage → later canon history.
-
-The missing faculty is historical/conceptual development across diverse corpora, not another vocabulary course.
-
 ### Completed Researcher 05 work
 
 - Source stack: PASS — minimum viable method foundation, with explicit access limits.
 - Unit 1 — Evidence stratification, dating, corpus boundaries: PASS.
-  - manuscript date ≠ composition date;
-  - Qumran findspot ≠ Yahad authorship;
-  - same vocabulary ≠ same conceptual stage.
 - Unit 2 — Continuity / development / discontinuity: PASS.
-  - added explicit `DEVELOPMENT_WITH_CONTINUITY` middle category;
-  - rejected both harmonizing identity and simplistic linear evolution/rupture.
 - Unit 3 — Second Temple source families / non-homogeneity: PASS.
-  - mapped Hebrew Bible, Enochic, Jubilees, DSS sectarian/non-sectarian, wisdom/deuterocanonical, Philo, Josephus, NT and post-70 evidence;
-  - no one family may stand for “Judaism.”
+- Unit 4 — Translation / language mediation: PASS, 4/4 examination gate.
+  - translation is evidence rather than a transparent lexical replacement;
+  - lexical continuity and conceptual continuity are tracked separately;
+  - materially divergent LXX/MT wording requires a possible-Vorlage check before attributing translator interpretation;
+  - translation, transliteration, borrowing, paraphrase and omission are distinct mediation relations;
+  - a different lexeme can preserve conceptual continuity and the same lexeme can participate in conceptual development;
+  - “the LXX” cannot be treated as one translator/technique across all books.
 
+Unit record: `RESEARCHER-05-UNIT-04-TRANSLATION-LANGUAGE-MEDIATION.md`.
 Course charter: `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-I.md`.
-Source stack: `RESEARCHER-05-BIBLICAL-CONCEPT-DEVELOPMENT-SOURCE-STACK.md`.
+
+No product-readable claim node was promoted by Unit 4 alone; therefore no new bridge regression was required in this wake cycle.
 
 ## Current next action
 
-`BIBLICAL_CONCEPT_DEVELOPMENT_I_UNIT_04_TRANSLATION_LANGUAGE_MEDIATION`.
+`UNIT_05_PRACTICUM_A_SATAN_ADVERSARY_SOURCE_SUFFICIENCY_CHECK`.
 
-Unit 4 must examine Hebrew/Aramaic/Greek mediation, including Septuagint translation, transliteration/name development, conceptual continuity under lexical change and conceptual change under lexical continuity. It remains a method unit. The Satan/adversary practicum begins only after Unit 4 and after targeted primary/specialist sources are sufficient for accountable Second Temple → NT comparison.
+Before changing `research.job.satan-identity`, assemble targeted primary and specialist evidence adequate to compare Hebrew-Bible adversary language, diverse Second Temple trajectories, and NT Satan/Devil usage. If that evidence layer is not sufficient, persist the source dependency rather than fabricate a practicum result.
