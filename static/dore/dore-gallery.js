@@ -21,6 +21,13 @@
   };
   document.head.appendChild(parserRuntime);
 
+  // Final presentation guard for whole-chapter searches. This runs after the
+  // main Search renderer and collapses verse cards into one continuous chapter.
+  const chapterReadingRuntime=document.createElement('script');
+  chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823a';
+  chapterReadingRuntime.defer=true;
+  document.head.appendChild(chapterReadingRuntime);
+
   // BW-1 entity intelligence is a separate runtime so it can evolve without
   // coupling the Scripture reader/search implementation to Biblical World.
   const entityRuntime=document.createElement('script');
