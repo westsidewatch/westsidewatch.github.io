@@ -21,6 +21,9 @@ BOOK_ALIASES = {
     "ISA":"ISA","ISAIAH":"ISA","以賽亞書":"ISA","以赛亚书":"ISA","賽":"ISA","赛":"ISA",
 }
 ZH_DIGITS={"零":0,"〇":0,"一":1,"二":2,"三":3,"四":4,"五":5,"六":6,"七":7,"八":8,"九":9,"兩":2,"两":2}
+ZH_VARIANTS=str.maketrans({
+    '虚':'虛','来':'來','语':'語','书':'書','马':'馬','约':'約','传':'傳','罗':'羅','后':'後','数':'數','创':'創','启':'啟','亚':'亞','结':'結','历':'歷','腊':'臘','国':'國','爱':'愛','灵':'靈','体':'體','万':'萬','与':'與','为':'為','义':'義','圣':'聖','经':'經','节':'節','处':'處','发':'發','从':'從','条':'條','树':'樹','见':'見','听':'聽','说':'說','问':'問','应':'應','难':'難','亲':'親','风':'風','声':'聲','头':'頭','会':'會','开':'開','长':'長','无':'無','时':'時','实':'實','进':'進','当':'當','归':'歸','众':'眾','还':'還','显':'顯','灭':'滅','将':'將','谁':'誰','让':'讓','觉':'覺','称':'稱','复':'復','获':'獲','读':'讀','写':'寫','译':'譯','词':'詞','证':'證','据':'據','类':'類','别':'別','简':'簡'
+})
 
 def _zh_number(s:str)->int|None:
     s=s.strip()
@@ -78,7 +81,6 @@ class BibleSearchIndex:
         if mode=="reference":
             nq=self._normalize_ref(q); nr=self._normalize_ref(ref)
             if not nq:return 0.0
-            # Chapter stimuli deliberately match all verses in the chapter.
             return 1.0 if (nq==nr or nr.startswith(nq+".")) else 0.0
         if mode=="lemma":return 1.0 if analyses.get("lemma","").casefold()==q.casefold() else 0.0
         if mode=="morphology":return 1.0 if q.casefold() in analyses.get("morphology","").casefold() else 0.0
@@ -94,13 +96,14 @@ class BibleSearchIndex:
         return ratio if ratio>=0.55 else 0.0
 
     @staticmethod
-    def _norm(s:str)->str:return re.sub(r"[\s.,;:!?，。；：！？「」『』()（）\-–—]+","",s).casefold()
+    def _norm(s:str)->str:
+        folded=s.translate(ZH_VARIANTS)
+        return re.sub(r"[\s.,;:!?，。；：！？「」『』()（）\-–—]+","",folded).casefold()
 
     @staticmethod
     def _normalize_ref(s:str)->str:
         raw=s.strip().upper().replace("：",":")
         raw=re.sub(r"^BIBLE\.REF\.","",raw)
-        # Chinese natural-language chapter/verse form.
         m=re.match(r"^(.+?)第?([零〇一二三四五六七八九十百兩两\d]+)章(?:第?([零〇一二三四五六七八九十百兩两\d]+)節?)?$",raw,re.I)
         if m:
             book=BOOK_ALIASES.get(m.group(1).replace(" ","")); chapter=_zh_number(m.group(2)); verse=_zh_number(m.group(3)) if m.group(3) else None
