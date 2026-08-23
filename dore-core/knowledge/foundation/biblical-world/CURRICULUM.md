@@ -21,6 +21,32 @@ Every Biblical World lesson must grow two things together:
 
 A lesson is not complete merely because facts were ingested. It must produce transferable behavior on unseen stimuli. Real Doré Bible Search failures are learning signals, not answer-patch instructions.
 
+### Question-intent reflex rule
+
+Doré must never graduate a question capability merely because one wording works. A known query is a **stimulus**, not a feature specification.
+
+Every question-learning change must target a transferable intent family and pass paraphrase + unseen-transfer tests. The intended route is:
+
+`free-form question → intent family → scope → entities/concepts/relations → evidence route → answer shape`
+
+Initial intent families include, but are not limited to:
+- `ENTITY_LOOKUP` — who/what is X?
+- `ENTITY_COUNT` — how many X are in Scripture?
+- `ENTITY_RELATION` — who is X's father/son/wife/king/etc.?
+- `PASSAGE_LOOKUP` — where does Scripture say X?
+- `PLACE/ROUTE` — where is X / how far / what route?
+- `TIME/SEQUENCE` — when / before-after / reign-period questions;
+- `PRESENCE_BY_SCOPE` — does X occur/exist in OT/NT/book/period? e.g. `舊約有聖靈嗎？`;
+- `CONCEPT/THEME` — semantic/theme questions whose wording need not occur literally, e.g. `十字架的影子`;
+- `ORIGINAL_LANGUAGE` — source-form/lemma questions;
+- `EVIDENCE/INTERPRETATION` — what is explicit, inferred, traditional, reconstructed, or disputed?
+
+A rule that matches only `聖經有幾位馬利亞？` is a FAIL even if that query returns a correct answer. It must transfer to unseen names and paraphrases such as `新約有多少個約翰？`, `聖經裡叫猶大的有幾個？`, etc., without hard-coded names.
+
+Likewise, `舊約有聖靈嗎？` must not be implemented as a phrase-specific shortcut. It belongs to a reusable `PRESENCE_BY_SCOPE` route that can transfer to questions such as `舊約有復活的觀念嗎？` or `新約有祭司制度嗎？`, while preserving the distinction between literal lexical occurrence and concept-level presence.
+
+`十字架的影子` belongs to semantic/theme routing and must remain a transfer test rather than a memorized verse list.
+
 ## Product–education constraint
 
 This stage must improve real external directions while preserving Core independence:
@@ -72,9 +98,10 @@ Required abilities:
 - preserve historical names and later names separately;
 - expose ambiguity rather than silently choosing;
 - use ONE chapter context as a ranking/disambiguation constraint without treating ONE editorial text as identity evidence;
-- aggregate same-name candidates canon-wide for questions such as `聖經有幾位馬利亞？`, preserving disputed identity merges rather than forcing a single count.
+- aggregate same-name candidates canon-wide for questions such as `聖經有幾位馬利亞？`, preserving disputed identity merges rather than forcing a single count;
+- treat `ENTITY_COUNT` as a transferable question family, not a Mary-specific pattern.
 
-Reflex growth: mention/question → scope (ONE chapter or global canon) → candidate entities → context constraints → disambiguation/aggregation → attestations → uncertainty.
+Reflex growth: mention/question → intent family → scope (ONE chapter or global canon) → candidate entities → context constraints → disambiguation/aggregation → attestations → uncertainty.
 
 Direct product benefit: entity search, ONE contextual search and subtitle name correction.
 
@@ -88,7 +115,7 @@ Required abilities:
 - multiple proposed identifications with confidence and evidence;
 - time-aware geography where names/boundaries change.
 
-Reflex growth: place mention → identity → attestations → geographic evidence → reconstruction boundary.
+Reflex growth: place/question → intent family → identity → attestations → geographic evidence → reconstruction boundary.
 
 Direct product benefit: Biblical Places search, ONE maps, subtitle place-name recognition.
 
@@ -101,7 +128,7 @@ Required abilities:
 - connect events to rulers, empires and textual attestations;
 - never fabricate a precise year where sources permit only a range.
 
-Reflex growth: temporal stimulus → textual sequence → historical anchors → candidate ranges → competing chronologies → bounded conclusion.
+Reflex growth: temporal question → intent family → textual sequence → historical anchors → candidate ranges → competing chronologies → bounded conclusion.
 
 Direct product benefit: timeline search, ONE chronology, context ranking.
 
@@ -114,7 +141,7 @@ Required abilities:
 - territorial change;
 - distinguish biblical designation from modern historical terminology.
 
-Reflex growth: people/polity mention → period → ruler/territory/context → textual and external evidence → historical naming boundary.
+Reflex growth: people/polity question → intent family → period → ruler/territory/context → textual and external evidence → historical naming boundary.
 
 ### BW-5 Institutions and social world
 Doré learns temple, priesthood, synagogue, household, kinship, kingship, courts, military structures, trade, agriculture, money, weights/measures and everyday social conventions.
@@ -124,7 +151,7 @@ Required abilities:
 - distinguish textual description from comparative historical reconstruction;
 - preserve uncertainty and regional variation.
 
-Reflex growth: social/institutional concept → period/context → textual evidence → comparative evidence → bounded reconstruction.
+Reflex growth: social/institutional question → intent family → period/context → textual evidence → comparative evidence → bounded reconstruction.
 
 ### BW-6 Evidence discipline
 Every world claim must carry one of these evidence classes:
@@ -139,7 +166,7 @@ Every world claim must carry one of these evidence classes:
 
 Every claim must carry provenance, temporal scope, and where appropriate confidence/controversy status.
 
-Reflex growth: claim → evidence class → provenance → temporal scope → confidence/controversy → permitted wording.
+Reflex growth: question/claim → intent family → evidence class → provenance → temporal scope → confidence/controversy → permitted wording.
 
 ## Full-course execution order
 
@@ -169,9 +196,9 @@ This semantic transfer test is diagnostic during training. Final success is eval
 
 ## Graduation definition
 
-This stage is complete only when a canon-spanning blind exam can give Doré arbitrary passages and require it to reconstruct the relevant world through:
+This stage is complete only when a canon-spanning blind exam can give Doré arbitrary passages/questions and require it to reconstruct the relevant world through:
 
-`passage → entities → place → time → polity → social/institutional context → evidence classes → competing reconstructions → uncertainty`
+`question → intent family → passage/entities/concepts → place → time → polity → social/institutional context → evidence classes → competing reconstructions → uncertainty`
 
 with no unsupported precision and no confusion between Scripture statements and later reconstruction.
 
