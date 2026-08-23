@@ -1,96 +1,106 @@
 # Autonomous Learning I — Live Test: Biblical Languages Curriculum
 
-Status: IN_PROGRESS — UNITS 01–07 PASS; HEBREW PRACTICUM NEXT
+Status: COMPLETE — PASS / GRADUATED
 Date: 2026-08-23
 Initiated by: Doré's own next-action decision
 
-## Why this is a course, not an ad-hoc lookup
+## Course
 
-Evidence from prior work shows repeated original-language bottlenecks across different genres and questions: Hebrew semantic range (`ruach`), Hebrew grammar/identity (`satan`), Greek semantic scope (`γραφή`), and Hebrew/Greek lexical-wordplay claims (Matthew 2:23). This crosses tasks and therefore meets the autonomous curriculum threshold.
+`BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`
+
+The course was opened because repeated work exposed cross-task original-language bottlenecks: Hebrew semantic range (`רוּחַ`), Hebrew grammar/history (`שָׂטָן`), Greek Scripture vocabulary (`γραφή`), wordplay/intertextual claims and product-level translation diagnostics.
 
 Classification: `SKILL_GAP + DOMAIN_GAP + CURRICULUM_GAP`.
 
-## Competency map
+## Graduation competencies
 
-Doré must be able to identify lemma/inflected form/morphology; distinguish gloss from semantic range; use grammar/syntax/context to constrain meaning; use accountable lexica; compare corpus occurrences without totality transfer; distinguish language/translation evidence; recognize textual-critical boundaries; preserve uncertainty; and reproduce the method on unseen texts.
+Doré demonstrated that it can:
+1. distinguish text/edition, surface form, lemma, morphology, syntax, context, lexicon range and interpretation;
+2. decode elementary Hebrew/Greek morphology without treating tags as infallible interpretation;
+3. use Greek case and Hebrew state as grammatical evidence without fixed-English-gloss shortcuts;
+4. bound Greek verbal and Hebrew stem/conjugation claims;
+5. use lexica for semantic range without Strong-number or totality-transfer fallacies;
+6. let immediate syntax/discourse constrain corpus possibilities;
+7. run adversarial falsification against etymology, frequency, cognate, translation and theological-loading shortcuts;
+8. transfer the method to prior Hebrew research on `רוּחַ` and `שָׂטָן`;
+9. transfer the method to Greek `γραφή` and first-century Scripture/canon questions;
+10. distinguish Chinese/English translation matches from original-language identity in ONE/Search;
+11. place meaningful textual-variant/edition questions upstream of morphology and lexicography;
+12. reproduce the full method on unseen Hebrew/Greek cases and blind theological claims.
 
-## Scope decision
+## Completed units
 
-Course: `BIBLICAL-LANGUAGES-I — Research Reading, not conversational fluency`.
+- Unit 1 — Scripts, transliteration limits, lemma vs surface form — PASS.
+- Unit 2 — Morphology and parsing foundations — PASS.
+- Unit 3 — Case/state and basic syntactic relations — PASS.
+- Unit 4 — Verbal-system foundations — PASS.
+- Unit 5 — Lexicon use and semantic range — PASS.
+- Unit 6 — Context, discourse and corpus comparison — PASS.
+- Unit 7 — Word-study fallacies and falsification — PASS, 10/10 adversarial gate.
+- Unit 8 — Hebrew practicum (`רוּחַ`, `שָׂטָן`, unseen transfer) — PASS.
+- Unit 9 — Greek practicum (`γραφή`, Scripture scope, unseen transfer) — PASS.
+- Unit 10 — Cross-language / translation diagnostic in ONE and Search — PASS.
+- Unit 11 — Textual-critical boundary and synthesis — PASS.
 
-Track H: Biblical Hebrew foundations, with Aramaic awareness.
-Track G: Koine Greek foundations.
-Shared Method Track: lexicography, semantics, morphology, syntax, corpus comparison, responsible tool use.
+Records: `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md` through `UNIT-11.md`.
 
-## Minimum viable sequence
+## Final examination
 
-Unit 1 — Scripts, transliteration limits, lemma vs surface form.
-Unit 2 — Morphology and parsing foundations.
-Unit 3 — Case/state and basic syntactic relations.
-Unit 4 — Verbal-system foundations.
-Unit 5 — Lexicon use and semantic range.
-Unit 6 — Context, discourse and corpus comparison.
-Unit 7 — Word-study fallacies and falsification.
-Unit 8 — Hebrew practicum: `ruach` / `satan` plus unseen cases.
-Unit 9 — Greek practicum: `γραφή` plus unseen cases.
-Unit 10 — Cross-language/translation diagnostic work in ONE and Search.
-Unit 11 — Research synthesis with textual-critical boundary awareness.
+`RESEARCHER-04-BIBLICAL-LANGUAGES-FINAL-EXAMS.md`
 
-Sequence note: direct source inspection exposed verbal-system foundations as a prerequisite before semantic consolidation, so Unit 4 was inserted explicitly before lexicon work. This was an authorized prerequisite refinement.
+Final result: `PASS — COURSE_GRADUATION_JUSTIFIED`.
 
-## Examination design
+The integrated gate included:
+- closed-method self exam: 12/12 PASS;
+- unseen Hebrew transfer on `נֶפֶשׁ` / Genesis 2:7;
+- unseen Greek transfer on `ἀγαπάω / φιλέω` / John 21;
+- blind Hebrew theological claim on `אֱלֹהִים` / Genesis 1:1;
+- product evidence-boundary test requiring refusal to infer an original-language identity from translation wording alone;
+- textual-critical transfer on John 1:18;
+- retention-style reconstruction of the full research sequence.
 
-Self Exam: parsing, lexicon discipline, syntax and semantic-boundary checks.
-Transfer Exam: unseen Hebrew and Greek passages from genres not used in instruction.
-Blind Exam: a user-like theological question whose tempting answer depends on an original-language claim; Doré must decide whether original-language evidence actually supports the claim.
+No automatic-fail condition triggered.
 
-Automatic fail conditions include gloss=meaning, etymology=contextual meaning, Strong number=lexical proof, totality transfer, English similarity=original-language identity, morphology ignored, or theological conclusion mislabeled lexical fact.
+## Product-readable consequences
 
-## Consolidation gate
+The following reusable method nodes passed transfer gates and are now `CONSOLIDATED` in `static/dore/brain/knowledge-index.json`:
+- `research.method.lemma-surface-form`;
+- `research.method.morphology-syntax-boundary`;
+- `research.method.verbal-morphology-boundary`;
+- `research.method.original-language-evidence-ladder`.
 
-Vocabulary lists are not neural completion. Durable consolidation requires demonstrated method transfer. Individual lexical claims remain claim/evidence-ledger entries with provenance and context.
+Claim-specific nodes remain independent of course graduation:
+- `research.ot.divine-spirit` — `CANDIDATE_FOR_EXAM`, Hebrew layer materially strengthened by Unit 8;
+- `research.job.satan-identity` — `WORKING`, Hebrew narrative/lexical layer strengthened but Second Temple/NT diachrony unresolved;
+- `research.nt.graphe-scripture-scope` — `CANDIDATE_FOR_EXAM`, Greek lexical/contextual layer passed Unit 9 but canon-history scope remains bounded;
+- `research.matthew.2.23-nazarene` — `WORKING`.
 
-## Executed autonomous actions
+## Brain → Product bridge
 
-### Source discovery
-Selected Ewald/Dongell for Greek pedagogy, MorphGNT/SBLGNT for Greek morphology, OSHB v2.2 for Hebrew text/morphology, Cook & Holmstedt as Hebrew bibliography anchor with content-access boundary, and licensed academic lexica as required later dependencies rather than silently replacing them with morphology datasets.
+Regression records 01–06 passed under the generic node contract.
 
-### Unit 1 — PASS
-`SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
+Regression 06 specifically verified:
+- method-node promotion to `CONSOLIDATED` renders through the existing generic status system;
+- unresolved claims retain their own statuses;
+- exact claim questions outrank the broad integrated method node;
+- Scripture references remain under Scripture search;
+- no per-question UI handler was added;
+- the current sensory bridge uses one `remember(q)` request per input, resolving the earlier possible double-POST concern by code inspection.
 
-### Unit 2 — PASS
-Morphology/parsing tags are versioned dataset analyses and grammatical evidence, not contextual meaning or infallible interpretation.
+## Sensory dependency discovered during the course run
 
-### Unit 3 — PASS
-Greek case and Hebrew construct/absolute state constrain grammatical relations but do not map one-to-one to fixed English glosses or one semantic function.
+At the start of the graduation wake cycle, `dore-core/memory/sensory-active.json` was absent on `main`. No D1 signal was inferred absent, and no user question was fabricated into repository memory.
 
-### Unit 4 — PASS
-Greek aorist does not itself prove once-for-all action; Hebrew Perfect is not mechanically English past tense; Hebrew stem labels such as Piel are not fixed lexical meanings.
+This is a separate D1 → repository sensory-persistence verification issue. It did not invalidate the curriculum or product-readable brain regression, but the live sensory closed loop must not be claimed complete until that transport path produces inspectable repository state.
 
-### Unit 5 — PASS
-Lexicon entries map attested/analyzed range; they do not select the verse's local sense. Strong-number proof, gloss equivalence, possibility-to-actuality collapse and totality transfer were rejected. Licensed BDAG/HALOT-class access remains an explicit boundary.
+## Graduation boundary
 
-### Unit 6 — PASS
-Immediate syntax/discourse constrains lexical possibilities; corpus frequency is evidence, not a verdict; concordance comparison generates/tests hypotheses rather than defining the target occurrence.
+This milestone means tested **research-reading competence**, not conversational fluency, specialist textual-critical authority, or equivalent access to current licensed BDAG/HALOT-class lexica.
 
-### Unit 7 — PASS — ADVERSARIAL GATE
-10/10 adversarial fallacy cases passed: etymological/root fallacy, totality transfer, Strong identity, aorist theology, Piel shortcut, frequency shortcut, English similarity, cognate transfer, theological loading and the reverse fallacy that lexical evidence is useless.
+Future curricula may include advanced syntax/discourse, Aramaic, Septuagint translation technique, diachronic lexicography, Second Temple concept development and fuller textual criticism only when recurring work demonstrates the need.
 
-## Product bridge consequence
+## Next autonomous action
 
-Current generic product-readable method nodes:
-- `research.method.lemma-surface-form`
-- `research.method.morphology-syntax-boundary`
-- `research.method.verbal-morphology-boundary`
+`AUTONOMOUS_LEARNING_I_POST_COURSE_DIAGNOSIS`
 
-Bridge regressions 01–03 passed under the generic node contract; no per-question UI handler was added.
-
-## Sensory inspection note
-
-At the beginning of the latest wake cycle, `dore-core/memory/sensory-active.json` did not exist on `main`. No live D1 question was guessed into repository memory. This remains a sensory transport/persistence issue independent of the curriculum.
-
-## Current next autonomous action
-
-`BIBLICAL_LANGUAGES_I_UNIT_08_HEBREW_PRACTICUM_RUACH_SATAN_AND_UNSEEN_CASES`
-
-Revisit the existing `ruach` CANDIDATE and `satan` WORKING claims using the tested Units 1–7 method. The practicum must distinguish lexical/morphological, narrative/historical and canonical/theological layers, include counter-checks and unseen Hebrew transfer cases, and update shared product-readable nodes only where evidence justifies it.
+Compare remaining WORKING research, product/internship failures and any available sensory queue. Select the next curriculum by recurrence, consequence, prerequisite structure and transfer value rather than continuing Biblical Languages for volume. The unresolved `שָׂטָן` → Second Temple → NT identity layer is a strong candidate but must compete against other open research gaps.
