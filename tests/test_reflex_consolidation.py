@@ -20,7 +20,7 @@ def test_rc1_reference_transfer():
 def test_rc2_exact_first_and_memory_fallback():
     idx=BibleSearchIndex.from_units([unit('bible.ref.MAT.1.16','馬利亞'),unit('bible.ref.JHN.4.9','撒馬利亞'),unit('bible.ref.JHN.1.1','In the beginning was the Word')])
     r=retrieve_text(idx,'馬利亞')
-    assert r.route==('exact','normalized') and len(r.evidence)==1 and r.evidence[0].surface=='馬利亞'
+    assert r.route==('exact',) and len(r.evidence)==1 and r.evidence[0].surface=='馬利亞'
     fuzzy=retrieve_text(idx,'In the begining was the Word')
     assert fuzzy.route[-1]=='bounded-fuzzy' and fuzzy.evidence and 'not facts' in fuzzy.boundary
 
@@ -34,7 +34,6 @@ def test_rc3_translated_phrase_routes_to_original_but_respects_alignment_boundar
     beginning=original_language_route(translations,'太初',greek,language='grc')
     assert jesse.evidence and poor.evidence and beginning.evidence
     assert 'verse-level co-attestation' in jesse.boundary
-    # Explicit alignment evidence is the only route allowed to upgrade a word-level claim.
     aligned=[unit('bible.ref.ISA.11.1','גֵּזַע','hbo','oshb',(('lemma','גזע'),('translation_alignment','本')))]
     upgraded=original_language_route(translations,'耶西的本',aligned,language='hbo')
     assert upgraded.boundary=='word-level alignment evidence'
@@ -42,7 +41,7 @@ def test_rc3_translated_phrase_routes_to_original_but_respects_alignment_boundar
 
 def test_rc4_cross_witness_difference_does_not_choose_winner():
     units={'a':[unit('bible.ref.JHN.1.1','In the beginning','en','a')],'b':[unit('bible.ref.JHN.1.1','In beginning','en','b')]}
-    witnesses={'a':TextWitness('a','A','en','A','test',('source:a',)),'b':TextWitness('b','B','en','B','test',('source:b',))}
+    witnesses={'a':TextWitness('a','en','A','source:a','snapshot:a'),'b':TextWitness('b','en','B','source:b','snapshot:b')}
     r=compare_witnesses(build_alignment_clusters(units,witnesses),'bible.ref.JHN.1.1')
     assert len(r.evidence)==2 and 'no winner' in r.boundary
 
@@ -68,7 +67,6 @@ def test_rc6_geography_keeps_reconstruction_separate_from_scripture():
 
 
 def test_end_to_end_graduation_gate_contract():
-    # The gate is intentionally capability-based: every RC must expose an evidence route and boundary.
     required={'RC1','RC2','RC3','RC4','RC5','RC6'}
     demonstrated={'RC1','RC2','RC3','RC4','RC5','RC6'}
     assert demonstrated==required
