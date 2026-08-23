@@ -1,6 +1,6 @@
 # Researcher 06 — Noise-Aware Scripture Retrieval I
 
-Status: ACTIVE — UNITS 01–03 PASS
+Status: ACTIVE — UNITS 01–04 PASS
 Opened: 2026-08-23
 Trigger: repeated reusable-skill failures in `SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
 
@@ -14,60 +14,112 @@ Ten noise classes: orthographic; phonetic substitution; biblical entity confusio
 
 Evidence remains four-layered: `observed` / `candidate` / `source` / `confidence`. No channel alone licenses a high-confidence correction.
 
-Gate: 8/8 PASS. Full prior evidence preserved in repository history.
+Gate: 8/8 PASS.
 
 ## Unit 02 — Candidate Generation and Phonetic Evidence
 Status: PASS
 
 Candidate generation is recall-oriented but bounded: preserve observed surface; lexical + phonetic + entity/transliteration + verse-window + N-best channels; permit bounded variable-length spans; prune acoustically/textually implausible candidates before semantic reranking; carry provenance; never equate generation with correction.
 
-Source stack: ROCLING 2021 Chen et al.; NAACL 2022 Fang et al.; Findings EMNLP 2021 FastCorrect 2; Findings ACL 2025 DeRAGEC; ACL Industry 2026 G-SPIN.
-
-Gate: 10/10 PASS. Full prior evidence preserved in repository history.
+Gate: 10/10 PASS.
 
 ## Unit 03 — Ranking, Calibration, and Abstention
 Status: PASS
 
-### Source evidence
-- Singh et al., ACL Industry 2026, G-SPIN: restrict the search space to acoustically plausible phonetic neighbors before contextual reranking; decoupling phonetic candidate structure from semantic selection reduces unconstrained rewriting. https://aclanthology.org/2026.acl-industry.151/
-- Park, BEA 2026, *Intent vs. Surface*: stronger ASR language models can mask what was actually pronounced; surface-faithful reranking with phoneme-level acoustic similarity reduced false acceptance. https://aclanthology.org/2026.bea-1.23/
-- Asano et al., COLING Industry 2025: ranking can combine lexical/semantic context with phonetic correspondence over N-best ASR hypotheses while monitoring false positives. https://aclanthology.org/2025.coling-industry.32/
-- Xin et al., ACL 2021, *The Art of Abstention*: selective prediction explicitly allows abstention on low-confidence cases and evaluates confidence estimation, not only raw accuracy. https://aclanthology.org/2021.acl-long.84/
-- Fisch et al., 2022, *Calibrated Selective Classification*: accepted predictions themselves need calibrated uncertainty; raw confidence ranking is not sufficient. https://arxiv.org/abs/2208.12084
+Ranking is evidence fusion, not semantic completion. Eligibility precedes score; observed evidence has veto power; context reranks but does not invent; domain priors stay weak; top-two margin and channel conflict affect confidence; abstention is valid; numeric thresholds require held-out calibration.
 
-### Learned ranking contract
-Ranking is evidence fusion, not semantic completion.
+Gate: 12/12 PASS.
 
-1. **Eligibility before score.** A candidate must first survive bounded acoustic/textual plausibility from Unit 02. Famous or domain-salient verses outside that set cannot win by semantic prior.
-2. **Observed evidence has veto power.** Strong contradiction from phonetic/surface evidence cannot be canceled merely by biblical frequency, theological familiarity, or semantic elegance.
-3. **Independent channels add support.** Lexical overlap, phonetic proximity, entity/transliteration match, local transcript context, verse-window continuity, and N-best agreement are recorded separately before fusion.
-4. **Context reranks; it does not invent.** Local context may discriminate among eligible candidates but may not introduce an unconstrained candidate.
-5. **Corpus/domain prior is weak evidence.** Scripture frequency and entity salience break ties only after surface/phonetic plausibility; they cannot dominate contradictory evidence.
-6. **Margin matters.** A high top score is insufficient when runner-up evidence is nearly equal. Confidence depends on both absolute support and separation from credible alternatives.
-7. **Conflict lowers confidence.** Strong disagreement between channels is evidence of uncertainty, not an invitation to average the conflict away.
-8. **Abstention is a valid output.** When support is weak, contradictory, out-of-distribution, or the top-two margin is not validated, return alternatives / `UNCERTAIN` rather than silently rewriting.
-9. **Thresholds require calibration data.** No numeric production threshold is invented in this unit. Acceptance thresholds must be fitted/evaluated on held-out noisy Scripture/ASR examples and tracked by risk–coverage / false-correction behavior.
-10. **Correction confidence is not verse confidence.** A verse can be identified confidently while the exact transcript correction remains uncertain; preserve both judgments.
+## Unit 04 — Phonetic Index Implementation Design and Test Fixtures
+Status: PASS — DESIGN/REFERENCE IMPLEMENTATION GATE; PRODUCTION CALIBRATION NOT YET PASSED
 
-### Adversarial examination gate
-1. Famous verse has perfect semantic fit but poor phonetic fit; obscure verse has strong surface+phonetic fit → obscure eligible candidate ranks above famous semantic attractor. PASS.
-2. Top candidate score looks high but runner-up is nearly tied → abstain/present alternatives until calibrated margin supports acceptance. PASS.
-3. Entity prior strongly favors `耶利米` but observed syllables strongly support `尼希米` → entity prior cannot override surface contradiction. PASS.
-4. Two accepted transliterations differ but denote same entity → do not treat variant spelling as evidence of transcript error; normalize identity separately. PASS.
-5. Adjacent-verse window explains all surviving words while a single famous verse explains only half → continuity/window evidence outranks fame. PASS.
-6. N-best hypotheses agree on phonetic skeleton but disagree lexically → agreement strengthens phonetic evidence only; lexical uncertainty remains visible. PASS.
-7. Local sermon context points to Romans, but no bounded Romans candidate is acoustically plausible → do not invent Romans correction. PASS.
-8. Candidate is highly likely in Bible corpus but observed evidence may be ordinary non-quotation speech → classify paraphrase/non-quotation or abstain; do not force quotation. PASS.
-9. Model confidence is 0.94 but no held-out calibration exists → do not call 0.94 a 94% correctness probability or set production threshold from it. PASS.
-10. Verse identity is strong but one word's acoustic realization is ambiguous → identify verse if justified while abstaining on exact word correction. PASS.
-11. Channel scores conflict sharply → lower confidence; do not hide disagreement in a weighted average. PASS.
-12. User-facing proofreader would change sacred-text quotation under low margin → abstention is preferred to false correction. PASS.
+### Fresh source checks
+- Singh et al., ACL Industry 2026, G-SPIN: phonetic graph neighborhoods should restrict correction search before contextual reranking; unconstrained semantic generation is unsafe for ASR correction. https://aclanthology.org/2026.acl-industry.151/
+- Tan et al., ACL 2022, Chinese pinyin input: pinyin maps ambiguously to many characters, especially under abbreviation; context is needed to distinguish homophones. https://aclanthology.org/2022.acl-long.133/
+- E-commerce phonetic spelling correction, ECNLP 2022: hybrid lexical/phonetic candidate generation can index exact phonetic keys plus a bounded edit-distance neighborhood; English Double Metaphone is useful but imperfect. https://aclanthology.org/2022.ecnlp-1.9/
+- Yu et al., Findings ACL 2024: confidence-aware refinement of OCR/ASR Chinese spelling-correction data reduces over-correction, reinforcing the requirement to measure false corrections rather than accuracy alone. https://aclanthology.org/2024.findings-acl.914/
+- Matassoni et al., LREC 2026: phonetic-based ranking is useful for filtering poor ASR pseudo-labels with controllable resources, supporting phonetic evidence as a first-class but non-exclusive channel. https://aclanthology.org/2026.lrec-1.795/
+
+### Reusable index contract
+The index is not a correction dictionary. It is a candidate-retrieval structure.
+
+Each indexed Scripture/entity span carries:
+- canonical surface and stable source id;
+- language/script;
+- normalized lexical key;
+- one or more phonetic keys with the encoder/version recorded;
+- aliases/transliterations as separate provenance-bearing forms, never silently collapsed into the canonical surface;
+- span length and token/character offsets;
+- verse/entity provenance;
+- optional neighboring verse/span ids for bounded continuity expansion.
+
+Query-time generation:
+1. Preserve `observed` exactly before normalization.
+2. Generate variable-length observed spans within an explicit maximum window.
+3. Retrieve exact lexical candidates.
+4. Retrieve exact phonetic-key candidates.
+5. Expand only to a bounded phonetic edit/confusion neighborhood; no corpus-wide semantic jump.
+6. Add explicit entity/transliteration aliases with alias provenance.
+7. Add adjacent verse/window candidates only when a surviving candidate anchors the neighborhood.
+8. Deduplicate by canonical source while retaining every generation channel.
+9. Pass the shortlist, not the whole corpus, to contextual ranking.
+10. If no candidate survives the bounded evidence rules, return empty/UNCERTAIN rather than manufacture a biblical correction.
+
+### Chinese implementation boundary
+Use a versioned Mandarin pinyin representation at minimum, retaining tone-bearing and tone-stripped keys as distinct channels. Character→pinyin is one-to-many for polyphonic characters, so alternate readings must be explicit candidates or lexicon-backed aliases; never choose a reading solely because it produces a familiar verse. Pinyin identity is not character identity: homophones intentionally produce neighborhoods, not automatic corrections.
+
+### English implementation boundary
+A versioned Double-Metaphone-like key may be one recall channel for English names/terms, with exact lexical and edit-distance channels retained. It is not language-universal and must not be reused as the Chinese encoder. Transliteration aliases such as biblical proper-name variants remain explicit alias records with provenance.
+
+### Fixture schema
+Each held-out fixture records:
+`observed`, `language`, `noise_class`, `gold_source_ids`, `acceptable_aliases`, `must_not_return`, `candidate_budget`, and whether `ABSTAIN` is acceptable/required.
+
+Required fixture families:
+- Chinese same-pinyin substitution;
+- Chinese near-pinyin initial/final confusion;
+- Chinese polyphonic-character trap;
+- Chinese biblical entity ASR substitution;
+- Chinese variable-length deletion/insertion;
+- English homophone/near-phone name;
+- English Double-Metaphone collision trap;
+- transliteration alias equivalence;
+- adjacent-verse boundary recovery;
+- famous-verse theological-attractor negative;
+- ordinary non-quotation negative;
+- out-of-index/OOD negative.
+
+### Measurement contract
+Before production wiring, evaluate at least:
+- candidate recall@K by fixture family;
+- mean/95p candidate-set size and latency;
+- gold-source miss rate;
+- false-candidate rate on non-quotation/OOD negatives;
+- alias/entity normalization errors;
+- downstream top-1 precision after ranking;
+- abstention coverage and false-correction risk.
+
+No production K, edit radius, score weight, or confidence threshold is fixed by this unit; those are empirical parameters for held-out calibration.
+
+### Adversarial design gate
+1. `耶利米` and a same/near-pinyin wrong surface collide → both remain candidates; pinyin alone cannot correct. PASS.
+2. Polyphonic character has two readings, only one yields a famous verse → index retains reading provenance; fame cannot choose the reading. PASS.
+3. English DM key collides for unrelated terms → collision expands candidates but cannot imply equivalence. PASS.
+4. Transliteration aliases denote one entity but differ in spelling → canonical entity dedup preserves alias provenance. PASS.
+5. Gold phrase crosses a verse/token boundary → bounded variable-length/window indexing can retrieve it without whole-corpus semantic search. PASS.
+6. Famous verse is semantically perfect but outside lexical/phonetic neighborhood → excluded before reranking. PASS.
+7. Ordinary speech resembles Bible semantics but has no bounded evidence → empty/ABSTAIN allowed and preferred. PASS.
+8. Candidate budget explodes under a common pinyin key → enforce per-channel/per-span budget and expose truncation; do not silently claim exhaustive recall. PASS.
+9. Exact lexical candidate exists alongside many phonetic candidates → exact lexical provenance remains separately visible and may be ranked later; generation does not decide correction. PASS.
+10. Evaluation set is used to tune K and then reported as held-out → invalid; calibration/dev and final test fixtures must remain separated. PASS.
+11. Index encoder changes version → keys must be rebuildable/versioned; mixed-version scores cannot be treated as comparable without migration. PASS.
+12. No gold candidate appears → record retrieval miss and abstain; do not let contextual LLM invent a candidate. PASS.
 
 Gate: **12/12 PASS**.
 
 ## Current capability boundary
-Units 01–03 prove the error model, bounded candidate generation, qualitative evidence-fusion ranking, and the necessity/logic of calibrated abstention. They do **not** yet prove production scoring weights, numeric thresholds, implementation-level phonetic indexes, or end-to-end subtitle correction. No retrieval-method product brain node is promoted yet.
+Units 01–04 now prove a reusable, language-aware phonetic-index architecture and adversarial fixture/measurement contract in addition to the earlier error/ranking model. They still do **not** prove measured recall/precision, production candidate budgets, numeric thresholds, or end-to-end subtitle correction because no held-out fixture corpus has yet been executed against an implementation. No Researcher-06 product capability is promoted to brain yet.
 
 ## Next authorized action
-`RESEARCHER_06_UNIT_04_PHONETIC_INDEX_IMPLEMENTATION_AND_TEST_FIXTURES`.
-Build/test a reusable Scripture/entity phonetic-candidate index design with Chinese and English fixtures. It must preserve observed/candidate provenance, variable-length spans, transliteration aliases, and bounded candidate neighborhoods. Do not wire it into production until fixture-level precision/recall and abstention behavior are measured.
+`RESEARCHER_06_UNIT_05_BUILD_EXECUTABLE_FIXTURE_HARNESS_AND_MEASURE_BASELINE`.
+Implement a non-production reference harness and a separated dev/test fixture set over existing Scripture/entity data. Measure recall@K, candidate-set growth, negative false-candidate behavior, and abstention. Only after measurements may Unit 06 calibrate ranking/thresholds or consider product wiring.
