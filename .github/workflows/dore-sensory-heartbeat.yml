@@ -33,13 +33,14 @@ jobs:
           DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
           DORE_SENSORY_BASE_URL: https://westsidewatch-github-io.pages.dev
         run: node scripts/dore/sensory-heartbeat.mjs
-      - name: Persist sensory work queue
+      - name: Persist sensory state and diagnostics
+        if: always()
         run: |
           git config user.name 'Doré Heartbeat'
           git config user.email 'westsidewatchca@gmail.com'
-          git add dore-core/memory/sensory-active.json
+          git add dore-core/memory/sensory-active.json dore-core/memory/sensory-heartbeat-diagnostic.json 2>/dev/null || true
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'chore(dore): persist sensory heartbeat state [skip ci]'
+          git commit -m 'chore(dore): persist sensory heartbeat evidence [skip ci]'
           for attempt in 1 2 3 4; do
             if git push origin HEAD:main; then exit 0; fi
             git pull --rebase origin main
