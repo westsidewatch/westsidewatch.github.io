@@ -28,13 +28,14 @@ Decision: absence does not prove D1 has no live signal. No user question was fab
 - Units 1–4: PASS.
 - Unit 05 Practicum A: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection.
 - Unit 06 Practicum B: PASS, 5/5 adversarial examination. Hebrew-Bible baseline + diverse Second Temple witnesses were stratified against Synoptic/Lukan, Pauline and Johannine Spirit discourse. The passed model preserves explicit prophetic/anointing/promise continuity while recognizing corpus-specific development in communal, eschatological, Christological and enduring-presence configurations. Flattening, rupture, retrojection and single-line Second Temple evolution models all failed.
+- Unit 07 Canon / Scripture Concept Development: PASS, 5/5 adversarial examination. The passed model distinguishes authoritative text, inherited collection/category, explicit corpus boundary, and later canonical closure. Sirach's Law/Prophets/other-books witness and Josephus's twenty-two-book corpus were stratified rather than flattened; NT γραφή/γραφαί usage is treated as evidence of scriptural authority whose exact corpus boundaries require separate contextual evidence. Uniform-linear and retrojected-closed-canon models failed.
 
 ### Current wake
 - Required sensory-first check repeated: `sensory-active.json` remains absent on `main`; no live user question was invented.
-- Unit 06 NT corpus stratification and adversarial gate executed and persisted as `RESEARCHER-05-UNIT-06-NT-CORPUS-STRATIFICATION-EXAM.md`.
-- Product promotion remains deliberately deferred: the known connector path still does not guarantee a safe full replacement of the large `static/dore/brain/knowledge-index.json`. No truncated brain write and no false Brain → Product regression were claimed.
+- Unit 07 evidence and adversarial gate persisted as `RESEARCHER-05-UNIT-07-CANON-SCRIPTURE-STRATIFICATION-EXAM.md`.
+- Product promotion remains deliberately deferred: Unit 07 is a reusable method competence and does not by itself justify a new user-facing knowledge node. Known connector limitations also still make large brain-index replacement unsafe; no truncated brain write and no false Brain → Product regression were claimed.
 
 ## Current next action
-`UNIT_07_CANON_SCRIPTURE_CONCEPT_DEVELOPMENT`.
+`UNIT_08_INTEGRATED_FINAL_TRANSFER`.
 
-Open the next course unit by stratifying Hebrew-Bible internal authority/scripture language, Second Temple collection/interpretation evidence, and New Testament γραφή/γραφαι usage before later closed-canon claims. Preserve the distinction between authoritative writings, collection processes and later canonical closure. Separately, when a safe full-file edit path is available, apply bounded Unit 05/06 product-node updates and run Brain → Product regression.
+Run an independent transfer practicum on a concept not used as the primary Unit 05–07 target. Require Hebrew-Bible baseline, Second Temple evidence where relevant, multiple NT corpora, counter-evidence, provenance, uncertainty and explicit anti-retrojection controls. If the transfer gate passes, evaluate Researcher 05 for graduation and consolidate only genuinely reusable method nodes. Separately, when a safe full-file edit path is available, apply bounded Unit 05/06 product-node updates and run Brain → Product regression.
