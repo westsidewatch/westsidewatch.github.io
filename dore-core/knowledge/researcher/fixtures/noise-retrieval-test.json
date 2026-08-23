@@ -1,0 +1,11 @@
+{
+  "split": "test",
+  "sealed": true,
+  "policy": "Held-out final evaluation only. Do not tune candidate budgets, phonetic radius, ranking weights, or confidence thresholds on this file.",
+  "fixtures": [
+    {"id":"test-exact-zh","observed":"我終日等候你","language":"zh","noise_class":"partial_scripture","gold_text":"我終日等候你","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"test-entity-zh","observed":"尼哥底母","language":"zh","noise_class":"biblical_entity","gold_entity":"尼哥底母","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"test-negative-zh","observed":"停車場入口今天改到北門","language":"zh","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"},
+    {"id":"test-negative-en","observed":"the package should arrive after lunch","language":"en","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"}
+  ]
+}
