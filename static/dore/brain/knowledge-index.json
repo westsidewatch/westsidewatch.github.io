@@ -86,6 +86,29 @@
         "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md"
       ],
       "next_research": ["Unit 2 morphology and parsing foundations", "full transfer/blind exam later in Biblical Languages I"]
+    },
+    {
+      "id": "research.method.morphology-syntax-boundary",
+      "type": "research_method_answer",
+      "status": "CANDIDATE_FOR_EXAM",
+      "confidence": "high-method-elementary-syntax-scope",
+      "questions": ["聖經原文 morphology 是什麼", "原文形態標籤可以直接告訴我意思嗎", "希臘文 case 是不是等於固定翻譯", "希伯來文 construct state 是不是就是所有格", "can morphology tags determine meaning", "does Greek case determine translation", "does Hebrew construct state mean possession"],
+      "concepts": ["morphology", "形態學", "parsing", "case", "nominative", "genitive", "dative", "accusative", "construct state", "absolute state", "syntax", "句法", "OSHB", "MorphGNT"],
+      "answer": {
+        "lead": "形態標籤、格和 Hebrew noun state 都是重要的文法證據，但不能直接等同上下文意義或固定英文翻譯。",
+        "body": [
+          "MorphGNT 與 OSHB 的 parsing code 必須按照各自的 schema／版本解碼；它們是資料集所提供的文法分析，不是不可錯的詮釋。",
+          "希臘文 nominative、genitive、dative、accusative 會限制可能的句法關係，但常見功能不能被改寫成『永遠只有一種功能』，也不能機械映射成固定的 of／to／for 或英文語序。",
+          "希伯來文 construct state 表示與後項形成文法鏈接，但可承載所有、材料、屬性、目的、施事／工具等多種關係；有些形式在 construct 與 absolute 中外觀相同，必須看句法上下文。",
+          "因此可靠的原文研究順序應保持：詞形 → lemma → morphology → syntax → discourse/context → lexicography/semantic judgment。"
+        ],
+        "boundary": "這是 Biblical Languages I Units 2–3 已通過本地自測與轉移測試的方法性結論；仍未完成整門課，也不授權僅憑 morphology 對具體爭議詞義作定案。"
+      },
+      "provenance": [
+        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md",
+        "dore-core/knowledge/researcher/RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md"
+      ],
+      "next_research": ["Unit 4 verbal system foundations", "full blind/retention exam later in Biblical Languages I"]
     }
   ]
 }
