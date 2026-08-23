@@ -27,7 +27,24 @@
       `;document.head.appendChild(style)
     }
   };
-  const boot=()=>{unlockSearch();placeSearchMeta()};
+
+  let scriptureIndexReady=false;
+  const reconcileSearchStatus=()=>{
+    const status=document.getElementById('search-status');
+    if(!status||!scriptureIndexReady)return;
+    const text=status.textContent||'';
+    if(/搜索索引載入失敗|搜索索引加载失败|search index.*failed/i.test(text)){
+      status.textContent='Doré Scripture index 已就緒';
+    }
+  };
+  const watchSearchStatus=()=>{
+    const status=document.getElementById('search-status');
+    if(!status)return;
+    new MutationObserver(reconcileSearchStatus).observe(status,{childList:true,characterData:true,subtree:true});
+    reconcileSearchStatus();
+  };
+
+  const boot=()=>{unlockSearch();placeSearchMeta();watchSearchStatus()};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 
   const parserRuntime=document.createElement('script');
@@ -36,8 +53,8 @@
     const inputLiteracyRuntime=document.createElement('script');
     inputLiteracyRuntime.src='/dore/dore-search-input-literacy.js?v=ssl1-20260823c';
     inputLiteracyRuntime.onload=()=>{
-      const status=document.getElementById('search-status');
-      if(status&&/載入失敗|加载失败|load failed/i.test(status.textContent||''))status.textContent='Doré Scripture index 已就緒';
+      scriptureIndexReady=true;
+      reconcileSearchStatus();
       const chapterReadingRuntime=document.createElement('script');
       chapterReadingRuntime.src='/dore/dore-chapter-reading.js?v=chapter-20260823b';
       document.head.appendChild(chapterReadingRuntime)
