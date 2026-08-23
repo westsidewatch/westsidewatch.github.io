@@ -10,6 +10,8 @@ on:
       - 'scripts/build_dore_browser_entity_index.py'
       - 'scripts/run_bw1_entity_graduation.py'
       - 'scripts/run_biblical_world_graduation.py'
+      - 'scripts/run_dore_search_self_exam.py'
+      - 'static/dore/dore-search.js'
       - 'static/dore/dore-entity-search.js'
       - 'static/dore/dore-gallery.js'
       - 'tests/test_biblical_world_*.py'
@@ -75,6 +77,8 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/run_biblical_world_graduation.py
+      - name: Public Doré Search self-examination
+        run: python scripts/run_dore_search_self_exam.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -84,13 +88,14 @@ jobs:
             reports/DORÉ-BW1-ENTITY-GRADUATION.json
             reports/DORÉ-BIBLICAL-GEOGRAPHY.json
             reports/DORÉ-BIBLICAL-WORLD-GRADUATION.json
+            reports/DORÉ-SEARCH-SELF-EXAM.json
             static/dore/entity-index.json
       - name: Persist educational checkpoint evidence and browser corpus
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json reports/DORÉ-BW1-ENTITY-GRADUATION.json reports/DORÉ-BIBLICAL-GEOGRAPHY.json reports/DORÉ-BIBLICAL-WORLD-GRADUATION.json static/dore/entity-index.json 2>/dev/null || true
+          git add reports/DORÉ-BIBLICAL-ENTITY-RECOGNITION.json reports/DORÉ-BW1-ENTITY-GRADUATION.json reports/DORÉ-BIBLICAL-GEOGRAPHY.json reports/DORÉ-BIBLICAL-WORLD-GRADUATION.json reports/DORÉ-SEARCH-SELF-EXAM.json static/dore/entity-index.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): persist Biblical World checkpoint evidence [skip ci]'
             for attempt in 1 2 3 4; do
