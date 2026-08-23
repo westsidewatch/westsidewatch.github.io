@@ -1,6 +1,7 @@
 {
   "capabilities": [
     "canonical_reference",
+    "chapter_reference",
     "cuv_webu_keyword",
     "fuzzy_recall_candidates",
     "original_surface",
@@ -13,9 +14,7 @@
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [
-    "join_entry"
-  ],
+  "failures": [],
   "function_url": "/dore/search/",
   "governance": "This is an external work-node acceptance, not an educational milestone.",
   "performance": {
@@ -24,7 +23,7 @@
     "original_index_loading": "lazy"
   },
   "schema": "dore.work-node.bible-search.v1",
-  "status": "NOT_READY",
-  "verdict": "FAIL",
+  "status": "AVAILABLE",
+  "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
 }
