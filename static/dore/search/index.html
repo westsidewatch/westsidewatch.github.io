@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#CEBD74">
+<title>DORÉ Bible Search · 聖經搜索</title>
+<meta name="description" content="Doré Bible Search — 經文、關鍵字、原文字詞與詞形搜索。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+TC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;color:#252525;font-family:"Noto Serif TC",serif;background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url("/background.jpg");background-size:cover;background-position:center;background-attachment:fixed}.page{min-height:100vh}.topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(18px,5vw,64px);border-bottom:1px solid rgba(55,45,20,.14)}.brand{text-decoration:none;color:#8c6818;font:500 1.8rem "Cormorant Garamond",serif;letter-spacing:.11em}.topnav{display:flex;gap:18px}.topnav a{text-decoration:none;color:#252525;font-size:.75rem;opacity:.72}.hero{max-width:1160px;margin:auto;padding:24px clamp(10px,3vw,32px) 58px}.art-stage{position:relative;height:min(48vw,500px);min-height:350px;overflow:hidden;border:1px solid rgba(80,64,26,.18);box-shadow:0 18px 55px rgba(65,45,8,.13);background:rgba(242,226,179,.34)}.dore-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(.8) contrast(.82) brightness(1.08);opacity:0;transform:scale(1.025);transition:opacity 2.1s ease,transform 12s ease}.dore-art.is-active{opacity:.65;transform:scale(1)}.art-stage:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(211,189,117,.2),rgba(232,214,160,.28) 45%,rgba(238,222,174,.94))}.hero-copy{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;text-align:center;padding:24px 18px 90px}.hero-title{margin:0;color:#966f17;font:500 clamp(3.6rem,8vw,7rem)/.85 "Cormorant Garamond",serif;letter-spacing:.05em}.hero-sub{margin:14px 0 18px;color:#765619;font:500 clamp(.9rem,1.7vw,1.25rem) "Cormorant Garamond",serif;letter-spacing:.28em}.verse{margin:0;max-width:780px;line-height:1.9;font-size:clamp(.9rem,1.4vw,1.08rem)}.verse cite{display:block;margin-top:6px;font-size:.76rem;font-style:normal}.search-shell{position:relative;z-index:5;width:min(900px,calc(100% - 30px));margin:-43px auto 0}.search-form{display:flex;min-height:86px;background:rgba(255,253,246,.96);border:1px solid rgba(116,85,20,.42);border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(74,50,8,.2);backdrop-filter:blur(8px)}.search-icon{width:70px;display:grid;place-items:center;color:#967018;font:2rem "Cormorant Garamond",serif}.search-form input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#252525;font:400 clamp(1rem,2vw,1.35rem) "Cormorant Garamond","Noto Serif TC",serif}.search-form button{border:0;border-left:1px solid rgba(120,90,28,.16);padding:0 30px;background:transparent;color:#9b7015;font:600 .95rem "Noto Serif TC",serif;cursor:pointer}.search-form button:disabled,.search-form input:disabled{opacity:.5}.examples{text-align:center;margin:16px 0 0;font-size:.76rem;line-height:2}.examples a{color:#6d531b;text-decoration:none;border-bottom:1px dotted rgba(80,60,20,.35)}#search-status{text-align:center;margin:8px 0 0;font-size:.68rem;opacity:.58}.results-wrap{max-width:920px;margin:30px auto 0;padding:0 18px;scroll-margin-top:20px}.results-head{display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid rgba(82,62,20,.22);padding-bottom:10px}.results-head h2{margin:0;font:500 1.5rem "Cormorant Garamond","Noto Serif TC",serif}.results-head span{font-size:.72rem;opacity:.65}.result-card{padding:22px 2px;border-bottom:1px solid rgba(82,62,20,.16)}.result-card header{display:flex;gap:14px;align-items:baseline}.result-card header strong{color:#8c6818}.result-card header span{font:italic .88rem "Cormorant Garamond",serif;opacity:.65}.result-card p{margin:10px 0 0;line-height:1.9;font-size:.92rem}.result-card .english{font-family:"Cormorant Garamond",serif;font-size:1rem}.result-card footer{display:flex;justify-content:space-between;gap:10px;margin-top:12px;font-size:.63rem;opacity:.55}.empty{padding:30px 0;line-height:1.8;font-size:.83rem}.footer{max-width:920px;margin:72px auto 0;padding:32px 18px;border-top:1px solid rgba(72,52,17,.2);display:flex;justify-content:space-between;gap:22px;font-size:.72rem}.footer a{color:#252525;text-decoration:none}.footer strong{color:#8c6818;font:500 1.6rem "Cormorant Garamond",serif;letter-spacing:.08em}@media(max-width:760px){.topbar{height:64px;padding:0 15px}.topnav{gap:10px;font-size:.68rem}.hero{padding:14px 8px 44px}.art-stage{height:480px}.hero-copy{padding:22px 14px 100px}.hero-title{font-size:4rem}.search-shell{width:calc(100% - 22px);margin-top:-40px}.search-form{min-height:76px}.search-icon{width:52px}.search-form button{padding:0 16px}.footer{flex-direction:column;text-align:center}.result-card footer{flex-direction:column}}
+</style>
+</head>
+<body>
+<div class="page">
+<header class="topbar"><a class="brand" href="/dore/search/">DORÉ</a><nav class="topnav"><a href="/join/">JOIN</a><a href="/one/">ONE</a><a href="/">WESTSIDE WATCH</a></nav></header>
+<main>
+<section class="hero">
+<div class="art-stage">
+<img class="dore-art is-active" src="/one/dore-restorations/183-john-baptist-preaching-restored-r1.png" alt="Gustave Doré, John the Baptist preaching">
+<img class="dore-art" src="/one/dore-restorations/184-baptism-of-jesus-restored-r1.png" alt="Gustave Doré, Baptism of Jesus">
+<div class="hero-copy"><h1 class="hero-title">DORÉ</h1><p class="hero-sub">BIBLE SEARCH</p><p class="verse">「你求告我，我就應允你，並將你所不知道、又大又難的事指示你。」<cite>耶利米書 33:3</cite></p></div>
+</div>
+<div class="search-shell">
+<form class="search-form" id="search-form"><span class="search-icon" aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="搜索經文、關鍵詞、原文字詞…" aria-label="搜索聖經" disabled><button id="search-button" type="submit" disabled>搜索</button></form>
+<p class="examples">例如： <a href="#" data-example="詩篇 23:1">詩篇 23:1</a>　/　<a href="#" data-example="John 3:16">John 3:16</a>　/　<a href="#" data-example="愛">愛</a>　/　<a href="#" data-example="love">love</a>　/　<a href="#" data-example="ἀγάπη">ἀγάπη</a>　/　<a href="#" data-example="λόγος">λόγος</a></p>
+<p id="search-status">正在載入 Doré Scripture index…</p>
+</div>
+</section>
+<section class="results-wrap" id="results-wrap"><div class="results-head"><h2>Search Results · 搜索結果</h2><span id="result-count">等待搜索</span></div><div id="results"></div></section>
+</main>
+<footer class="footer"><div><strong>DORÉ</strong><br>Bible Search · 聖經搜索</div><div><a href="/join/">JOIN</a> · <a href="/one/">ONE</a> · <a href="/">Westside Watch</a></div></footer>
+</div>
+<script src="/dore/dore-search.js"></script>
+</body>
+</html>
