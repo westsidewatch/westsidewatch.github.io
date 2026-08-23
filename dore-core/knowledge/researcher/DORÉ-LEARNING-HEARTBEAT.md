@@ -27,14 +27,14 @@ Decision: absence does not prove D1 has no live signal. No user question was fab
 - Source stack: PASS.
 - Units 1–4: PASS.
 - Unit 05 Practicum A: PASS, 5/5 examination. Direct samples across Jubilees/Mastema, Qumran Belial/Angel-of-Darkness, Enochic Azazel, Synoptic Satan/Devil, Pauline Satan functions and Revelation support a bounded development-with-continuity model while rejecting corpus flattening and retrojection.
+- Unit 06 Practicum B: PASS, 5/5 adversarial examination. Hebrew-Bible baseline + diverse Second Temple witnesses were stratified against Synoptic/Lukan, Pauline and Johannine Spirit discourse. The passed model preserves explicit prophetic/anointing/promise continuity while recognizing corpus-specific development in communal, eschatological, Christological and enduring-presence configurations. Flattening, rupture, retrojection and single-line Second Temple evolution models all failed.
 
 ### Current wake
-- Exact `research.job.satan-identity` node audited. Its old boundary is now stale because the named Second Temple + NT dependency has been materially researched. However, the current connector response truncates the full `knowledge-index.json`, so a safe whole-file replacement cannot be guaranteed in this wake. No partial/truncated product file was written and no false bridge regression was claimed.
-- Unit 06 Practicum B opened.
-- Second Temple primary gate 1: 4/4 PASS. Jubilees 1 supplies eschatological holy-spirit/restoration language; 1QS 3–4 supplies distinct two-spirit and purification configurations. Shared vocabulary was not treated as identical ontology, and Second Temple diversity was preserved.
-- Evidence persisted: `RESEARCHER-05-UNIT-06-PRACTICUM-B-DIVINE-SPIRIT.md`.
+- Required sensory-first check repeated: `sensory-active.json` remains absent on `main`; no live user question was invented.
+- Unit 06 NT corpus stratification and adversarial gate executed and persisted as `RESEARCHER-05-UNIT-06-NT-CORPUS-STRATIFICATION-EXAM.md`.
+- Product promotion remains deliberately deferred: the known connector path still does not guarantee a safe full replacement of the large `static/dore/brain/knowledge-index.json`. No truncated brain write and no false Brain → Product regression were claimed.
 
 ## Current next action
-`UNIT_06_NT_CORPUS_STRATIFICATION_AND_ADVERSARIAL_EXAM`.
+`UNIT_07_CANON_SCRIPTURE_CONCEPT_DEVELOPMENT`.
 
-Assemble representative Synoptic/Lukan, Pauline and Johannine Spirit evidence, compare against Hebrew-Bible and diverse Second Temple layers, and test continuity/development/discontinuity. Do not promote `research.ot.divine-spirit` until this gate passes. Separately, when a safe full-file edit path is available, apply the bounded Unit 05 Job/Satan node update and run Brain → Product regression.
+Open the next course unit by stratifying Hebrew-Bible internal authority/scripture language, Second Temple collection/interpretation evidence, and New Testament γραφή/γραφαι usage before later closed-canon claims. Preserve the distinction between authoritative writings, collection processes and later canonical closure. Separately, when a safe full-file edit path is available, apply bounded Unit 05/06 product-node updates and run Brain → Product regression.
