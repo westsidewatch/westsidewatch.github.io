@@ -3,6 +3,7 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - 'dore-core/reflex/**'
       - 'dore_core/search/**'
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
@@ -27,7 +28,7 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/build_dore_browser_search_index.py
-      - name: Verify index and dedicated function page
+      - name: Verify index, function page, and learning reflex 001
         run: |
           python - <<'PY'
           import json
@@ -46,9 +47,22 @@ jobs:
           assert all(isinstance(i,int) for refs_ in list(original['lemma'].values())[:20] for i in refs_)
           html=Path('static/dore/search/index.html').read_text(encoding='utf-8')
           redirect=Path('static/dore/index.html').read_text(encoding='utf-8')
+          js=Path('static/dore/dore-search.js').read_text(encoding='utf-8')
+          reflex=Path('dore-core/reflex/signals/001-translated-phrase-to-original-language.md').read_text(encoding='utf-8')
           assert '耶利米書 33:3' in html and '/background.jpg' in html and 'id="search-form"' in html
           assert '/dore/search/' in redirect
-          print({'status':'PASS','function_url':'/dore/search/','verses':len(core['verses']),'lemmas':len(original['lemma']),'core_bytes':core_path.stat().st_size,'original_bytes':original_path.stat().st_size})
+          # Canonical real-work regression: "耶西的本 希伯來原文".
+          jesse=[(i,v) for i,v in enumerate(core['verses']) if '耶西的本' in v.get('z','')]
+          assert jesse, 'CUV phrase 耶西的本 must resolve to a canonical passage'
+          isa=[(i,v) for i,v in jesse if v['r']=='bible.ref.ISA.11.1']
+          assert isa, '耶西的本 must include Isaiah 11:1 in the pinned CUV witness'
+          verse_id=isa[0][0]
+          surfaces=[k for k,ids in original['original_surface'].items() if verse_id in ids]
+          lemmas=[k for k,ids in original['lemma'].items() if verse_id in ids]
+          assert surfaces and lemmas, 'Isaiah 11:1 must have OSHB original-language evidence'
+          assert 'translated-to-original' in js and 'originalEvidence' in js
+          assert '耶西的本 希伯來原文' in reflex
+          print({'status':'PASS','function_url':'/dore/search/','reflex':'001-translated-phrase-to-original-language','query':'耶西的本 希伯來原文','passage':'bible.ref.ISA.11.1','original_surfaces':surfaces,'lemmas':lemmas})
           PY
       - name: Accept Doré Bible Search work node
         run: python scripts/verify_dore_bible_search_product.py
