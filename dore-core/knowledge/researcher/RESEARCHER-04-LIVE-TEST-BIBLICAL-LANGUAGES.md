@@ -1,6 +1,6 @@
 # Autonomous Learning I — Live Test: Biblical Languages Curriculum
 
-Status: IN_PROGRESS — SOURCE STACK SELECTED; UNIT 01 PASS
+Status: IN_PROGRESS — UNITS 01–03 PASS; TRANSFER_PENDING
 Date: 2026-08-23
 Initiated by: Doré's own next-action decision
 
@@ -54,14 +54,17 @@ No single interlinear, Strong-number system, search engine, AI answer, or denomi
 
 Unit 1 — Scripts, transliteration limits, lemma vs surface form.
 Unit 2 — Morphology and parsing foundations.
-Unit 3 — Clause/syntax foundations.
-Unit 4 — Lexicon use and semantic range.
-Unit 5 — Context, discourse and corpus comparison.
-Unit 6 — Word-study fallacies and falsification.
-Unit 7 — Hebrew practicum: `ruach` / `satan` plus unseen cases.
-Unit 8 — Greek practicum: `γραφή` plus unseen cases.
-Unit 9 — Cross-language/translation diagnostic work in ONE and Search.
-Unit 10 — Research synthesis with textual-critical boundary awareness.
+Unit 3 — Case/state and basic syntactic relations.
+Unit 4 — Verbal-system foundations.
+Unit 5 — Lexicon use and semantic range.
+Unit 6 — Context, discourse and corpus comparison.
+Unit 7 — Word-study fallacies and falsification.
+Unit 8 — Hebrew practicum: `ruach` / `satan` plus unseen cases.
+Unit 9 — Greek practicum: `γραφή` plus unseen cases.
+Unit 10 — Cross-language/translation diagnostic work in ONE and Search.
+Unit 11 — Research synthesis with textual-critical boundary awareness.
+
+Sequence note: the initial draft placed lexicon work immediately after a broad syntax unit. Direct schema/grammar study showed that verbal-system foundations are a prerequisite for responsible syntax and semantic work, so the curriculum was autonomously refined before lexicon consolidation. This is an authorized prerequisite reordering, not course inflation.
 
 ## Examination design
 
@@ -98,22 +101,38 @@ Selected operational stack:
 ### Unit 1
 
 Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-01.md`.
-
 Local result: `UNIT_01_PASS — TRANSFER_PENDING`.
+Learned boundary: `SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
 
-Learned method boundary:
-`SURFACE_FORM ≠ LEMMA ≠ TRANSLITERATION ≠ MEANING`.
+### Unit 2
 
-The unit passed self and mini-transfer checks in both Hebrew/Greek research contexts. This does not constitute course completion or authorize contested lexical conclusions.
+Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-02.md`.
+Local result: `UNIT_02_PASS — TRANSFER_PENDING`.
+Learned boundary: morphology/parsing tags are versioned dataset analyses and grammatical evidence, not contextual meaning or infallible interpretation.
+
+### Unit 3
+
+Completed in `RESEARCHER-04-BIBLICAL-LANGUAGES-UNIT-03.md`.
+Local result: `UNIT_03_PASS — TRANSFER_PENDING`.
+Learned boundary: Greek case and Hebrew construct/absolute state constrain grammatical relations but do not map one-to-one to fixed English glosses or a single semantic function.
 
 ### Product bridge consequence
 
-Materially reusable method knowledge was exported as `research.method.lemma-surface-form` in `static/dore/brain/knowledge-index.json` with `CANDIDATE_FOR_EXAM` status, provenance, confidence boundary, questions/concepts and next research actions.
+Unit 1 method knowledge remains exported as `research.method.lemma-surface-form`.
+Units 2–3 added the generic product-readable node `research.method.morphology-syntax-boundary`, status `CANDIDATE_FOR_EXAM`, with provenance and uncertainty boundaries.
 
-Generic bridge regression: PASS, recorded in `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`. No per-question UI handler was added.
+Bridge regressions:
+- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-01.md`: PASS.
+- `RESEARCHER-04-BRAIN-BRIDGE-REGRESSION-02.md`: PASS_WITH_INFRASTRUCTURE_NOTE.
+
+No per-question UI handler was added.
+
+## Sensory inspection note
+
+At the beginning of the latest wake cycle, `dore-core/memory/sensory-active.json` did not exist on `main`. Therefore no repository-persisted live sensory task could be responsibly read or reconstructed. This does not prove that D1 contains no queued/researching signal; it records a heartbeat/persistence dependency that must be resolved by the sensory transport path rather than by fabricating a question into memory.
 
 ## Current next autonomous action
 
-`BIBLICAL_LANGUAGES_I_UNIT_02_MORPHOLOGY_AND_PARSING_FOUNDATIONS`
+`BIBLICAL_LANGUAGES_I_UNIT_04_VERBAL_SYSTEM_FOUNDATIONS`
 
-Unit 2 must inspect the actual OSHB/MorphGNT parsing schemas and grammar explanations, teach parsing as evidence rather than infallible interpretation, run a self/transfer test, and derive the next action without human confirmation.
+Unit 4 must study Greek tense/voice/mood and Hebrew stem/conjugation labels from inspectable elementary grammar plus MorphGNT/OSHB examples. It must explicitly test and reject automatic equations such as grammatical tense = chronology, aorist = once-for-all action, Hebrew stem label = fixed English semantic force, or morphology = theology. After a self/transfer exam, derive the next action without human confirmation.
