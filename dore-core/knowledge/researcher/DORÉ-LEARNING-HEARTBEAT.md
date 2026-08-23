@@ -26,19 +26,18 @@ This proves the previously missing middle of the closed loop: **durable sensory 
 Evidence: `dore-core/knowledge/researcher/live/SENSORY-5cf2c608-MARY-COUNT.md`, `dore-core/memory/sensory-active.json`, `static/dore/brain/knowledge-index.json`.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–03 PASS.
+Status: ACTIVE — UNITS 01–04 PASS.
 Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`.
 
 Unit 01: noise taxonomy + observed/candidate/source/confidence model, 8/8 PASS.
 Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/10 PASS.
-Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS. No numeric threshold was fabricated without held-out calibration data.
-
-No Researcher-06 product capability is promoted yet because implementation-level phonetic indexing and fixture measurements remain unproven.
+Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS.
+Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS. Production parameters remain uncalibrated and no capability was promoted to brain.
 
 ## Current next action
-`RESEARCHER_06_UNIT_04_PHONETIC_INDEX_IMPLEMENTATION_AND_TEST_FIXTURES`.
+`RESEARCHER_06_UNIT_05_BUILD_EXECUTABLE_FIXTURE_HARNESS_AND_MEASURE_BASELINE`.
 
-Build and test a reusable Chinese/English Scripture/entity phonetic-candidate index with explicit provenance, transliteration aliases, variable-length spans, bounded neighborhoods, and fixture-level retrieval measurements. Do not wire it into production until its failure modes and abstention behavior are measured.
+Implement a non-production reference harness and separated dev/test fixtures against existing Scripture/entity data. Measure candidate recall@K, candidate-set growth/latency, negative false-candidate behavior, alias normalization and abstention. Do not tune on the final test set and do not wire into production yet.
 
 ## Closed-loop next acceptance
 Run Brain → Product regression for `research.nt.mary-count`: verify a generic Search brain lookup can surface the new node without per-question UI logic. Separately verify a current Search browser deployment can itself POST a fresh unknown query into sensory memory; do not infer that browser acceptance solely from the successful durable signal.
