@@ -16,7 +16,7 @@ const EXPRESSIONS={
  DISPUTED:{label:'存在爭議',lead:'這個問題存在不同的解釋。'},
  REOPENED:{label:'重新考慮',lead:'我以前有一個答案，但新的證據讓我需要重新考慮。'}
 };
-async function loadBrain(force=false){if(force){state.brain=null;state.loading=null}if(state.brain)return state.brain;if(state.loading)return state.loading;state.loading=fetch('/dore/brain/knowledge-index.json',{cache:'no-cache'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(d=>{state.brain=d;return d}).catch(e=>{console.error('Doré brain bridge load failed',e);return null});return state.loading}
+async function loadBrain(force=false){if(force){state.brain=null;state.loading=null}if(state.brain)return state.brain;if(state.loading)return state.loading;state.loading=fetch(`${SENSORY_ORIGIN}/api/dore/brain`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`HTTP ${r.status}`);return r.json()}).then(d=>{state.brain=d;return d}).catch(e=>{console.error('Doré brain bridge load failed',e);return null});return state.loading}
 function scoreNode(node,q){const nq=norm(q);if(!nq)return 0;let best=0;for(const v of node.questions||[]){const nv=norm(v);if(nv===nq)return 100;if((nv&&nq.includes(nv))||nv.includes(nq))best=Math.max(best,82)}let conceptHits=0;for(const c of node.concepts||[]){const nc=norm(c);if(nc&&nq.includes(nc))conceptHits++}if(conceptHits>=2)best=Math.max(best,72+Math.min(12,conceptHits*3));else if(conceptHits===1)best=Math.max(best,46);return best}
 function chooseNode(brain,q){let best=null,bestScore=0;for(const node of brain?.nodes||[]){const s=scoreNode(node,q);if(s>bestScore){best=node;bestScore=s}}return bestScore>=70?{node:best,score:bestScore}:null}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
