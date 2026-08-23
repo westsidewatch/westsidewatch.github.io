@@ -14,13 +14,29 @@ from dore_core.world.tipnr import iter_tipnr_records,to_world_entity,TIPNR_SOURC
 
 CJK=re.compile(r'[\u3400-\u9fff]+')
 
+# Biblical Chinese proper-name expressions can be longer than five characters
+# (e.g. 抹大拉的馬利亞).  Short fixed n-grams create false aliases such as
+# 抹大拉的馬 / 大拉的馬利.  Generate long candidates and later keep only
+# maximal stable forms.
 def grams(text:str):
     out=set()
     for chunk in CJK.findall(text or ''):
-        for n in range(2,6):
-            for i in range(max(0,len(chunk)-n+1)):
+        limit=min(12,len(chunk))
+        for n in range(2,limit+1):
+            for i in range(len(chunk)-n+1):
                 out.add(chunk[i:i+n])
     return out
+
+def maximal_stable(scored):
+    """Drop an internal fragment when a longer candidate has comparable support."""
+    kept=[]
+    # Examine longer forms first. Comparable support means the longer expression
+    # occurs in at least 85% as many aligned attestations as the fragment.
+    for score,length,g,count,coverage in sorted(scored,key=lambda x:(-x[1],-x[0],x[2])):
+        if any(g in long_g and g!=long_g and coverage <= long_cov/.85 for _,_,long_g,_,long_cov in kept):
+            continue
+        kept.append((score,length,g,count,coverage))
+    return kept
 
 def main():
     ap=argparse.ArgumentParser()
@@ -50,16 +66,20 @@ def main():
                 if c<required:continue
                 coverage=c/len(aligned)
                 specificity=math.log((total+1)/(df[g]+1))
-                # Prefer complete proper-name forms over their internal substrings.
-                score=coverage*specificity*(1+.16*(len(g)-2))
-                scored.append((score,len(g),g,c))
+                # Prefer complete proper-name forms strongly. Long stable forms
+                # should dominate their internal fragments.
+                score=coverage*specificity*(1+.24*(len(g)-2))
+                scored.append((score,len(g),g,c,coverage))
+            scored=maximal_stable(scored)
             scored.sort(reverse=True)
             if scored:
                 best=scored[0][0]
-                # Keep a very small routing alias set; longer/more-specific wins ties.
-                for score,_,g,c in scored:
-                    if score < best*.82 or len(zh)>=3:break
+                for score,_,g,c,coverage in scored:
+                    if score < best*.78 or len(zh)>=3:break
+                    # Never retain a shorter internal fragment of an already kept
+                    # alias. If the longer form appears later, replace the fragment.
                     if any(g in x and g!=x for x in zh):continue
+                    zh=[x for x in zh if not (x in g and x!=g)]
                     zh.append(g)
         zh_count+=len(zh)
         aliases=[]
