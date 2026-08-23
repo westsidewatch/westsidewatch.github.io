@@ -15,6 +15,12 @@ export async function onRequestPatch({request,env}){
   const next=String(body?.state||'');
   if(!id||!allowed.has(next))return json({ok:false,error:'invalid_transition'},400);
   const now=new Date().toISOString();
-  await env.DORE_SENSORY.prepare('UPDATE sensory_signals SET state=?1,research_task=COALESCE(?2,research_task),brain_node=COALESCE(?3,brain_node),error=?4,updated_at=?5 WHERE id=?6').bind(next,body?.research_task||null,body?.brain_node||null,body?.error||null,now,id).run();
+  const info=await env.DORE_SENSORY.prepare('PRAGMA table_info(sensory_signals)').all();
+  const columns=new Set((info?.results||[]).map(r=>r.name));
+  if(columns.has('error')){
+    await env.DORE_SENSORY.prepare('UPDATE sensory_signals SET state=?1,research_task=COALESCE(?2,research_task),brain_node=COALESCE(?3,brain_node),error=?4,updated_at=?5 WHERE id=?6').bind(next,body?.research_task||null,body?.brain_node||null,body?.error||null,now,id).run();
+  }else{
+    await env.DORE_SENSORY.prepare('UPDATE sensory_signals SET state=?1,research_task=COALESCE(?2,research_task),brain_node=COALESCE(?3,brain_node),updated_at=?4 WHERE id=?5').bind(next,body?.research_task||null,body?.brain_node||null,now,id).run();
+  }
   return json({ok:true,signal_id:id,state:next,updated_at:now});
 }
