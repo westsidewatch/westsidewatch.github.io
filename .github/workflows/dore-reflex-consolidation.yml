@@ -7,6 +7,15 @@ on:
       - 'dore_core/**'
       - 'dore-core/reflex/**'
       - 'tests/test_reflex_consolidation.py'
+      - 'tests/test_dore_bible_search.py'
+      - '.github/workflows/dore-reflex-consolidation.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'dore_core/**'
+      - 'dore-core/reflex/**'
+      - 'tests/test_reflex_consolidation.py'
+      - 'tests/test_dore_bible_search.py'
       - '.github/workflows/dore-reflex-consolidation.yml'
   workflow_dispatch:
 
