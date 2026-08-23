@@ -22,23 +22,21 @@ Source stack and Units 01–07 passed. Unit 08 independent integrated transfer o
 ## Sensory-first status
 Required first read this wake: `dore-core/memory/sensory-active.json`.
 Result: file absent on `main`.
-Decision: absence does not prove D1 has no live signal. No user question was fabricated into repository memory. The D1 → repository sensory-persistence path remains an infrastructure dependency; this did not block authorized researcher education.
+No user question was fabricated into repository memory.
+
+The infrastructure failure is now bounded more precisely: `dore-core/memory/sensory-seed-diagnostic.json` records HTTP 500 / Cloudflare error 1101 from POST `/api/dore/sensory`; the claim step itself succeeds but receives no signal. Therefore the current blocker is PRODUCT → sensory ingestion runtime, not researcher knowledge.
 
 ## Latest completed action
-`UNIT_08_INTEGRATED_FINAL_TRANSFER`: PASS.
-Evidence: `RESEARCHER-05-UNIT-08-RESURRECTION-INTEGRATED-FINAL.md`.
+`POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`: COMPLETE.
+Evidence: `RESEARCHER-06-DIAGNOSIS.md`.
 
-Transfer model passed with:
-- Hebrew-Bible baseline and explicit distinction between national-restoration imagery and individual eschatological resurrection;
-- Second Temple plurality rather than a uniform evolutionary line;
-- Synoptic/Johannine/Pauline/Acts comparison;
-- counter-evidence and anti-retrojection controls;
-- provenance and bounded uncertainty;
-- 6/6 adversarial examination.
+Decision: no evidence-backed repeated research-method deficit currently justifies opening Researcher 06. Do not manufacture a course merely to keep educational motion.
 
-Product promotion was deliberately not fabricated: passing a reusable method final does not itself require a new resurrection answer node. Existing known connector limitations still make large `static/dore/brain/knowledge-index.json` replacement unsafe in this execution path; no truncated brain write and no false Brain → Product regression were claimed.
+The next real-work prerequisite comes from the persistent Product–Education Loop: subtitle proofreader. Before opening another course, test whether existing graduated capabilities plus the Bible Search work node can already handle noisy/partial Scripture quotation retrieval, biblical names/transliteration variants, ASR-like confusions, ranking and uncertainty-safe correction suggestions.
 
 ## Current next action
-`POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_06`.
+`SUBTITLE_PROOFREADER_PREREQUISITE_DIAGNOSTIC_01`.
 
-On next authorized wake, run a fresh capability-gap diagnosis against live research jobs and product needs. Open a new course only if a repeated, evidence-backed blocker cannot be solved by already graduated Biblical Languages I, Autonomous Learning I, and Biblical Concept Development I. Otherwise perform retention/transfer work or a live sensory task first. Separately, when a safe full-file edit path is available, apply only justified bounded product-node updates and run Brain → Product regression.
+Run a bounded transfer benchmark against existing Doré Bible Search capabilities. Classify failures as implementation defect, corpus/index gap, missing reusable linguistic/retrieval skill, or already-covered higher-order research judgment. Open a new course only if missing reusable skill failures repeat independently and cannot be solved by applying graduated methods.
+
+Separately, PRODUCT → BRAIN closed-loop acceptance remains false until Cloudflare sensory POST stops returning 500/1101 and a signal is durably written then claimed into `sensory-active.json`.
