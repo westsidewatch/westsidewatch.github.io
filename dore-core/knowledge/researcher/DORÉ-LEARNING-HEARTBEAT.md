@@ -2,6 +2,7 @@
 
 Status: ACTIVE
 Established: 2026-08-23
+Updated: 2026-08-24
 
 ## Rule
 Doré learning does not wait for a human to say `continue`, `execute`, `next`, or approve each course. On wake, read current state, execute `AUTONOMOUS_ALLOWED` work, self-check, persist evidence/failures/state/next action, and continue while evidence and authority remain clear. Course completion requires exam gates. Retention/transfer failures reopen learning.
@@ -19,94 +20,43 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 `dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED`; therefore no live sensory research preempted the course loop.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–07 PASS; UNIT 08 V2 FROZEN / ONE-SHOT FINAL DISPATCHED.
+Status: ACTIVE — UNITS 01–08 PASS; UNIT 09 ACTIVE.
 
-### Unit 06 outcome
-After schema and per-surface repairs, dev calibration reached:
-- recall-at-budget `1.0`;
-- gold misses `0`;
-- negative abstention `2/2`;
-- mean candidate set `4.6`.
+### Unit 06 honest failure
+After dev calibration reached recall-at-budget 1.0 with zero gold misses, the frozen one-time held-out final failed at recall 0.5 because the deliberately small Mandarin mapping covered only a small fraction of the biblical entity corpus. V1 remains frozen and that exposed final is permanently retired as unseen evidence.
 
-Parameters and encoder versions were frozen before opening the sealed test.
+### Unit 07 corpus-wide repair
+Corpus audit showed 2,876 Chinese entity surfaces / 14,953 Han occurrences but only 30.78% occurrence coverage under v1. A pinned research-only `pinyin-pro@3.29.3` reference covered the corpus, leading to `mandarin-pinyin-pro-v2-research` without identity-specific patches. Unit 07 examination: 8/8 PASS.
 
-One-time held-out final then failed:
-- recall-at-budget `0.5`;
-- gold misses `1`;
-- negative abstention `2/2`.
+### Unit 08 authoritative fresh final
+The first durable result at `evidence/researcher06-unit08-v2-fresh-final.json` is authoritative for the frozen v2 architecture:
+- positives: 80;
+- recall-at-budget: 1.0;
+- gold misses: 0;
+- negative abstention: 5/5;
+- unknown Han rate: 0;
+- mean candidate set: 2.4941;
+- perturbation family: single-Han same-pinyin;
+- pass: true.
 
-The exact partial-Scripture case passed, both ordinary nonquotation negatives passed, and the biblical-entity case failed because the deliberately small Mandarin table left most characters unknown. V1 remains frozen; the exposed final suite is not eligible for reuse as unseen evidence.
+`RESEARCHER-06-UNIT-08-EXAM.md` records the 8/8 PASS. This proves the corpus-wide v2 Mandarin encoder repaired the v1 coverage failure for the tested unseen biblical-entity perturbation while preserving conservative negative abstention. It does not alone prove mixed transcript-noise correction, subtitle editing safety, calibrated ambiguity handling, or production readiness.
 
-Evidence:
-- `RESEARCHER-06-UNIT-06-HELDOUT-DIAGNOSIS.md`
-- `evidence/researcher06-unit06-freeze.json`
-- `evidence/researcher06-unit06-heldout-summary.json`
+### Unit 09 — Offline Integration Transfer Gate
+Unit 09 is now active under `RESEARCHER-06-UNIT-09-INTEGRATION-TRANSFER.md`.
 
-### Unit 07 corpus-wide diagnosis and v2 design
-A whole-entity-corpus audit was executed without modifying v1:
-- 4,293 entity rows;
-- 2,876 Chinese surfaces;
-- 14,953 Han occurrences;
-- v1 occurrence coverage `30.78%`;
-- 774 unique Han, only 39 mapped (`5.04%`);
-- fully covered Chinese surfaces: 67 / 2,876 (`2.33%`).
+The required transfer is product-neutral: the same generic retrieval result must serve both a Search-like consumer and a subtitle-proofreader consumer. Every suggestion must preserve `observed -> candidate -> source/canonical anchor -> evidence channels -> confidence/score boundary -> abstain/review decision`. The subtitle surface may propose but may not silently overwrite what was heard.
 
-A pinned research-only comparison using `pinyin-pro@3.29.3` converted all 14,953 Han occurrences and all 2,876 Chinese surfaces in the same corpus (`100%` reference coverage). This established a corpus-wide source candidate but did not itself prove retrieval quality.
+Required fresh evidence families include exact/partial Scripture, Mandarin homophone corruption, biblical entity corruption, deletion/insertion, supported transliteration/alias variation, ambiguous competing candidates, and ordinary nonquotation negatives. A fresh final cannot be opened until encoder IDs, normalization, candidate budget, ranking/abstention policy, adapters, fixture partition and harness are frozen.
 
-Unit 07 then designed and began implementing v2 without touching production/v1:
-- added `scripts/dore/phonetic-encoders-v2.mjs` with encoder id `mandarin-pinyin-pro-v2-research`;
-- pinned provenance to `pinyin-pro@3.29.3`;
-- preserved explicit unknown-Han tokens and source metadata;
-- kept the English channel unchanged as a control;
-- permanently retired the exposed Unit 06 final as unseen evidence;
-- defined a new architecture-freeze → deterministic fresh-partition → one-shot-final protocol;
-- required recall, candidate budget, abstention, unknown rate, perturbation-family metrics and freeze provenance before any promotion.
-
-Unit 07 examination: **8/8 PASS**. No old failing entity was patched by name, no product wiring was added, and no brain node was promoted.
-
-Evidence:
-- `RESEARCHER-06-UNIT-07-COVERAGE-PLAN.md`
-- `RESEARCHER-06-UNIT-07-V2-DESIGN.md`
-- `evidence/researcher06-unit07-mandarin-coverage.json`
-- `evidence/researcher06-unit07-reference-coverage.json`
-- `scripts/dore/phonetic-encoders-v2.mjs`
-
-### Unit 08 current state
-The deterministic development gate is now durably present and passing:
-- partition `sha256(entity-id\0surface) mod 10 in {0,1}`;
-- inspected rows `601`;
-- Han occurrences `3,123`;
-- unknown Han `0`;
-- empty encoding keys `0`;
-- `pass:true`.
-
-Evidence was persisted in commit `f2787822ce52ebce850ceca78953848db16ae932`.
-
-The fresh-final harness was then created without opening the final, committed as `2bb3ae463a9da4acc3b4a99c0d4f836590f479d3`, and the v2 architecture was frozen in `evidence/researcher06-unit08-v2-freeze.json` at commit `5d7de730b5444ee5df5a02c6efc6a7cfab328cfe`.
-
-Frozen final boundaries include:
-- Mandarin encoder `mandarin-pinyin-pro-v2-research` / `pinyin-pro@3.29.3`;
-- tone-free normalization and explicit unknown-Han handling;
-- candidate budget `20`;
-- stable corpus-order ranking among exact phonetic-key matches, deduped by entity ID;
-- fresh partition `sha256(entity-id\0surface) mod 10 in {8,9}`;
-- deterministic single-Han same-pinyin perturbation;
-- five ordinary Mandarin negative controls;
-- pass policy: at least 40 positives, zero gold misses, all negatives abstain, zero unknown Han.
-
-Workflow `.github/workflows/dore-researcher06-v2-fresh-final.yml` was committed as `877b0ffff68e15961f8a7c95deb0dcdb226b40d7` to execute and persist the first one-shot result. At this heartbeat's last check, `evidence/researcher06-unit08-v2-fresh-final.json` was not yet visible on `main`; therefore Unit 08 is neither passed nor failed yet. This is an execution dependency, not retrieval evidence.
-
-Full state record:
-- `RESEARCHER-06-UNIT-08-FRESH-FINAL.md`
-- `evidence/researcher06-unit08-v2-dev-gate.json`
-- `evidence/researcher06-unit08-v2-freeze.json`
-- `scripts/dore/phonetic-v2-fresh-final.mjs`
-- `.github/workflows/dore-researcher06-v2-fresh-final.yml`
+Existing `noise-retrieval-*` fixtures and baseline are development/history evidence only; the exposed Unit 06 test cannot be recycled as a new unseen final.
 
 ## Current next action
-`RESEARCHER_06_UNIT_08_INSPECT_ONE_SHOT_FINAL_RESULT`.
+`RESEARCHER_06_UNIT_09_BUILD_AND_FREEZE_OFFLINE_TRANSFER_HARNESS`.
 
-On the next heartbeat, first inspect `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-fresh-final.json`. Its first durable result is authoritative as the one-shot unseen gate. If passing, persist the Unit 08 examination and determine whether Researcher 06 has sufficient transfer evidence for graduation or needs an additional integration/retention gate. If failing, preserve the failure and diagnose only from architecture/corpus/perturbation-family evidence; do not patch exposed final identities or reuse that final as unseen evidence.
+Build a product-neutral development harness and fresh fixture protocol, tune only on development evidence, then persist an integration freeze before opening any fresh final. If the frozen fresh transfer passes, examine Researcher 06 for graduation/retention-watch; if it fails, preserve the failure and diagnose generically rather than patching exposed identities.
+
+## Brain/Product status
+This heartbeat changed no product-readable knowledge node, so no Brain → Product regression was required. The Researcher 06 encoders remain research-only and are not production-promoted by Unit 08.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
