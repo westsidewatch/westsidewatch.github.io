@@ -5,8 +5,10 @@ const $=s=>document.querySelector(s);
 const SENSORY_ORIGIN='https://westsidewatch-github-io.pages.dev';
 const BRAIN_API='/api/dore/brain';
 const BRAIN_INDEX='/dore/brain/knowledge-index.json';
+const ASSET_API='/api/dore/assets/search';
 const norm=s=>String(s??'').toLowerCase().normalize('NFKC').replace(/[\s.,;:!?，。；：！？「」『』()（）\-–—_'"`]/g,'');
 const questionLike=q=>/[?？]/.test(q)||/(?:什麼|什么|為何|为何|為什麼|为什么|如何|怎樣|怎样|怎麼|怎么|是否|是不是|有沒有|有没有|有無|有无|能否|可否|哪裡|哪里|何處|何处|誰|谁|幾|几|多少|意思|解釋|解释|關係|关系|區別|区别|背景|原因|目的|代表|象徵|象征|預表|预表|教導|教导|神學|神学|工作|發生|发生|記載|记载|說明|说明|嗎\s*$|吗\s*$)/u.test(q);
+const assetLike=q=>/(?:封面|圖片|图片|插圖|插图|圖像|图像|資產|资产|素材|動畫|动画|gif|png|jpg|jpeg|svg|r2|cloudflare|黎明書局|黎明书局|one.*(?:圖|图|封面)|(?:圖|图|封面).*one)/iu.test(q);
 const EXPRESSIONS={
  UNKNOWN:{label:'還不知道',lead:'這個問題，我現在還不知道。',line:'我已經聽見了。'},
  QUEUED:{label:'已經記下',lead:'我把這個問題留下來了。',line:'我會去查。'},
@@ -23,20 +25,11 @@ async function loadBrain(force=false){
   if(state.brain)return state.brain;
   if(state.loading)return state.loading;
   state.loading=(async()=>{
-    try{
-      const d=await fetchJson(BRAIN_API);
-      state.brain=d;
-      return d;
-    }catch(apiError){
+    try{const d=await fetchJson(BRAIN_API);state.brain=d;return d}
+    catch(apiError){
       console.warn('Doré Brain API unavailable; falling back to static brain index',apiError);
-      try{
-        const d=await fetchJson(BRAIN_INDEX);
-        state.brain=d;
-        return d;
-      }catch(indexError){
-        console.error('Doré brain bridge load failed',indexError);
-        return null;
-      }
+      try{const d=await fetchJson(BRAIN_INDEX);state.brain=d;return d}
+      catch(indexError){console.error('Doré brain bridge load failed',indexError);return null}
     }
   })();
   return state.loading;
@@ -44,11 +37,17 @@ async function loadBrain(force=false){
 function scoreNode(node,q){const nq=norm(q);if(!nq)return 0;let best=0;for(const v of node.questions||[]){const nv=norm(v);if(nv===nq)return 100;if((nv&&nq.includes(nv))||nv.includes(nq))best=Math.max(best,82)}let conceptHits=0;for(const c of node.concepts||[]){const nc=norm(c);if(nc&&nq.includes(nc))conceptHits++}if(conceptHits>=2)best=Math.max(best,72+Math.min(12,conceptHits*3));else if(conceptHits===1)best=Math.max(best,46);return best}
 function chooseNode(brain,q){let best=null,bestScore=0;for(const node of brain?.nodes||[]){const s=scoreNode(node,q);if(s>bestScore){best=node;bestScore=s}}return bestScore>=70?{node:best,score:bestScore}:null}
 function esc(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-function renderNode(node){const box=$('#results'),count=$('#result-count'),wrap=$('#results-wrap');if(!box||!count)return;const a=node.answer||{},status=node.status||'WORKING',x=EXPRESSIONS[status]||EXPRESSIONS.WORKING;const lead=x.lead||a.lead||'';const answerLead=x.lead&&a.lead?`<p class="brain-answer-lead">${esc(a.lead)}</p>`:'';const body=(a.body||[]).map(p=>`<p>${esc(p)}</p>`).join('');const refs=(node.scripture||[]).length?`<p class="brain-scripture"><strong>相關經文：</strong>${node.scripture.map(esc).join(' · ')}</p>`:'';const next=(node.next_research||[]).length?`<p class="brain-next"><strong>仍在研究：</strong>${node.next_research.map(esc).join(' · ')}</p>`:'';box.innerHTML=`<article class="brain-answer" data-brain-node="${esc(node.id)}" data-expression-state="${esc(status)}"><header><strong>DORÉ</strong><span>${esc(x.label)}</span></header><h3>${esc(lead)}</h3>${answerLead}${body}${refs}${a.boundary?`<p class="brain-boundary">${esc(a.boundary)}</p>`:''}${next}</article>`;count.textContent=status==='CONSOLIDATED'?'Doré 回答':'Doré · '+x.label;if(wrap)wrap.scrollIntoView({behavior:'smooth',block:'start'})}
+function showResults(html,label){const box=$('#results'),count=$('#result-count'),wrap=$('#results-wrap');if(!box||!count)return;box.innerHTML=html;count.textContent=label;if(wrap)wrap.scrollIntoView({behavior:'smooth',block:'start'})}
+function renderNode(node){const a=node.answer||{},status=node.status||'WORKING',x=EXPRESSIONS[status]||EXPRESSIONS.WORKING;const lead=x.lead||a.lead||'';const answerLead=x.lead&&a.lead?`<p class="brain-answer-lead">${esc(a.lead)}</p>`:'';const body=(a.body||[]).map(p=>`<p>${esc(p)}</p>`).join('');const refs=(node.scripture||[]).length?`<p class="brain-scripture"><strong>相關經文：</strong>${node.scripture.map(esc).join(' · ')}</p>`:'';const next=(node.next_research||[]).length?`<p class="brain-next"><strong>仍在研究：</strong>${node.next_research.map(esc).join(' · ')}</p>`:'';showResults(`<article class="brain-answer" data-brain-node="${esc(node.id)}" data-expression-state="${esc(status)}"><header><strong>DORÉ</strong><span>${esc(x.label)}</span></header><h3>${esc(lead)}</h3>${answerLead}${body}${refs}${a.boundary?`<p class="brain-boundary">${esc(a.boundary)}</p>`:''}${next}</article>`,status==='CONSOLIDATED'?'Doré 回答':'Doré · '+x.label)}
+function parseList(v){if(Array.isArray(v))return v;try{return JSON.parse(v||'[]')}catch{return []}}
+function renderAssets(q,data){const rows=data?.results||[];if(!rows.length){showResults(`<article class="brain-answer asset-answer"><header><strong>DORÉ</strong><span>Asset Registry</span></header><h3>目前沒有找到「${esc(q)}」對應的已登記資產。</h3><p>如果它仍只存在 GitHub、尚未遷入 Asset Registry，我會在資產遷移後逐步能直接找到。</p></article>`,'Doré · 資產未找到');return}
+  const cards=rows.map(r=>{const refs=parseList(r.scripture_refs_json),products=parseList(r.products_using_it_json),social=parseList(r.social_uses_json),library=parseList(r.liming_resource_ids_json);return `<article class="asset-card"><header><strong>${esc(r.title||r.asset_code||'Doré Asset')}</strong><span>${esc(r.asset_code||'')}</span></header><p class="asset-locator"><b>${esc((r.storage_backend||'').toUpperCase())}</b> · ${esc(r.storage_locator||'')}</p>${refs.length?`<p><strong>經文：</strong>${refs.map(esc).join(' · ')}</p>`:''}${products.length?`<p><strong>使用：</strong>${products.map(esc).join(' · ')}</p>`:''}${social.length?`<p><strong>衍生用途：</strong>${social.map(esc).join(' · ')}</p>`:''}${library.length?`<p><strong>黎明書局：</strong>${library.map(esc).join(' · ')}</p>`:''}<footer><span>${esc(r.preservation_class||'')}</span><span>${esc(r.lifecycle_state||'')}</span></footer></article>`}).join('');showResults(cards,`Doré · ${rows.length} 個資產`)}
 async function remember(q){try{const r=await fetch(`${SENSORY_ORIGIN}/api/dore/sensory`,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({query:q})});if(!r.ok)return null;const d=await r.json();return d?.ok?d:null}catch{return null}}
+async function resolveAsset(q){remember(q).catch(()=>{});try{const d=await fetchJson(`${ASSET_API}?q=${encodeURIComponent(q)}`);renderAssets(q,d)}catch(error){showResults(`<article class="brain-answer asset-answer"><header><strong>DORÉ</strong><span>Asset Registry</span></header><h3>資產索引暫時不可用。</h3><p>${esc(error.message||error)}</p></article>`,'Doré · 資產索引錯誤')}}
 async function resolveQuestion(form,q){const savedPromise=remember(q);const brain=await loadBrain(),hit=chooseNode(brain,q);if(hit){savedPromise.catch(()=>{});renderNode(hit.node);return}savedPromise.catch(()=>{});state.bypassSearch=true;form.requestSubmit()}
-function intercept(e){const form=e.target;if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;if(state.bypassSearch){state.bypassSearch=false;return}const input=$('#search-input'),q=input?.value?.trim();if(!q||!questionLike(q)){if(q)remember(q).catch(()=>{});return}e.preventDefault();e.stopImmediatePropagation();resolveQuestion(form,q)}
-function addStyle(){if(document.getElementById('dore-brain-bridge-style'))return;const s=document.createElement('style');s.id='dore-brain-bridge-style';s.textContent=`.brain-answer{padding:2vw .15vw 1.2vw}.brain-answer header{display:flex;align-items:baseline;gap:1vw;border-bottom:1px solid rgba(82,62,20,.2);padding-bottom:.8vw;margin-bottom:1.2vw}.brain-answer header strong{color:#8c6818;font:500 1.35rem "Cormorant Garamond",serif;letter-spacing:.08em}.brain-answer header span{font-size:.72rem;opacity:.58}.brain-answer h3{font-size:1.05rem;font-weight:400;line-height:1.8;margin:0 0 1vw}.brain-answer p{line-height:2;margin:.8vw 0}.brain-answer-lead{font-weight:500}.brain-boundary,.brain-next{font-size:.82rem;opacity:.68}.brain-scripture{font-size:.86rem;color:#725719}@media(max-width:820px){.brain-answer{padding:24px 2px}.brain-answer p{margin:12px 0}.brain-answer header{margin-bottom:16px}}`;document.head.appendChild(s)}
-addStyle();loadBrain();document.addEventListener('submit',intercept,true);
-window.DoreBrainBridge={load:loadBrain,match:async q=>{const b=await loadBrain();return chooseNode(b,q)},render:renderNode,isQuestion:questionLike,expressions:EXPRESSIONS};
+function intercept(e){const form=e.target;if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;if(state.bypassSearch){state.bypassSearch=false;return}const input=$('#search-input'),q=input?.value?.trim();if(!q)return;if(assetLike(q)){e.preventDefault();e.stopImmediatePropagation();resolveAsset(q);return}if(!questionLike(q)){remember(q).catch(()=>{});return}e.preventDefault();e.stopImmediatePropagation();resolveQuestion(form,q)}
+function tuneEntrance(){const sub=$('.hero-sub'),input=$('#search-input'),info=$('.info h2'),desc=$('.info p'),head=$('.results-head h2');if(sub)sub.textContent='ASK · SEARCH · FIND';if(input)input.placeholder='問多雷、找經文、找 ONE 封面、找黎明書局資料…';if(info)info.textContent='Ask or Search with Doré';if(desc)desc.textContent='同一個入口：可問多雷、搜索聖經，也可查找已進入 Asset Registry 的 ONE／黎明書局資產。多雷不知道的問題會留下來繼續研究。';if(head)head.textContent='Doré · 回答與搜索結果';document.title='DORÉ · 問多雷與聖經搜索'}
+function addStyle(){if(document.getElementById('dore-brain-bridge-style'))return;const s=document.createElement('style');s.id='dore-brain-bridge-style';s.textContent=`.brain-answer,.asset-card{padding:2vw .15vw 1.2vw}.brain-answer header,.asset-card header{display:flex;align-items:baseline;gap:1vw;border-bottom:1px solid rgba(82,62,20,.2);padding-bottom:.8vw;margin-bottom:1.2vw}.brain-answer header strong,.asset-card header strong{color:#8c6818;font:500 1.35rem "Cormorant Garamond",serif;letter-spacing:.04em}.brain-answer header span,.asset-card header span{font-size:.72rem;opacity:.58}.brain-answer h3{font-size:1.05rem;font-weight:400;line-height:1.8;margin:0 0 1vw}.brain-answer p,.asset-card p{line-height:2;margin:.8vw 0}.brain-answer-lead{font-weight:500}.brain-boundary,.brain-next{font-size:.82rem;opacity:.68}.brain-scripture{font-size:.86rem;color:#725719}.asset-card{border-bottom:1px solid rgba(82,62,20,.16)}.asset-card .asset-locator{font-family:"Cormorant Garamond",serif;word-break:break-all}.asset-card footer{display:flex;justify-content:space-between;font-size:.7rem;opacity:.58;margin-top:1vw}@media(max-width:820px){.brain-answer,.asset-card{padding:24px 2px}.brain-answer p,.asset-card p{margin:12px 0}.brain-answer header,.asset-card header{margin-bottom:16px}}`;document.head.appendChild(s)}
+addStyle();tuneEntrance();loadBrain();document.addEventListener('submit',intercept,true);
+window.DoreBrainBridge={load:loadBrain,match:async q=>{const b=await loadBrain();return chooseNode(b,q)},render:renderNode,isQuestion:questionLike,isAssetQuery:assetLike,searchAssets:resolveAsset,expressions:EXPRESSIONS};
 })();
