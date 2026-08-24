@@ -1,0 +1,78 @@
+{
+  "batch_id": "asset-migration-001",
+  "created_at": "2026-08-24",
+  "policy": "classify-first-no-source-deletion",
+  "target_bucket": "westside-assets",
+  "status": "READY_FOR_GOVERNED_MIGRATION",
+  "assets": [
+    {
+      "asset_code": "ONE-MAT-03-SHARE-R2",
+      "source_path": "static/one/share/matthew-03-baptism-motion-r2.gif",
+      "github_blob_sha": "d9fbb9dd0d8fffed426d7a008ad1786b9baccaff",
+      "byte_size": 5463147,
+      "target_key": "one/share/matthew-03-baptism-motion-r2.gif",
+      "preservation_class": "regenerable",
+      "lifecycle_state": "review",
+      "canonical_status": "UNRESOLVED",
+      "scripture_refs": ["Matthew 3"],
+      "products_using_it": ["ONE"],
+      "social_uses": ["share"],
+      "migration_order": 2
+    },
+    {
+      "asset_code": "ONE-MAT-03-SHARE-R3-MOBILE",
+      "source_path": "static/one/share/matthew-03-baptism-motion-r3-mobile.gif",
+      "github_blob_sha": "21221c1da844ed89f6f4b178572736f9f83b85e6",
+      "byte_size": 5507985,
+      "target_key": "one/share/matthew-03-baptism-motion-r3-mobile.gif",
+      "preservation_class": "regenerable",
+      "lifecycle_state": "review",
+      "canonical_status": "UNRESOLVED",
+      "scripture_refs": ["Matthew 3"],
+      "products_using_it": ["ONE"],
+      "social_uses": ["share", "mobile"],
+      "migration_order": 3
+    },
+    {
+      "asset_code": "ONE-MAT-03-SHARE-R4-MOBILE",
+      "source_path": "static/one/share/matthew-03-baptism-motion-r4-mobile.gif",
+      "github_blob_sha": "0aa1b2372c7e25c18272403ac70b646e1649f3ca",
+      "byte_size": 4437855,
+      "target_key": "one/share/matthew-03-baptism-motion-r4-mobile.gif",
+      "preservation_class": "regenerable",
+      "lifecycle_state": "review",
+      "canonical_status": "UNRESOLVED",
+      "scripture_refs": ["Matthew 3"],
+      "products_using_it": ["ONE"],
+      "social_uses": ["share", "mobile"],
+      "migration_order": 4
+    },
+    {
+      "asset_code": "ONE-MAT-03-SHARE-R5-MOBILE",
+      "source_path": "static/one/share/matthew-03-baptism-motion-r5-mobile.gif",
+      "github_blob_sha": "8716328e69e194ff314803d0af4ea61aad238555",
+      "byte_size": 7819362,
+      "target_key": "one/share/matthew-03-baptism-motion-r5-mobile.gif",
+      "preservation_class": "working",
+      "lifecycle_state": "review",
+      "canonical_status": "LATEST_REVISION_NOT_YET_DECLARED_CANONICAL",
+      "scripture_refs": ["Matthew 3"],
+      "products_using_it": ["ONE"],
+      "social_uses": ["share", "mobile"],
+      "migration_order": 1
+    }
+  ],
+  "acceptance": {
+    "first_asset": "ONE-MAT-03-SHARE-R5-MOBILE",
+    "requirements": [
+      "authenticated migration only",
+      "compute SHA-256 from fetched source bytes",
+      "dedupe by content hash",
+      "write R2 object under governed namespace",
+      "write D1 Asset Registry row",
+      "read R2 back and verify SHA-256",
+      "retain GitHub source during rollback window",
+      "do not declare canonical or delete any revision until runtime/reference audit is complete"
+    ]
+  }
+}
