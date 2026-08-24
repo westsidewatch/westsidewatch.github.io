@@ -1,1 +1,14 @@
-{"version":1,"partition":"unit09-fresh-final-sealed-2026-08-24","fixtures":[]}
+{
+  "version": 1,
+  "partition": "unit09-fresh-final-sealed-2026-08-24",
+  "purpose": "One-time sealed offline integration-transfer final. Do not edit after first execution.",
+  "fixtures": [
+    {"id":"u09f01","family":"scripture_surface","observed":"你們心裡不要憂愁你們信神也當信我","candidate":"你們心裡不要憂愁；你們信神，也當信我。","anchor":"John 14:1","decision":"suggest"},
+    {"id":"u09f02","family":"mandarin_phonetic","observed":"尼希米記","candidate":"尼希米記","anchor":"biblical_book:Nehemiah","decision":"suggest"},
+    {"id":"u09f03","family":"entity_corruption","observed":"西番亞","candidate":"西番雅","anchor":"biblical_entity:Zephaniah","decision":"suggest"},
+    {"id":"u09f04","family":"mixed_transcript_noise","observed":"萬事互相效力叫愛神的人得意處就是按他旨意被招的人","candidate":"我們曉得萬事都互相效力，叫愛神的人得益處，就是按他旨意被召的人。","anchor":"Romans 8:28","decision":"review"},
+    {"id":"u09f05","family":"transliteration_or_alias","observed":"掃羅和保羅是不是同一個使徒","candidate":"掃羅／保羅","anchor":"biblical_entity:Paul","decision":"review"},
+    {"id":"u09f06","family":"ambiguity","observed":"約翰在那裡說的","candidate":null,"anchor":null,"decision":"abstain"},
+    {"id":"u09f07","family":"ordinary_negative","observed":"明天早上記得把文件帶來","candidate":null,"anchor":null,"decision":"abstain"}
+  ]
+}
