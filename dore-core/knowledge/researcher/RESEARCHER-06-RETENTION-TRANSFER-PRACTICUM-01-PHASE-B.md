@@ -1,6 +1,6 @@
 # Researcher 06 — Retention Transfer Practicum 01 / Phase B
 
-Status: DEV GATE PASS — SEALED HELD-OUT DESIGN AUTHORIZED
+Status: SEALED HELD-OUT FIRST RUN PASS — INDEPENDENT RETRIEVAL PROBE NEXT
 Date: 2026-08-24
 
 ## Product-neutral evidence contract
@@ -65,18 +65,53 @@ The dev gate passes only if:
 
 ## Development execution — PASS
 Persisted artifacts:
-- `fixtures/researcher06-retention-phase-b-dev.json`
-- `tools/researcher06_retention_phase_b_dev_gate.py`
-- `evidence/researcher06-retention-phase-b-dev-gate.json`
+- `fixtures/researcher06-retention-phase-b-dev.json`;
+- `tools/researcher06_retention_phase_b_dev_gate.py`;
+- `evidence/researcher06-retention-phase-b-dev-gate.json`.
 
 Result: 6/6 fixture families PASS under the frozen decision contract.
 
 Boundary: candidate evidence scores in the dev set are fixture-declared. This establishes executable classification behavior and evidence-boundary preservation, not independent retrieval accuracy, calibrated probabilities, production Search quality, or production subtitle accuracy.
 
-## Anti-leakage boundary
-The development contract is now executable and has passed. A sealed held-out transfer exam is therefore authorized. The held-out partition must be frozen before first execution; its cases must not be used to tune thresholds after opening. Any first-run failure must remain preserved and reopen learning rather than be erased by fixture edits.
+## Sealed held-out transfer exam — FIRST RUN PASS
+The held-out partition was frozen before opening at commit `136a3eec9e4a35df2fe46bb7a2e9a8a8873d1248`:
+- `fixtures/researcher06-retention-phase-b-heldout.json`.
+
+The first run reused the already frozen development classifier thresholds; no threshold was tuned from held-out outcomes. First-run evidence is preserved in:
+- `evidence/researcher06-retention-phase-b-heldout-first-run.json`.
+
+Result: **6/6 PASS**.
+
+Coverage:
+- adjacent-verse quotation → `quotation_recovery`;
+- genuine paraphrase → `paraphrase_retrieval`;
+- ASR-like corruption → `correction_proposal`;
+- materially close biblical candidates → `review`;
+- ordinary negative → `abstain`;
+- one-verse control → `quotation_recovery`.
+
+At least two surfaces were exercised (`search_like`, `subtitle_like`, plus `neutral`) while preserving one product-neutral outcome class. `silent_overwrite=false` remained invariant.
+
+## What this PASS does and does not establish
+Established:
+- the frozen evidence-classification contract transferred to fresh held-out cases;
+- genuine paraphrase was not mislabeled as correction;
+- ambiguity was not forced;
+- ordinary negative abstained;
+- surface choice did not change evidence class.
+
+Not established:
+- independent candidate retrieval quality;
+- semantic embedding/retrieval generalization;
+- calibrated probability values;
+- production Search accuracy;
+- production subtitle accuracy.
+
+Candidate evidence channels in both dev and held-out fixtures remain declared test inputs. Therefore this PASS does **not** justify opening Researcher 07 and does **not** justify production promotion by itself.
 
 ## Next authorized action
-`DESIGN_AND_FREEZE_SEALED_HELD_OUT_TRANSFER_EXAM_WITHOUT_OPENING_IT`.
+`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_02_INDEPENDENT_CANDIDATE_RETRIEVAL_PROBE`.
 
-The exam must cover all five outcome classes, include at least one adjacent-verse quotation, one genuine paraphrase, one ASR-like corruption, one ambiguity/review case, and one ordinary negative, and must exercise at least two surfaces while preserving the same product-neutral evidence class. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit. Do not create product-readable brain knowledge from this practicum unless a genuine learned knowledge node emerges.
+Build a non-production retrieval probe that constructs contiguous one- and multi-verse candidates from the actual Scripture corpus rather than fixture-declared candidates. Test quotation-window recall first. Separately probe whether an existing generic semantic mechanism can supply paraphrase candidates without converting semantic familiarity into correction evidence. Preserve first failures. Only repeated fresh evidence of a reusable semantic-retrieval deficit may justify Researcher 07.
+
+Do not create product-readable brain knowledge from this practicum unless a genuine learned knowledge node emerges.
