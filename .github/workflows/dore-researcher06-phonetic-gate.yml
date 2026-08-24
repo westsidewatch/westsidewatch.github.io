@@ -1,0 +1,20 @@
+name: Doré Researcher 06 Phonetic Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/dore/phonetic-encoders.mjs'
+      - 'scripts/dore/phonetic-encoder-selftest.mjs'
+      - '.github/workflows/dore-researcher06-phonetic-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  phonetic-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node scripts/dore/phonetic-encoder-selftest.mjs
