@@ -42,41 +42,38 @@ First-run evidence:
 
 Result: **6/6 PASS** with no post-open threshold tuning.
 
-Coverage included:
-- adjacent-verse quotation;
-- genuine paraphrase;
-- ASR-like corruption;
-- ambiguity/review;
-- ordinary negative;
-- one-verse control;
-- Search-like, subtitle-like and neutral surfaces under one evidence class.
-
-The result preserves the essential boundaries: paraphrase was not mislabeled as correction, ambiguity was not forced, the ordinary negative abstained, and subtitle-like handling kept `silent_overwrite=false`.
+Coverage included adjacent-verse quotation, genuine paraphrase, ASR-like corruption, ambiguity/review, ordinary negative, one-verse control, and Search-like/subtitle-like/neutral surfaces under one evidence class.
 
 ### Critical limitation
-Both dev and held-out cases still supplied candidate evidence channels as fixture inputs. Therefore this is a transfer PASS for **classification and evidence discipline**, not proof of independent candidate retrieval, calibrated probabilities, production Search accuracy, or production subtitle accuracy.
+Both dev and held-out cases still supplied candidate evidence channels as fixture inputs. Therefore this is a transfer PASS for classification and evidence discipline, not proof of independent candidate retrieval, calibrated probabilities, production Search accuracy, or production subtitle accuracy.
 
 No Researcher 07 is justified by this result.
 
-## Next retention practicum opened
-`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-02.md` is now active.
+## Retention Practicum 02 — Probe A advanced
+The authoritative Scripture corpus has now been located and its provenance contract identified.
 
-Purpose: independently retrieve candidates from the real Scripture corpus rather than fixture-declared candidates.
+- Generated corpus: `static/dore/search-index.json` (`dore.browser-search-core.v1`).
+- Generator: `scripts/build_dore_browser_search_index.py`.
+- Current Bible Search workflow asserts >=31,000 verses and canonical control refs.
+- Generator pins CUV Traditional 1919, WEBU, OSHB/WLC and MorphGNT/SBLGNT snapshots.
+- Current `static/dore/dore-search.js` confirms free-text retrieval is verse-by-verse; it does not independently generate contiguous 2/3-verse free-text candidates.
 
-First probe:
-- construct one-, two-, and justified three-verse contiguous windows from the authoritative corpus;
-- compare against current verse-by-verse retrieval;
-- measure correct-window recall under a frozen candidate budget;
-- preserve verse provenance and first failures.
+Evidence:
+`evidence/researcher06-retention-practicum02-corpus-location-2026-08-24.md`.
 
-Second probe:
-- determine whether an existing generic semantic mechanism can generate paraphrase candidates;
-- semantic similarity may retrieve but must never become textual-correction evidence by itself.
+Result: **PASS for corpus location and implementation-gap classification.**
+
+### Execution boundary encountered
+The available repository connector cannot execute repository code and does not expose the multi-megabyte one-line generated search-index body through its file-content action. A full-corpus top-K window-retrieval measurement therefore cannot be honestly produced in this run.
+
+This is recorded as an unresolved tool/execution dependency, not a learning failure and not evidence for opening Researcher 07.
 
 ## Current next action
-`LOCATE_AUTHORITATIVE_SCRIPTURE_CORPUS_AND_BUILD_NON_PRODUCTION_CONTIGUOUS_WINDOW_RETRIEVAL_HARNESS`.
+`BUILD_AND_EXECUTE_NON_PRODUCTION_CONTIGUOUS_WINDOW_RETRIEVAL_HARNESS_WHEN_REPOSITORY_EXECUTION_OR_FULL_CORPUS_BYTES_ARE_AVAILABLE`.
 
-Only repeated fresh evidence of a reusable semantic-retrieval deficit, after ordinary implementation/provider gaps are separated, may justify opening Researcher 07.
+Harness contract is already fixed: same-chapter contiguous windows of lengths 1/2/3, component-ref provenance, expected refs used only for evaluation, frozen candidate budget, verse-only baseline comparison, and first failures preserved.
+
+After Probe A execution, inspect an existing generic semantic mechanism for paraphrase candidate generation. Semantic similarity may retrieve but must never become textual-correction evidence by itself.
 
 ## Brain/Product status
 This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated capability under retention testing, not automatically production-promoted.
