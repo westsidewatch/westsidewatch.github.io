@@ -15,15 +15,24 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-      - name: Migrate priority ONE media sequentially
+      - name: Run migration and persist diagnostic receipt
         env:
           TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
         shell: bash
         run: |
-          set -euo pipefail
-          test -n "${TOKEN:-}" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 1; }
-          python3 - <<'PY' > items.json
-          import json
+          set -u
+          mkdir -p dore-core/cloudflare/receipts
+          python3 - <<'PY'
+          import json, os, time, datetime, urllib.request, urllib.parse, urllib.error
+
+          receipt={
+            'batch_id':'asset-migration-002',
+            'status':'FAIL',
+            'completed_at':None,
+            'assets':[],
+            'registry_search_verified':[],
+            'error':None
+          }
           items=[
             {'source':'static/one/studio/jude-01-michael-moses-dore-studio-r2.png','code':'ONE-JUDE-01-MICHAEL-MOSES-STUDIO','preserve':'working'},
             {'source':'static/one/studio/obadiah-01-dore-studio-r2.png','code':'ONE-OBA-01-DORE-STUDIO','preserve':'working'},
@@ -32,81 +41,69 @@ jobs:
             {'source':'static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png','code':'ONE-MAT-03-BAPTISM-JESUS-RESTORED','preserve':'permanent'},
             {'source':'static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png','code':'ONE-MAT-03-BAPTISM-MOTION-SOURCE','preserve':'regenerable'}
           ]
-          json.dump(items,open('items.json','w'))
+          token=os.environ.get('TOKEN','')
+          try:
+              if not token:
+                  raise RuntimeError('DORE_HEARTBEAT_TOKEN missing')
+              for item in items:
+                  body=json.dumps({
+                      'source_path':item['source'],
+                      'asset_code':item['code'],
+                      'title':item['code'].replace('-',' '),
+                      'generated_by':'dore',
+                      'preservation_class':item['preserve'],
+                      'products_using_it':['ONE']
+                  }).encode()
+                  result=None
+                  for attempt in range(1,6):
+                      req=urllib.request.Request(
+                          'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate',
+                          data=body,
+                          headers={'Authorization':f'Bearer {token}','Content-Type':'application/json'},
+                          method='POST')
+                      try:
+                          with urllib.request.urlopen(req,timeout=120) as r:
+                              result=json.load(r)
+                          if result.get('ok'): break
+                      except urllib.error.HTTPError as e:
+                          raw=e.read().decode('utf-8','replace')
+                          try: result=json.loads(raw)
+                          except: result={'ok':False,'http_status':e.code,'raw':raw}
+                      except Exception as e:
+                          result={'ok':False,'exception':repr(e)}
+                      if attempt<5: time.sleep(attempt*15)
+                  receipt['assets'].append({'asset_code':item['code'],'source_path':item['source'],'migration':result})
+                  if not result or not result.get('ok'):
+                      raise RuntimeError(f"migration failed for {item['code']}: {result}")
+                  if result.get('action')!='dedupe_no_copy' and not result.get('registry_verified'):
+                      raise RuntimeError(f"registry verification failed for {item['code']}: {result}")
+
+                  q=urllib.parse.quote(item['code'])
+                  with urllib.request.urlopen('https://westsidewatch-github-io.pages.dev/api/dore/assets/search?q='+q,timeout=60) as r:
+                      search=json.load(r)
+                  rows=search.get('results') or search.get('assets') or []
+                  if not any(x.get('asset_code')==item['code'] for x in rows):
+                      raise RuntimeError(f"registry search failed for {item['code']}: {search}")
+                  receipt['registry_search_verified'].append(item['code'])
+              receipt['status']='PASS'
+          except Exception as e:
+              receipt['error']=repr(e)
+          receipt['asset_count']=len(receipt['assets'])
+          receipt['completed_at']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+          path='dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-RESULT.json'
+          json.dump(receipt,open(path,'w'),ensure_ascii=False,indent=2)
+          print(json.dumps(receipt,ensure_ascii=False,indent=2))
           PY
-          : > responses.ndjson
-          python3 - <<'PY'
-          import json,subprocess,os,time
-          token=os.environ['TOKEN']
-          items=json.load(open('items.json'))
-          out=[]
-          for item in items:
-              body=json.dumps({
-                  'source_path':item['source'],
-                  'asset_code':item['code'],
-                  'title':item['code'].replace('-',' '),
-                  'generated_by':'dore',
-                  'preservation_class':item['preserve'],
-                  'products_using_it':['ONE']
-              })
-              last=None
-              for attempt in range(1,6):
-                  p=subprocess.run(['curl','--silent','--show-error','--write-out','\n%{http_code}','--request','POST',
-                    '--header',f'Authorization: Bearer {token}','--header','Content-Type: application/json',
-                    '--data',body,'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate'],capture_output=True,text=True)
-                  text=p.stdout
-                  payload,code=(text.rsplit('\n',1)+[''])[:2] if '\n' in text else (text,'')
-                  try: last=json.loads(payload)
-                  except: last={'ok':False,'raw':payload,'curl_stderr':p.stderr}
-                  if code=='200' and last.get('ok'): break
-                  if attempt<5: time.sleep(attempt*15)
-              if not last or not last.get('ok'):
-                  raise SystemExit(f"migration failed for {item['code']}: {last}")
-              if last.get('action')!='dedupe_no_copy' and not last.get('registry_verified'):
-                  raise SystemExit(f"registry verification failed for {item['code']}: {last}")
-              out.append({'asset_code':item['code'],'source_path':item['source'],'result':last})
-              print('PASS',item['code'],last.get('action'))
-          json.dump(out,open('responses.json','w'),ensure_ascii=False,indent=2)
-          PY
-      - name: Verify all registry records searchable
-        shell: bash
-        run: |
-          set -euo pipefail
-          python3 - <<'PY'
-          import json,urllib.request,urllib.parse
-          rows=json.load(open('responses.json'))
-          verified=[]
-          for row in rows:
-              code=row['asset_code']
-              url='https://westsidewatch-github-io.pages.dev/api/dore/assets/search?q='+urllib.parse.quote(code)
-              with urllib.request.urlopen(url) as r:
-                  data=json.load(r)
-              results=data.get('results') or data.get('assets') or []
-              ok=any(x.get('asset_code')==code for x in results)
-              if not ok: raise SystemExit(f'not searchable: {code}')
-              verified.append(code)
-          json.dump(verified,open('verified.json','w'))
-          PY
-      - name: Persist PASS receipt
-        shell: bash
-        run: |
-          mkdir -p dore-core/cloudflare/receipts
-          python3 - <<'PY'
-          import json,datetime
-          responses=json.load(open('responses.json'))
-          verified=json.load(open('verified.json'))
-          out={
-            'batch_id':'asset-migration-002',
-            'status':'PASS',
-            'completed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
-            'asset_count':len(responses),
-            'registry_search_verified':verified,
-            'assets':responses
-          }
-          json.dump(out,open('dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-PASS.json','w'),ensure_ascii=False,indent=2)
-          PY
+
           git config user.name 'dore-migration-bot'
           git config user.email 'dore-migration-bot@users.noreply.github.com'
-          git add dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-PASS.json
-          git commit -m 'chore(dore): record batch 002 R2 migration PASS' || exit 0
-          git push
+          git add dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-RESULT.json
+          git commit -m 'chore(dore): record batch 002 migration result [skip ci]' || true
+          git pull --rebase origin main || true
+          git push || true
+
+          python3 - <<'PY'
+          import json
+          r=json.load(open('dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-RESULT.json'))
+          raise SystemExit(0 if r.get('status')=='PASS' else 1)
+          PY
