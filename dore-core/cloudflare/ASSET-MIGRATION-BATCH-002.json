@@ -1,0 +1,15 @@
+{
+  "batch_id": "asset-migration-002",
+  "created_at": "2026-08-24",
+  "status": "STAGED_PENDING_BATCH_001_PASS",
+  "target_bucket": "westside-assets",
+  "policy": "canonical-media-to-r2",
+  "assets": [
+    {"source_path":"static/one/studio/jude-01-michael-moses-dore-studio-r2.png","target_key":"one/studio/jude-01-michael-moses-dore-studio-r2.png","asset_code":"ONE-JUDE-01-MICHAEL-MOSES-STUDIO","preservation_class":"working"},
+    {"source_path":"static/one/studio/obadiah-01-dore-studio-r2.png","target_key":"one/studio/obadiah-01-dore-studio-r2.png","asset_code":"ONE-OBA-01-DORE-STUDIO","preservation_class":"working"},
+    {"source_path":"static/one/studio/revelation-02-dore-final-full.png","target_key":"one/studio/revelation-02-dore-final-full.png","asset_code":"ONE-REV-02-DORE-FINAL","preservation_class":"working"},
+    {"source_path":"static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png","target_key":"one/restorations/183-john-baptist-preaching-restored-r1.png","asset_code":"ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED","preservation_class":"permanent"},
+    {"source_path":"static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png","target_key":"one/restorations/184-baptism-of-jesus-restored-r1.png","asset_code":"ONE-MAT-03-BAPTISM-JESUS-RESTORED","preservation_class":"permanent"},
+    {"source_path":"static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png","target_key":"one/motion/matthew-03-baptism-dove-removed-r1.png","asset_code":"ONE-MAT-03-BAPTISM-MOTION-SOURCE","preservation_class":"regenerable"}
+  ]
+}
