@@ -1,20 +1,138 @@
 {
   "milestone": "priority-one-media-migration",
-  "status": "FAIL",
+  "status": "PASS",
   "assets": [
     {
       "asset_code": "ONE-MAT-03-BAPTISM-COVER-MOTION",
       "source_path": "static/one/share/matthew-03-baptism-motion-r5-mobile.gif",
       "migration": {
-        "ok": false,
-        "http_status": 403,
-        "raw": "error code: 1010\n"
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/share/matthew-03-baptism-motion-r5-mobile.gif",
+        "sha256": "c54eca02197c2e79129d06ea5031ddf7623f36b5148c17cf8c5f6dcb12b1706f",
+        "existing": {
+          "id": "26639a6d-9639-42b9-840d-a9d669d2a914",
+          "asset_code": "ONE-MAT-03-BAPTISM-COVER-MOTION",
+          "storage_backend": "r2",
+          "storage_locator": "one/share/matthew-03-baptism-motion-r5-mobile.gif",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-JUDE-01-MICHAEL-MOSES-STUDIO",
+      "source_path": "static/one/studio/jude-01-michael-moses-dore-studio-r2.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/studio/jude-01-michael-moses-dore-studio-r2.png",
+        "sha256": "048e91c7752aeb9493bba8ae8716c0faa4d0a6189ee4a7923e6f2394ac85f568",
+        "existing": {
+          "id": "3b1ca631-8c03-4d54-bc04-9c47cadce0eb",
+          "asset_code": "ONE-JUDE-01-MICHAEL-MOSES-STUDIO",
+          "storage_backend": "r2",
+          "storage_locator": "one/studio/jude-01-michael-moses-dore-studio-r2.png",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-OBA-01-DORE-STUDIO",
+      "source_path": "static/one/studio/obadiah-01-dore-studio-r2.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/studio/obadiah-01-dore-studio-r2.png",
+        "sha256": "31c0e72f3e1728fbb9be55df5241f5e69e6ea9d7ccdb2f2572809a357fd44da4",
+        "existing": {
+          "id": "24c98ffa-1f0f-4dc4-ab22-d3ef8d2d40af",
+          "asset_code": "ONE-OBA-01-DORE-STUDIO",
+          "storage_backend": "r2",
+          "storage_locator": "one/studio/obadiah-01-dore-studio-r2.png",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-REV-02-DORE-FINAL",
+      "source_path": "static/one/studio/revelation-02-dore-final-full.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/studio/revelation-02-dore-final-full.png",
+        "sha256": "3e4e2458d28085bf9f116ffc7720aa921f09746f0aa920d0df1b791966424ec3",
+        "existing": {
+          "id": "f7b00bf8-22a4-481e-a954-b0be5d3c9d46",
+          "asset_code": "ONE-REV-02-DORE-FINAL",
+          "storage_backend": "r2",
+          "storage_locator": "one/studio/revelation-02-dore-final-full.png",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED",
+      "source_path": "static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png",
+        "sha256": "bdb87757c0edd69e0f7aaa972ef83c0849d5fc07e47aaff015d724d02e0809b2",
+        "existing": {
+          "id": "84a7516c-41c2-49b6-8ff7-c50c2249c10f",
+          "asset_code": "ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED",
+          "storage_backend": "r2",
+          "storage_locator": "one/restorations/183-john-baptist-preaching-restored-r1.png",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-MAT-03-BAPTISM-JESUS-RESTORED",
+      "source_path": "static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png",
+        "sha256": "31ffb05945b3fcb3ad493929b9a55118d26001112366f18e41aba48522237501",
+        "existing": {
+          "id": "ce7804f3-b289-438f-960c-90f0d2f08cb1",
+          "asset_code": "ONE-MAT-03-BAPTISM-JESUS-RESTORED",
+          "storage_backend": "r2",
+          "storage_locator": "one/restorations/184-baptism-of-jesus-restored-r1.png",
+          "lifecycle_state": "active"
+        }
+      }
+    },
+    {
+      "asset_code": "ONE-MAT-03-BAPTISM-MOTION-SOURCE",
+      "source_path": "static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png",
+      "migration": {
+        "ok": true,
+        "action": "dedupe_no_copy",
+        "source_path": "static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png",
+        "sha256": "562736268c1b0de8897b3a2450624dd603f2cc912a329f48711e866792889e94",
+        "existing": {
+          "id": "f45292e4-6539-469d-b6d2-a16a91661cb2",
+          "asset_code": "ONE-MAT-03-BAPTISM-MOTION-SOURCE",
+          "storage_backend": "r2",
+          "storage_locator": "one/motion/matthew-03-baptism-dove-removed-r1.png",
+          "lifecycle_state": "active"
+        }
       }
     }
   ],
-  "verified": [],
-  "error": "RuntimeError(\"migration failed ONE-MAT-03-BAPTISM-COVER-MOTION: {'ok': False, 'http_status': 403, 'raw': 'error code: 1010\\\\n'}\")",
-  "asset_count": 1,
-  "verified_count": 0,
-  "completed_at": "2026-08-24T09:01:38.006661+00:00"
+  "verified": [
+    "ONE-MAT-03-BAPTISM-COVER-MOTION",
+    "ONE-JUDE-01-MICHAEL-MOSES-STUDIO",
+    "ONE-OBA-01-DORE-STUDIO",
+    "ONE-REV-02-DORE-FINAL",
+    "ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED",
+    "ONE-MAT-03-BAPTISM-JESUS-RESTORED",
+    "ONE-MAT-03-BAPTISM-MOTION-SOURCE"
+  ],
+  "error": null,
+  "asset_count": 7,
+  "verified_count": 7,
+  "completed_at": "2026-08-24T09:03:09.798109+00:00"
 }
