@@ -28,7 +28,7 @@ disableKinds = ["taxonomy", "term"]
     target = "static/join"
   [[module.mounts]]
     source = "background.jpg"
-    target = "static/background.jpg"
+    target = "static/api/dore/assets/site-file?code=SITE-BACKGROUND"
   [[module.mounts]]
     source = "wechat-qr.png"
-    target = "static/wechat-qr.png"
+    target = "static/api/dore/assets/site-file?code=SITE-WECHAT-QR"

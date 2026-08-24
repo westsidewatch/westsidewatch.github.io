@@ -378,7 +378,7 @@ h1 {
   border-bottom: 1px solid rgba(210, 188, 105, .22);
   background-image:
     linear-gradient(rgba(250, 249, 245, .08), rgba(210, 188, 105, .12)),
-    url("/images/temple-stone-light.png");
+    url("/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT");
   background-size: auto, 44rem auto;
   overflow: hidden;
   scroll-margin-top: 0;
@@ -705,7 +705,7 @@ h1 {
   flex: 0 0 auto;
   height: 100%;
   aspect-ratio: 5 / 8;
-  background-image: url("/images/damascus-gate.jpg");
+  background-image: url("/api/dore/assets/site-file?code=SITE-DAMASCUS-GATE");
   background-repeat: no-repeat;
   background-size: 300% auto;
   filter: sepia(.26) contrast(1.06) saturate(.68);
@@ -750,7 +750,7 @@ h1 {
   bottom: 0;
   left: 0;
   height: clamp(1.6rem, 3.8vw, 3.25rem);
-  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
+  background: url("/api/dore/assets/site-file?code=SITE-JERUSALEM-WALL") center bottom / auto 100% repeat-x;
   content: none;
   z-index: 2;
 }
@@ -1513,13 +1513,13 @@ h1 {
   bottom: 0;
   left: 0;
   height: clamp(2.25rem, 5vw, 4.5rem);
-  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
+  background: url("/api/dore/assets/site-file?code=SITE-JERUSALEM-WALL") center bottom / auto 100% repeat-x;
 }
 
 .article--visual .article-body {
   margin-top: calc(clamp(4rem, 8vw, 7rem) * -1);
   padding: clamp(5rem, 10vw, 9rem) clamp(1rem, 4vw, 4rem);
-  background-image: linear-gradient(rgba(250,249,245,.48), rgba(250,249,245,.48)), url("/images/temple-stone-light.png");
+  background-image: linear-gradient(rgba(250,249,245,.48), rgba(250,249,245,.48)), url("/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT");
   background-size: auto, 48rem auto;
 }
 
@@ -1612,7 +1612,7 @@ h1 {
   padding: clamp(7rem, 13vw, 12rem) 0 0;
   overflow: hidden;
   color: #f3edda;
-  background: #eee5cb url("/images/temple-stone-light.png") 0 0 / 48rem auto repeat;
+  background: #eee5cb url("/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT") 0 0 / 48rem auto repeat;
   isolation: isolate;
 }
 
@@ -2003,7 +2003,7 @@ h1 {
   bottom: 0;
   left: 0;
   height: clamp(1rem, 2vw, 1.75rem);
-  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
+  background: url("/api/dore/assets/site-file?code=SITE-JERUSALEM-WALL") center bottom / auto 100% repeat-x;
   content: "";
   opacity: .22;
   z-index: 2;
@@ -2099,7 +2099,7 @@ h1 {
   bottom: 0;
   left: 0;
   height: clamp(4rem, 9vw, 8rem);
-  background: url("/images/jerusalem-wall.png") center bottom / auto 100% repeat-x;
+  background: url("/api/dore/assets/site-file?code=SITE-JERUSALEM-WALL") center bottom / auto 100% repeat-x;
   content: "";
   opacity: .42;
 }

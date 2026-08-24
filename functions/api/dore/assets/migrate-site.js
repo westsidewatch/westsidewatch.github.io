@@ -3,11 +3,11 @@ const okAuth=(r,e)=>(r.headers.get('authorization')||'')===`Bearer ${e.DORE_HEAR
 const hex=b=>[...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join('');
 const sha=async b=>hex(await crypto.subtle.digest('SHA-256',b));
 const MAP={
- 'background.jpg':'site/background.jpg',
- 'static/images/damascus-gate.jpg':'site/damascus-gate.jpg',
- 'static/images/jerusalem-wall.png':'site/jerusalem-wall.png',
- 'static/images/temple-stone-light.png':'site/temple-stone-light.png',
- 'static/wechat-qr.png':'site/wechat-qr.png'
+ 'background.jpg':'site/api/dore/assets/site-file?code=SITE-BACKGROUND',
+ 'static/api/dore/assets/site-file?code=SITE-DAMASCUS-GATE':'site/damascus-gate.jpg',
+ 'static/api/dore/assets/site-file?code=SITE-JERUSALEM-WALL':'site/jerusalem-wall.png',
+ 'static/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT':'site/temple-stone-light.png',
+ 'static/api/dore/assets/site-file?code=SITE-WECHAT-QR':'site/api/dore/assets/site-file?code=SITE-WECHAT-QR'
 };
 export async function onRequestPost({request,env}){
  if(!env.DORE_HEARTBEAT_TOKEN||!okAuth(request,env))return J({ok:false,error:'unauthorized'},401);

@@ -16,11 +16,11 @@
     radial-gradient(circle at 17% 7%,rgba(255,246,187,.24),transparent 28%),
     radial-gradient(circle at 84% 91%,rgba(146,104,32,.07),transparent 34%),
     linear-gradient(rgba(226,211,151,.28),rgba(212,194,125,.34)),
-    url('/images/temple-stone-light.png') center/560px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/560px auto;
   --one-page-surface:
     radial-gradient(ellipse at 30% 10%,rgba(255,248,204,.25),transparent 38%),
     linear-gradient(rgba(231,218,168,.34),rgba(218,201,139,.42)),
-    url('/images/temple-stone-light.png') center/520px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/520px auto;
   --one-chapter-engraving:url('https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/The_Birth_of_Jesus.jpg/960px-The_Birth_of_Jesus.jpg');
   --one-chapter-number:"01";
   --one-book-running:"MATTHEW";
@@ -96,7 +96,7 @@ main,.views{background:transparent}
   border-color:rgba(117,85,31,.32);
   background:
     linear-gradient(rgba(220,204,143,.58),rgba(211,192,124,.62)),
-    url('/images/temple-stone-light.png') center/520px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/520px auto;
   box-shadow:0 .45rem 1.4rem rgba(72,49,18,.1);
   backdrop-filter:blur(8px);
 }
@@ -154,7 +154,7 @@ main,.views{background:transparent}
   border:1px solid rgba(117,85,31,.48);
   background:
     linear-gradient(rgba(211,191,122,.42),rgba(203,180,106,.46)),
-    url('/images/temple-stone-light.png') center/460px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/460px auto;
   box-shadow:inset 0 0 0 7px rgba(181,141,34,.08);
 }
 .notice pre{color:var(--one-ink)}
@@ -400,7 +400,7 @@ main,.views{background:transparent}
     linear-gradient(90deg,rgba(85,51,19,.24),transparent 4%,transparent 96%,rgba(85,51,19,.24)),
     linear-gradient(rgba(230,214,158,.42),rgba(205,179,104,.48)),
     var(--one-chapter-engraving) center top/contain no-repeat,
-    url('/images/temple-stone-light.png') center/460px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/460px auto;
   background-blend-mode:normal,normal,multiply,normal;
   box-shadow:
     inset 1.6rem 0 1.8rem -1rem rgba(67,39,14,.5),
@@ -459,7 +459,7 @@ main,.views{background:transparent}
   background:
     radial-gradient(circle at 22% 10%,rgba(255,245,187,.2),transparent 31%),
     linear-gradient(rgba(231,218,168,.42),rgba(211,191,124,.48)),
-    url('/images/temple-stone-light.png') center/430px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/430px auto;
   box-shadow:inset 0 0 0 7px rgba(116,77,25,.06),inset 0 0 0 8px rgba(117,82,30,.35),0 .8rem 2rem rgba(74,49,18,.1);
 }
 
@@ -478,7 +478,7 @@ main,.views{background:transparent}
   border:1px solid rgba(117,85,31,.5);
   background:
     linear-gradient(rgba(224,207,145,.94),rgba(207,185,113,.95)),
-    url('/images/temple-stone-light.png') center/420px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/420px auto;
   box-shadow:0 .7rem 2rem rgba(71,46,17,.14),inset 0 0 0 4px rgba(181,141,34,.06);
   backdrop-filter:blur(12px);
 }

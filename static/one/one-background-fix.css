@@ -23,7 +23,7 @@
     linear-gradient(rgba(230,214,158,.46),rgba(205,179,104,.50)),
     linear-gradient(90deg,rgba(222,208,150,.56),rgba(222,208,150,.08) 20%,rgba(222,208,150,.04) 50%,rgba(222,208,150,.08) 80%,rgba(222,208,150,.56)),
     var(--one-chapter-engraving) center/cover no-repeat,
-    url('/images/temple-stone-light.png') center/460px auto;
+    url('/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT') center/460px auto;
   background-blend-mode:normal,normal,normal,multiply,normal;
 }
 
