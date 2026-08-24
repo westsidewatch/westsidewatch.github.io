@@ -1,0 +1,19 @@
+{
+  "batch_id": "asset-migration-002",
+  "status": "FAIL",
+  "completed_at": "2026-08-24T08:56:43.578782+00:00",
+  "assets": [
+    {
+      "asset_code": "ONE-JUDE-01-MICHAEL-MOSES-STUDIO",
+      "source_path": "static/one/studio/jude-01-michael-moses-dore-studio-r2.png",
+      "migration": {
+        "ok": false,
+        "http_status": 403,
+        "raw": "error code: 1010\n"
+      }
+    }
+  ],
+  "registry_search_verified": [],
+  "error": "RuntimeError(\"migration failed for ONE-JUDE-01-MICHAEL-MOSES-STUDIO: {'ok': False, 'http_status': 403, 'raw': 'error code: 1010\\\\n'}\")",
+  "asset_count": 1
+}
