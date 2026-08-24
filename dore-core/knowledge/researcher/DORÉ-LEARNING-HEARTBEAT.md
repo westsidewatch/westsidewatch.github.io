@@ -49,23 +49,34 @@ Two original subtitle diagnostic gaps remain incompletely tested:
 - paraphrase/semantic retrieval distinct from correction.
 
 ## Retention transfer practicum
-`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md` Phase A completed by re-inspecting the current Search implementation.
+`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md` Phase A confirmed that free-text Search still scores verses independently and has no dedicated semantic paraphrase candidate generator.
 
-Findings:
-- free-text retrieval still scores verses independently; it does not construct contiguous adjacent-verse windows;
-- explicit reference ranges exist, but that is not cross-verse fuzzy quotation recovery;
-- fuzzy search remains surface/character based rather than a dedicated semantic paraphrase candidate generator.
+Phase B design freeze is now complete and persisted in:
+`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B.md`.
 
-Classification:
-- cross-verse quotation = confirmed implementation/retrieval-model gap, not yet a new course-level deficit;
-- paraphrase-vs-correction = capability question still open; absence of implementation is insufficient evidence for Researcher 07.
+Frozen outcome classes:
+- `quotation_recovery`;
+- `paraphrase_retrieval`;
+- `correction_proposal`;
+- `review`;
+- `abstain`.
 
-The practicum is not marked PASS. Architecture inspection is not a transfer exam, and supplied fixture targets must not be mistaken for semantic competence.
+Frozen boundaries include:
+- preserve observed text verbatim;
+- treat adjacent contiguous verse windows as first-class retrieval candidates;
+- never infer textual correction from semantic/theological familiarity alone;
+- genuine paraphrase may retrieve but is not a correction;
+- ambiguous/conflicting evidence goes to review;
+- ordinary negatives abstain;
+- subtitle-like outputs remain non-overwriting;
+- surface adapters may change presentation but not evidence class.
+
+This is not a PASS. Design evidence is not executable transfer evidence, and no fresh-final partition may be opened before the dev contract becomes executable and passes.
 
 ## Current next action
-`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01_PHASE_B_DESIGN_FREEZE`.
+`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01_PHASE_B_DEV_FIXTURES_AND_HARNESS`.
 
-Design a product-neutral contiguous-window + paraphrase/correction evidence contract and development-only fixture set covering adjacent-verse quotation, exact controls, genuine paraphrase, ASR corruption, ambiguity, and ordinary negatives. Preserve separate outcome classes for quotation recovery, paraphrase retrieval, correction proposal, review, and abstention. Do not open a fresh final until the development contract is executable and passes. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit.
+Build a development-only fixture set covering adjacent-verse quotation, one-verse controls, genuine paraphrase, ASR corruption, ambiguity, and ordinary negatives, plus an executable product-neutral harness against the frozen Phase B contract. Record failures honestly. Only after a clean dev pass may a sealed held-out transfer exam be designed. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit.
 
 ## Brain/Product status
 This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated research capability, not an automatically production-promoted feature.
