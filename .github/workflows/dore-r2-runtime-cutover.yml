@@ -10,38 +10,27 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Switch active references, remove rollback binaries, verify
+      - name: Switch active references and persist audit
         shell: bash
         run: |
           set -euo pipefail
           python3 - <<'PY'
           from pathlib import Path
-          repl={
-          '/one/share/matthew-03-baptism-motion-r5-mobile.gif':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-COVER-MOTION',
-          '/one/studio/jude-01-michael-moses-dore-studio-r2.png?v=048e91c7752a':'/api/dore/assets/file?code=ONE-JUDE-01-MICHAEL-MOSES-STUDIO',
-          '/one/studio/obadiah-01-dore-studio-r2.png?v=31c0e72f3e17':'/api/dore/assets/file?code=ONE-OBA-01-DORE-STUDIO',
-          '/one/studio/revelation-02-dore-final-full.png?v=20260818k':'/api/dore/assets/file?code=ONE-REV-02-DORE-FINAL',
-          '/one/dore-restorations/183-john-baptist-preaching-restored-r1.png?v=bdb87757c0ed':'/api/dore/assets/file?code=ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED',
-          '/one/dore-restorations/184-baptism-of-jesus-restored-r1.png?v=31ffb05945b3':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-JESUS-RESTORED',
-          '/one/dore-restorations/184-baptism-of-jesus-restored-r1.png':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-JESUS-RESTORED'}
+          repl={'/one/share/matthew-03-baptism-motion-r5-mobile.gif':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-COVER-MOTION','/one/studio/jude-01-michael-moses-dore-studio-r2.png?v=048e91c7752a':'/api/dore/assets/file?code=ONE-JUDE-01-MICHAEL-MOSES-STUDIO','/one/studio/obadiah-01-dore-studio-r2.png?v=31c0e72f3e17':'/api/dore/assets/file?code=ONE-OBA-01-DORE-STUDIO','/one/studio/revelation-02-dore-final-full.png?v=20260818k':'/api/dore/assets/file?code=ONE-REV-02-DORE-FINAL','/one/dore-restorations/183-john-baptist-preaching-restored-r1.png?v=bdb87757c0ed':'/api/dore/assets/file?code=ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED','/one/dore-restorations/184-baptism-of-jesus-restored-r1.png?v=31ffb05945b3':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-JESUS-RESTORED','/one/dore-restorations/184-baptism-of-jesus-restored-r1.png':'/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-JESUS-RESTORED'}
           for f in ['static/one/one-baptism-motion.js','static/one/one-studio-assets.js','static/one/one-cover-policy.js','content/website/dore.md']:
-            p=Path(f); s=p.read_text(); old=s
+            p=Path(f); s=p.read_text()
             for a,b in repl.items(): s=s.replace(a,b)
-            if s!=old: p.write_text(s)
+            p.write_text(s)
           PY
           files=(static/one/share/matthew-03-baptism-motion-r5-mobile.gif static/one/studio/jude-01-michael-moses-dore-studio-r2.png static/one/studio/obadiah-01-dore-studio-r2.png static/one/studio/revelation-02-dore-final-full.png static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png)
           : >/tmp/refs
           for f in "${files[@]}"; do b=$(basename "$f"); git grep -n -F "$b" -- ':!dore-core/cloudflare/**' ':!.github/workflows/**' ':!static/one/r2-assets.json' ':!static/one/*.md' ':!static/one/dore-publisher-receipts/**' >>/tmp/refs || true; done
-          cat /tmp/refs; test ! -s /tmp/refs
-          git rm -- "${files[@]}"
-          codes=(ONE-MAT-03-BAPTISM-COVER-MOTION ONE-JUDE-01-MICHAEL-MOSES-STUDIO ONE-OBA-01-DORE-STUDIO ONE-REV-02-DORE-FINAL ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED ONE-MAT-03-BAPTISM-JESUS-RESTORED ONE-MAT-03-BAPTISM-MOTION-SOURCE)
-          for code in "${codes[@]}"; do curl -fsS "https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code=$code" -o /tmp/a; test -s /tmp/a; done
           mkdir -p dore-core/cloudflare/receipts
           python3 - <<'PY'
           import json
-          json.dump({'milestone':'r2-runtime-cutover','status':'PASS','active_references_switched':7,'active_old_path_references':0,'github_rollback_binaries_removed':7,'r2_delivery_verified_after_removal':7,'one_runtime_files_updated':['one-baptism-motion.js','one-studio-assets.js','one-cover-policy.js','content/website/dore.md'],'canonical_dore_241_library_touched':False},open('dore-core/cloudflare/receipts/R2-RUNTIME-CUTOVER-PASS.json','w'),indent=2)
+          refs=open('/tmp/refs').read().splitlines(); json.dump({'status':'REFERENCES_SWITCHED' if not refs else 'REFERENCES_REMAIN','remaining':refs,'count':len(refs)},open('dore-core/cloudflare/receipts/R2-CUTOVER-REFERENCE-AUDIT.json','w'),indent=2)
           PY
           git config user.name dore-delivery-bot; git config user.email dore-delivery-bot@users.noreply.github.com
-          git add -A
-          git commit -m 'feat(one): cut migrated media runtime over to private R2 delivery [skip ci]'
+          git add static/one/one-baptism-motion.js static/one/one-studio-assets.js static/one/one-cover-policy.js content/website/dore.md dore-core/cloudflare/receipts/R2-CUTOVER-REFERENCE-AUDIT.json
+          git commit -m 'feat(one): switch migrated media references to R2 delivery [skip ci]' || true
           git pull --rebase origin main || true; git push
