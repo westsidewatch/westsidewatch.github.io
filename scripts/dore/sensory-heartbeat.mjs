@@ -24,10 +24,15 @@ try{
   const active=await readJson(activePath,{version:1,signals:[]});
   const brain=await readJson(brainPath,{nodes:[]});
   let changed=false;
+  let reconciledConsolidated=0;
   for(const item of active.signals||[]){
-    if(item.state==='CONSOLIDATED')continue;
+    if(item.state==='CONSOLIDATED'){
+      await api('PATCH',{signal_id:item.signal_id,state:'CONSOLIDATED',brain_node:item.brain_node||null});
+      reconciledConsolidated++;
+      continue;
+    }
     const node=(brain.nodes||[]).find(n=>n.id===item.brain_node&&n.status==='CONSOLIDATED');
-    if(node){await api('PATCH',{signal_id:item.signal_id,state:'CONSOLIDATED',brain_node:node.id});item.state='CONSOLIDATED';item.consolidated_at=new Date().toISOString();changed=true}
+    if(node){await api('PATCH',{signal_id:item.signal_id,state:'CONSOLIDATED',brain_node:node.id});item.state='CONSOLIDATED';item.consolidated_at=new Date().toISOString();changed=true;reconciledConsolidated++}
   }
   const next=await api('GET');
   if(next.signal&&!['RESEARCHING','WORKING','CANDIDATE_FOR_EXAM'].includes(next.signal.state)){
@@ -37,7 +42,7 @@ try{
     changed=true;
   }
   if(changed){active.updated_at=new Date().toISOString();await writeJson(activePath,active)}
-  await writeJson(diagPath,{ok:true,at:new Date().toISOString(),base,signal:next.signal||null,changed});
+  await writeJson(diagPath,{ok:true,at:new Date().toISOString(),base,signal:next.signal||null,changed,reconciled_consolidated:reconciledConsolidated});
 }catch(e){await fail(e)}
 
-// touch: retrigger after production sensory routing repair
+// reconcile local consolidated state back to D1 so drift self-heals
