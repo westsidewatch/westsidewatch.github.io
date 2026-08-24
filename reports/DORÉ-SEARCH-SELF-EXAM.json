@@ -2,22 +2,22 @@
   "status": "FAIL",
   "exam": "DORE_SEARCH_POST_BIBLICAL_WORLD_SELF_EXAM_1",
   "summary": {
-    "passed": 4,
-    "failed": 4,
+    "passed": 3,
+    "failed": 5,
     "total": 8
   },
   "cases": [
     {
       "name": "scripture-reference-routing",
       "family": "PASSAGE_LOOKUP",
-      "pass": true,
+      "pass": false,
       "signal": null,
       "evidence": "reference parser is wired"
     },
     {
       "name": "original-language-routing",
       "family": "ORIGINAL_LANGUAGE",
-      "pass": true,
+      "pass": false,
       "signal": null,
       "evidence": "original-language intent is wired"
     },
@@ -38,9 +38,9 @@
     {
       "name": "exact-name-boundary",
       "family": "ENTITY_LOOKUP",
-      "pass": false,
-      "signal": "LEXICAL_COLLISION",
-      "evidence": "plain textSearch uses substring inclusion"
+      "pass": true,
+      "signal": null,
+      "evidence": "boundary-safe matching"
     },
     {
       "name": "scope-presence-question-routing",
