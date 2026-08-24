@@ -1,63 +1,16 @@
-/* ONE opening rail compatibility layer.
- * The actual wheel / pointer / keyboard rail interaction belongs to one-app.js.
- * This layer preserves the visual rail. Pointer book selection delegates directly
- * to one-app's canonical selectCoverBook() after the rail has received the same click.
- * No polling, synthetic second click, or book-specific entry patch is allowed here.
- */
+/* ONE opening rail compatibility layer. */
 (() => {
   "use strict";
-
   const coverPortals=document.querySelector(".cover-portals");
-  if(coverPortals&&!coverPortals.querySelector(".dore-search-mark")){
-    const dore=document.createElement("a");
-    dore.className="dore-search-mark";
-    dore.href="/dore/search/";
-    dore.setAttribute("aria-label","Doré Bible Search 聖經搜索");
-    dore.innerHTML='<span>DORÉ</span><strong>BIBLE SEARCH</strong><i>聖經搜索</i>';
-    coverPortals.prepend(dore);
+  if(coverPortals&&!coverPortals.querySelector(".dore-inline-search")){
+    coverPortals.querySelector(".dore-search-mark")?.remove();
+    const form=document.createElement("form");form.className="dore-inline-search";form.setAttribute("role","search");form.setAttribute("aria-label","搜索");form.innerHTML='<input type="search" name="q" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off"><button type="submit">搜索</button>';
+    form.addEventListener("submit",e=>{e.preventDefault();const q=form.elements.q.value.trim();if(q)location.href="/dore/search/?q="+encodeURIComponent(q)});coverPortals.prepend(form);
   }
-
-  const scriptureTrigger=document.getElementById("open-scripture");
-  if(scriptureTrigger){
-    const staticScripture=document.createElement("div");
-    staticScripture.className="cover-scripture-static";
-    staticScripture.setAttribute("aria-label","詩篇 36:9");
-    staticScripture.innerHTML=scriptureTrigger.innerHTML;
-    scriptureTrigger.replaceWith(staticScripture);
-    document.getElementById("light-reading")?.remove();
-  }
-
-  const scriptureStyle=document.createElement("style");
-  scriptureStyle.textContent=`
-    .dore-search-mark{display:grid;justify-items:center;gap:.08rem;color:inherit;text-decoration:none;min-width:8.5rem;opacity:.9}
-    .dore-search-mark span{color:var(--dawn,#c7a858);font:500 1.5rem/1 "Cormorant Garamond",serif;letter-spacing:.12em}
-    .dore-search-mark strong{font:500 .64rem/1.2 "Cormorant Garamond",serif;letter-spacing:.16em}
-    .dore-search-mark i{font:normal .65rem/1.2 "Noto Serif TC",serif;letter-spacing:.12em}
-    .dore-search-mark:hover,.dore-search-mark:focus-visible{opacity:.62}
-    .one-scripture-reload{margin-left:.65rem;padding:0;border:0;color:inherit;background:transparent;font:inherit;text-decoration:underline;text-underline-offset:.18em;cursor:pointer}
-    .one-scripture-reload:hover{opacity:.68}.one-scripture-reload:focus-visible{outline:1px solid currentColor;outline-offset:.2rem}
-  `;
-  document.head.append(scriptureStyle);
-
+  const scriptureTrigger=document.getElementById("open-scripture");if(scriptureTrigger){const staticScripture=document.createElement("div");staticScripture.className="cover-scripture-static";staticScripture.setAttribute("aria-label","詩篇 36:9");staticScripture.innerHTML=scriptureTrigger.innerHTML;scriptureTrigger.replaceWith(staticScripture);document.getElementById("light-reading")?.remove();}
+  const scriptureStyle=document.createElement("style");scriptureStyle.textContent=`.dore-inline-search{display:flex;align-items:center;min-width:min(25rem,80vw);border-bottom:1px solid currentColor;padding:.35rem 0;opacity:.9}.dore-inline-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:inherit;font:400 .82rem "Noto Serif TC",serif}.dore-inline-search button{border:0;background:transparent;color:var(--dawn,#c7a858);font:500 .75rem "Noto Serif TC",serif;cursor:pointer}.one-scripture-reload{margin-left:.65rem;padding:0;border:0;color:inherit;background:transparent;font:inherit;text-decoration:underline;text-underline-offset:.18em;cursor:pointer}.one-scripture-reload:hover{opacity:.68}.one-scripture-reload:focus-visible{outline:1px solid currentColor;outline-offset:.2rem}`;document.head.append(scriptureStyle);
   const freshYouVersionUrl=source=>{try{const url=new URL(source,location.href);url.searchParams.set("one_embed",String(Date.now()));return url.toString();}catch(error){return source+(source.includes("?")?"&":"?")+"one_embed="+Date.now();}};
-  const enhanceEnglishScripture=root=>{
-    root.querySelectorAll?.('.scripture-reading__pages article[lang="en"]').forEach(article=>{
-      if(article.dataset.oneEnglishReady==="true")return;
-      const frame=article.querySelector("iframe"),head=article.querySelector(":scope > div"),canonical=head?.querySelector('a[href*="bible.com"]'),source=frame?.dataset.src||frame?.getAttribute("src")||canonical?.href;
-      if(!frame||!head||!source)return;
-      article.dataset.oneEnglishReady="true";frame.dataset.oneBaseSrc=source;frame.removeAttribute("data-src");frame.loading="eager";frame.src=freshYouVersionUrl(source);
-      const reload=document.createElement("button");reload.type="button";reload.className="one-scripture-reload";reload.textContent="Reload English";reload.setAttribute("aria-label","重新載入本章英文 NIV 經文");
-      reload.addEventListener("click",()=>{reload.disabled=true;const oldText=reload.textContent;reload.textContent="Reloading…";frame.src="about:blank";requestAnimationFrame(()=>requestAnimationFrame(()=>{frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source);setTimeout(()=>{reload.disabled=false;reload.textContent=oldText},900)}))});
-      head.append(reload);frame.addEventListener("error",()=>{if(frame.dataset.oneNetworkRetry==="true")return;frame.dataset.oneNetworkRetry="true";frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source)});
-    });
-  };
+  const enhanceEnglishScripture=root=>{root.querySelectorAll?.('.scripture-reading__pages article[lang="en"]').forEach(article=>{if(article.dataset.oneEnglishReady==="true")return;const frame=article.querySelector("iframe"),head=article.querySelector(":scope > div"),canonical=head?.querySelector('a[href*="bible.com"]'),source=frame?.dataset.src||frame?.getAttribute("src")||canonical?.href;if(!frame||!head||!source)return;article.dataset.oneEnglishReady="true";frame.dataset.oneBaseSrc=source;frame.removeAttribute("data-src");frame.loading="eager";frame.src=freshYouVersionUrl(source);const reload=document.createElement("button");reload.type="button";reload.className="one-scripture-reload";reload.textContent="Reload English";reload.setAttribute("aria-label","重新載入本章英文 NIV 經文");reload.addEventListener("click",()=>{reload.disabled=true;const oldText=reload.textContent;reload.textContent="Reloading…";frame.src="about:blank";requestAnimationFrame(()=>requestAnimationFrame(()=>{frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source);setTimeout(()=>{reload.disabled=false;reload.textContent=oldText},900)}))});head.append(reload);frame.addEventListener("error",()=>{if(frame.dataset.oneNetworkRetry==="true")return;frame.dataset.oneNetworkRetry="true";frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source)});});};
   const chapterDetail=document.getElementById("chapter-detail");if(chapterDetail){enhanceEnglishScripture(chapterDetail);const scriptureObserver=new MutationObserver(()=>enhanceEnglishScripture(chapterDetail));scriptureObserver.observe(chapterDetail,{childList:true,subtree:true});}
-
-  const list=document.getElementById("cover-books");if(!list)return;list.classList.add("one-rail-enabled");
-  const reducedMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;let reboundTimer=0;
-  const clearRebound=()=>{clearTimeout(reboundTimer);reboundTimer=0;list.querySelectorAll(".cover-book").forEach(item=>item.style.removeProperty("transition"));};
-  const scheduleRebound=()=>{clearTimeout(reboundTimer);if(!list.classList.contains("is-settled"))return;reboundTimer=setTimeout(()=>{const current=list.querySelector(".cover-book.rail-current");if(!current||!list.classList.contains("is-settled"))return;current.style.setProperty("transition",reducedMotion?"none":"transform .26s cubic-bezier(.22,.8,.3,1), color .14s ease, opacity .14s linear");current.style.setProperty("--rail-scale","1.12");},reducedMotion?0:140);};
-  const observer=new MutationObserver(records=>{if(!records.some(record=>record.attributeName==="class"))return;if(list.classList.contains("is-settled"))scheduleRebound();else clearRebound();});observer.observe(list,{attributes:true,attributeFilter:["class"]});
-  list.addEventListener("click",event=>{if(event.defaultPrevented||event.detail===0)return;const item=event.target.closest(".cover-book");if(!item||item.classList.contains("rail-current"))return;const number=Number(item.dataset.book),book=typeof window.bookInfo==="function"?window.bookInfo(number):null;if(book&&typeof window.selectCoverBook==="function")window.selectCoverBook(book);});
-  list.addEventListener("pointerdown",clearRebound,{passive:true});list.addEventListener("wheel",clearRebound,{passive:true});list.addEventListener("keydown",clearRebound);if(list.classList.contains("is-settled"))scheduleRebound();
+  const list=document.getElementById("cover-books");if(!list)return;list.classList.add("one-rail-enabled");const reducedMotion=matchMedia("(prefers-reduced-motion: reduce)").matches;let reboundTimer=0;const clearRebound=()=>{clearTimeout(reboundTimer);reboundTimer=0;list.querySelectorAll(".cover-book").forEach(item=>item.style.removeProperty("transition"));};const scheduleRebound=()=>{clearTimeout(reboundTimer);if(!list.classList.contains("is-settled"))return;reboundTimer=setTimeout(()=>{const current=list.querySelector(".cover-book.rail-current");if(!current||!list.classList.contains("is-settled"))return;current.style.setProperty("transition",reducedMotion?"none":"transform .26s cubic-bezier(.22,.8,.3,1), color .14s ease, opacity .14s linear");current.style.setProperty("--rail-scale","1.12");},reducedMotion?0:140);};const observer=new MutationObserver(records=>{if(!records.some(record=>record.attributeName==="class"))return;if(list.classList.contains("is-settled"))scheduleRebound();else clearRebound();});observer.observe(list,{attributes:true,attributeFilter:["class"]});list.addEventListener("click",event=>{if(event.defaultPrevented||event.detail===0)return;const item=event.target.closest(".cover-book");if(!item||item.classList.contains("rail-current"))return;const number=Number(item.dataset.book),book=typeof window.bookInfo==="function"?window.bookInfo(number):null;if(book&&typeof window.selectCoverBook==="function")window.selectCoverBook(book);});list.addEventListener("pointerdown",clearRebound,{passive:true});list.addEventListener("wheel",clearRebound,{passive:true});list.addEventListener("keydown",clearRebound);if(list.classList.contains("is-settled"))scheduleRebound();
 })();
