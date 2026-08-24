@@ -1,0 +1,1188 @@
+{
+  "gate": "researcher06-unit08-v2-fresh-final",
+  "protocol": {
+    "partition": "sha256(entity-id\\0surface) mod 10 in {8,9}",
+    "positive_limit": 80,
+    "perturbation": "first eligible Han replaced by deterministic alternate Han sharing the same v2 tone-free pinyin syllable",
+    "candidate_budget": 20,
+    "ranking": "stable corpus order among exact phonetic-key matches; dedupe by entity id",
+    "negative_controls": "fixed ordinary Mandarin utterances; exact phonetic entity match must abstain"
+  },
+  "encoder": {
+    "mandarin": {
+      "id": "mandarin-pinyin-pro-v2-research",
+      "source": "pinyin-pro@3.29.3",
+      "tone": "none",
+      "status": "research-only"
+    },
+    "english": {
+      "id": "english-metaphone-lite-v1",
+      "source": "local",
+      "status": "unchanged-control"
+    }
+  },
+  "positives": 80,
+  "negatives": 5,
+  "recall_at_budget": 1,
+  "gold_misses": 0,
+  "mean_candidate_set": 2.4941176470588236,
+  "negative_abstention_correct": "5/5",
+  "unknown_han_rate": 0,
+  "perturbation_families": {
+    "single-han-same-pinyin": 80
+  },
+  "pass": true,
+  "boundary": "Fresh one-shot final for frozen v2 architecture. Any code/parameter change after opening this output invalidates it as unseen evidence.",
+  "cases": [
+    {
+      "id": "bible.person.tipnr.22c8b0a016b0",
+      "gold_surface": "他長子是亞伯頓",
+      "observed": "撻長子是亞伯頓",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "他",
+        "to": "撻",
+        "syllable": "ta"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.4ca82523b90f",
+      "gold_surface": "亞比亞",
+      "observed": "押比亞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.9dc6a2a2995f",
+      "gold_surface": "亞比米勒",
+      "observed": "雅比米勒",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.9c19ed72d6b5",
+      "gold_surface": "大坍",
+      "observed": "打坍",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "大",
+        "to": "打",
+        "syllable": "da"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.199b197721f0",
+      "gold_surface": "書念的女子亞比煞",
+      "observed": "叔念的女子亞比煞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "書",
+        "to": "叔",
+        "syllable": "shu"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.9121834b4e66",
+      "gold_surface": "亞比述",
+      "observed": "押比述",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.d29576575ac2",
+      "gold_surface": "亞干",
+      "observed": "押干",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.b564a38bcef3",
+      "gold_surface": "亞革波",
+      "observed": "押革波",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.035d0b7c79d5",
+      "gold_surface": "耶羅罕的兒子亞大雅",
+      "observed": "野羅罕的兒子亞大雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "耶",
+        "to": "野",
+        "syllable": "ye"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.0ecf910252ae",
+      "gold_surface": "以實瑪利的長子是尼拜約",
+      "observed": "益實瑪利的長子是尼拜約",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "以",
+        "to": "益",
+        "syllable": "yi"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.ef8e8d4363b2",
+      "gold_surface": "亞多尼雅",
+      "observed": "睚多尼雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "睚",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c4f02de64f67",
+      "gold_surface": "得米勒和沙利色用刀殺了他",
+      "observed": "德米勒和沙利色用刀殺了他",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "得",
+        "to": "德",
+        "syllable": "de"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c4f02de64f67",
+      "gold_surface": "他兒子以撒哈頓接續他作王",
+      "observed": "塔兒子以撒哈頓接續他作王",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "他",
+        "to": "塔",
+        "syllable": "ta"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c4f02de64f67",
+      "gold_surface": "亞得米勒和沙利色用刀殺了",
+      "observed": "雅得米勒和沙利色用刀殺了",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.6ef15db8dec8",
+      "gold_surface": "米何拉人",
+      "observed": "彌何拉人",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "米",
+        "to": "彌",
+        "syllable": "mi"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.7ec91ce962d3",
+      "gold_surface": "以尼雅",
+      "observed": "易尼雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "以",
+        "to": "易",
+        "syllable": "yi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.5b53cdc72d96",
+      "gold_surface": "亞基帕",
+      "observed": "睚基帕",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "睚",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.bf79449d2854",
+      "gold_surface": "西底家",
+      "observed": "息底家",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "西",
+        "to": "息",
+        "syllable": "xi"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.5387b0278054",
+      "gold_surface": "生亞拉篾",
+      "observed": "省亞拉篾",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "生",
+        "to": "省",
+        "syllable": "sheng"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.f75561973a61",
+      "gold_surface": "亞哈謝",
+      "observed": "押哈謝",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c633ffbe46f9",
+      "gold_surface": "亞哈謝",
+      "observed": "押哈謝",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.da22aa67e191",
+      "gold_surface": "亞希雅",
+      "observed": "押希雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.b7e4ed07cdc4",
+      "gold_surface": "亞希米勒",
+      "observed": "睚希米勒",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "睚",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.d1b5e7857d2d",
+      "gold_surface": "亞比亞他的兒子亞希米勒",
+      "observed": "雅比亞他的兒子亞希米勒",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.d6cb41030907",
+      "gold_surface": "米基羅",
+      "observed": "密基羅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "米",
+        "to": "密",
+        "syllable": "mi"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.85b281158530",
+      "gold_surface": "櫃從岡上亞比拿達",
+      "observed": "歸從岡上亞比拿達",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "櫃",
+        "to": "歸",
+        "syllable": "gui"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.fed5537b5302",
+      "gold_surface": "亞谷",
+      "observed": "雅谷",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.71b92cdea7bf",
+      "gold_surface": "約坍生亞摩答",
+      "observed": "越坍生亞摩答",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "約",
+        "to": "越",
+        "syllable": "yue"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.d044036c5726",
+      "gold_surface": "亞勒腓的兒子雅各",
+      "observed": "押勒腓的兒子雅各",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 6,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c23b0d7035fc",
+      "gold_surface": "耶加面",
+      "observed": "葉加面",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "耶",
+        "to": "葉",
+        "syllable": "ye"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.357456cc2b6e",
+      "gold_surface": "亞瑪利雅",
+      "observed": "雅瑪利雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 7,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.a0ebd16a78f6",
+      "gold_surface": "米拉約",
+      "observed": "密拉約",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "米",
+        "to": "密",
+        "syllable": "mi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.f46dc635194f",
+      "gold_surface": "亞瑪謝",
+      "observed": "雅瑪謝",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.8977671f1e2a",
+      "gold_surface": "亞米拿達",
+      "observed": "押米拿達",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.24b519e0212e",
+      "gold_surface": "亞米拿達",
+      "observed": "押米拿達",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.aa1f1571b276",
+      "gold_surface": "邑宰亞們和王的兒子約阿施",
+      "observed": "益宰亞們和王的兒子約阿施",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "邑",
+        "to": "益",
+        "syllable": "yi"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.aa1f1571b276",
+      "gold_surface": "給邑宰亞們和王的兒子約阿",
+      "observed": "給以宰亞們和王的兒子約阿",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 1,
+        "from": "邑",
+        "to": "以",
+        "syllable": "yi"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.eadaaad6991c",
+      "gold_surface": "暗蘭",
+      "observed": "按蘭",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "暗",
+        "to": "按",
+        "syllable": "an"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.403446cc2e4c",
+      "gold_surface": "以拉撒王",
+      "observed": "易拉撒王",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "以",
+        "to": "易",
+        "syllable": "yi"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.99662cd49091",
+      "gold_surface": "祭便",
+      "observed": "基便",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "祭",
+        "to": "基",
+        "syllable": "ji"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.086b5333125e",
+      "gold_surface": "大祭司亞拿尼亞",
+      "observed": "打祭司亞拿尼亞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "大",
+        "to": "打",
+        "syllable": "da"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.80705fb846b5",
+      "gold_surface": "亞拿尼亞",
+      "observed": "押拿尼亞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c180a5b73352",
+      "gold_surface": "以實各",
+      "observed": "邑實各",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "以",
+        "to": "邑",
+        "syllable": "yi"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.67888f1312c6",
+      "gold_surface": "底珊的兒子是烏斯",
+      "observed": "帝珊的兒子是烏斯",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "底",
+        "to": "帝",
+        "syllable": "di"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.1d75993d7761",
+      "gold_surface": "亞基人戶篩",
+      "observed": "押基人戶篩",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.d054839192cc",
+      "gold_surface": "以拉撒王",
+      "observed": "易拉撒王",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "以",
+        "to": "易",
+        "syllable": "yi"
+      },
+      "candidate_count": 5,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.04555e6bb0ad",
+      "gold_surface": "米迦的兒子瑪",
+      "observed": "彌迦的兒子瑪",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "米",
+        "to": "彌",
+        "syllable": "mi"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.36e31cb146a6",
+      "gold_surface": "希勒家的兒子家宰以利亞敬",
+      "observed": "悉勒家的兒子家宰以利亞敬",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "希",
+        "to": "悉",
+        "syllable": "xi"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.c96992532e5f",
+      "gold_surface": "便雅憫的",
+      "observed": "遍雅憫的",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "便",
+        "to": "遍",
+        "syllable": "bian"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.9987aa9b19a1",
+      "gold_surface": "提哥亞",
+      "observed": "蹄哥亞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "提",
+        "to": "蹄",
+        "syllable": "ti"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.f2e4b539b56c",
+      "gold_surface": "亞她利雅",
+      "observed": "押她利雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.f1f6c42cd6b0",
+      "gold_surface": "亞太",
+      "observed": "押太",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "押",
+        "syllable": "ya"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.579a9676f1ee",
+      "gold_surface": "亞撒利雅",
+      "observed": "雅撒利雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 9,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.a709f2dc1a99",
+      "gold_surface": "亞撒利雅",
+      "observed": "雅撒利雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "亞",
+        "to": "雅",
+        "syllable": "ya"
+      },
+      "candidate_count": 9,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.1187195e0c68",
+      "gold_surface": "阿蘇巴",
+      "observed": "阿穌巴",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 1,
+        "from": "蘇",
+        "to": "穌",
+        "syllable": "su"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.10d2f6ba10fe",
+      "gold_surface": "在耶路撒冷作王二十五年",
+      "observed": "宰耶路撒冷作王二十五年",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "在",
+        "to": "宰",
+        "syllable": "zai"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.564524bb9130",
+      "gold_surface": "他長子是亞伯頓",
+      "observed": "撻長子是亞伯頓",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "他",
+        "to": "撻",
+        "syllable": "ta"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.097fa29ece9e",
+      "gold_surface": "巴卜的子孫",
+      "observed": "八卜的子孫",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "巴",
+        "to": "八",
+        "syllable": "ba"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.097fa29ece9e",
+      "gold_surface": "哈忽的子孫",
+      "observed": "哈戶的子孫",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 1,
+        "from": "忽",
+        "to": "戶",
+        "syllable": "hu"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.0e59a89e5fec",
+      "gold_surface": "的子孫六百四十",
+      "observed": "德子孫六百四十",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "的",
+        "to": "德",
+        "syllable": "de"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.453d13c33710",
+      "gold_surface": "耶書亞",
+      "observed": "葉書亞",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "耶",
+        "to": "葉",
+        "syllable": "ye"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.e5ac53d092eb",
+      "gold_surface": "巴拿巴",
+      "observed": "把拿巴",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "巴",
+        "to": "把",
+        "syllable": "ba"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.0131eb34ad01",
+      "gold_surface": "迦南人",
+      "observed": "甲南人",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "迦",
+        "to": "甲",
+        "syllable": "jia"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.8128ad7e665e",
+      "gold_surface": "巴洗律的子孫",
+      "observed": "把洗律的子孫",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "巴",
+        "to": "把",
+        "syllable": "ba"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.a830e622c01a",
+      "gold_surface": "比結",
+      "observed": "庇結",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "比",
+        "to": "庇",
+        "syllable": "bi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.444848ba105f",
+      "gold_surface": "比拉的",
+      "observed": "彼拉的",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "比",
+        "to": "彼",
+        "syllable": "bi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.299e198dc502",
+      "gold_surface": "伯沙撒",
+      "observed": "泊沙撒",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "伯",
+        "to": "泊",
+        "syllable": "bo"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.ae7aaec17672",
+      "gold_surface": "哈達",
+      "observed": "哈答",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 1,
+        "from": "達",
+        "to": "答",
+        "syllable": "da"
+      },
+      "candidate_count": 3,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.5a1fccbd8ade",
+      "gold_surface": "便雅憫",
+      "observed": "邊雅憫",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "便",
+        "to": "邊",
+        "syllable": "bian"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.ffc09faca1b8",
+      "gold_surface": "城名叫亭哈巴",
+      "observed": "稱名叫亭哈巴",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "城",
+        "to": "稱",
+        "syllable": "cheng"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.e387235aed30",
+      "gold_surface": "耶和華的話臨到易多的孫子",
+      "observed": "業和華的話臨到易多的孫子",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "耶",
+        "to": "業",
+        "syllable": "ye"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.ff9afd47ec2e",
+      "gold_surface": "比利亞的",
+      "observed": "彼利亞的",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "比",
+        "to": "彼",
+        "syllable": "bi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.5ae2e4268370",
+      "gold_surface": "比賽的子孫",
+      "observed": "庇賽的子孫",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "比",
+        "to": "庇",
+        "syllable": "bi"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.16ffcf3496bf",
+      "gold_surface": "巴拉迦的兒子以利戶",
+      "observed": "罷拉迦的兒子以利戶",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "巴",
+        "to": "罷",
+        "syllable": "ba"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.f10eaf793fef",
+      "gold_surface": "耶何耶大的兒子比拿雅",
+      "observed": "葉何耶大的兒子比拿雅",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "耶",
+        "to": "葉",
+        "syllable": "ye"
+      },
+      "candidate_count": 4,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.bfb478e0bbe8",
+      "gold_surface": "基連",
+      "observed": "極連",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "基",
+        "to": "極",
+        "syllable": "ji"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.50cab9618827",
+      "gold_surface": "的兒子是",
+      "observed": "德兒子是",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "的",
+        "to": "德",
+        "syllable": "de"
+      },
+      "candidate_count": 12,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.a2b365565337",
+      "gold_surface": "波斯王塞魯士",
+      "observed": "泊斯王塞魯士",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "波",
+        "to": "泊",
+        "syllable": "bo"
+      },
+      "candidate_count": 1,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.74f5e70116cc",
+      "gold_surface": "大流士",
+      "observed": "打流士",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "大",
+        "to": "打",
+        "syllable": "da"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "id": "bible.person.tipnr.3d1babe80fea",
+      "gold_surface": "大坍",
+      "observed": "打坍",
+      "perturbation": {
+        "family": "single-han-same-pinyin",
+        "position": 0,
+        "from": "大",
+        "to": "打",
+        "syllable": "da"
+      },
+      "candidate_count": 2,
+      "gold_found": true
+    },
+    {
+      "negative": true,
+      "observed": "今天天氣很好",
+      "candidate_count": 0,
+      "abstain_correct": true
+    },
+    {
+      "negative": true,
+      "observed": "請把燈關掉",
+      "candidate_count": 0,
+      "abstain_correct": true
+    },
+    {
+      "negative": true,
+      "observed": "明天記得買牛奶",
+      "candidate_count": 0,
+      "abstain_correct": true
+    },
+    {
+      "negative": true,
+      "observed": "會議改到下午三點",
+      "candidate_count": 0,
+      "abstain_correct": true
+    },
+    {
+      "negative": true,
+      "observed": "這是一個普通句子",
+      "candidate_count": 0,
+      "abstain_correct": true
+    }
+  ]
+}
