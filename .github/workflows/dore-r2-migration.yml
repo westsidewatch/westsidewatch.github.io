@@ -8,13 +8,14 @@ on:
       - 'dore-core/cloudflare/ASSET-MIGRATION-BATCH-001.json'
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   migrate-batch-001:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - uses: actions/checkout@v4
       - name: Migrate Matthew 3 canonical cover motion
         env:
           DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
@@ -22,49 +23,54 @@ jobs:
         run: |
           set -euo pipefail
           test -n "${DORE_HEARTBEAT_TOKEN:-}" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 1; }
-
           body='{"source_path":"static/one/share/matthew-03-baptism-motion-r5-mobile.gif","asset_code":"ONE-MAT-03-BAPTISM-COVER-MOTION","title":"Matthew 3 — Baptism Cover Motion","description":"Canonical final retained motion cover for Matthew chapter 3.","alt_text":"Matthew 3 baptism cover motion","creator":"Doré","generated_by":"dore","preservation_class":"working","scripture_refs":["Matthew 3"],"products_using_it":["ONE"],"social_uses":["share","mobile"]}'
-
           for attempt in 1 2 3 4 5; do
-            echo "Migration attempt ${attempt}/5"
-            code=$(curl --silent --show-error --output response.json --write-out '%{http_code}' \
-              --request POST \
-              --header "Authorization: Bearer ${DORE_HEARTBEAT_TOKEN}" \
-              --header 'Content-Type: application/json' \
-              --data "$body" \
-              'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate' || true)
-            cat response.json || true
-            echo
-            if [ "$code" = "200" ]; then break; fi
-            if [ "$attempt" = "5" ]; then echo "Migration failed with HTTP ${code}"; exit 1; fi
+            code=$(curl --silent --show-error --output response.json --write-out '%{http_code}' --request POST \
+              --header "Authorization: Bearer ${DORE_HEARTBEAT_TOKEN}" --header 'Content-Type: application/json' \
+              --data "$body" 'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate' || true)
+            cat response.json || true; echo
+            [ "$code" = "200" ] && break
+            [ "$attempt" = "5" ] && { echo "Migration failed with HTTP ${code}"; exit 1; }
             sleep $((attempt * 15))
           done
-
           python3 - <<'PY'
           import json
-          with open('response.json', encoding='utf-8') as f:
-              r=json.load(f)
-          if not r.get('ok'):
-              raise SystemExit(f"migration response not ok: {r}")
-          if r.get('action') != 'dedupe_no_copy' and not r.get('registry_verified'):
-              raise SystemExit(f"registry verification did not pass: {r}")
-          print('MIGRATION_PASS', r.get('action'), r.get('target_key') or r.get('existing',{}).get('storage_locator'))
+          r=json.load(open('response.json'))
+          assert r.get('ok'), r
+          assert r.get('action')=='dedupe_no_copy' or r.get('registry_verified'), r
           PY
-
       - name: Verify searchable registry record
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --silent --show-error \
-            'https://westsidewatch-github-io.pages.dev/api/dore/assets/search?q=ONE-MAT-03-BAPTISM-COVER-MOTION' \
-            -o search.json
-          cat search.json
+          curl --fail --silent --show-error 'https://westsidewatch-github-io.pages.dev/api/dore/assets/search?q=ONE-MAT-03-BAPTISM-COVER-MOTION' -o search.json
           python3 - <<'PY'
           import json
-          with open('search.json', encoding='utf-8') as f:
-              r=json.load(f)
+          r=json.load(open('search.json'))
           rows=r.get('results') or r.get('assets') or []
-          if not any(x.get('asset_code')=='ONE-MAT-03-BAPTISM-COVER-MOTION' for x in rows):
-              raise SystemExit('canonical asset not found in registry search')
-          print('REGISTRY_SEARCH_PASS')
+          assert any(x.get('asset_code')=='ONE-MAT-03-BAPTISM-COVER-MOTION' for x in rows), r
           PY
+      - name: Persist PASS receipt
+        shell: bash
+        run: |
+          mkdir -p dore-core/cloudflare/receipts
+          python3 - <<'PY'
+          import json,datetime
+          r=json.load(open('response.json'))
+          s=json.load(open('search.json'))
+          out={
+            'batch_id':'asset-migration-001',
+            'status':'PASS',
+            'completed_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),
+            'asset_code':'ONE-MAT-03-BAPTISM-COVER-MOTION',
+            'migration':r,
+            'registry_search_verified':True,
+            'search_result_count':len(s.get('results') or s.get('assets') or [])
+          }
+          json.dump(out,open('dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-001-PASS.json','w'),ensure_ascii=False,indent=2)
+          PY
+          git config user.name 'dore-migration-bot'
+          git config user.email 'dore-migration-bot@users.noreply.github.com'
+          git add dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-001-PASS.json
+          git commit -m 'chore(dore): record batch 001 R2 migration PASS' || exit 0
+          git push
