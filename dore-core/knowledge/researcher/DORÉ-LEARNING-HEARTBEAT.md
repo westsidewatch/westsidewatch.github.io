@@ -51,7 +51,7 @@ Two original subtitle diagnostic gaps remain incompletely tested:
 ## Retention transfer practicum
 `RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md` Phase A confirmed that free-text Search still scores verses independently and has no dedicated semantic paraphrase candidate generator.
 
-Phase B design freeze is now complete and persisted in:
+Phase B's product-neutral contract was frozen in:
 `RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B.md`.
 
 Frozen outcome classes:
@@ -71,12 +71,22 @@ Frozen boundaries include:
 - subtitle-like outputs remain non-overwriting;
 - surface adapters may change presentation but not evidence class.
 
-This is not a PASS. Design evidence is not executable transfer evidence, and no fresh-final partition may be opened before the dev contract becomes executable and passes.
+### Phase B dev execution — PASS
+Development artifacts are now executable and persisted:
+- `fixtures/researcher06-retention-phase-b-dev.json`;
+- `tools/researcher06_retention_phase_b_dev_gate.py`;
+- `evidence/researcher06-retention-phase-b-dev-gate.json`.
+
+Result: **6/6 PASS** across adjacent-verse quotation, one-verse control, genuine paraphrase, ASR corruption, ambiguity/review, and ordinary negative.
+
+The dev gate also preserved provenance boundaries, kept `silent_overwrite=false`, abstained on the ordinary negative, and did not mislabel genuine paraphrase as textual correction.
+
+Important boundary: candidate evidence scores in this dev gate are fixture-declared. This establishes executable classification behavior against the frozen evidence contract, not independent retrieval quality, calibrated probabilities, production Search accuracy, or production subtitle accuracy.
 
 ## Current next action
-`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01_PHASE_B_DEV_FIXTURES_AND_HARNESS`.
+`DESIGN_AND_FREEZE_SEALED_HELD_OUT_TRANSFER_EXAM_WITHOUT_OPENING_IT`.
 
-Build a development-only fixture set covering adjacent-verse quotation, one-verse controls, genuine paraphrase, ASR corruption, ambiguity, and ordinary negatives, plus an executable product-neutral harness against the frozen Phase B contract. Record failures honestly. Only after a clean dev pass may a sealed held-out transfer exam be designed. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit.
+The held-out transfer exam must be frozen before first execution, cover all five outcome classes, include adjacent-verse quotation, genuine paraphrase, ASR-like corruption, ambiguity/review, and ordinary negative, and exercise at least two surfaces under the same product-neutral evidence class. Do not tune thresholds from held-out outcomes. Preserve any first-run failure. Only repeated held-out evidence of a reusable semantic-retrieval deficit may justify opening Researcher 07.
 
 ## Brain/Product status
 This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated research capability, not an automatically production-promoted feature.
