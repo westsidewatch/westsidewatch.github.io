@@ -1,0 +1,14 @@
+{
+  "status": "SEALED_HELD_OUT_FROZEN",
+  "frozen_at": "2026-08-24T18:05:00Z",
+  "contract": "RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B",
+  "anti_leakage": "Freeze before first execution. Never tune thresholds or mutate cases after opening; preserve first-run failure if any.",
+  "fixtures": [
+    {"id":"heldout_adjacent_quote","family":"adjacent-verse quotation","surface":"search_like","observed_text":"你們祈求就給你們尋找就尋見叩門就給你們開門因為凡祈求的就得著","candidates":[{"id":"Matt7:7-8","reference":"Matthew 7:7-8","text":"你們祈求，就給你們；尋找，就尋見；叩門，就給你們開門。因為凡祈求的，就得著；尋找的，就尋見；叩門的，就給他開門。","surface_similarity":0.92,"phonetic_similarity":0.89,"semantic_support":0.96,"contiguous":true}],"expected":"quotation_recovery"},
+    {"id":"heldout_paraphrase","family":"genuine paraphrase","surface":"search_like","observed_text":"真正重要的不是只聽道而是要把聽見的活出來","candidates":[{"id":"Jas1:22","reference":"James 1:22","text":"只是你們要行道，不要單單聽道，自己欺哄自己。","surface_similarity":0.43,"phonetic_similarity":0.20,"semantic_support":0.93,"contiguous":true}],"expected":"paraphrase_retrieval"},
+    {"id":"heldout_asr","family":"ASR corruption","surface":"subtitle_like","observed_text":"神所次的出人意外的平安必在基督耶穌裏保守你們的心懷意念","candidates":[{"id":"Phil4:7","reference":"Philippians 4:7","text":"神所賜、出人意外的平安，必在基督耶穌裡保守你們的心懷意念。","surface_similarity":0.86,"phonetic_similarity":0.97,"semantic_support":0.98,"contiguous":true}],"expected":"correction_proposal"},
+    {"id":"heldout_review","family":"ambiguity/review","surface":"subtitle_like","observed_text":"在人不能在神凡事都能","candidates":[{"id":"Matt19:26","reference":"Matthew 19:26","text":"在人這是不能的，在神凡事都能。","surface_similarity":0.94,"phonetic_similarity":0.94,"semantic_support":0.97,"contiguous":true},{"id":"Mark10:27","reference":"Mark 10:27","text":"在人是不能，在神卻不然，因為神凡事都能。","surface_similarity":0.92,"phonetic_similarity":0.93,"semantic_support":0.97,"contiguous":true}],"expected":"review"},
+    {"id":"heldout_negative","family":"ordinary non-biblical negative","surface":"neutral","observed_text":"明天上午十點把車送去保養然後買咖啡","candidates":[{"id":"Eccl3:1","reference":"Ecclesiastes 3:1","text":"凡事都有定期，天下萬務都有定時。","surface_similarity":0.11,"phonetic_similarity":0.07,"semantic_support":0.28,"contiguous":true}],"expected":"abstain"},
+    {"id":"heldout_exact_control","family":"one-verse quotation control","surface":"neutral","observed_text":"你的話是我腳前的燈是我路上的光","candidates":[{"id":"Ps119:105","reference":"Psalm 119:105","text":"你的話是我腳前的燈，是我路上的光。","surface_similarity":0.99,"phonetic_similarity":0.99,"semantic_support":0.99,"contiguous":true}],"expected":"quotation_recovery"}
+  ]
+}
