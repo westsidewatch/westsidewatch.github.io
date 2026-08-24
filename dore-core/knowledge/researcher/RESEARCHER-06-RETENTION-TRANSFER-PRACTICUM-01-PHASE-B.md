@@ -1,6 +1,6 @@
 # Researcher 06 — Retention Transfer Practicum 01 / Phase B
 
-Status: DESIGN FROZEN — DEV FIXTURES REQUIRED
+Status: DEV GATE PASS — SEALED HELD-OUT DESIGN AUTHORIZED
 Date: 2026-08-24
 
 ## Product-neutral evidence contract
@@ -63,10 +63,20 @@ The dev gate passes only if:
 - no ordinary negative yields a positive candidate;
 - every `subtitle_like` result preserves `silent_overwrite=false`.
 
+## Development execution — PASS
+Persisted artifacts:
+- `fixtures/researcher06-retention-phase-b-dev.json`
+- `tools/researcher06_retention_phase_b_dev_gate.py`
+- `evidence/researcher06-retention-phase-b-dev-gate.json`
+
+Result: 6/6 fixture families PASS under the frozen decision contract.
+
+Boundary: candidate evidence scores in the dev set are fixture-declared. This establishes executable classification behavior and evidence-boundary preservation, not independent retrieval accuracy, calibrated probabilities, production Search quality, or production subtitle accuracy.
+
 ## Anti-leakage boundary
-This is a development-only contract. No future fresh-final partition may be opened or tuned against until an executable dev harness passes this frozen contract. Passing the dev contract will authorize a sealed held-out transfer exam; it will not establish production subtitle or Search accuracy.
+The development contract is now executable and has passed. A sealed held-out transfer exam is therefore authorized. The held-out partition must be frozen before first execution; its cases must not be used to tune thresholds after opening. Any first-run failure must remain preserved and reopen learning rather than be erased by fixture edits.
 
 ## Next authorized action
-`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01_PHASE_B_DEV_FIXTURES_AND_HARNESS`.
+`DESIGN_AND_FREEZE_SEALED_HELD_OUT_TRANSFER_EXAM_WITHOUT_OPENING_IT`.
 
-Build a development-only fixture set covering all six families and an executable product-neutral harness against this frozen contract. Record failures honestly. Do not open Researcher 07 and do not create product-readable brain knowledge from this practicum unless a genuine learned knowledge node emerges.
+The exam must cover all five outcome classes, include at least one adjacent-verse quotation, one genuine paraphrase, one ASR-like corruption, one ambiguity/review case, and one ordinary negative, and must exercise at least two surfaces while preserving the same product-neutral evidence class. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit. Do not create product-readable brain knowledge from this practicum unless a genuine learned knowledge node emerges.
