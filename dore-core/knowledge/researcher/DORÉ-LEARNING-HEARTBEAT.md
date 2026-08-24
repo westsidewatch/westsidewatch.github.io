@@ -37,27 +37,35 @@ Summary:
 - subtitle silent overwrite false;
 - overall PASS.
 
-The final covers Scripture surface recovery, Mandarin phonetic evidence, biblical-entity corruption, mixed transcript noise, transliteration/alias handling, ambiguity, and an ordinary negative.
-
 Important boundary: Unit 09 is an integration-transfer gate and consumes fixture-declared candidates/anchors. Independent retrieval/generalization evidence remains Unit 08. Unit 09 does not establish production subtitle accuracy or calibrated probabilities. The frozen harness retained a `dev contract gate` note in score metadata; that wording is recorded as metadata debt and was not retroactively changed after the final opened.
 
-Researcher 06 therefore graduates with its full failure lineage intact: Unit 06's original one-shot held-out failure remains preserved and is not erased by later repair and success.
+Researcher 06 graduates with its failure lineage intact: Unit 06's original one-shot held-out failure remains preserved and is not erased by later repair and success.
 
 ## Post-graduation diagnosis
-`RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md` completed.
+`RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md` completed. No Researcher 07 was opened merely to continue the curriculum.
 
-No Researcher 07 was opened merely to continue the curriculum. Two original subtitle diagnostic gaps remain incompletely tested:
+Two original subtitle diagnostic gaps remain incompletely tested:
 - cross-verse quotation windows;
 - paraphrase/semantic retrieval distinct from correction.
 
-Current evidence is insufficient to call these a new reusable course-level deficit. Cross-verse handling is likely implementation/retrieval work; paraphrase retrieval requires repeated independent failure evidence before a new course is warranted.
+## Retention transfer practicum
+`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md` Phase A completed by re-inspecting the current Search implementation.
 
-黎明書局 and Doré's librarian/resource work are now explicitly treated as future real-work evidence surfaces for self-diagnosis, not automatic excuses to open another course.
+Findings:
+- free-text retrieval still scores verses independently; it does not construct contiguous adjacent-verse windows;
+- explicit reference ranges exist, but that is not cross-verse fuzzy quotation recovery;
+- fuzzy search remains surface/character based rather than a dedicated semantic paraphrase candidate generator.
+
+Classification:
+- cross-verse quotation = confirmed implementation/retrieval-model gap, not yet a new course-level deficit;
+- paraphrase-vs-correction = capability question still open; absence of implementation is insufficient evidence for Researcher 07.
+
+The practicum is not marked PASS. Architecture inspection is not a transfer exam, and supplied fixture targets must not be mistaken for semantic competence.
 
 ## Current next action
-`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01`.
+`RESEARCHER_06_RETENTION_TRANSFER_PRACTICUM_01_PHASE_B_DESIGN_FREEZE`.
 
-Build an offline retention-transfer set spanning cross-verse quotation, paraphrase-vs-correction distinction, noisy entity recovery, ambiguity, and ordinary negatives. Use the results to classify failures as implementation gaps, retention failures, or evidence for a genuinely new reusable capability/course. Preserve observed transcript separately, never silently overwrite subtitles, and do not promote to production merely because offline tests pass.
+Design a product-neutral contiguous-window + paraphrase/correction evidence contract and development-only fixture set covering adjacent-verse quotation, exact controls, genuine paraphrase, ASR corruption, ambiguity, and ordinary negatives. Preserve separate outcome classes for quotation recovery, paraphrase retrieval, correction proposal, review, and abstention. Do not open a fresh final until the development contract is executable and passes. Do not open Researcher 07 unless repeated held-out failures demonstrate a reusable semantic-retrieval deficit.
 
 ## Brain/Product status
 This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated research capability, not an automatically production-promoted feature.
