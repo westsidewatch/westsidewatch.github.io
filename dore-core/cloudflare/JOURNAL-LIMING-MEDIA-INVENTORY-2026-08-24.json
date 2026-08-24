@@ -1,0 +1,32 @@
+{
+  "milestone": "journal-liming-media-inventory",
+  "date": "2026-08-24",
+  "status": "PASS",
+  "journal": {
+    "content_path": "content/journal",
+    "local_media_binaries": 0,
+    "finding": "Current Journal section contains only content/journal/_index.md; vol-00 editorial structure is data in data/volumes/vol-00.yaml, not binary media.",
+    "placement": "KEEP structured editorial data in GitHub; future editorial photos/plates/cover binaries use R2 namespace journal/."
+  },
+  "liming_library": {
+    "master_path": "data/resources.json",
+    "local_media_binaries": 0,
+    "finding": "Liming/Dawn Library is currently a structured resource master and external-resource catalog. No local image/cover binary fields are present in the master inventory requiring migration.",
+    "placement": "KEEP data/resources.json in GitHub as versioned structured source; future owned/downloaded library media use R2 namespace library/media/ and D1 Asset Registry relationships via liming_resource_ids_json."
+  },
+  "migration": {
+    "eligible_local_binaries": 0,
+    "r2_writes": 0,
+    "d1_new_rows": 0,
+    "github_binary_deletions": 0,
+    "reason": "No Journal/Liming local content-media binaries currently exist to migrate. Moving structured JSON/YAML to object storage would weaken atomic versioning and is not justified by access pattern."
+  },
+  "governance": {
+    "github": ["data/resources.json", "data/volumes/vol-00.yaml", "content/journal/_index.md", "code/UI/brand assets"],
+    "r2_future_namespaces": ["journal/", "library/media/"],
+    "registry_requirements": ["asset_code", "content_hash", "provenance", "rights/license", "preservation_class", "products_using_it", "liming_resource_ids"],
+    "canonical_dore_001_241_touched": false,
+    "search_corpus_json_touched": false
+  },
+  "closure": "Inventory/classification complete; zero-migration is the correct governed outcome for the current repository state."
+}
