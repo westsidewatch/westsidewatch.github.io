@@ -20,76 +20,66 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 ## Sensory state checked this heartbeat
 `dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED → research.nt.mary-count`; therefore no live sensory research preempted the course loop.
 
-## Researcher 06 — graduation evidence
-The previously required Unit 09 development evidence existed and passed 10/10. A separate sealed fresh-final partition was then created and executed once under the frozen contract.
-
-Authoritative first final result:
-`evidence/researcher06-unit09-final-gate.json`
-
-Summary:
-- total 7;
-- passed 7;
-- failed 0;
-- ordinary-negative abstention PASS;
-- ambiguity not forced PASS;
-- same generic result object consumed by Search-like and subtitle-proofreader adapters;
-- provenance preserved through both adapters;
-- subtitle silent overwrite false;
-- overall PASS.
-
-Important boundary: Unit 09 is an integration-transfer gate and consumes fixture-declared candidates/anchors. Independent retrieval/generalization evidence remains Unit 08. Unit 09 does not establish production subtitle accuracy or calibrated probabilities. The frozen harness retained a `dev contract gate` note in score metadata; that wording is recorded as metadata debt and was not retroactively changed after the final opened.
-
-Researcher 06 graduates with its failure lineage intact: Unit 06's original one-shot held-out failure remains preserved and is not erased by later repair and success.
-
-## Post-graduation diagnosis
-`RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md` completed. No Researcher 07 was opened merely to continue the curriculum.
-
-Two original subtitle diagnostic gaps remain incompletely tested:
-- cross-verse quotation windows;
-- paraphrase/semantic retrieval distinct from correction.
-
-## Retention transfer practicum
-`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md` Phase A confirmed that free-text Search still scores verses independently and has no dedicated semantic paraphrase candidate generator.
-
-Phase B's product-neutral contract was frozen in:
-`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B.md`.
-
-Frozen outcome classes:
+## Researcher 06 retention transfer — Phase B
+The product-neutral evidence contract separates:
 - `quotation_recovery`;
 - `paraphrase_retrieval`;
 - `correction_proposal`;
 - `review`;
 - `abstain`.
 
-Frozen boundaries include:
-- preserve observed text verbatim;
-- treat adjacent contiguous verse windows as first-class retrieval candidates;
-- never infer textual correction from semantic/theological familiarity alone;
-- genuine paraphrase may retrieve but is not a correction;
-- ambiguous/conflicting evidence goes to review;
-- ordinary negatives abstain;
-- subtitle-like outputs remain non-overwriting;
-- surface adapters may change presentation but not evidence class.
+Development execution previously passed 6/6 under frozen thresholds while preserving provenance, abstention, and `silent_overwrite=false`.
 
-### Phase B dev execution — PASS
-Development artifacts are now executable and persisted:
-- `fixtures/researcher06-retention-phase-b-dev.json`;
-- `tools/researcher06_retention_phase_b_dev_gate.py`;
-- `evidence/researcher06-retention-phase-b-dev-gate.json`.
+### Sealed held-out first run — PASS
+The held-out partition was frozen before opening at commit:
+`136a3eec9e4a35df2fe46bb7a2e9a8a8873d1248`.
 
-Result: **6/6 PASS** across adjacent-verse quotation, one-verse control, genuine paraphrase, ASR corruption, ambiguity/review, and ordinary negative.
+Frozen fixture:
+`fixtures/researcher06-retention-phase-b-heldout.json`.
 
-The dev gate also preserved provenance boundaries, kept `silent_overwrite=false`, abstained on the ordinary negative, and did not mislabel genuine paraphrase as textual correction.
+First-run evidence:
+`evidence/researcher06-retention-phase-b-heldout-first-run.json`.
 
-Important boundary: candidate evidence scores in this dev gate are fixture-declared. This establishes executable classification behavior against the frozen evidence contract, not independent retrieval quality, calibrated probabilities, production Search accuracy, or production subtitle accuracy.
+Result: **6/6 PASS** with no post-open threshold tuning.
+
+Coverage included:
+- adjacent-verse quotation;
+- genuine paraphrase;
+- ASR-like corruption;
+- ambiguity/review;
+- ordinary negative;
+- one-verse control;
+- Search-like, subtitle-like and neutral surfaces under one evidence class.
+
+The result preserves the essential boundaries: paraphrase was not mislabeled as correction, ambiguity was not forced, the ordinary negative abstained, and subtitle-like handling kept `silent_overwrite=false`.
+
+### Critical limitation
+Both dev and held-out cases still supplied candidate evidence channels as fixture inputs. Therefore this is a transfer PASS for **classification and evidence discipline**, not proof of independent candidate retrieval, calibrated probabilities, production Search accuracy, or production subtitle accuracy.
+
+No Researcher 07 is justified by this result.
+
+## Next retention practicum opened
+`RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-02.md` is now active.
+
+Purpose: independently retrieve candidates from the real Scripture corpus rather than fixture-declared candidates.
+
+First probe:
+- construct one-, two-, and justified three-verse contiguous windows from the authoritative corpus;
+- compare against current verse-by-verse retrieval;
+- measure correct-window recall under a frozen candidate budget;
+- preserve verse provenance and first failures.
+
+Second probe:
+- determine whether an existing generic semantic mechanism can generate paraphrase candidates;
+- semantic similarity may retrieve but must never become textual-correction evidence by itself.
 
 ## Current next action
-`DESIGN_AND_FREEZE_SEALED_HELD_OUT_TRANSFER_EXAM_WITHOUT_OPENING_IT`.
+`LOCATE_AUTHORITATIVE_SCRIPTURE_CORPUS_AND_BUILD_NON_PRODUCTION_CONTIGUOUS_WINDOW_RETRIEVAL_HARNESS`.
 
-The held-out transfer exam must be frozen before first execution, cover all five outcome classes, include adjacent-verse quotation, genuine paraphrase, ASR-like corruption, ambiguity/review, and ordinary negative, and exercise at least two surfaces under the same product-neutral evidence class. Do not tune thresholds from held-out outcomes. Preserve any first-run failure. Only repeated held-out evidence of a reusable semantic-retrieval deficit may justify opening Researcher 07.
+Only repeated fresh evidence of a reusable semantic-retrieval deficit, after ordinary implementation/provider gaps are separated, may justify opening Researcher 07.
 
 ## Brain/Product status
-This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated research capability, not an automatically production-promoted feature.
+This heartbeat changed no product-readable knowledge node in `static/dore/brain/knowledge-index.json`; therefore no Brain → Product regression was required. Researcher 06 remains a graduated capability under retention testing, not automatically production-promoted.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
