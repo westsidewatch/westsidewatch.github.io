@@ -1,0 +1,24 @@
+{
+  "contract": "RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B",
+  "partition": "SEALED_HELD_OUT_FIRST_RUN",
+  "opened_after_fixture_freeze_commit": "136a3eec9e4a35df2fe46bb7a2e9a8a8873d1248",
+  "classifier": "same frozen thresholds as researcher06_retention_phase_b_dev_gate.py",
+  "status": "PASS",
+  "total": 6,
+  "passed": 6,
+  "failed": 0,
+  "results": [
+    {"id":"heldout_adjacent_quote","family":"adjacent-verse quotation","surface":"search_like","expected":"quotation_recovery","actual":"quotation_recovery","passed":true,"observed_text_preserved":true,"provenance_preserved":true,"silent_overwrite":false},
+    {"id":"heldout_paraphrase","family":"genuine paraphrase","surface":"search_like","expected":"paraphrase_retrieval","actual":"paraphrase_retrieval","passed":true,"observed_text_preserved":true,"provenance_preserved":true,"silent_overwrite":false},
+    {"id":"heldout_asr","family":"ASR corruption","surface":"subtitle_like","expected":"correction_proposal","actual":"correction_proposal","passed":true,"observed_text_preserved":true,"provenance_preserved":true,"silent_overwrite":false},
+    {"id":"heldout_review","family":"ambiguity/review","surface":"subtitle_like","expected":"review","actual":"review","passed":true,"observed_text_preserved":true,"provenance_preserved":true,"silent_overwrite":false},
+    {"id":"heldout_negative","family":"ordinary non-biblical negative","surface":"neutral","expected":"abstain","actual":"abstain","passed":true,"observed_text_preserved":true,"provenance_preserved":false,"silent_overwrite":false},
+    {"id":"heldout_exact_control","family":"one-verse quotation control","surface":"neutral","expected":"quotation_recovery","actual":"quotation_recovery","passed":true,"observed_text_preserved":true,"provenance_preserved":true,"silent_overwrite":false}
+  ],
+  "boundaries": [
+    "Fixture-declared evidence channels; this is not independent retrieval quality.",
+    "No calibrated probability claim.",
+    "No production Search or subtitle accuracy claim.",
+    "First-run result preserved without post-open threshold tuning."
+  ]
+}
