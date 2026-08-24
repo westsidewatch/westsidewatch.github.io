@@ -1,0 +1,670 @@
+{
+  "generated_at": "2026-08-24T13:18:30.761Z",
+  "summary": {
+    "partition": "unit09-development-only",
+    "encoder": {
+      "mandarin": {
+        "id": "mandarin-pinyin-pro-v2-research",
+        "source": "pinyin-pro@3.29.3",
+        "tone": "none",
+        "status": "research-only"
+      },
+      "english": {
+        "id": "english-metaphone-lite-v1",
+        "source": "local",
+        "status": "unchanged-control"
+      }
+    },
+    "total": 10,
+    "passed": 10,
+    "failed": 0,
+    "ordinary_negative_abstention": true,
+    "ambiguous_not_forced": true,
+    "shared_generic_object": true,
+    "subtitle_silent_overwrite": false,
+    "pass": true
+  },
+  "results": [
+    {
+      "id": "u09d01",
+      "family": "exact_scripture",
+      "generic": {
+        "observed": "耶和華是我的牧者我必不至缺乏",
+        "candidate": "耶和華是我的牧者，我必不至缺乏。",
+        "source": "Psalm 23:1",
+        "canonical_anchor": "Psalm 23:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "耶和華是我的牧者我必不至缺乏",
+        "candidate": "耶和華是我的牧者，我必不至缺乏。",
+        "canonical_anchor": "Psalm 23:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "耶和華是我的牧者我必不至缺乏",
+        "candidate": "耶和華是我的牧者，我必不至缺乏。",
+        "canonical_anchor": "Psalm 23:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d02",
+      "family": "partial_scripture",
+      "generic": {
+        "observed": "你們要休息要知道我是神",
+        "candidate": "你們要休息，要知道我是神！",
+        "source": "Psalm 46:10",
+        "canonical_anchor": "Psalm 46:10",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "你們要休息要知道我是神",
+        "candidate": "你們要休息，要知道我是神！",
+        "canonical_anchor": "Psalm 46:10",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "你們要休息要知道我是神",
+        "candidate": "你們要休息，要知道我是神！",
+        "canonical_anchor": "Psalm 46:10",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d03",
+      "family": "mandarin_homophone",
+      "generic": {
+        "observed": "以賽亞先知",
+        "candidate": "以賽亞先知",
+        "source": "biblical_entity:Isaiah",
+        "canonical_anchor": "biblical_entity:Isaiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "以賽亞先知",
+        "candidate": "以賽亞先知",
+        "canonical_anchor": "biblical_entity:Isaiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "以賽亞先知",
+        "candidate": "以賽亞先知",
+        "canonical_anchor": "biblical_entity:Isaiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d04",
+      "family": "entity_corruption",
+      "generic": {
+        "observed": "耶力米",
+        "candidate": "耶利米",
+        "source": "biblical_entity:Jeremiah",
+        "canonical_anchor": "biblical_entity:Jeremiah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "耶力米",
+        "candidate": "耶利米",
+        "canonical_anchor": "biblical_entity:Jeremiah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "耶力米",
+        "candidate": "耶利米",
+        "canonical_anchor": "biblical_entity:Jeremiah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d05",
+      "family": "deletion",
+      "generic": {
+        "observed": "神愛世人甚至將獨生子賜給他們叫一切信他的不至滅亡反得永生",
+        "candidate": "神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。",
+        "source": "John 3:16",
+        "canonical_anchor": "John 3:16",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "神愛世人甚至將獨生子賜給他們叫一切信他的不至滅亡反得永生",
+        "candidate": "神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。",
+        "canonical_anchor": "John 3:16",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "神愛世人甚至將獨生子賜給他們叫一切信他的不至滅亡反得永生",
+        "candidate": "神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。",
+        "canonical_anchor": "John 3:16",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d06",
+      "family": "insertion",
+      "generic": {
+        "observed": "耶穌回答說人若不重生真的就不能見神的國",
+        "candidate": "耶穌回答說：我實實在在地告訴你，人若不重生，就不能見神的國。",
+        "source": "John 3:3",
+        "canonical_anchor": "John 3:3",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "search_adapter": {
+        "observed": "耶穌回答說人若不重生真的就不能見神的國",
+        "candidate": "耶穌回答說：我實實在在地告訴你，人若不重生，就不能見神的國。",
+        "canonical_anchor": "John 3:3",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "subtitle_adapter": {
+        "observed": "耶穌回答說人若不重生真的就不能見神的國",
+        "candidate": "耶穌回答說：我實實在在地告訴你，人若不重生，就不能見神的國。",
+        "canonical_anchor": "John 3:3",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d07",
+      "family": "transliteration_alias",
+      "generic": {
+        "observed": "彼得和磯法是不是同一個人",
+        "candidate": "彼得／磯法",
+        "source": "biblical_entity:Peter",
+        "canonical_anchor": "biblical_entity:Peter",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "search_adapter": {
+        "observed": "彼得和磯法是不是同一個人",
+        "candidate": "彼得／磯法",
+        "canonical_anchor": "biblical_entity:Peter",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "subtitle_adapter": {
+        "observed": "彼得和磯法是不是同一個人",
+        "candidate": "彼得／磯法",
+        "canonical_anchor": "biblical_entity:Peter",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d08",
+      "family": "ambiguous",
+      "generic": {
+        "observed": "馬利亞在那裡",
+        "candidate": null,
+        "source": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "search_adapter": {
+        "observed": "馬利亞在那裡",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "subtitle_adapter": {
+        "observed": "馬利亞在那裡",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d09",
+      "family": "ordinary_negative",
+      "generic": {
+        "observed": "今天下午記得買牛奶",
+        "candidate": null,
+        "source": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "search_adapter": {
+        "observed": "今天下午記得買牛奶",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "subtitle_adapter": {
+        "observed": "今天下午記得買牛奶",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09d10",
+      "family": "ordinary_negative",
+      "generic": {
+        "observed": "會議改到星期五上午十點",
+        "candidate": null,
+        "source": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "search_adapter": {
+        "observed": "會議改到星期五上午十點",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "subtitle_adapter": {
+        "observed": "會議改到星期五上午十點",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    }
+  ]
+}
