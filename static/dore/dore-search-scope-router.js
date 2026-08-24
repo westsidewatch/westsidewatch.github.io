@@ -2,12 +2,86 @@
 'use strict';
 const $=s=>document.querySelector(s);
 const QUESTION=/(?:[?？]|有沒有|有没有|是否|是不是|為何|为何|為什麼|为什么|如何|怎麼|怎么|哪裡|哪里|何處|何处|誰|谁|幾|几|多少|意思|解釋|解释|關係|关系|區別|区别|原因|目的|代表|象徵|象征|預表|预表|嗎$|吗$)/u;
+const EXISTENCE_QUESTION=/^(?:有沒有|有没有|是否有|是不是有|有|存在|能否找到|可否找到)\s*(.+?)(?:嗎|吗|呢)?[?？]?$/u;
 const OT_NAMES=['創世記','创世记','出埃及記','出埃及记','利未記','利未记','民數記','民数记','申命記','申命记','約書亞記','约书亚记','士師記','士师记','路得記','路得记','撒母耳記上','撒母耳记上','撒母耳記下','撒母耳记下','列王紀上','列王纪上','列王紀下','列王纪下','歷代志上','历代志上','歷代志下','历代志下','以斯拉記','以斯拉记','尼希米記','尼希米记','以斯帖記','以斯帖记','約伯記','约伯记','詩篇','诗篇','箴言','傳道書','传道书','雅歌','以賽亞書','以赛亚书','耶利米書','耶利米书','耶利米哀歌','以西結書','以西结书','但以理書','但以理书','何西阿書','何西阿书','約珥書','约珥书','阿摩司書','阿摩司书','俄巴底亞書','俄巴底亚书','約拿書','约拿书','彌迦書','弥迦书','那鴻書','那鸿书','哈巴谷書','哈巴谷书','西番雅書','西番雅书','哈該書','哈该书','撒迦利亞書','撒迦利亚书','瑪拉基書','玛拉基书'];
 const OT_CODES=new Set(['GEN','EXO','LEV','NUM','DEU','JOS','JDG','RUT','1SA','2SA','1KI','2KI','1CH','2CH','EZR','NEH','EST','JOB','PSA','PRO','ECC','SNG','ISA','JER','LAM','EZK','DAN','HOS','JOL','AMO','OBA','JON','MIC','NAM','HAB','ZEP','HAG','ZEC','MAL']);
-function parse(raw){const q=String(raw||'').trim();if(!q||QUESTION.test(q))return null;let m=q.match(/^(?:舊約|旧约|old\s+testament|\bOT\b)\s*[:：-]?\s*(.+)$/iu);if(m&&m[1].trim())return{scope:'OT',term:m[1].trim(),original:q};m=q.match(/^(?:新約|新约|new\s+testament|\bNT\b)\s*[:：-]?\s*(.+)$/iu);if(m&&m[1].trim())return{scope:'NT',term:m[1].trim(),original:q};return null}
-function isOT(card){const text=card?.querySelector('header')?.textContent||'';if(OT_NAMES.some(n=>text.includes(n)))return true;for(const code of OT_CODES)if(new RegExp(`\\b${code}\\b`).test(text))return true;return false}
-function applyScope(meta){const box=$('#results'),count=$('#result-count');if(!box||!meta)return;const cards=[...box.querySelectorAll('.result-card')];if(!cards.length)return;let kept=0;for(const card of cards){const keep=meta.scope==='OT'?isOT(card):!isOT(card);card.hidden=!keep;if(keep)kept++}if(count)count.textContent=`${kept} 個結果 · ${meta.scope==='OT'?'舊約':'新約'}範圍`;if(!kept&&box){box.innerHTML='<div class="empty">在指定的'+(meta.scope==='OT'?'舊約':'新約')+'範圍內沒有足夠可靠的候選。</div>'}}
-const form=$('#search-form'),input=$('#search-input');if(!form||!input)return;
-form.addEventListener('submit',()=>{const meta=parse(input.value);if(!meta)return;window.DoreSearchScope=meta;input.value=meta.term;setTimeout(()=>{applyScope(meta);input.value=meta.original;const u=new URL(location.href);u.searchParams.set('q',meta.original);history.replaceState({},'',u)},0)},true);
+const SCOPE_PATTERNS=[['OT',/^(?:舊約|旧约|old\s+testament|\bOT\b)\s*[:：-]?\s*(.+)$/iu],['NT',/^(?:新約|新约|new\s+testament|\bNT\b)\s*[:：-]?\s*(.+)$/iu]];
+function parse(raw){
+  const q=String(raw||'').trim();
+  if(!q)return null;
+  for(const[scope,re]of SCOPE_PATTERNS){
+    const m=q.match(re);
+    if(!m)continue;
+    const rest=m[1].trim();
+    if(!rest)return null;
+    const existence=rest.match(EXISTENCE_QUESTION);
+    if(existence&&existence[1].trim())return{scope,term:existence[1].trim(),original:q,mode:'question-evidence'};
+    if(QUESTION.test(rest))return null;
+    return{scope,term:rest,original:q,mode:'scope'};
+  }
+  return null;
+}
+function isOT(card){
+  const text=card?.querySelector('header')?.textContent||'';
+  if(OT_NAMES.some(n=>text.includes(n)))return true;
+  for(const code of OT_CODES)if(new RegExp(`\\b${code}\\b`).test(text))return true;
+  return false;
+}
+function scopeLabel(meta){return meta.scope==='OT'?'舊約':'新約'}
+function applyScope(meta){
+  const box=$('#results'),count=$('#result-count');
+  if(!box||!meta)return;
+  box.querySelector('.scope-empty')?.remove();
+  const cards=[...box.querySelectorAll('.result-card')];
+  let kept=0;
+  for(const card of cards){
+    const keep=meta.scope==='OT'?isOT(card):!isOT(card);
+    card.hidden=!keep;
+    if(keep)kept++;
+  }
+  const prefix=meta.mode==='question-evidence'?'問題證據 · ':'';
+  if(count)count.textContent=`${kept} 個結果 · ${prefix}${scopeLabel(meta)}範圍`;
+  if(!cards.length){
+    const empty=box.querySelector('.empty');
+    if(empty)empty.textContent=`在指定的${scopeLabel(meta)}範圍內沒有足夠可靠的候選。`;
+    return;
+  }
+  if(!kept){
+    const empty=document.createElement('div');
+    empty.className='empty scope-empty';
+    empty.textContent=`在指定的${scopeLabel(meta)}範圍內沒有足夠可靠的候選。`;
+    box.prepend(empty);
+  }
+}
+function restore(meta){
+  input.value=meta.original;
+  const u=new URL(location.href);
+  u.searchParams.set('q',meta.original);
+  history.replaceState({},'',u);
+}
+const form=$('#search-form'),input=$('#search-input'),results=$('#results');
+if(!form||!input||!results)return;
+let pending=null;
+let renderVersion=0;
+const observer=new MutationObserver(()=>{
+  renderVersion++;
+  if(!pending)return;
+  const version=renderVersion;
+  queueMicrotask(()=>{
+    if(!pending||version!==renderVersion)return;
+    const meta=pending;
+    pending=null;
+    applyScope(meta);
+    restore(meta);
+  });
+});
+observer.observe(results,{childList:true,subtree:true});
+form.addEventListener('submit',()=>{
+  const meta=parse(input.value);
+  if(!meta){pending=null;return;}
+  window.DoreSearchScope=meta;
+  pending=meta;
+  input.value=meta.term;
+},true);
 window.DoreSearchScopeRouter={parse,applyScope};
 })();
