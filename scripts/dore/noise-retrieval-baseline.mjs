@@ -6,12 +6,11 @@ const split=args.has('--test')?'test':'dev';
 if(split==='test'&&args.has('--tune')) throw new Error('Refusing to tune on sealed held-out test fixtures');
 const fixturePath=`dore-core/knowledge/researcher/fixtures/noise-retrieval-${split}.json`;
 const suite=JSON.parse(fs.readFileSync(fixturePath,'utf8'));
-const scripture=JSON.parse(fs.readFileSync('static/dore/original-index.json','utf8'));
+const scripture=JSON.parse(fs.readFileSync('static/dore/search-index.json','utf8'));
 const entities=JSON.parse(fs.readFileSync('static/dore/entity-index.json','utf8'));
 const norm=s=>String(s??'').toLowerCase().normalize('NFKC').replace(/[\s.,;:!?，。；：！？「」『』()（）\-–—_'"`]/g,'');
-const flat=(x,out=[])=>{if(Array.isArray(x))for(const v of x)flat(v,out);else if(x&&typeof x==='object'){if(typeof x.text==='string')out.push({id:x.id||x.ref||x.reference||`text:${out.length}`,text:x.text,kind:'scripture'});for(const v of Object.values(x))if(v&&typeof v==='object')flat(v,out)}return out};
-const verses=flat(scripture);
-const entityRows=flat(entities).map(x=>({...x,kind:'entity'}));
+const verses=(scripture.verses||[]).map(v=>({id:v.r||`${v.b}.${v.c}.${v.v}`,text:[v.z,v.e].filter(Boolean).join(' '),kind:'scripture'}));
+const entityRows=(entities.entities||[]).map((e,i)=>({id:e.id||e.k||`entity:${i}`,text:[e.p,...(e.a||[]).map(a=>a?.v)].filter(Boolean).join(' '),kind:'entity'}));
 const phoneticKey=(text,language)=>language==='zh'?encodeMandarin(text):encodeEnglish(text);
 
 function pushUnique(c,row,channel,budget,seen){
