@@ -35,12 +35,14 @@ Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/
 Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS.
 Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS.
 Unit 05: executable non-production measurement harness + separated dev/sealed-test fixtures + tuning guard, 8/8 PASS.
-Unit 06: reproducible versioned encoder implementation committed. `mandarin-pinyin-lite-v1` exposes explicit supported Han→pinyin syllables plus deterministic unknown-Han fallbacks; `english-metaphone-lite-v1` provides deterministic rule-based phonetic keys. An executable self-test and GitHub gate were added. Only dev fixtures were expanded; sealed held-out fixtures remain unopened. Dev calibration and held-out evaluation are not yet passed, so no production or brain promotion is authorized.
+Unit 06: reproducible versioned encoder implementation committed. `mandarin-pinyin-lite-v1` and `english-metaphone-lite-v1` are integrated into the non-production harness. A dedicated dev calibration workflow now persists machine-readable evidence.
+
+First measured dev run: FAIL — recall-at-budget `0`, three gold misses, while both negative abstention fixtures were correctly empty. The failure was traced to the harness reading `original-index.json` with a generic `text` flattener even though product Scripture text lives in `search-index.json`, and to treating the entity index as generic text despite its `entities[].p` / alias schema. This was an instrumentation/schema failure rather than evidence against the encoders. The harness was repaired to consume the actual product Scripture and entity schemas. The sealed held-out split remains unopened.
 
 ## Current next action
-`RESEARCHER_06_UNIT_06_OBSERVE_ENCODER_GATE_THEN_INTEGRATE_DEV_ONLY_PHONETIC_CHANNEL`.
+`RESEARCHER_06_UNIT_06_OBSERVE_REPAIRED_DEV_CALIBRATION`.
 
-Observe the executable encoder gate. If it passes, integrate the versioned channels into the non-production retrieval harness, calibrate bounded candidate parameters using only development fixtures, freeze them, then open the sealed final test only for evaluation. Do not wire into production before held-out evidence passes.
+Observe the rerun persisted by `.github/workflows/dore-researcher06-dev-calibration.yml`. If development recall/abstention evidence passes the Unit 06 gate, freeze parameters before opening the sealed final test for evaluation. If it still fails, diagnose only against dev evidence. Do not wire production or promote a Researcher-06 brain capability before held-out evidence passes.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are now evidenced. The remaining product acceptance is browser-level: verify a current Search deployment itself POSTs a fresh unknown query into sensory memory and, after consolidation, surfaces the live brain result without per-question UI logic.
