@@ -19,17 +19,18 @@ function dispatch(detail){
   if(!detail?.query)return;
   window.dispatchEvent(new CustomEvent(EVENT,{detail}));
 }
-function onSubmit(){
+function onSubmit(event){
+  const form=event.target;
+  if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;
   const detail=snapshot();
   if(!detail.query)return;
   setTimeout(()=>dispatch(detail),0);
 }
 function init(){
-  const form=$('#search-form');
-  if(!form||form.dataset.doreRuntimeBound)return;
-  form.dataset.doreRuntimeBound='1';
-  form.addEventListener('submit',onSubmit,false);
+  if(document.documentElement.dataset.doreRuntimeBound)return;
+  document.documentElement.dataset.doreRuntimeBound='1';
+  document.addEventListener('submit',onSubmit,true);
 }
-window.DoreSearchRuntime={version:'1.0.0',event:EVENT,snapshot,dispatch};
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
+window.DoreSearchRuntime={version:'1.1.0',event:EVENT,snapshot,dispatch};
+init();
 })();
