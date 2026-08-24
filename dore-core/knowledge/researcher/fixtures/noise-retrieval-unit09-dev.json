@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "partition": "unit09-development-only",
+  "purpose": "Exercise one product-neutral retrieval result through Search-like and subtitle-proofreader adapters before any fresh final is opened.",
+  "fixtures": [
+    {"id":"u09d01","family":"exact_scripture","observed":"耶和華是我的牧者我必不至缺乏","candidate":"耶和華是我的牧者，我必不至缺乏。","anchor":"Psalm 23:1","decision":"suggest"},
+    {"id":"u09d02","family":"partial_scripture","observed":"你們要休息要知道我是神","candidate":"你們要休息，要知道我是神！","anchor":"Psalm 46:10","decision":"suggest"},
+    {"id":"u09d03","family":"mandarin_homophone","observed":"以賽亞先知","candidate":"以賽亞先知","anchor":"biblical_entity:Isaiah","decision":"suggest"},
+    {"id":"u09d04","family":"entity_corruption","observed":"耶力米","candidate":"耶利米","anchor":"biblical_entity:Jeremiah","decision":"suggest"},
+    {"id":"u09d05","family":"deletion","observed":"神愛世人甚至將獨生子賜給他們叫一切信他的不至滅亡反得永生","candidate":"神愛世人，甚至將他的獨生子賜給他們，叫一切信他的，不至滅亡，反得永生。","anchor":"John 3:16","decision":"suggest"},
+    {"id":"u09d06","family":"insertion","observed":"耶穌回答說人若不重生真的就不能見神的國","candidate":"耶穌回答說：我實實在在地告訴你，人若不重生，就不能見神的國。","anchor":"John 3:3","decision":"review"},
+    {"id":"u09d07","family":"transliteration_alias","observed":"彼得和磯法是不是同一個人","candidate":"彼得／磯法","anchor":"biblical_entity:Peter","decision":"review"},
+    {"id":"u09d08","family":"ambiguous","observed":"馬利亞在那裡","candidate":null,"anchor":null,"decision":"abstain"},
+    {"id":"u09d09","family":"ordinary_negative","observed":"今天下午記得買牛奶","candidate":null,"anchor":null,"decision":"abstain"},
+    {"id":"u09d10","family":"ordinary_negative","observed":"會議改到星期五上午十點","candidate":null,"anchor":null,"decision":"abstain"}
+  ]
+}
