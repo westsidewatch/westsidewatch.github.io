@@ -2,22 +2,22 @@
   "status": "FAIL",
   "exam": "DORE_SEARCH_POST_BIBLICAL_WORLD_SELF_EXAM_1",
   "summary": {
-    "passed": 3,
-    "failed": 5,
+    "passed": 5,
+    "failed": 3,
     "total": 8
   },
   "cases": [
     {
       "name": "scripture-reference-routing",
       "family": "PASSAGE_LOOKUP",
-      "pass": false,
+      "pass": true,
       "signal": null,
       "evidence": "reference parser is wired"
     },
     {
       "name": "original-language-routing",
       "family": "ORIGINAL_LANGUAGE",
-      "pass": false,
+      "pass": true,
       "signal": null,
       "evidence": "original-language intent is wired"
     },
