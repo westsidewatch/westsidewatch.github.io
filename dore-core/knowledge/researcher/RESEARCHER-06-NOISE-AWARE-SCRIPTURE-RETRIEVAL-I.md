@@ -39,18 +39,20 @@ The executable reference harness now:
 Gate: 8/8 PASS.
 
 ## Unit 06 — Versioned Phonetic Encoders and Dev Calibration
-Status: IN PROGRESS — IMPLEMENTATION COMMITTED; CALIBRATION GATE PENDING
-Evidence: `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`, `scripts/dore/phonetic-encoders.mjs`, `scripts/dore/phonetic-encoder-selftest.mjs`, `.github/workflows/dore-researcher06-phonetic-gate.yml`.
+Status: IN PROGRESS — IMPLEMENTATION COMMITTED; EXECUTABLE DEV CALIBRATION GATE LAUNCHED
+Evidence: `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`, `scripts/dore/phonetic-encoders.mjs`, `scripts/dore/phonetic-encoder-selftest.mjs`, `.github/workflows/dore-researcher06-phonetic-gate.yml`, `.github/workflows/dore-researcher06-dev-calibration.yml`.
 
 Committed encoder versions:
 - `mandarin-pinyin-lite-v1` with explicit auditable Han→syllable mappings and deterministic unknown-Han fallbacks;
 - `english-metaphone-lite-v1` with deterministic rule-based phonetic normalization.
 
-Only development fixtures were expanded. The sealed test split remains unopened and unchanged. No production wiring or brain promotion is authorized yet.
+The non-production retrieval harness now imports these versioned encoders and exposes phonetic provenance in its measurement output. A dedicated development-only GitHub gate has been added to run the encoder self-test first, then execute the retrieval harness against `noise-retrieval-dev.json`, and persist both NDJSON case evidence and a machine-readable summary under `dore-core/knowledge/researcher/evidence/`.
+
+The sealed test split remains unopened and tuning on it is still programmatically refused. No production wiring or brain promotion is authorized yet.
 
 ## Current capability boundary
-Units 01–05 prove the error model, bounded candidate architecture, evidence-fusion/calibration rules, phonetic-index design, fixture discipline, and an executable non-production measurement harness. Unit 06 now has reproducible encoder code but has **not** yet passed dev calibration or held-out evaluation. It still does not prove calibrated production candidate budgets, comprehensive Mandarin pronunciation coverage, or end-to-end subtitle correction. No Researcher-06 product capability is promoted to brain yet.
+Units 01–05 prove the error model, bounded candidate architecture, evidence-fusion/calibration rules, phonetic-index design, fixture discipline, and an executable non-production measurement harness. Unit 06 now has reproducible encoder code plus an executable dev-only calibration gate, but no passed dev summary has yet been observed in repository evidence. It still does not prove calibrated production candidate budgets, comprehensive Mandarin pronunciation coverage, held-out generalization, or end-to-end subtitle correction. No Researcher-06 product capability is promoted to brain yet.
 
 ## Next authorized action
-`RESEARCHER_06_UNIT_06_OBSERVE_ENCODER_GATE_THEN_INTEGRATE_DEV_ONLY_PHONETIC_CHANNEL`.
-Observe the executable encoder self-test. If it passes, integrate the versioned phonetic channels into the non-production retrieval harness and calibrate bounded candidate parameters using only development fixtures. Freeze parameters before opening the sealed final test split. Do not wire production until held-out evidence passes.
+`RESEARCHER_06_UNIT_06_OBSERVE_DEV_CALIBRATION_EVIDENCE`.
+Observe the persisted development summary produced by `.github/workflows/dore-researcher06-dev-calibration.yml`. If and only if the encoder self-test and dev evidence pass the Unit 06 thresholds, freeze the calibrated parameters in a versioned config before opening the sealed final test split for evaluation. If dev evidence fails, diagnose and revise only against development fixtures. Do not wire production or open held-out evidence prematurely.
