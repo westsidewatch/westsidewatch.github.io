@@ -1,0 +1,21 @@
+{
+  "batch_id": "asset-migration-001",
+  "status": "PASS",
+  "completed_at": "2026-08-24T08:48:52.542413+00:00",
+  "asset_code": "ONE-MAT-03-BAPTISM-COVER-MOTION",
+  "migration": {
+    "ok": true,
+    "action": "dedupe_no_copy",
+    "source_path": "static/one/share/matthew-03-baptism-motion-r5-mobile.gif",
+    "sha256": "c54eca02197c2e79129d06ea5031ddf7623f36b5148c17cf8c5f6dcb12b1706f",
+    "existing": {
+      "id": "26639a6d-9639-42b9-840d-a9d669d2a914",
+      "asset_code": "ONE-MAT-03-BAPTISM-COVER-MOTION",
+      "storage_backend": "r2",
+      "storage_locator": "one/share/matthew-03-baptism-motion-r5-mobile.gif",
+      "lifecycle_state": "active"
+    }
+  },
+  "registry_search_verified": true,
+  "search_result_count": 1
+}
