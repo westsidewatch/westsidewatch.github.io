@@ -1,0 +1,93 @@
+name: Doré R2 Priority B site media
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/dore-r2-priority-b-site-media.yml']
+permissions: {contents: write}
+jobs:
+  migrate-cutover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Migrate Priority B raster identity media
+        env:
+          TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${TOKEN:-}"
+          python3 - <<'PY'
+          import json,os,subprocess,time,urllib.parse,hashlib
+          items=[
+            ('background.jpg','SITE-BACKGROUND','site/background.jpg'),
+            ('static/images/damascus-gate.jpg','SITE-DAMASCUS-GATE','site/damascus-gate.jpg'),
+            ('static/images/jerusalem-wall.png','SITE-JERUSALEM-WALL','site/jerusalem-wall.png'),
+            ('static/images/temple-stone-light.png','SITE-TEMPLE-STONE-LIGHT','site/temple-stone-light.png'),
+            ('static/wechat-qr.png','SITE-WECHAT-QR','site/wechat-qr.png')]
+          token=os.environ['TOKEN']; out=[]
+          def call(args):
+            p=subprocess.run(['curl','-sS','-L']+args,capture_output=True,text=True); raw=p.stdout.strip()
+            try:return json.loads(raw)
+            except:return {'ok':False,'raw':raw,'stderr':p.stderr}
+          for source,code,key in items:
+            assert os.path.exists(source),source
+            sha=hashlib.sha256(open(source,'rb').read()).hexdigest()
+            body=json.dumps({'source_path':source,'asset_code':code,'title':code.replace('-',' '),'generated_by':'westside-watch','preservation_class':'working','products_using_it':['SITE','ONE','JOURNAL'],'scripture_refs':[],'social_uses':[]})
+            result=None
+            for attempt in range(5):
+              result=call(['-X','POST','-H',f'Authorization: Bearer {token}','-H','Content-Type: application/json','--data',body,'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate'])
+              if result.get('ok'):break
+              time.sleep((attempt+1)*10)
+            if not result or not result.get('ok'): raise SystemExit(f'migrate failed {code}: {result}')
+            q=urllib.parse.quote(code); s=call(['https://westsidewatch-github-io.pages.dev/api/dore/assets/search?q='+q]); rows=s.get('results') or s.get('assets') or []
+            assert any(x.get('asset_code')==code for x in rows),(code,s)
+            out.append({'asset_code':code,'source_path':source,'sha256':sha,'migration':result})
+          json.dump({'milestone':'priority-b-site-media','status':'MIGRATED','asset_count':len(out),'assets':out},open('/tmp/priority-b.json','w'),indent=2)
+          PY
+      - name: Cut runtime references to registry delivery
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          from pathlib import Path
+          repl={
+            '/background.jpg':'/api/dore/assets/file?code=SITE-BACKGROUND',
+            '/images/damascus-gate.jpg':'/api/dore/assets/file?code=SITE-DAMASCUS-GATE',
+            '/images/jerusalem-wall.png':'/api/dore/assets/file?code=SITE-JERUSALEM-WALL',
+            '/images/temple-stone-light.png':'/api/dore/assets/file?code=SITE-TEMPLE-STONE-LIGHT',
+            '/wechat-qr.png':'/api/dore/assets/file?code=SITE-WECHAT-QR'}
+          skip={'.git'}
+          changed=[]
+          for p in Path('.').rglob('*'):
+            if not p.is_file() or any(x in p.parts for x in skip): continue
+            if p.suffix.lower() not in {'.html','.css','.js','.md','.json','.toml','.yaml','.yml'}: continue
+            try:s=p.read_text()
+            except:continue
+            old=s
+            for a,b in repl.items():s=s.replace(a,b)
+            if s!=old:p.write_text(s);changed.append(str(p))
+          Path('/tmp/changed').write_text('\n'.join(changed))
+          PY
+          cat /tmp/changed
+          files=(background.jpg static/images/damascus-gate.jpg static/images/jerusalem-wall.png static/images/temple-stone-light.png static/wechat-qr.png)
+          : >/tmp/refs
+          for f in "${files[@]}"; do b=$(basename "$f"); git grep -n -F "$b" -- ':!.github/workflows/**' ':!dore-core/cloudflare/**' >>/tmp/refs || true; done
+          cat /tmp/refs
+          test ! -s /tmp/refs
+          git rm -- "${files[@]}"
+      - name: Verify private R2 delivery and persist receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          codes=(SITE-BACKGROUND SITE-DAMASCUS-GATE SITE-JERUSALEM-WALL SITE-TEMPLE-STONE-LIGHT SITE-WECHAT-QR)
+          for code in "${codes[@]}"; do curl -fsS "https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code=$code" -o /tmp/a; test -s /tmp/a; done
+          mkdir -p dore-core/cloudflare/receipts
+          python3 - <<'PY'
+          import json
+          r=json.load(open('/tmp/priority-b.json')); r.update({'status':'PASS','runtime_old_path_references':0,'github_binaries_removed':5,'r2_delivery_verified':5,'brand_svg_policy':'KEEP_IN_GITHUB','canonical_dore_241_touched':False}); json.dump(r,open('dore-core/cloudflare/receipts/R2-PRIORITY-B-SITE-MEDIA-PASS.json','w'),indent=2)
+          PY
+          git config user.name dore-migration-bot; git config user.email dore-migration-bot@users.noreply.github.com
+          git add -A
+          git commit -m 'feat(dore): complete Priority B site media R2 cutover [skip ci]'
+          git pull --rebase origin main || true; git push
