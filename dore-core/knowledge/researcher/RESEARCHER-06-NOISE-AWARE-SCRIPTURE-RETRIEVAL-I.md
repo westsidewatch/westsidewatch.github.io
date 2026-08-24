@@ -1,7 +1,8 @@
 # Researcher 06 — Noise-Aware Scripture Retrieval I
 
-Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 HELD-OUT FAIL; UNITS 07–08 PASS; UNIT 09 ACTIVE
+Status: PASS / GRADUATED → RETENTION_WATCH
 Opened: 2026-08-23
+Graduated: 2026-08-24
 Trigger: repeated reusable-skill failures in `SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
 
 ## Goal
@@ -25,7 +26,7 @@ Status: PASS — 8/8. Non-production harness, separated dev/test fixtures, tunin
 ## Unit 06 — Versioned Phonetic Encoders and Generalization Gate
 Status: FAIL AT HELD-OUT FINAL — V1 FROZEN; DO NOT TUNE.
 
-V1 passed development calibration but failed its one-shot held-out biblical-entity case because the deliberately small Mandarin character table lacked corpus-wide coverage. The failure was preserved; the exposed final remains retired from unseen evidence.
+V1 passed development calibration but failed its one-shot held-out biblical-entity case because the deliberately small Mandarin character table lacked corpus-wide coverage. The failure is preserved permanently; the exposed final remains retired from unseen evidence.
 
 Evidence:
 - `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`
@@ -47,7 +48,7 @@ Evidence:
 ## Unit 08 — Fresh Frozen V2 Generalization Final
 Status: PASS — 8/8.
 
-The architecture and final harness were frozen before opening a new deterministic unseen partition. First durable final result:
+First durable final result:
 - positives 80;
 - negatives 5;
 - recall-at-budget 1.0;
@@ -65,18 +66,30 @@ Evidence:
 - `evidence/researcher06-unit08-v2-freeze.json`
 - `evidence/researcher06-unit08-v2-fresh-final.json`
 
-Interpretation: v2 repairs the specific unseen biblical-entity coverage/generalization failure that invalidated v1 while preserving conservative abstention. This is strong evidence, but Unit 08 tests one perturbation family and does not alone prove the broader course goal across mixed transcript noise and multiple product consumers.
-
 ## Unit 09 — Offline Integration Transfer Gate
-Status: ACTIVE — DESIGN / FREEZE REQUIRED.
+Status: PASS — 7/7 fresh-final fixtures.
 
-Unit 09 must test the same generic retrieval contract through at least two offline consumer adapters: Search-like recovery and subtitle-proofreader candidate suggestion. It must include multiple previously learned noise families, preserve `observed -> candidate -> source -> confidence`, enforce abstention under ambiguity/nonquotation, and freeze the integration contract before a fresh one-shot final.
+The frozen product-neutral retrieval/evidence contract passed through two consumers: Search-like recovery and subtitle-proofreader suggestion. The final preserved observed transcript, candidate/source provenance, non-probabilistic score boundary, ambiguity abstention, ordinary-negative abstention, shared generic-object behavior, and subtitle no-silent-overwrite.
 
-Evidence/plan:
+Evidence:
+- `RESEARCHER-06-UNIT-09-FREEZE.md`
 - `RESEARCHER-06-UNIT-09-INTEGRATION-TRANSFER.md`
+- `RESEARCHER-06-UNIT-09-EXAM.md`
+- `evidence/researcher06-unit09-dev-gate.json`
+- `fixtures/unit09-final-partition.json`
+- `evidence/researcher06-unit09-final-gate.json`
+
+Boundary: Unit 09 is an integration-transfer exam and consumes fixture-declared candidate/anchor targets. Independent retrieval/generalization evidence remains Unit 08. It does not establish production subtitle accuracy or calibrated probability.
+
+## Graduation judgment
+Researcher 06 graduates because the course demonstrated: explicit noise taxonomy; candidate/phonetic evidence design; ranking/abstention discipline; executable measurement; honest held-out failure handling; systematic corpus-wide repair without test leakage; frozen fresh generalization success; and product-neutral transfer to both Search-like and subtitle-proofreader consumers.
+
+The failed Unit 06 lineage remains part of the record and is not erased by graduation.
 
 ## Current capability boundary
-Doré has demonstrated reproducible measurement discipline, honest held-out failure handling, systematic corpus-wide coverage repair, frozen unseen evaluation, strong v2 Mandarin entity retrieval under same-pinyin corruption, and negative abstention. It has not yet demonstrated an integrated mixed-noise transfer gate across both Search-like and subtitle-proofreader consumers. Production wiring remains unauthorized.
+Doré may now treat noise-aware Scripture/entity retrieval as a graduated research capability under retention watch. Production wiring remains a separate authorization and acceptance problem. The system must still preserve `observed → candidate → source → confidence/decision`, abstain under ambiguity, and prohibit silent subtitle overwrite.
 
 ## Next authorized action
-`RESEARCHER_06_UNIT_09_BUILD_AND_FREEZE_OFFLINE_TRANSFER_HARNESS`.
+`POST_GRADUATION_DIAGNOSIS_FOR_RESEARCHER_07`.
+
+Do not invent Researcher 07 merely to continue a curriculum. Inspect current real work (Search, subtitle proofreading, live sensory questions, ONE, library/resource work) and open a new course only if repeated unresolved failures reveal a reusable capability gap that the graduated stack cannot solve.
