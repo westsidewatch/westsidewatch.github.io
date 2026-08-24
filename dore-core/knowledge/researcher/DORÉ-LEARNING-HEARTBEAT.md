@@ -27,19 +27,20 @@ This proves **durable sensory memory → autonomous research → examination →
 The generic bridge now loads the live brain endpoint rather than a frozen deployment-local snapshot. `scripts/dore/brain-bridge-regression.mjs` tests three Mary question variants against `research.nt.mary-count` plus a Scripture-routing probe, using the same generic normalization/scoring contract as `static/dore/dore-brain-bridge.js`. No Mary-specific answer branch exists in the product bridge; the only Mary strings in the regression are test inputs/expected node ids. This establishes the repository-level Brain → Product regression surface. Live browser acceptance remains separate from repository-level regression.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–05 PASS.
-Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md` and `RESEARCHER-06-UNIT-05-HARNESS-SPEC.md`.
+Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 IN PROGRESS.
+Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`, `RESEARCHER-06-UNIT-05-HARNESS-SPEC.md`, `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`.
 
 Unit 01: noise taxonomy + observed/candidate/source/confidence model, 8/8 PASS.
 Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/10 PASS.
 Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS.
 Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS.
-Unit 05: executable non-production measurement harness + separated dev/sealed-test fixtures + tuning guard, 8/8 PASS. Phonetic measurement is explicitly pending reproducible encoders; no production parameters/capability were fabricated or promoted.
+Unit 05: executable non-production measurement harness + separated dev/sealed-test fixtures + tuning guard, 8/8 PASS.
+Unit 06: reproducible versioned encoder implementation committed. `mandarin-pinyin-lite-v1` exposes explicit supported Han→pinyin syllables plus deterministic unknown-Han fallbacks; `english-metaphone-lite-v1` provides deterministic rule-based phonetic keys. An executable self-test and GitHub gate were added. Only dev fixtures were expanded; sealed held-out fixtures remain unopened. Dev calibration and held-out evaluation are not yet passed, so no production or brain promotion is authorized.
 
 ## Current next action
-`RESEARCHER_06_UNIT_06_IMPLEMENT_VERSIONED_PHONETIC_ENCODERS_AND_RUN_DEV_CALIBRATION`.
+`RESEARCHER_06_UNIT_06_OBSERVE_ENCODER_GATE_THEN_INTEGRATE_DEV_ONLY_PHONETIC_CHANNEL`.
 
-Implement reproducible Mandarin pinyin and English phonetic-key channels with explicit versions. Use only dev fixtures to calibrate bounded candidate parameters, freeze them, then open the sealed final test only for evaluation. Do not wire into production before held-out evidence passes.
+Observe the executable encoder gate. If it passes, integrate the versioned channels into the non-production retrieval harness, calibrate bounded candidate parameters using only development fixtures, freeze them, then open the sealed final test only for evaluation. Do not wire into production before held-out evidence passes.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are now evidenced. The remaining product acceptance is browser-level: verify a current Search deployment itself POSTs a fresh unknown query into sensory memory and, after consolidation, surfaces the live brain result without per-question UI logic.
