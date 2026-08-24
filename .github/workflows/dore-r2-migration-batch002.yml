@@ -73,7 +73,7 @@ jobs:
         run: |
           set -euo pipefail
           python3 - <<'PY'
-          import json,urllib.request
+          import json,urllib.request,urllib.parse
           rows=json.load(open('responses.json'))
           verified=[]
           for row in rows:
