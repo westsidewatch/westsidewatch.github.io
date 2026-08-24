@@ -2,8 +2,8 @@
   "status": "FAIL",
   "exam": "DORE_SEARCH_POST_BIBLICAL_WORLD_SELF_EXAM_1",
   "summary": {
-    "passed": 5,
-    "failed": 3,
+    "passed": 4,
+    "failed": 4,
     "total": 8
   },
   "cases": [
@@ -31,7 +31,7 @@
     {
       "name": "entity-layer-does-not-replace-scripture",
       "family": "ENTITY_LOOKUP",
-      "pass": true,
+      "pass": false,
       "signal": null,
       "evidence": "entity layer is additive"
     },
