@@ -1,0 +1,28 @@
+name: Doré Researcher 06 V2 Dev Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/dore/phonetic-encoders-v2.mjs'
+      - 'scripts/dore/phonetic-v2-dev-gate.mjs'
+      - 'static/dore/entity-index.json'
+      - '.github/workflows/dore-researcher06-v2-dev-gate.yml'
+  workflow_dispatch:
+
+jobs:
+  v2-dev-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned research dependency
+        run: npm install --no-save --ignore-scripts pinyin-pro@3.29.3
+      - name: Run deterministic v2 development gate
+        run: node scripts/dore/phonetic-v2-dev-gate.mjs | tee researcher06-v2-dev-gate.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: researcher06-v2-dev-gate
+          path: researcher06-v2-dev-gate.json
