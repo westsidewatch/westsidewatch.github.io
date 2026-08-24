@@ -1,6 +1,6 @@
 # Researcher 06 — Noise-Aware Scripture Retrieval I
 
-Status: ACTIVE — UNITS 01–05 PASS
+Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 IN PROGRESS
 Opened: 2026-08-23
 Trigger: repeated reusable-skill failures in `SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
 
@@ -38,9 +38,19 @@ The executable reference harness now:
 
 Gate: 8/8 PASS.
 
+## Unit 06 — Versioned Phonetic Encoders and Dev Calibration
+Status: IN PROGRESS — IMPLEMENTATION COMMITTED; CALIBRATION GATE PENDING
+Evidence: `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`, `scripts/dore/phonetic-encoders.mjs`, `scripts/dore/phonetic-encoder-selftest.mjs`, `.github/workflows/dore-researcher06-phonetic-gate.yml`.
+
+Committed encoder versions:
+- `mandarin-pinyin-lite-v1` with explicit auditable Han→syllable mappings and deterministic unknown-Han fallbacks;
+- `english-metaphone-lite-v1` with deterministic rule-based phonetic normalization.
+
+Only development fixtures were expanded. The sealed test split remains unopened and unchanged. No production wiring or brain promotion is authorized yet.
+
 ## Current capability boundary
-Units 01–05 prove the error model, bounded candidate architecture, evidence-fusion/calibration rules, phonetic-index design, fixture discipline, and an executable non-production measurement harness. They still do **not** prove Chinese pinyin or English phonetic recall, calibrated production candidate budgets, numeric thresholds, or end-to-end subtitle correction. No Researcher-06 product capability is promoted to brain yet.
+Units 01–05 prove the error model, bounded candidate architecture, evidence-fusion/calibration rules, phonetic-index design, fixture discipline, and an executable non-production measurement harness. Unit 06 now has reproducible encoder code but has **not** yet passed dev calibration or held-out evaluation. It still does not prove calibrated production candidate budgets, comprehensive Mandarin pronunciation coverage, or end-to-end subtitle correction. No Researcher-06 product capability is promoted to brain yet.
 
 ## Next authorized action
-`RESEARCHER_06_UNIT_06_IMPLEMENT_VERSIONED_PHONETIC_ENCODERS_AND_RUN_DEV_CALIBRATION`.
-Implement reproducible Mandarin pinyin and English phonetic-key channels with explicit encoder versions. Use only the development fixtures to choose bounded candidate parameters. Freeze parameters before opening the sealed final test split; do not wire production until held-out evidence passes.
+`RESEARCHER_06_UNIT_06_OBSERVE_ENCODER_GATE_THEN_INTEGRATE_DEV_ONLY_PHONETIC_CHANNEL`.
+Observe the executable encoder self-test. If it passes, integrate the versioned phonetic channels into the non-production retrieval harness and calibrate bounded candidate parameters using only development fixtures. Freeze parameters before opening the sealed final test split. Do not wire production until held-out evidence passes.
