@@ -12,8 +12,48 @@
     "mode": "autonomous learning + real brand work in parallel",
     "liming_library": {
       "status": "active",
-      "current_phase": "Library Science Foundation + existing-code audit",
+      "current_phase": "LIBRARY / M0.5 — Library Science Foundation + Phase 1 existing-code audit",
       "graduation_gate": "not yet passed",
+      "curriculum": {
+        "course": "Library Science Foundation / 圖書館學與知識組織基礎",
+        "objective": "understand mature library identity, classification, cataloguing, metadata, authority control, subject access and relationships before redesigning Liming Library coding",
+        "modules": [
+          {"id":1,"name":"Library classification fundamentals","status":"in_progress"},
+          {"id":2,"name":"Bibliographic identity and cataloguing","status":"queued"},
+          {"id":3,"name":"Metadata and description","status":"queued"},
+          {"id":4,"name":"Authority control and canonical entities","status":"queued"},
+          {"id":5,"name":"Subject indexing and faceted knowledge organization","status":"queued"},
+          {"id":6,"name":"Knowledge relationships and linked-data concepts","status":"queued"},
+          {"id":7,"name":"Identifier and migration design","status":"queued"},
+          {"id":8,"name":"Digital-library operations","status":"queued"},
+          {"id":9,"name":"Applied comparative study","status":"queued"},
+          {"id":10,"name":"Liming Library practicum","status":"queued"}
+        ],
+        "current_module": 1,
+        "current_task": "learn classification purpose, hierarchical vs faceted systems, notation/extensibility/collision avoidance; compare DDC and LCC conceptually before applying anything to Liming",
+        "exam_gate": [
+          "explain classification vs identifier vs metadata vs subject indexing vs authority control",
+          "diagnose weaknesses in current Liming codes without prematurely replacing them",
+          "catalogue unfamiliar resources consistently",
+          "resolve aliases, editions and duplicates",
+          "design a reversible migration map",
+          "place Coding, Morning Stars, Spectrum and Collections correctly relative to library-science structures",
+          "defend a proposed schema using actual retrieval and product-use cases"
+        ],
+        "progress_rule": "no module is marked complete merely because terminology was summarized; applied evidence is required"
+      },
+      "existing_code_audit": {
+        "status": "active",
+        "source": "data/resources.json",
+        "known_ranges_under_reconstruction": ["001–021","021-B–029-B","later departmental ranges"],
+        "destructive_renumbering": "forbidden_until_M0.5_exam_and_compatibility_map"
+      },
+      "editorial_logics": {
+        "coding": "它是誰？",
+        "morning_stars": "它值不值得被帶到前面？",
+        "spectrum": "它在學習道路與知識結構的哪裡？",
+        "collections": "它應該和誰一起，帶人往哪裡走？"
+      },
       "rules": [
         "learn library science before destructive coding-system redesign",
         "preserve Coding / Three Morning Stars / Spectrum / Curated Collections as distinct logics",
@@ -29,25 +69,10 @@
     "asset_registry": "production schema and governed migration in progress"
   },
   "active_workstreams": [
-    {
-      "name": "Doré autonomous learning + Liming Library",
-      "status": "active"
-    },
-    {
-      "name": "ONE media migration to R2 + D1 Asset Registry",
-      "status": "active",
-      "next": "migrate retained Matthew 3 r5 canonical motion asset"
-    },
-    {
-      "name": "Unified /dore entrance",
-      "status": "active",
-      "capabilities": ["ask Doré","Bible search","asset lookup","self-status lookup"]
-    },
-    {
-      "name": "Daily Devotional",
-      "status": "next product milestone",
-      "dependency": "complete a reliable production asset/registry vertical slice"
-    }
+    {"name":"Doré autonomous learning + Liming Library","status":"active"},
+    {"name":"ONE media migration to R2 + D1 Asset Registry","status":"active","next":"migrate retained Matthew 3 r5 canonical motion asset"},
+    {"name":"Unified /dore entrance","status":"active","capabilities":["ask Doré","Bible search","asset lookup","self-status lookup","Liming curriculum lookup"]},
+    {"name":"Daily Devotional","status":"next product milestone","dependency":"complete a reliable production asset/registry vertical slice"}
   ],
   "recent_milestones": [
     "Cloudflare D1 + R2 production bindings verified",
@@ -56,10 +81,11 @@
     "Doré unified ask/search/find entrance started"
   ],
   "next_steps": [
-    "complete production deployment of asset search/status routes",
+    "continue LIBRARY M0.5 Module 1 with applied notes/evidence",
+    "continue existing Liming Library code audit",
     "migrate first real canonical ONE asset to R2 and register it in D1",
     "verify /dore can find the migrated asset",
-    "continue Library Science Foundation and existing Liming Library code audit",
+    "advance Library Science modules only after applied evidence",
     "start smallest Daily Devotional end-to-end vertical slice after asset workflow is reliable"
   ]
 }
