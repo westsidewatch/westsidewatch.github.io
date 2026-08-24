@@ -1,0 +1,20 @@
+{
+  "milestone": "priority-one-media-migration",
+  "status": "FAIL",
+  "assets": [
+    {
+      "asset_code": "ONE-MAT-03-BAPTISM-COVER-MOTION",
+      "source_path": "static/one/share/matthew-03-baptism-motion-r5-mobile.gif",
+      "migration": {
+        "ok": false,
+        "http_status": 403,
+        "raw": "error code: 1010\n"
+      }
+    }
+  ],
+  "verified": [],
+  "error": "RuntimeError(\"migration failed ONE-MAT-03-BAPTISM-COVER-MOTION: {'ok': False, 'http_status': 403, 'raw': 'error code: 1010\\\\n'}\")",
+  "asset_count": 1,
+  "verified_count": 0,
+  "completed_at": "2026-08-24T09:01:38.006661+00:00"
+}
