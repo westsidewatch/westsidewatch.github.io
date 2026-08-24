@@ -1,0 +1,46 @@
+name: Doré Researcher 06 V2 Fresh Final
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/dore/phonetic-v2-fresh-final.mjs'
+      - 'dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-freeze.json'
+      - '.github/workflows/dore-researcher06-v2-fresh-final.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  fresh-final:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install frozen research dependency
+        run: npm install --no-save --ignore-scripts pinyin-pro@3.29.3
+      - name: Verify freeze exists
+        run: test -f dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-freeze.json
+      - name: Run one-shot fresh final
+        run: |
+          mkdir -p dore-core/knowledge/researcher/evidence
+          node scripts/dore/phonetic-v2-fresh-final.mjs | tee dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-fresh-final.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: researcher06-v2-fresh-final
+          path: dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-fresh-final.json
+      - name: Persist passing final evidence
+        if: success()
+        run: |
+          git config user.name 'Doré Learning Heartbeat'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-fresh-final.json
+          git commit -m 'test(dore): record Researcher 06 v2 fresh-final pass [skip ci]' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
