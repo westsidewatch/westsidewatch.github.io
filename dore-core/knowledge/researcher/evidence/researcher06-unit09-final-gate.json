@@ -1,0 +1,487 @@
+{
+  "generated_at": "2026-08-24T15:11:22.335Z",
+  "summary": {
+    "partition": "unit09-fresh-final-sealed-2026-08-24",
+    "encoder": {
+      "mandarin": {
+        "id": "mandarin-pinyin-pro-v2-research",
+        "source": "pinyin-pro@3.29.3",
+        "tone": "none",
+        "status": "research-only"
+      },
+      "english": {
+        "id": "english-metaphone-lite-v1",
+        "source": "local",
+        "status": "unchanged-control"
+      }
+    },
+    "total": 7,
+    "passed": 7,
+    "failed": 0,
+    "ordinary_negative_abstention": true,
+    "ambiguous_not_forced": true,
+    "shared_generic_object": true,
+    "subtitle_silent_overwrite": false,
+    "pass": true
+  },
+  "results": [
+    {
+      "id": "u09f01",
+      "family": "scripture_surface",
+      "generic": {
+        "observed": "你們心裡不要憂愁你們信神也當信我",
+        "candidate": "你們心裡不要憂愁；你們信神，也當信我。",
+        "source": "John 14:1",
+        "canonical_anchor": "John 14:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "你們心裡不要憂愁你們信神也當信我",
+        "candidate": "你們心裡不要憂愁；你們信神，也當信我。",
+        "canonical_anchor": "John 14:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "你們心裡不要憂愁你們信神也當信我",
+        "candidate": "你們心裡不要憂愁；你們信神，也當信我。",
+        "canonical_anchor": "John 14:1",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f02",
+      "family": "mandarin_phonetic",
+      "generic": {
+        "observed": "尼希米記",
+        "candidate": "尼希米記",
+        "source": "biblical_book:Nehemiah",
+        "canonical_anchor": "biblical_book:Nehemiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "尼希米記",
+        "candidate": "尼希米記",
+        "canonical_anchor": "biblical_book:Nehemiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "尼希米記",
+        "candidate": "尼希米記",
+        "canonical_anchor": "biblical_book:Nehemiah",
+        "evidence_channels": [
+          {
+            "channel": "surface",
+            "relation": "normalized_exact"
+          },
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f03",
+      "family": "entity_corruption",
+      "generic": {
+        "observed": "西番亞",
+        "candidate": "西番雅",
+        "source": "biblical_entity:Zephaniah",
+        "canonical_anchor": "biblical_entity:Zephaniah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "search_adapter": {
+        "observed": "西番亞",
+        "candidate": "西番雅",
+        "canonical_anchor": "biblical_entity:Zephaniah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest"
+      },
+      "subtitle_adapter": {
+        "observed": "西番亞",
+        "candidate": "西番雅",
+        "canonical_anchor": "biblical_entity:Zephaniah",
+        "evidence_channels": [
+          {
+            "channel": "mandarin_phonetic",
+            "relation": "exact",
+            "encoder": "mandarin-pinyin-pro-v2-research"
+          },
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "suggest",
+        "mutation": "proposal_only",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f04",
+      "family": "mixed_transcript_noise",
+      "generic": {
+        "observed": "萬事互相效力叫愛神的人得意處就是按他旨意被招的人",
+        "candidate": "我們曉得萬事都互相效力，叫愛神的人得益處，就是按他旨意被召的人。",
+        "source": "Romans 8:28",
+        "canonical_anchor": "Romans 8:28",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "search_adapter": {
+        "observed": "萬事互相效力叫愛神的人得意處就是按他旨意被招的人",
+        "candidate": "我們曉得萬事都互相效力，叫愛神的人得益處，就是按他旨意被召的人。",
+        "canonical_anchor": "Romans 8:28",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "subtitle_adapter": {
+        "observed": "萬事互相效力叫愛神的人得意處就是按他旨意被招的人",
+        "candidate": "我們曉得萬事都互相效力，叫愛神的人得益處，就是按他旨意被召的人。",
+        "canonical_anchor": "Romans 8:28",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f05",
+      "family": "transliteration_or_alias",
+      "generic": {
+        "observed": "掃羅和保羅是不是同一個使徒",
+        "candidate": "掃羅／保羅",
+        "source": "biblical_entity:Paul",
+        "canonical_anchor": "biblical_entity:Paul",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "search_adapter": {
+        "observed": "掃羅和保羅是不是同一個使徒",
+        "candidate": "掃羅／保羅",
+        "canonical_anchor": "biblical_entity:Paul",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review"
+      },
+      "subtitle_adapter": {
+        "observed": "掃羅和保羅是不是同一個使徒",
+        "candidate": "掃羅／保羅",
+        "canonical_anchor": "biblical_entity:Paul",
+        "evidence_channels": [
+          {
+            "channel": "fixture_canonical_anchor",
+            "relation": "declared_development_target"
+          }
+        ],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "review",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f06",
+      "family": "ambiguity",
+      "generic": {
+        "observed": "約翰在那裡說的",
+        "candidate": null,
+        "source": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "search_adapter": {
+        "observed": "約翰在那裡說的",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "subtitle_adapter": {
+        "observed": "約翰在那裡說的",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    },
+    {
+      "id": "u09f07",
+      "family": "ordinary_negative",
+      "generic": {
+        "observed": "明天早上記得把文件帶來",
+        "candidate": null,
+        "source": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "search_adapter": {
+        "observed": "明天早上記得把文件帶來",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain"
+      },
+      "subtitle_adapter": {
+        "observed": "明天早上記得把文件帶來",
+        "candidate": null,
+        "canonical_anchor": null,
+        "evidence_channels": [],
+        "score_boundary": {
+          "calibrated_probability": false,
+          "note": "Unit 09 dev contract gate; no probability claim."
+        },
+        "decision": "abstain",
+        "mutation": "none",
+        "silent_overwrite": false
+      },
+      "checks": {
+        "provenance": true,
+        "safe_ambiguity": true,
+        "negative_abstention": true,
+        "no_silent_overwrite": true
+      },
+      "pass": true
+    }
+  ]
+}
