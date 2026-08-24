@@ -1,4 +1,4 @@
-# 黎明書局 / Liming Library — Doré Build Plan v0.2
+# 黎明書局 / Liming Library — Doré Build Plan v0.3
 
 Status: START NOW
 Date: 2026-08-24
@@ -39,6 +39,87 @@ Produce no mass acquisition until the current system and editorial relationships
 Preserve the recovered Resource Master logic rather than replacing it with a new generic taxonomy. The established workflow is:
 
 `候選資源池 → 編輯甄選 → 三晨星 → 光譜 → 策展集 → Resource Card → 黎明書局`
+
+## Phase 0.5 — Library Science Curriculum / 圖書館學與知識組織課程
+
+If Doré cannot demonstrate sufficient understanding of library coding, classification and cataloguing systems, Doré must **learn before redesigning**. This curriculum is part of Doré's formal education, not an optional research detour.
+
+### Course objective
+
+Doré must understand why mature libraries separate identity, description, classification, subject access, authority control and relationships before proposing changes to Liming Library.
+
+### Required modules
+
+1. **Library classification fundamentals**
+   - purpose and limits of shelf/classification systems;
+   - hierarchical vs faceted classification;
+   - notation, extensibility, hospitality for new subjects and collision avoidance;
+   - study representative mature systems such as Dewey Decimal Classification and Library of Congress Classification at the conceptual level.
+
+2. **Bibliographic identity and cataloguing**
+   - work / expression / manifestation / item distinctions where useful;
+   - editions, translations, versions, creators, publishers and dates;
+   - stable identifiers vs display/shelf codes;
+   - why one intellectual work may have multiple physical/digital manifestations.
+
+3. **Metadata and description**
+   - descriptive metadata, administrative metadata, structural metadata and provenance;
+   - required vs optional fields;
+   - controlled values vs free text;
+   - interoperability principles and schema evolution.
+
+4. **Authority control and canonical entities**
+   - canonical names, aliases, transliterations and multilingual naming;
+   - person, institution, place, work and subject authority records;
+   - duplicate detection and identity resolution;
+   - special attention to Chinese/English/Hebrew/Greek biblical names and church terminology.
+
+5. **Subject indexing and faceted knowledge organization**
+   - difference between classification and subject access;
+   - controlled vocabulary, thesaurus, broader/narrower/related concepts;
+   - facets and multi-dimensional retrieval;
+   - why Spectrum must not be confused with shelf classification or ordinary tags.
+
+6. **Knowledge relationships and linked data concepts**
+   - entity–relationship thinking;
+   - source-backed edges, inferred edges and provenance;
+   - Scripture passage ↔ person ↔ place ↔ event ↔ topic ↔ resource ↔ product relationships;
+   - graph usefulness without graph inflation.
+
+7. **Identifier and migration design**
+   - opaque vs semantic IDs;
+   - persistent IDs and legacy aliases;
+   - versioning, redirects/mappings, collision handling and migration plans;
+   - why existing Liming Library codes must not be destructively renumbered before reconstruction.
+
+8. **Digital-library operations**
+   - acquisition, review, de-duplication, preservation, rights/access state and stale-link checks;
+   - citation/provenance trails;
+   - feedback from retrieval and real product use into catalogue maintenance.
+
+9. **Applied comparative study**
+   - compare several mature library/catalogue approaches and identify what should and should not transfer to a Scripture-centered digital learning institution;
+   - explicitly distinguish universal library-science principles from Westside Watch-specific editorial logic.
+
+10. **Liming Library practicum**
+    - use actual `data/resources.json` records;
+    - reconstruct existing ranges and anomalies;
+    - catalogue representative Bible text, commentary, map, historical work, visual asset, church resource and subtitle terminology source;
+    - apply Coding + Morning Stars + Spectrum + Collections without collapsing their functions;
+    - trace each example into ONE, Bible Search or another live product.
+
+### Examination / graduation gate
+
+Doré does not pass this curriculum by summarizing terminology. It must pass an applied examination demonstrating that it can:
+- explain classification vs identifier vs metadata vs subject indexing vs authority control;
+- diagnose weaknesses in the current Liming code without prematurely replacing it;
+- catalogue unfamiliar resources consistently;
+- resolve aliases/editions/duplicates;
+- design a reversible migration map;
+- explain where Morning Stars, Spectrum and Collections sit relative to library-science structures;
+- defend a proposed schema using actual retrieval and product-use cases.
+
+Until this gate is passed, Doré may audit, document and propose hypotheses, but may not perform destructive coding-system redesign.
 
 ## Phase 1 — Audit and learn the existing library code
 
@@ -179,6 +260,10 @@ Once registry, coding and retrieval contracts are stable:
 - Do not optimize for number of resources, tags or graph edges. Optimize for trustworthy structure, retrieval, learning and reuse.
 
 ## Milestones
+
+### `LIBRARY / M0.5 — Library Science Foundation`
+
+Pass only after Doré completes the library-science curriculum and applied examination above. This is a prerequisite for proposing structural redesign of the coding system.
 
 ### `LIBRARY / M1 — Existing Collection Understood`
 
