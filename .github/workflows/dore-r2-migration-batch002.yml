@@ -1,0 +1,75 @@
+name: Doré governed R2 migration batch 002
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-r2-migration-batch002.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - source: static/one/studio/jude-01-michael-moses-dore-studio-r2.png
+            code: ONE-JUDE-01-MICHAEL-MOSES-STUDIO
+            preserve: working
+          - source: static/one/studio/obadiah-01-dore-studio-r2.png
+            code: ONE-OBA-01-DORE-STUDIO
+            preserve: working
+          - source: static/one/studio/revelation-02-dore-final-full.png
+            code: ONE-REV-02-DORE-FINAL
+            preserve: working
+          - source: static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png
+            code: ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED
+            preserve: permanent
+          - source: static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png
+            code: ONE-MAT-03-BAPTISM-JESUS-RESTORED
+            preserve: permanent
+          - source: static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png
+            code: ONE-MAT-03-BAPTISM-MOTION-SOURCE
+            preserve: regenerable
+    steps:
+      - name: Migrate and verify ${{ matrix.code }}
+        env:
+          TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+          SOURCE: ${{ matrix.source }}
+          CODE: ${{ matrix.code }}
+          PRESERVE: ${{ matrix.preserve }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "${TOKEN:-}" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 1; }
+          python3 - <<'PY' > body.json
+          import json,os
+          print(json.dumps({
+            'source_path':os.environ['SOURCE'],
+            'asset_code':os.environ['CODE'],
+            'title':os.environ['CODE'].replace('-',' '),
+            'generated_by':'dore',
+            'preservation_class':os.environ['PRESERVE'],
+            'products_using_it':['ONE']
+          }))
+          PY
+          for attempt in 1 2 3 4 5; do
+            code=$(curl --silent --show-error --output response.json --write-out '%{http_code}' --request POST \
+              --header "Authorization: Bearer ${TOKEN}" --header 'Content-Type: application/json' \
+              --data @body.json 'https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate' || true)
+            cat response.json || true; echo
+            [ "$code" = 200 ] && break
+            [ "$attempt" = 5 ] && { echo "HTTP ${code}"; exit 1; }
+            sleep $((attempt*15))
+          done
+          python3 - <<'PY'
+          import json
+          r=json.load(open('response.json'))
+          assert r.get('ok'), r
+          assert r.get('action')=='dedupe_no_copy' or r.get('registry_verified'), r
+          print('PASS',r.get('action'),r.get('target_key') or (r.get('existing') or {}).get('storage_locator'))
+          PY
