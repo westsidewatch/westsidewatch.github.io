@@ -16,57 +16,36 @@
       <p><em>The Night Is Far Spent. The Day Is at Hand.</em></p>
       <cite>Romans 13:12, KJV</cite>
     </div>
+    <form class="dore-inline-search" data-dore-search-entry role="search" aria-label="搜索" style="position:relative;z-index:5;width:min(68vw,880px);margin:1.6rem auto 0;display:flex;border-bottom:1px solid rgba(82,62,20,.42);padding:.45rem 0">
+      <input name="q" type="search" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off" style="min-width:0;flex:1;border:0;outline:0;background:transparent;color:#252525;font:400 clamp(.9rem,1.15vw,1.15rem) 'Cormorant Garamond','Noto Serif TC',serif">
+      <button type="submit" aria-label="搜索" style="border:0;background:transparent;color:#8c6818;font:500 1rem 'Noto Serif TC',serif;cursor:pointer">搜索</button>
+    </form>
     <div class="hero__wall" aria-hidden="true">
       <svg viewBox="0 0 12000 392" preserveAspectRatio="xMidYMax meet" focusable="false">
         <defs>
-          <pattern id="wall-left" width="700" height="392" patternUnits="userSpaceOnUse">
-            <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-100" width="1983" height="392" />
-          </pattern>
-          <pattern id="wall-right" width="700" height="392" patternUnits="userSpaceOnUse">
-            <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-1183" width="1983" height="392" />
-          </pattern>
-          <linearGradient id="golden-gate" x1="0" x2="1">
-            <stop offset="0" stop-color="#a2872a" />
-            <stop offset=".3" stop-color="#d2bc69" />
-            <stop offset=".7" stop-color="#d2bc69" />
-            <stop offset="1" stop-color="#a2872a" />
-          </linearGradient>
+          <pattern id="wall-left" width="700" height="392" patternUnits="userSpaceOnUse"><image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-100" width="1983" height="392" /></pattern>
+          <pattern id="wall-right" width="700" height="392" patternUnits="userSpaceOnUse"><image href="{{ "images/jerusalem-wall.png" | relURL }}" x="-1183" width="1983" height="392" /></pattern>
+          <linearGradient id="golden-gate" x1="0" x2="1"><stop offset="0" stop-color="#a2872a" /><stop offset=".3" stop-color="#d2bc69" /><stop offset=".7" stop-color="#d2bc69" /><stop offset="1" stop-color="#a2872a" /></linearGradient>
         </defs>
-        <rect width="5009" height="392" fill="url(#wall-left)" shape-rendering="crispEdges" />
-        <rect x="6991" width="5009" height="392" fill="url(#wall-right)" shape-rendering="crispEdges" />
-        <image href="{{ "images/jerusalem-wall.png" | relURL }}" x="5008.5" width="1983" height="392" />
-        <path d="M5967 392V286a33.5 33.5 0 0 1 67 0v106Z" fill="url(#golden-gate)" />
+        <rect width="5009" height="392" fill="url(#wall-left)" shape-rendering="crispEdges" /><rect x="6991" width="5009" height="392" fill="url(#wall-right)" shape-rendering="crispEdges" /><image href="{{ "images/jerusalem-wall.png" | relURL }}" x="5008.5" width="1983" height="392" /><path d="M5967 392V286a33.5 33.5 0 0 1 67 0v106Z" fill="url(#golden-gate)" />
       </svg>
     </div>
   </section>
 
   <section id="vol-00-proclamation" class="stone-intro opening-plate" aria-labelledby="volume-title">
-    <nav class="opening-nav" aria-label="Vol.00 reading progress">
-      <a href="#hero-title"><span>Cover</span><b aria-hidden="true">01</b></a>
-      <a href="#vol-00-proclamation" aria-current="location"><span>Opening</span><b aria-hidden="true">02</b></a>
-      <a href="#contents"><span>Contents</span><b aria-hidden="true">03</b></a>
-      <a href="#movement-watch"><span>Read</span><b aria-hidden="true">04</b></a>
-    </nav>
+    <nav class="opening-nav" aria-label="Vol.00 reading progress"><a href="#hero-title"><span>Cover</span><b aria-hidden="true">01</b></a><a href="#vol-00-proclamation" aria-current="location"><span>Opening</span><b aria-hidden="true">02</b></a><a href="#contents"><span>Contents</span><b aria-hidden="true">03</b></a><a href="#movement-watch"><span>Read</span><b aria-hidden="true">04</b></a></nav>
     <span class="opening-plate__light" aria-hidden="true"></span>
-    <div class="stone-intro__meta">
-      <p class="section-label">{{ site.Params.volume }} · Theological Overture</p>
-      <p class="stone-intro__rhythm" aria-hidden="true">✦</p>
-    </div>
+    <div class="stone-intro__meta"><p class="section-label">{{ site.Params.volume }} · Theological Overture</p><p class="stone-intro__rhythm" aria-hidden="true">✦</p></div>
     <div class="stone-intro__body">
-      <p class="kicker">Founding Volume · 創刊號</p>
-      {{ $volumeTitleParts := split site.Params.volumeTitle "，" }}
+      <p class="kicker">Founding Volume · 創刊號</p>{{ $volumeTitleParts := split site.Params.volumeTitle "，" }}
       <h2 id="volume-title"><span lang="zh-Hant">{{ index $volumeTitleParts 0 }}，</span><span lang="zh-Hant">{{ index $volumeTitleParts 1 }}</span></h2>
-      <div class="opening-scriptures" aria-label="Opening scriptures">
-        <blockquote class="proclamation__scripture proclamation__scripture--foundation editorial-card editorial-card--portrait"><span class="proclamation__index">01 · Foundation</span><p><em>“For he looked for a city which hath foundations, whose builder and maker is God.”</em></p><p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p><cite>希伯來書 11:10 · KJV</cite></blockquote>
-        <blockquote class="proclamation__scripture proclamation__scripture--watch editorial-card editorial-card--portrait" lang="zh-Hant"><span class="proclamation__index">02 · Watch</span><p>「若不是耶和華建造房屋，建造的人就枉然勞力；若不是耶和華看守城池，看守的人就枉然警醒。」</p><cite>詩篇 127:1</cite></blockquote>
-      </div>
+      <div class="opening-scriptures" aria-label="Opening scriptures"><blockquote class="proclamation__scripture proclamation__scripture--foundation editorial-card editorial-card--portrait"><span class="proclamation__index">01 · Foundation</span><p><em>“For he looked for a city which hath foundations, whose builder and maker is God.”</em></p><p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p><cite>希伯來書 11:10 · KJV</cite></blockquote><blockquote class="proclamation__scripture proclamation__scripture--watch editorial-card editorial-card--portrait" lang="zh-Hant"><span class="proclamation__index">02 · Watch</span><p>「若不是耶和華建造房屋，建造的人就枉然勞力；若不是耶和華看守城池，看守的人就枉然警醒。」</p><cite>詩篇 127:1</cite></blockquote></div>
       <div class="proclamation__thesis" lang="zh-Hant"><p class="section-label">Opening declaration · 卷首宣言</p><p class="proclamation__lead">在這個黑暗的世界，守望黎明，是教會應有的姿態；而守望這座光明之城的兵器，就是讚美。</p><p class="proclamation__watchman">我們不是第一位守望者。<strong>耶和華才是。</strong></p></div>
       <div class="proclamation__cycle" lang="zh-Hant" aria-label="屬靈循環"><p class="section-label">屬靈循環</p><ol><li><span>01</span><p><b>神先呼召，</b><strong>我們才回應；</strong></p></li><li><span>02</span><p><b>神先守望，</b><strong>我們才守望；</strong></p></li><li><span>03</span><p><b>神先愛，</b><strong>我們才愛；</strong></p></li><li><span>04</span><p><b>神先立約，</b><strong>我們才得以活在約中。</strong></p></li></ol></div>
       <div class="proclamation__creed"><p class="section-label">The ground of our watch · 守望的根基</p><p><strong>We do not watch for God.<br>We watch because God first watched over us.</strong></p><p lang="zh-Hant">我們不是因尋見神而開始守望；<br>我們乃是因神先尋見我們，才得以站在城牆之上。</p><p class="proclamation__promise"><em>We watch for the city because God is its builder.<br>We wait because He has promised the Dawn.</em></p></div>
       <a class="opening-continue" href="#contents"><span>Continue reading</span><strong>Contents · 目錄</strong><b aria-hidden="true">↓</b></a>
-    </div>
-    <p class="watch-rhythm" aria-label="End of section"><span></span><b aria-hidden="true">✦</b><span></span></p>
+    </div><p class="watch-rhythm" aria-label="End of section"><span></span><b aria-hidden="true">✦</b><span></span></p>
   </section>
-
   {{ partial "vol-00-contents.html" . }}
+  <script src="/dore/dore-search-entry.js?v=20260824a"></script>
 {{ end }}
