@@ -9,14 +9,24 @@ const suite=JSON.parse(fs.readFileSync(fixturePath,'utf8'));
 const scripture=JSON.parse(fs.readFileSync('static/dore/search-index.json','utf8'));
 const entities=JSON.parse(fs.readFileSync('static/dore/entity-index.json','utf8'));
 const norm=s=>String(s??'').toLowerCase().normalize('NFKC').replace(/[\s.,;:!?，。；：！？「」『』()（）\-–—_'"`]/g,'');
-const verses=(scripture.verses||[]).map(v=>({id:v.r||`${v.b}.${v.c}.${v.v}`,text:[v.z,v.e].filter(Boolean).join(' '),kind:'scripture'}));
-const entityRows=(entities.entities||[]).map((e,i)=>({id:e.id||e.k||`entity:${i}`,text:[e.p,...(e.a||[]).map(a=>a?.v)].filter(Boolean).join(' '),kind:'entity'}));
+const verses=(scripture.verses||[]).map(v=>({id:v.r||`${v.b}.${v.c}.${v.v}`,text:[v.z,v.e].filter(Boolean).join(' '),surfaces:[v.z,v.e].filter(Boolean),kind:'scripture'}));
+const entityRows=(entities.entities||[]).map((e,i)=>{const surfaces=[e.p,...(e.a||[]).map(a=>a?.v)].filter(Boolean);return{id:e.id||e.k||`entity:${i}`,text:surfaces.join(' '),surfaces,kind:'entity'}});
 const phoneticKey=(text,language)=>language==='zh'?encodeMandarin(text):encodeEnglish(text);
 
 function pushUnique(c,row,channel,budget,seen){
   const key=`${row.kind}:${row.id}:${channel}`;
   if(seen.has(key)||c.length>=budget)return;
   seen.add(key);c.push({...row,channel});
+}
+
+function hasExactPhoneticSurface(row,queryPhonetic,language){
+  for(const surface of row.surfaces||[row.text]){
+    const k=phoneticKey(surface,language);
+    if(!k.key)continue;
+    if(language==='zh'&&k.unknown_han>0)continue;
+    if(k.key===queryPhonetic.key)return true;
+  }
+  return false;
 }
 
 function generate(f){
@@ -28,19 +38,17 @@ function generate(f){
   const phoneticUsable=Boolean(queryPhonetic.key)&&!(f.language==='zh'&&queryPhonetic.unknown_han>0);
   if(phoneticUsable&&c.length<budget){
     for(const row of entityRows){
-      const k=phoneticKey(row.text,f.language);
-      if(k.key&&k.key===queryPhonetic.key&&!(f.language==='zh'&&k.unknown_han>0))pushUnique(c,row,'entity-phonetic-exact',budget,seen);
+      if(hasExactPhoneticSurface(row,queryPhonetic,f.language))pushUnique(c,row,'entity-phonetic-exact',budget,seen);
       if(c.length>=budget)break;
     }
   }
   if(phoneticUsable&&c.length<budget){
     for(const row of verses){
-      const k=phoneticKey(row.text,f.language);
-      if(k.key&&k.key===queryPhonetic.key&&!(f.language==='zh'&&k.unknown_han>0))pushUnique(c,row,'scripture-phonetic-exact',budget,seen);
+      if(hasExactPhoneticSurface(row,queryPhonetic,f.language))pushUnique(c,row,'scripture-phonetic-exact',budget,seen);
       if(c.length>=budget)break;
     }
   }
-  return {candidates:c.slice(0,budget),truncated:c.length>=budget,phonetic:{available:true,versions:PHONETIC_ENCODER_VERSIONS,query:queryPhonetic,policy:'exact-key dev baseline; no fuzzy threshold calibrated'}};
+  return {candidates:c.slice(0,budget),truncated:c.length>=budget,phonetic:{available:true,versions:PHONETIC_ENCODER_VERSIONS,query:queryPhonetic,policy:'exact-key dev baseline; entity/scripture surfaces compared separately; no fuzzy threshold calibrated'}};
 }
 
 let hit=0,required=0,falseNeg=0,totalCandidates=0,abstainCorrect=0,synthetic=0;
