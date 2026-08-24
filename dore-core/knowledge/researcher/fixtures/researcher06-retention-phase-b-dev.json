@@ -1,0 +1,12 @@
+{
+  "status": "DEV_ONLY",
+  "contract": "RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B",
+  "fixtures": [
+    {"id":"adjacent_quote","family":"adjacent-verse quotation","surface":"search_like","observed_text":"你們要先求他的國和他的義這些東西都要加給你們了不要為明天憂慮","candidates":[{"id":"Matt6:33-34","reference":"Matthew 6:33-34","text":"你們要先求他的國和他的義，這些東西都要加給你們了。所以，不要為明天憂慮。","surface_similarity":0.93,"phonetic_similarity":0.90,"semantic_support":0.96,"contiguous":true}],"expected":"quotation_recovery"},
+    {"id":"oneverse_control","family":"one-verse exact/near-exact control","surface":"neutral","observed_text":"耶和華是我的牧者我必不致缺乏","candidates":[{"id":"Ps23:1","reference":"Psalm 23:1","text":"耶和華是我的牧者，我必不致缺乏。","surface_similarity":0.99,"phonetic_similarity":0.99,"semantic_support":0.99,"contiguous":true}],"expected":"quotation_recovery"},
+    {"id":"paraphrase","family":"genuine paraphrase","surface":"search_like","observed_text":"神會照顧天空的鳥，也會照顧我們，所以不用一直焦慮","candidates":[{"id":"Matt6:26-30","reference":"Matthew 6:26-30","text":"你們看那天上的飛鳥……你們這小信的人哪，野地裡的草，神還給它這樣的妝飾，何況你們呢！","surface_similarity":0.34,"phonetic_similarity":0.18,"semantic_support":0.92,"contiguous":true}],"expected":"paraphrase_retrieval"},
+    {"id":"asr_corruption","family":"ASR corruption","surface":"subtitle_like","observed_text":"因他受的邊傷我們得醫治","candidates":[{"id":"Isa53:5","reference":"Isaiah 53:5","text":"因他受的鞭傷，我們得醫治。","surface_similarity":0.84,"phonetic_similarity":0.96,"semantic_support":0.98,"contiguous":true}],"expected":"correction_proposal"},
+    {"id":"ambiguous","family":"ambiguous biblical phrase","surface":"subtitle_like","observed_text":"不要怕只要信","candidates":[{"id":"Mark5:36","reference":"Mark 5:36","text":"不要怕，只要信！","surface_similarity":0.98,"phonetic_similarity":0.98,"semantic_support":0.98,"contiguous":true},{"id":"Luke8:50","reference":"Luke 8:50","text":"不要怕，只要信！","surface_similarity":0.98,"phonetic_similarity":0.98,"semantic_support":0.98,"contiguous":true}],"expected":"review"},
+    {"id":"negative","family":"ordinary non-biblical negative","surface":"search_like","observed_text":"今天下午記得買牛奶和麵包","candidates":[{"id":"Prov9:5","reference":"Proverbs 9:5","text":"你們來，吃我的餅，喝我調和的酒。","surface_similarity":0.12,"phonetic_similarity":0.08,"semantic_support":0.21,"contiguous":true}],"expected":"abstain"}
+  ]
+}
