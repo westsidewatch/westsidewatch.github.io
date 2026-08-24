@@ -20,7 +20,7 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 `dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED`; therefore no live sensory research preempted the course loop.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–08 PASS; UNIT 09 ACTIVE / INTEGRATION CONTRACT FROZEN.
+Status: ACTIVE — UNITS 01–08 PASS; UNIT 09 ACTIVE / EXECUTABLE DEV GATE IMPLEMENTED.
 
 ### Unit 06 honest failure
 After dev calibration reached recall-at-budget 1.0 with zero gold misses, the frozen one-time held-out final failed at recall 0.5 because the deliberately small Mandarin mapping covered only a small fraction of the biblical entity corpus. V1 remains frozen and that exposed final is permanently retired as unseen evidence.
@@ -29,30 +29,25 @@ After dev calibration reached recall-at-budget 1.0 with zero gold misses, the fr
 Corpus audit showed 2,876 Chinese entity surfaces / 14,953 Han occurrences but only 30.78% occurrence coverage under v1. A pinned research-only `pinyin-pro@3.29.3` reference covered the corpus, leading to `mandarin-pinyin-pro-v2-research` without identity-specific patches. Unit 07 examination: 8/8 PASS.
 
 ### Unit 08 authoritative fresh final
-The first durable result at `evidence/researcher06-unit08-v2-fresh-final.json` is authoritative for the frozen v2 architecture:
-- positives: 80;
-- recall-at-budget: 1.0;
-- gold misses: 0;
-- negative abstention: 5/5;
-- unknown Han rate: 0;
-- mean candidate set: 2.4941;
-- perturbation family: single-Han same-pinyin;
-- pass: true.
-
-`RESEARCHER-06-UNIT-08-EXAM.md` records the 8/8 PASS. This proves the corpus-wide v2 Mandarin encoder repaired the v1 coverage failure for the tested unseen biblical-entity perturbation while preserving conservative negative abstention. It does not alone prove mixed transcript-noise correction, subtitle editing safety, calibrated ambiguity handling, or production readiness.
+The first durable result at `evidence/researcher06-unit08-v2-fresh-final.json` is authoritative for the frozen v2 architecture: 80/80 positives, recall-at-budget 1.0, zero gold misses, 5/5 negative abstention, unknown Han rate 0, mean candidate set 2.4941. Unit 08 examination: 8/8 PASS. This does not alone prove mixed transcript-noise correction, subtitle editing safety, calibrated ambiguity handling, or production readiness.
 
 ### Unit 09 — Offline Integration Transfer Gate
-Unit 09 remains active. This heartbeat completed the authorized design/freeze stage:
-- added `fixtures/noise-retrieval-unit09-dev.json`, an exposed development-only mixed-noise fixture set spanning exact/partial Scripture, homophone/entity corruption, deletion/insertion, alias/transliteration, ambiguity and ordinary negatives;
-- added `RESEARCHER-06-UNIT-09-FREEZE.md` freezing the product-neutral result schema, adapters, decision surface, ambiguity/abstention policy, encoder identity and fresh-final protocol;
-- explicitly prohibited the development fixtures and exposed Unit 06 final from being reused as unseen evidence.
+The integration contract remains frozen in `RESEARCHER-06-UNIT-09-FREEZE.md`.
 
-No fresh final has been opened. No PASS is claimed from fixture authorship alone.
+This heartbeat completed the next authorized implementation action:
+- added `scripts/dore/researcher06-unit09-transfer-gate.mjs`;
+- the harness emits one product-neutral evidence object containing observed transcript, candidate, canonical source/anchor, evidence channels, non-probabilistic score boundary, and decision;
+- Search-like and subtitle-proofreader adapters consume that same generic object rather than separate product-specific retrieval logic;
+- subtitle output explicitly preserves observed text and forbids silent overwrite;
+- ambiguity and ordinary-negative safety invariants are checked;
+- added `.github/workflows/dore-researcher06-unit09-dev-gate.yml` to execute the exposed development partition with pinned `pinyin-pro@3.29.3` and persist the resulting evidence JSON.
+
+No Unit 09 PASS is claimed yet. The development fixture is exposed and cannot count as fresh-final evidence. The workflow/evidence result must exist before a fresh final may be authored or opened.
 
 ## Current next action
-`RESEARCHER_06_UNIT_09_IMPLEMENT_GENERIC_OFFLINE_TRANSFER_HARNESS_AND_RUN_DEV_GATE`.
+`RESEARCHER_06_UNIT_09_INSPECT_PERSISTED_DEV_GATE_RESULT`.
 
-Implement one generic retrieval object consumed unchanged by Search-like and subtitle-proofreader adapters. Run only the exposed development partition first and persist the result. If the development gate satisfies provenance, abstention and shared-adapter invariants, author/seal a separate fresh final partition and run it once. A fresh failure must be preserved and diagnosed generically.
+When `dore-core/knowledge/researcher/evidence/researcher06-unit09-dev-gate.json` is present, inspect it. If the dev gate passes all shared-object, provenance, negative-abstention, ambiguity and subtitle-no-silent-overwrite invariants, author and seal a separate fresh-final partition covering all seven required evidence families, then run it once under the frozen contract. If the dev gate fails, preserve the failure and repair only generic architecture using the exposed dev partition.
 
 ## Brain/Product status
 This heartbeat changed no product-readable knowledge node, so no Brain → Product regression was required. Researcher 06 remains research-only and is not production-promoted.
