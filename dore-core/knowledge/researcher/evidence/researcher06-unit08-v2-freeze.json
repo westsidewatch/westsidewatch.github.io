@@ -1,0 +1,46 @@
+{
+  "gate": "researcher06-unit08-v2-architecture-freeze",
+  "frozen_at": "2026-08-24T06:11:00Z",
+  "status": "FROZEN_FOR_ONE_SHOT_FINAL",
+  "development_evidence": {
+    "path": "dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json",
+    "commit": "f2787822ce52ebce850ceca78953848db16ae932",
+    "pass": true,
+    "inspected_rows": 601,
+    "total_han": 3123,
+    "unknown_han": 0,
+    "empty_keys": 0
+  },
+  "encoder": {
+    "mandarin": {
+      "id": "mandarin-pinyin-pro-v2-research",
+      "source": "pinyin-pro@3.29.3",
+      "tone": "none",
+      "normalization": "NFKC; lowercase; ü->v; explicit u<codepoint> token for unconverted Han",
+      "implementation": "scripts/dore/phonetic-encoders-v2.mjs",
+      "blob_sha": "e2cdca1b1999f601aef9b0fa1434498dab18d478"
+    },
+    "english_control": {
+      "id": "english-metaphone-lite-v1",
+      "source": "local",
+      "status": "unchanged-control"
+    }
+  },
+  "fresh_final_harness": {
+    "path": "scripts/dore/phonetic-v2-fresh-final.mjs",
+    "commit": "2bb3ae463a9da4acc3b4a99c0d4f836590f479d3",
+    "partition": "sha256(entity-id\\0surface) mod 10 in {8,9}",
+    "positive_limit": 80,
+    "candidate_budget": 20,
+    "ranking": "stable corpus order among exact v2 phonetic-key matches; dedupe by entity id",
+    "perturbation": "first eligible Han replaced by deterministic alternate Han sharing the same tone-free pinyin syllable",
+    "negative_policy": "five fixed ordinary Mandarin utterances must yield no exact phonetic entity candidate",
+    "pass_policy": "at least 40 positives; zero gold misses; all negatives abstain; zero unknown Han"
+  },
+  "architecture_boundary": [
+    "Unit 06 exposed final is retired from unseen evidence and cannot be used for tuning.",
+    "No product wiring or brain promotion is part of this freeze.",
+    "After the fresh final is opened, any encoder, ranking, candidate-budget, perturbation, partition or abstention-policy change invalidates that final as unseen evidence.",
+    "A failed one-shot final must be diagnosed broadly; it may not be patched by exposed case identity."
+  ]
+}
