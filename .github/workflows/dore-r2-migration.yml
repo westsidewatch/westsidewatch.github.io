@@ -27,7 +27,6 @@ jobs:
           mkdir -p dore-core/cloudflare/receipts
           python3 - <<'PY'
           import json, os, time, datetime, urllib.request, urllib.parse, urllib.error
-
           items=[
             {'source':'static/one/share/matthew-03-baptism-motion-r5-mobile.gif','code':'ONE-MAT-03-BAPTISM-COVER-MOTION','preserve':'working','scripture':['Matthew 3'],'social':['share','mobile']},
             {'source':'static/one/studio/jude-01-michael-moses-dore-studio-r2.png','code':'ONE-JUDE-01-MICHAEL-MOSES-STUDIO','preserve':'working'},
@@ -37,17 +36,15 @@ jobs:
             {'source':'static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png','code':'ONE-MAT-03-BAPTISM-JESUS-RESTORED','preserve':'permanent','scripture':['Matthew 3']},
             {'source':'static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png','code':'ONE-MAT-03-BAPTISM-MOTION-SOURCE','preserve':'regenerable','scripture':['Matthew 3']}
           ]
-          token=os.environ['TOKEN']
           receipt={'milestone':'priority-one-media-migration','status':'FAIL','assets':[],'verified':[],'error':None}
+          token=os.environ['TOKEN']
           try:
               for item in items:
-                  body={
-                      'source_path':item['source'], 'asset_code':item['code'],
-                      'title':item['code'].replace('-',' '), 'generated_by':'dore',
-                      'preservation_class':item['preserve'], 'products_using_it':['ONE'],
-                      'scripture_refs':item.get('scripture',[]), 'social_uses':item.get('social',[])
-                  }
-                  payload=json.dumps(body).encode()
+                  payload=json.dumps({
+                      'source_path':item['source'],'asset_code':item['code'],'title':item['code'].replace('-',' '),
+                      'generated_by':'dore','preservation_class':item['preserve'],'products_using_it':['ONE'],
+                      'scripture_refs':item.get('scripture',[]),'social_uses':item.get('social',[])
+                  }).encode()
                   result=None
                   for attempt in range(1,6):
                       req=urllib.request.Request('https://westsidewatch-github-io.pages.dev/api/dore/assets/migrate',data=payload,headers={'Authorization':f'Bearer {token}','Content-Type':'application/json'},method='POST')
@@ -80,11 +77,13 @@ jobs:
           if receipt['status']!='PASS': raise SystemExit(1)
           PY
       - name: Persist milestone receipt
+        if: always()
         shell: bash
         run: |
+          test -f dore-core/cloudflare/receipts/ASSET-MIGRATION-PRIORITY-ONE-RESULT.json || exit 0
           git config user.name 'dore-migration-bot'
           git config user.email 'dore-migration-bot@users.noreply.github.com'
           git add dore-core/cloudflare/receipts/ASSET-MIGRATION-PRIORITY-ONE-RESULT.json
-          git commit -m 'chore(dore): record priority ONE media migration PASS [skip ci]' || exit 0
+          git commit -m 'chore(dore): record priority ONE media migration result [skip ci]' || exit 0
           git pull --rebase origin main || true
-          git push
+          git push || true
