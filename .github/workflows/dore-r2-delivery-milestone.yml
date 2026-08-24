@@ -24,3 +24,4 @@ jobs:
       - name: Persist receipt
         run: |
           git config user.name dore-delivery-bot; git config user.email dore-delivery-bot@users.noreply.github.com; git add dore-core/cloudflare/receipts/R2-DELIVERY-MILESTONE-PASS.json; git commit -m 'chore(dore): record R2 delivery milestone PASS [skip ci]' || exit 0; git pull --rebase origin main || true; git push
+# trigger: 2026-08-24T10:47Z
