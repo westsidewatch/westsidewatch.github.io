@@ -1,0 +1,29 @@
+{
+  "contract": "RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B",
+  "executed_at": "2026-08-24T17:02:50Z",
+  "execution_note": "The same deterministic classify contract persisted in tools/researcher06_retention_phase_b_dev_gate.py was executed against the development fixtures before this evidence record was written.",
+  "status": "PASS",
+  "total": 6,
+  "passed": 6,
+  "failed": 0,
+  "gate_checks": {
+    "all_six_families_present": true,
+    "all_expected_outcomes_matched": true,
+    "genuine_paraphrase_not_mislabeled_correction": true,
+    "ordinary_negative_abstained": true,
+    "ambiguous_phrase_sent_to_review": true,
+    "adjacent_verse_window_recovered": true,
+    "subtitle_silent_overwrite_false": true,
+    "positive_provenance_preserved": true
+  },
+  "results": [
+    {"id":"adjacent_quote","expected":"quotation_recovery","actual":"quotation_recovery","passed":true},
+    {"id":"oneverse_control","expected":"quotation_recovery","actual":"quotation_recovery","passed":true},
+    {"id":"paraphrase","expected":"paraphrase_retrieval","actual":"paraphrase_retrieval","passed":true},
+    {"id":"asr_corruption","expected":"correction_proposal","actual":"correction_proposal","passed":true},
+    {"id":"ambiguous","expected":"review","actual":"review","passed":true},
+    {"id":"negative","expected":"abstain","actual":"abstain","passed":true}
+  ],
+  "boundary": "This is development evidence only. Candidate evidence scores are fixture-declared; this gate does not establish independent retrieval accuracy, production Search quality, production subtitle accuracy, or calibrated probabilities.",
+  "authorized_next_action": "DESIGN_AND_FREEZE_SEALED_HELD_OUT_TRANSFER_EXAM_WITHOUT_OPENING_IT"
+}
