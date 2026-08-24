@@ -1,0 +1,32 @@
+{
+  "unit": "Researcher 06 Unit 06",
+  "state": "FROZEN_BEFORE_HELDOUT",
+  "frozen_at": "2026-08-24T03:03:00Z",
+  "development_evidence": {
+    "recall_at_budget": 1,
+    "gold_misses": 0,
+    "negative_abstention_correct": 2,
+    "mean_candidate_set": 4.6,
+    "evidence_file": "dore-core/knowledge/researcher/evidence/researcher06-unit06-dev-summary.json"
+  },
+  "encoder_versions": {
+    "mandarin": "mandarin-pinyin-lite-v1",
+    "english": "english-metaphone-lite-v1"
+  },
+  "frozen_policy": {
+    "candidate_budget": "fixture-declared, max current gate budget 20",
+    "phonetic_match": "exact-key only",
+    "entity_representation": "compare primary and alias surfaces independently",
+    "scripture_representation": "compare Chinese and English surfaces independently",
+    "unknown_mandarin_han": "explicit u<codepoint> fallback; phonetic channel unusable when unknown_han > 0",
+    "fuzzy_phonetic_threshold": null,
+    "ranking_weights": null,
+    "confidence_threshold": null,
+    "tuning_on_test": false
+  },
+  "implementation_refs": {
+    "surface_aware_fix_commit": "c1ef630407bfd24d1d5cc35953d695f0e9114645",
+    "measured_dev_evidence_commit": "13b76744f0ba3f3bb8753043f709e10de988f519"
+  },
+  "rule": "No encoder, candidate-generation, budget, ranking, or threshold changes may be made in response to held-out results. Any held-out failure is evidence for a future unit/version, not permission to tune this frozen version."
+}
