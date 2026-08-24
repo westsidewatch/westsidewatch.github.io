@@ -10,35 +10,29 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
-      - name: Audit references, remove redundant binaries, verify R2
+      - name: Audit and clean
         shell: bash
         run: |
           set -euo pipefail
-          files=(
-          static/one/share/matthew-03-baptism-motion-r5-mobile.gif
-          static/one/studio/jude-01-michael-moses-dore-studio-r2.png
-          static/one/studio/obadiah-01-dore-studio-r2.png
-          static/one/studio/revelation-02-dore-final-full.png
-          static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png
-          static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png
-          static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png)
-          : > /tmp/refs.txt
-          for f in "${files[@]}"; do
-            b=$(basename "$f")
-            git grep -n -F "$b" -- ':!dore-core/cloudflare/**' ':!.github/workflows/**' ':!static/one/r2-assets.json' ':!static/one/*.md' >> /tmp/refs.txt || true
-          done
-          cat /tmp/refs.txt
-          test ! -s /tmp/refs.txt || { echo 'ACTIVE REFERENCES REMAIN'; exit 1; }
-          git rm -- "${files[@]}"
-          codes=(ONE-MAT-03-BAPTISM-COVER-MOTION ONE-JUDE-01-MICHAEL-MOSES-STUDIO ONE-OBA-01-DORE-STUDIO ONE-REV-02-DORE-FINAL ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED ONE-MAT-03-BAPTISM-JESUS-RESTORED ONE-MAT-03-BAPTISM-MOTION-SOURCE)
-          for code in "${codes[@]}"; do curl -fsS "https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code=$code" -o /tmp/asset; test -s /tmp/asset; done
+          files=(static/one/share/matthew-03-baptism-motion-r5-mobile.gif static/one/studio/jude-01-michael-moses-dore-studio-r2.png static/one/studio/obadiah-01-dore-studio-r2.png static/one/studio/revelation-02-dore-final-full.png static/one/dore-restorations/183-john-baptist-preaching-restored-r1.png static/one/dore-restorations/184-baptism-of-jesus-restored-r1.png static/one/motion-assets/matthew-03-baptism-dove-removed-r1.png)
+          : >/tmp/refs.txt
+          for f in "${files[@]}"; do b=$(basename "$f"); git grep -n -F "$b" -- ':!dore-core/cloudflare/**' ':!.github/workflows/**' ':!static/one/r2-assets.json' ':!static/one/*.md' >>/tmp/refs.txt || true; done
           mkdir -p dore-core/cloudflare/receipts
-          python3 - <<'PY'
+          if [ -s /tmp/refs.txt ]; then
+            python3 - <<'PY'
           import json
-          json.dump({'milestone':'r2-post-delivery-cleanup','status':'PASS','active_github_reference_count':0,'github_binaries_removed':7,'r2_delivery_post_cleanup_verified':7,'canonical_original_241_touched':False},open('dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-PASS.json','w'),indent=2)
+          refs=open('/tmp/refs.txt').read().splitlines(); json.dump({'milestone':'r2-post-delivery-cleanup','status':'BLOCKED_ACTIVE_REFERENCES','active_github_reference_count':len(refs),'references':refs},open('dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-RESULT.json','w'),indent=2)
           PY
+          else
+            git rm -- "${files[@]}"
+            codes=(ONE-MAT-03-BAPTISM-COVER-MOTION ONE-JUDE-01-MICHAEL-MOSES-STUDIO ONE-OBA-01-DORE-STUDIO ONE-REV-02-DORE-FINAL ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED ONE-MAT-03-BAPTISM-JESUS-RESTORED ONE-MAT-03-BAPTISM-MOTION-SOURCE)
+            for code in "${codes[@]}"; do curl -fsS "https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code=$code" -o /tmp/asset; test -s /tmp/asset; done
+            python3 - <<'PY'
+          import json
+          json.dump({'milestone':'r2-post-delivery-cleanup','status':'PASS','active_github_reference_count':0,'github_binaries_removed':7,'r2_delivery_post_cleanup_verified':7,'canonical_original_241_touched':False},open('dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-RESULT.json','w'),indent=2)
+          PY
+          fi
           git config user.name dore-delivery-bot; git config user.email dore-delivery-bot@users.noreply.github.com
-          git add dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-PASS.json
-          git commit -m 'chore(dore): remove R2-migrated ONE rollback binaries [skip ci]'
-          git pull --rebase origin main || true
-          git push
+          git add -A dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-RESULT.json "${files[@]}" || true
+          git commit -m 'chore(dore): record R2 cleanup audit result [skip ci]' || exit 0
+          git pull --rebase origin main || true; git push
