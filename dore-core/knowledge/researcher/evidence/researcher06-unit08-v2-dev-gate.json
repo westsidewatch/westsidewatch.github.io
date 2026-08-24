@@ -1,0 +1,25 @@
+{
+  "gate": "researcher06-unit08-v2-dev-coverage",
+  "partition": "sha256(entity-id\\0surface) mod 10 in {0,1}",
+  "inspected_rows": 601,
+  "total_han": 3123,
+  "unknown_han": 0,
+  "unknown_rate": 0,
+  "empty_keys": 0,
+  "encoder": {
+    "mandarin": {
+      "id": "mandarin-pinyin-pro-v2-research",
+      "source": "pinyin-pro@3.29.3",
+      "tone": "none",
+      "status": "research-only"
+    },
+    "english": {
+      "id": "english-metaphone-lite-v1",
+      "source": "local",
+      "status": "unchanged-control"
+    }
+  },
+  "failures": [],
+  "pass": true,
+  "boundary": "Development/self-test only. This is not a fresh held-out retrieval claim."
+}
