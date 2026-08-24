@@ -1,0 +1,26 @@
+name: Doré R2 delivery milestone
+on:
+  workflow_dispatch:
+  push:
+    paths: ['functions/api/dore/assets/file.js','static/one/r2-assets.json','.github/workflows/dore-r2-delivery-milestone.yml']
+permissions: {contents: write}
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify delivery
+        run: |
+          set -euo pipefail
+          ok=0; for wait in 10 20 30 40 50 60 60; do sleep "$wait"; c=$(curl -sS -o /tmp/p -w '%{http_code}' 'https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-COVER-MOTION'||true); [ "$c" = 200 ]&&{ ok=1; break;}; done; [ "$ok" = 1 ]
+          python3 - <<'PY'
+          import json,subprocess,hashlib,urllib.parse,os
+          exp={'ONE-MAT-03-BAPTISM-COVER-MOTION':'c54eca02197c2e79129d06ea5031ddf7623f36b5148c17cf8c5f6dcb12b1706f','ONE-JUDE-01-MICHAEL-MOSES-STUDIO':'048e91c7752aeb9493bba8ae8716c0faa4d0a6189ee4a7923e6f2394ac85f568','ONE-OBA-01-DORE-STUDIO':'31c0e72f3e1728fbb9be55df5241f5e69e6ea9d7ccdb2f2572809a357fd44da4','ONE-REV-02-DORE-FINAL':'3e4e2458d28085bf9f116ffc7720aa921f09746f0aa920d0df1b791966424ec3','ONE-MAT-03-JOHN-BAPTIST-PREACHING-RESTORED':'bdb87757c0edd69e0f7aaa972ef83c0849d5fc07e47aaff015d724d02e0809b2','ONE-MAT-03-BAPTISM-JESUS-RESTORED':'31ffb05945b3fcb3ad493929b9a55118d26001112366f18e41aba48522237501','ONE-MAT-03-BAPTISM-MOTION-SOURCE':'562736268c1b0de8897b3a2450624dd603f2cc912a329f48711e866792889e94'}; out=[]
+          for code,sha in exp.items():
+            p='/tmp/'+code; u='https://westsidewatch-github-io.pages.dev/api/dore/assets/file?code='+urllib.parse.quote(code); subprocess.run(['curl','-fsS',u,'-o',p],check=True); got=hashlib.sha256(open(p,'rb').read()).hexdigest(); assert got==sha,(code,got); out.append({'asset_code':code,'sha256':got})
+          subprocess.run(['curl','-fsS','https://westsidewatch-github-io.pages.dev/one/','-o','/tmp/one'],check=True); os.makedirs('dore-core/cloudflare/receipts',exist_ok=True); json.dump({'milestone':'r2-private-delivery','status':'PASS','asset_count':7,'assets':out,'one_page_http_pass':True,'r2_public_access_required':False},open('dore-core/cloudflare/receipts/R2-DELIVERY-MILESTONE-PASS.json','w'),indent=2)
+          PY
+      - name: Persist receipt
+        run: |
+          git config user.name dore-delivery-bot; git config user.email dore-delivery-bot@users.noreply.github.com; git add dore-core/cloudflare/receipts/R2-DELIVERY-MILESTONE-PASS.json; git commit -m 'chore(dore): record R2 delivery milestone PASS [skip ci]' || exit 0; git pull --rebase origin main || true; git push
