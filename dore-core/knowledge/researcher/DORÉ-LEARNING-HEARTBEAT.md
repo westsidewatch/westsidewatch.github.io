@@ -9,42 +9,61 @@ Doré learning does not wait for a human to say `continue`, `execute`, `next`, o
 Human approval is reserved for irreversible/destructive external actions, paid obligations, official outward doctrinal/editorial publication, brand/governance changes, new private credentials/access, material legal/security/privacy consequences, or genuine unresolved value conflicts.
 
 ## Major completed milestones
-### Biblical Languages I
-`PASS / GRADUATED`. Units 1–11, Hebrew/Greek practica and integrated finals passed. Reusable method nodes consolidated.
+- Biblical Languages I: `PASS / GRADUATED`.
+- Researcher 04 — Autonomous Learning I: `COMPLETE → RETENTION_WATCH`, final 12/12 PASS.
+- Researcher 05 — Biblical Concept Development I: `PASS / GRADUATED → RETENTION_WATCH`, independent resurrection transfer 6/6 PASS.
+- First durable sensory → research → brain consolidation: `馬利亞有幾位?` consolidated to `research.nt.mary-count` after independent research and 7/7 examination.
+- Generic Brain → Product repository regression established without per-question answer logic.
 
-### Researcher 04 — Autonomous Learning I
-`COMPLETE → RETENTION_WATCH`. Final exam: 12/12 PASS.
-
-### Researcher 05 — Biblical Concept Development I
-`PASS / GRADUATED → RETENTION_WATCH`. Independent resurrection transfer passed 6/6 adversarial gate.
-
-### First durable sensory → research → brain consolidation
-Signal `5cf2c608-e66f-4176-a3f8-b3284819158a`, query `馬利亞有幾位?`, was durably claimed as `RESEARCHING`, independently researched, counter-checked, passed a 7/7 gate, promoted generically as `research.nt.mary-count`, and written back to `sensory-active.json` as `CONSOLIDATED` with a real `brain_node`.
-
-This proves **durable sensory memory → autonomous research → examination → product-readable brain consolidation**. Browser-side ingestion remains a separate acceptance surface.
-
-### Brain → Product generic bridge acceptance
-The generic bridge now loads the live brain endpoint rather than a frozen deployment-local snapshot. `scripts/dore/brain-bridge-regression.mjs` tests three Mary question variants against `research.nt.mary-count` plus a Scripture-routing probe, using the same generic normalization/scoring contract as `static/dore/dore-brain-bridge.js`. No Mary-specific answer branch exists in the product bridge; the only Mary strings in the regression are test inputs/expected node ids. This establishes the repository-level Brain → Product regression surface. Live browser acceptance remains separate from repository-level regression.
+## Sensory state checked this heartbeat
+`dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED`; therefore no live sensory research preempted the course loop.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 IN PROGRESS.
-Evidence: `RESEARCHER-06-NOISE-AWARE-SCRIPTURE-RETRIEVAL-I.md`, `RESEARCHER-06-UNIT-05-HARNESS-SPEC.md`, `RESEARCHER-06-UNIT-06-PHONETIC-ENCODER-SPEC.md`.
+Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 HELD-OUT FAIL; UNIT 07 IN PROGRESS.
 
-Unit 01: noise taxonomy + observed/candidate/source/confidence model, 8/8 PASS.
-Unit 02: bounded lexical/phonetic/entity/window/N-best candidate generation, 10/10 PASS.
-Unit 03: evidence-fusion ranking, surface-evidence veto, weak domain priors, top-two margin reasoning, conflict-aware confidence, calibrated abstention requirement, 12/12 PASS.
-Unit 04: reusable Chinese/English phonetic-index architecture, explicit encoder/alias/span provenance, bounded neighborhoods, variable-length spans, separated fixture schema and measurement contract, 12/12 adversarial design gate PASS.
-Unit 05: executable non-production measurement harness + separated dev/sealed-test fixtures + tuning guard, 8/8 PASS.
-Unit 06: reproducible versioned encoder implementation committed. `mandarin-pinyin-lite-v1` and `english-metaphone-lite-v1` are integrated into the non-production harness. A dedicated dev calibration workflow persists machine-readable evidence.
+### Unit 06 outcome
+After schema and per-surface repairs, dev calibration reached:
+- recall-at-budget `1.0`;
+- gold misses `0`;
+- negative abstention `2/2`;
+- mean candidate set `4.6`.
 
-First measured dev run: FAIL — recall-at-budget `0`, three gold misses, while both negative abstention fixtures were correctly empty. This exposed an instrumentation/schema failure: the harness read `original-index.json` generically instead of the product `search-index.json`, and flattened entity data incorrectly. The harness was repaired to consume the real Scripture and entity schemas.
+Parameters and encoder versions were frozen before opening the sealed test.
 
-Second measured dev run after that repair: FAIL — recall-at-budget `0.6667`, one gold miss, mean candidate set `4.2`, and both negative abstention fixtures remained correctly empty. Exact Scripture and entity retrieval now pass. The remaining miss is `dev-phonetic-zh-trad-simp` (`马利亚` → gold `馬利亞`). Diagnosis: entity aliases were concatenated into one row before phonetic encoding, so exact phonetic comparison tested the whole concatenated alias string rather than each candidate surface independently. This is a representation bug, not a justified encoder failure. The harness is now repaired to retain per-row `surfaces[]` and compare the query phonetic key against each primary/alias surface separately. No held-out fixtures have been opened.
+One-time held-out final then failed:
+- recall-at-budget `0.5`;
+- gold misses `1`;
+- negative abstention `2/2`.
+
+The exact partial-Scripture case passed, both ordinary nonquotation negatives passed, and the biblical-entity case failed because the deliberately small Mandarin table left most characters unknown. V1 remains frozen; the exposed final suite is not eligible for reuse as unseen evidence.
+
+Evidence:
+- `RESEARCHER-06-UNIT-06-HELDOUT-DIAGNOSIS.md`
+- `evidence/researcher06-unit06-freeze.json`
+- `evidence/researcher06-unit06-heldout-summary.json`
+
+### Unit 07 corpus-wide diagnosis
+A whole-entity-corpus audit was executed without modifying v1:
+- 4,293 entity rows;
+- 2,876 Chinese surfaces;
+- 14,953 Han occurrences;
+- v1 occurrence coverage `30.78%`;
+- 774 unique Han, only 39 mapped (`5.04%`);
+- fully covered Chinese surfaces: 67 / 2,876 (`2.33%`).
+
+This proves the held-out miss is one symptom of a broad coverage deficit, not a single-name bug.
+
+A pinned research-only comparison using `pinyin-pro@3.29.3` then converted all 14,953 Han occurrences and all 2,876 Chinese surfaces in the same corpus (`100%` reference coverage). This is only a source/architecture experiment; no production dependency, v1 mutation, product wiring, or brain promotion has occurred.
+
+Evidence:
+- `RESEARCHER-06-UNIT-07-COVERAGE-PLAN.md`
+- `evidence/researcher06-unit07-mandarin-coverage.json`
+- `evidence/researcher06-unit07-reference-coverage.json`
 
 ## Current next action
-`RESEARCHER_06_UNIT_06_OBSERVE_SURFACE_AWARE_DEV_CALIBRATION`.
+`RESEARCHER_06_UNIT_07_DESIGN_V2_AND_FRESH_EVALUATION_PROTOCOL`.
 
-Observe the dev rerun after commit `c1ef630407bfd24d1d5cc35953d695f0e9114645`. If development recall reaches the Unit 06 gate while negative abstention remains intact, freeze parameters/version identifiers before opening the sealed held-out final test. If dev still fails, diagnose only against dev evidence. Do not wire production or promote a Researcher-06 brain capability before held-out evidence passes.
+Design the v2 pronunciation architecture from corpus-wide evidence, preserving version/provenance and unknown handling. Before claiming generalization, establish a fresh leakage-safe evaluation protocol that is not the exposed Unit 06 test. Do not promote to product/brain until a new held-out gate passes.
 
 ## Closed-loop remaining acceptance
-Repository-level durable sensory → research → brain and generic Brain → Product regression are now evidenced. The remaining product acceptance is browser-level: verify a current Search deployment itself POSTs a fresh unknown query into sensory memory and, after consolidation, surfaces the live brain result without per-question UI logic.
+Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
