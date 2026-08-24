@@ -71,7 +71,7 @@ ONE 現有的章節時間軸將來可以與多雷動畫聯動。時間軸上的�
 
 多雷已從 ONE 的逐章封面與插圖工作開始，建立古斯塔夫・多雷原作與 Westside Watch 延續作品共存的系統。馬太福音第 3 章的受洗圖，也確立了目前新的線條基準：寧可回到較早、清楚而有材質差異的版本，也不接受在反覆修改中逐漸 AI 化、模糊化的後期版本。
 
-![馬太福音第三章：耶穌受洗的版畫重製](/one/dore-restorations/184-baptism-of-jesus-restored-r1.png)
+![馬太福音第三章：耶穌受洗的版畫重製](/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-JESUS-RESTORED)
 
 ## 產品方向
 

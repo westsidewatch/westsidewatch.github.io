@@ -1,5 +1,5 @@
 (()=>{
-  const gif='/one/share/matthew-03-baptism-motion-r5-mobile.gif';
+  const gif='/api/dore/assets/file?code=ONE-MAT-03-BAPTISM-COVER-MOTION';
   const style=document.createElement('link');style.rel='stylesheet';style.href='/one/one-baptism-motion.css?v=20260821c';document.head.append(style);
   const intro=document.querySelector('.now__intro');
   if(!intro)return;
