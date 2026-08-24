@@ -1,0 +1,29 @@
+name: Doré Researcher06 Unit09 Final Gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-core/knowledge/researcher/fixtures/unit09-final-partition.json'
+      - '.github/workflows/dore-researcher06-unit09-final-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  final-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm install --no-save pinyin-pro@3.29.3
+      - run: node scripts/dore/researcher06-unit09-transfer-gate.mjs dore-core/knowledge/researcher/fixtures/unit09-final-partition.json dore-core/knowledge/researcher/evidence/researcher06-unit09-final-gate.json
+      - name: Persist evidence
+        if: always()
+        run: |
+          git config user.name "dore-learning-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add dore-core/knowledge/researcher/evidence/researcher06-unit09-final-gate.json || true
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "dore: persist Researcher 06 Unit 09 final gate evidence"
+          git push
