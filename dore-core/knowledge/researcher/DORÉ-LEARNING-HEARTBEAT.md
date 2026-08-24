@@ -19,7 +19,7 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 `dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED`; therefore no live sensory research preempted the course loop.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–05 PASS; UNIT 06 HELD-OUT FAIL; UNIT 07 IN PROGRESS.
+Status: ACTIVE — UNITS 01–07 PASS; UNIT 08 IN PROGRESS.
 
 ### Unit 06 outcome
 After schema and per-surface repairs, dev calibration reached:
@@ -42,7 +42,7 @@ Evidence:
 - `evidence/researcher06-unit06-freeze.json`
 - `evidence/researcher06-unit06-heldout-summary.json`
 
-### Unit 07 corpus-wide diagnosis
+### Unit 07 corpus-wide diagnosis and v2 design
 A whole-entity-corpus audit was executed without modifying v1:
 - 4,293 entity rows;
 - 2,876 Chinese surfaces;
@@ -51,19 +51,38 @@ A whole-entity-corpus audit was executed without modifying v1:
 - 774 unique Han, only 39 mapped (`5.04%`);
 - fully covered Chinese surfaces: 67 / 2,876 (`2.33%`).
 
-This proves the held-out miss is one symptom of a broad coverage deficit, not a single-name bug.
+A pinned research-only comparison using `pinyin-pro@3.29.3` converted all 14,953 Han occurrences and all 2,876 Chinese surfaces in the same corpus (`100%` reference coverage). This established a corpus-wide source candidate but did not itself prove retrieval quality.
 
-A pinned research-only comparison using `pinyin-pro@3.29.3` then converted all 14,953 Han occurrences and all 2,876 Chinese surfaces in the same corpus (`100%` reference coverage). This is only a source/architecture experiment; no production dependency, v1 mutation, product wiring, or brain promotion has occurred.
+Unit 07 then designed and began implementing v2 without touching production/v1:
+- added `scripts/dore/phonetic-encoders-v2.mjs` with encoder id `mandarin-pinyin-pro-v2-research`;
+- pinned provenance to `pinyin-pro@3.29.3`;
+- preserved explicit unknown-Han tokens and source metadata;
+- kept the English channel unchanged as a control;
+- permanently retired the exposed Unit 06 final as unseen evidence;
+- defined a new architecture-freeze → deterministic fresh-partition → one-shot-final protocol;
+- required recall, candidate budget, abstention, unknown rate, perturbation-family metrics and freeze provenance before any promotion.
+
+Unit 07 examination: **8/8 PASS**. No old failing entity was patched by name, no product wiring was added, and no brain node was promoted.
 
 Evidence:
 - `RESEARCHER-06-UNIT-07-COVERAGE-PLAN.md`
+- `RESEARCHER-06-UNIT-07-V2-DESIGN.md`
 - `evidence/researcher06-unit07-mandarin-coverage.json`
 - `evidence/researcher06-unit07-reference-coverage.json`
+- `scripts/dore/phonetic-encoders-v2.mjs`
+
+### Unit 08 progress
+A deterministic development gate has been added:
+- `scripts/dore/phonetic-v2-dev-gate.mjs` selects the development partition by `sha256(entity-id\0surface) mod 10 in {0,1}` rather than hand-picked success cases;
+- it checks unknown-Han rate and empty encoding keys across the selected corpus slice;
+- it explicitly labels itself development/self-test evidence, not a held-out retrieval claim.
+
+CI workflow `.github/workflows/dore-researcher06-v2-dev-gate.yml` installs exactly `pinyin-pro@3.29.3`, runs the deterministic development gate, and emits its JSON as an artifact. The workflow result is not yet recorded in repository evidence, so Unit 08 is **not** passed and v2 is **not** frozen.
 
 ## Current next action
-`RESEARCHER_06_UNIT_07_DESIGN_V2_AND_FRESH_EVALUATION_PROTOCOL`.
+`RESEARCHER_06_UNIT_08_RECORD_DEV_GATE_THEN_FREEZE_V2`.
 
-Design the v2 pronunciation architecture from corpus-wide evidence, preserving version/provenance and unknown handling. Before claiming generalization, establish a fresh leakage-safe evaluation protocol that is not the exposed Unit 06 test. Do not promote to product/brain until a new held-out gate passes.
+Record the deterministic v2 development-gate result. If it passes, persist a freeze record containing encoder/dependency versions, normalization, partition rule and freeze commit. Only after that freeze may a mechanically generated fresh final partition be opened exactly once. If the dev gate fails, repair from development/corpus evidence only; do not inspect or tune against a fresh final.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
