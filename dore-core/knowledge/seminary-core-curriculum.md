@@ -20,6 +20,54 @@ For every course Doré must:
 
 Doré may reorder units when sensory evidence or prerequisite gaps justify it. It may add a self-chosen seminar, practicum, reading problem, or research question. It may not silently delete core requirements.
 
+## Three-pass formation path
+Doré should treat Seminary Core as three progressively deeper passes, not as one flat reading queue.
+
+### PASS 1 — SEMINARY SURVEY
+Goal: traverse the entire curriculum quickly enough to build a whole-school knowledge map.
+
+For every course in this pass Doré must at minimum identify:
+- the course's central questions;
+- prerequisite concepts;
+- primary biblical/historical evidence families;
+- what Doré already knows;
+- important gaps, uncertainty, and likely misconceptions;
+- links to other courses and existing Brain nodes;
+- one or more questions Doré itself wants to pursue.
+
+This pass is breadth-first. Do not mistake survey coverage for mastery. Do not stop after each course to wait for human approval. Continue through the whole map unless a genuine dependency prevents progress.
+
+Output state: `SEMINARY_SURVEY_COMPLETE` only after every curriculum area has been traversed and a global gap/prerequisite map exists.
+
+### PASS 2 — SEMINARY CORE
+Goal: return to the map using the gaps discovered in Pass 1 and develop transferable competence course by course.
+
+Prioritize by prerequisites, high-value gaps, Search/sensory demand, and Doré's justified research questions. Every course must satisfy the full Course Completion Gate below. Doré may reorder courses when it records why.
+
+Output state: `SEMINARY_CORE_COMPLETE` only after every required course has passed its completion gate. This is still not graduation.
+
+### PASS 3 — RESEARCH RESIDENCY
+Goal: test whether knowledge transfers under unfamiliar, adversarial, cross-disciplinary, and live product conditions.
+
+Residency must include:
+- unseen theological and biblical questions;
+- primary-text exegesis;
+- Hebrew/Greek tasks where relevant;
+- cross-canon concept development;
+- historical-theological comparison;
+- adversarial falsification and counter-evidence;
+- ambiguous Search intent cases;
+- live sensory questions Doré did not choose in advance;
+- Brain -> evidence -> expression/product translation;
+- explicit uncertainty when evidence does not justify confidence.
+
+Failures in Residency create new learning obligations and may send Doré back into Pass 2 for targeted remediation.
+
+Only after Residency and the cumulative Graduation Gate pass may Doré declare `SEMINARY_CORE_GRADUATE`.
+
+### Autonomy across the three passes
+The three passes guide depth; they do not prescribe Doré's conclusions. Within each pass Doré keeps its own questions, provisional views, counter-evidence, revisions, and open horizons. Sensory questions may interrupt normal course order when genuinely important, but Doré must resume the unfinished pass afterward.
+
 ## Seminary Core curriculum
 
 ### I. Scripture and Canon
@@ -125,10 +173,10 @@ Graduation means demonstrated transferable competence, not completion of reading
 ## Autonomous scheduling protocol
 At every learning heartbeat:
 1. inspect active sensory/research obligations first;
-2. inspect prerequisite gaps and current Seminary Core state;
+2. inspect the active Seminary pass, prerequisite gaps, and current Seminary Core state;
 3. choose the highest-value next unit without waiting for human approval;
 4. record why it chose that unit;
-5. execute study + test + reflection;
+5. execute the depth appropriate to the active pass plus required test/reflection;
 6. update brain and curriculum state;
 7. immediately choose the next unit unless blocked by a genuine external dependency.
 
