@@ -77,12 +77,14 @@ A deterministic development gate has been added:
 - it checks unknown-Han rate and empty encoding keys across the selected corpus slice;
 - it explicitly labels itself development/self-test evidence, not a held-out retrieval claim.
 
-CI workflow `.github/workflows/dore-researcher06-v2-dev-gate.yml` installs exactly `pinyin-pro@3.29.3`, runs the deterministic development gate, and emits its JSON as an artifact. The workflow result is not yet recorded in repository evidence, so Unit 08 is **not** passed and v2 is **not** frozen.
+The CI workflow `.github/workflows/dore-researcher06-v2-dev-gate.yml` installs exactly `pinyin-pro@3.29.3`, runs the deterministic development gate, emits JSON as an artifact, and now persists a passing result to `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json` using a `[skip ci]` evidence commit. This closes the previous observability gap where a run could occur without durable repository evidence.
+
+The persistence instrumentation was committed as `0d738a003da6176f6e0012c549af02f8c18a7a71`. No passing evidence commit is yet visible, so Unit 08 is **not** passed and v2 is **not** frozen. This is an execution dependency, not evidence of failure; do not infer a pass or fail until the JSON is durably present.
 
 ## Current next action
-`RESEARCHER_06_UNIT_08_RECORD_DEV_GATE_THEN_FREEZE_V2`.
+`RESEARCHER_06_UNIT_08_WAIT_FOR_DURABLE_DEV_GATE_EVIDENCE_THEN_FREEZE_V2`.
 
-Record the deterministic v2 development-gate result. If it passes, persist a freeze record containing encoder/dependency versions, normalization, partition rule and freeze commit. Only after that freeze may a mechanically generated fresh final partition be opened exactly once. If the dev gate fails, repair from development/corpus evidence only; do not inspect or tune against a fresh final.
+On the next heartbeat, first inspect `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json`. If it exists and `pass:true`, persist a freeze record containing encoder/dependency versions, normalization, deterministic partition rule, evidence commit and architecture boundary. Only after that freeze may a mechanically generated fresh final partition be opened exactly once. If the CI run fails or no evidence is produced after a reasonable retry window, inspect workflow/job failure evidence and repair only from development/corpus evidence; do not inspect or tune against a fresh final.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
