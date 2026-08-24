@@ -10,19 +10,36 @@ on:
       - '.github/workflows/dore-researcher06-v2-dev-gate.yml'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
   v2-dev-gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Install pinned research dependency
         run: npm install --no-save --ignore-scripts pinyin-pro@3.29.3
       - name: Run deterministic v2 development gate
-        run: node scripts/dore/phonetic-v2-dev-gate.mjs | tee researcher06-v2-dev-gate.json
+        run: |
+          mkdir -p dore-core/knowledge/researcher/evidence
+          node scripts/dore/phonetic-v2-dev-gate.mjs | tee dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: researcher06-v2-dev-gate
-          path: researcher06-v2-dev-gate.json
+          path: dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json
+      - name: Persist passing development evidence
+        if: success()
+        run: |
+          git config user.name 'Doré Learning Heartbeat'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json
+          git commit -m 'test(dore): record Researcher 06 v2 dev-gate pass [skip ci]' || exit 0
+          git pull --rebase origin main
+          git push origin HEAD:main
