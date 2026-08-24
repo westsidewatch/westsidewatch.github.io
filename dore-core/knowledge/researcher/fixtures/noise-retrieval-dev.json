@@ -4,6 +4,8 @@
   "fixtures": [
     {"id":"dev-exact-zh","observed":"耶和華是我的牧者","language":"zh","noise_class":"exact","gold_text":"耶和華是我的牧者","candidate_budget":20,"abstain":"not_expected"},
     {"id":"dev-entity-zh","observed":"耶利米","language":"zh","noise_class":"biblical_entity","gold_entity":"耶利米","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"dev-phonetic-zh-trad-simp","observed":"马利亚","language":"zh","noise_class":"orthographic_phonetic_equivalence","gold_entity":"馬利亞","candidate_budget":20,"abstain":"not_expected"},
+    {"id":"dev-phonetic-en-knight","observed":"night","language":"en","noise_class":"near_homophone","gold_text":"knight","candidate_budget":20,"abstain":"not_expected","synthetic_encoder_probe":true},
     {"id":"dev-negative-zh","observed":"今天下午記得買牛奶","language":"zh","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"},
     {"id":"dev-negative-en","observed":"please move the meeting to Tuesday","language":"en","noise_class":"ordinary_nonquotation","candidate_budget":20,"abstain":"required"}
   ]
