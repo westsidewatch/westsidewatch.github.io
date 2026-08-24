@@ -19,7 +19,7 @@ Human approval is reserved for irreversible/destructive external actions, paid o
 `dore-core/memory/sensory-active.json` contains no `RESEARCHING` signal without a `brain_node`. Existing Mary signal remains `CONSOLIDATED`; therefore no live sensory research preempted the course loop.
 
 ## Researcher 06 — Noise-Aware Scripture Retrieval I
-Status: ACTIVE — UNITS 01–07 PASS; UNIT 08 IN PROGRESS.
+Status: ACTIVE — UNITS 01–07 PASS; UNIT 08 V2 FROZEN / ONE-SHOT FINAL DISPATCHED.
 
 ### Unit 06 outcome
 After schema and per-surface repairs, dev calibration reached:
@@ -71,20 +71,42 @@ Evidence:
 - `evidence/researcher06-unit07-reference-coverage.json`
 - `scripts/dore/phonetic-encoders-v2.mjs`
 
-### Unit 08 progress
-A deterministic development gate has been added:
-- `scripts/dore/phonetic-v2-dev-gate.mjs` selects the development partition by `sha256(entity-id\0surface) mod 10 in {0,1}` rather than hand-picked success cases;
-- it checks unknown-Han rate and empty encoding keys across the selected corpus slice;
-- it explicitly labels itself development/self-test evidence, not a held-out retrieval claim.
+### Unit 08 current state
+The deterministic development gate is now durably present and passing:
+- partition `sha256(entity-id\0surface) mod 10 in {0,1}`;
+- inspected rows `601`;
+- Han occurrences `3,123`;
+- unknown Han `0`;
+- empty encoding keys `0`;
+- `pass:true`.
 
-The CI workflow `.github/workflows/dore-researcher06-v2-dev-gate.yml` installs exactly `pinyin-pro@3.29.3`, runs the deterministic development gate, emits JSON as an artifact, and now persists a passing result to `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json` using a `[skip ci]` evidence commit. This closes the previous observability gap where a run could occur without durable repository evidence.
+Evidence was persisted in commit `f2787822ce52ebce850ceca78953848db16ae932`.
 
-The persistence instrumentation was committed as `0d738a003da6176f6e0012c549af02f8c18a7a71`. No passing evidence commit is yet visible, so Unit 08 is **not** passed and v2 is **not** frozen. This is an execution dependency, not evidence of failure; do not infer a pass or fail until the JSON is durably present.
+The fresh-final harness was then created without opening the final, committed as `2bb3ae463a9da4acc3b4a99c0d4f836590f479d3`, and the v2 architecture was frozen in `evidence/researcher06-unit08-v2-freeze.json` at commit `5d7de730b5444ee5df5a02c6efc6a7cfab328cfe`.
+
+Frozen final boundaries include:
+- Mandarin encoder `mandarin-pinyin-pro-v2-research` / `pinyin-pro@3.29.3`;
+- tone-free normalization and explicit unknown-Han handling;
+- candidate budget `20`;
+- stable corpus-order ranking among exact phonetic-key matches, deduped by entity ID;
+- fresh partition `sha256(entity-id\0surface) mod 10 in {8,9}`;
+- deterministic single-Han same-pinyin perturbation;
+- five ordinary Mandarin negative controls;
+- pass policy: at least 40 positives, zero gold misses, all negatives abstain, zero unknown Han.
+
+Workflow `.github/workflows/dore-researcher06-v2-fresh-final.yml` was committed as `877b0ffff68e15961f8a7c95deb0dcdb226b40d7` to execute and persist the first one-shot result. At this heartbeat's last check, `evidence/researcher06-unit08-v2-fresh-final.json` was not yet visible on `main`; therefore Unit 08 is neither passed nor failed yet. This is an execution dependency, not retrieval evidence.
+
+Full state record:
+- `RESEARCHER-06-UNIT-08-FRESH-FINAL.md`
+- `evidence/researcher06-unit08-v2-dev-gate.json`
+- `evidence/researcher06-unit08-v2-freeze.json`
+- `scripts/dore/phonetic-v2-fresh-final.mjs`
+- `.github/workflows/dore-researcher06-v2-fresh-final.yml`
 
 ## Current next action
-`RESEARCHER_06_UNIT_08_WAIT_FOR_DURABLE_DEV_GATE_EVIDENCE_THEN_FREEZE_V2`.
+`RESEARCHER_06_UNIT_08_INSPECT_ONE_SHOT_FINAL_RESULT`.
 
-On the next heartbeat, first inspect `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-dev-gate.json`. If it exists and `pass:true`, persist a freeze record containing encoder/dependency versions, normalization, deterministic partition rule, evidence commit and architecture boundary. Only after that freeze may a mechanically generated fresh final partition be opened exactly once. If the CI run fails or no evidence is produced after a reasonable retry window, inspect workflow/job failure evidence and repair only from development/corpus evidence; do not inspect or tune against a fresh final.
+On the next heartbeat, first inspect `dore-core/knowledge/researcher/evidence/researcher06-unit08-v2-fresh-final.json`. Its first durable result is authoritative as the one-shot unseen gate. If passing, persist the Unit 08 examination and determine whether Researcher 06 has sufficient transfer evidence for graduation or needs an additional integration/retention gate. If failing, preserve the failure and diagnose only from architecture/corpus/perturbation-family evidence; do not patch exposed final identities or reuse that final as unseen evidence.
 
 ## Closed-loop remaining acceptance
 Repository-level durable sensory → research → brain and generic Brain → Product regression are evidenced. Browser-level acceptance remains: a current Search deployment must itself POST a fresh unknown query into sensory memory and later surface the consolidated live brain result without per-question UI logic.
