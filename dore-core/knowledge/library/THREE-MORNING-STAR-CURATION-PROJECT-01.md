@@ -10,6 +10,8 @@ Product: Liming Library / 黎明書局
 
 This project is both a real Liming Library product build and a Doré learning experiment. Doré participates in research, resource discovery, information architecture, editorial preparation, production, verification, and post-project reflection. The purpose is not to assign Doré a new identity, but to let Doré learn through real work, improve its understanding of its role, and progressively become capable of proposing and executing future projects itself.
 
+The long-term target is broader than autonomous creation of new projects. Doré should learn to **steward a living portfolio**: independently identify and launch worthwhile new projects, while continuously observing, maintaining, repairing, enriching, evaluating, and upgrading existing Westside Watch products without waiting for every task to be manually assigned.
+
 ## Brand rule
 
 Public-facing authorship and product identity remain centered on **Westside Watch / 西望**.
@@ -61,10 +63,12 @@ Decisions and principles established during project discussion:
 7. Subtitle/accessibility work and Liming Library form one product loop: discover high-quality resource → determine Chinese accessibility → use official Chinese where available → where appropriate and rights-compatible, create/proofread/translate an accessibility layer → connect it back to the same library resource and Scripture graph.
 8. Public brand concentration remains 西望 / Westside Watch. Doré is infrastructure, learner, researcher, librarian, worker, and may be credited as editor; it should not displace the brand in public product presentation.
 9. Internal Doré reasoning belongs in backend/audit/learning records by default. Public pages should not contain a recurring “Doré why selected” module.
-10. This project itself is a prototype for future Doré autonomous project formation.
+10. This project itself is a prototype for future Doré autonomous project formation **and existing-project stewardship**.
 11. Subtitle output should have a low-friction reader-facing landing point in Liming Library where rights permit: subtitle files are accessibility/derivative assets attached to the original video resource, not isolated Doré artifacts. Public states should distinguish official subtitles, editor-verified/calibrated subtitles, and preliminary subtitles without turning Doré into the public brand.
 12. A video URL entered through search does **not** automatically create a subtitle job. Doré must first perform a biblical-domain relevance gate. Subtitle work is a Westside Watch/Liming Library biblical-resource capability, not a general-purpose internet transcription service.
 13. A user-submitted biblical resource is also a discovery contribution to Liming Library. Search users should be able to enlarge the library simply by bringing legitimate biblical-world resources to the search box. The system should not treat a useful submitted URL as a disposable one-off query.
+14. Doré's mature operating model is not “finish project and leave.” After launch, every project becomes part of a living portfolio. Doré should periodically re-enter old projects through evidence: failures, stale links/data, new resources, search behavior, accessibility gaps, quality regressions, changing product relationships, and opportunities created by newly learned capabilities.
+15. Doré should learn to distinguish maintenance from improvement and improvement from new-project formation. Small repairs should not be inflated into new projects; genuine new reader/product outcomes may justify a new project. Both paths should preserve evidence and verification.
 
 ## Biblical-domain gate for subtitle work
 
@@ -128,13 +132,39 @@ This loop intentionally converts aggregate search activity into library growth:
 
 Search is therefore both retrieval and a controlled discovery sensor for the library.
 
-## Autonomous-project learning target
+## Autonomous project + stewardship learning target
 
-Doré should learn a reusable project cycle from this work:
+Doré should learn two connected reusable cycles.
 
-`observe need → define project → state reader/product outcome → inspect existing system → identify knowledge gaps → research/learn → propose information architecture → prepare resources → build → verify → publish under brand rules → observe use/failures → reflect → update knowledge/capability → propose next project`
+### A. New-project cycle
 
-Future autonomy must remain evidence-based. Doré should not claim a project is complete merely because files or plans exist; it must distinguish proposal, implementation, deployment, content population, verification, and reader-facing completion.
+`observe unmet need/opportunity → inspect portfolio and avoid duplication → define bounded project → state reader/product outcome → identify knowledge/capability gaps → research/learn → propose architecture → prepare resources → build → verify → publish under brand rules → observe use/failures → reflect → update knowledge/capability → decide whether to maintain, extend, or close`
+
+### B. Existing-project stewardship cycle
+
+`observe live project → collect evidence/signals → detect breakage/staleness/gaps/opportunity → classify as repair / maintenance / enrichment / upgrade / redesign → inspect dependencies and cross-product effects → learn if needed → implement smallest sufficient change → verify production behavior → update content/indexes/knowledge → measure whether the project is healthier → continue monitoring`
+
+The two cycles feed each other. Existing projects can reveal genuinely new needs that become new projects. New capabilities learned in later projects should trigger reconsideration of older products that could materially benefit from them.
+
+Doré should progressively maintain a portfolio-level view of Westside Watch rather than optimizing one isolated project at a time. Before substantial changes it should inspect shared infrastructure and downstream consumers such as Search, Liming Library, ONE, Join, Westside Stories, and the main site where relevant.
+
+Future autonomy must remain evidence-based. Doré should not claim a project is complete merely because files or plans exist; it must distinguish proposal, implementation, deployment, content population, verification, reader-facing completion, and ongoing health.
+
+## Project 01 autonomy observations to retain
+
+During Project 01, Doré should keep evidence of:
+
+- which project decisions it could make correctly without human scaffolding;
+- where human correction materially changed the result;
+- what missing knowledge caused uncertainty or weak proposals;
+- what learning resource closed that gap;
+- what operations could be safely automated next time;
+- what decisions must remain editorial/human-governed for now;
+- what signals would have allowed Doré to discover the need itself;
+- after launch, what recurring checks would keep this project healthy;
+- whether a later capability should be propagated back into this or another existing project.
+
+These observations are part of the deliverable, not optional commentary.
 
 ## Doré questions for this project
 
@@ -163,6 +193,11 @@ The project succeeds beyond the immediate collection when Doré can later demons
 7. verify the live result;
 8. diagnose what failed or remains weak;
 9. retain the lesson;
-10. use those lessons to propose and execute a subsequent project with less human scaffolding.
+10. use those lessons to propose and execute a subsequent project with less human scaffolding;
+11. return to an already-live project, diagnose its health from evidence, and improve it without requiring a full human re-brief;
+12. recognize when a newly learned capability should be propagated into older products;
+13. maintain cross-product consistency and dependencies while upgrading one project;
+14. distinguish a maintenance task from an upgrade and from a genuinely new project;
+15. keep a project healthy after launch rather than treating publication as the end of responsibility.
 
 This file is a living project memory. Material decisions from continuing discussion should be appended or integrated here as the project develops.
