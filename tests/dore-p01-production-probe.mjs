@@ -4,6 +4,8 @@ const origin = (process.env.DORE_P01_ORIGIN || '').replace(/\/$/, '');
 const suppliedJobId = process.env.DORE_P01_JOB_ID || '';
 const sourceUrl = process.env.DORE_P01_SOURCE_URL || 'https://youtube.com/watch?v=ak06MSETeo4';
 const evidenceFile = process.env.DORE_P01_EVIDENCE_FILE || '';
+const deploymentWaitAttempts = Math.max(1, Number(process.env.DORE_P01_DEPLOY_WAIT_ATTEMPTS || 36));
+const deploymentWaitMs = Math.max(1000, Number(process.env.DORE_P01_DEPLOY_WAIT_MS || 5000));
 
 const evidence = {
   schema: 'dore.p01-production-probe-evidence.v2',
@@ -20,6 +22,8 @@ function persist(final = false) {
   if (evidenceFile) fs.writeFileSync(evidenceFile, `${JSON.stringify(evidence, null, 2)}\n`, 'utf8');
 }
 
+const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+
 async function requestJson(url, options = {}, expected = null) {
   const res = await fetch(url, options);
   const text = await res.text();
@@ -31,8 +35,31 @@ async function requestJson(url, options = {}, expected = null) {
   return { res, body, text };
 }
 
+async function waitForProductionExecutor() {
+  let last = null;
+  for (let attempt = 1; attempt <= deploymentWaitAttempts; attempt++) {
+    try {
+      const probe = await requestJson(`${origin}/api/dore/video-subtitle`, { headers: { accept: 'application/json' } });
+      last = { http: probe.res.status, schema: probe.body?.schema || null, executors: probe.body?.executors || null };
+      const ready = probe.res.ok && probe.body?.schema === 'dore.video-subtitle.v5' && Array.isArray(probe.body?.executors) && probe.body.executors.includes('youtube-advertised-caption-acquisition') && probe.body.executors.includes('dore-vtt-proofread');
+      if (ready) {
+        evidence.stages.push({ stage: 'deployed-executor-capability', ok: true, attempt, ...last });
+        persist();
+        return;
+      }
+    } catch (error) {
+      last = { error: String(error?.message || error) };
+    }
+    if (attempt < deploymentWaitAttempts) await sleep(deploymentWaitMs);
+  }
+  evidence.stages.push({ stage: 'deployed-executor-capability', ok: false, attempts: deploymentWaitAttempts, last });
+  persist();
+  throw new Error(`deployed production endpoint did not expose dore.video-subtitle.v5 executors after ${deploymentWaitAttempts} checks: ${JSON.stringify(last)}`);
+}
+
 async function main() {
   if (!origin) throw new Error('DORE_P01_ORIGIN is required');
+  await waitForProductionExecutor();
 
   let jobId = suppliedJobId;
   let currentStatus = null;
