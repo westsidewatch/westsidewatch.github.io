@@ -2,25 +2,30 @@
 
 Status: ACTIVE / CANONICAL / CONTINUOUSLY UPDATED
 Established: 2026-08-24
-Owner: Westside Watch
+Owner: Westside Watch / church ministry
 Executor / steward: Doré
 
 ## Governing mission
 Doré's highest purpose is the Great Commission. Researcher, editor, administrator, librarian, engineer, visual-production center, search system, subtitle worker, publisher, audience-development system, and future roles are capabilities serving that mission.
 
+Westside Watch is governed by a **free-first ministry principle**: public biblical/editorial resources begin free rather than placing cost on readers or requiring the church to finance an unproven project. The project began from an intentionally minimal operating core—one human and AI assistance, later developing Doré as the durable AI system. Westside Watch is not intended as the private commercial property of that operating core: the governing intent is church ownership/stewardship, with revenue/support belonging to the church and future spending serving publication, gospel outreach, ministry activity and further mission-aligned development.
+
+The first concrete geographic/audience launch context for the physical Journal is **Toronto Chinese Christian / Chinese-reading community**, while the digital mission and resource ecosystem may reach far beyond it.
+
 ## Canonical active map
 
 | Order | ID | Workstream | Status | Current position | Next milestone |
 |---:|---|---|---|---|---|
-| 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + learning-through-real-work established | Every project returns durable learning to core |
+| 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + free-first/church-stewardship + learning-through-real-work established | Every project returns durable learning to core |
 | 1 | RUNTIME | Autonomous project continuity | ACTIVE | Persistent state/heartbeat/resume exist; P01 has demonstrated autonomous resume | Repeated autonomous cycles to terminal state |
 | 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Sweep established | Reconcile history, completed-work evaluation, revisit queue, evidence gaps |
 | 2 | P01-PREFLIGHT | Video URL → usable subtitle | ACTIVE | Recognition/gate/job/proofreader/Library binding/canonicalization exist; not E2E verified | Real acquisition executor → SRT/VTT → reader result → production verification |
 | 3 | LIBRARY-INGEST | Doré → Liming Library ingestion | ACTIVE_PARALLEL | Contract/registry/binding foundation exists | Real resources safely dedupe/enrich/write with provenance/rights |
 | 4 | 3MS | Three Morning Star curation | ACTIVE_PARALLEL | Standard + seed teachers + discovery work exist | Defensible Teacher → Series → Work population |
 | 5 | VIS-LEARN | Modern design/editorial/spatial design education | ACTIVE_PARALLEL | Round 01 cases underway | Large comparative corpus + transferable hypotheses + prototype evidence |
-| 5A | JOURNAL-PRINT | Westside Journal independent print-magazine research and path to market | DISCOVERY / ACTIVE_PARALLEL | Print is confirmed destination; Journal is the amplified/highest-precision expression of Westside visual grammar | Study successful global/Chinese-language/Christian independent magazines: editorial identity, typography, physical production, cadence, distribution, subscription, economics; define viable zero-to-print launch model |
-| 5B | DORE-DISTRIBUTION | Doré AI-led gospel distribution / audience-growth system | DISCOVERY / ACTIVE_PARALLEL | New governing research line established: traffic is a means, not the mission; all products should share a measurable distribution layer | Build ethical audience model + measurement taxonomy + channel experiments + cross-product recommendation/discovery architecture; establish baselines before optimization |
+| 5A | JOURNAL-PRINT | Westside Journal independent print-magazine path | DISCOVERY / ACTIVE_PARALLEL | Print destination, free-first ministry model, church stewardship and Toronto-Chinese launch context established | Build evidence-based free digital → returning audience → voluntary subscription → print-readiness model; research Toronto launch/print/fulfillment realities |
+| 5B | DORE-DISTRIBUTION | Doré AI-led gospel distribution / audience-growth system | DISCOVERY / ACTIVE_PARALLEL | Traffic is a means; ecosystem-wide measurable distribution layer required | Establish baselines and model audience/subscription growth with ethical channel experiments |
+| 5C | JOURNAL-FINANCE | Free-first ministry funding / print threshold model | DISCOVERY / ACTIVE_PARALLEL | No reader paywall required as foundation; future church support/donations may finance print and further ministry | Define lawful/transparent accounting assumptions and calculate print trigger from actual recurring support, reserves, print+fulfillment cost, audience demand and church approval—never assume donations will exceed costs before evidence |
 | 6 | VIS-GRAMMAR | Westside visual grammar from Doré engraving + Dawn | DISCOVERY | Engraving = source grammar, not page template | Prototype coherent marks/typography/navigation/restraint across digital+print |
 | 7 | DORE-EXHIBITION | Doré Works Exhibition | READY | Concept established | Curated exhibition with Scripture/context/provenance/rights |
 | 8 | LIBRARY-V1 | Liming Library comprehensive upgrade | READY | Current presentation insufficient | Three Morning Star real-content prototype |
@@ -35,33 +40,75 @@ Doré's highest purpose is the Great Commission. Researcher, editor, administrat
 | 17 | CONVERSATION | Doré direct Conversation Runtime | PARKED / READINESS-WATCH | Purpose established | Build only after repeated autonomous capability and grounded knowledge/tool access |
 | 18 | STEWARDSHIP | Existing-product maintenance | CORE/CONTINUOUS | Explicit Doré role | Observe → repair/enrich/upgrade → verify |
 
-## JOURNAL-PRINT governing hypothesis
-Westside Journal is not a web magazine that may later be printed. Its destination is a real independent physical magazine. The digital Journal and print object must therefore be designed as one editorial system with different media expressions. The Journal is the Westside visual language amplified to maximum editorial precision: complexity or simplicity is chosen by content, reader and editorial purpose, not by a generic minimalism rule.
+## JOURNAL-PRINT governing model
+Westside Journal is not a web magazine that may later be printed. Its destination is a real independent physical gospel/editorial magazine. The digital Journal and print object are one editorial system with different media expressions. The Journal is the Westside visual language amplified to maximum editorial precision.
 
-The publication model is intentionally unusual: a very small human+AI core (one human publisher/editorial principal + Doré as AI editorial/research/design/engineering/distribution system), with commissioned/contributing authors allowed without creating a conventional permanent newsroom. Doré must research whether and how this structural asymmetry can reduce fixed cost while increasing editorial/design/technical capability enough to take the publication from zero audience to a sustainable physical edition.
+### Origin and operating constraint
+The founding constraint is part of the publication identity rather than an embarrassment to hide: **start with what is available, impose no initial financial burden on the church, keep reader access free as the default, and build with an extremely small human+AI core.** Contributing/commissioned authors may join later without requiring a conventional permanent newsroom.
 
-Required research: successful independent magazine launches; Chinese/Hong Kong/Taiwan/Japan/Singapore/Canadian editorial design; Christian/Bible publication content and gaps; print frequency; trim/paper/binding/print-run economics; preorders; subscriptions/membership; direct-to-reader; churches/bookstores/specialist shops; events; donor/supporter models where appropriate; fulfillment; rights; editorial standards; commissioning; reader research; retention; archive/back-catalog value; and criteria for when print becomes financially/operationally justified.
+Doré should preserve the history of this development: early human+general-AI work → Doré's emergence → increasingly autonomous research/editorial/design/engineering/distribution capability → digital readership → subscription/relationship layer → first physical edition. This history may later become part of the publication's own editorial/archive story, but must never be used to exaggerate AI autonomy or make unverifiable claims.
 
-## DORE-DISTRIBUTION governing hypothesis
-Doré's AI advantage is not permission to chase maximum clicks. It is the ability to continuously learn from aggregate, privacy-respecting signals across the ecosystem, run disciplined experiments, detect patterns humans would miss, and improve discovery/continuation pathways faster than a conventional tiny publication could.
+### Free-first does not mean economics-free
+Free access is a ministry/editorial commitment, not permission to ignore costs. Doré must model the path quantitatively and update it from evidence.
 
-The distribution system must serve the Great Commission and reader value. It must never optimize deception, outrage, addiction, fear, spiritual coercion, manipulative personalization, dark patterns, or controversy merely because they increase engagement.
+Target growth path:
+`free useful public work → discovery/reach → qualified returning readers → voluntary direct subscription (email/reader relationship, not necessarily paid) → measurable Toronto Chinese core audience → print intent/preorder-interest signal → verified ministry support/funding capacity → church approval → pilot annual print issue → fulfillment/reader evidence → repeatable annual or other justified cadence`
 
-Shared funnel model:
-`external discovery → clear visual/editorial promise → useful content/answer → meaningful next step → Scripture/resource relationship → deeper reading/study/conversation/community when appropriate → voluntary return/subscription`
+The initial physical ambition is an **independent annual** rather than prematurely committing to monthly/bimonthly frequency. Frequency may change only when editorial capacity, audience demand, funding and production evidence justify it.
 
-Doré must learn and test SEO/search intent, AI-search discoverability, structured data, internal linking, recommendation/ranking, newsletters/email, social/video/referral, multilingual discovery, performance/mobile, content packaging, headlines without clickbait, release timing/cadence, attribution, cohort/retention analysis, experiments, print conversion, subscriber acquisition/retention, and cross-product journeys among Search, Journal, Library, ONE, Devotional, Stories and church/community surfaces.
+### Print trigger must be calculated, not proclaimed
+Doré must maintain a print-readiness model using at least:
+- active direct subscribers and growth/retention cohorts;
+- Toronto/GTA Chinese-reading reachable audience and demonstrated print interest;
+- expected copies demanded, complimentary/ministry copies, waste allowance and minimum economical print run;
+- printer quotes by trim/page count/paper/binding/quantity;
+- proofing, prepress, ISBN/ISSN or other publishing administration as applicable;
+- packaging, postage/local distribution, storage, failed delivery/replacement and tax/accounting implications;
+- recurring and restricted/unrestricted support available for the publication under actual church governance/accounting rules;
+- operating reserve so printing does not impair church ministry obligations;
+- human editorial/legal/rights/quality-control obligations that AI cannot simply waive;
+- explicit church authorization before committing funds.
 
-Measurement hierarchy (never collapse into one vanity metric):
+A possible governing condition is:
+`available approved publication fund >= fully-loaded pilot print+fulfillment cost + required reserve`
+**and** audience evidence exceeds a separately defined demand threshold.
+
+The assumption that online giving will certainly exceed print cost is a faith expectation, not yet an accounting fact; Doré must not encode it as guaranteed data. Doré's job is to calculate faithfully from actual evidence while the ministry's theological convictions remain theological convictions.
+
+### Ownership and use of support
+Governing intent: Westside Watch is a church ministry asset/stewardship rather than a founder-profit vehicle. Publication-related support/revenue is intended for church/ministry purposes. Once financially and legally implemented, Doré should help maintain transparent attribution and reporting so publication support, printing/distribution costs, outreach events and subsequent development can be evaluated without confusing ministry funds or donor intent.
+
+Surplus capacity, when genuinely available and authorized, may support additional gospel/outreach activities and mission-aligned product development rather than private distribution to the operating core.
+
+### First physical market
+The first print-launch research is Toronto Chinese readership. Doré must therefore study Toronto/GTA Chinese churches, Christian readers, bookstores/distribution possibilities, community geography, bilingual/traditional-Chinese editorial expectations, local printers/fulfillment, church pickup/event distribution, reader acquisition cost, and realistic reachable audience size. Global digital reach remains compatible with a deliberately local first physical edition.
+
+## DORE-DISTRIBUTION governing model
+Doré's AI advantage is not permission to chase maximum clicks. It is the ability to continuously learn from aggregate, privacy-respecting signals across the ecosystem, run disciplined experiments, detect patterns humans would miss, model growth and improve discovery/continuation pathways faster than a conventional tiny publication could.
+
+Shared funnel:
+`external discovery → clear visual/editorial promise → useful content/answer → meaningful next step → Scripture/resource relationship → deeper reading/study/conversation/community when appropriate → voluntary return → direct subscription → print interest where relevant`
+
+Doré must learn/test SEO/search intent, AI-search discoverability, structured data, internal linking, recommendation/ranking, newsletters/email, social/video/referral, multilingual discovery, performance/mobile, content packaging, non-clickbait headlines, cadence, attribution, cohort/retention analysis, experiments, print conversion and cross-product journeys among Search, Journal, Library, ONE, Devotional, Stories and church/community surfaces.
+
+For Journal growth Doré must build scenario models rather than one magic forecast. At minimum model conservative/base/accelerated cases for:
+`qualified monthly reach × direct-subscription conversion × retention × Toronto-share × print-interest rate = addressable first-print demand`
+and separately:
+`approved recurring ministry support - digital/operating obligations = safely available print capacity`.
+
+Traffic and donations are not interchangeable. High traffic does not guarantee donations; donations do not guarantee print demand; print demand does not by itself authorize spending. Doré must measure each link.
+
+Measurement hierarchy:
 1. Reach/discovery.
 2. Qualified/useful engagement.
 3. Depth into Scripture/resources.
 4. Voluntary return/retention.
-5. Subscription/membership/print intent where relevant.
-6. Community/church pathway where genuinely appropriate.
-7. Gospel opportunity quality: whether the gospel can be presented faithfully, clearly, wisely and without manipulation in the actual context.
+5. Direct subscription.
+6. Print intent/demand where relevant.
+7. Community/church pathway where genuinely appropriate.
+8. Gospel opportunity quality: faithful, clear, wise, non-manipulative presentation in context.
 
-Before claiming an algorithm improves anything, Doré must establish baselines, define a hypothesis, change a bounded variable, measure outcome and guardrails, preserve evidence, and be willing to reverse a change. Correlation is not causation. Human spiritual response must never be reduced to a conversion KPI or claimed as caused by an algorithm.
+Never optimize deception, outrage, addiction, fear, spiritual coercion, manipulative personalization, dark patterns or controversy for engagement. Human spiritual response must never be reduced to a conversion KPI or claimed as caused by an algorithm.
 
 ## Product architecture
 `Westside Watch public brand ↔ Search/Ask ↔ Scripture ↔ ONE ↔ Liming Library ↔ Journal/Print ↔ subtitles ↔ Westside Stories ↔ Devotional ↔ church/community ↔ future Doré conversation`
