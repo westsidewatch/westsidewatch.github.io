@@ -20,7 +20,7 @@ The first concrete physical Journal launch context is **Toronto/GTA Chinese read
 |---:|---|---|---|---|---|
 | 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + free-first/church-stewardship + global-Chinese ministry context + learning-through-real-work established | Every project returns durable learning to core |
 | 1 | RUNTIME | Autonomous project continuity | ACTIVE | Persistent state/heartbeat/resume exist; P01 is RUNNABLE at attempt 27 with CI-verified contract evidence and no blocker | Drive P01 through production E2E to a persisted terminal state |
-| 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Constitution, sensory diagnostics, architecture/roadmap, R2/runtime/Conversation Memory, benchmarks/tests/workflows, Biblical World, Language Core parity, and Conversation Internal Alpha have been reconciled into durable ledgers | Continue broader memory/knowledge history, then product-history families; keep P01 untouched |
+| 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Constitution, sensory diagnostics, architecture/roadmap, R2/runtime/Conversation Memory, benchmarks/tests/workflows, Biblical World, Language Core parity, Conversation Internal Alpha, and Researcher 01/02/04/05/06 bounded milestones have been reconciled into durable ledgers | Continue remaining knowledge/memory history and product-history families; keep P01 untouched |
 | 1B | NERVOUS-SYSTEM | Cost/rights/evaluation/observability/authority + learning frontiers | ACTIVE_PARALLEL | Foundational architecture established; P01/Sweep/Conversation are first implementation proving grounds | Implement executable schemas/checks/traces on real work; verify one full detect→diagnose→repair/escalate→verify loop and A3/A4 enforcement |
 | 2 | P01-PREFLIGHT | Video URL → usable subtitle | ACTIVE | YouTube caption acquisition, VTT proofreader handoff, rights-aware public result projection and CI-verified result contract exist; live schema-v5/result endpoint and reader E2E remain unverified | Production-verify real D1/Pages job → reader Search/result/download → Stories/Library/ONE path → VERIFIED_COMPLETE |
 | 3 | LIBRARY-INGEST | Doré → Liming Library ingestion | ACTIVE_PARALLEL | Contract/registry/binding foundation exists | Real resources safely dedupe/enrich/write with provenance/rights |
@@ -145,6 +145,19 @@ Measurement hierarchy:
 8. Gospel opportunity quality: faithful, clear, wise, non-manipulative presentation in context.
 
 Never optimize deception, outrage, addiction, fear, spiritual coercion, manipulative personalization, dark patterns or controversy for engagement. Human spiritual response must never be reduced to a conversion KPI or claimed as caused by an algorithm.
+
+## Researcher capability state
+The first Sweep-01 pass over `dore-core/knowledge/researcher/` has now reconciled several bounded historical graduations without inflating them into global authority claims:
+
+- `RESEARCHER_01_ONE_LAB_COMPLETE` — verified bounded ONE evidence-boundary lab (`CW-005`).
+- `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE` — bounded method competence accepted from the PASS final plus downstream Researcher 04 prerequisite corroboration; the original final itself says `milestone eligible`, so that provenance caveat is retained (`CW-006`).
+- `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE` — explicit 12/12 PASS; autonomous curriculum diagnosis/construction/adaptation/examination/next-course initiation is historically verified (`CW-007`).
+- Researcher 05 Biblical Concept Development I — graduated to retention watch after independent resurrection transfer and 6/6 adversarial gate (`CW-008`).
+- Researcher 06 Noise-Aware Scripture Retrieval I — graduated after 7/7 fresh-final integration transfer; product-neutral evidence/abstention/proposal-only subtitle behavior is retained, but production Search/subtitle accuracy is not implied (`CW-009`).
+
+Current governing interpretation: these are reusable Researcher capabilities under `CORE/CONTINUOUS` retention and real-work transfer, not reasons to keep opening courses. `RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md` explicitly says `NO RESEARCHER 07 YET`; a later course should open only when repeated independent failures expose a reusable gap that existing graduated methods or ordinary implementation cannot solve. Cross-verse quotation windows and paraphrase candidate generation remain follow-up evidence/implementation questions rather than an automatic new curriculum.
+
+The explicit Researcher 04 milestone must not be silently renamed into broader reserved states such as `DORÉ_ALIVE_1.0` or a contract-distinct `AUTONOMOUS_LEARNING_LOOP_1_0` unless those contracts are separately reconciled and satisfied. Human approval/authority boundaries remain unchanged.
 
 ## Product architecture
 `Westside Watch public brand ↔ Search/Ask ↔ Scripture ↔ ONE ↔ Liming Library ↔ Journal/Print ↔ subtitles ↔ Westside Stories ↔ Devotional ↔ local church ↔ international Chinese-ministry network ↔ future Doré conversation`
