@@ -30,3 +30,27 @@ Raise priority if any of the following occurs:
 Measure heterogeneous-signal success, deduplication accuracy, failed-claim/retry behavior, long-horizon persistence, false consolidation risk and sampled research-answer quality.
 
 **Current disposition:** keep closed; watch for trigger.
+
+## RQ-002 — Biblical World foundation scholarly refinement
+
+**Source completed milestone:** `CW-002 — Biblical World foundation graduation`
+
+**Current priority:** LOW / WATCHLIST
+
+**Why it may deserve revisit**
+The original BW-1 through BW-6 foundation milestone is explicitly PASS and includes blind evidence-boundary checks, but the graduation report itself correctly warns that later historical/textual/theological research education may refine scholarly reconstructions. As Doré acquires stronger source criticism, archaeological/geographic evidence and cross-witness reasoning, some contextual registries may become visibly too coarse.
+
+**Do not reopen now because**
+There is no evidence in the reviewed batch of a current systematic failure, and reopening a completed foundation without a concrete downstream weakness would distract from the P01 critical path and higher-priority active implementation work.
+
+**Revisit trigger**
+Raise priority when one of the following occurs:
+- a materially richer historical/geographical source corpus is ingested;
+- ONE/Search/Library repeatedly exposes the same contextual weakness;
+- a disputed chronology/location case fails a newer Researcher benchmark;
+- a new evidence model makes a current registry incapable of representing material scholarly disagreement.
+
+**Desired future evaluation**
+Sample high-impact/disputed biblical-world entries against stronger primary/secondary evidence, measure uncertainty/provenance quality and update only the affected registries rather than reopening the entire foundation by default.
+
+**Current disposition:** keep the foundation milestone closed; refine selectively when evidence triggers it.
