@@ -47,8 +47,10 @@ export async function onRequestGet({request,env}){
   try{
     await ensureSchema(env.DORE_SENSORY);
     let result;
-    if(conversationId){
-      result=await env.DORE_SENSORY.prepare(`SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE conversation_id=?1${projectId?' AND project_id=?2':''} ORDER BY created_at DESC LIMIT ?3`).bind(...(projectId?[conversationId,projectId,limit]:[conversationId,limit,limit])).all();
+    if(conversationId&&projectId){
+      result=await env.DORE_SENSORY.prepare('SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE conversation_id=?1 AND project_id=?2 ORDER BY created_at DESC LIMIT ?3').bind(conversationId,projectId,limit).all();
+    }else if(conversationId){
+      result=await env.DORE_SENSORY.prepare('SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE conversation_id=?1 ORDER BY created_at DESC LIMIT ?2').bind(conversationId,limit).all();
     }else{
       result=await env.DORE_SENSORY.prepare('SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE project_id=?1 ORDER BY created_at DESC LIMIT ?2').bind(projectId,limit).all();
     }
