@@ -143,3 +143,38 @@ Reopen this milestone only if regression evidence fails, project-context archite
 
 **Disposition**
 Keep Internal Alpha closed and internal-only. Continue Conversation Memory v1 separately; preserve public Conversation as parked until explicitly authorized and independently made production-ready.
+
+## CW-005 — Researcher 01 ONE Lab
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded Researcher 01 ONE Lab milestone; ONE remains a continuing internship surface and this does not imply full Researcher graduation.
+
+**Original objective**
+Run Doré through ONE as a real Bible-study work environment while proving that ONE's editorial synthesis, linked resources, prompts and product state are not silently promoted into Scripture or Core truth.
+
+**Completion evidence**
+- `dore-core/knowledge/researcher/RESEARCHER-01-ONE-LAB.md` explicitly records `Status: COMPLETE`, `Completed: 2026-08-23`, milestone `RESEARCHER_01_ONE_LAB_COMPLETE`, and `Exam: 22/22 PASS`.
+- The same document points to `reports/DORÉ-RESEARCHER-01-ONE-LAB.json` as machine-readable evidence.
+- Its graduation result states that all 22 checks passed across the 66-book shell plus Genesis, Matthew, Thessalonians and Samuel surfaces.
+- It explicitly preserves evidence boundaries among Scripture evidence, external-source pointers, editorial synthesis and diagnostic prompts.
+
+**Current quality judgment**
+The milestone is explicit and bounded enough to accept as historical completion. It proves the ONE Lab and its evidence-boundary exam, not general autonomous research mastery. The source itself states that ONE remains an ongoing internship environment throughout Researcher education.
+
+**What Doré learned / retained**
+- ONE prose is not Scripture evidence;
+- questions/prompts are stimuli, not answers;
+- external links require independent source evaluation;
+- product progress is not research evidence;
+- unsupported routes/cross-references must not be invented;
+- editorial synthesis may generate hypotheses without becoming Core truth.
+
+**Weaknesses / debt**
+- this is a bounded lab on the then-current ONE surfaces, not proof of broad scholarly depth;
+- later ONE content/schema changes may require fresh internship evaluation;
+- it does not close `ME-007` or prove `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`.
+
+**Revisit trigger**
+Re-run an equivalent boundary check if ONE's evidence model changes materially or if downstream work shows Doré collapsing editorial/product material into research evidence.
+
+**Disposition**
+Keep Researcher 01 ONE Lab closed as an earned historical milestone; continue ONE as a live internship/work surface.
