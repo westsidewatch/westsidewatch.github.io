@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T03:30:00Z",
+  "updated_at": "2026-08-25T03:25:19.894280+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -40,7 +40,7 @@
       "holder": null,
       "started_at": null
     },
-    "attempt": 1,
+    "attempt": 2,
     "checkpoint": {
       "cycle": "canonicalize-deduplicate-job-boundary",
       "commit": "2c0dc03c018545f5a3012cc34ef7395dbd222273",
@@ -63,7 +63,7 @@
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T02:44:51.352128+00:00",
-    "runtime_observation": "The scheduled runtime successfully resumed P01 from repository-persisted state without a human re-brief and completed one engineering/learning cycle. Continuity is therefore demonstrated at checkpoint level; terminal autonomous completion remains unproven."
+    "last_heartbeat_at": "2026-08-25T03:25:19.894280+00:00",
+    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
   }
 }
