@@ -1,0 +1,84 @@
+name: Doré Project Runtime
+
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-core/runtime/project-execution-state.json'
+      - 'dore-core/projects/**'
+      - '.github/workflows/dore-project-runtime.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-project-runtime
+  cancel-in-progress: false
+
+jobs:
+  heartbeat:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Resume active Doré project from persistent state
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from pathlib import Path
+
+          p = Path('dore-core/runtime/project-execution-state.json')
+          state = json.loads(p.read_text())
+          project = state.get('active_project')
+          if not project:
+              print('No active project.')
+              raise SystemExit(0)
+
+          terminal = set(project.get('terminal_states', []))
+          if project.get('state') in terminal:
+              print(f"Project already terminal: {project['state']}")
+              raise SystemExit(0)
+
+          now = datetime.now(timezone.utc).isoformat()
+          project['attempt'] = int(project.get('attempt', 0)) + 1
+          project['last_heartbeat_at'] = now
+          project['state'] = 'RUNNABLE'
+          project['lease'] = {
+              'status': 'AVAILABLE',
+              'holder': None,
+              'started_at': None
+          }
+          project['runtime_observation'] = (
+              'Heartbeat restored the accepted project from repository-persisted state. '
+              'A capable executor must claim this RUNNABLE project, inspect the brief and evidence, '
+              'perform the next engineering cycle, then persist checkpoint/terminal evidence here.'
+          )
+          state['updated_at'] = now
+          p.write_text(json.dumps(state, ensure_ascii=False, indent=2) + '\n')
+          print(f"Project {project['id']} heartbeat #{project['attempt']}: RUNNABLE")
+          print(f"Brief: {project['brief']}")
+          print(f"Next: {project['next_action']}")
+          PY
+
+      - name: Persist heartbeat checkpoint
+        run: |
+          if git diff --quiet -- dore-core/runtime/project-execution-state.json; then
+            exit 0
+          fi
+          git config user.name 'Doré Project Runtime'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/runtime/project-execution-state.json
+          git commit -m 'chore(dore): persist project runtime heartbeat [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
