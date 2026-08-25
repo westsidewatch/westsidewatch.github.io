@@ -28,3 +28,47 @@ This map links completed work to reusable Doré capability so old projects remai
 
 **Boundary / caution**
 This capability does not yet imply broad-volume robustness or truth/quality of every learned answer; those require separate evaluation.
+
+## CAP-002 — Biblical-world contextual reasoning with evidence boundaries
+
+**Learned from:** `CW-002 — Biblical World foundation graduation`
+
+**Reusable capabilities retained**
+- organize people, places, chronology, polity and institutions as related but distinct evidence domains;
+- preserve uncertainty and disputed reconstruction boundaries instead of flattening them into a single asserted answer;
+- test transfer with blind cases rather than equating source ingestion with understanding;
+- connect canon-spanning historical/social context to a specific passage without silently turning context into doctrine;
+- provide reusable contextual registries for research, Search, ONE, Library, subtitle correction and visual-scene review.
+
+**Useful in current/future work**
+- Bible Search query interpretation and contextual answer generation;
+- ONE chapter background, maps and timeline relationships;
+- Liming Library topic/resource classification;
+- subtitle correction where names, places or historical context disambiguate ASR;
+- visual research that must distinguish biblical evidence from editorial reconstruction;
+- Researcher benchmark families for historical geography, entity relationship and source criticism.
+
+**Boundary / caution**
+The completed milestone is a foundation, not full Researcher graduation or exhaustive mastery of historical scholarship. Later evidence may refine individual reconstructions without erasing the historical completion milestone.
+
+## CAP-003 — Full-canon Language Core migration and parity discipline
+
+**Learned from:** `CW-003 — Language Core full-parity migration milestone`
+
+**Reusable capabilities retained**
+- preserve source witness identity, reference/order and surface/normalized language data through migration;
+- verify all 66 books against an explicit parity criterion rather than relying on aggregate row counts alone;
+- fail closed on book-level mismatch instead of silently accepting data drift;
+- use a unified language substrate for original-language reading, lexical work, cross-witness alignment, Search and Scripture-aware subtitle correction;
+- treat CI final enforcement as the authoritative workflow outcome when intermediate diagnostic steps are allowed to continue on error.
+
+**Useful in current/future work**
+- original-language Reader and Researcher work;
+- Hebrew/Greek lexical and concordance analysis;
+- multi-witness Scripture alignment;
+- fuzzy/normalized Bible Search;
+- subtitle Scripture detection/correction;
+- future corpus upgrades where preservation must be proven before adoption.
+
+**Boundary / caution**
+Parity proves that the declared migration envelope was preserved at that checkpoint. It does not prove every linguistic analysis is correct, and later corpus/schema changes require fresh regression evidence.
