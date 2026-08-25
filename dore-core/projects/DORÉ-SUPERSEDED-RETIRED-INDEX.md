@@ -36,6 +36,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Retained boundary:** public Doré conversation remains gated; only the internal Alpha is active. Public exposure must still wait for grounded knowledge/tool access, evaluation and authority gates.
 
+## SR-004 — Brand Operating Architecture v0.2 immediate implementation order
+
+**Source:** `dore-core/DORÉ-BRAND-OPERATING-ARCHITECTURE-v0.2.md`, especially section 11 `Immediate implementation order`.
+
+**Classification:** `SUPERSEDED` as a literal current priority sequence; `CURRENT / RETAINED` for the broader architecture and governance principles that remain compatible with later evidence.
+
+**Conflict resolved:** v0.2 prescribed brand-level R2 setup, Asset Registry, Worker upload/register/verify, a closed-loop asset test, Liming Library metadata linkage, Journal column contracts and staged Daily Devotional automation as the immediate order. Later project evidence and the canonical Master Work Register moved the active critical path to P01 subtitle preflight and established Memory Sweep, Conversation Alpha, Library ingestion, design learning and the Doré Operating Nervous System as parallel work. The v0.2 sequence must therefore not be interpreted as an instruction to interrupt P01 or restart the old order.
+
+**Retained value:** Doré's three-part identity (learner/researcher; steward/editor/librarian; capability/production center), Liming Library as resource school/station, GitHub as versioned source of truth, Cloudflare as replaceable runtime/media substrate, provenance-aware asset lifecycle, bounded automation progression, and explicit human authority for doctrine/sensitive/high-impact actions remain durable architectural guidance unless a later canonical policy explicitly replaces them.
+
+**Current authority:** current priority comes from `DORÉ-MASTER-WORK-REGISTER.md` plus active runtime/project checkpoints. Use v0.2 as architecture/history evidence, not as the live queue.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
