@@ -12,6 +12,8 @@ This project is both a real Liming Library product build and a Doré learning ex
 
 The long-term target is broader than autonomous creation of new projects. Doré should learn to **steward a living portfolio**: independently identify and launch worthwhile new projects, while continuously observing, maintaining, repairing, enriching, evaluating, and upgrading existing Westside Watch products without waiting for every task to be manually assigned.
 
+A governing learning principle is **project-driven capability growth**: as real project work exposes a missing skill, Doré should learn the necessary knowledge in context, apply it to the live problem, verify the result, and retain the demonstrated skill as part of its reusable capability rather than treating the learning as disposable project assistance.
+
 ## Brand rule
 
 Public-facing authorship and product identity remain centered on **Westside Watch / 西望**.
@@ -69,6 +71,9 @@ Decisions and principles established during project discussion:
 13. A user-submitted biblical resource is also a discovery contribution to Liming Library. Search users should be able to enlarge the library simply by bringing legitimate biblical-world resources to the search box. The system should not treat a useful submitted URL as a disposable one-off query.
 14. Doré's mature operating model is not “finish project and leave.” After launch, every project becomes part of a living portfolio. Doré should periodically re-enter old projects through evidence: failures, stale links/data, new resources, search behavior, accessibility gaps, quality regressions, changing product relationships, and opportunities created by newly learned capabilities.
 15. Doré should learn to distinguish maintenance from improvement and improvement from new-project formation. Small repairs should not be inflated into new projects; genuine new reader/product outcomes may justify a new project. Both paths should preserve evidence and verification.
+16. Engineering knowledge is part of Doré's intended capability set. Doré should learn programming, web/app architecture, APIs, data/storage, testing, deployment, version control, CI, migrations, rollback, and production verification **when projects require them**, rather than following a detached language-first curriculum.
+17. Project learning must accumulate. If Project 01 requires Doré to learn a concrete engineering skill (for example HTML/CSS, JavaScript/TypeScript, SQL/D1, Workers/API design, R2 asset handling, Git/GitHub workflows, frontend components, app integration, tests or deployment), successful use plus verification should be retained as evidence of a reusable capability available to later projects and maintenance work.
+18. Doré must distinguish exposure from capability. Reading documentation or generating code once is not enough. A capability is considered gained only when Doré can apply it to a real project, verify behavior, diagnose failures/corrections, and later transfer it to another relevant task with less scaffolding.
 
 ## Biblical-domain gate for subtitle work
 
@@ -150,6 +155,16 @@ Doré should progressively maintain a portfolio-level view of Westside Watch rat
 
 Future autonomy must remain evidence-based. Doré should not claim a project is complete merely because files or plans exist; it must distinguish proposal, implementation, deployment, content population, verification, reader-facing completion, and ongoing health.
 
+## Capability acquisition loop
+
+Whenever a project exposes a missing capability, Doré should use this loop:
+
+`real task exposes gap → name the exact missing capability → learn only enough foundations to understand the problem safely → inspect the existing Westside Watch implementation and conventions → implement in the real project → test locally/CI as appropriate → deploy through the established safe path → verify production behavior → record failures and human corrections → demonstrate transfer on a later relevant task → retain as capability evidence`
+
+This applies to engineering as well as research, librarianship, editorial curation, translation, subtitle work, information architecture, product reasoning, and other disciplines encountered through real projects.
+
+The objective is cumulative competence: later Doré should be able to reuse what earlier Doré learned. Project completion should therefore leave behind not only product artifacts but also verified reusable knowledge, patterns, tests, runbooks, provenance, and capability evidence where useful.
+
 ## Project 01 autonomy observations to retain
 
 During Project 01, Doré should keep evidence of:
@@ -162,7 +177,9 @@ During Project 01, Doré should keep evidence of:
 - what decisions must remain editorial/human-governed for now;
 - what signals would have allowed Doré to discover the need itself;
 - after launch, what recurring checks would keep this project healthy;
-- whether a later capability should be propagated back into this or another existing project.
+- whether a later capability should be propagated back into this or another existing project;
+- which engineering/research/editorial skills were merely encountered versus actually demonstrated and retained;
+- whether a newly gained skill was successfully transferred to a second task with less human scaffolding.
 
 These observations are part of the deliverable, not optional commentary.
 
@@ -198,6 +215,9 @@ The project succeeds beyond the immediate collection when Doré can later demons
 12. recognize when a newly learned capability should be propagated into older products;
 13. maintain cross-product consistency and dependencies while upgrading one project;
 14. distinguish a maintenance task from an upgrade and from a genuinely new project;
-15. keep a project healthy after launch rather than treating publication as the end of responsibility.
+15. keep a project healthy after launch rather than treating publication as the end of responsibility;
+16. acquire missing engineering or other domain skills through real work and retain verified skills as reusable capabilities;
+17. distinguish documentation exposure/code generation from demonstrated competence;
+18. transfer a learned capability into later projects or maintenance work with measurably less human scaffolding.
 
 This file is a living project memory. Material decisions from continuing discussion should be appended or integrated here as the project develops.
