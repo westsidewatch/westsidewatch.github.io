@@ -61,12 +61,44 @@ Findings:
 9. **Public Conversation remains unauthorized.** Internal Alpha activation supersedes only the old “fully parked” interpretation; it does not authorize a public conversational UI/API.
 10. **No human or environment blocker is present in the reviewed runtime state.** P01 must remain the critical path while Sweep continues in parallel.
 
+### Batch D — benchmarks + verification tests + relevant workflows/reports
+Reviewed:
+- `dore-core/benchmarks/RESEARCHER-GRADUATION.md`
+- `dore-core/tests/search-cognition-understanding-gate.md`
+- `dore-core/tests/search-browser-negative-relevance.mjs`
+- `dore-core/tests/test_conversation_context.py`
+- `dore-core/tests/test_cross_witness_alignment.py`
+- `.github/workflows/dore-conversation-alpha.yml`
+- `.github/workflows/dore-foundation-tests.yml`
+- `reports/DORÉ-BIBLICAL-WORLD-GRADUATION.json`
+- `reports/DORÉ-LANGUAGE-CORE-PARITY.json`
+- persisted Conversation Alpha rehearsal record `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json`
+- Conversation Alpha workflow history/commit evidence around `ce653b6e9443b287984e08f8e8f226a324533e2c`.
+
+Findings:
+1. **Researcher Graduation 0.1 remains a specification, not completion evidence.** It defines ten benchmark families and explicit epistemic failure conditions, but its own graduation rule says no numeric threshold exists until a real benchmark dataset exists. This file alone cannot be used to claim Researcher graduation.
+2. **Biblical World foundation is historically `VERIFIED_COMPLETE`.** The persisted graduation report records `PASS`, `BIBLICAL_WORLD_COMPLETE`, BW-1 through BW-6 all passing, blind evidence-boundary checks and canon-spanning coverage. This is now `CW-002`; it must not be inflated into full Researcher graduation because the report itself explicitly says foundation completion is not researcher graduation.
+3. **Language Core full-parity migration is historically `VERIFIED_COMPLETE`.** The persisted parity report records all 66 books checked, exact `444339 → 444339` unit parity, zero mismatched books and a defined preservation criterion. This is now `CW-003`; ongoing language research remains continuous and future schema/corpus changes require fresh regression evidence.
+4. **The foundation workflow has an important interpretation rule.** Intermediate unit/corpus/lexicon/concordance/parity steps use `continue-on-error`, but the final `Enforce Doré Foundation result` step explicitly requires all outcomes to be `success`. Therefore a single intermediate continuation is not a passing run; the final enforced workflow result is the relevant CI evidence.
+5. **Cross-witness alignment has explicit fail-closed behavior.** The reviewed unit test preserves distinct witness identity, flags missing witnesses for review rather than synthesizing them, and marks unaligned units. This is strong reusable quality architecture but not by itself a completed broad alignment milestone.
+6. **Search cognition remains `TAUGHT`, not `CONCEPT_PASS` or `PRODUCT_PASS`.** The understanding gate explicitly forbids stronger claims without unseen-transfer reasoning and live route execution. This gap is now `ME-006`.
+7. **Search already has a meaningful negative-relevance regression.** The browser test requires unrelated multiword English phrases to produce zero fabricated Scripture results while preserving explicit Scripture reference resolution and single-term fuzzy tolerance. This is maintenance evidence, not proof of full Search cognition graduation.
+8. **Conversation Alpha has materially advanced past the previous checkpoint.** A persisted P01 rehearsal close now contains one grounded durable risk, one rejected speculative/transient suggestion, authority boundaries and no unresolved blocker. The current context test requires a fresh packet to discover/replay that record, and commit `ce653b6e9443b287984e08f8e8f226a324533e2c` extends the workflow to assert `meeting-replay-ready` behavior.
+9. **Conversation Alpha is still not promoted to `VERIFIED_COMPLETE` in this batch.** The repository contains the rehearsal record, replay assertions and workflow definition, but this sweep could not independently observe a completed push-triggered Actions run for the newest replay assertions through the available connector/status surfaces. `ME-003` is narrowed to this execution-evidence/contract-evaluation gap rather than the older missing-rehearsal gap.
+10. **No HUMAN_DECISION_BLOCKED or ENVIRONMENT_BLOCKED state is present in this bounded batch.** Sweep remains parallel and P01 remains the critical path.
+
 ## Supersession output
 
 Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
 - `SR-001` — Core Architecture v0.1 superseded as current baseline;
 - `SR-002` — Next Product Roadmap v0.1 superseded as current operational priority order while retaining useful architecture/product evidence;
 - `SR-003` — old fully parked Conversation status superseded by internal Alpha activation, while public exposure remains gated.
+
+## Completed-work / revisit output
+
+- `CW-001` — Sensory-loop consolidation / D1 reconciliation milestone: `VERIFIED_COMPLETE` historical repair milestone.
+- `CW-002` — Biblical World foundation graduation: `VERIFIED_COMPLETE` bounded foundation milestone; `RQ-002` low-priority scholarly refinement watchlist.
+- `CW-003` — Language Core full-parity migration milestone: `VERIFIED_COMPLETE` bounded migration/parity checkpoint; future parity is maintenance/regression, not reopening.
 
 ## Classification effects
 
@@ -79,21 +111,28 @@ Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
 - Operating Nervous System architecture: `CORE/CONTINUOUS`; implementation program: `ACTIVE_PARALLEL`.
 - Runtime: `ACTIVE`; persistent resume is evidenced, repeated terminal completion still pending.
 - P01: `ACTIVE`; CI-verified contract milestone achieved, production E2E remains pending.
-- Conversation internal Alpha: `ACTIVE_PARALLEL`; primitives CI-verified, real meeting/replay gate pending.
+- Conversation internal Alpha: `ACTIVE_PARALLEL`; persisted rehearsal/replay implementation now exists, newest execution evidence still pending before `VERIFIED_COMPLETE`.
 - Public Conversation: `PARKED / READINESS-WATCH` until separately authorized.
+- Biblical World foundation: `VERIFIED_COMPLETE` for the declared foundation stage, not full Researcher graduation.
+- Language Core parity migration: `VERIFIED_COMPLETE` for the recorded full-canon parity checkpoint; continuing language capability is `CORE/CONTINUOUS`.
+- Search cognition understanding gate: `TAUGHT` / `UNKNOWN_NEEDS_EVIDENCE` for stronger concept/product pass claims; Search product remains `MAINTENANCE + DISCOVERY`.
 
 ## Canonical reconciliation still required
 
-The Master Work Register snapshot reviewed in this batch still predates Operating Nervous System implementation and Internal Conversation Alpha activation, and understates the latest P01 pipeline evidence. These are repository-staleness corrections that should be written without disturbing P01 priority.
+The Master Work Register should reflect that the benchmark/tests/workflows verification batch is complete, that Conversation Alpha now has a persisted rehearsal plus replay assertions rather than merely primitives, and that the next Sweep phase is broader memory/knowledge/product history. P01 status/priority must remain unchanged.
 
 ## Source-family accounting
 
 - `dore-core/constitution/`: **reviewed/closed for current single-file state**.
 - `dore-core/architecture/`: **reviewed/closed for current single-file state**.
 - top-level current architecture/roadmap family: **substantially reviewed** — README, Brand Operating Architecture, Next Product Roadmap and R2 Asset Architecture accounted for; older/historical top-level evidence may still surface during commit/product-history review.
-- `dore-core/runtime/`: **reviewed for current family/state**; code-level implementation history and workflow evidence can be revisited only where needed for milestone verification.
+- `dore-core/runtime/`: **reviewed for current family/state**; Conversation rehearsal evidence additionally reconciled in Batch D.
+- `dore-core/benchmarks/`: **reviewed/closed for current single-file state**.
+- `dore-core/tests/`: **verification-focused bounded subset reviewed** — Conversation, Search cognition/negative relevance and cross-witness alignment covered; remaining tests should be accounted for during the adjacent knowledge/product-history passes rather than assumed closed.
+- relevant GitHub workflows/reports: **partially reviewed** — Conversation Alpha and Foundation workflows plus two high-value persisted graduation/parity reports reconciled; broader product-specific workflows/reports remain in scope.
 - `dore-core/memory/`: **partially reviewed**; live sensory diagnostic/state family reviewed, broader history remains in scope.
+- `dore-core/knowledge/`: **not yet systematically reviewed**; Search cognition protocol surfaced through tests but broader knowledge history remains pending.
 
 ## Next bounded batch
 
-Review `dore-core/benchmarks/`, `dore-core/tests/` and relevant GitHub workflows as one verification-focused batch. Reconcile test/workflow evidence with completed-work and missing-evidence ledgers, especially sensory robustness, Conversation Alpha gates and reusable runtime capability. Then continue into broader memory/knowledge history. Do not displace the P01 subtitle critical path.
+Review broader `dore-core/memory/` and `dore-core/knowledge/` history as the next bounded family, prioritizing files that encode learned capability, prior graduation claims, superseded Search/research models and durable obligations not yet present in the Master Register. Cross-check relevant persisted `reports/` evidence only when needed to verify a claimed milestone. Then continue into product-history families. Do not displace the P01 subtitle critical path.
