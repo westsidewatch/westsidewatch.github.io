@@ -84,6 +84,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** do not reopen `DISCOVER_AND_EVALUATE_BIBLICAL_CONCEPT_DEVELOPMENT_I_SOURCE_STACK` merely because this historical file ends with that instruction. Researcher 05 is complete; later learning priorities must come from current diagnosis, the Master Work Register and live work evidence.
 
+## SR-008 — Researcher 06 post-graduation retention-transfer next-action chain
+
+**Sources:** `dore-core/knowledge/researcher/RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md`, `RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01.md`, and `RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-01-PHASE-B.md`.
+
+**Classification:** `SUPERSEDED` only for their historical `Next authorized action` instructions; the diagnosis, frozen evidence contract and preserved test evidence remain retained/current where not contradicted.
+
+**Superseding evidence:** the post-graduation instruction to run Practicum 01 was executed; Practicum 01's instruction to build Phase B development fixtures/harness was executed; Phase B then achieved development 6/6 plus sealed held-out first-run 6/6 and its instruction to open Practicum 02 was also executed. `RESEARCHER-06-RETENTION-TRANSFER-PRACTICUM-02.md` is the later state.
+
+**Retained value:** this chain is strong provenance for curriculum restraint. Researcher 07 was not opened merely to keep study moving. The work separated implementation/retrieval-model gaps from reusable reasoning-capability gaps, preserved observed text/provenance/abstention/review boundaries, distinguished paraphrase retrieval from correction, and required fresh independent retrieval evidence before escalating curriculum.
+
+**Current authority:** do not restart the earlier post-graduation or Phase B actions. The unresolved edge begins at Practicum 02: execute an independent contiguous-window retrieval harness when feasible, then probe genuine paraphrase candidate generation without converting semantic similarity into correction evidence. This work remains subordinate to P01 and is not evidence that Researcher 07 is needed.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
