@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T05:21:55.466554+00:00",
+  "updated_at": "2026-08-25T05:34:00.000000+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -14,39 +14,41 @@
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
       "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
-      "latest_subtitle_engineering_commit": "ab8766da9b38b2570ce13dad9debc28fba520ab9",
+      "latest_subtitle_engineering_commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
       "known_pipeline": [
         "video URL recognition",
         "canonical URL normalization",
         "in-flight job deduplication",
         "job status lookup",
         "subtitle routing/job infrastructure",
-        "Doré subtitle proofreading worker",
+        "Doré conservative subtitle proofreading core",
         "Liming Library resource binding",
         "biblical-domain gate",
-        "YouTube advertised-caption acquisition executor"
+        "YouTube advertised-caption acquisition executor",
+        "VTT segmentation and persisted proofreader handoff"
       ],
       "verification": [
-        "Repository implementation inspected directly before modification.",
-        "video-subtitle schema advanced to v4 while preserving v3 canonicalization/dedup/job lookup behavior.",
-        "An executable action=execute-caption-acquisition path now loads a persisted job and attempts YouTube caption acquisition from caption tracks advertised by the source page.",
-        "Caption-track parsing is bounded to the advertised captionTracks array; fetched caption URLs are restricted to YouTube/Googlevideo hosts and requested as VTT.",
-        "Successful acquisition persists the real caption payload and advances status to caption-acquired-awaiting-proofread.",
-        "No-caption cases advance explicitly to needs-transcription-audio rather than fabricating subtitle text; unsupported hosts and retryable acquisition failures have explicit states.",
-        "Caption payload size is bounded before D1 persistence.",
-        "GitHub combined status reported no checks for commit ab8766d at checkpoint time; live production execution has not yet been verified."
+        "Repository implementation and P01 brief inspected directly before modification.",
+        "subtitle-proofread schema advanced to v2 and its conservative biblical-term engine is now exported as a reusable pipeline core while preserving the HTTP worker surface.",
+        "video-subtitle schema advanced to v5 with action=execute-proofread for persisted jobs whose acquired caption is WebVTT.",
+        "VTT parsing preserves cue timing/identifier lines, proofs only cue text, chunks jobs beyond the worker's 500-segment boundary, and reserializes corrected VTT.",
+        "Proofread output and summary are persisted in the existing D1 job payload, with explicit proofread-complete-result-ready vs proofread-complete-needs-translation states based on source/target/mode.",
+        "Translation remains a distinct unimplemented stage; the executor explicitly refuses to fabricate it.",
+        "Caption/proofread payloads retain the 750000-character D1 boundary.",
+        "GitHub combined status reported no configured checks for commit be3e45c at checkpoint time; live production execution remains unverified."
       ]
     },
-    "next_action": "Production-verify schema v4 and the caption-acquisition action against a real supported YouTube job. If caption acquisition succeeds, connect the acquired VTT payload into the existing Doré subtitle-proofread worker and persist the corrected result/status; if the real source has no captions, implement or identify the audio-transcription executor path. Preserve rights/provenance and keep Search regression-safe.",
+    "next_action": "Production-verify schema v5 against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, then execute-proofread and inspect the persisted VTT/status. If the selected source requires translation, implement the bounded translation executor or choose a same-language proofread case first for end-to-end proof. If no advertised captions exist, implement/identify audio acquisition+transcription. Then expose a rights-aware reader-facing result/download state and preserve Search regression safety.",
     "lease": {
       "status": "AVAILABLE",
       "holder": null,
       "started_at": null
     },
-    "attempt": 19,
+    "attempt": 20,
     "checkpoint": {
-      "cycle": "youtube-advertised-caption-acquisition-executor",
-      "commit": "ab8766da9b38b2570ce13dad9debc28fba520ab9",
+      "cycle": "acquired-vtt-proofreader-handoff",
+      "commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
+      "supporting_commit": "2b91350df230b950f9f230b3a7a373b1e9f677e4",
       "result": "IMPLEMENTED_NOT_YET_PRODUCTION_VERIFIED",
       "capability_evidence": {
         "already_demonstrated": [
@@ -54,23 +56,26 @@
           "D1-backed subtitle job persistence",
           "Liming Library resource feedback",
           "idempotent canonicalized job boundary",
-          "resumable job lookup"
+          "resumable job lookup",
+          "conservative biblical-term subtitle correction"
         ],
         "learned_and_applied_this_cycle": [
-          "bounded extraction of advertised caption track metadata from a supported video source",
-          "host-restricted remote caption acquisition with explicit non-fabrication boundaries",
-          "persisted job state transitions for caption-acquired, no-caption/audio-needed, unsupported-host and retryable-failure outcomes"
+          "reusing an existing worker's deterministic correction core inside a larger pipeline without duplicating its rule set",
+          "WebVTT cue-text segmentation and timing-preserving reconstruction",
+          "bounded batching across an existing 500-segment proofreader limit",
+          "persisted state separation between proofread-ready result and translation-required result"
         ],
         "encountered_not_yet_demonstrated": [
-          "production verification of v4 on live D1/Pages deployment",
-          "automatic VTT segmentation/proofreader handoff and corrected subtitle persistence",
+          "production verification of v5 on live D1/Pages deployment",
+          "translation executor when acquired caption language differs from target",
           "audio transcription executor for sources without advertised captions",
-          "reader-facing completed subtitle result/download surface"
+          "reader-facing completed subtitle result/download surface",
+          "full Search/Library/ONE/Westside Stories production flow verification"
         ]
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T05:21:55.466554+00:00",
-    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
+    "last_heartbeat_at": "2026-08-25T05:34:00.000000+00:00",
+    "runtime_observation": "This cycle resumed from repository-persisted state without human re-brief and advanced the acquired-caption path into a reusable persisted proofreader stage. Project remains RUNNABLE because production and downstream reader flow are not yet verified."
   }
 }
