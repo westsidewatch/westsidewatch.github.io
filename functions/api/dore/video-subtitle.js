@@ -84,6 +84,19 @@ function captionFetchUrl(baseUrl){
   }catch{return null}
 }
 
+async function acquireAdvertisedTrack(tracks,targetLanguage,acquisition){
+  if(!tracks?.length)return {ok:false,status:'needs-transcription-audio',reason:'no-caption-track-advertised'};
+  const track=chooseCaptionTrack(tracks,targetLanguage);
+  const fetchUrl=captionFetchUrl(track?.baseUrl);
+  if(!fetchUrl)return {ok:false,status:'caption-source-rejected',reason:'caption-track-url-outside-allowed-hosts'};
+  const cap=await fetch(fetchUrl,{headers:{'accept-language':'en-US,en;q=0.8','user-agent':'Mozilla/5.0 (compatible; WestsideWatch-Dore/1.0)'}});
+  if(!cap.ok)return {ok:false,status:'caption-source-fetch-failed',reason:`caption-http-${cap.status}`};
+  const text=await cap.text();
+  if(!text.trim())return {ok:false,status:'caption-source-empty',reason:'caption-response-empty'};
+  if(text.length>750000)return {ok:false,status:'caption-source-too-large',reason:'caption-exceeds-d1-payload-boundary'};
+  return {ok:true,status:'caption-acquired-awaiting-proofread',caption:{language_code:track.languageCode||null,name:track?.name?.simpleText||null,kind:track.kind||'manual',is_translatable:Boolean(track.isTranslatable),format:'vtt',text,acquisition}};
+}
+
 function xmlDecode(value){return String(value||'').replace(/&quot;/g,'"').replace(/&#39;|&apos;/g,"'").replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>')}
 function parseTimedTextTracks(xml){
   const tracks=[];
@@ -114,29 +127,49 @@ async function acquireTimedTextListedCaption(videoId,targetLanguage){
   return {ok:true,status:'caption-acquired-awaiting-proofread',caption:{language_code:track.languageCode||null,name:track?.name?.simpleText||null,kind:track.kind||'manual',is_translatable:true,format:'vtt',text,acquisition:'youtube-timedtext-listed-track'}};
 }
 
+function parseAdvertisedCaptionTracks(text){
+  const direct=parseJsonArrayAfter(String(text||''),'"captionTracks":');
+  if(direct?.length)return direct;
+  const decoded=String(text||'').replace(/\\u0026/g,'&').replace(/\\u003d/g,'=').replace(/\\u0025/g,'%').replace(/\\"/g,'"').replace(/\\\//g,'/');
+  if(decoded!==text){const tracks=parseJsonArrayAfter(decoded,'"captionTracks":');if(tracks?.length)return tracks}
+  return null;
+}
+
+async function acquireEmbedAdvertisedCaption(videoId,targetLanguage){
+  const urls=[`https://www.youtube.com/embed/${encodeURIComponent(videoId)}?hl=en`,`https://www.youtube-nocookie.com/embed/${encodeURIComponent(videoId)}?hl=en`];
+  const reasons=[];
+  for(const url of urls){
+    try{
+      const r=await fetch(url,{headers:{'accept-language':'en-US,en;q=0.8','user-agent':'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36','referer':'https://www.youtube.com/'}});
+      if(!r.ok){reasons.push(`embed-http-${r.status}`);continue}
+      const tracks=parseAdvertisedCaptionTracks(await r.text());
+      if(!tracks?.length){reasons.push('embed-no-caption-track-advertised');continue}
+      return await acquireAdvertisedTrack(tracks,targetLanguage,'youtube-embed-advertised-track');
+    }catch(e){reasons.push(`embed-fetch-${String(e?.message||e)}`)}
+  }
+  return {ok:false,status:'needs-transcription-audio',reason:reasons.join(';')||'embed-no-caption-track-advertised'};
+}
+
 async function acquireYoutubeCaption(row){
   const canonical=new URL(row.canonical_url);
   if(canonical.hostname!=='youtube.com')return {ok:false,status:'executor-unsupported-host',reason:'automatic-caption-acquisition-currently-youtube-only'};
   const videoId=canonical.searchParams.get('v');
   if(!videoId)return {ok:false,status:'caption-source-rejected',reason:'youtube-video-id-missing'};
-  const watch=await fetch(canonical.toString(),{headers:{'accept-language':'en-US,en;q=0.8','user-agent':'Mozilla/5.0 (compatible; WestsideWatch-Dore/1.0)'}});
-  if(!watch.ok){
-    const fallback=await acquireTimedTextListedCaption(videoId,row.target_language);
-    if(fallback.ok||fallback.status==='needs-transcription-audio')return fallback;
-    return {ok:false,status:'caption-source-fetch-failed',reason:`youtube-watch-http-${watch.status};${fallback.reason||fallback.status}`};
-  }
-  const html=await watch.text();
-  const tracks=parseJsonArrayAfter(html,'"captionTracks":');
-  if(!tracks?.length)return acquireTimedTextListedCaption(videoId,row.target_language);
-  const track=chooseCaptionTrack(tracks,row.target_language);
-  const fetchUrl=captionFetchUrl(track?.baseUrl);
-  if(!fetchUrl)return {ok:false,status:'caption-source-rejected',reason:'caption-track-url-outside-allowed-hosts'};
-  const cap=await fetch(fetchUrl,{headers:{'accept-language':'en-US,en;q=0.8','user-agent':'Mozilla/5.0 (compatible; WestsideWatch-Dore/1.0)'}});
-  if(!cap.ok)return {ok:false,status:'caption-source-fetch-failed',reason:`caption-http-${cap.status}`};
-  const text=await cap.text();
-  if(!text.trim())return {ok:false,status:'caption-source-empty',reason:'caption-response-empty'};
-  if(text.length>750000)return {ok:false,status:'caption-source-too-large',reason:'caption-exceeds-d1-payload-boundary'};
-  return {ok:true,status:'caption-acquired-awaiting-proofread',caption:{language_code:track.languageCode||null,name:track?.name?.simpleText||null,kind:track.kind||'manual',is_translatable:Boolean(track.isTranslatable),format:'vtt',text,acquisition:'youtube-watch-advertised-track'}};
+  let watchReason=null;
+  try{
+    const watch=await fetch(canonical.toString(),{headers:{'accept-language':'en-US,en;q=0.8','user-agent':'Mozilla/5.0 (compatible; WestsideWatch-Dore/1.0)'}});
+    if(watch.ok){
+      const tracks=parseAdvertisedCaptionTracks(await watch.text());
+      if(tracks?.length)return acquireAdvertisedTrack(tracks,row.target_language,'youtube-watch-advertised-track');
+      watchReason='watch-no-caption-track-advertised';
+    }else watchReason=`youtube-watch-http-${watch.status}`;
+  }catch(e){watchReason=`youtube-watch-fetch-${String(e?.message||e)}`}
+  const embed=await acquireEmbedAdvertisedCaption(videoId,row.target_language);
+  if(embed.ok)return embed;
+  const timed=await acquireTimedTextListedCaption(videoId,row.target_language);
+  if(timed.ok)return timed;
+  if(embed.status==='needs-transcription-audio'&&timed.status==='needs-transcription-audio')return {ok:false,status:'needs-transcription-audio',reason:[watchReason,embed.reason,timed.reason].filter(Boolean).join(';')};
+  return {ok:false,status:timed.status||embed.status||'caption-source-fetch-failed',reason:[watchReason,embed.reason,timed.reason].filter(Boolean).join(';')};
 }
 
 function parseVttForProofread(vtt){
