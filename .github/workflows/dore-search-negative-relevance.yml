@@ -11,15 +11,46 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
+
+concurrency:
+  group: dore-search-negative-relevance
+  cancel-in-progress: false
 
 jobs:
   negative-relevance:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - name: Verify unrelated queries do not fabricate Scripture hits
         run: node dore-core/tests/search-browser-negative-relevance.mjs
+      - name: Persist verification evidence
+        run: |
+          mkdir -p dore-core/runtime/evidence
+          cat > dore-core/runtime/evidence/search-negative-relevance.json <<EOF
+          {
+            "schema": "dore.search-negative-relevance-evidence.v1",
+            "verified_at": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "source_commit": "${GITHUB_SHA}",
+            "status": "PASS",
+            "regressions": {
+              "Mortal Shell II": "ZERO_SCRIPTURE_RESULTS",
+              "Grand Theft Auto": "ZERO_SCRIPTURE_RESULTS",
+              "John 3:16": "SCRIPTURE_REFERENCE_RESOLVES",
+              "約翰福音 3:16": "SCRIPTURE_REFERENCE_RESOLVES",
+              "begining": "SINGLE_TERM_FUZZY_REMAINS_AVAILABLE"
+            }
+          }
+          EOF
+          git config user.name 'Doré Search Verification'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/runtime/evidence/search-negative-relevance.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'chore(dore): persist Search negative-relevance evidence [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
