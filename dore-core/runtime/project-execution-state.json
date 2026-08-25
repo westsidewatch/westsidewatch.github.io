@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T09:41:30+00:00",
+  "updated_at": "2026-08-25T11:38:30+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -9,49 +9,53 @@
     "objective": "Complete and production-verify the reader-facing video URL to subtitle/library/ONE/Westside Stories product flow.",
     "resume_policy": "Resume without human re-brief after the environment blocker is removed; inspect persisted evidence and continue the highest-priority unfinished executable work.",
     "last_verified_evidence": {
-      "latest_subtitle_engineering_commit": "cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3",
-      "latest_deployment_workflow_commit": "aff696fd68f315d872dde5451cf1e076e95ec407",
-      "checkpoint_commit": "adbc7546536ff19f0e1c506b045dee1759770dcc",
-      "production_probe_run": 32831832417,
-      "production_probe_job": 97752039352,
-      "production_probe_artifact": 9557040549,
-      "production_capability_run": 32831924317,
-      "production_capability_job_attempt_2": 97753436398,
-      "production_deploy_run": 32833024988,
-      "production_deploy_job": 97755705884,
-      "real_production_job_id": 1,
+      "latest_subtitle_engineering_commit": "d95668c0b37264d47fda90f4d469345ce62507e4",
+      "latest_probe_source_commit": "554d0dc180638bd43c6778c40a8b9385560d2df3",
+      "checkpoint_commit": "dc3dad7396e730027bef3745ec5919fe83379c0d",
+      "production_deploy_run": 32843148308,
+      "production_deploy_job": 97786876168,
+      "production_probe_run": 32843196221,
+      "production_probe_job": 97787023155,
+      "production_probe_artifact": 9561284285,
+      "real_production_job_id": 3,
       "verification": [
-        "Self-seeding production probe created real D1 subtitle job id 1 at the live Pages origin with HTTP 202.",
-        "Production capability polling verified live remains dore.video-subtitle.v2 with executors=null while repository main contains dore.video-subtitle.v5.",
-        "Explicit Cloudflare Pages deployment workflow built Hugo successfully and verified the v5 executor/result/router bundle successfully.",
-        "Deployment run 32833024988 job 97755705884 failed only at the Cloudflare deployment boundary.",
-        "Exact log: CLOUDFLARE_API_TOKEN is not configured; CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID were empty; exit code 78."
+        "Cloudflare Pages production deployment now succeeds from GitHub Actions; the previous deployment-credential blocker is resolved.",
+        "Live production exposes dore.video-subtitle.v5 with youtube-advertised-caption-acquisition and dore-vtt-proofread executors.",
+        "Production probe run 32843196221 reached live v5, deduplicated real D1 job id 3, and executed caption acquisition.",
+        "Normal YouTube watch acquisition is throttled with HTTP 429 in the deployed runtime.",
+        "Both YouTube embed-player discovery surfaces returned no parseable advertised caption tracks.",
+        "The public timed-text track listing returned no advertised tracks.",
+        "Exact final production status is needs-transcription-audio with reason youtube-watch-http-429;embed-no-caption-track-advertised;embed-no-caption-track-advertised;no-caption-track-advertised.",
+        "A second public source was tested in addition to the original probe source; neither exposed usable server-side captions to the deployed runtime.",
+        "No production audio transcription executor or approved audio-acquisition runtime/binding exists in the current repository/environment."
       ]
     },
-    "next_action": "After Cloudflare Pages deployment access is restored, rerun Doré P01 Pages Deploy; verify live exposes dore.video-subtitle.v5 and both executors; rerun the production probe through caption acquisition, proofread, reader result and rights verification; then finish Search/Library/ONE/Westside Stories production verification.",
+    "next_action": "After an approved production transcription/audio-acquisition dependency is provisioned, implement the needs-transcription-audio executor and resume real job execution through transcription, Doré proofread, translation/Scripture alignment as applicable, reader result/rights verification, then Search/Library/ONE/Westside Stories production verification.",
     "lease": {"status":"AVAILABLE","holder":null,"started_at":null},
-    "attempt": 38,
+    "attempt": 39,
     "checkpoint": {
-      "cycle": "explicit-production-deployment-boundary-verification",
-      "commit": "aff696fd68f315d872dde5451cf1e076e95ec407",
-      "supporting_commit": "adbc7546536ff19f0e1c506b045dee1759770dcc",
-      "result": "ENVIRONMENT_BLOCKED_CLOUDFLARE_DEPLOYMENT_CREDENTIALS_MISSING"
+      "cycle": "production-caption-source-fallback-and-runtime-verification",
+      "commit": "d95668c0b37264d47fda90f4d469345ce62507e4",
+      "supporting_commit": "dc3dad7396e730027bef3745ec5919fe83379c0d",
+      "result": "ENVIRONMENT_BLOCKED_TRANSCRIPTION_RUNTIME_REQUIRED"
     },
     "blocker": {
       "type": "ENVIRONMENT_BLOCKED",
-      "code": "CLOUDFLARE_PAGES_DEPLOYMENT_CREDENTIALS_MISSING",
+      "code": "CAPTION_SOURCE_UNAVAILABLE_AND_AUDIO_TRANSCRIPTION_RUNTIME_NOT_CONFIGURED",
       "evidence": {
-        "workflow_run": 32833024988,
-        "job": 97755705884,
-        "failed_step": "Deploy production Pages bundle",
-        "exact_log": "CLOUDFLARE_API_TOKEN is not configured",
-        "exit_code": 78,
-        "live_schema": "dore.video-subtitle.v2",
-        "required_schema": "dore.video-subtitle.v5"
+        "production_deploy_run": 32843148308,
+        "production_deploy_job": 97786876168,
+        "production_probe_run": 32843196221,
+        "production_probe_job": 97787023155,
+        "production_probe_artifact": 9561284285,
+        "real_job_id": 3,
+        "live_schema": "dore.video-subtitle.v5",
+        "caption_status": "needs-transcription-audio",
+        "exact_reason": "youtube-watch-http-429;embed-no-caption-track-advertised;embed-no-caption-track-advertised;no-caption-track-advertised"
       },
-      "smallest_human_action": "Configure GitHub Actions repository secrets CLOUDFLARE_API_TOKEN and CLOUDFLARE_ACCOUNT_ID with permission to deploy the Cloudflare Pages project serving westsidewatch-github-io.pages.dev, then rerun Doré P01 Pages Deploy. Equivalent one-off recovery is to manually deploy current main to that Pages project."
+      "smallest_human_action": "Provision one approved production transcription/audio-acquisition path and expose its required binding or credential to the Cloudflare Pages Function. The dependency must be able to receive legally obtainable audio when source-advertised captions are unavailable. After that single environment capability exists, Doré can implement and verify the executor without a re-brief."
     },
-    "last_heartbeat_at": "2026-08-25T09:41:30+00:00",
-    "runtime_observation": "P01 is environment-blocked at production deployment. Code, build, bundle validation, real D1 job creation and production diagnostics succeeded; the autonomous environment lacks Cloudflare deployment credentials."
+    "last_heartbeat_at": "2026-08-25T11:38:30+00:00",
+    "runtime_observation": "P01 production deployment and v5 capability are healthy. The terminal blocker has moved downstream to media acquisition/transcription: the deployed runtime cannot obtain advertised captions from tested YouTube sources and no audio transcription runtime is configured."
   }
 }
