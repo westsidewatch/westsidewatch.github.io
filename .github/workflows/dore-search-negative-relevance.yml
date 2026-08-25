@@ -1,0 +1,25 @@
+name: Doré Search Negative Relevance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/dore/dore-search.js'
+      - 'static/dore/search-index.json'
+      - 'dore-core/tests/search-browser-negative-relevance.mjs'
+      - '.github/workflows/dore-search-negative-relevance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  negative-relevance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify unrelated queries do not fabricate Scripture hits
+        run: node dore-core/tests/search-browser-negative-relevance.mjs
