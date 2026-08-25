@@ -85,3 +85,30 @@ That the recorded provider free-tier allowances remain current at any future dec
 Re-verify current provider pricing/allowances from authoritative provider documentation when Cost Frontier first approaches a real storage/operation threshold or before recommending paid capacity.
 
 **Priority:** LOW now; automatically rises near the first capacity warning threshold.
+
+## ME-005 — Conversation Memory Layer v1 production isolation and semantic recall
+
+**Related work:** `CONV-MEM-V1`, `CONVERSATION`
+
+**What is already evidenced**
+- `cloudflare/d1/002_dore_conversation_memory.sql` defines conversation, message and memory-chunk structures with project/conversation scope;
+- `functions/api/dore/memory.js` implements scoped record/retrieve behavior, conversation-local deduplication and optional R2/Vectorize binding awareness;
+- `dore-core/tests/memory-layer-contract.mjs` explicitly requires scope, anti-global-vector rules, project/conversation boundaries and public tenant/authentication caution;
+- `DORÉ-CONVERSATION-MEMORY-LAYER-V1.md` separates raw history, selected memory and consolidated knowledge and defines staged M1–M4 gates.
+
+**What is not yet evidenced strongly enough**
+- a real production D1 write through `/api/dore/memory`;
+- exact replay of that message under the intended conversation+project scope;
+- proof that a different conversation cannot retrieve the message;
+- R2 archive write/recovery on a bound production archive;
+- any real embedding generation or Vectorize retrieval;
+- metadata-filtered vector retrieval that resists cross-conversation contamination;
+- Conversation Alpha consuming the scoped memory interface;
+- authenticated tenant isolation for any future public multi-user use.
+
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for production-ready conversational memory; implementation remains `ACTIVE_PARALLEL / IMPLEMENTING`.
+
+**Smallest useful future evidence**
+Run one production-safe two-conversation fixture in the same project: write distinct sentinel messages, replay each exact scope, assert zero cross-retrieval, then persist the diagnostic. Only after this passes should R2 recovery and scoped Vectorize recall be activated and evaluated.
+
+**Priority:** HIGH for Conversation Alpha continuity, but must not displace P01's active production E2E critical path.
