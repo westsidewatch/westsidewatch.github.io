@@ -25,7 +25,7 @@ At discussion close, separate transient dialogue from durable outputs. Persist o
 5. No public conversational UI/API is exposed before a separate publication/readiness decision.
 
 ## Current checkpoint
-A1 and A2 are IMPLEMENTED_AND_CI_VERIFIED for the persisted active-project path.
+A1, A2, and the bounded A3 persistence primitive are IMPLEMENTED_AND_CI_VERIFIED for the persisted active-project path.
 
 A1 evidence:
 - `dore-core/runtime/build_conversation_context.py` builds a bounded packet from the canonical Master Register, persistent project runtime state, Constitution, this Alpha contract, and the active project brief.
@@ -37,9 +37,16 @@ A2 evidence:
 - Evidence/judgment/risk/decision-candidate contributions are rejected when they lack an evidence basis; unknown evidence references are rejected.
 - Speculative/unverified/unknown contributions cannot be marked persistence-allowed; grounded evidence can be marked eligible while human/church final authority and the public-conversation prohibition remain carried in the envelope.
 - `dore-core/tests/test_conversation_contribution.py` exercises grounded judgment, missing-evidence rejection, unknown-reference rejection, speculative persistence rejection, and grounded persistence eligibility.
-- `.github/workflows/dore-conversation-alpha.yml` now verifies A1+A2 together.
-- GitHub Actions run `32822006374` completed the Conversation Alpha job successfully after the import-safety repair at commit `4c7e404a86c58f089817dcb98e4e113de4816427`.
 
-This does not mark the Internal Alpha complete. A1/A2 now provide bounded context plus grounded contribution validation; project-specific memory/knowledge enrichment remains evidence-driven rather than fabricated when no explicit binding exists.
+A3 evidence:
+- `dore-core/runtime/conversation_meeting_close.py` builds a compact internal meeting-close record from the ready context and validated contributions.
+- Only contributions already marked persistence-allowed can enter the durable contribution set; project-mismatched, transient, speculative, or authority-unsafe items are rejected into an explicit non-durable list.
+- Every persisted meeting record keeps human/church authority final, public conversation unauthorized, and consequential action unauthorized by the record itself.
+- `persist_meeting_record()` writes a replayable JSON record whose round trip is tested to survive a fresh process/session boundary.
+- `dore-core/tests/test_conversation_meeting_close.py` verifies filtering, project mismatch rejection, authority preservation, and round-trip durability.
+- `.github/workflows/dore-conversation-alpha.yml` verifies A1+A2+A3 together.
+- GitHub Actions run `32822094490` completed the Conversation Alpha job successfully on commit `db0e39d93a296cc5e695aa4dc3cacf63aec592fe`.
 
-Next bounded step: implement A3 meeting-close persistence as a compact internal meeting record that accepts only persistence-allowed contributions and explicit changed constraints/verified learning/blockers/next actions, survives a new session, and cannot silently authorize public conversation or consequential human/church decisions.
+This does not yet mark the Internal Alpha VERIFIED_COMPLETE. The primitives are now present and CI-verified, but the readiness gate still requires a real internal meeting exercise that loads persisted P01 context, produces at least one grounded contribution and one rejected transient/speculative contribution, persists the meeting-close record into a durable repository evidence path, then demonstrates that a fresh context load can discover/replay that record without a human re-brief. Project-specific memory/knowledge enrichment also remains evidence-driven rather than fabricated where no explicit binding exists.
+
+Next bounded step: execute and persist that full internal P01 meeting rehearsal end-to-end, then perform a fresh-session replay check. If successful, evaluate whether Internal Alpha meets VERIFIED_COMPLETE without changing P01 priority or authorizing any public conversation surface.
