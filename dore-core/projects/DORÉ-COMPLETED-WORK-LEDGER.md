@@ -106,3 +106,40 @@ Run the same parity criterion whenever the corpus, normalization rules, referenc
 
 **Disposition**
 Keep the migration milestone closed. Treat future parity execution as maintenance/regression protection, not as reopening the original migration.
+
+## CW-004 — Conversation Runtime Internal Alpha
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded internal-only Alpha milestone; public conversation remains `PARKED`, and scoped Conversation Memory v1 remains a separate active implementation line.
+
+**Original objective**
+Demonstrate that Doré can participate in a bounded internal project conversation by loading persisted project context, making grounded contributions, rejecting transient/speculative material from durable memory, persisting a meeting-close record, and replaying that durable record in a fresh session without a human re-brief.
+
+**Completion evidence**
+- `dore-core/runtime/conversation-alpha-contract.md` now records `Status: VERIFIED_COMPLETE / INTERNAL_ONLY / NOT_PUBLIC` and states that all five Internal Alpha readiness gates are satisfied for the persisted active-project path.
+- GitHub Actions run `32822094490` completed the A1+A2+A3 Conversation Alpha job successfully.
+- `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json` persists a real P01 rehearsal record containing a grounded durable risk, a rejected speculative/transient suggestion, verified learning, next actions, and authority limits.
+- commit `3cca4b6b5ba06197e1f4c64b2a320a4a6ef09fc9` persisted that rehearsal; commit `c8b54534ac69cfe9f006e48aac6cdfded92dfc48` added fresh-context discovery/replay; commit `7c4c110d11c448a8d9e1263e90a37133dd59999c` added the fresh-session replay test; commit `ce653b6e9443b287984e08f8e8f226a324533e2c` made CI require replayed meeting memory, project match and the non-consequential authority boundary.
+- `dore-core/runtime/conversation-alpha-verification.json` records the five-gate verified-complete evaluation.
+- commit `ed45a900befa2478afda685d48a270b0256c3c3e` formally reconciles the Alpha contract to verified-complete status.
+
+**Current quality judgment**
+Strong for the declared internal milestone because it combines implementation tests, a real persisted P01 rehearsal, fresh-session replay behavior and explicit authority boundaries. The milestone is deliberately narrow: it does not prove production-grade multi-user conversational memory, semantic retrieval, long-horizon robustness, or suitability for a public conversational product.
+
+**What Doré learned / retained**
+- project conversation must begin from canonical persisted context rather than requiring a human to reconstruct prior state;
+- durable meeting memory must distinguish grounded decisions/learning from transient or speculative dialogue;
+- fresh-session replay is a stronger continuity test than same-process recall;
+- internal conversational capability and public conversational product authorization are separate gates;
+- consequential, doctrinal, pastoral and publication authority remain outside the Alpha milestone.
+
+**Weaknesses / debt**
+- the demonstrated replay path is still a bounded active-project path rather than a long-horizon, multi-project stress test;
+- Conversation Memory v1 production D1 isolation, R2 recovery and scoped Vectorize recall remain unverified;
+- no public authentication/tenant-isolation or public UX/readiness evidence exists, by design;
+- the current verification should be maintained through regression tests so later context/memory changes do not silently weaken the authority or scope boundaries.
+
+**Revisit trigger**
+Reopen this milestone only if regression evidence fails, project-context architecture changes materially, or a future internal-runtime expansion requires stronger multi-project/long-horizon guarantees. A request to build public Conversation is a new authorization/readiness workstream, not an automatic reopening of Internal Alpha.
+
+**Disposition**
+Keep Internal Alpha closed and internal-only. Continue Conversation Memory v1 separately; preserve public Conversation as parked until explicitly authorized and independently made production-ready.
