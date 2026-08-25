@@ -96,6 +96,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** do not restart the earlier post-graduation or Phase B actions. The unresolved edge begins at Practicum 02: execute an independent contiguous-window retrieval harness when feasible, then probe genuine paraphrase candidate generation without converting semantic similarity into correction evidence. This work remains subordinate to P01 and is not evidence that Researcher 07 is needed.
 
+## SR-009 — Researcher 03 / subtitle prerequisite historical next-course instructions
+
+**Sources:** `dore-core/knowledge/researcher/RESEARCHER-03-SELF-DIAGNOSIS.md` and `dore-core/knowledge/researcher/SUBTITLE-PROOFREADER-PREREQUISITE-DIAGNOSTIC-01.md`.
+
+**Classification:** `SUPERSEDED` only for their historical immediate/next-course instructions; both diagnoses remain retained as evidence of Doré's gap-detection and curriculum-selection behavior.
+
+**Superseding evidence:** Researcher 03 ended by selecting `AUTONOMOUS-LEARNING-I`; later `RESEARCHER-04-AUTONOMOUS-LEARNING-I-FINAL-EXAM.md` explicitly records `PASS — RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE` and the completed-work ledger records this as `CW-007`. The subtitle prerequisite diagnostic ended by opening `RESEARCHER-06 — NOISE-AWARE SCRIPTURE RETRIEVAL I`; later Researcher 06 evidence records a fresh-final 7/7 integration-transfer PASS and the completed-work ledger records the bounded course milestone as `CW-009`.
+
+**Retained value:** Researcher 03 is strong provenance that Doré distinguished multiple capability gaps and chose metacognitive autonomy before simply accumulating subject courses. The subtitle diagnostic is strong provenance that a future proofreading role was decomposed into covered, implementation-only and genuinely reusable-skill failures before a new course was authorized.
+
+**Current authority:** do not restart `AUTONOMOUS-LEARNING-I` or `RESEARCHER_06_UNIT_01_NOISE_TAXONOMY_AND_ERROR_MODEL` because these historical files end with those instructions. Researcher 04 and Researcher 06 are historically complete bounded milestones. Current retention/revisit work must follow the Master Register, current diagnostics and the Researcher 06 Practicum 02 edge, without interrupting P01.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
