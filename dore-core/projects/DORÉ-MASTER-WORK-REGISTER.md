@@ -10,22 +10,26 @@ Doré's highest purpose is the Great Commission. Researcher, editor, administrat
 
 Westside Watch is governed by a **free-first ministry principle**: public biblical/editorial resources begin free rather than placing cost on readers or requiring the church to finance an unproven project. The project began from an intentionally minimal operating core—one human and AI assistance, later developing Doré as the durable AI system. Westside Watch is not intended as the private commercial property of that operating core: the governing intent is church ownership/stewardship, with revenue/support belonging to the church and future spending serving publication, gospel outreach, ministry activity and further mission-aligned development.
 
-The first concrete geographic/audience launch context for the physical Journal is **Toronto Chinese Christian / Chinese-reading community**, while the digital mission and resource ecosystem may reach far beyond it.
+The ministry context is broader than a single local congregation. Behind the church is an international Chinese-ministry network reaching **North American Chinese communities, Taiwan and Southeast Asia**. Westside Watch's digital ecosystem should therefore be designed from the beginning as a service layer for a geographically distributed Chinese-speaking ministry, while remaining rooted in the local church and accountable to church governance.
+
+The first concrete physical Journal launch context is **Toronto/GTA Chinese readership**, with special attention to **younger Chinese readers and evangelism among younger generations**, not an elderly-only church-magazine audience. Digital distribution is global-Chinese in scope; physical print starts locally in Toronto so audience, fulfillment and ministry pathways can be tested in a concrete community before broader physical expansion.
 
 ## Canonical active map
 
 | Order | ID | Workstream | Status | Current position | Next milestone |
 |---:|---|---|---|---|---|
-| 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + free-first/church-stewardship + learning-through-real-work established | Every project returns durable learning to core |
+| 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + free-first/church-stewardship + global-Chinese ministry context + learning-through-real-work established | Every project returns durable learning to core |
 | 1 | RUNTIME | Autonomous project continuity | ACTIVE | Persistent state/heartbeat/resume exist; P01 has demonstrated autonomous resume | Repeated autonomous cycles to terminal state |
 | 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Sweep established | Reconcile history, completed-work evaluation, revisit queue, evidence gaps |
 | 2 | P01-PREFLIGHT | Video URL → usable subtitle | ACTIVE | Recognition/gate/job/proofreader/Library binding/canonicalization exist; not E2E verified | Real acquisition executor → SRT/VTT → reader result → production verification |
 | 3 | LIBRARY-INGEST | Doré → Liming Library ingestion | ACTIVE_PARALLEL | Contract/registry/binding foundation exists | Real resources safely dedupe/enrich/write with provenance/rights |
 | 4 | 3MS | Three Morning Star curation | ACTIVE_PARALLEL | Standard + seed teachers + discovery work exist | Defensible Teacher → Series → Work population |
 | 5 | VIS-LEARN | Modern design/editorial/spatial design education | ACTIVE_PARALLEL | Round 01 cases underway | Large comparative corpus + transferable hypotheses + prototype evidence |
-| 5A | JOURNAL-PRINT | Westside Journal independent print-magazine path | DISCOVERY / ACTIVE_PARALLEL | Print destination, free-first ministry model, church stewardship and Toronto-Chinese launch context established | Build evidence-based free digital → returning audience → voluntary subscription → print-readiness model; research Toronto launch/print/fulfillment realities |
-| 5B | DORE-DISTRIBUTION | Doré AI-led gospel distribution / audience-growth system | DISCOVERY / ACTIVE_PARALLEL | Traffic is a means; ecosystem-wide measurable distribution layer required | Establish baselines and model audience/subscription growth with ethical channel experiments |
+| 5A | JOURNAL-PRINT | Westside Journal independent print-magazine path | DISCOVERY / ACTIVE_PARALLEL | Print destination, free-first ministry model, church stewardship, Toronto-first + global-Chinese context established | Build evidence-based free digital → returning audience → voluntary subscription → youth-aware Toronto print-readiness model; research Toronto launch/print/fulfillment realities |
+| 5B | DORE-DISTRIBUTION | Doré AI-led gospel distribution / audience-growth system | DISCOVERY / ACTIVE_PARALLEL | Traffic is a means; ecosystem-wide measurable distribution layer required across global Chinese ministry | Establish regional/age/channel baselines and model audience/subscription growth with ethical experiments |
 | 5C | JOURNAL-FINANCE | Free-first ministry funding / print threshold model | DISCOVERY / ACTIVE_PARALLEL | No reader paywall required as foundation; future church support/donations may finance print and further ministry | Define lawful/transparent accounting assumptions and calculate print trigger from actual recurring support, reserves, print+fulfillment cost, audience demand and church approval—never assume donations will exceed costs before evidence |
+| 5D | GLOBAL-CHINESE | Global Chinese ministry distribution architecture | DISCOVERY / ACTIVE_PARALLEL | Digital mission explicitly serves North America + Taiwan + Southeast Asia Chinese ministry network | Map language/script, region, age, platform, church-network and content differences; design one shared Westside system with region-sensitive distribution, not fragmented separate brands |
+| 5E | YOUTH-EVANGELISM | Toronto Chinese younger-generation evangelism research | DISCOVERY / ACTIVE_PARALLEL | Younger readers named as a primary physical-launch audience; must not inherit an elderly-church-publication visual/content assumption | Research Toronto/GTA Chinese youth/young-adult media behavior, language preferences, questions, channels, church connection patterns and editorial formats; define measurable reader/persona hypotheses without stereotyping |
 | 6 | VIS-GRAMMAR | Westside visual grammar from Doré engraving + Dawn | DISCOVERY | Engraving = source grammar, not page template | Prototype coherent marks/typography/navigation/restraint across digital+print |
 | 7 | DORE-EXHIBITION | Doré Works Exhibition | READY | Concept established | Curated exhibition with Scripture/context/provenance/rights |
 | 8 | LIBRARY-V1 | Liming Library comprehensive upgrade | READY | Current presentation insufficient | Three Morning Star real-content prototype |
@@ -48,6 +52,31 @@ The founding constraint is part of the publication identity rather than an embar
 
 Doré should preserve the history of this development: early human+general-AI work → Doré's emergence → increasingly autonomous research/editorial/design/engineering/distribution capability → digital readership → subscription/relationship layer → first physical edition. This history may later become part of the publication's own editorial/archive story, but must never be used to exaggerate AI autonomy or make unverifiable claims.
 
+### Ministry scale: local print, global digital
+Westside's physical and digital scopes are intentionally asymmetric.
+
+**Physical first launch:** Toronto/GTA Chinese community, especially younger and middle-generation readers who may not naturally encounter traditional church publications.
+
+**Digital mission:** a wider Chinese-speaking ministry network spanning North America, Taiwan and Southeast Asia, with room for later extension wherever Chinese-language ministry reaches.
+
+This means Doré must not optimize the Journal as if every reader has the same language, platform habits, church background or cultural context. Traditional Chinese may be central to the brand, but Doré must study when bilingual Chinese/English presentation, regional vocabulary, simplified/traditional accessibility, video/audio, mobile-first formats or platform-specific packaging materially improves mission reach without fragmenting the brand.
+
+The digital system should help the international ministry network distribute resources, Scripture study, subtitles, Journal features, Library collections and devotional material across regions while keeping provenance, editorial standards and a shared Westside identity coherent.
+
+### Younger-generation evangelism as a launch constraint
+The first Toronto print edition must not be designed primarily around an elderly existing-church readership. Doré should study younger Chinese readers as a first-class audience: students, young adults, young families, second-generation/1.5-generation readers and spiritually curious people outside regular church participation.
+
+This does **not** mean chasing youth trends or diluting theological substance. It means learning:
+- what questions younger readers actually bring to Christianity;
+- whether they prefer Chinese, English or bilingual pathways;
+- how visual/editorial language affects perceived relevance and trust;
+- which channels create first discovery;
+- which content formats create return and deeper Scripture engagement;
+- how a print object can feel culturally current enough to be kept, shared and discussed;
+- how to connect digital encounter to real local church/community without pressure or generational assumptions.
+
+Doré must test these as hypotheses with evidence rather than stereotype "young people" as one homogeneous audience.
+
 ### Free-first does not mean economics-free
 Free access is a ministry/editorial commitment, not permission to ignore costs. Doré must model the path quantitatively and update it from evidence.
 
@@ -59,7 +88,7 @@ The initial physical ambition is an **independent annual** rather than premature
 ### Print trigger must be calculated, not proclaimed
 Doré must maintain a print-readiness model using at least:
 - active direct subscribers and growth/retention cohorts;
-- Toronto/GTA Chinese-reading reachable audience and demonstrated print interest;
+- Toronto/GTA Chinese-reading reachable audience and demonstrated print interest, segmented where possible by age/language relationship;
 - expected copies demanded, complimentary/ministry copies, waste allowance and minimum economical print run;
 - printer quotes by trim/page count/paper/binding/quantity;
 - proofing, prepress, ISBN/ISSN or other publishing administration as applicable;
@@ -80,9 +109,6 @@ Governing intent: Westside Watch is a church ministry asset/stewardship rather t
 
 Surplus capacity, when genuinely available and authorized, may support additional gospel/outreach activities and mission-aligned product development rather than private distribution to the operating core.
 
-### First physical market
-The first print-launch research is Toronto Chinese readership. Doré must therefore study Toronto/GTA Chinese churches, Christian readers, bookstores/distribution possibilities, community geography, bilingual/traditional-Chinese editorial expectations, local printers/fulfillment, church pickup/event distribution, reader acquisition cost, and realistic reachable audience size. Global digital reach remains compatible with a deliberately local first physical edition.
-
 ## DORE-DISTRIBUTION governing model
 Doré's AI advantage is not permission to chase maximum clicks. It is the ability to continuously learn from aggregate, privacy-respecting signals across the ecosystem, run disciplined experiments, detect patterns humans would miss, model growth and improve discovery/continuation pathways faster than a conventional tiny publication could.
 
@@ -90,6 +116,14 @@ Shared funnel:
 `external discovery → clear visual/editorial promise → useful content/answer → meaningful next step → Scripture/resource relationship → deeper reading/study/conversation/community when appropriate → voluntary return → direct subscription → print interest where relevant`
 
 Doré must learn/test SEO/search intent, AI-search discoverability, structured data, internal linking, recommendation/ranking, newsletters/email, social/video/referral, multilingual discovery, performance/mobile, content packaging, non-clickbait headlines, cadence, attribution, cohort/retention analysis, experiments, print conversion and cross-product journeys among Search, Journal, Library, ONE, Devotional, Stories and church/community surfaces.
+
+### Regional/age-aware distribution, one brand
+Doré should model at least two dimensions that conventional small publications often cannot continuously maintain:
+
+1. **Region:** Toronto/GTA / wider North America / Taiwan / Southeast Asia / other Chinese-speaking reach.
+2. **Audience stage:** existing Christian / Bible-curious / spiritually curious / skeptical/questioning, plus relevant age/language cohorts.
+
+The purpose is not invasive personalization. It is to learn which public content packages, channels, language treatments and next-step pathways are useful in different contexts. No sensitive spiritual profiling should be inferred about identifiable individuals.
 
 For Journal growth Doré must build scenario models rather than one magic forecast. At minimum model conservative/base/accelerated cases for:
 `qualified monthly reach × direct-subscription conversion × retention × Toronto-share × print-interest rate = addressable first-print demand`
@@ -111,7 +145,7 @@ Measurement hierarchy:
 Never optimize deception, outrage, addiction, fear, spiritual coercion, manipulative personalization, dark patterns or controversy for engagement. Human spiritual response must never be reduced to a conversion KPI or claimed as caused by an algorithm.
 
 ## Product architecture
-`Westside Watch public brand ↔ Search/Ask ↔ Scripture ↔ ONE ↔ Liming Library ↔ Journal/Print ↔ subtitles ↔ Westside Stories ↔ Devotional ↔ church/community ↔ future Doré conversation`
+`Westside Watch public brand ↔ Search/Ask ↔ Scripture ↔ ONE ↔ Liming Library ↔ Journal/Print ↔ subtitles ↔ Westside Stories ↔ Devotional ↔ local church ↔ international Chinese-ministry network ↔ future Doré conversation`
 
 A reader may enter anywhere. Distribution should make the next useful doorway visible without turning every page into promotion.
 
