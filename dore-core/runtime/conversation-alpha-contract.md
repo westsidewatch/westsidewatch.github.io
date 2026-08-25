@@ -25,4 +25,15 @@ At discussion close, separate transient dialogue from durable outputs. Persist o
 5. No public conversational UI/API is exposed before a separate publication/readiness decision.
 
 ## Current checkpoint
-A1/A2 contract persisted. Next bounded step: implement or identify the internal context-packet builder against the existing project runtime and project brief, then exercise it on P01 without changing P01 priority or terminal-state rules.
+A1 is now IMPLEMENTED_AND_CI_VERIFIED for the persisted active project path.
+
+Evidence:
+- `dore-core/runtime/build_conversation_context.py` builds a bounded packet from the canonical Master Register, persistent project runtime state, Constitution, this Alpha contract, and the active project brief.
+- The packet explicitly carries human/church final authority, forbids public-conversation authorization, exposes missing required evidence, and refuses to silently substitute a non-active project for the persisted runtime context.
+- `dore-core/tests/test_conversation_context.py` verifies the P01 packet and the project-substitution guard.
+- `.github/workflows/dore-conversation-alpha.yml` executes the tests and builds the packet in CI.
+- GitHub Actions run `32817415345` completed successfully on commit `eb17215f493ddf36297b124d807d458162415e56`.
+
+This does not mark the Internal Alpha complete. A1 currently loads the canonical persistent project context, but project-specific memory/knowledge enrichment remains evidence-driven rather than fabricated when no explicit binding exists.
+
+Next bounded step: implement the A2 grounded-contribution envelope so every Doré meeting contribution carries a type, evidence references, uncertainty, authority level, and persistence eligibility; exercise it against the P01 context packet before beginning A3 meeting-close persistence.
