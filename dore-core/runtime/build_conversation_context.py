@@ -17,6 +17,7 @@ RUNTIME_STATE = ROOT / "dore-core/runtime/project-execution-state.json"
 MASTER_REGISTER = ROOT / "dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md"
 CONSTITUTION = ROOT / "dore-core/constitution/CONSTITUTION.md"
 ALPHA_CONTRACT = ROOT / "dore-core/runtime/conversation-alpha-contract.md"
+MEETINGS_ROOT = ROOT / "dore-core/runtime/meetings"
 
 
 def read_text(path: Path) -> str:
@@ -45,6 +46,28 @@ def source_record(path: Path, role: str, required: bool = True) -> dict[str, Any
     }
 
 
+def load_prior_meeting(project_id: str) -> tuple[dict[str, Any] | None, dict[str, Any]]:
+    latest = MEETINGS_ROOT / project_id / "latest.json"
+    source = source_record(latest, "prior_meeting_record", required=False)
+    if not latest.exists():
+        return None, source
+    try:
+        record = json.loads(read_text(latest))
+    except (OSError, json.JSONDecodeError) as exc:
+        source["status"] = "invalid"
+        source["error"] = type(exc).__name__
+        return None, source
+    if record.get("mode") != "INTERNAL_ALPHA_NOT_PUBLIC" or record.get("project_id") != project_id:
+        source["status"] = "invalid"
+        source["error"] = "meeting_record_scope_mismatch"
+        return None, source
+    if record.get("authority", {}).get("public_conversation_authorized") is not False:
+        source["status"] = "invalid"
+        source["error"] = "public_conversation_authority_violation"
+        return None, source
+    return record, source
+
+
 def build_packet(project_id: str | None = None) -> dict[str, Any]:
     state = json.loads(read_text(RUNTIME_STATE))
     active = state.get("active_project") or {}
@@ -60,6 +83,7 @@ def build_packet(project_id: str | None = None) -> dict[str, Any]:
 
     brief_rel = active.get("brief")
     brief_path = ROOT / brief_rel if brief_rel else None
+    prior_meeting, prior_meeting_source = load_prior_meeting(requested)
 
     sources = [
         source_record(MASTER_REGISTER, "canonical_work_map"),
@@ -71,11 +95,25 @@ def build_packet(project_id: str | None = None) -> dict[str, Any]:
         sources.append(source_record(brief_path, "active_project_brief"))
     else:
         sources.append({"role": "active_project_brief", "required": True, "status": "missing", "path": None})
+    sources.append(prior_meeting_source)
 
     missing_required = [s for s in sources if s.get("required") and s.get("status") != "loaded"]
 
+    meeting_memory = None
+    if prior_meeting:
+        meeting_memory = {
+            "project_id": prior_meeting.get("project_id"),
+            "closed_at": prior_meeting.get("closed_at"),
+            "project_state_at_close": prior_meeting.get("project_state_at_close"),
+            "durable_contributions": prior_meeting.get("durable_contributions", []),
+            "verified_learning": prior_meeting.get("verified_learning", []),
+            "unresolved_blockers": prior_meeting.get("unresolved_blockers", []),
+            "next_actions": prior_meeting.get("next_actions", []),
+            "authority": prior_meeting.get("authority", {}),
+        }
+
     packet = {
-        "schema_version": 1,
+        "schema_version": 2,
         "mode": "INTERNAL_ALPHA_NOT_PUBLIC",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "project": {
@@ -103,6 +141,7 @@ def build_packet(project_id: str | None = None) -> dict[str, Any]:
             "project_fact_claims_require_source_basis": True,
             "speculation_must_not_be_persisted_as_fact": True,
         },
+        "meeting_memory": meeting_memory,
         "sources": sources,
         "missing_evidence": missing_required,
         "ready_for_internal_meeting": not missing_required,
