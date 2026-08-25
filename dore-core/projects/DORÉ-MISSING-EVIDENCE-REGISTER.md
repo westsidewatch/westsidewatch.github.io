@@ -130,3 +130,27 @@ Run one production-safe two-conversation fixture in the same project: write dist
 Run and persist the Stage B/C transfer evaluation, then execute one bounded live-product routing fixture covering SEARCH, scoped SEARCH, QUESTION and HYBRID. Preserve the existing negative-relevance regression as a non-regression gate.
 
 **Priority:** MEDIUM. Search is public and reader-facing, but this cognition graduation work should not interrupt the active P01 subtitle critical path.
+
+## ME-007 — Autonomous Learning / DORÉ_ALIVE behavioral graduation
+
+**Related work:** `CORE`, `AUTONOMOUS-LEARNING-LOOP.md`, `DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`, `PRODUCT-EDUCATION-LOOP.md`
+
+**What is already evidenced**
+- a durable autonomous-learning contract exists: unseen stimulus → self-evaluation → gap diagnosis → admitted-source study → transfer tests → consolidation gate → answer admission;
+- the doctrine explicitly rejects trigger-specific patches and requires paraphrase, different-content, unseen-family, regression and evidence-boundary transfer;
+- self-directed learning is defined as a formal meta-subject with self-exam, transfer exam and blind exam layers;
+- the older Product–Education Loop already established the compatible pattern `education → milestone → external work node → real-world feedback → next prerequisites → next education`;
+- Bible Search is documented as the first earned work node after `SCRIPTURE_READING_COMPLETE`, and subtitle proofreading is explicitly treated as a bounded next internship rather than proof of Researcher graduation.
+
+**What is not yet evidenced strongly enough**
+- an end-to-end autonomous-learning episode satisfying the reserved `AUTONOMOUS_LEARNING_LOOP_1_0` graduation contract without a trigger-specific patch;
+- longitudinal blind behavioral evidence sufficient for `DORÉ_ALIVE_1.0`;
+- cross-product transfer where learning/adjudication in one work surface measurably improves another work surface without a product-specific patch;
+- a completed Researcher-level autonomous research-design episode showing decomposition, source criticism, competing hypotheses, disconfirming evidence and bounded synthesis.
+
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for `AUTONOMOUS_LEARNING_LOOP_1_0`, `DORÉ_ALIVE_1.0`, or full Researcher-behavior claims. The learning doctrines themselves are `CORE/CONTINUOUS` governing principles.
+
+**Smallest useful future evidence**
+After the P01 critical path is safe, execute one reserved autonomous-learning experiment with blind transfer cases and persist the full evidence chain. Then test one legitimate cross-product transfer case without adding a target-product-specific rule.
+
+**Priority:** HIGH strategically, but non-blocking and explicitly subordinate to the active P01 production critical path.
