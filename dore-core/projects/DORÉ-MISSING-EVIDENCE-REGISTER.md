@@ -53,21 +53,22 @@ Drive P01 through production E2E verification to a persisted terminal state, wit
 **Related work:** `CONVERSATION`
 
 **What is already evidenced**
-A1 context loading, A2 grounded contribution validation and bounded A3 meeting-close persistence primitives are implemented and CI-verified. Authority boundaries and no-public-conversation constraints are explicitly carried by the runtime contract.
+- A1 context loading, A2 grounded contribution validation and bounded A3 meeting-close persistence primitives are implemented and CI-verified in the previously reviewed state.
+- `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json` now records a real persisted internal P01 rehearsal close with one grounded durable risk, one rejected speculative/transient suggestion, authority boundaries, no unresolved blocker and a fresh-session replay next action.
+- `dore-core/tests/test_conversation_context.py` now requires the active P01 context packet to discover and replay the prior meeting record, preserve project identity and authority, and expose the durable contribution/verified learning without a human re-brief.
+- commit `ce653b6e9443b287984e08f8e8f226a324533e2c` updates the Conversation Alpha workflow to require a prior meeting record and print `meeting-replay-ready` after the replay assertions.
 
 **What is not yet evidenced strongly enough**
-- one real internal P01 meeting rehearsal using persisted context;
-- at least one grounded durable contribution plus one rejected transient/speculative contribution in the same exercise;
-- a durable meeting-close record persisted into repository evidence;
-- fresh-session discovery/replay of that record without a human re-brief;
-- proof that this loop survives ordinary project-state changes rather than only fixtures.
+- an independently observed successful GitHub Actions run for the new rehearsal-replay assertions in this sweep batch; the commit/workflow/test definitions are present, but the commit-status endpoint exposes no completed status context and the available connector run lookup does not return push-triggered runs;
+- evidence that the replay loop survives ordinary project-state changes over time rather than one current rehearsal fixture;
+- a separate decision that the Internal Alpha as a whole meets every contract readiness gate and should be marked `VERIFIED_COMPLETE`.
 
-**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for Internal Alpha `VERIFIED_COMPLETE`; implementation remains `ACTIVE_PARALLEL`.
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for Internal Alpha `VERIFIED_COMPLETE`; the rehearsal/replay implementation gate is materially advanced and implementation remains `ACTIVE_PARALLEL` until execution evidence is closed.
 
 **Smallest useful future evidence**
-Execute the contract's defined P01 rehearsal and fresh-session replay check, persist the evidence, then evaluate the Alpha against all readiness gates.
+Persist or directly inspect one successful Conversation Alpha workflow run executing the current replay assertions, then evaluate the Alpha contract gates. Do not expose a public conversation surface as part of this verification.
 
-**Priority:** HIGH because this is one of the three convergence proof lines.
+**Priority:** HIGH because this is one of the three convergence proof lines, but it must not displace P01's production E2E critical path.
 
 ## ME-004 — R2 cost assumptions as current external fact
 
@@ -112,3 +113,25 @@ Re-verify current provider pricing/allowances from authoritative provider docume
 Run one production-safe two-conversation fixture in the same project: write distinct sentinel messages, replay each exact scope, assert zero cross-retrieval, then persist the diagnostic. Only after this passes should R2 recovery and scoped Vectorize recall be activated and evaluated.
 
 **Priority:** HIGH for Conversation Alpha continuity, but must not displace P01's active production E2E critical path.
+
+## ME-006 — Search cognition understanding/product gate
+
+**Related work:** `SEARCH`, `dore-core/knowledge/search-cognition-protocol.md`
+
+**What is already evidenced**
+- `dore-core/tests/search-cognition-understanding-gate.md` defines taught contrasts, eight unseen transfer cases, explanation requirements and product-routing requirements.
+- The gate explicitly distinguishes `TAUGHT`, `CONCEPT_PASS` and `PRODUCT_PASS` and forbids claiming that Doré "understands" the protocol before the corresponding evidence exists.
+- Its current recorded state is `TAUGHT`.
+- `dore-core/tests/search-browser-negative-relevance.mjs` separately protects an important production-quality boundary: unrelated English phrases such as `Mortal Shell II` and `Grand Theft Auto` must not fabricate Scripture results, while explicit Scripture references and single-term fuzzy tolerance must continue to work.
+
+**What is not yet evidenced strongly enough**
+- recorded unseen-case reasoning sufficient for `CONCEPT_PASS`;
+- live route execution proving SEARCH, scoped SEARCH, QUESTION and HYBRID behaviors sufficient for `PRODUCT_PASS`;
+- evidence that fuzzy tolerance and negative relevance remain stable across the broader multilingual query distribution, not only the current regression fixtures.
+
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for any claim that Search cognition is understood/product-complete; Search itself remains `MAINTENANCE + DISCOVERY`.
+
+**Smallest useful future evidence**
+Run and persist the Stage B/C transfer evaluation, then execute one bounded live-product routing fixture covering SEARCH, scoped SEARCH, QUESTION and HYBRID. Preserve the existing negative-relevance regression as a non-regression gate.
+
+**Priority:** MEDIUM. Search is public and reader-facing, but this cognition graduation work should not interrupt the active P01 subtitle critical path.
