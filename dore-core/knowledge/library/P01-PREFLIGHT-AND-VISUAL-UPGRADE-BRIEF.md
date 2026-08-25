@@ -19,6 +19,105 @@ The present Liming Library presentation is not considered satisfactory. During P
 
 This is not permission to copy another site's skin. Research should extract principles, interaction patterns, information hierarchy, collection legibility, viewing comfort, responsive behavior, accessibility, and visual rhythm, then reinterpret them through the existing Westside Watch identity.
 
+## Foundational design-learning requirement
+
+Before Doré is trusted to define the first mature Westside Watch visual system, it must build a sufficiently broad and deep design foundation. Visual production skill alone is not enough. Doré must study **how modern visual systems are actually composed, edited, paced, read, navigated, and inhabited**.
+
+This learning should happen in parallel with P01 but must precede any claim that Doré has established a complete brand visual language.
+
+### A. Modern web and digital-product design
+
+Doré should study contemporary website and digital-product design at the level of principles, systems, and details, including:
+
+- information hierarchy and visual hierarchy;
+- responsive composition rather than simple scaling;
+- typography systems, type scale, measure, line length, leading, tracking, optical alignment, punctuation behavior, widows/orphans, rag quality, and word-breaking/hyphenation rules;
+- grid systems, spacing systems, rhythm, density, proportion, alignment, whitespace, negative space, and focal hierarchy;
+- image behavior, cropping, aspect ratio, art direction, captions, metadata, galleries, media viewers, and mixed-media layouts;
+- navigation systems, visual wayfinding, progressive disclosure, search/discovery balance, sticky/fixed elements, spatial continuity, and page-to-page transition logic;
+- card systems and when **not** to use cards;
+- motion and interaction as information, not decoration;
+- accessibility, contrast, focus, keyboard behavior, readable type, reduced motion, and semantic structure;
+- performance constraints as part of visual design;
+- long-form reading, deep-reading surfaces, knowledge products, media archives, streaming/video pages, and complex collection interfaces;
+- design-system thinking: tokens, components, patterns, exceptions, states, responsive variants, governance, and evolution.
+
+Typography competence must include editorial details that visibly separate professional publishing from rough web layout. Doré should learn and verify rules such as preventing visually poor single-word/single-character wraps where language and layout allow, controlling widows/orphans, avoiding awkward title breaks, preserving meaningful phrase grouping, managing Chinese/English mixed typography, and understanding when manual editorial line-breaking is preferable to automatic wrapping.
+
+### B. Editorial and magazine design language
+
+Doré should study magazine, journal, newspaper, book, catalogue, art-book, and independent-periodical design as a discipline separate from generic web UI.
+
+The study should include:
+
+- cover systems and recurring issue identity;
+- contents pages, department architecture, feature openers, section openers, running heads, folios, pull quotes, captions, sidebars, notes, footnotes, references, and image sequences;
+- editorial pacing across spreads/screens;
+- hierarchy between headline, deck, standfirst, byline, body, annotation, caption, metadata, and navigation;
+- image-text relationships, full bleed vs inset, contact sheets, grids, interruptions, quiet pages, dense pages, and deliberate visual tempo;
+- how independent magazines establish a recognizable system while allowing every feature to feel distinct;
+- how typography and image selection carry editorial judgment, not merely decoration;
+- how print editorial principles translate to responsive screens without literal imitation of paper.
+
+The goal is that Doré can recognize and use editorial grammar, not merely imitate individual layouts.
+
+### C. Contemporary media and cultural-brand design
+
+Doré should study current visual languages used by serious media organizations, cultural institutions, museums, publishers, design studios, archives, journals, and independent magazines. It should learn how contemporary brands combine archival/historical material with modern interfaces without falling into either generic minimalism or costume-like nostalgia.
+
+Research should include cases where brands successfully combine:
+
+- historic material + contemporary typography;
+- archival imagery + modern navigation;
+- strong illustration systems + editorial photography;
+- restrained brand marks + flexible feature art direction;
+- fixed identity + changing campaigns/issues/exhibitions;
+- digital products + print/social/event collateral.
+
+### D. Architecture, exhibition, and spatial-design references
+
+Doré should also study architecture, exhibition design, museums, galleries, libraries, wayfinding, retail/cultural spaces, and environmental graphics as supporting disciplines.
+
+This is relevant because Westside Watch products are increasingly conceived spatially:
+
+`vista → entrance → room/gallery → collection → work → focused encounter`
+
+Doré should learn from:
+
+- threshold and entrance design;
+- procession and sequence;
+- sightlines and focal points;
+- compression vs openness;
+- rhythm, repetition, pause, reveal, and transition;
+- zoning, orientation, landmarks, signage, and wayfinding;
+- material language and how a limited material palette creates identity;
+- exhibition labels and the balance between object, image, caption, context, and visitor attention;
+- how a physical space can feel unified without every room looking identical.
+
+These studies should inform digital composition metaphorically and structurally, not through literal skeuomorphic imitation.
+
+### E. Case-study volume and depth
+
+Doré should not form a system after seeing a handful of reference websites. It must review a **large enough body of serious cases** to distinguish durable principles from fashionable surface treatments.
+
+The research corpus should span at minimum:
+
+- contemporary high-quality websites;
+- digital libraries and archives;
+- museums and cultural institutions;
+- major and independent magazines;
+- editorial design systems;
+- book/catalogue design;
+- media brands;
+- exhibition/wayfinding projects;
+- architecture/interior/spatial systems;
+- Christian/Bible products where genuinely strong;
+- non-Christian cultural products where the design lesson is transferable.
+
+For each useful case, Doré should record **what problem was solved, what principle is transferable, what is context-specific, what should not be copied, and how/if the lesson can serve Westside Watch**.
+
+Reference collection is not completion. Doré must demonstrate synthesis.
+
 ## Initial external research directions
 
 The first scan identified useful patterns to investigate further:
@@ -46,6 +145,9 @@ Doré should broaden this research beyond these seeds and retain citations/prove
 10. Which current visual patterns should be preserved as Westside Watch identity, which should be refined, and which should be retired?
 11. How can Doré's own engraving/illustration language become a high-recognition Westside Watch brand asset without overpowering reading, usability, or the existing stone/light/gold visual vocabulary?
 12. How should image-led navigation create recognition before text-heavy reading, so every product feels like another room in the same Westside Watch visual world?
+13. Which editorial typography and composition principles should become non-negotiable quality rules across Web, Journal, Library, ONE, print collateral, and future Doré-generated products?
+14. Which lessons from architecture/exhibition/wayfinding genuinely improve digital navigation and brand coherence, and which are merely attractive metaphors?
+15. What evidence shows that Doré has learned a design principle deeply enough to transfer it across multiple products rather than reproducing one reference layout?
 
 ## Visual-upgrade principles already fixed
 
@@ -65,6 +167,8 @@ Doré should broaden this research beyond these seeds and retain citations/prove
 - Every major surface should feel visually related even when its layout differs. Main Site, ONE, Join, Search, Liming Library, Westside Stories, journals, devotionals, and future Doré conversation should share enough visual DNA that removing the logo would not erase brand recognition.
 - Shared identity does not mean identical layouts. Each product may have its own spatial behavior while inheriting common imagery language, typography, light/gold/stone logic, spacing rhythm, navigation behavior, and motion discipline.
 - Desktop and mobile share content structure and brand language but do not have to share the same composition. Mobile is a first-class composition target, not a shrunken desktop.
+- Typography and editorial composition are structural brand quality, not cleanup. Bad line breaks, weak hierarchy, uncontrolled measure, widows/orphans, broken bilingual rhythm, awkward title wrapping, and inconsistent caption/metadata systems are design failures even if the page is otherwise attractive.
+- Doré must learn enough design history, contemporary practice, editorial craft, and spatial thinking to explain why a proposed layout works before standardizing it across the ecosystem.
 
 ## Brand visual direction — Engraving + Dawn + Navigation
 
@@ -104,22 +208,40 @@ For representative pages across the ecosystem, Doré should periodically test th
 
 Recognition should come from a combination of image language, typography, composition, light/gold/stone treatment, spacing rhythm, motion, controls, editorial restraint, and navigation behavior—not from a single repeated ornament.
 
+## Design-learning graduation test
+
+Doré should not be considered ready to define the final first-generation visual system merely because it has collected references or generated attractive screens. It should demonstrate that it can:
+
+1. identify and explain core typographic/editorial/web/spatial principles in its own words;
+2. analyze multiple unrelated cases and extract common structural lessons;
+3. distinguish fashion from durable design logic;
+4. apply the same principle differently across Library, ONE, Journal, Search, and print collateral;
+5. detect detailed typographic/composition failures in its own work and repair them without being prompted line by line;
+6. defend when Doré engraving should be used, reduced, transformed, or omitted;
+7. create visual navigation that remains legible with real dense content;
+8. preserve brand recognition while allowing radically different page types;
+9. prove responsive quality on desktop/mobile with real content;
+10. leave behind reusable rules/checklists/components rather than only finished screens.
+
 ## Expected P01 visual deliverables
 
 Doré should progressively produce, as real project work makes them necessary:
 
 1. current-state visual/UX audit of Liming Library and related Westside Watch surfaces;
-2. external reference study with extracted principles (not imitation screenshots), including Doré's own selected core reference set and the specific lesson taken from each reference;
-3. proposed shared visual grammar/tokens/components and interaction rules;
-4. an **engraving integration study** showing how Doré original imagery can coexist with current Westside Watch visual elements across at least several real content types without becoming repetitive or decorative noise;
-5. a **visual-navigation system** for entrance/collection/teacher/series states that reduces initial text overload and makes hierarchy visible at a glance;
-6. Liming Library information-architecture + visual hierarchy proposal;
-7. real-content prototype/implementation for Three Morning Star collection → teacher → series → work;
-8. subtitle/result/download states and Westside Stories pathway integrated into that grammar;
-9. mobile + desktop verification;
-10. a first Westside Watch ecosystem visual-upgrade plan showing what should propagate to Main Site, ONE, Join, Search, journals/devotionals, and other surfaces, and in what dependency-safe order;
-11. a reusable Westside Watch visual-recognition checklist for future products so new projects inherit the system rather than inventing a separate look;
-12. capability evidence recording what Doré learned about visual research, UX, frontend implementation, responsive design, accessibility, image systems, visual navigation, and cross-product design-system stewardship.
+2. a **foundational design study corpus** covering modern web, editorial/magazine design, contemporary media/cultural branding, architecture/exhibition/wayfinding, and relevant Bible/Christian products;
+3. external reference study with extracted principles (not imitation screenshots), including Doré's own selected core reference set and the specific lesson taken from each reference;
+4. a **typography and editorial-composition rule set** for Westside Watch, including bilingual Chinese/English behavior, line-breaking/wrapping discipline, hierarchy, measure, spacing, captions, metadata, and long-form reading;
+5. proposed shared visual grammar/tokens/components and interaction rules;
+6. an **engraving integration study** showing how Doré original imagery can coexist with current Westside Watch visual elements across at least several real content types without becoming repetitive or decorative noise;
+7. a **visual-navigation system** for entrance/collection/teacher/series states that reduces initial text overload and makes hierarchy visible at a glance;
+8. Liming Library information-architecture + visual hierarchy proposal;
+9. real-content prototype/implementation for Three Morning Star collection → teacher → series → work;
+10. subtitle/result/download states and Westside Stories pathway integrated into that grammar;
+11. mobile + desktop verification;
+12. cross-medium proofs showing how the same visual system behaves on at least selected web/app/editorial/print/ministry outputs;
+13. a first Westside Watch ecosystem visual-upgrade plan showing what should propagate to Main Site, ONE, Join, Search, journals/devotionals, and other surfaces, and in what dependency-safe order;
+14. a reusable Westside Watch visual-recognition checklist for future products so new projects inherit the system rather than inventing a separate look;
+15. capability evidence recording what Doré learned about visual research, editorial design, typography, UX, frontend implementation, responsive design, accessibility, image systems, spatial thinking, visual navigation, and cross-product design-system stewardship.
 
 ## Relationship to P01
 
