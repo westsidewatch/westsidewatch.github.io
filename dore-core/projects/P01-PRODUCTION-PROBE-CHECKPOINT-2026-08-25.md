@@ -6,82 +6,85 @@ Terminal state: `ENVIRONMENT_BLOCKED`
 
 ## Engineering cycle completed
 
-The production probe was upgraded from a manually parameterized reader-result checker into a self-seeding production E2E probe.
+The earlier Cloudflare deployment-credential blocker is resolved. Production deployment is now repeatable from GitHub Actions and the live Pages endpoint exposes the current P01 v5 executor contract.
+
+Doré continued the real subtitle preflight rather than stopping at deployment. Two public biblical-world YouTube sources were exercised against production, source discovery was expanded from the normal watch page to the legacy timed-text track listing and then to both YouTube embed-player variants, and every attempt preserved the no-fabrication boundary.
 
 Current harness:
-- `tests/dore-p01-production-probe.mjs` can create/deduplicate a real deployed subtitle job, run advertised-caption acquisition, run Doré VTT proofreading, and verify the deployed `dore.video-subtitle-result.v1` reader/rights contract. An existing `job_id` remains optional for targeted replay.
-- `.github/workflows/dore-p01-production-probe.yml` runs on relevant `main` pushes as well as manual dispatch, defaults to the deployed Pages origin, seeds a public biblical-world BibleProject source, and uploads structured production evidence as a retained Actions artifact.
-- The probe waits for deployed schema `dore.video-subtitle.v5` plus both `youtube-advertised-caption-acquisition` and `dore-vtt-proofread` executors before attempting production mutation.
-- `.github/workflows/dore-p01-pages-deploy.yml` now provides an explicit, reproducible production deployment path instead of assuming an external Pages integration will refresh itself.
+- `tests/dore-p01-production-probe.mjs` creates/deduplicates a real deployed subtitle job, runs caption acquisition, runs Doré VTT proofreading when a VTT is acquired, and verifies the deployed `dore.video-subtitle-result.v1` reader/rights contract.
+- `.github/workflows/dore-p01-pages-deploy.yml` performs reproducible production deployment and live v5 capability verification.
+- `.github/workflows/dore-p01-production-probe.yml` automatically follows a successful Pages deploy and preserves structured evidence as an Actions artifact.
+- `functions/api/dore/video-subtitle.js` now tries source-advertised captions through the normal YouTube watch response, both embed-player surfaces, and the public timed-text track listing before declaring that transcription audio is required.
 
-Engineering commits in this cycle:
-- `9529ae6c615d3cdd8151e50f6984fa4a8d7cccfc` — self-seeding production probe
-- `0f69de451492e0fae5b455442b4b37e35ac3d837` — autonomous push-triggered production probe workflow
-- `cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3` — deployment-capability gate
-- `aff696fd68f315d872dde5451cf1e076e95ec407` — explicit Cloudflare Pages deployment workflow
+## Engineering commits in the resumed cycle
+
+- `ac938576e764cb6a896f7c550bb8b29dccd7986f` — repaired the Pages Function scope/syntax defect exposed by Wrangler.
+- `d62837c7a0f2478115086124150b734f566061d0` — chained production probe after successful Pages deploy.
+- `06ecf4ad53bc9c49562f99ffb87497eb4805cd83` — added timed-text track-list fallback after the live watch endpoint returned HTTP 429.
+- `554d0dc180638bd43c6778c40a8b9385560d2df3` — changed the probe to a known public BibleProject source expected to have captions.
+- `d95668c0b37264d47fda90f4d469345ce62507e4` — added browser-like YouTube embed-player advertised-caption discovery while retaining source-host restrictions and no subtitle fabrication.
 
 ## Verified production evidence
 
-### Real production subtitle job
+### Production deployment is no longer blocked
 
-Workflow run: `32831832417` (`Doré P01 Production Probe`)
-Job: `97752039352`
-Artifact: `9557040549` (`dore-p01-production-evidence`)
-
-Verified:
-- production origin reachable: `https://westsidewatch-github-io.pages.dev`
-- production POST returned HTTP `202`
-- D1 created real subtitle `job_id = 1`
-- initial production state: `awaiting-transcription-executor`
-- immediate executor action returned HTTP `400` with `supported_video_url_required`
-
-That run revealed that the live endpoint was older than the repository implementation.
-
-### Deployment-capability verification
-
-Production probe run `32831924317`, attempt 2, job `97753436398` polled the deployed endpoint after the repository-side deployment refresh attempt. The live endpoint remained:
-- HTTP `200`
-- schema `dore.video-subtitle.v2`
-- `executors = null`
-
-The repository implementation is `dore.video-subtitle.v5` and contains the caption-acquisition and VTT-proofread executors. Therefore production is not serving current `main`.
-
-### Explicit deployment attempt
-
-Workflow run: `32833024988` (`Doré P01 Pages Deploy`)
-Job: `97755705884`
-Conclusion: `failure`
+`Doré P01 Pages Deploy` run `32843148308`, job `97786876168`, completed successfully.
 
 Verified successful steps:
 - checkout: PASS
-- Hugo 0.165.0 setup: PASS
-- `hugo --gc --minify`: PASS
-- P01 bundle verification for v5 executor/result/router: PASS
+- Hugo setup/build: PASS
+- P01 v5 bundle verification: PASS
+- Cloudflare Pages production deployment: PASS
+- live production verification of `dore.video-subtitle.v5`: PASS
+- live executor list contains `youtube-advertised-caption-acquisition` and `dore-vtt-proofread`: PASS
 
-Exact blocking step:
-- `Deploy production Pages bundle`: FAIL
-- workflow environment shows `CLOUDFLARE_API_TOKEN` empty and `CLOUDFLARE_ACCOUNT_ID` empty
-- exact log: `CLOUDFLARE_API_TOKEN is not configured`
-- process exit code: `78`
+This supersedes the earlier `CLOUDFLARE_API_TOKEN` blocker.
 
-This is an infrastructure credential/deployment-boundary failure, not a code defect and not an editorial/product decision.
+### Real production D1 / caption acquisition
 
-## Smallest human action required
+Latest automatically chained `Doré P01 Production Probe` run: `32843196221`
+Job: `97787023155`
+Artifact: `9561284285` (`dore-p01-production-evidence`)
+Source: `https://youtube.com/watch?v=3Dv4-n6OYGI`
+Real production D1 job: `job_id = 3`
 
-Provide a production deployment path for the current `main` branch. The smallest durable action is to configure these GitHub Actions repository secrets with Cloudflare Pages deployment permission:
+Verified stages:
+- deployed executor capability: HTTP `200`, `dore.video-subtitle.v5`, both expected executors present — PASS
+- create/deduplicate production job: HTTP `200`, real job `3` — PASS
+- execute caption acquisition: HTTP `202`, `ok = false`, `status = needs-transcription-audio`
+- exact production reason: `youtube-watch-http-429;embed-no-caption-track-advertised;embed-no-caption-track-advertised;no-caption-track-advertised`
 
-1. `CLOUDFLARE_API_TOKEN`
-2. `CLOUDFLARE_ACCOUNT_ID`
+A previous real production probe with source `https://youtube.com/watch?v=ak06MSETeo4` also reached `needs-transcription-audio`. The first version had `youtube-watch-http-429`; after timed-text fallback it produced `no-caption-track-advertised` instead of failing the executor.
 
-The token must be able to deploy the Cloudflare Pages project serving `https://westsidewatch-github-io.pages.dev` (workflow project name currently configured as `westsidewatch-github-io`).
+## Diagnosis
 
-Equivalent one-off recovery: manually deploy the current `main` commit to that Cloudflare Pages project. The durable secrets are preferred because P01 requires repeatable production verification without future human deployment handoffs.
+The deployed product can create/deduplicate real jobs, persist them in production D1, deploy and expose the v5 executor, and safely determine that an audio transcription stage is required. The remaining failure is no longer a deploy defect or an ordinary code syntax defect.
+
+The available Pages runtime cannot obtain usable source-advertised caption text from the tested public YouTube sources:
+- normal watch fetch is throttled with HTTP 429;
+- both browser-like embed surfaces return no parseable advertised caption tracks to the server-side runtime;
+- the public timed-text track-list endpoint returns no tracks;
+- no production audio transcription executor or authorized audio-acquisition runtime/binding exists in the repository/environment.
+
+Doré deliberately did not bypass the source boundary with untrusted scraping proxies and did not invent subtitle text. That is consistent with the P01 rights/provenance rule and Doré's conservative evidence principle.
+
+## Terminal blocker
+
+`ENVIRONMENT_BLOCKED` — `CAPTION_SOURCE_UNAVAILABLE_AND_AUDIO_TRANSCRIPTION_RUNTIME_NOT_CONFIGURED`
+
+The missing dependency is a production-capable, rights/provenance-compatible way to obtain/transcribe audio when source-advertised captions are unavailable to the deployed runtime.
+
+Smallest human/environment action: provision one approved production transcription/acquisition path and expose it to the Pages Function (for example, an approved transcription service or Cloudflare binding/runtime that can receive legally obtainable audio), including any required binding/credential. Once that exists, Doré can implement the executor against it and resume the same persisted D1 job without re-brief.
+
+Cloudflare's current Pages documentation confirms Workers AI can be exposed to Pages Functions through a Workers AI binding, but audio still must be made available to the model; therefore an AI binding by itself does not resolve YouTube audio acquisition.
 
 ## Resume condition
 
-After production deployment capability is restored, resume without re-brief:
-1. rerun `Doré P01 Pages Deploy` and verify live `dore.video-subtitle.v5` executors;
-2. rerun the self-seeding production probe and continue real job execution through caption acquisition → proofread → reader result → rights boundary;
-3. continue reader-facing Search/result and Library/ONE/Westside Stories production verification required by the Project 01 brief.
+Resume without human re-brief when a production transcription/audio-acquisition dependency is available. Continue:
+1. `needs-transcription-audio` → real transcription executor;
+2. Doré proofreading → translation/Scripture alignment as applicable;
+3. reader result and rights-boundary verification;
+4. Search result plus Library/ONE/Westside Stories production flow;
+5. desktop/mobile verification and capability evidence required by the P01 brief.
 
 `VERIFIED_COMPLETE` is **not** claimed.
