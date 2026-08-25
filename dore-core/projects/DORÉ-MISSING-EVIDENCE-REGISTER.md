@@ -153,3 +153,26 @@ Run and persist the Stage B/C transfer evaluation, then execute one bounded live
 First reconcile the exact reserved contract names so the system knows whether `AUTONOMOUS_LEARNING_LOOP_1_0` is synonymous with or stronger than Researcher 04. Separately, when a real downstream opportunity appears without interrupting P01, persist one cross-product transfer case showing a generalized learned capability improving another surface with no product-specific patch.
 
 **Priority:** MEDIUM/HIGH strategically, but non-blocking and subordinate to P01 production E2E.
+
+## ME-008 — Live product expression of QUEUED / RESEARCHING states
+
+**Related work:** `SEARCH`, `NERVOUS-SYSTEM`, `DORÉ-EXPRESSION-PROTOCOL.md`, `SR-006`.
+
+**What is already evidenced**
+- repository/runtime-level sensory persistence and research execution exist;
+- a real sensory signal has reached `CONSOLIDATED`;
+- the Learning Heartbeat records durable sensory → research → brain consolidation for `馬利亞有幾位?`;
+- the Expression Protocol defines truthful state semantics and forbids visible state from exceeding verified internal state.
+
+**What is not yet evidenced strongly enough**
+- a current public Search deployment receiving a fresh unknown query and durably persisting it;
+- the browser later rendering `QUEUED` or `RESEARCHING` from that same persisted live state rather than from a local/scripted fallback;
+- the browser subsequently surfacing the consolidated brain result without per-question UI logic;
+- direct acceptance evidence for the named `DORÉ_CLOSED_LOOP_01_PASS` milestone.
+
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for browser/product expression wiring and the named full closed-loop acceptance; the underlying Expression Protocol remains `ACTIVE` and repository/runtime sensory capability is not downgraded.
+
+**Smallest useful future evidence**
+Use one fresh unknown browser query: capture initial truthful UNKNOWN/HEARD state, prove durable queue persistence, capture QUEUED/RESEARCHING only when backed by live state, let the research/consolidation path complete, then re-run the same query and capture the improved generic brain-backed result with no query-specific code patch.
+
+**Priority:** MEDIUM/HIGH because it would close a major learning→product proof line, but it must not interrupt P01.
