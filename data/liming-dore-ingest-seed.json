@@ -1,0 +1,48 @@
+{
+  "schema": "liming.dore.ingest-seed.v1",
+  "updated_at": "2026-08-24",
+  "resources": [
+    {
+      "title": "大衛・鮑森《新舊約縱覽》舊約圖卡 Part 1",
+      "title_en": "David Pawson — Unlocking the Bible OT Notes Part 1",
+      "creator": "David Pawson",
+      "series": "Unlocking the Bible",
+      "resource_type": "pdf-notes",
+      "language": "zh-Hant+en",
+      "source_url": "https://davidpawson.storage.sardius.media/file/davidpawson/Pawson/Notes/Chinese_David_Pawson_Unlocking_the_Bible_OT_Notes_Part_1.pdf",
+      "source_class": "official",
+      "rights_status": "link-only",
+      "morning_stars": 3,
+      "chinese_access": "official-chinese",
+      "status": "published",
+      "scripture_refs": [
+        {"book":"Genesis"},{"book":"Exodus"},{"book":"Leviticus"},{"book":"Numbers"},{"book":"Deuteronomy"},{"book":"Joshua"},{"book":"Judges"},{"book":"Ruth"},{"book":"1 Samuel"},{"book":"2 Samuel"},{"book":"1 Kings"},{"book":"2 Kings"},{"book":"Psalms"},{"book":"Proverbs"},{"book":"Job"}
+      ],
+      "topics": ["Bible overview","Old Testament","Chinese teaching resource"],
+      "products": ["Liming Library","ONE","Doré Subtitle"],
+      "provenance": {"seed":"user-supplied matching PDF + Doré source tracing","policy":"external resource remains at source; Liming stores the bridge and relationships"},
+      "discovered_by": "dore+human-seed"
+    },
+    {
+      "title": "GOOD TV《新約縱覽》大衛・鮑森",
+      "title_en": "GOOD TV — David Pawson New Testament Overview",
+      "creator": "David Pawson",
+      "series": "Unlocking the Bible / 新約縱覽",
+      "resource_type": "official-series-page",
+      "language": "zh-Hant",
+      "source_url": "https://shop.goodtv.tv/products/m17523568",
+      "source_class": "authorized",
+      "rights_status": "link-only",
+      "morning_stars": 3,
+      "chinese_access": "official-chinese",
+      "status": "published",
+      "scripture_refs": [
+        {"book":"Matthew"},{"book":"Mark"},{"book":"Luke"},{"book":"John"},{"book":"Acts"},{"book":"Romans"},{"book":"1 Corinthians"},{"book":"2 Corinthians"},{"book":"Galatians"},{"book":"Ephesians"},{"book":"Philippians"},{"book":"Colossians"},{"book":"1 Thessalonians"},{"book":"2 Thessalonians"},{"book":"1 Timothy"},{"book":"2 Timothy"},{"book":"Titus"},{"book":"Philemon"},{"book":"Hebrews"},{"book":"James"},{"book":"1 Peter"},{"book":"2 Peter"},{"book":"1 John"},{"book":"2 John"},{"book":"3 John"},{"book":"Jude"},{"book":"Revelation"}
+      ],
+      "topics": ["Bible overview","New Testament","Chinese teaching resource"],
+      "products": ["Liming Library","ONE","Doré Subtitle"],
+      "provenance": {"seed":"user-supplied NT notes matched to authorized publisher resource","policy":"bridge official/authorized source instead of rehosting"},
+      "discovered_by": "dore+human-seed"
+    }
+  ]
+}
