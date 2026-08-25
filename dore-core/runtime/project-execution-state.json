@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T06:17:42.514176+00:00",
+  "updated_at": "2026-08-25T06:21:05.000000+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -14,7 +14,7 @@
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
       "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
-      "latest_subtitle_engineering_commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
+      "latest_subtitle_engineering_commit": "5c3a8c3be03e82097535890d11289887945ec030",
       "known_pipeline": [
         "video URL recognition",
         "canonical URL normalization",
@@ -25,30 +25,31 @@
         "Liming Library resource binding",
         "biblical-domain gate",
         "YouTube advertised-caption acquisition executor",
-        "VTT segmentation and persisted proofreader handoff"
+        "VTT segmentation and persisted proofreader handoff",
+        "rights-aware public subtitle result projection"
       ],
       "verification": [
         "Repository implementation and P01 brief inspected directly before modification.",
-        "subtitle-proofread schema advanced to v2 and its conservative biblical-term engine is now exported as a reusable pipeline core while preserving the HTTP worker surface.",
-        "video-subtitle schema advanced to v5 with action=execute-proofread for persisted jobs whose acquired caption is WebVTT.",
-        "VTT parsing preserves cue timing/identifier lines, proofs only cue text, chunks jobs beyond the worker's 500-segment boundary, and reserializes corrected VTT.",
-        "Proofread output and summary are persisted in the existing D1 job payload, with explicit proofread-complete-result-ready vs proofread-complete-needs-translation states based on source/target/mode.",
+        "subtitle-proofread schema v2 remains the reusable conservative biblical-term engine used by video-subtitle schema v5.",
+        "Acquired WebVTT is proofread while preserving cue timing and persisted into the existing D1 job payload.",
         "Translation remains a distinct unimplemented stage; the executor explicitly refuses to fabricate it.",
-        "Caption/proofread payloads retain the 750000-character D1 boundary.",
-        "GitHub combined status reported no configured checks for commit be3e45c at checkpoint time; live production execution remains unverified."
+        "New video-subtitle-result endpoint exposes only a bounded public result projection, never raw payload_json.",
+        "Download is denied by default and becomes available only when an explicit recorded rights flag allows subtitle_download/public_derivative and a VTT result is actually ready.",
+        "Rights-restricted ready results, translation-required, transcription-required, processing-error and processing states now have explicit reader_state/next_step projections.",
+        "Live production execution of the new result endpoint and schema v5 pipeline remains unverified."
       ]
     },
-    "next_action": "Production-verify schema v5 against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, then execute-proofread and inspect the persisted VTT/status. If the selected source requires translation, implement the bounded translation executor or choose a same-language proofread case first for end-to-end proof. If no advertised captions exist, implement/identify audio acquisition+transcription. Then expose a rights-aware reader-facing result/download state and preserve Search regression safety.",
+    "next_action": "Production-verify schema v5 and the new rights-aware result endpoint against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, execute-proofread, inspect the persisted status, then query /api/dore/video-subtitle-result and confirm default-deny download behavior. If the selected source requires translation, implement the bounded translation executor or choose a same-language proofread case first. If no advertised captions exist, implement/identify audio acquisition+transcription. After live API proof, wire the reader-facing Search result/download surface plus Westside Stories pathway and preserve ordinary Scripture Search regression safety.",
     "lease": {
       "status": "AVAILABLE",
       "holder": null,
       "started_at": null
     },
-    "attempt": 23,
+    "attempt": 24,
     "checkpoint": {
-      "cycle": "acquired-vtt-proofreader-handoff",
-      "commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
-      "supporting_commit": "2b91350df230b950f9f230b3a7a373b1e9f677e4",
+      "cycle": "rights-aware-reader-result-contract",
+      "commit": "5c3a8c3be03e82097535890d11289887945ec030",
+      "supporting_commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
       "result": "IMPLEMENTED_NOT_YET_PRODUCTION_VERIFIED",
       "capability_evidence": {
         "already_demonstrated": [
@@ -57,25 +58,26 @@
           "Liming Library resource feedback",
           "idempotent canonicalized job boundary",
           "resumable job lookup",
-          "conservative biblical-term subtitle correction"
+          "conservative biblical-term subtitle correction",
+          "WebVTT timing-preserving proofreading"
         ],
         "learned_and_applied_this_cycle": [
-          "reusing an existing worker's deterministic correction core inside a larger pipeline without duplicating its rule set",
-          "WebVTT cue-text segmentation and timing-preserving reconstruction",
-          "bounded batching across an existing 500-segment proofreader limit",
-          "persisted state separation between proofread-ready result and translation-required result"
+          "default-deny rights-aware public projection over internal subtitle job payloads",
+          "separating internal processing data from reader-visible result state",
+          "conditional VTT delivery based on explicit recorded derivative-download permission",
+          "reader-state mapping for ready/restricted/translation/transcription/error/processing outcomes"
         ],
         "encountered_not_yet_demonstrated": [
-          "production verification of v5 on live D1/Pages deployment",
+          "production verification of v5 and video-subtitle-result on live D1/Pages deployment",
           "translation executor when acquired caption language differs from target",
           "audio transcription executor for sources without advertised captions",
-          "reader-facing completed subtitle result/download surface",
+          "Search frontend result/download surface",
           "full Search/Library/ONE/Westside Stories production flow verification"
         ]
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T06:17:42.514176+00:00",
-    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
+    "last_heartbeat_at": "2026-08-25T06:21:05.000000+00:00",
+    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state; this cycle added a rights-aware reader-result contract and persisted a resumable checkpoint. The project remains RUNNABLE because live production verification and reader-facing integration are still executable work, not a terminal blocker."
   }
 }
