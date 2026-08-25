@@ -48,27 +48,22 @@ Drive P01 through production E2E verification to a persisted terminal state, wit
 
 **Priority:** CRITICAL because this is one of the three convergence proof lines.
 
-## ME-003 — Conversation Internal Alpha end-to-end continuity
+## ME-003 — Conversation Internal Alpha end-to-end continuity — RESOLVED
 
-**Related work:** `CONVERSATION`
+**Related work:** `CONVERSATION`, `CW-004 — Conversation Runtime Internal Alpha`
 
-**What is already evidenced**
-- A1 context loading, A2 grounded contribution validation and bounded A3 meeting-close persistence primitives are implemented and CI-verified in the previously reviewed state.
-- `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json` now records a real persisted internal P01 rehearsal close with one grounded durable risk, one rejected speculative/transient suggestion, authority boundaries, no unresolved blocker and a fresh-session replay next action.
-- `dore-core/tests/test_conversation_context.py` now requires the active P01 context packet to discover and replay the prior meeting record, preserve project identity and authority, and expose the durable contribution/verified learning without a human re-brief.
-- commit `ce653b6e9443b287984e08f8e8f226a324533e2c` updates the Conversation Alpha workflow to require a prior meeting record and print `meeting-replay-ready` after the replay assertions.
+**Resolution evidence**
+- `dore-core/runtime/conversation-alpha-contract.md` records `VERIFIED_COMPLETE / INTERNAL_ONLY / NOT_PUBLIC` and states that all five Internal Alpha readiness gates are satisfied for the persisted active-project path.
+- GitHub Actions run `32822094490` completed the A1+A2+A3 job successfully.
+- the durable P01 rehearsal record exists at `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json`;
+- fresh-context discovery/replay and fresh-session replay tests were added and enforced in CI by commits `c8b54534ac69cfe9f006e48aac6cdfded92dfc48`, `7c4c110d11c448a8d9e1263e90a37133dd59999c`, and `ce653b6e9443b287984e08f8e8f226a324533e2c`;
+- `dore-core/runtime/conversation-alpha-verification.json` records the five-gate evaluation;
+- commit `ed45a900befa2478afda685d48a270b0256c3c3e` formally marks the contract verified complete.
 
-**What is not yet evidenced strongly enough**
-- an independently observed successful GitHub Actions run for the new rehearsal-replay assertions in this sweep batch; the commit/workflow/test definitions are present, but the commit-status endpoint exposes no completed status context and the available connector run lookup does not return push-triggered runs;
-- evidence that the replay loop survives ordinary project-state changes over time rather than one current rehearsal fixture;
-- a separate decision that the Internal Alpha as a whole meets every contract readiness gate and should be marked `VERIFIED_COMPLETE`.
+**Resolution classification:** `VERIFIED_COMPLETE` for the bounded Internal Alpha milestone. The earlier `UNKNOWN_NEEDS_EVIDENCE` gap is closed and retained here only for provenance.
 
-**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for Internal Alpha `VERIFIED_COMPLETE`; the rehearsal/replay implementation gate is materially advanced and implementation remains `ACTIVE_PARALLEL` until execution evidence is closed.
-
-**Smallest useful future evidence**
-Persist or directly inspect one successful Conversation Alpha workflow run executing the current replay assertions, then evaluate the Alpha contract gates. Do not expose a public conversation surface as part of this verification.
-
-**Priority:** HIGH because this is one of the three convergence proof lines, but it must not displace P01's production E2E critical path.
+**Remaining non-blocking unknowns moved elsewhere**
+Long-horizon/multi-project replay robustness remains maintenance/revisit territory, while production scoped D1/R2/Vectorize memory behavior remains `ME-005` / `CONV-MEM-V1`. Public conversation remains a separate parked authorization/readiness decision.
 
 ## ME-004 — R2 cost assumptions as current external fact
 
@@ -112,7 +107,7 @@ Re-verify current provider pricing/allowances from authoritative provider docume
 **Smallest useful future evidence**
 Run one production-safe two-conversation fixture in the same project: write distinct sentinel messages, replay each exact scope, assert zero cross-retrieval, then persist the diagnostic. Only after this passes should R2 recovery and scoped Vectorize recall be activated and evaluated.
 
-**Priority:** HIGH for Conversation Alpha continuity, but must not displace P01's active production E2E critical path.
+**Priority:** HIGH for future conversation continuity, but must not displace P01's active production E2E critical path.
 
 ## ME-006 — Search cognition understanding/product gate
 
