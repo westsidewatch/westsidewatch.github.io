@@ -27,6 +27,10 @@ Doré's highest purpose is the Great Commission. Researcher, editor, administrat
 - `BLOCKED` — cannot progress without a named dependency/decision.
 - `MAINTENANCE` — live product stewardship.
 - `VERIFIED_COMPLETE` — completed with evidence, not merely committed.
+- `COMPLETED_REVISIT_CANDIDATE` — original milestone completed, but current Doré judgment says a future revision may be worthwhile.
+- `SUPERSEDED` — replaced by a later governing decision/implementation; preserved for provenance.
+- `RETIRED` — intentionally no longer active or maintained.
+- `UNKNOWN_NEEDS_EVIDENCE` — historical claim/status exists but current evidence is insufficient.
 - `PARKED` — intentionally deferred, not forgotten.
 
 ## Priority / dependency order
@@ -35,6 +39,7 @@ Doré's highest purpose is the Great Commission. Researcher, editor, administrat
 |---:|---|---|---|---|---|---|
 | 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission established as highest purpose; learning-through-real-work, memory discipline, portfolio stewardship, engineering growth and peer-AI learning established | Every project inherits core; generalized lessons flow back into core | none |
 | 1 | RUNTIME | Autonomous project continuity / Project Runtime | ACTIVE | Persistent execution state + heartbeat + resume policy exist; P01 has demonstrated at least one no-human-rebrief resumed engineering cycle | Repeated autonomous cycles reliably claim work, execute, checkpoint and reach a terminal state without human re-brief | CORE |
+| 1A | MEM-SWEEP-01 | First whole-system Memory Consolidation Sweep + completed-work evaluation | ACTIVE_PARALLEL | Sweep brief established; all Doré memory/project/architecture/product-history families must be reconciled without interrupting P01 | Master Register reconciled; completed-work ledger, revisit queue, superseded/retired index, missing-evidence register and capability-retention map produced; major source families accounted for | CORE, RUNTIME |
 | 2 | P01-PREFLIGHT | Video URL → usable subtitle end-to-end preflight | ACTIVE | Search recognition, biblical-domain gate, subtitle job infrastructure, proofreader infrastructure, Library binding, canonicalization/dedup/resumable lookup implemented; not yet end-to-end production verified | Real caption/audio/transcription acquisition executor advances a real accepted job through proofreading/translation as applicable to SRT/VTT and reader-facing result; production test succeeds | RUNTIME |
 | 3 | LIBRARY-INGEST | Doré → Liming Library controlled write/ingestion | ACTIVE_PARALLEL | Ingestion contract/registry and subtitle-resource binding foundation exist | Real P01 resources safely deduplicate/enrich/write provenance, series/work relationships and subtitle assets; rights-aware public result verified | P01-PREFLIGHT |
 | 4 | 3MS | Three Morning Star master-teacher curation / P01 content | ACTIVE_PARALLEL | Three Morning Star standard, seed/calibration teachers, project memory and initial discovery work exist | Doré expands beyond supplied examples into a defensible biblical-world master-teacher map and begins verified Teacher → Series → Work population | CORE, LIBRARY-INGEST |
@@ -52,6 +57,24 @@ Doré's highest purpose is the Great Commission. Researcher, editor, administrat
 | 16 | BIBLE-AI | External Bible-AI observation and peer dialogue | CORE/CONTINUOUS | Foundational principle established: learn from Bible-focused/general AI peers but verify against Scripture/primary/reliable sources | Periodic useful comparisons/dialogues generate concrete evals, capability ideas or corrections tied to real projects | CORE |
 | 17 | CONVERSATION | Doré direct Conversation Runtime | PARKED / READINESS-WATCH | Purpose and readiness principle established; must expose real Doré knowledge/provenance/tools rather than a generic branded chatbot | Readiness threshold: Doré repeatedly discovers, plans, learns, executes, verifies and maintains projects with low scaffolding; then build direct human↔Doré conversation surface | RUNTIME + demonstrated autonomy |
 | 18 | STEWARDSHIP | Existing-product maintenance / regression / production health | CORE/CONTINUOUS | Explicitly part of Doré's role; new capabilities should trigger reevaluation of old products | Continuous observe → detect → repair/enrich/upgrade → verify loop across all live Westside products | CORE |
+
+## Completed work is part of the live plan
+
+The Master Register must increasingly show not only active/future work but also major completed work and Doré's current evaluation of it.
+
+Historical completion and current quality are separate judgments. A milestone can remain truthfully `VERIFIED_COMPLETE` for its original objective while also being placed on a `COMPLETED_REVISIT_CANDIDATE` watchlist because Doré has grown, standards have improved, or the ecosystem has changed.
+
+For substantial completed work, Doré should preserve:
+
+- original objective;
+- completion evidence;
+- current quality judgment;
+- durable capability/lesson gained;
+- weaknesses or technical/editorial/visual debt now visible;
+- revisit trigger;
+- current disposition: keep, maintain, enrich, refactor, redesign, migrate, supersede, retire, or revisit later.
+
+The detailed process is governed by `dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md`.
 
 ## Product architecture relationship
 
@@ -123,6 +146,7 @@ This register must be updated when any of these occur:
 - a dependency/blocker appears or clears;
 - a milestone is verified;
 - a project reaches a terminal state;
+- a completed project is re-evaluated under newer Doré capability/standards;
 - a new capability changes what older products can do;
 - a product is retired/replaced;
 - a foundational principle materially changes work priority.
@@ -131,12 +155,12 @@ Updates should be evidence-based. A commit is implementation evidence, not autom
 
 ## Query protocol
 
-When the user asks things such as **「多雷現在什麼進度？」、「所有項目做到哪裡？」、「下一步是什麼？」、「這個 idea 排在哪裡？」**:
+When the user asks things such as **「多雷現在什麼進度？」、「所有項目做到哪裡？」、「下一步是什麼？」、「這個 idea 排在哪裡？」、「以前完成的工作現在怎麼評價？」**:
 
 1. Read this register first.
 2. Read `dore-core/runtime/project-execution-state.json` for the currently executing project.
 3. Check recent relevant commits/checkpoints for evidence newer than this register.
-4. Read the linked detailed project/memory file only where needed.
+4. Read the linked detailed project/memory/completed-work evaluation file where needed.
 5. Answer from current evidence, and update this register if the evidence has moved.
 
 This register is a map, not a substitute for source records.
@@ -149,6 +173,7 @@ Do **not** delete older Doré memory, architecture, research, project, benchmark
 - overlapping old roadmaps become historical/detail sources rather than competing current priority lists;
 - contradictions should be resolved explicitly and recorded;
 - obsolete items should be marked superseded/retired rather than silently erased;
+- completed work should retain original completion evidence plus Doré's current evaluation;
 - future consolidation may add an archive/index, but deletion requires separate evidence and care.
 
 ## Known source families to keep indexed
@@ -169,4 +194,4 @@ The Doré repository already contains durable material across at least these fam
 
 ## Immediate operational instruction
 
-Do not pause the active P01 Runtime in order to perform documentation cleanup. Consolidation is a parallel stewardship task. The critical path remains P01 subtitle preflight while design learning, Three Morning Star curation, Library ingestion, and master-register reconciliation proceed in parallel at appropriate cadence.
+Do not pause the active P01 Runtime in order to perform documentation cleanup. `MEM-SWEEP-01` is a parallel stewardship task. The critical path remains P01 subtitle preflight while design learning, Three Morning Star curation, Library ingestion, memory consolidation, and master-register reconciliation proceed in parallel at appropriate cadence.
