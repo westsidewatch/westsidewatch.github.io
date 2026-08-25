@@ -1,11 +1,15 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T07:27:00+00:00",
+  "updated_at": "2026-08-25T07:33:18.083493+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
     "state": "RUNNABLE",
-    "terminal_states": ["VERIFIED_COMPLETE", "HUMAN_DECISION_BLOCKED", "ENVIRONMENT_BLOCKED"],
+    "terminal_states": [
+      "VERIFIED_COMPLETE",
+      "HUMAN_DECISION_BLOCKED",
+      "ENVIRONMENT_BLOCKED"
+    ],
     "objective": "Complete and production-verify the reader-facing video URL to subtitle/library/ONE/Westside Stories product flow.",
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
@@ -41,8 +45,12 @@
       ]
     },
     "next_action": "Production-verify schema v5 and /api/dore/video-subtitle-result against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, execute-proofread, inspect persisted status, query the result endpoint, and confirm default-deny download behavior. Then wire the reader-facing Search result/download surface plus Westside Stories pathway and preserve ordinary Scripture Search regression safety. If a same-language caption case cannot be found, proceed to the bounded translation executor; if captions are unavailable, proceed to audio acquisition/transcription.",
-    "lease": {"status": "AVAILABLE", "holder": null, "started_at": null},
-    "attempt": 26,
+    "lease": {
+      "status": "AVAILABLE",
+      "holder": null,
+      "started_at": null
+    },
+    "attempt": 27,
     "checkpoint": {
       "cycle": "rights-aware-reader-result-contract-ci",
       "commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
@@ -74,7 +82,7 @@
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T07:27:00+00:00",
-    "runtime_observation": "This cycle converted the new public subtitle-result rights boundary from code-only evidence into repeatable CI-verified behavior. The project remains RUNNABLE; production D1/Pages verification is the next critical gate."
+    "last_heartbeat_at": "2026-08-25T07:33:18.083493+00:00",
+    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
   }
 }
