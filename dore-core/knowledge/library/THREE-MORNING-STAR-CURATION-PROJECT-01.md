@@ -64,6 +64,7 @@ Decisions and principles established during project discussion:
 10. This project itself is a prototype for future Doré autonomous project formation.
 11. Subtitle output should have a low-friction reader-facing landing point in Liming Library where rights permit: subtitle files are accessibility/derivative assets attached to the original video resource, not isolated Doré artifacts. Public states should distinguish official subtitles, editor-verified/calibrated subtitles, and preliminary subtitles without turning Doré into the public brand.
 12. A video URL entered through search does **not** automatically create a subtitle job. Doré must first perform a biblical-domain relevance gate. Subtitle work is a Westside Watch/Liming Library biblical-resource capability, not a general-purpose internet transcription service.
+13. A user-submitted biblical resource is also a discovery contribution to Liming Library. Search users should be able to enlarge the library simply by bringing legitimate biblical-world resources to the search box. The system should not treat a useful submitted URL as a disposable one-off query.
 
 ## Biblical-domain gate for subtitle work
 
@@ -82,6 +83,50 @@ The gate is semantic rather than keyword-only. A resource does not qualify merel
 Reader-facing decline should be brief and brand-appropriate, e.g. that the submitted video is outside the biblical-resource scope and therefore no subtitle was produced. Internal Doré reasoning remains backend by default.
 
 False-positive and false-negative decisions should be retained as training/evaluation cases so Doré improves this gate over time.
+
+## Search-to-library contribution loop
+
+For a URL submitted through any Westside Watch search surface (main site, ONE, Join, Liming Library, or another surface using the shared Doré search runtime), the desired lifecycle is:
+
+`user submits URL → normalize/canonicalize URL → biblical-domain gate → check Library Registry for canonical URL/content identity → if existing, return existing library resource/accessibility assets → if new and ACCEPT_BIBLICAL, create a provenance-preserving candidate/resource record → discover title/creator/series/source/language/Scripture relations/official or authorized alternatives → assess rights and Chinese accessibility → attach to appropriate teacher/series/domain/Scripture graph → where appropriate and rights-compatible, create subtitle/accessibility job → proofread/translate/Scripture-align → attach resulting subtitle asset to the same resource_id → expose through Liming Library and relevant ONE Scripture indexes → retain discovery provenance and quality feedback.`
+
+The submitting user is therefore a **discovery contributor**, not automatically an editor or authority. Submission does not itself confer Three Morning Star status, publication approval, doctrinal endorsement, or permission to redistribute derivative files.
+
+### Deduplication and enrichment
+
+A submitted URL must first be checked against existing canonical resources and known mirrors/variants. If the work already exists, Doré should enrich the existing record rather than create duplicates. A new URL may reveal a better official source, missing language version, transcript, PDF, episode, series relationship, or Scripture relation; these should improve the existing graph.
+
+### Collection status is separate from biblical relevance
+
+`ACCEPT_BIBLICAL` means the resource is in scope for evaluation and possible ingestion. It does **not** mean the resource is automatically Three Morning Star. Doré must separately evaluate collection tier, source quality, provenance, rights, usefulness, and relationship to established collections.
+
+This distinction allows search users to help discover the wider biblical world while preserving the curated meaning of the Three Morning Star layer.
+
+### Subtitle generation is conditional, not blind
+
+For a newly discovered biblical video, Doré should inspect existing accessibility before generating anything:
+
+`official Chinese available → bridge/index official Chinese first`
+
+`good existing Chinese subtitles available and rights-compatible → index/preserve provenance; do not duplicate merely to generate another file`
+
+`Chinese missing or materially inadequate + resource valuable + rights allow derivative/distribution → enqueue Doré subtitle/translation workflow`
+
+`rights unclear/restrictive → preserve discovery and metadata; do not expose a downloadable derivative until permitted`
+
+Thus user discovery can create useful work for Doré without turning the search box into an uncontrolled transcription queue.
+
+### Contribution provenance
+
+Backend records should preserve at minimum: discovery source (`user_search_submission`), first-seen time, submitted canonical URL, subsequent official-source resolution, Doré classification/evidence/confidence, duplicate resolution, collection decision, rights/accessibility decision, and resulting resource/subtitle identifiers. Public identity/privacy of the submitting search user is not required for the library resource.
+
+### Product effect
+
+This loop intentionally converts aggregate search activity into library growth:
+
+`more useful searches → more discovered biblical resources → richer Liming Library → richer Doré learning corpus → better subtitle/search/Scripture alignment → better ONE and Library results → more useful searches`.
+
+Search is therefore both retrieval and a controlled discovery sensor for the library.
 
 ## Autonomous-project learning target
 
