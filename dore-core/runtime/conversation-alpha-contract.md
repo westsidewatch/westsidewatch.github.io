@@ -25,15 +25,21 @@ At discussion close, separate transient dialogue from durable outputs. Persist o
 5. No public conversational UI/API is exposed before a separate publication/readiness decision.
 
 ## Current checkpoint
-A1 is now IMPLEMENTED_AND_CI_VERIFIED for the persisted active project path.
+A1 and A2 are IMPLEMENTED_AND_CI_VERIFIED for the persisted active-project path.
 
-Evidence:
+A1 evidence:
 - `dore-core/runtime/build_conversation_context.py` builds a bounded packet from the canonical Master Register, persistent project runtime state, Constitution, this Alpha contract, and the active project brief.
 - The packet explicitly carries human/church final authority, forbids public-conversation authorization, exposes missing required evidence, and refuses to silently substitute a non-active project for the persisted runtime context.
 - `dore-core/tests/test_conversation_context.py` verifies the P01 packet and the project-substitution guard.
-- `.github/workflows/dore-conversation-alpha.yml` executes the tests and builds the packet in CI.
-- GitHub Actions run `32817415345` completed successfully on commit `eb17215f493ddf36297b124d807d458162415e56`.
 
-This does not mark the Internal Alpha complete. A1 currently loads the canonical persistent project context, but project-specific memory/knowledge enrichment remains evidence-driven rather than fabricated when no explicit binding exists.
+A2 evidence:
+- `dore-core/runtime/conversation_contribution.py` validates a typed internal contribution envelope with evidence references, explicit uncertainty, authority level, and persistence eligibility.
+- Evidence/judgment/risk/decision-candidate contributions are rejected when they lack an evidence basis; unknown evidence references are rejected.
+- Speculative/unverified/unknown contributions cannot be marked persistence-allowed; grounded evidence can be marked eligible while human/church final authority and the public-conversation prohibition remain carried in the envelope.
+- `dore-core/tests/test_conversation_contribution.py` exercises grounded judgment, missing-evidence rejection, unknown-reference rejection, speculative persistence rejection, and grounded persistence eligibility.
+- `.github/workflows/dore-conversation-alpha.yml` now verifies A1+A2 together.
+- GitHub Actions run `32822006374` completed the Conversation Alpha job successfully after the import-safety repair at commit `4c7e404a86c58f089817dcb98e4e113de4816427`.
 
-Next bounded step: implement the A2 grounded-contribution envelope so every Doré meeting contribution carries a type, evidence references, uncertainty, authority level, and persistence eligibility; exercise it against the P01 context packet before beginning A3 meeting-close persistence.
+This does not mark the Internal Alpha complete. A1/A2 now provide bounded context plus grounded contribution validation; project-specific memory/knowledge enrichment remains evidence-driven rather than fabricated when no explicit binding exists.
+
+Next bounded step: implement A3 meeting-close persistence as a compact internal meeting record that accepts only persistence-allowed contributions and explicit changed constraints/verified learning/blockers/next actions, survives a new session, and cannot silently authorize public conversation or consequential human/church decisions.
