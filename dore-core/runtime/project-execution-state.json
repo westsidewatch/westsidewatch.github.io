@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T02:44:51.352128+00:00",
+  "updated_at": "2026-08-25T03:30:00Z",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -14,25 +14,56 @@
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
       "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
-      "latest_known_subtitle_engineering_commit": "d78b5515d1db7b0c7723444497d70b303707961b",
+      "latest_subtitle_engineering_commit": "2c0dc03c018545f5a3012cc34ef7395dbd222273",
       "known_pipeline": [
         "video URL recognition",
+        "canonical URL normalization",
+        "in-flight job deduplication",
+        "job status lookup",
         "subtitle routing/job infrastructure",
         "Doré subtitle proofreading worker",
         "Liming Library resource binding",
         "biblical-domain gate"
+      ],
+      "verification": [
+        "Repository implementation inspected directly before modification.",
+        "video-subtitle schema advanced to v3 with canonical_url persistence and D1 index.",
+        "YouTube/youtu.be URLs collapse to one canonical watch URL; tracking parameters are removed for other supported hosts.",
+        "Open jobs with the same canonical URL + target language + mode are reused instead of duplicated.",
+        "GET ?job_id= now exposes resumable job state.",
+        "GitHub combined status had no reported checks for commit 2c0dc03 at checkpoint time; production behavior is not yet claimed verified."
       ]
     },
-    "next_action": "Read the project brief and repository state; derive the next executable engineering task from evidence; implement/test/persist progress; repeat until terminal state.",
+    "next_action": "Connect an executable caption/transcription acquisition step or identify the existing executor integration point, then advance jobs beyond awaiting-transcription-executor with explicit failure/retry states and evidence. Preserve rights/provenance boundaries.",
     "lease": {
       "status": "AVAILABLE",
       "holder": null,
       "started_at": null
     },
     "attempt": 1,
-    "checkpoint": null,
+    "checkpoint": {
+      "cycle": "canonicalize-deduplicate-job-boundary",
+      "commit": "2c0dc03c018545f5a3012cc34ef7395dbd222273",
+      "result": "IMPLEMENTED_NOT_YET_PRODUCTION_VERIFIED",
+      "capability_evidence": {
+        "already_demonstrated": [
+          "Cloudflare Pages Function request handling",
+          "D1-backed subtitle job persistence",
+          "Liming Library resource feedback"
+        ],
+        "learned_and_applied_this_cycle": [
+          "idempotent video-job boundary via URL canonicalization plus in-flight deduplication",
+          "resumable job lookup surface for subsequent executor cycles"
+        ],
+        "encountered_not_yet_demonstrated": [
+          "caption/audio acquisition executor",
+          "automatic job progression/retry worker",
+          "production verification of v3 migration on live D1"
+        ]
+      }
+    },
     "blocker": null,
     "last_heartbeat_at": "2026-08-25T02:44:51.352128+00:00",
-    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
+    "runtime_observation": "The scheduled runtime successfully resumed P01 from repository-persisted state without a human re-brief and completed one engineering/learning cycle. Continuity is therefore demonstrated at checkpoint level; terminal autonomous completion remains unproven."
   }
 }
