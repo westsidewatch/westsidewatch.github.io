@@ -60,6 +60,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Important boundary:** superseding the missing-ingestion claim does **not** prove `DORÉ_CLOSED_LOOP_01_PASS`. The full unseen-input → persisted signal → autonomous research → materially updated brain node → improved repeat Search loop without human answer or query-specific code still requires direct acceptance evidence and remains an explicit missing-evidence item.
 
+## SR-006 — Expression Protocol claim that QUEUED/RESEARCHING cannot yet be backed by Product→Brain persistence
+
+**Source:** `dore-core/knowledge/researcher/DORÉ-EXPRESSION-PROTOCOL.md`, section `Current implementation boundary`.
+
+**Classification:** `SUPERSEDED` only as a blanket system-architecture statement.
+
+**Superseding evidence:** `DORÉ-LEARNING-HEARTBEAT.md` records a durable sensory → research → brain consolidation for `馬利亞有幾位?`, and existing Sweep evidence (`CW-001` / `ME-001`) records a real sensory signal reaching `CONSOLIDATED` with deployed seed/heartbeat diagnostics. Product→Brain persistence and research execution therefore exist at repository/runtime level; the older statement that QUEUED/RESEARCHING must wait for those capabilities to exist is no longer current system truth.
+
+**Retained value:** the Expression Protocol itself remains `ACTIVE`. Its honesty invariant (`VISIBLE_STATE <= VERIFIED_INTERNAL_STATE`), shared state semantics, uncertainty preservation, and ban on claiming `RESEARCHING` without a real task remain governing behavior.
+
+**Important boundary:** this supersession does **not** prove that the current public Search deployment renders `QUEUED` or `RESEARCHING` from live persisted state. Browser-level expression wiring remains unverified and is tracked as missing evidence; products may only display those states when the corresponding live state can be demonstrated.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
