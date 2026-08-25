@@ -41,6 +41,26 @@ Findings:
 7. **Operating Nervous System is a newly active cross-cutting implementation program** and should be reconciled into the canonical Master Register. Its implementation file is `ACTIVE_PARALLEL` and explicitly integrates P01, Memory Sweep and Conversation Alpha without interrupting P01.
 8. **Conversation Runtime status has advanced beyond the older parked state for the internal Alpha.** Public conversation remains readiness-gated, but internal Conversation Alpha is active and should be represented separately or by a qualified `ACTIVE_PARALLEL` status in the Master Register.
 
+### Batch C — operating nervous system + R2 asset architecture + runtime family
+Reviewed:
+- `dore-core/architecture/DORE-OPERATING-NERVOUS-SYSTEM.md`
+- `dore-core/CLOUDFLARE-R2-ASSET-ARCHITECTURE-v0.1.md` (content declares Asset Architecture v0.2)
+- `dore-core/runtime/project-execution-state.json`
+- `dore-core/runtime/conversation-alpha-contract.md`
+- runtime family inventory: `build_conversation_context.py`, `conversation_contribution.py`, `conversation_meeting_close.py`, `project-execution-state.json`.
+
+Findings:
+1. **Operating Nervous System is foundational architecture, not a completed implementation.** Cost Frontier, Rights/Provenance, Evaluation, Observability, Authority Matrix, Audience Learning and Capability Frontier are now first-class Doré contracts. Classification: architecture `CORE/CONTINUOUS`; implementation program `ACTIVE_PARALLEL`.
+2. **R2 asset architecture remains a valid current operating direction.** It preserves GitHub as institutional source of truth, Cloudflare as replaceable operational substrate, R2 as shared binary media layer, D1 as structured runtime registry, and Workers/Pages Functions as bounded gateways. This is not retired merely because the old roadmap priority was superseded.
+3. **R2 architecture already contains a Cost-Frontier precursor**: free-first capacity assumptions, 70/80/90% storage-pressure thresholds, preservation classes and safe cleanup constraints. These should be retained but future live billing allowances must be treated as external facts requiring re-verification rather than timeless constants.
+4. **R2 architecture already contains a Rights/Provenance precursor** through Asset Registry fields and one-authoritative-binary rules. The newer Operating Nervous System generalizes these requirements across all external resources and products; the two documents are complementary, not duplicates.
+5. **Filename/version metadata debt exists:** `CLOUDFLARE-R2-ASSET-ARCHITECTURE-v0.1.md` contains a document titled “Cloudflare R2 / Doré Asset Architecture v0.2”. Do not silently rename during Sweep; preserve history and record this as low-risk documentation inconsistency for later cleanup.
+6. **Project Runtime is genuinely persistent and resumable, but not yet terminally proven.** Current persisted state is P01 `RUNNABLE`, attempt 27, with no blocker. It records CI-verified rights-aware subtitle result contract evidence but explicitly says live production schema-v5/result-endpoint execution remains unverified. Runtime therefore remains `ACTIVE`, not `VERIFIED_COMPLETE`.
+7. **P01 current evidence is materially ahead of the stale Master Register wording.** Known pipeline now includes YouTube advertised-caption acquisition, VTT segmentation/proofreader handoff, rights-aware public result projection and a CI-verified rights-aware result contract. Remaining critical evidence is production execution plus reader-facing Search/Stories and full product-flow verification.
+8. **Conversation Internal Alpha is materially active.** A1 context loading, A2 grounded contributions and bounded A3 meeting-close persistence primitives are implemented and CI-verified. The Alpha itself is not yet `VERIFIED_COMPLETE`; it still requires a real persisted P01 meeting rehearsal plus fresh-session replay without human re-brief.
+9. **Public Conversation remains unauthorized.** Internal Alpha activation supersedes only the old “fully parked” interpretation; it does not authorize a public conversational UI/API.
+10. **No human or environment blocker is present in the reviewed runtime state.** P01 must remain the critical path while Sweep continues in parallel.
+
 ## Supersession output
 
 Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
@@ -55,20 +75,25 @@ Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
 - Core Architecture v0.1: `SUPERSEDED` as current baseline; retain as provenance.
 - Next Product Roadmap v0.1 priority sequence: `SUPERSEDED`; retained concepts remain historical/design evidence.
 - Daily Devotional: remains `READY` under current Master Register, not reactivated by old roadmap.
-- Cloudflare connection: retained infrastructure/dependency evidence; priority must be re-established from current project/runtime needs rather than the old roadmap.
-- Operating Nervous System implementation: `ACTIVE_PARALLEL` and missing from the current Master Register snapshot reviewed in this batch.
-- Conversation internal Alpha: `ACTIVE_PARALLEL`; public Doré conversation remains readiness-gated.
+- Cloudflare/R2 asset architecture: `CORE/CONTINUOUS` infrastructure direction; priority of implementation remains dependency-driven.
+- Operating Nervous System architecture: `CORE/CONTINUOUS`; implementation program: `ACTIVE_PARALLEL`.
+- Runtime: `ACTIVE`; persistent resume is evidenced, repeated terminal completion still pending.
+- P01: `ACTIVE`; CI-verified contract milestone achieved, production E2E remains pending.
+- Conversation internal Alpha: `ACTIVE_PARALLEL`; primitives CI-verified, real meeting/replay gate pending.
+- Public Conversation: `PARKED / READINESS-WATCH` until separately authorized.
 
 ## Canonical reconciliation still required
 
-The current Master Work Register snapshot reviewed in this batch predates at least two active changes: Operating Nervous System implementation and internal Conversation Alpha activation. A later bounded write should reconcile these into the canonical table without disturbing P01 priority. This is a register-staleness issue, not a human blocker.
+The Master Work Register snapshot reviewed in this batch still predates Operating Nervous System implementation and Internal Conversation Alpha activation, and understates the latest P01 pipeline evidence. These are repository-staleness corrections that should be written without disturbing P01 priority.
 
 ## Source-family accounting
 
 - `dore-core/constitution/`: **reviewed/closed for current single-file state**.
-- top-level Doré architecture/roadmap: **partially reviewed**; current README, brand architecture and next-product roadmap reviewed, but Cloudflare R2 architecture and deeper `architecture/` family remain in scope.
+- `dore-core/architecture/`: **reviewed/closed for current single-file state**.
+- top-level current architecture/roadmap family: **substantially reviewed** — README, Brand Operating Architecture, Next Product Roadmap and R2 Asset Architecture accounted for; older/historical top-level evidence may still surface during commit/product-history review.
+- `dore-core/runtime/`: **reviewed for current family/state**; code-level implementation history and workflow evidence can be revisited only where needed for milestone verification.
 - `dore-core/memory/`: **partially reviewed**; live sensory diagnostic/state family reviewed, broader history remains in scope.
 
 ## Next bounded batch
 
-Review `dore-core/architecture/` plus `CLOUDFLARE-R2-ASSET-ARCHITECTURE-v0.1.md` and the runtime family. Reconcile the Nervous System/Conversation Alpha entries into the Master Register if the write can be performed safely, then identify runtime milestones that are verified, superseded, or still missing evidence. Do not displace the P01 subtitle critical path.
+Review `dore-core/benchmarks/`, `dore-core/tests/` and relevant GitHub workflows as one verification-focused batch. Reconcile test/workflow evidence with completed-work and missing-evidence ledgers, especially sensory robustness, Conversation Alpha gates and reusable runtime capability. Then continue into broader memory/knowledge history. Do not displace the P01 subtitle critical path.
