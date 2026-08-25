@@ -19,9 +19,10 @@ The first concrete physical Journal launch context is **Toronto/GTA Chinese read
 | Order | ID | Workstream | Status | Current position | Next milestone |
 |---:|---|---|---|---|---|
 | 0 | CORE | Doré mission, memory, capability accumulation | CORE/CONTINUOUS | Great Commission + free-first/church-stewardship + global-Chinese ministry context + learning-through-real-work established | Every project returns durable learning to core |
-| 1 | RUNTIME | Autonomous project continuity | ACTIVE | Persistent state/heartbeat/resume exist; P01 has demonstrated autonomous resume | Repeated autonomous cycles to terminal state |
-| 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Sweep established | Reconcile history, completed-work evaluation, revisit queue, evidence gaps |
-| 2 | P01-PREFLIGHT | Video URL → usable subtitle | ACTIVE | Recognition/gate/job/proofreader/Library binding/canonicalization exist; not E2E verified | Real acquisition executor → SRT/VTT → reader result → production verification |
+| 1 | RUNTIME | Autonomous project continuity | ACTIVE | Persistent state/heartbeat/resume exist; P01 is RUNNABLE at attempt 27 with CI-verified contract evidence and no blocker | Drive P01 through production E2E to a persisted terminal state |
+| 1A | MEM-SWEEP-01 | Whole-system Memory Consolidation Sweep | ACTIVE_PARALLEL | Constitution, sensory diagnostics, current architecture/roadmap, R2 architecture and current runtime family reviewed; ledgers active | Benchmarks/tests/workflows verification batch, then broader memory/knowledge/product history |
+| 1B | NERVOUS-SYSTEM | Cost/rights/evaluation/observability/authority + learning frontiers | ACTIVE_PARALLEL | Foundational architecture established; P01/Sweep/Conversation are first implementation proving grounds | Implement executable schemas/checks/traces on real work; verify one full detect→diagnose→repair/escalate→verify loop and A3/A4 enforcement |
+| 2 | P01-PREFLIGHT | Video URL → usable subtitle | ACTIVE | YouTube caption acquisition, VTT proofreader handoff, rights-aware public result projection and CI-verified result contract exist; live schema-v5/result endpoint and reader E2E remain unverified | Production-verify real D1/Pages job → reader Search/result/download → Stories/Library/ONE path → VERIFIED_COMPLETE |
 | 3 | LIBRARY-INGEST | Doré → Liming Library ingestion | ACTIVE_PARALLEL | Contract/registry/binding foundation exists | Real resources safely dedupe/enrich/write with provenance/rights |
 | 4 | 3MS | Three Morning Star curation | ACTIVE_PARALLEL | Standard + seed teachers + discovery work exist | Defensible Teacher → Series → Work population |
 | 5 | VIS-LEARN | Modern design/editorial/spatial design education | ACTIVE_PARALLEL | Round 01 cases underway | Large comparative corpus + transferable hypotheses + prototype evidence |
@@ -41,7 +42,7 @@ The first concrete physical Journal launch context is **Toronto/GTA Chinese read
 | 14 | JOIN | Join | MAINTENANCE | Community/church access role | Maintain utility; later proven grammar |
 | 15 | DEVOTIONAL | Daily devotional | READY | Mission role recognized | Sustainable editorial workflow + distribution experiment + Scripture pathways |
 | 16 | BIBLE-AI | External Bible-AI observation/dialogue | CORE/CONTINUOUS | Principle established | Concrete evals/corrections tied to projects |
-| 17 | CONVERSATION | Doré direct Conversation Runtime | PARKED / READINESS-WATCH | Purpose established | Build only after repeated autonomous capability and grounded knowledge/tool access |
+| 17 | CONVERSATION | Doré direct Conversation Runtime | ACTIVE_PARALLEL / INTERNAL_ALPHA; PUBLIC PARKED | A1 context loading, A2 grounded contribution and bounded A3 meeting-close persistence are implemented and CI-verified; no public surface authorized | Real persisted P01 meeting rehearsal → fresh-session replay without human re-brief → evaluate Internal Alpha VERIFIED_COMPLETE |
 | 18 | STEWARDSHIP | Existing-product maintenance | CORE/CONTINUOUS | Explicit Doré role | Observe → repair/enrich/upgrade → verify |
 
 ## JOURNAL-PRINT governing model
