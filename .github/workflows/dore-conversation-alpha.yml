@@ -8,6 +8,7 @@ on:
       - 'dore-core/runtime/conversation_meeting_close.py'
       - 'dore-core/runtime/conversation-alpha-contract.md'
       - 'dore-core/runtime/project-execution-state.json'
+      - 'dore-core/runtime/meetings/**'
       - 'dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md'
       - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
       - 'dore-core/constitution/CONSTITUTION.md'
@@ -40,5 +41,8 @@ jobs:
           assert p['mode']=='INTERNAL_ALPHA_NOT_PUBLIC'
           assert p['authority']['public_conversation_authorized'] is False
           assert p['ready_for_internal_meeting'] is True
-          print(p['project']['id'], p['project']['state'])
+          assert p['meeting_memory'] is not None
+          assert p['meeting_memory']['project_id']==p['project']['id']
+          assert p['meeting_memory']['authority']['consequential_action_authorized_by_record'] is False
+          print(p['project']['id'], p['project']['state'], 'meeting-replay-ready')
           PY
