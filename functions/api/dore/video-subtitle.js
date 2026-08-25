@@ -238,6 +238,7 @@ export async function onRequestPost({request,env}){
       try{await env.DORE_SENSORY.prepare(`UPDATE liming_resources SET chinese_access=CASE WHEN ?1 LIKE 'zh%' THEN 'dore-subtitle-queued' ELSE chinese_access END,updated_at=?2 WHERE resource_id=?3`).bind(targetLanguage,createdAt,resourceId).run()}catch(e){console.warn('library subtitle feedback skipped',e)}
     }
   }catch(e){console.error('video subtitle job registry',e)}
+  }
   return json({ok:true,status:'awaiting-transcription-executor',recorded,deduplicated,job_id:jobId,canonical_url:canonicalUrl,job,message:'影片已進入 Doré 字幕工作隊列；若它來自黎明書局，工作會綁定同一 resource_id，完成後回寫中文可及性與學習反饋。',boundary:'目前仍不會在沒有取得字幕或音訊的情況下虛構字幕。'},202);
 }
 
