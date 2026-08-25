@@ -62,6 +62,26 @@ Decisions and principles established during project discussion:
 8. Public brand concentration remains 西望 / Westside Watch. Doré is infrastructure, learner, researcher, librarian, worker, and may be credited as editor; it should not displace the brand in public product presentation.
 9. Internal Doré reasoning belongs in backend/audit/learning records by default. Public pages should not contain a recurring “Doré why selected” module.
 10. This project itself is a prototype for future Doré autonomous project formation.
+11. Subtitle output should have a low-friction reader-facing landing point in Liming Library where rights permit: subtitle files are accessibility/derivative assets attached to the original video resource, not isolated Doré artifacts. Public states should distinguish official subtitles, editor-verified/calibrated subtitles, and preliminary subtitles without turning Doré into the public brand.
+12. A video URL entered through search does **not** automatically create a subtitle job. Doré must first perform a biblical-domain relevance gate. Subtitle work is a Westside Watch/Liming Library biblical-resource capability, not a general-purpose internet transcription service.
+
+## Biblical-domain gate for subtitle work
+
+Before transcription, proofreading, translation, expensive media processing, or publication, Doré must classify the submitted video/resource.
+
+Default decision states:
+
+- `ACCEPT_BIBLICAL` — substantially concerned with Scripture, biblical books/passages, biblical theology, exegesis, biblical languages/text, biblical history/geography/archaeology, church history/theology that materially supports biblical study, Christian spiritual formation/sermons/teaching with substantive biblical content, or another established Liming Library biblical collection domain.
+- `REVIEW_AMBIGUOUS` — metadata or available evidence is insufficient, mixed, or only weakly related. Doré may inspect lightweight metadata/transcript samples as needed, but should not silently proceed to full subtitle production.
+- `DECLINE_OUT_OF_SCOPE` — clearly unrelated to the Bible/Christian biblical-learning scope. Do not transcribe, translate, generate subtitle files, enqueue publication, or add it to Liming Library merely because a URL was submitted.
+
+Classification should use available evidence in a cost-conscious order: URL/platform metadata → title/description/channel/series context → existing captions/transcript sample where available → limited content inspection if still ambiguous. Full transcription should not be the mechanism used merely to discover that an obviously unrelated video was out of scope.
+
+The gate is semantic rather than keyword-only. A resource does not qualify merely because its title contains “Bible”, “Jesus”, “church”, or a verse token, and a legitimate biblical resource should not be rejected merely because its title is indirect. Doré should preserve the classification, confidence, evidence, and reason in backend provenance so errors can become learning examples.
+
+Reader-facing decline should be brief and brand-appropriate, e.g. that the submitted video is outside the biblical-resource scope and therefore no subtitle was produced. Internal Doré reasoning remains backend by default.
+
+False-positive and false-negative decisions should be retained as training/evaluation cases so Doré improves this gate over time.
 
 ## Autonomous-project learning target
 
