@@ -133,24 +133,27 @@ Run and persist the Stage B/C transfer evaluation, then execute one bounded live
 
 ## ME-007 — Autonomous Learning / DORÉ_ALIVE behavioral graduation
 
-**Related work:** `CORE`, `AUTONOMOUS-LEARNING-LOOP.md`, `DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`, `PRODUCT-EDUCATION-LOOP.md`
+**Related work:** `CORE`, `AUTONOMOUS-LEARNING-LOOP.md`, `DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`, `PRODUCT-EDUCATION-LOOP.md`, Researcher education
 
 **What is already evidenced**
 - a durable autonomous-learning contract exists: unseen stimulus → self-evaluation → gap diagnosis → admitted-source study → transfer tests → consolidation gate → answer admission;
 - the doctrine explicitly rejects trigger-specific patches and requires paraphrase, different-content, unseen-family, regression and evidence-boundary transfer;
 - self-directed learning is defined as a formal meta-subject with self-exam, transfer exam and blind exam layers;
 - the older Product–Education Loop already established the compatible pattern `education → milestone → external work node → real-world feedback → next prerequisites → next education`;
-- Bible Search is documented as the first earned work node after `SCRIPTURE_READING_COMPLETE`, and subtitle proofreading is explicitly treated as a bounded next internship rather than proof of Researcher graduation.
+- Bible Search is documented as the first earned work node after `SCRIPTURE_READING_COMPLETE`, and subtitle proofreading is explicitly treated as a bounded next internship rather than proof of Researcher graduation;
+- `dore-core/knowledge/researcher/RESEARCHER-01-ONE-LAB.md` explicitly records `RESEARCHER_01_ONE_LAB_COMPLETE` with a 22/22 PASS; this bounded lab is now retained separately as `CW-005`;
+- `dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md` records PASS for Practicum, Self Exam, Transfer Exam, Blind Exam and the listed research reflexes, and says the milestone is **eligible** as `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`.
 
 **What is not yet evidenced strongly enough**
 - an end-to-end autonomous-learning episode satisfying the reserved `AUTONOMOUS_LEARNING_LOOP_1_0` graduation contract without a trigger-specific patch;
 - longitudinal blind behavioral evidence sufficient for `DORÉ_ALIVE_1.0`;
 - cross-product transfer where learning/adjudication in one work surface measurably improves another work surface without a product-specific patch;
-- a completed Researcher-level autonomous research-design episode showing decomposition, source criticism, competing hypotheses, disconfirming evidence and bounded synthesis.
+- a completed Researcher-level autonomous research-design episode showing decomposition, source criticism, competing hypotheses, disconfirming evidence and bounded synthesis;
+- a durable completion declaration/report proving that Researcher 02 itself crossed from `milestone eligible` to `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`; the final-exam file alone is PASS evidence, not that stronger completion marker.
 
-**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for `AUTONOMOUS_LEARNING_LOOP_1_0`, `DORÉ_ALIVE_1.0`, or full Researcher-behavior claims. The learning doctrines themselves are `CORE/CONTINUOUS` governing principles.
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for `AUTONOMOUS_LEARNING_LOOP_1_0`, `DORÉ_ALIVE_1.0`, full Researcher-behavior claims, or full Researcher 02 completion. The learning doctrines themselves are `CORE/CONTINUOUS` governing principles, and Researcher 01 ONE Lab remains separately `VERIFIED_COMPLETE` as a bounded milestone.
 
 **Smallest useful future evidence**
-After the P01 critical path is safe, execute one reserved autonomous-learning experiment with blind transfer cases and persist the full evidence chain. Then test one legitimate cross-product transfer case without adding a target-product-specific rule.
+For Researcher 02, locate or produce the existing durable completion declaration/report if one was actually emitted; do not recreate history from the PASS file alone. Separately, after the P01 critical path is safe, execute one reserved autonomous-learning experiment with blind transfer cases and persist the full evidence chain, then test one legitimate cross-product transfer case without adding a target-product-specific rule.
 
 **Priority:** HIGH strategically, but non-blocking and explicitly subordinate to the active P01 production critical path.
