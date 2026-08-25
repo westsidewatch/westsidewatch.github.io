@@ -14,10 +14,13 @@
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
       "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
-      "latest_subtitle_engineering_commit": "5c3a8c3be03e82097535890d11289887945ec030",
-      "latest_contract_test_commit": "8d8985cd2c3b5ded571a3e1e9ab62d5a497a065f",
-      "latest_contract_workflow_commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
-      "contract_workflow_run": 32821583667,
+      "latest_subtitle_engineering_commit": "cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3",
+      "latest_contract_test_commit": "9529ae6c615d3cdd8151e50f6984fa4a8d7cccfc",
+      "latest_contract_workflow_commit": "0f69de451492e0fae5b455442b4b37e35ac3d837",
+      "production_probe_run": 32831832417,
+      "production_probe_job": 97752039352,
+      "production_probe_artifact": 9557040549,
+      "real_production_job_id": 1,
       "known_pipeline": [
         "video URL recognition",
         "canonical URL normalization",
@@ -30,21 +33,24 @@
         "YouTube advertised-caption acquisition executor",
         "VTT segmentation and persisted proofreader handoff",
         "rights-aware public subtitle result projection",
-        "CI-verified rights-aware result contract"
+        "CI-verified rights-aware result contract",
+        "self-seeding production probe with structured evidence",
+        "deployment-capability gate before production mutation"
       ],
       "verification": [
         "Repository implementation and P01 brief inspected directly before modification.",
         "Acquired WebVTT is proofread while preserving cue timing and persisted into the existing D1 job payload.",
-        "Translation remains a distinct unimplemented stage; the executor explicitly refuses to fabricate it.",
+        "Translation remains a distinct stage; the executor explicitly refuses to fabricate it.",
         "video-subtitle-result exposes only a bounded public result projection and not raw payload_json.",
-        "Default-deny download behavior is now covered by executable tests.",
+        "Default-deny download behavior is covered by executable tests.",
         "Explicit recorded subtitle_download permission produces a downloadable VTT response in executable tests.",
-        "Rights-restricted ready results and translation-required states are covered by executable tests.",
-        "GitHub Actions run 32821583667 completed successfully; job subtitle-result-contract conclusion=success.",
-        "Live production execution of schema v5 and the result endpoint against D1 remains unverified."
+        "Production probe run 32831832417 reached the live Pages origin and created real D1 subtitle job id 1 with HTTP 202.",
+        "The same run exposed a deployment-ordering race: the executor action hit an older deployed endpoint and returned supported_video_url_required.",
+        "The probe now waits until the live endpoint exposes dore.video-subtitle.v5 and both caption-acquisition/proofread executors before continuing.",
+        "Full live caption acquisition, proofread, result projection and rights-boundary success remain unverified."
       ]
     },
-    "next_action": "Production-verify schema v5 and /api/dore/video-subtitle-result against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, execute-proofread, inspect persisted status, query the result endpoint, and confirm default-deny download behavior. Then wire the reader-facing Search result/download surface plus Westside Stories pathway and preserve ordinary Scripture Search regression safety. If a same-language caption case cannot be found, proceed to the bounded translation executor; if captions are unavailable, proceed to audio acquisition/transcription.",
+    "next_action": "Observe the deployment-capability-gated production probe run triggered by cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3. When the live endpoint exposes dore.video-subtitle.v5, continue real job execution through caption acquisition, proofread, reader result, and rights denial/download verification; persist exact run/job/artifact evidence. Then continue Search reader-facing result plus Library/ONE/Westside Stories production verification without human re-brief.",
     "lease": {
       "status": "AVAILABLE",
       "holder": null,
@@ -52,10 +58,10 @@
     },
     "attempt": 35,
     "checkpoint": {
-      "cycle": "rights-aware-reader-result-contract-ci",
-      "commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
-      "supporting_commit": "8d8985cd2c3b5ded571a3e1e9ab62d5a497a065f",
-      "result": "CI_VERIFIED_NOT_YET_PRODUCTION_VERIFIED",
+      "cycle": "autonomous-production-probe-and-deployment-race-repair",
+      "commit": "cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3",
+      "supporting_commit": "ef57ca8befef64b8896d8b898d9deb0c5d9abc54",
+      "result": "REAL_PRODUCTION_JOB_CREATED_EXECUTOR_REPLAY_IN_PROGRESS",
       "capability_evidence": {
         "already_demonstrated": [
           "Cloudflare Pages Function request handling",
@@ -67,13 +73,15 @@
           "rights-aware public result projection"
         ],
         "learned_and_applied_this_cycle": [
-          "executable mocked-D1 contract testing of a Cloudflare Pages Function",
-          "CI enforcement for default-deny subtitle derivative delivery",
-          "CI verification that public JSON does not expose raw subtitle text",
-          "CI verification of explicit-rights VTT download behavior"
+          "self-seeding production E2E probe without requiring a human-supplied job id",
+          "structured GitHub Actions artifact persistence for production probe evidence",
+          "diagnosis of deployment-ordering races from real production behavior",
+          "capability polling that separates deployment lag from endpoint defects"
         ],
         "encountered_not_yet_demonstrated": [
-          "production verification of v5 and video-subtitle-result on live D1/Pages deployment",
+          "successful live YouTube advertised-caption acquisition from the deployed Worker",
+          "successful live VTT proofread persistence",
+          "successful live reader-result and rights-boundary verification",
           "translation executor when acquired caption language differs from target",
           "audio transcription executor for sources without advertised captions",
           "Search frontend result/download surface",
@@ -83,6 +91,6 @@
     },
     "blocker": null,
     "last_heartbeat_at": "2026-08-25T09:27:22.256714+00:00",
-    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
+    "runtime_observation": "A real production job has now been created autonomously. The first mutation replay revealed deployment lag, which was converted into an executable capability gate; the next probe can resume without a human job-id handoff."
   }
 }
