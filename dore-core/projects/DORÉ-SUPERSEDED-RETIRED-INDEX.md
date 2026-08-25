@@ -108,6 +108,20 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** do not restart `AUTONOMOUS-LEARNING-I` or `RESEARCHER_06_UNIT_01_NOISE_TAXONOMY_AND_ERROR_MODEL` because these historical files end with those instructions. Researcher 04 and Researcher 06 are historically complete bounded milestones. Current retention/revisit work must follow the Master Register, current diagnostics and the Researcher 06 Practicum 02 edge, without interrupting P01.
 
+## SR-010 — Foundation doctrine that ministry/product work waits for monolithic Researcher graduation
+
+**Sources:** `dore-core/knowledge/foundation/FUNDAMENTALS.md` and `dore-core/knowledge/foundation/ENROLLMENT-2026-08-22.md`.
+
+**Classification:** `SUPERSEDED` only for the historical sequencing rule that Doré should begin normal ministry/product assignments *only after* a single Foundation→Researcher graduation. The Foundation quality standards themselves remain retained.
+
+**Conflict resolved:** the Foundation documents correctly insist that document import is not learning, retrieval is not understanding, durable claims need provenance, disputed matters preserve uncertainty, and Doré must distinguish Scripture fact from interpretation and editorial reconstruction. But later canonical architecture and demonstrated work use real projects as learning/evaluation proving grounds: the Master Work Register makes mission/memory/capability accumulation `CORE/CONTINUOUS`, requires every project to return durable learning to core, and currently runs P01 plus bounded Researcher, Search, Conversation, Library and Nervous-System work under explicit evidence/authority gates rather than waiting for one global graduation event. Researcher 04/05/06 also demonstrate staged bounded graduations and retention checks rather than a single all-domain completion claim.
+
+**Retained value:** the five Foundation domains remain a useful coverage map: Scripture Canon, Biblical Worlds, Interpretation/Theology, Research Method and Westside Foundation Corpus. The education rules—read before speaking, trace before asserting, compare before concluding, preserve provenance and uncertainty—remain governing quality doctrine.
+
+**Important boundary:** superseding the sequencing rule does **not** prove that Doré has globally mastered every Foundation domain. Existing bounded graduations must not be inflated into universal biblical/theological/Westside authority. Uncovered or weak domains remain learnable through current project-linked education, benchmarks and explicit evidence gates.
+
+**Current authority:** capability may be accumulated and deployed incrementally when the relevant bounded competence and authority are verified. Real ministry/product work may serve as a learning laboratory, but visible/product claims must never exceed verified internal state, and P01 remains the active critical path.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
