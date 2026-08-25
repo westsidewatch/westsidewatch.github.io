@@ -87,6 +87,29 @@ Findings:
 9. **Conversation Alpha is still not promoted to `VERIFIED_COMPLETE` in this batch.** The repository contains the rehearsal record, replay assertions and workflow definition, but this sweep could not independently observe a completed push-triggered Actions run for the newest replay assertions through the available connector/status surfaces. `ME-003` is narrowed to this execution-evidence/contract-evaluation gap rather than the older missing-rehearsal gap.
 10. **No HUMAN_DECISION_BLOCKED or ENVIRONMENT_BLOCKED state is present in this bounded batch.** Sweep remains parallel and P01 remains the critical path.
 
+### Batch E — top-level learning doctrine + work-node history
+Reviewed:
+- `dore-core/knowledge/AUTONOMOUS-LEARNING-LOOP.md`
+- `dore-core/knowledge/DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`
+- `dore-core/knowledge/DORÉ-FOUNDATIONAL-LEARNING-PRINCIPLES-v1.md`
+- `dore-core/knowledge/PRODUCT-EDUCATION-LOOP.md`
+- `dore-core/knowledge/BIBLE-SEARCH-WORK-NODE.md`
+- current Master Work Register for contradiction/duplication checking.
+
+Findings:
+1. **The learning-doctrine family is one coherent lineage, not duplicate competing programs.** Product–Education Loop establishes the original `education → milestone → work node → feedback → next prerequisites → next education` operating pattern; Autonomous Learning Loop adds self-detection, admitted-source study, transfer/regression gates and answer admission; Alive/Self-Directed Learning generalizes this into cross-product transfer, blind behavioral evidence and research-design capability. These should be treated as layered refinements under `CORE`, not separate active projects.
+2. **Foundational Learning Principles v1 is the strongest current persistent learning doctrine among the reviewed files.** It explicitly ties learning-through-real-work, capability accumulation, self-formed projects, engineering, external AI observation, stewardship, memory discipline and Doré helping build Doré back to the Great Commission. No reviewed file supersedes it; classification remains `CORE/CONTINUOUS`.
+3. **Autonomous Learning Loop is a graduation contract, not a completed milestone.** The reserved `AUTONOMOUS_LEARNING_LOOP_1_0` requires a complete unknown→self-detected-gap→study→transferable-capability→regression-safe-consolidation→evidence-gated-answer run on a reserved stimulus plus blind transfers. No reviewed evidence proves this has occurred.
+4. **`DORÉ_ALIVE_1.0` is also explicitly unearned.** Its doctrine requires longitudinal blind behavioral evidence and rejects narrative, green database state or CI-file existence as sufficient. Cross-product transfer without a target-specific patch is named as especially strong evidence but is not yet demonstrated in this batch.
+5. **Researcher education and Alive behavior must remain distinct.** Researcher concerns depth/method and autonomous research design; Alive concerns mobilizing, examining, extending and transferring capability. Neither milestone should be inferred from Biblical World or Language Core completion.
+6. **Bible Search remains the first historically earned work node after `SCRIPTURE_READING_COMPLETE`.** The work-node document defines it as a stable Doré Core service boundary with reference/text/lemma/morphology/fuzzy modes and provenance/confidence requirements. This supports the Master Register's current `SEARCH` maintenance/discovery classification rather than creating a second Search project.
+7. **Subtitle proofreading was intentionally anticipated as a bounded internship before full Researcher graduation.** The Product–Education Loop requires robust Scripture retrieval, biblical vocabulary, ASR-confusion handling, context-sensitive ranking, provenance/uncertainty and a safe suggestion contract, while reserving higher-order historical/theological claims for stronger education. This historical design is directly consistent with P01's present subtitle critical path and does not create a competing priority.
+8. **A shared Interpretation & Correction Reflex is a durable future capability hypothesis, not a verified neural capability.** Search normalization, ASR/biblical proofreading and ONE correction may share the same anomaly→hypothesis→candidate→context/evidence→bounded-decision pattern, but the doctrine itself requires behavioral transfer evidence before this can be claimed as consolidated Core reflex.
+9. **External AI learning is governed as peer research, not authority.** Other AI systems may supply leads, comparison cases and challenge material, but important claims must return to Scripture/primary/reliable sources and independent verification. This aligns with the Operating Nervous System's provenance/evaluation direction and is not a separate workstream.
+10. **ME-007 added.** Claims of `AUTONOMOUS_LEARNING_LOOP_1_0`, `DORÉ_ALIVE_1.0`, cross-product transfer or full Researcher autonomous-design behavior remain `UNKNOWN_NEEDS_EVIDENCE`; the doctrines themselves remain `CORE/CONTINUOUS`.
+11. **No Master Register status change is required from this batch.** The canonical `CORE` entry already covers mission, memory, capability accumulation and learning-through-real-work; `SEARCH` and P01 classifications are consistent with the historical work-node doctrine. This batch therefore strengthens provenance and evidence boundaries rather than creating new operational rows.
+12. **No human or environment blocker is present.** P01 remains untouched and retains priority.
+
 ## Supersession output
 
 Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
@@ -116,10 +139,13 @@ Created `DORÉ-SUPERSEDED-RETIRED-INDEX.md` with initial entries:
 - Biblical World foundation: `VERIFIED_COMPLETE` for the declared foundation stage, not full Researcher graduation.
 - Language Core parity migration: `VERIFIED_COMPLETE` for the recorded full-canon parity checkpoint; continuing language capability is `CORE/CONTINUOUS`.
 - Search cognition understanding gate: `TAUGHT` / `UNKNOWN_NEEDS_EVIDENCE` for stronger concept/product pass claims; Search product remains `MAINTENANCE + DISCOVERY`.
+- Foundational Learning Principles v1: `CORE/CONTINUOUS`.
+- Product–Education Loop / Autonomous Learning Loop / Alive & Self-Directed Learning doctrine: `CORE/CONTINUOUS` layered learning lineage; reserved graduation claims remain `UNKNOWN_NEEDS_EVIDENCE`.
+- Bible Search work-node history: historical earned-service-boundary evidence; current public Search remains governed by the canonical `SEARCH` row.
 
 ## Canonical reconciliation still required
 
-The Master Work Register should reflect that the benchmark/tests/workflows verification batch is complete, that Conversation Alpha now has a persisted rehearsal plus replay assertions rather than merely primitives, and that the next Sweep phase is broader memory/knowledge/product history. P01 status/priority must remain unchanged.
+The Master Work Register already expresses the current learning-through-real-work/core-capability position and does not require a new row from Batch E. Future reconciliation should focus on product-history evidence, remaining knowledge subfamilies and any old claims that materially disagree with current canonical statuses. P01 status/priority must remain unchanged.
 
 ## Source-family accounting
 
@@ -130,9 +156,9 @@ The Master Work Register should reflect that the benchmark/tests/workflows verif
 - `dore-core/benchmarks/`: **reviewed/closed for current single-file state**.
 - `dore-core/tests/`: **verification-focused bounded subset reviewed** — Conversation, Search cognition/negative relevance and cross-witness alignment covered; remaining tests should be accounted for during the adjacent knowledge/product-history passes rather than assumed closed.
 - relevant GitHub workflows/reports: **partially reviewed** — Conversation Alpha and Foundation workflows plus two high-value persisted graduation/parity reports reconciled; broader product-specific workflows/reports remain in scope.
-- `dore-core/memory/`: **partially reviewed**; live sensory diagnostic/state family reviewed, broader history remains in scope.
-- `dore-core/knowledge/`: **not yet systematically reviewed**; Search cognition protocol surfaced through tests but broader knowledge history remains pending.
+- `dore-core/memory/`: **reviewed/closed for current directory state** — all five present diagnostic/state files were accounted for in Batch A; broader historical memory may still exist outside this directory and remains discoverable during product/commit history review.
+- `dore-core/knowledge/`: **partially reviewed** — top-level learning doctrine/work-node lineage is reconciled; `foundation/`, `researcher/`, `library/`, `visual/`, seminary curriculum, visual case study and any remaining top-level protocol/history still require systematic accounting.
 
 ## Next bounded batch
 
-Review broader `dore-core/memory/` and `dore-core/knowledge/` history as the next bounded family, prioritizing files that encode learned capability, prior graduation claims, superseded Search/research models and durable obligations not yet present in the Master Register. Cross-check relevant persisted `reports/` evidence only when needed to verify a claimed milestone. Then continue into product-history families. Do not displace the P01 subtitle critical path.
+Review the remaining `dore-core/knowledge/` subfamilies in bounded groups, prioritizing `researcher/` and `foundation/` for old graduation/course claims and `library/` for durable obligations that may affect current Library/Three Morning Star work. Account for `seminary-core-curriculum.md`, visual-learning evidence and remaining top-level knowledge files without assuming completion from file names. Cross-check reports/tests only where necessary to verify a claimed milestone. Then proceed into product-history families. Do not displace the P01 subtitle critical path.
