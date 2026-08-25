@@ -6,6 +6,9 @@ on:
     paths:
       - 'tests/dore-p01-production-probe.mjs'
       - '.github/workflows/dore-p01-production-probe.yml'
+  workflow_run:
+    workflows: ['Doré P01 Pages Deploy']
+    types: [completed]
   workflow_dispatch:
     inputs:
       origin:
@@ -28,6 +31,7 @@ permissions:
 
 jobs:
   production-probe:
+    if: ${{ github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
