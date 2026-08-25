@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T09:28:17.109863+00:00",
+  "updated_at": "2026-08-25T09:39:18.807390+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -56,7 +56,7 @@
       "holder": null,
       "started_at": null
     },
-    "attempt": 36,
+    "attempt": 37,
     "checkpoint": {
       "cycle": "autonomous-production-probe-and-deployment-race-repair",
       "commit": "cfbd2e3a9472cac83d7ff73b7320e0858bf7fef3",
@@ -90,7 +90,7 @@
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T09:28:17.109863+00:00",
+    "last_heartbeat_at": "2026-08-25T09:39:18.807390+00:00",
     "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
   }
 }
