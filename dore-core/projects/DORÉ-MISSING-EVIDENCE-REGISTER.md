@@ -156,23 +156,29 @@ First reconcile the exact reserved contract names so the system knows whether `A
 
 ## ME-008 — Live product expression of QUEUED / RESEARCHING states
 
-**Related work:** `SEARCH`, `NERVOUS-SYSTEM`, `DORÉ-EXPRESSION-PROTOCOL.md`, `SR-006`.
+**Related work:** `SEARCH`, `NERVOUS-SYSTEM`, `DORÉ-EXPRESSION-PROTOCOL.md`, `DORÉ-CLOSED-LOOP-EXPERIMENT-01.md`, `SR-005`, `SR-006`.
 
 **What is already evidenced**
 - repository/runtime-level sensory persistence and research execution exist;
 - a real sensory signal has reached `CONSOLIDATED`;
 - the Learning Heartbeat records durable sensory → research → brain consolidation for `馬利亞有幾位?`;
-- the Expression Protocol defines truthful state semantics and forbids visible state from exceeding verified internal state.
+- the Expression Protocol defines truthful state semantics and forbids visible state from exceeding verified internal state;
+- `DORÉ-CLOSED-LOOP-EXPERIMENT-01.md` defines the exact ten-step acceptance contract for the named milestone `DORÉ_CLOSED_LOOP_01_PASS`.
+
+**Strong provenance boundary discovered in Sweep checkpoint 05**
+The closed-loop experiment source itself is still explicitly `Status: READY_FOR_D1_BINDING`, not PASS. Its document describes infrastructure prepared and the future success milestone; it is therefore design/acceptance evidence, not completion evidence. Repository code search for the exact token `DORÉ_CLOSED_LOOP_01_PASS` also returned no independent passing artifact in this bounded pass.
 
 **What is not yet evidenced strongly enough**
 - a current public Search deployment receiving a fresh unknown query and durably persisting it;
 - the browser later rendering `QUEUED` or `RESEARCHING` from that same persisted live state rather than from a local/scripted fallback;
-- the browser subsequently surfacing the consolidated brain result without per-question UI logic;
+- autonomous research/learning occurring for that unseen input under the experiment's provenance/counter-check/examination gates;
+- a product-readable brain node being materially created/updated from that learning episode;
+- the browser subsequently surfacing the materially improved generic brain-backed result without per-question UI logic;
 - direct acceptance evidence for the named `DORÉ_CLOSED_LOOP_01_PASS` milestone.
 
 **Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for browser/product expression wiring and the named full closed-loop acceptance; the underlying Expression Protocol remains `ACTIVE` and repository/runtime sensory capability is not downgraded.
 
 **Smallest useful future evidence**
-Use one fresh unknown browser query: capture initial truthful UNKNOWN/HEARD state, prove durable queue persistence, capture QUEUED/RESEARCHING only when backed by live state, let the research/consolidation path complete, then re-run the same query and capture the improved generic brain-backed result with no query-specific code patch.
+Execute the experiment exactly as written on one fresh unseen browser query: capture first truthful UNKNOWN/HEARD behavior, prove durable D1 queue persistence, prove Heartbeat-owned RESEARCHING state, persist research/provenance/examination evidence, prove a generic brain-node update, then re-run the same query and capture the materially improved result with no query-specific code patch and no human-supplied answer. Persist one explicit passing artifact that names `DORÉ_CLOSED_LOOP_01_PASS` only if all ten acceptance points are satisfied.
 
 **Priority:** MEDIUM/HIGH because it would close a major learning→product proof line, but it must not interrupt P01.
