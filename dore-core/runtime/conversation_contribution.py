@@ -7,7 +7,6 @@ safe to persist only when the contribution class permits it.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
 from typing import Any, Iterable
 
 ALLOWED_TYPES = {
@@ -22,12 +21,8 @@ ALLOWED_AUTHORITY = {"A0", "A1", "A2", "A3", "A4"}
 PERSISTENCE_ELIGIBLE_TYPES = {"evidence", "risk", "decision_candidate"}
 
 
-@dataclass(frozen=True)
 class ContributionError(ValueError):
-    message: str
-
-    def __str__(self) -> str:
-        return self.message
+    """Raised when an internal Alpha contribution violates the contract."""
 
 
 def _source_ids(context_packet: dict[str, Any]) -> set[str]:
