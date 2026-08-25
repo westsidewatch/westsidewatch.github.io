@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-08-24T22:42:00-04:00",
+  "active_project": {
+    "id": "P01-PREFLIGHT-SUBTITLE",
+    "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
+    "state": "RUNNABLE",
+    "terminal_states": [
+      "VERIFIED_COMPLETE",
+      "HUMAN_DECISION_BLOCKED",
+      "ENVIRONMENT_BLOCKED"
+    ],
+    "objective": "Complete and production-verify the reader-facing video URL to subtitle/library/ONE/Westside Stories product flow.",
+    "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
+    "last_verified_evidence": {
+      "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
+      "latest_known_subtitle_engineering_commit": "d78b5515d1db7b0c7723444497d70b303707961b",
+      "known_pipeline": [
+        "video URL recognition",
+        "subtitle routing/job infrastructure",
+        "Doré subtitle proofreading worker",
+        "Liming Library resource binding",
+        "biblical-domain gate"
+      ]
+    },
+    "next_action": "Read the project brief and repository state; derive the next executable engineering task from evidence; implement/test/persist progress; repeat until terminal state.",
+    "lease": {
+      "status": "AVAILABLE",
+      "holder": null,
+      "started_at": null
+    },
+    "attempt": 0,
+    "checkpoint": null,
+    "blocker": null
+  }
+}
