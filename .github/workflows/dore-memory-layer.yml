@@ -1,0 +1,26 @@
+name: Doré Conversation Memory Layer
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'cloudflare/d1/002_dore_conversation_memory.sql'
+      - 'functions/api/dore/memory.js'
+      - 'dore-core/projects/DORÉ-CONVERSATION-MEMORY-LAYER-V1.md'
+      - 'dore-core/tests/memory-layer-contract.mjs'
+      - '.github/workflows/dore-memory-layer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  memory-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify scoped memory contract
+        run: node dore-core/tests/memory-layer-contract.mjs
