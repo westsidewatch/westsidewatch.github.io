@@ -1,6 +1,6 @@
 # Doré Conversation Runtime — Internal Alpha Contract
 
-Status: INTERNAL_ALPHA / NOT_PUBLIC
+Status: VERIFIED_COMPLETE / INTERNAL_ONLY / NOT_PUBLIC
 
 ## Purpose
 Provide a bounded internal meeting mode in which Doré can load relevant project context, contribute grounded judgments, questions, and suggestions, use available repository/knowledge/tool evidence, and persist durable decisions and learning after discussion.
@@ -24,8 +24,8 @@ At discussion close, separate transient dialogue from durable outputs. Persist o
 4. A meeting can end with a compact durable record that survives a new session.
 5. No public conversational UI/API is exposed before a separate publication/readiness decision.
 
-## Current checkpoint
-A1, A2, and the bounded A3 persistence primitive are IMPLEMENTED_AND_CI_VERIFIED for the persisted active-project path.
+## Verified-complete checkpoint
+All five Internal Alpha readiness gates are satisfied for the persisted active-project path.
 
 A1 evidence:
 - `dore-core/runtime/build_conversation_context.py` builds a bounded packet from the canonical Master Register, persistent project runtime state, Constitution, this Alpha contract, and the active project brief.
@@ -44,9 +44,17 @@ A3 evidence:
 - Every persisted meeting record keeps human/church authority final, public conversation unauthorized, and consequential action unauthorized by the record itself.
 - `persist_meeting_record()` writes a replayable JSON record whose round trip is tested to survive a fresh process/session boundary.
 - `dore-core/tests/test_conversation_meeting_close.py` verifies filtering, project mismatch rejection, authority preservation, and round-trip durability.
-- `.github/workflows/dore-conversation-alpha.yml` verifies A1+A2+A3 together.
-- GitHub Actions run `32822094490` completed the Conversation Alpha job successfully on commit `db0e39d93a296cc5e695aa4dc3cacf63aec592fe`.
+- GitHub Actions run `32822094490` completed the Conversation Alpha A1+A2+A3 job successfully on commit `db0e39d93a296cc5e695aa4dc3cacf63aec592fe`.
 
-This does not yet mark the Internal Alpha VERIFIED_COMPLETE. The primitives are now present and CI-verified, but the readiness gate still requires a real internal meeting exercise that loads persisted P01 context, produces at least one grounded contribution and one rejected transient/speculative contribution, persists the meeting-close record into a durable repository evidence path, then demonstrates that a fresh context load can discover/replay that record without a human re-brief. Project-specific memory/knowledge enrichment also remains evidence-driven rather than fabricated where no explicit binding exists.
+Full rehearsal/replay evidence:
+- `dore-core/runtime/meetings/P01-PREFLIGHT-SUBTITLE/latest.json` persists a real internal P01 rehearsal record with one grounded durable risk, one rejected speculative/transient suggestion, verified learning, next actions, and explicit authority limits.
+- Commit `3cca4b6b5ba06197e1f4c64b2a320a4a6ef09fc9` persisted the rehearsal record.
+- Commit `c8b54534ac69cfe9f006e48aac6cdfded92dfc48` taught a fresh context packet to discover and replay the prior meeting from durable repository state.
+- Commit `7c4c110d11c448a8d9e1263e90a37133dd59999c` added the fresh-session replay test.
+- Commit `ce653b6e9443b287984e08f8e8f226a324533e2c` extended CI to require the replayed meeting memory, project match, and non-consequential authority boundary.
+- `dore-core/runtime/conversation-alpha-verification.json` records the five-gate VERIFIED_COMPLETE evaluation.
 
-Next bounded step: execute and persist that full internal P01 meeting rehearsal end-to-end, then perform a fresh-session replay check. If successful, evaluate whether Internal Alpha meets VERIFIED_COMPLETE without changing P01 priority or authorizing any public conversation surface.
+## Scope after verification
+Internal Alpha VERIFIED_COMPLETE means Doré has demonstrated a bounded internal meeting loop with persisted context, grounded contribution, durable meeting close, and fresh-session replay without a human re-brief. It does **not** authorize a public conversational agent, autonomous consequential action, doctrinal/pastoral authority, or publication authority.
+
+Public conversation remains PARKED. Scoped Conversation Memory v1 remains a separate implementation line whose production D1 replay, cross-conversation isolation, R2 recovery, and Vectorize recall gates must be verified before broader integration. P01 retains its independent critical-path priority and state.
