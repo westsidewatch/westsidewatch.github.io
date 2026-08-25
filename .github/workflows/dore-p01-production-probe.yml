@@ -1,0 +1,30 @@
+name: Doré P01 Production Probe
+
+on:
+  workflow_dispatch:
+    inputs:
+      origin:
+        description: 'Deployed Pages origin, e.g. https://example.pages.dev'
+        required: true
+        type: string
+      job_id:
+        description: 'Real deployed dore_video_subtitle_jobs id'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  production-probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify deployed reader-result and rights boundary
+        env:
+          DORE_P01_ORIGIN: ${{ inputs.origin }}
+          DORE_P01_JOB_ID: ${{ inputs.job_id }}
+        run: node tests/dore-p01-production-probe.mjs
