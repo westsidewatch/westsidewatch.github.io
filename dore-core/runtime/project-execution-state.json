@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T08:54:23.747603+00:00",
+  "updated_at": "2026-08-25T09:16:54.915615+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
@@ -50,7 +50,7 @@
       "holder": null,
       "started_at": null
     },
-    "attempt": 32,
+    "attempt": 33,
     "checkpoint": {
       "cycle": "rights-aware-reader-result-contract-ci",
       "commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
@@ -82,7 +82,7 @@
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T08:54:23.747603+00:00",
+    "last_heartbeat_at": "2026-08-25T09:16:54.915615+00:00",
     "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
   }
 }
