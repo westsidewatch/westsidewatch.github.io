@@ -48,6 +48,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** current priority comes from `DORÉ-MASTER-WORK-REGISTER.md` plus active runtime/project checkpoints. Use v0.2 as architecture/history evidence, not as the live queue.
 
+## SR-005 — Brain→Product Bridge claim that Product→Brain lacks durable ingestion
+
+**Source:** `dore-core/knowledge/researcher/DORÉ-BRAIN-PRODUCT-BRIDGE.md`, section `Search sensory limitation — current architecture`.
+
+**Classification:** `SUPERSEDED` only for the historical implementation claim that an arbitrary product query cannot be durably written because no safe writable ingestion service exists.
+
+**Superseding evidence:** the later `DORÉ-CLOSED-LOOP-EXPERIMENT-01.md` records prepared first-party sensory endpoints (`/api/dore/sensory`, protected `/api/dore/sensory-admin`), D1 schema and client bridge; subsequent Sweep-01 evidence already records a real sensory signal reaching `CONSOLIDATED` plus deployed seed/heartbeat/Actions diagnostics (`CW-001` / `ME-001`). Therefore the old architectural limitation must not be re-read as current runtime truth.
+
+**Retained value:** the Brain→Product contract remains current and important: product-readable nodes require explicit status/provenance; `WORKING` must not be rendered as certainty; Scripture reference search must not be swallowed by question-answer routing; product behavior should change through generic brain-node state rather than per-question hard-coded handlers.
+
+**Important boundary:** superseding the missing-ingestion claim does **not** prove `DORÉ_CLOSED_LOOP_01_PASS`. The full unseen-input → persisted signal → autonomous research → materially updated brain node → improved repeat Search loop without human answer or query-specific code still requires direct acceptance evidence and remains an explicit missing-evidence item.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
