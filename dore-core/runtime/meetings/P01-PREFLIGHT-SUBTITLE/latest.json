@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "mode": "INTERNAL_ALPHA_NOT_PUBLIC",
+  "closed_at": "2026-08-25T08:44:00Z",
+  "project_id": "P01-PREFLIGHT-SUBTITLE",
+  "project_state_at_close": "RUNNABLE",
+  "rehearsal": true,
+  "authority": {
+    "doré_role": "advisory_and_evidentiary",
+    "human_church_authority_final": true,
+    "public_conversation_authorized": false,
+    "consequential_action_authorized_by_record": false
+  },
+  "durable_contributions": [
+    {
+      "type": "risk",
+      "content": "P01 must not be treated as production-verified until the live D1/Pages subtitle path has been exercised end-to-end and persisted result state inspected.",
+      "evidence_refs": [
+        "persistent_runtime_state",
+        "active_project_brief"
+      ],
+      "uncertainty": "none",
+      "authority_level": "A1"
+    }
+  ],
+  "rejected_transient_or_unsafe": [
+    {
+      "type": "suggestion",
+      "reason": "not_persistence_allowed",
+      "example": "Speculative preference about changing P01 product direction without evidence or human decision."
+    }
+  ],
+  "changed_constraints": [],
+  "verified_learning": [
+    "Conversation Alpha can distinguish a grounded durable project risk from a speculative transient suggestion without changing project authority or priority."
+  ],
+  "unresolved_blockers": [],
+  "next_actions": [
+    "On a fresh internal context load, discover and replay this meeting record without a human re-brief.",
+    "Keep P01 RUNNABLE and preserve its existing production-verification next action."
+  ]
+}
