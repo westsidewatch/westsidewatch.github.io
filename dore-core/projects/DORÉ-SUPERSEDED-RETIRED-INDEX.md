@@ -72,6 +72,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Important boundary:** this supersession does **not** prove that the current public Search deployment renders `QUEUED` or `RESEARCHING` from live persisted state. Browser-level expression wiring remains unverified and is tracked as missing evidence; products may only display those states when the corresponding live state can be demonstrated.
 
+## SR-007 — Researcher 04 post-course next action to open Biblical Concept Development I
+
+**Source:** `dore-core/knowledge/researcher/RESEARCHER-04-POST-COURSE-DIAGNOSIS.md`, section `Next autonomous action`.
+
+**Classification:** `SUPERSEDED` as an active next-action instruction; retained as historical provenance of Doré's autonomous curriculum selection.
+
+**Superseding evidence:** the diagnosis selected `BIBLICAL-CONCEPT-DEVELOPMENT-I` after comparing multiple candidate gaps. Later Researcher 05 evidence records that Biblical Concept Development I was actually executed and graduated to retention watch, and the completed-work ledger records that bounded milestone as `CW-008 — Researcher 05 Biblical Concept Development I` with `VERIFIED_COMPLETE` classification.
+
+**Retained value:** the diagnosis remains important evidence that Doré selected the broader transferable diachronic/canonical method rather than a claim-specific Satan course, advanced syntax by momentum, or intertextuality without recurrence evidence. It is also evidence for the Researcher 04 autonomous-learning graduation because the next curriculum was chosen from repeated unresolved work.
+
+**Current authority:** do not reopen `DISCOVER_AND_EVALUATE_BIBLICAL_CONCEPT_DEVELOPMENT_I_SOURCE_STACK` merely because this historical file ends with that instruction. Researcher 05 is complete; later learning priorities must come from current diagnosis, the Master Work Register and live work evidence.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
