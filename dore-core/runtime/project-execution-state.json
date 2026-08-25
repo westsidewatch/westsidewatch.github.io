@@ -1,20 +1,19 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-08-25T07:16:57.349971+00:00",
+  "updated_at": "2026-08-25T07:27:00+00:00",
   "active_project": {
     "id": "P01-PREFLIGHT-SUBTITLE",
     "brief": "dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md",
     "state": "RUNNABLE",
-    "terminal_states": [
-      "VERIFIED_COMPLETE",
-      "HUMAN_DECISION_BLOCKED",
-      "ENVIRONMENT_BLOCKED"
-    ],
+    "terminal_states": ["VERIFIED_COMPLETE", "HUMAN_DECISION_BLOCKED", "ENVIRONMENT_BLOCKED"],
     "objective": "Complete and production-verify the reader-facing video URL to subtitle/library/ONE/Westside Stories product flow.",
     "resume_policy": "On every project-runtime heartbeat, inspect evidence and continue the highest-priority unfinished executable work. Do not require a human re-brief. Stop only at a declared terminal state.",
     "last_verified_evidence": {
       "handoff_commit": "eca4a021520de531ab20421e25dcddab7deac576",
       "latest_subtitle_engineering_commit": "5c3a8c3be03e82097535890d11289887945ec030",
+      "latest_contract_test_commit": "8d8985cd2c3b5ded571a3e1e9ab62d5a497a065f",
+      "latest_contract_workflow_commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
+      "contract_workflow_run": 32821583667,
       "known_pipeline": [
         "video URL recognition",
         "canonical URL normalization",
@@ -26,46 +25,44 @@
         "biblical-domain gate",
         "YouTube advertised-caption acquisition executor",
         "VTT segmentation and persisted proofreader handoff",
-        "rights-aware public subtitle result projection"
+        "rights-aware public subtitle result projection",
+        "CI-verified rights-aware result contract"
       ],
       "verification": [
         "Repository implementation and P01 brief inspected directly before modification.",
-        "subtitle-proofread schema v2 remains the reusable conservative biblical-term engine used by video-subtitle schema v5.",
         "Acquired WebVTT is proofread while preserving cue timing and persisted into the existing D1 job payload.",
         "Translation remains a distinct unimplemented stage; the executor explicitly refuses to fabricate it.",
-        "New video-subtitle-result endpoint exposes only a bounded public result projection, never raw payload_json.",
-        "Download is denied by default and becomes available only when an explicit recorded rights flag allows subtitle_download/public_derivative and a VTT result is actually ready.",
-        "Rights-restricted ready results, translation-required, transcription-required, processing-error and processing states now have explicit reader_state/next_step projections.",
-        "Live production execution of the new result endpoint and schema v5 pipeline remains unverified."
+        "video-subtitle-result exposes only a bounded public result projection and not raw payload_json.",
+        "Default-deny download behavior is now covered by executable tests.",
+        "Explicit recorded subtitle_download permission produces a downloadable VTT response in executable tests.",
+        "Rights-restricted ready results and translation-required states are covered by executable tests.",
+        "GitHub Actions run 32821583667 completed successfully; job subtitle-result-contract conclusion=success.",
+        "Live production execution of schema v5 and the result endpoint against D1 remains unverified."
       ]
     },
-    "next_action": "Production-verify schema v5 and the new rights-aware result endpoint against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, execute-proofread, inspect the persisted status, then query /api/dore/video-subtitle-result and confirm default-deny download behavior. If the selected source requires translation, implement the bounded translation executor or choose a same-language proofread case first. If no advertised captions exist, implement/identify audio acquisition+transcription. After live API proof, wire the reader-facing Search result/download surface plus Westside Stories pathway and preserve ordinary Scripture Search regression safety.",
-    "lease": {
-      "status": "AVAILABLE",
-      "holder": null,
-      "started_at": null
-    },
-    "attempt": 25,
+    "next_action": "Production-verify schema v5 and /api/dore/video-subtitle-result against a real supported YouTube job on the live D1/Pages deployment: create/resume a job, execute-caption-acquisition, execute-proofread, inspect persisted status, query the result endpoint, and confirm default-deny download behavior. Then wire the reader-facing Search result/download surface plus Westside Stories pathway and preserve ordinary Scripture Search regression safety. If a same-language caption case cannot be found, proceed to the bounded translation executor; if captions are unavailable, proceed to audio acquisition/transcription.",
+    "lease": {"status": "AVAILABLE", "holder": null, "started_at": null},
+    "attempt": 26,
     "checkpoint": {
-      "cycle": "rights-aware-reader-result-contract",
-      "commit": "5c3a8c3be03e82097535890d11289887945ec030",
-      "supporting_commit": "be3e45c9351c9714b6908f86e4852d9096275d1b",
-      "result": "IMPLEMENTED_NOT_YET_PRODUCTION_VERIFIED",
+      "cycle": "rights-aware-reader-result-contract-ci",
+      "commit": "5bcbcef412e0137a11f9fdfe75a9f3f208899f00",
+      "supporting_commit": "8d8985cd2c3b5ded571a3e1e9ab62d5a497a065f",
+      "result": "CI_VERIFIED_NOT_YET_PRODUCTION_VERIFIED",
       "capability_evidence": {
         "already_demonstrated": [
           "Cloudflare Pages Function request handling",
           "D1-backed subtitle job persistence",
-          "Liming Library resource feedback",
           "idempotent canonicalized job boundary",
           "resumable job lookup",
           "conservative biblical-term subtitle correction",
-          "WebVTT timing-preserving proofreading"
+          "WebVTT timing-preserving proofreading",
+          "rights-aware public result projection"
         ],
         "learned_and_applied_this_cycle": [
-          "default-deny rights-aware public projection over internal subtitle job payloads",
-          "separating internal processing data from reader-visible result state",
-          "conditional VTT delivery based on explicit recorded derivative-download permission",
-          "reader-state mapping for ready/restricted/translation/transcription/error/processing outcomes"
+          "executable mocked-D1 contract testing of a Cloudflare Pages Function",
+          "CI enforcement for default-deny subtitle derivative delivery",
+          "CI verification that public JSON does not expose raw subtitle text",
+          "CI verification of explicit-rights VTT download behavior"
         ],
         "encountered_not_yet_demonstrated": [
           "production verification of v5 and video-subtitle-result on live D1/Pages deployment",
@@ -77,7 +74,7 @@
       }
     },
     "blocker": null,
-    "last_heartbeat_at": "2026-08-25T07:16:57.349971+00:00",
-    "runtime_observation": "Heartbeat restored the accepted project from repository-persisted state. A capable executor must claim this RUNNABLE project, inspect the brief and evidence, perform the next engineering cycle, then persist checkpoint/terminal evidence here."
+    "last_heartbeat_at": "2026-08-25T07:27:00+00:00",
+    "runtime_observation": "This cycle converted the new public subtitle-result rights boundary from code-only evidence into repeatable CI-verified behavior. The project remains RUNNABLE; production D1/Pages verification is the next critical gate."
   }
 }
