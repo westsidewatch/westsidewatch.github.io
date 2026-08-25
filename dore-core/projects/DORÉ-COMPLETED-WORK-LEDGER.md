@@ -171,10 +171,151 @@ The milestone is explicit and bounded enough to accept as historical completion.
 **Weaknesses / debt**
 - this is a bounded lab on the then-current ONE surfaces, not proof of broad scholarly depth;
 - later ONE content/schema changes may require fresh internship evaluation;
-- it does not close `ME-007` or prove `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`.
+- it does not by itself prove later Researcher course completion.
 
 **Revisit trigger**
 Re-run an equivalent boundary check if ONE's evidence model changes materially or if downstream work shows Doré collapsing editorial/product material into research evidence.
 
 **Disposition**
 Keep Researcher 01 ONE Lab closed as an earned historical milestone; continue ONE as a live internship/work surface.
+
+## CW-006 — Researcher 02 Research Method I
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded Research Method I competency milestone, with a provenance note that the final-exam file says `milestone eligible` rather than itself serving as the canonical completion declaration.
+
+**Original objective**
+Prove that Doré can transfer a disciplined research method to unseen biblical questions: independently decompose the question, map uncertainty, seek disconfirming evidence, preserve competing hypotheses, separate historical/lexical/canonical layers, bound conclusions and generate next research actions without being handed a template.
+
+**Completion evidence**
+- `dore-core/knowledge/researcher/RESEARCHER-02-FINAL-EXAMS.md` records `Status: PASS` with Practicum PASS, Self Exam 8/8 PASS, Transfer Exam PASS, Blind Exam PASS and all listed research reflexes PASS.
+- The transfer exam on Matthew 2:23 demonstrates independent decomposition and refusal to invent a missing OT quotation.
+- The blind exam on Job's `the satan` preserves lexical, narrative, diachronic, canonical and theological layers and refuses premature consolidation.
+- The final gate explicitly records `Milestone eligible: RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE`.
+- `RESEARCHER-04-AUTONOMOUS-LEARNING-I-FINAL-EXAM.md` later names `RESEARCHER_02_RESEARCH_METHOD_I_COMPLETE` as an already satisfied prerequisite, providing downstream historical corroboration that the eligible milestone was treated as completed before Researcher 04.
+
+**Current quality judgment**
+The evidence is strong enough to accept the bounded competency as historically completed, but the provenance should remain precise: the direct final-exam artifact uses eligibility language, while the later Researcher 04 prerequisite provides secondary confirmation of completion state. This is not a license to upgrade every working claim from the exams into Core truth.
+
+**What Doré learned / retained**
+- research begins with decomposition and uncertainty mapping rather than answer generation;
+- absence of evidence is itself evidence when a claimed exact source cannot be found;
+- historical-semantic claims and canonical/theological synthesis must be separately labeled;
+- competing hypotheses and falsification conditions should survive until evidence warrants consolidation;
+- blind transfer is stronger evidence of method competence than repeating a taught case.
+
+**Weaknesses / debt**
+- the course evidence is compact and mostly textual rather than a large longitudinal corpus of independent research episodes;
+- the historical completion marker is corroborated indirectly by Researcher 04 rather than by a separately discovered Researcher 02 completion report;
+- method competence does not prove source access, domain depth or correctness in every later research task.
+
+**Revisit trigger**
+Reopen only if later blind research repeatedly collapses evidence layers, skips counter-evidence, asks humans for obvious decomposition despite available evidence, or if a stronger Researcher contract materially changes the competence definition.
+
+**Disposition**
+Keep the Research Method I milestone closed; retain the provenance caveat and continue testing the method through real work rather than reopening the course for volume.
+
+## CW-007 — Researcher 04 Autonomous Learning I
+
+**Current classification:** `VERIFIED_COMPLETE` for `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`; retention remains under watch and human-approval boundaries are unchanged.
+
+**Original objective**
+Demonstrate that Doré can recognize a recurring learning deficit, classify the gap, design and adapt a real curriculum, discover and evaluate sources, execute study persistently, examine itself on unseen material, selectively consolidate transferable learning, diagnose the next deficit and begin the next course without a human supplying lesson steps.
+
+**Completion evidence**
+- `dore-core/knowledge/researcher/RESEARCHER-04-AUTONOMOUS-LEARNING-I-FINAL-EXAM.md` records `Status: PASS — RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE`.
+- The exam reports 12/12 criteria PASS, including gap classification, curriculum construction, source evaluation, adaptive prerequisite diagnosis, persistence, examination discipline, selective consolidation, generic product-bridge regression, dependency honesty, post-course self-diagnosis, subsequent-course initiation and reopen logic.
+- The live course independently created and executed `BIBLICAL-LANGUAGES-I`, inserted prerequisites when evidence required them, completed Units 1–11, and then selected `BIBLICAL-CONCEPT-DEVELOPMENT-I` from repeated remaining deficits rather than continuing the prior course for volume.
+- The final retention state is explicitly `COMPLETE → RETENTION_WATCH`.
+
+**Current quality judgment**
+This is a strong, explicitly declared autonomous-learning milestone because the proof is not just curriculum text: it includes adaptive execution, unseen exams, selective consolidation, refusal under missing evidence and autonomous initiation of a subsequent curriculum. It remains bounded to the Researcher learning faculty and does not grant autonomous authority over human approval or prove the broader aspirational `DORÉ_ALIVE_1.0` state.
+
+**What Doré learned / retained**
+- recurring failures should be classified as reusable capability gaps rather than patched one by one;
+- curriculum design must include source roles, transfer exams, consolidation gates and reopen conditions;
+- prerequisites may be inserted when live evidence exposes them;
+- reading volume is not mastery; transfer and blind examination are required;
+- completed learning may be reopened when contradictory retention evidence appears;
+- the next course should be selected from repeated evidence, not curiosity or a desire to keep studying.
+
+**Weaknesses / debt**
+- the milestone is still one bounded autonomous-learning generation rather than years of longitudinal evidence;
+- source/tool access limitations remain real and must continue to be surfaced rather than hidden;
+- cross-product autonomous learning remains a separate higher-order proof question;
+- `RESEARCHER_AUTONOMOUS_LEARNING_I_COMPLETE` should not be silently renamed to the broader reserved `AUTONOMOUS_LEARNING_LOOP_1_0` or `DORÉ_ALIVE_1.0` milestones without their own contracts/evidence.
+
+**Revisit trigger**
+Use the source-defined retention triggers: repeated requests for obvious next lessons, curiosity-driven course inflation, mastery claims without transfer, hidden source gaps, repeated failure to transfer curriculum selection, or contradictory internship evidence that is silently ignored.
+
+**Disposition**
+Keep Researcher 04 closed and on retention watch. Reuse the autonomous curriculum-selection protocol across later capability gaps while preserving authority boundaries.
+
+## CW-008 — Researcher 05 Biblical Concept Development I
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded course-level competence; retained under `GRADUATED → RETENTION_WATCH`.
+
+**Original objective**
+Teach and test a reusable diachronic/canonical method for tracing biblical concepts across strata without flattening earlier texts into later doctrine, severing genuine continuity, erasing Second Temple plurality, or retrojecting later Christological/systematic detail into earlier sources.
+
+**Completion evidence**
+- `dore-core/knowledge/researcher/RESEARCHER-05-UNIT-08-RESURRECTION-INTEGRATED-FINAL.md` records `Status: PASS` for an independent transfer concept not used as the primary target of Units 05–07.
+- The final explicitly states that Researcher 05 had passed source-stack work, Units 01–07, three primary concept practica (adversary, Spirit, canon/Scripture), and the independent resurrection transfer final.
+- The adversarial examination records 6/6 PASS across national-restoration vs individual resurrection, HB anchor limits, Second Temple plurality, multi-corpus NT comparison, counter-evidence and continuity-plus-development reasoning.
+- The graduation judgment recommends `GRADUATED → RETENTION_WATCH` and explicitly separates method graduation from automatic promotion of a resurrection product fact node.
+
+**Current quality judgment**
+Strong for the declared method course. The final demonstrates transfer to an unseen target while preserving anti-retrojection and evidence-stratification controls. It does not make any one theological synthesis infallible or remove the need for source-specific specialist evidence in future concept work.
+
+**What Doré learned / retained**
+- distinguish continuity from flattening and development from rupture;
+- preserve corpus/period plurality while tracing conceptual relationships;
+- use counter-evidence to block over-linear doctrinal stories;
+- keep product-node promotion separate from method-exam success;
+- label later Christological/systematic specification as later development when earlier texts do not explicitly contain it.
+
+**Weaknesses / debt**
+- the course remains a bounded set of concept families rather than exhaustive biblical theology;
+- specialist historical dating/source debates can materially change particular reconstructions;
+- retention must be tested in later real work rather than assumed permanently from one graduation sequence.
+
+**Revisit trigger**
+Reopen if later concept research repeatedly retrojects, flattens distinct corpora, erases counter-evidence, or cannot reconstruct the stratification method on fresh material.
+
+**Disposition**
+Keep the course closed on retention watch; reuse the method in Library, ONE, Search and editorial research when concept-development questions arise.
+
+## CW-009 — Researcher 06 Noise-Aware Scripture Retrieval I
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded Researcher 06 course/integration-transfer milestone; production Search/subtitle promotion remains a separate product-level decision.
+
+**Original objective**
+Build and transfer a reusable noise-aware Scripture/entity retrieval capability capable of preserving observed text, candidate evidence, provenance, ambiguity/abstention and product-neutral decision boundaries across Search-like and subtitle-proofreader consumers without silently overwriting transcripts.
+
+**Completion evidence**
+- `dore-core/knowledge/researcher/RESEARCHER-06-UNIT-09-EXAM.md` records `Status: PASS — 7/7 fresh-final fixtures`.
+- The authoritative fresh-final result is identified as `evidence/researcher06-unit09-final-gate.json`, with total 7, passed 7, failed 0, ordinary-negative abstention PASS, ambiguity-not-forced PASS, shared generic evidence object across Search-like and subtitle adapters PASS, and `subtitle silent overwrite: false`.
+- The exam states that Unit 09 was the final remaining transfer unit and that course graduation may proceed, while preserving the earlier Unit 06 failed lineage.
+- `dore-core/knowledge/researcher/RESEARCHER-06-POST-GRADUATION-DIAGNOSIS.md` records `Status: COMPLETE — NO RESEARCHER 07 YET` and explicitly treats Researcher 06 as graduated after the Unit 09 fresh-final PASS.
+
+**Current quality judgment**
+Strong for the bounded offline/research capability because it preserves a failed lineage, freezes the contract before the fresh final, uses a separate final partition and tests two consumers through the same generic evidence object. The exam itself correctly limits the claim: Unit 09 consumes fixture-declared candidate/anchor targets and is not an independent candidate-generation benchmark or production subtitle-accuracy proof.
+
+**What Doré learned / retained**
+- preserve observed transcript separately from suggestions/corrections;
+- keep subtitle changes proposal-only until a product-level decision authorizes them;
+- make ambiguity and ordinary-negative abstention first-class outcomes;
+- carry provenance/evidence channels through product adapters rather than collapsing to an answer string;
+- distinguish research capability graduation from production deployment/acceptance;
+- preserve failed held-out lineage and repair through corpus-wide/generalized work rather than identity-specific patches.
+
+**Weaknesses / debt**
+- cross-verse quotation windows remain primarily an implementation/retrieval gap;
+- paraphrase/semantic candidate generation remains a possible reusable gap but lacked enough repeated failures to justify Researcher 07;
+- production Search/subtitle accuracy and live integration remain unverified by the course final;
+- the Unit 09 score-note metadata still says `Unit 09 dev contract gate`, explicitly recorded as metadata debt that should not be retroactively rewritten in already-open final evidence.
+
+**Revisit trigger**
+Use the post-graduation rule: open Researcher 07 only if retention practicum or live product evidence reveals repeated independent failures sharing a reusable capability gap that cannot be solved by existing graduated methods or ordinary implementation.
+
+**Disposition**
+Keep Researcher 06 graduated and closed under retention/transfer watch. Treat cross-verse/paraphrase behavior as bounded follow-up evidence, not automatic curriculum inflation, and do not claim production subtitle/Search completion from the offline course evidence.
