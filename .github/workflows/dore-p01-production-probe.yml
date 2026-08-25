@@ -19,7 +19,7 @@ on:
       source_url:
         description: 'Public biblical-world YouTube source used to seed a real subtitle job'
         required: false
-        default: 'https://youtube.com/watch?v=ak06MSETeo4'
+        default: 'https://youtube.com/watch?v=3Dv4-n6OYGI'
         type: string
       job_id:
         description: 'Optional existing real dore_video_subtitle_jobs id; when omitted the probe creates/deduplicates its own job'
@@ -41,7 +41,7 @@ jobs:
       - name: Seed or resume a real production subtitle job and verify reader result
         env:
           DORE_P01_ORIGIN: ${{ github.event.inputs.origin || 'https://westsidewatch-github-io.pages.dev' }}
-          DORE_P01_SOURCE_URL: ${{ github.event.inputs.source_url || 'https://youtube.com/watch?v=ak06MSETeo4' }}
+          DORE_P01_SOURCE_URL: ${{ github.event.inputs.source_url || 'https://youtube.com/watch?v=3Dv4-n6OYGI' }}
           DORE_P01_JOB_ID: ${{ github.event.inputs.job_id || '' }}
           DORE_P01_EVIDENCE_FILE: /tmp/dore-p01-production-evidence.json
         run: node tests/dore-p01-production-probe.mjs
