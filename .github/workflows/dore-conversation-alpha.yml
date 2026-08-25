@@ -4,12 +4,14 @@ on:
   push:
     paths:
       - 'dore-core/runtime/build_conversation_context.py'
+      - 'dore-core/runtime/conversation_contribution.py'
       - 'dore-core/runtime/conversation-alpha-contract.md'
       - 'dore-core/runtime/project-execution-state.json'
       - 'dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md'
       - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
       - 'dore-core/constitution/CONSTITUTION.md'
       - 'dore-core/tests/test_conversation_context.py'
+      - 'dore-core/tests/test_conversation_contribution.py'
       - '.github/workflows/dore-conversation-alpha.yml'
   workflow_dispatch:
 
@@ -24,8 +26,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run Conversation Alpha context tests
-        run: python -m unittest dore-core/tests/test_conversation_context.py -v
+      - name: Run Conversation Alpha tests
+        run: python -m unittest dore-core/tests/test_conversation_context.py dore-core/tests/test_conversation_contribution.py -v
       - name: Build active-project context packet
         run: python dore-core/runtime/build_conversation_context.py --output /tmp/dore-conversation-context.json
       - name: Verify packet remains internal and ready
