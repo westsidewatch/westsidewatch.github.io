@@ -1,0 +1,60 @@
+name: Doré Liming Library Ingest
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'data/liming-dore-ingest-seed.json'
+      - 'functions/api/dore/library/resources.js'
+  workflow_dispatch:
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wait for Cloudflare deployment and ingest resources
+        env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${DORE_HEARTBEAT_TOKEN:-}" ]; then
+            echo 'Missing DORE_HEARTBEAT_TOKEN'
+            exit 1
+          fi
+          endpoint='https://westsidewatch.ca/api/dore/library/resources'
+          for i in $(seq 1 20); do
+            code=$(curl -sS -o /tmp/health.json -w '%{http_code}' "${endpoint}?status=published" || true)
+            if [ "$code" = "200" ]; then break; fi
+            echo "library API not ready yet ($code), retry $i/20"
+            sleep 15
+          done
+          test "$(curl -sS -o /tmp/health.json -w '%{http_code}' "${endpoint}?status=published")" = "200"
+          python3 - <<'PY'
+          import json, os, subprocess
+          data=json.load(open('data/liming-dore-ingest-seed.json'))
+          token=os.environ['DORE_HEARTBEAT_TOKEN']
+          endpoint='https://westsidewatch.ca/api/dore/library/resources'
+          for item in data.get('resources',[]):
+              payload=json.dumps(item,ensure_ascii=False)
+              p=subprocess.run(['curl','-fsS','-X','POST',endpoint,
+                                '-H','content-type: application/json',
+                                '-H',f'authorization: Bearer {token}',
+                                '--data-binary',payload],capture_output=True,text=True)
+              if p.returncode:
+                  raise SystemExit(p.stderr)
+              result=json.loads(p.stdout)
+              if not result.get('ok'):
+                  raise SystemExit(p.stdout)
+              print(result['resource']['resource_id'], result['resource']['title'])
+          PY
+      - name: Verify published three-star resources are readable
+        run: |
+          curl -fsS 'https://westsidewatch.ca/api/dore/library/resources?creator=David%20Pawson&morning_stars=3&status=published' > /tmp/result.json
+          python3 - <<'PY'
+          import json
+          d=json.load(open('/tmp/result.json'))
+          assert d.get('ok') is True
+          assert len(d.get('results',[])) >= 2, d
+          print('Liming Library live ingest PASS:', len(d['results']))
+          PY
