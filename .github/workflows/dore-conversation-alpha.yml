@@ -1,0 +1,40 @@
+name: Doré Conversation Alpha
+
+on:
+  push:
+    paths:
+      - 'dore-core/runtime/build_conversation_context.py'
+      - 'dore-core/runtime/conversation-alpha-contract.md'
+      - 'dore-core/runtime/project-execution-state.json'
+      - 'dore-core/projects/P01-PREFLIGHT-SUBTITLE-AUTONOMOUS-RUN.md'
+      - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
+      - 'dore-core/constitution/CONSTITUTION.md'
+      - 'dore-core/tests/test_conversation_context.py'
+      - '.github/workflows/dore-conversation-alpha.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  internal-context-packet:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Conversation Alpha context tests
+        run: python -m unittest dore-core/tests/test_conversation_context.py -v
+      - name: Build active-project context packet
+        run: python dore-core/runtime/build_conversation_context.py --output /tmp/dore-conversation-context.json
+      - name: Verify packet remains internal and ready
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/dore-conversation-context.json', encoding='utf-8'))
+          assert p['mode']=='INTERNAL_ALPHA_NOT_PUBLIC'
+          assert p['authority']['public_conversation_authorized'] is False
+          assert p['ready_for_internal_meeting'] is True
+          print(p['project']['id'], p['project']['state'])
+          PY
