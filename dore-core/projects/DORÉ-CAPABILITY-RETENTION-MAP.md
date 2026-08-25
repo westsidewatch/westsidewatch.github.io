@@ -72,3 +72,89 @@ The completed milestone is a foundation, not full Researcher graduation or exhau
 
 **Boundary / caution**
 Parity proves that the declared migration envelope was preserved at that checkpoint. It does not prove every linguistic analysis is correct, and later corpus/schema changes require fresh regression evidence.
+
+## CAP-004 — Evidence-bounded research method
+
+**Learned from:** `CW-006 — Researcher 02 Research Method I`
+
+**Reusable capabilities retained**
+- decompose an unseen question into independently testable research requirements;
+- create uncertainty maps and competing hypotheses before synthesis;
+- distinguish lexical, historical, diachronic, canonical and theological evidence layers;
+- record failure to find an exact source as evidence rather than inventing one;
+- require disconfirming/falsification checks and bounded conclusions;
+- produce autonomous next actions while refusing premature consolidation.
+
+**Useful in current/future work**
+- ONE and Bible Search explanation work;
+- Liming Library source evaluation and relationship claims;
+- subtitle correction where a theological/biblical phrase must be verified rather than guessed;
+- Journal fact-checking and editorial research;
+- autonomous sensory learning and any future Doré research project.
+
+**Boundary / caution**
+Method competence does not guarantee domain mastery or source access. Every substantive claim still needs evidence appropriate to its domain.
+
+## CAP-005 — Autonomous curriculum selection and self-directed learning
+
+**Learned from:** `CW-007 — Researcher 04 Autonomous Learning I`
+
+**Reusable capabilities retained**
+- detect repeated failures and classify them as skill/domain/curriculum gaps rather than isolated bugs;
+- build a course with competency map, source roles, unit sequence, transfer/blind exams, consolidation gate and reopen conditions;
+- discover/evaluate learning materials while surfacing inaccessible-source gaps;
+- insert prerequisites when live evidence shows the original sequence is insufficient;
+- continue execution without waiting for a human to supply each next lesson;
+- promote only transferable learning and leave claim-specific material at weaker states when evidence is incomplete;
+- diagnose the next curriculum from repeated remaining deficits and reject curriculum inflation.
+
+**Useful in current/future work**
+- every Doré capability frontier, including subtitle, Library, Search, editorial, design and infrastructure learning;
+- post-project retrospectives that reveal reusable deficits;
+- continuous stewardship where real product work becomes evidence for the next education step.
+
+**Boundary / caution**
+This is a bounded autonomous-learning faculty, not autonomous authority over consequential human decisions and not equivalent to `DORÉ_ALIVE_1.0` without that milestone's own evidence.
+
+## CAP-006 — Diachronic/canonical concept development
+
+**Learned from:** `CW-008 — Researcher 05 Biblical Concept Development I`
+
+**Reusable capabilities retained**
+- trace concepts across textual/historical strata while preserving continuity and material development;
+- distinguish earlier textual meaning from later canonical/theological specification;
+- preserve Second Temple and cross-corpus plurality rather than forcing a single linear evolution;
+- use counter-evidence to reject flattening, rupture and retrojection models;
+- separate method graduation from automatic promotion of topical product facts.
+
+**Useful in current/future work**
+- ONE theological/background study;
+- Journal and Devotional biblical-theology research;
+- Liming Library topical curation and relationship modeling;
+- Bible Search answers to concept-development questions;
+- subtitle proofreading where terminology carries diachronic/canonical ambiguity.
+
+**Boundary / caution**
+The method is reusable, but individual concept reconstructions remain source-dependent and revisable.
+
+## CAP-007 — Noise-aware Scripture/entity retrieval with abstention
+
+**Learned from:** `CW-009 — Researcher 06 Noise-Aware Scripture Retrieval I`
+
+**Reusable capabilities retained**
+- preserve observed text separately from suggested correction/canonical anchor;
+- combine multiple evidence channels without collapsing provenance;
+- explicitly represent ambiguity and ordinary-negative abstention;
+- feed a generic evidence object into multiple products without product-specific answer patches;
+- keep subtitle correction proposal-only rather than silently overwriting transcript;
+- preserve failed held-out lineage and repair by generalized coverage rather than fixture identity.
+
+**Useful in current/future work**
+- Doré Bible Search fuzzy/noisy query recovery;
+- P01 subtitle proofreader and Westside Stories subtitle pathway;
+- entity/name normalization in Library ingestion;
+- Scripture quotation detection in Journal/Devotional content;
+- future ASR/transcript alignment and multilingual retrieval.
+
+**Boundary / caution**
+The course's final integration harness is not production subtitle/Search accuracy proof and does not independently benchmark all candidate generation. Cross-verse and paraphrase retrieval remain follow-up evidence questions.
