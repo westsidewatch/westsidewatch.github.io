@@ -389,3 +389,39 @@ Re-run delivery/hash/reference regression when the asset registry schema, delive
 
 **Disposition**
 Keep the Priority-A migration/cutover closed and maintain it through regression checks. Do not reopen merely because the broader media platform continues to expand.
+
+## CW-012 — Westside Stories first Doré external-worker integration
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded executable-consumer/service-boundary milestone; WSS live packaged-App end-to-end verification remains open under the active WSS workstream.
+
+**Original objective**
+Make Westside Stories the first product outside the main Westside Watch site to consume a Doré subtitle-proofreading service through a conservative, explicit contract without coupling the app to Doré's internal indexes or silently rewriting uncertain subtitle content.
+
+**Completion evidence**
+- `westsidewatch/Westside-Stories` contains `docs/DORE-FIRST-EXTERNAL-WORKER-MILESTONE.md` with `Status: COMPLETE / PASS`, endpoint `/api/dore/subtitle-proofread`, schema `dore.subtitle-proofread.v1`, and worker identity `westside-stories.subtitle-proofreader`.
+- `app/dore_proofreader.py` implements the service client, defaults to `https://westsidewatch.ca/api/dore/subtitle-proofread`, requires `ok=true` and the expected schema, and raises explicitly on unexpected/unavailable service behavior.
+- The SRT adapter excludes sequence numbers and timestamps from rewriting and only applies returned corrections to subtitle text lines.
+- `app/main_dore.py` replaces the production worker so every produced/reused SRT passes through Doré before return/burn-in, with explicit failure rather than silently claiming an unproofread result.
+- `build_app.command` packages `app/main_dore.py` and states the production pipeline as `Whisper → Doré proofreader → SRT → optional burn-in`.
+- Commits `5362c912...`, `b19b9b9e...`, `f85401a0...`, `eb651bcd...`, and `44e44aa2...` preserve the implementation/closure lineage.
+
+**Current quality judgment**
+Strong enough for the declared cross-product service-boundary milestone: a concrete executable consumer, conservative contract, production entry point and packaged build target all exist. The historical milestone document's word `production-safe` must not be interpreted as proof that a distributed `.app` was run end-to-end against the live endpoint; no independent runtime artifact for that stronger claim was found in this bounded sweep.
+
+**What Doré learned / retained**
+- external products should consume stable Doré service contracts rather than internal indexes;
+- subtitle proofreading should preserve observed structure and fail explicitly rather than silently invent corrections;
+- conservative high-confidence normalization can be shipped as a bounded first worker while richer Scripture-context and vocabulary capabilities remain future extensions;
+- packaging a Doré-aware entry point is separate from proving live packaged-product execution.
+
+**Weaknesses / debt**
+- the WSS `ROADMAP.md` is stale: it still lists optional AI proofreading as future work even though Doré proofreading is implemented in the production entry path;
+- no repository evidence in this batch independently proves a packaged macOS App run through the live Doré endpoint, corrected SRT output and optional burn-in;
+- there is no visible CI/test suite in the reviewed WSS root evidence for live-contract regression;
+- the app client currently depends on a network endpoint and a 30-second HTTP timeout, so production failure/retry/user-recovery behavior should be verified in real packaging.
+
+**Revisit trigger**
+Reopen the bounded milestone only if the service contract/schema changes, WSS stops using the Doré-aware entry point, or regressions show SRT structure/error semantics are no longer preserved. Treat packaged-App live execution as a separate active verification milestone, not retroactive invalidation of this completed service-boundary milestone.
+
+**Disposition**
+Keep the first external-worker integration milestone closed. Continue WSS as `ACTIVE_PARALLEL` until a packaged App run against the live endpoint is independently verified and recorded.
