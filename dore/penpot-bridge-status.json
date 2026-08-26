@@ -1,0 +1,16 @@
+{
+  "project": "PENPOT-BRIDGE-01",
+  "status": "LIVE_PROBE_PENDING",
+  "bridge": "dore.penpot.mcp.v0.1",
+  "updated_at": "2026-08-26T20:10:00Z",
+  "gates": {
+    "penpot_remote_mcp_enabled": true,
+    "cloudflare_secret_configured_by_owner": true,
+    "runtime_secret_bound": "VERIFYING",
+    "initialize": "PENDING",
+    "tools_list": "PENDING",
+    "canvas_read": "PENDING",
+    "canvas_write": "PENDING"
+  },
+  "next": "Automated GitHub Actions live probe; on PASS proceed to capability discovery and first controlled design write."
+}
