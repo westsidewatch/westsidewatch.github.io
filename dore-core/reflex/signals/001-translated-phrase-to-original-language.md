@@ -2,7 +2,8 @@
 
 Date: 2026-08-22
 Source work node: Doré Bible Search
-Status: candidate reflex; regression required
+Status: PROMOTED / VERIFIED THROUGH REFLEX CONSOLIDATION 1.0
+Promotion evidence: `dore-core/reflex/REFLEX-CONSOLIDATION-1.0.md`, PR #233, Doré Reflex Consolidation run #7 SUCCESS, Doré Foundation Tests run #87 SUCCESS.
 
 ## Stimulus
 
@@ -44,7 +45,7 @@ Verse-level co-attestation is evidence that an original token occurs in the matc
 
 ## Regression gate
 
-Must route successfully without hard-coded answers:
+Required transferable cases:
 
 - `耶西的本 希伯來原文`
 - `耶西的本 希伯來文`
@@ -52,3 +53,7 @@ Must route successfully without hard-coded answers:
 - `虛心 希臘文`
 
 The first two must locate the translated passage containing `耶西的本` and expose Hebrew evidence from that verse. Passing only the Jesse wording is not graduation.
+
+## Reconciliation note — Sweep 01
+
+This signal was originally persisted as `candidate reflex; regression required`. That status became stale after Reflex Consolidation 1.0 graduated. The historical failure and diagnosis remain valid provenance, while promotion is now bounded by RC3 and the end-to-end transfer/regression evidence in PR #233. This does not upgrade verse-level co-attestation into word-level translation alignment, and it does not prove production-wide Search relevance quality.
