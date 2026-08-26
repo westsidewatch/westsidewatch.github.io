@@ -166,3 +166,28 @@ This first sweep establishes the baseline. Afterward, memory consolidation becom
 `new work / completed milestone / new capability → update Master Register → evaluate completed work → propagate generalized learning → reconsider old products when justified`
 
 This prevents another large backlog of disconnected memories from forming.
+
+## Checkpoint 17 — learning doctrine + runtime-ledger reconciliation (2026-08-26)
+
+Bounded evidence reviewed in this pass:
+
+- `dore-core/knowledge/AUTONOMOUS-LEARNING-LOOP.md`;
+- `dore-core/knowledge/PRODUCT-EDUCATION-LOOP.md`;
+- `dore-core/knowledge/DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`;
+- canonical Researcher completion interpretation already persisted in the completed-work/capability ledgers;
+- `DORÉ-MISSING-EVIDENCE-REGISTER.md` against the current Master Register P01/runtime state.
+
+Reconciliation findings:
+
+1. Autonomous Learning Loop and Product–Education Loop are governing `CORE/CONTINUOUS` doctrine, not separately completed products. Researcher 04 proves a bounded autonomous curriculum faculty, but must not be renamed into `AUTONOMOUS_LEARNING_LOOP_1_0` or `DORÉ_ALIVE_1.0` without their own behavioral contracts.
+2. The stronger “alive” contract specifically requires longitudinal blind behavioral evidence and cross-product transfer without a target-specific patch; this remains `UNKNOWN_NEEDS_EVIDENCE` and is now explicit in the Master Register CORE interpretation and `ME-007`.
+3. `ME-002` had become stale: it still described P01 as `RUNNABLE` and listed blocker-stop behavior as wholly unproven. The canonical runtime evidence now shows persisted attempt 39 and a genuine production `ENVIRONMENT_BLOCKED` terminal state after live v5/D1 execution. The missing-evidence ledger was corrected: blocker detection/stop behavior is partially verified, while full autonomous terminal completion remains unproven.
+4. No new P01 action was taken by Sweep 01. The existing approved-audio/transcription environment dependency remains the same governing blocker.
+
+Durable updates in this checkpoint:
+
+- Master Register CORE row now names Product–Education / learning-through-real-work explicitly and preserves the evidence boundary around broader “alive” claims;
+- Master Register MEM-SWEEP row now records the three learning-doctrine sources as reconciled;
+- `ME-002` and `ME-007` were reconciled to current runtime and doctrine evidence.
+
+Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
