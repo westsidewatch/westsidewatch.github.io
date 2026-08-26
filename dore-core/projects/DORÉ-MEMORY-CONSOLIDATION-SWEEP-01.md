@@ -191,3 +191,28 @@ Durable updates in this checkpoint:
 - `ME-002` and `ME-007` were reconciled to current runtime and doctrine evidence.
 
 Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
+
+## Checkpoint 18 — original-language reader acceptance reconciliation (2026-08-26)
+
+Bounded evidence reviewed in this pass:
+
+- complete `dore-core/readers/` family (currently `original_language_reader.py`);
+- `dore-core/tests/test_original_language_reader.py`;
+- `dore-core/tests/test_cross_witness_alignment.py`;
+- current Language/Text and Scripture-corpus missing-evidence interpretation.
+
+Reconciliation findings:
+
+1. The original-language reader implementation is real foundation work, not a memo: it pins OSHB and MorphGNT/SBLGNT snapshots, preserves textual and analytical provenance separately, retains source-native references, and deliberately marks Daniel/Ezra language as unresolved rather than fabricating Hebrew certainty.
+2. Reader-specific completion evidence is weaker than the implementation. `test_original_language_reader.py` explicitly states that it is a non-runnable acceptance specification pending package/import wiring and records `TEST_SPEC_PENDING_PACKAGE_WIRING`. Therefore no passing reader-suite claim is justified yet.
+3. `test_cross_witness_alignment.py` is a genuinely executable Language Core test family and demonstrates the desired evidence posture: preserve distinct witness identity; report missing witnesses for review instead of synthesizing data; flag unaligned units. This supports the architecture but does not substitute for the reader-specific acceptance suite.
+4. A new `ME-013` now records the exact evidence boundary and smallest future proof: wire the reader into an importable test target, execute the existing requirements against bounded pinned corpora, and persist token reconciliation/mixed-language/provenance results.
+5. No P01 state or action was modified.
+
+Current disposition:
+
+- original-language reader architecture: retain as `CORE/CONTINUOUS` Language/Text foundation progress;
+- runnable reader acceptance: `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`;
+- no `VERIFIED_COMPLETE` promotion and no revisit/retirement action is justified by this batch.
+
+Sweep status remains `ACTIVE_PARALLEL`; `dore-core/readers/` is now explicitly accounted for in the bounded source-family review.
