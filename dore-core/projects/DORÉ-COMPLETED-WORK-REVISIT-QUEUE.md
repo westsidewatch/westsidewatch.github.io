@@ -54,3 +54,25 @@ Raise priority when one of the following occurs:
 Sample high-impact/disputed biblical-world entries against stronger primary/secondary evidence, measure uncertainty/provenance quality and update only the affected registries rather than reopening the entire foundation by default.
 
 **Current disposition:** keep the foundation milestone closed; refine selectively when evidence triggers it.
+
+## RQ-003 — Bible Search first work-node relevance / association upgrade
+
+**Source completed milestone:** `dore-core/knowledge/BIBLE-SEARCH-WORK-NODE.md` — the first earned external Scripture-search service boundary.
+
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for the original v0.1 work-node milestone; the live `SEARCH` workstream remains `MAINTENANCE + DISCOVERY`.
+
+**Current priority:** HIGH / TRIGGERED, but subordinate to the active P01 critical path.
+
+**Why the revisit trigger has fired**
+Real-use evidence now contains both directions of retrieval failure: a relevant biblical concept/version variant (`Tablets of the Testimony`) did not adequately retrieve KJV-related `tables of the testimony`, while an unrelated English word combination could still produce Scripture results. The existing negative-relevance regression proves only a bounded fixture set (`Mortal Shell II`, `Grand Theft Auto`) and does not establish universal production precision or cross-version semantic recall. The Search cognition gate also remains `TAUGHT`, not `CONCEPT_PASS` or `PRODUCT_PASS`.
+
+**What remains valid from the original milestone**
+The service-boundary decision is still sound: canonical references/witness/provenance remain part of the result contract; fuzzy retrieval is candidate retrieval rather than certainty; consumers should call Doré rather than duplicate Scripture intelligence locally where practical. The node should be extended, not discarded.
+
+**Desired revisit evaluation**
+Doré should independently diagnose whether the paired false-negative/false-positive signals arise from one or several systemic layers, then run unseen evaluation across exact text, cross-version lexical variation, concept/entity association, multilingual retrieval, spelling/noise, ranking, truly unrelated strings and explicit abstention. Existing successful reference/fuzzy behavior must remain protected. A one-off `tablets = tables` patch is not sufficient unless evidence proves the case isolated.
+
+**Self-repair evidence requirement**
+The revisit is not complete merely when the two reported examples pass. Doré must persist its own diagnosis, scope judgment, repair rationale, regression results and durable learning, and later demonstrate that a similar real-use failure can be detected and routed into reflection without another external human prompt.
+
+**Current disposition:** trigger a systemic Search-quality revisit when dependency-safe; preserve P01 as the active critical path and keep the temporary external failure memo until its deletion tests are independently satisfied.
