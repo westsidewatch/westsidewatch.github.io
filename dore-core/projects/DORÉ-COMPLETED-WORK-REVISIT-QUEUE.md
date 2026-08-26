@@ -76,3 +76,28 @@ Doré should independently diagnose whether the paired false-negative/false-posi
 The revisit is not complete merely when the two reported examples pass. Doré must persist its own diagnosis, scope judgment, repair rationale, regression results and durable learning, and later demonstrate that a similar real-use failure can be detected and routed into reflection without another external human prompt.
 
 **Current disposition:** trigger a systemic Search-quality revisit when dependency-safe; preserve P01 as the active critical path and keep the temporary external failure memo until its deletion tests are independently satisfied.
+
+## RQ-004 — Main homepage / Vol.00 visual-language refit
+
+**Source completed milestones:** the August 2026 homepage rebuild around the watchful-city concept (`339679b4`), the later 5:8 / 8:5 editorial-ratio unification (`051afa76`), and subsequent live homepage Doré Search integration (`e2b7d577`).
+
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for the bounded homepage visual-language milestone; the live `MAIN` workstream remains maintenance and the separate `VIS-GRAMMAR` workstream remains discovery.
+
+**Current priority:** MEDIUM / TRIGGERED, subordinate to P01 and to completing the visual-grammar evidence base.
+
+**Why the revisit trigger has fired**
+The original rebuild successfully established a coherent watchful-city identity using Watch Night, First Light Gold, a Jerusalem wall / Golden Gate treatment, temple-stone texture, bilingual Scripture and later an explicit 5:8 / 8:5 publication-ratio system. Current repository state still carries those decisions and now embeds direct Doré Search in the homepage. At the same time, the canonical plan explicitly says Brand V1 must wait for a proven visual grammar and records `VIS-GRAMMAR` as discovery rather than complete. Therefore the August homepage treatment should be preserved as a legitimate historical completion but not mistaken for the final ecosystem-wide visual system.
+
+**What remains valid from the original milestone**
+The homepage learned several durable brand primitives: watch/night/dawn sequencing; city-wall / gate symbolism; temple-stone materiality; bilingual Scripture; the 5:8 portrait and 8:5 landscape publication ratios; and the principle that product utility such as Doré Search can live inside the brand center rather than as a disconnected tool.
+
+**Weaknesses / debt**
+The ratio system and framed editorial-card treatment were introduced before the current dedicated visual-grammar research program existed. The homepage also contains product-specific inline search styling and accumulated visual decisions from repeated repair/refinement passes. Those choices may be locally successful yet too literal, too card-dependent, or too tightly coupled to Vol.00 to serve as the final shared grammar for Main, Journal, Library, Search, ONE and Join.
+
+**Revisit trigger**
+Reopen only when `VIS-GRAMMAR` has produced evidence-backed, cross-surface rules and a prototype strong enough to compare against the live Main baseline. The comparison must preserve the successful semantic primitives above and prove an actual improvement in identity, restraint, readability, responsive behavior and cross-product transfer.
+
+**Desired future evaluation**
+Use the current production homepage as the control. Apply only the newly proven grammar to the same real content and product functions, then compare against the baseline on desktop/mobile, bilingual typography, material/texture behavior, Scripture readability, search discoverability, wall/gate/dawn symbolism and ability to generalize to other products. Do not replace the live homepage with conceptual placeholders.
+
+**Current disposition:** keep production stable; maintain the August 2026 build as the historical baseline; revisit after visual-grammar evidence is mature enough for a real A/B implementation.
