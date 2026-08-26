@@ -1,0 +1,34 @@
+name: Doré Penpot MCP Probe
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'functions/api/dore/penpot-probe.js'
+      - '.github/workflows/dore-penpot-probe.yml'
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Cloudflare Pages deployment
+        run: sleep 90
+      - name: Probe Doré → Penpot Remote MCP
+        env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+        run: |
+          set -euo pipefail
+          test -n "$DORE_HEARTBEAT_TOKEN"
+          body="$(curl --fail-with-body --silent --show-error --retry 5 --retry-delay 15 --max-time 90 \
+            -H "Authorization: Bearer $DORE_HEARTBEAT_TOKEN" \
+            https://westsidewatch.github.io/api/dore/penpot-probe)"
+          printf '%s\n' "$body" | python3 -m json.tool
+          BODY="$body" python3 - <<'PY'
+          import json, os, sys
+          data=json.loads(os.environ['BODY'])
+          if data.get('ok') is not True:
+              raise SystemExit(f"Penpot MCP probe failed: {data}")
+          if int(data.get('tool_count') or 0) < 1:
+              raise SystemExit(f"Penpot MCP returned no tools: {data}")
+          print(f"PASS: {data.get('bridge')} / tools={data.get('tool_count')} / server={data.get('server_info')}")
+          PY
