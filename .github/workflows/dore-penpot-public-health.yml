@@ -1,0 +1,25 @@
+name: Doré Penpot Runtime Health
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'functions/api/dore/penpot-health.js'
+      - '.github/workflows/dore-penpot-public-health.yml'
+jobs:
+  health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Pages deployment
+        run: sleep 90
+      - name: Verify runtime secret binding
+        run: |
+          set -euo pipefail
+          body="$(curl --fail-with-body --silent --show-error --retry 5 --retry-delay 15 --max-time 60 https://westsidewatch.github.io/api/dore/penpot-health)"
+          printf '%s\n' "$body" | python3 -m json.tool
+          BODY="$body" python3 - <<'PY'
+          import json,os
+          d=json.loads(os.environ['BODY'])
+          assert d.get('ok') is True, d
+          assert d.get('secret_bound') is True, d
+          print('PASS: PENPOT_MCP_KEY is bound in Cloudflare runtime')
+          PY
