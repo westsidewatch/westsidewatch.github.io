@@ -1,0 +1,15 @@
+name: Dore Penpot LIGHT Family v0.1
+on:
+  push:
+    paths:
+      - functions/api/dore/penpot-light-family-v01.js
+      - .github/workflows/dore-penpot-light-family-v01.yml
+jobs:
+  produce:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90
+      - env:
+          HOST: westsidewatch-github-io.pages.dev
+        run: curl --fail-with-body --silent --show-error "https://${HOST}/api/dore/penpot-light-family-v01" | tee /tmp/result.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/result.json')); assert d.get('ok') is True; print(d)"
