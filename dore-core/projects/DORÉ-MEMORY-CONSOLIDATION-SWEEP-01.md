@@ -216,3 +216,32 @@ Current disposition:
 - no `VERIFIED_COMPLETE` promotion and no revisit/retirement action is justified by this batch.
 
 Sweep status remains `ACTIVE_PARALLEL`; `dore-core/readers/` is now explicitly accounted for in the bounded source-family review.
+
+## Checkpoint 19 — Bible Search work-node / service-boundary reconciliation (2026-08-26)
+
+Bounded evidence reviewed in this pass:
+
+- `dore-core/knowledge/BIBLE-SEARCH-WORK-NODE.md`;
+- `dore-core/knowledge/search-cognition-protocol.md`;
+- `dore_core/search/service.py`;
+- `dore-core/tests/search-cognition-understanding-gate.md`;
+- `dore-core/tests/search-browser-negative-relevance.mjs`;
+- current public browser implementation `static/dore/dore-search.js`;
+- existing `RQ-003` / `ME-006` Search interpretations.
+
+Reconciliation findings:
+
+1. The original Bible Search v0.1 work-node is a legitimate historical completion milestone: a product-independent `BibleSearchIndex` exists with reference/text/lemma/morphology/fuzzy modes, provenance-bearing candidate results, bounded fuzzy confidence, and an explicit rule against inventing missing Scripture or promoting fuzzy candidates to facts.
+2. The Search cognition protocol is still doctrine under test, not earned cognition completion. Its own gate remains `TAUGHT`; Stage B unseen transfer, reasoned Stage C classification and Stage D live SEARCH/scoped/QUESTION/HYBRID behavior have not been persisted as passing evidence. `ME-006` remains valid.
+3. The negative-relevance regression is real but bounded: it protects unrelated multiword English examples while preserving explicit Chinese/English references and a misspelled fuzzy example. It is not evidence of universal production precision or semantic recall.
+4. A new architecture-drift finding is now durable: the original work-node contract says consumers should call Doré rather than duplicate Scripture intelligence locally where practical, yet `static/dore/dore-search.js` independently implements aliases, reference parsing, normalization, fuzzy scoring and English relevance logic in parallel with `dore_core.search.BibleSearchIndex`. This creates two evolving search-intelligence paths whose parity is not guaranteed.
+5. The drift does not justify retiring either path or changing the live `SEARCH` status from `MAINTENANCE + DISCOVERY`. It strengthens the already-triggered `RQ-003` revisit: future Search-quality work should converge on one canonical execution/specification boundary and add parity/regression evidence instead of continuing two independent retrieval engines.
+6. No P01 state or action was modified.
+
+Durable updates in this checkpoint:
+
+- `RQ-003` now records the browser/Core duplication as explicit technical debt and adds service-boundary convergence to the desired revisit outcome;
+- Search's existing cognition evidence boundary remains unchanged (`TAUGHT`; no `CONCEPT_PASS`/`PRODUCT_PASS` promotion);
+- the canonical Master Register `SEARCH` classification remains correct, so no status promotion/demotion is warranted from this bounded batch.
+
+Sweep status remains `ACTIVE_PARALLEL`; the Bible Search work-node/cognition/browser implementation family is now explicitly accounted for in the bounded source-family review.
