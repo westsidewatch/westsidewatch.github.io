@@ -1,0 +1,15 @@
+name: Dore Penpot Foundation Write
+on:
+  push:
+    paths:
+      - functions/api/dore/penpot-foundation.js
+      - .github/workflows/dore-penpot-foundation.yml
+jobs:
+  write:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90
+      - env:
+          HOST: westsidewatch-github-io.pages.dev
+        run: curl --fail-with-body --silent --show-error "https://${HOST}/api/dore/penpot-foundation" | tee /tmp/result.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/result.json')); assert d.get('ok') is True; print(d)"
