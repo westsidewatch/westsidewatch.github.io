@@ -1,0 +1,15 @@
+name: Dore Penpot Canvas Context
+on:
+  push:
+    paths:
+      - functions/api/dore/penpot-context.js
+      - .github/workflows/dore-penpot-context.yml
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90
+      - env:
+          HOST: westsidewatch-github-io.pages.dev
+        run: curl --fail-with-body --silent --show-error "https://${HOST}/api/dore/penpot-context" | tee /tmp/result.json
+      - run: cat /tmp/result.json
