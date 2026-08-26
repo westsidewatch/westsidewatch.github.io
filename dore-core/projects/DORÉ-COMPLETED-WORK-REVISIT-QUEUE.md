@@ -66,16 +66,20 @@ Sample high-impact/disputed biblical-world entries against stronger primary/seco
 **Why the revisit trigger has fired**
 Real-use evidence now contains both directions of retrieval failure: a relevant biblical concept/version variant (`Tablets of the Testimony`) did not adequately retrieve KJV-related `tables of the testimony`, while an unrelated English word combination could still produce Scripture results. The existing negative-relevance regression proves only a bounded fixture set (`Mortal Shell II`, `Grand Theft Auto`) and does not establish universal production precision or cross-version semantic recall. The Search cognition gate also remains `TAUGHT`, not `CONCEPT_PASS` or `PRODUCT_PASS`.
 
+Sweep 01 has now also identified a service-boundary architecture drift. `BIBLE-SEARCH-WORK-NODE.md` explicitly says consumers should call Doré rather than duplicate Scripture intelligence locally where practical and names `dore_core.search.BibleSearchIndex` as the core implementation. The current public browser implementation in `static/dore/dore-search.js` independently reimplements book aliases, reference parsing, text normalization, fuzzy scoring and English relevance filtering. This does not invalidate the original work-node milestone, but it creates two evolving search-intelligence paths that can diverge in normalization, ranking and regression behavior.
+
 **What remains valid from the original milestone**
 The service-boundary decision is still sound: canonical references/witness/provenance remain part of the result contract; fuzzy retrieval is candidate retrieval rather than certainty; consumers should call Doré rather than duplicate Scripture intelligence locally where practical. The node should be extended, not discarded.
 
 **Desired revisit evaluation**
 Doré should independently diagnose whether the paired false-negative/false-positive signals arise from one or several systemic layers, then run unseen evaluation across exact text, cross-version lexical variation, concept/entity association, multilingual retrieval, spelling/noise, ranking, truly unrelated strings and explicit abstention. Existing successful reference/fuzzy behavior must remain protected. A one-off `tablets = tables` patch is not sufficient unless evidence proves the case isolated.
 
+The revisit should also decide one canonical execution boundary for public Search. Preferred direction is to make browser Search consume the Doré/Core service contract, or otherwise generate both paths from one shared canonical normalization/retrieval specification with parity tests. Do not silently maintain two independent fuzzy/reference engines as if they were equivalent.
+
 **Self-repair evidence requirement**
 The revisit is not complete merely when the two reported examples pass. Doré must persist its own diagnosis, scope judgment, repair rationale, regression results and durable learning, and later demonstrate that a similar real-use failure can be detected and routed into reflection without another external human prompt.
 
-**Current disposition:** trigger a systemic Search-quality revisit when dependency-safe; preserve P01 as the active critical path and keep the temporary external failure memo until its deletion tests are independently satisfied.
+**Current disposition:** trigger a systemic Search-quality and service-boundary convergence revisit when dependency-safe; preserve P01 as the active critical path and keep the temporary external failure memo until its deletion tests are independently satisfied.
 
 ## RQ-004 — Main homepage / Vol.00 visual-language refit
 
