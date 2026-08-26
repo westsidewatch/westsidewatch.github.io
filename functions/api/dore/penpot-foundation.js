@@ -1,3 +1,4 @@
+// controlled Westside foundation write trigger
 const json=(d,s=200)=>new Response(JSON.stringify(d),{status:s,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
 function ev(t){return String(t||'').split(/\n\n+/).map(b=>b.split(/\n/).filter(l=>l.startsWith('data:')).map(l=>l.slice(5).trim()).join('\n')).filter(Boolean).map(x=>{try{return JSON.parse(x)}catch{return null}}).filter(Boolean)}
 async function rpc(url,p,sid){const h={'content-type':'application/json','accept':'application/json, text/event-stream'};if(sid)h['Mcp-Session-Id']=sid;const r=await fetch(url,{method:'POST',headers:h,body:JSON.stringify(p)});const t=await r.text();let b=null;try{b=(r.headers.get('content-type')||'').includes('text/event-stream')?(ev(t).find(x=>x?.id===p.id)||ev(t).at(-1)):JSON.parse(t)}catch{}return {ok:r.ok,status:r.status,body:b,sid:r.headers.get('Mcp-Session-Id')||sid||null}}
