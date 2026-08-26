@@ -56,6 +56,26 @@ No source in this batch supersedes the principle `engraving = source grammar, no
 
 The only canonical correction required is status granularity: the Master Register's `VIS-GRAMMAR = DISCOVERY` understates the evidence because a named active design/research/build project already exists. The correct current interpretation is `ACTIVE_PARALLEL / BUILDING`, while completion remains unearned.
 
+## Penpot workspace / bridge evidence boundary — Sweep batch 29
+
+Additional sources reviewed:
+
+- `dore-core/projects/PENPOT-BRIDGE-01.md`;
+- `dore-core/projects/WESTSIDE-VISUAL-CONSTRUCTION-PENPOT-V1.md`;
+- `dore-core/projects/DORÉ-VISUAL-DESIGNER-01-LIGHT.md`;
+- commit `cb742e9b0d6692768ba5ddd10369f3d668ea1fbd` (`feat(dore): migrate established Figma-era visual foundation into Penpot`).
+
+Current evidence judgment:
+
+1. The Penpot documents record a **tooling/workspace decision and implementation plan**, not a verified visual-design milestone. `PENPOT-BRIDGE-01.md` explicitly requires deployed secret binding, MCP initialize, `tools/list`, focused-file readback and a bounded write/readback before its own bridge PASS can be claimed.
+2. No reviewed artifact in this batch proves those Penpot bridge PASS gates. Therefore the phrases `ACTIVE / CANONICAL DESIGN WORKSPACE` and `Production surface: Penpot only` must not be treated as evidence that Doré can already execute, render and verify the visual system autonomously through Penpot.
+3. The migration commit proves repository-side migration/history work occurred, but a commit message does not substitute for MCP read/write/render evidence or human acceptance of a produced visual asset.
+4. `DORÉ-VISUAL-DESIGNER-01-LIGHT.md` correctly strengthens the quality boundary: API/MCP success, named layers, empty containers, generic gradients or decorative rays are automatic failure. The first meaningful visual capability gate is one rendered, critiqued, revised and human-accepted LIGHT asset that survives representative Living Paper and true-night contexts.
+5. Tool choice and visual-language validity are separate questions. Penpot may remain the recorded intended production workspace, but `VIS-GRAMMAR` completion depends on transferable rendered asset evidence and real-product proof, not on a particular canvas tool.
+6. No new `VIS-GRAMMAR`, `VIS-LEARN`, `BRAND-V1` or `DORE-EXHIBITION` status change is justified. The actionable evidence gap is to prove the bridge and then prove one actual LIGHT asset under the existing Visual Designer 01 gate.
+
+This boundary prevents a tooling migration from being mistaken for design graduation and prevents future sweep passes from reading workspace declarations as completed capability.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
