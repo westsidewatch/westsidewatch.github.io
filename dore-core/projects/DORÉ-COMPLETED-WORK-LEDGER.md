@@ -319,3 +319,73 @@ Use the post-graduation rule: open Researcher 07 only if retention practicum or 
 
 **Disposition**
 Keep Researcher 06 graduated and closed under retention/transfer watch. Treat cross-verse/paraphrase behavior as bounded follow-up evidence, not automatic curriculum inflation, and do not claim production subtitle/Search completion from the offline course evidence.
+
+## CW-010 — Reflex Consolidation 1.0
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded six-track consolidation/graduation milestone; reflex learning remains `CORE/CONTINUOUS`.
+
+**Original objective**
+Connect existing Doré knowledge into transferable, evidence-bounded routes rather than phrase-specific answer memory, across reference, text retrieval, original language, cross-witness, entity and geography tracks.
+
+**Completion evidence**
+- `dore-core/reflex/REFLEX-CONSOLIDATION-1.0.md` declares the six-track consolidation contract and `GRADUATED — PASS`.
+- Merged PR #233 preserves the failed-before-passing lineage.
+- Doré Reflex Consolidation workflow run #7 completed `success` on head `142f2426acf0bdee2bf34cb3addb1a6d5127ad97`.
+- Doré Foundation Tests run #87 also completed `success` on the same head.
+- The lineage exposed a missing pytest dependency and then a genuine simplified/traditional transfer defect (`这`→`這`), which was repaired at the capability class level before the final green gate.
+
+**Current quality judgment**
+Strong for the declared six-track transfer contract because the completion claim is independently corroborated by observable CI, not documentation alone. It is not proof of universal production Search relevance, ranking, semantic association or abstention calibration.
+
+**What Doré learned / retained**
+- diagnose failure by capability class rather than memorize failed strings;
+- require unseen transfer and evidence separation before promotion;
+- preserve regression protection when consolidating new routes;
+- distinguish a bounded reflex graduation from the continuous `STIMULUS → INTENT → ROUTE → EVIDENCE → OUTCOME → REFLEX UPDATE` learning architecture.
+
+**Weaknesses / debt**
+- only one canonical signal is currently persisted under `reflex/signals/`, so raw/live signal capture and promotion history remain sparse relative to the intended architecture;
+- current broader Search relevance failures are not covered by the original six-track milestone and must become new stewardship/learning evidence rather than retroactive invalidation.
+
+**Revisit trigger**
+Reopen only if RC1–RC6 regress, route promotion occurs without unseen transfer/evidence boundaries, or repeated real-product failures show that the reflex layer is no longer capturing/repairing the relevant capability classes.
+
+**Disposition**
+Keep Reflex Consolidation 1.0 closed; continue the reflex layer as core stewardship and feed new Search/ONE/subtitle/research failures into transferable evaluation loops.
+
+## CW-011 — ONE Priority-A private R2 delivery/runtime cutover
+
+**Current classification:** `VERIFIED_COMPLETE` for the bounded Priority-A ONE media migration and private-delivery cutover; ONE itself remains `MAINTENANCE` and future Priority-B/Journal/Library media work remains separate.
+
+**Original objective**
+Move the selected Priority-A ONE binary media from GitHub runtime paths to a governed Cloudflare media architecture without exposing the R2 bucket publicly or breaking active ONE references.
+
+**Completion evidence**
+- `dore-core/cloudflare/R2-DELIVERY-MILESTONE-2026-08-24.md` records `COMPLETE / PASS`.
+- Production acceptance records 7/7 migrated assets delivered through `/api/dore/assets/file?code=<ASSET_CODE>` and 7/7 byte hashes matching D1-registered SHA-256 values.
+- ONE page HTTP verification passed.
+- Active references were switched to stable asset-code delivery URLs; post-switch audit found 0 active GitHub references to the seven rollback binaries.
+- The seven GitHub rollback binaries were removed only after R2 delivery verification, and post-removal delivery verification remained 7/7.
+- The canonical Doré Original Library 001–241 was explicitly not modified.
+- Commit `6b20c25502c89b8d58b8467e28b3b42aa37d1232` records the closeout milestone and identifies the runtime files cut over.
+
+**Current quality judgment**
+Strong for the declared migration/cutover because it includes production delivery, byte-level integrity verification, active-reference audit and a safe rollback-removal sequence. It should not be inflated into a claim that all Westside media, the full Asset Registry lifecycle, Journal media, Liming Library media or structured-data runtime are complete.
+
+**What Doré learned / retained**
+- stable public media identity should be `asset_code`, not a raw R2 object path;
+- D1 should own locator/hash/metadata while R2 owns binary media;
+- private R2 can remain non-public while browser delivery is mediated by a controlled Pages Function;
+- runtime cutover should be verified before rollback binaries are removed;
+- source-locked canonical libraries should remain outside unrelated runtime migrations.
+
+**Weaknesses / debt**
+- the milestone covers only the selected Priority-A ONE set;
+- Priority-B shared UI/site images, future Journal media, Liming Library media and Search/corpus structured-data runtime remain separate milestones;
+- later routing/schema changes could break asset-code delivery even though the historical cutover was correct.
+
+**Revisit trigger**
+Re-run delivery/hash/reference regression when the asset registry schema, delivery endpoint, ONE runtime references, Cloudflare binding model or migrated asset set changes materially.
+
+**Disposition**
+Keep the Priority-A migration/cutover closed and maintain it through regression checks. Do not reopen merely because the broader media platform continues to expand.
