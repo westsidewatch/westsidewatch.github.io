@@ -134,6 +134,22 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** P01 completion is governed by the Master Work Register plus persisted runtime/project evidence. Visual-system research is a separate parallel/later line and must not interrupt or replace P01.
 
+## SR-012 — Original-language reader v0.1 implementation
+
+**Historical source:** `dore-core/readers/original_language_reader.py`.
+
+**Classification:** `SUPERSEDED` as current executable original-language reader behavior; retained as historical provenance of the first conservative reader/provenance contract.
+
+**Superseding source:** `dore_core/readers/original_language.py` v0.3.
+
+**Conflict resolved:** the historical v0.1 reader maps only Matthew in MorphGNT and conservatively treats Daniel/Ezra as unresolved `und`/warning behavior. The later v0.3 reader expands MorphGNT mapping across all NT books, parses the pinned corpus shape, and implements verse-level Hebrew/Aramaic boundaries for Daniel/Ezra while deliberately retaining `und` at Daniel 2:4 where verse-level certainty is unsafe. Therefore the old executable must not be used to infer current NT coverage or Daniel/Ezra language handling.
+
+**Retained value:** pinned corpus snapshots, source-native references, witness identity, analysis provenance and refusal to fabricate language certainty remain current principles and are strengthened by the v0.3 implementation.
+
+**Important boundary:** this supersession does not reopen or invalidate the bounded Language Core parity milestone (`CW-003`), nor does it prove global Scripture Canon/original-language curriculum completion. It is implementation-history reconciliation only.
+
+**Current authority:** interpret current reader behavior from `dore_core/readers/original_language.py` and current Language Core/foundation evidence, not the historical v0.1 file.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
