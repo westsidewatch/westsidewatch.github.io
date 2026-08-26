@@ -171,3 +171,41 @@ The micro-unit requires unseen transfer across different books and formatting va
 Execute a bounded unseen fixture set satisfying the micro-unit's exact graduation paragraph, persist pass/fail results, and only then record a bounded completion milestone.
 
 **Priority:** LOW/MEDIUM; useful for Search quality, subordinate to P01.
+
+## ME-011 — Global Biblical Corpus Reading completion
+
+**Related work:** `CORE`, `dore-core/knowledge/foundation/language-text/BASELINE-CHINESE-ENGLISH-WITNESS-CURRICULUM.md`
+
+**What is already evidenced**
+Doré has substantial original-language/textual infrastructure and a durable witness architecture: adapter-based ingestion, explicit witness identity, surface-preserving normalization, provenance/licensing separation, and bounded Hebrew/Greek work. The baseline curriculum also defines a clear researcher-standard contract for Chinese and English witnesses and cross-version comparison.
+
+**What is not yet evidenced strongly enough**
+No independent persisted artifact was found proving the named `BIBLICAL_CORPUS_READING_COMPLETE` milestone across operational Hebrew/Aramaic + Greek, operational LXX + Vulgate, Chinese and English baseline witnesses, lawful access, and cross-version comparison benchmarks. Downstream Researcher/Search competence cannot silently substitute for this broader corpus-reading contract.
+
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for the global corpus-reading completion claim; the underlying Language/Text architecture remains `CORE/CONTINUOUS`.
+
+**Smallest useful future evidence**
+Persist a coverage matrix for the required witness families, lawful-access/provenance status, and explicit cross-version benchmark results; only then issue the named completion token if every curriculum gate is satisfied.
+
+**Priority:** MEDIUM strategically; do not interrupt P01.
+
+## ME-012 — Liming Library bounded milestone/runtime evidence
+
+**Related work:** `LIBRARY-INGEST`, `3MS`, `LIBRARY-V1`, `dore-core/knowledge/library/LIMING-LIBRARY-BUILD-PLAN-v0.1.md`, `LIMING-LIVE-INGEST-CONTRACT-v1.md`
+
+**What is already evidenced**
+The Liming Library build plan defines a coherent learning-institution model, preserves Resource Master editorial logic, separates coding/Morning Stars/Spectrum/Collections, and sets explicit milestone contracts M0.5–M5. A live-ingest contract defines the intended discover→verify→classify→registry→relationship→product→feedback loop, storage boundaries, rights/provenance requirements and shared resource identity across Library/ONE/subtitle accessibility layers. The Three-Morning-Star file records a genuine first autonomous discovery pass plus an explicit gap diagnosis and next-pass saturation requirement.
+
+**What is not yet evidenced strongly enough**
+- no applied examination artifact was found proving `LIBRARY/M0.5 — Library Science Foundation`;
+- no explicit pass artifact was found proving `LIBRARY/M1 — Existing Collection Understood`;
+- the Three-Morning-Star document itself says `EXPAND, VERIFY, SATURATE`, identifies major uncovered categories, and therefore does not satisfy `LIBRARY/M1.5` coverage-complete v1;
+- the live-ingest contract is a contract, not evidence of a successful authenticated production write, dedupe/enrichment cycle, relationship graph exposure, or feedback return;
+- no evidence in this bounded batch justifies promoting `LIBRARY-INGEST`, `3MS`, or `LIBRARY-V1` to `VERIFIED_COMPLETE`.
+
+**Current classification:** `ACTIVE_PARALLEL / UNKNOWN_NEEDS_EVIDENCE` for the named bounded milestones and live runtime behavior. Current Master Work Register statuses remain appropriate.
+
+**Smallest useful future evidence**
+For M0.5/M1, persist the applied exam/audit outputs named by the build plan. For M1.5, complete at least one fresh non-seeded discovery pass, coverage matrix, exclusions/borderlines and saturation judgment. For live ingest, persist one real verified resource flowing through authenticated write → stable identity/dedupe → provenance/rights → teacher/series/Scripture/product edges → readback in the intended product view, without creating a duplicate identity.
+
+**Priority:** MEDIUM/HIGH for Library capability, but subordinate to P01.
