@@ -212,3 +212,20 @@ The Liming Library build plan defines a coherent learning-institution model, pre
 For M0.5/M1, persist the applied exam/audit outputs named by the build plan. For M1.5, complete at least one fresh non-seeded discovery pass, coverage matrix, exclusions/borderlines and saturation judgment. For live ingest, persist one real verified resource flowing through authenticated write → stable identity/dedupe → provenance/rights → teacher/series/Scripture/product edges → readback in the intended product view, without creating a duplicate identity.
 
 **Priority:** MEDIUM/HIGH for Library capability, but subordinate to P01.
+
+## ME-013 — Original-language reader runnable acceptance evidence
+
+**Related work:** `CORE`, Language/Text foundation, `dore-core/readers/original_language_reader.py`, `dore-core/tests/test_original_language_reader.py`.
+
+**What is already evidenced**
+A real provenance-preserving reader foundation exists for pinned OSHB and MorphGNT/SBLGNT snapshots. It separates surface text from analytical metadata, preserves source-native references and corpus snapshots, and deliberately refuses to fabricate Hebrew certainty for mixed-language Daniel/Ezra. Cross-witness alignment tests elsewhere in the Language Core are genuinely executable and preserve distinct witness identity while surfacing missing/unaligned witnesses for review.
+
+**What is not yet evidenced strongly enough**
+The reader-specific acceptance file is explicitly a non-runnable specification placeholder: it imports a placeholder module, records `TEST_SPEC_PENDING_PACKAGE_WIRING`, and states that package/import wiring is the next engineering step. Therefore no claim that the original-language reader acceptance suite itself passes is currently justified. The named requirements for source/emitted token reconciliation, missing provenance failure, and Daniel/Ezra mixed-language handling remain specified but not independently executed in this file.
+
+**Current classification:** `ACTIVE / UNKNOWN_NEEDS_EVIDENCE` for runnable reader acceptance. The implementation is real progress and remains part of the Language/Text foundation; this is not a downgrade of the reader architecture.
+
+**Smallest useful future evidence**
+Package or otherwise wire the reader into an importable test target, convert the existing acceptance specification into executable tests, run it against bounded pinned OSHB/MorphGNT fixtures, and persist the pass/fail output including token-count reconciliation and mixed-language boundary behavior.
+
+**Priority:** MEDIUM; foundational quality work, subordinate to P01.
