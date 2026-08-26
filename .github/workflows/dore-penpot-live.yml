@@ -3,10 +3,13 @@ on:
   push:
     paths:
       - functions/api/dore/penpot-live.js
+      - .github/workflows/dore-penpot-live.yml
 jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
-      - run: sleep 120
-      - run: curl --fail-with-body --silent --show-error --retry 5 https://westsidewatch.github.io/api/dore/penpot-live | tee /tmp/result.json
+      - run: sleep 90
+      - env:
+          HOST: westsidewatch-github-io.pages.dev
+        run: curl --fail-with-body --silent --show-error --retry 5 "https://${HOST}/api/dore/penpot-live" | tee /tmp/result.json
       - run: python3 -c "import json; d=json.load(open('/tmp/result.json')); assert d.get('ok') is True and d.get('tool_count',0)>0; print(d)"
