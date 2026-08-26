@@ -122,6 +122,18 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** capability may be accumulated and deployed incrementally when the relevant bounded competence and authority are verified. Real ministry/product work may serve as a learning laboratory, but visible/product claims must never exceed verified internal state, and P01 remains the active critical path.
 
+## SR-011 — P01 preflight + visual-upgrade brief Track-B coupling
+
+**Source:** `dore-core/knowledge/library/P01-PREFLIGHT-AND-VISUAL-UPGRADE-BRIEF.md`.
+
+**Classification:** `SUPERSEDED` only for the historical sequencing/coupling claim that a broad visual-system upgrade must be prepared as part of P01 completion; `CURRENT / RETAINED` for its visual-learning doctrine and design-research scope where compatible with later evidence.
+
+**Conflict resolved:** the brief's Track A remains aligned with the active P01 subtitle-preflight/autonomy loop. Its Track B historically coupled P01 with broad visual-system preparation. The later canonical Master Work Register separates those dependency lines: `P01-PREFLIGHT` is the subtitle critical path, while `VIS-LEARN`, `VIS-GRAMMAR`, `LIBRARY-V1` and `BRAND-V1` own design education, visual-language discovery, Library redesign and later ecosystem propagation. Visual work may proceed in parallel but cannot redefine, delay or become an acceptance prerequisite for P01.
+
+**Retained value:** the brief remains useful historical evidence for Doré's visual-learning agenda, Library/brand research questions and the principle that visual capability should be learned from comparative evidence rather than copied mechanically.
+
+**Current authority:** P01 completion is governed by the Master Work Register plus persisted runtime/project evidence. Visual-system research is a separate parallel/later line and must not interrupt or replace P01.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
