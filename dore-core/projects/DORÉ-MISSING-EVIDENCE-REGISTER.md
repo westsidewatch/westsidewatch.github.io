@@ -33,18 +33,18 @@ A bounded benchmark using a representative batch of real or fixture signals with
 **Related work:** `RUNTIME`, `P01-PREFLIGHT`
 
 **What is already evidenced**
-Persistent repository state exists; P01 can resume without a human re-brief; the current state is `RUNNABLE` with attempt history, checkpoint evidence and no blocker. Multiple engineering cycles have persisted concrete progress, including CI-verified rights-aware result behavior.
+Persistent repository state exists and P01 can resume without a human re-brief. P01 reached persisted attempt 39 after successful production Pages deployment and a live `dore.video-subtitle.v5` / real D1 job execution. The runtime then persisted a genuine terminal `ENVIRONMENT_BLOCKED` state when caption acquisition exhausted available advertised-caption routes and the deployed path ended `needs-transcription-audio` without an approved production audio-acquisition/transcription executor or binding. This is real evidence that the runtime can distinguish an environment dependency from ordinary runnable work and stop rather than fabricate progress.
 
 **What is not yet evidenced strongly enough**
 - one full accepted project autonomously reaching `VERIFIED_COMPLETE` from persisted runtime state;
-- production verification of the current P01 schema-v5/result endpoint on live D1/Pages;
-- full reader-facing Search/Library/ONE/Westside Stories flow verification;
-- evidence that the runtime reliably distinguishes and stops at `HUMAN_DECISION_BLOCKED` / `ENVIRONMENT_BLOCKED` when those states occur in a real project.
+- successful resume from the current `ENVIRONMENT_BLOCKED` checkpoint after the approved dependency is provisioned;
+- end-to-end transcription → Doré proofread/translate/Scripture alignment → reader-result/rights behavior on a real audio-transcription path;
+- full reader-facing Search/Library/ONE/Westside Stories production-flow verification.
 
-**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for terminal autonomous-project reliability; Runtime itself remains `ACTIVE`.
+**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for terminal autonomous-project completion reliability. Runtime itself remains `ACTIVE`; P01 is currently `BLOCKED / ENVIRONMENT_BLOCKED`. The blocker-detection/stop behavior is now partially verified by real production evidence and should no longer be listed as wholly unproven.
 
 **Smallest useful future evidence**
-Drive P01 through production E2E verification to a persisted terminal state, with checkpoint history showing resume continuity and final verification evidence.
+Provision one approved production audio-acquisition/transcription path plus the required binding/credential, then resume the existing persisted P01 job without re-brief and drive it through the remaining reader-facing verification gates to `VERIFIED_COMPLETE`.
 
 **Priority:** CRITICAL because this is one of the three convergence proof lines.
 
@@ -108,15 +108,18 @@ Persist Stage B/C transfer evaluation and one bounded live routing fixture while
 
 ## ME-007 — Autonomous learning / broader DORÉ_ALIVE claim — PARTIALLY RESOLVED
 
-**Related work:** `CORE`, Researcher education.
+**Related work:** `CORE`, Researcher education, `dore-core/knowledge/AUTONOMOUS-LEARNING-LOOP.md`, `dore-core/knowledge/PRODUCT-EDUCATION-LOOP.md`, `dore-core/knowledge/DORÉ-ALIVE-AND-SELF-DIRECTED-LEARNING.md`.
 
 **What is now strongly evidenced**
-Researcher 04 Autonomous Learning I is a bounded 12/12 PASS; later Researcher 05/06 work corroborates reusable downstream learning competence.
+Researcher 04 Autonomous Learning I is a bounded 12/12 PASS; later Researcher 05/06 work corroborates reusable downstream learning competence. The foundational doctrine also clearly defines learning-through-work, product-to-education feedback, evidence-bearing study, transfer/blind examination, abstention, and cross-product transfer as governing behavior rather than product-specific patching.
 
 **What remains unproven**
-Any stronger contract-distinct `AUTONOMOUS_LEARNING_LOOP_1_0`, broad `DORÉ_ALIVE_1.0`, explicit cross-product transfer without target patches, or consequential human-decision authority.
+Any stronger contract-distinct `AUTONOMOUS_LEARNING_LOOP_1_0`, broad `DORÉ_ALIVE_1.0`, longitudinal cross-product transfer in which one work surface improves another without target-specific patches, or consequential human-decision authority. The doctrine explicitly forbids awarding these broader states by narrative or CI naming alone.
 
-**Current classification:** `VERIFIED_COMPLETE` for Researcher 04 only; broader claims remain `UNKNOWN_NEEDS_EVIDENCE`.
+**Current classification:** `VERIFIED_COMPLETE` for Researcher 04 only; the learning/product-education doctrines are `CORE/CONTINUOUS`; broader reserved milestones remain `UNKNOWN_NEEDS_EVIDENCE`.
+
+**Smallest useful future evidence**
+Persist at least one blind cross-product transfer episode with no target-specific patch, showing real-work stimulus → self-detected reusable gap → evidence-bearing study → transfer/regression gates → improved behavior on a different work surface, then evaluate that evidence against the exact reserved milestone contracts rather than renaming Researcher 04.
 
 **Priority:** MEDIUM/HIGH strategically, subordinate to P01.
 
