@@ -1,0 +1,86 @@
+name: Doré Memory Core No-AI Acceptance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'functions/api/dore/memory.js'
+      - 'functions/api/dore/retrieval.js'
+      - 'functions/api/dore/cross-memory.js'
+      - 'functions/api/dore/raw-history.js'
+      - 'docs/dore-memory-core-boundary.md'
+      - '.github/workflows/dore-memory-core-no-ai-acceptance.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dore-memory-core-no-ai-production
+  cancel-in-progress: false
+
+jobs:
+  production-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Build production bundle
+        run: hugo --gc --minify
+      - name: Static provider-independence gate
+        run: |
+          set -euo pipefail
+          grep -q "workers_ai_required:false" functions/api/dore/memory.js
+          grep -q "workers_ai_required:false" functions/api/dore/retrieval.js
+          grep -q "workers_ai_required:false" functions/api/dore/cross-memory.js
+          grep -q "workers_ai_used:false" functions/api/dore/raw-history.js
+          ! grep -q "env.AI.run" functions/api/dore/retrieval.js
+          ! grep -q "env.AI.run" functions/api/dore/cross-memory.js
+      - name: Deploy Memory Core to Cloudflare Pages
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$CLOUDFLARE_API_TOKEN"
+          test -n "$CLOUDFLARE_ACCOUNT_ID"
+          npx --yes wrangler@4 pages deploy public --project-name=westsidewatch-github-io --branch=main --commit-hash="${GITHUB_SHA}" --commit-message="Doré Memory Core no-AI acceptance ${GITHUB_SHA}"
+      - name: Prove write, same-session recall, cross-session recall, and raw history without AI
+        env:
+          BASE: https://westsidewatch-github-io.pages.dev
+        run: |
+          set -euo pipefail
+          sleep 20
+          stamp="$(date +%s)-$RANDOM"
+          project="no-ai-$stamp"
+          old="old-$stamp"
+          fresh="fresh-$stamp"
+          token="CEDAR-$stamp"
+
+          write=$(curl -fsS -X POST "$BASE/api/dore/memory" -H 'content-type: application/json' --data "{\"project_id\":\"$project\",\"conversation_id\":\"$old\",\"actor_id\":\"ci\",\"role\":\"user\",\"content\":\"Remember $token as the no-AI memory proof.\",\"semantic_index\":false}")
+          echo "$write" | jq .
+          echo "$write" | jq -e '.ok==true and .workers_ai_required==false and .memory_core=="d1+r2"'
+
+          recall=$(curl -fsS -X POST "$BASE/api/dore/retrieval" -H 'content-type: application/json' --data "{\"project_id\":\"$project\",\"conversation_id\":\"$old\",\"query\":\"$token\"}")
+          echo "$recall" | jq .
+          echo "$recall" | jq -e '.ok==true and .contract.workers_ai_required==false and .contract.retrieval_core=="d1-lexical+recent"'
+          echo "$recall" | jq -er '.context.messages[].content' | grep -F "$token"
+
+          cross=$(curl -fsS -X POST "$BASE/api/dore/cross-memory" -H 'content-type: application/json' --data "{\"action\":\"retrieve\",\"project_id\":\"$project\",\"conversation_id\":\"$fresh\",\"query\":\"$token\"}")
+          echo "$cross" | jq .
+          echo "$cross" | jq -e --arg old "$old" '.ok==true and .contract.workers_ai_required==false and (.memories|map(.conversation_id)|index($old))!=null'
+          echo "$cross" | jq -er '.memories[].content' | grep -F "$token"
+
+          raw=$(curl -fsS -X POST "$BASE/api/dore/raw-history" -H 'content-type: application/json' --data "{\"source\":\"chatgpt\",\"source_conversation_id\":\"history-$stamp\",\"source_message_id\":\"msg-$stamp\",\"project_id\":\"dore-global\",\"actor_id\":\"user\",\"role\":\"user\",\"title\":\"No AI acceptance\",\"content\":\"Historical proof $token\",\"source_created_at\":\"2026-08-08T12:00:00Z\"}")
+          echo "$raw" | jq .
+          echo "$raw" | jq -e '.ok==true and .workers_ai_used==false and .provider_independent==true'
+
+          history=$(curl -fsS -X POST "$BASE/api/dore/raw-history" -H 'content-type: application/json' --data "{\"action\":\"recall\",\"source\":\"chatgpt\",\"from\":\"2026-08-08T00:00:00Z\",\"to\":\"2026-08-08T23:59:59Z\",\"query\":\"$token\"}")
+          echo "$history" | jq .
+          echo "$history" | jq -e '.ok==true and .workers_ai_used==false and .provider_independent==true'
+          echo "$history" | jq -er '.messages[].content' | grep -F "$token"
+
+          echo DORE_MEMORY_CORE_NO_AI_PASS
