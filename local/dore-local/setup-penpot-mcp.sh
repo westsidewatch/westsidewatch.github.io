@@ -37,49 +37,54 @@ COREPACK="$RUNTIME/node_modules/.bin/corepack"
 [[ -x "$COREPACK" ]] || { echo "ERROR: Corepack executable missing" >&2; exit 3; }
 "$COREPACK" prepare pnpm@11.4.0 --activate
 
-# Install the published package without invoking its bootstrap yet. The package
-# owns an internal pnpm workspace, so build approval must be written into that
-# workspace rather than the outer Doré runtime.
-"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.15.4
+"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.15.4 pnpm@11.4.0
 PKG_DIR="$RUNTIME/node_modules/@penpot/mcp"
 PKG="$PKG_DIR/package.json"
-[[ -f "$PKG" ]] || { echo "ERROR: @penpot/mcp package not installed" >&2; exit 3; }
-
-"$NODE22" - "$PKG" <<'NODE'
-const fs = require('fs');
-const file = process.argv[2];
-const p = JSON.parse(fs.readFileSync(file, 'utf8'));
-p.pnpm = p.pnpm || {};
-p.pnpm.onlyBuiltDependencies = ['esbuild', 'sharp'];
-fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
-NODE
-
-# pnpm 11 reads build approval from pnpm-workspace.yaml when a workspace file
-# is present. Penpot ships one, so patch that source of truth as well.
 WORKSPACE="$PKG_DIR/pnpm-workspace.yaml"
+PNPM="$RUNTIME/node_modules/.bin/pnpm"
+[[ -f "$PKG" && -x "$PNPM" ]] || { echo "ERROR: Penpot MCP bootstrap prerequisites missing" >&2; exit 3; }
+
+# pnpm 11 no longer honors legacy onlyBuiltDependencies for this gate. Its
+# current policy is allowBuilds in pnpm-workspace.yaml. Penpot needs esbuild and
+# sharp lifecycle scripts, so explicitly allow only those two packages.
 if [[ -f "$WORKSPACE" ]]; then
   "$NODE22" - "$WORKSPACE" <<'NODE'
 const fs = require('fs');
 const file = process.argv[2];
 let s = fs.readFileSync(file, 'utf8');
-// Remove an existing onlyBuiltDependencies block if present, preserving the
-// next top-level key. Then append a deterministic approval block.
-s = s.replace(/\nonlyBuiltDependencies:\n(?:[ \t]+-.*\n)*/g, '\n');
-s = s.replace(/\nneverBuiltDependencies:\n(?:[ \t]+-.*\n)*/g, '\n');
-s = s.replace(/\s+$/, '') + '\n\nonlyBuiltDependencies:\n  - esbuild\n  - sharp\n';
+const dropList = key => {
+  const re = new RegExp(`\\n${key}:\\n(?:[ \\t]+-.*\\n)*`, 'g');
+  s = s.replace(re, '\n');
+};
+const dropMap = key => {
+  const re = new RegExp(`\\n${key}:\\n(?:[ \\t]+[^\\n]+\\n)*`, 'g');
+  s = s.replace(re, '\n');
+};
+dropList('onlyBuiltDependencies');
+dropList('ignoredBuiltDependencies');
+dropList('neverBuiltDependencies');
+dropMap('allowBuilds');
+s = s.replace(/\s+$/, '') + '\n\nallowBuilds:\n  esbuild: true\n  sharp: true\n';
 fs.writeFileSync(file, s);
 NODE
 fi
 
-PNPM="$RUNTIME/node_modules/.bin/pnpm"
-if [[ ! -x "$PNPM" ]]; then
-  "$NPM22" install --ignore-scripts --save-exact pnpm@11.4.0
-  PNPM="$RUNTIME/node_modules/.bin/pnpm"
-fi
-[[ -x "$PNPM" ]] || { echo "ERROR: pnpm executable missing" >&2; exit 3; }
+# Remove any legacy package.json policy so pnpm 11 has exactly one source of
+# truth and cannot inherit stale contradictory settings.
+"$NODE22" - "$PKG" <<'NODE'
+const fs = require('fs');
+const file = process.argv[2];
+const p = JSON.parse(fs.readFileSync(file, 'utf8'));
+if (p.pnpm) {
+  delete p.pnpm.onlyBuiltDependencies;
+  delete p.pnpm.ignoredBuiltDependencies;
+  delete p.pnpm.neverBuiltDependencies;
+  delete p.pnpm.allowBuilds;
+  if (!Object.keys(p.pnpm).length) delete p.pnpm;
+}
+fs.writeFileSync(file, JSON.stringify(p, null, 2) + '\n');
+NODE
 
-# Complete Penpot's workspace bootstrap with the approval policy already in
-# place. CI is set so ignored required builds are treated as a hard failure.
 (
   cd "$PKG_DIR"
   CI=true "$PNPM" install
