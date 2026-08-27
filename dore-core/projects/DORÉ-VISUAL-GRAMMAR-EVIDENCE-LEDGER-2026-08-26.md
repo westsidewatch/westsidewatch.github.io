@@ -76,6 +76,32 @@ Current evidence judgment:
 
 This boundary prevents a tooling migration from being mistaken for design graduation and prevents future sweep passes from reading workspace declarations as completed capability.
 
+## Workspace authority contradiction — Sweep batch 30
+
+Additional evidence reviewed:
+
+- `PENPOT-BRIDGE-01.md`, which still declares Penpot the intended remote Doré bridge and records a future PASS sequence rather than a completed bridge;
+- current live design activity in an existing Figma file `v0LXKYZznCRmXWhk36zARN`, where the Visual Language Lab has been actively edited through the connected Figma execution surface during the same product-history period;
+- a fresh Figma metadata verification attempt in this sweep, which was blocked by the account's MCP tool-call limit before an independent canvas readback could be persisted.
+
+Reconciliation judgment:
+
+1. Repository history currently contains a **workspace-authority contradiction**: Penpot documentation uses canonical/production-only language, while later live design execution is occurring in Figma. The Penpot bridge itself still lacks its own PASS evidence.
+2. This is **not** evidence that Figma should be declared permanently canonical, nor that Penpot should be retired. It is evidence that the stronger claim `Penpot only` is no longer safe to treat as present operational truth without a fresh governing decision plus tool evidence.
+3. Until that decision/evidence is durable, visual grammar must remain **tool-agnostic at the capability level**. The governing object is the reusable Doré-derived asset system and its tested output, not a specific canvas vendor.
+4. `PENPOT-BRIDGE-01` remains an implementation history/workstream, but its canonical-workspace language should be treated as `UNKNOWN_NEEDS_EVIDENCE / POSSIBLY_SUPERSEDED` rather than silently propagated.
+5. The current design milestone remains unchanged: one real purpose-built LIGHT asset, then the coherent website-asset family (light, Bethlehem star, water, cloud/sky, stone/wall, city-edge, restrained paper/stone surfaces, dividers/edges/section marks), each rendered, critiqued, revised, human-accepted and then proved across real content.
+6. Original Doré works remain curated content/exhibition material, not the default interface asset source.
+7. No P01 action or state was modified by this reconciliation.
+
+Smallest future evidence to resolve workspace authority:
+
+- persist one explicit current workspace decision in the visual project memory;
+- independently verify read/write/readback on the chosen execution surface;
+- keep the visual-language acceptance gates identical regardless of tool.
+
+This is an evidence-management issue, not a blocker for Sweep 01 or for purpose-built visual-asset development.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
