@@ -5,7 +5,7 @@ Uses the official Penpot MCP endpoint through a tiny Node MCP client and keeps
 visual acceptance external to the acting text model. No cloud AI is required.
 """
 from __future__ import annotations
-import json, os, subprocess, urllib.request
+import json, os, subprocess, urllib.request, shutil
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -16,12 +16,22 @@ MODEL = os.environ.get('DORE_LOCAL_MODEL', 'qwen3:8b')
 VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL', 'qwen3-vl:8b')
 MAX_STEPS = int(os.environ.get('DORE_PENPOT_MAX_STEPS', '16'))
 
+def _node_bin():
+    explicit=os.environ.get('DORE_NODE_BIN')
+    candidates=[explicit, shutil.which('node'), '/opt/homebrew/bin/node', '/usr/local/bin/node', str(Path.home()/'.nvm/versions/node/current/bin/node')]
+    for c in candidates:
+        if c and Path(c).is_file(): return c
+    return None
+
 def _node(op: str, payload=None):
     if not MCP_CLIENT.is_file():
         return {'ok': False, 'error': f'penpot_mcp_client_missing:{MCP_CLIENT}', 'url': MCP_URL}
+    node=_node_bin()
+    if not node:
+        return {'ok':False,'error':'node_executable_not_found','searched':['PATH','/opt/homebrew/bin/node','/usr/local/bin/node','~/.nvm/versions/node/current/bin/node'],'url':MCP_URL}
     env = os.environ.copy(); env['PENPOT_MCP_URL'] = MCP_URL
     p = subprocess.run(
-        ['node', str(MCP_CLIENT), op],
+        [node, str(MCP_CLIENT), op],
         input=json.dumps(payload or {}, ensure_ascii=False) if payload is not None else None,
         text=True, capture_output=True, env=env, cwd=str(MCP_CLIENT.parent), timeout=90,
     )
@@ -29,9 +39,8 @@ def _node(op: str, payload=None):
     try: data = json.loads(raw or '{}')
     except Exception: data = {'ok': False, 'error': raw or p.stderr or f'node exited {p.returncode}'}
     if p.returncode and data.get('ok') is not True:
-        data.setdefault('stderr', (p.stderr or '').strip())
-        data.setdefault('client', str(MCP_CLIENT))
-        return data
+        data.setdefault('stderr', (p.stderr or '').strip()); data.setdefault('client', str(MCP_CLIENT)); data.setdefault('node',node); return data
+    data.setdefault('node',node)
     return data
 
 def status(): return _node('status')
