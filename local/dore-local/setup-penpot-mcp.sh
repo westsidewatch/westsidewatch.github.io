@@ -3,6 +3,9 @@ set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RUNTIME="$HOME/.dore/runtime/penpot-mcp"
 VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-qwen3-vl:8b}"
+LABEL="io.westsidewatch.penpot-mcp"
+PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
+DOMAIN="gui/$(id -u)"
 
 command -v brew >/dev/null || { echo "ERROR: Homebrew is required to provision isolated Node 22 for Penpot MCP." >&2; exit 2; }
 command -v ollama >/dev/null || { echo "ERROR: Ollama is required." >&2; exit 2; }
@@ -20,10 +23,17 @@ NPX22="$NODE22_PREFIX/bin/npx"
 
 echo "Penpot MCP Node: $($NODE22 --version) ($NODE22)"
 
+# A previously registered KeepAlive LaunchAgent can keep touching the old MCP
+# tree while setup removes it, producing macOS 'Directory not empty' races.
+# Stop/unload it before rebuilding the runtime from scratch.
+launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
+if [[ -f "$PLIST" ]]; then launchctl unload "$PLIST" 2>/dev/null || true; fi
+sleep 1
+
+rm -rf "$RUNTIME"
 mkdir -p "$RUNTIME"
 cd "$RUNTIME"
-rm -rf node_modules package-lock.json
-if [[ ! -f package.json ]]; then "$NPM22" init -y >/dev/null 2>&1; fi
+"$NPM22" init -y >/dev/null 2>&1
 
 # Penpot's published package bootstraps a pnpm workspace. pnpm 11 blocks native
 # dependency build scripts unless explicitly approved. Penpot's own issue
