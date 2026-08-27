@@ -6,6 +6,11 @@ const clean=(v,max=12000)=>String(v??'').normalize('NFKC').trim().slice(0,max);
 const safeId=(v,f='')=>clean(v,160).replace(/[^a-zA-Z0-9._:-]/g,'-')||f;
 const newId=()=>typeof crypto.randomUUID==='function'?crypto.randomUUID():`${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
 
+export function onRequestGet({env}){
+ const configured=Boolean(clean(env?.OPENAI_API_KEY,12000));
+ return json({ok:configured,schema:'dore.search-chatgpt-readiness.v1',provider:{name:'openai',api:'responses'},model:clean(env?.DORE_CHATGPT_MODEL,120)||'gpt-5.4',configured,error:configured?null:'openai_api_key_unbound'},configured?200:503);
+}
+
 export async function onRequestPost({request,env}){
  let body;try{body=await request.json()}catch{return json({ok:false,error:'invalid_json'},400)}
  const query=clean(body?.query,4000);if(!query)return json({ok:false,error:'query_required'},400);
