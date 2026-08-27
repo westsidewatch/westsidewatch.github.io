@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore'))
 DB=ROOT/'data'/'dore.sqlite3'; HOST=os.environ.get('DORE_LOCAL_HOST','127.0.0.1'); PORT=int(os.environ.get('DORE_LOCAL_PORT','8788'))
 MODEL=os.environ.get('DORE_LOCAL_MODEL','qwen3:8b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
+ALLOWED_ORIGINS={'https://westsidewatch.github.io','https://westsidewatch-github-io.pages.dev'}
 SYSTEM='''You are Doré, a persistent local research and knowledge agent. Your identity is independent of the language model serving this response. Use supplied memory as evidence. Do not invent memories. If memory is insufficient, say so. Keep continuity across conversations through Doré Memory Core.'''
 def now(): return datetime.now(timezone.utc).isoformat()
 def db():
@@ -24,10 +25,20 @@ def recall(project,cid,q,limit=14):
 def ollama(messages):
  data=json.dumps({'model':MODEL,'messages':messages,'stream':False}).encode(); req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'}); return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']['content']
 class H(BaseHTTPRequestHandler):
+ def cors(self):
+  origin=self.headers.get('Origin','')
+  if origin in ALLOWED_ORIGINS:
+   self.send_header('Access-Control-Allow-Origin',origin)
+   self.send_header('Vary','Origin')
+  self.send_header('Access-Control-Allow-Methods','GET, POST, OPTIONS')
+  self.send_header('Access-Control-Allow-Headers','Content-Type, Accept')
+  self.send_header('Access-Control-Allow-Private-Network','true')
  def sendj(self,x,s=200):
-  b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
+  b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Cache-Control','no-store'); self.cors(); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
+ def do_OPTIONS(self):
+  self.send_response(204); self.cors(); self.send_header('Content-Length','0'); self.end_headers()
  def do_GET(self):
-  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False})
+  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True})
   self.sendj({'ok':False,'error':'not_found'},404)
  def do_POST(self):
   try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
@@ -38,7 +49,7 @@ class H(BaseHTTPRequestHandler):
   save(cid,'user',text,project); memories=recall(project,cid,text); context='\n'.join(f"[{m['created_at']}] {m['role']}: {m['content']}" for m in reversed(memories))
   try: answer=ollama([{'role':'system','content':SYSTEM+'\n\nDoré memory:\n'+context},{'role':'user','content':text}])
   except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
-  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'answer':answer,'memory_hits':len(memories),'model':MODEL,'workers_ai_used':False})
+  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False})
  def log_message(self,*a): pass
 if __name__=='__main__':
  print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
