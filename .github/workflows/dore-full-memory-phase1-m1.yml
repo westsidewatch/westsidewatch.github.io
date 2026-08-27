@@ -1,0 +1,14 @@
+name: Dore Full Memory Phase 1 M1
+on:
+  push:
+    paths:
+      - functions/api/dore/memory-phase1-diagnostic.js
+      - .github/workflows/dore-full-memory-phase1-m1.yml
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90
+      - run: curl --fail-with-body --silent --show-error https://westsidewatch-github-io.pages.dev/api/dore/memory-phase1-diagnostic | tee /tmp/m1.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/m1.json')); assert d.get('milestone')=='M1_STORAGE_SCOPE_PASS',d; print(json.dumps(d,ensure_ascii=False))"
