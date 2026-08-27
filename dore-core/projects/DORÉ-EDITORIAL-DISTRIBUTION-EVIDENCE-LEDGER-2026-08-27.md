@@ -90,3 +90,9 @@ P01 protection rechecked: no subtitle-path action, runtime mutation, deployment,
 ## Sweep source-family accounting
 
 This bounded family is now explicitly accounted for by Sweep 01 as of 2026-08-27. Its canonical interpretation is the existing cluster of `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL` rows rather than a new standalone workstream. The durable ledger remains the evidence link for that interpretation until one of the six smallest future proofs above is actually persisted. No completed-work, revisit, superseded/retired, or missing-evidence classification changed in this pass, and P01 remained untouched.
+
+## Checkpoint 22 linkage — 2026-08-27
+
+Sweep 01 bounded checkpoint 22 treats this ledger as the durable accounting record for the editorial/publishing/distribution family. Fresh review of the governing research source confirms that its ten named outputs remain requirements rather than completed evidence. The canonical Master Register therefore remains unchanged by design: its existing `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL` rows already express the strongest justified classifications.
+
+No new completed milestone, revisit candidate, superseded/retired item, or missing-evidence identifier is warranted from this batch. The smallest useful advancement remains one of the six bounded proofs above. P01 was not touched.
