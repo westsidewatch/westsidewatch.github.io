@@ -271,3 +271,28 @@ Current disposition:
 - Brand propagation: remain gated on real digital + print/ministry proof.
 
 Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
+
+## Checkpoint 21 — visual knowledge-family contract reconciliation (2026-08-27)
+
+Bounded evidence reviewed in this pass:
+
+- complete current `dore-core/knowledge/visual/` family;
+- `VISUAL-DESIGNER-01-LIGHT-RESEARCH-ROUND-01.md`;
+- `WESTSIDE-WATCH-DORÉ-ENGRAVING-BRAND-SYSTEM-P01.md`;
+- the governing `VIS-GRAMMAR` / `DORE-EXHIBITION` interpretation already present in the Master Register and Checkpoint 20.
+
+Reconciliation findings:
+
+1. `VISUAL-DESIGNER-01-LIGHT-RESEARCH-ROUND-01.md` is correctly classified as learning evidence, not brand law. Its strongest reusable findings are that light needs a source, occlusion, material/depth hierarchy, retained shadow information, restrained gold contact edges and crop-aware website behavior. The failed vector/Penpot attempts are not completion evidence; they establish the durable rule that editable/vector format is a production property rather than proof of design quality.
+2. The brand-system project already contained the correct architectural direction—source grammar rather than pasted reproductions, fresh redrawing preference, cross-media testing and restraint—but the website-asset contract was still broad enough to permit ambiguity. It has now been tightened durably.
+3. The governing visual split is: **original Doré works = curated reader content**, preferably as exhibition/curation cards with Scripture/context/provenance/rights; **Doré-derived website materials = purpose-built fresh assets** drawn from current Westside principles.
+4. The first canonical asset families are `LIGHT`, `STAR` (including Bethlehem/watch-star variants), `WATER`, `SKY/CLOUD`, `STONE/WALL/CITY`, `PAPER/SURFACE`, and `DIVIDER/EDGE/SECTION`, with responsive digital and print equivalents. These must be designed with semantic role, crop behavior, density, scale and medium constraints in advance; generic engraving filters and post-layout decoration do not satisfy the contract.
+5. The current production Journal remains the control surface. A valid proof requires the same real content to gain recognizably stronger Westside atmosphere from the asset family without losing reading comfort, bilingual typography, mobile clarity, accessibility/performance or print transfer.
+6. No status change is justified: `VIS-GRAMMAR` remains `ACTIVE_PARALLEL / BUILDING`; `DORE-EXHIBITION` remains `READY`; ecosystem-wide `BRAND-V1` propagation remains gated on real digital plus print/ministry proof.
+7. No P01 subtitle-runtime state or action was modified.
+
+Durable update in this checkpoint:
+
+- `dore-core/knowledge/visual/WESTSIDE-WATCH-DORÉ-ENGRAVING-BRAND-SYSTEM-P01.md` now contains the explicit purpose-built asset-family contract and the curated-content separation.
+
+Sweep status remains `ACTIVE_PARALLEL`; the current `dore-core/knowledge/visual/` family is explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
