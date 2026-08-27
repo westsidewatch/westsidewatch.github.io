@@ -45,8 +45,10 @@ jobs:
           fi
       - name: Download exact current Pages configuration
         run: |
-          rm -f /tmp/dore-pages.toml
-          npx --yes wrangler@4 pages download config "$PROJECT" --force --config /tmp/dore-pages.toml
+          rm -f wrangler.toml /tmp/dore-pages.toml
+          npx --yes wrangler@4 pages download config "$PROJECT" --force
+          test -s wrangler.toml
+          cp wrangler.toml /tmp/dore-pages.toml
           test -s /tmp/dore-pages.toml
           sed -E 's/(value\s*=\s*).*/\1"[REDACTED]"/' /tmp/dore-pages.toml | head -220
       - name: Merge M2 Vectorize and Workers AI bindings
