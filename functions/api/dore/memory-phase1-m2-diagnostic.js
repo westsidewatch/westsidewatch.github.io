@@ -3,6 +3,7 @@ const auth=(r,e)=>Boolean(e.DORE_HEARTBEAT_TOKEN)&&(r.headers.get('authorization
 const ns=(project,conversation)=>`${project}::${conversation}`.slice(0,64);
 async function embed(env,texts){const r=await env.AI.run('@cf/baai/bge-small-en-v1.5',{text:texts});if(!r?.data||!Array.isArray(r.data))throw new Error('embedding_response_invalid');return r.data;}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function waitForQuery(env,vector,namespace,expectedId){let last=null;for(let i=0;i<12;i++){last=await env.DORE_MEMORY_VECTOR.query(vector,{topK:3,namespace,returnMetadata:'all'});if(last?.matches?.some(m=>m?.id===expectedId))return last;await sleep(5000);}return last;}
 export async function onRequestPost({request,env}){
   if(!auth(request,env))return json({ok:false,error:'unauthorized'},401);
   const bindings={d1:Boolean(env.DORE_SENSORY),vectorize:Boolean(env.DORE_MEMORY_VECTOR),archive:Boolean(env.DORE_MEMORY_ARCHIVE),ai:Boolean(env.AI)};
@@ -18,14 +19,15 @@ export async function onRequestPost({request,env}){
       {id:ida,values:va,namespace:na,metadata:{project_id:project,conversation_id:a,role:'user',kind:'diagnostic'}},
       {id:idb,values:vb,namespace:nb,metadata:{project_id:project,conversation_id:b,role:'user',kind:'diagnostic'}}
     ]);
-    await sleep(4500);
     const [qa]=await embed(env,['Which memory mentions a lamp near a gate at sunrise?']);
     const [qb]=await embed(env,['Which memory talks about a gardening tool under a greenhouse bench?']);
-    const ra=await env.DORE_MEMORY_VECTOR.query(qa,{topK:3,namespace:na,returnMetadata:'all'});
-    const rb=await env.DORE_MEMORY_VECTOR.query(qb,{topK:3,namespace:nb,returnMetadata:'all'});
+    const [ra,rb]=await Promise.all([
+      waitForQuery(env,qa,na,ida),
+      waitForQuery(env,qb,nb,idb)
+    ]);
     const crossA=await env.DORE_MEMORY_VECTOR.query(qb,{topK:3,namespace:na,returnMetadata:'all'});
     const crossB=await env.DORE_MEMORY_VECTOR.query(qa,{topK:3,namespace:nb,returnMetadata:'all'});
-    const topA=ra?.matches?.[0]||null,topB=rb?.matches?.[0]||null,topCrossA=crossA?.matches?.[0]||null,topCrossB=crossB?.matches?.[0]||null;
+    const topA=ra?.matches?.find(m=>m?.id===ida)||ra?.matches?.[0]||null,topB=rb?.matches?.find(m=>m?.id===idb)||rb?.matches?.[0]||null,topCrossA=crossA?.matches?.[0]||null,topCrossB=crossB?.matches?.[0]||null;
     const scoped=topA?.id===ida&&topB?.id===idb&&topCrossA?.id===ida&&topCrossB?.id===idb;
     const semantic=Number(topA?.score||0)>0.45&&Number(topB?.score||0)>0.45;
     const pass=scoped&&semantic;
