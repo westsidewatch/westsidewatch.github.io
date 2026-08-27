@@ -45,14 +45,15 @@ jobs:
           grep -q "dore.video-subtitle-result.v1" functions/api/dore/video-subtitle-result.js
           node --check static/dore/dore-search.js
           node --check static/dore/dore-search-runtime.js
-      - name: Verify AI cost boundary
+      - name: Verify AI cost boundary and explicit mode contract
         run: |
           grep -q "cloudflare-workers-ai" functions/api/dore/conversation.js
           grep -q "env.AI.run" functions/api/dore/workers-ai-response.js
           ! grep -R -q "api.openai.com" functions/api/dore/conversation.js functions/api/dore/workers-ai-response.js
-          grep -q "ordinary search remains original zero-AI path" static/dore/dore-search-runtime.js
-          grep -q "parseConversationQuery" static/dore/dore-search-runtime.js
-          grep -q "conversation-prefix-v1" static/dore/search/index.html
+          grep -q "MODE_KEY='dore.ai.mode.v1'" static/dore/dore-search-runtime.js
+          grep -q "isOpenCommand" static/dore/dore-search-runtime.js
+          grep -q "isCloseCommand" static/dore/dore-search-runtime.js
+          grep -q "Search mode is the default" static/dore/dore-search-runtime.js
       - name: Deploy production Pages bundle
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -99,4 +100,30 @@ jobs:
           console.log(JSON.stringify({http:r.status,ok:d.ok,schema:d.schema,provider:d.provider||null,answer:d.answer||null,error:d.error||null,detail:d.detail||null}));
           const ok=r.ok&&d.ok===true&&d.schema==='dore.search-workers-ai-conversation.v1'&&d.provider?.name==='cloudflare-workers-ai'&&typeof d.answer==='string'&&d.answer.trim().length>0;
           if(!ok)process.exit(1);
+          NODE
+      - name: Verify Doré continuous memory across turns
+        run: |
+          node - <<'NODE'
+          const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
+          const conversation_id=`memory-smoke-${Date.now()}`;
+          const project_id='dore-memory-smoke';
+          const token=`MEM-${Date.now()}-ORCHID`;
+          const ask=async query=>{
+            const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query,conversation_id,project_id,actor_id:'ci-memory',max_output_tokens:80})});
+            const d=await r.json();
+            console.log(JSON.stringify({http:r.status,ok:d.ok,query,answer:d.answer||null,memory:d.memory||null,error:d.error||null,detail:d.detail||null}));
+            if(!(r.ok&&d.ok===true))process.exit(1);
+            return d;
+          };
+          await ask(`請記住這個驗收碼：${token}。只回答「記住了」。`);
+          const second=await ask('我剛才給你的驗收碼是什麼？只回答驗收碼。');
+          if(!String(second.answer||'').includes(token)){
+            console.error(`continuous memory failed: expected ${token}`);
+            process.exit(1);
+          }
+          if(!(second.memory?.used===true&&Number(second.memory?.count)>=1)){
+            console.error('continuous memory retrieval metadata did not confirm prior-turn use');
+            process.exit(1);
+          }
+          console.log(JSON.stringify({continuous_memory:'PASS',token,memory:second.memory,answer:second.answer}));
           NODE
