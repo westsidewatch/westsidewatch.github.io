@@ -1,0 +1,82 @@
+name: Dore Full Memory Phase 1 M3 Provision
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-full-memory-phase1-m3-provision.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dore-full-memory-m3-provision
+  cancel-in-progress: false
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+      PROJECT: westsidewatch-github-io
+      BUCKET: dore-conversation-memory-archive
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Verify Cloudflare automation credentials
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo 'CLOUDFLARE_API_TOKEN missing'; exit 78; }
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'CLOUDFLARE_ACCOUNT_ID missing'; exit 78; }
+          test -n "$DORE_HEARTBEAT_TOKEN" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 78; }
+          npx --yes wrangler@4 whoami
+      - name: Create or verify R2 conversation archive bucket
+        run: |
+          if npx --yes wrangler@4 r2 bucket list --json | tee /tmp/r2.json | python3 -c "import sys,json; d=json.load(sys.stdin); raise SystemExit(0 if any(x.get('name')=='${BUCKET}' for x in d) else 1)"; then
+            echo 'R2_BUCKET_EXISTS'
+          else
+            npx --yes wrangler@4 r2 bucket create "$BUCKET"
+          fi
+      - name: Download exact current Pages configuration
+        run: |
+          rm -f wrangler.toml
+          npx --yes wrangler@4 pages download config "$PROJECT" --force
+          test -s wrangler.toml
+      - name: Merge M3 R2 production binding
+        run: |
+          if ! grep -q 'binding = "DORE_MEMORY_ARCHIVE"' wrangler.toml; then
+            printf '\n[[env.production.r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
+          fi
+          grep -n -E '^\[\[env.production.r2_buckets\]\]|binding = "DORE_MEMORY_ARCHIVE"|bucket_name = "dore-conversation-memory-archive"' wrangler.toml
+      - name: Build Pages output
+        run: hugo --gc --minify
+      - name: Deploy exact current config plus M3 archive binding
+        run: |
+          npx --yes wrangler@4 pages deploy public \
+            --project-name="$PROJECT" \
+            --branch=main \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="Doré Full Memory M3 archive binding ${GITHUB_SHA}" \
+            --commit-dirty=true
+      - name: Verify M3 production ingestion end to end
+        run: |
+          sleep 20
+          for i in $(seq 1 18); do
+            OUT=$(curl --silent --show-error \
+              -X POST \
+              -H "Authorization: Bearer $DORE_HEARTBEAT_TOKEN" \
+              https://westsidewatch-github-io.pages.dev/api/dore/memory-phase1-m3-diagnostic || true)
+            echo "$OUT"
+            if echo "$OUT" | python3 -c "import sys,json; d=json.load(sys.stdin); raise SystemExit(0 if d.get('milestone')=='M3_CONVERSATION_INGESTION_PASS' else 1)"; then
+              echo 'M3_CONVERSATION_INGESTION_PASS'
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'M3_CONVERSATION_INGESTION_FAIL'
+          exit 1
