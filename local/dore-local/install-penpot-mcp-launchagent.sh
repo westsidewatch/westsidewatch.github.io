@@ -1,34 +1,36 @@
 #!/bin/bash
 set -euo pipefail
-ROOT="$HOME/westsidewatch.github.io"
+RUNTIME="$HOME/.dore/runtime/penpot-mcp"
 DORE="$HOME/.dore"
 PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.penpot-mcp.plist"
 LABEL="io.westsidewatch.penpot-mcp"
 UIDN="$(id -u)"
 DOMAIN="gui/$UIDN"
-LOCALBIN="$ROOT/local/dore-local/penpot-mcp/node_modules/.bin"
 mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs"
 : > "$DORE/logs/penpot-mcp.log"
 : > "$DORE/logs/penpot-mcp.err.log"
-NPX="$(command -v npx || true)"
-if [[ -z "$NPX" ]]; then
-  for p in /opt/homebrew/bin/npx /usr/local/bin/npx "$HOME/.nvm/versions/node"/*/bin/npx; do
-    [[ -x "$p" ]] && NPX="$p" && break
-  done
+
+NODE="$(command -v node || true)"
+if [[ -z "$NODE" ]]; then
+  for p in /opt/homebrew/bin/node /usr/local/bin/node; do [[ -x "$p" ]] && NODE="$p" && break; done
 fi
-[[ -n "$NPX" && -x "$NPX" ]] || { echo "ERROR: npx not found" >&2; exit 2; }
-COREPACK="${COREPACK_BIN:-$(command -v corepack || true)}"
-[[ -n "$COREPACK" && -x "$COREPACK" ]] || { echo "ERROR: verified corepack missing; run setup-penpot-mcp.sh" >&2; exit 2; }
-NODEDIR="$(dirname "$NPX")"
-COREPACKDIR="$(dirname "$COREPACK")"
+[[ -n "$NODE" && -x "$NODE" ]] || { echo "ERROR: node not found" >&2; exit 2; }
+[[ -f "$RUNTIME/mcp-bin-path" ]] || { echo "ERROR: persistent Penpot MCP runtime not prepared" >&2; exit 2; }
+MCP_BIN="$(cat "$RUNTIME/mcp-bin-path")"
+COREPACK="$(cat "$RUNTIME/corepack-path")"
+[[ -f "$MCP_BIN" ]] || { echo "ERROR: Penpot MCP executable missing: $MCP_BIN" >&2; exit 2; }
+[[ -x "$COREPACK" ]] || { echo "ERROR: corepack missing: $COREPACK" >&2; exit 2; }
+LOCALBIN="$RUNTIME/node_modules/.bin"
+NODEDIR="$(dirname "$NODE")"
+
 cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>Label</key><string>$LABEL</string>
-<key>ProgramArguments</key><array><string>$NPX</string><string>-y</string><string>@penpot/mcp@stable</string></array>
+<key>ProgramArguments</key><array><string>$NODE</string><string>$MCP_BIN</string></array>
 <key>EnvironmentVariables</key><dict>
- <key>PATH</key><string>$COREPACKDIR:$LOCALBIN:$NODEDIR:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+ <key>PATH</key><string>$LOCALBIN:$NODEDIR:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
 </dict>
 <key>RunAtLoad</key><true/>
 <key>KeepAlive</key><true/>
@@ -36,30 +38,33 @@ cat > "$PLIST" <<EOF
 <key>LimitLoadToSessionType</key><string>Aqua</string>
 <key>StandardOutPath</key><string>$DORE/logs/penpot-mcp.log</string>
 <key>StandardErrorPath</key><string>$DORE/logs/penpot-mcp.err.log</string>
-<key>WorkingDirectory</key><string>$ROOT</string>
+<key>WorkingDirectory</key><string>$RUNTIME</string>
 </dict></plist>
 EOF
+
 plutil -lint "$PLIST"
 launchctl bootout "$DOMAIN/$LABEL" 2>/dev/null || true
 launchctl unload "$PLIST" 2>/dev/null || true
-if ! launchctl bootstrap "$DOMAIN" "$PLIST" 2>"$DORE/logs/penpot-mcp-bootstrap.err"; then
-  launchctl load -w "$PLIST"
-fi
+if ! launchctl bootstrap "$DOMAIN" "$PLIST" 2>"$DORE/logs/penpot-mcp-bootstrap.err"; then launchctl load -w "$PLIST"; fi
 launchctl enable "$DOMAIN/$LABEL" 2>/dev/null || true
 launchctl kickstart -k "$DOMAIN/$LABEL" 2>/dev/null || true
-sleep 7
-if launchctl print "$DOMAIN/$LABEL" >/dev/null 2>&1; then
-  echo DORE_PENPOT_MCP_AUTOSTART_REGISTERED
-else
-  echo "ERROR: Penpot MCP LaunchAgent not registered" >&2
-  exit 3
-fi
-if curl -fsS http://127.0.0.1:4400/manifest.json >/dev/null 2>&1; then
+
+ok=0
+for _ in 1 2 3 4 5 6 7 8 9 10; do
+  if curl -fsS http://127.0.0.1:4400/manifest.json >/dev/null 2>&1; then ok=1; break; fi
+  sleep 2
+done
+
+if launchctl print "$DOMAIN/$LABEL" >/dev/null 2>&1; then echo DORE_PENPOT_MCP_AUTOSTART_REGISTERED; else echo "ERROR: Penpot MCP LaunchAgent not registered" >&2; exit 3; fi
+if [[ "$ok" == 1 ]]; then
   echo DORE_PENPOT_MCP_HTTP_PASS
 else
-  echo "WARN: Penpot MCP process registered but manifest not reachable yet" >&2
-  echo "--- Penpot MCP stderr ---" >&2
-  tail -n 30 "$DORE/logs/penpot-mcp.err.log" >&2 2>/dev/null || true
+  echo "ERROR: Penpot MCP runtime failed to expose plugin manifest" >&2
   echo "--- LaunchAgent state ---" >&2
-  launchctl print "$DOMAIN/$LABEL" 2>/dev/null | grep -E 'state =|last exit code|program =|PATH =>' >&2 || true
+  launchctl print "$DOMAIN/$LABEL" 2>&1 | tail -n 45 >&2 || true
+  echo "--- stderr ---" >&2
+  tail -n 45 "$DORE/logs/penpot-mcp.err.log" >&2 || true
+  echo "--- stdout ---" >&2
+  tail -n 45 "$DORE/logs/penpot-mcp.log" >&2 || true
+  exit 4
 fi
