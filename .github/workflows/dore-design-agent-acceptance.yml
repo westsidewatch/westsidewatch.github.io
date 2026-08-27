@@ -1,0 +1,54 @@
+name: Doré Design Agent Acceptance
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/**'
+      - 'docs/dore/DESIGN-WORKING-MEMORY.md'
+      - '.github/workflows/dore-design-agent-acceptance.yml'
+  workflow_dispatch:
+
+jobs:
+  deterministic-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python syntax
+        run: python3 -m py_compile local/dore-local/design_memory.py local/dore-local/penpot_agent.py local/dore-local/dore_local.py
+      - name: D1-D3 truth and consolidation acceptance
+        working-directory: local/dore-local
+        run: python3 test_design_memory.py
+      - name: Penpot action routing acceptance
+        working-directory: local/dore-local
+        run: |
+          python3 - <<'PY'
+          import dore_local
+          assert dore_local.is_penpot_action('在 Penpot 設計新的西望網站模板')
+          assert dore_local.is_penpot_action('使用 Penpot 修改首頁')
+          assert not dore_local.is_penpot_action('我們討論一下 Penpot 的定位')
+          print('DORE_PENPOT_ACTION_ROUTING_PASS')
+          PY
+
+  mcp-client-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install MCP client
+        working-directory: local/dore-local/penpot-mcp
+        run: npm install --omit=dev
+      - name: Node syntax
+        run: node --check local/dore-local/penpot-mcp/client.mjs
+      - name: Verify unavailable MCP fails closed
+        working-directory: local/dore-local
+        run: |
+          set +e
+          output=$(node penpot-mcp/client.mjs status)
+          code=$?
+          set -e
+          echo "$output"
+          test "$code" -ne 0
+          echo "$output" | grep '"ok":false'
+          echo 'DORE_PENPOT_FAIL_CLOSED_PASS'
