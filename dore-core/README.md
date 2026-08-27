@@ -12,18 +12,23 @@ Doré is not a chat UI, autonomous preacher, giant prompt, single model or produ
 
 These stages may overlap where safeguards are explicit. Doré must never claim graduation merely because it has begun useful product work.
 
-## Core boundaries
+## Repository map and architecture namespaces
 
-- `constitution/` — durable principles and non-negotiable boundaries.
-- `core/` — context, observation, evidence, judgment and routing primitives.
-- `knowledge/` — provenance-aware durable knowledge and curriculum/corpus manifests.
-- `memory/` — working memory, candidate knowledge, promotion and supersession.
-- `research/` — source evaluation, retrieval, citation and research workflows.
-- `providers/` — replaceable model/search/embedding/ASR/translation/image providers. Provider != Doré.
-- `roles/` — faculties such as Scholar, Researcher, Librarian, Steward, Editor, Visual Director, Proofreader and Interpreter.
-- `adapters/` — product contracts for ONE, Westside Stories, 黎明書局, Journal, Search, Visual, church and later products.
-- `tools/` — managed tool/API/MCP gateway and permission policies.
-- `benchmarks/` — formation and transfer tests.
+The current repository is not a literal one-folder-per-architecture-layer implementation. The durable source families currently include `architecture/`, `benchmarks/`, `cloudflare/`, `constitution/`, `evidence/`, `knowledge/`, `memory/`, `projects/`, `readers/`, `reflex/`, `runtime/` and `tests/`, while additional executable Doré code also exists outside this hyphenated `dore-core/` tree (for example the Python package under `dore_core/`).
+
+The following names are **architectural responsibilities**, not a claim that matching `dore-core/<name>/` directories already exist:
+
+- **Core primitives** — context, observation, evidence, judgment and routing.
+- **Knowledge** — provenance-aware durable knowledge and curriculum/corpus manifests.
+- **Memory** — working memory, candidate knowledge, promotion and supersession.
+- **Research** — source evaluation, retrieval, citation and research workflows.
+- **Providers** — replaceable model/search/embedding/ASR/translation/image providers. Provider != Doré.
+- **Roles / faculties** — Scholar, Researcher, Librarian, Steward, Editor, Visual Director, Proofreader and Interpreter.
+- **Product adapters** — contracts for ONE, Westside Stories, 黎明書局, Journal, Search, Visual, church and later products.
+- **Tools / permissions** — managed tool/API/MCP gateways and authority policies.
+- **Benchmarks / tests** — formation, transfer and regression evidence.
+
+Architecture documents describe intended boundaries; only repository/runtime/test evidence proves that a particular boundary is implemented. Missing literal directories must not be interpreted as either proof of absence of the capability or proof that the architecture is complete.
 
 ## First principle
 
