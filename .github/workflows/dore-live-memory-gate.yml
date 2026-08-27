@@ -1,0 +1,35 @@
+name: Dore Live Memory Gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'functions/api/dore/live.js'
+      - 'functions/api/dore/cross-memory.js'
+      - '.github/workflows/dore-live-memory-gate.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  production-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Cloudflare Pages deployment
+        run: sleep 35
+      - name: Prove automatic persistence and cross-conversation recall
+        env:
+          BASE: https://westsidewatch.github.io
+        run: |
+          set -euo pipefail
+          stamp="$(date +%s)-$RANDOM"
+          project="live-gate-$stamp"
+          old="live-old-$stamp"
+          new="live-new-$stamp"
+          fact="The live memory verification phrase is cedar-$stamp."
+          a=$(curl -fsS -X POST "$BASE/api/dore/live" -H 'content-type: application/json' --data "{\"project_id\":\"$project\",\"conversation_id\":\"$old\",\"content\":\"$fact\"}")
+          echo "$a" | jq -e '.ok==true and .memory.automatic==true and .memory.user_persisted==true and .memory.assistant_persisted==true'
+          sleep 20
+          b=$(curl -fsS -X POST "$BASE/api/dore/live" -H 'content-type: application/json' --data "{\"project_id\":\"$project\",\"conversation_id\":\"$new\",\"content\":\"What is the live memory verification phrase?\"}")
+          echo "$b" | jq .
+          echo "$b" | jq -e --arg old "$old" '.ok==true and .memory.automatic==true and .memory.cross_conversation_used==true and (.memory.source_conversations|index($old))!=null'
+          echo "$b" | jq -er '.answer' | grep -F "cedar-$stamp"
+          echo LIVE_MEMORY_CORE_PASS
