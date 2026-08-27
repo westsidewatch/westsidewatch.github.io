@@ -102,6 +102,12 @@ Smallest future evidence to resolve workspace authority:
 
 This is an evidence-management issue, not a blocker for Sweep 01 or for purpose-built visual-asset development.
 
+## Sweep batch 31 — workspace authority evidence extracted into a dedicated ledger (2026-08-27)
+
+The Penpot/Figma authority contradiction and bridge proof boundary are now extracted into `DORÉ-VISUAL-WORKSPACE-AUTHORITY-EVIDENCE-LEDGER-2026-08-27.md` so future design/tooling decisions do not have to infer current truth from mixed project-history documents.
+
+Canonical interpretation remains unchanged: visual capability is governed by accepted purpose-built output, not by a canvas vendor; Penpot bridge PASS is still unearned; the literal `Penpot only / Figma retired from production` claim is `UNKNOWN_NEEDS_EVIDENCE / POSSIBLY_SUPERSEDED` as current operational truth; no workstream status changes are justified.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
