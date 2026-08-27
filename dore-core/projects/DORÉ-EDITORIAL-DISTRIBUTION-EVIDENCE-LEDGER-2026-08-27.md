@@ -86,3 +86,7 @@ Current classification summary:
 Canonical-register judgment: **no row/status change warranted in this batch**; the Master Register already encodes the governing interpretation. This ledger is the durable evidence link for that no-change decision.
 
 P01 protection rechecked: no subtitle-path action, runtime mutation, deployment, binding, credential, or blocker-state change was performed by Sweep 01.
+
+## Sweep source-family accounting
+
+This bounded family is now explicitly accounted for by Sweep 01 as of 2026-08-27. Its canonical interpretation is the existing cluster of `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL` rows rather than a new standalone workstream. The durable ledger remains the evidence link for that interpretation until one of the six smallest future proofs above is actually persisted. No completed-work, revisit, superseded/retired, or missing-evidence classification changed in this pass, and P01 remained untouched.
