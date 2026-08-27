@@ -251,3 +251,28 @@ to
 `researching → abstracting → designing → systematizing → prototyping → implementing → governing a living brand language`.
 
 Successful completion should leave Westside Watch with a stronger visual identity and leave Doré with a reusable, demonstrated capability in visual-system stewardship for future projects and maintenance work.
+
+## 14. Governing asset-family clarification — purpose-built Doré website materials
+
+The visual grammar must now be interpreted more strictly:
+
+**Doré original works are curated content; they are not the default website asset library.** Original works may appear in a dedicated exhibition/curation card inside the reader's scrolling flow, with context, Scripture linkage, provenance and rights. Their role is editorial and curatorial.
+
+**The website visual language must be purpose-built by Doré from current Westside Watch principles.** Doré should draw a coherent fresh asset family that carries Doré-like spatial, atmospheric and engraved logic while being designed specifically for interface, editorial and ministry use.
+
+Priority asset families include:
+
+- `LIGHT` — directional engraved light fields, broken/occluded beams, edge illumination and pale paper-light textures;
+- `STAR` — Bethlehem-star and watch-star forms, including small navigation/section variants and larger atmospheric variants;
+- `WATER` — restrained engraved water/ripple/current/reflection fields that can crop and repeat without becoming a full illustration;
+- `SKY / CLOUD` — cloud mass, dawn break, night-sky and atmospheric depth textures;
+- `STONE / WALL / CITY` — temple-stone surfaces, wall/battlement edges, distant city silhouettes and first-light contact edges;
+- `PAPER / SURFACE` — restrained papyric/stone-derived material behavior that supports Living Paper rather than replacing it with a heavy background;
+- `DIVIDER / EDGE / SECTION` — small structural marks derived from the same grammar for navigation, cards and editorial pacing;
+- responsive and print equivalents of the same assets.
+
+These are not to be generic filters applied after layout. They are production assets drawn with intended crop behavior, density, scale, contrast, mobile/print use and semantic role defined in advance.
+
+The first comparison standard is the **current production Westside Watch / Journal visual surface as control** versus the same real content using a proven purpose-built Doré-derived asset suite. The test is meaningful only if the new version demonstrates stronger Westside recognition and atmosphere without reducing reading comfort, bilingual typography quality, mobile clarity, accessibility, performance or print transfer.
+
+Do not propagate this grammar ecosystem-wide until at least one real digital specimen and one print/ministry specimen pass human visual judgment and the quality tests in §12.
