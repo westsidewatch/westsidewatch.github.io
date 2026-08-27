@@ -23,6 +23,7 @@ jobs:
       DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
       PROJECT: westsidewatch-github-io
       BUCKET: dore-conversation-memory-archive
+      INDEX: dore-conversation-memory
     steps:
       - uses: actions/checkout@v4
       - uses: peaceiris/actions-hugo@v3
@@ -35,33 +36,35 @@ jobs:
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'CLOUDFLARE_ACCOUNT_ID missing'; exit 78; }
           test -n "$DORE_HEARTBEAT_TOKEN" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 78; }
           npx --yes wrangler@4 whoami
-      - name: Verify R2 conversation archive bucket
+      - name: Verify M3 storage resources
         run: |
           npx --yes wrangler@4 r2 bucket list | tee /tmp/r2.txt
           grep -q "$BUCKET" /tmp/r2.txt || npx --yes wrangler@4 r2 bucket create "$BUCKET"
+          npx --yes wrangler@4 vectorize get "$INDEX" --json >/tmp/vector.json
+          cat /tmp/vector.json
       - name: Download exact current Pages configuration
         run: |
           rm -f wrangler.toml
           npx --yes wrangler@4 pages download config "$PROJECT" --force
           test -s wrangler.toml
-      - name: Merge M3 R2 Pages binding
+      - name: Merge complete M3 Pages binding set
         run: |
-          # Pages deployment bindings are read from the top-level Wrangler binding set.
-          # Keep any downloaded environment-specific entries intact and add the production
-          # archive binding at top level so the deployed Functions runtime receives it.
           if ! awk '/^\[\[r2_buckets\]\]/{top=1;next} /^\[/{top=0} top && /binding = "DORE_MEMORY_ARCHIVE"/{found=1} END{exit !found}' wrangler.toml; then
             printf '\n[[r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
           fi
-          grep -n -E '^\[\[r2_buckets\]\]|^\[\[env.production.r2_buckets\]\]|binding = "DORE_MEMORY_ARCHIVE"|bucket_name = "dore-conversation-memory-archive"' wrangler.toml
+          if ! awk '/^\[\[vectorize\]\]/{top=1;next} /^\[/{top=0} top && /binding = "DORE_MEMORY_VECTOR"/{found=1} END{exit !found}' wrangler.toml; then
+            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
+          fi
+          grep -n -E '^\[\[r2_buckets\]\]|^\[\[vectorize\]\]|binding = "DORE_MEMORY_(ARCHIVE|VECTOR)"|bucket_name = "dore-conversation-memory-archive"|index_name = "dore-conversation-memory"' wrangler.toml
       - name: Build Pages output
         run: hugo --gc --minify
-      - name: Deploy exact current config plus M3 archive binding
+      - name: Deploy complete M3 binding set
         run: |
           npx --yes wrangler@4 pages deploy public \
             --project-name="$PROJECT" \
             --branch=main \
             --commit-hash="${GITHUB_SHA}" \
-            --commit-message="Doré Full Memory M3 archive binding ${GITHUB_SHA}" \
+            --commit-message="Doré Full Memory M3 bindings ${GITHUB_SHA}" \
             --commit-dirty=true
       - name: Verify M3 production ingestion end to end
         run: |
