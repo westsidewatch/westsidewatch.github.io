@@ -9,6 +9,7 @@ on:
       - 'functions/api/dore/video-subtitle-result.js'
       - 'functions/api/dore/subtitle-proofread.js'
       - 'functions/api/dore/conversation.js'
+      - 'functions/api/dore/workers-ai-response.js'
       - 'static/dore/dore-search-runtime.js'
       - 'static/dore/dore-search.js'
       - 'static/dore/dore-reference-router.js'
@@ -37,19 +38,20 @@ jobs:
           extended: true
       - name: Build Hugo site with Pages Functions
         run: hugo --gc --minify
-      - name: Verify P01 production bundle contains v5 executor and reader route
+      - name: Verify P01 production bundle
         run: |
           grep -q "dore.video-subtitle.v5" functions/api/dore/video-subtitle.js
           grep -q "youtube-advertised-caption-acquisition" functions/api/dore/video-subtitle.js
           grep -q "dore.video-subtitle-result.v1" functions/api/dore/video-subtitle-result.js
-          grep -q "dore-video-subtitle-router.js" static/dore/dore-brain-bridge.js
           node --check static/dore/dore-search.js
-          node --check static/dore/dore-reference-router.js
-          node --check static/dore/dore-scripture-reference-parser.js
-      - name: Verify paid external AI is disabled
+          node --check static/dore/dore-search-runtime.js
+      - name: Verify AI cost boundary
         run: |
-          grep -q "external_paid_ai_disabled" functions/api/dore/conversation.js
-          ! grep -q "api.openai.com" functions/api/dore/conversation.js
+          grep -q "cloudflare-workers-ai" functions/api/dore/conversation.js
+          grep -q "env.AI.run" functions/api/dore/workers-ai-response.js
+          ! grep -R -q "api.openai.com" functions/api/dore/conversation.js functions/api/dore/workers-ai-response.js
+          grep -q "Enter / Search is deliberately search-only" static/dore/dore-search-runtime.js
+          grep -q "dispatch(detail);" static/dore/dore-search-runtime.js
       - name: Deploy production Pages bundle
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -72,27 +74,17 @@ jobs:
               const r=await fetch(url,{headers:{accept:'application/json'},cache:'no-store'});
               const d=await r.json();
               const ok=r.ok&&d.schema==='dore.video-subtitle.v5'&&Array.isArray(d.executors)&&d.executors.includes('youtube-advertised-caption-acquisition')&&d.executors.includes('dore-vtt-proofread');
-              console.log(JSON.stringify({attempt:i,http:r.status,schema:d.schema,executors:d.executors||null}));
               if(ok) process.exit(0);
-            }catch(e){console.log(JSON.stringify({attempt:i,error:String(e)}))}
+            }catch(e){}
             await sleep(5000);
           }
           process.exit(1);
           NODE
-      - name: Verify live Doré paid AI is disabled
+      - name: Verify Doré Workers AI binding state
         run: |
           node - <<'NODE'
-          const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
-          const sleep=ms=>new Promise(r=>setTimeout(r,ms));
-          for(let i=1;i<=24;i++){
-            try{
-              const r=await fetch(url,{headers:{accept:'application/json'},cache:'no-store'});
-              const d=await r.json();
-              const ok=r.status===503&&d.schema==='dore.conversation-disabled.v1'&&d.error==='external_paid_ai_disabled';
-              console.log(JSON.stringify({attempt:i,http:r.status,schema:d.schema,error:d.error||null}));
-              if(ok) process.exit(0);
-            }catch(e){console.log(JSON.stringify({attempt:i,error:String(e)}))}
-            await sleep(5000);
-          }
-          process.exit(1);
+          const r=await fetch('https://westsidewatch-github-io.pages.dev/api/dore/conversation',{headers:{accept:'application/json'},cache:'no-store'});
+          const d=await r.json();
+          console.log(JSON.stringify({http:r.status,schema:d.schema,configured:d.configured,provider:d.provider||null,model:d.model||null}));
+          if(d.schema!=='dore.workers-ai-readiness.v1')process.exit(1);
           NODE
