@@ -47,24 +47,24 @@ jobs:
           rm -f wrangler.toml
           npx --yes wrangler@4 pages download config "$PROJECT" --force
           test -s wrangler.toml
-      - name: Merge complete M3 Pages binding set
+      - name: Merge complete M3 production binding set
         run: |
-          if ! awk '/^\[\[r2_buckets\]\]/{top=1;next} /^\[/{top=0} top && /binding = "DORE_MEMORY_ARCHIVE"/{found=1} END{exit !found}' wrangler.toml; then
-            printf '\n[[r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
+          if ! grep -A4 '^\[\[env.production.r2_buckets\]\]' wrangler.toml | grep -q 'binding = "DORE_MEMORY_ARCHIVE"'; then
+            printf '\n[[env.production.r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
           fi
-          if ! awk '/^\[\[vectorize\]\]/{top=1;next} /^\[/{top=0} top && /binding = "DORE_MEMORY_VECTOR"/{found=1} END{exit !found}' wrangler.toml; then
-            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
+          if ! grep -A4 '^\[\[env.production.vectorize\]\]' wrangler.toml | grep -q 'binding = "DORE_MEMORY_VECTOR"'; then
+            printf '\n[[env.production.vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
           fi
-          grep -n -E '^\[\[r2_buckets\]\]|^\[\[vectorize\]\]|binding = "DORE_MEMORY_(ARCHIVE|VECTOR)"|bucket_name = "dore-conversation-memory-archive"|index_name = "dore-conversation-memory"' wrangler.toml
+          grep -n -E '^\[\[env.production.r2_buckets\]\]|^\[\[env.production.vectorize\]\]|binding = "DORE_MEMORY_(ARCHIVE|VECTOR)"|bucket_name = "dore-conversation-memory-archive"|index_name = "dore-conversation-memory"' wrangler.toml
       - name: Build Pages output
         run: hugo --gc --minify
-      - name: Deploy complete M3 binding set
+      - name: Deploy complete M3 production binding set
         run: |
           npx --yes wrangler@4 pages deploy public \
             --project-name="$PROJECT" \
             --branch=main \
             --commit-hash="${GITHUB_SHA}" \
-            --commit-message="Doré Full Memory M3 bindings ${GITHUB_SHA}" \
+            --commit-message="Doré Full Memory M3 production bindings ${GITHUB_SHA}" \
             --commit-dirty=true
       - name: Verify M3 production ingestion end to end
         run: |
