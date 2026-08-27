@@ -13,17 +13,7 @@ def normalize(row,project):
  content=row.get('content') or row.get('text') or row.get('message')
  if isinstance(content,dict):content=content.get('text') or content.get('content') or json.dumps(content,ensure_ascii=False)
  if not content:return None
- return {
-  'id':str(row.get('id') or row.get('message_id') or row.get('memory_id') or uuid.uuid4()),
-  'conversation_id':str(row.get('conversation_id') or row.get('thread_id') or row.get('session_id') or 'cloud-import'),
-  'project_id':str(row.get('project_id') or project or 'dore-global'),
-  'role':str(row.get('role') or row.get('author') or 'user'),
-  'content':str(content),
-  'created_at':str(row.get('created_at') or row.get('timestamp') or row.get('source_created_at') or datetime.now(timezone.utc).isoformat()),
-  'content_sha256':row.get('content_sha256'),
-  'archive_key':row.get('archive_key'),
-  'remote':row
- }
+ return {'id':str(row.get('id') or row.get('message_id') or row.get('memory_id') or uuid.uuid4()),'conversation_id':str(row.get('conversation_id') or row.get('thread_id') or row.get('session_id') or 'cloud-import'),'project_id':str(row.get('project_id') or project or 'dore-global'),'role':str(row.get('role') or row.get('author') or 'user'),'content':str(content),'created_at':str(row.get('created_at') or row.get('timestamp') or row.get('source_created_at') or datetime.now(timezone.utc).isoformat()),'content_sha256':row.get('content_sha256'),'archive_key':row.get('archive_key'),'remote':row}
 def put(row):
  with sqlite3.connect(DB) as c:
   ensure(c); rid=row['id']
@@ -41,23 +31,29 @@ def extract_rows(data):
    for kk in ('messages','memories','items','results'):
     if isinstance(v.get(kk),list):return v[kk]
  return []
+def fetch_cloud(base,q,headers):
+ tested=[]
+ for path in ('/api/dore/memory','/v1/memory'):
+  url=base.rstrip('/')+path+'?'+urllib.parse.urlencode(q); tested.append(url)
+  try:return path,url,json.loads(urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=60).read())
+  except urllib.error.HTTPError as e:
+   if e.code==404:continue
+   detail=e.read().decode('utf-8','replace');raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','status':e.code,'url':url,'detail':detail[:1000],'workers_ai_used':False},ensure_ascii=False))
+  except urllib.error.URLError as e:raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','url':url,'detail':str(e),'workers_ai_used':False},ensure_ascii=False))
+ raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','status':404,'tested':tested,'detail':'No supported memory endpoint found','workers_ai_used':False},ensure_ascii=False))
 def pull(base,project,conversation=None,limit=80,token=None):
  q={'project_id':project,'limit':str(limit)}
  if conversation:q['conversation_id']=conversation
- url=base.rstrip('/')+'/v1/memory?'+urllib.parse.urlencode(q); headers={'Accept':'application/json'}
+ headers={'Accept':'application/json'}
  if token:headers['Authorization']='Bearer '+token
- req=urllib.request.Request(url,headers=headers)
- try:data=json.loads(urllib.request.urlopen(req,timeout=60).read())
- except urllib.error.HTTPError as e:
-  detail=e.read().decode('utf-8','replace');raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','status':e.code,'url':url,'detail':detail[:1000],'workers_ai_used':False},ensure_ascii=False))
- rows=extract_rows(data); normalized=[x for x in (normalize(r,project) for r in rows) if x]; n=sum(put(x) for x in normalized); s=load_state();s['last_pull']=datetime.now(timezone.utc).isoformat();s['last_endpoint']=url;s['imported']=s.get('imported',0)+n;save_state(s);print(json.dumps({'ok':True,'direction':'cloud-to-local','endpoint':'/v1/memory','received':len(rows),'normalized':len(normalized),'imported':n,'workers_ai_used':False},ensure_ascii=False))
+ endpoint,url,data=fetch_cloud(base,q,headers); rows=extract_rows(data); normalized=[x for x in (normalize(r,project) for r in rows) if x]; n=sum(put(x) for x in normalized); s=load_state();s['last_pull']=datetime.now(timezone.utc).isoformat();s['last_endpoint']=url;s['imported']=s.get('imported',0)+n;save_state(s);print(json.dumps({'ok':True,'direction':'cloud-to-local','endpoint':endpoint,'received':len(rows),'normalized':len(normalized),'imported':n,'workers_ai_used':False},ensure_ascii=False))
 def import_jsonl(path):
- n=0; total=0
+ n=0;total=0
  for line in Path(path).read_text(encoding='utf-8').splitlines():
   if not line.strip():continue
   total+=1
   try:
-   raw=json.loads(line); row=normalize(raw,raw.get('project_id','dore-global') if isinstance(raw,dict) else 'dore-global'); n+=1 if row and put(row) else 0
+   raw=json.loads(line);row=normalize(raw,raw.get('project_id','dore-global') if isinstance(raw,dict) else 'dore-global');n+=1 if row and put(row) else 0
   except Exception as e:print('skip',total,e)
  print(json.dumps({'ok':True,'source':str(path),'records':total,'imported':n,'workers_ai_used':False},ensure_ascii=False))
 if __name__=='__main__':
