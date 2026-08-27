@@ -1,6 +1,6 @@
 # Scripture Search Input Literacy 1.0
 
-Status: FOUNDATION MICRO-UNIT
+Status: FOUNDATION MICRO-UNIT / NOT GRADUATED
 Purpose: teach Doré the real-world forms people use when asking for Scripture references.
 
 ## Principle
@@ -47,3 +47,12 @@ A known standard abbreviation is not a reasoning problem and should never be lef
 ## Graduation
 
 Pass only when unseen references using different books and formatting variants transfer without book-specific patches. Multi-reference tests must include two and three references and mixed single/range references.
+
+## Sweep 01 evidence state — 2026-08-27
+
+Current repository implementation is partial and does not yet satisfy this graduation paragraph. Core and browser Search each contain useful reference parsing, but they differ in alias/range grammar and the bounded review found no shared all-66-book, multi-reference, deduplication transfer fixture proving parity or graduation.
+
+Canonical missing-evidence guardrail: `DORÉ-MISSING-EVIDENCE-REGISTER.md#ME-010`.
+Detailed implementation reconciliation: `dore-core/projects/DORÉ-SCRIPTURE-SEARCH-INPUT-EVIDENCE-LEDGER-2026-08-27.md`.
+
+Do not issue a completion token for this micro-unit until the shared unseen acceptance corpus passes without book-specific patches.
