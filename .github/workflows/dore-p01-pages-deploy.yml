@@ -50,8 +50,9 @@ jobs:
           grep -q "cloudflare-workers-ai" functions/api/dore/conversation.js
           grep -q "env.AI.run" functions/api/dore/workers-ai-response.js
           ! grep -R -q "api.openai.com" functions/api/dore/conversation.js functions/api/dore/workers-ai-response.js
-          grep -q "Enter / Search is deliberately search-only" static/dore/dore-search-runtime.js
-          grep -q "dispatch(detail);" static/dore/dore-search-runtime.js
+          grep -q "ordinary search remains original zero-AI path" static/dore/dore-search-runtime.js
+          grep -q "parseConversationQuery" static/dore/dore-search-runtime.js
+          grep -q "conversation-prefix-v1" static/dore/search/index.html
       - name: Deploy production Pages bundle
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
