@@ -86,5 +86,16 @@ jobs:
           const r=await fetch('https://westsidewatch-github-io.pages.dev/api/dore/conversation',{headers:{accept:'application/json'},cache:'no-store'});
           const d=await r.json();
           console.log(JSON.stringify({http:r.status,schema:d.schema,configured:d.configured,provider:d.provider||null,model:d.model||null}));
-          if(d.schema!=='dore.workers-ai-readiness.v1')process.exit(1);
+          if(!(r.ok&&d.schema==='dore.workers-ai-readiness.v1'&&d.configured===true&&d.provider?.name==='cloudflare-workers-ai'))process.exit(1);
+          NODE
+      - name: Live Doré Workers AI conversation smoke test
+        run: |
+          node - <<'NODE'
+          const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
+          const conversation_id=`deploy-smoke-${Date.now()}`;
+          const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query:'請只回答：Workers AI 已連線',conversation_id,project_id:'dore-deploy-smoke',actor_id:'ci',max_output_tokens:32})});
+          const d=await r.json();
+          console.log(JSON.stringify({http:r.status,ok:d.ok,schema:d.schema,provider:d.provider||null,answer:d.answer||null,error:d.error||null,detail:d.detail||null}));
+          const ok=r.ok&&d.ok===true&&d.schema==='dore.search-workers-ai-conversation.v1'&&d.provider?.name==='cloudflare-workers-ai'&&typeof d.answer==='string'&&d.answer.trim().length>0;
+          if(!ok)process.exit(1);
           NODE
