@@ -1,0 +1,93 @@
+name: Dore Full Memory Phase 1 M2 Provision
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-full-memory-phase1-m2-provision.yml'
+      - 'functions/api/dore/memory-phase1-m2-diagnostic.js'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dore-full-memory-m2-provision
+  cancel-in-progress: false
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      PROJECT: westsidewatch-github-io
+      INDEX: dore-conversation-memory
+    steps:
+      - uses: actions/checkout@v4
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+      - name: Verify existing Cloudflare automation credentials
+        run: |
+          test -n "$CLOUDFLARE_API_TOKEN" || { echo 'CLOUDFLARE_API_TOKEN missing'; exit 78; }
+          test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'CLOUDFLARE_ACCOUNT_ID missing'; exit 78; }
+          npx --yes wrangler@4 whoami
+      - name: Create or verify Vectorize index
+        run: |
+          if npx --yes wrangler@4 vectorize get "$INDEX" --json >/tmp/vector.json 2>/tmp/vector.err; then
+            cat /tmp/vector.json
+          else
+            cat /tmp/vector.err
+            npx --yes wrangler@4 vectorize create "$INDEX" --dimensions=384 --metric=cosine --description='Doré Full Memory conversation embeddings'
+            npx --yes wrangler@4 vectorize get "$INDEX" --json
+          fi
+      - name: Download exact current Pages configuration
+        run: |
+          rm -f /tmp/dore-pages.toml
+          npx --yes wrangler@4 pages download config "$PROJECT" --force --config /tmp/dore-pages.toml
+          test -s /tmp/dore-pages.toml
+          sed -E 's/(value\s*=\s*).*/\1"[REDACTED]"/' /tmp/dore-pages.toml | head -220
+      - name: Merge M2 Vectorize and Workers AI bindings
+        run: |
+          if ! grep -q 'binding = "DORE_MEMORY_VECTOR"' /tmp/dore-pages.toml; then
+            cat >> /tmp/dore-pages.toml <<'EOF'
+
+[[vectorize]]
+binding = "DORE_MEMORY_VECTOR"
+index_name = "dore-conversation-memory"
+EOF
+          fi
+          if ! grep -q '^\[ai\]' /tmp/dore-pages.toml; then
+            cat >> /tmp/dore-pages.toml <<'EOF'
+
+[ai]
+binding = "AI"
+EOF
+          fi
+          grep -n -E '^\[ai\]|^\[\[vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' /tmp/dore-pages.toml
+      - name: Build Pages output
+        run: hugo --gc --minify
+      - name: Deploy exact current config plus M2 bindings
+        run: |
+          npx --yes wrangler@4 pages deploy public \
+            --project-name="$PROJECT" \
+            --branch=main \
+            --commit-hash="${GITHUB_SHA}" \
+            --commit-message="Doré Full Memory M2 bindings ${GITHUB_SHA}" \
+            --config /tmp/dore-pages.toml
+      - name: Verify runtime bindings became live
+        run: |
+          sleep 20
+          for i in $(seq 1 18); do
+            OUT=$(curl --silent --show-error --fail https://westsidewatch-github-io.pages.dev/api/dore/memory-phase1-diagnostic || true)
+            echo "$OUT"
+            if echo "$OUT" | python3 -c "import sys,json; d=json.load(sys.stdin); b=d.get('bindings',{}); raise SystemExit(0 if b.get('d1') and b.get('vectorize') and b.get('ai') else 1)"; then
+              echo 'M2_BINDINGS_LIVE_PASS'
+              exit 0
+            fi
+            sleep 5
+          done
+          echo 'M2_BINDINGS_LIVE_FAIL'
+          exit 1
