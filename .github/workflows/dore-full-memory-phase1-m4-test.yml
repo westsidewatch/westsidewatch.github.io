@@ -1,0 +1,24 @@
+name: Dore Full Memory Phase 1 M4 Test
+on:
+  push:
+    paths:
+      - functions/api/dore/memory.js
+      - functions/api/dore/retrieval.js
+      - functions/api/dore/memory-phase1-m4-diagnostic.js
+      - .github/workflows/dore-full-memory-phase1-m4-test.yml
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 35
+      - env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+        run: |
+          test -n "$DORE_HEARTBEAT_TOKEN"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Authorization: Bearer $DORE_HEARTBEAT_TOKEN" \
+            https://westsidewatch-github-io.pages.dev/api/dore/memory-phase1-m4-diagnostic \
+            | tee /tmp/m4.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/m4.json')); assert d.get('milestone')=='M4_RETRIEVAL_CONTEXT_ASSEMBLY_PASS',d; print(json.dumps(d,ensure_ascii=False))"
