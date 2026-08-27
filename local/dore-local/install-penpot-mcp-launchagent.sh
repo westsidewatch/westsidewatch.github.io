@@ -10,18 +10,15 @@ mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs"
 : > "$DORE/logs/penpot-mcp.log"
 : > "$DORE/logs/penpot-mcp.err.log"
 
-NODE="$(command -v node || true)"
-if [[ -z "$NODE" ]]; then
-  for p in /opt/homebrew/bin/node /usr/local/bin/node; do [[ -x "$p" ]] && NODE="$p" && break; done
-fi
-[[ -n "$NODE" && -x "$NODE" ]] || { echo "ERROR: node not found" >&2; exit 2; }
+[[ -f "$RUNTIME/node-path" ]] || { echo "ERROR: isolated Node 22 runtime not prepared" >&2; exit 2; }
+[[ -f "$RUNTIME/node-bin-dir" ]] || { echo "ERROR: isolated Node 22 bin dir not prepared" >&2; exit 2; }
 [[ -f "$RUNTIME/mcp-bin-path" ]] || { echo "ERROR: persistent Penpot MCP runtime not prepared" >&2; exit 2; }
+NODE="$(cat "$RUNTIME/node-path")"
+NODEDIR="$(cat "$RUNTIME/node-bin-dir")"
 MCP_BIN="$(cat "$RUNTIME/mcp-bin-path")"
-COREPACK="$(cat "$RUNTIME/corepack-path")"
+[[ -x "$NODE" ]] || { echo "ERROR: Node 22 missing: $NODE" >&2; exit 2; }
 [[ -f "$MCP_BIN" ]] || { echo "ERROR: Penpot MCP executable missing: $MCP_BIN" >&2; exit 2; }
-[[ -x "$COREPACK" ]] || { echo "ERROR: corepack missing: $COREPACK" >&2; exit 2; }
 LOCALBIN="$RUNTIME/node_modules/.bin"
-NODEDIR="$(dirname "$NODE")"
 
 cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
