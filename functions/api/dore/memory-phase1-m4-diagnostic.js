@@ -21,10 +21,14 @@ export async function onRequestPost({request,env}){
       const x=await ingestMessage(env,{project_id:project,conversation_id:conversation,actor_id:role==='assistant'?'dore':'diagnostic-user',role,content,title:'M4 diagnostic'});
       ids.push(x.message_id);archives.push(x.archive_key);
     }
-    await sleep(35000);
-    const result=await retrieveContext(env,{project_id:project,conversation_id:conversation,query:'What label format did the reader choose for chapter maps?',top_k:6,recent_limit:2,min_score:0.35,max_chars:5000});
-    const messages=result?.context?.messages||[];
-    const target=messages.find(m=>m.content===facts.preference)||null;
+    let result=null,target=null,messages=[];
+    for(let i=0;i<12;i++){
+      result=await retrieveContext(env,{project_id:project,conversation_id:conversation,query:'What label format did the reader choose for chapter maps?',top_k:6,recent_limit:2,min_score:0.35,max_chars:5000});
+      messages=result?.context?.messages||[];
+      target=messages.find(m=>m.content===facts.preference)||null;
+      if(Boolean(target?.semantic)&&Number(target?.semantic_score||0)>0)break;
+      await sleep(5000);
+    }
     const recentContinuation=messages.some(m=>m.content===facts.continuation||m.content===facts.assistant);
     const semanticTarget=Boolean(target?.semantic)&&Number(target?.semantic_score||0)>0;
     const archiveHydration=Boolean(target?.source==='semantic_archive');
@@ -37,7 +41,7 @@ export async function onRequestPost({request,env}){
     for(const key of archives)if(key)await env.DORE_MEMORY_ARCHIVE.delete(key);
     await env.DORE_SENSORY.prepare('DELETE FROM dore_messages WHERE conversation_id=?1 AND project_id=?2').bind(conversation,project).run();
     await env.DORE_SENSORY.prepare('DELETE FROM dore_conversations WHERE id=?1 AND project_id=?2').bind(conversation,project).run();
-    return json({ok:pass,stage:'M4',milestone:pass?'M4_RETRIEVAL_CONTEXT_ASSEMBLY_PASS':'M4_RETRIEVAL_CONTEXT_ASSEMBLY_FAIL',bindings,checks:{semantic_target:semanticTarget,archive_hydration:archiveHydration,recent_continuity:recentContinuation,scope_isolation:scoped,deduplicated,budget_respected:budget,answerable_from_context:answerable,target_score:target?.semantic_score||null,context_messages:messages.length,cleanup:true},contract:result.contract,next:pass?'M5_MEMORY_AWARE_RESPONSE':'M4_REPAIR'});
+    return json({ok:pass,stage:'M4',milestone:pass?'M4_RETRIEVAL_CONTEXT_ASSEMBLY_PASS':'M4_RETRIEVAL_CONTEXT_ASSEMBLY_FAIL',bindings,checks:{semantic_target:semanticTarget,archive_hydration:archiveHydration,recent_continuity:recentContinuation,scope_isolation:scoped,deduplicated,budget_respected:budget,answerable_from_context:answerable,target_score:target?.semantic_score||null,context_messages:messages.length,cleanup:true},contract:result?.contract||null,next:pass?'M5_MEMORY_AWARE_RESPONSE':'M4_REPAIR'});
   }catch(e){
     try{if(ids.length)await env.DORE_MEMORY_VECTOR.deleteByIds(ids)}catch{}
     for(const key of archives)try{if(key)await env.DORE_MEMORY_ARCHIVE.delete(key)}catch{}
