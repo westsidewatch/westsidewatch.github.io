@@ -17,10 +17,24 @@ function setAiMode(on){if(on)sessionStorage.setItem(MODE_KEY,'on');else sessionS
 function isOpenCommand(v=''){return /^問多雷[!！。.?？\s]*$/i.test(String(v).trim())}
 function isCloseCommand(v=''){return /^搜索[!！。.?？\s]*$/i.test(String(v).trim())}
 function providerLabel(provider){const name=provider?.name||'';if(name==='dore-local')return 'Conversation · Local';if(name==='cloudflare-workers-ai')return 'Conversation · Workers AI';return 'Conversation'}
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+function inlineMarkdown(s){return esc(s).replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>').replace(/__([^_]+)__/g,'<strong>$1</strong>').replace(/\*([^*\n]+)\*/g,'<em>$1</em>')}
+function markdown(s=''){
+ const lines=String(s).replace(/\r\n?/g,'\n').split('\n'),out=[];let list=null;
+ const close=()=>{if(list){out.push(`</${list}>`);list=null}};
+ for(const raw of lines){const line=raw.trimEnd(),t=line.trim();
+  if(!t){close();continue}
+  if(/^---+$/.test(t)){close();out.push('<hr>');continue}
+  let m=t.match(/^(#{1,4})\s+(.+)$/);if(m){close();const n=Math.min(4,m[1].length);out.push(`<h${n}>${inlineMarkdown(m[2])}</h${n}>`);continue}
+  m=t.match(/^[-*]\s+(.+)$/);if(m){if(list!=='ul'){close();list='ul';out.push('<ul>')}out.push(`<li>${inlineMarkdown(m[1])}</li>`);continue}
+  m=t.match(/^\d+[.)]\s+(.+)$/);if(m){if(list!=='ol'){close();list='ol';out.push('<ol>')}out.push(`<li>${inlineMarkdown(m[1])}</li>`);continue}
+  close();out.push(`<p>${inlineMarkdown(t)}</p>`)
+ }
+ close();return out.join('')
+}
 function renderConversation(user,answer,error='',provider=null){
  const box=$('#results'),count=$('#result-count');if(!box)return;
- const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- box.innerHTML=`<article class="result-card"><header><strong>DORÉ</strong><span>${esc(providerLabel(provider))}</span></header><p>${esc(answer||'Doré 對話目前不可用。')}</p><footer><span>${esc(user)}</span><span>${esc(error)}</span></footer></article>`;
+ box.innerHTML=`<article class="result-card dore-conversation"><header><strong>DORÉ</strong><span>${esc(providerLabel(provider))}</span></header><div class="dore-answer">${markdown(answer||'Doré 對話目前不可用。')}</div><footer><span>${esc(user)}</span><span>${esc(error)}</span></footer></article>`;
  if(count)count.textContent=error?'對話失敗':'Doré 回應';
  $('#results-wrap')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
@@ -64,6 +78,6 @@ function onSubmit(event){
 }
 function newConversation(){sessionStorage.removeItem(CONVERSATION_KEY);return conversationId()}
 function init(){if(document.documentElement.dataset.doreConversationBound)return;document.documentElement.dataset.doreConversationBound='1';sessionStorage.removeItem(MODE_KEY);document.addEventListener('submit',onSubmit,true)}
-window.DoreSearchRuntime={version:'6.0.0',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
+window.DoreSearchRuntime={version:'6.0.1',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
 init();
 })();
