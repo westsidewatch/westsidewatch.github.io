@@ -25,23 +25,23 @@ export async function ingestProjectMemory(env,input={}){
   const actorId=safeId(input.actor_id,'internal');
   const id=projectVectorId(stored.message_id);
   const values=await embed(env,content);
-  await env.DORE_MEMORY_VECTOR.upsert([{id,values,namespace:projectNs(projectId),metadata:{kind:'project_conversation_message',schema:'m6',message_id:stored.message_id,conversation_id:conversationId,project_id:projectId,actor_id:actorId,role,archive_key:stored.archive_key,created_at:stored.created_at}}]);
+  await env.DORE_MEMORY_VECTOR.upsert([{id,values,namespace:projectNs(projectId),metadata:{kind:'project_conversation_message',schema:'live-v3',message_id:stored.message_id,conversation_id:conversationId,project_id:projectId,actor_id:actorId,role,archive_key:stored.archive_key,created_at:stored.created_at}}]);
   return {...stored,project_vector_id:id,project_namespace:projectNs(projectId)};
 }
 
 async function hydrate(env,match){
   const md=match?.metadata||{};
   if(md.archive_key&&env.DORE_MEMORY_ARCHIVE){
-    try{
-      const obj=await env.DORE_MEMORY_ARCHIVE.get(md.archive_key);
-      if(obj){
-        const a=JSON.parse(await obj.text());
-        if(a?.content)return {id:a.message_id,conversation_id:a.conversation_id,project_id:a.project_id,actor_id:a.actor_id,role:a.role,content:a.content,created_at:a.created_at,archive_key:md.archive_key,semantic_score:Number(match.score||0),source:'project_semantic_archive'};
-      }
-    }catch{}
+    try{const obj=await env.DORE_MEMORY_ARCHIVE.get(md.archive_key);if(obj){const a=JSON.parse(await obj.text());if(a?.content)return {id:a.message_id,conversation_id:a.conversation_id,project_id:a.project_id,actor_id:a.actor_id,role:a.role,content:a.content,created_at:a.created_at,archive_key:md.archive_key,semantic_score:Number(match.score||0),source:'project_semantic_archive'}}}catch{}
   }
   const row=await env.DORE_SENSORY.prepare('SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE id=?1 AND project_id=?2 LIMIT 1').bind(md.message_id,md.project_id).first();
   return row?{...row,semantic_score:Number(match.score||0),source:'project_semantic_d1'}:null;
+}
+
+async function freshProjectMessages(env,{projectId,currentConversationId,limit=24}){
+  if(!env.DORE_SENSORY)throw new Error('memory_db_unbound');
+  const r=await env.DORE_SENSORY.prepare('SELECT id,conversation_id,project_id,actor_id,role,content,archive_key,created_at FROM dore_messages WHERE project_id=?1 AND conversation_id<>?2 ORDER BY created_at DESC,id DESC LIMIT ?3').bind(projectId,currentConversationId,limit).all();
+  return (r?.results||[]).map(x=>({...x,semantic_score:null,source:'project_recent_d1'}));
 }
 
 export async function retrieveCrossConversationMemory(env,input={}){
@@ -56,9 +56,16 @@ export async function retrieveCrossConversationMemory(env,input={}){
   const vector=await embed(env,query);
   const result=await env.DORE_MEMORY_VECTOR.query(vector,{topK,namespace:projectNs(projectId),returnMetadata:'all'});
   const hits=(result?.matches||[]).filter(m=>Number(m.score||0)>=minScore&&m?.metadata?.kind==='project_conversation_message'&&m?.metadata?.project_id===projectId&&m?.metadata?.conversation_id!==currentConversationId);
-  const memories=[];
-  for(const hit of hits){const x=await hydrate(env,hit);if(x)memories.push(x)}
-  return {ok:true,stage:'M6',scope:{project_id:projectId,current_conversation_id:currentConversationId},memory_scope:'cross_conversation_same_project',memories,contract:{schema:'dore.cross-conversation-memory.v1',embedding_model:EMBEDDING_MODEL,namespace:projectNs(projectId)}};
+  const semantic=[];
+  for(const hit of hits){const x=await hydrate(env,hit);if(x)semantic.push(x)}
+  // Vectorize is eventually consistent. D1 is authoritative for freshly written
+  // turns, so merge a small same-project cross-conversation window immediately.
+  const fresh=await freshProjectMessages(env,{projectId,currentConversationId,limit:24});
+  const byId=new Map();
+  for(const x of fresh)byId.set(x.id,x);
+  for(const x of semantic)byId.set(x.id,x);
+  const memories=[...byId.values()].slice(0,Math.max(topK,12));
+  return {ok:true,stage:'LIVE',scope:{project_id:projectId,current_conversation_id:currentConversationId},memory_scope:'cross_conversation_same_project',memories,contract:{schema:'dore.cross-conversation-memory.v2',embedding_model:EMBEDDING_MODEL,namespace:projectNs(projectId),fresh_consistency:'d1+vectorize'}};
 }
 
 export async function generateCrossConversationResponse(env,input={}){
@@ -72,18 +79,10 @@ export async function generateCrossConversationResponse(env,input={}){
   const out=await env.AI.run(RESPONSE_MODEL,{messages:[{role:'system',content:system},{role:'user',content:prompt}],temperature:0.1,max_tokens:420});
   const answer=clean(out?.response,8000);
   if(!answer)throw new Error('response_generation_empty');
-  return {ok:true,stage:'M6',answer,memory:{used:memories.length>0,count:memories.length,source_conversations:[...new Set(memories.map(m=>m.conversation_id))],scope:retrieved.scope},contract:{schema:'dore.cross-conversation-response.v1',retrieval_schema:retrieved.contract.schema,embedding_model:EMBEDDING_MODEL,response_model:RESPONSE_MODEL}};
+  return {ok:true,stage:'LIVE',answer,memory:{used:memories.length>0,count:memories.length,source_conversations:[...new Set(memories.map(m=>m.conversation_id))],scope:retrieved.scope},contract:{schema:'dore.cross-conversation-response.v2',retrieval_schema:retrieved.contract.schema,embedding_model:EMBEDDING_MODEL,response_model:RESPONSE_MODEL}};
 }
 
 export async function onRequestPost({request,env}){
   let body;try{body=await request.json()}catch{return json({ok:false,error:'invalid_json'},400)}
-  try{
-    if(body?.action==='ingest')return json(await ingestProjectMemory(env,body),201);
-    if(body?.action==='retrieve')return json(await retrieveCrossConversationMemory(env,body));
-    return json(await generateCrossConversationResponse(env,body));
-  }catch(error){
-    const detail=String(error?.message||error);
-    const status=['missing_conversation_id','empty_query'].includes(detail)?400:detail.endsWith('_unbound')?503:500;
-    return json({ok:false,error:'cross_conversation_memory_failed',detail},status);
-  }
+  try{if(body?.action==='ingest')return json(await ingestProjectMemory(env,body),201);if(body?.action==='retrieve')return json(await retrieveCrossConversationMemory(env,body));return json(await generateCrossConversationResponse(env,body))}catch(error){const detail=String(error?.message||error);const status=['missing_conversation_id','empty_query'].includes(detail)?400:detail.endsWith('_unbound')?503:500;return json({ok:false,error:'cross_conversation_memory_failed',detail},status)}
 }
