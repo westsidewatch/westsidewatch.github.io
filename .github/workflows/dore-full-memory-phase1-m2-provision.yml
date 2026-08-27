@@ -45,21 +45,19 @@ jobs:
           fi
       - name: Download exact current Pages configuration
         run: |
-          rm -f wrangler.toml /tmp/dore-pages.toml
+          rm -f wrangler.toml
           npx --yes wrangler@4 pages download config "$PROJECT" --force
           test -s wrangler.toml
-          cp wrangler.toml /tmp/dore-pages.toml
-          test -s /tmp/dore-pages.toml
-          sed -E 's/(value\s*=\s*).*/\1"[REDACTED]"/' /tmp/dore-pages.toml | head -220
+          sed -E 's/(value\s*=\s*).*/\1"[REDACTED]"/' wrangler.toml | head -220
       - name: Merge M2 Vectorize and Workers AI bindings
         run: |
-          if ! grep -q 'binding = "DORE_MEMORY_VECTOR"' /tmp/dore-pages.toml; then
-            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> /tmp/dore-pages.toml
+          if ! grep -q 'binding = "DORE_MEMORY_VECTOR"' wrangler.toml; then
+            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
           fi
-          if ! grep -q '^\[ai\]' /tmp/dore-pages.toml; then
-            printf '\n[ai]\nbinding = "AI"\n' >> /tmp/dore-pages.toml
+          if ! grep -q '^\[ai\]' wrangler.toml; then
+            printf '\n[ai]\nbinding = "AI"\n' >> wrangler.toml
           fi
-          grep -n -E '^\[ai\]|^\[\[vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' /tmp/dore-pages.toml
+          grep -n -E '^\[ai\]|^\[\[vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' wrangler.toml
       - name: Build Pages output
         run: hugo --gc --minify
       - name: Deploy exact current config plus M2 bindings
@@ -68,8 +66,7 @@ jobs:
             --project-name="$PROJECT" \
             --branch=main \
             --commit-hash="${GITHUB_SHA}" \
-            --commit-message="Doré Full Memory M2 bindings ${GITHUB_SHA}" \
-            --config /tmp/dore-pages.toml
+            --commit-message="Doré Full Memory M2 bindings ${GITHUB_SHA}"
       - name: Verify runtime bindings became live
         run: |
           sleep 20
