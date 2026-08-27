@@ -7,8 +7,6 @@ VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-qwen3-vl:8b}"
 command -v brew >/dev/null || { echo "ERROR: Homebrew is required to provision isolated Node 22 for Penpot MCP." >&2; exit 2; }
 command -v ollama >/dev/null || { echo "ERROR: Ollama is required." >&2; exit 2; }
 
-# Penpot MCP is tested against Node 22.x. Keep its runtime isolated from the
-# user's default Node so newer Node/Corepack changes cannot break Doré.
 NODE22_PREFIX="$(brew --prefix node@22 2>/dev/null || true)"
 if [[ -z "$NODE22_PREFIX" || ! -x "$NODE22_PREFIX/bin/node" ]]; then
   echo "Installing isolated Node 22 runtime for Penpot MCP..."
@@ -24,10 +22,29 @@ echo "Penpot MCP Node: $($NODE22 --version) ($NODE22)"
 
 mkdir -p "$RUNTIME"
 cd "$RUNTIME"
-# Remove artifacts created by a different Node generation before reinstalling.
 rm -rf node_modules package-lock.json
 if [[ ! -f package.json ]]; then "$NPM22" init -y >/dev/null 2>&1; fi
-PATH="$NODE22_PREFIX/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin" "$NPM22" install --save-exact @penpot/mcp@2.15.4
+
+# Penpot's published package bootstraps a pnpm workspace. pnpm 11 blocks native
+# dependency build scripts unless explicitly approved. Penpot's own issue
+# identifies esbuild and sharp as the required builds. Preconfigure pnpm before
+# installing so the package bootstrap is non-interactive and reproducible.
+"$NODE22" - <<'NODE'
+const fs = require('fs');
+const p = JSON.parse(fs.readFileSync('package.json','utf8'));
+p.pnpm = p.pnpm || {};
+p.pnpm.onlyBuiltDependencies = Array.from(new Set([...(p.pnpm.onlyBuiltDependencies || []), 'esbuild', 'sharp']));
+fs.writeFileSync('package.json', JSON.stringify(p, null, 2) + '\n');
+NODE
+
+export PATH="$NODE22_PREFIX/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin"
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
+"$NPM22" install --save-exact corepack
+COREPACK="$RUNTIME/node_modules/.bin/corepack"
+[[ -x "$COREPACK" ]] || { echo "ERROR: Corepack executable missing" >&2; exit 3; }
+"$COREPACK" enable --install-directory "$NODE22_PREFIX/bin" 2>/dev/null || true
+"$COREPACK" prepare pnpm@11.4.0 --activate
+"$NPM22" install --save-exact @penpot/mcp@2.15.4
 
 PKG="$RUNTIME/node_modules/@penpot/mcp/package.json"
 [[ -f "$PKG" ]] || { echo "ERROR: @penpot/mcp package not installed" >&2; exit 3; }
