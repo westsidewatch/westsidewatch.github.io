@@ -51,8 +51,9 @@ jobs:
           grep -q "env.AI.run" functions/api/dore/workers-ai-response.js
           ! grep -R -q "api.openai.com" functions/api/dore/conversation.js functions/api/dore/workers-ai-response.js
           grep -q "MODE_KEY='dore.ai.mode.v1'" static/dore/dore-search-runtime.js
-          grep -q "isOpenCommand" static/dore/dore-search-runtime.js
-          grep -q "isCloseCommand" static/dore/dore-search-runtime.js
+          grep -q "SEARCH_SURFACE='dore-search-ui'" static/dore/dore-search-runtime.js
+          grep -q "workers_ai_search_surface_only" functions/api/dore/conversation.js
+          grep -q "origin!==SEARCH_ORIGIN" functions/api/dore/conversation.js
           grep -q "Search mode is the default" static/dore/dore-search-runtime.js
       - name: Deploy production Pages bundle
         env:
@@ -87,18 +88,27 @@ jobs:
           node - <<'NODE'
           const r=await fetch('https://westsidewatch-github-io.pages.dev/api/dore/conversation',{headers:{accept:'application/json'},cache:'no-store'});
           const d=await r.json();
-          console.log(JSON.stringify({http:r.status,schema:d.schema,configured:d.configured,provider:d.provider||null,model:d.model||null}));
-          if(!(r.ok&&d.schema==='dore.workers-ai-readiness.v1'&&d.configured===true&&d.provider?.name==='cloudflare-workers-ai'))process.exit(1);
+          console.log(JSON.stringify({http:r.status,schema:d.schema,configured:d.configured,provider:d.provider||null,model:d.model||null,scope:d.scope||null}));
+          if(!(r.ok&&d.schema==='dore.workers-ai-readiness.v1'&&d.configured===true&&d.provider?.name==='cloudflare-workers-ai'&&d.scope==='dore-search-ui-only'))process.exit(1);
+          NODE
+      - name: Verify non-search callers cannot consume Workers AI
+        run: |
+          node - <<'NODE'
+          const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
+          const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query:'should be rejected',conversation_id:'boundary-test',project_id:'internal'})});
+          const d=await r.json();
+          console.log(JSON.stringify({http:r.status,error:d.error||null}));
+          if(!(r.status===403&&d.error==='workers_ai_search_surface_only'))process.exit(1);
           NODE
       - name: Live Doré Workers AI conversation smoke test
         run: |
           node - <<'NODE'
           const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
           const conversation_id=`deploy-smoke-${Date.now()}`;
-          const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query:'請只回答：Workers AI 已連線',conversation_id,project_id:'dore-deploy-smoke',actor_id:'ci',max_output_tokens:32})});
+          const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json',origin:'https://westsidewatch.github.io'},body:JSON.stringify({query:'請只回答：Workers AI 已連線',conversation_id,project_id:'dore-deploy-smoke',actor_id:'ci',surface:'dore-search-ui',max_output_tokens:32})});
           const d=await r.json();
           console.log(JSON.stringify({http:r.status,ok:d.ok,schema:d.schema,provider:d.provider||null,answer:d.answer||null,error:d.error||null,detail:d.detail||null}));
-          const ok=r.ok&&d.ok===true&&d.schema==='dore.search-workers-ai-conversation.v1'&&d.provider?.name==='cloudflare-workers-ai'&&typeof d.answer==='string'&&d.answer.trim().length>0;
+          const ok=r.ok&&d.ok===true&&d.schema==='dore.search-workers-ai-conversation.v1'&&d.surface==='dore-search-ui'&&d.provider?.name==='cloudflare-workers-ai'&&typeof d.answer==='string'&&d.answer.trim().length>0;
           if(!ok)process.exit(1);
           NODE
       - name: Verify Doré continuous memory across turns
@@ -109,7 +119,7 @@ jobs:
           const project_id='dore-memory-smoke';
           const token=`MEM-${Date.now()}-ORCHID`;
           const ask=async query=>{
-            const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query,conversation_id,project_id,actor_id:'ci-memory',max_output_tokens:80})});
+            const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json',accept:'application/json',origin:'https://westsidewatch.github.io'},body:JSON.stringify({query,conversation_id,project_id,actor_id:'ci-memory',surface:'dore-search-ui',max_output_tokens:80})});
             const d=await r.json();
             console.log(JSON.stringify({http:r.status,ok:d.ok,query,answer:d.answer||null,memory:d.memory||null,error:d.error||null,detail:d.detail||null}));
             if(!(r.ok&&d.ok===true))process.exit(1);
