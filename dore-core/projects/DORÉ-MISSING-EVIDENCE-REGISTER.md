@@ -229,3 +229,20 @@ The reader-specific acceptance file is explicitly a non-runnable specification p
 Package or otherwise wire the reader into an importable test target, convert the existing acceptance specification into executable tests, run it against bounded pinned OSHB/MorphGNT fixtures, and persist the pass/fail output including token-count reconciliation and mixed-language boundary behavior.
 
 **Priority:** MEDIUM; foundational quality work, subordinate to P01.
+
+## ME-014 — Seminary Core survey/core/residency completion states
+
+**Related work:** `SEMINARY-CORE`, `dore-core/knowledge/seminary-core-curriculum.md`, `CORE`.
+
+**What is already evidenced**
+A coherent seminary-scale formation curriculum exists. It defines three distinct passes (`SEMINARY_SURVEY_COMPLETE`, `SEMINARY_CORE_COMPLETE`, research residency leading only eventually to `SEMINARY_CORE_GRADUATE`), exact course completion gates, held-out/adversarial examination, original-language tasks, Search practicum, uncertainty ledgers, autonomous scheduling, and protected Doré thought-space. The curriculum explicitly forbids equating reading or survey traversal with mastery.
+
+**What is not yet evidenced strongly enough**
+This bounded reconciliation found no persisted global survey/gap map proving `SEMINARY_SURVEY_COMPLETE`, no evidence that every required course has passed the full course gate, no cumulative residency/graduation artifact, and no basis for inferring seminary completion from separate Researcher graduations or foundation-course implementation. The file's `ACTIVE CURRICULUM` label describes the curriculum's intended operational status, not a completed formation milestone.
+
+**Current classification:** `ACTIVE_PARALLEL / CURRICULUM`; all three named completion/graduation states remain `UNKNOWN_NEEDS_EVIDENCE` until their own contracts are satisfied.
+
+**Smallest useful future evidence**
+Persist Pass 1 coverage across every curriculum area with each course's central questions, prerequisites, evidence families, known gaps/misconceptions, cross-course links and self-chosen questions, followed by one global gap/prerequisite map. Only after that artifact exists should the system consider issuing `SEMINARY_SURVEY_COMPLETE` and scheduling Pass 2 under the existing course gates.
+
+**Priority:** MEDIUM strategically; formation is important but remains subordinate to P01 and should not be opened merely to manufacture progress.
