@@ -70,3 +70,19 @@ The publication/distribution research program remains active discovery work. Rev
 ## P01 protection
 
 This reconciliation changed no P01 code, runtime state, subtitle ordering, deployment, binding or blocker state. The existing P01 environment dependency is unchanged.
+
+## Sweep checkpoint — 2026-08-27 bounded revalidation
+
+A fresh bounded reread of the canonical research source and Master Work Register confirms that the current classifications remain evidence-correct. The source is still a program specification with hypotheses and required outputs, not a completed publishing/distribution milestone. No new repository evidence in this bounded batch justifies promotion, retirement, supersession, or a new canonical workstream.
+
+Current classification summary:
+
+- editorial/publishing/distribution research program: `ACTIVE_PARALLEL / DISCOVERY`;
+- `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`: retain existing discovery classifications;
+- `DEVOTIONAL`: retain `READY`;
+- completed-work/revisit/superseded/retired additions: none;
+- missing-evidence priorities: unchanged, with the six bounded proofs above remaining the smallest useful advancement.
+
+Canonical-register judgment: **no row/status change warranted in this batch**; the Master Register already encodes the governing interpretation. This ledger is the durable evidence link for that no-change decision.
+
+P01 protection rechecked: no subtitle-path action, runtime mutation, deployment, binding, credential, or blocker-state change was performed by Sweep 01.
