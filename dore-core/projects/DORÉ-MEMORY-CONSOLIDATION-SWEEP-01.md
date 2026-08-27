@@ -245,3 +245,29 @@ Durable updates in this checkpoint:
 - the canonical Master Register `SEARCH` classification remains correct, so no status promotion/demotion is warranted from this bounded batch.
 
 Sweep status remains `ACTIVE_PARALLEL`; the Bible Search work-node/cognition/browser implementation family is now explicitly accounted for in the bounded source-family review.
+
+## Checkpoint 20 — Journal visual-history / purpose-built Doré asset reconciliation (2026-08-26)
+
+Bounded evidence reviewed in this pass:
+
+- `dore-core/projects/DORÉ-JOURNAL-VISUAL-HISTORY-EVIDENCE-LEDGER-2026-08-26.md`;
+- August 2026 Journal/Vol.00 visual lineage summarized there;
+- current `VIS-GRAMMAR`, `DORE-EXHIBITION`, `MAIN`, `JOURNAL-PRINT` interpretations in the canonical Master Register.
+
+Reconciliation findings:
+
+1. The August Journal/Vol.00 visual system is a legitimate bounded historical completion and should be classified `COMPLETED_REVISIT_CANDIDATE`, while `MAIN` correctly remains `MAINTENANCE` and `VIS-GRAMMAR` remains active rather than complete.
+2. The durable distinction is now explicit: **original Doré works are curated content**, while **Doré-derived website grammar must be purpose-built as a fresh asset family**. Original works belong in exhibition/curation cards in the reader flow; they are not the default raw material for interface decoration.
+3. The target asset family is not a generic engraving filter. Doré should draw a coherent suite from current Westside visual principles: light fields/engraved light textures, Bethlehem-star variants, water, cloud/sky, stone/wall, city-edge forms, restrained paper/stone surface behavior, dividers/edges/section marks, and responsive digital/print equivalents.
+4. The current Journal remains the required control. A meaningful future comparison is `current production Journal` versus `same real content + proven purpose-built Doré-derived grammar`, judged on recognition, restraint, bilingual typography, mobile behavior, semantic usefulness, print transfer, performance/accessibility and cross-product generalization.
+5. This finding strengthens the existing `VIS-GRAMMAR` build direction and `RQ-004`; it does not justify early Brand V1 propagation or direct replacement of the live Journal.
+6. No P01 state or action was modified; the previously known production audio/transcription environment blocker is unchanged.
+
+Current disposition:
+
+- August Journal visual milestone: `COMPLETED_REVISIT_CANDIDATE`, retain as production baseline/control;
+- purpose-built Doré-derived asset suite: `ACTIVE_PARALLEL / BUILDING` under `VIS-GRAMMAR`;
+- original Doré exhibition/curation: separate `READY` content workstream under `DORE-EXHIBITION`;
+- Brand propagation: remain gated on real digital + print/ministry proof.
+
+Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
