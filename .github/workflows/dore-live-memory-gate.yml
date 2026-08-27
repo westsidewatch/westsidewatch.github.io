@@ -17,7 +17,7 @@ jobs:
         run: sleep 35
       - name: Prove automatic persistence and cross-conversation recall
         env:
-          BASE: https://westsidewatch.github.io
+          BASE: https://westsidewatch-github-io.pages.dev
         run: |
           set -euo pipefail
           stamp="$(date +%s)-$RANDOM"
