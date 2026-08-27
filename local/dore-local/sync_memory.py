@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-import argparse,json,sqlite3,urllib.request,urllib.parse,urllib.error,hashlib,uuid,os
+import argparse,json,sqlite3,urllib.request,urllib.parse,urllib.error,hashlib,uuid,os,subprocess,shutil
 from pathlib import Path
 from datetime import datetime,timezone
 HOME=Path.home()/'.dore'; DB=HOME/'data'/'dore.sqlite3'; STATE=HOME/'sync-state.json'
+BROWSER_UA='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15'
 def load_state():
  try:return json.loads(STATE.read_text())
  except:return {'last_pull':None,'imported':0}
@@ -31,20 +32,32 @@ def extract_rows(data):
    for kk in ('messages','memories','items','results'):
     if isinstance(v.get(kk),list):return v[kk]
  return []
+def curl_json(url,headers):
+ if not shutil.which('curl'):return None
+ cmd=['curl','-fsSL','--max-time','60','-A',headers.get('User-Agent',BROWSER_UA),'-H','Accept: application/json','-H','Accept-Language: en-US,en;q=0.9']
+ if 'Authorization' in headers:cmd+=['-H','Authorization: '+headers['Authorization']]
+ cmd.append(url)
+ try:return json.loads(subprocess.check_output(cmd,stderr=subprocess.STDOUT,text=True))
+ except Exception:return None
 def fetch_cloud(base,q,headers):
- tested=[]
+ tested=[]; last=None
  for path in ('/api/dore/memory','/v1/memory'):
   url=base.rstrip('/')+path+'?'+urllib.parse.urlencode(q); tested.append(url)
-  try:return path,url,json.loads(urllib.request.urlopen(urllib.request.Request(url,headers=headers),timeout=60).read())
+  req=urllib.request.Request(url,headers=headers)
+  try:return path,url,json.loads(urllib.request.urlopen(req,timeout=60).read())
   except urllib.error.HTTPError as e:
+   detail=e.read().decode('utf-8','replace'); last={'status':e.code,'detail':detail[:1000]}
    if e.code==404:continue
-   detail=e.read().decode('utf-8','replace');raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','status':e.code,'url':url,'detail':detail[:1000],'workers_ai_used':False},ensure_ascii=False))
-  except urllib.error.URLError as e:raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','url':url,'detail':str(e),'workers_ai_used':False},ensure_ascii=False))
- raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','status':404,'tested':tested,'detail':'No supported memory endpoint found','workers_ai_used':False},ensure_ascii=False))
+   if e.code in (403,429) or '1010' in detail:
+    data=curl_json(url,headers)
+    if data is not None:return path,url,data
+    continue
+  except urllib.error.URLError as e:last={'detail':str(e)}
+ raise SystemExit(json.dumps({'ok':False,'stage':'cloud_fetch','tested':tested,'last':last,'detail':'Cloudflare request blocked or no supported endpoint found','workers_ai_used':False},ensure_ascii=False))
 def pull(base,project,conversation=None,limit=80,token=None):
  q={'project_id':project,'limit':str(limit)}
  if conversation:q['conversation_id']=conversation
- headers={'Accept':'application/json'}
+ headers={'Accept':'application/json','User-Agent':BROWSER_UA,'Accept-Language':'en-US,en;q=0.9','Cache-Control':'no-cache','Pragma':'no-cache'}
  if token:headers['Authorization']='Bearer '+token
  endpoint,url,data=fetch_cloud(base,q,headers); rows=extract_rows(data); normalized=[x for x in (normalize(r,project) for r in rows) if x]; n=sum(put(x) for x in normalized); s=load_state();s['last_pull']=datetime.now(timezone.utc).isoformat();s['last_endpoint']=url;s['imported']=s.get('imported',0)+n;save_state(s);print(json.dumps({'ok':True,'direction':'cloud-to-local','endpoint':endpoint,'received':len(rows),'normalized':len(normalized),'imported':n,'workers_ai_used':False},ensure_ascii=False))
 def import_jsonl(path):
