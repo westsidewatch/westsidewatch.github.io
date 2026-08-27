@@ -8,14 +8,11 @@ on:
       - 'functions/api/dore/video-subtitle.js'
       - 'functions/api/dore/video-subtitle-result.js'
       - 'functions/api/dore/subtitle-proofread.js'
-      - 'functions/api/dore/openai-response.js'
-      - 'functions/api/dore/respond.js'
       - 'functions/api/dore/conversation.js'
       - 'static/dore/dore-search-runtime.js'
       - 'static/dore/dore-search.js'
       - 'static/dore/dore-reference-router.js'
       - 'static/dore/dore-scripture-reference-parser.js'
-      - 'scripts/dore/chatgpt-bridge-gate.mjs'
       - 'static/dore/dore-video-subtitle-router.js'
       - 'static/dore/dore-brain-bridge.js'
       - 'static/dore/search/index.html'
@@ -49,7 +46,10 @@ jobs:
           node --check static/dore/dore-search.js
           node --check static/dore/dore-reference-router.js
           node --check static/dore/dore-scripture-reference-parser.js
-          node scripts/dore/chatgpt-bridge-gate.mjs
+      - name: Verify paid external AI is disabled
+        run: |
+          grep -q "external_paid_ai_disabled" functions/api/dore/conversation.js
+          ! grep -q "api.openai.com" functions/api/dore/conversation.js
       - name: Deploy production Pages bundle
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
@@ -79,7 +79,7 @@ jobs:
           }
           process.exit(1);
           NODE
-      - name: Verify live Doré ChatGPT binding
+      - name: Verify live Doré paid AI is disabled
         run: |
           node - <<'NODE'
           const url='https://westsidewatch-github-io.pages.dev/api/dore/conversation';
@@ -88,8 +88,8 @@ jobs:
             try{
               const r=await fetch(url,{headers:{accept:'application/json'},cache:'no-store'});
               const d=await r.json();
-              const ok=r.ok&&d.schema==='dore.search-chatgpt-readiness.v1'&&d.configured===true&&d.provider?.name==='openai'&&d.provider?.api==='responses';
-              console.log(JSON.stringify({attempt:i,http:r.status,schema:d.schema,configured:d.configured??null,provider:d.provider||null,error:d.error||null}));
+              const ok=r.status===503&&d.schema==='dore.conversation-disabled.v1'&&d.error==='external_paid_ai_disabled';
+              console.log(JSON.stringify({attempt:i,http:r.status,schema:d.schema,error:d.error||null}));
               if(ok) process.exit(0);
             }catch(e){console.log(JSON.stringify({attempt:i,error:String(e)}))}
             await sleep(5000);
