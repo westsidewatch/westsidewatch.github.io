@@ -1,0 +1,25 @@
+name: Dore Full Memory Phase 1 M5 Test
+on:
+  push:
+    paths:
+      - functions/api/dore/memory.js
+      - functions/api/dore/retrieval.js
+      - functions/api/dore/respond.js
+      - functions/api/dore/memory-phase1-m5-diagnostic.js
+      - .github/workflows/dore-full-memory-phase1-m5-test.yml
+  workflow_dispatch:
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 40
+      - env:
+          DORE_HEARTBEAT_TOKEN: ${{ secrets.DORE_HEARTBEAT_TOKEN }}
+        run: |
+          test -n "$DORE_HEARTBEAT_TOKEN"
+          curl --fail-with-body --silent --show-error \
+            -X POST \
+            -H "Authorization: Bearer $DORE_HEARTBEAT_TOKEN" \
+            https://westsidewatch-github-io.pages.dev/api/dore/memory-phase1-m5-diagnostic \
+            | tee /tmp/m5.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/m5.json')); assert d.get('milestone')=='M5_MEMORY_AWARE_RESPONSE_PASS',d; print(json.dumps(d,ensure_ascii=False))"
