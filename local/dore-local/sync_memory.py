@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse,json,sqlite3,urllib.request,urllib.parse,urllib.error,hashlib,uuid,os,subprocess,shutil
+import argparse,json,sqlite3,urllib.request,urllib.parse,urllib.error,hashlib,uuid,os
 from pathlib import Path
 from datetime import datetime,timezone
 HOME=Path.home()/'.dore'; DB=HOME/'data'/'dore.sqlite3'; STATE=HOME/'sync-state.json'; BROWSER_UA='Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 Version/18.0 Safari/605.1.15'
@@ -54,16 +54,28 @@ def local_unsynced(project,limit=100):
  with sqlite3.connect(DB) as c:
   ensure(c);c.row_factory=sqlite3.Row
   rows=c.execute("SELECT m.* FROM dore_messages m LEFT JOIN dore_sync_log s ON s.remote_id=m.id AND s.direction='local-to-cloud' WHERE m.project_id=? AND (s.remote_id IS NULL) AND m.actor_id<>'cloud-sync' ORDER BY m.created_at ASC LIMIT ?",(project,limit)).fetchall();return [dict(r) for r in rows]
+def discover_sync_endpoint(base):
+ headers={'Accept':'application/json','User-Agent':BROWSER_UA}
+ last=None
+ for path in ('/api/dore/sync-memory','/api/dore/sync'):
+  url=base.rstrip('/')+path
+  try:
+   out=req_json(url,headers)
+   if isinstance(out,dict) and out.get('schema')=='dore.sync-readiness.v1':
+    if not out.get('configured'):raise RuntimeError('sync_secret_not_configured')
+    return path
+  except Exception as e:last=str(e)
+ raise RuntimeError('sync_endpoint_unavailable: '+str(last))
 def push(base,project,token,limit=100):
  if not token:raise RuntimeError('DORE_CLOUD_SYNC_TOKEN required')
  rows=local_unsynced(project,limit)
  if not rows:return {'ok':True,'direction':'local-to-cloud','selected':0,'inserted':0,'deduplicated':0,'conflicts':0,'workers_ai_used':False}
- url=base.rstrip('/')+'/api/dore/sync-memory'; headers={'Accept':'application/json','Content-Type':'application/json','Authorization':'Bearer '+token,'User-Agent':BROWSER_UA}; out=req_json(url,headers,'POST',{'messages':rows})
+ path=discover_sync_endpoint(base); url=base.rstrip('/')+path; headers={'Accept':'application/json','Content-Type':'application/json','Authorization':'Bearer '+token,'User-Agent':BROWSER_UA}; out=req_json(url,headers,'POST',{'messages':rows})
  with sqlite3.connect(DB) as c:
   ensure(c)
   for d in out.get('details',[]):
    if d.get('status') in ('inserted','deduplicated','conflict'):c.execute('INSERT OR REPLACE INTO dore_sync_log VALUES(?,?,?)',(d.get('id'),'local-to-cloud',datetime.now(timezone.utc).isoformat()))
- s=load_state();s['last_push']=datetime.now(timezone.utc).isoformat();s['pushed']=s.get('pushed',0)+int(out.get('inserted',0));save_state(s);return {'ok':bool(out.get('ok')),'direction':'local-to-cloud','selected':len(rows),'inserted':out.get('inserted',0),'deduplicated':out.get('deduplicated',0),'conflicts':out.get('conflicts',0),'failed':out.get('failed',0),'conflict_policy':out.get('conflict_policy'),'workers_ai_used':False}
+ s=load_state();s['last_push']=datetime.now(timezone.utc).isoformat();s['last_push_endpoint']=path;s['pushed']=s.get('pushed',0)+int(out.get('inserted',0));save_state(s);return {'ok':bool(out.get('ok')),'direction':'local-to-cloud','endpoint':path,'selected':len(rows),'inserted':out.get('inserted',0),'deduplicated':out.get('deduplicated',0),'conflicts':out.get('conflicts',0),'failed':out.get('failed',0),'conflict_policy':out.get('conflict_policy'),'workers_ai_used':False}
 def import_jsonl(path):
  n=0;total=0
  for line in Path(path).read_text(encoding='utf-8').splitlines():
