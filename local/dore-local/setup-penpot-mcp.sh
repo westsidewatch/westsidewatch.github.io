@@ -14,15 +14,15 @@ npm install --omit=dev
 echo "Pulling Doré visual verification model: $VISION_MODEL"
 ollama pull "$VISION_MODEL"
 
+bash "$HERE/install-penpot-mcp-launchagent.sh"
+
 cat <<EOF
 DORE_PENPOT_MCP_PREP_PASS
 
-Next runtime requirements:
-1. Start Penpot MCP in a separate terminal:
-   npx -y @penpot/mcp@stable
-2. In the open Penpot file, load plugin URL:
-   http://localhost:4400/manifest.json
-3. Open the plugin and click Connect to MCP server.
-4. Verify from this repository:
-   node local/dore-local/penpot-mcp/client.mjs status
+Penpot MCP is now registered as a persistent per-user LaunchAgent.
+You no longer need to keep a separate Terminal running npx manually.
+Plugin manifest: http://localhost:4400/manifest.json
+MCP endpoint: http://localhost:4401/mcp
+Verification command:
+  node local/dore-local/penpot-mcp/client.mjs status
 EOF
