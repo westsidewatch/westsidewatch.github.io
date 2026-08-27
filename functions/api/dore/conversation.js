@@ -14,8 +14,8 @@ export async function onRequestPost({request,env}){
  const actorId=safeId(body?.actor_id,'public');
  try{
   const user=await ingestMessage(env,{project_id:projectId,conversation_id:conversationId,actor_id:actorId,role:'user',content:query,mode:'CONVERSATION_BETA',title:clean(body?.title,240)||query.slice(0,80)});
-  const response=await generateMemoryAwareResponse(env,{project_id:projectId,conversation_id:conversationId,query,top_k:body?.top_k,recent_limit:body?.recent_limit,min_score:body?.min_score,max_chars:body?.max_chars});
+  const response=await generateMemoryAwareResponse(env,{project_id:projectId,conversation_id:conversationId,query,previous_response_id:clean(body?.previous_response_id,180),top_k:body?.top_k,recent_limit:body?.recent_limit,min_score:body?.min_score,max_chars:body?.max_chars,max_output_tokens:body?.max_output_tokens});
   const assistant=await ingestMessage(env,{project_id:projectId,conversation_id:conversationId,actor_id:'dore',role:'assistant',content:response.answer,mode:'CONVERSATION_BETA'});
-  return json({ok:true,schema:'dore.conversation.v1',conversation_id:conversationId,project_id:projectId,answer:response.answer,memory:response.memory,persistence:{user_message_id:user.message_id,assistant_message_id:assistant.message_id,user_deduplicated:user.deduplicated,assistant_deduplicated:assistant.deduplicated}});
- }catch(error){const detail=String(error?.message||error);const status=detail.endsWith('_unbound')?503:500;return json({ok:false,error:'conversation_failed',detail,conversation_id:conversationId,project_id:projectId},status)}
+  return json({ok:true,schema:'dore.search-chatgpt-conversation.v1',conversation_id:conversationId,project_id:projectId,answer:response.answer,memory:response.memory,provider:response.provider,persistence:{user_message_id:user.message_id,assistant_message_id:assistant.message_id,user_deduplicated:user.deduplicated,assistant_deduplicated:assistant.deduplicated}});
+ }catch(error){const detail=String(error?.message||error);const status=detail.endsWith('_unbound')?503:detail.startsWith('openai_')?502:500;return json({ok:false,error:'conversation_failed',detail,conversation_id:conversationId,project_id:projectId},status)}
 }
