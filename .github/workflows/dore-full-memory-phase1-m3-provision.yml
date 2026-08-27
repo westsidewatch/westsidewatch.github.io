@@ -35,24 +35,24 @@ jobs:
           test -n "$CLOUDFLARE_ACCOUNT_ID" || { echo 'CLOUDFLARE_ACCOUNT_ID missing'; exit 78; }
           test -n "$DORE_HEARTBEAT_TOKEN" || { echo 'DORE_HEARTBEAT_TOKEN missing'; exit 78; }
           npx --yes wrangler@4 whoami
-      - name: Create or verify R2 conversation archive bucket
+      - name: Verify R2 conversation archive bucket
         run: |
-          if npx --yes wrangler@4 r2 bucket list --json | tee /tmp/r2.json | python3 -c "import sys,json; d=json.load(sys.stdin); raise SystemExit(0 if any(x.get('name')=='${BUCKET}' for x in d) else 1)"; then
-            echo 'R2_BUCKET_EXISTS'
-          else
-            npx --yes wrangler@4 r2 bucket create "$BUCKET"
-          fi
+          npx --yes wrangler@4 r2 bucket list | tee /tmp/r2.txt
+          grep -q "$BUCKET" /tmp/r2.txt || npx --yes wrangler@4 r2 bucket create "$BUCKET"
       - name: Download exact current Pages configuration
         run: |
           rm -f wrangler.toml
           npx --yes wrangler@4 pages download config "$PROJECT" --force
           test -s wrangler.toml
-      - name: Merge M3 R2 production binding
+      - name: Merge M3 R2 Pages binding
         run: |
-          if ! grep -q 'binding = "DORE_MEMORY_ARCHIVE"' wrangler.toml; then
-            printf '\n[[env.production.r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
+          # Pages deployment bindings are read from the top-level Wrangler binding set.
+          # Keep any downloaded environment-specific entries intact and add the production
+          # archive binding at top level so the deployed Functions runtime receives it.
+          if ! awk '/^\[\[r2_buckets\]\]/{top=1;next} /^\[/{top=0} top && /binding = "DORE_MEMORY_ARCHIVE"/{found=1} END{exit !found}' wrangler.toml; then
+            printf '\n[[r2_buckets]]\nbinding = "DORE_MEMORY_ARCHIVE"\nbucket_name = "dore-conversation-memory-archive"\n' >> wrangler.toml
           fi
-          grep -n -E '^\[\[env.production.r2_buckets\]\]|binding = "DORE_MEMORY_ARCHIVE"|bucket_name = "dore-conversation-memory-archive"' wrangler.toml
+          grep -n -E '^\[\[r2_buckets\]\]|^\[\[env.production.r2_buckets\]\]|binding = "DORE_MEMORY_ARCHIVE"|bucket_name = "dore-conversation-memory-archive"' wrangler.toml
       - name: Build Pages output
         run: hugo --gc --minify
       - name: Deploy exact current config plus M3 archive binding
