@@ -14,18 +14,18 @@ function conversationId(){let v=sessionStorage.getItem(CONVERSATION_KEY);if(!v){
 function snapshot(){const input=$('#search-input');return{query:input?.value?.trim()||'',input,results:$('#results'),count:$('#result-count'),conversation_id:conversationId()}}
 function aiMode(){return sessionStorage.getItem(MODE_KEY)==='on'}
 function setAiMode(on){if(on)sessionStorage.setItem(MODE_KEY,'on');else sessionStorage.removeItem(MODE_KEY);window.dispatchEvent(new CustomEvent('dore:ai-mode',{detail:{enabled:!!on}}));return !!on}
-function isOpenCommand(v=''){return /^問多雷[!！。.?？\s]*$/i.test(String(v).trim())}
+function isOpenCommand(v=''){return /^[問问]多雷[!！。.?？\s]*$/i.test(String(v).trim())}
 function isCloseCommand(v=''){return /^搜索[!！。.?？\s]*$/i.test(String(v).trim())}
 function providerLabel(provider){const name=provider?.name||'';if(name==='dore-local')return 'Conversation · Local';if(name==='cloudflare-workers-ai')return 'Conversation · Workers AI';return 'Conversation'}
 function renderConversation(user,answer,error='',provider=null){
  const box=$('#results'),count=$('#result-count');if(!box)return;
- const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#39;'}[c]));
  box.innerHTML=`<article class="result-card"><header><strong>DORÉ</strong><span>${esc(providerLabel(provider))}</span></header><p>${esc(answer||'Doré 對話目前不可用。')}</p><footer><span>${esc(user)}</span><span>${esc(error)}</span></footer></article>`;
  if(count)count.textContent=error?'對話失敗':'Doré 回應';
  $('#results-wrap')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
 function renderMode(message){const box=$('#results'),count=$('#result-count');if(box)box.innerHTML=`<article class="result-card"><header><strong>DORÉ</strong></header><p>${message}</p></article>`;if(count)count.textContent=message}
-async function localReady(timeoutMs=900){
+async function localReady(timeoutMs=1200){
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
  try{const r=await fetch(LOCAL_HEALTH,{cache:'no-store',signal:controller.signal});if(!r.ok)return false;const d=await r.json();return d?.ok===true&&d?.node==='dore-local'}catch{return false}finally{clearTimeout(timer)}
 }
@@ -60,10 +60,9 @@ function onSubmit(event){
   if(isCloseCommand(raw)){event.preventDefault();event.stopImmediatePropagation();setAiMode(false);renderMode('已返回普通搜索。');if(snap.input)snap.input.value='';return}
   if(!raw)return;event.preventDefault();event.stopImmediatePropagation();converse({...snap,query:raw});return
  }
- // Search mode is the default. No keyword, including 多雷/Doré, can trigger AI here.
 }
 function newConversation(){sessionStorage.removeItem(CONVERSATION_KEY);return conversationId()}
-function init(){if(document.documentElement.dataset.doreConversationBound)return;document.documentElement.dataset.doreConversationBound='1';sessionStorage.removeItem(MODE_KEY);document.addEventListener('submit',onSubmit,true)}
-window.DoreSearchRuntime={version:'6.0.0',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
+function init(){if(document.documentElement.dataset.doreConversationBound)return;document.documentElement.dataset.doreConversationBound='1';sessionStorage.removeItem(MODE_KEY);window.addEventListener('submit',onSubmit,true)}
+window.DoreSearchRuntime={version:'6.1.0',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
 init();
 })();
