@@ -2,7 +2,8 @@ import {ingestMessage} from './memory.js';
 import {retrieveContext} from './retrieval.js';
 import {createWorkersAIResponse} from './workers-ai-response.js';
 
-const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store'}});
+const cors={'access-control-allow-origin':'https://westsidewatch.github.io','access-control-allow-methods':'GET, POST, OPTIONS','access-control-allow-headers':'content-type, accept','vary':'Origin'};
+const json=(data,status=200)=>new Response(JSON.stringify(data),{status,headers:{'content-type':'application/json; charset=utf-8','cache-control':'no-store',...cors}});
 const clean=(v,max=12000)=>String(v??'').normalize('NFKC').trim().slice(0,max);
 const safeId=(v,f='')=>clean(v,160).replace(/[^a-zA-Z0-9._:-]/g,'-')||f;
 const newId=()=>typeof crypto.randomUUID==='function'?crypto.randomUUID():`${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
@@ -12,6 +13,7 @@ function memoryBlock(messages=[]){
  return messages.map((m,i)=>`[memory ${i+1}] role=${m.role}; created_at=${m.created_at}\n${m.content}`).join('\n\n');
 }
 
+export function onRequestOptions(){return new Response(null,{status:204,headers:cors})}
 export function onRequestGet({env}){
  const configured=Boolean(env?.AI?.run);
  return json({ok:configured,schema:'dore.workers-ai-readiness.v1',configured,provider:{name:'cloudflare-workers-ai'},model:clean(env?.DORE_WORKERS_AI_MODEL,180)||'@cf/zai-org/glm-4.7-flash',billing_guard:'workers-free-plan-hard-limit'},configured?200:503);
