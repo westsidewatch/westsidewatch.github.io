@@ -1,0 +1,44 @@
+#!/usr/bin/env python3
+import json, os, sqlite3, hashlib, uuid, urllib.request
+from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
+from datetime import datetime, timezone
+from pathlib import Path
+ROOT=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore'))
+DB=ROOT/'data'/'dore.sqlite3'; HOST=os.environ.get('DORE_LOCAL_HOST','127.0.0.1'); PORT=int(os.environ.get('DORE_LOCAL_PORT','8788'))
+MODEL=os.environ.get('DORE_LOCAL_MODEL','qwen3:8b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
+SYSTEM='''You are Doré, a persistent local research and knowledge agent. Your identity is independent of the language model serving this response. Use supplied memory as evidence. Do not invent memories. If memory is insufficient, say so. Keep continuity across conversations through Doré Memory Core.'''
+def now(): return datetime.now(timezone.utc).isoformat()
+def db():
+ c=sqlite3.connect(DB); c.row_factory=sqlite3.Row; return c
+def save(cid,role,content,project='dore-global'):
+ mid=str(uuid.uuid4()); ts=now(); h=hashlib.sha256(content.encode()).hexdigest(); key=f'conversations/{project}/{cid}/{mid}.json'; p=ROOT/'archive'/key; p.parent.mkdir(parents=True,exist_ok=True)
+ payload={'schema':'dore.local-message.v1','id':mid,'conversation_id':cid,'project_id':project,'role':role,'content':content,'created_at':ts,'workers_ai_required':False}; p.write_text(json.dumps(payload,ensure_ascii=False),encoding='utf-8')
+ with db() as c:
+  c.execute('INSERT OR IGNORE INTO dore_conversations(id,project_id,actor_id,mode,title,created_at,updated_at) VALUES(?,?,?,?,?,?,?)',(cid,project,'local','LOCAL',None,ts,ts)); c.execute('UPDATE dore_conversations SET updated_at=? WHERE id=?',(ts,cid)); c.execute('INSERT OR IGNORE INTO dore_messages(id,conversation_id,project_id,actor_id,role,content,content_sha256,archive_key,created_at) VALUES(?,?,?,?,?,?,?,?,?)',(mid,cid,project,'local',role,content,h,key,ts))
+ return mid
+def recall(project,cid,q,limit=14):
+ terms=[x.lower() for x in q.replace('，',' ').replace('。',' ').replace('?',' ').replace('？',' ').split() if len(x)>=2]
+ with db() as c: rows=[dict(x) for x in c.execute('SELECT * FROM dore_messages WHERE project_id=? ORDER BY created_at DESC LIMIT 160',(project,))]
+ for r in rows: r['_score']=sum(t in r['content'].lower() for t in terms)+(3 if r['conversation_id']==cid else 0)
+ return sorted(rows,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit]
+def ollama(messages):
+ data=json.dumps({'model':MODEL,'messages':messages,'stream':False}).encode(); req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'}); return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']['content']
+class H(BaseHTTPRequestHandler):
+ def sendj(self,x,s=200):
+  b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
+ def do_GET(self):
+  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False})
+  self.sendj({'ok':False,'error':'not_found'},404)
+ def do_POST(self):
+  try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
+  except: return self.sendj({'ok':False,'error':'invalid_json'},400)
+  if self.path!='/chat': return self.sendj({'ok':False,'error':'not_found'},404)
+  text=str(b.get('message','')).strip(); cid=str(b.get('conversation_id') or uuid.uuid4()); project=str(b.get('project_id') or 'dore-global')
+  if not text:return self.sendj({'ok':False,'error':'empty_message'},400)
+  save(cid,'user',text,project); memories=recall(project,cid,text); context='\n'.join(f"[{m['created_at']}] {m['role']}: {m['content']}" for m in reversed(memories))
+  try: answer=ollama([{'role':'system','content':SYSTEM+'\n\nDoré memory:\n'+context},{'role':'user','content':text}])
+  except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
+  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'answer':answer,'memory_hits':len(memories),'model':MODEL,'workers_ai_used':False})
+ def log_message(self,*a): pass
+if __name__=='__main__':
+ print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
