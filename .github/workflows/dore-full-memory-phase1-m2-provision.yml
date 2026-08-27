@@ -48,16 +48,15 @@ jobs:
           rm -f wrangler.toml
           npx --yes wrangler@4 pages download config "$PROJECT" --force
           test -s wrangler.toml
-          sed -E 's/(value\s*=\s*).*/\1"[REDACTED]"/' wrangler.toml | head -220
-      - name: Merge M2 Vectorize and Workers AI bindings
+      - name: Merge M2 Vectorize and Workers AI production bindings
         run: |
-          if ! grep -q 'binding = "DORE_MEMORY_VECTOR"' wrangler.toml; then
-            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
+          if ! grep -q '^\[\[env.production.vectorize\]\]' wrangler.toml; then
+            printf '\n[[env.production.vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> wrangler.toml
           fi
-          if ! grep -q '^\[ai\]' wrangler.toml; then
-            printf '\n[ai]\nbinding = "AI"\n' >> wrangler.toml
+          if ! grep -q '^\[env.production.ai\]' wrangler.toml; then
+            printf '\n[env.production.ai]\nbinding = "AI"\n' >> wrangler.toml
           fi
-          grep -n -E '^\[ai\]|^\[\[vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' wrangler.toml
+          grep -n -E '^\[env.production.ai\]|^\[\[env.production.vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' wrangler.toml
       - name: Build Pages output
         run: hugo --gc --minify
       - name: Deploy exact current config plus M2 bindings
@@ -66,7 +65,8 @@ jobs:
             --project-name="$PROJECT" \
             --branch=main \
             --commit-hash="${GITHUB_SHA}" \
-            --commit-message="Doré Full Memory M2 bindings ${GITHUB_SHA}"
+            --commit-message="Doré Full Memory M2 bindings ${GITHUB_SHA}" \
+            --commit-dirty=true
       - name: Verify runtime bindings became live
         run: |
           sleep 20
