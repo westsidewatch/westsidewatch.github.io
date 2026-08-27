@@ -19,4 +19,4 @@ function bookStarts(q){const text=String(q||''),found=[];for(let i=0;i<text.leng
 function parseQuery(q){const text=String(q||'').trim();if(!text)return null;const starts=bookStarts(text);if(!starts.length)return null;const segments=[];for(let i=0;i<starts.length;i++){const end=i+1<starts.length?starts[i+1]:text.length;const seg=text.slice(starts[i],end).replace(/^[\s,，;；、]+|[\s,，;；、]+$/g,'');if(seg)segments.push(seg)}if(!segments.length)return null;const parsed=segments.map(parseSegment);return parsed.some(x=>!x)?null:parsed}
 return{parseSegment,parseQuery,aliases:aliases.slice()}}
 return{version:'1.0',create,chineseNumber};
-}));
+});

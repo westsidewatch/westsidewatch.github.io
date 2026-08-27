@@ -12,6 +12,9 @@ on:
       - 'functions/api/dore/respond.js'
       - 'functions/api/dore/conversation.js'
       - 'static/dore/dore-search-runtime.js'
+      - 'static/dore/dore-search.js'
+      - 'static/dore/dore-reference-router.js'
+      - 'static/dore/dore-scripture-reference-parser.js'
       - 'scripts/dore/chatgpt-bridge-gate.mjs'
       - 'static/dore/dore-video-subtitle-router.js'
       - 'static/dore/dore-brain-bridge.js'
@@ -43,6 +46,9 @@ jobs:
           grep -q "youtube-advertised-caption-acquisition" functions/api/dore/video-subtitle.js
           grep -q "dore.video-subtitle-result.v1" functions/api/dore/video-subtitle-result.js
           grep -q "dore-video-subtitle-router.js" static/dore/dore-brain-bridge.js
+          node --check static/dore/dore-search.js
+          node --check static/dore/dore-reference-router.js
+          node --check static/dore/dore-scripture-reference-parser.js
           node scripts/dore/chatgpt-bridge-gate.mjs
       - name: Deploy production Pages bundle
         env:
