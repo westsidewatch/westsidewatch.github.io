@@ -18,7 +18,7 @@ if ! command -v ollama >/dev/null; then
   exit 2
 fi
 
-mkdir -p "$ROOT"/{data,archive/raw-history,archive/conversations,logs,backups,imports}
+mkdir -p "$ROOT"/{data,archive/raw-history,archive/conversations,archive/design-evidence,logs,backups,imports}
 DB="$ROOT/data/dore.sqlite3"
 sqlite3 "$DB" <<'SQL'
 PRAGMA journal_mode=WAL;
@@ -46,9 +46,22 @@ CREATE TABLE IF NOT EXISTS dore_messages (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_msg_conversation_hash ON dore_messages(conversation_id,content_sha256,role);
 CREATE INDEX IF NOT EXISTS idx_msg_conversation_created ON dore_messages(conversation_id,created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_msg_project_created ON dore_messages(project_id,created_at DESC);
+CREATE TABLE IF NOT EXISTS dore_context_state (
+ conversation_id TEXT PRIMARY KEY, project_id TEXT NOT NULL, scope TEXT NOT NULL DEFAULT 'candidate',
+ brand_project_status TEXT NOT NULL DEFAULT 'candidate', design_mode INTEGER NOT NULL DEFAULT 0,
+ updated_at TEXT NOT NULL
+);
+CREATE TABLE IF NOT EXISTS dore_design_evidence (
+ id TEXT PRIMARY KEY, conversation_id TEXT NOT NULL, message_id TEXT, project_id TEXT NOT NULL,
+ scope TEXT NOT NULL, truth_state TEXT NOT NULL, content TEXT NOT NULL, source_ref TEXT,
+ supersedes TEXT, created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_design_project_time ON dore_design_evidence(project_id,created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_design_truth ON dore_design_evidence(truth_state,created_at DESC);
 INSERT INTO dore_meta(key,value) VALUES('node_kind','mac-local') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 INSERT INTO dore_meta(key,value) VALUES('memory_core','sqlite+filesystem') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 INSERT INTO dore_meta(key,value) VALUES('workers_ai_required','false') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
+INSERT INTO dore_meta(key,value) VALUES('design_working_memory','d1-d3-integrating') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 SQL
 
 if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
