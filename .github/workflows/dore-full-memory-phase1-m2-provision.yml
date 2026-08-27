@@ -52,19 +52,10 @@ jobs:
       - name: Merge M2 Vectorize and Workers AI bindings
         run: |
           if ! grep -q 'binding = "DORE_MEMORY_VECTOR"' /tmp/dore-pages.toml; then
-            cat >> /tmp/dore-pages.toml <<'EOF'
-
-[[vectorize]]
-binding = "DORE_MEMORY_VECTOR"
-index_name = "dore-conversation-memory"
-EOF
+            printf '\n[[vectorize]]\nbinding = "DORE_MEMORY_VECTOR"\nindex_name = "dore-conversation-memory"\n' >> /tmp/dore-pages.toml
           fi
           if ! grep -q '^\[ai\]' /tmp/dore-pages.toml; then
-            cat >> /tmp/dore-pages.toml <<'EOF'
-
-[ai]
-binding = "AI"
-EOF
+            printf '\n[ai]\nbinding = "AI"\n' >> /tmp/dore-pages.toml
           fi
           grep -n -E '^\[ai\]|^\[\[vectorize\]\]|binding = "(AI|DORE_MEMORY_VECTOR)"|index_name = "dore-conversation-memory"' /tmp/dore-pages.toml
       - name: Build Pages output
