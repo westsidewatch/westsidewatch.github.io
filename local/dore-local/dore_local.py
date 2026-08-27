@@ -31,15 +31,10 @@ def save(cid,role,content,project='dore-global'):
  return mid
 def context_state(cid,project,text):
  with db() as c:
-  row=c.execute('SELECT * FROM dore_context_state WHERE conversation_id=?',(cid,)).fetchone()
-  inherited=row['scope'] if row else None; scope=classify_scope(text,inherited)
-  design=bool(row['design_mode']) if row else False
+  row=c.execute('SELECT * FROM dore_context_state WHERE conversation_id=?',(cid,)).fetchone(); inherited=row['scope'] if row else None; scope=classify_scope(text,inherited); design=bool(row['design_mode']) if row else False
   if any(h in text.lower() for h in DESIGN_HINTS): design=True
-  status='confirmed' if scope in {'westside_brand','scripture_church_theology'} else 'candidate'
-  ts=now(); c.execute('INSERT INTO dore_context_state(conversation_id,project_id,scope,brand_project_status,design_mode,updated_at) VALUES(?,?,?,?,?,?) ON CONFLICT(conversation_id) DO UPDATE SET project_id=excluded.project_id,scope=excluded.scope,brand_project_status=excluded.brand_project_status,design_mode=excluded.design_mode,updated_at=excluded.updated_at',(cid,project,scope,status,1 if design else 0,ts))
- return {'scope':scope,'brand_project_status':status,'design_mode':design}
-def is_penpot_action(text):
- s=str(text).lower(); return any(re.search(p,s,re.I) for p in PENPOT_ACTION_PATTERNS)
+  status='confirmed' if scope in {'westside_brand','scripture_church_theology'} else 'candidate'; ts=now(); c.execute('INSERT INTO dore_context_state(conversation_id,project_id,scope,brand_project_status,design_mode,updated_at) VALUES(?,?,?,?,?,?) ON CONFLICT(conversation_id) DO UPDATE SET project_id=excluded.project_id,scope=excluded.scope,brand_project_status=excluded.brand_project_status,design_mode=excluded.design_mode,updated_at=excluded.updated_at',(cid,project,scope,status,1 if design else 0,ts)); return {'scope':scope,'brand_project_status':status,'design_mode':design}
+def is_penpot_action(text): return any(re.search(p,str(text).lower(),re.I) for p in PENPOT_ACTION_PATTERNS)
 def save_design_evidence(cid,mid,project,scope,content,state='observation',source_ref=None,supersedes=None):
  if state not in TRUTH_STATES: raise ValueError('invalid truth state')
  eid=str(uuid.uuid4()); ts=now(); item=DesignEvidence(eid,content,state,project,scope,source_ref,ts,supersedes).validate(); key=f'{project}/{cid}/{eid}.json'; p=ROOT/'archive'/'design-evidence'/key; p.parent.mkdir(parents=True,exist_ok=True); p.write_text(json.dumps(item.json(),ensure_ascii=False),encoding='utf-8')
@@ -47,8 +42,7 @@ def save_design_evidence(cid,mid,project,scope,content,state='observation',sourc
  return eid
 def design_view(project,limit=120):
  with db() as c: rows=[dict(x) for x in c.execute('SELECT * FROM dore_design_evidence WHERE project_id=? ORDER BY created_at ASC LIMIT ?',(project,limit))]
- items=[DesignEvidence(r['id'],r['content'],r['truth_state'],r['project_id'],r['scope'],r['source_ref'],r['created_at'],r['supersedes']) for r in rows]
- return consolidate(items)
+ return consolidate([DesignEvidence(r['id'],r['content'],r['truth_state'],r['project_id'],r['scope'],r['source_ref'],r['created_at'],r['supersedes']) for r in rows])
 def design_context(view):
  def lines(key): return '\n'.join(f"- [{x['truth_state']}] {x['content']}" for x in view[key][-20:]) or '- none'
  return 'CURRENT / CONFIRMED:\n'+lines('current')+'\n\nACTIVE EXPLORATION:\n'+lines('exploration')+'\n\nREFERENCES / EVIDENCE:\n'+lines('references')+'\n\nREJECTED / CORRECTED HISTORY:\n'+lines('historical')+'\n\nUNRESOLVED:\n'+lines('unresolved')
@@ -64,11 +58,20 @@ def recall(project,cid,q,limit=18):
  with db() as c: rows=[dict(x) for x in c.execute('SELECT * FROM dore_messages WHERE project_id=? ORDER BY created_at DESC',(project,))]
  scored=[]
  for r in rows:
-  content=r['content'].lower(); hits=sum(1 for t in terms if t in content); same=(r['conversation_id']==cid); r['_score']=hits*10+(5 if same else 0)
+  hits=sum(1 for t in terms if t in r['content'].lower()); same=(r['conversation_id']==cid); r['_score']=hits*10+(5 if same else 0)
   if hits or same: scored.append(r)
- ranked=sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True); return sorted(ranked[:limit],key=lambda x:x['created_at'])
+ return sorted(sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit],key=lambda x:x['created_at'])
 def ollama(messages):
  data=json.dumps({'model':MODEL,'messages':messages,'stream':False}).encode(); req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'}); return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']['content']
+def execute_penpot(b, compatibility=False):
+ project=str(b.get('project_id') or 'dore-search'); cid=str(b.get('conversation_id') or uuid.uuid4()); action=str(b.get('action') or '').strip(); task=str(b.get('task') or '').strip()
+ if compatibility and action=='read_page' and not task: task='Read the currently open Penpot page. Return the actual current page structure and visible composition evidence without modifying anything.'
+ if not task:return {'http':400,'body':{'ok':False,'error':'empty_task'}}
+ scope=classify_scope(task); brief=design_context(design_view(project))
+ try: result=run_penpot_task(task,brief)
+ except Exception as e: result={'ok':False,'verified':False,'error':str(e)}
+ evstate='verified' if result.get('verified') else ('evidence' if action=='read_page' and result.get('ok') else 'attempt'); save_design_evidence(cid,None,project,scope,json.dumps({'action':action or 'run','task':task,'result':result},ensure_ascii=False),evstate,'penpot-mcp')
+ return {'http':200,'body':{'ok':bool(result.get('ok')),'penpot_run':result,'truth_state':evstate,'compatibility_route':compatibility}}
 class H(BaseHTTPRequestHandler):
  def cors(self):
   origin=self.headers.get('Origin','')
@@ -78,7 +81,7 @@ class H(BaseHTTPRequestHandler):
   b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Cache-Control','no-store'); self.cors(); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
  def do_OPTIONS(self): self.send_response(204); self.cors(); self.send_header('Content-Length','0'); self.end_headers()
  def do_GET(self):
-  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v2','design_working_memory':'d1-d4-bridge-v1','penpot_agent':'mcp+local-vlm'})
+  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v2','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
   self.sendj({'ok':False,'error':'not_found'},404)
  def do_POST(self):
   try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
@@ -89,17 +92,10 @@ class H(BaseHTTPRequestHandler):
    try:eid=save_design_evidence(cid,None,project,scope,text,state,b.get('source_ref'),b.get('supersedes'))
    except ValueError as e:return self.sendj({'ok':False,'error':str(e)},400)
    return self.sendj({'ok':True,'evidence_id':eid,'design_view':design_view(project)})
-  if self.path=='/design/view':
-   project=str(b.get('project_id') or 'dore-global'); return self.sendj({'ok':True,'project_id':project,'design_view':design_view(project)})
+  if self.path=='/design/view': return self.sendj({'ok':True,'project_id':str(b.get('project_id') or 'dore-global'),'design_view':design_view(str(b.get('project_id') or 'dore-global'))})
   if self.path=='/design/penpot/status': return self.sendj(penpot_status())
-  if self.path=='/design/penpot/run':
-   project=str(b.get('project_id') or 'dore-search'); cid=str(b.get('conversation_id') or uuid.uuid4()); task=str(b.get('task') or '').strip()
-   if not task:return self.sendj({'ok':False,'error':'empty_task'},400)
-   scope=classify_scope(task); brief=design_context(design_view(project))
-   try: result=run_penpot_task(task,brief)
-   except Exception as e: result={'ok':False,'verified':False,'error':str(e)}
-   evstate='verified' if result.get('verified') else 'attempt'; save_design_evidence(cid,None,project,scope,json.dumps({'task':task,'result':result},ensure_ascii=False),evstate,'penpot-mcp')
-   return self.sendj({'ok':True,'penpot_run':result,'truth_state':evstate})
+  if self.path in {'/design/penpot/run','/penpot'}:
+   out=execute_penpot(b,self.path=='/penpot'); return self.sendj(out['body'],out['http'])
   if self.path!='/chat': return self.sendj({'ok':False,'error':'not_found'},404)
   text=str(b.get('message','')).strip(); cid=str(b.get('conversation_id') or uuid.uuid4()); project=str(b.get('project_id') or 'dore-global')
   if not text:return self.sendj({'ok':False,'error':'empty_message'},400)
@@ -107,18 +103,14 @@ class H(BaseHTTPRequestHandler):
   if state['design_mode']: save_design_evidence(cid,mid,project,state['scope'],text,'observation','dore-search')
   memories=recall(project,cid,text); context='\n'.join(f"[{m['created_at']}] {m['role']}: {m['content']}" for m in memories); dv=design_view(project) if state['design_mode'] else None
   if state['design_mode'] and is_penpot_action(text):
-   brief=design_context(dv)
-   try: result=run_penpot_task(text,brief)
+   try: result=run_penpot_task(text,design_context(dv))
    except Exception as e: result={'ok':False,'verified':False,'error':str(e)}
-   evstate='verified' if result.get('verified') else 'attempt'; save_design_evidence(cid,mid,project,state['scope'],json.dumps({'task':text,'result':result},ensure_ascii=False),evstate,'penpot-mcp')
-   if result.get('verified'): answer=result.get('answer') or 'Penpot 設計已完成並通過實際畫面驗證。'
-   else: answer='Penpot 設計尚未通過視覺驗證。'+((' 阻塞：'+str(result.get('error'))) if result.get('error') else ' 我沒有把工具執行或圖層建立當作完成。')
-   save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'context_state':state,'design_working_memory':'d1-d4-bridge-v1','penpot_run':result,'truth_state':evstate})
+   evstate='verified' if result.get('verified') else 'attempt'; save_design_evidence(cid,mid,project,state['scope'],json.dumps({'task':text,'result':result},ensure_ascii=False),evstate,'penpot-mcp'); answer=(result.get('answer') or 'Penpot 設計已完成並通過實際畫面驗證。') if result.get('verified') else 'Penpot 設計尚未通過視覺驗證。'+((' 阻塞：'+str(result.get('error'))) if result.get('error') else ' 我沒有把工具執行或圖層建立當作完成。'); save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'context_state':state,'design_working_memory':'d1-d4-bridge-v2','penpot_run':result,'truth_state':evstate})
   sys=SYSTEM+'\n\nDoré memory:\n'+context
   if dv is not None: sys+='\n\nDoré Design Working Memory:\n'+design_context(dv)
   try: answer=ollama([{'role':'system','content':sys},{'role':'user','content':text}])
   except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
-  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2','context_state':state,'design_working_memory':'d1-d4-bridge-v1'})
+  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
  def log_message(self,*a): pass
 if __name__=='__main__':
- ensure_design_schema(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v1',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
+ ensure_design_schema(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
