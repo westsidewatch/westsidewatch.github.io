@@ -1,84 +1,40 @@
 (()=>{
 'use strict';
 if(window.DoreSearchRuntime?.version)return;
-
-const EVENT='dore:search-query';
-const CONVERSATION_KEY='dore.conversation.id.v3';
-const $=selector=>document.querySelector(selector);
+const CONVERSATION_KEY='dore.conversation.id.v4';
+const $=s=>document.querySelector(s);
 const uuid=()=>crypto.randomUUID?.()||`${Date.now().toString(36)}-${Math.random().toString(36).slice(2)}`;
-
-function conversationId(){
-  let value=sessionStorage.getItem(CONVERSATION_KEY);
-  if(!value){value=uuid();sessionStorage.setItem(CONVERSATION_KEY,value)}
-  return value;
+function conversationId(){let v=sessionStorage.getItem(CONVERSATION_KEY);if(!v){v=uuid();sessionStorage.setItem(CONVERSATION_KEY,v)}return v}
+function snapshot(){const input=$('#search-input');return{query:input?.value?.trim()||'',input,results:$('#results'),count:$('#result-count'),conversation_id:conversationId()}}
+function parseConversationQuery(value=''){const m=String(value).trim().match(/^(?:多雷|dor[eé])\s*[,，:：]?\s*(.+)$/i);return m?.[1]?.trim()||''}
+function renderConversation(user,answer,error=''){
+ const box=$('#results'),count=$('#result-count');if(!box)return;
+ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ box.innerHTML=`<article class="result-card"><header><strong>DORÉ</strong><span>Conversation · Workers AI</span></header><p>${esc(answer||'Doré 對話目前不可用。')}</p><footer><span>${esc(user)}</span><span>${esc(error)}</span></footer></article>`;
+ if(count)count.textContent=error?'對話失敗':'Doré 回應';
+ $('#results-wrap')?.scrollIntoView({behavior:'smooth',block:'start'});
 }
-
-function snapshot(){
-  const form=$('#search-form'),input=$('#search-input');
-  return{query:input?.value?.trim()||'',form,input,results:$('#results'),count:$('#result-count'),status:$('#search-status'),conversation_id:conversationId(),timestamp:Date.now()};
-}
-
-function dispatch(detail){if(detail?.query)window.dispatchEvent(new CustomEvent(EVENT,{detail}))}
-function log(){return $('#conversation-log')}
-function appendTurn(role,text,meta={}){
-  const box=log();if(!box)return null;
-  const article=document.createElement('article');
-  article.className=`conversation-turn conversation-turn--${role}`;
-  article.dataset.turnId=meta.turnId||uuid();
-  const header=document.createElement('header');
-  const name=document.createElement('strong');name.textContent=role==='user'?'你':'DORÉ';
-  const detail=document.createElement('span');detail.textContent=meta.label||'';
-  const body=document.createElement('p');body.textContent=text;
-  header.append(name,detail);article.append(header,body);box.append(article);
-  return article;
-}
-function updateTurn(article,text,meta={}){
-  if(!article)return;
-  const body=article.querySelector('p');if(body)body.textContent=text;
-  const detail=article.querySelector('header span');if(detail)detail.textContent=meta.label||'';
-  article.classList.toggle('conversation-turn--error',Boolean(meta.error));
-}
-function setBusy(busy){
-  const button=$('#chat-button');if(button){button.disabled=busy;button.textContent=busy?'Doré 回應中…':'問 Doré'}
-}
-
 async function converse(detail){
-  appendTurn('user',detail.query,{label:'Conversation'});
-  const pending=appendTurn('assistant','正在思考…',{label:'Cloudflare Workers AI'});
-  setBusy(true);
-  try{
-    const response=await fetch('/api/dore/conversation',{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query:detail.query,conversation_id:detail.conversation_id,project_id:'dore-search',actor_id:'public'})});
-    const data=await response.json();
-    if(!response.ok||!data?.ok)throw new Error(data?.detail||data?.error||`HTTP ${response.status}`);
-    if(data?.provider?.name!=='cloudflare-workers-ai')throw new Error('unexpected_ai_provider');
-    updateTurn(pending,data.answer,{label:`Workers AI · ${data.provider.model||''}`});
-    window.dispatchEvent(new CustomEvent('dore:conversation-response',{detail:data}));
-    return data;
-  }catch(error){
-    updateTurn(pending,'Doré 對話目前不可用；普通搜索不受影響。',{error:true,label:String(error?.message||error)});
-    return null;
-  }finally{setBusy(false)}
+ const q=detail.query;
+ renderConversation(q,'Doré 回應中…');
+ try{
+  const r=await fetch('/api/dore/conversation',{method:'POST',headers:{'content-type':'application/json',accept:'application/json'},body:JSON.stringify({query:q,conversation_id:detail.conversation_id,project_id:'dore-search',actor_id:'public'})});
+  const d=await r.json();
+  if(!r.ok||!d?.ok)throw new Error(d?.detail||d?.error||`HTTP ${r.status}`);
+  if(d?.provider?.name!=='cloudflare-workers-ai')throw new Error('unexpected_ai_provider');
+  renderConversation(q,d.answer||'');
+  window.dispatchEvent(new CustomEvent('dore:conversation-response',{detail:d}));
+  return d;
+ }catch(e){renderConversation(q,'Doré 對話目前不可用。',String(e?.message||e));return null}
 }
-
 function onSubmit(event){
-  const form=event.target;if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;
-  const detail=snapshot();if(!detail.query)return;
-  // Enter / Search is deliberately search-only: no Workers AI call, no AI tokens/neurons.
-  dispatch(detail);
+ const form=event.target;if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;
+ const snap=snapshot(),q=parseConversationQuery(snap.query);if(!q)return; // ordinary search remains original zero-AI path
+ event.preventDefault();event.stopImmediatePropagation();
+ converse({...snap,query:q});
 }
-function onChat(event){
-  const button=event.target.closest?.('#chat-button');if(!button)return;
-  event.preventDefault();
-  const detail=snapshot();if(!detail.query)return;
-  converse(detail);
-}
-function newConversation(){sessionStorage.removeItem(CONVERSATION_KEY);log()?.replaceChildren();return conversationId()}
-function init(){
-  if(document.documentElement.dataset.doreRuntimeBound)return;
-  document.documentElement.dataset.doreRuntimeBound='1';
-  document.addEventListener('submit',onSubmit,true);
-  document.addEventListener('click',onChat,true);
-}
-window.DoreSearchRuntime={version:'4.0.0',event:EVENT,snapshot,dispatch,conversationId,newConversation,converse};
+function newConversation(){sessionStorage.removeItem(CONVERSATION_KEY);return conversationId()}
+function init(){if(document.documentElement.dataset.doreConversationBound)return;document.documentElement.dataset.doreConversationBound='1';document.addEventListener('submit',onSubmit,true)}
+window.DoreSearchRuntime={version:'4.1.0',snapshot,conversationId,newConversation,converse,parseConversationQuery};
 init();
 })();
