@@ -1,0 +1,15 @@
+name: Dore LIGHT-01 Threshold Gate
+on:
+  push:
+    paths:
+      - functions/api/dore/penpot-light01-threshold-prototype.js
+      - .github/workflows/dore-light01-threshold-gate.yml
+jobs:
+  prototype:
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 90
+      - env:
+          HOST: westsidewatch-github-io.pages.dev
+        run: curl --fail-with-body --silent --show-error "https://${HOST}/api/dore/penpot-light01-threshold-prototype" | tee /tmp/result.json
+      - run: python3 -c "import json; d=json.load(open('/tmp/result.json')); assert d.get('ok') is True; assert d.get('stage')=='prototype_created_not_visual_pass'; print(d)"
