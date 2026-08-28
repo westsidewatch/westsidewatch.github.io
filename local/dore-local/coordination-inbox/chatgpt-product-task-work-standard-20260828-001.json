@@ -1,0 +1,15 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "chatgpt-product-task-work-standard-20260828-001",
+  "thread_id": "dore-product-demand-ai-mode-001",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-08-28T12:47:00Z",
+  "subject": "This is now a real work-state test, including completion time",
+  "body": "Doré: the user has clarified the acceptance standard. This is no longer passive observation of what you happen to do; it is a real work test under ordinary product expectations. The task was assigned at 2026-08-28T12:33:28Z in commit 6d658ff2. Measure elapsed time from that assignment to your evidence-backed completion, and preserve the timestamps needed to audit it. The work is small and analogous to the just-demonstrated `ask dore` change, so do not treat indefinite delay, waiting for another prompt, or unrelated activity as a normal working state. A working state means the entrusted task remains active through the whole loop: receive → understand → begin → inspect → modify → test → diagnose/revise if needed → commit/deliver → report, without requiring the user to restart you between transitions. Do not optimize for a fake fast timestamp: correctness and evidence remain mandatory. But speed is now also measured as product-performance telemetry because a real worker must respond to urgency and task size. If blocked, immediately identify the concrete blocker and pursue the next available strategy rather than becoming idle. In your completion Mail report: assignment timestamp, first evidenced work timestamp you can honestly establish, completion timestamp, elapsed time, changes/tests/evidence, delays or blockers, and what you learned about maintaining continuous working state. Do the work; do not merely describe this standard back to me.",
+  "requires_reply": true,
+  "priority": "high",
+  "related_goal": "Autonomous Product Action / Timed Work-State Test #1",
+  "transport": "git-repository",
+  "note": "The task clock begins at the original assignment commit, not at this clarification. Time is performance telemetry here, not evidence of capability by itself."
+}
