@@ -18,8 +18,10 @@ if 'def learning_plan_view():' not in s:
 """
     s=s.replace(anchor,anchor+block,1)
 route="  if self.path=='/learning/plan': return self.sendj(learning_plan_view())\n"
+while s.count(route)>1: s=s.replace(route+route,route)
 if route not in s:
     marker="  if self.path in {'/memory/self/status','/learning/status'}: return self.sendj(self_view())\n"
     s=s.replace(marker,marker+route,1)
-s=s.replace("'recall':'project-wide-v3+self-memory+learning-ledger'","'recall':'project-wide-v4+self-memory+learning-ledger+capability-planner'",1)
-p.write_text(s,encoding='utf-8'); print('DORE_LEARNING_PLANNER_WIRE_APPLIED')
+for old in ("project-wide-v2+legacy-transplant-v1","project-wide-v3+self-memory+learning-ledger","project-wide-v4+self-memory+learning-ledger+capability-planner"):
+    s=s.replace(old,"project-wide-v4+self-memory+learning-ledger+capability-planner")
+p.write_text(s,encoding='utf-8'); print('DORE_LEARNING_PLANNER_WIRE_IDEMPOTENT_PASS')
