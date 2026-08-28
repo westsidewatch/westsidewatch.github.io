@@ -13,24 +13,26 @@ def _verified_pass(events, domain, stage=None):
     return False
 
 
+def _unlock_count(gates, gate_id):
+    return sum(1 for g in gates if gate_id in (g.get('requires') or []))
+
+
 def plan(status_payload, gates):
     """Return executable gates. Calendar duration is never a readiness criterion."""
     events=(status_payload.get('learning') or {}).get('events') or []
-    completed=[]; ready=[]; blocked=[]
-    gate_map={g['id']:g for g in gates}
-    passed=set()
+    completed=[]; ready=[]; blocked=[]; passed=set()
     for g in gates:
         if _verified_pass(events,g['domain'],g.get('stage')):
             passed.add(g['id']); completed.append({'id':g['id'],'reason':'verified_capability'})
     for g in gates:
         if g['id'] in passed: continue
-        deps=g.get('requires') or []
-        missing=[d for d in deps if d not in passed]
-        item={'id':g['id'],'domain':g['domain'],'stage':g.get('stage'),'requires':deps,'acceptance':g.get('acceptance') or [],'next_action':g.get('next_action')}
-        if missing:
-            item['blocked_by']=missing; blocked.append(item)
+        deps=g.get('requires') or []; missing=[d for d in deps if d not in passed]
+        item={'id':g['id'],'domain':g['domain'],'stage':g.get('stage'),'requires':deps,'acceptance':g.get('acceptance') or [],'next_action':g.get('next_action'),'priority':int(g.get('priority') or 0),'unlock_count':_unlock_count(gates,g['id'])}
+        item['scheduler_score']=item['priority']+item['unlock_count']*10
+        if missing: item['blocked_by']=missing; blocked.append(item)
         else: ready.append(item)
-    return {'policy':'capability-gated-v1','time_is_gate':False,'completed':completed,'ready':ready,'blocked':blocked}
+    ready.sort(key=lambda x:(x['scheduler_score'],x['unlock_count'],x['priority']),reverse=True)
+    return {'policy':'capability-gated-v2','time_is_gate':False,'scheduler':'dependency-leverage+priority','completed':completed,'ready':ready,'blocked':blocked}
 
 
 def validate_gate(gate):
