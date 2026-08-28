@@ -6,6 +6,7 @@ from pathlib import Path
 from design_memory import DesignEvidence, classify_scope, consolidate, TRUTH_STATES
 from penpot_agent import status as penpot_status, run_task as run_penpot_task
 from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as import_legacy_items, recall as legacy_recall, context as legacy_context
+from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as import_legacy_items, recall as legacy_recall, context as legacy_context
 ROOT=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore'))
 DB=ROOT/'data'/'dore.sqlite3'; HOST=os.environ.get('DORE_LOCAL_HOST','127.0.0.1'); PORT=int(os.environ.get('DORE_LOCAL_PORT','8788'))
 MODEL=os.environ.get('DORE_LOCAL_MODEL','qwen3:8b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
@@ -21,18 +22,28 @@ def ensure_design_schema():
  ROOT.joinpath('archive','design-evidence').mkdir(parents=True,exist_ok=True)
  with db() as c:
   ensure_legacy_schema(c)
+  ensure_legacy_schema(c)
   c.execute("CREATE TABLE IF NOT EXISTS dore_context_state (conversation_id TEXT PRIMARY KEY,project_id TEXT NOT NULL,scope TEXT NOT NULL DEFAULT 'candidate',brand_project_status TEXT NOT NULL DEFAULT 'candidate',design_mode INTEGER NOT NULL DEFAULT 0,updated_at TEXT NOT NULL)")
   c.execute("CREATE TABLE IF NOT EXISTS dore_design_evidence (id TEXT PRIMARY KEY,conversation_id TEXT NOT NULL,message_id TEXT,project_id TEXT NOT NULL,scope TEXT NOT NULL,truth_state TEXT NOT NULL,content TEXT NOT NULL,source_ref TEXT,supersedes TEXT,created_at TEXT NOT NULL)")
   c.execute('CREATE INDEX IF NOT EXISTS idx_design_project_time ON dore_design_evidence(project_id,created_at DESC)')
   c.execute('CREATE INDEX IF NOT EXISTS idx_design_truth ON dore_design_evidence(truth_state,created_at DESC)')
 def bootstrap_legacy_memory():
- seed=Path(__file__).resolve().parent/'legacy-memory'/'seed-v1.json'
- if not seed.is_file(): return 0
- try: payload=json.loads(seed.read_text(encoding='utf-8')); items=payload.get('items') or []
- except Exception: return 0
- with db() as c: return len(import_legacy_items(c,ROOT,items))
+ seed_dir=Path(__file__).resolve().parent/'legacy-memory'
+ total=0
+ for seed in sorted(seed_dir.glob('seed-*.json')):
+  try: payload=json.loads(seed.read_text(encoding='utf-8')); items=payload.get('items') or []
+  except Exception: continue
+  with db() as c: total+=len(import_legacy_items(c,ROOT,items))
+ return total
 def legacy_view(q):
  with db() as c: return legacy_recall(c,q)
+def legacy_status():
+ with db() as c:
+  ensure_legacy_schema(c)
+  total=c.execute('SELECT COUNT(*) FROM dore_legacy_memory').fetchone()[0]
+  states={r[0]:r[1] for r in c.execute('SELECT epistemic_state,COUNT(*) FROM dore_legacy_memory GROUP BY epistemic_state')}
+  subjects={r[0]:r[1] for r in c.execute('SELECT subject,COUNT(*) FROM dore_legacy_memory GROUP BY subject')}
+ return {'total':total,'states':states,'subjects':subjects,'source':'chatgpt_legacy_memory'}
 def save(cid,role,content,project='dore-global'):
  mid=str(uuid.uuid4()); ts=now(); h=hashlib.sha256(content.encode()).hexdigest(); key=f'conversations/{project}/{cid}/{mid}.json'; p=ROOT/'archive'/key; p.parent.mkdir(parents=True,exist_ok=True)
  payload={'schema':'dore.local-message.v1','id':mid,'conversation_id':cid,'project_id':project,'role':role,'content':content,'created_at':ts,'workers_ai_required':False}; p.write_text(json.dumps(payload,ensure_ascii=False),encoding='utf-8')
@@ -91,6 +102,7 @@ class H(BaseHTTPRequestHandler):
   b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Cache-Control','no-store'); self.cors(); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
  def do_OPTIONS(self): self.send_response(204); self.cors(); self.send_header('Content-Length','0'); self.end_headers()
  def do_GET(self):
+  if self.path=='/legacy-memory/status': return self.sendj({'ok':True,'legacy_memory':legacy_status()})
   if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v2+legacy-transplant-v1','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
   self.sendj({'ok':False,'error':'not_found'},404)
  def do_POST(self):
@@ -120,7 +132,7 @@ class H(BaseHTTPRequestHandler):
   if dv is not None: sys+='\n\nDoré Design Working Memory:\n'+design_context(dv)
   try: answer=ollama([{'role':'system','content':sys},{'role':'user','content':text}])
   except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
-  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'legacy_memory_hits':len(inherited),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
+  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'legacy_memory_hits':len(inherited),'legacy_memory_hits':len(inherited),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2+legacy-transplant-v1','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
  def log_message(self,*a): pass
 if __name__=='__main__':
- ensure_design_schema(); bootstrap_legacy_memory(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
+ ensure_design_schema(); bootstrap_legacy_memory(); bootstrap_legacy_memory(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
