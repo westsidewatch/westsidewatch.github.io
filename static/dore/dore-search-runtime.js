@@ -14,7 +14,7 @@ function conversationId(){let v=sessionStorage.getItem(CONVERSATION_KEY);if(!v){
 function snapshot(){const input=$('#search-input');return{query:input?.value?.trim()||'',input,results:$('#results'),count:$('#result-count'),conversation_id:conversationId()}}
 function aiMode(){return sessionStorage.getItem(MODE_KEY)==='on'}
 function setAiMode(on){if(on)sessionStorage.setItem(MODE_KEY,'on');else sessionStorage.removeItem(MODE_KEY);window.dispatchEvent(new CustomEvent('dore:ai-mode',{detail:{enabled:!!on}}));return !!on}
-function isOpenCommand(v=''){return /^問多雷[!！。.?？\s]*$/i.test(String(v).trim())}
+function isOpenCommand(v=''){return /^(?:問多雷|ask\s+dore)[!！。.?？\s]*$/i.test(String(v).trim())}
 function isCloseCommand(v=''){return /^搜索[!！。.?？\s]*$/i.test(String(v).trim())}
 function providerLabel(provider){const name=provider?.name||'';if(name==='dore-local')return 'Conversation · Local';if(name==='cloudflare-workers-ai')return 'Conversation · Workers AI';return 'Conversation'}
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -74,10 +74,10 @@ function onSubmit(event){
   if(isCloseCommand(raw)){event.preventDefault();event.stopImmediatePropagation();setAiMode(false);renderMode('已返回普通搜索。');if(snap.input)snap.input.value='';return}
   if(!raw)return;event.preventDefault();event.stopImmediatePropagation();converse({...snap,query:raw});return
  }
- // Search mode is the default. No keyword, including 多雷/Doré, can trigger AI here.
+ // Search mode is the default. Only explicit AI-mode commands can switch modes.
 }
 function newConversation(){sessionStorage.removeItem(CONVERSATION_KEY);return conversationId()}
 function init(){if(document.documentElement.dataset.doreConversationBound)return;document.documentElement.dataset.doreConversationBound='1';sessionStorage.removeItem(MODE_KEY);document.addEventListener('submit',onSubmit,true)}
-window.DoreSearchRuntime={version:'6.0.1',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
+window.DoreSearchRuntime={version:'6.0.2',snapshot,conversationId,newConversation,converse,aiMode,setAiMode,isOpenCommand,isCloseCommand,localReady};
 init();
 })();
