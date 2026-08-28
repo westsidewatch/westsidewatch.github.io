@@ -1,0 +1,33 @@
+name: Doré Legacy Memory Transplant Wire
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/apply-legacy-transplant.py'
+      - 'local/dore-local/legacy_memory.py'
+      - 'local/dore-local/legacy-memory/**'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  wire:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Wire legacy memory into Doré Local
+        run: python3 local/dore-local/apply-legacy-transplant.py
+      - name: Static acceptance
+        run: |
+          python3 -m py_compile local/dore-local/legacy_memory.py local/dore-local/dore_local.py
+          grep -q 'bootstrap_legacy_memory' local/dore-local/dore_local.py
+          grep -q 'legacy_memory_hits' local/dore-local/dore_local.py
+          grep -q 'legacy-transplant-v1' local/dore-local/dore_local.py
+      - name: Commit generated wiring
+        run: |
+          if git diff --quiet; then exit 0; fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add local/dore-local/dore_local.py
+          git commit -m 'feat(dore): activate inherited legacy memory recall'
+          git push
