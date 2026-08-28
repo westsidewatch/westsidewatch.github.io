@@ -318,3 +318,23 @@ Reconciliation findings:
 7. No P01 subtitle-runtime state or action was modified. The existing production audio/transcription environment dependency remains unchanged.
 
 Sweep status remains `ACTIVE_PARALLEL`; Design Working Memory/Penpot acceptance evidence is now explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
+
+## Checkpoint 23 — editorial / publishing / gospel-distribution research reconciliation (2026-08-28)
+
+Bounded evidence reviewed in this pass:
+
+- `dore-core/projects/WESTSIDE-EDITORIAL-PUBLISHING-AND-GOSPEL-DISTRIBUTION-RESEARCH.md`;
+- `dore-core/projects/DORÉ-EDITORIAL-DISTRIBUTION-EVIDENCE-LEDGER-2026-08-27.md`;
+- canonical `DORÉ-MASTER-WORK-REGISTER.md` rows for `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL`.
+
+Reconciliation findings:
+
+1. The editorial/publishing/distribution source is a real `ACTIVE_PARALLEL / DISCOVERY` research program, not a completed result. Its ten required outputs remain largely requirements/hypotheses: no bounded corpus matrices, Christian-periodical map/gap study, sustainability matrix, Toronto print-cost/fulfillment baseline, audience baseline, cross-product distribution prototype or mission-aware experiment were found in this batch.
+2. The Master Register already represents the work correctly as a cluster of operational rows rather than a new standalone workstream. No status promotion or demotion is justified: the five research rows remain `DISCOVERY / ACTIVE_PARALLEL`, and `DEVOTIONAL` remains `READY`.
+3. The durable principles are retained: Journal intensifies the Westside grammar rather than becoming an unrelated sub-brand; Christian publications are primarily research inputs rather than visual templates; distribution should be shared cross-product where practical; traffic is a means rather than the mission; analytics do not prove conversion; print/funding decisions require measured demand, cost, governance and consent rather than assumptions.
+4. No substantial completed milestone was discovered, so this batch adds no `COMPLETED_REVISIT_CANDIDATE`, `SUPERSEDED`, or `RETIRED` item. The smallest useful future proofs remain the six bounded artifacts listed in the editorial-distribution evidence ledger.
+5. A contradiction in the linked ledger was corrected: its local `Checkpoint 22 linkage` label conflicted with the canonical Sweep file, whose Checkpoint 22 is Design Working Memory/Penpot. The ledger now correctly links this family to Checkpoint 23.
+6. The Master Register `MEM-SWEEP-01` row now explicitly records the editorial/publishing/distribution research family as reconciled.
+7. No P01 subtitle/runtime/deployment/binding state was modified; the existing P01 environment dependency is unchanged.
+
+Sweep status remains `ACTIVE_PARALLEL`; this family is now explicitly accounted for, but remaining product-history/evidence families still prevent `VERIFIED_COMPLETE`.
