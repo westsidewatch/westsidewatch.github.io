@@ -6,7 +6,7 @@ from pathlib import Path
 from learning_planner import plan, validate_gate
 from self_memory import add_learning, status as learning_status, transition_learning
 
-PHASES=('selected','discovering','synthesizing','challenging','blind_testing','assessment_ready','blocked','completed')
+PHASES=('selected','discovering','synthesizing','challenging','revising','blind_testing','assessment_ready','blocked','completed')
 TEXT_EXTS={'.md','.txt','.json','.jsonl','.py','.js','.ts','.tsx','.jsx','.html','.yml','.yaml','.toml','.csv','.xml','.css','.scss'}
 
 def now(): return datetime.now(timezone.utc).isoformat()
@@ -35,8 +35,7 @@ def _python_search(root:Path,q,limit=30):
         try:
             if not p.is_file() or '.git' in p.parts or p.stat().st_size>2_000_000: continue
             if p.suffix.lower() not in TEXT_EXTS and p.suffix: continue
-            text=p.read_text(encoding='utf-8',errors='ignore')
-            if ql in text.lower(): found.append(p)
+            if ql in p.read_text(encoding='utf-8',errors='ignore').lower(): found.append(p)
         except Exception: continue
     return found
 
@@ -86,23 +85,38 @@ def synthesize(model_call,gate,pack):
 def challenge(model_call,gate,pack,synthesis):
     return _call_json(model_call,"Act as an adversarial research examiner independent of the synthesis. Using the evidence, attack unsupported leaps, circular provenance, inherited-memory self-authentication, missing counterevidence, and acceptance criteria not actually demonstrated. Return strict JSON: objections (array), unsupported_claims (array), acceptance_met (array), acceptance_missing (array), verdict_reason. Do not award PASS.\nGATE:\n"+json.dumps(gate,ensure_ascii=False)+'\nEVIDENCE:\n'+json.dumps(pack,ensure_ascii=False)+'\nSYNTHESIS:\n'+json.dumps(synthesis,ensure_ascii=False))
 
+def revise(model_call,gate,pack,synthesis,critic):
+    return _call_json(model_call,"Revise the research synthesis immediately in response to the examiner. Do not defend weak claims. Remove unsupported claims, preserve uncertainty, add missing provenance, and explicitly resolve or retain objections. Return strict JSON with thesis, claims (array of {claim,source_refs}), unresolved, contradictions, resolved_objections.\nGATE:\n"+json.dumps(gate,ensure_ascii=False)+'\nEVIDENCE:\n'+json.dumps(pack,ensure_ascii=False)+'\nPREVIOUS:\n'+json.dumps(synthesis,ensure_ascii=False)+'\nCRITIC:\n'+json.dumps(critic,ensure_ascii=False))
+
+def iterate_research(model_call,gate,pack):
+    synthesis=synthesize(model_call,gate,pack); history=[]; max_revisions=max(0,int(gate.get('max_revisions') or 2)); critic={}
+    for i in range(max_revisions+1):
+        critic=challenge(model_call,gate,pack,synthesis); history.append({'iteration':i,'synthesis':synthesis,'critic':critic})
+        if not (critic.get('unsupported_claims') or []) and not (critic.get('acceptance_missing') or []): break
+        if i>=max_revisions: break
+        synthesis=revise(model_call,gate,pack,synthesis,critic)
+    return synthesis,critic,history
+
 def blind_assessment(model_call,gate,pack):
     questions=_call_json(model_call,'Create 3 difficult blind-test questions from this evidence pack. They must test relational understanding, provenance, and ability to distinguish claim from evidence; avoid trivia and avoid embedding answers. Return strict JSON {questions:[...]} only.\n'+json.dumps(pack,ensure_ascii=False)).get('questions') or []
     answers=_call_json(model_call,'Answer these questions without seeing source material. Be concise and explicitly mark uncertainty. Return strict JSON {answers:[...]} only.\nQUESTIONS:\n'+json.dumps(questions,ensure_ascii=False)).get('answers') or []
     grade=_call_json(model_call,'Grade the blind answers against the evidence pack. Return strict JSON with score from 0.0 to 1.0, errors (array), unsupported (array), provenance_failures (array), and reason. High score requires correct relationships and provenance, not plausible prose.\nQUESTIONS:\n'+json.dumps(questions,ensure_ascii=False)+'\nANSWERS:\n'+json.dumps(answers,ensure_ascii=False)+'\nEVIDENCE:\n'+json.dumps(pack,ensure_ascii=False))
     return {'questions':questions,'answers':answers,'grade':grade}
 
-def _structural_research_method_pass(gate,pack,synthesis,critic):
+def _refs(synthesis):
     refs=[]
     for c in (synthesis.get('claims') or []) if isinstance(synthesis,dict) else []:
         if isinstance(c,dict): refs.extend(c.get('source_refs') or [])
-    return len(pack)>=int(gate.get('min_evidence') or 1) and len(set(refs))>=2 and isinstance(critic.get('objections'),list)
+    return set(refs)
+
+def _structural_research_method_pass(gate,pack,synthesis,critic):
+    return len(pack)>=int(gate.get('min_evidence') or 1) and len(_refs(synthesis))>=2 and not (critic.get('unsupported_claims') or []) and not (critic.get('acceptance_missing') or [])
 
 def _autonomous_learning_pass(gate,pack,synthesis,critic,blind):
     grade=blind.get('grade') or {}
     try: score=float(grade.get('score') or 0)
     except Exception: score=0
-    return len(pack)>=int(gate.get('min_evidence') or 1) and score>=0.85 and not (grade.get('unsupported') or []) and not (grade.get('provenance_failures') or []) and len(critic.get('acceptance_missing') or [])<=1
+    return len(pack)>=int(gate.get('min_evidence') or 1) and len(_refs(synthesis))>=2 and not (critic.get('unsupported_claims') or []) and not (critic.get('acceptance_missing') or []) and score>=0.85 and not (grade.get('unsupported') or []) and not (grade.get('provenance_failures') or [])
 
 def execute_gate(conn,repo_root:Path,dore_root:Path,gate,model_call=None):
     ensure_schema(conn); prev=conn.execute('SELECT * FROM dore_autonomous_runs WHERE gate_id=? ORDER BY updated_at DESC LIMIT 1',(gate['id'],)).fetchone(); attempt=(prev['attempt']+1) if prev else 1
@@ -112,7 +126,7 @@ def execute_gate(conn,repo_root:Path,dore_root:Path,gate,model_call=None):
     result={'gate_id':gate['id'],'domain':gate['domain'],'stage':gate.get('stage'),'fresh_problem':gate.get('fresh_problem'),'evidence':hits,'acceptance':gate.get('acceptance') or [],'next_action':gate.get('next_action')}
     phase='blocked'; verified=False
     if len(pack)>=int(gate.get('min_evidence') or 1) and model_call:
-        synthesis=synthesize(model_call,gate,pack); critic=challenge(model_call,gate,pack,synthesis); result.update({'synthesis':synthesis,'critic':critic}); phase='assessment_ready'
+        synthesis,critic,iterations=iterate_research(model_call,gate,pack); result.update({'synthesis':synthesis,'critic':critic,'iterations':iterations}); phase='assessment_ready'
         if gate['id']=='research-method-i': verified=_structural_research_method_pass(gate,pack,synthesis,critic)
         elif gate['id']=='autonomous-learning-i':
             blind=blind_assessment(model_call,gate,pack); result['blind_assessment']=blind; verified=_autonomous_learning_pass(gate,pack,synthesis,critic,blind)
@@ -120,7 +134,7 @@ def execute_gate(conn,repo_root:Path,dore_root:Path,gate,model_call=None):
     conn.execute('INSERT INTO dore_autonomous_runs(id,gate_id,phase,attempt,evidence_hash,evidence_ref,result_json,created_at,updated_at) VALUES(?,?,?,?,?,?,?,?,?)',(rid,gate['id'],final_phase,attempt,digest,ref,json.dumps(result,ensure_ascii=False),t,t))
     lid=add_learning(conn,gate['domain'],f"Autonomous learning run {rid} for {gate['id']}.",gate.get('stage'),assessment='fresh executor assessment' if verified else 'pending stronger evidence/assessment',status='pass' if verified else ('researching' if phase=='assessment_ready' else 'blocked'),evidence_ref=ref,source_type='autonomous_executor',epistemic_state='observed')
     if verified: transition_learning(conn,lid,'verified',reason='fresh capability-gated autonomous assessment passed',evidence_ref=ref,status='pass')
-    conn.commit(); return {'gate_id':gate['id'],'run_id':rid,'phase':final_phase,'attempt':attempt,'evidence_count':len(pack),'evidence_ref':ref,'verified':verified}
+    conn.commit(); return {'gate_id':gate['id'],'run_id':rid,'phase':final_phase,'attempt':attempt,'evidence_count':len(pack),'evidence_ref':ref,'verified':verified,'iterations':len(result.get('iterations') or [])}
 
 def run_cycle(conn,repo_root:Path,dore_root:Path,max_gates=1,model_call=None):
     ensure_schema(conn); gates=load_gates(Path(__file__).resolve().parent); p=plan(learning_status(conn),gates); executed=[]; productive=0
@@ -128,7 +142,7 @@ def run_cycle(conn,repo_root:Path,dore_root:Path,max_gates=1,model_call=None):
         if productive>=max_gates: break
         r=execute_gate(conn,repo_root,dore_root,next(g for g in gates if g['id']==item['id']),model_call); executed.append(r)
         if r.get('phase')!='stagnant': productive+=1
-    return {'ok':True,'policy':'bounded-autonomous-learning-v3','time_is_gate':False,'executed':executed,'planner':p,'productive_runs':productive}
+    return {'ok':True,'policy':'bounded-autonomous-learning-v4','time_is_gate':False,'executed':executed,'planner':p,'productive_runs':productive}
 
 def status(conn):
     ensure_schema(conn); rows=[dict(r) for r in conn.execute('SELECT * FROM dore_autonomous_runs ORDER BY updated_at DESC LIMIT 50')]
