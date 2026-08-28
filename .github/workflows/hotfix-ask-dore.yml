@@ -1,0 +1,43 @@
+name: Hotfix ask dore trigger
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/hotfix-ask-dore.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Unify AI-mode trigger and bust runtime cache
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('static/dore/search/index.html')
+          s = p.read_text()
+          old = "const open=/^(?:問|问)多雷[!！。.?？\\s]*$/i"
+          new = "const open=/^(?:(?:問|问)多雷|ask\\s+dore)[!！。.?？\\s]*$/i"
+          if old not in s:
+              raise SystemExit('old inline AI-mode trigger not found')
+          s = s.replace(old, new, 1)
+          s = s.replace('dore-search-runtime.js?v=local-first-20260827c', 'dore-search-runtime.js?v=ask-dore-20260828a', 1)
+          p.write_text(s)
+          PY
+          rm .github/workflows/hotfix-ask-dore.yml
+      - name: Verify
+        run: |
+          grep -F 'ask\s+dore' static/dore/search/index.html
+          grep -F 'dore-search-runtime.js?v=ask-dore-20260828a' static/dore/search/index.html
+      - name: Commit hotfix
+        run: |
+          git config user.name 'westsidewatch-bot'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/dore/search/index.html .github/workflows/hotfix-ask-dore.yml
+          git commit -m 'fix: make ask dore open AI mode everywhere'
+          git push origin HEAD:main
