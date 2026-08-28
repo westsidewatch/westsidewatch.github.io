@@ -49,6 +49,8 @@ jobs:
           grep -q 'memory/self/status' local/dore-local/local_updater.py
           grep -q 'learning/status' local/dore-local/local_updater.py
           grep -q 'learning/plan' local/dore-local/local_updater.py
+          grep -q 'learning/autonomous/status' local/dore-local/local_updater.py
           grep -q 'spawn_learning_worker' local/dore-local/local_updater.py
+          grep -q 'dirty_worktree' local/dore-local/local_updater.py
           grep -q 'learning_worker.py' local/dore-local/local_updater.py
           echo DORE_LOCAL_AUTONOMOUS_LEARNING_CONTRACT_PASS
