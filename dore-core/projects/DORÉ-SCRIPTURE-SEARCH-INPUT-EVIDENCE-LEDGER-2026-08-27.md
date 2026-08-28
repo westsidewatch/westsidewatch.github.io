@@ -106,3 +106,21 @@ This reconciliation changed no P01 code, runtime state, deployment, binding, cre
 ## Sweep source-family accounting
 
 The `dore-core/knowledge/foundation/search-input/` family is now explicitly accounted for by Sweep 01. Its current evidence boundary is partial implementation + ungraduated foundation contract, with `ME-010` remaining the canonical missing-evidence guardrail.
+
+## Checkpoint 24 revalidation — 2026-08-28
+
+Fresh bounded revalidation covered the complete `dore-core/knowledge/foundation/search-input/` family (currently the single `SCRIPTURE-SEARCH-INPUT-LITERACY-1.0.md` micro-unit), its existing `ME-010` guardrail, and the canonical Search interpretation.
+
+The micro-unit still self-identifies as `FOUNDATION MICRO-UNIT / NOT GRADUATED` and explicitly requires unseen transfer across different books/format variants, two- and three-reference inputs, mixed single/range references, overlapping-result deduplication, and no book-specific patches. No independent graduation/pass artifact was found in this bounded recheck.
+
+Current disposition remains evidence-correct:
+
+- curriculum/doctrine: `CORE/CONTINUOUS` foundation learning;
+- graduation claim: `UNKNOWN_NEEDS_EVIDENCE` under `ME-010`;
+- live `SEARCH`: remain `MAINTENANCE + DISCOVERY`;
+- completed-work/revisit/superseded/retired additions: none;
+- canonical Master Register: no row/status change warranted because its current Search classification already preserves the correct boundary.
+
+This checkpoint also confirms that the earlier service-boundary drift finding remains material: Core and browser parsing capability cannot be treated as one graduated faculty until one shared acceptance corpus proves parity against the micro-unit contract.
+
+P01 protection rechecked: no subtitle-path code, runtime state, deployment, binding, credential, ordering, or blocker state was modified by Sweep 01.
