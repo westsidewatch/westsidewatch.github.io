@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Generated wiring step for Doré legacy-memory transplant v1.
 from pathlib import Path
 p=Path(__file__).with_name('dore_local.py')
 s=p.read_text()
