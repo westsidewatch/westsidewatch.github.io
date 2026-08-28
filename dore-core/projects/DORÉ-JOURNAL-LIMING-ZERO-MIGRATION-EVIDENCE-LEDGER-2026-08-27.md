@@ -61,3 +61,17 @@ This ledger should be merged into the canonical completed-work ledger during a l
 ## Sweep / P01 protection
 
 Sweep 01 remains `ACTIVE_PARALLEL`; this batch does not satisfy whole-sweep `VERIFIED_COMPLETE` criteria. No P01 subtitle code, runtime state, deployment, binding, credential, ordering or blocker state was modified.
+
+## Checkpoint 23 linkage — 2026-08-28
+
+Sweep 01 now explicitly accounts for the Journal + Liming zero-migration placement audit as a bounded `VERIFIED_COMPLETE` historical milestone.
+
+Current interpretation remains unchanged after re-reading the milestone/inventory evidence against the canonical register:
+
+- the zero-object result is a valid completion because policy classification found no eligible binaries and persisted a machine-readable PASS;
+- it does **not** prove Journal media infrastructure, Library ingestion, or future R2 asset handling generally complete;
+- no new Master Register row or status change is warranted because the existing `MEM-SWEEP-01` placement-history accounting and separate `MAIN` / `LIBRARY-INGEST` / `LIBRARY-V1` rows already encode the correct boundary;
+- no `COMPLETED_REVISIT_CANDIDATE`, `SUPERSEDED`, `RETIRED`, or new missing-evidence item is justified in this batch;
+- the only future reopen trigger is material arrival of independently addressable Journal/Library binaries or a superseding canonical asset-storage architecture.
+
+P01 protection rechecked: no subtitle-path action, runtime mutation, deployment, binding, credential, or blocker-state change was performed by Sweep 01.
