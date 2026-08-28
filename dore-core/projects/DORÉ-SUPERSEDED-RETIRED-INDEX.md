@@ -150,6 +150,20 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** interpret current reader behavior from `dore_core/readers/original_language.py` and current Language Core/foundation evidence, not the historical v0.1 file.
 
+## SR-013 — Westside Stories ROADMAP “Optional AI proofreading” future item
+
+**Historical source:** `westsidewatch/Westside-Stories/ROADMAP.md` (`Future → Optional AI proofreading`).
+
+**Classification:** `SUPERSEDED` as a future-work instruction; retained only as product-history provenance.
+
+**Superseding evidence:** `westsidewatch/Westside-Stories/docs/DORE-FIRST-EXTERNAL-WORKER-MILESTONE.md` records `COMPLETE / PASS` for the Doré subtitle-proofreader service boundary, with `/api/dore/subtitle-proofread`, schema `dore.subtitle-proofread.v1`, reusable client `app/dore_proofreader.py`, executable SRT worker path, explicit failure semantics and SRT structure preservation. Sweep 01's completed-work ledger already classifies the bounded external-worker integration as `CW-012 — VERIFIED_COMPLETE`, while the canonical Master Register keeps WSS itself `ACTIVE_PARALLEL` pending packaged-App live end-to-end verification.
+
+**Conflict resolved:** the roadmap can no longer be read as meaning AI/Doré proofreading has not been implemented. The remaining open work is stronger product-level verification: a packaged macOS App run through the live Doré endpoint, corrected SRT output and optional burn-in/recovery behavior. That is not the same as the historical “optional AI proofreading” feature request.
+
+**Retained value:** the roadmap remains useful evidence of WSS 1.0 scope and still-unresolved future ideas such as additional languages, Windows/Linux exploration and possible Mac App Store distribution. Those items are not promoted by this reconciliation.
+
+**Current authority:** use the canonical Master Register `WSS` row and current WSS implementation/milestone evidence for status. Do not reopen “Optional AI proofreading” as a new feature simply because the stale roadmap still lists it under `Future`.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
