@@ -1,0 +1,45 @@
+name: Doré Local Updater Acceptance
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/local_updater.py'
+      - 'local/dore-local/install-launchagent.sh'
+      - 'local/dore-local/dore_local.py'
+      - 'local/dore-local/legacy_memory.py'
+      - 'local/dore-local/legacy-memory/**'
+  workflow_dispatch:
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Static compile
+        run: python3 -m py_compile local/dore-local/local_updater.py local/dore-local/dore_local.py local/dore-local/legacy_memory.py
+      - name: Legacy store acceptance
+        run: |
+          python3 - <<'PY'
+          import json, sqlite3, tempfile
+          from pathlib import Path
+          import sys
+          sys.path.insert(0,'local/dore-local')
+          from legacy_memory import ensure_schema, import_items, recall
+          root=Path(tempfile.mkdtemp())
+          db=root/'dore.sqlite3'
+          c=sqlite3.connect(db); c.row_factory=sqlite3.Row
+          ensure_schema(c)
+          payload=json.loads(Path('local/dore-local/legacy-memory/seed-v1.json').read_text())
+          ids=import_items(c,root,payload['items']); c.commit()
+          assert len(ids) >= 20, len(ids)
+          for q,needle in [('你是誰','Doré'),('西望是什麼','Westside Watch'),('黎明書局','黎明書局'),('你學到哪裡','Researcher')]:
+              rows=recall(c,q,16)
+              text='\n'.join(r['content'] for r in rows)
+              assert needle in text,(q,needle,text)
+          print('DORE_LEGACY_MEMORY_RECALL_PASS',len(ids))
+          PY
+      - name: LaunchAgent contract
+        run: |
+          grep -q 'io.westsidewatch.dore-updater' local/dore-local/install-launchagent.sh
+          grep -q 'StartInterval' local/dore-local/install-launchagent.sh
+          grep -q 'legacy-memory/status' local/dore-local/local_updater.py
+          echo DORE_LOCAL_AUTONOMOUS_UPDATE_CONTRACT_PASS
