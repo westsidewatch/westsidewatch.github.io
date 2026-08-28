@@ -246,3 +246,22 @@ This bounded reconciliation found no persisted global survey/gap map proving `SE
 Persist Pass 1 coverage across every curriculum area with each course's central questions, prerequisites, evidence families, known gaps/misconceptions, cross-course links and self-chosen questions, followed by one global gap/prerequisite map. Only after that artifact exists should the system consider issuing `SEMINARY_SURVEY_COMPLETE` and scheduling Pass 2 under the existing course gates.
 
 **Priority:** MEDIUM strategically; formation is important but remains subordinate to P01 and should not be opened merely to manufacture progress.
+
+## ME-015 — Design Working Memory D4 / full operational acceptance
+
+**Related work:** `VIS-GRAMMAR`, `docs/dore/DESIGN-WORKING-MEMORY.md`, `.github/workflows/dore-design-agent-acceptance.yml`, `dore-core/evidence/PENPOT-BRIDGE-01-LIVE-EVIDENCE-2026-08-26.md`, `DORÉ-DESIGN-WORKING-MEMORY-EVIDENCE-LEDGER-2026-08-28.md`.
+
+**What is already evidenced**
+The design-memory architecture defines explicit D1 Design Scope, D2 Truth State, D3 Consolidation and D4 Penpot Visual Verification gates. Current CI provides real deterministic coverage for D1–D3 truth/consolidation behavior, Penpot-action routing, MCP-client build and fail-closed behavior. Separately, live Penpot bridge feasibility is a bounded `VERIFIED_COMPLETE` infrastructure milestone: Doré Core can reach Penpot Remote MCP, execute code, persist an editable object and independently read it back.
+
+**What is not yet evidenced strongly enough**
+- the D4 rendered visual readback and evidence-driven correction loop;
+- the full Search conversation → inherited current design memory → Penpot execution → visual inspection → correction → verified design state exam;
+- any inference that editable/vector persistence or CI connectivity alone proves visual competence or finished Westside visual grammar.
+
+**Current classification:** overall Design Working Memory remains `ACTIVE`; D1–D3 are implemented/automated progress, Penpot bridge feasibility is bounded `VERIFIED_COMPLETE`, and D4/full operational acceptance remains `UNKNOWN_NEEDS_EVIDENCE`.
+
+**Smallest useful future evidence**
+Run one bounded real Westside design task using current confirmed visual memory, persist the editable result, perform actual rendered visual readback, make at least one evidence-driven correction when the readback exposes a mismatch, and persist the final verified comparison/artifact against the design intent.
+
+**Priority:** MEDIUM/HIGH for visual-system maturity, but subordinate to P01 and not a reason to bypass the `VIS-GRAMMAR` real digital + print proof gate.
