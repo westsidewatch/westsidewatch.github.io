@@ -6,6 +6,8 @@ on:
       - 'local/dore-local/self-memory/**'
       - 'local/dore-local/learning_planner.py'
       - 'local/dore-local/learning-gates/**'
+      - 'local/dore-local/autonomous_learner.py'
+      - 'local/dore-local/learning_worker.py'
       - 'local/dore-local/apply-self-memory.py'
       - 'local/dore-local/apply-learning-planner.py'
       - 'docs/dore/LEARNING-CADENCE.md'
@@ -28,12 +30,13 @@ jobs:
           python local/dore-local/apply-learning-planner.py
           cmp /tmp/dore-once.py local/dore-local/dore_local.py
       - name: Compile
-        run: python -m py_compile local/dore-local/dore_local.py local/dore-local/self_memory.py local/dore-local/legacy_memory.py local/dore-local/learning_planner.py
-      - name: Learning ledger and planner acceptance
+        run: python -m py_compile local/dore-local/dore_local.py local/dore-local/self_memory.py local/dore-local/legacy_memory.py local/dore-local/learning_planner.py local/dore-local/autonomous_learner.py local/dore-local/learning_worker.py
+      - name: Learning ledger planner and executor acceptance
         run: |
           python - <<'PY'
-          import json,sqlite3,sys
-          sys.path.insert(0,'local/dore-local'); import self_memory as m; import learning_planner as p
+          import json,sqlite3,sys,tempfile
+          from pathlib import Path
+          sys.path.insert(0,'local/dore-local'); import self_memory as m; import learning_planner as p; import autonomous_learner as a
           c=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row; m.ensure_schema(c)
           m.upsert_self(c,'identity','Doré is persistent','test','e1','verified')
           lid=m.add_learning(c,'Bible','Inherited pass claim',status='historical-pass-claim',source_type='legacy',epistemic_state='inherited')
@@ -43,10 +46,17 @@ jobs:
           bad=m.add_learning(c,'Research','Rejected old claim',epistemic_state='observed'); m.transition_learning(c,bad,'rejected',reason='contradicted by evidence')
           s=m.status(c); assert len(s['learning']['verified_capabilities'])==1; assert all(x['id']!=bad for x in s['learning']['events'])
           gates=json.load(open('local/dore-local/learning-gates/core-v1.json'))['gates']; [p.validate_gate(g) for g in gates]
-          plan=p.plan(s,gates); assert plan['time_is_gate'] is False
+          assert p.plan(s,gates)['time_is_gate'] is False
           try: p.validate_gate({'id':'bad','domain':'Bad','acceptance':['study for 3 months']}); raise AssertionError('calendar gate accepted')
           except ValueError: pass
-          print('DORE_CAPABILITY_GATED_LEARNING_PASS')
+          root=Path(tempfile.mkdtemp()); dore=root/'dore'; (dore/'archive').mkdir(parents=True); (root/'source-a.md').write_text('Research Method I source acquisition provenance reverse check'); (root/'source-b.md').write_text('Research Method I counter-source provenance')
+          gate=next(g for g in gates if g['id']=='research-method-i')
+          def fake(prompt):
+              if 'adversarial research examiner' in prompt: return json.dumps({'objections':[],'unsupported_claims':[],'acceptance_met':['source acquisition','provenance','reverse check'],'acceptance_missing':[],'verdict_reason':'process demonstrated'})
+              return json.dumps({'thesis':'method demonstrated','claims':[{'claim':'source acquisition retained','source_refs':[str(root/'source-a.md'),str(root/'source-b.md')]}],'unresolved':[],'contradictions':[]})
+          r=a.execute_gate(c,root,dore,gate,fake); assert r['verified'] is True, r
+          caps=m.status(c)['learning']['verified_capabilities']; assert any(x['domain']=='Research Method' for x in caps)
+          print('DORE_AUTONOMOUS_LEARNING_EXECUTOR_PASS')
           PY
       - name: Commit wired runtime
         run: |
