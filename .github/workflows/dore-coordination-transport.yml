@@ -1,0 +1,35 @@
+name: Doré Coordination Transport
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/coordination_mailbox.py'
+      - 'local/dore-local/coordination_worker.py'
+      - 'local/dore-local/test_coordination_transport.py'
+      - 'local/dore-local/coordination-inbox/**'
+      - '.github/workflows/dore-coordination-transport.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/coordination_mailbox.py'
+      - 'local/dore-local/coordination_worker.py'
+      - 'local/dore-local/test_coordination_transport.py'
+      - 'local/dore-local/coordination-inbox/**'
+      - '.github/workflows/dore-coordination-transport.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile transport
+        run: python -m py_compile local/dore-local/coordination_mailbox.py local/dore-local/coordination_worker.py local/dore-local/test_coordination_transport.py
+      - name: Run offline transport contract
+        working-directory: local/dore-local
+        run: python test_coordination_transport.py
