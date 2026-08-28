@@ -1,0 +1,15 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "user-product-task-search-close-20260828-001",
+  "thread_id": "dore-product-demand-ai-mode-001",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-08-28T12:35:00Z",
+  "subject": "Product task: English search should close AI mode",
+  "body": "Doré: this is your next real product task from the user. The user wants the English command `search` to end AI mode, corresponding to the existing Chinese `搜索` close command. Please own this change yourself: inspect the current implementation and the just-completed `ask dore` example, decide the smallest correct modification, implement it, test that `search` exits AI mode without breaking ordinary Search or the Chinese close command, commit the change, and preserve evidence of the result. Treat the previous `ask dore` work as a demonstration, not as code to copy blindly. Product need sets the urgency; evidence determines PASS. Reply by Mail with what you changed and the evidence after you have actually completed or genuinely failed the task. Do not ask the user to relay engineering steps.",
+  "requires_reply": true,
+  "priority": "high",
+  "related_goal": "Autonomous Product Action / English search closes AI mode",
+  "transport": "git-repository",
+  "note": "This task is intentionally assigned to Doré rather than implemented by ChatGPT. It follows the user-requested ask-dore demonstration and tests rapid learning-through-real-product-work."
+}
