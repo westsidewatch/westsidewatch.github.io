@@ -19,36 +19,49 @@ def read_jsonl(path:Path):
   except Exception:pass
  return out
 def _delivered_ids(): return {x.get('message_id') for x in read_jsonl(DELIVERY) if x.get('published') is True}
+def _run(args,timeout=60):return subprocess.run(args,cwd=ROOT,text=True,capture_output=True,timeout=timeout)
 def _git_publish(msg):
+ """Publish only this mail path; unrelated Doré work must not block communication."""
  if not (ROOT/'.git').exists(): return {'published':False,'reason':'repo_missing'}
  path=None
  try:
-  dirty=subprocess.run(['git','status','--porcelain'],cwd=ROOT,text=True,capture_output=True,timeout=15)
-  if dirty.returncode or dirty.stdout.strip(): return {'published':False,'reason':'dirty_worktree'}
-  REPO_OUTBOX.mkdir(parents=True,exist_ok=True); path=REPO_OUTBOX/(msg['message_id']+'.json'); path.write_text(json.dumps(msg,ensure_ascii=False,sort_keys=True,indent=2)+'\n',encoding='utf-8'); rel=str(path.relative_to(ROOT))
-  subprocess.run(['git','add','--',rel],cwd=ROOT,check=True,capture_output=True,text=True,timeout=15)
-  c=subprocess.run(['git','commit','-m','dore: publish coordination message '+msg['message_id']],cwd=ROOT,capture_output=True,text=True,timeout=30)
-  if c.returncode: subprocess.run(['git','reset','HEAD','--',rel],cwd=ROOT,capture_output=True); path.unlink(missing_ok=True); return {'published':False,'reason':'commit_failed'}
-  p=subprocess.run(['git','push','origin','HEAD:main'],cwd=ROOT,capture_output=True,text=True,timeout=60)
-  if p.returncode: return {'published':False,'reason':'push_failed','committed':True}
+  # Reconcile remote first only when HEAD can fast-forward. Never stage/commit unrelated files.
+  _run(['git','fetch','origin','main'])
+  rel=f"local/dore-local/coordination-outbox/{msg['message_id']}.json"; path=ROOT/rel; path.parent.mkdir(parents=True,exist_ok=True)
+  # If the exact path is already in origin/main, delivery already succeeded earlier.
+  remote=_run(['git','show',f'origin/main:{rel}'],15)
+  rendered=json.dumps(msg,ensure_ascii=False,sort_keys=True,indent=2)+'\n'
+  if remote.returncode==0 and remote.stdout==rendered:return {'published':True,'path':rel,'already_remote':True}
+  # Pull remote changes only if this checkout is behind with no local divergence.
+  ff=_run(['git','merge-base','--is-ancestor','HEAD','origin/main'],15)
+  if ff.returncode==0:_run(['git','merge','--ff-only','origin/main'],30)
+  path.write_text(rendered,encoding='utf-8')
+  _run(['git','add','--',rel],15)
+  # --only + pathspec isolates the mail commit from unrelated staged/unstaged autonomous work.
+  c=_run(['git','commit','--only','-m','dore: publish coordination message '+msg['message_id'],'--',rel],30)
+  if c.returncode:
+   remote=_run(['git','show',f'origin/main:{rel}'],15)
+   if remote.returncode==0 and remote.stdout==rendered:return {'published':True,'path':rel,'already_remote':True}
+   return {'published':False,'reason':'commit_failed','detail':c.stderr[-300:]}
+  p=_run(['git','push','origin','HEAD:main'],60)
+  if p.returncode:return {'published':False,'reason':'push_failed','committed':True,'detail':p.stderr[-300:]}
   return {'published':True,'path':rel}
  except Exception as e:return {'published':False,'reason':type(e).__name__}
 def flush_outbox():
- """Retry every undelivered durable Doré message. Safe across worker restarts."""
  delivered=_delivered_ids(); results=[]
  for msg in read_jsonl(OUTBOX):
   mid=msg.get('message_id')
-  if not mid or mid in delivered: continue
+  if not mid or mid in delivered:continue
   result=_git_publish(msg); rec={'schema':'dore.mail-delivery.v1','message_id':mid,'attempted_at':now(),**result}; _append(DELIVERY,rec); results.append(rec)
-  if result.get('published'): delivered.add(mid)
-  else: break
+  if result.get('published'):delivered.add(mid)
+  else:break
  return results
 def send_to_chatgpt(subject:str,body:str,*,requires_reply=False,priority='normal',related_goal=None,evidence_refs=None,thread_id=None):
  msg={'schema':'dore.mail.v1','message_id':str(uuid.uuid4()),'thread_id':thread_id or str(uuid.uuid4()),'sender':'dore','recipient':'chatgpt','created_at':now(),'subject':subject,'body':body,'requires_reply':bool(requires_reply),'priority':priority,'related_goal':related_goal,'evidence_refs':list(evidence_refs or [])}
  msg['message_sha256']=hashlib.sha256(json.dumps(msg,ensure_ascii=False,sort_keys=True).encode()).hexdigest(); _append(OUTBOX,msg); flush_outbox(); return msg
 def receive_from_chatgpt(message:dict):
  required={'message_id','sender','recipient','body'}
- if not required.issubset(message) or message.get('sender')!='chatgpt' or message.get('recipient')!='dore': raise ValueError('invalid ChatGPT->Doré message')
+ if not required.issubset(message) or message.get('sender')!='chatgpt' or message.get('recipient')!='dore':raise ValueError('invalid ChatGPT->Doré message')
  existing={m.get('message_id') for m in read_jsonl(INBOX)}
  if message['message_id'] in existing:return {'schema':'dore.mail-receipt.v1','message_id':message['message_id'],'duplicate':True}
  sha=_append(INBOX,message); receipt={'schema':'dore.mail-receipt.v1','message_id':message['message_id'],'received_at':now(),'sha256':sha}; _append(RECEIPTS,receipt); return receipt
