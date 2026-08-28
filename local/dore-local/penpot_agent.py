@@ -10,7 +10,8 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 MCP_CLIENT = HERE / 'penpot-mcp' / 'client.mjs'
-MCP_URL = os.environ.get('PENPOT_MCP_URL', 'http://127.0.0.1:4401/mcp')
+MCP_RUNTIME = Path.home() / '.dore' / 'runtime' / 'penpot-mcp'
+MCP_URL = os.environ.get('PENPOT_MCP_URL', 'http://localhost:4401/mcp')
 OLLAMA = os.environ.get('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
 MODEL = os.environ.get('DORE_LOCAL_MODEL', 'qwen3:8b')
 VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL', 'qwen3-vl:8b')
@@ -18,7 +19,12 @@ MAX_STEPS = int(os.environ.get('DORE_PENPOT_MAX_STEPS', '16'))
 
 def _node_bin():
     explicit=os.environ.get('DORE_NODE_BIN')
-    candidates=[explicit, shutil.which('node'), '/opt/homebrew/bin/node', '/usr/local/bin/node', str(Path.home()/'.nvm/versions/node/current/bin/node')]
+    runtime_path=MCP_RUNTIME / 'node-path'
+    runtime_node=None
+    if runtime_path.is_file():
+        try: runtime_node=runtime_path.read_text().strip()
+        except Exception: runtime_node=None
+    candidates=[explicit, runtime_node, '/opt/homebrew/opt/node@22/bin/node', shutil.which('node'), '/opt/homebrew/bin/node', '/usr/local/bin/node', str(Path.home()/'.nvm/versions/node/current/bin/node')]
     for c in candidates:
         if c and Path(c).is_file(): return c
     return None
@@ -28,7 +34,7 @@ def _node(op: str, payload=None):
         return {'ok': False, 'error': f'penpot_mcp_client_missing:{MCP_CLIENT}', 'url': MCP_URL}
     node=_node_bin()
     if not node:
-        return {'ok':False,'error':'node_executable_not_found','searched':['PATH','/opt/homebrew/bin/node','/usr/local/bin/node','~/.nvm/versions/node/current/bin/node'],'url':MCP_URL}
+        return {'ok':False,'error':'node_executable_not_found','searched':['DORE_NODE_BIN','~/.dore/runtime/penpot-mcp/node-path','/opt/homebrew/opt/node@22/bin/node','PATH'],'url':MCP_URL}
     env = os.environ.copy(); env['PENPOT_MCP_URL'] = MCP_URL
     p = subprocess.run(
         [node, str(MCP_CLIENT), op],
