@@ -91,8 +91,10 @@ P01 protection rechecked: no subtitle-path action, runtime mutation, deployment,
 
 This bounded family is now explicitly accounted for by Sweep 01 as of 2026-08-27. Its canonical interpretation is the existing cluster of `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL` rows rather than a new standalone workstream. The durable ledger remains the evidence link for that interpretation until one of the six smallest future proofs above is actually persisted. No completed-work, revisit, superseded/retired, or missing-evidence classification changed in this pass, and P01 remained untouched.
 
-## Checkpoint 22 linkage — 2026-08-27
+## Checkpoint 23 linkage — 2026-08-28
 
-Sweep 01 bounded checkpoint 22 treats this ledger as the durable accounting record for the editorial/publishing/distribution family. Fresh review of the governing research source confirms that its ten named outputs remain requirements rather than completed evidence. The canonical Master Register therefore remains unchanged by design: its existing `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL` rows already express the strongest justified classifications.
+Sweep 01 has now canonically accounted for this editorial/publishing/distribution family as bounded Checkpoint 23. The earlier local `Checkpoint 22 linkage` label in this ledger conflicted with the canonical Sweep file, where Checkpoint 22 is the Design Working Memory / Penpot acceptance reconciliation; that stale label is corrected here rather than preserved as a second checkpoint number.
 
-No new completed milestone, revisit candidate, superseded/retired item, or missing-evidence identifier is warranted from this batch. The smallest useful advancement remains one of the six bounded proofs above. P01 was not touched.
+Fresh review of the governing research source confirms that its ten named outputs remain requirements rather than completed evidence. The canonical Master Register therefore retains the existing classifications for `JOURNAL-PRINT`, `DORE-DISTRIBUTION`, `JOURNAL-FINANCE`, `GLOBAL-CHINESE`, `YOUTH-EVANGELISM`, and `DEVOTIONAL`; no new standalone workstream is justified.
+
+No new completed milestone, revisit candidate, superseded/retired item, or missing-evidence identifier is warranted from this batch. The six bounded proofs listed above remain the smallest useful advancement. P01 was not touched.
