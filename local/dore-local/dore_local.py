@@ -6,8 +6,7 @@ from pathlib import Path
 from design_memory import DesignEvidence, classify_scope, consolidate, TRUTH_STATES
 from penpot_agent import status as penpot_status, run_task as run_penpot_task
 from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as import_legacy_items, recall as legacy_recall, context as legacy_context
-from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as import_legacy_items, recall as legacy_recall, context as legacy_context
-from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as import_legacy_items, recall as legacy_recall, context as legacy_context
+from self_memory import ensure_schema as ensure_self_schema, upsert_self, add_learning, status as self_status, context as self_context
 ROOT=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore'))
 DB=ROOT/'data'/'dore.sqlite3'; HOST=os.environ.get('DORE_LOCAL_HOST','127.0.0.1'); PORT=int(os.environ.get('DORE_LOCAL_PORT','8788'))
 MODEL=os.environ.get('DORE_LOCAL_MODEL','qwen3:8b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
@@ -23,8 +22,7 @@ def ensure_design_schema():
  ROOT.joinpath('archive','design-evidence').mkdir(parents=True,exist_ok=True)
  with db() as c:
   ensure_legacy_schema(c)
-  ensure_legacy_schema(c)
-  ensure_legacy_schema(c)
+  ensure_self_schema(c)
   c.execute("CREATE TABLE IF NOT EXISTS dore_context_state (conversation_id TEXT PRIMARY KEY,project_id TEXT NOT NULL,scope TEXT NOT NULL DEFAULT 'candidate',brand_project_status TEXT NOT NULL DEFAULT 'candidate',design_mode INTEGER NOT NULL DEFAULT 0,updated_at TEXT NOT NULL)")
   c.execute("CREATE TABLE IF NOT EXISTS dore_design_evidence (id TEXT PRIMARY KEY,conversation_id TEXT NOT NULL,message_id TEXT,project_id TEXT NOT NULL,scope TEXT NOT NULL,truth_state TEXT NOT NULL,content TEXT NOT NULL,source_ref TEXT,supersedes TEXT,created_at TEXT NOT NULL)")
   c.execute('CREATE INDEX IF NOT EXISTS idx_design_project_time ON dore_design_evidence(project_id,created_at DESC)')
@@ -37,6 +35,23 @@ def bootstrap_legacy_memory():
   except Exception: continue
   with db() as c: total+=len(import_legacy_items(c,ROOT,items))
  return total
+def bootstrap_self_memory():
+ seed=Path(__file__).resolve().parent/'self-memory'/'seed-v1.json'
+ if not seed.is_file(): return 0
+ try: payload=json.loads(seed.read_text(encoding='utf-8'))
+ except Exception: return 0
+ n=0
+ with db() as c:
+  ensure_self_schema(c)
+  for x in payload.get('self') or []:
+   upsert_self(c,x['key'],x['content'],x.get('source_type','legacy_transplant'),x.get('source_ref'),x.get('epistemic_state','inherited')); n+=1
+  for x in payload.get('learning') or []:
+   add_learning(c,x['domain'],x['claim'],x.get('stage'),x.get('assessment'),x.get('status','recorded'),x.get('evidence_ref'),x.get('source_type','chatgpt_legacy_memory'),x.get('epistemic_state','inherited')); n+=1
+ return n
+def self_view():
+ with db() as c: return self_status(c)
+def self_prompt():
+ with db() as c: return self_context(c)
 def legacy_view(q):
  with db() as c: return legacy_recall(c,q)
 def legacy_status():
@@ -105,8 +120,8 @@ class H(BaseHTTPRequestHandler):
  def do_OPTIONS(self): self.send_response(204); self.cors(); self.send_header('Content-Length','0'); self.end_headers()
  def do_GET(self):
   if self.path=='/legacy-memory/status': return self.sendj({'ok':True,'legacy_memory':legacy_status()})
-  if self.path=='/legacy-memory/status': return self.sendj({'ok':True,'legacy_memory':legacy_status()})
-  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v2+legacy-transplant-v1','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
+  if self.path in {'/memory/self/status','/learning/status'}: return self.sendj(self_view())
+  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v3+self-memory+learning-ledger','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
   self.sendj({'ok':False,'error':'not_found'},404)
  def do_POST(self):
   try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
@@ -131,11 +146,11 @@ class H(BaseHTTPRequestHandler):
    try: result=run_penpot_task(text,design_context(dv))
    except Exception as e: result={'ok':False,'verified':False,'error':str(e)}
    evstate='verified' if result.get('verified') else 'attempt'; save_design_evidence(cid,mid,project,state['scope'],json.dumps({'task':text,'result':result},ensure_ascii=False),evstate,'penpot-mcp'); answer=(result.get('answer') or 'Penpot 設計已完成並通過實際畫面驗證。') if result.get('verified') else 'Penpot 設計尚未通過視覺驗證。'+((' 阻塞：'+str(result.get('error'))) if result.get('error') else ' 我沒有把工具執行或圖層建立當作完成。'); save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'context_state':state,'design_working_memory':'d1-d4-bridge-v2','penpot_run':result,'truth_state':evstate})
-  sys=SYSTEM+'\n\nDoré conversational memory:\n'+context+'\n\nDoré inherited legacy memory (usable, provenance-labelled; inherited is not the same as externally verified):\n'+legacy_context(inherited)
+  sys=SYSTEM+'\n\nDoré durable self memory and learning ledger:\n'+self_prompt()+'\n\nDoré conversational memory:\n'+context+'\n\nDoré inherited legacy memory (usable, provenance-labelled; inherited is not the same as externally verified):\n'+legacy_context(inherited)
   if dv is not None: sys+='\n\nDoré Design Working Memory:\n'+design_context(dv)
   try: answer=ollama([{'role':'system','content':sys},{'role':'user','content':text}])
   except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
   save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'legacy_memory_hits':len(inherited),'legacy_memory_hits':len(inherited),'legacy_memory_hits':len(inherited),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2+legacy-transplant-v1','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
  def log_message(self,*a): pass
 if __name__=='__main__':
- ensure_design_schema(); bootstrap_legacy_memory(); bootstrap_legacy_memory(); bootstrap_legacy_memory(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
+ ensure_design_schema(); bootstrap_legacy_memory(); bootstrap_self_memory(); bootstrap_legacy_memory(); bootstrap_legacy_memory(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
