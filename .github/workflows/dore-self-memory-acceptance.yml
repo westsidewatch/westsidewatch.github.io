@@ -10,6 +10,7 @@ on:
       - 'local/dore-local/learning_worker.py'
       - 'local/dore-local/apply-self-memory.py'
       - 'local/dore-local/apply-learning-planner.py'
+      - 'local/dore-local/apply-autonomous-learning.py'
       - 'docs/dore/LEARNING-CADENCE.md'
       - '.github/workflows/dore-self-memory-acceptance.yml'
 permissions:
@@ -25,9 +26,11 @@ jobs:
         run: |
           python local/dore-local/apply-self-memory.py
           python local/dore-local/apply-learning-planner.py
+          python local/dore-local/apply-autonomous-learning.py
           cp local/dore-local/dore_local.py /tmp/dore-once.py
           python local/dore-local/apply-self-memory.py
           python local/dore-local/apply-learning-planner.py
+          python local/dore-local/apply-autonomous-learning.py
           cmp /tmp/dore-once.py local/dore-local/dore_local.py
       - name: Compile
         run: python -m py_compile local/dore-local/dore_local.py local/dore-local/self_memory.py local/dore-local/legacy_memory.py local/dore-local/learning_planner.py local/dore-local/autonomous_learner.py local/dore-local/learning_worker.py
@@ -46,16 +49,26 @@ jobs:
           bad=m.add_learning(c,'Research','Rejected old claim',epistemic_state='observed'); m.transition_learning(c,bad,'rejected',reason='contradicted by evidence')
           s=m.status(c); assert len(s['learning']['verified_capabilities'])==1; assert all(x['id']!=bad for x in s['learning']['events'])
           gates=json.load(open('local/dore-local/learning-gates/core-v1.json'))['gates']; [p.validate_gate(g) for g in gates]
-          assert p.plan(s,gates)['time_is_gate'] is False
+          pp=p.plan(s,gates); assert pp['time_is_gate'] is False; assert pp['scheduler']=='dependency-leverage+priority'
           try: p.validate_gate({'id':'bad','domain':'Bad','acceptance':['study for 3 months']}); raise AssertionError('calendar gate accepted')
           except ValueError: pass
-          root=Path(tempfile.mkdtemp()); dore=root/'dore'; (dore/'archive').mkdir(parents=True); (root/'source-a.md').write_text('Research Method I source acquisition provenance reverse check'); (root/'source-b.md').write_text('Research Method I counter-source provenance')
-          gate=next(g for g in gates if g['id']=='research-method-i')
-          def fake(prompt):
+          root=Path(tempfile.mkdtemp()); dore=root/'dore'; (dore/'archive').mkdir(parents=True)
+          (root/'method-a.md').write_text('Research Method I source acquisition provenance reverse check'); (root/'method-b.md').write_text('Research Method I counter-source provenance')
+          method=next(g for g in gates if g['id']=='research-method-i')
+          def fake_method(prompt):
               if 'adversarial research examiner' in prompt: return json.dumps({'objections':[],'unsupported_claims':[],'acceptance_met':['source acquisition','provenance','reverse check'],'acceptance_missing':[],'verdict_reason':'process demonstrated'})
-              return json.dumps({'thesis':'method demonstrated','claims':[{'claim':'source acquisition retained','source_refs':[str(root/'source-a.md'),str(root/'source-b.md')]}],'unresolved':[],'contradictions':[]})
-          r=a.execute_gate(c,root,dore,gate,fake); assert r['verified'] is True, r
-          caps=m.status(c)['learning']['verified_capabilities']; assert any(x['domain']=='Research Method' for x in caps)
+              return json.dumps({'thesis':'method demonstrated','claims':[{'claim':'source acquisition retained','source_refs':[str(root/'method-a.md'),str(root/'method-b.md')]}],'unresolved':[],'contradictions':[]})
+          r=a.execute_gate(c,root,dore,method,fake_method); assert r['verified'] is True, r
+          (root/'mary-a.md').write_text('馬利亞 Mary 抹大拉的馬利亞 Magdalene textual evidence A'); (root/'mary-b.md').write_text('馬利亞 Mary 伯大尼的馬利亞 Bethany textual evidence B'); (root/'mary-c.md').write_text('馬利亞 Mary 革羅罷 textual evidence C')
+          auto=next(g for g in gates if g['id']=='autonomous-learning-i')
+          def fake_auto(prompt):
+              if 'Create 3 difficult blind-test questions' in prompt: return json.dumps({'questions':['Q1','Q2','Q3']})
+              if 'Answer these questions without seeing source material' in prompt: return json.dumps({'answers':['A1','A2','A3']})
+              if 'Grade the blind answers' in prompt: return json.dumps({'score':0.9,'errors':[],'unsupported':[],'provenance_failures':[],'reason':'blind relational test passed'})
+              if 'adversarial research examiner' in prompt: return json.dumps({'objections':['identity conflation checked'],'unsupported_claims':[],'acceptance_met':['multiple sources','counter-check'],'acceptance_missing':[],'verdict_reason':'challenge complete'})
+              return json.dumps({'thesis':'distinct identities require textual separation','claims':[{'claim':'multiple Mary identities require source-specific evidence','source_refs':[str(root/'mary-a.md'),str(root/'mary-b.md'),str(root/'mary-c.md')]}],'unresolved':['traditional conflations'],'contradictions':[]})
+          r2=a.execute_gate(c,root,dore,auto,fake_auto); assert r2['verified'] is True, r2
+          caps=m.status(c)['learning']['verified_capabilities']; assert any(x['domain']=='Research Method' for x in caps) and any(x['domain']=='Autonomous Learning' for x in caps)
           print('DORE_AUTONOMOUS_LEARNING_EXECUTOR_PASS')
           PY
       - name: Commit wired runtime
@@ -63,5 +76,5 @@ jobs:
           git config user.name 'Doré CI'
           git config user.email 'dore-ci@users.noreply.github.com'
           git add local/dore-local/dore_local.py
-          git diff --cached --quiet || git commit -m 'feat(dore): activate capability-gated learning planner'
+          git diff --cached --quiet || git commit -m 'feat(dore): activate autonomous learning runtime'
           git push
