@@ -296,3 +296,25 @@ Durable update in this checkpoint:
 - `dore-core/knowledge/visual/WESTSIDE-WATCH-DORÉ-ENGRAVING-BRAND-SYSTEM-P01.md` now contains the explicit purpose-built asset-family contract and the curated-content separation.
 
 Sweep status remains `ACTIVE_PARALLEL`; the current `dore-core/knowledge/visual/` family is explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
+
+## Checkpoint 22 — Design Working Memory / Penpot acceptance reconciliation (2026-08-28)
+
+Bounded evidence reviewed in this pass:
+
+- `docs/dore/DESIGN-WORKING-MEMORY.md`;
+- `.github/workflows/dore-design-agent-acceptance.yml`;
+- `dore-core/evidence/PENPOT-BRIDGE-01-LIVE-EVIDENCE-2026-08-26.md`;
+- `dore-core/projects/DORÉ-DESIGN-WORKING-MEMORY-EVIDENCE-LEDGER-2026-08-28.md`;
+- current `VIS-GRAMMAR` and missing-evidence interpretations.
+
+Reconciliation findings:
+
+1. Design Working Memory has a real four-gate contract: D1 Design Scope, D2 Truth State, D3 Consolidation, and D4 Penpot Visual Verification. Current automated acceptance provides meaningful D1–D3 deterministic coverage plus Penpot-action routing, MCP-client build and fail-closed behavior, but it does not execute D4 visual readback/correction and does not prove the full Search-to-design acceptance exam.
+2. The live Penpot bridge is separately a legitimate bounded `VERIFIED_COMPLETE` infrastructure milestone: Doré Core reached Penpot Remote MCP, executed code, persisted an editable object and independently read it back. That milestone proves connectivity/persistence only, not visual quality, typography, responsive/print transfer or finished Westside grammar.
+3. Overall Design Working Memory therefore remains `ACTIVE`; D4 and the full Search conversation → inherited design memory → execution → rendered inspection → correction → verified design state exam remain `UNKNOWN_NEEDS_EVIDENCE`.
+4. `ME-015` now records this exact boundary and the smallest future proof: one bounded real Westside design task using current confirmed visual memory, actual rendered readback, evidence-driven correction where needed, and a persisted final verification artifact.
+5. The canonical `VIS-GRAMMAR` row now references the Design Working Memory ledger and distinguishes D1–D3 implementation, bounded Penpot bridge completion and the still-unproven D4/full operational exam. No workstream status promotion or demotion was warranted.
+6. The durable generalized lesson remains: memory truth, execution connectivity and visual competence are three different evidence layers. Tool/API success or editable/vector persistence is not proof of visual quality.
+7. No P01 subtitle-runtime state or action was modified. The existing production audio/transcription environment dependency remains unchanged.
+
+Sweep status remains `ACTIVE_PARALLEL`; Design Working Memory/Penpot acceptance evidence is now explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
