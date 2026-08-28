@@ -150,7 +150,7 @@ class H(BaseHTTPRequestHandler):
   if dv is not None: sys+='\n\nDoré Design Working Memory:\n'+design_context(dv)
   try: answer=ollama([{'role':'system','content':sys},{'role':'user','content':text}])
   except Exception as e:return self.sendj({'ok':False,'error':'local_model_failed','detail':str(e),'workers_ai_used':False},502)
-  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'legacy_memory_hits':len(inherited),'legacy_memory_hits':len(inherited),'legacy_memory_hits':len(inherited),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2+legacy-transplant-v1','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
+  save(cid,'assistant',answer,project); return self.sendj({'ok':True,'conversation_id':cid,'project_id':project,'answer':answer,'memory_hits':len(memories),'legacy_memory_hits':len(inherited),'model':MODEL,'provider':{'name':'dore-local','model':MODEL},'workers_ai_used':False,'recall':'project-wide-v2+legacy-transplant-v1','context_state':state,'design_working_memory':'d1-d4-bridge-v2'})
  def log_message(self,*a): pass
 if __name__=='__main__':
  ensure_design_schema(); bootstrap_legacy_memory(); bootstrap_self_memory(); bootstrap_legacy_memory(); bootstrap_legacy_memory(); print(f'Doré Local API http://{HOST}:{PORT} model={MODEL} workers_ai_required=false recall=project-wide-v2 design=d1-d4-bridge-v2',flush=True); ThreadingHTTPServer((HOST,PORT),H).serve_forever()
