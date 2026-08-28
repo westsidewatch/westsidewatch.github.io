@@ -2,7 +2,7 @@
 """Durable Doré -> ChatGPT bridge reminder contract.
 
 This module deliberately exposes a machine-readable handoff rather than relying on
-ChatGPT remembering prior chat context.  It reads Doré's durable self-memory and
+ChatGPT remembering prior chat context. It reads Doré's durable self-memory and
 open learning/work items from SQLite and emits a compact bridge packet.
 """
 from __future__ import annotations
@@ -11,6 +11,7 @@ import hashlib
 import json
 import sqlite3
 from datetime import datetime, timezone
+from self_memory import ensure_schema as ensure_self_schema
 
 
 def _rows(conn: sqlite3.Connection, sql: str, args=()):
@@ -20,6 +21,9 @@ def _rows(conn: sqlite3.Connection, sql: str, args=()):
 
 def bridge_packet(conn: sqlite3.Connection) -> dict:
     """Return the current durable handoff ChatGPT must read before Doré work."""
+    # The coordination worker can be invoked before the Doré HTTP service has
+    # bootstrapped a newly-added schema. Make bridge reads independently safe.
+    ensure_self_schema(conn)
     policies = _rows(
         conn,
         "SELECT key,content,epistemic_state,source_ref FROM dore_self_memory "
