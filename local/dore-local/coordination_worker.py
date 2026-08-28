@@ -17,30 +17,36 @@ def load_state():
   except Exception:pass
  return {}
 def save(obj):STATE.parent.mkdir(parents=True,exist_ok=True); STATE.write_text(json.dumps(obj,ensure_ascii=False,indent=2))
-def consume_repo_inbox(prev):
- seen=set(prev.get('repo_inbox_seen') or []); local_ids={m.get('message_id') for m in read_jsonl(INBOX)}; pending=[]
+def pending_repo_inbox(prev):
+ processed=set(prev.get('repo_inbox_processed') or []); local_ids={m.get('message_id') for m in read_jsonl(INBOX)}; pending=[]
  if REPO_INBOX.exists():
   for path in sorted(REPO_INBOX.glob('*.json')):
    try:msg=json.loads(path.read_text(encoding='utf-8'))
    except Exception:continue
    mid=msg.get('message_id')
-   if not mid or mid in seen:continue
+   if not mid or mid in processed:continue
    if mid not in local_ids:receive_from_chatgpt(msg)
-   seen.add(mid); pending.append(msg)
- return seen,pending
+   pending.append(msg)
+ return processed,pending
 def main():
- # First repair any previously spoken but not yet delivered message.
  flush_outbox()
  if not DB.exists():return 0
- prev=load_state(); seen,pending=consume_repo_inbox(prev)
+ prev=load_state(); processed,pending=pending_repo_inbox(prev)
  with sqlite3.connect(DB) as c:packet=bridge_packet(c)
  digest=packet['packet_sha256']
  if not pending and prev.get('packet_sha256')==digest:
-  prev['repo_inbox_seen']=sorted(seen); save(prev); return 0
- prompt='''Review durable coordination state and NEW_MESSAGES. Continue autonomous work regardless of reply. If a new message explicitly asks for a simple reply, obey it exactly in body. Otherwise send only a useful coordination message. Return {"send":true|false,"subject":"...","body":"...","requires_reply":true|false,"priority":"normal|high","related_goal":"...","evidence_refs":[...]}.\nSTATE:\n'''+json.dumps(packet,ensure_ascii=False)+'\nNEW_MESSAGES:\n'+json.dumps(pending,ensure_ascii=False)
+  prev['repo_inbox_processed']=sorted(processed); prev.pop('repo_inbox_seen',None); save(prev); return 0
+ # Process one durable letter/thread at a time. Discovery/receipt is NOT processing.
+ current=pending[0] if pending else None
+ new_messages=[current] if current else []
+ prompt='''Review durable coordination state and NEW_MESSAGES. Continue autonomous work regardless of reply. If a new message explicitly asks for a simple reply, obey it exactly in body. Otherwise send only a useful coordination message. Return {"send":true|false,"subject":"...","body":"...","requires_reply":true|false,"priority":"normal|high","related_goal":"...","evidence_refs":[...]}.\nSTATE:\n'''+json.dumps(packet,ensure_ascii=False)+'\nNEW_MESSAGES:\n'+json.dumps(new_messages,ensure_ascii=False)
  try:decision=parse(ask(prompt))
- except Exception:
-  save({'packet_sha256':prev.get('packet_sha256'),'repo_inbox_seen':sorted(seen),'checked_at':datetime.now(timezone.utc).isoformat(),'last_error':'model_or_parse'}); return 1
- if decision.get('send'):send_to_chatgpt(str(decision.get('subject') or 'Doré coordination'),str(decision.get('body') or ''),requires_reply=decision.get('requires_reply',False),priority=str(decision.get('priority') or 'normal'),related_goal=decision.get('related_goal'),evidence_refs=decision.get('evidence_refs') or [],thread_id=(pending[0].get('thread_id') if pending else None))
- save({'packet_sha256':digest,'repo_inbox_seen':sorted(seen),'checked_at':datetime.now(timezone.utc).isoformat()}); return 0
+ except Exception as e:
+  save({'packet_sha256':prev.get('packet_sha256'),'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat(),'last_error':'model_or_parse:'+type(e).__name__}); return 1
+ if current and current.get('requires_reply') and not decision.get('send'):
+  save({'packet_sha256':prev.get('packet_sha256'),'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat(),'last_error':'required_reply_not_generated'}); return 2
+ if decision.get('send'):
+  send_to_chatgpt(str(decision.get('subject') or 'Doré coordination'),str(decision.get('body') or ''),requires_reply=decision.get('requires_reply',False),priority=str(decision.get('priority') or 'normal'),related_goal=decision.get('related_goal'),evidence_refs=decision.get('evidence_refs') or [],thread_id=(current.get('thread_id') if current else None))
+ if current:processed.add(current['message_id'])
+ save({'packet_sha256':digest,'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()}); return 0
 if __name__=='__main__':raise SystemExit(main())
