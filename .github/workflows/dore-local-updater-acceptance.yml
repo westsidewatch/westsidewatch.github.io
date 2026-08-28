@@ -8,6 +8,8 @@ on:
       - 'local/dore-local/dore_local.py'
       - 'local/dore-local/legacy_memory.py'
       - 'local/dore-local/legacy-memory/**'
+      - 'local/dore-local/self_memory.py'
+      - 'local/dore-local/self-memory/**'
   workflow_dispatch:
 jobs:
   acceptance:
@@ -15,31 +17,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Static compile
-        run: python3 -m py_compile local/dore-local/local_updater.py local/dore-local/dore_local.py local/dore-local/legacy_memory.py
-      - name: Legacy store acceptance
+        run: python3 -m py_compile local/dore-local/local_updater.py local/dore-local/dore_local.py local/dore-local/legacy_memory.py local/dore-local/self_memory.py
+      - name: Memory core acceptance
         run: |
           python3 - <<'PY'
-          import json, sqlite3, tempfile
+          import json, sqlite3, tempfile, sys
           from pathlib import Path
-          import sys
           sys.path.insert(0,'local/dore-local')
           from legacy_memory import ensure_schema, import_items, recall
-          root=Path(tempfile.mkdtemp())
-          db=root/'dore.sqlite3'
-          c=sqlite3.connect(db); c.row_factory=sqlite3.Row
-          ensure_schema(c)
+          import self_memory as sm
+          root=Path(tempfile.mkdtemp()); c=sqlite3.connect(root/'dore.sqlite3'); c.row_factory=sqlite3.Row
+          ensure_schema(c); sm.ensure_schema(c)
           payload=json.loads(Path('local/dore-local/legacy-memory/seed-v1.json').read_text())
-          ids=import_items(c,root,payload['items']); c.commit()
-          assert len(ids) >= 20, len(ids)
+          ids=import_items(c,root,payload['items']); c.commit(); assert len(ids)>=20
           for q,needle in [('你是誰','Doré'),('西望是什麼','Westside Watch'),('黎明書局','黎明書局'),('你學到哪裡','Researcher')]:
-              rows=recall(c,q,16)
-              text='\n'.join(r['content'] for r in rows)
-              assert needle in text,(q,needle,text)
-          print('DORE_LEGACY_MEMORY_RECALL_PASS',len(ids))
+              assert needle in '\n'.join(r['content'] for r in recall(c,q,16))
+          lid=sm.add_learning(c,'Acceptance','capability',status='historical-pass-claim',epistemic_state='inherited')
+          try: sm.transition_learning(c,lid,'verified',status='pass'); raise AssertionError('unsafe PASS')
+          except ValueError: pass
+          sm.transition_learning(c,lid,'verified',status='pass',evidence_ref='ci:updater')
+          assert len(sm.status(c)['learning']['verified_capabilities'])==1
+          print('DORE_MEMORY_CORE_ACCEPTANCE_PASS',len(ids))
           PY
-      - name: LaunchAgent contract
+      - name: Autonomous update contract
         run: |
           grep -q 'io.westsidewatch.dore-updater' local/dore-local/install-launchagent.sh
           grep -q 'StartInterval' local/dore-local/install-launchagent.sh
           grep -q 'legacy-memory/status' local/dore-local/local_updater.py
+          grep -q 'memory/self/status' local/dore-local/local_updater.py
+          grep -q 'learning/status' local/dore-local/local_updater.py
           echo DORE_LOCAL_AUTONOMOUS_UPDATE_CONTRACT_PASS
