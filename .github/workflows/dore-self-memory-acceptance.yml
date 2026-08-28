@@ -1,0 +1,47 @@
+name: Doré Self Memory and Learning Ledger Acceptance
+on:
+  push:
+    paths:
+      - 'local/dore-local/self_memory.py'
+      - 'local/dore-local/self-memory/**'
+      - 'local/dore-local/apply-self-memory.py'
+      - '.github/workflows/dore-self-memory-acceptance.yml'
+permissions:
+  contents: write
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Wire runtime
+        run: python local/dore-local/apply-self-memory.py
+      - name: Compile
+        run: python -m py_compile local/dore-local/dore_local.py local/dore-local/self_memory.py local/dore-local/legacy_memory.py
+      - name: Acceptance
+        run: |
+          python - <<'PY'
+          import sqlite3,sys,tempfile
+          from pathlib import Path
+          sys.path.insert(0,'local/dore-local')
+          import self_memory as m
+          c=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row; m.ensure_schema(c)
+          m.upsert_self(c,'identity','Doré is persistent','test','e1','verified')
+          m.add_learning(c,'Bible','Inherited pass claim',status='historical-pass-claim',source_type='legacy',epistemic_state='inherited')
+          try:
+              m.add_learning(c,'Bible','Unsafe verified pass',status='pass',epistemic_state='verified')
+              raise AssertionError('verified PASS without evidence was accepted')
+          except ValueError: pass
+          m.add_learning(c,'Bible','Verified capability',status='pass',evidence_ref='ci:test:1',epistemic_state='verified')
+          s=m.status(c)
+          assert s['learning']['verified']==1 and s['learning']['inherited']==1
+          print('DORE_SELF_MEMORY_LEARNING_LEDGER_PASS')
+          PY
+      - name: Commit wired runtime
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'dore-ci@users.noreply.github.com'
+          git add local/dore-local/dore_local.py
+          git diff --cached --quiet || git commit -m 'feat(dore): activate self memory and learning ledger'
+          git push
