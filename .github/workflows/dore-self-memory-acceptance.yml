@@ -15,27 +15,31 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - name: Wire runtime
-        run: python local/dore-local/apply-self-memory.py
+      - name: Wire runtime twice to prove idempotency
+        run: |
+          python local/dore-local/apply-self-memory.py
+          cp local/dore-local/dore_local.py /tmp/dore-once.py
+          python local/dore-local/apply-self-memory.py
+          cmp /tmp/dore-once.py local/dore-local/dore_local.py
       - name: Compile
         run: python -m py_compile local/dore-local/dore_local.py local/dore-local/self_memory.py local/dore-local/legacy_memory.py
-      - name: Acceptance
+      - name: Learning ledger acceptance
         run: |
           python - <<'PY'
-          import sqlite3,sys,tempfile
-          from pathlib import Path
-          sys.path.insert(0,'local/dore-local')
-          import self_memory as m
+          import sqlite3,sys
+          sys.path.insert(0,'local/dore-local'); import self_memory as m
           c=sqlite3.connect(':memory:'); c.row_factory=sqlite3.Row; m.ensure_schema(c)
           m.upsert_self(c,'identity','Doré is persistent','test','e1','verified')
-          m.add_learning(c,'Bible','Inherited pass claim',status='historical-pass-claim',source_type='legacy',epistemic_state='inherited')
-          try:
-              m.add_learning(c,'Bible','Unsafe verified pass',status='pass',epistemic_state='verified')
-              raise AssertionError('verified PASS without evidence was accepted')
+          lid=m.add_learning(c,'Bible','Inherited pass claim',status='historical-pass-claim',source_type='legacy',epistemic_state='inherited')
+          try: m.transition_learning(c,lid,'verified',status='pass'); raise AssertionError('verified PASS without evidence was accepted')
           except ValueError: pass
-          m.add_learning(c,'Bible','Verified capability',status='pass',evidence_ref='ci:test:1',epistemic_state='verified')
+          m.transition_learning(c,lid,'verified',status='pass',evidence_ref='ci:test:1',reason='reverse exam passed')
+          bad=m.add_learning(c,'Research','Rejected old claim',epistemic_state='observed')
+          m.transition_learning(c,bad,'rejected',reason='contradicted by evidence')
           s=m.status(c)
-          assert s['learning']['verified']==1 and s['learning']['inherited']==1
+          assert s['learning']['states']['verified']==1
+          assert len(s['learning']['verified_capabilities'])==1
+          assert all(x['id']!=bad for x in s['learning']['events'])
           print('DORE_SELF_MEMORY_LEARNING_LEDGER_PASS')
           PY
       - name: Commit wired runtime
@@ -43,5 +47,5 @@ jobs:
           git config user.name 'Doré CI'
           git config user.email 'dore-ci@users.noreply.github.com'
           git add local/dore-local/dore_local.py
-          git diff --cached --quiet || git commit -m 'feat(dore): activate self memory and learning ledger'
+          git diff --cached --quiet || git commit -m 'feat(dore): normalize self memory runtime wiring'
           git push
