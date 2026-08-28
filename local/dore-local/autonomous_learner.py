@@ -7,6 +7,7 @@ from learning_planner import plan, validate_gate
 from self_memory import add_learning, status as learning_status, transition_learning
 
 PHASES=('selected','discovering','synthesizing','challenging','blind_testing','assessment_ready','blocked','completed')
+TEXT_EXTS={'.md','.txt','.json','.jsonl','.py','.js','.ts','.tsx','.jsx','.html','.yml','.yaml','.toml','.csv','.xml','.css','.scss'}
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def _id(*parts): return hashlib.sha256('|'.join(parts).encode()).hexdigest()[:24]
@@ -25,13 +26,30 @@ def load_gates(base:Path):
 
 def _candidate_roots(repo_root:Path,dore_root:Path): return [p for p in (repo_root,dore_root/'archive') if p.exists()]
 
+def _python_search(root:Path,q,limit=30):
+    found=[]; ql=q.lower()
+    try: paths=root.rglob('*')
+    except Exception: return found
+    for p in paths:
+        if len(found)>=limit: break
+        try:
+            if not p.is_file() or '.git' in p.parts or p.stat().st_size>2_000_000: continue
+            if p.suffix.lower() not in TEXT_EXTS and p.suffix: continue
+            text=p.read_text(encoding='utf-8',errors='ignore')
+            if ql in text.lower(): found.append(p)
+        except Exception: continue
+    return found
+
 def discover_evidence(repo_root:Path,dore_root:Path,gate,limit=30):
     hits=[]; seen=set(); queries=[str(q) for q in gate.get('evidence_queries') or []]
     for root in _candidate_roots(repo_root,dore_root):
         for q in queries:
+            paths=[]
             try:
-                p=subprocess.run(['rg','-l','-F',q,str(root)],capture_output=True,text=True,timeout=20); paths=[Path(x) for x in p.stdout.splitlines() if x.strip()]
-            except Exception: paths=[]
+                p=subprocess.run(['rg','-l','-F','--hidden','--glob','!.git/**',q,str(root)],capture_output=True,text=True,timeout=20)
+                paths=[Path(x) for x in p.stdout.splitlines() if x.strip()]
+            except Exception: pass
+            if not paths: paths=_python_search(root,q,max(1,limit-len(hits)))
             for path in paths:
                 key=str(path)
                 if key not in seen: hits.append({'path':key,'query':q}); seen.add(key)
