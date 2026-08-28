@@ -338,3 +338,33 @@ Reconciliation findings:
 7. No P01 subtitle/runtime/deployment/binding state was modified; the existing P01 environment dependency is unchanged.
 
 Sweep status remains `ACTIVE_PARALLEL`; this family is now explicitly accounted for, but remaining product-history/evidence families still prevent `VERIFIED_COMPLETE`.
+
+## Checkpoint 24 — live sensory-memory diagnostics reconciliation (2026-08-28)
+
+Bounded evidence reviewed in this pass:
+
+- complete current `dore-core/memory/` family;
+- `actions-probe-diagnostic.json`;
+- `sensory-active.json`;
+- `sensory-claim-step-diagnostic.json`;
+- `sensory-heartbeat-diagnostic.json`;
+- `sensory-seed-diagnostic.json`;
+- existing `CW-001` sensory-loop completion interpretation.
+
+Reconciliation findings:
+
+1. The `dore-core/memory/` family is operational evidence, not a separate project-definition layer. Its diagnostic files should be interpreted as rolling evidence artifacts attached to the `CORE/CONTINUOUS` sensory-learning system.
+2. The historical sensory repair/consolidation milestone remains defensibly `VERIFIED_COMPLETE`: the current seed diagnostic still returns HTTP 200 with `state=CONSOLIDATED`, `deduplicated=true`, and `schema_reconciled=true`; the heartbeat reports `ok=true` and `reconciled_consolidated=1`; and the GitHub Actions probe reports a newer successful run `33131038809` on 2026-08-28. This strengthens retention evidence without turning continuous operation into a new completion milestone.
+3. `sensory-active.json` now contains two semantically different states: the Mary-count signal remains durably `CONSOLIDATED` with brain node `research.nt.mary-count`, while a later Search/conversation signal remains `RESEARCHING` with no brain node. This is current in-flight state, not evidence that the prior repair milestone regressed and not evidence of a new completed capability.
+4. The diagnostic snapshot has a mild cross-file time/state asymmetry: the heartbeat captured the later signal as `QUEUED`, while `sensory-active.json` captured it moments later as `RESEARCHING`. The chronology is coherent and should not be treated as a contradiction; these are sequential runtime snapshots.
+5. No new `COMPLETED_REVISIT_CANDIDATE`, `SUPERSEDED`, `RETIRED`, or missing-evidence item is justified from this bounded batch. Long-horizon sensory quality, heterogeneous-signal robustness and stress/volume behavior remain general evaluation debt already implicit in `CW-001`, not a newly discovered blocker.
+6. No P01 subtitle-path state, deployment, binding, credential, ordering or blocker condition was modified.
+
+Current disposition:
+
+- sensory repair/consolidation historical milestone: keep closed as `VERIFIED_COMPLETE`;
+- sensory learning/runtime: continue as `CORE/CONTINUOUS`;
+- current `RESEARCHING` signal: preserve as live state, neither promote nor diagnose as blocked without stronger evidence;
+- diagnostic files: retain as provenance-bearing rolling evidence, not canonical work-register truth by themselves.
+
+Sweep status remains `ACTIVE_PARALLEL`; the current `dore-core/memory/` family is now explicitly revalidated, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
