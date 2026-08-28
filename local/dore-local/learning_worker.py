@@ -24,9 +24,18 @@ def main():
         try: fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
         except BlockingIOError: return 0
         try:
-            c=sqlite3.connect(DB); c.row_factory=sqlite3.Row
-            result=run_cycle(c,REPO,DORE,max_gates=int(os.environ.get('DORE_LEARNING_MAX_GATES','1')),model_call=model_call)
-            payload={'ok':True,'checked_at':now(),'result':result}; STATE.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8'); emit('cycle',executed=result.get('executed'))
+            c=sqlite3.connect(DB); c.row_factory=sqlite3.Row; cycles=[]; max_depth=int(os.environ.get('DORE_LEARNING_MAX_DEPTH','4'))
+            for depth in range(max_depth):
+                result=run_cycle(c,REPO,DORE,max_gates=int(os.environ.get('DORE_LEARNING_MAX_GATES','1')),model_call=model_call); cycles.append(result)
+                executed=result.get('executed') or []
+                progressed=any(r.get('verified') for r in executed)
+                productive=bool(result.get('productive_runs'))
+                emit('cycle',depth=depth,executed=executed,progressed=progressed)
+                # Continue immediately through a newly unlocked dependency chain. Stop when no new capability was verified,
+                # or when all remaining work is stagnant/blocked. This is compute-budgeted, not calendar-gated.
+                if not progressed: break
+                if not productive: break
+            payload={'ok':True,'checked_at':now(),'cycles':cycles,'max_depth':max_depth,'calendar_gate':False}; STATE.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
             return 0
         except Exception as e:
             payload={'ok':False,'checked_at':now(),'error':str(e)}; STATE.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8'); emit('error',detail=str(e)); return 1
