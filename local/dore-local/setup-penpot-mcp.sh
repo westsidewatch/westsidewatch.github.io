@@ -2,7 +2,8 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RUNTIME="$HOME/.dore/runtime/penpot-mcp"
-VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-qwen3-vl:8b}"
+MODEL="${DORE_LOCAL_MODEL:-gemma4:e4b}"
+VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-$MODEL}"
 LABEL="io.westsidewatch.penpot-mcp"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 DOMAIN="gui/$(id -u)"
@@ -44,9 +45,6 @@ WORKSPACE="$PKG_DIR/pnpm-workspace.yaml"
 PNPM="$RUNTIME/node_modules/.bin/pnpm"
 [[ -f "$PKG" && -x "$PNPM" ]] || { echo "ERROR: Penpot MCP bootstrap prerequisites missing" >&2; exit 3; }
 
-# pnpm 11 no longer honors legacy onlyBuiltDependencies for this gate. Its
-# current policy is allowBuilds in pnpm-workspace.yaml. Penpot needs esbuild and
-# sharp lifecycle scripts, so explicitly allow only those two packages.
 if [[ -f "$WORKSPACE" ]]; then
   "$NODE22" - "$WORKSPACE" <<'NODE'
 const fs = require('fs');
@@ -69,8 +67,6 @@ fs.writeFileSync(file, s);
 NODE
 fi
 
-# Remove any legacy package.json policy so pnpm 11 has exactly one source of
-# truth and cannot inherit stale contradictory settings.
 "$NODE22" - "$PKG" <<'NODE'
 const fs = require('fs');
 const file = process.argv[2];
@@ -101,7 +97,7 @@ printf '%s\n' "$NODE22_PREFIX/bin" > "$RUNTIME/node-bin-dir"
 
 echo "Penpot MCP runtime: $RUNTIME"
 echo "Penpot MCP executable: $MCP_BIN"
-echo "Pulling Doré visual verification model: $VISION_MODEL"
+echo "Ensuring active Doré visual engine is available: $VISION_MODEL"
 ollama pull "$VISION_MODEL"
 
 bash "$HERE/install-penpot-mcp-launchagent.sh"
@@ -110,6 +106,8 @@ cat <<EOF
 DORE_PENPOT_MCP_PREP_PASS
 Plugin manifest: http://localhost:4400/manifest.json
 MCP endpoint: http://localhost:4401/mcp
+Active Doré engine: $MODEL
+Visual verification engine: $VISION_MODEL
 Verification command:
   node local/dore-local/penpot-mcp/client.mjs status
 EOF
