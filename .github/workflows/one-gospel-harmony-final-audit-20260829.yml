@@ -1,0 +1,111 @@
+name: ONE Gospel Harmony Final Audit 2026-08-29
+on:
+  push:
+    paths: ['.github/workflows/one-gospel-harmony-final-audit-20260829.yml']
+permissions:
+  contents: write
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Parse every Gospel harmony block and validate columns
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import json,re,collections
+          root=Path('static/one')
+          files=[p for p in root.glob('*.js') if p.name in {'one-data.js','matthew-complete.js'} or p.name.startswith(('mark-','luke-','john-'))]
+          full={'馬太福音':'太','馬可福音':'可','路加福音':'路','約翰福音':'約'}
+          expected={1:'太',2:'可',3:'路',4:'約'}; maxch={'太':28,'可':16,'路':24,'約':21}
+          def extract_array(src,start):
+              i=src.find('[',start)
+              if i<0:return None,None
+              depth=0; quote=False; esc=False
+              for j in range(i,len(src)):
+                  c=src[j]
+                  if quote:
+                      if esc:esc=False
+                      elif c=='\\':esc=True
+                      elif c=='"':quote=False
+                      continue
+                  if c=='"':quote=True
+                  elif c=='[':depth+=1
+                  elif c==']':
+                      depth-=1
+                      if depth==0:return src[i:j+1],j+1
+              return None,None
+          rows=[]; parse=[]; wrong=[]; sermon=[]
+          for p in sorted(files):
+              src=p.read_text(encoding='utf-8',errors='ignore'); pos=0
+              while True:
+                  k=src.find('harmony:',pos)
+                  if k<0:break
+                  arr,end=extract_array(src,k+8); line=src.count('\n',0,k)+1
+                  if not arr:
+                      parse.append(f'{p.name}:{line}: no balanced array');pos=k+8;continue
+                  try:block=json.loads(arr)
+                  except Exception as e:
+                      parse.append(f'{p.name}:{line}: {e}');pos=end;continue
+                  if not isinstance(block,list):parse.append(f'{p.name}:{line}: not list');pos=end;continue
+                  for r in block:
+                      if not isinstance(r,list) or len(r)!=5:
+                          parse.append(f'{p.name}:{line}: non-5-column row {r!r}');continue
+                      rows.append((p.name,line,r))
+                      title=str(r[0]).strip()
+                      for col in range(1,5):
+                          s=str(r[col]).strip()
+                          if s in {'','—','-'}:continue
+                          normalized=s
+                          for a,b in full.items():normalized=normalized.replace(a,b)
+                          # Parenthetical notes may explicitly compare a different Gospel; validate primary citation text.
+                          primary=normalized.split('（',1)[0]
+                          refs=re.findall(r'(太|可|路|約)\s*(\d+)',primary)
+                          if not refs:wrong.append(f'{p.name}:{line} {title}: {expected[col]}欄無經文引用: {s}')
+                          for pref,ch in refs:
+                              if pref!=expected[col]:wrong.append(f'{p.name}:{line} {title}: {expected[col]}欄誤置{pref}: {s}')
+                              if not 1<=int(ch)<=maxch[pref]:wrong.append(f'{p.name}:{line} {title}: 章號越界: {s}')
+                      joined=[str(x) for x in r]
+                      if '平原寶訓' in ''.join(joined):
+                          if '平原寶訓' not in joined[3] or any('平原寶訓' in joined[i] for i in (0,1,2,4)): sermon.append(f'{p.name}:{line}: 平原寶訓不在路加欄: {r!r}')
+                      if '山上寶訓' in ''.join(joined):
+                          if '山上寶訓' not in joined[1] or any('山上寶訓' in joined[i] for i in (0,2,3,4)): sermon.append(f'{p.name}:{line}: 山上寶訓不在馬太欄: {r!r}')
+                  pos=end
+          # Detect duplicate event labels whose reference extents differ, for editorial review rather than automatic mutation.
+          groups=collections.defaultdict(list)
+          def canon(s):
+              s=str(s).strip()
+              for a,b in full.items():s=s.replace(a,b)
+              return re.sub(r'\s+',' ',s)
+          for fn,ln,r in rows:groups[str(r[0]).strip()].append((tuple(canon(x) for x in r[1:]),fn,ln))
+          diffs=[]
+          for title,items in sorted(groups.items()):
+              sigs=collections.defaultdict(list)
+              for sig,fn,ln in items:sigs[sig].append(f'{fn}:{ln}')
+              if len(items)>1 and len(sigs)>1:diffs.append((title,sigs))
+          out=Path('docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md');out.parent.mkdir(parents=True,exist_ok=True)
+          L=['# ONE Four-Gospel Harmony Final Audit — 2026-08-29','',f'- Gospel source files inspected: **{len(files)}**',f'- Harmony rows inspected: **{len(rows)}**',f'- Balanced-parser failures: **{len(parse)}**',f'- Wrong Gospel-column / chapter-bound findings: **{len(wrong)}**',f'- Sermon-label placement findings: **{len(sermon)}**',f'- Duplicate event labels with differing extents/notes (editorial review set): **{len(diffs)}**','']
+          if parse:L+=['## Parser findings','']+[f'- {x}' for x in parse]+['']
+          if wrong:L+=['## Column/reference findings','']+[f'- {x}' for x in wrong]+['']
+          if sermon:L+=['## Sermon-label findings','']+[f'- {x}' for x in sermon]+['']
+          L+=['## Editorial review set','']
+          for title,sigs in diffs:
+              L.append(f'### {title}')
+              for sig,loc in sigs.items():L.append(f'- `{ " | ".join(sig) }` — {", ".join(loc)}')
+              L.append('')
+          L+=['## Result','', 'The balanced parser covers every discovered `harmony:` array in the four-Gospel ONE sources, including multiline John blocks. Structural placement is clean after the Matthew 5 correction. Differing verse extents and explanatory notes are retained for editorial judgment rather than normalized mechanically, because many represent deliberate scope or textual-critical distinctions.','']
+          out.write_text('\n'.join(L),encoding='utf-8');print('\n'.join(L))
+          if parse or wrong or sermon:raise SystemExit('final structural audit has unresolved findings')
+          PY
+      - name: Syntax check all Gospel sources
+        run: |
+          for f in static/one/one-data.js static/one/matthew-complete.js static/one/mark-*.js static/one/luke-*.js static/one/john-*.js; do node --check "$f"; done
+      - name: Commit audit and self-remove
+        run: |
+          git config user.name westsidewatch
+          git config user.email westsidewatchca@gmail.com
+          git rm .github/workflows/one-gospel-harmony-final-audit-20260829.yml
+          git add docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md
+          git commit -m 'audit(one): complete four-Gospel harmony review'
+          git push
