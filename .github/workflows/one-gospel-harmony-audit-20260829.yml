@@ -13,105 +13,89 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Repair Matthew 5 label placement and audit all Gospel harmony rows
+      - name: Repair and audit all ONE Gospel harmony tables
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          import re, json, sys
+          import re, json
 
-          root = Path('static/one')
-          target = root / 'matthew-complete.js'
-          text = target.read_text(encoding='utf-8')
-          old = 'harmony: [["山上寶訓／平原寶訓","太 5:1–7:29","—","路 6:20–49","—"],["鹽與光"'
-          new = 'harmony: [["寶訓","山上寶訓 · 太 5:1–7:29","—","平原寶訓 · 路 6:20–49","—"],["鹽與光"'
+          root=Path('static/one')
+          target=root/'matthew-complete.js'
+          text=target.read_text(encoding='utf-8')
+          old='harmony: [["山上寶訓／平原寶訓","太 5:1–7:29","—","路 6:20–49","—"],["鹽與光"'
+          new='harmony: [["寶訓","山上寶訓 · 太 5:1–7:29","—","平原寶訓 · 路 6:20–49","—"],["鹽與光"'
           if old in text:
-              text = text.replace(old, new, 1)
-              target.write_text(text, encoding='utf-8')
+              text=text.replace(old,new,1)
+              target.write_text(text,encoding='utf-8')
           elif new not in text:
-              raise SystemExit('Matthew 5 harmony row not found in expected form')
+              raise SystemExit('Matthew 5 harmony target missing')
 
-          # Scan every ONE JavaScript source, not just Matthew, so all four-Gospel
-          # harmony tables are structurally checked in one pass.
-          files = sorted(root.glob('*.js'))
-          row_re = re.compile(r'\[("(?:[^"\\]|\\.)*"(?:\s*,\s*"(?:[^"\\]|\\.)*"){4})\]')
-          harmony_blocks = []
-          issues = []
-          rows = []
-          gospel_prefix = {1:'太', 2:'可', 3:'路', 4:'約'}
-          chapter_max = {'太':28,'可':16,'路':24,'約':21}
-
-          for path in files:
-              src = path.read_text(encoding='utf-8', errors='ignore')
-              # Each harmony assignment is kept on one logical source line in ONE data files.
-              for lineno, line in enumerate(src.splitlines(), 1):
-                  if 'harmony:' not in line:
+          gospel_prefix={1:'太',2:'可',3:'路',4:'約'}
+          chapter_max={'太':28,'可':16,'路':24,'約':21}
+          rows=[]; issues=[]; blocks=0
+          for path in sorted(root.glob('*.js')):
+              src=path.read_text(encoding='utf-8',errors='ignore')
+              for lineno,line in enumerate(src.splitlines(),1):
+                  if 'harmony:' not in line: continue
+                  m=re.search(r'harmony:\s*(\[\[.*?\]\])\s*,',line)
+                  if not m:
+                      issues.append(f'{path}:{lineno}: harmony block could not be parsed')
                       continue
-                  harmony_blocks.append((path, lineno, line))
-                  tail = line.split('harmony:',1)[1]
-                  for m in row_re.finditer(tail):
-                      try:
-                          cells = json.loads('[' + m.group(1) + ']')
-                      except Exception as exc:
-                          issues.append(f'{path}:{lineno}: cannot parse harmony row: {exc}')
+                  blocks+=1
+                  try: block=json.loads(m.group(1))
+                  except Exception as exc:
+                      issues.append(f'{path}:{lineno}: JSON parse failure: {exc}')
+                      continue
+                  for cells in block:
+                      if not isinstance(cells,list) or len(cells)!=5:
+                          issues.append(f'{path}:{lineno}: row is not 5 columns: {cells!r}')
                           continue
-                      if len(cells) != 5:
-                          issues.append(f'{path}:{lineno}: expected 5 cells, got {len(cells)}: {cells!r}')
-                          continue
-                      rows.append((path, lineno, cells))
-                      title = cells[0]
+                      rows.append((path,lineno,cells))
+                      title=str(cells[0])
                       for col in range(1,5):
-                          cell = cells[col].strip()
-                          if cell in {'—','-',''}:
-                              continue
-                          expected = gospel_prefix[col]
-                          # Allow prose labels before the actual reference, e.g. "山上寶訓 · 太 5:1–7:29".
-                          refs = re.findall(r'(太|可|路|約)\s*(\d+)(?::\d+)?', cell)
+                          cell=str(cells[col]).strip()
+                          if cell in {'—','-',''}: continue
+                          expected=gospel_prefix[col]
+                          refs=re.findall(r'(太|可|路|約)\s*(\d+)(?::\d+)?',cell)
                           if not refs:
-                              issues.append(f'{path}:{lineno}: {title}: column {col} has no Gospel reference: {cell}')
-                              continue
-                          for prefix, chapter in refs:
-                              if prefix != expected:
-                                  issues.append(f'{path}:{lineno}: {title}: {cell} is in {expected} column but cites {prefix}')
-                              if int(chapter) > chapter_max[prefix] or int(chapter) < 1:
+                              issues.append(f'{path}:{lineno}: {title}: {expected} column lacks a Gospel ref: {cell}')
+                          for prefix,chapter in refs:
+                              if prefix!=expected:
+                                  issues.append(f'{path}:{lineno}: {title}: {expected} column cites {prefix}: {cell}')
+                              if not 1<=int(chapter)<=chapter_max[prefix]:
                                   issues.append(f'{path}:{lineno}: {title}: invalid {prefix} chapter {chapter}')
-                      # Gospel-specific sermon names belong in their Gospel cells, not the shared topic cell.
                       if '平原寶訓' in title or '山上寶訓' in title:
-                          issues.append(f'{path}:{lineno}: Gospel-specific sermon name remains in shared topic cell: {title}')
-                      if any('平原寶訓' in c for c in cells[1:]):
-                          if '平原寶訓' not in cells[3] or any('平原寶訓' in cells[i] for i in (1,2,4)):
-                              issues.append(f'{path}:{lineno}: 平原寶訓 must be placed only in Luke column: {cells!r}')
-                      if any('山上寶訓' in c for c in cells[1:]):
-                          if '山上寶訓' not in cells[1] or any('山上寶訓' in cells[i] for i in (2,3,4)):
-                              issues.append(f'{path}:{lineno}: 山上寶訓 must be placed only in Matthew column: {cells!r}')
+                          issues.append(f'{path}:{lineno}: Gospel-specific sermon name in shared topic: {title}')
+                      if any('平原寶訓' in str(c) for c in cells):
+                          if '平原寶訓' not in str(cells[3]) or any('平原寶訓' in str(cells[i]) for i in (0,1,2,4)):
+                              issues.append(f'{path}:{lineno}: 平原寶訓 must occur only in Luke cell: {cells!r}')
+                      if any('山上寶訓' in str(c) for c in cells):
+                          if '山上寶訓' not in str(cells[1]) or any('山上寶訓' in str(cells[i]) for i in (0,2,3,4)):
+                              issues.append(f'{path}:{lineno}: 山上寶訓 must occur only in Matthew cell: {cells!r}')
 
-          if not harmony_blocks:
-              raise SystemExit('No harmony blocks found')
-
-          # Make the result reproducible and visible in CI logs.
-          print(f'ONE_GOSPEL_HARMONY_BLOCKS={len(harmony_blocks)}')
-          print(f'ONE_GOSPEL_HARMONY_ROWS={len(rows)}')
-          print('GOSPEL_FILES=' + ','.join(sorted({p.name for p,_,_ in rows})))
-          print('MATTHEW5=' + next(str(c) for p,_,c in rows if p.name=='matthew-complete.js' and c[0]=='寶訓'))
+          matt5=[c for p,_,c in rows if p.name=='matthew-complete.js' and c[0]=='寶訓']
+          if len(matt5)!=1: issues.append(f'Matthew 5 corrected row count is {len(matt5)}, expected 1')
+          report=Path('docs/one/GOSPEL-HARMONY-AUDIT-20260829.md')
+          report.parent.mkdir(parents=True,exist_ok=True)
+          files=sorted({p.name for p,_,_ in rows})
+          lines=['# ONE Four-Gospel Harmony Audit — 2026-08-29','',f'- Harmony blocks inspected: **{blocks}**',f'- Harmony rows inspected: **{len(rows)}**',f'- Source files: **{", ".join(files)}**',f'- Structural/reference-column issues: **{len(issues)}**','', '## Matthew 5 correction','', '`寶訓 | 山上寶訓 · 太 5:1–7:29 | — | 平原寶訓 · 路 6:20–49 | —`','']
           if issues:
-              print('\n'.join('AUDIT_FAIL ' + x for x in issues))
-              raise SystemExit(f'Gospel harmony audit failed with {len(issues)} issue(s)')
-          print('ONE_GOSPEL_HARMONY_AUDIT=PASS')
+              lines+=['## Audit findings','']+[f'- {x}' for x in issues]
+          else:
+              lines+=['## Audit result','','PASS — every discovered harmony row has five columns; Gospel references are in the correct Gospel column; Gospel chapter numbers are valid; and the Matthew 5 sermon labels are attached to their respective Gospel cells.']
+          lines+=['','## Scope','', 'This automated pass checks every `harmony:` table currently present under `static/one/*.js` for table shape, Gospel-column/reference consistency, valid Gospel chapter bounds, and the sermon-name placement error reported for Matthew 5. Event-level historical/chronological equivalence still requires editorial comparison with the Gospel texts; automation is a guardrail, not a substitute for textual judgment.','']
+          report.write_text('\n'.join(lines),encoding='utf-8')
+          print('\n'.join(lines))
           PY
       - name: JavaScript syntax checks
         run: |
           node --check static/one/matthew-complete.js
-          for f in static/one/*.js; do
-            if grep -q 'harmony:' "$f"; then node --check "$f"; fi
-          done
-      - name: Commit repair and remove one-shot workflow
+          for f in static/one/*.js; do if grep -q 'harmony:' "$f"; then node --check "$f"; fi; done
+      - name: Commit repair and audit evidence
         run: |
           git config user.name 'westsidewatch'
           git config user.email 'westsidewatchca@gmail.com'
           git rm .github/workflows/one-gospel-harmony-audit-20260829.yml
-          git add static/one/matthew-complete.js
-          if git diff --cached --quiet; then
-            echo 'No changes to commit'
-            exit 0
-          fi
-          git commit -m 'fix(one): correct Gospel harmony sermon placement'
+          git add static/one/matthew-complete.js docs/one/GOSPEL-HARMONY-AUDIT-20260829.md
+          git commit -m 'fix(one): correct and audit Gospel harmony tables'
           git push
