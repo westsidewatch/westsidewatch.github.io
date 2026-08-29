@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json, os, sqlite3, hashlib, uuid, urllib.request, re
+from urllib.parse import urlparse, parse_qs
 from http.server import ThreadingHTTPServer, BaseHTTPRequestHandler
 from datetime import datetime, timezone
 from pathlib import Path
@@ -73,6 +74,22 @@ def save(cid,role,content,project='dore-global'):
  with db() as c:
   c.execute('INSERT OR IGNORE INTO dore_conversations(id,project_id,actor_id,mode,title,created_at,updated_at) VALUES(?,?,?,?,?,?,?)',(cid,project,'local','LOCAL',None,ts,ts)); c.execute('UPDATE dore_conversations SET updated_at=? WHERE id=?',(ts,cid)); c.execute('INSERT OR IGNORE INTO dore_messages(id,conversation_id,project_id,actor_id,role,content,content_sha256,archive_key,created_at) VALUES(?,?,?,?,?,?,?,?,?)',(mid,cid,project,'local',role,content,h,key,ts))
  return mid
+def conversation_list(project='dore-search',limit=80):
+ with db() as c:
+  rows=[dict(x) for x in c.execute("SELECT id,project_id,title,created_at,updated_at FROM dore_conversations WHERE project_id=? ORDER BY updated_at DESC LIMIT ?",(project,limit))]
+  out=[]
+  for r in rows:
+   first=c.execute("SELECT content FROM dore_messages WHERE conversation_id=? AND project_id=? AND role='user' ORDER BY created_at ASC LIMIT 1",(r['id'],project)).fetchone()
+   last=c.execute("SELECT content FROM dore_messages WHERE conversation_id=? AND project_id=? ORDER BY created_at DESC LIMIT 1",(r['id'],project)).fetchone()
+   title=(r.get('title') or (first['content'] if first else 'New conversation')).strip().replace('\n',' ')[:72]
+   out.append({**r,'title':title,'preview':(last['content'] if last else '')[:140]})
+  return out
+def conversation_history(cid,project='dore-search'):
+ with db() as c:
+  conv=c.execute('SELECT id,project_id,title,created_at,updated_at FROM dore_conversations WHERE id=? AND project_id=?',(cid,project)).fetchone()
+  if not conv:return None
+  messages=[dict(x) for x in c.execute('SELECT id,role,content,created_at FROM dore_messages WHERE conversation_id=? AND project_id=? ORDER BY created_at ASC',(cid,project))]
+  return {'conversation':dict(conv),'messages':messages}
 def context_state(cid,project,text):
  with db() as c:
   row=c.execute('SELECT * FROM dore_context_state WHERE conversation_id=?',(cid,)).fetchone(); inherited=row['scope'] if row else None; scope=classify_scope(text,inherited); design=bool(row['design_mode']) if row else False
@@ -131,11 +148,18 @@ class H(BaseHTTPRequestHandler):
   b=json.dumps(x,ensure_ascii=False).encode(); self.send_response(s); self.send_header('Content-Type','application/json; charset=utf-8'); self.send_header('Cache-Control','no-store'); self.cors(); self.send_header('Content-Length',str(len(b))); self.end_headers(); self.wfile.write(b)
  def do_OPTIONS(self): self.send_response(204); self.cors(); self.send_header('Content-Length','0'); self.end_headers()
  def do_GET(self):
-  if self.path=='/legacy-memory/status': return self.sendj({'ok':True,'legacy_memory':legacy_status()})
-  if self.path in {'/memory/self/status','/learning/status'}: return self.sendj(self_view())
-  if self.path=='/learning/plan': return self.sendj(learning_plan_view())
-  if self.path=='/learning/autonomous/status': return self.sendj(autonomous_learning_view())
-  if self.path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v5+self-memory+learning-ledger+autonomous-learning','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
+  parsed=urlparse(self.path); path=parsed.path; qs=parse_qs(parsed.query)
+  if path=='/conversations':
+   project=str((qs.get('project_id') or ['dore-search'])[0]); return self.sendj({'ok':True,'project_id':project,'conversations':conversation_list(project)})
+  if path=='/conversation':
+   project=str((qs.get('project_id') or ['dore-search'])[0]); cid=str((qs.get('conversation_id') or [''])[0]); item=conversation_history(cid,project)
+   if not item:return self.sendj({'ok':False,'error':'conversation_not_found'},404)
+   return self.sendj({'ok':True,**item})
+  if path=='/legacy-memory/status': return self.sendj({'ok':True,'legacy_memory':legacy_status()})
+  if path in {'/memory/self/status','/learning/status'}: return self.sendj(self_view())
+  if path=='/learning/plan': return self.sendj(learning_plan_view())
+  if path=='/learning/autonomous/status': return self.sendj(autonomous_learning_view())
+  if path=='/health': return self.sendj({'ok':True,'node':'dore-local','model':MODEL,'memory_core':'sqlite+filesystem','workers_ai_required':False,'search_loopback':True,'recall':'project-wide-v5+self-memory+learning-ledger+autonomous-learning','design_working_memory':'d1-d4-bridge-v2','penpot_agent':'mcp+local-vlm','penpot_routes':['/penpot','/design/penpot/status','/design/penpot/run']})
   self.sendj({'ok':False,'error':'not_found'},404)
  def do_POST(self):
   try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
