@@ -108,6 +108,25 @@ The Penpot/Figma authority contradiction and bridge proof boundary are now extra
 
 Canonical interpretation remains unchanged: visual capability is governed by accepted purpose-built output, not by a canvas vendor; Penpot bridge PASS is still unearned; the literal `Penpot only / Figma retired from production` claim is `UNKNOWN_NEEDS_EVIDENCE / POSSIBLY_SUPERSEDED` as current operational truth; no workstream status changes are justified.
 
+## Sweep batch 32 — purpose-built website asset-suite contract reconciliation (2026-08-28)
+
+Additional source reviewed:
+
+- `dore-core/projects/DORÉ-VISUAL-DESIGNER-01-LIGHT.md` against the already reconciled `VIS-GRAMMAR` and `DORE-EXHIBITION` boundaries.
+
+Reconciliation judgment:
+
+1. The current visual objective is **not** to place Doré originals across the site, nor to derive interface decoration by cropping historical plates. The operative build target is a fresh, coherent Westside website-asset suite drawn from Doré's visual logic and the current Westside constitution.
+2. The asset suite should be treated as one system with distinct semantic families: `LIGHT`, `STAR / Bethlehem Star`, `WATER`, `SKY / CLOUD`, `STONE / WALL`, `CITY / CITY-EDGE`, restrained `PAPER / MATERIAL` behavior, and secondary `DIVIDER / EDGE / SECTION MARK` elements. These are reusable brand assets, not editorial illustrations.
+3. `DORÉ-VISUAL-DESIGNER-01-LIGHT.md` establishes the correct sequencing gate: **LIGHT-01 must pass first** as a rendered, critiqued, revised, human-accepted reusable asset. Until that gate passes, producing the rest of the family would risk scaling the same design-learning failure across multiple categories.
+4. The full-suite destination and the single-asset training sequence are therefore complementary, not contradictory: `one accepted LIGHT asset → retained rules → next family → coherent suite → real-product proof`.
+5. The suite must be derived from current Westside principles rather than generic "engraving" appearance: Living Paper + papyrus/material behavior; Ink Black as form, never blanket field; Midnight Blue only for true night; First Light Gold only for important names/stars/actually lit edges; atmosphere/air/scale/directional light; structured darkness; architecture/cloud/water/terrain as form-bearing grammar; bilingual editorial restraint.
+6. Original Doré works remain a separate `DORE-EXHIBITION` content stream, ideally surfaced as curated cards with Scripture/context/provenance/rights rather than acting as the default website texture source.
+7. No workstream status change is justified. `VIS-GRAMMAR` remains `ACTIVE_PARALLEL / BUILDING`, `DORE-EXHIBITION` remains `READY`, and `BRAND-V1` remains downstream/gated.
+8. No P01 state or action was modified.
+
+Smallest next proof for this visual family remains exactly one accepted `LIGHT-01` asset with transparent-background reuse plus Living Paper and true-night render checks. The larger asset suite should not be claimed until that first proof exists.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
