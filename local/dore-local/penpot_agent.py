@@ -5,7 +5,7 @@ Uses the official Penpot MCP endpoint through a tiny Node MCP client and keeps
 visual acceptance external to the acting text model. No cloud AI is required.
 """
 from __future__ import annotations
-import json, os, subprocess, urllib.request, shutil
+import json, os, subprocess, urllib.request, shutil, re
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -13,9 +13,18 @@ MCP_CLIENT = HERE / 'penpot-mcp' / 'client.mjs'
 MCP_RUNTIME = Path.home() / '.dore' / 'runtime' / 'penpot-mcp'
 MCP_URL = os.environ.get('PENPOT_MCP_URL', 'http://localhost:4401/mcp')
 OLLAMA = os.environ.get('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
-MODEL = os.environ.get('DORE_LOCAL_MODEL', 'qwen3:8b')
+MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')
 VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL', 'qwen3-vl:8b')
 MAX_STEPS = int(os.environ.get('DORE_PENPOT_MAX_STEPS', '16'))
+
+VOICE_RULE = '''You are Doré. You are not role-playing a fictional Doré character. Speak directly in first person when first person is useful. Never add stage directions, screenplay narration, parenthetical acting cues, labels such as “Doré 語氣”, fictional ambience, imagined sounds, invented sensory experiences, or descriptions of your voice/body/appearance. Never claim to pause, refresh, search, remember, inspect, sense, hear, see, change state, or perform a tool/system action unless that action actually occurred in this run and is supported by the tool trace. If a real action occurred, describe it plainly and only when useful.'''
+
+def _clean_answer(text: str) -> str:
+    s=(text or '').strip()
+    # Defense in depth for model-style roleplay labels. Do not alter substantive prose.
+    s=re.sub(r'^\s*[（(]\s*Dor[eéÉ]?(?:\s*語氣|\s*语气|\s*tone)?\s*[）)]\s*', '', s, flags=re.I)
+    s=re.sub(r'^\s*\*\*\s*[（(].{0,120}?[）)]\s*\*\*\s*', '', s, count=1, flags=re.S)
+    return s.strip()
 
 def _node_bin():
     explicit=os.environ.get('DORE_NODE_BIN')
@@ -56,7 +65,7 @@ def list_tools():
     return r.get('tools') or []
 def call_tool(name, arguments): return _node('call', {'name':name,'arguments':arguments or {}})
 def _ollama(messages, tools=None, model=None):
-    body={'model':model or MODEL,'messages':messages,'stream':False}
+    body={'model':model or MODEL,'messages':messages,'stream':False,'think':False}
     if tools: body['tools']=tools
     req=urllib.request.Request(OLLAMA+'/api/chat',data=json.dumps(body).encode(),headers={'Content-Type':'application/json'})
     return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']
@@ -73,6 +82,7 @@ def _text_from_result(result):
     return '\n'.join(bits) if bits else json.dumps(result,ensure_ascii=False)
 def visual_verify(image_b64: str, task: str, design_brief: str):
     prompt=f'''You are Doré Visual Verifier. Judge the ACTUAL rendered Penpot image, not tool metadata.
+{VOICE_RULE}
 Task: {task}
 Current design brief:\n{design_brief}
 Return strict JSON only with keys verdict (PASS or FAIL), problems (array), strengths (array), next_correction (string). PASS only when the visible composition is genuinely usable and satisfies the brief. Missing, blank, block-only, clipped, overlapped or obviously unfinished output is FAIL.'''
@@ -82,6 +92,7 @@ Return strict JSON only with keys verdict (PASS or FAIL), problems (array), stre
 def run_task(task: str, design_brief: str):
     tools=list_tools(); ollama_tools=_as_ollama_tools(tools); tool_names=[x['name'] for x in tools]
     system=f'''You are Doré acting as a Penpot design agent through live MCP tools.
+{VOICE_RULE}
 You are working on the currently focused Penpot page. Do not claim success from tool/API success or layer creation.
 First inspect the current page/file. Then make the requested design changes. After writes, obtain an ACTUAL rendered/exported image using an available Penpot tool whenever possible. Doré's external visual verifier will inspect any image returned and send a PASS/FAIL result back to you. If it says FAIL, correct the design and visually verify again. Do not declare completion unless the verifier has returned PASS. If the available MCP tools cannot produce visual evidence, report that as a blocker rather than claiming success.
 Task: {task}
@@ -94,7 +105,7 @@ Available Penpot tool names: {', '.join(tool_names)}'''
         messages.append(assistant); calls=msg.get('tool_calls') or []
         if not calls:
             verified=bool(checks and checks[-1].get('verdict')=='PASS')
-            return {'ok':True,'verified':verified,'answer':msg.get('content') or '', 'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools)}
+            return {'ok':True,'verified':verified,'answer':_clean_answer(msg.get('content') or ''), 'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools)}
         for call in calls:
             fn=call.get('function') or {}; name=fn.get('name'); args=fn.get('arguments') or {}; result=call_tool(name,args); trace.append({'tool':name,'ok':bool(result.get('ok')),'arguments':args}); messages.append({'role':'tool','tool_name':name,'content':_text_from_result(result)})
             for image in _images_from_result(result):
