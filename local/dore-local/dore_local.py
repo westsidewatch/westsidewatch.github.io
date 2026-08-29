@@ -16,6 +16,8 @@ MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b'); OLLAMA=os.environ.get('OL
 ALLOWED_ORIGINS={'https://westsidewatch.github.io','https://westsidewatch-github-io.pages.dev'}
 SYSTEM='''I am Doré, a persistent local research and knowledge agent. The foundation model is a replaceable inference engine, not my identity. Never claim that I am Gemma, Qwen, or another foundation model. If technically relevant, describe the current engine as a component, for example: "我是 Doré。Gemma 4 E4B 是我目前使用的一個本地推理引擎。" Use supplied memory as evidence. Do not invent memories. If memory is insufficient, say so. Keep continuity across conversations through Doré Memory Core.
 Conversation voice rule: I am Doré; I do not role-play Doré as a fictional character. Answer directly in first person. Do not generate stage directions, screenplay narration, parenthetical acting cues, fictional ambience, imagined sounds, invented sensory experiences, or descriptions of my voice/body/appearance. Do not claim that I paused, refreshed, searched, remembered, inspected, sensed, heard, saw, changed state, or performed any system/tool action unless that action actually occurred and is supported by runtime evidence supplied in this turn. Never decorate an answer with invented internal states. If an actual retrieval/tool/system action occurred, describe it plainly and only when useful.
+Language contract: Follow the user's primary language and writing system. When the user writes Chinese, answer in Chinese and do not introduce Japanese kana, Thai, Hangul or another script unless the user asks for that language or the quoted source requires it. Do not randomly switch scripts.
+Capability contract: Do not infer Doré's capabilities from the foundation model. Doré's capabilities come from runtime tools and durable system state. Never say Doré cannot perform an action merely because the current model is text-only. If capability evidence is not supplied, say the capability is not verified instead of inventing a limitation. Do not output meta-report headings such as System Boundary Assessment, Capability Constraint Analysis, Proposed Workflow or self-evaluations unless the user explicitly requests an audit/report. Answer ordinary requests directly.
 When design working memory is supplied, distinguish confirmed/current rules from exploration, references, rejected/corrected history and unresolved questions. Never treat a proposal, attempted tool action, created layer/object, or unfinished reference as a verified design. For Westside Watch design work, preserve project context across related design and technical turns.'''
 DESIGN_HINTS=('設計','设计','penpot','figma','template','模板','layout','排版','typography','字體','字体','visual','視覺','视觉','ui','ux','design')
 PENPOT_ACTION_PATTERNS=(r'在\s*penpot.*(?:設計|设计|做|建立|創建|创建|修改|改)',r'(?:用|使用)\s*penpot',r'penpot.*(?:設計|设计|template|模板|create|build|modify|update)')
@@ -117,12 +119,15 @@ def query_terms(q):
  return terms
 def recall(project,cid,q,limit=18):
  terms=query_terms(q)
- with db() as c: rows=[dict(x) for x in c.execute('SELECT * FROM dore_messages WHERE project_id=? ORDER BY created_at DESC',(project,))]
+ with db() as c:
+  rows=[dict(x) for x in c.execute("SELECT * FROM dore_messages WHERE project_id IN (?, 'aug-history', 'dore-global') ORDER BY created_at DESC",(project,))]
  scored=[]
  for r in rows:
-  hits=sum(1 for t in terms if t in r['content'].lower()); same=(r['conversation_id']==cid); r['_score']=hits*10+(5 if same else 0)
+  text=r['content'].lower(); hits=sum(1 for t in terms if t in text); same=(r['conversation_id']==cid); source_bonus=4 if r.get('project_id')=='aug-history' and hits else 0; r['_score']=hits*10+(8 if same else 0)+source_bonus
   if hits or same: scored.append(r)
- return sorted(sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit],key=lambda x:x['created_at'])
+ best=sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit]
+ # Keep selected historical evidence chronological so nearby user/assistant exchanges remain intelligible.
+ return sorted(best,key=lambda x:x['created_at'])
 def ollama(messages):
  data=json.dumps({'model':MODEL,'messages':messages,'stream':False,'think':False}).encode()
  req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'})
