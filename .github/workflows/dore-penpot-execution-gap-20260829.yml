@@ -1,0 +1,115 @@
+name: Doré Penpot Execution Gap Repair
+on:
+  push:
+    paths: ['.github/workflows/dore-penpot-execution-gap-20260829.yml']
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - shell: python
+        run: |
+          from pathlib import Path
+          p=Path('local/dore-local/penpot_agent.py')
+          s=p.read_text()
+          anchor='def run_task(task:str,design_brief:str):\n'
+          if anchor not in s: raise SystemExit('penpot run_task anchor missing')
+          readonly=r'''def _readonly_tools(mcp_tools):
+              """Conservative read-only MCP surface. Unknown/mutating tools are excluded."""
+              deny=('create','delete','remove','update','set','write','move','resize','rename','change','apply','insert','add','clone','duplicate','replace','edit','modify')
+              allow=('get','list','read','inspect','find','query','search','current','page','file','selection','export','render','screenshot','view')
+              out=[]
+              for t in mcp_tools:
+                  hay=((t.get('name') or '')+' '+(t.get('description') or '')).lower()
+                  if any(x in hay for x in deny): continue
+                  if any(x in hay for x in allow): out.append(t)
+              return out
+
+          def run_readonly_task(task:str,design_brief:str=''):
+              """Execute an evidence-producing Penpot inspection without exposing write tools."""
+              import time
+              started=time.time(); all_tools=list_tools(); tools=_readonly_tools(all_tools)
+              ollama_tools=_as_ollama_tools(tools); names=[x['name'] for x in tools]
+              system=f'''You are Doré performing a REAL READ-ONLY Penpot inspection through live MCP tools.\n{VOICE_RULE}\nYou MUST use the available tools before answering. No write/mutation tools are exposed. Do not return a plan, acknowledgement, intention, or future tense as the result. Inspect the actual current Penpot file/page and return only evidence obtained in this run. If the tools cannot expose requested metadata, report that exact limitation. Include exact object names/IDs/metadata when available.\nTask: {task}\nContext: {design_brief}\nRead-only Penpot tools: {', '.join(names)}'''
+              messages=[{'role':'system','content':system},{'role':'user','content':task}]; trace=[]
+              if not tools:
+                  return {'ok':False,'executed':False,'error':'no_readonly_penpot_tools','available_tool_names':[t.get('name') for t in all_tools],'duration_seconds':round(time.time()-started,3),'trace':[]}
+              for step in range(MAX_STEPS):
+                  msg=_ollama(messages,ollama_tools); calls=msg.get('tool_calls') or []
+                  assistant={'role':'assistant','content':msg.get('content') or ''}
+                  if calls: assistant['tool_calls']=calls
+                  messages.append(assistant)
+                  if not calls:
+                      if not trace:
+                          messages.append({'role':'user','content':'You have not executed a Penpot tool. You must inspect the actual Penpot state with a read-only tool now; do not answer with a plan.'})
+                          continue
+                      return {'ok':True,'executed':True,'answer':_clean_answer(msg.get('content') or ''),'trace':trace,'steps':step+1,'tool_count':len(tools),'duration_seconds':round(time.time()-started,3)}
+                  for call in calls:
+                      fn=call.get('function') or {}; name=fn.get('name'); args=fn.get('arguments') or {}
+                      if name not in names:
+                          result={'ok':False,'error':'readonly_tool_blocked:'+str(name)}
+                      else: result=call_tool(name,args)
+                      text=_text_from_result(result); trace.append({'tool':name,'ok':bool(result.get('ok')),'arguments':args,'result_excerpt':text[:4000]})
+                      messages.append({'role':'tool','tool_name':name,'content':text})
+              return {'ok':False,'executed':bool(trace),'error':'penpot_readonly_step_limit','trace':trace,'steps':MAX_STEPS,'tool_count':len(tools),'duration_seconds':round(time.time()-started,3)}
+
+          '''
+          import textwrap
+          readonly=textwrap.dedent(readonly)
+          if 'def run_readonly_task(' not in s: s=s.replace(anchor,readonly+anchor,1)
+          p.write_text(s)
+
+          w=Path('local/dore-local/coordination_worker.py'); s=w.read_text()
+          imp='from complete_recall import complete_recall\n'
+          if 'from penpot_agent import run_readonly_task' not in s: s=s.replace(imp,imp+'from penpot_agent import run_readonly_task\n',1)
+          anchor='def run_acceptance_tasks(prev):\n'
+          handler=r'''def handle_penpot_work(msg):
+              if msg.get('kind')!='penpot_work': return False
+              body=str(msg.get('body') or '').strip()
+              result=run_readonly_task(body,'Coordination work request from ChatGPT. Preserve actual tool evidence; do not substitute a model acknowledgement.')
+              send_to_chatgpt(
+                  'Doré Penpot execution: '+str(msg.get('subject') or '')[:100],
+                  json.dumps(result,ensure_ascii=False), requires_reply=False, priority='high',
+                  related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),
+                  evidence_refs=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')],
+                  thread_id=msg.get('thread_id'))
+              return True
+
+          '''
+          handler=textwrap.dedent(handler)
+          if 'def handle_penpot_work(' not in s: s=s.replace(anchor,handler+anchor,1)
+          old=''' if current and handle_complete_recall(current):
+            processed.add(current["message_id"])
+            prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
+            save(prev); flush_outbox(); return 0
+          '''
+          new=''' if current and handle_complete_recall(current):
+            processed.add(current["message_id"])
+            prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
+            save(prev); flush_outbox(); return 0
+           if current and handle_penpot_work(current):
+            processed.add(current["message_id"])
+            prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
+            save(prev); flush_outbox(); return 0
+          '''
+          if old not in s: raise SystemExit('worker dispatch anchor missing')
+          s=s.replace(old,new,1)
+          w.write_text(s)
+      - name: Verify syntax and contract
+        run: |
+          python -m py_compile local/dore-local/penpot_agent.py local/dore-local/coordination_worker.py
+          grep -q 'run_readonly_task' local/dore-local/coordination_worker.py
+          grep -q 'handle_penpot_work' local/dore-local/coordination_worker.py
+          grep -q 'readonly_tool_blocked' local/dore-local/penpot_agent.py
+      - name: Commit repair
+        run: |
+          git config user.name WATCHMAN
+          git config user.email westsidewatchca@gmail.com
+          git add local/dore-local/penpot_agent.py local/dore-local/coordination_worker.py
+          git commit -m 'dore: execute Penpot work through live read-only tools'
+          git rm .github/workflows/dore-penpot-execution-gap-20260829.yml
+          git commit -m 'ci: remove Penpot execution repair workflow'
+          git push
