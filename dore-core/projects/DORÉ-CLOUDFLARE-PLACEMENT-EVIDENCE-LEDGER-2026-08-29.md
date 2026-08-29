@@ -65,6 +65,7 @@ Current disposition: keep the service-layer milestone closed; route future seman
 - The migration plan's seven retained GitHub rollback binaries are historical and were superseded by the verified private-R2 delivery cutover, after which those binaries were safely removed.
 - The Structured Data audit intentionally supersedes any blanket "large files should move to R2/D1" interpretation: runtime role and source-of-truth semantics govern placement, not size alone.
 - Search Runtime Consolidation and Service Layer v1 are architectural compatibility milestones, not evidence that browser/Core search semantics were fully converged; later `RQ-003` governs that debt.
+- Sweep Checkpoint 25's statement that no named Structured Data Runtime Audit evidence was found is superseded by direct source evidence and by `DORÉ-CLOUDFLARE-STRUCTURED-RUNTIME-EVIDENCE-LEDGER-2026-08-26.md`; the durable correction is `DORÉ-SWEEP-CHECKPOINT-26-CLOUDFLARE-STRUCTURED-RUNTIME-CORRECTION-2026-08-29.md`.
 
 ## Capability retention
 
