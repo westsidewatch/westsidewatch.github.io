@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Python syntax
-        run: python3 -m py_compile local/dore-local/design_memory.py local/dore-local/penpot_agent.py local/dore-local/dore_local.py
+        run: python3 -m py_compile local/dore-local/design_memory.py local/dore-local/penpot_agent.py local/dore-local/dore_local.py local/dore-local/test_penpot_execution_gate.py
       - name: D1-D3 truth and consolidation acceptance
         working-directory: local/dore-local
         run: python3 test_design_memory.py
@@ -28,6 +28,9 @@ jobs:
           assert not dore_local.is_penpot_action('我們討論一下 Penpot 的定位')
           print('DORE_PENPOT_ACTION_ROUTING_PASS')
           PY
+      - name: Penpot execution gate acceptance
+        working-directory: local/dore-local
+        run: python3 test_penpot_execution_gate.py
 
   mcp-client-build:
     runs-on: ubuntu-latest
