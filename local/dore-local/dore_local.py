@@ -106,7 +106,13 @@ def recall(project,cid,q,limit=18):
   if hits or same: scored.append(r)
  return sorted(sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit],key=lambda x:x['created_at'])
 def ollama(messages):
- data=json.dumps({'model':MODEL,'messages':messages,'stream':False}).encode(); req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'}); return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']['content']
+ data=json.dumps({'model':MODEL,'messages':messages,'stream':False,'think':False}).encode()
+ req=urllib.request.Request(OLLAMA+'/api/chat',data=data,headers={'Content-Type':'application/json'})
+ payload=json.loads(urllib.request.urlopen(req,timeout=300).read())
+ msg=payload.get('message') or {}
+ content=msg.get('content')
+ if isinstance(content,str) and content.strip(): return content.strip()
+ raise RuntimeError('ollama_empty_content:'+json.dumps({'model':payload.get('model'),'done_reason':payload.get('done_reason'),'message_keys':sorted(msg.keys())},ensure_ascii=False))
 def execute_penpot(b, compatibility=False):
  project=str(b.get('project_id') or 'dore-search'); cid=str(b.get('conversation_id') or uuid.uuid4()); action=str(b.get('action') or '').strip(); task=str(b.get('task') or '').strip()
  if compatibility and action=='read_page' and not task: task='Read the currently open Penpot page. Return the actual current page structure and visible composition evidence without modifying anything.'
