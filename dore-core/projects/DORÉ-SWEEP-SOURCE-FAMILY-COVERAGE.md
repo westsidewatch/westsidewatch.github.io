@@ -15,8 +15,8 @@ Track whether each required Sweep 01 source family has been systematically revie
 |---|---|---|
 | `dore-core/constitution/` | REVIEWED | Already reconciled in Sweep 01 / Master Register MEM-SWEEP history. |
 | `dore-core/memory/` | REVIEWED + REVALIDATED | Checkpoint 24 reviewed the complete current family and distinguished rolling diagnostics from canonical project truth. |
-| `dore-core/knowledge/` | PARTIALLY SYSTEMATIC / MANY SUBFAMILIES REVIEWED | Biblical World, Language Core, Researcher 01/02/04/05/06, learning doctrine, Search cognition/work-node, visual family, Foundational Learning Principles and Seminary Core are explicitly checkpointed. Remaining subfamilies must still be enumerated before Sweep completion. |
-| `dore-core/projects/` | PARTIALLY SYSTEMATIC / MANY PROJECT FAMILIES REVIEWED | Master Register, completed/revisit/missing-evidence outputs, Conversation Memory, Nervous System, visual, Journal/distribution, Library, Cloudflare evidence ledgers and product histories have bounded reconciliation. Directory-wide enumeration remains required before final completion. |
+| `dore-core/knowledge/` | PARTIALLY SYSTEMATIC / MANY SUBFAMILIES REVIEWED | Biblical World, Language Core, Researcher 01/02/04/05/06, learning doctrine, Search cognition/work-node, visual family, Foundational Learning Principles and Seminary Core are explicitly checkpointed. Checkpoint 35 additionally reconciles the top-level `VISUAL-CASE-STUDY-ROUND-01.md` against its later same-named project record, preserving the knowledge file as method/learning corpus/completion gate rather than a second project. Remaining subfamilies must still be enumerated before Sweep completion. |
+| `dore-core/projects/` | PARTIALLY SYSTEMATIC / MANY PROJECT FAMILIES REVIEWED | Master Register, completed/revisit/missing-evidence outputs, Conversation Memory, Nervous System, visual, Journal/distribution, Library, Cloudflare evidence ledgers and product histories have bounded reconciliation. Checkpoint 35 maps the project-level Visual Case Study record to the single canonical `VIS-LEARN` workstream. Directory-wide enumeration remains required before final completion. |
 | `dore-core/runtime/` | REVIEWED IN MAJOR FAMILIES | P01 runtime continuity, Conversation Internal Alpha, Full Memory Phase 1 and current blocker evidence are reconciled. Final directory enumeration still required. |
 | `dore-core/benchmarks/` | REVIEWED IN PRIOR BATCH | Recorded as reconciled in Master Register MEM-SWEEP history; final completion requires explicit directory-accounting confirmation. |
 | `dore-core/tests/` | REVIEWED IN MAJOR FAMILIES | Foundation/search/original-language/design acceptance evidence has been reconciled; final directory enumeration remains required. |
@@ -37,17 +37,27 @@ Direct evidence rechecked:
 - `SEARCH-RUNTIME-CONSOLIDATION-2026-08-24.md`: confirms a bounded historical `COMPLETE / PASS` for the shared browser `dore:search-query` coordination lifecycle while explicitly preserving the existing Scripture-search semantics and deferring service-layer replacement.
 - `DORÉ-CLOUDFLARE-ASSET-SEARCH-RUNTIME-EVIDENCE-LEDGER-2026-08-28.md`: correctly interprets Priority-B as bounded `VERIFIED_COMPLETE` and Search Runtime Consolidation as `COMPLETED_REVISIT_CANDIDATE` in the context of the later `RQ-003` service-boundary duplication finding.
 
+### Checkpoint 35 — VIS-LEARN same-name record reconciliation
+
+- `dore-core/knowledge/VISUAL-CASE-STUDY-ROUND-01.md` was introduced at `2026-08-25T04:12:33Z` as the learning corpus/method record.
+- `dore-core/projects/VISUAL-CASE-STUDY-ROUND-01.md` followed at `2026-08-25T04:31:42Z` as a later project-level findings/research expansion.
+- They are not two workstreams. Both map to canonical `VIS-LEARN`.
+- The knowledge file remains `ACTIVE / SUPPORTING LEARNING CORPUS` because it uniquely preserves the explicit study method, typography requirement, first seven hypotheses and completion gate.
+- The project file is `ACTIVE_PARALLEL / CANONICAL EXECUTION-AND-FINDINGS RECORD` because it contains the later interpretations, city-window/index hypothesis, print research expansion and next sequence.
+- The later project record partially supersedes the earlier case interpretations but does not supersede the methodology/completion conditions. No deletion, completion promotion, new revisit item, or Master Register status change is justified.
+
 ## Canonical reconciliation judgment
 
-No Master Work Register status change is justified by this batch. The current canonical rows already preserve the correct live interpretation:
+No Master Work Register status change is justified by these batches. The current canonical rows already preserve the correct live interpretation:
 
 - `JOIN = MAINTENANCE`, with the verified Priority-B site-media consequence;
 - `SEARCH = MAINTENANCE + DISCOVERY`, with the later service-boundary/cognition debt;
+- `VIS-LEARN = ACTIVE_PARALLEL`, with Round 01 completion still gated on structured/mobile/typography/contradiction/10-hypothesis/prototype evidence;
 - `VIS-GRAMMAR = ACTIVE_PARALLEL / BUILDING` and must not be conflated with asset-storage milestones;
 - `MEM-SWEEP-01 = ACTIVE_PARALLEL` because systematic family enumeration remains incomplete.
 
-The new useful durable result is coverage accounting: `dore-core/evidence/` is now explicitly closed as a reviewed current family, and the remaining final-completion work is narrowed to systematic enumeration of the still-partial families rather than re-reviewing already reconciled evidence.
+The durable result is coverage accounting: `dore-core/evidence/` is explicitly closed as a reviewed current family, and the ambiguous same-named Visual Case Study records are now assigned non-competing roles under one workstream. Remaining final-completion work is narrowed to systematic enumeration of still-partial families rather than re-reviewing already reconciled evidence.
 
 ## P01 isolation
 
-No P01 runtime, deployment, binding, credential, ordering, or blocker state was changed in this batch. The existing production audio-acquisition/transcription environment dependency remains the governing P01 blocker.
+No P01 runtime, deployment, binding, credential, ordering, or blocker state was changed in these batches. The existing production audio-acquisition/transcription environment dependency remains the governing P01 blocker.
