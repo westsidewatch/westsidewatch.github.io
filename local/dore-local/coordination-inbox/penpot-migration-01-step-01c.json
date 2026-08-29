@@ -1,0 +1,15 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-migration-01-step-01c",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-08-29T23:43:00Z",
+  "subject": "Migration 01 Step 1C — execute after gate deployment",
+  "body": "Re-run the destination-workspace step under the new execution gate. Create or rename a safe editable Penpot workspace/page to 'Migration 01 — 新西望' without deleting existing work. A successful mutation and actual rendered visual PASS are mandatory. If impossible, return the exact MCP limitation and available tool names.",
+  "kind": "penpot_execute",
+  "requires_reply": false,
+  "priority": "high",
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": ["gate-version:mutation+visual-required"]
+}
