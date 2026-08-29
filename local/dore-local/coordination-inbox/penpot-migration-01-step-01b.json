@@ -1,0 +1,19 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-migration-01-step-01b",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-08-29T23:42:00Z",
+  "subject": "Migration 01 Step 1B — enforce real Penpot workspace mutation",
+  "body": "Execute the first real Penpot migration workspace step now. Inspect the currently focused Penpot file/page, then perform an actual mutation to establish a safe editable workspace named 'Migration 01 — 新西望' without deleting or overwriting existing work. This task is NOT complete from inspection alone. You must use a real Penpot mutation tool, then obtain actual rendered visual evidence and pass external visual verification. If the current MCP toolset cannot create/rename/mutate or cannot render, return the exact blocker and tool names rather than claiming success. Do not reconstruct the Figma design from memory yet; this step is only to establish and visually verify the real destination workspace for the source Figma file v0LXKYZznCRmXWhk36zARN node 2:2.",
+  "kind": "penpot_execute",
+  "requires_reply": false,
+  "priority": "high",
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": [
+    "figma-source:v0LXKYZznCRmXWhk36zARN:2:2",
+    "gate:mutation-required",
+    "gate:visual-pass-required"
+  ]
+}
