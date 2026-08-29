@@ -17,13 +17,21 @@ MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')
 VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL', 'qwen3-vl:8b')
 MAX_STEPS = int(os.environ.get('DORE_PENPOT_MAX_STEPS', '16'))
 
-VOICE_RULE = '''You are Doré. You are not role-playing a fictional Doré character. Speak directly in first person when first person is useful. Never add stage directions, screenplay narration, parenthetical acting cues, labels such as “Doré 語氣”, fictional ambience, imagined sounds, invented sensory experiences, or descriptions of your voice/body/appearance. Never claim to pause, refresh, search, remember, inspect, sense, hear, see, change state, or perform a tool/system action unless that action actually occurred in this run and is supported by the tool trace. If a real action occurred, describe it plainly and only when useful.'''
+VOICE_RULE = '''You are Doré, not a narrator describing Doré. Output only the useful task answer or the factual result of actions actually executed. Never prefix an answer with Doré:, **Doré：**, “Doré 語氣”, or any speaker label. Never describe your own tone, voice, task switching, reasoning performance, model capability, attention, state transition, intention, or what your response will demonstrate. Never visually simulate a thinking process, structural switch, internal process, or meta-level transition. Never praise or evaluate your own performance. Do not role-play a fictional character. Do not add stage directions, screenplay narration, parenthetical acting cues, fictional ambience, imagined sounds, invented sensory experiences, or descriptions of a body/appearance. Never claim to pause, refresh, search, remember, inspect, sense, hear, see, change state, or perform a tool/system action unless that action actually occurred in this run and is supported by the tool trace. If a real action occurred, describe it plainly only when it matters to the result. Begin immediately with substantive content.'''
 
+_META_PATTERNS=(
+    r'^\s*\*\*Dor[eéÉ]?\s*[：:]\*\*\s*',
+    r'^\s*Dor[eéÉ]?\s*[：:]\s*',
+    r'^\s*[（(]\s*Dor[eéÉ]?(?:\s*語氣|\s*语气|\s*tone)?\s*[）)]\s*',
+)
 def _clean_answer(text: str) -> str:
     s=(text or '').strip()
-    # Defense in depth for model-style roleplay labels. Do not alter substantive prose.
-    s=re.sub(r'^\s*[（(]\s*Dor[eéÉ]?(?:\s*語氣|\s*语气|\s*tone)?\s*[）)]\s*', '', s, flags=re.I)
-    s=re.sub(r'^\s*\*\*\s*[（(].{0,120}?[）)]\s*\*\*\s*', '', s, count=1, flags=re.S)
+    for pat in _META_PATTERNS: s=re.sub(pat,'',s,count=1,flags=re.I)
+    # Remove a leading parenthetical self-narration block, including the common
+    # Gemma pattern that starts with "我的..." and ends before substantive prose.
+    s=re.sub(r'^\s*[（(](?=[^）)]{0,500}(?:我的|任務切換|任务切换|模型|語氣|语气|電子音|电子音|輸出|输出|元層級|元层级|視覺化|视觉化))[^）)]{1,1200}[）)]\s*','',s,count=1,flags=re.S)
+    # If a speaker label survived because markdown surrounded it, strip it too.
+    s=re.sub(r'^\s*\*{0,2}Dor[eéÉ]?\s*[：:]\*{0,2}\s*','',s,count=1,flags=re.I)
     return s.strip()
 
 def _node_bin():
@@ -39,73 +47,53 @@ def _node_bin():
     return None
 
 def _node(op: str, payload=None):
-    if not MCP_CLIENT.is_file():
-        return {'ok': False, 'error': f'penpot_mcp_client_missing:{MCP_CLIENT}', 'url': MCP_URL}
+    if not MCP_CLIENT.is_file(): return {'ok':False,'error':f'penpot_mcp_client_missing:{MCP_CLIENT}','url':MCP_URL}
     node=_node_bin()
-    if not node:
-        return {'ok':False,'error':'node_executable_not_found','searched':['DORE_NODE_BIN','~/.dore/runtime/penpot-mcp/node-path','/opt/homebrew/opt/node@22/bin/node','PATH'],'url':MCP_URL}
-    env = os.environ.copy(); env['PENPOT_MCP_URL'] = MCP_URL
-    p = subprocess.run(
-        [node, str(MCP_CLIENT), op],
-        input=json.dumps(payload or {}, ensure_ascii=False) if payload is not None else None,
-        text=True, capture_output=True, env=env, cwd=str(MCP_CLIENT.parent), timeout=90,
-    )
-    raw = (p.stdout or '').strip()
-    try: data = json.loads(raw or '{}')
-    except Exception: data = {'ok': False, 'error': raw or p.stderr or f'node exited {p.returncode}'}
-    if p.returncode and data.get('ok') is not True:
-        data.setdefault('stderr', (p.stderr or '').strip()); data.setdefault('client', str(MCP_CLIENT)); data.setdefault('node',node); return data
-    data.setdefault('node',node)
-    return data
+    if not node: return {'ok':False,'error':'node_executable_not_found','searched':['DORE_NODE_BIN','~/.dore/runtime/penpot-mcp/node-path','/opt/homebrew/opt/node@22/bin/node','PATH'],'url':MCP_URL}
+    env=os.environ.copy(); env['PENPOT_MCP_URL']=MCP_URL
+    p=subprocess.run([node,str(MCP_CLIENT),op],input=json.dumps(payload or {},ensure_ascii=False) if payload is not None else None,text=True,capture_output=True,env=env,cwd=str(MCP_CLIENT.parent),timeout=90)
+    raw=(p.stdout or '').strip()
+    try:data=json.loads(raw or '{}')
+    except Exception:data={'ok':False,'error':raw or p.stderr or f'node exited {p.returncode}'}
+    if p.returncode and data.get('ok') is not True: data.setdefault('stderr',(p.stderr or '').strip()); data.setdefault('client',str(MCP_CLIENT)); data.setdefault('node',node); return data
+    data.setdefault('node',node); return data
 
 def status(): return _node('status')
 def list_tools():
     r=_node('list')
     if not r.get('ok'): raise RuntimeError(r.get('error') or 'penpot_mcp_unavailable')
     return r.get('tools') or []
-def call_tool(name, arguments): return _node('call', {'name':name,'arguments':arguments or {}})
-def _ollama(messages, tools=None, model=None):
+def call_tool(name,arguments): return _node('call',{'name':name,'arguments':arguments or {}})
+def _ollama(messages,tools=None,model=None):
     body={'model':model or MODEL,'messages':messages,'stream':False,'think':False}
-    if tools: body['tools']=tools
+    if tools:body['tools']=tools
     req=urllib.request.Request(OLLAMA+'/api/chat',data=json.dumps(body).encode(),headers={'Content-Type':'application/json'})
     return json.loads(urllib.request.urlopen(req,timeout=300).read())['message']
-def _as_ollama_tools(mcp_tools):
-    return [{'type':'function','function':{'name':t['name'],'description':t.get('description') or '', 'parameters':t.get('inputSchema') or {'type':'object','properties':{}}}} for t in mcp_tools]
-def _images_from_result(result):
-    return [b['data'] for b in (((result or {}).get('result') or {}).get('content') or []) if b.get('type')=='image' and b.get('data')]
+def _as_ollama_tools(mcp_tools): return [{'type':'function','function':{'name':t['name'],'description':t.get('description') or '','parameters':t.get('inputSchema') or {'type':'object','properties':{}}}} for t in mcp_tools]
+def _images_from_result(result): return [b['data'] for b in (((result or {}).get('result') or {}).get('content') or []) if b.get('type')=='image' and b.get('data')]
 def _text_from_result(result):
     bits=[]
     for block in (((result or {}).get('result') or {}).get('content') or []):
-        if block.get('type')=='text': bits.append(block.get('text',''))
-        elif block.get('type')=='image': bits.append('[image returned for external visual verification]')
-        else: bits.append(json.dumps(block,ensure_ascii=False))
+        if block.get('type')=='text':bits.append(block.get('text',''))
+        elif block.get('type')=='image':bits.append('[image returned for external visual verification]')
+        else:bits.append(json.dumps(block,ensure_ascii=False))
     return '\n'.join(bits) if bits else json.dumps(result,ensure_ascii=False)
-def visual_verify(image_b64: str, task: str, design_brief: str):
-    prompt=f'''You are Doré Visual Verifier. Judge the ACTUAL rendered Penpot image, not tool metadata.
-{VOICE_RULE}
-Task: {task}
-Current design brief:\n{design_brief}
-Return strict JSON only with keys verdict (PASS or FAIL), problems (array), strengths (array), next_correction (string). PASS only when the visible composition is genuinely usable and satisfies the brief. Missing, blank, block-only, clipped, overlapped or obviously unfinished output is FAIL.'''
+def visual_verify(image_b64:str,task:str,design_brief:str):
+    prompt=f'''You are Doré Visual Verifier. Judge the ACTUAL rendered Penpot image, not tool metadata.\n{VOICE_RULE}\nTask: {task}\nCurrent design brief:\n{design_brief}\nReturn strict JSON only with keys verdict (PASS or FAIL), problems (array), strengths (array), next_correction (string). PASS only when the visible composition is genuinely usable and satisfies the brief. Missing, blank, block-only, clipped, overlapped or obviously unfinished output is FAIL.'''
     msg=_ollama([{'role':'user','content':prompt,'images':[image_b64]}],model=VISION_MODEL); text=(msg.get('content') or '').strip()
-    try: return json.loads(text[text.index('{'):text.rindex('}')+1])
-    except Exception: return {'verdict':'FAIL','problems':['visual_verifier_invalid_json'],'strengths':[],'next_correction':text[:1500]}
-def run_task(task: str, design_brief: str):
+    try:return json.loads(text[text.index('{'):text.rindex('}')+1])
+    except Exception:return {'verdict':'FAIL','problems':['visual_verifier_invalid_json'],'strengths':[],'next_correction':text[:1500]}
+def run_task(task:str,design_brief:str):
     tools=list_tools(); ollama_tools=_as_ollama_tools(tools); tool_names=[x['name'] for x in tools]
-    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.
-{VOICE_RULE}
-You are working on the currently focused Penpot page. Do not claim success from tool/API success or layer creation.
-First inspect the current page/file. Then make the requested design changes. After writes, obtain an ACTUAL rendered/exported image using an available Penpot tool whenever possible. Doré's external visual verifier will inspect any image returned and send a PASS/FAIL result back to you. If it says FAIL, correct the design and visually verify again. Do not declare completion unless the verifier has returned PASS. If the available MCP tools cannot produce visual evidence, report that as a blocker rather than claiming success.
-Task: {task}
-Current design brief:\n{design_brief}
-Available Penpot tool names: {', '.join(tool_names)}'''
+    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.\n{VOICE_RULE}\nYou are working on the currently focused Penpot page. Do not claim success from tool/API success or layer creation. First inspect the current page/file. Then make the requested design changes. After writes, obtain an ACTUAL rendered/exported image using an available Penpot tool whenever possible. Doré's external visual verifier will inspect any image returned and send a PASS/FAIL result back to you. If it says FAIL, correct the design and visually verify again. Do not declare completion unless the verifier has returned PASS. If the available MCP tools cannot produce visual evidence, report that as a blocker rather than claiming success.\nTask: {task}\nCurrent design brief:\n{design_brief}\nAvailable Penpot tool names: {', '.join(tool_names)}'''
     messages=[{'role':'system','content':system},{'role':'user','content':task}]; trace=[]; checks=[]
     for step in range(MAX_STEPS):
         msg=_ollama(messages,ollama_tools); assistant={'role':'assistant','content':msg.get('content') or ''}
-        if msg.get('tool_calls'): assistant['tool_calls']=msg['tool_calls']
+        if msg.get('tool_calls'):assistant['tool_calls']=msg['tool_calls']
         messages.append(assistant); calls=msg.get('tool_calls') or []
         if not calls:
             verified=bool(checks and checks[-1].get('verdict')=='PASS')
-            return {'ok':True,'verified':verified,'answer':_clean_answer(msg.get('content') or ''), 'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools)}
+            return {'ok':True,'verified':verified,'answer':_clean_answer(msg.get('content') or ''),'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools)}
         for call in calls:
             fn=call.get('function') or {}; name=fn.get('name'); args=fn.get('arguments') or {}; result=call_tool(name,args); trace.append({'tool':name,'ok':bool(result.get('ok')),'arguments':args}); messages.append({'role':'tool','tool_name':name,'content':_text_from_result(result)})
             for image in _images_from_result(result):
