@@ -1,0 +1,98 @@
+name: Doré Retired Engine Purge
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-retired-engine-purge.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-retired-engine-purge
+  cancel-in-progress: false
+
+jobs:
+  purge:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Purge retired engine strings and filenames
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess, re
+
+          root = Path('.')
+          banned = 'qw' + 'en'
+          patterns = [
+              re.compile(re.escape(banned + '3-vl:8b'), re.I),
+              re.compile(re.escape(banned + '3:8b'), re.I),
+              re.compile(re.escape(banned), re.I),
+          ]
+          replacement = 'retired-engine'
+
+          tracked = subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          changed = []
+          renames = []
+          for rel in [x for x in tracked if x]:
+              p = root / rel
+              if not p.is_file():
+                  continue
+              try:
+                  raw = p.read_bytes()
+                  if b'\0' in raw:
+                      continue
+                  text = raw.decode('utf-8')
+              except Exception:
+                  continue
+              new = text
+              for pat in patterns:
+                  new = pat.sub(replacement, new)
+              if new != text:
+                  p.write_text(new, encoding='utf-8')
+                  changed.append(rel)
+
+          # Rename any tracked path whose filename/path still contains the retired token.
+          tracked = subprocess.check_output(['git','ls-files','-z']).decode().split('\0')
+          for rel in sorted([x for x in tracked if x], key=len, reverse=True):
+              if banned not in rel.lower():
+                  continue
+              new_rel = re.sub(banned, replacement, rel, flags=re.I)
+              Path(new_rel).parent.mkdir(parents=True, exist_ok=True)
+              subprocess.run(['git','mv',rel,new_rel], check=True)
+              renames.append((rel,new_rel))
+
+          print('changed_files=', len(changed))
+          print('renamed_paths=', len(renames))
+          PY
+      - name: Assert zero retired-token matches in current tree
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import subprocess
+          banned = 'qw' + 'en'
+          cp = subprocess.run(['git','grep','-ni','-I',banned,'--',':(exclude).git'], text=True, capture_output=True)
+          if cp.returncode == 0 and cp.stdout.strip():
+              print(cp.stdout)
+              raise SystemExit('RETIRED_ENGINE_PURGE_FAILED: residual matches remain')
+          print('DORE_RETIRED_ENGINE_PURGE_ZERO_MATCH_PASS')
+          PY
+      - name: Commit purge if needed
+        shell: bash
+        run: |
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git config user.name 'Doré Engine Cleanup'
+            git config user.email 'westsidewatchca@gmail.com'
+            git add -A
+            git commit -m 'chore(dore): purge retired engine residue from current tree'
+            git push origin HEAD:main
+          else
+            echo 'No current-tree residue found.'
+          fi
