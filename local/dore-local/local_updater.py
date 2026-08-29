@@ -30,7 +30,7 @@ def main():
  remote=run(['git','rev-parse','origin/main'])[1]
  if old!=remote:
   if run(['git','merge','--ff-only','origin/main'])[0] and run(['git','rebase','origin/main'])[0]:return 6
- targets=['local/dore-local/dore_local.py','local/dore-local/legacy_memory.py','local/dore-local/self_memory.py','local/dore-local/learning_planner.py','local/dore-local/autonomous_learner.py','local/dore-local/learning_worker.py','local/dore-local/bridge_reminder.py','local/dore-local/coordination_mailbox.py','local/dore-local/coordination_worker.py','local/dore-local/local_updater.py','local/dore-local/test_coordination_transport.py']
+ targets=['local/dore-local/dore_local.py','local/dore-local/legacy_memory.py','local/dore-local/self_memory.py','local/dore-local/learning_planner.py','local/dore-local/autonomous_learner.py','local/dore-local/learning_worker.py','local/dore-local/bridge_reminder.py','local/dore-local/coordination_mailbox.py','local/dore-local/coordination_worker.py','local/dore-local/conversation_acceptance.py','local/dore-local/local_updater.py','local/dore-local/test_coordination_transport.py']
  if run(['python3','-m','py_compile',*targets])[0]:return 7
  test=run(['python3','local/dore-local/test_coordination_transport.py'],timeout=30)
  if test[0] or 'DORE_COORDINATION_TRANSPORT_CONTRACT_PASS' not in test[1]:emit('error',stage='coordination_contract',detail=test[2] or test[1]); return 10
@@ -40,5 +40,6 @@ def main():
   try:
    checks=[get_json('http://127.0.0.1:8788'+p) for p in ['/health','/legacy-memory/status','/memory/self/status','/learning/status','/learning/plan','/learning/autonomous/status']]; ok=all(bool(x.get('ok')) for x in checks) and checks[4].get('time_is_gate') is False
   except Exception as e:emit('error',stage='health',detail=str(e));return 8
- learning=spawn('learning-worker','learning_worker.py'); coordination=spawn('coordination-worker','coordination_worker.py'); head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination); return 0 if ok else 9
+ # Coordination goes first so acceptance/communication cannot be starved by a learning worker that immediately dirties the shared worktree.
+ coordination=spawn('coordination-worker','coordination_worker.py'); learning=spawn('learning-worker','learning_worker.py'); head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination); return 0 if ok else 9
 if __name__=='__main__':raise SystemExit(main())
