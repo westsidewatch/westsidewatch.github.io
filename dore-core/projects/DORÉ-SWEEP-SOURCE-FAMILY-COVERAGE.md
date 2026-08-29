@@ -15,7 +15,8 @@ Track whether each required Sweep 01 source family has been systematically revie
 |---|---|---|
 | `dore-core/constitution/` | REVIEWED | Already reconciled in Sweep 01 / Master Register MEM-SWEEP history. |
 | `dore-core/memory/` | REVIEWED + REVALIDATED | Checkpoint 24 reviewed the complete current family and distinguished rolling diagnostics from canonical project truth. |
-| `dore-core/knowledge/` | PARTIALLY SYSTEMATIC / MANY SUBFAMILIES REVIEWED | Biblical World, Language Core, Researcher 01/02/04/05/06, learning doctrine, Search cognition/work-node, visual family, Foundational Learning Principles and Seminary Core are explicitly checkpointed. Checkpoint 35 additionally reconciles the top-level `VISUAL-CASE-STUDY-ROUND-01.md` against its later same-named project record, preserving the knowledge file as method/learning corpus/completion gate rather than a second project. Remaining subfamilies must still be enumerated before Sweep completion. |
+| `dore-core/knowledge/` | PARTIALLY SYSTEMATIC / MANY SUBFAMILIES REVIEWED | Biblical World, Language Core, Researcher 01/02/04/05/06, learning doctrine, Search cognition/work-node, visual family, Foundational Learning Principles and Seminary Core are explicitly checkpointed. Checkpoint 35 reconciles the top-level `VISUAL-CASE-STUDY-ROUND-01.md` against its later same-named project record. Checkpoint 36 closes `knowledge/foundation/` as `REVIEWED / COMPLETE CURRENT FAMILY`: both top-level Foundation records and all four current subfamilies (`biblical-world/`, `language-text/`, `scripture-canon/`, `search-input/`) are now directory-enumerated and mapped to existing durable classifications/evidence boundaries. Remaining non-Foundation knowledge subfamilies must still be enumerated before Sweep completion. |
+| `dore-core/knowledge/foundation/` | REVIEWED / COMPLETE CURRENT FAMILY | Checkpoint 36 enumerated the complete current directory: `ENROLLMENT-2026-08-22.md`, `FUNDAMENTALS.md`, `biblical-world/`, `language-text/`, `scripture-canon/`, `search-input/`. Existing Foundation, Language, Scripture Canon and Search Input ledgers already classify every current artifact; remaining graduation gaps stay evidence-gated rather than being promoted. |
 | `dore-core/projects/` | PARTIALLY SYSTEMATIC / MANY PROJECT FAMILIES REVIEWED | Master Register, completed/revisit/missing-evidence outputs, Conversation Memory, Nervous System, visual, Journal/distribution, Library, Cloudflare evidence ledgers and product histories have bounded reconciliation. Checkpoint 35 maps the project-level Visual Case Study record to the single canonical `VIS-LEARN` workstream. Directory-wide enumeration remains required before final completion. |
 | `dore-core/runtime/` | REVIEWED IN MAJOR FAMILIES | P01 runtime continuity, Conversation Internal Alpha, Full Memory Phase 1 and current blocker evidence are reconciled. Final directory enumeration still required. |
 | `dore-core/benchmarks/` | REVIEWED IN PRIOR BATCH | Recorded as reconciled in Master Register MEM-SWEEP history; final completion requires explicit directory-accounting confirmation. |
@@ -46,6 +47,16 @@ Direct evidence rechecked:
 - The project file is `ACTIVE_PARALLEL / CANONICAL EXECUTION-AND-FINDINGS RECORD` because it contains the later interpretations, city-window/index hypothesis, print research expansion and next sequence.
 - The later project record partially supersedes the earlier case interpretations but does not supersede the methodology/completion conditions. No deletion, completion promotion, new revisit item, or Master Register status change is justified.
 
+### Checkpoint 36 — Foundation directory-wide reconciliation
+
+- The complete current top level of `dore-core/knowledge/foundation/` contains two files plus four subdirectories: `ENROLLMENT-2026-08-22.md`, `FUNDAMENTALS.md`, `biblical-world/`, `language-text/`, `scripture-canon/`, `search-input/`.
+- The two top-level records are already classified by `DORÉ-FOUNDATION-EDUCATION-EVIDENCE-LEDGER-2026-08-28.md`: enrollment is a bounded historical milestone; epistemic discipline remains CORE; the old no-work-before-Researcher sequencing rule is superseded by Product–Education doctrine.
+- `biblical-world/` currently contains exactly `BW-1-GRADUATION.md`, `CURRICULUM.md`, `SOURCES.md`, all already represented by prior bounded Biblical World reconciliation.
+- `language-text/` enumerates the already-reconciled witness/access/cross-witness family; broader global corpus-reading completion remains evidence-gated by the existing missing-evidence register.
+- `scripture-canon/` is already covered by the Scripture Canon evidence ledger and `ME-009`; substantial infrastructure is retained without promoting Course 01 beyond its current active Foundation state.
+- `search-input/` currently contains exactly `SCRIPTURE-SEARCH-INPUT-LITERACY-1.0.md`, already covered by its evidence ledger and `ME-010`.
+- No orphan active workstream, new revisit candidate, retirement, or new missing-evidence entry was found. `knowledge/foundation/` is therefore closed as `REVIEWED / COMPLETE CURRENT FAMILY` for Sweep coverage purposes, without implying all curricula have graduated.
+
 ## Canonical reconciliation judgment
 
 No Master Work Register status change is justified by these batches. The current canonical rows already preserve the correct live interpretation:
@@ -54,9 +65,10 @@ No Master Work Register status change is justified by these batches. The current
 - `SEARCH = MAINTENANCE + DISCOVERY`, with the later service-boundary/cognition debt;
 - `VIS-LEARN = ACTIVE_PARALLEL`, with Round 01 completion still gated on structured/mobile/typography/contradiction/10-hypothesis/prototype evidence;
 - `VIS-GRAMMAR = ACTIVE_PARALLEL / BUILDING` and must not be conflated with asset-storage milestones;
+- `SCRIPTURE-CANON = ACTIVE / FOUNDATION`, with course completion still evidence-gated;
 - `MEM-SWEEP-01 = ACTIVE_PARALLEL` because systematic family enumeration remains incomplete.
 
-The durable result is coverage accounting: `dore-core/evidence/` is explicitly closed as a reviewed current family, and the ambiguous same-named Visual Case Study records are now assigned non-competing roles under one workstream. Remaining final-completion work is narrowed to systematic enumeration of still-partial families rather than re-reviewing already reconciled evidence.
+The durable result is coverage accounting: `dore-core/evidence/` and `dore-core/knowledge/foundation/` are explicitly closed as reviewed current families, and the ambiguous same-named Visual Case Study records are assigned non-competing roles under one workstream. Remaining final-completion work is narrowed to systematic enumeration of still-partial families rather than re-reviewing already reconciled evidence.
 
 ## P01 isolation
 
