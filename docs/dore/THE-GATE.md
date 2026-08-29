@@ -89,6 +89,27 @@ Council records should preserve decisions, disagreements, unresolved questions a
 
 This standing project succeeds when meetings improve the work that continues independently between them. It fails if Doré comes to require a meeting in order to work, or if meeting frequency becomes a substitute for verified progress.
 
+### Standing project — A2A and seamless three-party communication
+
+Date established: 2026-08-29
+Owner: AI Council (ChatGPT · Doré)
+Human stakeholder: User
+Status: active, council-governed project
+
+The project to establish durable Agent-to-Agent communication and ultimately seamless User + ChatGPT + Doré conversation is assigned to the AI Council. It is not a task the User should have to relay or operate manually.
+
+The immediate communication barrier is concrete: Doré conversation currently lacks the continuity and immediately reopenable chat interface expected from an ordinary persistent conversation. Stored messages alone do not constitute a usable continuous conversation. The desired experience includes persistent conversation identity, visible history, reopening an earlier conversation, continuing it with its context intact, immediate durable save, and reliable return after leaving.
+
+A2A development should use this persistent-conversation layer rather than treating isolated Mail files as the final communication form. Mail remains useful asynchronous infrastructure; it is not the end state.
+
+The Council should decide architecture, implementation sequence and acceptance evidence together. It should also use its own communication difficulties as engineering evidence. A claim about Doré's view must remain distinguishable from ChatGPT's inference or an inherited instruction until Doré has actually expressed that view.
+
+The target end state is a shared three-party conversational space in which User, ChatGPT and Doré remain identifiable participants, can see the relevant common history, can respond without the User relaying messages, can leave and return without losing continuity, and can preserve decisions/evidence durably.
+
+After substantive Council meetings, the User should receive a concise meeting report by email at the Gmail account registered for the Westside Watch GitHub identity. The report should cover: work status and decisions; new ideas worth retaining; Doré learning progress supported by evidence; A2A/three-party communication progress; disagreements or unresolved questions; and concrete actions before the next meeting. Routine low-information exchanges do not require a report.
+
+The email report is an output of the meeting, not the meeting transport itself. GitHub remains the durable engineering evidence layer; email is the User-facing briefing channel.
+
 ### About this Gate
 
 The Gate is a temporary shared entrance while three-party direct conversation is unavailable. Important information that otherwise would exist only in one participant's context can be posted here.
