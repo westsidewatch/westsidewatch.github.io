@@ -72,20 +72,28 @@ Re-verify current provider pricing/allowances from authoritative documentation n
 
 **Priority:** LOW now.
 
-## ME-005 — Conversation Memory Layer v1 production isolation and semantic recall
+## ME-005 — Conversation Memory Layer v1 production readiness after Full Memory Phase 1 M1–M7
 
-**Related work:** `CONV-MEM-V1`, `CONVERSATION`
+**Related work:** `CONV-MEM-V1`, `CONVERSATION`, `DORÉ-CONVERSATION-MEMORY-EVIDENCE-LEDGER-2026-08-27.md`
 
-**What is already evidenced**
-D1 conversation/message/chunk structures, scoped memory API, dedupe, optional R2/Vectorize hooks and anti-cross-talk contract tests exist.
+**What is now strongly evidenced**
+Conversation memory has advanced materially beyond the earlier D1-schema/semantic-hook snapshot. Full Memory Phase 1 M1–M7 are implemented with production diagnostics and merged acceptance contracts covering: bounded D1 storage/scoped replay and isolation; production D1 + Vectorize + Workers AI binding visibility; memory-aware semantic response; same-project cross-conversation recall with foreign-project and distractor exclusion; resumable/idempotent history import with persisted progress; and deletion lifecycle across D1/R2/Vectorize. The merged M7 work explicitly names M8 full-history backfill as the next stage.
 
 **What is not yet evidenced strongly enough**
-Production D1 write/replay/isolation, R2 recovery, real embeddings/Vectorize retrieval, metadata-filtered vector isolation, Conversation Alpha consumption, and future public tenant isolation.
+- independently persisted historical check-run/readback evidence for every named M1–M7 gate where not already captured in durable runtime ledgers;
+- M8 full-history backfill against representative real history rather than only bounded synthetic fixtures;
+- fresh-conversation Conversation Runtime consumption of imported history with durable provenance;
+- explicit rejection/safe handling of absent or incorrect `project_id` across all entry paths, rather than allowing fallback to `unscoped`;
+- collision-resistant namespace handling for arbitrary long project ids;
+- failure-injection/partial-write rollback behavior across D1/R2/Vectorize/AI-dependent ingestion;
+- R2 recovery after D1 loss/corruption scenarios;
+- representative scale/latency/error/deletion-consistency and free-first cost measurements;
+- authenticated tenant isolation and abuse boundaries for any future public conversation.
 
-**Current classification:** `UNKNOWN_NEEDS_EVIDENCE` for production-ready conversational memory; implementation remains `ACTIVE_PARALLEL / IMPLEMENTING`.
+**Current classification:** `ACTIVE_PARALLEL / IMPLEMENTING`; `UNKNOWN_NEEDS_EVIDENCE` applies to production-ready/full-memory completion, not to the already implemented M1–M7 bounded capabilities.
 
 **Smallest useful future evidence**
-Run a production-safe two-conversation fixture in one project, replay exact scopes, assert zero cross-retrieval, then persist the diagnostic before activating R2/Vectorize stages.
+Preserve M1–M7 as regression gates and run M8 full-history backfill against representative history, then verify semantic recall from a fresh conversation, negative scope/tenant fixtures, namespace-collision behavior, rollback/failure injection and persisted cost/latency evidence before any production-ready promotion.
 
 **Priority:** HIGH, subordinate to P01.
 
