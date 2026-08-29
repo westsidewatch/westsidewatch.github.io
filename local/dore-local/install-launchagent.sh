@@ -21,7 +21,7 @@ cat > "$PLIST" <<EOF
  <key>DORE_LOCAL_HOME</key><string>$DORE</string>
  <key>DORE_LOCAL_HOST</key><string>127.0.0.1</string>
  <key>DORE_LOCAL_PORT</key><string>8788</string>
- <key>DORE_LOCAL_MODEL</key><string>qwen3:8b</string>
+ <key>DORE_LOCAL_MODEL</key><string>gemma4:e4b</string>
  <key>OLLAMA_BASE_URL</key><string>http://127.0.0.1:11434</string>
 </dict>
 <key>RunAtLoad</key><true/>
