@@ -1,0 +1,23 @@
+name: Doré updater contract 2026-08-29
+on:
+  push:
+    paths: ['.github/workflows/dore-updater-contract-20260829.yml']
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - run: |
+          python -m py_compile local/dore-local/dore_updater.py local/dore-local/coordination_worker.py local/dore-local/complete_recall.py
+          grep -q 'StartInterval' local/dore-local/install-updater.sh
+          grep -q '<integer>30</integer>' local/dore-local/install-updater.sh
+          grep -q 'merge --ff-only\|"merge", "--ff-only"' local/dore-local/dore_updater.py
+      - run: |
+          git config user.name WATCHMAN
+          git config user.email westsidewatchca@gmail.com
+          git rm .github/workflows/dore-updater-contract-20260829.yml
+          git commit -m 'ci: remove one-shot updater contract'
+          git push
