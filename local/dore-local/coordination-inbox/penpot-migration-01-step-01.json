@@ -1,0 +1,19 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-migration-01-step-01",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-08-29T23:45:00Z",
+  "subject": "Migration 01 Step 1 — establish real Penpot migration workspace",
+  "body": "Execute this as real Penpot work, not as a plan. First inspect the currently focused Penpot file/page and report its exact identity and current structure through tool evidence. Then create or prepare a clearly named editable migration workspace for the Westside Watch / 新西望 Figma migration, named 'Migration 01 — 新西望'. Do not recreate the Figma design from memory and do not invent source details. Preserve any existing user design content. Obtain an actual rendered image after the change and continue correcting until the external visual verifier returns PASS. If the Penpot MCP, Penpot app, focused file, or rendering capability is unavailable, stop with the exact blocker and tool trace rather than claiming success.",
+  "design_brief": "This is the first real step of a Figma-to-Penpot migration. Source of truth is Figma file v0LXKYZznCRmXWhk36zARN, node 2:2, Westside Watch — Design System 1.0. This step does NOT permit redrawing that source from memory. It only establishes a safe, editable Penpot migration workspace and verifies the real rendered Penpot result. Existing Penpot content must not be destroyed or overwritten.",
+  "kind": "penpot_execute",
+  "requires_reply": false,
+  "priority": "high",
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": [
+    "figma-source:v0LXKYZznCRmXWhk36zARN:2:2",
+    "migration-step:01"
+  ]
+}
