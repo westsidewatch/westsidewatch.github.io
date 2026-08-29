@@ -38,7 +38,7 @@ This capability does not yet imply broad-volume robustness or truth/quality of e
 - preserve uncertainty and disputed reconstruction boundaries instead of flattening them into a single asserted answer;
 - test transfer with blind cases rather than equating source ingestion with understanding;
 - connect canon-spanning historical/social context to a specific passage without silently turning context into doctrine;
-- provide reusable contextual registries for research, Search, ONE, Library, subtitle correction and visual-scene review.
+- provide reusable contextual registries for research, Search, ONE, Library, subtitle correction and visual research.
 
 **Useful in current/future work**
 - Bible Search query interpretation and contextual answer generation;
@@ -180,3 +180,25 @@ The course's final integration harness is not production subtitle/Search accurac
 
 **Boundary / caution**
 The verified milestones cover the selected Priority-A ONE set and the bounded five Priority-B shared site assets only. They do not prove all Journal/Library media should move to R2, do not authorize moving source-locked Doré originals, and do not prove unrelated structured-data/Search runtime migrations. Each later migration needs its own inventory, placement decision, runtime/hash verification and safe-cleanup evidence.
+
+## CAP-009 — Transferable reflex routing with evidence-bounded promotion
+
+**Learned from:** `CW-010 — Reflex Consolidation 1.0` and promoted signal `dore-core/reflex/signals/001-translated-phrase-to-original-language.md`.
+
+**Reusable capabilities retained**
+- turn a concrete reader failure into a capability-class routing diagnosis instead of a phrase-specific patch;
+- route translated biblical wording through canonical passage discovery to original-language evidence while preserving the distinction between verse-level co-attestation and word-level translation alignment;
+- normalize Chinese script variants as a transferable routing behavior rather than accumulating query-specific aliases;
+- preserve witness/entity/geography uncertainty boundaries while routing to the right evidence layer;
+- require regression and unseen-transfer evidence before promoting a candidate reflex into production behavior;
+- treat Search, ONE, subtitle and research work as internships feeding one shared reflex layer rather than separate answer memories.
+
+**Useful in current/future work**
+- Bible Search intent routing and original-language requests;
+- ONE passage research and cross-witness exploration;
+- P01/WSS subtitle recovery where noisy translated phrases need canonical/original-language verification;
+- Liming Library entity/Scripture relationship disambiguation;
+- future conversational work where surface wording should activate an evidence route without becoming durable fact by itself.
+
+**Boundary / caution**
+Reflex Consolidation 1.0 proves the bounded RC1–RC6 transfer contract and the promoted signal's route. It does not prove universal Search relevance/ranking, semantic association, production-wide abstention calibration, or exact lexical equivalence when explicit word-alignment evidence is absent. New reflexes remain continuous work and must earn their own promotion evidence.
