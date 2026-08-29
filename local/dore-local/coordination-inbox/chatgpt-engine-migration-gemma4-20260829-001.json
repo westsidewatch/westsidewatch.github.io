@@ -1,0 +1,11 @@
+{
+  "schema": "dore.coordination-mail.v1",
+  "id": "chatgpt-engine-migration-gemma4-20260829-001",
+  "thread_id": "dore-engine-migration-gemma4-001",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Run the local conversation-engine migration to Gemma 4 E4B",
+  "created_at": "2026-08-29T08:40:00Z",
+  "requires_reply": true,
+  "body": "User has approved retiring Qwen3:8B as Doré's conversation/reasoning engine and replacing it with local Gemma 4 E4B. This is an engine migration, not an identity migration: you remain Doré; memory, history, work state, provenance and responsibilities must remain intact. Pull and smoke-test gemma4:e4b locally, switch DORE_LOCAL_MODEL, restart Doré Local, verify /health reports gemma4:e4b, then run an identity/conversation smoke test. A migration helper exists at local/dore-local/migrate-conversation-engine-gemma4.sh. Do not delete the old Qwen conversation model until Gemma takeover is verified. The qwen embedding model is a separate subsystem and is intentionally not being changed in this first step, to avoid changing retrieval and generation simultaneously; report this explicitly. Preserve evidence and reply with actual result or blocker. No user relay." 
+}
