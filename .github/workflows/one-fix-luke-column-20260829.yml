@@ -1,0 +1,36 @@
+name: ONE fix Luke Plain Sermon column 2026-08-29
+on:
+  push:
+    paths: ['.github/workflows/one-fix-luke-column-20260829.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - shell: python
+        run: |
+          from pathlib import Path
+          p=Path('static/one/matthew-complete.js')
+          s=p.read_text()
+          old='["平原寶訓","—","—","路 6:20–49","—"]'
+          new='["平原寶訓","—","—","—","路 6:20–49"]'
+          if old not in s: raise SystemExit('target not found')
+          p.write_text(s.replace(old,new,1))
+          lp=Path('docs/dore/lessons/ONE-LESSON-001-GOSPEL-HARMONY-AUDIT.md')
+          t=lp.read_text()
+          t += '''\n\n## 第三次驗收：schema 欄位索引不能靠猜\n\n實際頁面再次暴露錯誤：雖然資料字串寫了 `路 6:20–49`，它沒有顯示在「路加」欄。原因是本 ONE harmony row 的陣列順序不是先前假定的 `[事件, 馬太, 馬可, 路加, 約翰]`；實際渲染映射要求此處的路加值放在第五個元素。\n\n修正為：`["平原寶訓","—","—","—","路 6:20–49"]`。\n\n這次教訓必須保留：**agent 不可以只看變數名稱或憑常識猜 schema；修改資料前必須讀實際 renderer / 以產品畫面驗證欄位映射。測試若只斷言字串存在，也可能得到假 PASS。** 後續驗收應檢查資料經 renderer 後的欄位結果，而不是只檢查 source 中是否出現經文。\n'''
+          lp.write_text(t)
+      - run: |
+          node --check static/one/matthew-complete.js
+          grep -F '["平原寶訓","—","—","—","路 6:20–49"]' static/one/matthew-complete.js
+      - run: |
+          git config user.name WATCHMAN
+          git config user.email westsidewatchca@gmail.com
+          git add static/one/matthew-complete.js docs/dore/lessons/ONE-LESSON-001-GOSPEL-HARMONY-AUDIT.md
+          git commit -m 'fix(one): place Plain Sermon reference in Luke column'
+          git rm .github/workflows/one-fix-luke-column-20260829.yml
+          git commit -m 'ci: remove one-shot Luke column fix'
+          git push
