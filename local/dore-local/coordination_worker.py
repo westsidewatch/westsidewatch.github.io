@@ -6,6 +6,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,receive_from_chatgpt,read_jsonl,flush_outbox,INBOX
 from bridge_reminder import bridge_packet
+from complete_recall import complete_recall
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); DB=HOME/'data'/'dore.sqlite3'; STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; TASKS=ROOT/'local/dore-local/tasks'; OLLAMA=os.environ.get('DORE_OLLAMA_URL','http://127.0.0.1:11434/api/chat'); MODEL=os.environ.get('DORE_MODEL','gemma4:e4b')
 def ask(prompt):
  req=urllib.request.Request(OLLAMA,data=json.dumps({'model':MODEL,'stream':False,'think':False,'messages':[{'role':'system','content':'You are Doré. Speak as Doré, grounded only in durable state and received messages. Never invent attempts or evidence. Return JSON only.'},{'role':'user','content':prompt}]}).encode(),headers={'Content-Type':'application/json'})
@@ -28,6 +29,23 @@ def pending_repo_inbox(prev):
    if mid not in local_ids:receive_from_chatgpt(msg)
    pending.append(msg)
  return processed,pending
+
+def handle_complete_recall(msg):
+    subject=str(msg.get("subject") or "").lower()
+    body=str(msg.get("body") or "")
+    if not (msg.get("kind")=="complete_recall" or "complete recall" in subject or "完整回憶" in subject or "完整回忆" in subject):
+        return False
+    query=str(msg.get("query") or body).strip()
+    packet=complete_recall(query)
+    send_to_chatgpt(
+        "Doré complete recall: "+query[:80],
+        json.dumps(packet,ensure_ascii=False),
+        requires_reply=False, priority="high",
+        related_goal="complete-recall-automation",
+        evidence_refs=["local-memory:"+str(packet.get("conversation_count",0))+"-conversations"],
+        thread_id=msg.get("thread_id"))
+    return True
+
 def run_acceptance_tasks(prev):
  done=set(prev.get('autonomous_tasks_processed') or [])
  if not TASKS.exists(): return done,False
@@ -57,7 +75,12 @@ def main():
  digest=packet['packet_sha256']
  if not pending and prev.get('packet_sha256')==digest:
   prev['repo_inbox_processed']=sorted(processed); prev.pop('repo_inbox_seen',None); save(prev); return 0
- current=pending[0] if pending else None; new_messages=[current] if current else []
+ current=pending[0] if pending else None
+ if current and handle_complete_recall(current):
+  processed.add(current["message_id"])
+  prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
+  save(prev); flush_outbox(); return 0
+ new_messages=[current] if current else []
  prompt='''Review durable coordination state and NEW_MESSAGES. Continue autonomous work regardless of reply. If a new message explicitly asks for a simple reply, obey it exactly in body. Otherwise send only a useful coordination message. Return {"send":true|false,"subject":"...","body":"...","requires_reply":true|false,"priority":"normal|high","related_goal":"...","evidence_refs":[...]}.\nSTATE:\n'''+json.dumps(packet,ensure_ascii=False)+'\nNEW_MESSAGES:\n'+json.dumps(new_messages,ensure_ascii=False)
  try:decision=parse(ask(prompt))
  except Exception as e:
