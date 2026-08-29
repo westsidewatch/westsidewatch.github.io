@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -euo pipefail
 ROOT="${DORE_LOCAL_HOME:-$HOME/.dore}"
-MODEL="${DORE_LOCAL_MODEL:-qwen3:8b}"
+MODEL="${DORE_LOCAL_MODEL:-gemma4:e4b}"
+# Embeddings are a separate replaceable subsystem. Keep the existing embedding
+# model during the conversation-engine migration so memory retrieval does not
+# change at the same time as generation. It can be migrated independently.
 EMBED_MODEL="${DORE_LOCAL_EMBED_MODEL:-qwen3-embedding:0.6b}"
 
 echo "Doré Local bootstrap"
@@ -62,6 +65,7 @@ INSERT INTO dore_meta(key,value) VALUES('node_kind','mac-local') ON CONFLICT(key
 INSERT INTO dore_meta(key,value) VALUES('memory_core','sqlite+filesystem') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 INSERT INTO dore_meta(key,value) VALUES('workers_ai_required','false') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 INSERT INTO dore_meta(key,value) VALUES('design_working_memory','d1-d3-integrating') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
+INSERT INTO dore_meta(key,value) VALUES('conversation_engine','gemma4:e4b') ON CONFLICT(key) DO UPDATE SET value=excluded.value,updated_at=CURRENT_TIMESTAMP;
 SQL
 
 if ! curl -fsS http://127.0.0.1:11434/api/tags >/dev/null 2>&1; then
