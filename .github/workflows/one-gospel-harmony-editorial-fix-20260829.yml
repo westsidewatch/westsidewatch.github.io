@@ -1,0 +1,39 @@
+name: ONE Gospel Harmony Editorial Fix 2026-08-29
+on:
+  push:
+    paths: ['.github/workflows/one-gospel-harmony-editorial-fix-20260829.yml']
+permissions:
+  contents: write
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - name: Correct misleading resurrection-appearance conflation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('static/one/matthew-complete.js')
+          s=p.read_text(encoding='utf-8')
+          old='["向門徒顯現","太 28:16–17","可 16:9–14（較長結尾）","路 24:13–49","約 20:19–21:23"]'
+          new='["加利利向十一門徒顯現","太 28:16–17","—","—","—"]'
+          if old not in s and new not in s: raise SystemExit('target row missing')
+          if old in s:s=s.replace(old,new,1)
+          old2='["差遣與同在","太 28:18–20","可 16:15–18（較長結尾）","路 24:44–49","約 20:21–23"]'
+          new2='["復活後的差遣使命（各福音不同場次）","太 28:18–20","可 16:15–18（較長結尾）","路 24:44–49","約 20:21–23"]'
+          if old2 not in s and new2 not in s: raise SystemExit('mission row missing')
+          if old2 in s:s=s.replace(old2,new2,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          node --check static/one/matthew-complete.js
+          grep -F '加利利向十一門徒顯現' static/one/matthew-complete.js
+          grep -F '復活後的差遣使命（各福音不同場次）' static/one/matthew-complete.js
+      - name: Commit and self-remove
+        run: |
+          git config user.name westsidewatch
+          git config user.email westsidewatchca@gmail.com
+          git rm .github/workflows/one-gospel-harmony-editorial-fix-20260829.yml
+          git add static/one/matthew-complete.js
+          git commit -m 'fix(one): distinguish resurrection harmony scenes'
+          git push
