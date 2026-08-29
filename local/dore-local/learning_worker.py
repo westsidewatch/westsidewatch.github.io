@@ -8,7 +8,7 @@ from autonomous_learner import run_cycle
 REPO=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser()
 DORE=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()
 DB=DORE/'data'/'dore.sqlite3'; LOCK=DORE/'data'/'learning-worker.lock'; STATE=DORE/'data'/'learning-worker-state.json'; LOG=DORE/'logs'/'learning-worker.jsonl'
-MODEL=os.environ.get('DORE_LOCAL_MODEL','qwen3:8b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
+MODEL=os.environ.get('DORE_LOCAL_MODEL','retired-engine'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def emit(event,**extra):

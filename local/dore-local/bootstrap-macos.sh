@@ -5,7 +5,7 @@ MODEL="${DORE_LOCAL_MODEL:-gemma4:e4b}"
 # Embeddings are a separate replaceable subsystem. Keep the existing embedding
 # model during the conversation-engine migration so memory retrieval does not
 # change at the same time as generation. It can be migrated independently.
-EMBED_MODEL="${DORE_LOCAL_EMBED_MODEL:-qwen3-embedding:0.6b}"
+EMBED_MODEL="${DORE_LOCAL_EMBED_MODEL:-retired-engine3-embedding:0.6b}"
 
 echo "Doré Local bootstrap"
 echo "Home: $ROOT"

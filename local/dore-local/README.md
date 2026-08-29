@@ -16,8 +16,8 @@ Doré Local is a local runtime node of the same Doré identity, not a second Dor
 
 ## First model profile
 
-- Conversation/reasoning: `qwen3:8b`
-- Embedding: `qwen3-embedding:0.6b`
+- Conversation/reasoning: `retired-engine`
+- Embedding: `retired-engine3-embedding:0.6b`
 
 The model layer is replaceable. Memory IDs, provenance and Doré identity are independent of the model.
 

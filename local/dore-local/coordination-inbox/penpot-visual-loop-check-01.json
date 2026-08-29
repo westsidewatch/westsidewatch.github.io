@@ -6,12 +6,12 @@
   "recipient": "dore",
   "kind": "penpot_execute",
   "subject": "Migration 01 — verify export_shape visual loop",
-  "body": "Use the REAL current Penpot file. Find or switch to the page named 'Migration 01 — 新西望'. Add one small temporary but visible text or rectangle labeled/identifiable as 'VISUAL LOOP CHECK' without disturbing existing content. Then call export_shape for the entire current page with PNG. The task is complete only if an actual PNG reaches the external qwen3-vl visual verifier and it returns PASS that the rendered page is visible/nonblank and contains the test object. Do not claim completion from API success alone. If direct MCP image content is absent, the local filePath fallback in penpot_agent.py must recover the PNG. Return the trace including image_count, visual_source, and visual_checks.",
+  "body": "Use the REAL current Penpot file. Find or switch to the page named 'Migration 01 — 新西望'. Add one small temporary but visible text or rectangle labeled/identifiable as 'VISUAL LOOP CHECK' without disturbing existing content. Then call export_shape for the entire current page with PNG. The task is complete only if an actual PNG reaches the external retired-engine3-vl visual verifier and it returns PASS that the rendered page is visible/nonblank and contains the test object. Do not claim completion from API success alone. If direct MCP image content is absent, the local filePath fallback in penpot_agent.py must recover the PNG. Return the trace including image_count, visual_source, and visual_checks.",
   "requires_reply": false,
   "priority": "high",
   "related_goal": "figma-to-penpot-migration-01",
   "evidence_refs": [
     "penpot-export-shape-image-recovery",
-    "qwen3-vl-visual-loop"
+    "retired-engine3-vl-visual-loop"
   ]
 }

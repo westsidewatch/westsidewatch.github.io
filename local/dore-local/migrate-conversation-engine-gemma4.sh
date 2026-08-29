@@ -28,7 +28,7 @@ for line in lines:
         out.append('DORE_LOCAL_MODEL=gemma4:e4b'); seen=True
     elif line.startswith('DORE_LOCAL_VISION_MODEL='):
         # Visual verification now follows DORE_LOCAL_MODEL by default.
-        # Remove any stale override such as the retired qwen3-vl model.
+        # Remove any stale override such as the retired retired-engine3-vl model.
         continue
     else:
         out.append(line)
