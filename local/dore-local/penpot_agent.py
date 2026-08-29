@@ -10,7 +10,9 @@ MCP_RUNTIME = Path.home() / '.dore' / 'runtime' / 'penpot-mcp'
 MCP_URL = os.environ.get('PENPOT_MCP_URL', 'http://localhost:4401/mcp')
 OLLAMA = os.environ.get('OLLAMA_BASE_URL', 'http://127.0.0.1:11434')
 MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')
-VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL', 'qwen3-vl:8b')
+# Visual verification follows the active Doré engine unless an explicit,
+# intentional override is configured. Never silently fall back to a retired model.
+VISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL') or MODEL
 MAX_STEPS = int(os.environ.get('DORE_PENPOT_MAX_STEPS', '16'))
 EXPORT_DIR = MCP_RUNTIME / 'exports'
 
@@ -153,15 +155,22 @@ def _tool_is_mutation(tool):
 
 def visual_verify(image_b64:str,task:str,design_brief:str):
     prompt=f'''You are Doré Visual Verifier. Judge the ACTUAL rendered Penpot image, not tool metadata.\n{VOICE_RULE}\nTask: {task}\nCurrent design brief:\n{design_brief}\nReturn strict JSON only with keys verdict (PASS or FAIL), problems (array), strengths (array), next_correction (string). PASS only when the visible composition is genuinely usable and satisfies the brief. Missing, blank, block-only, clipped, overlapped or obviously unfinished output is FAIL.'''
-    msg=_ollama([{'role':'user','content':prompt,'images':[image_b64]}],model=VISION_MODEL)
+    try:
+        msg=_ollama([{'role':'user','content':prompt,'images':[image_b64]}],model=VISION_MODEL)
+    except Exception as e:
+        return {'verdict':'FAIL','problems':['visual_engine_error:'+type(e).__name__+':'+str(e)[:500]],'strengths':[],'next_correction':'Verify that the active Doré engine supports image input.','vision_model':VISION_MODEL}
     text=(msg.get('content') or '').strip()
-    try: return json.loads(text[text.index('{'):text.rindex('}')+1])
-    except Exception: return {'verdict':'FAIL','problems':['visual_verifier_invalid_json'],'strengths':[],'next_correction':text[:1500]}
+    try:
+        verdict=json.loads(text[text.index('{'):text.rindex('}')+1])
+        verdict.setdefault('vision_model',VISION_MODEL)
+        return verdict
+    except Exception:
+        return {'verdict':'FAIL','problems':['visual_verifier_invalid_json'],'strengths':[],'next_correction':text[:1500],'vision_model':VISION_MODEL}
 
 def run_task(task:str,design_brief:str):
     tools=list_tools(); ollama_tools=_as_ollama_tools(tools); tool_names=[x['name'] for x in tools]
     mutation_names={t['name'] for t in tools if _tool_is_mutation(t)}
-    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.\n{VOICE_RULE}\nWork on the currently focused Penpot page. First inspect the file/page, then make the requested design changes. A mutation task is incomplete until at least one real mutation succeeds. After writes, obtain an ACTUAL rendered PNG using export_shape. The external visual verifier will inspect it. If verification FAILs, correct and render again. Do not finish unless mutation succeeded and verifier returned PASS.\nTask: {task}\nCurrent design brief:\n{design_brief}\nAvailable Penpot tool names: {', '.join(tool_names)}'''
+    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.\n{VOICE_RULE}\nWork on the currently focused Penpot page. First inspect the file/page, then make the requested design changes. A mutation task is incomplete until at least one real mutation succeeds. After writes, obtain an ACTUAL rendered PNG using export_shape. The external visual verifier will inspect it. If verification FAILs, correct and render again. Do not finish unless mutation succeeded and verifier returned PASS.\nTask: {task}\nCurrent design brief:\n{design_brief}\nActive Doré engine: {MODEL}. Visual verifier engine: {VISION_MODEL}.\nAvailable Penpot tool names: {', '.join(tool_names)}'''
     messages=[{'role':'system','content':system},{'role':'user','content':task}]
     trace=[]; checks=[]; mutation_succeeded=False
     for step in range(MAX_STEPS):
@@ -178,7 +187,7 @@ def run_task(task:str,design_brief:str):
                 messages.append({'role':'user','content':'EXECUTION GATE FAILED: no actual rendered PNG reached visual verification. Call export_shape with format png now.'}); continue
             if not verified:
                 messages.append({'role':'user','content':'EXECUTION GATE FAILED: latest visual verification is not PASS. Correct the design and render again.'}); continue
-            return {'ok':True,'verified':True,'mutated':True,'answer':_clean_answer(msg.get('content') or ''),'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools)}
+            return {'ok':True,'verified':True,'mutated':True,'answer':_clean_answer(msg.get('content') or ''),'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools),'model':MODEL,'vision_model':VISION_MODEL}
         for call in calls:
             fn=call.get('function') or {}; name=fn.get('name'); args=fn.get('arguments') or {}
             result=call_tool(name,args)
@@ -195,4 +204,4 @@ def run_task(task:str,design_brief:str):
     if not mutation_succeeded: error='penpot_no_mutation_executed'
     elif not checks: error='penpot_no_visual_evidence'
     elif checks[-1].get('verdict')!='PASS': error='penpot_visual_not_passed'
-    return {'ok':False,'verified':False,'mutated':mutation_succeeded,'error':error,'visual_checks':checks,'trace':trace,'steps':MAX_STEPS,'tool_count':len(tools)}
+    return {'ok':False,'verified':False,'mutated':mutation_succeeded,'error':error,'visual_checks':checks,'trace':trace,'steps':MAX_STEPS,'tool_count':len(tools),'model':MODEL,'vision_model':VISION_MODEL}
