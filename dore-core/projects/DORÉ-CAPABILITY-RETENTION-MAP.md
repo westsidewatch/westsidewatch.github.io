@@ -202,3 +202,65 @@ The verified milestones cover the selected Priority-A ONE set and the bounded fi
 
 **Boundary / caution**
 Reflex Consolidation 1.0 proves the bounded RC1–RC6 transfer contract and the promoted signal's route. It does not prove universal Search relevance/ranking, semantic association, production-wide abstention calibration, or exact lexical equivalence when explicit word-alignment evidence is absent. New reflexes remain continuous work and must earn their own promotion evidence.
+
+## CAP-010 — Scoped conversation continuity with durable/transient separation
+
+**Learned from:** `CW-004 — Conversation Runtime Internal Alpha`.
+
+**Reusable capabilities retained**
+- load canonical persisted project context before contributing instead of requiring a human re-brief;
+- separate grounded durable decisions/learning from speculative or transient dialogue before persistence;
+- close a meeting into a replayable durable record;
+- verify continuity in a fresh session rather than relying on same-process recall;
+- keep internal conversational capability and public-product authorization as separate gates;
+- preserve authority limits around doctrinal, pastoral, publication and other consequential decisions.
+
+**Useful in current/future work**
+- internal project runtime and long-running engineering/research work;
+- scoped Conversation Memory v1 regression design;
+- future cross-session project handoff;
+- any Doré workstream that must resume from evidence without restating the project history.
+
+**Boundary / caution**
+Internal Alpha proves a bounded persisted active-project path. It does not prove public conversation readiness, multi-tenant isolation, semantic-memory quality, multi-project stress behavior or long-horizon production robustness.
+
+## CAP-011 — Product evidence-boundary discipline inside ONE
+
+**Learned from:** `CW-005 — Researcher 01 ONE Lab`.
+
+**Reusable capabilities retained**
+- distinguish Scripture evidence from editorial synthesis, external-source pointers and diagnostic prompts;
+- treat prompts/questions as stimuli rather than answers;
+- require independent verification before external links or product prose become research evidence;
+- reject invented routes/cross-references when the product does not support them;
+- use a live product as an internship surface without silently promoting its state into Core truth.
+
+**Useful in current/future work**
+- ONE maintenance and future chapter expansion;
+- Search answer construction that consumes ONE context;
+- Library relationship curation;
+- Journal/Devotional research that reuses product notes;
+- future product-education loops where product material is both useful and epistemically bounded.
+
+**Boundary / caution**
+The 22/22 lab exam is a bounded evidence-discipline milestone on the then-current ONE surfaces, not proof of general research mastery or permanent correctness of later ONE content.
+
+## CAP-012 — External Doré service-contract integration for subtitle products
+
+**Learned from:** `CW-012 — Westside Stories first Doré external-worker integration`.
+
+**Reusable capabilities retained**
+- expose Doré capability through a stable versioned service contract rather than sharing internal indexes with a consumer;
+- preserve subtitle sequence numbers/timestamps while applying corrections only to text lines;
+- fail explicitly when the Doré service is unavailable or returns an unexpected schema instead of silently claiming successful proofreading;
+- keep conservative high-confidence normalization separate from later richer Scripture-context/vocabulary capabilities;
+- distinguish executable consumer integration and packaging from live packaged-product verification.
+
+**Useful in current/future work**
+- Westside Stories packaged-App verification and later subtitle upgrades;
+- other external Westside products that should consume Doré through stable service boundaries;
+- P01 output adapters where structure preservation and explicit failure semantics matter;
+- future worker/version migrations that need contract regression rather than internal coupling.
+
+**Boundary / caution**
+This retained capability is proven at the executable-consumer/service-boundary level. It does not prove a distributed macOS App has completed a live end-to-end run against the production Doré endpoint, and it does not prove P01 completion.
