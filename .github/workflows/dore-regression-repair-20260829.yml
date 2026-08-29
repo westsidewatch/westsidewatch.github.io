@@ -1,0 +1,78 @@
+name: Dore regression repair 2026-08-29
+on:
+  push:
+    paths:
+      - '.github/workflows/dore-regression-repair-20260829.yml'
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Repair Doré conversation contracts
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('local/dore-local/dore_local.py')
+          s=p.read_text(encoding='utf-8')
+          old="""Conversation voice rule: I am Doré; I do not role-play Doré as a fictional character. Answer directly in first person. Do not generate stage directions, screenplay narration, parenthetical acting cues, fictional ambience, imagined sounds, invented sensory experiences, or descriptions of my voice/body/appearance. Do not claim that I paused, refreshed, searched, remembered, inspected, sensed, heard, saw, changed state, or performed any system/tool action unless that action actually occurred and is supported by runtime evidence supplied in this turn. Never decorate an answer with invented internal states. If an actual retrieval/tool/system action occurred, describe it plainly and only when useful.\n"""
+          new=old+"""Language contract: Follow the user's primary language and writing system. When the user writes Chinese, answer in Chinese and do not introduce Japanese kana, Thai, Hangul or another script unless the user asks for that language or the quoted source requires it. Do not randomly switch scripts.\nCapability contract: Do not infer Doré's capabilities from the foundation model. Doré's capabilities come from runtime tools and durable system state. Never say Doré cannot perform an action merely because the current model is text-only. If capability evidence is not supplied, say the capability is not verified instead of inventing a limitation. Do not output meta-report headings such as System Boundary Assessment, Capability Constraint Analysis, Proposed Workflow or self-evaluations unless the user explicitly requests an audit/report. Answer ordinary requests directly.\n"""
+          if 'Language contract:' not in s:
+              if old not in s: raise SystemExit('voice anchor missing')
+              s=s.replace(old,new,1)
+          oldrec="""def recall(project,cid,q,limit=18):\n terms=query_terms(q)\n with db() as c: rows=[dict(x) for x in c.execute('SELECT * FROM dore_messages WHERE project_id=? ORDER BY created_at DESC',(project,))]\n scored=[]\n for r in rows:\n  hits=sum(1 for t in terms if t in r['content'].lower()); same=(r['conversation_id']==cid); r['_score']=hits*10+(5 if same else 0)\n  if hits or same: scored.append(r)\n return sorted(sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit],key=lambda x:x['created_at'])\n"""
+          newrec="""def recall(project,cid,q,limit=18):\n terms=query_terms(q)\n with db() as c:\n  rows=[dict(x) for x in c.execute(\"SELECT * FROM dore_messages WHERE project_id IN (?, 'aug-history', 'dore-global') ORDER BY created_at DESC\",(project,))]\n scored=[]\n for r in rows:\n  text=r['content'].lower(); hits=sum(1 for t in terms if t in text); same=(r['conversation_id']==cid); source_bonus=4 if r.get('project_id')=='aug-history' and hits else 0; r['_score']=hits*10+(8 if same else 0)+source_bonus\n  if hits or same: scored.append(r)\n best=sorted(scored,key=lambda x:(x['_score'],x['created_at']),reverse=True)[:limit]\n # Keep selected historical evidence chronological so nearby user/assistant exchanges remain intelligible.\n return sorted(best,key=lambda x:x['created_at'])\n"""
+          if "project_id IN (?, 'aug-history'" not in s:
+              if oldrec not in s: raise SystemExit('recall anchor missing')
+              s=s.replace(oldrec,newrec,1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          python3 -m py_compile local/dore-local/dore_local.py
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('static/dore/dore-search-runtime.js')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("wait.innerHTML=`<div class=\"who\">DORÉ</div><div>${markdown(d.reply||'')}</div>`;if(count)count.textContent='已保存 · Local · 最新在上';", "const provider=(d.provider?.name||d.provider||'dore-local');const providerLabel=/cloudflare/i.test(String(provider))?'Cloudflare':'Local';wait.innerHTML=`<div class=\"who\">DORÉ · ${providerLabel}</div><div>${markdown(d.reply||'')}</div>`;if(count)count.textContent=`已保存 · ${providerLabel} · 最新在上`;const state=$('#dore-ai-state');if(state)state.textContent=`Conversation · ${providerLabel} · 對話會立即保存，可離開後再回來繼續。`;",1)
+          s=s.replace("window.DoreSearchRuntime={version:'7.1.0'", "window.DoreSearchRuntime={version:'7.2.0'",1)
+          p.write_text(s,encoding='utf-8')
+          PY
+          node --check static/dore/dore-search-runtime.js
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('local/dore-local/dore_local.py').read_text()
+          assert "'aug-history'" in s
+          assert 'Language contract:' in s
+          assert 'Capability contract:' in s
+          r=Path('static/dore/dore-search-runtime.js').read_text()
+          assert 'providerLabel' in r and "version:'7.2.0'" in r
+          print('REGRESSION_REPAIR_STATIC_PASS')
+          PY
+      - name: Add regression contract test
+        run: |
+          cat > local/dore-local/test_regression_contracts.py <<'PY'
+          from pathlib import Path
+          core=Path(__file__).with_name('dore_local.py').read_text(encoding='utf-8')
+          ui=(Path(__file__).parents[2]/'static/dore/dore-search-runtime.js').read_text(encoding='utf-8')
+          assert "project_id IN (?, 'aug-history', 'dore-global')" in core
+          assert 'Language contract:' in core
+          assert 'Capability contract:' in core
+          assert 'System Boundary Assessment' in core
+          assert 'providerLabel' in ui
+          assert "version:'7.2.0'" in ui
+          print('DORE_REGRESSION_CONTRACT_PASS')
+          PY
+          python3 local/dore-local/test_regression_contracts.py
+      - name: Commit repairs and remove one-shot workflow
+        run: |
+          rm .github/workflows/dore-regression-repair-20260829.yml
+          git config user.name 'dore-ci'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add local/dore-local/dore_local.py static/dore/dore-search-runtime.js local/dore-local/test_regression_contracts.py .github/workflows/dore-regression-repair-20260829.yml
+          git commit -m 'dore: restore memory language capability and provider contracts'
+          git push
