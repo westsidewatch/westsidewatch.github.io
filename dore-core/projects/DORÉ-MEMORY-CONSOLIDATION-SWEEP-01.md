@@ -368,3 +368,29 @@ Current disposition:
 - diagnostic files: retain as provenance-bearing rolling evidence, not canonical work-register truth by themselves.
 
 Sweep status remains `ACTIVE_PARALLEL`; the current `dore-core/memory/` family is now explicitly revalidated, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
+
+## Checkpoint 25 — Cloudflare Journal/Liming media-placement reconciliation (2026-08-29)
+
+Bounded evidence reviewed in this pass:
+
+- current `dore-core/cloudflare/` family inventory;
+- `JOURNAL-LIMING-MEDIA-MILESTONE-2026-08-24.md`;
+- `JOURNAL-LIMING-MEDIA-INVENTORY-2026-08-24.json` as referenced by that milestone;
+- canonical Master Register placement interpretation for Journal/Liming/Cloudflare work.
+
+Reconciliation findings:
+
+1. The Journal + Liming media milestone is a legitimate bounded **zero-migration completion**, not a skipped task. The audit found no eligible local Journal or Liming binary-media collection at that point, so `0` R2 writes, `0` D1 media rows and `0` GitHub binary removals were the correct result under the placement policy.
+2. The durable placement rule is sound: versioned editorial/build data such as `data/volumes/vol-00.yaml` and `data/resources.json` remain in GitHub; independently addressable owned/downloaded binaries may use private R2 with D1 registry links. Moving JSON/YAML merely because R2 exists would create a worse source-of-truth model.
+3. The milestone explicitly defers Search/corpus JSON and Doré Brain/runtime data to a separate **structured data-runtime audit**. No evidence of that named follow-on audit was found in this bounded batch. This is not a regression in the completed media-placement milestone; it is a distinct still-unverified storage/runtime decision family.
+4. The Master Register already correctly summarizes Cloudflare service/placement milestones and Liming media-placement history, so no row/status change is required from this batch. The zero-migration milestone remains historical completion evidence, while any future structured-data move must be evaluated by access pattern, build atomicity, update frequency, size, reader latency and competing-master risk rather than by storage fashion.
+5. No new revisit candidate is warranted for the zero-migration decision itself. Revisit should trigger only when Journal/Library acquire material owned binary collections, or when Search/corpus/runtime access patterns make the deferred structured data-runtime audit high leverage.
+6. No P01 subtitle-runtime state, deployment, binding, credential, ordering or blocker condition was modified.
+
+Current disposition:
+
+- Journal/Liming binary-media placement audit: `VERIFIED_COMPLETE` as a bounded zero-migration milestone;
+- future owned Journal/Library media placement: `MAINTENANCE / POLICY-DRIVEN` under existing product/storage architecture;
+- deferred Search/corpus structured data-runtime audit: `UNKNOWN_NEEDS_EVIDENCE` as a distinct future storage decision, not a blocker to the completed media milestone.
+
+Sweep status remains `ACTIVE_PARALLEL`; the Cloudflare Journal/Liming media-placement evidence is now explicitly revalidated, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
