@@ -158,3 +158,25 @@ The method is reusable, but individual concept reconstructions remain source-dep
 
 **Boundary / caution**
 The course's final integration harness is not production subtitle/Search accuracy proof and does not independently benchmark all candidate generation. Cross-verse and paraphrase retrieval remain follow-up evidence questions.
+
+## CAP-008 — Governed private-media migration and verified delivery cutover
+
+**Learned from:** `CW-011 — ONE Priority-A private R2 delivery/runtime cutover` plus the bounded Priority-B five-asset site-media cutover recorded in `DORÉ-CLOUDFLARE-ASSET-SEARCH-RUNTIME-EVIDENCE-LEDGER-2026-08-28.md`.
+
+**Reusable capabilities retained**
+- assign a stable public `asset_code` identity rather than exposing raw object-store paths;
+- keep locator/hash/metadata in D1 while keeping binary media private in R2;
+- mediate browser delivery through controlled Pages Function routes;
+- verify delivered bytes against registered hashes before treating storage presence as successful migration;
+- cut active product references over only after governed delivery works, and remove rollback binaries only after post-cutover reference/runtime verification;
+- decide GitHub-versus-R2 placement semantically: large runtime/content media may migrate, while code/UI-coupled identity assets and source-locked libraries may correctly remain in GitHub.
+
+**Useful in current/future work**
+- Journal media migration;
+- Liming Library media placement and delivery;
+- future shared site-media consolidation;
+- any product that needs stable media identity independent of storage location;
+- migration/cleanup work where byte integrity, rollback safety and provenance matter more than nominal object-store presence.
+
+**Boundary / caution**
+The verified milestones cover the selected Priority-A ONE set and the bounded five Priority-B shared site assets only. They do not prove all Journal/Library media should move to R2, do not authorize moving source-locked Doré originals, and do not prove unrelated structured-data/Search runtime migrations. Each later migration needs its own inventory, placement decision, runtime/hash verification and safe-cleanup evidence.
