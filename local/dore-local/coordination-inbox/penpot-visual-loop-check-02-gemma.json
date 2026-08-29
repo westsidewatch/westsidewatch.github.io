@@ -1,0 +1,18 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-visual-loop-check-02-gemma",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_execute",
+  "subject": "Migration 01 — verify export visual loop on active Doré engine only",
+  "body": "Use the REAL current Penpot file and active Doré engine only. Do not use or request any retired or separate visual model. Find or switch to the page named 'Migration 01 — 新西望'. Add one small temporary but visible object labeled or identifiable as 'VISUAL LOOP CHECK 02' without disturbing existing content. Call export_shape for the entire current page as PNG. If direct MCP image content is absent, use the filePath fallback. Feed the actual PNG to Doré visual verification using the same active engine selected by DORE_LOCAL_MODEL. Return model, vision_model, trace image_count/visual_source, and visual_checks. The task is complete only if model == vision_model, a real PNG reaches visual verification, and verification returns PASS. If the active engine cannot accept images, return that exact engine capability error rather than looking for another model.",
+  "requires_reply": false,
+  "priority": "high",
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": [
+    "penpot-export-shape-image-recovery",
+    "active-engine-only-visual-verification",
+    "retired-engine-purge"
+  ]
+}
