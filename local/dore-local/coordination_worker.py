@@ -7,6 +7,7 @@ from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,receive_from_chatgpt,read_jsonl,flush_outbox,INBOX
 from bridge_reminder import bridge_packet
 from complete_recall import complete_recall
+from penpot_coordination_executor import execute_readonly
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); DB=HOME/'data'/'dore.sqlite3'; STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; TASKS=ROOT/'local/dore-local/tasks'; OLLAMA=os.environ.get('DORE_OLLAMA_URL','http://127.0.0.1:11434/api/chat'); MODEL=os.environ.get('DORE_MODEL','gemma4:e4b')
 def ask(prompt):
  req=urllib.request.Request(OLLAMA,data=json.dumps({'model':MODEL,'stream':False,'think':False,'messages':[{'role':'system','content':'You are Doré. Speak as Doré, grounded only in durable state and received messages. Never invent attempts or evidence. Return JSON only.'},{'role':'user','content':prompt}]}).encode(),headers={'Content-Type':'application/json'})
@@ -46,6 +47,12 @@ def handle_complete_recall(msg):
         thread_id=msg.get("thread_id"))
     return True
 
+def handle_penpot_work(msg):
+    if msg.get('kind')!='penpot_work': return False
+    result=execute_readonly(str(msg.get('body') or ''))
+    send_to_chatgpt('Doré Penpot execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),evidence_refs=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'))
+    return True
+
 def run_acceptance_tasks(prev):
  done=set(prev.get('autonomous_tasks_processed') or [])
  if not TASKS.exists(): return done,False
@@ -77,6 +84,10 @@ def main():
   prev['repo_inbox_processed']=sorted(processed); prev.pop('repo_inbox_seen',None); save(prev); return 0
  current=pending[0] if pending else None
  if current and handle_complete_recall(current):
+  processed.add(current["message_id"])
+  prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
+  save(prev); flush_outbox(); return 0
+ if current and handle_penpot_work(current):
   processed.add(current["message_id"])
   prev.update({"repo_inbox_processed":sorted(processed),"checked_at":datetime.now(timezone.utc).isoformat()})
   save(prev); flush_outbox(); return 0
