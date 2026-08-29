@@ -8,6 +8,7 @@ from coordination_mailbox import send_to_chatgpt,receive_from_chatgpt,read_jsonl
 from bridge_reminder import bridge_packet
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
+from penpot_agent import run_task
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); DB=HOME/'data'/'dore.sqlite3'; STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; TASKS=ROOT/'local/dore-local/tasks'; OLLAMA=os.environ.get('DORE_OLLAMA_URL','http://127.0.0.1:11434/api/chat'); MODEL=os.environ.get('DORE_MODEL','gemma4:e4b')
 def ask(prompt):
  req=urllib.request.Request(OLLAMA,data=json.dumps({'model':MODEL,'stream':False,'think':False,'messages':[{'role':'system','content':'You are Doré. Speak as Doré, grounded only in durable state and received messages. Never invent attempts or evidence. Return JSON only.'},{'role':'user','content':prompt}]}).encode(),headers={'Content-Type':'application/json'})
@@ -48,9 +49,17 @@ def handle_complete_recall(msg):
     return True
 
 def handle_penpot_work(msg):
-    if msg.get('kind')!='penpot_work': return False
-    result=execute_readonly(str(msg.get('body') or ''))
-    send_to_chatgpt('Doré Penpot execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),evidence_refs=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'))
+    kind=msg.get('kind')
+    if kind not in ('penpot_work','penpot_execute'): return False
+    task=str(msg.get('body') or '').strip()
+    if kind=='penpot_execute':
+        brief=str(msg.get('design_brief') or msg.get('brief') or task).strip()
+        result=run_task(task,brief)
+        evidence=['penpot-live-mutation-execution','penpot-visual-verification','source-message:'+str(msg.get('message_id') or '')]
+    else:
+        result=execute_readonly(task)
+        evidence=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')]
+    send_to_chatgpt('Doré Penpot execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),evidence_refs=evidence,thread_id=msg.get('thread_id'))
     return True
 
 def run_acceptance_tasks(prev):
