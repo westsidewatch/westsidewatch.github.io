@@ -40,29 +40,58 @@ jobs:
           s=s.replace("; env.pop('DORE_LOCAL_VISION_MODEL',None);", ";")
           p.write_text(s,encoding='utf-8')
           PY
-      - name: Validate current tree
+      - name: Validate current tree and preserve visual core
         run: |
           python3 -m py_compile local/dore-local/penpot_agent.py local/dore-local/local_updater.py local/dore-local/learning_worker.py
           python3 - <<'PY'
           from pathlib import Path
           import subprocess
+
           forbidden=['qwen','retired-engine','DORE_LOCAL_VISION_MODEL']
           tracked=subprocess.check_output(['git','ls-files']).decode().splitlines()
           hits=[]
           for rel in tracked:
             p=Path(rel)
-            if not p.is_file(): continue
-            try: t=p.read_text(encoding='utf-8')
-            except Exception: continue
+            if not p.is_file():
+              continue
+            try:
+              t=p.read_text(encoding='utf-8')
+            except Exception:
+              continue
             low=t.lower()
             for token in forbidden:
-              if token.lower() in low: hits.append((rel,token))
+              if token.lower() in low:
+                hits.append((rel,token))
           if hits:
             raise SystemExit('FORBIDDEN_ENGINE_RESIDUE:'+repr(hits[:100]))
-          assert "MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')" in Path('local/dore-local/penpot_agent.py').read_text()
-          assert 'VISION_MODEL = MODEL' in Path('local/dore-local/penpot_agent.py').read_text()
-          assert "MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b')" in Path('local/dore-local/learning_worker.py').read_text()
+
+          agent=Path('local/dore-local/penpot_agent.py').read_text(encoding='utf-8')
+          setup=Path('local/dore-local/setup-penpot-mcp.sh').read_text(encoding='utf-8')
+          worker=Path('local/dore-local/learning_worker.py').read_text(encoding='utf-8')
+
+          # Single active engine source.
+          assert "MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')" in agent
+          assert 'VISION_MODEL = MODEL' in agent
+          assert 'VISION_MODEL="$MODEL"' in setup
+          assert "MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b')" in worker
+
+          # Active visual core must survive cleanup intact.
+          required_visual_core=[
+            'def visual_verify(',
+            "'images':[image_b64]",
+            "name=='export_shape'",
+            'filePath-fallback',
+            'base64.b64encode',
+            'visual_checks',
+            "checks[-1].get('verdict')=='PASS'",
+            "'vision_model':VISION_MODEL",
+          ]
+          missing=[x for x in required_visual_core if x not in agent]
+          if missing:
+            raise SystemExit('ACTIVE_VISUAL_CORE_DAMAGED:'+repr(missing))
+
           print('DORE_ENGINE_SINGLE_SOURCE_PASS')
+          print('DORE_ACTIVE_VISUAL_CORE_PRESERVED_PASS')
           PY
       - name: Commit cleanup and remove one-shot workflow
         run: |
