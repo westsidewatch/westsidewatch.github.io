@@ -15,6 +15,46 @@ A larger database is not sufficient. A successful product answer to one known qu
 
 This loop must be shared by Doré Bible Search, ONE, future subtitle proofreading, Dawn Library and later Doré work nodes.
 
+## Capability Exoskeleton Principle — equip before expecting performance
+
+Doré is intentionally allowed to operate with small/local/free models. Their model-level limits must not be treated as a reason to force every capability into the model itself or to depend on progressively larger paid models.
+
+For every new class of real work, the default preparation sequence is:
+
+`define the real job → inspect the capability gap → equip Doré with the right external capabilities → connect those capabilities to observable work → let Doré perform → evaluate the real result → retain reusable learning → reduce unnecessary external assistance over time`
+
+The mental model is game equipment: **before asking a small model to fight a harder battle, equip the agent.** The equipment may include deterministic tools, local software, open-source components, MCP/CLI/API adapters, structured memory, retrieval, validators, visual feedback, test harnesses, workflows, domain rules, datasets, and larger-model assistance such as ChatGPT when genuinely needed.
+
+This is not a workaround at the edge of Doré. It is a core method for using, training and growing Doré under small-model and free-compute constraints.
+
+A capability package should function as an **exoskeleton** around the model:
+
+`small/local model + tools + memory + evidence + feedback + validators + workflows + optional expert-model assistance → capable work agent`
+
+The purpose of the exoskeleton is not merely to complete one task. Real work must teach Doré how to use the equipment and must leave transferable capability behind. Repeated external assistance should therefore be converted, where possible, into durable assets such as:
+
+- a reusable tool or adapter;
+- a deterministic workflow or recovery procedure;
+- a learned domain rule with evidence;
+- a validator or acceptance test;
+- a project/brand decision memory;
+- a failure pattern and diagnosis route;
+- a routing rule describing when Doré can act alone and when it should request stronger assistance.
+
+The desired progression is:
+
+`human → ChatGPT/expert reasoning → Doré → equipped work environment`
+
+then, after verified learning:
+
+`human → Doré → equipped work environment`
+
+with Doré independently escalating to ChatGPT or another stronger resource only when its current equipment and verified capability are insufficient.
+
+Therefore, when Doré enters a new professional work domain, **do not begin by repeatedly prompting the small model harder. Build or assemble the workbench first.** The workbench itself becomes part of Doré's education.
+
+Doré Design is the first explicit implementation of this pattern: it is simultaneously a production tool, a learning environment, and a capability exoskeleton. The same pattern should be reusable for future research, publishing, Bible study, subtitle, web, office, media, and other work nodes.
+
 ## Resource Discovery and Reuse Principle
 
 Doré must treat discovery of already-built external capabilities as a permanent part of learning and work, not as an occasional manual search.
