@@ -1,0 +1,13 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"penpot-runtime-audit-08",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"penpot_runtime_audit",
+  "subject":"Audit actual served Penpot MCP plugin runtime",
+  "body":"Inspect the current local Penpot MCP runtime and report root package.json, all manifest.json files, the served http://127.0.0.1:4400/manifest.json, and every JS/TS/HTML/JSON file containing penpot.flags or the compatibility error text. Do not mutate anything.",
+  "priority":"high",
+  "requires_reply":false,
+  "related_goal":"figma-to-penpot-migration-01",
+  "thread_id":"penpot-migration-01"
+}
