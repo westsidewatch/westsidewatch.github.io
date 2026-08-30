@@ -1,0 +1,13 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"penpot-ai-kit-adoption-01",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "subject":"Adopt Penpot AI Kit workflow layer before further homepage design",
+  "kind":"penpot_ai_kit_adoption",
+  "priority":"high",
+  "thread_id":"penpot-migration-01",
+  "related_goal":"figma-to-penpot-migration-01",
+  "body":"Study and adopt the official penpot/penpot-ai-kit as Doré's Penpot behavior/workflow layer. Do not replace our already working local Penpot MCP transport. Use local/generic mode concepts: AGENTS instructions, penpot-router, penpot-build-screen, workflows/routing, workflows/brief-to-screen, shared visual-self-review, plugin API gotchas, policies/modes, and eval patterns. First implement a local adapter/seed under ~/.penpot-ai-kit or Doré runtime without introducing paid dependencies. Then run a capability probe against the live local MCP. Report exact installed/adopted version, files, capability-probe result, and any blockers. Do not begin homepage design until this layer is verified. Source: https://github.com/penpot/penpot-ai-kit",
+  "created_at":"2026-08-30T13:25:00Z"
+}
