@@ -1,0 +1,12 @@
+{
+  "message_id": "design-provider-bakeoff-01",
+  "sender": "chatgpt",
+  "kind": "local_exec",
+  "subject": "Doré Design Provider Bake-off — environment and candidate preflight",
+  "related_goal": "dore-design-provider-selection",
+  "commands": [
+    {"argv":["bash","-lc","printf 'SYSTEM\\n'; sw_vers 2>/dev/null || true; printf '\\nNODE\\n'; node --version; printf '\\nNPM\\n'; npm --version; printf '\\nCHROME\\n'; test -d '/Applications/Google Chrome.app' && echo yes || echo no; printf '\\nOPENPENCIL\\n'; command -v openpencil-mcp || true; printf '\\nPENPOT_MCP\\n'; test -d "$HOME/.dore/runtime/penpot-ai-kit" && echo ai-kit-present || true"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["npm","view","@open-pencil/mcp","version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["npm","view","framesmith","version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ]
+}
