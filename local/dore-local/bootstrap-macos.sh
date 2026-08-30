@@ -2,10 +2,10 @@
 set -euo pipefail
 ROOT="${DORE_LOCAL_HOME:-$HOME/.dore}"
 MODEL="${DORE_LOCAL_MODEL:-gemma4:e4b}"
-# Embeddings are a separate replaceable subsystem. Keep the existing embedding
-# model during the conversation-engine migration so memory retrieval does not
-# change at the same time as generation. It can be migrated independently.
-EMBED_MODEL="${DORE_LOCAL_EMBED_MODEL:-retired-engine3-embedding:0.6b}"
+# Embeddings are optional and independent from the active reasoning engine.
+# Do not invent or auto-select an embedding model. Only provision one when an
+# explicit DORE_LOCAL_EMBED_MODEL is supplied by the runtime configuration.
+EMBED_MODEL="${DORE_LOCAL_EMBED_MODEL:-}"
 
 echo "Doré Local bootstrap"
 echo "Home: $ROOT"
@@ -75,19 +75,26 @@ fi
 
 echo "Pulling local conversation model: $MODEL"
 ollama pull "$MODEL"
-echo "Pulling local embedding model: $EMBED_MODEL"
-ollama pull "$EMBED_MODEL"
+if [[ -n "$EMBED_MODEL" ]]; then
+  echo "Pulling explicitly configured local embedding model: $EMBED_MODEL"
+  ollama pull "$EMBED_MODEL"
+else
+  echo "No embedding model configured; skipping embedding provisioning."
+fi
 
 cat > "$ROOT/node.env" <<EOF
 DORE_LOCAL_HOME=$ROOT
 DORE_LOCAL_HOST=127.0.0.1
 DORE_LOCAL_PORT=8788
 DORE_LOCAL_MODEL=$MODEL
-DORE_LOCAL_EMBED_MODEL=$EMBED_MODEL
 OLLAMA_BASE_URL=http://127.0.0.1:11434
 EOF
+if [[ -n "$EMBED_MODEL" ]]; then
+  printf 'DORE_LOCAL_EMBED_MODEL=%s\n' "$EMBED_MODEL" >> "$ROOT/node.env"
+fi
 chmod 600 "$ROOT/node.env"
 
 echo "DORE_LOCAL_BOOTSTRAP_PASS"
 echo "Database: $DB"
-echo "Models: $MODEL ; $EMBED_MODEL"
+echo "Conversation model: $MODEL"
+if [[ -n "$EMBED_MODEL" ]]; then echo "Embedding model: $EMBED_MODEL"; fi
