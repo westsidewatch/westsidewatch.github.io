@@ -1,0 +1,14 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-export-breakpoint-04-2133-connected",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_export_probe",
+  "subject": "Penpot PNG probe 04 — MCP 2.13.3 connected",
+  "body": "Run the deterministic Penpot export probe immediately against the current @penpot/mcp@2.13.3 runtime while the Penpot plugin is visibly already connected. Do not use LLM tool planning. Call export_shape for shapeId page and format png. Do not mutate the design. Return exact MCP/plugin/export text plus image_count, visual_source, visual_fallback_error, result_content_types, and visual_diagnostics.",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": ["penpot-plugin-already-connected", "mcp-2.13.3", "pnpm-10.28.2"],
+  "thread_id": "penpot-migration-01"
+}
