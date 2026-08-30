@@ -48,7 +48,9 @@ def dispatch(msg):
   if not result.get('ok'):raise RuntimeError('penpot_ai_kit_adoption_failed')
   return
  if kind=='penpot_execute':
-  brief=str(msg.get('design_brief') or msg.get('brief') or msg.get('task') or task).strip();reply(msg,run_task(task,brief),['penpot-live-mutation-execution','penpot-visual-verification']);return
+  brief=str(msg.get('design_brief') or msg.get('brief') or msg.get('task') or task).strip();result=run_task(task,brief);reply(msg,result,['penpot-live-mutation-execution','penpot-visual-verification']);
+  if not result.get('ok'):raise RuntimeError('penpot_execute_failed:'+str(result.get('error') or 'unknown'))
+  return
  if kind=='penpot_work':reply(msg,execute_readonly(task),['penpot-live-tool-execution']);return
  if kind=='penpot_export_probe':reply(msg,call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'}),['penpot-export-probe']);return
  if kind=='penpot_mcp_reprovision':
@@ -56,7 +58,6 @@ def dispatch(msg):
  raise RuntimeError('unsupported_kind:'+str(kind))
 def main():
  flush_outbox()
- if not DB.exists():return 0
  state=load_state();done,queue=pending(state)
  for msg in queue[:MAX_PER_RUN]:
   mid=msg['message_id'];attempts=(state.get('attempts') or {}).get(mid,0)+1;state.setdefault('attempts',{})[mid]=attempts;state['active_message_id']=mid;save(state)
