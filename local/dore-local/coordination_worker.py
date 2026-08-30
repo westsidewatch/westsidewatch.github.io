@@ -44,9 +44,8 @@ def local_exec(msg):
   results.append({'index':i,'argv':argv,'cwd':str(cwd),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]})
   if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i}
  return {'ok':True,'results':results}
-def design_bakeoff():
- script=ROOT/'local/dore-local/dore_design_bakeoff.py'
- cp=subprocess.run(['python3',str(script)],cwd=ROOT,text=True,capture_output=True,timeout=1800)
+def run_script(name,timeout=1800):
+ cp=subprocess.run(['python3',str(ROOT/'local/dore-local'/name)],cwd=ROOT,text=True,capture_output=True,timeout=timeout)
  result={'ok':cp.returncode==0,'returncode':cp.returncode,'stderr':(cp.stderr or '')[-12000:]}
  try:result.update(json.loads((cp.stdout or '').strip().splitlines()[-1]))
  except:result['stdout']=(cp.stdout or '')[-20000:]
@@ -70,8 +69,12 @@ def ai_kit_adopt(msg):
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
  if kind=='dore_design_bakeoff':
-  result=design_bakeoff();reply(msg,result,['dore-evolution-run-001','design-equipment-discovery','local-provider-provenance']);
+  result=run_script('dore_design_bakeoff.py');reply(msg,result,['dore-evolution-run-001','design-equipment-discovery','local-provider-provenance']);
   if not result.get('ok'):raise RuntimeError('dore_design_bakeoff_failed')
+  return
+ if kind=='dore_design_openpencil_trial':
+  result=run_script('dore_design_openpencil_trial.py');reply(msg,result,['dore-evolution-run-001','openpencil-real-work','structured-edit','render-verification']);
+  if not result.get('ok'):raise RuntimeError('dore_design_openpencil_trial_failed')
   return
  if kind=='local_exec':
   result=local_exec(msg);reply(msg,result,['dore-local-exec','local-self-repair']);
