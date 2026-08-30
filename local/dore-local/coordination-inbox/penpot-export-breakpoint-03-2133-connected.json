@@ -1,0 +1,13 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-export-breakpoint-03-2133-connected",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_export_probe",
+  "subject": "Verify Penpot 2.13.3 plugin connection and PNG export",
+  "body": "Run the deterministic Penpot export probe now against the reprovisioned @penpot/mcp@2.13.3 runtime. First verify whether a Penpot plugin instance is connected, then call export_shape for shapeId page, format png. Do not mutate the design. Return exact connection/export error if any, plus image_count, visual_source, visual_fallback_error, result_content_types, and visual_diagnostics.",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "thread_id": "penpot-migration-01"
+}
