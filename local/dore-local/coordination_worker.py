@@ -70,11 +70,28 @@ def handle_penpot_runtime_audit(msg):
  except Exception as e: report['served_manifest']='ERROR:'+type(e).__name__+':'+str(e)
  send_to_chatgpt('Doré Penpot runtime audit',json.dumps(report,ensure_ascii=False),requires_reply=False,priority='high',related_goal='figma-to-penpot-migration-01',evidence_refs=['penpot-runtime-audit','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));return True
 
+def _mcp_text(raw):
+ try:return '\n'.join(str(x.get('text') or '') for x in (((raw.get('result') or {}).get('content')) or []) if isinstance(x,dict) and x.get('type')=='text')
+ except Exception:return ''
 def handle_penpot_work(msg):
  kind=msg.get('kind')
- if kind not in ('penpot_work','penpot_execute','penpot_export_probe','penpot_compat_probe'):return False
+ if kind not in ('penpot_work','penpot_execute','penpot_export_probe','penpot_compat_probe','penpot_root_export_probe'):return False
  task=str(msg.get('body') or '').strip()
- if kind=='penpot_compat_probe':
+ if kind=='penpot_root_export_probe':
+  probes=[]; root_id=None
+  try:
+   meta=call_tool('execute_code',{'code':'return {rootId: penpot.root?.id || null, pageId: penpot.currentPage?.id || null, pageName: penpot.currentPage?.name || null, fileId: penpot.currentFile?.id || null, rootChildren: penpot.root?.children?.length ?? null};'})
+   probes.append({'tool':'execute_code','returned':True,'raw':meta}); txt=_mcp_text(meta)
+   try:
+    parsed=json.loads(txt); root_id=parsed.get('rootId') if isinstance(parsed,dict) else None
+   except Exception:
+    import re; m=re.search(r'"rootId"\s*:\s*"([^"]+)"',txt); root_id=m.group(1) if m else None
+  except Exception as e: probes.append({'tool':'execute_code','returned':False,'exception':type(e).__name__+': '+str(e)})
+  if root_id:
+   try: exp=call_tool('export_shape',{'shapeId':root_id,'format':'png','mode':'shape'}); probes.append({'tool':'export_shape','shapeId':root_id,'returned':True,'raw':exp})
+   except Exception as e: probes.append({'tool':'export_shape','shapeId':root_id,'returned':False,'exception':type(e).__name__+': '+str(e)})
+  result={'ok':bool(root_id) and len(probes)>1 and probes[-1].get('returned') is True,'root_id':root_id,'model':MODEL,'vision_model':VISION_MODEL,'probes':probes}; evidence=['penpot-root-export-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
+ elif kind=='penpot_compat_probe':
   probes=[]
   for name,args in [('high_level_overview',{}),('export_shape',{'shapeId':'page','format':'png','mode':'shape'})]:
    try: raw=call_tool(name,args); probes.append({'tool':name,'returned':True,'raw':raw})
