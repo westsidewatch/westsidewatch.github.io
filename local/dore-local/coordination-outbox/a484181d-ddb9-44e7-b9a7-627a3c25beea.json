@@ -1,0 +1,18 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"westside-ai-kit-clean-rebuild-03\", \"attempt\": 4, \"exception\": \"RuntimeError: penpot_execute_failed:penpot_task_mutation_failed\"}",
+  "created_at": "2026-08-30T19:45:08.693179+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "source-message:westside-ai-kit-clean-rebuild-03"
+  ],
+  "message_id": "a484181d-ddb9-44e7-b9a7-627a3c25beea",
+  "message_sha256": "b9d34a4764d8a66039edd4d730a61f09304eead59641c29975fa00c4e63478cc",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Immediate retry: clean and rebuild verified Westside Watch board",
+  "thread_id": "penpot-migration-01"
+}
