@@ -1,0 +1,13 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-mcp-reprovision-2133-pnpm10",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_mcp_reprovision",
+  "subject": "Reprovision Penpot MCP 2.13.3 with pnpm 10.28.2",
+  "body": "Rebuild the local Penpot MCP runtime from the current repository setup script. It is pinned to @penpot/mcp@2.13.3 and pnpm@10.28.2. Return stdout/stderr and success status, including whether http://127.0.0.1:4400/manifest.json becomes available. Do not alter Doré's active model or visual core.",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "thread_id": "penpot-migration-01"
+}
