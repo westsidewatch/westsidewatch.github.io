@@ -94,3 +94,27 @@ The corrected interpretation is:
 - this does **not** mean future structured datasets can never move, and it does not make Search product/cognition complete;
 - any future revisit is triggered by materially changed access patterns, delivery architecture, repository pressure, or measurable reliability/performance benefit—not by an unresolved historical audit claim;
 - no P01 state, dependency, priority, deployment, binding or credential was modified by this reconciliation.
+
+## Sweep 01 bounded revalidation — 2026-08-30
+
+This run re-read the canonical Sweep file through Checkpoint 25 and the current Master Work Register, then revalidated this ledger against the contradiction introduced in Checkpoint 25.
+
+**Classification and evidence judgment**
+
+1. `STRUCTURED-DATA-RUNTIME-AUDIT-2026-08-24.md`: retain `VERIFIED_COMPLETE` for the bounded storage/governance decision.
+2. `SEARCH-RUNTIME-CONSOLIDATION-2026-08-24.md`: retain `VERIFIED_COMPLETE` for the bounded shared browser lifecycle/compatibility milestone.
+3. Historical Cloudflare `next milestone` sequencing: retain as provenance, but current priority authority is `SUPERSEDED` by later milestones and the Master Work Register.
+4. The Checkpoint 25 sentence that the structured data-runtime audit was not found is itself superseded evidence, not a new missing-evidence item.
+5. No top-level Master Work Register status change is warranted: its current Cloudflare/service-placement interpretation is already compatible with this corrected evidence boundary, and `SEARCH` correctly remains `MAINTENANCE + DISCOVERY`.
+
+**Completed-work evaluation**
+
+- Original objective: prevent storage-fashion migrations and add a single extension-compatible browser Search lifecycle without replacing the proven Scripture engine.
+- Completion evidence: explicit PASS audit, implementing commit, and current runtime/script-order evidence retained in this ledger.
+- Current quality: still strong for the bounded architecture; deliberately insufficient for Search cognition/product-complete claims.
+- Retained capability: select storage by semantics/access pattern; extend proven runtimes through stable compatibility boundaries.
+- Debt: browser/Core search-intelligence parity and semantic intent/relevance remain separate open work already governed under Search.
+- Revisit trigger: material delivery architecture change, repository pressure, event-contract regression, or measurable reliability/performance gain from a new service boundary.
+- Current disposition: keep both bounded milestones closed; do not reactivate the old Cloudflare sequence; do not create a false missing-evidence blocker.
+
+No P01 subtitle critical-path state, deployment, credential, binding, ordering or blocker was modified in this bounded pass.
