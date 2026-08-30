@@ -8,7 +8,7 @@ from autonomous_learner import run_cycle
 REPO=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser()
 DORE=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()
 DB=DORE/'data'/'dore.sqlite3'; LOCK=DORE/'data'/'learning-worker.lock'; STATE=DORE/'data'/'learning-worker-state.json'; LOG=DORE/'logs'/'learning-worker.jsonl'
-MODEL=os.environ.get('DORE_LOCAL_MODEL','retired-engine'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
+MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
 
 def now(): return datetime.now(timezone.utc).isoformat()
 def emit(event,**extra):
@@ -31,8 +31,6 @@ def main():
                 progressed=any(r.get('verified') for r in executed)
                 productive=bool(result.get('productive_runs'))
                 emit('cycle',depth=depth,executed=executed,progressed=progressed)
-                # Continue immediately through a newly unlocked dependency chain. Stop when no new capability was verified,
-                # or when all remaining work is stagnant/blocked. This is compute-budgeted, not calendar-gated.
                 if not progressed: break
                 if not productive: break
             payload={'ok':True,'checked_at':now(),'cycles':cycles,'max_depth':max_depth,'calendar_gate':False}; STATE.write_text(json.dumps(payload,ensure_ascii=False,indent=2),encoding='utf-8')
