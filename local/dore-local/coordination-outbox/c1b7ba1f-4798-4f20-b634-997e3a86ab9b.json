@@ -1,0 +1,18 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"penpot-ai-kit-adoption-01\", \"attempt\": 1, \"exception\": \"RuntimeError: unsupported_kind:penpot_ai_kit_adoption\"}",
+  "created_at": "2026-08-30T13:32:15.092429+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "source-message:penpot-ai-kit-adoption-01"
+  ],
+  "message_id": "c1b7ba1f-4798-4f20-b634-997e3a86ab9b",
+  "message_sha256": "6f9c4a8f3423815d9ef1460de0b74ae135293ff6e094c9fd0ba996027ac9db99",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Adopt Penpot AI Kit workflow layer before further homepage design",
+  "thread_id": "penpot-migration-01"
+}
