@@ -1,0 +1,14 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"westside-ai-kit-clean-rebuild-02",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "subject":"Rebuild Westside Watch homepage from zero on verified existing board",
+  "kind":"penpot_execute",
+  "priority":"high",
+  "thread_id":"penpot-migration-01",
+  "related_goal":"figma-to-penpot-migration-01",
+  "body":"Target existing live Penpot board ID fca4e052-7a4d-80fd-8008-8f9d0e6b9771. Use installed Penpot AI Kit instructions. This is CLEAN_START on the existing verified board: inspect the exact board, remove all of its old homepage children, rename it exactly `00 — Westside Watch Homepage — CLEAN START`, and rebuild the homepage from zero inside that same board. Do not create another board and do not copy old children. Follow AI Kit discipline: inspect/router first; make the smallest useful mutations; validate structure after cleanup and after build stages; export exact board; visually self-review; revise obvious defects before completion. Direction: quiet intelligent architectural Christian editorial publication at dawn. Palette Living Paper #FAF9F5, Ink Black #252525, First Light Gold #A2872A, Watch Night #102A43. Cormorant Garamond English intent, Noto Serif TC Chinese intent. Restrained masthead/navigation, strong editorial hero, generous whitespace, fine rules, asymmetry, 5:8 visual relationships, stone/paper/light feeling, real Chinese editorial module. No SaaS cards, rounded dashboard UI, generic template look, or decorative gold overload. All elements must remain editable native Penpot layers. Acceptance: exact board is visibly transformed; old children are gone; new board name exact; real child structure exists; exact-board PNG succeeds; visual review passes after a review checkpoint. Return board ID/name/child count, cleanup evidence, build checkpoints, export evidence, visual verdict. Do not claim success without actual mutation and visual evidence.",
+  "design_brief":"Westside Watch / 西區守望 homepage clean rebuild. Preserve mature brand thinking, abandon old artifacts. Native Penpot editorial/church-cultural homepage, serious luminous architectural composition.",
+  "created_at":"2026-08-30T13:52:00Z"
+}
