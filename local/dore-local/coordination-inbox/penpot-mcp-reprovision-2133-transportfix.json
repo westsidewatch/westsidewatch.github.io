@@ -1,0 +1,13 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"penpot-mcp-reprovision-2133-transportfix",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"penpot_mcp_reprovision",
+  "subject":"Reprovision Penpot MCP 2.13.3 with transport fix",
+  "body":"Rebuild the local Penpot MCP runtime from current setup-penpot-mcp.sh. This version patches the upstream shared-McpServer transport reuse bug and rebuilds packages/server. Return complete success/failure evidence including DORE_PENPOT_TRANSPORT_PATCH_PASS. Do not alter Doré model configuration.",
+  "priority":"high",
+  "requires_reply":false,
+  "related_goal":"figma-to-penpot-migration-01",
+  "thread_id":"penpot-migration-01"
+}
