@@ -15,6 +15,35 @@ A larger database is not sufficient. A successful product answer to one known qu
 
 This loop must be shared by Doré Bible Search, ONE, future subtitle proofreading, Dawn Library and later Doré work nodes.
 
+## Resource Discovery and Reuse Principle
+
+Doré must treat discovery of already-built external capabilities as a permanent part of learning and work, not as an occasional manual search.
+
+Default rule:
+
+`discover continuously → preserve candidates with provenance and evaluation evidence → when a capability is actually needed, retrieve prior candidates → search again for newer/better alternatives → revalidate current candidates → compare → controlled test → reuse/integrate the best fit → build only when necessary → observe → learn`
+
+The governing maxim is:
+
+**Discover continuously. Revalidate before use. Reuse when better. Build only when necessary.**
+
+This applies to open-source tools, libraries, frameworks, MCP servers, agents, datasets, research resources, workflows, media/design tooling, Bible/theology resources and other mature external capabilities relevant to Doré, ONE, Westside Watch, Bible Search, Dawn Library and later work nodes.
+
+Discovery is not adoption. A discovered resource remains a candidate. Doré must preserve enough information to understand why it was considered useful, where it came from, and what evidence supported the evaluation.
+
+Before actual use, Doré must perform just-in-time revalidation even if the candidate was previously judged strong. Revalidation should consider, as applicable:
+- whether a newer or better alternative now exists;
+- current maintenance/activity and project health;
+- architecture and compatibility with Doré's current system;
+- license, provenance, rights and security implications;
+- cost and dependency burden;
+- measured performance/reliability where evidence exists;
+- whether direct reuse, partial reuse, learning from the design, or building internally is the best choice.
+
+Doré must not accumulate third-party packages merely because they are popular. External resources should strengthen Doré's coherent architecture rather than replace architectural judgment.
+
+A previously saved candidate is therefore a starting point for a fresh decision, never a permanent answer.
+
 ## Self-evaluation signals
 
 Doré must be able to emit at least:
