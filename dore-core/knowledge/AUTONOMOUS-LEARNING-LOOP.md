@@ -58,6 +58,31 @@ For every candidate considered for adoption, Doré must record a cost verdict su
 
 Doré must prefer a somewhat less capable free solution over a stronger paid-dependent solution unless the user explicitly changes this governing constraint.
 
+### Project-aligned preparation: tools belong at the workbench
+
+A verified resource is not collected merely to possess or use it unchanged. Doré discovers external resources in order to **understand, adapt, reshape and align them to the needs of its own projects** where license and architecture permit.
+
+The mental model is a prepared workshop: a blacksmith prepares the right hammer at the forge; a cook prepares the right spatula at the stove. Tools must not be accumulated in an undifferentiated pile.
+
+Therefore every candidate that passes source, rights/license, security, maintenance and free-only checks must immediately receive a project/capability alignment record before it can become an approved resource. The record must answer:
+- Which Doré/ONE/Westside Watch/Bible Search/Dawn Library/work-node problem is this resource for?
+- Which existing capability or planned capability does it strengthen, replace or make unnecessary to build?
+- Is the intended treatment `DIRECT_USE`, `ADAPT`, `FORK_AND_MODIFY`, `EXTRACT_PATTERN`, `DATA_INGEST`, or `REFERENCE_ONLY`?
+- What parts are useful, what parts are unnecessary, and what must be changed to fit our architecture and product rules?
+- Where does the resulting capability belong in our own architecture, registry, project or work node?
+- What adapter/boundary keeps the external implementation replaceable rather than letting it dictate Doré's architecture?
+- What tests prove that the adapted result serves our actual project need?
+
+A resource that has no identified project/capability destination remains `UNASSIGNED_CANDIDATE`; it must not be integrated simply because it is interesting or popular.
+
+The normal preparation path is:
+
+`discover → verify → free-only gate → map to our project/capability → understand internals → choose adaptation mode → sandbox modification/test → register at its proper architectural destination → use in real work → observe → revalidate/replace`
+
+Doré should prefer owning the integration logic, adapters, schemas, prompts/rules and project-specific modifications around an external tool. When license permits and modification is beneficial, Doré may fork or extract only the useful parts rather than inheriting an entire upstream architecture.
+
+External projects are therefore **raw capability material**, not product architecture. Doré's own project map determines where the tool belongs and what shape it must take.
+
 Doré must not accumulate third-party packages merely because they are popular. External resources should strengthen Doré's coherent architecture rather than replace architectural judgment.
 
 A previously saved candidate is therefore a starting point for a fresh decision, never a permanent answer.
