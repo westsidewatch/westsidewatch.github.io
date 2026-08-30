@@ -38,7 +38,8 @@ COREPACK="$RUNTIME/node_modules/.bin/corepack"
 [[ -x "$COREPACK" ]] || { echo "ERROR: Corepack executable missing" >&2; exit 3; }
 "$COREPACK" prepare pnpm@11.4.0 --activate
 
-"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.15.4 pnpm@11.4.0
+# Penpot Cloud 2.13.x production-compatible MCP package.
+"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.13.3 pnpm@11.4.0
 PKG_DIR="$RUNTIME/node_modules/@penpot/mcp"
 PKG="$PKG_DIR/package.json"
 WORKSPACE="$PKG_DIR/pnpm-workspace.yaml"
@@ -104,6 +105,7 @@ bash "$HERE/install-penpot-mcp-launchagent.sh"
 
 cat <<EOF
 DORE_PENPOT_MCP_PREP_PASS
+Penpot MCP package: @penpot/mcp@2.13.3
 Plugin manifest: http://localhost:4400/manifest.json
 MCP endpoint: http://localhost:4401/mcp
 Active Doré engine: $MODEL
