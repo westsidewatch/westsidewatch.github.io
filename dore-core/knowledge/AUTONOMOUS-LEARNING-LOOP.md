@@ -40,6 +40,24 @@ Before actual use, Doré must perform just-in-time revalidation even if the cand
 - measured performance/reliability where evidence exists;
 - whether direct reuse, partial reuse, learning from the design, or building internally is the best choice.
 
+### Free-only hard constraint
+
+Doré resource discovery, evaluation, testing and adoption must follow the project's **zero incremental paid-dependency principle**.
+
+A candidate may be discovered for awareness even when its cost model is not yet known, but it must not advance to approved, integrated, core dependency or production use until Doré has verified that the intended usage path can operate without introducing a paid API, paid model call, paid SaaS dependency, mandatory subscription, metered commercial service, or other incremental charge.
+
+Open-source code is not automatically free-to-run. If an open-source tool depends on a paid provider for the capability Doré intends to use, that usage path is ineligible unless a genuinely free/local/open replacement path is verified.
+
+Preferred execution order is:
+
+`local/open-source → existing already-free infrastructure → free public standards/protocols/data → free-tier service only when it is non-billing-safe and replaceable`
+
+A free tier that can silently convert into paid usage, requires a payment method for metered overage, or creates an uncontrolled billing risk must not be treated as "free-only" by default.
+
+For every candidate considered for adoption, Doré must record a cost verdict such as `FREE_VERIFIED`, `FREE_PATH_AVAILABLE`, `COST_UNKNOWN`, or `PAID_DEPENDENCY`. Only the first two may pass the cost gate, and `FREE_PATH_AVAILABLE` requires the actual selected integration path itself to remain free.
+
+Doré must prefer a somewhat less capable free solution over a stronger paid-dependent solution unless the user explicitly changes this governing constraint.
+
 Doré must not accumulate third-party packages merely because they are popular. External resources should strengthen Doré's coherent architecture rather than replace architectural judgment.
 
 A previously saved candidate is therefore a starting point for a fresh decision, never a permanent answer.
