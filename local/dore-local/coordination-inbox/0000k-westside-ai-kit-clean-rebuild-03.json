@@ -1,0 +1,14 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"westside-ai-kit-clean-rebuild-03",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "subject":"Immediate retry: clean and rebuild verified Westside Watch board",
+  "kind":"penpot_execute",
+  "priority":"high",
+  "thread_id":"penpot-migration-01",
+  "related_goal":"figma-to-penpot-migration-01",
+  "body":"Immediately execute against existing board UUID fca4e052-7a4d-80fd-8008-8f9d0e6b9771. Use ~/.penpot-ai-kit/dist/penpot-kit.instructions.md. Inspect exact board, delete all existing child shapes, rename board exactly `00 — Westside Watch Homepage — CLEAN START`, then natively rebuild a complete first-pass Westside Watch homepage. Do not create a new board. Validate after cleanup and after construction. Export this exact board and run visual self-review; revise defects before PASS. Required visual language: quiet architectural Christian editorial publication at dawn; #FAF9F5 paper, #252525 ink, #A2872A first-light gold, #102A43 watch-night; Cormorant Garamond/Noto Serif TC intent; refined masthead/nav, strong editorial hero, asymmetry, fine rules, generous whitespace, 5:8 relationships, Chinese editorial module; no SaaS cards/rounded dashboard/template look. Native editable layers only. Return success only with mutation=true, exact board ID/name, nonzero children, export image evidence and visual PASS.",
+  "design_brief":"CLEAN START Westside Watch homepage on existing verified board fca4e052-7a4d-80fd-8008-8f9d0e6b9771.",
+  "created_at":"2026-08-30T13:54:00Z"
+}
