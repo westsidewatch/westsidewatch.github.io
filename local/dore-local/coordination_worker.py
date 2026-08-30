@@ -38,6 +38,16 @@ def handle_complete_recall(msg):
  query=str(msg.get('query') or body).strip(); packet=complete_recall(query)
  send_to_chatgpt('Doré complete recall: '+query[:80],json.dumps(packet,ensure_ascii=False),requires_reply=False,priority='high',related_goal='complete-recall-automation',evidence_refs=['local-memory:'+str(packet.get('conversation_count',0))+'-conversations'],thread_id=msg.get('thread_id'));return True
 
+def handle_penpot_reprovision(msg):
+ if msg.get('kind')!='penpot_mcp_reprovision':return False
+ script=ROOT/'local/dore-local/setup-penpot-mcp.sh'
+ try:
+  cp=subprocess.run(['bash',str(script)],cwd=ROOT,text=True,capture_output=True,timeout=1800)
+  result={'ok':cp.returncode==0,'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]}
+ except Exception as e:
+  result={'ok':False,'error':type(e).__name__+':'+str(e)}
+ send_to_chatgpt('Doré Penpot MCP reprovision',json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal='figma-to-penpot-migration-01',evidence_refs=['penpot-mcp-reprovision','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));return True
+
 def handle_penpot_work(msg):
  kind=msg.get('kind')
  if kind not in ('penpot_work','penpot_execute','penpot_export_probe'):return False
@@ -80,6 +90,7 @@ def main():
  if not pending and prev.get('packet_sha256')==digest:prev['repo_inbox_processed']=sorted(processed);prev.pop('repo_inbox_seen',None);save(prev);return 0
  current=pending[0] if pending else None
  if current and handle_complete_recall(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
+ if current and handle_penpot_reprovision(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
  if current and handle_penpot_work(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
  new_messages=[current] if current else []
  prompt='''Review durable coordination state and NEW_MESSAGES. Continue autonomous work regardless of reply. If a new message explicitly asks for a simple reply, obey it exactly in body. Otherwise send only a useful coordination message. Return {"send":true|false,"subject":"...","body":"...","requires_reply":true|false,"priority":"normal|high","related_goal":"...","evidence_refs":[...]}.\nSTATE:\n'''+json.dumps(packet,ensure_ascii=False)+'\nNEW_MESSAGES:\n'+json.dumps(new_messages,ensure_ascii=False)
