@@ -1,0 +1,48 @@
+name: Doré Resource Discovery
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/resource_discovery_worker.py'
+      - 'local/dore-local/local_updater.py'
+      - 'dore-core/knowledge/AUTONOMOUS-LEARNING-LOOP.md'
+      - '.github/workflows/dore-resource-discovery.yml'
+  schedule:
+    - cron: '23 9 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  resource-discovery:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile worker and updater
+        run: python -m py_compile local/dore-local/resource_discovery_worker.py local/dore-local/local_updater.py
+      - name: Run bounded discovery smoke test
+        env:
+          DORE_REPO_ROOT: ${{ github.workspace }}
+          DORE_LOCAL_HOME: ${{ runner.temp }}/dore
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$DORE_LOCAL_HOME/data" "$DORE_LOCAL_HOME/logs"
+          python local/dore-local/resource_discovery_worker.py
+          python - <<'PY'
+          import json, os, sqlite3
+          from pathlib import Path
+          home=Path(os.environ['DORE_LOCAL_HOME'])
+          state=json.loads((home/'data/resource-discovery-state.json').read_text())
+          assert state['ok'], state
+          db=sqlite3.connect(home/'data/dore.sqlite3')
+          count=db.execute('select count(*) from dore_resource_candidates').fetchone()[0]
+          runs=db.execute('select count(*) from dore_resource_discovery_runs').fetchone()[0]
+          assert runs==1
+          assert count>0, state
+          print('DORE_RESOURCE_DISCOVERY_PASS', count)
+          PY
