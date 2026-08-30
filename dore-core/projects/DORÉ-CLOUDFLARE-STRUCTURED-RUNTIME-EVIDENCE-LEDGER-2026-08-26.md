@@ -82,3 +82,15 @@ A later safe completed-ledger reconciliation may add a concise entry for the **S
 ## Sweep conclusion for this evidence family
 
 The structured-data placement audit and shared Search runtime consolidation are both defensible historical `VERIFIED_COMPLETE` bounded milestones whose architecture remains materially visible in current code. Their old sequential `next milestone` language is no longer current priority authority. No new human or environment blocker was discovered in this evidence family.
+
+## Sweep 01 reconciliation note — 2026-08-29
+
+A later Sweep checkpoint (Checkpoint 25, Journal/Liming media placement) incorrectly stated that no evidence of the named structured data-runtime audit had been found in that bounded pass. That statement is superseded by this durable ledger and the underlying `STRUCTURED-DATA-RUNTIME-AUDIT-2026-08-24.md`, which already establish the bounded audit as `VERIFIED_COMPLETE`.
+
+The corrected interpretation is:
+
+- Journal/Liming binary-media zero-migration remains independently `VERIFIED_COMPLETE` for its own bounded placement question;
+- the Search/corpus structured-data runtime audit is **not missing** as a historical architecture milestone; its 2026-08-24 placement/governance decision is `VERIFIED_COMPLETE`;
+- this does **not** mean future structured datasets can never move, and it does not make Search product/cognition complete;
+- any future revisit is triggered by materially changed access patterns, delivery architecture, repository pressure, or measurable reliability/performance benefit—not by an unresolved historical audit claim;
+- no P01 state, dependency, priority, deployment, binding or credential was modified by this reconciliation.
