@@ -1,0 +1,13 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-compat-breakpoint-05-raw",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_compat_probe",
+  "subject": "Penpot compatibility breakpoint 05 — preserve raw MCP results",
+  "body": "Run deterministic compatibility probe against the currently connected Penpot plugin. First call high_level_overview read-only. Then call export_shape for page PNG. Preserve the complete raw return object or exception from each call. Do not mutate the design and do not use LLM planning.",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "thread_id": "penpot-migration-01"
+}
