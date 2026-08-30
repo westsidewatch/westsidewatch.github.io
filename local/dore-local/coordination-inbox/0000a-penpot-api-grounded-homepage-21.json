@@ -1,0 +1,14 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-api-grounded-homepage-21",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Retry Westside homepage using verified Penpot API docs first",
+  "priority": "high",
+  "kind": "penpot_execute",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": true,
+  "body": "EXECUTE NOW using the currently connected official Penpot MCP, but do not guess any Penpot Plugin API. Before the first mutation, call high_level_overview once, then call penpot_api_info for the concrete types/members needed to create a Board, Rectangle, Text, append children, resize and style them. Use only signatures actually returned by those tools. The official MCP instructions explicitly require penpot_api_info to understand the Plugin API before execute_code. Build a MINIMUM REAL PAGE FIRST: create one real Board/artboard 1440x1200 named '02 — Westside Watch Homepage v0.1 — API Grounded', fill Living Paper #FAF9F5; create editable WESTSIDE WATCH masthead text in Ink #252525; create one First Light Gold #A2872A 1px rule; create one large editorial hero/title block and one 5:8 visual rectangle. Append all children using the verified Board/Shape API. Return the exact board id from execute_code. Immediately export that exact board id as PNG with export_shape. If PNG succeeds, run visual verification. Only after the minimum board export is proven may you expand the page. Do not create groups, placeholders, swatches, probe rectangles, or use createShape/setChildren/addChild/setParent unless penpot_api_info explicitly proves those methods exist. If any needed API remains uncertain, query penpot_api_info again instead of guessing. If export fails, return exact export_shape response and stop rather than generating more random shapes.",
+  "design_brief": "Use the Penpot AI Kit discipline: real structured editable design, inspect before write, API-grounded execution, small validated mutations, export visual proof before expansion. Westside Watch is contemporary editorial, not SaaS. Canonical colors: Living Paper #FAF9F5, Ink #252525, First Light Gold #A2872A, Watch Night #102A43. Visual DNA: Light, Line, Paper, Engraving, Architecture."
+}
