@@ -1,0 +1,76 @@
+name: Doré Engine Single Source Cleanup
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-engine-single-source-cleanup.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Remove independent visual-engine path
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          p=Path('local/dore-local/penpot_agent.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("# Visual verification follows the active Doré engine unless an explicit,\n# intentional override is configured. Never silently fall back to a retired model.\nVISION_MODEL = os.environ.get('DORE_LOCAL_VISION_MODEL') or MODEL\n", "VISION_MODEL = MODEL\n")
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('local/dore-local/setup-penpot-mcp.sh')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace('VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-$MODEL}"\n','VISION_MODEL="$MODEL"\n')
+          p.write_text(s,encoding='utf-8')
+
+          p=Path('local/dore-local/local_updater.py')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("    elif line.startswith('DORE_LOCAL_VISION_MODEL='):\n     continue\n","")
+          s=s.replace(" if plist.exists():\n  subprocess.run(['/usr/libexec/PlistBuddy','-c','Delete :EnvironmentVariables:DORE_LOCAL_VISION_MODEL',str(plist)],capture_output=True,text=True)\n os.environ.pop('DORE_LOCAL_VISION_MODEL',None)\n","")
+          s=s.replace("; env.pop('DORE_LOCAL_VISION_MODEL',None);", ";")
+          p.write_text(s,encoding='utf-8')
+          PY
+      - name: Validate current tree
+        run: |
+          python3 -m py_compile local/dore-local/penpot_agent.py local/dore-local/local_updater.py local/dore-local/learning_worker.py
+          python3 - <<'PY'
+          from pathlib import Path
+          import subprocess
+          forbidden=['qwen','retired-engine','DORE_LOCAL_VISION_MODEL']
+          tracked=subprocess.check_output(['git','ls-files']).decode().splitlines()
+          hits=[]
+          for rel in tracked:
+            p=Path(rel)
+            if not p.is_file(): continue
+            try: t=p.read_text(encoding='utf-8')
+            except Exception: continue
+            low=t.lower()
+            for token in forbidden:
+              if token.lower() in low: hits.append((rel,token))
+          if hits:
+            raise SystemExit('FORBIDDEN_ENGINE_RESIDUE:'+repr(hits[:100]))
+          assert "MODEL = os.environ.get('DORE_LOCAL_MODEL', 'gemma4:e4b')" in Path('local/dore-local/penpot_agent.py').read_text()
+          assert 'VISION_MODEL = MODEL' in Path('local/dore-local/penpot_agent.py').read_text()
+          assert "MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b')" in Path('local/dore-local/learning_worker.py').read_text()
+          print('DORE_ENGINE_SINGLE_SOURCE_PASS')
+          PY
+      - name: Commit cleanup and remove one-shot workflow
+        run: |
+          git config user.name 'Doré Engine Cleanup'
+          git config user.email 'westsidewatchca@gmail.com'
+          git rm .github/workflows/dore-engine-single-source-cleanup.yml
+          git add local/dore-local/penpot_agent.py local/dore-local/setup-penpot-mcp.sh local/dore-local/local_updater.py
+          if [[ -n "$(git status --porcelain)" ]]; then
+            git commit -m 'fix(dore): remove independent visual engine override'
+            git push origin HEAD:main
+          fi
