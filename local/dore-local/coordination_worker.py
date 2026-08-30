@@ -83,7 +83,7 @@ def handle_penpot_work(msg):
    meta=call_tool('execute_code',{'code':'return {rootId: penpot.root?.id || null, pageId: penpot.currentPage?.id || null, pageName: penpot.currentPage?.name || null, fileId: penpot.currentFile?.id || null, rootChildren: penpot.root?.children?.length ?? null};'})
    probes.append({'tool':'execute_code','returned':True,'raw':meta}); txt=_mcp_text(meta)
    try:
-    parsed=json.loads(txt); root_id=parsed.get('rootId') if isinstance(parsed,dict) else None
+    parsed=json.loads(txt); payload=parsed.get('result',parsed) if isinstance(parsed,dict) else {}; root_id=payload.get('rootId') if isinstance(payload,dict) else None
    except Exception:
     import re; m=re.search(r'"rootId"\s*:\s*"([^"]+)"',txt); root_id=m.group(1) if m else None
   except Exception as e: probes.append({'tool':'execute_code','returned':False,'exception':type(e).__name__+': '+str(e)})
