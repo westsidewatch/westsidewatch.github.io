@@ -1,0 +1,13 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-westside-visual-language-lab-17",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Build Westside New Classicism Visual Language Lab in real Penpot",
+  "priority": "high",
+  "kind": "penpot_execute",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": true,
+  "task": "Do not copy or reconstruct inaccessible Figma pixels. Rebuild the DESIGN THINKING in the currently connected real Penpot file as an editable Visual Language Lab for Westside Watch Design System 1.0. Preserve these recovered principles: Visual DNA = Light / Line / Paper / Engraving / Architecture. Website editorial grammar = Brick / Battlement / Flow. 5:8 is the dominant card/architectural proportion. The visual synthesis is Doré engraving spirit + Swiss/editorial discipline + Chinese typography + First Light Gold, but must not look like a nineteenth-century cosplay site. Use Living Paper, Ink Black, First Light Gold, restrained 1px rules, generous editorial whitespace, numbering, architectural proportions. Create a new page named '01 — Westside New Classicism Lab'. On it create THREE clearly separated editable experiments using the same small set of real-looking Westside editorial placeholder content (not random lorem): (A) LIGHT — test Living Paper / Ink Black / First Light Gold and dark-to-dawn hierarchy; (B) LINE + ENGRAVING — test minimal engraving dose, 1px category rules, numbering, border/rule rhythm, editorial typography; (C) ARCHITECTURE — build a first wall segment from 5:8 plus small/medium bricks so it evokes city/watchtower/battlement without literally drawing a castle. Add a compact principles panel with '光 · 線 · 紙 · 刻 · 築' and '磚 · 垛 · 流'. Use Cormorant Garamond where available for English and Noto Serif TC where available for Chinese; if unavailable, preserve semantic font intent and report fallback rather than failing. Everything must remain editable Penpot shapes/text, not a flattened screenshot. Then export each experiment or its containing board as real PNG, run the Gemma visual verifier, correct failures automatically, and finish only when at least one overall Lab board has a real PNG image_count > 0 and visual verifier PASS. Return created page ID, board/shape IDs, dimensions, export evidence, visual verdicts, and any font/API limitations. Do not stop after describing a plan; execute the work."
+}
