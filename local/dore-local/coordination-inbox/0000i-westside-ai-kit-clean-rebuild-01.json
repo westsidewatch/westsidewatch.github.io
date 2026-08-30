@@ -1,0 +1,14 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"westside-ai-kit-clean-rebuild-01",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "subject":"Clean old Westside Watch homepage and rebuild from zero with Penpot AI Kit",
+  "kind":"penpot_execute",
+  "priority":"high",
+  "thread_id":"penpot-migration-01",
+  "related_goal":"figma-to-penpot-migration-01",
+  "body":"Use the installed official Penpot AI Kit behavior layer at ~/.penpot-ai-kit/dist/penpot-kit.instructions.md. Work against the live Penpot file. First inspect the current page and identify all prior Westside Watch homepage experiment boards, including the old v0.2/design-pass/clean-start experiments. Remove/archive the obsolete homepage experiment boards from the working page so they no longer mix with the new work. Then create ONE fresh editable native Penpot board named exactly `00 — Westside Watch Homepage — CLEAN START` and rebuild the homepage from zero. Do not copy old board children and do not reuse the hardcoded v0.2 constructor. Follow AI Kit discipline: route/inspect first, smallest useful mutation steps, validate structure between steps, export the exact final board, visually self-review, then revise obvious defects before reporting. Homepage direction: quiet intelligent architectural Christian editorial publication at dawn; Living Paper #FAF9F5, Ink Black #252525, First Light Gold #A2872A, Watch Night #102A43; Cormorant Garamond English intent and Noto Serif TC Chinese intent; restrained masthead/navigation, strong editorial hero, generous whitespace, fine rules, asymmetry, 5:8 visual relationships, stone/paper/light feeling; real Chinese editorial module; no SaaS cards, generic rounded UI, decorative gold overload, or template-dashboard appearance. Keep all elements editable native Penpot layers. Acceptance gates: only the single new CLEAN START homepage board remains as the active homepage design; structure inspection proves real children; exact board PNG export succeeds; visual review passes after at least one review checkpoint. Return board ID, board name, child count, what old boards were removed/archived, AI Kit workflow/checkpoints used, export evidence, visual verdict, and any limitation. Do not claim success without actual mutation and visual evidence.",
+  "design_brief":"Westside Watch / 西區守望 homepage. Preserve the mature brand thinking but abandon low-quality previous artifacts. Rebuild natively in Penpot as an editorial/church-cultural publication interface rather than a product dashboard. The first screen should feel composed, quiet, serious, luminous, and architectural.",
+  "created_at":"2026-08-30T13:43:00Z"
+}
