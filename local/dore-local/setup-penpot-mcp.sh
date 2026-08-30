@@ -22,25 +22,32 @@ export PATH="$NODE22_PREFIX/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin" 
 "$NPM22" install --save-exact corepack
 COREPACK="$RUNTIME/node_modules/.bin/corepack"; "$COREPACK" prepare pnpm@10.28.2 --activate
 "$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.13.3 pnpm@10.28.2
-PKG_DIR="$RUNTIME/node_modules/@penpot/mcp"; PKG="$PKG_DIR/package.json"; PNPM="$RUNTIME/node_modules/.bin/pnpm"
+PKG_DIR="$RUNTIME/node_modules/@penpot/mcp"; PKG="$PKG_DIR/package.json"; PNPM="$RUNTIME/node_modules/.bin/pnpm"; WORKSPACE="$PKG_DIR/pnpm-workspace.yaml"
+if [[ -f "$WORKSPACE" ]]; then
+  cat >> "$WORKSPACE" <<'EOF'
+
+allowBuilds:
+  esbuild: true
+  sharp: true
+EOF
+fi
 (cd "$PKG_DIR"; CI=true "$PNPM" install)
 
-# Replace the npm package's mismatched plugin source with the canonical Penpot 2.13.3 tag.
 CANON="$RUNTIME/canonical-penpot"
 git clone --depth 1 --branch "$TAG" https://github.com/penpot/penpot.git "$CANON"
 rm -rf "$PKG_DIR/packages/plugin"
 cp -R "$CANON/mcp/packages/plugin" "$PKG_DIR/packages/plugin"
-# Assert the canonical 2.13.3 source does not contain the later penpot.flags compatibility gate.
 if grep -R -n -F 'penpot.flags' "$PKG_DIR/packages/plugin/src" >/dev/null 2>&1; then
   echo "ERROR: canonical $TAG plugin unexpectedly contains penpot.flags gate" >&2; exit 5
 fi
+# Reinstall after replacing the workspace package so TypeScript/Vite and workspace links exist.
+(cd "$PKG_DIR"; CI=true "$PNPM" install)
 (cd "$PKG_DIR/packages/plugin"; "$PNPM" run build)
 if grep -F 'incompatible with the connected Penpot version' "$PKG_DIR/packages/plugin/dist/plugin.js" >/dev/null 2>&1; then
   echo "ERROR: rebuilt canonical plugin still contains incompatible-version gate" >&2; exit 5
 fi
 echo "DORE_PENPOT_CANONICAL_PLUGIN_2133_PASS"
 
-# Keep the proven per-transport MCP server fix.
 SERVER_TS="$PKG_DIR/packages/server/src/PenpotMcpServer.ts"
 "$NODE22" - "$SERVER_TS" <<'NODE'
 const fs=require('fs'); const file=process.argv[2]; let s=fs.readFileSync(file,'utf8');
