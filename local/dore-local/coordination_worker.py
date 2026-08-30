@@ -8,7 +8,7 @@ from coordination_mailbox import send_to_chatgpt,flush_outbox
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; MAX_PER_RUN=int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20'))
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'}
 def load_state():
  try:return json.loads(STATE.read_text()) if STATE.exists() else {}
@@ -44,6 +44,13 @@ def local_exec(msg):
   results.append({'index':i,'argv':argv,'cwd':str(cwd),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]})
   if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i}
  return {'ok':True,'results':results}
+def design_bakeoff():
+ script=ROOT/'local/dore-local/dore_design_bakeoff.py'
+ cp=subprocess.run(['python3',str(script)],cwd=ROOT,text=True,capture_output=True,timeout=1800)
+ result={'ok':cp.returncode==0,'returncode':cp.returncode,'stderr':(cp.stderr or '')[-12000:]}
+ try:result.update(json.loads((cp.stdout or '').strip().splitlines()[-1]))
+ except:result['stdout']=(cp.stdout or '')[-20000:]
+ return result
 def ai_kit_adopt(msg):
  target=HOME/'runtime'/'penpot-ai-kit';src='https://github.com/penpot/penpot-ai-kit.git';steps=[]
  try:
@@ -62,6 +69,10 @@ def ai_kit_adopt(msg):
  except Exception as e:return {'ok':False,'target':str(target),'steps':steps,'exception':type(e).__name__+': '+str(e)}
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
+ if kind=='dore_design_bakeoff':
+  result=design_bakeoff();reply(msg,result,['dore-evolution-run-001','design-equipment-discovery','local-provider-provenance']);
+  if not result.get('ok'):raise RuntimeError('dore_design_bakeoff_failed')
+  return
  if kind=='local_exec':
   result=local_exec(msg);reply(msg,result,['dore-local-exec','local-self-repair']);
   if not result.get('ok'):raise RuntimeError('local_exec_failed')
