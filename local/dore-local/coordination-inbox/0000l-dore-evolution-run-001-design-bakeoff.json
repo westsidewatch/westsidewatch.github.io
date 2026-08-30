@@ -1,0 +1,8 @@
+{
+  "message_id": "dore-evolution-run-001-design-bakeoff",
+  "sender": "chatgpt",
+  "kind": "dore_design_bakeoff",
+  "subject": "Doré Evolution Run 001 — Design equipment discovery",
+  "related_goal": "dore-evolution-run-001",
+  "body": "Autonomously inspect the local environment and current design equipment candidates. Establish exact provenance/revision/license evidence for OpenPencil, Framesmith, Doop and Tela without requiring user terminal mediation. This is the first bounded equipment-discovery stage of Doré Evolution Run 001 and Doré Design 0.1. Return machine-readable evidence through the coordination outbox. Do not treat discovery as adoption; later stages must perform real-work create/edit/render verification."
+}
