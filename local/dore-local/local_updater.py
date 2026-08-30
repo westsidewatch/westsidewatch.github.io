@@ -30,6 +30,11 @@ def spawn(name,script):
   with out.open('a') as fo,err.open('a') as fe:subprocess.Popen(['python3',str(worker)],cwd=worker.parent,env=env,stdout=fo,stderr=fe,start_new_session=True)
   return True
  except Exception:return False
+def resource_discovery_due():
+ state=DORE/'data'/'resource-discovery-state.json'; interval=int(os.environ.get('DORE_RESOURCE_DISCOVERY_INTERVAL','21600'))
+ try:
+  data=json.loads(state.read_text(encoding='utf-8')); checked=datetime.fromisoformat(str(data.get('checked_at')).replace('Z','+00:00')); return (datetime.now(timezone.utc)-checked).total_seconds()>=interval
+ except Exception:return True
 def load_task_state():
  try:return json.loads(TASK_STATE.read_text())
  except Exception:return {'processed':[]}
@@ -65,7 +70,7 @@ def main():
  remote=run(['git','rev-parse','origin/main'])[1]
  if old!=remote:
   if run(['git','merge','--ff-only','origin/main'])[0] and run(['git','rebase','origin/main'])[0]:return 6
- targets=['local/dore-local/dore_local.py','local/dore-local/legacy_memory.py','local/dore-local/self_memory.py','local/dore-local/learning_planner.py','local/dore-local/autonomous_learner.py','local/dore-local/learning_worker.py','local/dore-local/bridge_reminder.py','local/dore-local/coordination_mailbox.py','local/dore-local/coordination_worker.py','local/dore-local/conversation_acceptance.py','local/dore-local/test_conversation_interface_contract.py','local/dore-local/local_updater.py','local/dore-local/test_coordination_transport.py','local/dore-local/penpot_agent.py']
+ targets=['local/dore-local/dore_local.py','local/dore-local/legacy_memory.py','local/dore-local/self_memory.py','local/dore-local/learning_planner.py','local/dore-local/autonomous_learner.py','local/dore-local/learning_worker.py','local/dore-local/resource_discovery_worker.py','local/dore-local/bridge_reminder.py','local/dore-local/coordination_mailbox.py','local/dore-local/coordination_worker.py','local/dore-local/conversation_acceptance.py','local/dore-local/test_conversation_interface_contract.py','local/dore-local/local_updater.py','local/dore-local/test_coordination_transport.py','local/dore-local/penpot_agent.py']
  if run(['python3','-m','py_compile',*targets])[0]:return 7
  test=run(['python3','local/dore-local/test_coordination_transport.py'],timeout=30)
  if test[0] or 'DORE_COORDINATION_TRANSPORT_CONTRACT_PASS' not in test[1]:emit('error',stage='coordination_contract',detail=test[2] or test[1]); return 10
@@ -79,5 +84,5 @@ def main():
   except Exception as e:emit('error',stage='health',detail=str(e));return 8
  if run_pending_acceptance():
   head=run(['git','rev-parse','HEAD'])[1];save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','acceptance_dispatched':True,'active_model':active_model(),'checked_at':now()});return 0
- coordination=spawn('coordination-worker','coordination_worker.py'); learning=spawn('learning-worker','learning_worker.py'); head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'active_model':active_model(),'visual_engine_follows_active_model':True,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination,active_model=active_model(),visual_engine_follows_active_model=True); return 0 if ok else 9
+ coordination=spawn('coordination-worker','coordination_worker.py'); learning=spawn('learning-worker','learning_worker.py'); resource_discovery=spawn('resource-discovery-worker','resource_discovery_worker.py') if resource_discovery_due() else False; head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'resource_discovery_due':resource_discovery_due(),'resource_discovery_worker_spawned':resource_discovery,'active_model':active_model(),'visual_engine_follows_active_model':True,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination,resource_discovery_worker_spawned=resource_discovery,active_model=active_model(),visual_engine_follows_active_model=True); return 0 if ok else 9
 if __name__=='__main__':raise SystemExit(main())
