@@ -44,20 +44,27 @@ def handle_penpot_reprovision(msg):
  try:
   cp=subprocess.run(['bash',str(script)],cwd=ROOT,text=True,capture_output=True,timeout=1800)
   result={'ok':cp.returncode==0,'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]}
- except Exception as e:
-  result={'ok':False,'error':type(e).__name__+':'+str(e)}
+ except Exception as e: result={'ok':False,'error':type(e).__name__+':'+str(e)}
  send_to_chatgpt('Doré Penpot MCP reprovision',json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal='figma-to-penpot-migration-01',evidence_refs=['penpot-mcp-reprovision','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));return True
 
 def handle_penpot_work(msg):
  kind=msg.get('kind')
- if kind not in ('penpot_work','penpot_execute','penpot_export_probe'):return False
+ if kind not in ('penpot_work','penpot_execute','penpot_export_probe','penpot_compat_probe'):return False
  task=str(msg.get('body') or '').strip()
- if kind=='penpot_export_probe':
+ if kind=='penpot_compat_probe':
+  probes=[]
+  for name,args in [('high_level_overview',{}),('export_shape',{'shapeId':'page','format':'png','mode':'shape'})]:
+   try:
+    raw=call_tool(name,args)
+    probes.append({'tool':name,'returned':True,'raw':raw})
+   except Exception as e:
+    probes.append({'tool':name,'returned':False,'exception':type(e).__name__+': '+str(e)})
+  result={'ok':all(p.get('returned') for p in probes),'model':MODEL,'vision_model':VISION_MODEL,'probes':probes}; evidence=['penpot-compatibility-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
+ elif kind=='penpot_export_probe':
   result=call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'})
-  probe={'ok':bool(result.get('ok')),'model':MODEL,'vision_model':VISION_MODEL,'image_count':0,'visual_source':result.get('visual_source'),'visual_fallback_error':result.get('visual_fallback_error'),'visual_diagnostics':result.get('visual_diagnostics'),'result_content_types':[x.get('type') for x in (((result.get('result') or {}).get('content')) or []) if isinstance(x,dict)]}
+  probe={'ok':bool(result.get('ok')),'model':MODEL,'vision_model':VISION_MODEL,'raw_result':result,'image_count':0,'visual_source':result.get('visual_source'),'visual_fallback_error':result.get('visual_fallback_error'),'visual_diagnostics':result.get('visual_diagnostics'),'result_content_types':[x.get('type') for x in (((result.get('result') or {}).get('content')) or []) if isinstance(x,dict)]}
   from penpot_agent import _images_from_result
-  probe['image_count']=len(_images_from_result(result))
-  result=probe; evidence=['penpot-export-breakpoint-probe','source-message:'+str(msg.get('message_id') or '')]
+  probe['image_count']=len(_images_from_result(result)); result=probe; evidence=['penpot-export-breakpoint-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
  elif kind=='penpot_execute':
   brief=str(msg.get('design_brief') or msg.get('brief') or task).strip(); result=run_task(task,brief); evidence=['penpot-live-mutation-execution','penpot-visual-verification','source-message:'+str(msg.get('message_id') or '')]
  else:
