@@ -1,0 +1,14 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"penpot-compat-breakpoint-07-fresh-plugin",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"penpot_compat_probe",
+  "subject":"Penpot breakpoint 07 — fresh 2.13 plugin connected",
+  "body":"The old browser Penpot MCP plugin was deleted, the plugin was freshly installed from http://localhost:4400/manifest.json, and the user confirms it is connected. Run deterministic high_level_overview then export_shape page PNG now. Preserve complete raw results. Do not mutate design and do not use LLM planning.",
+  "priority":"high",
+  "requires_reply":false,
+  "related_goal":"figma-to-penpot-migration-01",
+  "evidence_refs":["fresh-plugin-install","mcp-2.13.3","user-confirmed-connected"],
+  "thread_id":"penpot-migration-01"
+}
