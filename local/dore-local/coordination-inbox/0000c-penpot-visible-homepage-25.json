@@ -1,0 +1,14 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-visible-homepage-25",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Execute visible Westside Watch homepage after worker import repair",
+  "body": "Use the live Penpot MCP and run the current deterministic Penpot homepage construction now. Create a NEW editable board named 02 — Westside Watch Homepage v0.3 — VISIBLE. It must visibly contain a Living Paper background, Ink masthead, First Light Gold rule, large hero title, Watch Night 5:8 visual field, Morning Gold accent, and editorial passage. Do not stop at a blank board. Return the real created board id, export that exact board as PNG, and require visual verification. If any tool/API call fails, return the exact error rather than guessing.",
+  "kind": "penpot_execute",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "thread_id": "penpot-migration-01",
+  "design_brief": "Visible construction acceptance test. The board must not be blank. Canonical Westside Watch palette only: Living Paper #FAF9F5, Ink Black #252525, First Light Gold #A2872A, Watch Night #102A43, Morning Gold #D2BC69. Editable native Penpot shapes/text."
+}
