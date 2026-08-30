@@ -4,10 +4,10 @@
   "sender":"chatgpt",
   "recipient":"dore",
   "subject":"Install Penpot AI Kit for Doré generic client",
-  "kind":"shell_task",
+  "kind":"penpot_ai_kit_install",
   "priority":"high",
   "thread_id":"penpot-migration-01",
   "related_goal":"figma-to-penpot-migration-01",
-  "body":"Install and integrate the official Penpot AI Kit into Doré using the GENERIC client behavior and the EXISTING working local Penpot MCP. Do not replace or reconfigure the MCP connection. Follow upstream INSTALL.md: clone/download penpot/penpot-ai-kit as a disposable read-only seed outside the Westside Watch repo; require Node >=22; run detect-client; install with --client generic --mode none so MCP config is untouched; seed to ~/.penpot-ai-kit; record install-manifest; then verify the live bridge with high_level_overview and read-only execute_code returning penpotUtils.shapeStructure(penpot.currentPage.root,1). The Penpot plugin window must remain open. Return exact evidence: upstream commit/version, node version, detect-client summary, install command exit/result, seed path, manifest existence, verification outputs. If any step fails, stop and return the exact failure; do not claim installation success. After installation, Doré should load ~/.penpot-ai-kit/dist/penpot-kit.instructions.md or AGENTS.md as its Penpot behavior layer for subsequent design tasks. No paid API or service." ,
+  "body":"Install and integrate the official Penpot AI Kit into Doré using the GENERIC client behavior and the EXISTING working local Penpot MCP. Do not replace or reconfigure the MCP connection. Follow upstream INSTALL.md: clone/download penpot/penpot-ai-kit as a disposable read-only seed outside the Westside Watch repo; require Node >=22; run detect-client; install with --client generic --mode none so MCP config is untouched; seed to ~/.penpot-ai-kit; record install-manifest; then verify the live bridge with high_level_overview and read-only execute_code returning penpotUtils.shapeStructure(penpot.currentPage.root,1). The Penpot plugin window must remain open. Return exact evidence: upstream commit/version, node version, detect-client summary, install command exit/result, seed path, manifest existence, verification outputs. If any step fails, stop and return the exact failure; do not claim installation success. After installation, Doré should load ~/.penpot-ai-kit/dist/penpot-kit.instructions.md or AGENTS.md as its Penpot behavior layer for subsequent design tasks. No paid API or service.",
   "created_at":"2026-08-30T13:25:00Z"
 }
