@@ -3,7 +3,7 @@ set -euo pipefail
 HERE="$(cd "$(dirname "$0")" && pwd)"
 RUNTIME="$HOME/.dore/runtime/penpot-mcp"
 MODEL="${DORE_LOCAL_MODEL:-gemma4:e4b}"
-VISION_MODEL="${DORE_LOCAL_VISION_MODEL:-$MODEL}"
+VISION_MODEL="$MODEL"
 LABEL="io.westsidewatch.penpot-mcp"
 PLIST="$HOME/Library/LaunchAgents/$LABEL.plist"
 DOMAIN="gui/$(id -u)"
