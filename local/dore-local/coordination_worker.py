@@ -76,7 +76,7 @@ def _mcp_text(raw):
 def handle_penpot_work(msg):
  kind=msg.get('kind')
  if kind not in ('penpot_work','penpot_execute','penpot_export_probe','penpot_compat_probe','penpot_root_export_probe'):return False
- task=str(msg.get('body') or '').strip()
+ task=str(msg.get('body') or msg.get('task') or '').strip()
  if kind=='penpot_root_export_probe':
   probes=[]; root_id=None
   try:
@@ -102,7 +102,7 @@ def handle_penpot_work(msg):
   from penpot_agent import _images_from_result
   probe['image_count']=len(_images_from_result(result)); result=probe; evidence=['penpot-export-breakpoint-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
  elif kind=='penpot_execute':
-  brief=str(msg.get('design_brief') or msg.get('brief') or task).strip(); result=run_task(task,brief); evidence=['penpot-live-mutation-execution','penpot-visual-verification','source-message:'+str(msg.get('message_id') or '')]
+  brief=str(msg.get('design_brief') or msg.get('brief') or msg.get('task') or task).strip(); result=run_task(task,brief); evidence=['penpot-live-mutation-execution','penpot-visual-verification','source-message:'+str(msg.get('message_id') or '')]
  else: result=execute_readonly(task); evidence=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')]
  send_to_chatgpt('Doré Penpot execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),evidence_refs=evidence,thread_id=msg.get('thread_id'));return True
 
