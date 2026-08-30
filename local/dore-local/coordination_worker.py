@@ -47,6 +47,29 @@ def handle_penpot_reprovision(msg):
  except Exception as e: result={'ok':False,'error':type(e).__name__+':'+str(e)}
  send_to_chatgpt('Doré Penpot MCP reprovision',json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal='figma-to-penpot-migration-01',evidence_refs=['penpot-mcp-reprovision','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));return True
 
+def handle_penpot_runtime_audit(msg):
+ if msg.get('kind')!='penpot_runtime_audit':return False
+ runtime=HOME/'runtime'/'penpot-mcp'; pkg=runtime/'node_modules'/'@penpot'/'mcp'; report={'runtime':str(runtime),'pkg':str(pkg)}
+ def text(path,limit=5000):
+  try:return path.read_text(encoding='utf-8',errors='replace')[:limit]
+  except Exception as e:return 'ERROR:'+type(e).__name__+':'+str(e)
+ report['root_package_json']=text(pkg/'package.json')
+ candidates=list(pkg.rglob('manifest.json')); report['manifests']=[{'path':str(p),'text':text(p,4000)} for p in candidates[:20]]
+ needles=['penpot.flags','incompatible with the connected Penpot version','intended for Penpot 2.13','If you are an LLM, tell the user about this']
+ hits=[]
+ for p in pkg.rglob('*'):
+  if not p.is_file() or p.stat().st_size>8_000_000: continue
+  if p.suffix.lower() not in ('.js','.mjs','.ts','.html','.json'): continue
+  try:s=p.read_text(encoding='utf-8',errors='ignore')
+  except Exception:continue
+  found=[n for n in needles if n in s]
+  if found:hits.append({'path':str(p),'needles':found,'size':p.stat().st_size})
+ report['needle_hits']=hits[:100]
+ report['served_manifest']=''
+ try: report['served_manifest']=urllib.request.urlopen('http://127.0.0.1:4400/manifest.json',timeout=10).read().decode('utf-8','replace')[:5000]
+ except Exception as e: report['served_manifest']='ERROR:'+type(e).__name__+':'+str(e)
+ send_to_chatgpt('Doré Penpot runtime audit',json.dumps(report,ensure_ascii=False),requires_reply=False,priority='high',related_goal='figma-to-penpot-migration-01',evidence_refs=['penpot-runtime-audit','source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));return True
+
 def handle_penpot_work(msg):
  kind=msg.get('kind')
  if kind not in ('penpot_work','penpot_execute','penpot_export_probe','penpot_compat_probe'):return False
@@ -54,21 +77,16 @@ def handle_penpot_work(msg):
  if kind=='penpot_compat_probe':
   probes=[]
   for name,args in [('high_level_overview',{}),('export_shape',{'shapeId':'page','format':'png','mode':'shape'})]:
-   try:
-    raw=call_tool(name,args)
-    probes.append({'tool':name,'returned':True,'raw':raw})
-   except Exception as e:
-    probes.append({'tool':name,'returned':False,'exception':type(e).__name__+': '+str(e)})
+   try: raw=call_tool(name,args); probes.append({'tool':name,'returned':True,'raw':raw})
+   except Exception as e: probes.append({'tool':name,'returned':False,'exception':type(e).__name__+': '+str(e)})
   result={'ok':all(p.get('returned') for p in probes),'model':MODEL,'vision_model':VISION_MODEL,'probes':probes}; evidence=['penpot-compatibility-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
  elif kind=='penpot_export_probe':
-  result=call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'})
-  probe={'ok':bool(result.get('ok')),'model':MODEL,'vision_model':VISION_MODEL,'raw_result':result,'image_count':0,'visual_source':result.get('visual_source'),'visual_fallback_error':result.get('visual_fallback_error'),'visual_diagnostics':result.get('visual_diagnostics'),'result_content_types':[x.get('type') for x in (((result.get('result') or {}).get('content')) or []) if isinstance(x,dict)]}
+  result=call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'}); probe={'ok':bool(result.get('ok')),'model':MODEL,'vision_model':VISION_MODEL,'raw_result':result,'image_count':0,'visual_source':result.get('visual_source'),'visual_fallback_error':result.get('visual_fallback_error'),'visual_diagnostics':result.get('visual_diagnostics'),'result_content_types':[x.get('type') for x in (((result.get('result') or {}).get('content')) or []) if isinstance(x,dict)]}
   from penpot_agent import _images_from_result
   probe['image_count']=len(_images_from_result(result)); result=probe; evidence=['penpot-export-breakpoint-probe','raw-mcp-results','source-message:'+str(msg.get('message_id') or '')]
  elif kind=='penpot_execute':
   brief=str(msg.get('design_brief') or msg.get('brief') or task).strip(); result=run_task(task,brief); evidence=['penpot-live-mutation-execution','penpot-visual-verification','source-message:'+str(msg.get('message_id') or '')]
- else:
-  result=execute_readonly(task); evidence=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')]
+ else: result=execute_readonly(task); evidence=['penpot-live-tool-execution','source-message:'+str(msg.get('message_id') or '')]
  send_to_chatgpt('Doré Penpot execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'penpot-real-work-apprenticeship'),evidence_refs=evidence,thread_id=msg.get('thread_id'));return True
 
 def run_acceptance_tasks(prev):
@@ -98,6 +116,7 @@ def main():
  current=pending[0] if pending else None
  if current and handle_complete_recall(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
  if current and handle_penpot_reprovision(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
+ if current and handle_penpot_runtime_audit(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
  if current and handle_penpot_work(current):processed.add(current['message_id']);prev.update({'repo_inbox_processed':sorted(processed),'checked_at':datetime.now(timezone.utc).isoformat()});save(prev);flush_outbox();return 0
  new_messages=[current] if current else []
  prompt='''Review durable coordination state and NEW_MESSAGES. Continue autonomous work regardless of reply. If a new message explicitly asks for a simple reply, obey it exactly in body. Otherwise send only a useful coordination message. Return {"send":true|false,"subject":"...","body":"...","requires_reply":true|false,"priority":"normal|high","related_goal":"...","evidence_refs":[...]}.\nSTATE:\n'''+json.dumps(packet,ensure_ascii=False)+'\nNEW_MESSAGES:\n'+json.dumps(new_messages,ensure_ascii=False)
