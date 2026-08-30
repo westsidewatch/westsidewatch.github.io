@@ -158,19 +158,39 @@ def visual_verify(image_b64:str,task:str,design_brief:str):
         verdict=json.loads(text[text.index('{'):text.rindex('}')+1]); verdict.setdefault('vision_model',VISION_MODEL); return verdict
     except Exception:return {'verdict':'FAIL','problems':['visual_verifier_invalid_json'],'strengths':[],'next_correction':text[:1500],'vision_model':VISION_MODEL}
 
+def _grounding_packet(tool_names):
+    """Read official MCP overview/API docs once so the model cannot loop on discovery."""
+    packet=[]
+    if 'high_level_overview' in tool_names:
+        r=call_tool('high_level_overview',{})
+        packet.append({'tool':'high_level_overview','ok':bool(r.get('ok')),'text':_text_from_result(r)[:12000]})
+    if 'penpot_api_info' in tool_names:
+        for api_type in ('Penpot','Board','Rectangle','Text'):
+            r=call_tool('penpot_api_info',{'type':api_type})
+            packet.append({'tool':'penpot_api_info','type':api_type,'ok':bool(r.get('ok')),'text':_text_from_result(r)[:8000]})
+    return packet
+
 def run_task(task:str,design_brief:str):
-    tools=list_tools(); ollama_tools=_as_ollama_tools(tools); tool_names=[x['name'] for x in tools]; mutation_names={t['name'] for t in tools if _tool_is_mutation(t)}
-    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.\n{VOICE_RULE}\nWork on the currently focused Penpot page. First inspect the file/page, then make the requested design changes. A mutation task is incomplete until at least one real mutation succeeds. After writes, obtain an ACTUAL rendered PNG using export_shape. The external visual verifier will inspect it. If verification FAILs, correct and render again. Do not finish unless mutation succeeded and verifier returned PASS.\nTask: {task}\nCurrent design brief:\n{design_brief}\nActive Doré engine: {MODEL}. Visual verifier engine: {VISION_MODEL}.\nAvailable Penpot tool names: {', '.join(tool_names)}'''
-    messages=[{'role':'system','content':system},{'role':'user','content':task}]; trace=[]; checks=[]; mutation_succeeded=False
+    tools=list_tools(); tool_names=[x['name'] for x in tools]; mutation_names={t['name'] for t in tools if _tool_is_mutation(t)}
+    grounding=_grounding_packet(tool_names)
+    # Discovery tools are consumed deterministically above. Do not expose them to the model,
+    # which previously burned all 16 steps repeatedly calling high_level_overview.
+    action_tools=[t for t in tools if t.get('name') not in ('high_level_overview','penpot_api_info')]
+    ollama_tools=_as_ollama_tools(action_tools)
+    official_example='''Official Penpot repository E2E pattern: const board=penpot.createBoard(); board.name='Board name'; board.x=...; board.y=...; board.resize(300,300); const text=penpot.createText('Hello'); board.appendChild(text); const rect=penpot.createRectangle(); rect.resize(200,200). Shape width/height are read-only; use resize(). Set fills by replacing the fills array, e.g. shape.fills=[{fillColor:'#FAF9F5',fillOpacity:1}]. Text content is characters / createText(text).'''
+    system=f'''You are Doré acting as a Penpot design agent through live MCP tools.\n{VOICE_RULE}\nThe official Penpot MCP discovery phase has ALREADY been executed deterministically. DO NOT ask to inspect again. Use the supplied official API grounding and proceed directly to execute_code. Work on the currently focused Penpot page. A mutation task is incomplete until at least one real mutation succeeds. After writes, obtain an ACTUAL rendered PNG using export_shape. The external visual verifier will inspect it. If verification FAILs, correct and render again. Do not finish unless mutation succeeded and verifier returned PASS.\nTask: {task}\nCurrent design brief:\n{design_brief}\nOfficial API grounding:\n{json.dumps(grounding,ensure_ascii=False)}\nVerified upstream example:\n{official_example}\nActive Doré engine: {MODEL}. Visual verifier engine: {VISION_MODEL}.\nAction tools now available: {', '.join([t['name'] for t in action_tools])}'''
+    messages=[{'role':'system','content':system},{'role':'user','content':'Discovery is complete. Execute the requested Penpot mutation now using execute_code, return the created board id, then export that exact board as PNG.'}]; trace=[]; checks=[]; mutation_succeeded=False
+    for item in grounding:
+        trace.append({'tool':item.get('tool'),'ok':item.get('ok',False),'mutation':False,'arguments':({'type':item.get('type')} if item.get('type') else {}),'image_count':0,'preflight':True})
     for step in range(MAX_STEPS):
         msg=_ollama(messages,ollama_tools); assistant={'role':'assistant','content':msg.get('content') or ''}
         if msg.get('tool_calls'):assistant['tool_calls']=msg['tool_calls']
         messages.append(assistant); calls=msg.get('tool_calls') or []
         if not calls:
             verified=bool(checks and checks[-1].get('verdict')=='PASS')
-            if not mutation_succeeded:messages.append({'role':'user','content':'EXECUTION GATE FAILED: no successful Penpot mutation has occurred. Call a mutation tool now.'});continue
-            if not checks:messages.append({'role':'user','content':'EXECUTION GATE FAILED: no actual rendered PNG reached visual verification. Call export_shape with format png now.'});continue
-            if not verified:messages.append({'role':'user','content':'EXECUTION GATE FAILED: latest visual verification is not PASS. Correct the design and render again.'});continue
+            if not mutation_succeeded:messages.append({'role':'user','content':'EXECUTION GATE FAILED: discovery is already complete. Call execute_code now and make the real Penpot board.'});continue
+            if not checks:messages.append({'role':'user','content':'EXECUTION GATE FAILED: no actual rendered PNG reached visual verification. Call export_shape with the exact created board id and format png now.'});continue
+            if not verified:messages.append({'role':'user','content':'EXECUTION GATE FAILED: latest visual verification is not PASS. Correct the design with execute_code and render again.'});continue
             return {'ok':True,'verified':True,'mutated':True,'answer':_clean_answer(msg.get('content') or ''),'visual_checks':checks,'trace':trace,'steps':step+1,'tool_count':len(tools),'model':MODEL,'vision_model':VISION_MODEL}
         for call in calls:
             fn=call.get('function') or {}; name=fn.get('name'); args=fn.get('arguments') or {}; result=call_tool(name,args); success=bool(result.get('ok'))
