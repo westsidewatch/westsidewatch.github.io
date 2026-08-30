@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"verified\": false, \"mutated\": false, \"error\": \"penpot_task_mutation_failed\", \"board_id\": \"fca4e052-7a4d-80fd-8008-8f9d0e6b9771\", \"trace\": [{\"tool\": \"execute_code\", \"ok\": false, \"transport_ok\": true, \"mutation\": true, \"attempt\": 1, \"phase\": \"deterministic-westside-clean-rebuild\", \"board_id\": \"fca4e052-7a4d-80fd-8008-8f9d0e6b9771\", \"text\": \"Tool execution failed: Error: Error handling task: [PENPOT PLUGIN] Value not valid: Font weight '500' not supported for the current font. Supported weights: 200, 300, 400, 600, 700, 900. Code: :fontWeight\"}]}",
+  "created_at": "2026-08-30T22:47:53.139172+00:00",
+  "evidence_refs": [
+    "penpot-live-mutation-execution",
+    "penpot-visual-verification",
+    "source-message:westside-ai-kit-clean-rebuild-03"
+  ],
+  "message_id": "6d4408bd-a843-4dd8-ada6-6f2395d45971",
+  "message_sha256": "4a1b446dfa0a0e54a7cb25a9a395c17954b8304f64afd17b3c87aa339890ce07",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Immediate retry: clean and rebuild verified Westside Watch board",
+  "thread_id": "penpot-migration-01"
+}
