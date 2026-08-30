@@ -1,0 +1,14 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "penpot-export-breakpoint-01",
+  "thread_id": "penpot-migration-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "penpot_export_probe",
+  "subject": "Penpot export breakpoint 01 — deterministic PNG probe",
+  "body": "Run the deterministic export probe against the REAL currently focused Penpot page. Do not ask the model to choose tools. Directly call export_shape for shapeId=page, format=png, mode=shape. Return image_count, visual_source, visual_fallback_error, result content types, and every filePath diagnostic including requested path, parent writability, existence, file size, and MCP response summary.",
+  "priority": "high",
+  "requires_reply": false,
+  "related_goal": "figma-to-penpot-migration-01",
+  "evidence_refs": ["penpot-export-breakpoint-probe", "png-filepath-diagnostics"]
+}
