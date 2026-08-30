@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Resident Doré coordination worker: reliably drain durable ChatGPT envelopes."""
 from __future__ import annotations
-import json,os,sqlite3,urllib.request,subprocess,time,traceback,shutil
+import json,os,sqlite3,subprocess,traceback
 from datetime import datetime,timezone
 from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,flush_outbox
@@ -24,20 +24,21 @@ def pending(prev):
 def reply(msg,result,evidence):
  send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));flush_outbox()
 def ai_kit_adopt(msg):
- target=HOME/'runtime'/'penpot-ai-kit'; src='https://github.com/penpot/penpot-ai-kit.git'; steps=[]
+ target=HOME/'runtime'/'penpot-ai-kit';src='https://github.com/penpot/penpot-ai-kit.git';steps=[]
  try:
-  if (target/'.git').exists(): cp=subprocess.run(['git','-C',str(target),'pull','--ff-only'],text=True,capture_output=True,timeout=300)
+  if (target/'.git').exists():cp=subprocess.run(['git','-C',str(target),'pull','--ff-only'],text=True,capture_output=True,timeout=300)
   else:
    target.parent.mkdir(parents=True,exist_ok=True);cp=subprocess.run(['git','clone','--depth','1',src,str(target)],text=True,capture_output=True,timeout=300)
   steps.append({'step':'sync','ok':cp.returncode==0,'stdout':(cp.stdout or '')[-3000:],'stderr':(cp.stderr or '')[-3000:]})
-  if cp.returncode:return {'ok':False,'steps':steps}
-  install=target/'install.sh'
-  if install.exists():
-   cp=subprocess.run(['bash',str(install),'--mode','none'],cwd=target,text=True,capture_output=True,timeout=600);steps.append({'step':'install','ok':cp.returncode==0,'stdout':(cp.stdout or '')[-5000:],'stderr':(cp.stderr or '')[-5000:]})
-  else:steps.append({'step':'install','ok':False,'error':'install.sh missing'})
+  if cp.returncode:return {'ok':False,'target':str(target),'steps':steps}
+  cp=subprocess.run(['node','scripts/install/detect-client.mjs'],cwd=target,text=True,capture_output=True,timeout=120);steps.append({'step':'preflight','ok':cp.returncode==0,'stdout':(cp.stdout or '')[-5000:],'stderr':(cp.stderr or '')[-3000:]})
+  if cp.returncode:return {'ok':False,'target':str(target),'steps':steps}
+  cp=subprocess.run(['node','scripts/install/install.mjs','--client','generic','--mode','none'],cwd=target,text=True,capture_output=True,timeout=600);steps.append({'step':'install','ok':cp.returncode==0,'stdout':(cp.stdout or '')[-8000:],'stderr':(cp.stderr or '')[-5000:]})
+  if cp.returncode:return {'ok':False,'target':str(target),'steps':steps}
+  manifest=Path.home()/'.penpot-ai-kit'/'install-manifest.json';steps.append({'step':'manifest','ok':manifest.exists(),'path':str(manifest)})
   overview=call_tool('high_level_overview',{});steps.append({'step':'mcp-overview','ok':bool(overview.get('ok'))})
-  structure=call_tool('execute_code',{'code':'return JSON.stringify(penpotUtils.shapeStructure(penpot.root));'});steps.append({'step':'live-structure','ok':bool(structure.get('ok'))})
-  return {'ok':all(x.get('ok') for x in steps),'target':str(target),'steps':steps}
+  structure=call_tool('execute_code',{'code':'return penpotUtils.shapeStructure(penpot.currentPage.root, 1);'});steps.append({'step':'live-structure','ok':bool(structure.get('ok'))})
+  return {'ok':all(x.get('ok') for x in steps),'target':str(target),'seed':str(Path.home()/'.penpot-ai-kit'),'steps':steps}
  except Exception as e:return {'ok':False,'target':str(target),'steps':steps,'exception':type(e).__name__+': '+str(e)}
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
