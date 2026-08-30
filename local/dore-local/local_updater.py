@@ -13,30 +13,19 @@ def emit(event,**extra):
 def save_state(x):STATE.parent.mkdir(parents=True,exist_ok=True); STATE.write_text(json.dumps(x,ensure_ascii=False,indent=2))
 def get_json(url):
  import urllib.request; return json.loads(urllib.request.urlopen(url,timeout=5).read())
-def sanitize_engine_env():
+def active_model():
  envfile=DORE/'node.env'; model='gemma4:e4b'
  if envfile.exists():
   try:
-   original=envfile.read_text(encoding='utf-8'); clean=[]
-   for line in original.splitlines():
+   for line in envfile.read_text(encoding='utf-8').splitlines():
     if line.startswith('DORE_LOCAL_MODEL='):
-     model=line.split('=',1)[1].strip() or model; clean.append(line)
-    elif line.startswith('DORE_LOCAL_VISION_MODEL='):
-     continue
-    else: clean.append(line)
-   rendered='\n'.join(clean).rstrip()+'\n'
-   if rendered!=original:
-    envfile.write_text(rendered,encoding='utf-8'); emit('retired_visual_engine_override_removed',model=model)
-  except Exception as e:emit('error',stage='sanitize_engine_env',detail=repr(e))
- plist=Path.home()/'Library/LaunchAgents/io.westsidewatch.dore-local.plist'
- if plist.exists():
-  subprocess.run(['/usr/libexec/PlistBuddy','-c','Delete :EnvironmentVariables:DORE_LOCAL_VISION_MODEL',str(plist)],capture_output=True,text=True)
- os.environ.pop('DORE_LOCAL_VISION_MODEL',None)
+     model=line.split('=',1)[1].strip() or model; break
+  except Exception as e:emit('error',stage='active_model',detail=repr(e))
  return model
 def spawn(name,script):
  worker=ROOT/'local/dore-local'/script
  if not worker.exists() or run(['git','status','--porcelain'])[1]:return False
- env=os.environ.copy(); env['DORE_REPO_ROOT']=str(ROOT); env['DORE_LOCAL_HOME']=str(DORE); env['DORE_LOCAL_MODEL']=sanitize_engine_env(); env.pop('DORE_LOCAL_VISION_MODEL',None); out=DORE/'logs'/(name+'.stdout.log'); err=DORE/'logs'/(name+'.stderr.log'); out.parent.mkdir(parents=True,exist_ok=True)
+ env=os.environ.copy(); env['DORE_REPO_ROOT']=str(ROOT); env['DORE_LOCAL_HOME']=str(DORE); env['DORE_LOCAL_MODEL']=active_model(); out=DORE/'logs'/(name+'.stdout.log'); err=DORE/'logs'/(name+'.stderr.log'); out.parent.mkdir(parents=True,exist_ok=True)
  try:
   with out.open('a') as fo,err.open('a') as fe:subprocess.Popen(['python3',str(worker)],cwd=worker.parent,env=env,stdout=fo,stderr=fe,start_new_session=True)
   return True
@@ -76,7 +65,6 @@ def main():
  remote=run(['git','rev-parse','origin/main'])[1]
  if old!=remote:
   if run(['git','merge','--ff-only','origin/main'])[0] and run(['git','rebase','origin/main'])[0]:return 6
- sanitize_engine_env()
  targets=['local/dore-local/dore_local.py','local/dore-local/legacy_memory.py','local/dore-local/self_memory.py','local/dore-local/learning_planner.py','local/dore-local/autonomous_learner.py','local/dore-local/learning_worker.py','local/dore-local/bridge_reminder.py','local/dore-local/coordination_mailbox.py','local/dore-local/coordination_worker.py','local/dore-local/conversation_acceptance.py','local/dore-local/test_conversation_interface_contract.py','local/dore-local/local_updater.py','local/dore-local/test_coordination_transport.py','local/dore-local/penpot_agent.py']
  if run(['python3','-m','py_compile',*targets])[0]:return 7
  test=run(['python3','local/dore-local/test_coordination_transport.py'],timeout=30)
@@ -90,6 +78,6 @@ def main():
    checks=[get_json('http://127.0.0.1:8788'+p) for p in ['/health','/legacy-memory/status','/memory/self/status','/learning/status','/learning/plan','/learning/autonomous/status']]; ok=all(bool(x.get('ok')) for x in checks) and checks[4].get('time_is_gate') is False
   except Exception as e:emit('error',stage='health',detail=str(e));return 8
  if run_pending_acceptance():
-  head=run(['git','rev-parse','HEAD'])[1];save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','acceptance_dispatched':True,'active_model':sanitize_engine_env(),'checked_at':now()});return 0
- coordination=spawn('coordination-worker','coordination_worker.py'); learning=spawn('learning-worker','learning_worker.py'); head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'active_model':sanitize_engine_env(),'visual_engine_follows_active_model':True,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination,active_model=sanitize_engine_env(),visual_engine_follows_active_model=True); return 0 if ok else 9
+  head=run(['git','rev-parse','HEAD'])[1];save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','acceptance_dispatched':True,'active_model':active_model(),'checked_at':now()});return 0
+ coordination=spawn('coordination-worker','coordination_worker.py'); learning=spawn('learning-worker','learning_worker.py'); head=run(['git','rev-parse','HEAD'])[1]; save_state({'ok':ok,'updated':old!=remote,'head':head,'coordination_contract':'PASS','conversation_interface_contract':'PASS','learning_worker_spawned':learning,'coordination_worker_spawned':coordination,'active_model':active_model(),'visual_engine_follows_active_model':True,'checked_at':now()}); emit('tick',head=head,coordination_contract='PASS',coordination_worker_spawned=coordination,active_model=active_model(),visual_engine_follows_active_model=True); return 0 if ok else 9
 if __name__=='__main__':raise SystemExit(main())
