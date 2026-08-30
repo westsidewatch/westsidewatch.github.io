@@ -36,10 +36,10 @@ export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
 "$NPM22" install --save-exact corepack
 COREPACK="$RUNTIME/node_modules/.bin/corepack"
 [[ -x "$COREPACK" ]] || { echo "ERROR: Corepack executable missing" >&2; exit 3; }
-"$COREPACK" prepare pnpm@11.4.0 --activate
+"$COREPACK" prepare pnpm@10.28.2 --activate
 
 # Penpot Cloud 2.13.x production-compatible MCP package.
-"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.13.3 pnpm@11.4.0
+"$NPM22" install --ignore-scripts --save-exact @penpot/mcp@2.13.3 pnpm@10.28.2
 PKG_DIR="$RUNTIME/node_modules/@penpot/mcp"
 PKG="$PKG_DIR/package.json"
 WORKSPACE="$PKG_DIR/pnpm-workspace.yaml"
