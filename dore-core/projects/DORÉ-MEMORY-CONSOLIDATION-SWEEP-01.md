@@ -394,3 +394,33 @@ Current disposition:
 - deferred Search/corpus structured data-runtime audit: `UNKNOWN_NEEDS_EVIDENCE` as a distinct future storage decision, not a blocker to the completed media milestone.
 
 Sweep status remains `ACTIVE_PARALLEL`; the Cloudflare Journal/Liming media-placement evidence is now explicitly revalidated, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
+
+## Checkpoint 26 — coordination transport / execution-authority reconciliation (2026-08-30)
+
+Bounded evidence reviewed in this pass:
+
+- `.github/workflows/dore-coordination-transport.yml`;
+- `local/dore-local/coordination_mailbox.py`;
+- `local/dore-local/coordination_worker.py`;
+- `local/dore-local/test_coordination_transport.py`;
+- current repository coordination inbox/outbox surfaces;
+- recent live `dore: publish coordination message ...` commits;
+- `DORÉ-COORDINATION-TRANSPORT-EVIDENCE-LEDGER-2026-08-30.md`.
+
+Reconciliation findings:
+
+1. The coordination transport is real shared `CORE/CONTINUOUS` infrastructure, not merely a design memo: durable local inbox/outbox/receipt/delivery state, isolated git-backed publication, persisted worker attempts/failures and bounded dispatch contracts are implemented.
+2. The outbound delivery path has direct production evidence through a populated repository outbox and repeated current coordination-publication commits. Combined with the offline idempotence/retry contract, this supports a bounded completed transport sub-milestone without implying the whole execution plane is complete.
+3. The worker's `local_exec` path is constrained by executable and cwd allowlists, but its primary origin check is `sender == chatgpt` inside repository-backed JSON. That is an authority-boundary debt: repository write trust and execution-origin trust are currently coupled rather than separated by a proven authenticated envelope.
+4. `ME-016` now captures the smallest future proof: authenticated/equivalent origin verification plus negative authorization tests for `local_exec` and mutating Penpot dispatch, followed by one authorized end-to-end inbox→dispatch→reply proof.
+5. The transport should be retained and maintained; this finding does not justify retirement or disablement. Authority hardening belongs under `NERVOUS-SYSTEM` before privileges or exposure expand.
+6. No P01 subtitle/runtime/deployment/binding/credential/order/blocker state or action was modified.
+
+Current disposition:
+
+- coordination transport foundation: `CORE/CONTINUOUS`;
+- outbound durable-delivery sub-milestone: bounded `VERIFIED_COMPLETE`;
+- full bidirectional execution-plane authority hardening: `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`;
+- P01 impact: none.
+
+Sweep status remains `ACTIVE_PARALLEL`; the local coordination transport/execution-authority family is now explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.

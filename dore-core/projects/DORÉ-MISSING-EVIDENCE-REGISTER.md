@@ -273,3 +273,20 @@ The design-memory architecture defines explicit D1 Design Scope, D2 Truth State,
 Run one bounded real Westside design task using current confirmed visual memory, persist the editable result, perform actual rendered visual readback, make at least one evidence-driven correction when the readback exposes a mismatch, and persist the final verified comparison/artifact against the design intent.
 
 **Priority:** MEDIUM/HIGH for visual-system maturity, but subordinate to P01 and not a reason to bypass the `VIS-GRAMMAR` real digital + print proof gate.
+
+## ME-016 — Coordination transport authenticated authority boundary
+
+**Related work:** `CORE`, `NERVOUS-SYSTEM`, `local/dore-local/coordination_mailbox.py`, `local/dore-local/coordination_worker.py`, `.github/workflows/dore-coordination-transport.yml`.
+
+**What is already evidenced**
+A real durable coordination transport exists with JSONL inbox/outbox/receipt/delivery state, idempotent message handling, path-isolated git publication, persisted worker attempts/failures, bounded dispatch kinds, executable/cwd allowlists, an offline transport contract, a workflow contract, a populated repository outbox and repeated live `dore: publish coordination message ...` commits. The outbound publication sub-milestone is therefore operationally real.
+
+**What is not yet evidenced strongly enough**
+The repository inbox execution boundary does not yet have a proven cryptographic/authenticated message origin. `local_exec` checks `sender == chatgpt` and then relies on executable/cwd allowlists; a sender string inside repo-backed JSON is not by itself strong origin proof. This sweep also did not independently replay every inbox→dispatch→reply family or persist negative authorization tests proving forged/unauthorized messages cannot reach `local_exec` or mutating Penpot dispatch.
+
+**Current classification:** coordination transport remains `CORE/CONTINUOUS`; bounded outbound durable delivery is a legitimate completed sub-milestone; full bidirectional execution-plane authority hardening remains `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`.
+
+**Smallest useful future evidence**
+Define one authenticated envelope or equivalent origin-verification contract at the repository inbox boundary, preserve replay/idempotence protection, and add negative tests that unauthorized/forged messages cannot invoke `local_exec` or mutating design dispatches. Verify one authorized end-to-end inbox→dispatch→reply cycle under that contract before claiming Nervous-System authority enforcement.
+
+**Priority:** MEDIUM/HIGH before expanding local privileges or exposing coordination beyond the current trusted repository context; subordinate to P01.
