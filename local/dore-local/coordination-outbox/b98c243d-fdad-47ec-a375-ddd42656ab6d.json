@@ -1,0 +1,18 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"install-penpot-ai-kit-generic-local-01\", \"attempt\": 4, \"exception\": \"RuntimeError: unsupported_kind:shell_task\"}",
+  "created_at": "2026-08-30T13:39:34.051391+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "source-message:install-penpot-ai-kit-generic-local-01"
+  ],
+  "message_id": "b98c243d-fdad-47ec-a375-ddd42656ab6d",
+  "message_sha256": "47380bdf9a7305df8aef4bf3d9c77b181836763733951025bc7425d23453713d",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "figma-to-penpot-migration-01",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Install Penpot AI Kit for Doré generic client",
+  "thread_id": "penpot-migration-01"
+}
