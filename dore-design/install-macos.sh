@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 ROOT="${DORE_REPO_ROOT:-$HOME/westsidewatch.github.io}"
-APP="$ROOT/dore-design/app_visual.py"
+APP="$ROOT/dore-design/app_visual_v2.py"
 PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.dore-design.plist"
 LOGDIR="$HOME/.dore/logs"
 mkdir -p "$LOGDIR" "$HOME/Library/LaunchAgents"
