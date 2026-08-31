@@ -10,6 +10,7 @@ from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();STATE=HOME/'coordination'/'worker-state.json';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'}
+PRIORITY={'critical':0,'high':1,'normal':2,'low':3}
 def load_state():
  try:return json.loads(STATE.read_text()) if STATE.exists() else {}
  except:return {}
@@ -17,10 +18,15 @@ def save(s):STATE.parent.mkdir(parents=True,exist_ok=True);STATE.write_text(json
 def pending(prev):
  done=set(prev.get('repo_inbox_processed') or []);out=[]
  if REPO_INBOX.exists():
-  for p in sorted(REPO_INBOX.glob('*.json')):
+  for p in REPO_INBOX.glob('*.json'):
    try:m=json.loads(p.read_text(encoding='utf-8'))
    except:continue
-   if m.get('message_id') and m['message_id'] not in done:out.append(m)
+   if m.get('message_id') and m['message_id'] not in done:
+    m['_source_name']=p.name;out.append(m)
+ # Current critical work must not wait behind historical experiment files. Among equal
+ # priority, newer numeric product tasks sort ahead of older lexical backlog.
+ out.sort(key=lambda m:(PRIORITY.get(str(m.get('priority','normal')).lower(),2),0 if m.get('related_goal')=='dore-design-product' else 1,str(m.get('_source_name',''))))
+ for m in out:m.pop('_source_name',None)
  return done,out
 def reply(msg,result,evidence):
  send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(result,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+str(msg.get('message_id') or '')],thread_id=msg.get('thread_id'));flush_outbox()
