@@ -1,0 +1,23 @@
+name: Doré Coordination Rescue
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/rescue-coordination.py'
+      - 'local/dore-local/dore_coordination_daemon.py'
+      - 'local/dore-local/test_rescue_coordination.py'
+      - '.github/workflows/dore-coordination-rescue.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rescue:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax
+        run: python3 -m py_compile local/dore-local/rescue-coordination.py local/dore-local/dore_coordination_daemon.py
+      - name: Divergence preservation and reconcile
+        run: python3 local/dore-local/test_rescue_coordination.py
