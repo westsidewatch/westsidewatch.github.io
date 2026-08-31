@@ -1,0 +1,18 @@
+{
+  "task_id": "dore-design-workspace-061-live-015",
+  "kind": "local_exec",
+  "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+  "timeout": 900,
+  "commands": [
+    "git fetch origin main && git merge --ff-only origin/main",
+    "python3 dore-design/upgrade_workspace_061.py",
+    "bash dore-design/install-macos.sh",
+    "python3 dore-design/workspace_cli.py verify"
+  ],
+  "acceptance": [
+    "DORE_DESIGN_061_UPGRADE_PASS",
+    "antioch_remaining false",
+    "health version 0.6",
+    "workspace verify ok"
+  ]
+}
