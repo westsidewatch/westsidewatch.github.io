@@ -1,0 +1,12 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-design-bakeoff-all-providers-001",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "dore_design_bakeoff",
+  "subject": "Doré Design 0.1 — full provider elimination round",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "priority": "high",
+  "body": "Run the complete first-round elimination test across every discovered design provider: Penpot, OpenPencil, Framesmith, Doop, Tela. Use the same minimal Westside Watch real-work brief and the same PASS gate: create a real design artifact, make it visible/renderable, modify the same artifact a second time, render/verify again. Do not stop the whole round because one provider fails. Do not repeatedly repair one candidate during this round; record exact failure evidence and continue. Prefer existing mature upstream workflows and minimum adaptation. No user terminal mediation. Return one machine-readable matrix listing each provider PASS/FAIL, artifact paths, render evidence, editability/visibility, second-edit evidence, blockers, elapsed time, and candidates advancing to round two. This is an elimination round, not an optimization round. If only one passes, nominate it as provisional Doré Design 0.1 base. If none pass, return comparative failure evidence for composition/reselection."
+}
