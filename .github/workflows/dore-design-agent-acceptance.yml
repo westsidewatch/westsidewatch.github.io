@@ -15,44 +15,45 @@ jobs:
       - uses: actions/checkout@v4
       - name: Syntax and engine lifecycle
         run: |
-          python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py
+          python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py dore-design/integration_test.py
           python3 dore-design/selftest.py
-      - name: Live HTTP workbench and machine control
+      - name: HTTP integration
+        id: integration
+        continue-on-error: true
         shell: bash
         run: |
-          set -euo pipefail
-          export DORE_DESIGN_DATA="$RUNNER_TEMP/dore-design-data"
-          export DORE_DESIGN_PORT=4310
-          python3 dore-design/app.py >/tmp/dore-design.log 2>&1 &
-          pid=$!
-          trap 'kill "$pid" 2>/dev/null || true; cat /tmp/dore-design.log || true' EXIT
-          for i in $(seq 1 30); do
-            curl -fsS http://127.0.0.1:4310/api/health >/tmp/health.json && break
-            sleep .2
-          done
-          python3 - <<'PY'
-          import json,urllib.request
-          base='http://127.0.0.1:4310'
-          def req(path,payload=None):
-              data=None if payload is None else json.dumps(payload).encode()
-              h={} if payload is None else {'content-type':'application/json'}
-              q=urllib.request.Request(base+path,data=data,headers=h,method='GET' if payload is None else 'POST')
-              with urllib.request.urlopen(q,timeout=3) as r:return r.status,r.headers.get_content_type(),r.read()
-          _,_,raw=req('/api/health'); assert json.loads(raw)['ok']
-          _,typ,raw=req('/'); assert typ=='text/html' and b'DORE DESIGN 0.5' in raw
-          _,_,raw=req('/api/document/westside-watch'); d0=json.loads(raw); r0=d0['revision']
-          _,_,raw=req('/api/document/westside-watch/mutate',{'op':'set','id':'hero','patch':{'x':91}}); d1=json.loads(raw)['document']; assert d1['revision']==r0+1
-          _,_,raw=req('/api/document/westside-watch/batch',{'ops':[{'op':'set','id':'hero','patch':{'size':81}},{'op':'token','key':'gold','value':'#B79838'}]}); d2=json.loads(raw)['document']; assert d2['revision']==r0+2
-          _,typ,raw=req('/api/document/westside-watch/export.svg'); assert typ=='image/svg+xml' and b'<svg' in raw and b'WATCH FOR' in raw
-          _,_,raw=req('/api/document/westside-watch/verify'); v=json.loads(raw); assert v['ok'],v
-          _,_,raw=req('/api/document/westside-watch/history'); h=json.loads(raw); assert len(h)>=3
-          print(json.dumps({'ok':True,'revision_before':r0,'revision_after':d2['revision'],'history':len(h),'verification':v}))
-          PY
+          set +e
+          python3 dore-design/integration_test.py > /tmp/dore-design-integration.log 2>&1
+          rc=$?
+          cat /tmp/dore-design-integration.log
+          echo "$rc" > /tmp/dore-design-integration.rc
+          exit "$rc"
+      - name: Upload integration evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-design-integration-evidence
+          path: |
+            /tmp/dore-design-integration.log
+            /tmp/dore-design-integration.rc
+      - name: Machine control surface
+        if: steps.integration.outcome == 'success'
+        env:
+          DORE_DESIGN_DATA: ${{ runner.temp }}/dore-design-data
+        run: |
+          python3 dore-design/cli.py get >/tmp/document.json
+          python3 dore-design/cli.py verify >/tmp/verification.json
           python3 dore-design/cli.py set hero '{"x":88,"size":84}'
           python3 dore-design/cli.py token gold '#B79838'
           python3 dore-design/cli.py export-svg
           python3 dore-design/cli.py verify
-          test -s "$DORE_DESIGN_DATA/exports/westside-watch.svg"
-          echo DORE_DESIGN_ACCEPTANCE_PASS
+          test -s "${DORE_DESIGN_DATA}/exports/westside-watch.svg"
       - name: macOS installer static contract
+        if: steps.integration.outcome == 'success'
         run: bash -n dore-design/install-macos.sh
+      - name: Acceptance gate
+        if: always()
+        shell: bash
+        run: |
+          test '${{ steps.integration.outcome }}' = 'success'
+          echo DORE_DESIGN_ACCEPTANCE_PASS
