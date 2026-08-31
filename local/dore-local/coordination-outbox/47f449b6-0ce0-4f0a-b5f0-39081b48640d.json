@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"npx\", \"puppeteer\", \"browsers\", \"install\", \"chrome\"], \"cwd\": \"/Users/chenjingyu/.dore/runtime/design-providers/framesmith\", \"returncode\": 0, \"stdout\": \"chrome@146.0.7680.76 /Users/chenjingyu/.cache/puppeteer/chrome/mac_arm-146.0.7680.76/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing\\n\", \"stderr\": \"\"}]}",
+  "created_at": "2026-08-31T03:08:38.097167+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:framesmith-chrome-repair-004"
+  ],
+  "message_id": "47f449b6-0ce0-4f0a-b5f0-39081b48640d",
+  "message_sha256": "8567aecb05c30607ead04e3fee7df4e06807973cb84c33e38c2d3a89eada2cdb",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Repair verified Puppeteer Chrome runtime then rerun Framesmith visual acceptance",
+  "thread_id": "37ed9677-f027-4bc8-81f6-0da2b8094c67"
+}
