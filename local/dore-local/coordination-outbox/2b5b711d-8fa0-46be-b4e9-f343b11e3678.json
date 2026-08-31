@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"framesmith-mcp-westside-002\", \"attempt\": 3, \"terminal\": true, \"max_attempts\": 3, \"exception\": \"RuntimeError: dore_design_framesmith_mcp_trial_failed:RuntimeError: westside_project_not_found\"}",
+  "created_at": "2026-08-31T02:46:32.901506+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "terminal-failure",
+    "source-message:framesmith-mcp-westside-002"
+  ],
+  "message_id": "2b5b711d-8fa0-46be-b4e9-f343b11e3678",
+  "message_sha256": "a21b650dab2eb0179ac80e51bf638b6cf7c98648b20acd00337a0ad513ee94e8",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Retry Framesmith using actual upstream MCP tool names",
+  "thread_id": "0544e27a-b522-4f30-9934-e68079d2b7eb"
+}
