@@ -1,0 +1,16 @@
+{
+  "id": "new-westside-retro-asset-pack-01",
+  "kind": "local_exec",
+  "priority": "high",
+  "project": "new-westside-visual-structure",
+  "role": "bounded_visual_asset_generation_and_evidence",
+  "instruction": "Read dore-design/new-westside/STYLE-TRANSLATION-GATE.md and the current visual reference system. Build the first REAL Westside retro illustration candidate pack locally. Do not redesign the homepage and do not replace ChatGPT as visual director. Generate or assemble real raster/SVG illustration candidates using Doré's available local image-generation capability and controlled post-processing; rough CSS lines, placeholder hatch patterns, empty rectangles, and text-only stand-ins are forbidden. Subjects for Pack 01: (A) watchman on a city wall before dawn, vertical 5:8; (B) city wall and single gate at first light, panoramic; (C) road toward a distant founded city, vertical or 5:8; (D) scripture/book with stone and dawn light, compact editorial fragment. Visual target: convincing antique engraving / wood-engraving material, archival print tactility, high line detail, restrained tonal hierarchy, suitable for Living Paper / Ink / Midnight spot-ink treatment. Produce at least two materially different candidates for A and B if local generation supports it. Save assets under dore-design/new-westside/assets/retro-pack-01/ with a manifest.json recording filename, subject, aspect ratio, generation method/model, prompt or construction notes, intended crop, candidate status, and any limitations. Create a contact sheet or local HTML specimen showing the candidates on Living Paper and Midnight treatments. Run local visual/file verification, record dimensions and non-placeholder checks, then publish an outbox result with exact paths and evidence. Do not modify homepage-v1.html or promote any candidate to approved; ChatGPT will review and decide.",
+  "success_criteria": [
+    "real image assets exist locally/repo-visible, not CSS placeholder engraving",
+    "manifest records provenance and intended editorial crop",
+    "contact sheet/specimen renders candidates in Westside material treatments",
+    "at least watchman-wall and wall-gate subjects are represented",
+    "no homepage visual direction is independently changed",
+    "verification evidence is returned"
+  ]
+}
