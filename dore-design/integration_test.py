@@ -20,7 +20,7 @@ with tempfile.TemporaryDirectory() as td:
    except Exception:time.sleep(.1)
   else:raise RuntimeError('service_not_ready')
   health=json.loads(raw);assert code==200 and health['ok']
-  code,typ,html=req(base+'/');assert code==200 and typ=='text/html' and b'DORE DESIGN 0.5' in html
+  code,typ,html=req(base+'/');assert code==200 and typ=='text/html' and 'DORÉ DESIGN 0.5'.encode('utf-8') in html
   _,_,raw=req(base+'/api/document/westside-watch');d0=json.loads(raw);r0=d0['revision']
   _,_,raw=req(base+'/api/document/westside-watch/mutate',{'op':'set','id':'hero','patch':{'x':91}});d1=json.loads(raw)['document'];assert d1['revision']==r0+1 and next(n for n in d1['nodes'] if n['id']=='hero')['x']==91
   _,_,raw=req(base+'/api/document/westside-watch/batch',{'ops':[{'op':'set','id':'hero','patch':{'size':81}},{'op':'token','key':'gold','value':'#B79838'}]});d2=json.loads(raw)['document'];assert d2['revision']==r0+2
