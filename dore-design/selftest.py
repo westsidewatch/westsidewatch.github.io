@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic Build 002 verification without browser or external dependencies."""
+"""Deterministic Doré Design engine verification."""
 import json,tempfile,os,sys
 from pathlib import Path
 with tempfile.TemporaryDirectory() as td:
@@ -10,6 +10,9 @@ with tempfile.TemporaryDirectory() as td:
  d=app.mutate(d,{'op':'token','key':'gold','value':'#B79838'});assert d['tokens']['gold']=='#B79838'
  d=app.mutate(d,{'op':'add','node':{'id':'probe','type':'text','text':'PROBE','x':10,'y':10,'w':100,'size':12}});assert any(n['id']=='probe' for n in d['nodes'])
  d=app.mutate(d,{'op':'delete','id':'probe'});assert not any(n['id']=='probe' for n in d['nodes'])
- s=app.svg(d);assert s.startswith('<svg') and 'WATCH FOR' in s and '#B79838' in s
- snaps=list((Path(td)/'history').glob('westside-watch.r*.json'));assert len(snaps)==4
- print(json.dumps({'ok':True,'schema':d['schema'],'revision':d['revision'],'history_snapshots':len(snaps),'svg_bytes':len(s),'verified':['same-node-mutation','token-mutation','add-delete','revision-history','svg-export']}))
+ before_batch=d['revision'];d=app.batch(d,[{'op':'set','id':'hero','patch':{'x':84,'size':82}},{'op':'token','key':'night','value':'#16324A'}]);assert d['revision']==before_batch+1;assert next(n for n in d['nodes'] if n['id']=='hero')['x']==84
+ target_revision=r0+1;d=app.restore('westside-watch',target_revision);assert d['revision']>before_batch;assert next(n for n in d['nodes'] if n['id']=='hero')['size']==old-4
+ s=app.svg(d);assert s.startswith('<svg') and 'WATCH FOR' in s
+ v=app.verify(d);assert v['ok'] and v['checks']['schema_valid'] and v['checks']['render_nonempty']
+ snaps=list((Path(td)/'history').glob('westside-watch.r*.json'));assert len(snaps)>=5
+ print(json.dumps({'ok':True,'schema':d['schema'],'revision':d['revision'],'history_snapshots':len(snaps),'svg_bytes':len(s),'render_sha256':v['render_sha256'],'verified':['stable-document-identity','node-crud','token-edit','atomic-batch','revision-history','restore-undo','svg-export','machine-verifier']}))
