@@ -1,0 +1,18 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"dore-design-openpencil-real-work-001\", \"attempt\": 69, \"exception\": \"RuntimeError: dore_design_openpencil_trial_failed\"}",
+  "created_at": "2026-08-31T00:39:19.663214+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "source-message:dore-design-openpencil-real-work-001"
+  ],
+  "message_id": "572f7372-6fb9-41d5-895c-4af4f82491b0",
+  "message_sha256": "796423573b0f361156d821719840a14e045ce53e6326a371f9e2e799d0929874",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-evolution-run-001",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Doré Design 0.1 — OpenPencil real-work trial",
+  "thread_id": "81905a2b-3ad6-4f60-ab38-65c11a034167"
+}
