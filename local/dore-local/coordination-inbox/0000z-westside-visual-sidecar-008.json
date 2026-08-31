@@ -1,0 +1,15 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"westside-visual-sidecar-008",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"normal",
+  "subject":"Run background Westside colour structure content preparation",
+  "related_goal":"westside-watch-visual-preparation-sidecar",
+  "requires_reply":false,
+  "kind":"local_exec",
+  "commands":[
+    {"argv":["python3","local/dore-local/dore_design_sidecar.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":900}
+  ],
+  "body":"Background sidecar only. Prepare COLOR.md, STRUCTURE.md, CONTENT.md and OBSERVATION.md for the existing Westside visual direction. Do not restart design discovery, do not mutate the active Framesmith artifact, and do not block the Doré Design mainline. These packages will merge into Doré Design only after create-render-edit-rerender is working reliably."
+}
