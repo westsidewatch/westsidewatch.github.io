@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"install-coordination-daemon-006\", \"attempt\": 1, \"terminal\": false, \"parent_goal_preserved\": true, \"recovery_required\": false, \"exception\": \"RuntimeError: task_failed\"}",
+  "created_at": "2026-08-31T05:13:55.520371+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:install-coordination-daemon-006"
+  ],
+  "message_id": "c52eef20-33c0-4d36-bdea-6028195b2dd9",
+  "message_sha256": "626e11f89bf4898b2b01aba530f82a6928a44f5bf706af9cbcbe485e8132f26e",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-control-plane",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Install resident coordination daemon and close inbox-consumption gap",
+  "thread_id": "7a1a578d-0c83-4fb1-974d-439dfdbee1a5"
+}
