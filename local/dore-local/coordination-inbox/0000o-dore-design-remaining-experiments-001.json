@@ -1,0 +1,12 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-design-remaining-experiments-001",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "dore_design_bakeoff",
+  "subject": "Doré Design 0.1 — continue all remaining experiments",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "priority": "high",
+  "body": "Continue the first-round elimination experiments now. Treat the already evidenced OpenPencil Bun/import failure as FAIL for this round and do not retry it. Run every remaining candidate in sequence: Penpot, Framesmith, Doop, Tela. For each candidate use the same minimum real-work gate: create a structured Westside Watch design artifact, make it visible/renderable, perform a second modification on the same artifact, then render/verify again. On failure: capture exact cause, classify what was learned, mark that candidate terminal for this round, and immediately continue to the next candidate. Never let one provider block the queue. Do not optimize or deeply repair providers during this round. Finish all experiments before comparative analysis. Return a final machine-readable matrix with PASS/FAIL, failure cause, learning, artifact/render evidence, second-edit evidence, and advancing candidates. No user terminal mediation."
+}
