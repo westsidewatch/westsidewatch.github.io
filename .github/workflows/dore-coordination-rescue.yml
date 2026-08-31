@@ -10,7 +10,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   rescue:
@@ -20,4 +20,20 @@ jobs:
       - name: Syntax
         run: python3 -m py_compile local/dore-local/rescue-coordination.py local/dore-local/dore_coordination_daemon.py
       - name: Divergence preservation and reconcile
-        run: python3 local/dore-local/test_rescue_coordination.py
+        run: python3 local/dore-local/test_rescue_coordination.py | tee /tmp/rescue-test.json
+      - name: Persist pass evidence
+        run: |
+          mkdir -p dore-core/runtime
+          python3 - <<'PY'
+          import json,datetime
+          p=json.load(open('/tmp/rescue-test.json'))
+          assert p['ok'] and p['code']=='RESCUE_DIVERGENCE_TEST_PASS'
+          p['verified_at']=datetime.datetime.now(datetime.timezone.utc).isoformat()
+          p['source']='github-actions'
+          open('dore-core/runtime/coordination-rescue-ci.json','w').write(json.dumps(p,ensure_ascii=False,indent=2)+'\n')
+          PY
+          git config user.name WATCHMAN
+          git config user.email westsidewatchca@gmail.com
+          git add dore-core/runtime/coordination-rescue-ci.json
+          git diff --cached --quiet || git commit -m "chore(dore): persist coordination rescue PASS [skip ci]"
+          git push
