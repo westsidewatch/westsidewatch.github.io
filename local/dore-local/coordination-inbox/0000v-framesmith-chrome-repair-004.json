@@ -1,0 +1,15 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"framesmith-chrome-repair-004",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"high",
+  "subject":"Repair verified Puppeteer Chrome runtime then rerun Framesmith visual acceptance",
+  "related_goal":"dore-design-0.1",
+  "requires_reply":false,
+  "kind":"local_exec",
+  "commands":[
+    {"argv":["npx","puppeteer","browsers","install","chrome"],"cwd":"/Users/chenjingyu/.dore/runtime/design-providers/framesmith","timeout":900}
+  ],
+  "body":"The previous real run proved Framesmith create/edit/evaluate works and its own screenshot error explicitly prescribed installing Puppeteer-managed Chrome. Execute that exact upstream-prescribed repair. No guessed workaround."
+}
