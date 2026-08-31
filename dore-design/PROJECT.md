@@ -1,120 +1,83 @@
 # Doré Design
 
-Status: ACTIVE PROJECT
+Status: WORKING PRODUCT FOUNDATION COMPLETE — ACTIVE EVOLUTION
 Established: 2026-08-30
+Accepted working foundation: 2026-08-31
 
 ## Mission
 
-Doré Design is a design environment built specifically for the existing Doré local stack and real Westside Watch / ONE production work. It is not intended to reproduce Figma, Penpot, or any general-purpose design product.
+Doré Design is the local structured design environment built for the existing Doré stack and real Westside Watch / ONE production work. It is not intended to reproduce Figma, Penpot, or another general-purpose design suite.
 
-The fixed goal is reliable autonomous design production. Tools and providers are replaceable.
+The fixed goal is reliable design production in one shared artifact that both the human and Doré can inspect and edit. Tools and upstream components remain replaceable.
 
-## Current operating mode — two tracks, one merge
+## Working product
 
-Until Doré Design reaches a genuine working 0.1, execution is deliberately split:
+Doré Design 0.9 is the accepted resident product foundation. It runs locally at `127.0.0.1:4310` through a macOS LaunchAgent and stores a durable multi-page `dore.design.workspace.v1` document.
 
-**Track A — Doré Design mainline (ChatGPT-led).** ChatGPT leads architecture, upstream verification, adapter correctness, render/acceptance semantics, failure diagnosis and the shortest path to a real visible/editable Westside Watch artifact. Doré executes local steps and observes the decisions/evidence so the successful operating pattern can later be transferred into Doré.
+The same workspace is exposed through the browser, HTTP API and Doré CLI. Human and machine edits therefore modify one document rather than separate visual copies.
 
-**Track B — Westside visual preparation (Doré-led background work).** Doré continuously prepares bounded inputs for the new Westside visual system without blocking Track A: colour-system refinement, information/section structure, editorial/content preparation, visual-language evidence and reusable design decisions. It must build on existing accepted visual DNA rather than restarting visual discovery.
+Current working surface includes:
 
-The tracks merge only after Doré Design can reliably create, render, edit the same artifact, rerender and verify it. At merge, Doré's prepared colour/structure/content packages become direct inputs to the working Doré Design pipeline.
+- multi-page/artboard workspace;
+- page create, rename, duplicate and delete;
+- structured layers with create, edit, duplicate and delete;
+- direct pointer dragging on the canvas;
+- Inspector editing of coordinates, width, type size and text;
+- shared design tokens;
+- canvas dimensions;
+- keyboard Delete/Backspace;
+- history and Undo / Cmd-or-Ctrl-Z;
+- deterministic per-page SVG render/export;
+- machine verification of every page and render hash;
+- resident HTTP control surface;
+- Doré CLI read/write/verify/export surface;
+- migration guard for superseded legacy structural data;
+- local same-artifact acceptance testing.
 
-Mainline priority rule: Track B may never consume or block the resource needed by Track A. Unrelated memory sweeps or exploratory work do not outrank the active Doré Design acceptance goal.
+## Acceptance contract — PASSED for the working foundation
 
-## Target environment
+The working foundation was required to satisfy all of the following:
 
-- macOS local workstation
-- Doré Local
-- local Ollama models
-- GitHub coordination and durable evidence
-- MCP / CLI / native local automation
-- zero incremental paid dependency
-- human-visible, editable design output
-
-## Core acceptance contract
-
-A design workflow is not considered working until all of the following are true:
-
-1. Doré can start and complete the work without the user acting as a terminal operator.
-2. The user can see the actual rendered design.
-3. The result remains structurally editable, not merely a flattened AI image.
+1. Doré can execute the local workflow without the user acting as a terminal operator.
+2. The human can open and see the rendered design.
+3. The result remains structurally editable rather than being a flattened AI image.
 4. Doré can inspect and modify the same document in later iterations.
-5. Doré can export/render and visually verify its own result.
-6. Repeated operations are stable and do not depend on metered paid AI/API quotas.
-7. Failures produce machine-readable evidence and trigger bounded self-diagnosis/retry where safe.
+5. The same artifact can be rendered/exported and machine-verified after mutation.
+6. Core operation is local and does not depend on metered paid AI/API quotas.
+7. Failures and acceptance results are machine-readable and can be returned through the resident execution path.
 
-## Architecture principle
+GitHub Actions product acceptance run `33379900466` completed SUCCESS.
 
-Doré Design is machine-operable first and human-editable simultaneously:
+Physical Mac task `dd-product-020` completed SUCCESS on the resident 0.9 service. Health reported `version=0.9`, `workspace=multi-page`, `direct_manipulation=true`. The live acceptance probe returned `DORE_DESIGN_LOCAL_ACCEPTANCE_PASS` after mutating the same workspace, confirming rerender and machine verification, and cleaning up its probe. Workspace verification also confirmed the obsolete legacy structure was absent.
 
-Doré -> native design API / MCP / CLI -> document model -> canvas/render -> visual verifier
+## Architecture
 
-The human opens the same design document and sees/edit the real structure Doré is operating on.
+`Human browser ↘`
 
-No single provider is the architecture. Penpot, OpenPencil, Framesmith, Doop, Tela, or future projects are candidate engines/components behind adapters.
+`                 shared structured workspace -> canvas/render -> SVG/verifier/history`
 
-## Phase 0 — Open-source bake-off
+`Doré CLI/API  ↗`
 
-Use one identical real production brief: Westside Watch homepage.
+The document is the durable object. The browser canvas is a human editing view; the CLI/API is Doré's machine editing view; both address the same state.
 
-Candidates initially include:
-
-- Penpot
-- OpenPencil
-- Framesmith
-- Doop
-- Tela
-
-Each candidate must be evaluated for:
-
-- autonomous local installation/operation
-- machine control surface (MCP/CLI/API/RPC)
-- editable document/scene structure
-- visible render/export
-- iterative mutation of an existing design
-- local/macOS fit
-- stability under repeated operations
-- zero incremental paid dependency
-- license/provenance and safe reuse
-- useful components even if the candidate is not selected as the base engine
-
-Passing an API smoke test is insufficient. A candidate must produce an actual Westside Watch design that the user can see.
-
-## Selection strategy
-
-Find the simplest stable base engine first. Then selectively reuse or adapt the best compatible components from other open-source candidates rather than rebuilding mature capabilities unnecessarily.
-
-For every upstream component record:
-
-- repository/source
-- exact upstream revision/version
-- license
-- architecture role
-- test evidence
-- adoption level
-- whether used as dependency, adapter, isolated service, inspiration, or incorporated code
-
-License compatibility is a design constraint from the beginning, not a cleanup task at the end.
+GitHub is versioning, synchronization, backup and remote engineering coordination. It is not the intended central bus for every local edit. Doré's mature local path is direct controlled local tooling -> Doré Design workspace -> render/verify -> evidence/versioning.
 
 ## Engineering rules
 
-- Goal fixed; tools replaceable.
-- Repair a provider only while repair cost is lower than switching or bypassing it.
-- Prefer proven open-source components over rebuilding.
-- Keep provider adapters replaceable.
-- Never treat visual-verifier judgment as proof that a mutation occurred; structural evidence is required.
-- Prefer small validated mutations over one-shot page generation.
-- A failed provider must not block exploration of another provider.
-- Local evidence Doré can obtain itself must not be delegated to the user.
-- Human intervention is reserved for genuine login/authorization, unavoidable GUI-only actions, or high-risk/irreversible decisions.
-- Existing Westside visual work is a checkpoint, not disposable exploration. Tool changes must not trigger a fresh visual restart.
+- Goal fixed; components replaceable.
+- Current product state outranks superseded design memory.
+- Do not restart visual discovery when the editing engine changes.
+- Preserve structured identity across edits.
+- Structural evidence is required to prove a mutation occurred.
+- Render verification follows mutation; it does not substitute for mutation evidence.
+- Human intervention is reserved for genuine authorization, unavoidable GUI-only actions, or high-risk/irreversible decisions.
+- Build new editing capabilities from concrete production needs rather than speculative feature parity with incumbent design suites.
+- Every real production cycle should leave both work evidence and reusable Doré learning evidence.
 
-## First milestone — Doré Design 0.1
+## Product phase transition
 
-Doré autonomously produces a complete first-pass Westside Watch homepage through at least one open-source design engine, exposes a human-visible editable result, performs a second autonomous revision on the same document, exports a render, verifies it, and repeats a representative operation suite reliably without paid API dependency.
+The original construction/bake-off phase is closed. Penpot, OpenPencil, Framesmith, Doop, Tela and other projects remain sources of reusable ideas/components, but no provider is a prerequisite for Doré Design operation.
 
-## Long-term direction
+The next phase is production and evolution: use Doré Design for actual Westside Watch / ONE work, discover missing capabilities through that work, add them to the self-owned product, verify them, and teach Doré through the same real production loop.
 
-Doré Design may eventually own its agent control layer, provider adapters, design document abstractions, visual verification, import/export, version history, and environment-specific workflows while continuing to reuse suitable open-source canvas/rendering engines.
-
-The project succeeds by delivering stable real design work in the Doré environment, not by maximizing feature count or matching incumbent design software.
+The project now succeeds or fails on the quality and reliability of real design work produced in Doré Design, not on whether an upstream provider passes an experiment.
