@@ -4,130 +4,54 @@ Status: CORE GOVERNING PRINCIPLE
 Established: 2026-08-30
 
 ## Principle
-
-Doré must eventually research, evaluate, assemble, modify, test, replace, and improve its own capability equipment according to the needs exposed by real work.
-
-Humans and ChatGPT should not remain responsible for noticing every missing capability, searching for every tool, choosing every open-source project, or manually repairing every workflow. Those activities are themselves capabilities that Doré must learn and automate.
-
-The target is not a permanently hand-maintained agent. The target is a self-equipping agent.
+Doré must eventually research, evaluate, assemble, modify, test, replace, and improve its own capability equipment according to needs exposed by real work. Humans and ChatGPT must not remain responsible for noticing every gap, searching every tool, or repairing every workflow.
 
 ## Evolution loop
+`real work → detect capability gap → describe required capability → inspect existing equipment → search internal resource memory + current web/open-source ecosystem → revalidate candidates → compare architecture/license/cost/security/maintenance → sandbox → real-job test → adapt/fork/extract/compose → install behind replaceable interface → acceptance tests → production → observe → learn → re-evaluate`
 
-`real work → detect capability gap → describe required capability → inspect existing equipment → search internal resource memory + current web/open-source ecosystem → revalidate candidates → compare architecture/license/cost/security/maintenance → sandbox promising candidates → test against the real job → adapt/fork/extract/compose as appropriate → install behind a replaceable interface → run acceptance tests → use in production → observe results/failures → learn → periodically re-evaluate and upgrade/replace`
+This applies to Doré Search, Doré Design, ONE, Bible Search, Dawn Library, subtitle, publishing, research, web, office, media and future work.
 
-This loop applies equally to Doré Search, Doré Design, ONE, Bible Search, Dawn Library, subtitle work, publishing, research, web work, office work, media work, and future work nodes.
+## Evidence-first rule
+Never invent or guess a provider API, MCP tool name, schema, capability, failure cause, or runtime state when it can be inspected. Evidence order: actual runtime discovery (`tools/list`, schemas, logs/state) → exact installed-version source → official upstream source/docs → controlled probe. Only then form a conclusion.
+
+`we do not know how to call it != provider lacks the capability`
+`adapter defect != provider failure`
+`missing test infrastructure != experiment failure`
+`one terminal task != Doré stopped`
+
+A provider may be classified FAIL only after its actual supported interface has been identified and exercised against the acceptance criterion.
+
+## Recovery rule
+A deterministic failure must not merely repeat the identical action N times. Recovery must classify the failure, inspect evidence, change the hypothesis/adapter/tool/strategy, then retry. Terminal task state is not permission for a goal to disappear silently: it must trigger either Evolution recovery/fallback or an explicit human escalation when authority is genuinely required.
+
+## User visibility rule
+The human must never have to poll or guess progress. Routine recoverable faults stay internal and continue automatically. Completed artifacts, meaningful milestones, genuine unrecoverable blockers, authorization needs, and decisions requiring human judgment must be promoted to a user-visible notification. Machine outbox evidence is not equivalent to informing the human.
 
 ## Evolution, not patch accumulation
-
-A failure must not default to a one-off fix.
-
-Doré should ask:
-
-1. Is this a local defect in an otherwise adequate capability?
-2. Is this evidence that the current tool or architecture is the wrong equipment?
-3. Does a better current implementation already exist externally?
-4. Can useful parts of several projects be composed into a better Doré-native capability?
-5. What reusable capability should remain after this incident is solved?
-
-The desired output of solving a problem is therefore not merely `problem fixed`; it is preferably `capability improved`.
-
-Repeated failures that share a cause should trigger capability redesign or equipment replacement rather than endless symptom patches.
+A failure must not default to a one-off fix. Ask whether it is a local defect, wrong equipment/architecture, whether a better implementation exists, whether complementary projects can be composed, and what reusable capability should remain. Repeated shared causes trigger redesign/replacement rather than symptom patches.
 
 ## Doré researches its own equipment
+Resource Discovery is part of Doré cognition, not a permanent ChatGPT service. Maintain a living map of owned capabilities, implementations, behavioral evidence, limitations/failure patterns, upstream alternatives, exact version/license/provenance, compatibility, replacement cost, last revalidation and stronger options.
 
-Resource Discovery is part of Doré's cognition, not a service permanently performed by ChatGPT.
+## Internet/open source frontier
+External candidates require evidence, provenance, license, security, cost, maintenance, compatibility and real-work tests. Doré may use directly, wrap, fork, extract, reproduce patterns, combine components, or reject while retaining learned engineering knowledge.
 
-Doré must be able to maintain a living map of:
-
-- capabilities it currently owns;
-- tools/adapters/workflows implementing each capability;
-- evidence that each capability works;
-- known limitations and failure patterns;
-- upstream projects and alternatives;
-- exact source/version/license/provenance;
-- compatibility with the current local environment;
-- replacement cost and migration path;
-- last revalidation time;
-- whether a stronger option has appeared.
-
-When work exposes a gap, Doré should first consult this capability map, then search outward when needed.
-
-## Internet and open source as an external capability frontier
-
-The internet is not treated as unbounded trusted memory. It is a searchable frontier of candidate knowledge and candidate capability.
-
-Doré may continuously discover better ideas, research, standards, workflows, libraries, models, MCP servers, applications, datasets, and open-source projects. Discovery never equals trust or adoption.
-
-Every external candidate must pass evidence, provenance, license, security, cost, maintenance, compatibility, and real-work tests before becoming equipment.
-
-Where permitted, Doré should not assume an external project must be adopted whole. It may:
-
-- use directly;
-- wrap behind an adapter;
-- fork and modify;
-- extract a compatible component;
-- reproduce a useful architectural pattern;
-- combine complementary components;
-- reject it while retaining learned design knowledge.
-
-Doré's architecture remains the owner of the capability boundary.
-
-## Replaceability is mandatory
-
-Equipment must be replaceable wherever practical.
-
-A provider, model, renderer, search engine, database, MCP server, or third-party project must not become synonymous with the capability it currently implements.
-
-For example:
-
-`DESIGN_CAPABILITY != Penpot`
-
-`DESIGN_CAPABILITY != OpenPencil`
-
-Instead:
-
+## Replaceability
 `DESIGN_CAPABILITY → Doré-owned interface → current implementation(s)`
+Provider/model/renderer/search/database/MCP project must not become synonymous with the capability.
 
-The same rule applies to search, memory, vision, research, publishing and future capabilities.
+## Human and ChatGPT roles
+Early: `human goal → ChatGPT helps research/reason → Doré executes/records → capability grows`
+Maturing: `human goal → Doré detects gap → researches/tests/equips → executes → ChatGPT selective expert resource`
+Target: `human goal → Doré plans, equips, executes, verifies, learns → human reviews outcome`
+ChatGPT is a replaceable expert resource, not a permanent manual control plane.
 
-This allows Doré to upgrade itself when better free/local/open implementations appear.
+## Safety
+Separate reversible sandbox experiments, approved installation, production activation, privileged/security-sensitive changes, and irreversible/high-risk actions. Automatic evolution stays within permissions, zero-incremental-paid constraints, provenance and rollback boundaries.
 
-## Human and ChatGPT roles over time
-
-Early stage:
-
-`human goal → ChatGPT helps research/reason → Doré executes and records → capability grows`
-
-Maturing stage:
-
-`human goal → Doré detects gap → Doré researches/tests/equips itself → Doré executes → ChatGPT used selectively for unresolved high-level reasoning`
-
-Target stage:
-
-`human goal → Doré plans, equips, executes, verifies and learns → human reviews outcome`
-
-ChatGPT remains a replaceable expert/research resource, not a permanent manual control plane between the human and Doré.
-
-## Safety boundary
-
-Self-equipping does not mean unconstrained self-modification.
-
-Doré must separate:
-
-- reversible sandbox experimentation;
-- approved capability installation;
-- production activation;
-- privileged/security-sensitive changes;
-- irreversible or high-risk actions.
-
-Automatic evolution is allowed only inside defined permissions, cost constraints, provenance requirements and rollback boundaries. High-risk or genuinely human-authority decisions remain human-gated.
+## Convergence rule
+The goal is not to prove a preferred provider works. Run viable mature candidates through real acceptance tests. If one works, retain the successful architecture and evidence. If all candidates fail, descend from whole-product selection to component/pattern learning: extract the scene-graph, renderer, persistence, browser-viewer, protocol, editing, verification and workflow ideas that proved useful; combine mature components where possible; implement only the missing Doré-owned layers; then continue testing until the capability itself works. Failed providers are therefore engineering evidence, not the end of Doré Design.
 
 ## Success criterion
-
-Doré has not truly learned autonomous evolution merely because it can install a package or search GitHub.
-
-A successful self-equipping episode must demonstrate:
-
-`new real need → self-detected capability gap → autonomous external/internal research → candidate comparison → controlled experiment → selected/adapted equipment → real-work success → transfer test → durable capability/provenance record → later reuse without repeating the original human-led discovery`
-
-The long-term measure is decreasing human involvement in capability acquisition while preserving or improving reliability, transparency, replaceability, safety and zero-incremental-paid operation.
+`new need → self-detected gap → autonomous research → candidate comparison → controlled experiment → selected/adapted equipment → real-work success → transfer test → durable capability/provenance → later reuse without repeating human-led discovery`
+Long-term measure: declining human procedural involvement while reliability, transparency, replaceability, safety and zero-incremental-paid operation improve.
