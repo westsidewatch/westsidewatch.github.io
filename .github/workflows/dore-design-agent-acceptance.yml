@@ -21,7 +21,7 @@ jobs:
         run: python3 dore-design/integration_test.py
       - name: Workspace product lifecycle
         run: |
-          python3 -m py_compile dore-design/app_workspace.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py
+          python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py
           python3 dore-design/workspace_selftest.py
       - name: Workspace machine control surface
         env:
@@ -39,16 +39,17 @@ jobs:
           set -euo pipefail
           export DORE_DESIGN_DATA="${{ runner.temp }}/dore-design-http"
           export DORE_DESIGN_PORT=4310
-          python3 dore-design/app_workspace.py >/tmp/dd-http.log 2>&1 &
+          python3 dore-design/app_product.py >/tmp/dd-http.log 2>&1 &
           pid=$!
           trap 'kill $pid || true' EXIT
           for i in {1..30}; do curl -fsS http://127.0.0.1:4310/api/health && break || sleep .1; done
           python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
-          grep -q 'DORÉ DESIGN 0.8' <(curl -fsS http://127.0.0.1:4310/)
+          grep -q 'DORÉ DESIGN 0.9' <(curl -fsS http://127.0.0.1:4310/)
+          python3 -c "import json,urllib.request; h=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/health')); assert h['version']=='0.9' and h['direct_manipulation']"
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
-          grep -q 'app_workspace.py' dore-design/install-macos.sh
+          grep -q 'app_product.py' dore-design/install-macos.sh
       - name: Acceptance gate
-        run: echo DORE_DESIGN_WORKSPACE_ACCEPTANCE_PASS
+        run: echo DORE_DESIGN_PRODUCT_ACCEPTANCE_PASS
