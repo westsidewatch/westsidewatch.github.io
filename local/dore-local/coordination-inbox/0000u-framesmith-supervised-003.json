@@ -1,0 +1,12 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"framesmith-supervised-westside-003",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"high",
+  "subject":"Supervised Framesmith run using upstream init contract",
+  "related_goal":"dore-design-0.1",
+  "requires_reply":false,
+  "kind":"dore_design_framesmith_mcp_trial",
+  "body":"Run the corrected Framesmith real-work trial. The supervisor verified upstream src/bind.ts: init ensures requested projects and returns live re-keyed project IDs; consume that return directly. Runtime tools/list schemas are evidence and must be persisted. Do not invent project lookup semantics. Produce first render, same-canvas edit, second render, evaluation. On deterministic failure do not classify Framesmith failed from an adapter/control error; preserve exact evidence for immediate supervised correction/fallback."
+}
