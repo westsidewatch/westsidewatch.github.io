@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"python3\", \"dore-design/selftest.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"schema\\\": \\\"dore.design.v1\\\", \\\"revision\\\": 7, \\\"history_snapshots\\\": 6, \\\"svg_bytes\\\": 1169, \\\"render_sha256\\\": \\\"07d89740de4fbc2455fbe7c4903ae03ae40d12dc73fa327ac5e9fa2c18d41b08\\\", \\\"verified\\\": [\\\"stable-document-identity\\\", \\\"node-crud\\\", \\\"token-edit\\\", \\\"atomic-batch\\\", \\\"revision-history\\\", \\\"restore-undo\\\", \\\"svg-export\\\", \\\"machine-verifier\\\"]}\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"python3\", \"dore-design/integration_test.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"service\\\": \\\"dore-design\\\", \\\"version\\\": \\\"0.5\\\", \\\"http_workbench\\\": true, \\\"revision_before\\\": 1, \\\"revision_after\\\": 3, \\\"history_entries\\\": 3, \\\"svg_bytes\\\": 1247, \\\"verification\\\": {\\\"ok\\\": true, \\\"document_id\\\": \\\"westside-watch\\\", \\\"revision\\\": 3, \\\"checks\\\": {\\\"schema_valid\\\": true, \\\"stable_unique_node_ids\\\": true, \\\"render_nonempty\\\": true, \\\"required_visual_roles\\\": true, \\\"history_available\\\": true}, \\\"errors\\\": [], \\\"render_sha256\\\": \\\"62c2f4690c092f911737bcb4a4e8cd737d1d14c8ffeeb0bd8eda376e016bd7e0\\\", \\\"node_count\\\": 6}}\\n\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"python3\", \"dore-design/cli.py\", \"verify\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\n  \\\"ok\\\": true,\\n  \\\"document_id\\\": \\\"westside-watch\\\",\\n  \\\"revision\\\": 1,\\n  \\\"checks\\\": {\\n    \\\"schema_valid\\\": true,\\n    \\\"stable_unique_node_ids\\\": true,\\n    \\\"render_nonempty\\\": true,\\n    \\\"required_visual_roles\\\": true,\\n    \\\"history_available\\\": true\\n  },\\n  \\\"errors\\\": [],\\n  \\\"render_sha256\\\": \\\"4dfe216d2eb5f2e8eaad62d5d99e6906847d6c50c12d1d3bd636e160472ed80c\\\",\\n  \\\"node_count\\\": 6\\n}\\n\", \"stderr\": \"\"}]}",
+  "created_at": "2026-08-31T05:18:25.244323+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:dore-design-acceptance-010"
+  ],
+  "message_id": "064d9c22-9ff2-40f7-8b9b-5cd1467519ec",
+  "message_sha256": "6cc4a368956fc30a9b0d3bcb7838f550cc752396daaff0e7e44d085f054763ca",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-chatgpt-mainline",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Verify ChatGPT-built Doré Design 0.5",
+  "thread_id": "c3212f1b-f116-4efb-94e0-c7d55f916e47"
+}
