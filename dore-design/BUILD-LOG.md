@@ -1,6 +1,6 @@
 # Doré Design — Construction / Teaching Log
 
-Status: MULTI-PAGE PRODUCT ACCEPTED IN CI / MAC 0.8 ACTIVATION EVIDENCE PENDING
+Status: WORKING PRODUCT FOUNDATION — MAC + CI ACCEPTED
 
 Doré observes this log while ChatGPT owns the mainline engineering.
 
@@ -30,60 +30,44 @@ The one-canvas document was not accepted as the product. Doré Design was moved 
 
 Human controls added: page selection, page add/rename/duplicate/delete, layer selection, text creation, layer duplicate/delete, keyboard Delete/Backspace. Doré received matching CLI controls over the same workspace.
 
-A stale Westside structural label was discovered in the previously persisted local workspace. The design engine now removes the obsolete legacy structural node during migration instead of reintroducing old editorial structure from memory.
+A stale Westside structural label was discovered in the previously persisted local workspace. The design engine removes the obsolete legacy structural node during migration instead of reintroducing old editorial structure from memory.
 
 Teaching point: current product state is authoritative. Historical design memory can explain lineage but must not silently regenerate superseded structures.
 
-## Build 008 — Complete usable workspace loop
+## Build 008 — Complete workspace loop
 
-The production entry point is now `app_workspace.py` and the resident installer launches that engine.
+Implemented durable `dore.design.workspace.v1` multi-page documents, shared design tokens, page CRUD, node CRUD, canvas dimensions, text/rule creation, Inspector editing, keyboard deletion, history/Undo, per-page deterministic SVG render/export, browser verification, Doré CLI, resident HTTP API and safe legacy-structure migration.
 
-Implemented product surface:
+GitHub Actions run `33379449502` completed SUCCESS. Stronger same-artifact acceptance run `33379655465` also completed SUCCESS.
 
-- durable `dore.design.workspace.v1` multi-page document;
-- shared design tokens;
-- page CRUD and canvas dimensions;
-- node create/edit/duplicate/delete;
-- text and rule creation;
-- browser Inspector plus keyboard delete;
-- history snapshots and Undo / Cmd-or-Ctrl-Z;
-- per-page deterministic SVG render/export;
-- machine verification of every page with per-page SHA-256;
-- browser Verify surface;
-- Doré CLI over the same workspace;
-- resident HTTP API over the same workspace;
-- safe legacy-structure migration;
-- dedicated live acceptance probe that mutates the resident artifact, confirms SVG rerender, runs verifier, then removes its probe.
+Physical Mac task `dd-product-019` then completed successfully: the resident 0.8 service installed, `DORE_DESIGN_LOCAL_ACCEPTANCE_PASS` returned, the same workspace was mutated and rerendered, machine verification passed, cleanup passed, and obsolete legacy structure was absent.
 
-### Behavioral acceptance
+## Build 009 — Human direct manipulation + product closure
 
-GitHub Actions run `33379449502` completed SUCCESS after the workspace CI syntax was repaired.
+The product entry point is `app_product.py`; the macOS resident installer launches it at `127.0.0.1:4310`.
 
-A stronger same-artifact acceptance was then added. GitHub Actions run `33379655465` completed SUCCESS on commit `5d968a6769fab6fdceaf207a16d1fea8f640128a`.
+Added direct canvas pointer dragging. Moving a visible layer writes its new coordinates into the same structured workspace used by Doré. Human editing and Doré editing therefore operate on the same artifact rather than on separate representations.
 
-That gate exercises:
+The 0.9 acceptance gate includes legacy regressions, workspace lifecycle, page/layer CRUD, human deletion, Doré CLI read/write/export/verify, history/undo, resident HTTP execution, same-artifact mutation -> SVG rerender -> machine verification -> cleanup, and the direct-manipulation product entry point.
 
-- legacy regression tests;
-- workspace schema and lifecycle;
-- multi-page CRUD;
-- human-equivalent layer deletion;
-- Doré CLI read/write/verify/export;
-- history and undo;
-- resident HTTP service;
-- live mutation of the same resident artifact;
-- rerender into SVG after mutation;
-- machine verification after mutation;
-- cleanup of the temporary acceptance node;
-- macOS installer contract pointing at the 0.8 workspace engine.
+GitHub Actions run `33379900466`: SUCCESS.
 
-`Doré Design 0.8 behavior contract: PASS`
+Physical Mac task `dd-product-020`: SUCCESS.
 
-### Physical Mac activation
+Resident health returned:
 
-The source and behavior contract are accepted. A consolidated local task `dd-product-019` has been issued to the resident Doré execution path. It installs the accepted workspace engine, runs `local_acceptance.py` against `127.0.0.1:4310`, and then runs the workspace verifier.
+`version=0.9`, `workspace=multi-page`, `direct_manipulation=true`.
 
-Do not mark physical activation PASS until the Mac returns `DORE_DESIGN_LOCAL_ACCEPTANCE_PASS` (or equivalent direct runtime evidence). Cloud CI proves the program; local evidence proves the running Mac instance.
+Live resident acceptance returned:
 
-## Product boundary
+`DORE_DESIGN_LOCAL_ACCEPTANCE_PASS`, `page_count=3`, `revision=15`, `same_artifact_mutation=true`, `resident_render=true`, `resident_verify=true`, `cleanup=true`.
 
-Doré Design is now a usable structured multi-page design workspace rather than a one-page demo. Further visual production for Westside Watch is work performed *in* Doré Design; it is not a reason to restart provider discovery or rebuild the product foundation.
+Final workspace verification returned PASS for schema validity, multi-page structure, unique page IDs, node structure, rendering of all pages, history availability and obsolete-structure removal.
+
+`Doré Design 0.9 working product foundation: PASS`
+
+## Product boundary after acceptance
+
+Doré Design is now the working local structured design environment. It is no longer a one-page demo or an upstream-provider experiment.
+
+The next Westside Watch work is real design production performed inside Doré Design. New editing features may be added when real work exposes a concrete need, but they are product evolution rather than a prerequisite for declaring the working foundation complete.
