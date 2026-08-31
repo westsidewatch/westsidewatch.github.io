@@ -14,16 +14,14 @@ def quarantine(path,label):
  shutil.move(str(path),str(dst));return str(dst)
 def main():
  if not (ROOT/'.git').is_dir():die('repo_not_found',root=str(ROOT))
- s=run('git','status','--porcelain',t=60); lines=[x.strip() for x in s.stdout.splitlines() if x.strip()];qs=[]
- known={'?? .framesmith/':(ROOT/'.framesmith','framesmith'),'?? .framesmith':(ROOT/'.framesmith','framesmith'),'?? dore-design/prep/':(ROOT/'dore-design/prep','dore-design-prep'),'?? dore-design/prep':(ROOT/'dore-design/prep','dore-design-prep')}
- unknown=[x for x in lines if x not in known]
- if unknown:die('dirty_worktree_requires_review',status='\n'.join(unknown),known_generated=[x for x in lines if x in known])
- for x in lines:
-  if x in known:
-   p=quarantine(*known[x])
-   if p:qs.append(p)
+ # These are generated experiment/runtime directories, not source. Preserve them outside the repo before reconciliation.
+ qs=[]
+ for p,label in ((ROOT/'.framesmith','framesmith'),(ROOT/'dore-design/prep','dore-design-prep')):
+  q=quarantine(p,label)
+  if q:qs.append(q)
  s=run('git','status','--porcelain',t=60)
- if s.stdout.strip():die('dirty_worktree_after_quarantine',status=s.stdout[-5000:],quarantined=qs)
+ if s.returncode:die('git_status_failed',stderr=s.stderr[-3000:],quarantined=qs)
+ if s.stdout.strip():die('dirty_worktree_requires_review',status=s.stdout[-5000:],quarantined=qs)
  f=run('git','fetch','--prune',REMOTE,BRANCH,t=180)
  if f.returncode:die('fetch_failed',stderr=f.stderr[-3000:],quarantined=qs)
  topo=run('git','rev-list','--left-right','--count',f'HEAD...{REMOTE}/{BRANCH}',t=60)
