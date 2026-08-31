@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"results\": [{\"index\": 1, \"argv\": [\"bash\", \"dore-design/install-macos.sh\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 113, \"stdout\": \"\", \"stderr\": \"Could not find service \\\"io.westsidewatch.dore-design\\\" in domain for user gui: 501\\n\"}], \"failed_index\": 1}",
+  "created_at": "2026-08-31T05:13:10.345017+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:dore-mainline-recover-and-activate-010"
+  ],
+  "message_id": "5a469456-0133-4029-88e3-3452008d6b4c",
+  "message_sha256": "6a4c975607952be9c914e16128842565b72e8a634e00131f812aa904f2ca6d1d",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-chatgpt-mainline",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: After coordination recovery, activate and verify Doré Design mainline",
+  "thread_id": "a9fcb5fa-3334-4ada-ad0d-4f2961c53571"
+}
