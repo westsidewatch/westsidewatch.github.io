@@ -18,10 +18,8 @@ jobs:
           python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py dore-design/integration_test.py
           python3 dore-design/selftest.py
       - name: Legacy HTTP integration
-        id: integration
         run: python3 dore-design/integration_test.py
       - name: Workspace product lifecycle
-        id: workspace
         run: |
           python3 -m py_compile dore-design/app_workspace.py dore-design/workspace_cli.py dore-design/workspace_selftest.py
           python3 dore-design/workspace_selftest.py
@@ -50,11 +48,7 @@ jobs:
           curl -fsS 'http://127.0.0.1:4319/api/export.svg?page=cover' >/tmp/dd-cover.svg
           grep -q 'DORÉ DESIGN 0.8' <(curl -fsS http://127.0.0.1:4319/)
           grep -q '<svg' /tmp/dd-cover.svg
-          python3 - <<'PY'
-import json
-v=json.load(open('/tmp/dd-verify.json'))
-assert v['ok'] and v['page_count'] >= 2
-PY
+          python3 -c "import json; v=json.load(open('/tmp/dd-verify.json')); assert v['ok'] and v['page_count'] >= 2"
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
