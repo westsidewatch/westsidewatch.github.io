@@ -1,0 +1,15 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"install-coordination-daemon-006",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"high",
+  "subject":"Install resident coordination daemon and close inbox-consumption gap",
+  "related_goal":"dore-control-plane",
+  "requires_reply":false,
+  "kind":"local_exec",
+  "commands":[
+    {"argv":["bash","local/dore-local/install-coordination-daemon.sh"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body":"Install the LaunchAgent-backed resident coordination loop. This is the control-plane fix: heartbeat must not remain healthy while coordination inbox waits unconsumed. The daemon pulls repo state every 15 seconds and immediately drains coordination_worker, with durable health state and logs. After installation it should consume the already queued Chrome repair and Framesmith visual rerun without further user prompts."
+}
