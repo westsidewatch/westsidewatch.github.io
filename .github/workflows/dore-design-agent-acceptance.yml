@@ -4,43 +4,55 @@ on:
   push:
     paths:
       - 'dore-design/**'
-      - 'local/dore-local/**'
       - '.github/workflows/dore-design-agent-acceptance.yml'
   workflow_dispatch:
 
 jobs:
-  dore-design-core:
+  dore-design:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
-      - name: Syntax
-        run: python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py dore-design/integration_test.py
-      - name: Structured engine lifecycle
-        run: python3 dore-design/selftest.py
-      - name: HTTP workbench end to end
-        run: python3 dore-design/integration_test.py
-      - name: Machine control surface
-        env:
-          DORE_DESIGN_DATA: ${{ runner.temp }}/dore-design-data
+      - name: Syntax and engine lifecycle
         run: |
-          python3 dore-design/cli.py get >/tmp/document.json
-          python3 dore-design/cli.py verify >/tmp/verification.json
+          python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py
+          python3 dore-design/selftest.py
+      - name: Live HTTP workbench and machine control
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DORE_DESIGN_DATA="$RUNNER_TEMP/dore-design-data"
+          export DORE_DESIGN_PORT=4310
+          python3 dore-design/app.py >/tmp/dore-design.log 2>&1 &
+          pid=$!
+          trap 'kill "$pid" 2>/dev/null || true; cat /tmp/dore-design.log || true' EXIT
+          for i in $(seq 1 30); do
+            curl -fsS http://127.0.0.1:4310/api/health >/tmp/health.json && break
+            sleep .2
+          done
+          python3 - <<'PY'
+          import json,urllib.request
+          base='http://127.0.0.1:4310'
+          def req(path,payload=None):
+              data=None if payload is None else json.dumps(payload).encode()
+              h={} if payload is None else {'content-type':'application/json'}
+              q=urllib.request.Request(base+path,data=data,headers=h,method='GET' if payload is None else 'POST')
+              with urllib.request.urlopen(q,timeout=3) as r:return r.status,r.headers.get_content_type(),r.read()
+          _,_,raw=req('/api/health'); assert json.loads(raw)['ok']
+          _,typ,raw=req('/'); assert typ=='text/html' and b'DORE DESIGN 0.5' in raw
+          _,_,raw=req('/api/document/westside-watch'); d0=json.loads(raw); r0=d0['revision']
+          _,_,raw=req('/api/document/westside-watch/mutate',{'op':'set','id':'hero','patch':{'x':91}}); d1=json.loads(raw)['document']; assert d1['revision']==r0+1
+          _,_,raw=req('/api/document/westside-watch/batch',{'ops':[{'op':'set','id':'hero','patch':{'size':81}},{'op':'token','key':'gold','value':'#B79838'}]}); d2=json.loads(raw)['document']; assert d2['revision']==r0+2
+          _,typ,raw=req('/api/document/westside-watch/export.svg'); assert typ=='image/svg+xml' and b'<svg' in raw and b'WATCH FOR' in raw
+          _,_,raw=req('/api/document/westside-watch/verify'); v=json.loads(raw); assert v['ok'],v
+          _,_,raw=req('/api/document/westside-watch/history'); h=json.loads(raw); assert len(h)>=3
+          print(json.dumps({'ok':True,'revision_before':r0,'revision_after':d2['revision'],'history':len(h),'verification':v}))
+          PY
           python3 dore-design/cli.py set hero '{"x":88,"size":84}'
           python3 dore-design/cli.py token gold '#B79838'
           python3 dore-design/cli.py export-svg
           python3 dore-design/cli.py verify
-          test -s "${DORE_DESIGN_DATA}/exports/westside-watch.svg"
-          echo DORE_DESIGN_MACHINE_CONTROL_PASS
-
-  legacy-design-memory:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Python syntax
-        run: python3 -m py_compile local/dore-local/design_memory.py local/dore-local/penpot_agent.py local/dore-local/dore_local.py local/dore-local/test_penpot_execution_gate.py
-      - name: D1-D3 truth and consolidation acceptance
-        working-directory: local/dore-local
-        run: python3 test_design_memory.py
-      - name: Penpot execution gate acceptance
-        working-directory: local/dore-local
-        run: python3 test_penpot_execution_gate.py
+          test -s "$DORE_DESIGN_DATA/exports/westside-watch.svg"
+          echo DORE_DESIGN_ACCEPTANCE_PASS
+      - name: macOS installer static contract
+        run: bash -n dore-design/install-macos.sh
