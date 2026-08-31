@@ -7,13 +7,14 @@ on a timestamped backup branch before rebasing. It refuses to touch a dirty
 working tree because silent stashing/conflict resolution would risk user work.
 """
 from __future__ import annotations
-import json, os, subprocess, sys
+import json, os, subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser()
 REMOTE=os.environ.get('DORE_COORDINATION_REMOTE','origin')
 BRANCH=os.environ.get('DORE_COORDINATION_BRANCH','main')
+SKIP_INSTALL=os.environ.get('DORE_RESCUE_SKIP_INSTALL')=='1'
 
 def run(*argv,timeout=900):
  return subprocess.run(list(argv),cwd=ROOT,text=True,capture_output=True,timeout=timeout)
@@ -47,10 +48,13 @@ def main():
   if r.returncode:
    run('git','rebase','--abort',timeout=120)
    die('rebase_conflict_local_preserved',backup_branch=backup,stderr=r.stderr[-5000:])
- installer=ROOT/'local/dore-local/install-coordination-daemon.sh'
- if not installer.is_file(): die('installer_missing_after_reconcile',head=rev('HEAD'))
- ins=run('bash',str(installer),timeout=180)
- if ins.returncode: die('daemon_install_failed',stdout=ins.stdout[-5000:],stderr=ins.stderr[-5000:],backup_branch=backup)
- print(json.dumps({'ok':True,'code':'DORE_COORDINATION_RESCUE_PASS','head':rev('HEAD'),'remote':rev(f'{REMOTE}/{BRANCH}'),'ahead_before':ahead,'behind_before':behind,'backup_branch':backup,'installer_stdout':ins.stdout[-3000:]},ensure_ascii=False))
+ installer_stdout='SKIPPED_FOR_TEST'
+ if not SKIP_INSTALL:
+  installer=ROOT/'local/dore-local/install-coordination-daemon.sh'
+  if not installer.is_file(): die('installer_missing_after_reconcile',head=rev('HEAD'))
+  ins=run('bash',str(installer),timeout=180)
+  if ins.returncode: die('daemon_install_failed',stdout=ins.stdout[-5000:],stderr=ins.stderr[-5000:],backup_branch=backup)
+  installer_stdout=ins.stdout[-3000:]
+ print(json.dumps({'ok':True,'code':'DORE_COORDINATION_RESCUE_PASS','head':rev('HEAD'),'remote':rev(f'{REMOTE}/{BRANCH}'),'ahead_before':ahead,'behind_before':behind,'backup_branch':backup,'installer_stdout':installer_stdout},ensure_ascii=False))
 
 if __name__=='__main__': main()
