@@ -8,7 +8,7 @@ from coordination_mailbox import send_to_chatgpt,flush_outbox
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')))
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser(); STATE=HOME/'coordination'/'worker-state.json'; REPO_INBOX=ROOT/'local/dore-local/coordination-inbox'; MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20'))); MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'}
 def load_state():
  try:return json.loads(STATE.read_text()) if STATE.exists() else {}
@@ -101,8 +101,12 @@ def main():
   try:
    dispatch(msg);done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('last_error',None);state.pop('active_message_id',None);state['last_success_message_id']=mid;state['checked_at']=datetime.now(timezone.utc).isoformat();save(state)
   except Exception as e:
-   failures+=1;state['last_error']={'message_id':mid,'attempt':attempts,'type':type(e).__name__,'error':str(e)[:1000],'traceback':traceback.format_exc()[-5000:]};state.pop('active_message_id',None);save(state)
-   try:reply(msg,{'ok':False,'error':'coordination_dispatch_failed','message_id':mid,'attempt':attempts,'exception':type(e).__name__+': '+str(e)},['coordination-worker-error'])
+   failures+=1;err={'message_id':mid,'attempt':attempts,'type':type(e).__name__,'error':str(e)[:1000],'traceback':traceback.format_exc()[-5000:]};state['last_error']=err;state.pop('active_message_id',None)
+   terminal=attempts>=MAX_ATTEMPTS
+   if terminal:
+    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':datetime.now(timezone.utc).isoformat(),'attempts':attempts,'kind':msg.get('kind'),'error':str(e)[:1000]}
+   save(state)
+   try:reply(msg,{'ok':False,'error':'coordination_dispatch_failed','message_id':mid,'attempt':attempts,'terminal':terminal,'max_attempts':MAX_ATTEMPTS,'exception':type(e).__name__+': '+str(e)},['coordination-worker-error','terminal-failure' if terminal else 'retryable-failure'])
    except:pass
    continue
  return 1 if failures else 0
