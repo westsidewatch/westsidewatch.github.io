@@ -1,0 +1,16 @@
+{
+  "id": "dore-design-journal-mirror-12",
+  "kind": "local_exec",
+  "priority": "critical",
+  "project": "dore-design",
+  "role": "bounded_local_deploy_and_verification",
+  "instruction": "Pull the latest main branch containing commit f6623e8e8c1075e56a6f6f0d85a22cd06ab72b21. Do NOT redesign any Journal or Vol.00 visual. Restart the existing Doré Design localhost service using its established service mechanism so it runs dore-design/app_visual_v2.py version 1.2. Then request http://127.0.0.1:4310/journal/ and http://127.0.0.1:4310/vol-00/. This must trigger a local Hugo mirror build from the CURRENT repository source. Verify both return HTTP 200, verify /api/mirror/status says ok=true and mode=source-identical-hugo-mirror, verify the Journal page contains the official masthead and Current volume · Vol.00 text, verify Vol.00 contains its current title/content structure, and verify linked CSS/images resolve without 404. Compare the local mirror HTML against a fresh `hugo` build output for journal/index.html and vol-00/index.html; normalized content must be identical because the mirror is the Hugo build itself. Record exact commands, HTTP checks, file paths, and any error. If Hugo is missing, classify that as the only blocker and report it; do not substitute a hand-redesigned page. Publish one outbox result. Do not modify homepage-v1.html, Journal templates, Vol.00 templates, or visual CSS.",
+  "success_criteria": [
+    "Doré Design reports version 1.2",
+    "/journal/ returns current Journal as Hugo-source-identical mirror",
+    "/vol-00/ returns current Vol.00 as Hugo-source-identical mirror",
+    "official CSS and images resolve",
+    "/api/mirror/status ok=true",
+    "no visual redesign or reimplementation was introduced"
+  ]
+}
