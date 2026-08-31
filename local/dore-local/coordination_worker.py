@@ -72,6 +72,10 @@ def dispatch(msg):
   result=run_script('dore_design_bakeoff.py');reply(msg,result,['dore-evolution-run-001','design-equipment-discovery','local-provider-provenance']);
   if not result.get('ok'):raise RuntimeError('dore_design_bakeoff_failed')
   return
+ if kind=='dore_design_elimination':
+  result=run_script('dore_design_elimination.py',3600);reply(msg,result,['dore-design-real-work-elimination','vital-signs','provider-pass-fail-matrix']);
+  if not result.get('ok'):raise RuntimeError('dore_design_elimination_failed')
+  return
  if kind=='dore_design_openpencil_trial':
   result=run_script('dore_design_openpencil_trial.py');reply(msg,result,['dore-evolution-run-001','openpencil-real-work','structured-edit','render-verification']);
   if not result.get('ok'):raise RuntimeError('dore_design_openpencil_trial_failed')
