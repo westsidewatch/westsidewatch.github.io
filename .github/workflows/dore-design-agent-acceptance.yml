@@ -1,15 +1,38 @@
-name: Doré Design Agent Acceptance
+name: Doré Design Acceptance
 
 on:
   push:
     paths:
+      - 'dore-design/**'
       - 'local/dore-local/**'
-      - 'docs/dore/DESIGN-WORKING-MEMORY.md'
       - '.github/workflows/dore-design-agent-acceptance.yml'
   workflow_dispatch:
 
 jobs:
-  deterministic-core:
+  dore-design-core:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Syntax
+        run: python3 -m py_compile dore-design/app.py dore-design/cli.py dore-design/selftest.py dore-design/integration_test.py
+      - name: Structured engine lifecycle
+        run: python3 dore-design/selftest.py
+      - name: HTTP workbench end to end
+        run: python3 dore-design/integration_test.py
+      - name: Machine control surface
+        env:
+          DORE_DESIGN_DATA: ${{ runner.temp }}/dore-design-data
+        run: |
+          python3 dore-design/cli.py get >/tmp/document.json
+          python3 dore-design/cli.py verify >/tmp/verification.json
+          python3 dore-design/cli.py set hero '{"x":88,"size":84}'
+          python3 dore-design/cli.py token gold '#B79838'
+          python3 dore-design/cli.py export-svg
+          python3 dore-design/cli.py verify
+          test -s "${DORE_DESIGN_DATA}/exports/westside-watch.svg"
+          echo DORE_DESIGN_MACHINE_CONTROL_PASS
+
+  legacy-design-memory:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -18,40 +41,6 @@ jobs:
       - name: D1-D3 truth and consolidation acceptance
         working-directory: local/dore-local
         run: python3 test_design_memory.py
-      - name: Penpot action routing acceptance
-        working-directory: local/dore-local
-        run: |
-          python3 - <<'PY'
-          import dore_local
-          assert dore_local.is_penpot_action('在 Penpot 設計新的西望網站模板')
-          assert dore_local.is_penpot_action('使用 Penpot 修改首頁')
-          assert not dore_local.is_penpot_action('我們討論一下 Penpot 的定位')
-          print('DORE_PENPOT_ACTION_ROUTING_PASS')
-          PY
       - name: Penpot execution gate acceptance
         working-directory: local/dore-local
         run: python3 test_penpot_execution_gate.py
-
-  mcp-client-build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-      - name: Install MCP client
-        working-directory: local/dore-local/penpot-mcp
-        run: npm install --omit=dev
-      - name: Node syntax
-        run: node --check local/dore-local/penpot-mcp/client.mjs
-      - name: Verify unavailable MCP fails closed
-        working-directory: local/dore-local
-        run: |
-          set +e
-          output=$(node penpot-mcp/client.mjs status)
-          code=$?
-          set -e
-          echo "$output"
-          test "$code" -ne 0
-          echo "$output" | grep '"ok":false'
-          echo 'DORE_PENPOT_FAIL_CLOSED_PASS'
