@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"framesmith-mcp-westside-001\", \"attempt\": 1, \"terminal\": false, \"max_attempts\": 3, \"exception\": \"RuntimeError: dore_design_framesmith_mcp_trial_failed:RuntimeError: missing_tools:canvas_screenshot\"}",
+  "created_at": "2026-08-31T02:01:25.215690+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "retryable-failure",
+    "source-message:framesmith-mcp-westside-001"
+  ],
+  "message_id": "65fbe3b7-df15-4cbb-9f17-ff923df83041",
+  "message_sha256": "8974a0183b5c6b29b6f27248133102625b4a5910a3ce2f58bc62375af19d5995",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Create first Westside Watch artifact through Framesmith MCP",
+  "thread_id": "43a85e32-e6d2-4dc1-8ec5-9bd717b58116"
+}
