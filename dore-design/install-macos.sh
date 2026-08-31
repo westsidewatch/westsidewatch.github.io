@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 ROOT="${DORE_REPO_ROOT:-$HOME/westsidewatch.github.io}"
-APP="$ROOT/dore-design/app_multi.py"
+APP="$ROOT/dore-design/app_workspace.py"
 PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.dore-design.plist"
 LOGDIR="$HOME/.dore/logs"
 mkdir -p "$LOGDIR" "$HOME/Library/LaunchAgents"
@@ -21,7 +21,7 @@ EOF
 launchctl bootout "gui/$(id -u)/io.westsidewatch.dore-design" >/dev/null 2>&1 || true
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl kickstart -k "gui/$(id -u)/io.westsidewatch.dore-design"
-for i in {1..20}; do
+for i in {1..30}; do
   if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then cat /tmp/dore-design-health.json; echo; exit 0; fi
   sleep 0.25
 done
