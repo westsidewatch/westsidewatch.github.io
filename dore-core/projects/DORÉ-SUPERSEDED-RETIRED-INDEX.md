@@ -164,6 +164,22 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** use the canonical Master Register `WSS` row and current WSS implementation/milestone evidence for status. Do not reopen “Optional AI proofreading” as a new feature simply because the stale roadmap still lists it under `Future`.
 
+## SR-014 — Cloudflare asset migration preflight / failed-receipt state after later completion
+
+**Historical sources:** `dore-core/cloudflare/ASSET-MIGRATION-BATCH-001.json` and `dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-002-RESULT.json`.
+
+**Classification:** `SUPERSEDED` as current migration-state authority; retained as plan/incident provenance.
+
+**Superseding evidence:** `dore-core/cloudflare/receipts/ASSET-MIGRATION-BATCH-001-PASS.json` and `dore-core/cloudflare/receipts/ASSET-MIGRATION-PRIORITY-ONE-RESULT.json`, reconciled in `DORÉ-CLOUDFLARE-ASSET-BATCH-STATE-RECONCILIATION-2026-08-31.md` and `DORÉ-CLOUDFLARE-ASSET-MIGRATION-BATCH-LIFECYCLE-EVIDENCE-LEDGER-2026-08-31.md`.
+
+**Conflict resolved:** Batch 001 still embeds `READY_FOR_GOVERNED_MIGRATION`, but its later receipt proves the baptism-cover motion migration completed via verified hash deduplication. Batch 002 also preserves an earlier one-asset HTTP 403 / Cloudflare error 1010 failure receipt, but a later Priority-One receipt verifies seven of seven assets with `PASS`, active R2/D1 records, hashes and no error. The old ready/failure artifacts must therefore not reactivate migration work or a Cloudflare blocker when read in isolation.
+
+**Retained value:** the stale plan records canonical-revision and obsolete-revision policy; the failed receipt is valid incident chronology. Both are useful provenance. The durable lesson is that execution receipts/runtime evidence outrank preflight state, and `dedupe_no_copy` is a successful governed migration outcome when identity, locator, lifecycle state and readback are verified.
+
+**Retired revisions:** the historical `r2`, `r3-mobile`, and `r4-mobile` baptism-cover revisions are `RETIRED`; `r5-mobile` is the retained canonical revision for that completed milestone.
+
+**Current authority:** the later PASS receipts and canonical Master Work Register ONE/Cloudflare interpretation govern. The Priority-A migration remains a bounded `VERIFIED_COMPLETE` milestone; no new migration run or current Cloudflare blocker follows from the historical ready/failure artifacts.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
