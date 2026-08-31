@@ -1,0 +1,8 @@
+{
+  "message_id": "dore-design-elimination-001",
+  "sender": "chatgpt",
+  "kind": "dore_design_elimination",
+  "subject": "Run Doré Design real-work elimination",
+  "related_goal": "dore-design-0.1",
+  "body": "Run the bounded first-round real-work elimination now. OpenPencil is already terminal FAIL and must not be retried. Test Penpot, Framesmith, Doop and Tela independently. Required gate: create structured artifact, visible/renderable evidence, modify the same artifact, render/verify again. One failure must never stop later candidates. Preserve exact failure and learning evidence. No user terminal mediation. Return final PASS/FAIL matrix and 0/1/multiple-pass strategy."
+}
