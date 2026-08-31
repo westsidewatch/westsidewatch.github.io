@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"error\": \"coordination_dispatch_failed\", \"message_id\": \"dore-design-converge-001\", \"attempt\": 2, \"terminal\": false, \"max_attempts\": 3, \"exception\": \"RuntimeError: unsupported_kind:None\"}",
+  "created_at": "2026-08-31T02:55:15.854016+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "retryable-failure",
+    "source-message:dore-design-converge-001"
+  ],
+  "message_id": "becf6a5e-57d5-48af-a279-cb62213f03d1",
+  "message_sha256": "214e1baa523137d63be5b5149dacff556cb6fbb46f1f2eea14bc46d741505e48",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-0.1",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Continue Doré Design through all remaining candidates and converge",
+  "thread_id": "97727715-a38f-4c68-8f18-a1b1b8aff28e"
+}
