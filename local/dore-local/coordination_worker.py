@@ -76,6 +76,10 @@ def dispatch(msg):
   result=run_script('dore_design_elimination.py',3600);reply(msg,result,['dore-design-real-work-elimination','vital-signs','provider-pass-fail-matrix']);
   if not result.get('ok'):raise RuntimeError('dore_design_elimination_failed')
   return
+ if kind=='dore_design_framesmith_mcp_trial':
+  result=run_script('dore_design_framesmith_mcp_trial.py',1800);reply(msg,result,['framesmith-mcp-real-work','westside-watch-artifact','render-edit-rerender','vital-signs']);
+  if not result.get('ok'):raise RuntimeError('dore_design_framesmith_mcp_trial_failed:'+str(result.get('cause') or 'unknown'))
+  return
  if kind=='dore_design_openpencil_trial':
   result=run_script('dore_design_openpencil_trial.py');reply(msg,result,['dore-evolution-run-001','openpencil-real-work','structured-edit','render-verification']);
   if not result.get('ok'):raise RuntimeError('dore_design_openpencil_trial_failed')
