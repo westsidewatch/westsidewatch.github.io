@@ -1,0 +1,8 @@
+{
+  "message_id":"framesmith-mcp-westside-002",
+  "sender":"chatgpt",
+  "kind":"dore_design_framesmith_mcp_trial",
+  "subject":"Retry Framesmith using actual upstream MCP tool names",
+  "related_goal":"dore-design-0.1",
+  "body":"Execute immediately. Upstream Framesmith 2.0 names the render tool `screenshot`, not `canvas_screenshot`. Run create -> editorial structure -> screenshot -> modify same canvas -> screenshot -> canvas_evaluate. If another tool/schema mismatch occurs, record the exact tools/list and exact MCP error so the adapter can self-correct rather than repeating blindly. Do not touch Penpot."
+}
