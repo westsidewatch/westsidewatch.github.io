@@ -9,6 +9,18 @@ Doré Design is a design environment built specifically for the existing Doré l
 
 The fixed goal is reliable autonomous design production. Tools and providers are replaceable.
 
+## Current operating mode — two tracks, one merge
+
+Until Doré Design reaches a genuine working 0.1, execution is deliberately split:
+
+**Track A — Doré Design mainline (ChatGPT-led).** ChatGPT leads architecture, upstream verification, adapter correctness, render/acceptance semantics, failure diagnosis and the shortest path to a real visible/editable Westside Watch artifact. Doré executes local steps and observes the decisions/evidence so the successful operating pattern can later be transferred into Doré.
+
+**Track B — Westside visual preparation (Doré-led background work).** Doré continuously prepares bounded inputs for the new Westside visual system without blocking Track A: colour-system refinement, information/section structure, editorial/content preparation, visual-language evidence and reusable design decisions. It must build on existing accepted visual DNA rather than restarting visual discovery.
+
+The tracks merge only after Doré Design can reliably create, render, edit the same artifact, rerender and verify it. At merge, Doré's prepared colour/structure/content packages become direct inputs to the working Doré Design pipeline.
+
+Mainline priority rule: Track B may never consume or block the resource needed by Track A. Unrelated memory sweeps or exploratory work do not outrank the active Doré Design acceptance goal.
+
 ## Target environment
 
 - macOS local workstation
@@ -95,6 +107,7 @@ License compatibility is a design constraint from the beginning, not a cleanup t
 - A failed provider must not block exploration of another provider.
 - Local evidence Doré can obtain itself must not be delegated to the user.
 - Human intervention is reserved for genuine login/authorization, unavoidable GUI-only actions, or high-risk/irreversible decisions.
+- Existing Westside visual work is a checkpoint, not disposable exploration. Tool changes must not trigger a fresh visual restart.
 
 ## First milestone — Doré Design 0.1
 
