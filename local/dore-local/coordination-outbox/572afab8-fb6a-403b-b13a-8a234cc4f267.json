@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"bash\", \"dore-design/install-macos.sh\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"service\\\": \\\"dore-design\\\", \\\"version\\\": \\\"0.8\\\", \\\"workspace\\\": \\\"multi-page\\\"}\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"python3\", \"dore-design/workspace_selftest.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"revision_start\\\": 1, \\\"revision_end\\\": 12, \\\"page_count\\\": 3, \\\"verified\\\": [\\\"multi-page\\\", \\\"node-crud\\\", \\\"page-crud\\\", \\\"human-delete\\\", \\\"tokens\\\", \\\"canvas\\\", \\\"history\\\", \\\"undo\\\", \\\"svg-export\\\", \\\"machine-verify\\\", \\\"legacy-structure-migration\\\"]}\\n\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"python3\", \"dore-design/workspace_cli.py\", \"verify\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\n  \\\"ok\\\": true,\\n  \\\"document_id\\\": \\\"westside-watch\\\",\\n  \\\"revision\\\": 2,\\n  \\\"page_count\\\": 3,\\n  \\\"node_count\\\": 17,\\n  \\\"checks\\\": {\\n    \\\"schema_valid\\\": true,\\n    \\\"multi_page\\\": true,\\n    \\\"unique_page_ids\\\": true,\\n    \\\"node_structure_valid\\\": true,\\n    \\\"render_all_pages\\\": true,\\n    \\\"history_available\\\": true,\\n    \\\"obsolete_structure_removed\\\": true\\n  },\\n  \\\"errors\\\": [],\\n  \\\"page_render_sha256\\\": {\\n    \\\"cover\\\": \\\"e719a6886dd43a6ccc3c0ce30b01fde261fcd69aaecbf7111f746dc9a6eca9a7\\\",\\n    \\\"page-02\\\": \\\"c9b9e5a9bcf3be0b2d127e2a2641425d8788a473dd8975534fb348fc188def60\\\",\\n    \\\"page-03\\\": \\\"c9b9e5a9bcf3be0b2d127e2a2641425d8788a473dd8975534fb348fc188def60\\\"\\n  }\\n}\\n\", \"stderr\": \"\"}, {\"index\": 4, \"argv\": [\"python3\", \"dore-design/workspace_cli.py\", \"export-svg\", \"cover\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\n  \\\"ok\\\": true,\\n  \\\"path\\\": \\\"/Users/chenjingyu/.dore/design/exports/westside-watch.cover.svg\\\",\\n  \\\"bytes\\\": 2282\\n}\\n\", \"stderr\": \"\"}]}",
+  "created_at": "2026-08-31T09:47:15.313417+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:dd-product-018"
+  ],
+  "message_id": "572afab8-fb6a-403b-b13a-8a234cc4f267",
+  "message_sha256": "102638725ac7e4ea35a99271458a3ec84062073fa4b424efe441fad7faa4edde",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-product",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Activate and verify Doré Design 0.8",
+  "thread_id": "e36343ec-c117-4838-98e7-c1d4dcc26c1a"
+}
