@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"dore-mainline-recover-and-activate-010\", \"attempt\": 1, \"terminal\": false, \"parent_goal_preserved\": true, \"recovery_required\": false, \"exception\": \"RuntimeError: task_failed\"}",
+  "created_at": "2026-08-31T05:13:11.063809+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:dore-mainline-recover-and-activate-010"
+  ],
+  "message_id": "a526588d-40f0-4d58-8f6d-8d260d3d83ad",
+  "message_sha256": "de3f27010a38ab3498565e7686b720e27dffa4a308fc0f94ae42722d61f5308e",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-chatgpt-mainline",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: After coordination recovery, activate and verify Doré Design mainline",
+  "thread_id": "9b6d9d83-3e11-4848-bf93-6e36c4adb467"
+}
