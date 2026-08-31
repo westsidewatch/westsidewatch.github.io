@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Durable asynchronous Doré <-> ChatGPT mailbox with free git-backed transport."""
 from __future__ import annotations
-import hashlib,json,os,subprocess,uuid
+import hashlib,json,os,subprocess,uuid,tempfile,shutil
 from datetime import datetime,timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser(); ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser()
@@ -19,34 +19,42 @@ def read_jsonl(path:Path):
   except Exception:pass
  return out
 def _delivered_ids(): return {x.get('message_id') for x in read_jsonl(DELIVERY) if x.get('published') is True}
-def _run(args,timeout=60):return subprocess.run(args,cwd=ROOT,text=True,capture_output=True,timeout=timeout)
+def _run(args,timeout=60,cwd=None):return subprocess.run(args,cwd=cwd or ROOT,text=True,capture_output=True,timeout=timeout)
+def _remote_exact(rel,rendered):
+ cp=_run(['git','fetch','origin','main'],60)
+ if cp.returncode:return False
+ r=_run(['git','show',f'origin/main:{rel}'],15)
+ return r.returncode==0 and r.stdout==rendered
 def _git_publish(msg):
- """Publish only this mail path; unrelated Doré work must not block communication."""
+ """Publish one mail path from an isolated worktree so heartbeat commits cannot race the resident checkout."""
  if not (ROOT/'.git').exists(): return {'published':False,'reason':'repo_missing'}
- path=None
+ rel=f"local/dore-local/coordination-outbox/{msg['message_id']}.json";rendered=json.dumps(msg,ensure_ascii=False,sort_keys=True,indent=2)+'\n'
  try:
-  # Reconcile remote first only when HEAD can fast-forward. Never stage/commit unrelated files.
-  _run(['git','fetch','origin','main'])
-  rel=f"local/dore-local/coordination-outbox/{msg['message_id']}.json"; path=ROOT/rel; path.parent.mkdir(parents=True,exist_ok=True)
-  # If the exact path is already in origin/main, delivery already succeeded earlier.
-  remote=_run(['git','show',f'origin/main:{rel}'],15)
-  rendered=json.dumps(msg,ensure_ascii=False,sort_keys=True,indent=2)+'\n'
-  if remote.returncode==0 and remote.stdout==rendered:return {'published':True,'path':rel,'already_remote':True}
-  # Pull remote changes only if this checkout is behind with no local divergence.
-  ff=_run(['git','merge-base','--is-ancestor','HEAD','origin/main'],15)
-  if ff.returncode==0:_run(['git','merge','--ff-only','origin/main'],30)
-  path.write_text(rendered,encoding='utf-8')
-  _run(['git','add','--',rel],15)
-  # --only + pathspec isolates the mail commit from unrelated staged/unstaged autonomous work.
-  c=_run(['git','commit','--only','-m','dore: publish coordination message '+msg['message_id'],'--',rel],30)
-  if c.returncode:
-   remote=_run(['git','show',f'origin/main:{rel}'],15)
-   if remote.returncode==0 and remote.stdout==rendered:return {'published':True,'path':rel,'already_remote':True}
-   return {'published':False,'reason':'commit_failed','detail':c.stderr[-300:]}
-  p=_run(['git','push','origin','HEAD:main'],60)
-  if p.returncode:return {'published':False,'reason':'push_failed','committed':True,'detail':p.stderr[-300:]}
-  return {'published':True,'path':rel}
- except Exception as e:return {'published':False,'reason':type(e).__name__}
+  if _remote_exact(rel,rendered):return {'published':True,'path':rel,'already_remote':True}
+  last=''
+  for attempt in range(1,4):
+   _run(['git','fetch','origin','main'],60)
+   td=Path(tempfile.mkdtemp(prefix='dore-mail-'))
+   try:
+    add=_run(['git','worktree','add','--detach',str(td),'origin/main'],60)
+    if add.returncode:
+     last=add.stderr[-400:];continue
+    path=td/rel;path.parent.mkdir(parents=True,exist_ok=True);path.write_text(rendered,encoding='utf-8')
+    a=_run(['git','add','--',rel],15,td)
+    if a.returncode:last=a.stderr[-400:];continue
+    c=_run(['git','commit','-m','dore: publish coordination message '+msg['message_id'],'--',rel],30,td)
+    if c.returncode:
+     if _remote_exact(rel,rendered):return {'published':True,'path':rel,'already_remote':True}
+     last=c.stderr[-400:];continue
+    p=_run(['git','push','origin','HEAD:main'],60,td)
+    if p.returncode==0:return {'published':True,'path':rel,'attempt':attempt,'isolated_worktree':True}
+    last=p.stderr[-400:]
+    if _remote_exact(rel,rendered):return {'published':True,'path':rel,'already_remote':True}
+   finally:
+    _run(['git','worktree','remove','--force',str(td)],30)
+    shutil.rmtree(td,ignore_errors=True)
+  return {'published':False,'reason':'push_race_exhausted','detail':last}
+ except Exception as e:return {'published':False,'reason':type(e).__name__+': '+str(e)[:200]}
 def flush_outbox():
  delivered=_delivered_ids(); results=[]
  for msg in read_jsonl(OUTBOX):
