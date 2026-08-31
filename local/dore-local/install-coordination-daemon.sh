@@ -20,18 +20,25 @@ cat > "$PLIST" <<EOF
 EOF
 plutil -lint "$PLIST"
 launchctl bootout "gui/$(id -u)/$LABEL" >/dev/null 2>&1 || true
+rm -f "$HOME_DORE/coordination/daemon-state.json"
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl kickstart -k "gui/$(id -u)/$LABEL"
-sleep 2
 launchctl print "gui/$(id -u)/$LABEL" >/dev/null
 python3 - <<PY
 import json,time
 from pathlib import Path
 p=Path('$HOME_DORE/coordination/daemon-state.json')
-for _ in range(10):
+last=None
+for _ in range(30):
  if p.exists():
-  x=json.loads(p.read_text());print(json.dumps(x,ensure_ascii=False));raise SystemExit(0)
+  try:last=json.loads(p.read_text())
+  except Exception: last=None
+  if last and last.get('status') in {'healthy','worker_error','sync_error','daemon_error'}:
+   print(json.dumps(last,ensure_ascii=False))
+   if last.get('status')=='healthy': raise SystemExit(0)
+   raise SystemExit('coordination_daemon_not_healthy:'+last.get('status','unknown'))
  time.sleep(1)
-raise SystemExit('daemon_state_not_created')
+print(json.dumps(last or {},ensure_ascii=False))
+raise SystemExit('daemon_live_state_not_created')
 PY
 echo DORE_COORDINATION_DAEMON_PASS
