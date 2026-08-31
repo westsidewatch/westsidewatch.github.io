@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"python3\", \"dore-design/deploy_visual_11.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"code\\\": \\\"NEW_WESTSIDE_VISUAL_SURFACE_PASS\\\", \\\"health\\\": {\\\"ok\\\": true, \\\"service\\\": \\\"dore-design\\\", \\\"version\\\": \\\"1.1\\\", \\\"workspace\\\": \\\"new-westside\\\", \\\"default_surface\\\": \\\"real-homepage-v1\\\", \\\"editor\\\": \\\"/editor\\\", \\\"visual_grammar\\\": [\\\"official-masthead\\\", \\\"editorial-gravity\\\", \\\"5:8\\\", \\\"huarong-reflow\\\", \\\"crenellation\\\", \\\"central-gate\\\", \\\"dore-engraving\\\", \\\"archival-print\\\", \\\"time-flow\\\"]}, \\\"checks\\\": {\\\"version_11\\\": true, \\\"real_homepage_default\\\": true, \\\"homepage_marker\\\": true, \\\"editor_link\\\": true, \\\"structured_editor_preserved\\\": true}}\\n\", \"stderr\": \"\"}]}",
+  "created_at": "2026-08-31T16:17:05.947843+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:new-westside-deploy-022"
+  ],
+  "message_id": "22130921-1efa-4534-a74d-6b1188bfed79",
+  "message_sha256": "cad5b530c9048040334b6ac8dca471cdf85030eca20e3b88701eb548c265d2eb",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "new-westside-visual-build",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy Doré Design 1.1 real homepage surface",
+  "thread_id": "32d7937b-77f1-434d-930e-3c262c0903fe"
+}
