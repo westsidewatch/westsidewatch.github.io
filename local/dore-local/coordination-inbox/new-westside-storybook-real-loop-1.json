@@ -1,0 +1,16 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "new-westside-storybook-real-loop-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Run first real New Westside × Storybook loop",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "body": "Use the actual New Westside visual construction as the A2A/autonomous-learning acceptance. Keep the approved homepage control read-only. Run the real Storybook specimen cycle. If execution hits a known capability gap, use the autonomous capability loop; if the gap is unknown, preserve the parent goal and emit RESEARCH_REQUIRED rather than blind retry. Return canonical evidence.",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","dore-design/knowledge-lab/training/new_westside_storybook_real_loop.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":900}
+  ],
+  "requires_reply": true
+}
