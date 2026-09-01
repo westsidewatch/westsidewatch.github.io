@@ -1,0 +1,28 @@
+{
+  "body": "{\"source_message_id\": \"hardening-product-monitor-1\", \"task_status\": \"PASS\", \"attempt\": 1, \"terminal\": true, \"transport\": \"PASS\", \"execution\": \"PASS\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"WARN\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": false}, \"alerts\": [{\"code\": \"JOURNAL_COVER_ASSET_MISSING\", \"severity\": \"warning\", \"asset\": \"/images/jerusalem-wall.png\", \"http_status\": 404}]}, \"result\": {\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"git\", \"pull\", \"--ff-only\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"Already up to date.\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"python3\", \"dore-design/product_monitor.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"product_monitor\\\": \\\"WARN\\\", \\\"journal_cover_wall\\\": {\\\"journal_live\\\": true, \\\"cover_wall_required_by_source\\\": true, \\\"cover_wall_dom_present\\\": true, \\\"cover_wall_reference_present\\\": true, \\\"cover_wall_asset_served\\\": false}, \\\"alerts\\\": [{\\\"code\\\": \\\"JOURNAL_COVER_ASSET_MISSING\\\", \\\"severity\\\": \\\"warning\\\", \\\"asset\\\": \\\"/images/jerusalem-wall.png\\\", \\\"http_status\\\": 404}]}\\n\", \"stderr\": \"\"}]}}",
+  "created_at": "2026-09-01T04:09:40.267949+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:hardening-product-monitor-1"
+  ],
+  "message_id": "result-hardening-product-monitor-1",
+  "message_sha256": "d43680bfdd5dbe50b2a071b8cde6f3c69eff2ac1c77a4811f3acc5534b6f010d",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "WARN",
+    "source_message_id": "hardening-product-monitor-1",
+    "task_status": "PASS",
+    "terminal": true
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-coordination-hardening",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: Verify Doré product monitor reports missing Journal cover wall asset",
+  "thread_id": "02455593-ee7b-4260-a945-dc6875580d74"
+}
