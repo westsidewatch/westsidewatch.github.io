@@ -1,0 +1,20 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"storybook-root-cause-2",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"critical",
+  "kind":"local_exec",
+  "requires_reply":true,
+  "related_goal":"dore-a2a-272",
+  "subject":"Storybook root cause after command-evidence hardening",
+  "commands":[
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["node","--version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["npm","--version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["ls","-la","dore-design/knowledge-lab/storybook"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["cat","dore-design/knowledge-lab/storybook/package.json"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["npm","run","build-storybook"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":900}
+  ],
+  "body":"Run after coordination_worker command-level failure evidence hardening. Do not install or modify anything. This task exists only to expose the first failing command and its stdout/stderr/returncode so the next action can directly repair the real Storybook cause. Treat this as evidence for A2A project #272 as well as Storybook hardening."
+}
