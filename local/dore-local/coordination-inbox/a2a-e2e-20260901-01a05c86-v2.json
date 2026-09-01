@@ -1,0 +1,42 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "a2a-e2e-20260901-01a05c86-v2",
+  "thread_id": "01a05c86-4403-7ff1-95a9-5ecf76d7ed5f",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T11:05:00Z",
+  "subject": "A2A end-to-end return-path acceptance v2",
+  "body": "Execute a path-independent harmless local acceptance probe and return PASS through the canonical Doré A2A outbox.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "dore-a2a-e2e",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "--is-inside-work-tree"
+      ],
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "git",
+        "status",
+        "--short"
+      ],
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "pwd"
+      ],
+      "timeout": 60
+    }
+  ],
+  "metadata": {
+    "acceptance": "chatgpt-to-dore-to-chatgpt",
+    "expected_result_id": "result-a2a-e2e-20260901-01a05c86-v2"
+  }
+}
