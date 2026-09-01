@@ -1,0 +1,16 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "a2a-transport-learn-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Learn current A2A transport model and apply it to our shared lab",
+  "priority": "high",
+  "requires_reply": true,
+  "related_goal": "dore-a2a-272",
+  "body": "Read dore-design/knowledge-lab/training/a2a-transport-lab-2026-09-01.md. Treat this as shared knowledge between ChatGPT and Doré. Inspect the existing coordination architecture and identify the smallest compatibility-first transport-router experiment that preserves the working dore.mail chain while allowing multiple routes/fallback with one canonical task identity. Do not rewrite the working chain. Record concrete findings and proposed executable experiment in the repository. Then return PASS with evidence, or FAIL with exact blocking evidence. Parent goal remains Westside visual construction; A2A work must return to that parent goal.",
+  "commands": [
+    ["git", "pull", "--ff-only"],
+    ["cat", "dore-design/knowledge-lab/training/a2a-transport-lab-2026-09-01.md"],
+    ["python3", "-c", "from pathlib import Path; files=['local/dore-local/dore_coordination_daemon.py','local/dore-local/coordination_worker.py','local/dore-local/coordination_mailbox.py']; print('\\n'.join(f+'='+str(Path(f).exists()) for f in files))"]
+  ]
+}
