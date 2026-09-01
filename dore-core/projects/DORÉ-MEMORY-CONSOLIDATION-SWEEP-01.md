@@ -424,3 +424,29 @@ Current disposition:
 - P01 impact: none.
 
 Sweep status remains `ACTIVE_PARALLEL`; the local coordination transport/execution-authority family is now explicitly accounted for, but Sweep 01 is not yet `VERIFIED_COMPLETE`.
+
+
+## Checkpoint 27 — A2A / Storybook bounded autonomous-recovery reconciliation (2026-09-01)
+
+Bounded evidence reviewed in this pass:
+
+- `DORÉ-A2A-STORYBOOK-AUTONOMY-EVIDENCE-LEDGER-2026-09-01.md`;
+- terminal PASS receipt commit `0ed626411ecb9ff5075293581edc43a0031a4638` (`result-autonomous-loop-acceptance-1`);
+- New Westside Storybook real-loop / LEARNING evidence including `bf5a1f7629230c2d5ec9828930296dd11ccc105c`;
+- visible threshold-promoted homepage verification receipt `c7d672c18a063747574b3700e200d1cab8d7a48d`.
+
+Reconciliation findings:
+
+1. The earlier statement that no persisted end-to-end recovery episode existed is superseded for one bounded contract. `result-autonomous-loop-acceptance-1` records a real Storybook capability failure, parent-goal preservation, provenance-bearing reusable repair skill application, verified repair, same-parent-goal resume and terminal PASS. `AUTONOMOUS_CAPABILITY_RECOVERY_01` is therefore a legitimate bounded `VERIFIED_COMPLETE` capability milestone.
+2. This does not complete `EVOLUTION`: materially different-domain blind transfer, longitudinal reuse, broader self-equipping autonomy and stronger reserved `DORÉ_ALIVE`-style claims remain `UNKNOWN_NEEDS_EVIDENCE`.
+3. The New Westside Storybook lineage contains correct `LEARNING / RESEARCH_REQUIRED` non-fabrication behavior and later verified homepage implementation progress, but no single canonical artifact was found closing the entire original A2A↔Storybook road-test contract in one lineage. That broader road test remains `ACTIVE_PARALLEL / EVALUATION`.
+4. Storybook/design execution remains supporting evidence for `VIS-GRAMMAR`, not Brand V1 completion; local recovery/runtime primitives remain supporting evidence for `NERVOUS-SYSTEM`, not shared-system completion or A2A Inspector/TCK conformance.
+5. No P01 subtitle runtime, deployment, binding, credential, order or blocker state was modified.
+
+Durable updates in this checkpoint:
+
+- the A2A/Storybook evidence ledger was reconciled to the newer terminal PASS evidence;
+- the Master Register `EVOLUTION` row now retains the bounded recovery milestone while preserving the cross-domain blind-transfer gate;
+- the Master Register `MEM-SWEEP-01` row now explicitly accounts for this evidence family.
+
+Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
