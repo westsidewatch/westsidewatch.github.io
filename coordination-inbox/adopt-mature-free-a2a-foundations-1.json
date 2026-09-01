@@ -1,0 +1,22 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "adopt-mature-free-a2a-foundations-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Adopt mature free A2A foundations into autonomous Driver work",
+  "kind": "local_exec",
+  "priority": "high",
+  "related_goal": "dore-a2a-autonomous-driver",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/knowledge-lab/training/adopt_mature_free_a2a_foundations.py"],
+      "timeout": 900
+    }
+  ],
+  "body": "Read dore-design/knowledge-lab/a2a/mature-free-runtime-adoption-2026-09-01.md. Integrate mature free foundations by reuse-before-rebuild: A2A official protocol/Python SDK compatibility adapter and Inspector/TCK validation path; LangGraph durable state/checkpoint/resume patterns in an isolated Driver prototype; OpenHands-style portable skills evolution. Keep Temporal self-hosted as a later candidate, not a baseline dependency. Do not introduce paid hosted APIs. Preserve the existing dore.mail path and locked homepage #262. Run isolated verification before promotion, then resume the New Westside x Storybook parent goal. If the adoption script is absent, treat that as a capability gap and use the autonomous Driver/Research Bridge to create the smallest executable adoption experiment rather than asking the human.",
+  "requires_reply": true
+}
