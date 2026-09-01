@@ -27,7 +27,9 @@ tokens = {k: cssvar(k, v) for k, v in {
 }.items()}
 
 STORIES.mkdir(parents=True, exist_ok=True)
-story = STORIES / 'NewWestsideEditorialHero.stories.js'
+legacy_story = STORIES / 'NewWestsideEditorialHero.stories.js'
+if legacy_story.exists(): legacy_story.unlink()
+story = STORIES / 'NewWestsideEditorialHero.stories.jsx'
 template = r'''import React from 'react';
 
 const t=__TOKENS__;
