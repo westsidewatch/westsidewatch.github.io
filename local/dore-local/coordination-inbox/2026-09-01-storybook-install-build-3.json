@@ -1,0 +1,22 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"storybook-install-build-3",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"critical",
+  "kind":"local_exec",
+  "requires_reply":true,
+  "related_goal":"dore-design-storybook",
+  "subject":"Install Storybook dependencies and publish executable lab",
+  "commands":[
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["npm","install"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["npm","run","build-storybook"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["test","-f","storybook-static/index.html"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":30},
+    {"argv":["git","add","dore-design/knowledge-lab/storybook/.gitignore","dore-design/knowledge-lab/storybook/package.json","dore-design/knowledge-lab/storybook/package-lock.json","dore-design/knowledge-lab/storybook/.storybook","dore-design/knowledge-lab/storybook/src"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":60},
+    {"argv":["git","commit","-m","storybook: bootstrap executable Doré design knowledge lab"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["git","push","origin","main"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["git","status","--short"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30}
+  ],
+  "body":"Root cause from storybook-root-cause-2 is explicit: command 6 returned 127 with `sh: storybook: command not found`; Node v26.7.0 and npm 11.19.0 are available and the Storybook package/config/source directory exists locally. This task changes hypothesis from diagnosis to targeted dependency installation. Install declared dependencies, build the static Storybook, verify index.html, and commit only reproducible source/config/package lock. node_modules and storybook-static are ignored and must not be committed. Preserve the locked #262 homepage and Journal. On any failure, return command-level stdout/stderr/returncode." 
+}
