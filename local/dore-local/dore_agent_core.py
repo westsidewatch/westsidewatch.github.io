@@ -28,7 +28,7 @@ def context():
  d=default_goal()
  try:
   from goal_queue import ensure_default,current
-  ensure_default(d['goal_id'],d['goal'],project_loop=d['project_loop']);row=current() or {};return {'goal_id':str(row.get('goal_id') or d['goal_id']),'goal':str(row.get('goal') or d['goal']),'project_loop':str((row.get('metadata') or {}).get('project_loop') or d['project_loop'])}
+  ensure_default(d['goal_id'],d['goal'],project_loop=d['project_loop']);row=current() or {};meta=dict(row.get('metadata') or {});return {'goal_id':str(row.get('goal_id') or d['goal_id']),'goal':str(row.get('goal') or d['goal']),'project_loop':str(meta.get('project_loop') or d['project_loop']),'metadata':meta}
  except Exception:return d
 def latest_learning(goal_id):
  p=LEARNING/f'{goal_id}.json'
@@ -47,7 +47,7 @@ def transition(p,job,state,**extra):
 def ensure_job(ctx,learning):
  RESEARCH.mkdir(parents=True,exist_ok=True);failure=(learning or {}).get('failure_fingerprint') or fingerprint(learning or {'goal':ctx['goal_id']});rid=f"research-{ctx['goal_id']}-{fingerprint(failure)[:16]}";p=RESEARCH/f'{rid}.json';old=read_json(p,{}) or {}
  if old:return p,old
- q=((learning or {}).get('knowledge_request') or {}).get('question') or (learning or {}).get('question') or 'Find a mature evidence-backed repair, verify it in isolation, promote it, then resume this exact parent goal.';job={'schema':'dore.research-job.v0.3','research_id':rid,'state':'RESEARCH_QUEUED','created_at':now(),'updated_at':now(),'iteration':1,'parent_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'parent_goal_preserved':True,'failure_fingerprint':failure,'question':q,'preferred_sources':['local Knowledge Lab','verified skills/failure memory','official docs','maintained mature OSS','standards/specs'],'acceptance_test':'smallest falsifiable parent-specific experiment','promotion_target':'verified skill/failure-memory/shared-learning','human_gate':False,'history':[{'at':now(),'state':'RESEARCH_QUEUED'}]};atomic_json(p,job);return p,job
+ q=((learning or {}).get('knowledge_request') or {}).get('question') or (learning or {}).get('question') or 'Find a mature evidence-backed repair, verify it in isolation, promote it, then resume this exact parent goal.';job={'schema':'dore.research-job.v0.3','research_id':rid,'state':'RESEARCH_QUEUED','created_at':now(),'updated_at':now(),'iteration':1,'parent_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'parent_goal_preserved':True,'failure_fingerprint':failure,'question':q,'preferred_sources':['local Knowledge Lab','verified skills/failure memory','official docs','maintained mature OSS','standards/specs'],'acceptance_test':'smallest falsifiable parent-specific experiment','promotion_target':'verified skill/failure-memory/shared-learning','human_gate':False,'acceptance':{'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))},'history':[{'at':now(),'state':'RESEARCH_QUEUED'}]};atomic_json(p,job);return p,job
 def exec_json(script,args=(),timeout=600,input_text=None):
  if not script.exists():return {'ok':False,'error':'component_missing:'+str(script)}
  cp=subprocess.run([sys.executable,str(script),*map(str,args)],cwd=str(ROOT),text=True,capture_output=True,timeout=timeout,input=input_text);parsed=None
@@ -70,11 +70,26 @@ def reject(ctx,jp,job,result):
  diag={'returncode':result.get('returncode'),'stdout':(result.get('stdout') or '')[-2500:],'stderr':(result.get('stderr') or '')[-2500:],'parsed':result.get('result')};job=transition(jp,{**job,'experiments':list(job.get('experiments') or [])+[{'at':now(),'status':'REJECTED','diagnostic':diag}],'failure_memory':remember(ctx,result)},'REJECTED');job={**job,'iteration':int(job.get('iteration') or 1)+1,'knowledge_artifact':None,'question':str(job.get('question') or '')+' New rejected-experiment evidence: '+json.dumps(diag,ensure_ascii=False)[-3000:]};return transition(jp,job,'RESEARCH_QUEUED')
 def verified(ctx,jp,job,result):
  v={'at':now(),'signal':'parent-specific experiment passed','driver_result':result.get('result')};job=transition(jp,job,'VERIFIED',verification=v);s=share(ctx,job,'VERIFIED',v);parsed=result.get('result') if isinstance(result.get('result'),dict) else {};promotion=parsed.get('promoted_skills') or parsed.get('promoted_skill') or 'verified evidence retained';job=transition(jp,{**job,'shared_learning':s,'failure_memory':remember(ctx,result,True,promotion)},'PROMOTED',promotion=promotion);return transition(jp,job,'RESUME_PARENT',resumed=True)
+def _source_count(result):
+ best=0
+ def walk(v):
+  nonlocal best
+  if isinstance(v,dict):
+   if isinstance(v.get('source_count'),int):best=max(best,v['source_count'])
+   for x in v.values():walk(x)
+  elif isinstance(v,list):
+   for x in v:walk(x)
+ walk(result);return best
 def complete_goal(ctx,result):
  try:
   from goal_queue import set_status
-  set_status(ctx['goal_id'],'PASS',result=result.get('result'))
- except Exception:pass
+  meta=ctx.get('metadata') or {};minimum=int(meta.get('minimum_qualified_references') or 0);count=_source_count(result)
+  if meta.get('continuous') and count<minimum:
+   set_status(ctx['goal_id'],'ACTIVE',current_qualified_references=count,minimum_qualified_references=minimum,acceptance_met=False,last_activity_result=result.get('result'))
+   synthetic_gap(ctx,{'returncode':0,'stdout':f'Acceptance gate unmet: {count}/{minimum} qualified references. Expand source families, request peer research, checkpoint new evidence, then resume.','stderr':'','result':{'acceptance_met':False,'current_qualified_references':count,'minimum_qualified_references':minimum}})
+   return False
+  set_status(ctx['goal_id'],'PASS',result=result.get('result'),acceptance_met=True);return True
+ except Exception:return False
 def a2a_task(ctx,state_name):
  try:
   from a2a_adapter import dore_to_a2a_task
@@ -99,7 +114,8 @@ def step():
  if jp and job:
   if result.get('ok'):job=verified(ctx,jp,job,result);complete_goal(ctx,result);state='RESUME_PARENT';emit('VERIFIED');emit('PROMOTED');emit('RESUME_PARENT')
   else:job=reject(ctx,jp,job,result);state='RESEARCH_QUEUED';emit('REJECTED');emit('RESEARCH_QUEUED')
- elif result.get('ok'):complete_goal(ctx,result);state='PASS';emit('PASS')
+ elif result.get('ok'):
+  done=complete_goal(ctx,result);state='PASS' if done else 'RESEARCH_REQUIRED';emit('PASS' if done else 'ACCEPTANCE_UNMET')
  else:
   lp,learning=synthetic_gap(ctx,result);state='RESEARCH_REQUIRED';emit('GAP_DETECTED',failure_fingerprint=learning.get('failure_fingerprint'));emit('RESEARCH_REQUIRED')
  return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':state!='PASS','a2a_task':a2a_task(ctx,state)}
