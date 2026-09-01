@@ -1,0 +1,28 @@
+{
+  "body": "{\"source_message_id\": \"a2a-transport-learn-1\", \"task_status\": \"RETRYING\", \"attempt\": 1, \"terminal\": false, \"transport\": \"PASS\", \"execution\": \"FAIL\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": false, \"error\": \"RuntimeError: unsupported_kind:None\", \"parent_goal_preserved\": true, \"recovery_required\": false}}",
+  "created_at": "2026-09-01T05:52:47.472928+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "coordination-worker-error",
+    "command-level-failure-evidence",
+    "source-message:a2a-transport-learn-1"
+  ],
+  "message_id": "result-a2a-transport-learn-1",
+  "message_sha256": "a3a89368305120a42ef8fc170771daaaafc7262638dcbdac56cf2b2a1f2adbfc",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "PASS",
+    "source_message_id": "a2a-transport-learn-1",
+    "task_status": "RETRYING",
+    "terminal": false
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-a2a-272",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: Learn current A2A transport model and apply it to our shared lab",
+  "thread_id": "48ea3d35-7296-46df-a7e7-b061030c32d3"
+}
