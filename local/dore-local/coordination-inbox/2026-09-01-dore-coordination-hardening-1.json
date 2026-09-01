@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-coordination-hardening-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Deploy and verify Doré Coordination Hardening 1.0",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["bash","dore-design/install-macos.sh"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["python3","dore-design/coordination_hardening_acceptance.py","dore-coordination-hardening-1"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body": "Hardening milestone. Verify canonical lifecycle observability and Design 1.7.2 coordination status. Treat all subsequent Doré Design fixes as hardening real-work tests. Do not alter the locked approved homepage design."
+}
