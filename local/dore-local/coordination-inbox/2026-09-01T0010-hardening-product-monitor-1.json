@@ -1,0 +1,24 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "hardening-product-monitor-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Verify Doré product monitor reports missing Journal cover wall asset",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/product_monitor.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    }
+  ],
+  "body": "Hardening validation only. Do not repair the asset in this task. The canonical receipt must include product_monitor and explicitly report JOURNAL_COVER_ASSET_MISSING if /images/jerusalem-wall.png is unavailable while the Journal source requires it."
+}
