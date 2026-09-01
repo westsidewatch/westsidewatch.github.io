@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "research-bridge-live-acceptance-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Live acceptance: use Research Bridge to recover New Westside × Storybook parent goal",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "high",
+  "requires_reply": true,
+  "task": {
+    "type": "research_bridge_acceptance",
+    "manual": "dore-design/knowledge-lab/tools/research-bridge-v0.1.md",
+    "parent_source_message_id": "new-westside-storybook-real-loop-2",
+    "parent_goal": "New Westside visual construction",
+    "instructions": "Read and apply Research Bridge v0.1 as an operational procedure, not documentation only. Consume the existing RESEARCH_REQUIRED evidence from the failed New Westside Storybook parent task. Without asking the user for a technical diagnosis and without receiving a code fix from ChatGPT, transition the gap through RESEARCH_QUEUED/RESEARCHING. First search local Knowledge Lab, failure memory, existing Storybook specimens, generated JS, package behavior and trustworthy resources available to Doré. Diagnose the exact parse failure, form and test a minimal hypothesis, repair only the unlocked research specimen/generator, run npm run build-storybook, preserve locked homepage #262 unchanged, promote a reusable lesson/skill or failure-memory artifact with provenance and verification, then RESUME_PARENT and complete the New Westside Editorial Hero specimen task. If an external knowledge request is genuinely required, emit it through the existing coordination/A2A path as a structured Knowledge Artifact request while keeping the parent task durable; do not classify ordinary unknown technical knowledge as HUMAN_GATE. Continue while each attempt adds information. Return canonical evidence of every state crossed.",
+    "acceptance": [
+      "Research Bridge manual is read and used",
+      "RESEARCH_REQUIRED is converted into an actual research action",
+      "No user technical intervention is required",
+      "Diagnosis and hypothesis evidence are persisted",
+      "At least one minimal experiment is executed",
+      "Solved knowledge is promoted to reusable memory/skill when applicable",
+      "npm run build-storybook passes",
+      "New Westside Editorial Hero specimens remain the parent deliverable",
+      "locked #262 homepage is unchanged",
+      "parent goal reaches RESUME_PARENT then PASS, or returns a precise genuine HUMAN_GATE"
+    ]
+  }
+}
