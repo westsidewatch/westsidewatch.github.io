@@ -46,7 +46,8 @@ def transition(p,job,state,**extra):
  h=list(job.get('history') or []);h.append({'at':now(),'state':state});job={**job,'state':state,'updated_at':now(),'history':h,**extra};atomic_json(p,job);return job
 def ensure_job(ctx,learning):
  RESEARCH.mkdir(parents=True,exist_ok=True);failure=(learning or {}).get('failure_fingerprint') or fingerprint(learning or {'goal':ctx['goal_id']});rid=f"research-{ctx['goal_id']}-{fingerprint(failure)[:16]}";p=RESEARCH/f'{rid}.json';old=read_json(p,{}) or {}
- if old:return p,old
+ if old:
+  old['acceptance']={'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))};atomic_json(p,old);return p,old
  q=((learning or {}).get('knowledge_request') or {}).get('question') or (learning or {}).get('question') or 'Find a mature evidence-backed repair, verify it in isolation, promote it, then resume this exact parent goal.';job={'schema':'dore.research-job.v0.3','research_id':rid,'state':'RESEARCH_QUEUED','created_at':now(),'updated_at':now(),'iteration':1,'parent_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'parent_goal_preserved':True,'failure_fingerprint':failure,'question':q,'preferred_sources':['local Knowledge Lab','verified skills/failure memory','official docs','maintained mature OSS','standards/specs'],'acceptance_test':'smallest falsifiable parent-specific experiment','promotion_target':'verified skill/failure-memory/shared-learning','human_gate':False,'acceptance':{'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))},'history':[{'at':now(),'state':'RESEARCH_QUEUED'}]};atomic_json(p,job);return p,job
 def exec_json(script,args=(),timeout=600,input_text=None):
  if not script.exists():return {'ok':False,'error':'component_missing:'+str(script)}
@@ -112,7 +113,10 @@ def step():
  else:reason='NO_USER_INPUT_CONTINUE'
  emit('ACT',reason=reason);result=drive(ctx,lp,learning,jp,job,reason);emit('OBSERVE',driver_ok=bool(result.get('ok')),returncode=result.get('returncode'))
  if jp and job:
-  if result.get('ok'):job=verified(ctx,jp,job,result);complete_goal(ctx,result);state='RESUME_PARENT';emit('VERIFIED');emit('PROMOTED');emit('RESUME_PARENT')
+  if result.get('ok'):
+   done=complete_goal(ctx,result)
+   if done:job=verified(ctx,jp,job,result);state='RESUME_PARENT';emit('VERIFIED');emit('PROMOTED');emit('RESUME_PARENT')
+   else:job=transition(jp,{**job,'acceptance_unmet':True},'RESEARCH_QUEUED');state='RESEARCH_REQUIRED';emit('ACCEPTANCE_UNMET');emit('RESEARCH_QUEUED')
   else:job=reject(ctx,jp,job,result);state='RESEARCH_QUEUED';emit('REJECTED');emit('RESEARCH_QUEUED')
  elif result.get('ok'):
   done=complete_goal(ctx,result);state='PASS' if done else 'RESEARCH_REQUIRED';emit('PASS' if done else 'ACCEPTANCE_UNMET')

@@ -70,12 +70,16 @@ def peer_escalate(job,artifact):
   from coordination_mailbox import send_to_chatgpt
   rid=job['research_id'];body=json.dumps({'schema':'dore.peer-research-request.v1','research_id':rid,'parent_message_id':job.get('parent_message_id'),'parent_goal':job.get('parent_goal'),'question':job.get('question'),'failure_fingerprint':job.get('failure_fingerprint'),'self_research':artifact,'required_return_schema':'dore.knowledge-artifact.v1'},ensure_ascii=False);msg=send_to_chatgpt('Doré peer research: '+rid,body,requires_reply=True,priority='high',related_goal=job.get('parent_goal'),evidence_refs=['research-job:'+rid],message_id='peer-'+rid,metadata={'research_id':rid,'kind':'peer_research'});return {'queued':True,'message_id':msg.get('message_id'),'transport':'dore.mail.v2 -> GitHub coordination-outbox'}
  except Exception as e:return {'queued':False,'error':type(e).__name__+': '+str(e)}
+def acceptance(job,artifact):
+ cfg=job.get('acceptance') or {};minimum=int(cfg.get('minimum_qualified_references') or 0);minimum_families=int(cfg.get('minimum_source_families') or 0);sources=artifact.get('sources') or {};families=[k for k,v in sources.items() if isinstance(v,list) and v];count=int(artifact.get('evidence_count') or 0)
+ return {'minimum_qualified_references':minimum,'current_qualified_references':count,'minimum_source_families':minimum_families,'current_source_families':len(families),'source_families':families,'met':count>=minimum and len(families)>=minimum_families}
 def execute(job_path):
  p=Path(job_path);job=read_json(p,{}) or {}
  if not job.get('research_id'):return {'ok':False,'error':'invalid_research_job'}
  if job.get('state') in {'KNOWLEDGE_RETURNED','VERIFIED','PROMOTED','RESUME_PARENT'}:return {'ok':True,'state':job.get('state'),'job':job}
  job['state']='RESEARCHING';job['updated_at']=now();atomic_json(p,job);qs=terms(str(job.get('question') or '')+' '+str(job.get('failure_fingerprint') or ''));local=local_search(qs);catalog=catalog_search(qs);external,probes=external_search(qs);artifact={'schema':'dore.knowledge-artifact.v1','knowledge_id':'knowledge-'+job['research_id'],'research_id':job['research_id'],'created_at':now(),'discovered_by':'dore-research-executor','query_terms':qs,'sources':{'local':local,'catalog':catalog,'external':external},'tool_probes':probes,'provenance_preserved':True,'reuse_before_rebuild':True,'parent_goal':job.get('parent_goal')};artifact['evidence_count']=len(local)+len(catalog)+len(external)
- if artifact['evidence_count']:
+ gate=acceptance(job,artifact);artifact['acceptance']=gate
+ if artifact['evidence_count'] and gate['met']:
   artifact.update({'lesson':'Relevant resources found. Derive a falsifiable hypothesis and verify it in the smallest parent-specific experiment before promotion.','hypothesis_status':'CANDIDATES_FOUND','experiment_required':True})
   try:
    from shared_learning import record
