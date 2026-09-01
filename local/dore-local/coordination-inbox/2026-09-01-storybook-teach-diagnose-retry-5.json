@@ -1,0 +1,22 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "storybook-teach-diagnose-retry-5",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "subject": "Storybook teaching cycle: learn ETARGET package model, apply lesson, retry real task",
+  "related_goal": "dore-a2a-272",
+  "body": "This is the first explicit A2A teach-diagnose-retry cycle. Preserve the parent goal: executable Westside Storybook Knowledge Lab. First read both training lessons. The observed npm ETARGET is a capability/knowledge gap: Storybook 9 moved Essentials into core, so the old @storybook/addon-essentials dependency is invalid for this package model. Apply the executable lesson, install the corrected minimal dependencies, prove the local Storybook binary exists, build the static Storybook, and verify index.html. If any step fails, preserve exact command-level evidence and classify the new gap instead of blind retry. The learning outcome is as important as the build outcome: ETARGET must trigger dependency research/migration-note checking in future.",
+  "commands": [
+    {"argv": ["git", "pull", "--ff-only"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120},
+    {"argv": ["cat", "dore-design/knowledge-lab/training/storybook-runtime-basics-2026-09-01.md"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 30},
+    {"argv": ["cat", "dore-design/knowledge-lab/training/storybook-9-package-model-2026-09-01.md"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 30},
+    {"argv": ["python3", "dore-design/knowledge-lab/training/apply_storybook9_lesson.py"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 30},
+    {"argv": ["cat", "dore-design/knowledge-lab/storybook/package.json"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 30},
+    {"argv": ["npm", "install"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 900},
+    {"argv": ["ls", "-la", "node_modules/.bin/storybook"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 30},
+    {"argv": ["npm", "run", "build-storybook"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 900},
+    {"argv": ["ls", "-la", "storybook-static/index.html"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 30}
+  ]
+}
