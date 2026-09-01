@@ -1,23 +1,25 @@
 #!/usr/bin/env python3
-"""Doré Resident Runtime v0.8 — thin durable execution substrate.
+"""Doré Resident Runtime v0.9 — thin durable execution substrate.
 
 Ownership boundary:
 - launchd keeps this process alive.
 - Resident Runtime owns wake/sleep, process supervision, durable mechanical state,
   self-update, heartbeat and telemetry.
+- A2A Supervisor observes the higher-order Doré↔ChatGPT relationship and detects
+  project-loop stalls that must not be silently observed.
 - Doré Agent Core owns goal reasoning, research, learning, experiments, verification,
   promotion and next-action decisions.
 
 The runtime MUST NOT implement RESEARCH_REQUIRED branching or choose research
-strategies. It asks Doré Agent Core for one step, records the observation, then
-wakes it again without requiring user input.
+strategies. It wakes Agent Core, records the result, asks the A2A Supervisor to
+classify relationship health, publishes both observations, then wakes again.
 """
 from __future__ import annotations
 import fcntl, json, os, shutil, subprocess, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
-VERSION='dore.resident-runtime.v0.8'
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
+VERSION='dore.resident-runtime.v0.9'
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';SUPERVISOR=LOCAL/'a2a_supervisor.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';SUPERVISION=RUNTIME/'a2a-supervision.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
 INTERVAL=max(10,int(os.environ.get('DORE_RUNTIME_INTERVAL_SECONDS','30')));TELEMETRY_INTERVAL=max(60,int(os.environ.get('DORE_RUNTIME_TELEMETRY_SECONDS','120')));SELF_UPDATE_INTERVAL=max(120,int(os.environ.get('DORE_RUNTIME_SELF_UPDATE_SECONDS','300')))
 def now():return datetime.now(timezone.utc).isoformat()
 def read_json(p,default=None):
@@ -25,7 +27,7 @@ def read_json(p,default=None):
  except Exception:return default
 def atomic_json(p,v):
  p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);t=p.with_suffix(p.suffix+'.tmp');t.write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8');t.replace(p)
-def run(argv,cwd=ROOT,timeout=120,input_text=None):return subprocess.run(argv,cwd=str(cwd),text=True,capture_output=True,timeout=timeout,input=input_text)
+def run(argv,cwd=ROOT,timeout=120,input_text=None,env=None):return subprocess.run(argv,cwd=str(cwd),text=True,capture_output=True,timeout=timeout,input=input_text,env=env)
 def event(kind,**data):
  RUNTIME.mkdir(parents=True,exist_ok=True)
  with EVENTS.open('a',encoding='utf-8') as f:f.write(json.dumps({'at':now(),'event':kind,**data},ensure_ascii=False)+'\n')
@@ -38,10 +40,18 @@ def tail_events(n=64):
  return out
 def agent_step():
  if not AGENT.exists():return {'ok':False,'state':'AGENT_CORE_MISSING','error':str(AGENT),'continue':True}
- cp=run([sys.executable,str(AGENT)],timeout=1800);parsed=None
+ env=os.environ.copy();env['DORE_A2A_SUPERVISION_FILE']=str(SUPERVISION)
+ cp=run([sys.executable,str(AGENT)],timeout=1800,env=env);parsed=None
  try:parsed=json.loads((cp.stdout or '').strip().splitlines()[-1])
  except Exception:pass
  return {'ok':cp.returncode==0 and isinstance(parsed,dict) and bool(parsed.get('ok')),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:],'result':parsed}
+def supervisor_step(agent_result):
+ if not SUPERVISOR.exists():return {'ok':False,'a2a_state':'A2A_SUPERVISOR_MISSING','action_required':'REPAIR_CONTROL_PLANE','peer_required':True}
+ cp=run([sys.executable,str(SUPERVISOR)],timeout=60,input_text=json.dumps(agent_result,ensure_ascii=False));parsed=None
+ try:parsed=json.loads((cp.stdout or '').strip().splitlines()[-1])
+ except Exception:pass
+ if not isinstance(parsed,dict):return {'ok':False,'a2a_state':'A2A_SUPERVISOR_ERROR','action_required':'REPAIR_CONTROL_PLANE','peer_required':True,'stderr':(cp.stderr or '')[-2000:]}
+ return parsed
 def telemetry_repo():
  remote=run(['git','remote','get-url','origin'],timeout=30)
  if remote.returncode or not remote.stdout.strip():raise RuntimeError('origin_remote_unavailable')
@@ -52,11 +62,11 @@ def telemetry_repo():
   run(['git','config','user.name','DORE-RUNTIME'],cwd=TELEMETRY_REPO);run(['git','config','user.email','westsidewatchca@gmail.com'],cwd=TELEMETRY_REPO)
  return TELEMETRY_REPO
 def snapshot():
- st=read_json(STATE,{}) or {};hb=read_json(HEARTBEAT,{}) or {};result=st.get('last_agent_result') or {};agent=(result.get('result') or {}) if isinstance(result,dict) else {}
+ st=read_json(STATE,{}) or {};hb=read_json(HEARTBEAT,{}) or {};sup=read_json(SUPERVISION,{}) or {};result=st.get('last_agent_result') or {};agent=(result.get('result') or {}) if isinstance(result,dict) else {}
  try:
   sys.path.insert(0,str(LOCAL));from goal_queue import load;goals=load()
  except Exception:goals={}
- return {'schema':'dore.runtime.telemetry.v0.7','published_at':now(),'runtime':VERSION,'ownership':{'supervisor':'launchd','runtime':'wake/process/checkpoint/telemetry','agent_core':'reason/research/learn/experiment/verify/promote/next-action'},'agent_core':agent.get('agent_core'),'agent_state':agent.get('state'),'parent':agent.get('parent'),'goal_queue':goals,'heartbeat':hb,'state':st,'a2a_task':agent.get('a2a_task'),'research_job':agent.get('research_job'),'events':tail_events()}
+ return {'schema':'dore.runtime.telemetry.v0.8','published_at':now(),'runtime':VERSION,'ownership':{'supervisor':'launchd','runtime':'wake/process/checkpoint/telemetry','a2a_supervisor':'higher-order loop monitoring/intervention signal','agent_core':'reason/research/learn/experiment/verify/promote/next-action'},'a2a_supervision':sup,'agent_core':agent.get('agent_core'),'agent_state':agent.get('state'),'parent':agent.get('parent'),'goal_queue':goals,'heartbeat':hb,'state':st,'a2a_task':agent.get('a2a_task'),'research_job':agent.get('research_job'),'events':tail_events()}
 def publish(force=False):
  st=read_json(STATE,{}) or {};last=float(st.get('last_telemetry_epoch') or 0)
  if not force and time.time()-last<TELEMETRY_INTERVAL:return
@@ -73,7 +83,7 @@ def update_paths():
   v=manifest.get(key)
   if isinstance(v,list):paths.extend(str(x) for x in v if isinstance(x,str))
  if not paths:
-  paths=['local/dore-local/resident_runtime.py','local/dore-local/dore_agent_core.py','local/dore-local/autonomous_driver.py','local/dore-local/research_executor.py','local/dore-local/peer_research_bridge.py','local/dore-local/autonomous_capability_loop.py','local/dore-local/failure_memory.py','local/dore-local/shared_learning.py','local/dore-local/a2a_adapter.py','local/dore-local/goal_queue.py','local/dore-local/knowledge_experiment.py','local/dore-local/coordination_goal_executor.py','local/dore-local/coordination_worker.py','local/dore-local/coordination_mailbox.py','local/dore-local/loop_contract_acceptance.py','dore-design/knowledge-lab/resources/source-catalog.json','dore-design/knowledge-lab/a2a/project-state.json','dore-design/knowledge-lab/a2a/loop-contract-v1.json','dore-design/knowledge-lab/a2a/agent-card.json','dore-design/knowledge-lab/a2a/runtime-control-manifest.json','dore-design/knowledge-lab/skills/registry.json']
+  paths=['local/dore-local/resident_runtime.py','local/dore-local/a2a_supervisor.py','local/dore-local/dore_agent_core.py','local/dore-local/autonomous_driver.py','local/dore-local/research_executor.py','local/dore-local/peer_research_bridge.py','local/dore-local/autonomous_capability_loop.py','local/dore-local/failure_memory.py','local/dore-local/shared_learning.py','local/dore-local/a2a_adapter.py','local/dore-local/goal_queue.py','local/dore-local/knowledge_experiment.py','local/dore-local/coordination_goal_executor.py','local/dore-local/coordination_worker.py','local/dore-local/coordination_mailbox.py','local/dore-local/loop_contract_acceptance.py','dore-design/knowledge-lab/resources/source-catalog.json','dore-design/knowledge-lab/a2a/project-state.json','dore-design/knowledge-lab/a2a/loop-contract-v1.json','dore-design/knowledge-lab/a2a/agent-card.json','dore-design/knowledge-lab/a2a/runtime-control-manifest.json','dore-design/knowledge-lab/skills/registry.json']
  return list(dict.fromkeys(paths))
 def self_update():
  st=read_json(STATE,{}) or {};last=float(st.get('last_self_update_check_epoch') or 0)
@@ -91,7 +101,7 @@ def self_update():
   event('SELF_UPDATED',files=changed,source='origin/main');publish(True)
   if 'local/dore-local/resident_runtime.py' in changed:os.execv(sys.executable,[sys.executable,str(SELF)])
 def tick():
- event('WAKE',reason='NO_USER_INPUT_CONTINUE');result=agent_step();parsed=(result.get('result') or {}) if isinstance(result,dict) else {};state=str(parsed.get('state') or ('AGENT_ERROR' if not result.get('ok') else 'UNKNOWN'));st=read_json(STATE,{}) or {};st.update({'runtime':VERSION,'last_tick_at':now(),'last_event':'AGENT_OBSERVATION','last_agent_state':state,'last_agent_result':result});atomic_json(STATE,st);atomic_json(HEARTBEAT,{'runtime':VERSION,'at':now(),'state':state,'agent_core':parsed.get('agent_core'),'continue':parsed.get('continue',True),'next_tick_seconds':INTERVAL});event('AGENT_OBSERVATION',state=state,ok=bool(result.get('ok')),returncode=result.get('returncode'));publish(True)
+ event('WAKE',reason='NO_USER_INPUT_CONTINUE');result=agent_step();parsed=(result.get('result') or {}) if isinstance(result,dict) else {};state=str(parsed.get('state') or ('AGENT_ERROR' if not result.get('ok') else 'UNKNOWN'));supervision=supervisor_step(result);atomic_json(SUPERVISION,supervision);st=read_json(STATE,{}) or {};st.update({'runtime':VERSION,'last_tick_at':now(),'last_event':'A2A_SUPERVISION','last_agent_state':state,'last_agent_result':result,'last_a2a_state':supervision.get('a2a_state'),'last_a2a_action':supervision.get('action_required')});atomic_json(STATE,st);atomic_json(HEARTBEAT,{'runtime':VERSION,'at':now(),'state':state,'a2a_state':supervision.get('a2a_state'),'a2a_action':supervision.get('action_required'),'peer_required':supervision.get('peer_required',False),'agent_core':parsed.get('agent_core'),'continue':parsed.get('continue',True),'next_tick_seconds':INTERVAL});event('AGENT_OBSERVATION',state=state,ok=bool(result.get('ok')),returncode=result.get('returncode'));event('A2A_SUPERVISION',a2a_state=supervision.get('a2a_state'),action=supervision.get('action_required'),peer_required=supervision.get('peer_required'),unchanged_cycles=supervision.get('unchanged_cycles'));publish(True)
 def main():
  RUNTIME.mkdir(parents=True,exist_ok=True)
  with LOCK.open('w') as lock:
