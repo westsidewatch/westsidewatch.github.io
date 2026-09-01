@@ -4,6 +4,14 @@ Status: CURRENT
 Updated: 2026-08-31
 Authority order: live site content (`data/volumes/vol-00.yaml`) → this current visual state → historical design notes.
 
+## Active Doré Design surface
+
+- Visible default: `new-westside/homepage-v2-living-fortress.html`.
+- Direction: **A · Living Fortress**, selected by the user as the first complete Homepage V2 candidate.
+- Status: Candidate 01 — visible and testable, not silently promoted to final approval.
+- `homepage-v1.html` remains a retained anti-reference and must not return as the resident default.
+- The homepage exposes Journal as a 5:8 portal; `/journal/` and `/vol-00/` remain separate publication surfaces.
+
 ## Visual DNA
 Westside New Classicism = **Light · Line · Paper · Engraving · Architecture**.
 

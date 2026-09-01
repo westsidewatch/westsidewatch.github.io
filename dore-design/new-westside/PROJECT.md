@@ -6,6 +6,10 @@ Working environment: Doré Design
 Main engineer: ChatGPT
 Learning and bounded local execution: Doré
 
+## Current implementation checkpoint
+
+The user selected **A · Living Fortress** for the first complete Homepage V2 direction. Its visible candidate is `homepage-v2-living-fortress.html`, served by Doré Design 1.3 at `/`. The superseded `homepage-v1.html` is retained only as an anti-reference. Composition studies and reference boards do not count as implementation unless their decisions are promoted into the resident surface and verified there.
+
 ## Mission
 承接已完成的 Westside Watch 視覺研究、現行主站、Figma/Penpot 實驗與 Doré Design 工程，重新建設可以實際工作的「新西望」網站視覺結構。不重新啟動 Visual Discovery。
 

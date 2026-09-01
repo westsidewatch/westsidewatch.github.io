@@ -21,7 +21,7 @@ jobs:
         run: python3 dore-design/integration_test.py
       - name: Workspace product lifecycle
         run: |
-          python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/app_visual.py dore-design/app_visual_v2.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py
+          python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/app_visual.py dore-design/app_visual_v2.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py dore-design/upgrade_living_fortress_v2.py dore-design/deploy_visual_current.py
           python3 dore-design/workspace_selftest.py
       - name: Workspace machine control surface
         env:
@@ -33,12 +33,17 @@ jobs:
           python3 dore-design/workspace_cli.py export-svg cover
           python3 dore-design/workspace_cli.py verify
           test -s "${DORE_DESIGN_DATA}/exports/westside-watch.cover.svg"
+          python3 dore-design/upgrade_living_fortress_v2.py >/tmp/living-fortress-upgrade.json
+          python3 dore-design/workspace_cli.py get >/tmp/living-fortress-workspace.json
+          python3 -c "import json; w=json.load(open('/tmp/living-fortress-workspace.json')); assert w['active_surface']=='homepage-v2-living-fortress' and w['design_direction']=='A-living-fortress' and any(p['id']=='homepage' and any(n['id']=='one-territory' for n in p['nodes']) for p in w['pages'])"
       - name: Resident same-artifact acceptance
         shell: bash
         run: |
           set -euo pipefail
           export DORE_DESIGN_DATA="${{ runner.temp }}/dore-design-http"
           export DORE_DESIGN_PORT=4310
+          python3 dore-design/workspace_cli.py get >/tmp/dd-http-workspace.json
+          python3 dore-design/upgrade_living_fortress_v2.py >/tmp/dd-http-upgrade.json
           python3 dore-design/app_visual_v2.py >/tmp/dd-http.log 2>&1 &
           pid=$!
           trap 'kill $pid || true' EXIT
@@ -46,8 +51,10 @@ jobs:
           python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
           grep -q 'EDIT IN DORÉ DESIGN' <(curl -fsS http://127.0.0.1:4310/)
-          grep -q 'DORÉ DESIGN 1.2 · STRUCTURE EDITOR' <(curl -fsS http://127.0.0.1:4310/editor)
-          python3 -c "import json,urllib.request; h=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/health')); assert h['version']=='1.2' and h['default_surface']=='homepage-v1-anti-reference' and h['journal_mode']=='source-identical-hugo-mirror'"
+          grep -q 'data-design="living-fortress-v2"' <(curl -fsS http://127.0.0.1:4310/)
+          grep -q 'A · LIVING FORTRESS / HOMEPAGE V2' <(curl -fsS http://127.0.0.1:4310/)
+          grep -q 'DORÉ DESIGN 1.3 · STRUCTURE EDITOR' <(curl -fsS http://127.0.0.1:4310/editor)
+          python3 -c "import json,urllib.request; h=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/health')); assert h['version']=='1.3' and h['default_surface']=='homepage-v2-living-fortress' and h['design_direction']=='A-living-fortress' and h['journal_mode']=='source-identical-hugo-mirror'"
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
