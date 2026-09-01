@@ -1,6 +1,6 @@
 {
-  "body": "{\"source_message_id\": \"a2a-transport-learn-1\", \"task_status\": \"RETRYING\", \"attempt\": 2, \"terminal\": false, \"transport\": \"PASS\", \"execution\": \"FAIL\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": false, \"error\": \"RuntimeError: unsupported_kind:None\", \"parent_goal_preserved\": true, \"recovery_required\": false}}",
-  "created_at": "2026-09-01T05:53:23.949510+00:00",
+  "body": "{\"source_message_id\": \"a2a-transport-learn-1\", \"task_status\": \"FAIL\", \"attempt\": 3, \"terminal\": true, \"transport\": \"PASS\", \"execution\": \"FAIL\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": false, \"error\": \"RuntimeError: unsupported_kind:None\", \"parent_goal_preserved\": true, \"recovery_required\": true}}",
+  "created_at": "2026-09-01T05:53:57.410407+00:00",
   "evidence_refs": [
     "coordination-hardening-v1",
     "product-invariant-monitor",
@@ -9,13 +9,13 @@
     "source-message:a2a-transport-learn-1"
   ],
   "message_id": "result-a2a-transport-learn-1",
-  "message_sha256": "1e083e9d7cb53d229b4c7aa98f6193fcbe6c647842b53dae5c4d2e2250eb7cb6",
+  "message_sha256": "32d95e102bb34e1d199ebba989f8bec364b550898abeff05071611b0295d487c",
   "metadata": {
-    "attempt": 2,
+    "attempt": 3,
     "product_monitor": "PASS",
     "source_message_id": "a2a-transport-learn-1",
-    "task_status": "RETRYING",
-    "terminal": false
+    "task_status": "FAIL",
+    "terminal": true
   },
   "priority": "high",
   "recipient": "chatgpt",
@@ -24,5 +24,5 @@
   "schema": "dore.mail.v2",
   "sender": "dore",
   "subject": "Doré execution: Learn current A2A transport model and apply it to our shared lab",
-  "thread_id": "7c401676-adc7-406d-ae87-8a73e264078f"
+  "thread_id": "a0a77015-48b2-4d47-a627-fbb1c9bec903"
 }
