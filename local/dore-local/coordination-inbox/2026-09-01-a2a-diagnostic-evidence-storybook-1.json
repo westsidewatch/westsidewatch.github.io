@@ -1,0 +1,20 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"a2a-diagnostic-evidence-storybook-1",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"critical",
+  "kind":"local_exec",
+  "requires_reply":true,
+  "related_goal":"dore-a2a-272",
+  "subject":"A2A diagnostic: isolate Storybook runtime failure with existing tools",
+  "commands":[
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["node","--version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["npm","--version"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["ls","-la","dore-design/knowledge-lab/storybook"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["cat","dore-design/knowledge-lab/storybook/package.json"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["npm","run","build-storybook"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":900}
+  ],
+  "body":"This is a minimal isolated diagnostic, not another blind bootstrap retry. Use only commands already supported by the current worker. The purpose is to force command-level evidence into the existing local_exec result: Node/npm versions, actual Storybook directory/package state, and the real build stdout/stderr/returncode. Do not modify homepage, Journal, Storybook source, or install dependencies in this task. If the build fails, the canonical receipt must preserve the local_exec result evidence rather than collapsing the useful result into generic task_failed. This task is simultaneously Storybook hardening evidence and Doré↔ChatGPT A2A project #272 evidence: silence/failure is a signal and each attempt must increase information." 
+}
