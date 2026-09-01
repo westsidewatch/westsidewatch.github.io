@@ -5,7 +5,11 @@ from pathlib import Path
 HERE=Path(__file__).resolve().parent
 MCP_CLIENT=HERE/'penpot-mcp'/'client.mjs'
 MCP_RUNTIME=Path.home()/'.dore'/'runtime'/'penpot-mcp'
-MCP_URL=os.environ.get('PENPOT_MCP_URL','http://localhost:4401/mcp')
+# The local Penpot MCP server binds IPv4.  On hosts where Node resolves
+# ``localhost`` to ::1 first, passing localhost makes the MCP client fail before
+# the protocol handshake even though port 4401 is healthy.  Keep the default
+# address family explicit; deployments can still override PENPOT_MCP_URL.
+MCP_URL=os.environ.get('PENPOT_MCP_URL','http://127.0.0.1:4401/mcp')
 OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
 MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b'); VISION_MODEL=MODEL
 
@@ -39,7 +43,23 @@ def _semantic_ok(r):
  if not (r or {}).get('ok'):return False
  t=_text_from_result(r).lower(); bad=('tool execution failed','error handling task','unexpected token','syntaxerror','referenceerror','typeerror:','execution failed','timeout')
  return not any(x in t for x in bad)
-def status():return _node('status')
+def _document_probe():
+ r=call_tool('execute_code',{'code':'return JSON.stringify({fileId:penpot.currentFile?.id||null,fileName:penpot.currentFile?.name||null,pageId:penpot.currentPage?.id||null,pageName:penpot.currentPage?.name||null});'})
+ text=_text_from_result(r)
+ if not _semantic_ok(r):return {'ok':False,'error':'penpot_plugin_disconnected','detail':text[:1200]}
+ try:
+  document=json.loads(text)
+  # execute_code returns an envelope whose `result` may itself be JSON.
+  if isinstance(document,dict) and isinstance(document.get('result'),str):
+   try:document=json.loads(document['result'])
+   except Exception:pass
+ except Exception:document={'raw':text[:1200]}
+ return {'ok':True,'document':document}
+def status():
+ transport=_node('status')
+ if not transport.get('ok'):return {**transport,'transport_ok':False,'plugin_connected':False}
+ probe=_document_probe()
+ return {'ok':bool(probe.get('ok')),'transport_ok':True,'plugin_connected':bool(probe.get('ok')),'url':transport.get('url'),'server':transport.get('server'),'tool_count':transport.get('tool_count',0),'tools':transport.get('tools') or [],**({'document':probe.get('document')} if probe.get('ok') else {'error':probe.get('error'),'detail':probe.get('detail')})}
 def list_tools():
  r=_node('list')
  if not r.get('ok'):raise RuntimeError(r.get('error') or 'penpot_mcp_unavailable')

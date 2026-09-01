@@ -28,6 +28,7 @@ cat > "$PLIST" <<EOF
 <key>ProgramArguments</key><array><string>$NODE</string><string>$MCP_BIN</string></array>
 <key>EnvironmentVariables</key><dict>
  <key>PATH</key><string>$LOCALBIN:$NODEDIR:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin</string>
+ <key>PENPOT_MCP_URL</key><string>http://127.0.0.1:4401/mcp</string>
 </dict>
 <key>RunAtLoad</key><true/>
 <key>KeepAlive</key><true/>

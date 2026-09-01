@@ -86,8 +86,10 @@ def dispatch(msg):
  if kind=='complete_recall':return {'ok':True,'recall':complete_recall(str(msg.get('query') or task))}
  if kind in ('penpot_ai_kit_adoption','penpot_ai_kit_install'):raise RuntimeError('legacy_handler_not_loaded_in_goal_worker')
  if kind=='penpot_execute':return run_task(task,str(msg.get('design_brief') or msg.get('brief') or msg.get('task') or task).strip())
- if kind=='penpot_work':return {'ok':True,'penpot':execute_readonly(task)}
- if kind=='penpot_export_probe':return {'ok':True,'penpot':call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'})}
+ if kind=='penpot_work':
+  result=execute_readonly(task);return {'ok':bool(result.get('ok')),'penpot':result}
+ if kind=='penpot_export_probe':
+  result=call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'});return {'ok':bool(result.get('ok')),'penpot':result}
  raise RuntimeError('unsupported_kind:'+str(kind))
 def evidence_for(msg):
  base=['coordination-hardening-v1','product-invariant-monitor','autonomous-capability-loop','resident-goal-queue','research-bridge-executable']

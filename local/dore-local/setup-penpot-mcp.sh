@@ -69,5 +69,5 @@ Canonical plugin source: penpot/penpot tag $TAG
 Compatibility gate absent: verified
 Transport reuse patch: applied
 Plugin manifest: http://localhost:4400/manifest.json
-MCP endpoint: http://localhost:4401/mcp
+MCP endpoint: http://127.0.0.1:4401/mcp
 EOF
