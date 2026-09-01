@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "autonomous-driver-ignition-2",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "IGNITION 2: install Driver, run it, then immediately run coordination worker again",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/install_autonomous_driver_v01.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/autonomous_driver.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":900},
+    {"argv":["python3","local/dore-local/coordination_worker.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":900}
+  ]
+}
