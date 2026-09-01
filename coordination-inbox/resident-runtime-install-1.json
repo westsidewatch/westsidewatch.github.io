@@ -1,0 +1,28 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "resident-runtime-install-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Install mature launchd-backed Resident Runtime and start autonomous New Westside loop",
+  "related_goal": "dore-a2a-resident-runtime",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/install_resident_runtime.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "-c", "import json,time,pathlib; time.sleep(65); p=pathlib.Path.home()/'.dore/runtime/heartbeat.json'; print('HEARTBEAT_EXISTS',p.exists()); print(p.read_text() if p.exists() else 'NO_HEARTBEAT'); e=pathlib.Path.home()/'.dore/runtime/events.jsonl'; print('EVENTS_EXISTS',e.exists()); print('\\n'.join(e.read_text().splitlines()[-12:]) if e.exists() else 'NO_EVENTS')"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 90
+    }
+  ]
+}
