@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Doré Design 1.5 — exact #262 WYSIWYG homepage backed by one workspace."""
+"""Doré Design 1.5.1 — locked #262 front door with restored editing chrome."""
 import mimetypes
 import os
 import shutil
@@ -12,16 +12,11 @@ import homepage_wysiwyg
 ROOT=Path(__file__).resolve().parent.parent
 MIRROR=ROOT/'dore-design/.site-mirror'
 
-STRUCTURE_HTML=(
-    visual.HTML.replace(
-        '<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>',
-        '<div id="top"><b>DORÉ DESIGN 1.5 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'
-    )
-)
+STRUCTURE_HTML=(visual.HTML.replace('<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>','<div id="top"><b>DORÉ DESIGN 1.5.1 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'))
 
 def build_site_mirror(force=False):
     journal_index=MIRROR/'journal/index.html';vol_index=MIRROR/'vol-00/index.html'
-    if not force and journal_index.exists() and vol_index.exists(): return {'ok':True,'rebuilt':False,'engine':'hugo','mirror':str(MIRROR)}
+    if not force and journal_index.exists() and vol_index.exists():return {'ok':True,'rebuilt':False,'engine':'hugo','mirror':str(MIRROR)}
     hugo=shutil.which('hugo')
     if not hugo:return {'ok':False,'error':'hugo_not_found','mirror':str(MIRROR)}
     MIRROR.mkdir(parents=True,exist_ok=True)
@@ -47,8 +42,9 @@ class H(visual.H):
         ctype=mimetypes.guess_type(str(p))[0] or 'application/octet-stream';self.send_bytes(200,p.read_bytes(),ctype);return True
     def do_GET(self):
         path=self.path.split('?',1)[0]
-        if path=='/':return self.send_bytes(200,homepage_wysiwyg.render(edit=False).encode('utf-8'),'text/html; charset=utf-8')
-        if path=='/editor':return self.send_bytes(200,homepage_wysiwyg.render(edit=True).encode('utf-8'),'text/html; charset=utf-8')
+        if path=='/':return self.send_bytes(200,homepage_wysiwyg.render_canvas(edit=False).encode('utf-8'),'text/html; charset=utf-8')
+        if path=='/editor':return self.send_bytes(200,homepage_wysiwyg.render_editor().encode('utf-8'),'text/html; charset=utf-8')
+        if path=='/editor-canvas':return self.send_bytes(200,homepage_wysiwyg.render_canvas(edit=True).encode('utf-8'),'text/html; charset=utf-8')
         if path=='/structure-editor':return self.send_bytes(200,STRUCTURE_HTML.encode('utf-8'),'text/html; charset=utf-8')
         if path=='/asset/masthead.svg':
             p=ROOT/'static/images/westside-watch-masthead-landscape.svg'
@@ -65,9 +61,9 @@ class H(visual.H):
         if path=='/api/mirror/status':return self.out(200,{'ok':(MIRROR/'journal/index.html').exists() and (MIRROR/'vol-00/index.html').exists(),'journal':'/journal/','vol00':'/vol-00/','mode':'source-identical-hugo-mirror','redesign':False})
         if path=='/api/preview/status':
             w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='homepage'),w.get('pages',[None])[0])
-            return self.out(200,{'ok':bool(home),'mode':'same-template-same-workspace-wysiwyg','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':home.get('id') if home else None,'node_count':len(home.get('nodes',[])) if home else 0,'editor':'/editor','preview':'/','structure_editor':'/structure-editor'})
+            return self.out(200,{'ok':bool(home),'mode':'locked-template-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':home.get('id') if home else None,'node_count':len(home.get('nodes',[])) if home else 0,'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','structure_editor':'/structure-editor'})
         if MIRROR.exists() and self.serve_mirror(path):return
-        if path=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'1.5','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262','preview_mode':'same-template-same-workspace-wysiwyg','design_direction':'watch-for-the-dawn','editor':'/editor','preview':'/','structure_editor':'/structure-editor','journal_mirror':'/journal/','vol00_mirror':'/vol-00/','journal_mode':'source-identical-hugo-mirror','visual_grammar':['approved-front-door','watch-for-the-dawn','dore-engraving','responsive-city-grid','5:8-journal','central-gate','archival-print']})
+        if path=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'1.5.1','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262-locked','preview_mode':'locked-template-shared-workspace','design_direction':'watch-for-the-dawn','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','structure_editor':'/structure-editor','journal_mirror':'/journal/','vol00_mirror':'/vol-00/','journal_mode':'source-identical-hugo-mirror','visual_grammar':['approved-front-door','design-locked','watch-for-the-dawn','dore-engraving','responsive-city-grid','5:8-journal','central-gate','archival-print']})
         return super().do_GET()
 
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('DORE_DESIGN_PORT','4310'))),H).serve_forever()

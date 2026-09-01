@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the current resident Doré Design surface and verify the visible result."""
+"""Install Doré Design and verify locked #262 design plus full editor mode."""
 import json,subprocess,urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent;BASE='http://127.0.0.1:4310'
@@ -10,6 +10,19 @@ migration=subprocess.run(['python3','dore-design/upgrade_living_fortress_v2.py']
 if migration.returncode!=0:raise SystemExit('workspace_upgrade_failed:'+migration.stderr[-1200:])
 result=subprocess.run(['bash','dore-design/install-macos.sh'],cwd=ROOT,text=True,capture_output=True,timeout=120)
 if result.returncode!=0:raise SystemExit('install_failed:'+result.stderr[-1200:])
-health=json.loads(read('/api/health'));preview_status=json.loads(read('/api/preview/status'));preview=read('/');editor=read('/editor');structure=read('/structure-editor');workspace=json.loads(read('/api/workspace'));home=next((p for p in workspace.get('pages',[]) if p.get('id')=='homepage'),None);node_ids={n.get('id') for n in (home or {}).get('nodes',[])};texts='\n'.join(str(n.get('text',''))+' '+str(n.get('title','')) for n in (home or {}).get('nodes',[]))
-checks={'version_current':health.get('version')=='1.5','single_source':health.get('source_of_truth')=='structured-workspace','approved_layout_source':health.get('layout_source')=='approved-front-door-262','same_wysiwyg_renderer':health.get('preview_mode')=='same-template-same-workspace-wysiwyg','selected_direction':health.get('design_direction')=='watch-for-the-dawn','preview_exact_layout':'class="city-grid"' in preview and 'class="hero"' in preview and 'class="gate-line"' in preview and 'class="watch"' in preview,'editor_exact_layout':'data-dore-editor="true"' in editor and 'DORÉ DESIGN 1.5 · WYSIWYG' in editor and 'class="city-grid"' in editor,'editor_has_bindings':'data-node-id="home-title"' in editor and 'data-node-id="journal-tower"' in editor,'structure_demoted':'DORÉ DESIGN 1.5 · STRUCTURE' in structure,'workspace_surface':workspace.get('active_surface')=='homepage-watch-for-the-dawn-wysiwyg-v4','workspace_layout_source':workspace.get('layout_source')=='approved-front-door-262','approved_hero':'WATCH\nFOR THE\nDAWN.' in texts,'approved_destinations':{'journal-tower','one-territory','church-territory','library-territory','join-territory'}.issubset(node_ids),'preview_workspace_match':preview_status.get('workspace_id')==workspace.get('id'),'preview_revision_match':preview_status.get('revision')==workspace.get('revision'),'preview_page_match':preview_status.get('page_id')=='homepage'}
-ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_WYSIWYG_FRONT_DOOR_PASS' if ok else 'DORE_DESIGN_WYSIWYG_FRONT_DOOR_FAIL','health':health,'preview_status':preview_status,'workspace_revision':workspace.get('revision'),'migration':migration.stdout.strip(),'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
+health=json.loads(read('/api/health'));status=json.loads(read('/api/preview/status'));preview=read('/');editor=read('/editor');canvas=read('/editor-canvas');structure=read('/structure-editor');workspace=json.loads(read('/api/workspace'))
+markers=['class="hero"','class="city-grid"','class="gate-line"','class="watch"','WATCH<br>FOR THE <em>DAWN.</em>']
+checks={
+'version_current':health.get('version')=='1.5.1',
+'design_locked':health.get('layout_source')=='approved-front-door-262-locked',
+'shared_workspace':health.get('preview_mode')=='locked-template-shared-workspace',
+'preview_approved_layout':all(m in preview for m in markers),
+'canvas_approved_layout':all(m in canvas for m in markers),
+'editor_mode_visible':'DORÉ DESIGN 1.5.1 · EDITOR' in editor and 'PAGES' in editor and 'LAYERS' in editor and 'INSPECTOR' in editor,
+'editor_uses_canvas':'src="/editor-canvas"' in editor,
+'canvas_editable':'data-dore-canvas="true"' in canvas and 'data-node-id="home-title"' in canvas,
+'structure_preserved':'DORÉ DESIGN 1.5.1 · STRUCTURE' in structure,
+'workspace_revision_match':status.get('revision')==workspace.get('revision'),
+'workspace_page_match':status.get('page_id')=='homepage',
+}
+ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_EDITOR_MODE_PASS' if ok else 'DORE_DESIGN_EDITOR_MODE_FAIL','health':health,'preview_status':status,'workspace_revision':workspace.get('revision'),'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
