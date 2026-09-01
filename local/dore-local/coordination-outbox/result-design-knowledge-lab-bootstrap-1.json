@@ -1,0 +1,28 @@
+{
+  "body": "{\"source_message_id\": \"design-knowledge-lab-bootstrap-1\", \"task_status\": \"PASS\", \"attempt\": 1, \"terminal\": true, \"transport\": \"PASS\", \"execution\": \"PASS\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"WARN\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": false}, \"alerts\": [{\"code\": \"JOURNAL_COVER_ASSET_MISSING\", \"severity\": \"warning\", \"asset\": \"/images/jerusalem-wall.png\", \"http_status\": 404}]}, \"result\": {\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"git\", \"pull\", \"--ff-only\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"Already up to date.\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"test\", \"-f\", \"dore-design/knowledge-lab/README.md\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"test\", \"-f\", \"dore-design/knowledge-lab/research-2026-09-01.md\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"\", \"stderr\": \"\"}]}}",
+  "created_at": "2026-09-01T04:28:03.348119+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:design-knowledge-lab-bootstrap-1"
+  ],
+  "message_id": "result-design-knowledge-lab-bootstrap-1",
+  "message_sha256": "bf146e9bd1afd24b9d2d8297fa9f55a37ae74014ca556b0d0bb506ae71a17c91",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "WARN",
+    "source_message_id": "design-knowledge-lab-bootstrap-1",
+    "task_status": "PASS",
+    "terminal": true
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-coordination-hardening",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: Verify Doré executable design knowledge lab bootstrap",
+  "thread_id": "a4bbbf29-d66d-4b75-812f-aa26972e25c9"
+}
