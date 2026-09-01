@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"dore-journal-fidelity-171\", \"attempt\": 1, \"terminal\": false, \"parent_goal_preserved\": true, \"recovery_required\": false, \"exception\": \"RuntimeError: task_failed\"}",
+  "created_at": "2026-09-01T03:06:26.748726+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:dore-journal-fidelity-171"
+  ],
+  "message_id": "40e2ae41-f605-4f6b-9097-2946c28c3882",
+  "message_sha256": "0fb93dba784611d18ddbe35f04d72e066ab1f6ac109619c45ba5c760345b1fc5",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-editable-journal-fidelity",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy Doré Design 1.7.1 Journal slogan and asset fidelity fixes",
+  "thread_id": "3d91275f-e95f-4c3d-a15a-aaf9517a1164"
+}
