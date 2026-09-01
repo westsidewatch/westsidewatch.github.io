@@ -1,0 +1,32 @@
+{
+  "schema": "dore.research-job.v1",
+  "research_id": "design-reference-library-expansion-20260901",
+  "parent_message_id": "dore-design-reference-expansion-20260901-01",
+  "parent_goal": "westside-watch-homepage-redesign",
+  "state": "PENDING",
+  "question": "Build a large, high-quality, provenance-preserving reference library for modern editorial homepage design. Search beyond Storybook examples: Figma Community templates and design systems, previously supplied open-source design resources, maintained open-source editorial and magazine projects, modern independent magazines, cultural publications, art-book and newspaper-inspired sites, and strong non-SaaS web design references. Reuse all existing local reference material first, then expand externally. Record source URL, author/project, license or usage status, maintenance/currentness, visual traits, interaction patterns, typography, grid, image treatment, navigation, fit for Westside Watch, and rejection reason. Cluster the library into distinct design directions and only then create Storybook experiments. Do not stop after one search, one source, one build, or one successful component.",
+  "failure_fingerprint": "REFERENCE_LIBRARY_TOO_SMALL: current Storybook search and template search are insufficient and produce near-identical micro-variants rather than a homepage redesign.",
+  "parent_goal_preserved": true,
+  "acceptance": {
+    "minimum_qualified_references": 40,
+    "minimum_source_families": 6,
+    "required_families": [
+      "Figma Community templates",
+      "open-source design systems/templates",
+      "modern editorial websites",
+      "independent magazines",
+      "cultural or art publications",
+      "existing Westside Watch references"
+    ],
+    "required_outputs": [
+      "normalized searchable catalog",
+      "provenance and license fields",
+      "visual pattern taxonomy",
+      "quality and fit scoring",
+      "rejection log",
+      "at least three materially different Storybook homepage directions"
+    ],
+    "completion_rule": "Keep goal active until all thresholds are met and the three directions are visually and structurally distinct."
+  },
+  "updated_at": "2026-09-01T11:15:00Z"
+}
