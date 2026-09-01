@@ -14,12 +14,12 @@ Doré Local is a local runtime node of the same Doré identity, not a second Dor
 - `design_memory.py` — deterministic scope, truth-state and consolidation primitives
 - Cloudflare remains the public edge; Workers AI is not required by Doré Local Memory Core.
 
-## First model profile
+## Current model profile
 
-- Conversation/reasoning: `retired-engine`
-- Embedding: `retired-engine3-embedding:0.6b`
+- Conversation/reasoning source: `DORE_LOCAL_MODEL` (bootstrap default: `gemma4:e4b`)
+- Embedding source: optional `DORE_LOCAL_EMBED_MODEL`; no embedding model is auto-selected or provisioned when this is unset
 
-The model layer is replaceable. Memory IDs, provenance and Doré identity are independent of the model.
+Historical model names previously documented here are retired provenance, not current configuration authority. The model layer remains replaceable; memory IDs, provenance and Doré identity are independent of the selected model.
 
 ## Design Working Memory
 
@@ -41,7 +41,7 @@ The local API binds to `127.0.0.1` only by default. Do not expose port 8788 or O
 
 ## Bootstrap
 
-Run `bash local/dore-local/bootstrap-macos.sh` from the repository root. The script checks Apple Silicon/macOS, verifies Python and Ollama, creates the local directories/database, creates the Design Working Memory tables, and pulls the selected local models.
+Run `bash local/dore-local/bootstrap-macos.sh` from the repository root. The script checks Apple Silicon/macOS, verifies Python and Ollama, creates the local directories/database, creates the Design Working Memory tables, and pulls the selected local reasoning model. It provisions an embedding model only when `DORE_LOCAL_EMBED_MODEL` is explicitly supplied.
 
 For an already-bootstrapped machine, `dore_local.py` also creates the new Design Working Memory tables at startup, so a destructive database rebuild is not required.
 
