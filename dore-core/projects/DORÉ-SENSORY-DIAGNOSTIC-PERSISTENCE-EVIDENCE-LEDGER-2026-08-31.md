@@ -64,3 +64,11 @@ No P01 subtitle runtime, deployment, binding, credential, job ordering, blocker 
 ## Sweep disposition
 
 This batch adds a maintenance/revisit finding and stronger retention evidence, but it does not justify `MEM-SWEEP-01 = VERIFIED_COMPLETE`.
+
+## 2026-09-01 revalidation
+
+A fresh bounded history check confirms the same persistence pattern is still active and has not changed classification. Recent commits continue to alternate between `chore(dore): persist sensory heartbeat evidence [skip ci]` and `chore(dore): persist Actions probe evidence [skip ci]`, including heartbeat commits `7251222c137f87353f69e1d804f7b04f52a05dca`, `eaa6335f9f89f3bc86164f0cfbd954db75f764ba`, `014d66a6548dcc9ff018f14adc5dfbdf18c3dff3`, `b469af3af362bea4bc732cf06ba3038643d5d039`, `6b6b8f50bebad5432035593c8d435a16a0b1d9f4`, and probe commits `3f43565ea0cf735039fff0f6a5d2ac9483ddb748`, `83cc7a0a6c1303f767045ac26a7da6a4f7c7e2ce`, `40d06ae36e6ccd07e4e258fbfc15f47a74e40b9e`, `3e1a2a5cd6c5047f1cc0e2735a995a3cd5f90f9c`.
+
+The observed timestamps remain consistent with the previously documented roughly five-minute cadence and interleaving writers. This is retention evidence that the observability path remains live; it is also further confirmation that the source-control-churn debt is persistent rather than a one-day anomaly.
+
+No new blocker, completion milestone, P01 impact, or canonical status change is justified. The Master Register's existing `MEM-SWEEP-01` interpretation already captures this as `MAINTENANCE` / completed-observability revisit debt, so no canonical row rewrite is required from this bounded revalidation.
