@@ -1,0 +1,25 @@
+{
+  "schema": "dore.component-selection.v1",
+  "updated_at": "2026-09-01",
+  "selected_now": [
+    {"id":"a2a-1.0","role":"agent interoperability semantics","source":"https://a2a-protocol.org/v1.0.0/","status":"active-compatible-adapter","cost":"free/open"},
+    {"id":"sqlite-wal","role":"transactional checkpoints/events/leases/idempotency","source":"Python sqlite3 + SQLite WAL","status":"adopted-now","cost":"stdlib/local"},
+    {"id":"launchd","role":"resident process supervision","source":"macOS","status":"active","cost":"local"},
+    {"id":"otel-fields","role":"trace/span correlation schema","source":"https://opentelemetry.io/docs/languages/python/","status":"adopted-schema-only","cost":"free/local"},
+    {"id":"storybook-vite","role":"real design laboratory and executable workload","source":"https://github.com/storybookjs/storybook","status":"active","cost":"free/open"},
+    {"id":"openhands-skills-pattern","role":"repository-local reusable capabilities","source":"https://github.com/OpenHands/OpenHands","status":"pattern-adopted","cost":"free/open"},
+    {"id":"langgraph-persistence-pattern","role":"checkpoint vs durable store separation","source":"https://github.com/langchain-ai/docs/blob/main/src/oss/langgraph/persistence.mdx","status":"pattern-adopted","cost":"free/open"},
+    {"id":"microsoft-agent-framework-autonomous-pattern","role":"NO_USER_INPUT continuation + explicit turn termination","source":"https://learn.microsoft.com/en-us/agent-framework/workflows/orchestrations/handoff","status":"pattern-adopted","cost":"pattern-only"}
+  ],
+  "candidates": [
+    {"id":"dbos","role":"lightweight durable workflows/queues","source":"https://github.com/dbos-inc/dbos-transact-py","license":"MIT","decision":"defer until local SQLite durability limit is measured"},
+    {"id":"temporal","role":"strong distributed durable execution/replay","source":"https://docs.temporal.io/","license":"MIT","decision":"defer; too heavy for current one-Mac baseline"},
+    {"id":"prefect","role":"general orchestration/retries/work pools/observability","source":"https://github.com/PrefectHQ/prefect","license":"Apache-2.0","decision":"defer until multi-worker orchestration need"},
+    {"id":"pydantic-ai-durable","role":"engine-neutral durable agent compatibility","source":"https://github.com/pydantic/pydantic-ai/blob/main/docs/durable_execution/overview.md","decision":"adopt compatibility principle, no model/runtime dependency now"},
+    {"id":"apscheduler","role":"cron/timer scheduling","source":"https://github.com/agronholm/apscheduler","license":"MIT","decision":"defer until scheduled jobs become real workload"},
+    {"id":"watchfiles","role":"filesystem event wakeups","source":"https://github.com/samuelcolvin/watchfiles","license":"MIT","decision":"defer until polling is measured bottleneck"},
+    {"id":"a2a-inspector-tck","role":"protocol conformance validation","source":"https://github.com/a2aproject/","decision":"next isolated compatibility experiment; do not claim conformance before pass"}
+  ],
+  "missing_links_closed_now": ["transactional-durable-store","execution-leases","idempotency","explicit-retry-policy","autonomy-turn-and-time-budget","trace-correlation"],
+  "not_yet_claimed": ["A2A Inspector/TCK compliance","distributed durable workflow engine","event-driven file wakeup","cron scheduler"]
+}
