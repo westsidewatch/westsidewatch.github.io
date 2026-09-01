@@ -12,32 +12,50 @@ ROOT=Path(__file__).resolve().parent.parent
 MIRROR=ROOT/'dore-design/.site-mirror'
 
 EDITOR_CSS=r'''
-.stage.home{background:linear-gradient(180deg,#102a43 0%,#091c2d 100%);color:#f7f3e9;isolation:isolate}
-.stage.home:after{content:"";position:absolute;right:0;top:80px;width:62%;height:610px;z-index:0;background:linear-gradient(90deg,#102a43 0%,transparent 32%),linear-gradient(180deg,transparent 52%,#102a43 100%),url("https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg") center/cover no-repeat;filter:grayscale(1) contrast(1.18);opacity:.38;mix-blend-mode:screen;pointer-events:none}
-.home .masthead{z-index:4;filter:brightness(0) invert(1);opacity:.92}
-.home .node{z-index:2;color:#f7f3e9}
-.home .watch-kicker{top:112px!important;color:#d2bc69;letter-spacing:.14em}
-.home .home-title{top:148px!important;color:#f7f3e9;font-size:70px!important;line-height:.78}
-.home .home-deck{top:305px!important;color:#d2bc69}
-.home .block{border:1px solid rgba(247,243,233,.3);background:rgba(9,28,45,.67);color:#f7f3e9;padding:16px;backdrop-filter:blur(1px)}
-.home .block:before{height:1px;background:#d2bc69}
-.home .block .eye{color:#d2bc69}
-.home .block h2{font-size:30px;line-height:.94}
-.home .journal-tower{left:54px!important;top:360px!important;width:390px!important;height:624px!important;background:rgba(7,22,36,.9);border-color:rgba(210,188,105,.58)}
-.home .journal-tower h2{font-size:54px}
-.home .one-territory{background:rgba(9,28,45,.72)}
-.home .signal-territory{background:rgba(247,243,233,.92);color:#24231f}
-.home .signal-territory .eye{color:#a2872a}
-.home .church-territory{background:rgba(7,22,36,.82)}
-.home .library-territory{background:rgba(229,222,206,.94);color:#24231f}
-.home .library-territory .eye{color:#a2872a}
-.home .witness-territory,.home .prayer-territory,.home .archive-territory{background:rgba(9,28,45,.72)}
-.home .gatearch{left:690px;top:735px;width:130px;height:250px;z-index:3;border-color:#d2bc69;background:linear-gradient(rgba(210,188,105,.03),rgba(162,135,42,.2))}
-.home .gate-mark{left:680px!important;top:930px!important;color:#d2bc69;letter-spacing:.16em;z-index:5}
-.home .gate-left{left:660px!important;top:986px!important;width:48px!important;background:#d2bc69}
-.home .gate-right{left:812px!important;top:986px!important;width:48px!important;background:#d2bc69}
-.home .footer{left:462px!important;top:1025px!important;color:#d2bc69;letter-spacing:.12em}
-.home .crenel{left:45px;right:45px;bottom:18px;background:linear-gradient(90deg,#d2bc69 0 8%,transparent 8% 11%,#d2bc69 11% 24%,transparent 24% 29%,#d2bc69 29% 42%,transparent 42% 46%,#d2bc69 46% 63%,transparent 63% 68%,#d2bc69 68% 79%,transparent 79% 84%,#d2bc69 84% 100%);opacity:.25;z-index:1}
+.stage.home{background:#f2eee4;color:#1e211f;isolation:isolate}
+.stage.home:before{opacity:.08}
+.stage.home:after{content:"";position:absolute;left:500px;right:0;top:96px;height:600px;z-index:0;background:linear-gradient(90deg,#0b2639 0%,rgba(11,38,57,.92) 12%,rgba(11,38,57,.38) 68%,rgba(7,26,40,.68) 100%),linear-gradient(180deg,rgba(7,26,40,.06),rgba(7,26,40,.55)),url("https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg") 55% 40%/cover no-repeat;filter:grayscale(1) contrast(1.12) brightness(.8);pointer-events:none}
+.home .masthead{left:64px!important;top:32px!important;width:1072px!important;height:62px!important;z-index:6;filter:none;opacity:.82;border-bottom:1px solid rgba(30,33,31,.22)}
+.home .node{z-index:3;color:#1e211f}
+.home .brand,.home .brand-zh,.home .h-rule{display:none}
+.home .watch-kicker{color:#b39a47!important;letter-spacing:.16em;z-index:5}
+.home .home-title{color:#f2eee4!important;font-size:88px!important;line-height:.72!important;letter-spacing:-.045em;z-index:5;text-shadow:0 1px 1px rgba(0,0,0,.12)}
+.home .home-deck{color:rgba(242,238,228,.9)!important;line-height:1.45!important;z-index:5}
+.home .verse{color:#d0bd78!important;line-height:1.5!important;letter-spacing:.12em;text-align:right;z-index:5}
+.home .hero-rule{background:rgba(242,238,228,.32)!important;z-index:5}
+.home .threshold-title{color:#1e211f!important}
+.home .threshold-meta{color:#8c7a3d!important;letter-spacing:.15em;text-align:right}
+.home .block{border:1px solid rgba(30,33,31,.22);padding:26px;background:#e7e0d2;color:#1e211f;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:none}
+.home .block:before{height:1px;background:#b39a47;width:28%}
+.home .block .eye{color:#a2872a;letter-spacing:.14em}
+.home .block h2{font-size:42px;line-height:.9;margin:18px 0 10px;font-weight:400}
+.home .block p{font-size:15px;line-height:1.55}
+.home .journal-tower{background:#0b2639;color:#f2eee4;border-color:#0b2639}
+.home .journal-tower:after{content:"";position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,rgba(7,26,40,.1),rgba(7,26,40,.95)),url("https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg") 35% 50%/cover no-repeat;filter:grayscale(1) contrast(1.08);opacity:.46;pointer-events:none}
+.home .journal-tower>*{position:relative;z-index:1}
+.home .journal-tower .eye{color:#d0bd78}
+.home .journal-tower h2{font-size:66px;max-width:5.2em}
+.home .journal-tower p{font-size:17px;color:rgba(242,238,228,.8);max-width:22em}
+.home .one-territory{background:#e7e0d2}
+.home .one-territory h2{font-size:48px;max-width:10em}
+.home .church-territory{background:#071a28;color:#f2eee4;border-color:#071a28}
+.home .church-territory .eye{color:#d0bd78}
+.home .church-territory p{color:rgba(242,238,228,.75)}
+.home .library-territory{background:#ded6c4}
+.home .join-territory{background:#b39a47;color:#071a28;border-color:#b39a47}
+.home .join-territory:before{background:#071a28}
+.home .join-territory .eye{color:#071a28}
+.home .gate-copy-left,.home .gate-copy-right{color:#f2eee4!important;z-index:5}
+.home .gate-copy-right{text-align:right}
+.home .gatearch{left:520px!important;top:1645px!important;width:160px!important;height:185px!important;z-index:4;border:1px solid #d0bd78;border-bottom:0;border-radius:100px 100px 0 0;background:linear-gradient(180deg,rgba(208,189,120,.02),rgba(208,189,120,.13))}
+.home .gate-mark{color:#d0bd78!important;letter-spacing:.18em;text-align:center;z-index:5}
+.home .gate-left,.home .gate-right{background:#d0bd78!important;z-index:5}
+.home .watch-number{color:#b39a47!important;font-size:128px!important;line-height:.7!important}
+.home .watch-quote{color:#0b2639!important;font-size:54px!important;line-height:1.02!important}
+.home .watch-cite,.home .footer{color:#a2872a!important;letter-spacing:.14em}
+.home .footer-rule{background:rgba(30,33,31,.22)!important}
+.home .crenel{display:none}
+.home:has(.gate-copy-left):after{box-shadow:0 980px 0 0 #0b2639}
 '''
 
 EDITOR_HTML=(
@@ -48,19 +66,16 @@ EDITOR_HTML=(
 )
 
 PREVIEW_CSS=r"""
-html,body{height:auto;min-height:100%;background:#091c2d}
+html,body{height:auto;min-height:100%;background:#071a28}
 #top,.side{display:none!important}
 .app{height:auto!important;display:block!important}
-.stagewrap{min-height:100vh;padding:28px;overflow:auto;display:flex;align-items:flex-start;justify-content:center}
+.stagewrap{min-height:100vh;padding:28px;overflow:auto;display:flex;align-items:flex-start;justify-content:center;background:#071a28}
 .stage{margin:0 auto}
 .stage .node{pointer-events:none!important;cursor:default!important}
-.preview-edit{position:fixed;right:18px;bottom:18px;z-index:9999;background:#102a43;color:#faf9f5;border:1px solid #a2872a;padding:9px 12px;text-decoration:none;font:10px ui-monospace,monospace;letter-spacing:.12em}
+.preview-edit{position:fixed;right:18px;bottom:18px;z-index:9999;background:#0b2639;color:#f2eee4;border:1px solid #b39a47;padding:9px 12px;text-decoration:none;font:10px ui-monospace,monospace;letter-spacing:.12em}
 @media(max-width:700px){.stagewrap{padding:0;justify-content:flex-start}}
 """
 
-# Preview deliberately reuses the editor HTML, CSS, workspace API and render()
-# implementation. Only editor chrome/interactions are hidden. There is no
-# second homepage document or second layout model to drift out of sync.
 PUBLIC_HTML=(
     EDITOR_HTML
     .replace('<body>','<body class="preview">')
@@ -171,12 +186,13 @@ class H(visual.H):
                 'source_of_truth':'structured-workspace',
                 'default_surface':'workspace-homepage-preview',
                 'preview_mode':'same-workspace-same-renderer',
+                'design_direction':'watch-for-the-dawn',
                 'editor':'/editor',
                 'preview':'/',
                 'journal_mirror':'/journal/',
                 'vol00_mirror':'/vol-00/',
                 'journal_mode':'source-identical-hugo-mirror',
-                'visual_grammar':['official-masthead','editorial-gravity','5:8','huarong-reflow','crenellation','central-gate','dore-engraving','archival-print','time-flow']
+                'visual_grammar':['approved-front-door','watch-for-the-dawn','dore-engraving','editorial-gravity','5:8','asymmetric-portals','central-gate','archival-print']
             })
         return super().do_GET()
 
