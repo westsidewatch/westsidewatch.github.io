@@ -1,0 +1,36 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "dore-threshold-compare-20260901-01",
+  "thread_id": "dore-design-homepage-rebuild-20260901",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T10:47:00Z",
+  "subject": "Compare ThresholdStudy against locked homepage baseline",
+  "body": "Compare the real Storybook ThresholdStudy and LockedBaseline variants. Preserve the locked homepage unchanged. Produce evidence-backed promote/reject decisions for each meaningful visual pattern, then promote only supported ThresholdStudy patterns into the experimental homepage implementation. Rebuild Storybook and return the canonical result with changed files, comparison evidence, promoted patterns, rejected patterns, and verification status.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "westside-watch-homepage-redesign",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": ["python3", "dore-design/knowledge-lab/training/new_westside_storybook_real_loop.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 900
+    },
+    {
+      "argv": ["git", "status", "--short"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["ls", "-la", "storybook-static/index.html"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 60
+    }
+  ],
+  "metadata": {
+    "compare": ["LockedBaseline", "ThresholdStudy"],
+    "locked_control": "dore-design/new-westside/homepage-v2-living-fortress.html",
+    "expected_result_id": "result-dore-threshold-compare-20260901-01"
+  }
+}
