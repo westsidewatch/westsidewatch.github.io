@@ -8,6 +8,7 @@ from coordination_mailbox import send_to_chatgpt,flush_outbox
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
+from autonomous_capability_loop import attempt_learning_recovery
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();STATE=HOME/'coordination'/'worker-state.json';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'};PRIORITY={'critical':0,'high':1,'normal':2,'low':3}
 class TaskResultError(RuntimeError):
@@ -75,22 +76,41 @@ def dispatch(msg):
  if kind=='penpot_export_probe':return {'ok':True,'penpot':call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'})}
  raise RuntimeError('unsupported_kind:'+str(kind))
 def evidence_for(msg):
- kind=msg.get('kind');base=['coordination-hardening-v1','product-invariant-monitor']
+ kind=msg.get('kind');base=['coordination-hardening-v1','product-invariant-monitor','autonomous-capability-loop-v0.1']
  if kind=='local_exec':base+=['dore-local-exec','local-self-repair']
  return base
+def _finish_pass(state,done,msg,result,attempt,evidence):
+ mid=msg['message_id'];done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence,'PASS',attempt,True)
 def main():
  flush_outbox();state=load_state();done,queue=pending(state);state['queue_depth']=len(queue);state['checked_at']=now();save(state);failures=0
  for msg in queue[:MAX_PER_RUN]:
   mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);attempt=(state.get('attempts') or {}).get(mid,0)+1;state.setdefault('attempts',{})[mid]=attempt;state['active_goal']=goal;state['active_message_id']=mid;set_task(state,mid,'RECEIVED',attempt=attempt,goal=goal,kind=msg.get('kind'));set_task(state,mid,'RUNNING',attempt=attempt,started_at=now())
   try:
    result=dispatch(msg);ok=not isinstance(result,dict) or result.get('ok',True)
-   if ok:
-    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence_for(msg),'PASS',attempt,True)
-   else:raise TaskResultError(result)
+   if ok:_finish_pass(state,done,msg,result,attempt,evidence_for(msg));continue
+   raise TaskResultError(result)
   except Exception as e:
-   failures+=1;terminal=attempt>=MAX_ATTEMPTS;err=type(e).__name__+': '+str(e);failure_result=e.result if isinstance(e,TaskResultError) else {'ok':False,'error':err};failure_result={**failure_result,'error':err,'parent_goal_preserved':True,'recovery_required':terminal};state['last_error']={'message_id':mid,'attempt':attempt,'error':err[:1000]};state['last_result']=failure_result;status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=err[:1000],completed_at=now() if terminal else None,result=failure_result)
+   err=type(e).__name__+': '+str(e);failure_result=e.result if isinstance(e,TaskResultError) else {'ok':False,'error':err}
+   failure_result={**failure_result,'error':err,'parent_goal_preserved':True}
+   # First autonomous loop: before blind retry, turn failure into a capability-gap observation.
+   # A verified local skill is applied once and the preserved parent task resumes immediately.
+   learning=attempt_learning_recovery(msg,failure_result)
+   failure_result['learning']=learning
+   if learning.get('retry_parent'):
+    set_task(state,mid,'LEARNING',attempt=attempt,learning=learning)
+    try:
+     resumed=dispatch(msg);resumed_ok=not isinstance(resumed,dict) or resumed.get('ok',True)
+     if resumed_ok:
+      resumed={**(resumed if isinstance(resumed,dict) else {'ok':True,'result':resumed}),'autonomous_recovery':learning,'resumed_parent_goal':True}
+      _finish_pass(state,done,msg,resumed,attempt,evidence_for(msg)+['learning-skill:'+str(learning.get('selected_skill')),'parent-goal-resumed'])
+      continue
+     failure_result={'ok':False,'error':'parent_retry_after_learning_failed','result':resumed,'learning':learning,'parent_goal_preserved':True}
+    except Exception as resumed_exc:
+     failure_result={'ok':False,'error':type(resumed_exc).__name__+': '+str(resumed_exc),'learning':learning,'parent_goal_preserved':True}
+   failures+=1;terminal=attempt>=MAX_ATTEMPTS;failure_result['recovery_required']=terminal;state['last_error']={'message_id':mid,'attempt':attempt,'error':failure_result.get('error','task_failed')[:1000]};state['last_result']=failure_result;status='FAIL' if terminal else ('LEARNING' if learning.get('state')=='RESEARCH_REQUIRED' else 'RETRYING');set_task(state,mid,status,attempt=attempt,terminal=terminal,error=failure_result.get('error','task_failed')[:1000],completed_at=now() if terminal else None,result=failure_result)
    if terminal:
-    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':err[:1000],'result':failure_result};state.pop('active_message_id',None)
-   reply(msg,failure_result,evidence_for(msg)+['coordination-worker-error','command-level-failure-evidence'],'FAIL' if terminal else 'RETRYING',attempt,terminal)
+    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':failure_result.get('error','task_failed')[:1000],'result':failure_result};state.pop('active_message_id',None)
+   reply_status='FAIL' if terminal else ('LEARNING' if learning.get('state')=='RESEARCH_REQUIRED' else 'RETRYING')
+   reply(msg,failure_result,evidence_for(msg)+['coordination-worker-error','command-level-failure-evidence','capability-gap-observation'],reply_status,attempt,terminal)
  state['queue_depth']=max(0,len(queue)-min(len(queue),MAX_PER_RUN));state['checked_at']=now();save(state);return 1 if failures else 0
 if __name__=='__main__':raise SystemExit(main())
