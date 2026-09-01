@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.8",
-  "published_at": "2026-09-01T18:27:48.986017+00:00",
+  "published_at": "2026-09-01T18:28:23.343824+00:00",
   "runtime": "dore.resident-runtime.v0.9",
   "ownership": {
     "supervisor": "launchd",
@@ -959,10 +959,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788286999.928998,
-    "last_self_update_check_at": "2026-09-01T18:23:19.929111+00:00",
-    "last_telemetry_epoch": 1788287237.966451,
-    "last_telemetry_at": "2026-09-01T18:27:17.966465+00:00",
+    "last_self_update_check_epoch": 1788287300.860905,
+    "last_self_update_check_at": "2026-09-01T18:28:20.861326+00:00",
+    "last_telemetry_epoch": 1788287270.7604759,
+    "last_telemetry_at": "2026-09-01T18:27:50.760489+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-01T18:27:48.293003+00:00",
     "last_agent_state": "PEER_RESEARCH_QUEUED",
@@ -4498,14 +4498,6 @@
   },
   "events": [
     {
-      "at": "2026-09-01T18:16:08.240168+00:00",
-      "event": "A2A_SUPERVISION",
-      "a2a_state": "A2A_WAITING_PEER",
-      "action": "PEER_RESPONSE_REQUIRED",
-      "peer_required": true,
-      "unchanged_cycles": 228
-    },
-    {
       "at": "2026-09-01T18:16:40.782297+00:00",
       "event": "WAKE",
       "reason": "NO_USER_INPUT_CONTINUE"
@@ -4924,6 +4916,14 @@
       "action": "PEER_RESPONSE_REQUIRED",
       "peer_required": true,
       "unchanged_cycles": 249
+    },
+    {
+      "at": "2026-09-01T18:28:22.765600+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/resources/source-catalog.json"
+      ],
+      "source": "origin/main"
     }
   ]
 }
