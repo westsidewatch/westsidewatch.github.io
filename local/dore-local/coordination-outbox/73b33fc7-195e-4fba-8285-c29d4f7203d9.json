@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"dore-preview-editor-entry-152\", \"attempt\": 3, \"terminal\": true, \"parent_goal_preserved\": true, \"recovery_required\": true, \"exception\": \"RuntimeError: unsupported_kind:None\"}",
+  "created_at": "2026-09-01T01:54:34.657898+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:dore-preview-editor-entry-152"
+  ],
+  "message_id": "73b33fc7-195e-4fba-8285-c29d4f7203d9",
+  "message_sha256": "f05d778575e582f19372d2456694a093395ab5386db226f8aac25f3b1109a46b",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-preview-editor-entry",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy Doré Design 1.5.2 preview return-to-editor entry",
+  "thread_id": "dore-design-preview-editor-entry"
+}
