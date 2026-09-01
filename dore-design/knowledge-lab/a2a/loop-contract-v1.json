@@ -1,16 +1,23 @@
 {
-  "schema": "dore.autonomous-loop-contract.v1.1",
+  "schema": "dore.autonomous-loop-contract.v1.2",
   "updated_at": "2026-09-01",
   "project_loop": "A2A <-> Storybook",
   "parent_workload": "New Westside visual construction",
   "states": ["GOAL","PLAN","ACT","OBSERVE","GAP_DETECTED","RESEARCH_REQUIRED","RESEARCH_QUEUED","RESEARCHING","PEER_RESEARCH_QUEUED","KNOWLEDGE_RETURNED","EXPERIMENTING","VERIFYING","VERIFIED","REJECTED","PROMOTED","RESUME_PARENT","PASS","HUMAN_GATE"],
+  "ownership": {
+    "launchd": ["process-liveness"],
+    "resident_runtime": ["wake-sleep", "process-supervision", "mechanical-checkpoint", "self-update", "heartbeat", "telemetry"],
+    "dore_agent_core": ["goal-selection", "reasoning", "gap-detection", "research", "candidate-selection", "hypothesis", "experiment-choice", "information-gain", "verification", "skill-promotion", "next-action", "resume-parent"]
+  },
   "hard_invariants": [
     "chat-window-closed-does-not-stop-runtime",
     "no-user-input-is-a-continue-event",
     "silence-or-stall-is-an-observable-signal",
+    "runtime-does-not-own-research-or-learning-decisions",
+    "dore-agent-core-owns-research-learning-and-next-action",
     "parent-goal-is-checkpointed-before-detours",
     "goal-identity-survives-research-and-recovery-detours",
-    "resident-runtime-selects-from-a-durable-goal-queue",
+    "dore-agent-core-selects-from-a-durable-goal-queue",
     "research-required-never-directly-retries-identical-execution",
     "same-failure-fingerprint-requires-information-gain-before-next-experiment",
     "unknown-technical-knowledge-is-not-a-human-gate",
@@ -34,6 +41,7 @@
   "components": {
     "resident_supervisor": "local/dore-local/install_resident_runtime.py",
     "resident_runtime": "local/dore-local/resident_runtime.py",
+    "dore_agent_core": "local/dore-local/dore_agent_core.py",
     "durable_goal_queue": "local/dore-local/goal_queue.py",
     "driver": "local/dore-local/autonomous_driver.py",
     "gap_detector_and_skill_recovery": "local/dore-local/autonomous_capability_loop.py",
@@ -60,7 +68,8 @@
   "resource_foundations": [
     {"name":"Linux Foundation/AAIF A2A Protocol","use":"canonical task/message/artifact semantics and compatibility adapter","dependency":"spec-compatible local adapter; official SDK remains an optional compatibility validator until isolated adoption passes"},
     {"name":"LangGraph","use":"durable state/checkpoint/resume patterns","dependency":"pattern reuse, no runtime dependency"},
-    {"name":"OpenHands","use":"repository-local reusable Skills pattern","dependency":"pattern reuse, no runtime dependency"},
+    {"name":"OpenHands","use":"Agent/Runtime boundary and repository-local reusable Skills pattern","dependency":"pattern reuse, no runtime dependency"},
+    {"name":"AIOS","use":"agent/kernel responsibility separation","dependency":"architecture pattern reuse, no runtime dependency"},
     {"name":"macOS launchd","use":"resident supervision","dependency":"active OS service"},
     {"name":"Git","use":"durable mailbox, telemetry, audit transport and self-update","dependency":"active"},
     {"name":"Storybook + Vite","use":"real visual-work laboratory and executable acceptance workload","dependency":"project-local"},
