@@ -1,0 +1,48 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "dore-homepage-v3-visible-20260901-01",
+  "thread_id": "dore-design-homepage-rebuild-20260901",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T11:02:00Z",
+  "subject": "Activate and verify visible ThresholdStudy homepage V3",
+  "body": "Pull the visible V3 homepage switch, verify homepage_wysiwyg points to the threshold-promoted template, validate both promoted CSS signatures and compile the renderer. Return canonical evidence.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "westside-watch-homepage-redesign",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "-m",
+        "py_compile",
+        "dore-design/homepage_wysiwyg.py"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; p=Path('dore-design/new-westside/homepage-v3-threshold-promoted.html'); s=p.read_text(); assert '.hero{min-height:660px;' in s and '.hero-art{position:absolute;inset:0 0 0 54%;' in s; w=Path('dore-design/homepage_wysiwyg.py').read_text(); assert 'homepage-v3-threshold-promoted.html' in w; print('VISIBLE_HOMEPAGE_V3_PASS')"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    }
+  ],
+  "metadata": {
+    "visible_template": "dore-design/new-westside/homepage-v3-threshold-promoted.html",
+    "expected_result_id": "result-dore-homepage-v3-visible-20260901-01"
+  }
+}
