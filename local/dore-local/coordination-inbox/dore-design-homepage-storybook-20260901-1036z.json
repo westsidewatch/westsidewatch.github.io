@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "dore-design-homepage-storybook-20260901-1036z",
+  "thread_id": "dore-design-homepage-rebuild-20260901",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T10:36:00Z",
+  "subject": "Begin homepage redesign in Storybook",
+  "body": "Open the existing local Storybook and create the first editable implementation pass for the Westside Watch homepage. Start from NewWestsideEditorialHero and the first-scroll homepage structure. Use the existing Westside Watch design system and brand assets. Keep the established Cormorant Garamond and Noto Serif TC typography, dawn-gold and temple-stone visual language, editorial rather than SaaS styling, and clear main-site and Join/Gate navigation. Reuse existing components where appropriate. After implementation, validate that Storybook still builds successfully and return the changed files, validation result, and remaining design issues through the canonical outbox.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "westside-watch-homepage-redesign",
+  "kind": "local_exec",
+  "metadata": {
+    "expected_result_id": "result-dore-design-homepage-storybook-20260901-1036z"
+  }
+}
