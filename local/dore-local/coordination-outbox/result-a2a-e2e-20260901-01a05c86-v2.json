@@ -1,0 +1,31 @@
+{
+  "body": "{\"source_message_id\": \"a2a-e2e-20260901-01a05c86-v2\", \"task_status\": \"PASS\", \"attempt\": 1, \"terminal\": true, \"transport\": \"PASS\", \"execution\": \"PASS\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"git\", \"rev-parse\", \"--is-inside-work-tree\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"true\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"git\", \"status\", \"--short\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"?? dore-design/knowledge-lab/evidence/\\n?? dore-design/knowledge-lab/storybook/.storybook/\\n?? dore-design/knowledge-lab/storybook/package-lock.json\\n?? dore-design/knowledge-lab/storybook/package.json\\n?? dore-design/knowledge-lab/storybook/src/\\n\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"pwd\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"/Users/chenjingyu/westsidewatch.github.io\\n\", \"stderr\": \"\"}]}}",
+  "created_at": "2026-09-01T10:34:09.663443+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "autonomous-capability-loop",
+    "resident-goal-queue",
+    "research-bridge-executable",
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:a2a-e2e-20260901-01a05c86-v2"
+  ],
+  "message_id": "result-a2a-e2e-20260901-01a05c86-v2",
+  "message_sha256": "fe6ceadaa4d197f1f4961c1a8012967e1a1aedd3cbeba4a0c4175f19b6e5f805",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "PASS",
+    "source_message_id": "a2a-e2e-20260901-01a05c86-v2",
+    "task_status": "PASS",
+    "terminal": true
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-a2a-e2e",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: A2A end-to-end return-path acceptance v2",
+  "thread_id": "01a05c86-4403-7ff1-95a9-5ecf76d7ed5f"
+}
