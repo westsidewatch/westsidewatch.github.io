@@ -1,0 +1,19 @@
+{
+  "schema": "dore.skill-registry.v1",
+  "updated_at": "2026-09-01",
+  "skills": [
+    {
+      "id": "storybook9-package-model-repair",
+      "description": "Repair the obsolete Storybook 9 addon-essentials package model using the verified local lesson.",
+      "triggers": ["ETARGET", "@storybook/addon-essentials"],
+      "script": "dore-design/knowledge-lab/training/apply_storybook9_lesson.py",
+      "timeout": 180,
+      "provenance": [
+        "dore-design/knowledge-lab/training/storybook-9-package-model-2026-09-01.md",
+        "Storybook official migration guidance: essentials moved into core in Storybook 9",
+        "Verified by storybook-teach-diagnose-retry-5 PASS"
+      ],
+      "promotion_status": "verified"
+    }
+  ]
+}
