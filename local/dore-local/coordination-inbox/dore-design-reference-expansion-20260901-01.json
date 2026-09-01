@@ -1,0 +1,57 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "dore-design-reference-expansion-20260901-01",
+  "thread_id": "dore-design-homepage-rebuild-20260901",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T11:15:00Z",
+  "subject": "Continuously expand Figma, open-source, editorial and independent-magazine reference library",
+  "body": "Register this as a durable resident goal. Execute the research job, preserve provenance, keep the parent homepage redesign active, and continue across cycles until its quantitative and qualitative acceptance thresholds are met. A single successful search or Storybook build is not completion.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "westside-watch-homepage-redesign",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "pull",
+        "--ff-only"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import sys;sys.path.insert(0,'local/dore-local');from goal_queue import enqueue;import json;print(json.dumps(enqueue('design-reference-library-expansion-20260901','Continuously build a broad high-quality Figma, OSS, modern editorial and independent-magazine reference library; normalize, score, cluster, and produce three materially distinct Storybook homepage directions before completion.',priority='high',source='a2a',metadata={'job':'dore-design/knowledge-lab/research/design-reference-library-expansion-20260901.json','minimum_qualified_references':40,'minimum_source_families':6,'continuous':True,'parent_goal':'westside-watch-homepage-redesign'}),ensure_ascii=False))"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/research_executor.py",
+        "dore-design/knowledge-lab/research/design-reference-library-expansion-20260901.json"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 900
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/goal_queue.py"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    }
+  ],
+  "metadata": {
+    "continuous": true,
+    "minimum_qualified_references": 40,
+    "minimum_source_families": 6,
+    "expected_result_id": "result-dore-design-reference-expansion-20260901-01"
+  }
+}
