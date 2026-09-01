@@ -1,0 +1,25 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "new-westside-storybook-real-loop-2",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Relaunch real New Westside × Storybook autonomous loop",
+  "priority": "critical",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "requires_reply": false,
+  "body": "Resume the preserved New Westside visual-construction parent goal now. The prior run exposed a Python generator syntax gap; that concrete gap has been repaired in the real loop script. Do not turn this into a synthetic A2A test. Run the real Storybook/New Westside loop, build Storybook, preserve locked homepage #262 as read-only control, record evidence, and let any new failure flow through the autonomous capability loop instead of blind retry.",
+  "commands": [
+    {"argv": ["git", "pull", "--ff-only"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120},
+    {"argv": ["python3", "dore-design/knowledge-lab/training/new_westside_storybook_real_loop.py"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 900},
+    {"argv": ["npm", "run", "build-storybook"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 900},
+    {"argv": ["git", "status", "--short"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120}
+  ],
+  "metadata": {
+    "loop": "a2a-storybook-new-westside",
+    "parent_goal": "New Westside visual construction",
+    "control_locked": "PR #262 homepage",
+    "resume_from": "new-westside-storybook-real-loop-1",
+    "failure_to_learning_evidence": true
+  }
+}
