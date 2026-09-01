@@ -1,0 +1,23 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "autonomous-driver-ignition-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "IGNITION: install Autonomous Driver v0.1 and immediately drive the stalled New Westside Storybook parent goal",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["python3", "local/dore-local/install_autonomous_driver_v01.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/autonomous_driver.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 900
+    }
+  ]
+}
