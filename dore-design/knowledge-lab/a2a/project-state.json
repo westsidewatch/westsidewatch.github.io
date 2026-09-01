@@ -1,0 +1,24 @@
+{
+  "schema": "dore.project-state.v1",
+  "updated_at": "2026-09-01",
+  "active_relationship": {
+    "projects": ["Doré <-> ChatGPT A2A", "Storybook / Design Knowledge Lab"],
+    "loop": "Storybook real work exposes A2A/Doré capability gaps -> A2A upgrades -> Storybook resumes -> next real gap",
+    "parent_product_goal": "New Westside visual construction",
+    "current_parent_message_id": "new-westside-storybook-real-loop-2",
+    "human_role": "sets destination/product intent; not runtime driver or failure relay",
+    "chatgpt_role": "peer researcher/teacher/observation plane; not scheduler",
+    "dore_role": "resident learner/researcher/executor",
+    "runtime_role": "owns continuation when no user message exists"
+  },
+  "current_acceptance": {
+    "workload": "Storybook real build and New Westside EditorialHero specimen",
+    "pass_condition": "unknown gap -> research -> evidence -> minimal experiment -> verified reusable capability -> same parent resumes without human relay",
+    "locked_control": "approved homepage #262 is read-only baseline"
+  },
+  "anti_regression": [
+    "A2A <-> Storybook is the two-project growth loop",
+    "RESEARCH_REQUIRED means search/research, never identical retry",
+    "knowledge in chat or Markdown is not a capability until code + acceptance + runtime invariant exist"
+  ]
+}
