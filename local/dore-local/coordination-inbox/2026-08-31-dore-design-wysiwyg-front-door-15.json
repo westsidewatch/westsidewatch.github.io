@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-design-wysiwyg-front-door-15",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "new-westside-homepage-wysiwyg",
+  "subject": "Deploy exact #262 WYSIWYG homepage renderer",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","dore-design/deploy_visual_current.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["python3","dore-design/local_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body": "Deploy merged PR #265 / merge 4c3fc3490e756619670dd62052cd3d90223378e5. The prior r99 absolute-canvas restoration is rejected. Required result: /editor and / must both use the original #262 responsive DOM/CSS with hero, city-grid, gate-line and watch sections; /editor adds only WYSIWYG editing chrome and workspace bindings. Health must report version 1.5, layout_source approved-front-door-262, preview_mode same-template-same-workspace-wysiwyg. Preserve workspace history and non-homepage pages. Return exact health, preview status, workspace revision, deploy verification and acceptance output."
+}
