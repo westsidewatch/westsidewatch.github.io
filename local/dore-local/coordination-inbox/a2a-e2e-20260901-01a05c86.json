@@ -1,0 +1,35 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "a2a-e2e-20260901-01a05c86",
+  "thread_id": "01a05c86-4403-7ff1-95a9-5ecf76d7ed5f",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T11:00:00Z",
+  "subject": "A2A end-to-end return-path acceptance",
+  "body": "Execute a harmless local acceptance probe and return the canonical result through the Doré A2A outbox.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "dore-a2a-e2e",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "rev-parse",
+        "HEAD"
+      ],
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/product_monitor.py"
+      ],
+      "timeout": 60
+    }
+  ],
+  "metadata": {
+    "acceptance": "chatgpt-to-dore-to-chatgpt",
+    "expected_result_id": "result-a2a-e2e-20260901-01a05c86"
+  }
+}
