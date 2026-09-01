@@ -1,18 +1,30 @@
 {
-  "schema": "dore.autonomous-loop-contract.v1.2",
+  "schema": "dore.autonomous-loop-contract.v1.3",
   "updated_at": "2026-09-01",
   "project_loop": "A2A <-> Storybook",
   "parent_workload": "New Westside visual construction",
+  "loop_hierarchy": {
+    "higher_order": "Doré <-> ChatGPT A2A supervisory loop",
+    "supervised": "A2A <-> Storybook project continuation loop",
+    "rule": "The project loop is observable state under A2A control. A2A may interrupt/escalate a stalled project loop; the project loop never outranks or substitutes for A2A."
+  },
   "states": ["GOAL","PLAN","ACT","OBSERVE","GAP_DETECTED","RESEARCH_REQUIRED","RESEARCH_QUEUED","RESEARCHING","PEER_RESEARCH_QUEUED","KNOWLEDGE_RETURNED","EXPERIMENTING","VERIFYING","VERIFIED","REJECTED","PROMOTED","RESUME_PARENT","PASS","HUMAN_GATE"],
+  "a2a_supervision_states": ["A2A_HEALTHY","A2A_ATTENTION","A2A_WAITING_PEER","A2A_INTERVENE","PROJECT_PASS"],
   "ownership": {
     "launchd": ["process-liveness"],
     "resident_runtime": ["wake-sleep", "process-supervision", "mechanical-checkpoint", "self-update", "heartbeat", "telemetry"],
+    "a2a_supervisor": ["higher-order relationship health", "project-loop stall detection", "peer-required escalation", "A2A-over-project-loop authority"],
     "dore_agent_core": ["goal-selection", "reasoning", "gap-detection", "research", "candidate-selection", "hypothesis", "experiment-choice", "information-gain", "verification", "skill-promotion", "next-action", "resume-parent"]
   },
   "hard_invariants": [
     "chat-window-closed-does-not-stop-runtime",
     "no-user-input-is-a-continue-event",
     "silence-or-stall-is-an-observable-signal",
+    "a2a-supervises-project-continuation-loops",
+    "project-loop-state-is-observed-by-a2a-supervision",
+    "repeated-no-progress-project-state-must-escalate-to-a2a-intervene",
+    "chatgpt-peer-nonresponse-is-an-a2a-observable-state-not-silence",
+    "a2a-supervisor-must-not-silently-observe-a-stalled-project-loop",
     "runtime-does-not-own-research-or-learning-decisions",
     "dore-agent-core-owns-research-learning-and-next-action",
     "parent-goal-is-checkpointed-before-detours",
@@ -41,6 +53,7 @@
   "components": {
     "resident_supervisor": "local/dore-local/install_resident_runtime.py",
     "resident_runtime": "local/dore-local/resident_runtime.py",
+    "a2a_supervisor": "local/dore-local/a2a_supervisor.py",
     "dore_agent_core": "local/dore-local/dore_agent_core.py",
     "durable_goal_queue": "local/dore-local/goal_queue.py",
     "driver": "local/dore-local/autonomous_driver.py",
@@ -81,6 +94,7 @@
     "transport": "dore.mail.v2 -> GitHub coordination-outbox -> ChatGPT observation plane -> chatgpt-to-dore durable mailbox",
     "outbound_component": "local/dore-local/research_executor.py",
     "inbound_component": "local/dore-local/peer_research_bridge.py",
+    "supervision": "A2A Supervisor marks PEER_RESPONSE_REQUIRED when the project loop reaches PEER_RESEARCH_QUEUED and marks PROJECT_LOOP_STALLED after repeated no-progress observations.",
     "rule": "peer escalation is automatically published when self-research produces no relevant evidence; the user is never the relay",
     "truthfulness": "PEER_RESEARCH_QUEUED is not KNOWLEDGE_RETURNED. A provenance-bearing reply with matching research_id must be received and validated before experiment/resume."
   },
