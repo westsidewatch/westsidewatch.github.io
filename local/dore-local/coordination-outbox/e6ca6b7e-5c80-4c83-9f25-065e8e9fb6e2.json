@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"dore-full-journal-160\", \"attempt\": 2, \"terminal\": false, \"parent_goal_preserved\": true, \"recovery_required\": false, \"exception\": \"RuntimeError: task_failed\"}",
+  "created_at": "2026-09-01T02:21:17.020797+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:dore-full-journal-160"
+  ],
+  "message_id": "e6ca6b7e-5c80-4c83-9f25-065e8e9fb6e2",
+  "message_sha256": "7c374073234cd400339579acf3f28a723199436237ff15f59d88b9479742434d",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-full-journal",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy Doré Design 1.6 complete main-site Journal inside Design",
+  "thread_id": "a10058bf-6cff-43dc-99a4-d576fe583eb3"
+}
