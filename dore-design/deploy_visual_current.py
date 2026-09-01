@@ -1,35 +1,40 @@
 #!/usr/bin/env python3
-"""Install Doré Design and verify locked homepage plus complete main-site Journal."""
+"""Install Doré Design 1.7 and prove Journal is an editable workspace page."""
 import json,subprocess,urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent;BASE='http://127.0.0.1:4310'
-def read(path):return urllib.request.urlopen(BASE+path,timeout=10).read().decode('utf-8')
+def read(path):return urllib.request.urlopen(BASE+path,timeout=12).read().decode('utf-8')
+def post(payload):
+ r=urllib.request.Request(BASE+'/api/workspace',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
+ return json.loads(urllib.request.urlopen(r,timeout=12).read().decode('utf-8'))
 seed=subprocess.run(['python3','dore-design/workspace_cli.py','get'],cwd=ROOT,text=True,capture_output=True,timeout=60)
 if seed.returncode!=0:raise SystemExit('workspace_seed_failed:'+seed.stderr[-1200:])
-migration=subprocess.run(['python3','dore-design/upgrade_living_fortress_v2.py'],cwd=ROOT,text=True,capture_output=True,timeout=60)
-if migration.returncode!=0:raise SystemExit('workspace_upgrade_failed:'+migration.stderr[-1200:])
-result=subprocess.run(['bash','dore-design/install-macos.sh'],cwd=ROOT,text=True,capture_output=True,timeout=120)
-if result.returncode!=0:raise SystemExit('install_failed:'+result.stderr[-1200:])
-health=json.loads(read('/api/health'));status=json.loads(read('/api/preview/status'));mirror=json.loads(read('/api/mirror/status'));preview=read('/');editor=read('/editor');canvas=read('/editor-canvas');journal=read('/journal/');journal_index=read('/journal-index/');structure=read('/structure-editor');workspace=json.loads(read('/api/workspace'))
+home=subprocess.run(['python3','dore-design/upgrade_living_fortress_v2.py'],cwd=ROOT,text=True,capture_output=True,timeout=60)
+if home.returncode!=0:raise SystemExit('workspace_upgrade_failed:'+home.stderr[-1200:])
+journal_import=subprocess.run(['python3','dore-design/journal_import.py'],cwd=ROOT,text=True,capture_output=True,timeout=150)
+if journal_import.returncode!=0:raise SystemExit('journal_import_failed:'+journal_import.stderr[-3000:]+journal_import.stdout[-1500:])
+install=subprocess.run(['bash','dore-design/install-macos.sh'],cwd=ROOT,text=True,capture_output=True,timeout=120)
+if install.returncode!=0:raise SystemExit('install_failed:'+install.stderr[-1600:])
+health=json.loads(read('/api/health'));status=json.loads(read('/api/preview/status'));jstatus=json.loads(read('/api/journal/status'));preview=read('/');editor=read('/editor?page=journal-vol-00');home_canvas=read('/editor-canvas?page=homepage');journal_canvas=read('/editor-canvas?page=journal-vol-00');journal=read('/journal/');workspace=json.loads(read('/api/workspace'))
 home_markers=['class="hero"','class="city-grid"','class="gate-line"','class="watch"','WATCH<br>FOR THE <em>DAWN.</em>']
-journal_markers=['id="vol-00-proclamation"','id="contents"','id="movement-watch"','Opening declaration','Continue reading']
+jpage=next((p for p in workspace.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
+probe_ok=False;restored=False
+if jpage and jpage.get('nodes'):
+ n=next((x for x in jpage['nodes'] if x.get('type')=='text' and x.get('text')),jpage['nodes'][0]);original=n.get('text','');marker=' [DORÉ EDIT PROBE]'
+ post({'op':'set_node','page_id':'journal-vol-00','id':n['id'],'patch':{'text':original+marker}})
+ probe_ok=marker in read('/journal/')
+ post({'op':'set_node','page_id':'journal-vol-00','id':n['id'],'patch':{'text':original}})
+ restored=marker not in read('/journal/')
 checks={
-'version_current':health.get('version')=='1.6',
-'design_locked':health.get('layout_source')=='approved-front-door-262-locked',
-'shared_workspace':health.get('preview_mode')=='locked-template-shared-workspace',
-'preview_approved_layout':all(m in preview for m in home_markers),
-'canvas_approved_layout':all(m in canvas for m in home_markers),
-'preview_has_editor_entry':'class="dore-preview-edit"' in preview and 'href="/editor"' in preview,
-'homepage_journal_link':'href="/journal/"' in preview,
-'journal_full_issue':all(m in journal for m in journal_markers),
-'journal_inside_design':'class="dore-journal-nav"' in journal and 'href="/editor"' in journal and 'href="/"' in journal,
-'journal_mode':health.get('journal_mode')=='full-main-site-journal-in-design' and status.get('journal_full_issue') is True and mirror.get('mode')=='full-main-site-journal-in-design',
-'journal_index_preserved':'issue-door' in journal_index and 'journal-quicklinks' in journal_index,
-'editor_mode_visible':'EDITOR' in editor and 'PAGES' in editor and 'LAYERS' in editor and 'INSPECTOR' in editor,
-'editor_uses_canvas':'src="/editor-canvas"' in editor,
-'canvas_editable':'data-dore-canvas="true"' in canvas and 'data-node-id="home-title"' in canvas,
-'structure_preserved':'STRUCTURE' in structure,
-'workspace_revision_match':status.get('revision')==workspace.get('revision'),
-'workspace_page_match':status.get('page_id')=='homepage',
+ 'version_current':health.get('version')=='1.7',
+ 'homepage_locked':health.get('layout_source')=='approved-front-door-262-locked' and all(m in preview for m in home_markers) and all(m in home_canvas for m in home_markers),
+ 'multi_page_mode':health.get('preview_mode')=='multi-page-shared-workspace' and status.get('mode')=='multi-page-shared-workspace',
+ 'journal_workspace_page':bool(jpage) and jpage.get('renderer')=='journal-imported-dom-v1' and len(jpage.get('nodes',[]))>=20,
+ 'journal_editable_status':health.get('journal_mode')=='editable-workspace-page' and health.get('runtime_mirror') is False and jstatus.get('editable') is True and jstatus.get('runtime_mirror') is False,
+ 'journal_preview_bound':'data-dore-page="journal-vol-00"' in journal and 'dore-journal-bound' in journal,
+ 'journal_canvas_editable':'data-dore-canvas="true"' in journal_canvas and 'data-dore-page="journal-vol-00"' in journal_canvas and 'contentEditable' in journal_canvas,
+ 'editor_multi_page':'DORÉ DESIGN 1.7 · MULTI-PAGE EDITOR' in editor and 'journal-vol-00' in editor and 'PAGES' in editor and 'INSPECTOR' in editor,
+ 'homepage_links_journal':'href="/journal/"' in preview,
+ 'workspace_mutation_drives_journal':probe_ok and restored,
 }
-ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_FULL_JOURNAL_PASS' if ok else 'DORE_DESIGN_FULL_JOURNAL_FAIL','health':health,'preview_status':status,'mirror_status':mirror,'workspace_revision':workspace.get('revision'),'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
+ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_EDITABLE_JOURNAL_PASS' if ok else 'DORE_DESIGN_EDITABLE_JOURNAL_FAIL','health':health,'journal_status':jstatus,'journal_import':journal_import.stdout[-1000:],'workspace_revision':workspace.get('revision'),'journal_node_count':len(jpage.get('nodes',[])) if jpage else 0,'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
