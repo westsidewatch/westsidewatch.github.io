@@ -1,0 +1,16 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "hardening-wall-asset-real-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Make Journal Jerusalem wall asset real, then verify product monitor",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["bash","-lc","set -e; target=static/images/jerusalem-wall.png; if [ ! -s \"$target\" ]; then found=$(find /Users/chenjingyu -type f \\( -iname 'jerusalem-wall.png' -o -iname '*jerusalem*wall*.png' \\) 2>/dev/null | head -n 1 || true); if [ -n \"$found\" ]; then mkdir -p static/images; cp \"$found\" \"$target\"; fi; fi; test -s \"$target\"; git add \"$target\"; if ! git diff --cached --quiet; then git commit -m 'design: restore Journal Jerusalem wall asset'; git push origin HEAD:main; fi; python3 dore-design/journal_import.py; bash dore-design/install-macos.sh; python3 dore-design/product_monitor.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300}
+  ],
+  "body": "Hardening gate. Use the real existing Jerusalem wall asset if it exists locally; do not invent or substitute a fake wall. The task passes only when static/images/jerusalem-wall.png is a real non-empty asset, Journal import/service is refreshed, and product_monitor no longer emits JOURNAL_COVER_ASSET_MISSING. After this gate, Storybook runtime bootstrap is the next milestone, followed immediately by real visual design work. Do not alter the locked approved homepage design in this task."
+}
