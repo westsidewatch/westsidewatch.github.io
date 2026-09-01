@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Editable Journal / Vol.00 renderer backed by Doré workspace nodes."""
 from pathlib import Path
-import os
+import os,re
 DATA=Path(os.environ.get('DORE_DESIGN_DATA',Path.home()/'.dore/design')).expanduser()
 PACKAGE=DATA/'imports/journal-vol-00'
 TEMPLATE=PACKAGE/'index.html'
@@ -16,8 +16,9 @@ def available():return TEMPLATE.exists()
 def render_canvas(edit=False):
     if not TEMPLATE.exists():raise FileNotFoundError('editable_journal_not_imported')
     html=TEMPLATE.read_text(encoding='utf-8')
-    body='<body data-dore-canvas="true" data-dore-page="journal-vol-00">' if edit else '<body data-dore-page="journal-vol-00">'
-    html=html.replace('<body>',body,1)
+    attrs=' data-dore-page="journal-vol-00"'+(' data-dore-canvas="true"' if edit else '')
+    html,n=re.subn(r'<body(?P<a>[^>]*)>',lambda m:'<body'+m.group('a')+attrs+'>',html,count=1,flags=re.I)
+    if n!=1:raise ValueError('journal_body_missing')
     html=html.replace('</head>',CSS+'</head>',1)
     if not edit:html=html.replace('</body>',NAV+'</body>',1)
     return html.replace('</body>',JS+'</body>',1)
