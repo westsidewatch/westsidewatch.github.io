@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-design-preview-sync-14",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-single-source-preview",
+  "subject": "Deploy Doré Design 1.4 same-workspace preview",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 180
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull merged PR #263 and restart Doré Design on localhost:4310. Verify /editor and / use the same structured workspace and same renderer. Check /api/health reports version 1.4 and preview_mode same-workspace-same-renderer, then check /api/preview/status and return exact workspace id, revision, homepage node count, and HTTP evidence. Preserve Journal/Vol.00 mirrors and current workspace data."
+}
