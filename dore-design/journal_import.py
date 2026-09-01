@@ -14,7 +14,7 @@ WS=DATA/'westside-watch.workspace.json'
 HIST=DATA/'workspace-history'
 PACKAGE=DATA/'imports/journal-vol-00'
 PAGE_ID='journal-vol-00'
-RENDERER='journal-imported-dom-v1'
+RENDERER='journal-imported-dom-v2'
 SKIP={'head','title','style','script','svg','noscript','template'}
 ELIGIBLE={'div','nav','p','h1','h2','h3','h4','h5','h6','span','em','strong','cite','a','b','i','li','small','label','button','blockquote'}
 
@@ -51,7 +51,10 @@ class Binder(HTMLParser):
             self.out.append(data);return
         self.counter+=1;nid=f'journal-text-{self.counter:04d}'
         self.nodes.append({'id':nid,'type':'text','text':data,'x':0,'y':0,'w':1,'size':1,'role':'dom-text'})
-        self.out.append(f'<span class="dore-journal-bound" data-node-id="{nid}" data-field="text">{data}</span>')
+        # Use a custom inline element instead of span. The source design has many
+        # semantic span selectors (notably .hero__watchword span for the gold rules),
+        # and injecting an extra span changes the visual grammar.
+        self.out.append(f'<dore-text class="dore-journal-bound" data-node-id="{nid}" data-field="text">{data}</dore-text>')
 
 def build_import():
     hugo=shutil.which('hugo')
@@ -68,6 +71,10 @@ def build_import():
         if len(parser.nodes)<20:raise SystemExit(f'journal_import_too_small:{len(parser.nodes)}')
         if PACKAGE.exists():shutil.rmtree(PACKAGE)
         shutil.copytree(tmp,PACKAGE)
+        # Overlay repository static assets as a fidelity safety-net. Runtime remains
+        # self-contained in the Design package after this one-time import.
+        static=ROOT/'static'
+        if static.exists():shutil.copytree(static,PACKAGE,dirs_exist_ok=True)
         (PACKAGE/'index.html').write_text(bound,encoding='utf-8')
         return parser.nodes
     finally:
@@ -77,8 +84,8 @@ def main():
     if not WS.exists():raise SystemExit('workspace_not_found')
     w=json.loads(WS.read_text(encoding='utf-8'))
     existing=next((p for p in w.get('pages',[]) if p.get('id')==PAGE_ID),None)
-    if existing and (PACKAGE/'index.html').exists():
-        print(json.dumps({'ok':True,'code':'EDITABLE_JOURNAL_ALREADY_IMPORTED','page_id':PAGE_ID,'node_count':len(existing.get('nodes',[])),'revision':w.get('revision')},ensure_ascii=False));return
+    if existing and existing.get('renderer')==RENDERER and (PACKAGE/'index.html').exists():
+        print(json.dumps({'ok':True,'code':'EDITABLE_JOURNAL_ALREADY_IMPORTED','page_id':PAGE_ID,'node_count':len(existing.get('nodes',[])),'revision':w.get('revision'),'renderer':RENDERER},ensure_ascii=False));return
     nodes=build_import()
     if existing:
         old={n.get('id'):n for n in existing.get('nodes',[])}
@@ -94,6 +101,6 @@ def main():
     HIST.mkdir(parents=True,exist_ok=True);stamp=datetime.datetime.now().strftime('%Y%m%dT%H%M%S');shutil.copy2(WS,HIST/f'westside-watch.before-journal-import-{stamp}.json')
     w['revision']=int(w.get('revision',0))+1;w['updated_at']=now();w['multi_page_wysiwyg']=True
     atomic_obj(WS,w)
-    print(json.dumps({'ok':True,'code':'EDITABLE_JOURNAL_IMPORT_PASS','page_id':PAGE_ID,'node_count':len(nodes),'revision':w['revision'],'package':str(PACKAGE)},ensure_ascii=False))
+    print(json.dumps({'ok':True,'code':'EDITABLE_JOURNAL_IMPORT_PASS','page_id':PAGE_ID,'node_count':len(nodes),'revision':w['revision'],'package':str(PACKAGE),'renderer':RENDERER},ensure_ascii=False))
 
 if __name__=='__main__':main()
