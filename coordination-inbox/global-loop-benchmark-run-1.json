@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "global-loop-benchmark-run-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Run global component acceptance then resume A2A <-> Storybook real work",
+  "related_goal": "dore-design/a2a-storybook-global-benchmark",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["python3","local/dore-local/ecosystem_component_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["python3","local/dore-local/loop_contract_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":240},
+    {"argv":["python3","dore-design/knowledge-lab/training/new_westside_storybook_real_loop.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":1200}
+  ]
+}
