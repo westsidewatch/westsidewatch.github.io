@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-editable-journal-170",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-editable-journal-page",
+  "subject": "Deploy Doré Design 1.7 editable Journal workspace page",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 240
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull merged PR #269 / merge b13462ccb6b16666706a416e497d38069d2d9a7b. Deploy Doré Design 1.7. Preserve the locked #262 homepage exactly. Import the current main-site Journal once into the durable journal-vol-00 workspace page; do not run Journal as a Hugo runtime mirror. Verify /journal/ is rendered from workspace, /editor?page=journal-vol-00 exposes the Journal in the multi-page editor, and the reversible workspace mutation acceptance changes /journal/ then restores the original text. Return exact deployment and acceptance evidence."
+}
