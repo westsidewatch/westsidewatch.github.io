@@ -40,7 +40,7 @@ def tail_events(n=64):
  return out
 def agent_step():
  if not AGENT.exists():return {'ok':False,'state':'AGENT_CORE_MISSING','error':str(AGENT),'continue':True}
- env=os.environ.copy();env['DORE_A2A_SUPERVISION_FILE']=str(SUPERVISION)
+ env=os.environ.copy();env['PATH']='/opt/homebrew/bin:/usr/local/bin:'+env.get('PATH','/usr/bin:/bin:/usr/sbin:/sbin');env['DORE_A2A_SUPERVISION_FILE']=str(SUPERVISION)
  cp=run([sys.executable,str(AGENT)],timeout=1800,env=env);parsed=None
  try:parsed=json.loads((cp.stdout or '').strip().splitlines()[-1])
  except Exception:pass
