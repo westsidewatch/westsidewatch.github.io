@@ -93,6 +93,19 @@ Suggested completed-work ID when the main Completed Work Ledger is next compacte
 
 These IDs are reserved here to prevent the verified milestone from disappearing between ledgers; this supplement is governing evidence until those canonical aggregate files are next safely rewritten.
 
+## Sweep revalidation — 2026-09-01
+
+A bounded Sweep 01 re-read of the canonical `DORÉ-MASTER-WORK-REGISTER.md`, `DORÉ-COMPLETED-WORK-LEDGER.md`, this retention ledger, and `DORÉ-AUTONOMOUS-CAPABILITY-RECOVERY-AGGREGATE-LINKAGE-2026-09-01.md` confirms that the governing operational interpretation remains correct and that the aggregate-linkage gap is still real: the Completed Work Ledger currently ends at `CW-012`, while this bounded verified milestone remains represented through the Master Register plus the dedicated evidence/retention ledgers. No status promotion or demotion is warranted.
+
+Current bounded classification therefore remains:
+
+- `AUTONOMOUS_CAPABILITY_RECOVERY_01`: `VERIFIED_COMPLETE`;
+- broader `EVOLUTION`: `CORE/CONTINUOUS / ACTIVE_PARALLEL`;
+- materially different-domain blind transfer: `UNKNOWN_NEEDS_EVIDENCE`;
+- aggregate identity reservation: `CW-013` / `CAP-013` retained until the next dependency-safe aggregate rewrite.
+
+This is bookkeeping/evidence reconciliation only. It does not constitute a second autonomous-recovery proof and must not be counted as transfer evidence.
+
 ## P01 impact
 
 None. Sweep 01 did not modify subtitle runtime state, deployment, credentials, bindings, source order, or the existing P01 environment blocker.
