@@ -6,7 +6,7 @@ render the exact same template; /editor only wraps that canvas with tooling.
 """
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent
-TEMPLATE=ROOT/'dore-design/new-westside/homepage-v2-living-fortress.html'
+TEMPLATE=ROOT/'dore-design/new-westside/homepage-v3-threshold-promoted.html'
 
 BINDINGS=[
 ('<div class="hero-kicker micro">Westside Watch / 西望</div>','<div class="hero-kicker micro dore-bound" data-node-id="watch-kicker" data-field="text">Westside Watch / 西望</div>'),
