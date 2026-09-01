@@ -1,0 +1,20 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "autonomous-loop-maturity-2",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Advance autonomous capability loop toward v0.2 using mature patterns",
+  "priority": "high",
+  "related_goal": "dore-design/autonomous-capability-loop",
+  "body": "The v0.1 loop passed. Read the new maturity curriculum and immediately advance the existing loop, without waiting for the user. The parent real-world curriculum is New Westside/Storybook. Implement the smallest v0.2 increment: unknown gaps become RESEARCH_REQUIRED with durable evidence, local skill/failure-memory lookup, preserved parent goal/fingerprint, and a resumable handoff for newly acquired knowledge. Preserve v0.1 behavior and do not modify locked homepage #262.",
+  "commands": [
+    {"argv": ["git", "pull", "--ff-only"], "timeout": 120},
+    {"argv": ["cat", "dore-design/knowledge-lab/training/autonomous-loop-maturity-2026-09-01.md"], "timeout": 30},
+    {"argv": ["python3", "-c", "from pathlib import Path; p=Path('local/dore-local/autonomous_capability_loop.py'); print(p.read_text() if p.exists() else 'MISSING autonomous_capability_loop.py')"], "timeout": 30},
+    {"argv": ["python3", "-c", "from pathlib import Path; p=Path('dore-design/knowledge-lab/skills/registry.json'); print(p.read_text() if p.exists() else 'MISSING registry')"], "timeout": 30},
+    {"argv": ["python3", "dore-design/knowledge-lab/training/advance_autonomous_loop_v02.py"], "timeout": 120},
+    {"argv": ["python3", "dore-design/knowledge-lab/training/accept_autonomous_loop_v02.py"], "timeout": 180}
+  ],
+  "requires_reply": false
+}
