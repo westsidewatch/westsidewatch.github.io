@@ -1,0 +1,46 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "agent-core-live-experiment-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "LIVE EXPERIMENT: one Doré Agent Core control-loop round",
+  "related_goal": "A2A <-> Storybook",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/loop_contract_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 300
+    },
+    {
+      "argv": ["python3", "local/dore-local/dore_agent_core.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 1200
+    }
+  ],
+  "acceptance": {
+    "experiment_scope": "exactly one Agent Core step after syncing current main",
+    "must_observe": [
+      "Loop Contract acceptance passes locally",
+      "dore_agent_core.py executes directly",
+      "Agent Core reports its preserved parent goal",
+      "Agent Core emits ACT then OBSERVE",
+      "if the real Storybook workload passes, state may be PASS",
+      "if it fails, state must be RESEARCH_REQUIRED or a later research lifecycle state",
+      "no identical blind retry is performed inside this single experiment",
+      "Runtime is not used as the owner of research/learning decisions"
+    ],
+    "forbidden": [
+      "claiming PASS without canonical local result",
+      "changing the locked approved homepage baseline",
+      "treating an unknown technical gap as HUMAN_GATE"
+    ]
+  }
+}
