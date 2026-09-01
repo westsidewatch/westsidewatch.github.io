@@ -1,13 +1,13 @@
 {
   "schema": "dore.runtime.telemetry.v0.1",
-  "published_at": "2026-09-01T09:36:31.997179+00:00",
+  "published_at": "2026-09-01T09:38:05.260562+00:00",
   "runtime": "dore.resident-runtime.v0.2",
   "host_role": "dore-local-mac",
   "parent_goal": "New Westside visual construction",
   "parent_message_id": "new-westside-storybook-real-loop-2",
   "heartbeat": {
     "runtime": "dore.resident-runtime.v0.2",
-    "at": "2026-09-01T09:36:31.453448+00:00",
+    "at": "2026-09-01T09:38:04.597185+00:00",
     "state": "RUNNING_WITH_FAILURE_EVIDENCE",
     "parent_goal": "New Westside visual construction",
     "last_event": "RESEARCH_REQUIRED",
@@ -19,49 +19,21 @@
     "parent_goal": "New Westside visual construction",
     "parent_message_id": "new-westside-storybook-real-loop-2",
     "last_event": "RESEARCH_REQUIRED",
-    "last_attempt_at": "2026-09-01T09:36:31.451426+00:00",
-    "last_attempt_epoch": 1788255391.310452,
+    "last_attempt_at": "2026-09-01T09:38:04.595109+00:00",
+    "last_attempt_epoch": 1788255484.3917062,
     "last_driver_ok": false,
     "last_learning_fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece",
-    "last_result_fingerprint": "d2805e96880d829b38e67064861fb1bcb115ea6a582836f3b3421a568077b212",
+    "last_result_fingerprint": "6f6e302e4062fa09ad4c5161d4bf210180b35d174bba6854ee5f1774657e0eb0",
     "driver_passed": false,
-    "last_progress_at": "2026-09-01T09:36:31.451693+00:00",
-    "last_progress_epoch": 1788255391.451709,
-    "last_self_update_check_epoch": 1788255145.450665,
-    "last_self_update_check_at": "2026-09-01T09:32:25.450714+00:00",
-    "last_telemetry_epoch": 1788255301.1470919,
-    "last_telemetry_at": "2026-09-01T09:35:01.147108+00:00",
+    "last_progress_at": "2026-09-01T09:38:04.595317+00:00",
+    "last_progress_epoch": 1788255484.5953338,
+    "last_self_update_check_epoch": 1788255453.7491682,
+    "last_self_update_check_at": "2026-09-01T09:37:33.749330+00:00",
+    "last_telemetry_epoch": 1788255393.662566,
+    "last_telemetry_at": "2026-09-01T09:36:33.662586+00:00",
     "telemetry_branch": "dore-runtime-telemetry"
   },
   "events": [
-    {
-      "at": "2026-09-01T09:27:47.586246+00:00",
-      "event": "WAIT_FOR_INFORMATION_GAIN",
-      "parent_goal": "New Westside visual construction",
-      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
-    },
-    {
-      "at": "2026-09-01T09:28:17.618354+00:00",
-      "event": "WAIT_FOR_INFORMATION_GAIN",
-      "parent_goal": "New Westside visual construction",
-      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
-    },
-    {
-      "at": "2026-09-01T09:28:47.719252+00:00",
-      "event": "CONTINUE",
-      "reason": "RESEARCH_REQUIRED",
-      "parent_goal": "New Westside visual construction",
-      "learning": "/Users/chenjingyu/.dore/coordination/learning/new-westside-storybook-real-loop-2.json"
-    },
-    {
-      "at": "2026-09-01T09:28:47.856185+00:00",
-      "event": "DRIVER_RESULT",
-      "reason": "RESEARCH_REQUIRED",
-      "ok": false,
-      "returncode": 2,
-      "information_gain": true,
-      "result": "research_required_after_fresh_evidence"
-    },
     {
       "at": "2026-09-01T09:29:20.206276+00:00",
       "event": "WAIT_FOR_INFORMATION_GAIN",
@@ -195,6 +167,34 @@
     },
     {
       "at": "2026-09-01T09:36:31.454350+00:00",
+      "event": "DRIVER_RESULT",
+      "reason": "RESEARCH_REQUIRED",
+      "ok": false,
+      "returncode": 2,
+      "information_gain": true,
+      "result": "research_required_after_fresh_evidence"
+    },
+    {
+      "at": "2026-09-01T09:37:03.686112+00:00",
+      "event": "WAIT_FOR_INFORMATION_GAIN",
+      "parent_goal": "New Westside visual construction",
+      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
+    },
+    {
+      "at": "2026-09-01T09:37:34.289037+00:00",
+      "event": "WAIT_FOR_INFORMATION_GAIN",
+      "parent_goal": "New Westside visual construction",
+      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
+    },
+    {
+      "at": "2026-09-01T09:38:04.391053+00:00",
+      "event": "CONTINUE",
+      "reason": "RESEARCH_REQUIRED",
+      "parent_goal": "New Westside visual construction",
+      "learning": "/Users/chenjingyu/.dore/coordination/learning/new-westside-storybook-real-loop-2.json"
+    },
+    {
+      "at": "2026-09-01T09:38:04.598405+00:00",
       "event": "DRIVER_RESULT",
       "reason": "RESEARCH_REQUIRED",
       "ok": false,
