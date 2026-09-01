@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "storybook-runtime-bootstrap-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Bootstrap a real local Storybook runtime for Doré Design Knowledge Lab",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["bash","-lc","set -euo pipefail; LAB=dore-design/knowledge-lab/storybook; mkdir -p \"$LAB\"; cd \"$LAB\"; if [ ! -f package.json ]; then npm init -y; fi; if [ ! -d node_modules/@storybook ]; then npx storybook@latest init --yes --skip-install=false; fi; npm run build-storybook; test -f storybook-static/index.html; git add package.json package-lock.json .storybook stories src storybook-static 2>/dev/null || true; git add -A; if ! git diff --cached --quiet; then git commit -m 'design: bootstrap executable Doré Storybook lab'; git push origin HEAD:main; fi"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":600},
+    {"argv":["bash","-lc","set -euo pipefail; cd dore-design/knowledge-lab/storybook; test -f package.json; test -d .storybook; find . -name '*.stories.*' -print -quit | grep .; test -f storybook-static/index.html; grep -q 'storybook' package.json"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body": "This is the gate from hardening into real design work. Build a real, locally runnable Storybook inside dore-design/knowledge-lab/storybook. It must not be documentation-only. Acceptance requires package.json, .storybook, at least one executable *.stories.* file, and a successful static Storybook build. Use only local/free tooling; do not configure Chromatic or any paid hosted service. Commit and push the resulting executable lab to main. After this passes, the next work is real Westside visual design and Storybook stories should be replaced/extended with Westside editorial components. Do not alter the locked approved homepage design during bootstrap."
+}
