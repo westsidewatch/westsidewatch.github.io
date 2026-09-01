@@ -1,13 +1,13 @@
 {
   "schema": "dore.runtime.telemetry.v0.1",
-  "published_at": "2026-09-01T07:40:16.095439+00:00",
+  "published_at": "2026-09-01T07:41:48.880414+00:00",
   "runtime": "dore.resident-runtime.v0.2",
   "host_role": "dore-local-mac",
   "parent_goal": "New Westside visual construction",
   "parent_message_id": "new-westside-storybook-real-loop-2",
   "heartbeat": {
     "runtime": "dore.resident-runtime.v0.2",
-    "at": "2026-09-01T07:40:15.489128+00:00",
+    "at": "2026-09-01T07:41:48.265894+00:00",
     "state": "RUNNING_WITH_FAILURE_EVIDENCE",
     "parent_goal": "New Westside visual construction",
     "last_event": "RESEARCH_REQUIRED",
@@ -19,49 +19,21 @@
     "parent_goal": "New Westside visual construction",
     "parent_message_id": "new-westside-storybook-real-loop-2",
     "last_event": "RESEARCH_REQUIRED",
-    "last_attempt_at": "2026-09-01T07:40:15.487499+00:00",
-    "last_attempt_epoch": 1788248415.331674,
+    "last_attempt_at": "2026-09-01T07:41:48.263985+00:00",
+    "last_attempt_epoch": 1788248508.0757172,
     "last_driver_ok": false,
     "last_learning_fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece",
-    "last_result_fingerprint": "8f322066c9115be2b8ba2a7c5b6239b8985a668eb57f458ffc4e19e452aed5e2",
+    "last_result_fingerprint": "b29c4625d9472845a5db2418f9acf042e23b942c81c843a19f03eb45c70c2305",
     "driver_passed": false,
-    "last_progress_at": "2026-09-01T07:14:14.952962+00:00",
-    "last_progress_epoch": 1788246854.9529788,
+    "last_progress_at": "2026-09-01T07:41:48.264188+00:00",
+    "last_progress_epoch": 1788248508.2642019,
     "last_self_update_check_epoch": 1788248321.925366,
     "last_self_update_check_at": "2026-09-01T07:38:41.925415+00:00",
-    "last_telemetry_epoch": 1788248325.075368,
-    "last_telemetry_at": "2026-09-01T07:38:45.075391+00:00",
+    "last_telemetry_epoch": 1788248417.845224,
+    "last_telemetry_at": "2026-09-01T07:40:17.845244+00:00",
     "telemetry_branch": "dore-runtime-telemetry"
   },
   "events": [
-    {
-      "at": "2026-09-01T07:31:49.459692+00:00",
-      "event": "WAIT_FOR_INFORMATION_GAIN",
-      "parent_goal": "New Westside visual construction",
-      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
-    },
-    {
-      "at": "2026-09-01T07:32:19.477032+00:00",
-      "event": "CONTINUE",
-      "reason": "RESEARCH_REQUIRED",
-      "parent_goal": "New Westside visual construction",
-      "learning": "/Users/chenjingyu/.dore/coordination/learning/new-westside-storybook-real-loop-2.json"
-    },
-    {
-      "at": "2026-09-01T07:32:19.573146+00:00",
-      "event": "DRIVER_RESULT",
-      "reason": "RESEARCH_REQUIRED",
-      "ok": false,
-      "returncode": 1,
-      "information_gain": false,
-      "result": null
-    },
-    {
-      "at": "2026-09-01T07:32:49.640495+00:00",
-      "event": "WAIT_FOR_INFORMATION_GAIN",
-      "parent_goal": "New Westside visual construction",
-      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
-    },
     {
       "at": "2026-09-01T07:33:22.058151+00:00",
       "event": "RUNTIME_STARTED",
@@ -203,6 +175,34 @@
       "returncode": 1,
       "information_gain": false,
       "result": null
+    },
+    {
+      "at": "2026-09-01T07:40:47.921060+00:00",
+      "event": "WAIT_FOR_INFORMATION_GAIN",
+      "parent_goal": "New Westside visual construction",
+      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
+    },
+    {
+      "at": "2026-09-01T07:41:17.977779+00:00",
+      "event": "WAIT_FOR_INFORMATION_GAIN",
+      "parent_goal": "New Westside visual construction",
+      "fingerprint": "b7e8fcacfe5f25868ce47b010830a92b6b4ce1cbcfd04aa5c64793ddc7e4cece"
+    },
+    {
+      "at": "2026-09-01T07:41:48.074954+00:00",
+      "event": "CONTINUE",
+      "reason": "RESEARCH_REQUIRED",
+      "parent_goal": "New Westside visual construction",
+      "learning": "/Users/chenjingyu/.dore/coordination/learning/new-westside-storybook-real-loop-2.json"
+    },
+    {
+      "at": "2026-09-01T07:41:48.266870+00:00",
+      "event": "DRIVER_RESULT",
+      "reason": "RESEARCH_REQUIRED",
+      "ok": false,
+      "returncode": 2,
+      "information_gain": true,
+      "result": "research_required_after_fresh_evidence"
     }
   ]
 }
