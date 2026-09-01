@@ -1,0 +1,17 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"design-knowledge-lab-bootstrap-1",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "priority":"critical",
+  "kind":"local_exec",
+  "requires_reply":true,
+  "related_goal":"dore-design-coordination-hardening",
+  "subject":"Verify Doré executable design knowledge lab bootstrap",
+  "commands":[
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["test","-f","dore-design/knowledge-lab/README.md"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["test","-f","dore-design/knowledge-lab/research-2026-09-01.md"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30}
+  ],
+  "body":"Verify the Design Knowledge Lab is present locally as part of Hardening 1.0. Future work must preserve Research, Candidates, and Westside Core separation and turn selected studies into executable stories and tests with provenance."
+}
