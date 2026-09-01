@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "coordination-progress-heartbeat-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Add durable progress heartbeat reporting for long Doré tasks",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/coordination_progress_hardening.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300},
+    {"argv":["python3","local/dore-local/coordination_progress_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180}
+  ],
+  "body": "Hardening before continuing Storybook. Implement durable progress observability for long local_exec tasks so ChatGPT can distinguish QUEUED/RECEIVED/RUNNING and per-command progress instead of silence. Required behavior: worker state records active command index/total, argv summary, command_started_at, heartbeat_at, elapsed seconds, last stdout/stderr tail when available, and current phase; expose it through existing coordination status path; long-running subprocess execution must update heartbeat while command is alive rather than only after completion. Preserve canonical final receipt semantics and product monitor. Commit and push implementation and acceptance evidence. Do not continue or alter Storybook in this task; this task only hardens coordination progress reporting."
+}
