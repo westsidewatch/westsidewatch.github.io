@@ -1,0 +1,107 @@
+name: Doré Memory Sweep Visual Engine Reconcile 2026-09-01
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/dore-memory-sweep-visual-engine-reconcile-20260901.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  reconcile:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Persist bounded Sweep 01 reconciliation
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+
+          ledger = Path('dore-core/projects/DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md')
+          ledger.write_text('''# DORÉ LOCAL VISUAL ENGINE SINGLE-SOURCE EVIDENCE LEDGER — 2026-09-01
+
+Status: SWEEP-01 / BOUNDED RECONCILIATION
+Primary index: `dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md`
+
+## Evidence reviewed
+
+- `.github/workflows/dore-engine-single-source-cleanup.yml`
+- `local/dore-local/penpot_agent.py`
+- `local/dore-local/setup-penpot-mcp.sh`
+- `local/dore-local/local_updater.py`
+- `local/dore-local/learning_worker.py`
+
+## Classification
+
+### Current local-model / visual-engine relationship
+
+`CORE/CONTINUOUS / MAINTENANCE`
+
+The current executable local stack uses one active model source: `DORE_LOCAL_MODEL` (default `gemma4:e4b`). `penpot_agent.py` binds `VISION_MODEL=MODEL`; `setup-penpot-mcp.sh` binds `VISION_MODEL="$MODEL"`; `learning_worker.py` reads the same `DORE_LOCAL_MODEL`; and `local_updater.py` propagates the active model into spawned workers while persisting `visual_engine_follows_active_model: true`.
+
+This is real implementation evidence for **single-source model selection inside the current local Doré/Penpot path**. It is not evidence that the visual system is aesthetically complete, that D4 visual verification has passed, or that every Doré execution surface globally shares one model/runtime.
+
+### `dore-engine-single-source-cleanup.yml`
+
+`SUPERSEDED / RETIRED-AS-ACTION`
+
+The workflow encodes a one-shot migration from an independent `DORE_LOCAL_VISION_MODEL` override to a single active `DORE_LOCAL_MODEL`. The current executable files already exhibit the workflow's intended post-migration state, while the workflow file itself still remains in the repository. Therefore its migration instruction is historical provenance, not a current work item or a reason to re-run cleanup.
+
+No commit carrying the workflow's intended self-removal message (`fix(dore): remove independent visual engine override`) was found in the bounded commit search, so the exact execution history of that one-shot workflow remains unproven. Current-state source evidence is sufficient to classify the migration **goal** as satisfied, but not to claim the workflow itself successfully executed.
+
+## Durable lessons
+
+1. **Configuration convergence and visual competence are separate evidence layers.** One active model source reduces drift but does not prove design quality.
+2. **One-shot migration workflows must not remain interpretable as live work after their target state is already present.** Preserve them as provenance or explicitly retire them in the canonical index.
+3. **Current truth should be inferred from executable source plus runtime evidence, not from an old migration script's imperative wording.**
+4. This reconciliation does not modify P01 subtitle state or its existing production audio/transcription environment dependency.
+
+## Current disposition
+
+- single-source local model selection: retain as current implementation / maintenance baseline;
+- independent local visual-model override: `SUPERSEDED`;
+- one-shot cleanup workflow: `RETIRED-AS-ACTION`, retained only as historical provenance unless later repository hygiene safely removes it;
+- D4 Penpot visual readback / Westside visual-quality proof: remains separately evidence-gated under `VIS-GRAMMAR` / `ME-015`.
+''', encoding='utf-8')
+
+          sup = Path('dore-core/projects/DORÉ-SUPERSEDED-RETIRED-INDEX.md')
+          s = sup.read_text(encoding='utf-8')
+          if '## SR-014 — Independent local visual-engine override / one-shot cleanup' not in s:
+              s += '''\n\n## SR-014 — Independent local visual-engine override / one-shot cleanup\n\n**Historical source:** `.github/workflows/dore-engine-single-source-cleanup.yml` plus the former `DORE_LOCAL_VISION_MODEL` configuration path encoded there.\n\n**Classification:** `SUPERSEDED` for the independent visual-model override; `RETIRED-AS-ACTION` for the one-shot cleanup instruction.\n\n**Superseding current-state evidence:** `local/dore-local/penpot_agent.py` binds `VISION_MODEL=MODEL`; `local/dore-local/setup-penpot-mcp.sh` binds `VISION_MODEL="$MODEL"`; `local/dore-local/learning_worker.py` reads the same `DORE_LOCAL_MODEL`; and `local/dore-local/local_updater.py` propagates the active model and records `visual_engine_follows_active_model: true`. The migration target is therefore already present in current executable source.\n\n**Evidence boundary:** bounded commit search did not find the workflow's intended self-removal commit message, so do not claim the one-shot workflow itself executed successfully. The current source tree proves the target state, not the historical mechanism that produced it.\n\n**Retained value:** the workflow is provenance for why an independent visual-engine path was rejected: visual verification should follow the active Doré engine unless an explicitly governed future architecture introduces another executor. This does not prove D4 visual quality, brand maturity, or global single-engine behavior outside the local Doré/Penpot path.\n\n**Current authority:** treat `DORE_LOCAL_MODEL` as the current local model-selection source and the independent `DORE_LOCAL_VISION_MODEL` path as historical. Do not reactivate this cleanup merely because the old workflow remains in the repository.\n'''
+              sup.write_text(s, encoding='utf-8')
+
+          sweep = Path('dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md')
+          s = sweep.read_text(encoding='utf-8')
+          if '## Checkpoint 23 — local visual-engine single-source reconciliation (2026-09-01)' not in s:
+              s += '''\n\n## Checkpoint 23 — local visual-engine single-source reconciliation (2026-09-01)\n\nBounded evidence reviewed in this pass:\n\n- `.github/workflows/dore-engine-single-source-cleanup.yml`;\n- `local/dore-local/penpot_agent.py`;\n- `local/dore-local/setup-penpot-mcp.sh`;\n- `local/dore-local/local_updater.py`;\n- `local/dore-local/learning_worker.py`.\n\nReconciliation findings:\n\n1. Current executable local Doré/Penpot code already uses a single model-selection source: `DORE_LOCAL_MODEL`; the visual verifier follows that active model rather than an independent `DORE_LOCAL_VISION_MODEL` override.\n2. The surviving cleanup workflow is therefore `SUPERSEDED / RETIRED-AS-ACTION`: its intended migration target is already present, so its imperative wording must not silently become active work.\n3. Bounded commit search did not find the workflow's intended self-removal commit, so the workflow's actual historical execution remains unproven. Current source proves the target state only.\n4. Single-source configuration is not D4 or visual-quality proof. `VIS-GRAMMAR` / Design Working Memory acceptance remains separately gated.\n5. No P01 state or action was modified. The known production audio/transcription environment dependency remains unchanged.\n\nDurable updates in this checkpoint:\n\n- new `DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md`;\n- new `SR-014` supersession/retirement entry;\n- Master Register MEM-SWEEP interpretation updated to account for this local-engine history family.\n\nSweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.\n'''
+              sweep.write_text(s, encoding='utf-8')
+
+          master = Path('dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md')
+          s = master.read_text(encoding='utf-8')
+          anchor = 'plus the **local Doré↔ChatGPT coordination transport/execution boundary**, have been reconciled or checkpointed.'
+          repl = 'plus the **local Doré↔ChatGPT coordination transport/execution boundary** and the **local Penpot visual-engine single-source migration/current-state boundary**, have been reconciled or checkpointed.'
+          if anchor in s:
+              s = s.replace(anchor, repl, 1)
+          elif 'local Penpot visual-engine single-source migration/current-state boundary' not in s:
+              raise SystemExit('MASTER_MEM_SWEEP_ANCHOR_NOT_FOUND')
+          evidence_anchor = '`DORÉ-SENSORY-DIAGNOSTIC-PERSISTENCE-EVIDENCE-LEDGER-2026-08-31.md`'
+          if 'DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md' not in s:
+              s = s.replace(evidence_anchor, evidence_anchor + ', `DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md`', 1)
+          master.write_text(s, encoding='utf-8')
+          PY
+      - name: Commit reconciliation and remove one-shot workflow
+        run: |
+          git config user.name 'Doré Memory Sweep'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md \
+                  dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md \
+                  dore-core/projects/DORÉ-SUPERSEDED-RETIRED-INDEX.md \
+                  dore-core/projects/DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md
+          git rm .github/workflows/dore-memory-sweep-visual-engine-reconcile-20260901.yml
+          git commit -m 'docs(dore): reconcile local visual-engine single-source history'
+          git push origin HEAD:main
