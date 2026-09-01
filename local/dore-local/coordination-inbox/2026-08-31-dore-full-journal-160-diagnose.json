@@ -1,0 +1,34 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-full-journal-160-diagnose",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-full-journal",
+  "subject": "Diagnose Doré Design 1.6 Journal HTTP 500",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "-c", "import urllib.request,urllib.error; u='http://127.0.0.1:4310/journal/';\ntry:\n r=urllib.request.urlopen(u,timeout=10); print(r.status); print(r.read().decode('utf-8')[:8000])\nexcept urllib.error.HTTPError as e:\n print('HTTP',e.code); print(e.read().decode('utf-8','replace')[:8000])"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["hugo", "--destination", "/tmp/dore-journal-diag", "--cleanDestinationDir"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 90
+    },
+    {
+      "argv": ["python3", "-c", "from pathlib import Path; p=Path('/Users/chenjingyu/westsidewatch.github.io/dore-design/.site-mirror'); print('mirror_root',p.exists()); print('index', (p/'index.html').exists()); print('journal', (p/'journal/index.html').exists()); print('vol00', (p/'vol-00/index.html').exists())"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    }
+  ],
+  "body": "Do not modify the locked homepage. Diagnose the actual HTTP 500 preventing /journal/ from deploying. Return the HTTP error body, Hugo build result, and mirror file presence so ChatGPT can fix the exact cause rather than retrying blindly."
+}
