@@ -1,0 +1,43 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "autonomous-loop-acceptance-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "First autonomous capability loop acceptance",
+  "body": "Run the first closed-loop acceptance. The task deliberately recreates the already-understood Storybook 9 package-model gap exactly once. The worker must observe the failure, enter LEARNING automatically, select the verified Storybook 9 recovery skill from the skill registry, apply it, resume this same parent task without a new human instruction, and finish the real Storybook production build. Preserve evidence of GAP_DETECTED -> LEARNING -> VERIFIED -> parent-goal resume -> PASS.",
+  "related_goal": "dore-design/autonomous-capability-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "-c", "from pathlib import Path; import json; root=Path('dore-design/knowledge-lab/storybook'); marker=Path.home()/'.dore/coordination/learning/autonomous-loop-acceptance-1-fixture-created'; p=root/'package.json'; data=json.loads(p.read_text()); first=not marker.exists(); data.setdefault('devDependencies',{}).__setitem__('@storybook/addon-essentials','^9.1.3') if first else None; p.write_text(json.dumps(data,indent=2)+'\\n') if first else None; marker.parent.mkdir(parents=True,exist_ok=True); marker.touch() if first else None; print('FIXTURE_CREATED' if first else 'FIXTURE_ALREADY_CREATED')"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["npm", "install"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 900
+    },
+    {
+      "argv": ["npm", "run", "build-storybook"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 900
+    }
+  ],
+  "acceptance": {
+    "must_not_require_user_intervention": true,
+    "must_preserve_message_id": true,
+    "must_enter_learning_on_first_failure": true,
+    "must_select_skill": "storybook9-package-model-repair",
+    "must_resume_parent_task": true,
+    "must_finish_storybook_build": true,
+    "must_return_terminal_pass": true
+  }
+}
