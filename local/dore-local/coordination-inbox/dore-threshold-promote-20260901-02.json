@@ -1,0 +1,48 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "dore-threshold-promote-20260901-02",
+  "thread_id": "dore-design-homepage-rebuild-20260901",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "created_at": "2026-09-01T10:55:00Z",
+  "subject": "Implement evidence-backed ThresholdStudy patterns in experimental homepage",
+  "body": "Pull the evidence-gated promotion implementation, execute it locally, keep the locked baseline byte-for-byte unchanged, generate the experimental homepage, rebuild Storybook, verify storybook-static/index.html, and return the canonical result. Promotion is limited to patterns explicitly present in ThresholdStudy evidence.",
+  "requires_reply": true,
+  "priority": "critical",
+  "related_goal": "westside-watch-homepage-redesign",
+  "kind": "local_exec",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/knowledge-lab/training/promote_threshold_study.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["npm", "run", "build-storybook"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 900
+    },
+    {
+      "argv": ["ls", "-la", "storybook-static/index.html"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 60
+    },
+    {
+      "argv": ["git", "status", "--short"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "metadata": {
+    "implementation_commit": "dc95b6f89ef5b3e0f3470803fedd06920a5f1dac",
+    "locked_control": "dore-design/new-westside/homepage-v2-living-fortress.html",
+    "experimental_homepage": "dore-design/new-westside/homepage-v3-threshold-promoted.html",
+    "evidence": "dore-design/knowledge-lab/evidence/threshold-promotion-2026-09-01.json",
+    "expected_result_id": "result-dore-threshold-promote-20260901-02"
+  }
+}
