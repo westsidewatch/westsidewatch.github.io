@@ -66,6 +66,24 @@ Final workspace verification returned PASS for schema validity, multi-page struc
 
 `Doré Design 0.9 working product foundation: PASS`
 
+## Build 010 — Real ChatGPT → Doré → local execution chain
+
+Real Westside Watch design work established the first end-to-end human/agent/local execution chain:
+
+`Human -> ChatGPT -> GitHub coordination-inbox -> resident Doré coordination daemon -> Doré worker -> local repository / Doré Design / localhost -> execution + verification -> Doré outbox -> GitHub -> ChatGPT -> Human`.
+
+This is no longer only an architectural plan. Both directions have executed in real work. ChatGPT has written bounded `local_exec` tasks into the repository coordination inbox; the Mac-resident Doré daemon has synchronized the repository, drained those tasks, executed them against the local Doré Design installation, and generated durable result messages back into `local/dore-local/coordination-outbox`.
+
+The resident worker owns execution semantics. `coordination_worker.py` consumes unprocessed messages, preserves the active parent goal, executes allow-listed local commands, records attempts, and calls `reply()` with success or failure evidence. `coordination_mailbox.py` persists Doré-to-ChatGPT messages and publishes them to GitHub using an isolated git worktree with retry and remote-exact checks. `dore_coordination_daemon.py` continuously synchronizes `origin/main` and drains the worker.
+
+The chain has also demonstrated failure evidence rather than only success evidence. Doré Design 1.7.1 deployment returned a real local result showing the resident service version, editable Journal workspace page, node count, runtime-mirror retirement, asset fallback status, acceptance checks, retries, and terminal failure state. This confirms that the transport can carry execution results back even when the product task itself fails.
+
+Current maturity classification: **RUNNING, BIDIRECTIONAL, NOT YET HARDENED**.
+
+Known hardening work remains: deterministic task/result correlation, one canonical receipt per task, clearer separation between transport success and product acceptance, stale-result suppression, improved failure classification, and a visible health/status surface for inbox → execution → outbox delivery.
+
+Teaching point: GitHub is currently the durable bridge because ChatGPT cannot directly enter the Mac. Doré is the execution agent on the other side of that bridge. If Doré Design later becomes an online service, Doré's role should remain; only the transport changes from Git-backed local coordination toward a direct Doré API/message bus. GitHub should then return to its primary roles of source control, review, provenance and deployment evidence.
+
 ## Product boundary after acceptance
 
 Doré Design is now the working local structured design environment. It is no longer a one-page demo or an upstream-provider experiment.
