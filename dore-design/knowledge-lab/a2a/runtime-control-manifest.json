@@ -1,9 +1,10 @@
 {
-  "schema": "dore.runtime-control-manifest.v1",
+  "schema": "dore.runtime-control-manifest.v1.1",
   "updated_at": "2026-09-01",
-  "purpose": "Every file required to execute the autonomous loop locally. Resident self-update must sync this manifest rather than rely on a hard-coded partial list.",
+  "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest; autonomous decision ownership lives in Doré Agent Core, not Resident Runtime.",
   "files": [
     "local/dore-local/resident_runtime.py",
+    "local/dore-local/dore_agent_core.py",
     "local/dore-local/autonomous_driver.py",
     "local/dore-local/goal_queue.py",
     "local/dore-local/autonomous_capability_loop.py",
@@ -17,7 +18,13 @@
     "local/dore-local/coordination_worker.py",
     "local/dore-local/coordination_mailbox.py",
     "local/dore-local/loop_contract_acceptance.py",
+    "local/dore-local/durable_store.py",
+    "local/dore-local/retry_policy.py",
+    "local/dore-local/loop_guardrails.py",
+    "local/dore-local/trace_context.py",
+    "local/dore-local/ecosystem_component_acceptance.py",
     "dore-design/knowledge-lab/resources/source-catalog.json",
+    "dore-design/knowledge-lab/resources/component-selection-2026-09-01.json",
     "dore-design/knowledge-lab/skills/registry.json",
     "dore-design/knowledge-lab/a2a/project-state.json",
     "dore-design/knowledge-lab/a2a/loop-contract-v1.json",
@@ -36,5 +43,10 @@
     "~/.dore/coordination/shared-learning.jsonl",
     "~/.dore/coordination/chatgpt-to-dore.jsonl",
     "~/.dore/coordination/dore-to-chatgpt.jsonl"
-  ]
+  ],
+  "ownership": {
+    "launchd": ["process liveness"],
+    "resident_runtime": ["wake/sleep", "process supervision", "mechanical checkpoint", "self-update", "heartbeat", "telemetry"],
+    "dore_agent_core": ["goal reasoning", "gap detection", "resource search", "candidate selection", "hypothesis", "experiment choice", "information gain", "verification", "skill promotion", "next action", "resume parent"]
+  }
 }
