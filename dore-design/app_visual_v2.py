@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Doré Design 1.5.1 — locked #262 front door with restored editing chrome."""
+"""Doré Design 1.5.2 — locked #262 front door with preview-to-editor entry."""
 import mimetypes
 import os
 import shutil
@@ -12,7 +12,13 @@ import homepage_wysiwyg
 ROOT=Path(__file__).resolve().parent.parent
 MIRROR=ROOT/'dore-design/.site-mirror'
 
-STRUCTURE_HTML=(visual.HTML.replace('<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>','<div id="top"><b>DORÉ DESIGN 1.5.1 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'))
+STRUCTURE_HTML=(visual.HTML.replace('<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>','<div id="top"><b>DORÉ DESIGN 1.5.2 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'))
+
+PREVIEW_EDIT_ENTRY='''<style>.dore-preview-edit{position:fixed;right:18px;bottom:18px;z-index:2147483647;padding:9px 12px;border:1px solid rgba(208,189,120,.7);background:rgba(7,26,40,.88);color:#f2eee4!important;text-decoration:none!important;font:10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(4px);box-shadow:0 4px 18px rgba(0,0,0,.18)}.dore-preview-edit:hover,.dore-preview-edit:focus{background:#0b2639;border-color:#d0bd78;outline:none}</style><a class="dore-preview-edit" href="/editor" aria-label="Return to Doré Design editor">Edit in Doré Design</a>'''
+
+def preview_html():
+    html=homepage_wysiwyg.render_canvas(edit=False)
+    return html.replace('</body>',PREVIEW_EDIT_ENTRY+'</body>',1)
 
 def build_site_mirror(force=False):
     journal_index=MIRROR/'journal/index.html';vol_index=MIRROR/'vol-00/index.html'
@@ -42,7 +48,7 @@ class H(visual.H):
         ctype=mimetypes.guess_type(str(p))[0] or 'application/octet-stream';self.send_bytes(200,p.read_bytes(),ctype);return True
     def do_GET(self):
         path=self.path.split('?',1)[0]
-        if path=='/':return self.send_bytes(200,homepage_wysiwyg.render_canvas(edit=False).encode('utf-8'),'text/html; charset=utf-8')
+        if path=='/':return self.send_bytes(200,preview_html().encode('utf-8'),'text/html; charset=utf-8')
         if path=='/editor':return self.send_bytes(200,homepage_wysiwyg.render_editor().encode('utf-8'),'text/html; charset=utf-8')
         if path=='/editor-canvas':return self.send_bytes(200,homepage_wysiwyg.render_canvas(edit=True).encode('utf-8'),'text/html; charset=utf-8')
         if path=='/structure-editor':return self.send_bytes(200,STRUCTURE_HTML.encode('utf-8'),'text/html; charset=utf-8')
@@ -61,9 +67,9 @@ class H(visual.H):
         if path=='/api/mirror/status':return self.out(200,{'ok':(MIRROR/'journal/index.html').exists() and (MIRROR/'vol-00/index.html').exists(),'journal':'/journal/','vol00':'/vol-00/','mode':'source-identical-hugo-mirror','redesign':False})
         if path=='/api/preview/status':
             w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='homepage'),w.get('pages',[None])[0])
-            return self.out(200,{'ok':bool(home),'mode':'locked-template-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':home.get('id') if home else None,'node_count':len(home.get('nodes',[])) if home else 0,'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','structure_editor':'/structure-editor'})
+            return self.out(200,{'ok':bool(home),'mode':'locked-template-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':home.get('id') if home else None,'node_count':len(home.get('nodes',[])) if home else 0,'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor'})
         if MIRROR.exists() and self.serve_mirror(path):return
-        if path=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'1.5.1','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262-locked','preview_mode':'locked-template-shared-workspace','design_direction':'watch-for-the-dawn','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','structure_editor':'/structure-editor','journal_mirror':'/journal/','vol00_mirror':'/vol-00/','journal_mode':'source-identical-hugo-mirror','visual_grammar':['approved-front-door','design-locked','watch-for-the-dawn','dore-engraving','responsive-city-grid','5:8-journal','central-gate','archival-print']})
+        if path=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'1.5.2','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262-locked','preview_mode':'locked-template-shared-workspace','design_direction':'watch-for-the-dawn','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','journal_mirror':'/journal/','vol00_mirror':'/vol-00/','journal_mode':'source-identical-hugo-mirror','visual_grammar':['approved-front-door','design-locked','watch-for-the-dawn','dore-engraving','responsive-city-grid','5:8-journal','central-gate','archival-print']})
         return super().do_GET()
 
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('DORE_DESIGN_PORT','4310'))),H).serve_forever()
