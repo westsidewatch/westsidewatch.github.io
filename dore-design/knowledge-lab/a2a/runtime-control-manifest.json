@@ -1,9 +1,10 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.1",
+  "schema": "dore.runtime-control-manifest.v1.2",
   "updated_at": "2026-09-01",
-  "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest; autonomous decision ownership lives in Doré Agent Core, not Resident Runtime.",
+  "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest; A2A supervision is a higher-order control plane over project loops; autonomous decision ownership lives in Doré Agent Core, not Resident Runtime.",
   "files": [
     "local/dore-local/resident_runtime.py",
+    "local/dore-local/a2a_supervisor.py",
     "local/dore-local/dore_agent_core.py",
     "local/dore-local/autonomous_driver.py",
     "local/dore-local/goal_queue.py",
@@ -37,6 +38,8 @@
     "~/.dore/runtime/state.json",
     "~/.dore/runtime/events.jsonl",
     "~/.dore/runtime/heartbeat.json",
+    "~/.dore/runtime/a2a-supervision.json",
+    "~/.dore/a2a-supervisor/state.json",
     "~/.dore/coordination/learning/",
     "~/.dore/coordination/research/",
     "~/.dore/coordination/failure-memory.jsonl",
@@ -47,6 +50,7 @@
   "ownership": {
     "launchd": ["process liveness"],
     "resident_runtime": ["wake/sleep", "process supervision", "mechanical checkpoint", "self-update", "heartbeat", "telemetry"],
+    "a2a_supervisor": ["higher-order A2A health", "project-loop stall detection", "peer-required escalation signal", "A2A-over-project-loop authority"],
     "dore_agent_core": ["goal reasoning", "gap detection", "resource search", "candidate selection", "hypothesis", "experiment choice", "information gain", "verification", "skill promotion", "next action", "resume parent"]
   }
 }
