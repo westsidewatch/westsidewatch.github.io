@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://westsidewatch.github.io/schemas/dore-image-asset-v1.json",
+  "title": "Doré Image Studio asset",
+  "type": "object",
+  "required": ["schema", "id", "class", "status", "files", "provenance", "usage", "verification"],
+  "properties": {
+    "schema": {"const": "dore.image-asset.v1"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]+$"},
+    "class": {"enum": ["hero", "cover", "symbol", "ornament", "texture", "source"]},
+    "status": {"enum": ["research", "candidate", "approved", "rejected", "retired"]},
+    "files": {"type": "array", "minItems": 1, "items": {"type": "object", "required": ["path", "role"], "properties": {"path": {"type": "string"}, "role": {"type": "string"}, "width": {"type": "integer"}, "height": {"type": "integer"}, "bytes": {"type": "integer"}, "sha256": {"type": "string"}}}},
+    "provenance": {"type": "object", "required": ["method", "rights_status"], "properties": {"method": {"enum": ["generated", "public-domain-transform", "licensed-transform", "project-original"]}, "source_url": {"type": ["string", "null"]}, "creator": {"type": ["string", "null"]}, "license": {"type": ["string", "null"]}, "rights_status": {"enum": ["pending", "approved", "rejected"]}, "prompt": {"type": ["string", "null"]}, "transform_notes": {"type": ["string", "null"]}}},
+    "usage": {"type": "object", "required": ["semantic_role", "decorative"], "properties": {"semantic_role": {"type": "string"}, "decorative": {"type": "boolean"}, "alt": {"type": ["string", "null"]}, "consumers": {"type": "array", "items": {"type": "string"}}}},
+    "verification": {"type": "object", "required": ["visual", "rights", "storybook"], "properties": {"visual": {"type": "boolean"}, "rights": {"type": "boolean"}, "storybook": {"type": "boolean"}, "reviewer": {"type": ["string", "null"]}}}
+  },
+  "additionalProperties": true
+}

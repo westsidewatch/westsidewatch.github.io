@@ -1,0 +1,43 @@
+{
+  "schema": "dore.asset-pack.v1",
+  "id": "new-westside-retro-pack-01",
+  "status": "candidate",
+  "assets": [
+    {
+      "schema": "dore.image-asset.v1",
+      "id": "watchman-dawn-engraving-v1",
+      "class": "hero",
+      "status": "candidate",
+      "files": [
+        {
+          "path": "dore-design/new-westside/assets/retro-pack-01/watchman-dawn-engraving-v1.png",
+          "role": "master",
+          "width": 1122,
+          "height": 1402,
+          "bytes": 3803583
+        }
+      ],
+      "provenance": {
+        "method": "generated",
+        "source_url": null,
+        "creator": "Doré Image Studio",
+        "license": null,
+        "rights_status": "approved",
+        "prompt": "Original wood-engraving editorial scene: a watchman on an ancient city wall before dawn, looking toward a distant founded city and road; black ink on warm paper; no copied artwork.",
+        "transform_notes": "Original generation; no reference artwork supplied. Two-plate and responsive derivatives remain pending."
+      },
+      "usage": {
+        "semantic_role": "Homepage and feature artwork expressing watchfulness before dawn",
+        "decorative": false,
+        "alt": "A solitary watchman stands on a city wall as first light reaches a distant city.",
+        "consumers": ["storybook:Doré Image Studio/Foundation"]
+      },
+      "verification": {
+        "visual": true,
+        "rights": true,
+        "storybook": true,
+        "reviewer": "ChatGPT visual direction"
+      }
+    }
+  ]
+}
