@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": false, \"message_id\": \"dore-design-preview-sync-14\", \"attempt\": 2, \"terminal\": false, \"parent_goal_preserved\": true, \"recovery_required\": false, \"exception\": \"RuntimeError: task_failed\"}",
+  "created_at": "2026-09-01T01:14:49.195951+00:00",
+  "evidence_refs": [
+    "coordination-worker-error",
+    "parent-goal-preserved",
+    "source-message:dore-design-preview-sync-14"
+  ],
+  "message_id": "56fc7942-6d1c-4783-b9c0-0f7720b5f242",
+  "message_sha256": "c36b472a0fbc44f9c7b62b957f7c8598fb2827f77b1a1e2549fb93ad0b673d44",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-design-single-source-preview",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy Doré Design 1.4 same-workspace preview",
+  "thread_id": "3b2c14dc-f480-4af1-8c5d-79293e4e5d1a"
+}
