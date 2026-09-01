@@ -1,0 +1,33 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "loop-live-road-test-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "LIVE LOOP TEST: upgrade runtime, force research path, verify and resume Storybook",
+  "related_goal": "dore-a2a-storybook-live-loop-test",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/ecosystem_component_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300},
+    {"argv":["python3","local/dore-local/loop_contract_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300},
+    {"argv":["python3","dore-design/knowledge-lab/training/new_westside_storybook_real_loop.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":900}
+  ],
+  "acceptance": {
+    "must_observe": [
+      "latest runtime control files present locally",
+      "ecosystem component acceptance PASS",
+      "loop contract acceptance PASS",
+      "Storybook real workload either PASS or emits RESEARCH_REQUIRED with new evidence",
+      "if RESEARCH_REQUIRED occurs, runtime must transition to RESEARCH_QUEUED then RESEARCHING rather than identical retry",
+      "knowledge must be verified before PROMOTED",
+      "same parent goal must resume after verified repair"
+    ],
+    "forbidden": [
+      "identical retry without information gain",
+      "treat unknown technical knowledge as HUMAN_GATE",
+      "claim PASS without canonical result"
+    ]
+  }
+}
