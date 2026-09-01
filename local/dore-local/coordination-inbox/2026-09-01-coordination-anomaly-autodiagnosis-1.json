@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "coordination-anomaly-autodiagnosis-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-coordination-hardening",
+  "subject": "Make missing local response automatically trigger diagnosis",
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/coordination_anomaly_hardening.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300},
+    {"argv":["python3","local/dore-local/coordination_anomaly_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180}
+  ],
+  "body": "Establish automatic coordination anomaly diagnosis as a permanent Doré hardening rule. When an expected local heartbeat/progress/final receipt exceeds its reasonable window, absence of response is itself a failure signal and must automatically enter diagnostic mode without waiting for the user. Diagnosis must narrow the real chain: GitHub inbox -> daemon pickup -> worker start -> subprocess/active command -> dependency/network/permission/timeout -> result creation -> outbox delivery. Each retry must test a materially different hypothesis and persist evidence/information gain. Three attempts are a diagnostic threshold, not a blind hard stop: after three attempts, stop and record failure memory if there is no new information; if a new verifiable cause has been isolated, further targeted attempts are allowed. Persist failed hypotheses, evidence, capability boundary and eventual manual/local workaround so later Doré tasks can recall the failure instead of repeating it. Integrate with progress-heartbeat hardening where available, preserve canonical receipts/product monitor, commit and push implementation plus acceptance evidence. Do not modify locked homepage or Storybook product files in this task."
+}
