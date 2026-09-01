@@ -1,0 +1,19 @@
+{
+  "body": "{\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"git\", \"pull\", \"--ff-only\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"Already up to date.\\n\", \"stderr\": \"From https://github.com/westsidewatch/westsidewatch.github.io\\n * [new branch]        design/restore-front-door-into-workspace -> origin/design/restore-front-door-into-workspace\\n\"}, {\"index\": 2, \"argv\": [\"python3\", \"dore-design/deploy_visual_current.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"code\\\": \\\"DORE_DESIGN_WATCH_FOR_DAWN_PASS\\\", \\\"health\\\": {\\\"ok\\\": true, \\\"service\\\": \\\"dore-design\\\", \\\"version\\\": \\\"1.4\\\", \\\"workspace\\\": \\\"new-westside\\\", \\\"source_of_truth\\\": \\\"structured-workspace\\\", \\\"default_surface\\\": \\\"workspace-homepage-preview\\\", \\\"preview_mode\\\": \\\"same-workspace-same-renderer\\\", \\\"design_direction\\\": \\\"watch-for-the-dawn\\\", \\\"editor\\\": \\\"/editor\\\", \\\"preview\\\": \\\"/\\\", \\\"journal_mirror\\\": \\\"/journal/\\\", \\\"vol00_mirror\\\": \\\"/vol-00/\\\", \\\"journal_mode\\\": \\\"source-identical-hugo-mirror\\\", \\\"visual_grammar\\\": [\\\"approved-front-door\\\", \\\"watch-for-the-dawn\\\", \\\"dore-engraving\\\", \\\"editorial-gravity\\\", \\\"5:8\\\", \\\"asymmetric-portals\\\", \\\"central-gate\\\", \\\"archival-print\\\"]}, \\\"preview_status\\\": {\\\"ok\\\": true, \\\"mode\\\": \\\"same-workspace-same-renderer\\\", \\\"workspace_id\\\": \\\"westside-watch\\\", \\\"revision\\\": 94, \\\"page_id\\\": \\\"homepage\\\", \\\"node_count\\\": 25, \\\"editor\\\": \\\"/editor\\\", \\\"preview\\\": \\\"/\\\"}, \\\"workspace_revision\\\": 94, \\\"migration\\\": \\\"{\\\\\\\"ok\\\\\\\": true, \\\\\\\"code\\\\\\\": \\\\\\\"WATCH_FOR_DAWN_WORKSPACE_PASS\\\\\\\", \\\\\\\"revision\\\\\\\": 94, \\\\\\\"surface\\\\\\\": \\\\\\\"homepage-watch-for-the-dawn-workspace-v3\\\\\\\", \\\\\\\"homepage_nodes\\\\\\\": 25, \\\\\\\"preserved_pages\\\\\\\": [\\\\\\\"watch\\\\\\\", \\\\\\\"witness\\\\\\\", \\\\\\\"walk\\\\\\\", \\\\\\\"worship\\\\\\\"]}\\\", \\\"checks\\\": {\\\"version_current\\\": true, \\\"single_source\\\": true, \\\"same_renderer\\\": true, \\\"selected_direction\\\": true, \\\"structured_editor_preserved\\\": true, \\\"workspace_surface\\\": true, \\\"workspace_direction\\\": true, \\\"approved_hero\\\": true, \\\"approved_destinations\\\": true, \\\"preview_workspace_match\\\": true, \\\"preview_revision_match\\\": true, \\\"preview_page_match\\\": true}}\\n\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"python3\", \"dore-design/local_acceptance.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\\"ok\\\": true, \\\"code\\\": \\\"DORE_DESIGN_LOCAL_ACCEPTANCE_PASS\\\", \\\"version\\\": \\\"1.4\\\", \\\"page_count\\\": 5, \\\"revision\\\": 97, \\\"same_artifact_mutation\\\": true, \\\"resident_render\\\": true, \\\"resident_verify\\\": true, \\\"cleanup\\\": true}\\n\", \"stderr\": \"\"}]}",
+  "created_at": "2026-09-01T01:24:28.334064+00:00",
+  "evidence_refs": [
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:dore-design-restore-front-door-264"
+  ],
+  "message_id": "88b69317-98ae-4407-96b4-73315ad26ff2",
+  "message_sha256": "3622cc2310df0d24386561fdc787907491b15b426283e154f061a17bd6076d8d",
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "new-westside-homepage-v2",
+  "requires_reply": false,
+  "schema": "dore.mail.v1",
+  "sender": "dore",
+  "subject": "Doré execution: Deploy restored Watch for the Dawn workspace from PR 264",
+  "thread_id": "2ec84339-22c2-4f87-bbeb-109040d5c97d"
+}
