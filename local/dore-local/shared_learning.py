@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Doré shared-learning gate: synchronize verified knowledge, not raw memory."""
 from __future__ import annotations
-import json,os,re
+import copy,json,os,re
 from datetime import datetime,timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();STORE=HOME/'coordination'/'shared-learning.jsonl'
@@ -16,10 +16,13 @@ def record(artifact,*,learned_by='dore',status='CANDIDATE',verification=None,par
     gate=validate(artifact)
     if not gate['ok']:return {'ok':False,'error':'invalid_knowledge_artifact','validation':gate}
     if status in {'VERIFIED','PROMOTED'} and not verification:return {'ok':False,'error':'verification_required_before_promotion'}
-    row={'schema':'dore.shared-learning.v1','at':now(),'knowledge_id':artifact['knowledge_id'],'discovered_by':artifact.get('discovered_by') or 'research_executor','learned_by':learned_by,'parent_goal':parent_goal,'relevant':relevant(artifact,parent_goal or ''),'status':status,'verification':verification,'artifact':artifact}
+    snapshot=copy.deepcopy(artifact)
+    snapshot.pop('shared_learning_candidate',None)
+    row={'schema':'dore.shared-learning.v1','at':now(),'knowledge_id':snapshot['knowledge_id'],'discovered_by':snapshot.get('discovered_by') or 'research_executor','learned_by':learned_by,'parent_goal':parent_goal,'relevant':relevant(snapshot,parent_goal or ''),'status':status,'verification':verification,'artifact':snapshot}
     STORE.parent.mkdir(parents=True,exist_ok=True)
     with STORE.open('a',encoding='utf-8') as f:f.write(json.dumps(row,ensure_ascii=False)+'\n')
-    return {'ok':True,'record':row,'path':str(STORE)}
+    # Return a detached receipt, never the row containing the artifact itself.
+    return {'ok':True,'knowledge_id':row['knowledge_id'],'status':status,'relevant':row['relevant'],'at':row['at'],'path':str(STORE)}
 def records():
     if not STORE.exists():return []
     out=[]
