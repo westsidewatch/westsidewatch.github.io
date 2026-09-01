@@ -3,509 +3,212 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Westside Watch — Living Fortress</title>
+  <title>Westside Watch — Watch for the Dawn</title>
+  <meta name="description" content="Westside Watch — Journal, ONE, church life and the Dawn Library gathered around one watch for the dawn.">
   <style>
-    :root {
-      --paper: #f7f3e9;
-      --paper-deep: #e5dece;
-      --ink: #24231f;
-      --night: #102a43;
-      --night-deep: #091c2d;
-      --gold: #a2872a;
-      --morning: #d2bc69;
-      --hair: rgba(36, 35, 31, .28);
-      --paper-hair: rgba(247, 243, 233, .28);
+    :root{
+      --paper:#f2eee4;
+      --paper-2:#e7e0d2;
+      --ink:#1e211f;
+      --night:#0b2639;
+      --night-2:#071a28;
+      --gold:#b39a47;
+      --gold-soft:#d0bd78;
+      --line:rgba(30,33,31,.22);
+      --line-light:rgba(242,238,228,.28);
     }
+    *{box-sizing:border-box}
+    html{background:var(--night-2);scroll-behavior:smooth}
+    body{margin:0;background:var(--night-2);color:var(--ink);font-family:"Cormorant Garamond","Noto Serif TC",Georgia,serif}
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    .shell{width:min(1720px,100%);margin:auto;background:var(--paper);overflow:hidden;box-shadow:0 0 90px rgba(0,0,0,.32)}
+    .micro{font:10px/1.3 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.16em;text-transform:uppercase}
 
-    * { box-sizing: border-box; }
-    html { background: var(--night-deep); scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 72% 9%, rgba(210, 188, 105, .14), transparent 28rem),
-        var(--night-deep);
-      font-family: "Cormorant Garamond", "Noto Serif TC", Georgia, serif;
-    }
-    a { color: inherit; text-decoration: none; }
-    button { font: inherit; }
-    .page {
-      width: min(1680px, 100%);
-      margin: 0 auto;
-      overflow: hidden;
-      background: var(--paper);
-      box-shadow: 0 0 80px rgba(0, 0, 0, .28);
-    }
-    .micro {
-      font: 10px/1.35 ui-monospace, SFMono-Regular, Menlo, monospace;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .utility {
-      min-height: 38px;
-      padding: 0 4vw;
-      display: flex;
-      align-items: center;
-      border-bottom: 1px solid var(--hair);
-    }
-    .utility nav { margin-left: auto; display: flex; gap: clamp(12px, 2.2vw, 34px); }
-    .utility a { border-bottom: 1px solid transparent; }
-    .utility a:hover, .utility a:focus-visible { border-color: var(--gold); outline: 0; }
-    .masthead {
-      padding: 24px 4vw 18px;
-      position: relative;
-      border-bottom: 1px solid var(--hair);
-    }
-    .masthead > img:first-child { display: block; width: min(1120px, 86%); margin: 0 auto; }
-    .morning-star { position: absolute; top: 24px; right: 4vw; width: 22px; height: 22px; }
-    .watchword {
-      margin-top: 12px;
-      text-align: center;
-      color: var(--gold);
-      font-size: 16px;
-      font-style: italic;
-      letter-spacing: .05em;
-    }
-    .watchword::before, .watchword::after {
-      content: "";
-      display: inline-block;
-      width: 58px;
-      height: 1px;
-      margin: 0 16px;
-      vertical-align: middle;
-      background: var(--gold);
-    }
-    .opening {
-      min-height: 330px;
-      padding: 58px 4vw 38px;
-      display: grid;
-      grid-template-columns: minmax(0, 1.25fr) minmax(260px, .55fr);
-      gap: 7vw;
-      align-items: end;
-      position: relative;
-    }
-    .opening::after {
-      content: "";
-      position: absolute;
-      right: 4vw;
-      bottom: 0;
-      width: min(39vw, 560px);
-      height: 1px;
-      background: var(--gold);
-    }
-    .opening h1 {
-      margin: 0;
-      max-width: 8em;
-      color: var(--night);
-      font-size: clamp(62px, 8.4vw, 132px);
-      font-weight: 400;
-      letter-spacing: -.055em;
-      line-height: .76;
-    }
-    .opening h1 em { color: var(--gold); font-weight: 400; }
-    .opening aside { padding-left: 22px; border-left: 1px solid var(--gold); font-size: 18px; line-height: 1.6; }
-    .opening aside p { margin: 10px 0 0; }
-    .fortress-head {
-      margin: 4px 4vw 0;
-      padding: 12px 0 10px;
-      display: flex;
-      align-items: end;
-      border-top: 1px solid var(--ink);
-    }
-    .fortress-head h2 { margin: 0; font-size: 26px; font-weight: 400; }
-    .fortress-head .state-control {
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 13px;
-    }
-    .shift-button {
-      padding: 7px 0 5px;
-      color: var(--gold);
-      background: transparent;
-      border: 0;
-      border-bottom: 1px solid var(--gold);
-      cursor: pointer;
-    }
-    .fortress {
-      margin: 0 4vw;
-      min-height: 850px;
-      position: relative;
-      overflow: hidden;
-      color: var(--paper);
-      background:
-        linear-gradient(180deg, rgba(9, 28, 45, .16), rgba(9, 28, 45, .92)),
-        radial-gradient(ellipse at 69% 16%, rgba(210, 188, 105, .23), transparent 34%),
-        var(--night);
-      border: 1px solid var(--night);
-      isolation: isolate;
-    }
-    .fortress::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      opacity: .2;
-      background-image:
-        linear-gradient(rgba(247, 243, 233, .035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(247, 243, 233, .035) 1px, transparent 1px);
-      background-size: 48px 48px;
-    }
-    .engraving-field {
-      position: absolute;
-      top: 0;
-      right: 0;
-      width: 59%;
-      height: 70%;
-      margin: 0;
-      opacity: .46;
-      filter: grayscale(1) contrast(1.22) sepia(.15);
-      mix-blend-mode: screen;
-      mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 78%, transparent 100%);
-      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 24%, #000 78%, transparent 100%);
-    }
-    .engraving-field img { width: 100%; height: 100%; object-fit: cover; object-position: 54% 42%; }
-    .engraving-field::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, transparent 48%, var(--night) 100%);
-    }
-    .gold-trace {
-      position: absolute;
-      top: 9%;
-      right: 8%;
-      width: 31%;
-      height: 41%;
-      border-top: 1px solid var(--morning);
-      border-right: 1px solid var(--morning);
-      transform: rotate(2deg);
-      opacity: .78;
-    }
-    .wall {
-      min-height: 850px;
-      padding: 36px 32px 0;
-      display: grid;
-      grid-template-columns: repeat(24, minmax(0, 1fr));
-      grid-template-rows: repeat(24, 31px);
-      gap: 6px;
-      align-content: end;
-      position: relative;
-      z-index: 2;
-    }
-    .territory {
-      min-width: 0;
-      overflow: hidden;
-      padding: 15px;
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      border: 1px solid var(--paper-hair);
-      background: rgba(9, 28, 45, .54);
-      backdrop-filter: blur(1.5px);
-      transition: transform 1.15s cubic-bezier(.2, .8, .2, 1), opacity .9s ease;
-    }
-    .territory::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 23%;
-      height: 1px;
-      background: var(--morning);
-    }
-    .territory .label { margin-bottom: auto; color: var(--morning); }
-    .territory h3 { margin: 12px 0 5px; font-size: clamp(24px, 2.4vw, 43px); font-weight: 400; line-height: .95; }
-    .territory p { margin: 5px 0 0; max-width: 28em; font-size: 13px; line-height: 1.45; }
-    .territory .enter { margin-top: 16px; width: max-content; padding-bottom: 3px; border-bottom: 1px solid var(--morning); color: var(--morning); }
-    .journal-tower {
-      grid-column: 1 / 9;
-      grid-row: 3 / 24;
-      padding: 25px;
-      background: rgba(7, 22, 36, .88);
-      border-color: rgba(210, 188, 105, .55);
-    }
-    .journal-tower h3 { max-width: 6em; font-size: clamp(47px, 5vw, 76px); }
-    .journal-tower .portal-note { max-width: 22em; color: rgba(247, 243, 233, .76); }
-    .journal-tower .ratio {
-      position: absolute;
-      right: 14px;
-      bottom: 14px;
-      color: var(--morning);
-    }
-    .signal { grid-column: 9 / 14; grid-row: 10 / 18; background: rgba(247, 243, 233, .9); color: var(--ink); }
-    .signal::before { background: var(--gold); }
-    .signal .label, .signal .enter { color: var(--gold); }
-    .one { grid-column: 10 / 16; grid-row: 2 / 10; }
-    .church { grid-column: 16 / 21; grid-row: 6 / 17; background: rgba(7, 22, 36, .78); }
-    .library { grid-column: 21 / 25; grid-row: 12 / 21; background: rgba(229, 222, 206, .94); color: var(--ink); }
-    .library .label, .library .enter { color: var(--gold); }
-    .archive { grid-column: 18 / 22; grid-row: 18 / 24; }
-    .witness { grid-column: 9 / 13; grid-row: 19 / 24; background: rgba(210, 188, 105, .12); }
-    .prayer { grid-column: 15 / 18; grid-row: 17 / 24; }
-    .gate {
-      grid-column: 13 / 16;
-      grid-row: 16 / 25;
-      position: relative;
-      z-index: 4;
-    }
-    .gate a {
-      position: absolute;
-      inset: 7% 6% 0;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 18px;
-      color: var(--morning);
-      border: 1px solid var(--morning);
-      border-bottom: 0;
-      border-radius: 90px 90px 0 0;
-      background: linear-gradient(180deg, rgba(210, 188, 105, .02), rgba(210, 188, 105, .13));
-    }
-    .gate a::before {
-      content: "";
-      position: absolute;
-      inset: 10px;
-      border: 1px solid rgba(210, 188, 105, .34);
-      border-bottom: 0;
-      border-radius: 80px 80px 0 0;
-    }
-    .gate a:hover, .gate a:focus-visible { background: rgba(210, 188, 105, .16); outline: 0; }
-    .wall.is-shifted .signal { transform: translate(-10%, 18%); }
-    .wall.is-shifted .one { transform: translate(7%, 8%); }
-    .wall.is-shifted .church { transform: translate(6%, -7%); }
-    .wall.is-shifted .library { transform: translateY(-12%); }
-    .wall.is-shifted .archive { transform: translate(8%, -6%); }
-    .wall.is-shifted .witness { transform: translateX(-8%); }
-    .wall.is-shifted .prayer { transform: translate(5%, 7%); }
-    .foundation {
-      height: 25px;
-      margin: 0 4vw;
-      background: linear-gradient(90deg,
-        var(--night) 0 7%, transparent 7% 10%,
-        var(--night) 10% 24%, transparent 24% 29%,
-        var(--night) 29% 44%, transparent 44% 48%,
-        var(--night) 48% 64%, transparent 64% 68%,
-        var(--night) 68% 81%, transparent 81% 85%,
-        var(--night) 85% 100%);
-      opacity: .16;
-    }
-    .routes {
-      padding: 62px 4vw 76px;
-      display: grid;
-      grid-template-columns: .75fr 1.3fr .9fr;
-      gap: 0;
-    }
-    .routes article { min-height: 220px; padding: 0 30px; border-left: 1px solid var(--hair); }
-    .routes article:first-child { padding-left: 0; border-left: 0; }
-    .routes article:last-child { padding-right: 0; }
-    .routes h4 { margin: 10px 0; color: var(--night); font-size: 34px; font-weight: 400; line-height: 1; }
-    .routes p { margin: 0; font-size: 16px; line-height: 1.65; }
-    .closing {
-      min-height: 260px;
-      padding: 48px 4vw 55px;
-      display: flex;
-      align-items: end;
-      color: var(--paper);
-      background: var(--night);
-    }
-    .closing strong { font-size: clamp(46px, 6vw, 94px); font-weight: 400; line-height: .83; letter-spacing: -.035em; }
-    .closing .micro { margin-left: auto; color: var(--morning); text-align: right; }
-    .provenance { padding: 10px 4vw; color: rgba(247, 243, 233, .58); background: var(--night-deep); }
+    .topbar{height:42px;padding:0 clamp(18px,4vw,72px);display:flex;align-items:center;border-bottom:1px solid var(--line);background:rgba(242,238,228,.96)}
+    .topbar .place{opacity:.65}
+    .topbar nav{margin-left:auto;display:flex;gap:clamp(14px,2.6vw,42px)}
+    .topbar a{padding:5px 0;border-bottom:1px solid transparent}
+    .topbar a:hover,.topbar a:focus-visible{border-color:var(--gold);outline:0}
 
-    @media (max-width: 900px) {
-      .opening { grid-template-columns: 1fr; }
-      .opening aside { max-width: 78%; }
-      .fortress { min-height: 1250px; }
-      .engraving-field { width: 100%; height: 43%; opacity: .32; }
-      .wall { min-height: 1250px; grid-template-columns: repeat(12, 1fr); grid-template-rows: repeat(37, 29px); padding: 24px 16px 0; }
-      .journal-tower { grid-column: 1 / 8; grid-row: 2 / 20; }
-      .one { grid-column: 8 / 13; grid-row: 4 / 13; }
-      .signal { grid-column: 8 / 13; grid-row: 14 / 21; }
-      .church { grid-column: 1 / 6; grid-row: 21 / 31; }
-      .library { grid-column: 6 / 13; grid-row: 22 / 29; }
-      .witness { grid-column: 1 / 5; grid-row: 31 / 38; }
-      .gate { grid-column: 5 / 8; grid-row: 29 / 38; }
-      .prayer { grid-column: 8 / 10; grid-row: 30 / 38; }
-      .archive { grid-column: 10 / 13; grid-row: 29 / 38; }
-      .routes { grid-template-columns: 1fr; gap: 32px; }
-      .routes article, .routes article:first-child, .routes article:last-child { min-height: 0; padding: 24px 0 0; border-left: 0; border-top: 1px solid var(--hair); }
-    }
+    .hero{min-height:720px;position:relative;isolation:isolate;color:var(--paper);background:var(--night)}
+    .hero-art{position:absolute;inset:0 0 0 42%;z-index:-3;background:url("https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg") 55% 40%/cover no-repeat;filter:grayscale(1) contrast(1.15) brightness(.74)}
+    .hero:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(90deg,var(--night) 0 42%,rgba(11,38,57,.94) 52%,rgba(11,38,57,.34) 78%,rgba(7,26,40,.68) 100%),linear-gradient(180deg,rgba(7,26,40,.1),rgba(7,26,40,.7))}
+    .hero:after{content:"";position:absolute;right:-5%;top:-6%;width:48%;height:72%;z-index:-1;border-top:1px solid rgba(208,189,120,.55);border-right:1px solid rgba(208,189,120,.55);transform:rotate(3deg)}
+    .mast{padding:30px clamp(18px,4vw,72px) 0;display:flex;align-items:flex-start}
+    .mast img:first-child{width:min(760px,62vw);filter:brightness(0) invert(1);opacity:.94}
+    .mast .star{width:24px;height:24px;margin-left:auto;filter:brightness(1.4)}
+    .hero-copy{min-height:620px;padding:90px clamp(18px,4vw,72px) 64px;display:flex;flex-direction:column;justify-content:flex-end}
+    .hero-kicker{color:var(--gold-soft);margin-bottom:18px}
+    .hero h1{margin:0;max-width:6.6em;font-weight:400;font-size:clamp(76px,10vw,166px);line-height:.72;letter-spacing:-.055em}
+    .hero h1 em{font-style:normal;color:var(--gold-soft)}
+    .hero-bottom{margin-top:38px;display:grid;grid-template-columns:minmax(260px,520px) 1fr;gap:40px;align-items:end}
+    .hero-bottom p{margin:0;font-size:clamp(18px,1.8vw,27px);line-height:1.42;color:rgba(242,238,228,.9)}
+    .hero-bottom .verse{justify-self:end;text-align:right;color:var(--gold-soft)}
 
-    @media (max-width: 620px) {
-      .utility > span { display: none; }
-      .utility nav { width: 100%; justify-content: space-between; }
-      .masthead > img:first-child { width: 96%; }
-      .morning-star { display: none; }
-      .watchword::before, .watchword::after { width: 26px; margin: 0 9px; }
-      .opening { min-height: 0; padding-top: 42px; }
-      .opening h1 { font-size: clamp(58px, 19vw, 88px); }
-      .opening aside { max-width: 100%; }
-      .fortress-head { align-items: flex-start; gap: 12px; }
-      .fortress-head .state-control { flex-direction: column; align-items: end; }
-      .fortress { margin: 0; border-left: 0; border-right: 0; min-height: 1570px; }
-      .wall { min-height: 1570px; grid-template-rows: repeat(47, 27px); }
-      .journal-tower { grid-column: 1 / 13; grid-row: 2 / 22; }
-      .one { grid-column: 1 / 7; grid-row: 23 / 32; }
-      .signal { grid-column: 7 / 13; grid-row: 24 / 33; }
-      .church { grid-column: 1 / 8; grid-row: 33 / 41; }
-      .library { grid-column: 8 / 13; grid-row: 34 / 42; }
-      .witness { grid-column: 1 / 5; grid-row: 42 / 48; }
-      .gate { grid-column: 5 / 9; grid-row: 40 / 48; }
-      .prayer { display: none; }
-      .archive { grid-column: 9 / 13; grid-row: 42 / 48; }
-      .territory { padding: 12px; }
-      .territory h3 { font-size: 28px; }
-      .foundation { margin: 0; }
-      .closing { display: block; }
-      .closing .micro { margin: 32px 0 0; text-align: left; }
-    }
+    .threshold{padding:22px clamp(18px,4vw,72px);display:flex;gap:28px;align-items:center;background:var(--paper);border-bottom:1px solid var(--line)}
+    .threshold strong{font-weight:400;font-size:21px}
+    .threshold span:last-child{margin-left:auto;opacity:.6}
 
-    @media (prefers-reduced-motion: reduce) {
-      html { scroll-behavior: auto; }
-      .territory { transition: none; }
+    .city{padding:clamp(34px,4.5vw,76px);background:var(--paper)}
+    .city-grid{display:grid;grid-template-columns:1.25fr .72fr 1fr;grid-template-rows:290px 220px 240px;gap:12px}
+    .portal{position:relative;overflow:hidden;padding:26px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:flex-end;transition:transform .25s ease,border-color .25s ease}
+    .portal:hover{transform:translateY(-3px);border-color:var(--gold)}
+    .portal .eyebrow{position:absolute;left:26px;top:23px;color:var(--gold)}
+    .portal h2{margin:0;font-weight:400;font-size:clamp(34px,3.2vw,58px);line-height:.9;letter-spacing:-.025em}
+    .portal p{margin:12px 0 0;max-width:28em;font-size:15px;line-height:1.5}
+    .portal .go{margin-top:20px;width:max-content;padding-bottom:3px;border-bottom:1px solid currentColor;color:var(--gold)}
+
+    .journal{grid-column:1;grid-row:1/4;color:var(--paper);background:var(--night);min-height:750px;border-color:var(--night)}
+    .journal:before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(7,26,40,.1),rgba(7,26,40,.94)),url("https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg") 35% 50%/cover no-repeat;filter:grayscale(1) contrast(1.1);opacity:.44}
+    .journal>*{position:relative}
+    .journal h2{font-size:clamp(56px,5.7vw,94px);max-width:5em}
+    .journal p{font-size:17px;color:rgba(242,238,228,.8);max-width:22em}
+    .journal .ratio{position:absolute;right:22px;top:23px;color:rgba(208,189,120,.7)}
+
+    .one{grid-column:2/4;grid-row:1;background:var(--paper-2)}
+    .one h2{max-width:10em}
+    .church{grid-column:2;grid-row:2/4;color:var(--paper);background:var(--night-2);border-color:var(--night-2)}
+    .church p{color:rgba(242,238,228,.75)}
+    .library{grid-column:3;grid-row:2;background:#ded6c4}
+    .join{grid-column:3;grid-row:3;background:var(--gold);border-color:var(--gold);color:var(--night-2)}
+    .join .eyebrow,.join .go{color:var(--night-2)}
+
+    .gate-line{margin-top:12px;min-height:210px;display:grid;grid-template-columns:1fr 180px 1fr;align-items:end;background:var(--night);color:var(--paper);overflow:hidden}
+    .gate-copy{padding:34px clamp(18px,3vw,48px)}
+    .gate-copy.right{text-align:right}
+    .gate-copy h3{margin:7px 0 0;font-size:30px;font-weight:400}
+    .gate-mark{height:170px;position:relative;align-self:end;border:1px solid var(--gold-soft);border-bottom:0;border-radius:100px 100px 0 0;background:linear-gradient(180deg,rgba(208,189,120,.02),rgba(208,189,120,.13))}
+    .gate-mark:after{content:"THE GATE";position:absolute;left:50%;bottom:20px;transform:translateX(-50%);white-space:nowrap;color:var(--gold-soft);font:10px ui-monospace,monospace;letter-spacing:.18em}
+
+    .watch{padding:80px clamp(18px,4vw,72px) 90px;display:grid;grid-template-columns:.7fr 1.3fr;gap:7vw;align-items:end;background:var(--paper)}
+    .watch .number{font-size:clamp(88px,13vw,220px);line-height:.65;color:var(--gold);font-weight:400}
+    .watch blockquote{margin:0;font-size:clamp(34px,4.2vw,68px);line-height:1.02;font-weight:400;color:var(--night)}
+    .watch cite{display:block;margin-top:22px;font-style:normal;color:var(--gold)}
+
+    footer{padding:44px clamp(18px,4vw,72px) 24px;background:var(--night-2);color:var(--paper)}
+    .footer-main{display:flex;align-items:flex-end;gap:30px;padding-bottom:38px;border-bottom:1px solid var(--line-light)}
+    .footer-main strong{font-size:clamp(48px,6.5vw,102px);line-height:.8;font-weight:400;letter-spacing:-.04em}
+    .footer-main span{margin-left:auto;color:var(--gold-soft);text-align:right}
+    .footer-bottom{padding-top:18px;display:flex;gap:24px;color:rgba(242,238,228,.56)}
+    .footer-bottom span:last-child{margin-left:auto}
+
+    @media(max-width:900px){
+      .hero{min-height:650px}.hero-art{inset:0 0 0 24%}.hero:before{background:linear-gradient(90deg,var(--night) 0 26%,rgba(11,38,57,.9) 58%,rgba(7,26,40,.58) 100%),linear-gradient(180deg,rgba(7,26,40,.1),rgba(7,26,40,.78))}
+      .hero-copy{min-height:550px;padding-top:70px}.hero-bottom{grid-template-columns:1fr}.hero-bottom .verse{justify-self:start;text-align:left}
+      .city-grid{grid-template-columns:1fr 1fr;grid-template-rows:520px 260px 280px 220px}.journal{grid-column:1/3;grid-row:1}.one{grid-column:1/3;grid-row:2}.church{grid-column:1;grid-row:3/5}.library{grid-column:2;grid-row:3}.join{grid-column:2;grid-row:4}.journal h2{max-width:7em}
+      .watch{grid-template-columns:1fr}.watch .number{font-size:120px}.footer-main{display:block}.footer-main span{display:block;margin-top:28px;text-align:left}
     }
+    @media(max-width:620px){
+      .topbar .place{display:none}.topbar nav{width:100%;justify-content:space-between;gap:10px}.mast img:first-child{width:86%}.mast .star{display:none}
+      .hero{min-height:720px}.hero-art{inset:0;opacity:.68}.hero:before{background:linear-gradient(180deg,rgba(11,38,57,.6) 0%,rgba(11,38,57,.84) 48%,var(--night) 100%)}.hero-copy{min-height:640px;padding-top:60px}.hero h1{font-size:clamp(72px,23vw,110px)}
+      .threshold{display:none}.city{padding:16px}.city-grid{display:block}.portal{min-height:250px;margin-bottom:10px}.journal{min-height:520px}.journal h2{font-size:58px}.church{min-height:330px}.gate-line{grid-template-columns:1fr 105px 1fr}.gate-copy{padding:22px 14px}.gate-copy h3{font-size:22px}.gate-mark{height:130px}.watch{padding-top:62px}.footer-bottom{display:block}.footer-bottom span:last-child{display:block;margin-top:12px}
+    }
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.portal{transition:none}}
   </style>
 </head>
 <body>
-  <main class="page" data-design="living-fortress-v2">
-    <div class="utility micro">
-      <span>Westside Watch · Vaughan / Toronto</span>
-      <nav aria-label="Primary">
-        <a href="/journal/">Journal</a>
-        <a href="https://westsidewatch.github.io/one/">ONE</a>
-        <a href="https://westsidewatch.github.io/join/">Join</a>
-        <a href="/editor">Design</a>
-      </nav>
-    </div>
+<main class="shell" data-design="living-fortress-v2" data-revision="real-front-door-02">
+  <div class="topbar micro">
+    <span class="place">Westside Watch · Vaughan / Toronto</span>
+    <nav aria-label="Primary">
+      <a href="/journal/">Journal</a>
+      <a href="https://westsidewatch.github.io/one/">ONE</a>
+      <a href="https://westsidewatch.github.io/join/">Join</a>
+      <a href="/editor">Design</a>
+    </nav>
+  </div>
 
-    <header class="masthead">
+  <header class="hero">
+    <div class="hero-art" aria-hidden="true"></div>
+    <div class="mast">
       <img src="/images/westside-watch-masthead-landscape.svg" alt="Westside Watch">
-      <img class="morning-star" src="/images/westside-watch-morning-star.svg" alt="">
-      <div class="watchword">Watch for the Dawn</div>
-    </header>
-
-    <section class="opening" aria-labelledby="fortress-title">
-      <h1 id="fortress-title">A CITY<br>STILL <em>AWAKE.</em></h1>
-      <aside>
-        <div class="micro" style="color:var(--gold)">A · LIVING FORTRESS / HOMEPAGE V2</div>
-        <p>西望不是把內容放進同樣大小的盒子。每一條信息取得自己的領地；高度形成垛口，入口連接閱讀，時間讓整座城安靜地改變。</p>
-      </aside>
-    </section>
-
-    <div class="fortress-head">
-      <h2>The Living Fortress / 活的城</h2>
-      <div class="state-control micro">
-        <span id="wall-state">Watch state · I</span>
-        <button class="shift-button micro" id="shift-wall" type="button" aria-pressed="false">Let the wall yield</button>
+      <img class="star" src="/images/westside-watch-morning-star.svg" alt="">
+    </div>
+    <div class="hero-copy">
+      <div class="hero-kicker micro">Westside Watch / 西望</div>
+      <h1>WATCH<br>FOR THE <em>DAWN.</em></h1>
+      <div class="hero-bottom">
+        <p>在黑夜仍然守望，在清晨尚未來到以前保存光。文章、聖經、教會生活與研究，在同一座城中彼此照亮。</p>
+        <div class="verse micro">The night is far spent,<br>the day is at hand.<br>Romans 13:12</div>
       </div>
     </div>
+  </header>
 
-    <section class="fortress" aria-label="Westside living editorial wall">
-      <figure class="engraving-field" aria-hidden="true">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/4/4f/Dore_nwe_jeruzalem_grt.jpg" alt="">
-      </figure>
-      <div class="gold-trace" aria-hidden="true"></div>
+  <div class="threshold">
+    <strong>一個入口，四條路。</strong>
+    <span class="micro">Read · Study · Gather · Remember</span>
+    <span class="micro">Scroll into the city ↓</span>
+  </div>
 
-      <div class="wall" id="living-wall">
-        <article class="territory journal-tower">
-          <div class="label micro">Journal portal · Current volume</div>
-          <h3>守望，<br>一座光明的城</h3>
-          <p class="portal-note">Journal 是城中的展覽，不是整座城。從這座 5:8 瞭望塔進入 Vol.00 的獨立閱讀世界。</p>
-          <a class="enter micro" href="/journal/">Enter Journal →</a>
-          <span class="ratio micro">5:8 / Highest editorial gravity</span>
-        </article>
+  <section class="city" aria-label="Westside Watch main destinations">
+    <div class="city-grid">
+      <a class="portal journal" href="/journal/">
+        <span class="eyebrow micro">Journal · Current volume</span>
+        <span class="ratio micro">5:8</span>
+        <h2>守望，<br>一座光明的城</h2>
+        <p>進入本期 Journal。圖像、文字、見證與禱告在一個獨立的閱讀世界中展開。</p>
+        <span class="go micro">Enter Journal →</span>
+      </a>
 
-        <article class="territory one">
-          <div class="label micro">ONE · Scripture</div>
-          <h3>路上，祂向我們<br>打開聖經</h3>
-          <a class="enter micro" href="https://westsidewatch.github.io/one/">Open ONE →</a>
-        </article>
+      <a class="portal one" href="https://westsidewatch.github.io/one/">
+        <span class="eyebrow micro">ONE · Bible study</span>
+        <h2>路上，祂向我們打開聖經。</h2>
+        <p>從一章、一卷書、一條路線開始，把經文、歷史、地圖與串珠重新連起來。</p>
+        <span class="go micro">Open ONE →</span>
+      </a>
 
-        <article class="territory signal">
-          <div class="label micro">Now · The first watch</div>
-          <h3>城牆之上，<br>黎明之前</h3>
-          <p>此刻最需要被看見的一條信息。</p>
-        </article>
+      <a class="portal church" href="https://westsidewatch.github.io/join/">
+        <span class="eyebrow micro">Living Water West</span>
+        <h2>一座城，<br>也是一個家。</h2>
+        <p>Sunday Worship · Bible Study · Prayer · Life Together</p>
+        <span class="go micro">Church life →</span>
+      </a>
 
-        <article class="territory church">
-          <div class="label micro">Living Water West</div>
-          <h3>一座城，<br>也是一個家</h3>
-          <p>Worship · Bible Study · Prayer · Life Together</p>
-          <a class="enter micro" href="https://westsidewatch.github.io/join/">Come and see →</a>
-        </article>
-
-        <article class="territory library">
-          <div class="label micro">Dawn Library</div>
-          <h3>被保存的光</h3>
-          <p>地圖、文章、歷史與研究在此沉澱。</p>
-        </article>
-
-        <article class="territory witness">
-          <div class="label micro">Witness</div>
-          <h3>在日常中<br>看見神</h3>
-        </article>
-
-        <article class="territory prayer">
-          <div class="label micro">Prayer</div>
-          <h3>主啊，<br>願你來</h3>
-        </article>
-
-        <article class="territory archive">
-          <div class="label micro">Archive · Time</div>
-          <h3>留下來</h3>
-          <p>舊內容退後，卻不消失。</p>
-        </article>
-
-        <div class="gate">
-          <a class="micro" href="/journal/" aria-label="Enter through The Gate to Journal">The Gate</a>
-        </div>
+      <div class="portal library">
+        <span class="eyebrow micro">Dawn Library · 黎明書局</span>
+        <h2>被保存的光。</h2>
+        <p>地圖、文章、史料與研究資源逐步沉澱，成為可以再次被調用的知識。</p>
       </div>
-    </section>
-    <div class="foundation" aria-hidden="true"></div>
 
-    <section class="routes" aria-label="Living Fortress principles">
-      <article>
-        <div class="micro" style="color:var(--gold)">Brick / 磚</div>
-        <h4>信息有重量。</h4>
-        <p>尺寸與位置是編輯判斷，不由流量自動決定。內容先成為具體的磚，才進入這座城。</p>
-      </article>
-      <article>
-        <div class="micro" style="color:var(--gold)">Battlement / 垛</div>
-        <h4>輪廓來自內容與空白。</h4>
-        <p>城牆不是貼在卡片後面的裝飾圖。高低、尺度、相鄰關係和中央 Gate 共同形成 Westside 的建築輪廓。</p>
-      </article>
-      <article>
-        <div class="micro" style="color:var(--gold)">Flow / 流</div>
-        <h4>時間使彼此讓位。</h4>
-        <p>新的信息進場，鄰近領地安靜移動；舊內容沉降成檔案，而不是被無限向下推走。</p>
-      </article>
-    </section>
+      <a class="portal join" href="https://westsidewatch.github.io/join/">
+        <span class="eyebrow micro">The Gate</span>
+        <h2>Come<br>and see.</h2>
+        <span class="go micro">Join us →</span>
+      </a>
+    </div>
 
-    <footer class="closing">
-      <strong>信息為磚，<br>輕重成垛，<br>時間成流。</strong>
-      <div class="micro">Westside Watch<br>A · Living Fortress<br>Candidate 01 · Homepage V2</div>
-    </footer>
-    <div class="provenance micro">Engraving territory: Gustave Doré, The New Jerusalem · public-domain source · image is material, not wallpaper</div>
-  </main>
+    <div class="gate-line" aria-label="The Gate">
+      <div class="gate-copy">
+        <span class="micro" style="color:var(--gold-soft)">West</span>
+        <h3>從閱讀走向相遇。</h3>
+      </div>
+      <a class="gate-mark" href="https://westsidewatch.github.io/join/" aria-label="Enter The Gate"></a>
+      <div class="gate-copy right">
+        <span class="micro" style="color:var(--gold-soft)">East</span>
+        <h3>從守望走向黎明。</h3>
+      </div>
+    </div>
+  </section>
 
-  <script>
-    const wall = document.getElementById('living-wall');
-    const button = document.getElementById('shift-wall');
-    const state = document.getElementById('wall-state');
+  <section class="watch">
+    <div class="number">12</div>
+    <blockquote>
+      黑夜已深，<br>白晝將近。
+      <cite class="micro">Romans 13:12 · Watch for the Dawn</cite>
+    </blockquote>
+  </section>
 
-    function setShifted(shifted) {
-      wall.classList.toggle('is-shifted', shifted);
-      button.setAttribute('aria-pressed', String(shifted));
-      button.textContent = shifted ? 'Return to first watch' : 'Let the wall yield';
-      state.textContent = shifted ? 'Watch state · II / neighbours yield' : 'Watch state · I';
-    }
-
-    button.addEventListener('click', () => setShifted(!wall.classList.contains('is-shifted')));
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      window.setTimeout(() => setShifted(true), 1400);
-    }
-  </script>
+  <footer>
+    <div class="footer-main">
+      <strong>Stay awake.<br>Keep watch.</strong>
+      <span class="micro">Westside Watch<br>西望<br>Vaughan · Toronto</span>
+    </div>
+    <div class="footer-bottom micro">
+      <span>Journal · ONE · Living Water West · Dawn Library</span>
+      <span>Engraving: Gustave Doré · public domain</span>
+    </div>
+  </footer>
+</main>
 </body>
 </html>
