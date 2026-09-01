@@ -10,6 +10,10 @@ from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();STATE=HOME/'coordination'/'worker-state.json';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'};PRIORITY={'critical':0,'high':1,'normal':2,'low':3}
+class TaskResultError(RuntimeError):
+ def __init__(self,result):
+  self.result=result if isinstance(result,dict) else {'ok':False,'error':str(result)}
+  super().__init__(str(self.result.get('cause') or self.result.get('error') or 'task_failed'))
 def now():return datetime.now(timezone.utc).isoformat()
 def load_state():
  try:return json.loads(STATE.read_text()) if STATE.exists() else {}
@@ -55,7 +59,7 @@ def local_exec(msg):
   exe=Path(argv[0]).name
   if exe not in ALLOWED_LOCAL_EXE:raise RuntimeError('local_exec_executable_not_allowed:'+exe)
   cp=subprocess.run(argv,cwd=str(cwd),text=True,capture_output=True,timeout=timeout);results.append({'index':i,'argv':argv,'cwd':str(cwd),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]})
-  if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i}
+  if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i,'failed_command':argv,'failed_returncode':cp.returncode,'failed_stdout':(cp.stdout or '')[-12000:],'failed_stderr':(cp.stderr or '')[-12000:]}
  return {'ok':True,'results':results}
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
@@ -82,11 +86,11 @@ def main():
    result=dispatch(msg);ok=not isinstance(result,dict) or result.get('ok',True)
    if ok:
     done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence_for(msg),'PASS',attempt,True)
-   else:raise RuntimeError(str(result.get('cause') or result.get('error') or 'task_failed'))
+   else:raise TaskResultError(result)
   except Exception as e:
-   failures+=1;terminal=attempt>=MAX_ATTEMPTS;err=type(e).__name__+': '+str(e);state['last_error']={'message_id':mid,'attempt':attempt,'error':err[:1000]};state['last_result']={'ok':False,'error':err};status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=err[:1000],completed_at=now() if terminal else None)
+   failures+=1;terminal=attempt>=MAX_ATTEMPTS;err=type(e).__name__+': '+str(e);failure_result=e.result if isinstance(e,TaskResultError) else {'ok':False,'error':err};failure_result={**failure_result,'error':err,'parent_goal_preserved':True,'recovery_required':terminal};state['last_error']={'message_id':mid,'attempt':attempt,'error':err[:1000]};state['last_result']=failure_result;status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=err[:1000],completed_at=now() if terminal else None,result=failure_result)
    if terminal:
-    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':err[:1000]};state.pop('active_message_id',None)
-   reply(msg,{'ok':False,'error':err,'parent_goal_preserved':True,'recovery_required':terminal},evidence_for(msg)+['coordination-worker-error'],'FAIL' if terminal else 'RETRYING',attempt,terminal)
+    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':err[:1000],'result':failure_result};state.pop('active_message_id',None)
+   reply(msg,failure_result,evidence_for(msg)+['coordination-worker-error','command-level-failure-evidence'],'FAIL' if terminal else 'RETRYING',attempt,terminal)
  state['queue_depth']=max(0,len(queue)-min(len(queue),MAX_PER_RUN));state['checked_at']=now();save(state);return 1 if failures else 0
 if __name__=='__main__':raise SystemExit(main())
