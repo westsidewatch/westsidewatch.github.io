@@ -1,0 +1,29 @@
+name: Doré Autonomous Loop Contract
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/**'
+      - 'dore-design/knowledge-lab/a2a/**'
+      - 'dore-design/knowledge-lab/resources/**'
+      - 'dore-design/knowledge-lab/skills/**'
+      - '.github/workflows/dore-loop-contract.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/**'
+      - 'dore-design/knowledge-lab/a2a/**'
+      - 'dore-design/knowledge-lab/resources/**'
+      - 'dore-design/knowledge-lab/skills/**'
+
+jobs:
+  loop-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify every engineered loop component
+        run: python3 local/dore-local/loop_contract_acceptance.py
