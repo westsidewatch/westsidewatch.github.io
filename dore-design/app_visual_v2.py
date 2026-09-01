@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Doré Design 1.7 — locked #262 front door plus editable multi-page Journal."""
+"""Doré Design 1.7.1 — editable multi-page Journal with source-fidelity assets."""
 import mimetypes,os
 from pathlib import Path
 from http.server import ThreadingHTTPServer
@@ -9,22 +9,27 @@ import multipage_wysiwyg,journal_wysiwyg
 
 ROOT=Path(__file__).resolve().parent.parent
 PACKAGE=journal_wysiwyg.PACKAGE
-STRUCTURE_HTML=(visual.HTML.replace('<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>','<div id="top"><b>DORÉ DESIGN 1.7 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'))
+STRUCTURE_HTML=(visual.HTML.replace('<div id="top"><b>DORÉ DESIGN 1.0 · NEW WESTSIDE</b>','<div id="top"><b>DORÉ DESIGN 1.7.1 · STRUCTURE</b><button onclick="location.href=\'/editor\'">WYSIWYG</button><button onclick="location.href=\'/\'">Preview</button>'))
 PREVIEW_EDIT_ENTRY='''<style>.dore-preview-edit{position:fixed;right:18px;bottom:18px;z-index:2147483647;padding:9px 12px;border:1px solid rgba(208,189,120,.7);background:rgba(7,26,40,.88);color:#f2eee4!important;text-decoration:none!important;font:10px/1.2 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;text-transform:uppercase;backdrop-filter:blur(4px);box-shadow:0 4px 18px rgba(0,0,0,.18)}</style><a class="dore-preview-edit" href="/editor?page=homepage" aria-label="Return to Doré Design editor">Edit in Doré Design</a>'''
 
 def home_preview():
     html=multipage_wysiwyg.render_canvas('homepage',edit=False)
     return html.replace('</body>',PREVIEW_EDIT_ENTRY+'</body>',1)
 
-def package_file(request_path):
-    if not PACKAGE.exists():return None
+def safe_file(root,request_path):
+    if not root.exists():return None
     rel=request_path.lstrip('/')
     if not rel:return None
-    candidate=(PACKAGE/rel).resolve();root=PACKAGE.resolve()
-    try:candidate.relative_to(root)
+    candidate=(root/rel).resolve();base=root.resolve()
+    try:candidate.relative_to(base)
     except ValueError:return None
     if candidate.is_dir():candidate=candidate/'index.html'
     return candidate if candidate.is_file() else None
+
+def design_asset(request_path):
+    # Imported Journal package is primary; local source static assets are a fidelity
+    # fallback for files used by the real site but missed by the generated package.
+    return safe_file(PACKAGE,request_path) or safe_file(ROOT/'static',request_path)
 
 class H(visual.H):
     def send_bytes(self,status,body,ctype):
@@ -54,15 +59,15 @@ class H(visual.H):
             return self.send_bytes(200,html.encode('utf-8'),'text/html; charset=utf-8')
         if path=='/api/journal/status':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='journal-vol-00'),None)
-            return self.out(200,{'ok':bool(p and journal_wysiwyg.available()),'page_id':'journal-vol-00','editable':True,'runtime_mirror':False,'node_count':len(p.get('nodes',[])) if p else 0,'template_imported':journal_wysiwyg.available(),'renderer':p.get('renderer') if p else None,'revision':w.get('revision')})
+            return self.out(200,{'ok':bool(p and journal_wysiwyg.available()),'page_id':'journal-vol-00','editable':True,'runtime_mirror':False,'node_count':len(p.get('nodes',[])) if p else 0,'template_imported':journal_wysiwyg.available(),'renderer':p.get('renderer') if p else None,'revision':w.get('revision'),'asset_fallback':'package+repo-static'})
         if path=='/api/mirror/status':return self.out(200,{'ok':True,'retired':True,'mode':'retired-runtime-mirror','journal':'/journal/','replacement':'workspace-page:journal-vol-00'})
         if path=='/api/preview/status':
             w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='homepage'),None);journal=next((p for p in w.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
             return self.out(200,{'ok':bool(home and journal),'mode':'multi-page-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':'homepage','page_count':len(w.get('pages',[])),'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'runtime_mirror':False,'structure_editor':'/structure-editor'})
         if path=='/api/health':
             w=visual.base.workspace();journal=next((p for p in w.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
-            return self.out(200,{'ok':True,'service':'dore-design','version':'1.7','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262-locked','preview_mode':'multi-page-shared-workspace','design_direction':'watch-for-the-dawn','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False})
-        p=package_file(path)
+            return self.out(200,{'ok':True,'service':'dore-design','version':'1.7.1','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'approved-front-door-262-locked','preview_mode':'multi-page-shared-workspace','design_direction':'watch-for-the-dawn','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False,'journal_asset_fallback':'package+repo-static'})
+        p=design_asset(path)
         if p:
             ctype=mimetypes.guess_type(str(p))[0] or 'application/octet-stream';return self.send_bytes(200,p.read_bytes(),ctype)
         return super().do_GET()
