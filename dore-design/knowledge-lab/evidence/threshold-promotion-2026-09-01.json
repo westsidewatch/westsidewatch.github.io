@@ -1,0 +1,33 @@
+{
+  "task": "threshold-study-promotion",
+  "locked_baseline": "dore-design/new-westside/homepage-v2-living-fortress.html",
+  "locked_baseline_sha256_before": "88117e881a263b5587ce9774652040d3c453bb25290fe93e32cfa019484ce069",
+  "locked_baseline_sha256_after": "88117e881a263b5587ce9774652040d3c453bb25290fe93e32cfa019484ce069",
+  "locked_baseline_unchanged": true,
+  "storybook_evidence_checks": {
+    "threshold_height_660_present": true,
+    "threshold_inset_54_present": true
+  },
+  "experimental_homepage": "dore-design/new-westside/homepage-v3-threshold-promoted.html",
+  "promoted": [
+    {
+      "pattern": "hero_min_height",
+      "from": "720px",
+      "to": "660px",
+      "decision": "PROMOTE"
+    },
+    {
+      "pattern": "hero_visual_threshold",
+      "from": "42%",
+      "to": "54%",
+      "decision": "PROMOTE"
+    }
+  ],
+  "rejected_or_deferred": [
+    "typography changes: not tested by ThresholdStudy",
+    "navigation changes: not tested by ThresholdStudy",
+    "content/IA changes: not tested by ThresholdStudy",
+    "mobile breakpoint changes: not tested by ThresholdStudy",
+    "gradient boundary changes: not explicitly tested by ThresholdStudy"
+  ]
+}

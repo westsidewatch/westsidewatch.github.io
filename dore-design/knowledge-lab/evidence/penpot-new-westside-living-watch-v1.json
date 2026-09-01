@@ -1,0 +1,51 @@
+{
+  "schema": "dore.penpot-design-evidence.v1",
+  "created_at": "2026-09-01T13:18:00-04:00",
+  "file": {
+    "id": "c269caa0-e456-818c-8008-8b20f25b88a8",
+    "name": "Westside Watch — Design System 1.0",
+    "page_id": "c269caa0-e456-818c-8008-8b20f25b88a9",
+    "page_name": "Page 1"
+  },
+  "template": {
+    "id": "fca4e052-7a4d-80fd-8008-8f9dc6b5dd45",
+    "name": "02 — Westside Watch Homepage v0.2 — VISIBLE",
+    "use": "cloned as the completed 1440px layout seed; original template preserved"
+  },
+  "result": {
+    "id": "a07802e7-e63c-8098-8008-92c1af9d364f",
+    "name": "07 — 新西望 NEW WESTSIDE — LIVING WATCH v1",
+    "width": 1440,
+    "height": 2200,
+    "child_count": 71,
+    "source_template_modified": false
+  },
+  "design_language": {
+    "thesis": "Living Paper × city watch × dawn light",
+    "dominant_idea": "Faith does not escape the city; it keeps watch for light before dawn.",
+    "palette": {
+      "living_paper": "#F3ECDD",
+      "ink": "#17212B",
+      "midnight": "#0C2B3E",
+      "dawn_gold": "#D4B655",
+      "brick_rust": "#A64B35",
+      "field_sage": "#627966"
+    },
+    "patterns": [
+      "editorial asymmetric grid",
+      "bilingual oversized typography",
+      "watchtower and half-sun symbol",
+      "battlement card rhythm",
+      "issue/index metadata",
+      "restrained print-like spot colors"
+    ]
+  },
+  "verification": {
+    "live_document_probe": true,
+    "structure_probe": true,
+    "png_export": true,
+    "png_bytes": 214732,
+    "z_order_corrected_after_visual_review": true,
+    "final_visual_review": "PASS"
+  }
+}
