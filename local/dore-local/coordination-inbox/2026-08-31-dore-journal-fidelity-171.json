@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-journal-fidelity-171",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-editable-journal-fidelity",
+  "subject": "Deploy Doré Design 1.7.1 Journal slogan and asset fidelity fixes",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 240
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull merged PR #270 / merge 6946d00a7f1b082a8c6bf96b26198449cc520301. Preserve the locked #262 homepage and the editable journal-vol-00 multi-page architecture. Refresh the Journal import to renderer journal-imported-dom-v2. Verify the cover slogan Watch for the Dawn renders as text between its original gold rules rather than a filled rectangle, local Journal assets are served from the imported package with repo static fallback, Journal remains workspace-editable, and the deployment acceptance code is DORE_DESIGN_JOURNAL_FIDELITY_PASS. Return exact execution evidence."
+}
