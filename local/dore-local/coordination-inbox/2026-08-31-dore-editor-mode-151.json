@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-editor-mode-151",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-editor-mode",
+  "subject": "Deploy Doré Design 1.5.1 editor chrome without touching approved homepage",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 180
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull merged PR #266. Preserve the approved #262 homepage template exactly. Restart Doré Design and verify /editor visibly contains Pages, Layers, Inspector, Verify and Refresh; /editor-canvas renders the exact approved responsive front door with editable workspace bindings; / remains the unchanged clean preview; /api/health reports 1.5.1 and approved-front-door-262-locked. Return exact acceptance evidence."
+}
