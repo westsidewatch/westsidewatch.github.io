@@ -1,0 +1,31 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "agent-core-ownership-repair-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "ACCEPT OWNERSHIP REPAIR: Thin Runtime + Doré Agent Core",
+  "related_goal": "dore-a2a-storybook-agent-core-ownership",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {"argv":["git","pull","--ff-only"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/loop_contract_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300},
+    {"argv":["python3","local/dore-local/dore_agent_core.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":1800}
+  ],
+  "acceptance": {
+    "must_observe": [
+      "resident_runtime.py is Thin Runtime and contains no research decision branching",
+      "dore_agent_core.py owns RESEARCH_REQUIRED through RESUME_PARENT lifecycle",
+      "loop contract acceptance PASS",
+      "Doré Agent Core executes one real no-user-input step against the preserved A2A <-> Storybook parent goal",
+      "parent goal identity is preserved",
+      "any research transition is produced by Doré Agent Core rather than Resident Runtime"
+    ],
+    "forbidden": [
+      "Resident Runtime selecting research strategy",
+      "identical retry without information gain",
+      "claim PASS without local evidence"
+    ]
+  }
+}
