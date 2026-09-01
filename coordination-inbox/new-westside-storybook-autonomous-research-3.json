@@ -1,0 +1,26 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "new-westside-storybook-autonomous-research-3",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Continue real New Westside × Storybook loop; close the unknown gap autonomously",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "high",
+  "requires_reply": true,
+  "task": {
+    "type": "autonomous_capability_loop",
+    "parent_source_message_id": "new-westside-storybook-real-loop-2",
+    "parent_goal": "New Westside visual construction",
+    "instructions": "Resume the preserved parent goal from result-new-westside-storybook-real-loop-2. The observed unknown gap is a Storybook/Vite parse error in NewWestsideEditorialHero.stories.js at approximately line 82. Do NOT wait for a human or ChatGPT to prescribe the code fix. Treat the existing RESEARCH_REQUIRED artifact as an active learning request. Inspect the generated story and exact parser evidence; search/retrieve existing local Knowledge Lab, Storybook examples, installed package behavior/docs or other trustworthy resources available to Doré; form a hypothesis; run the smallest isolated experiment; repair the generator or specimen; verify with npm run build-storybook; if successful, persist the lesson as reusable failure memory/skill with trigger, provenance/evidence, scope and verification; then resume the New Westside parent task and produce the Editorial Hero Storybook specimens. Preserve the locked #262 homepage unchanged. If the first hypothesis fails, use the new evidence for a different hypothesis rather than blind retry. Continue while information gain exists. Stop only at PASS or a genuine HUMAN_GATE that cannot be crossed by tools/research.",
+    "acceptance": [
+      "No human-authored code fix is supplied in this task",
+      "Existing RESEARCH_REQUIRED state is consumed rather than treated as terminal failure",
+      "Doré records diagnosis/research evidence and a changed hypothesis for each failed experiment",
+      "Storybook static build passes",
+      "New Westside Editorial Hero specimens exist",
+      "Locked homepage #262 remains unchanged",
+      "New reusable skill or failure-memory evidence is promoted from the solved gap",
+      "Parent New Westside goal is resumed after learning"
+    ]
+  }
+}
