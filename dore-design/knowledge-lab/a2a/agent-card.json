@@ -1,0 +1,40 @@
+{
+  "name": "Doré",
+  "description": "Westside Watch resident learning, research, design and execution agent.",
+  "url": "local://dore-resident-runtime",
+  "version": "0.1.0",
+  "protocolVersion": "1.0",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": true,
+    "stateTransitionHistory": true
+  },
+  "defaultInputModes": ["application/json", "text/plain"],
+  "defaultOutputModes": ["application/json", "text/plain"],
+  "skills": [
+    {
+      "id": "autonomous-capability-recovery",
+      "name": "Autonomous capability recovery",
+      "description": "Detect gaps, research resources, run minimal experiments, promote verified skills and resume the preserved parent goal.",
+      "tags": ["research", "learning", "recovery", "durable execution"]
+    },
+    {
+      "id": "storybook-design-research",
+      "name": "Storybook design research",
+      "description": "Use Storybook as an executable visual knowledge laboratory for New Westside.",
+      "tags": ["storybook", "design-system", "visual-research"]
+    }
+  ],
+  "interfaces": [
+    {
+      "transport": "dore.mail.v2",
+      "role": "durable compatibility transport",
+      "status": "active"
+    },
+    {
+      "transport": "A2A HTTP+JSON / JSON-RPC",
+      "role": "standards compatibility adapter",
+      "status": "adapter-present-endpoint-not-yet-exposed"
+    }
+  ]
+}
