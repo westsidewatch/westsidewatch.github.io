@@ -1,0 +1,22 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "runtime-self-update-repair-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Repair resident runtime self-update tracking ref without human intervention",
+  "related_goal": "A2A <-> Storybook autonomous loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git", "fetch", "origin", "+refs/heads/main:refs/remotes/origin/main"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "acceptance": {
+    "expected_next_runtime_behavior": "existing resident runtime sees advanced origin/main, self-updates control files, exec-restarts, and publishes telemetry with runtime >= v0.6",
+    "human_action_required": false
+  }
+}
