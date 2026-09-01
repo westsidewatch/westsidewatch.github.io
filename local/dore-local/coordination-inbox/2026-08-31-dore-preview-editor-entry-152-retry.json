@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-preview-editor-entry-152-retry",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-design-preview-editor-entry",
+  "subject": "Retry Doré Design 1.5.2 preview return-to-editor entry with valid local_exec schema",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 180
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull current main containing merged PR #267. Do not modify the locked #262 homepage design. Deploy Doré Design 1.5.2, restart the resident localhost:4310 service, and verify that GET / has the fixed preview-only Edit in Doré Design link to /editor, GET /editor still exposes Pages/Layers/Inspector, GET /editor-canvas does not include the preview-only button, and the locked Hero/city-grid/Gate/Watch design remains unchanged. Return exact acceptance evidence."
+}
