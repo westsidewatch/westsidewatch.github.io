@@ -1,0 +1,25 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-preview-editor-entry-152",
+  "thread_id": "dore-design-preview-editor-entry",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "subject": "Deploy Doré Design 1.5.2 preview return-to-editor entry",
+  "priority": "high",
+  "related_goal": "dore-design-preview-editor-entry",
+  "requires_reply": true,
+  "body": {
+    "commands": [
+      ["git", "pull", "--ff-only"],
+      ["python3", "dore-design/deploy_visual_current.py"],
+      ["python3", "dore-design/local_acceptance.py"]
+    ],
+    "acceptance": [
+      "GET /api/health returns version 1.5.2 and preview_edit_entry=true",
+      "GET / contains class=dore-preview-edit linking to /editor",
+      "GET /editor still exposes Pages, Layers and Inspector",
+      "GET /editor-canvas does not show the preview-only return button",
+      "locked #262 Hero, city-grid, Gate and Watch layout remains unchanged"
+    ]
+  }
+}
