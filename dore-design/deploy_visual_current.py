@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Install Doré Design 1.7 and prove Journal is an editable workspace page."""
+"""Install Doré Design 1.7.1 and prove Journal editability plus import fidelity."""
 import json,subprocess,urllib.request
 from pathlib import Path
 ROOT=Path(__file__).resolve().parent.parent;BASE='http://127.0.0.1:4310'
 def read(path):return urllib.request.urlopen(BASE+path,timeout=12).read().decode('utf-8')
+def raw(path):return urllib.request.urlopen(BASE+path,timeout=12).read()
 def post(payload):
  r=urllib.request.Request(BASE+'/api/workspace',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
  return json.loads(urllib.request.urlopen(r,timeout=12).read().decode('utf-8'))
@@ -25,16 +26,21 @@ if jpage and jpage.get('nodes'):
  probe_ok=marker in read('/journal/')
  post({'op':'set_node','page_id':'journal-vol-00','id':n['id'],'patch':{'text':original}})
  restored=marker not in read('/journal/')
+asset_ok=False
+try:asset_ok=len(raw('/images/westside-watch-morning-star.svg'))>100
+except Exception:asset_ok=False
 checks={
- 'version_current':health.get('version')=='1.7',
+ 'version_current':health.get('version')=='1.7.1',
  'homepage_locked':health.get('layout_source')=='approved-front-door-262-locked' and all(m in preview for m in home_markers) and all(m in home_canvas for m in home_markers),
  'multi_page_mode':health.get('preview_mode')=='multi-page-shared-workspace' and status.get('mode')=='multi-page-shared-workspace',
- 'journal_workspace_page':bool(jpage) and jpage.get('renderer')=='journal-imported-dom-v1' and len(jpage.get('nodes',[]))>=20,
+ 'journal_workspace_page':bool(jpage) and jpage.get('renderer')=='journal-imported-dom-v2' and len(jpage.get('nodes',[]))>=20,
  'journal_editable_status':health.get('journal_mode')=='editable-workspace-page' and health.get('runtime_mirror') is False and jstatus.get('editable') is True and jstatus.get('runtime_mirror') is False,
  'journal_preview_bound':'data-dore-page="journal-vol-00"' in journal and 'dore-journal-bound' in journal,
  'journal_canvas_editable':'data-dore-canvas="true"' in journal_canvas and 'data-dore-page="journal-vol-00"' in journal_canvas and 'contentEditable' in journal_canvas,
- 'editor_multi_page':'DORÉ DESIGN 1.7 · MULTI-PAGE EDITOR' in editor and 'journal-vol-00' in editor and 'PAGES' in editor and 'INSPECTOR' in editor,
+ 'editor_multi_page':'MULTI-PAGE EDITOR' in editor and 'journal-vol-00' in editor and 'PAGES' in editor and 'INSPECTOR' in editor,
  'homepage_links_journal':'href="/journal/"' in preview,
  'workspace_mutation_drives_journal':probe_ok and restored,
+ 'journal_slogan_preserved':'Watch for the Dawn' in journal and '<p class="hero__watchword"><span></span><em><dore-text' in journal,
+ 'journal_asset_fallback':health.get('journal_asset_fallback')=='package+repo-static' and jstatus.get('asset_fallback')=='package+repo-static' and asset_ok,
 }
-ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_EDITABLE_JOURNAL_PASS' if ok else 'DORE_DESIGN_EDITABLE_JOURNAL_FAIL','health':health,'journal_status':jstatus,'journal_import':journal_import.stdout[-1000:],'workspace_revision':workspace.get('revision'),'journal_node_count':len(jpage.get('nodes',[])) if jpage else 0,'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
+ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_DESIGN_JOURNAL_FIDELITY_PASS' if ok else 'DORE_DESIGN_JOURNAL_FIDELITY_FAIL','health':health,'journal_status':jstatus,'journal_import':journal_import.stdout[-1000:],'workspace_revision':workspace.get('revision'),'journal_node_count':len(jpage.get('nodes',[])) if jpage else 0,'checks':checks},ensure_ascii=False));raise SystemExit(0 if ok else 1)
