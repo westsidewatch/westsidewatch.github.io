@@ -27,9 +27,17 @@ def pending(prev):
  out.sort(key=lambda m:(PRIORITY.get(str(m.get('priority','normal')).lower(),2),0 if str(m.get('related_goal','')).startswith('dore-design') else 1,str(m.get('_source_name',''))))
  for m in out:m.pop('_source_name',None)
  return done,out
+def run_script(name,timeout=1800):
+ cp=subprocess.run(['python3',str(ROOT/'local/dore-local'/name)] if (ROOT/'local/dore-local'/name).exists() else ['python3',str(ROOT/'dore-design'/name)],cwd=ROOT,text=True,capture_output=True,timeout=timeout);result={'ok':cp.returncode==0,'returncode':cp.returncode,'stderr':(cp.stderr or '')[-12000:]}
+ try:result.update(json.loads((cp.stdout or '').strip().splitlines()[-1]))
+ except:result['stdout']=(cp.stdout or '')[-20000:]
+ return result
+def product_monitor():
+ try:return run_script('product_monitor.py',30)
+ except Exception as e:return {'ok':False,'product_monitor':'UNKNOWN','error':type(e).__name__+': '+str(e)}
 def reply(msg,result,evidence,status,attempt,terminal=False):
- mid=str(msg.get('message_id') or 'unknown');payload={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'transport':'PASS','execution':'PASS' if result.get('ok') else 'FAIL','result':result}
- return send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(payload,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+mid],thread_id=msg.get('thread_id'),message_id='result-'+mid,metadata={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal})
+ mid=str(msg.get('message_id') or 'unknown');monitor=product_monitor();payload={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'transport':'PASS','execution':'PASS' if result.get('ok') else 'FAIL','product_monitor':monitor,'result':result}
+ return send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(payload,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+mid],thread_id=msg.get('thread_id'),message_id='result-'+mid,metadata={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'product_monitor':monitor.get('product_monitor')})
 def _safe_cwd(raw):
  p=Path(raw or ROOT).expanduser().resolve();roots=(ROOT.resolve(),HOME.resolve(),Path.home().resolve())
  if not any(p==r or r in p.parents for r in roots):raise RuntimeError('local_exec_cwd_outside_allowed_roots:'+str(p))
@@ -49,11 +57,6 @@ def local_exec(msg):
   cp=subprocess.run(argv,cwd=str(cwd),text=True,capture_output=True,timeout=timeout);results.append({'index':i,'argv':argv,'cwd':str(cwd),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:]})
   if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i}
  return {'ok':True,'results':results}
-def run_script(name,timeout=1800):
- cp=subprocess.run(['python3',str(ROOT/'local/dore-local'/name)],cwd=ROOT,text=True,capture_output=True,timeout=timeout);result={'ok':cp.returncode==0,'returncode':cp.returncode,'stderr':(cp.stderr or '')[-12000:]}
- try:result.update(json.loads((cp.stdout or '').strip().splitlines()[-1]))
- except:result['stdout']=(cp.stdout or '')[-20000:]
- return result
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
  if kind=='dore_design_bakeoff':return run_script('dore_design_bakeoff.py')
@@ -68,7 +71,7 @@ def dispatch(msg):
  if kind=='penpot_export_probe':return {'ok':True,'penpot':call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'})}
  raise RuntimeError('unsupported_kind:'+str(kind))
 def evidence_for(msg):
- kind=msg.get('kind');base=['coordination-hardening-v1']
+ kind=msg.get('kind');base=['coordination-hardening-v1','product-invariant-monitor']
  if kind=='local_exec':base+=['dore-local-exec','local-self-repair']
  return base
 def main():
@@ -79,11 +82,9 @@ def main():
    result=dispatch(msg);ok=not isinstance(result,dict) or result.get('ok',True)
    if ok:
     done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence_for(msg),'PASS',attempt,True)
-   else:
-    raise RuntimeError(str(result.get('cause') or result.get('error') or 'task_failed'))
+   else:raise RuntimeError(str(result.get('cause') or result.get('error') or 'task_failed'))
   except Exception as e:
-   failures+=1;terminal=attempt>=MAX_ATTEMPTS;err=type(e).__name__+': '+str(e);state['last_error']={'message_id':mid,'attempt':attempt,'error':err[:1000]};state['last_result']={'ok':False,'error':err}
-   status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=err[:1000],completed_at=now() if terminal else None)
+   failures+=1;terminal=attempt>=MAX_ATTEMPTS;err=type(e).__name__+': '+str(e);state['last_error']={'message_id':mid,'attempt':attempt,'error':err[:1000]};state['last_result']={'ok':False,'error':err};status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=err[:1000],completed_at=now() if terminal else None)
    if terminal:
     done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':err[:1000]};state.pop('active_message_id',None)
    reply(msg,{'ok':False,'error':err,'parent_goal_preserved':True,'recovery_required':terminal},evidence_for(msg)+['coordination-worker-error'],'FAIL' if terminal else 'RETRYING',attempt,terminal)
