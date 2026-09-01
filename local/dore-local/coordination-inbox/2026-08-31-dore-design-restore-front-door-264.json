@@ -1,0 +1,29 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-design-restore-front-door-264",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "new-westside-homepage-v2",
+  "subject": "Deploy restored Watch for the Dawn workspace from PR 264",
+  "commands": [
+    {
+      "argv": ["git", "pull", "--ff-only"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "dore-design/deploy_visual_current.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 180
+    },
+    {
+      "argv": ["python3", "dore-design/local_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Pull main including merged PR #264, rerun the workspace migration that restores the Watch for the Dawn homepage into the structured workspace, restart the resident Doré Design 1.4 service, and verify that /editor and / use the same workspace revision while the homepage visibly contains WATCH FOR THE DAWN rather than A CITY STILL AWAKE / BRICK / BATTLEMENT / FLOW. Return exact health, preview status, workspace revision, and acceptance evidence."
+}
