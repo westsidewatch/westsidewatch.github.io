@@ -180,6 +180,23 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** the later PASS receipts and canonical Master Work Register ONE/Cloudflare interpretation govern. The Priority-A migration remains a bounded `VERIFIED_COMPLETE` milestone; no new migration run or current Cloudflare blocker follows from the historical ready/failure artifacts.
 
+
+## SR-015 — Local visual-engine independent override / one-shot cleanup action
+
+**Historical source:** `.github/workflows/dore-engine-single-source-cleanup.yml` and the former `DORE_LOCAL_VISION_MODEL` override path.
+
+**Classification:** independent visual-model override `SUPERSEDED`; one-shot cleanup workflow `RETIRED-AS-ACTION` while retained as provenance.
+
+**Superseding evidence:** current `local/dore-local/penpot_agent.py` binds `VISION_MODEL=MODEL`, where `MODEL` comes from `DORE_LOCAL_MODEL` (default `gemma4:e4b`); bounded repository search found no active `DORE_LOCAL_VISION_MODEL` residue outside the historical cleanup workflow. `DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md` records the source reconciliation.
+
+**Conflict resolved:** the one-shot workflow still exists and contains imperative migration language plus self-deletion logic, but its target post-migration source state is already the current implementation. It must not be interpreted as an unfinished current instruction or re-run merely because the file remains. A bounded commit search found no commit carrying its intended self-removal message, so the workflow's own successful execution history is not claimed.
+
+**Retained value:** the workflow preserves provenance for why the independent visual-engine override was removed. The durable rule is that current executable source/runtime evidence outranks stale migration-script wording.
+
+**Important boundary:** single-source local model selection is not evidence that D4 Penpot visual readback/correction has passed, that Westside visual grammar is complete, or that every Doré execution surface globally shares one model/runtime. Those claims remain separately evidence-gated.
+
+**Current authority:** treat `DORE_LOCAL_MODEL` as the current local model source; keep the old independent visual override superseded and the cleanup workflow retired as an action. No P01 state follows from this historical cleanup artifact.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.

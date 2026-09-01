@@ -173,3 +173,8 @@ A reader may enter anywhere. Distribution should make the next useful doorway vi
 
 ## New-work intake rule
 Every durable idea must be captured here or in a linked project file, classified, tied to mission/reader/infrastructure value, checked for duplication, assigned dependencies/risks/priority, given a next milestone and verifiable completion condition, and updated as evidence changes. Valuable but untimely work is READY/PARKED rather than forgotten. A commit is implementation evidence, not production verification.
+
+## Sweep 01 canonical reconciliation — local visual-engine single-source (2026-09-01)
+
+The bounded local Doré/Penpot implementation now has one active model source: `DORE_LOCAL_MODEL`, with `VISION_MODEL=MODEL` in the current executable agent. The historical independent `DORE_LOCAL_VISION_MODEL` override is therefore `SUPERSEDED`, while `.github/workflows/dore-engine-single-source-cleanup.yml` is `RETIRED-AS-ACTION`: its intended target state already exists, but its own successful self-removing execution is not proven. This is configuration-convergence evidence only; it does not prove D4 visual readback, aesthetic competence, or global single-runtime unification. Evidence: `DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md`. P01 state is unchanged.
+

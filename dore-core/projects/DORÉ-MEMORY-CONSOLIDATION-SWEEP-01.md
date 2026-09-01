@@ -450,3 +450,18 @@ Durable updates in this checkpoint:
 - the Master Register `MEM-SWEEP-01` row now explicitly accounts for this evidence family.
 
 Sweep status remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE`.
+
+## Checkpoint — local visual-engine single-source canonical reconciliation (2026-09-01)
+
+Bounded evidence reviewed: `.github/workflows/dore-engine-single-source-cleanup.yml`, `local/dore-local/penpot_agent.py`, the current source search for `DORE_LOCAL_VISION_MODEL`, commit-history evidence, and `DORÉ-LOCAL-VISUAL-ENGINE-SINGLE-SOURCE-EVIDENCE-LEDGER-2026-09-01.md`.
+
+Reconciliation findings:
+
+1. Current executable local Doré/Penpot configuration uses a single active model source (`DORE_LOCAL_MODEL`); `VISION_MODEL=MODEL` is present in current source and no active `DORE_LOCAL_VISION_MODEL` residue was found outside the historical one-shot workflow.
+2. The independent visual-model override is `SUPERSEDED`. The one-shot cleanup workflow is `RETIRED-AS-ACTION`: its intended post-migration source state is already present, while the exact workflow execution/self-removal history remains unproven.
+3. This does not promote `VIS-GRAMMAR`, D4 visual readback, or broader Evolution autonomy. Configuration convergence and visual/design competence remain separate evidence layers.
+4. The canonical Superseded/Retired Index now records the retired-action interpretation so the stale workflow cannot silently reactivate itself as current work.
+5. No P01 runtime, source order, deployment, credential, binding, subtitle logic, or blocker state was changed.
+
+Sweep 01 remains `ACTIVE_PARALLEL`; this bounded reconciliation does not justify `VERIFIED_COMPLETE`.
+
