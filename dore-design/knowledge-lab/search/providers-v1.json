@@ -1,0 +1,14 @@
+{
+  "schema": "dore.search.providers.v1",
+  "principles": ["free-first", "open-source-or-public-data-first", "local-first-when-available", "provenance-required", "cache-external", "route-dont-broadcast", "graceful-provider-failure", "no-paid-ai-api-required"],
+  "providers": [
+    {"id":"westside-internal","family":"internal","role":["discover","lookup","curated","verify"],"priority":100,"status":"planned","cost_class":"local-light"},
+    {"id":"open-library","family":"books","role":["discover","lookup","explore","verify"],"priority":90,"status":"qualified-first-adapter","access":"public-web-api","usage":"low-volume-real-time; cache; bulk via dumps rather than API","identifiers":["OLID","ISBN","OCLC","LCCN"]},
+    {"id":"doab","family":"open-access-books","role":["discover","verify","ingest"],"priority":85,"status":"qualified","access":"OAI-PMH/open metadata feeds","metadata_license":"CC0-1.0"},
+    {"id":"crossref","family":"scholarly-metadata","role":["discover","lookup","verify","explore"],"priority":85,"status":"qualified","access":"public REST API","signup_required":false,"identifiers":["DOI","ORCID","ROR"]},
+    {"id":"openalex","family":"scholarly-graph","role":["discover","explore","relationships"],"priority":75,"status":"research-qualified","access":"public/free baseline; paid expansion must never be required"},
+    {"id":"loc","family":"cultural-heritage","role":["discover","explore","verify"],"priority":75,"status":"research-qualified"},
+    {"id":"iiif","family":"cultural-objects","role":["discover","manifest","image-context","relationships"],"priority":75,"status":"research-qualified"},
+    {"id":"zotero-local","family":"local-stewardship","role":["lookup","catalog","verify","local-library"],"priority":95,"status":"capability-not-yet-verified","access":"localhost local API when enabled"}
+  ]
+}
