@@ -1,0 +1,9 @@
+{
+  "schema": "dore.project-link.v1",
+  "from": "dore-search-capability-upgrade-v1",
+  "to": "dawn-library-genesis-project-273",
+  "relationship": "shared-capability-before-library-build",
+  "reason": "Dawn Library should reuse Doré's strengthened discovery capability rather than build a separate search stack.",
+  "first_library_capability": "library.books",
+  "status": "deferred-until-search-acceptance"
+}
