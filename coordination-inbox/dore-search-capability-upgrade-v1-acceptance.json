@@ -1,0 +1,19 @@
+{
+  "id": "dore-search-capability-upgrade-v1-acceptance",
+  "project": "dore-search-capability-upgrade-v1",
+  "kind": "acceptance",
+  "goal": "Verify on Doré Mac that the new capability discovery layer extends rather than replaces existing Search and does not break existing Bible Search or AI Conversation.",
+  "branch": "dore-search-capability-upgrade-v1",
+  "commands": [
+    "python3 local/dore-local/capability_registry_acceptance.py"
+  ],
+  "acceptance": [
+    "capability registry acceptance PASS",
+    "existing /dore/dore-search.js remains native execution owner",
+    "existing Bible Search remains functional",
+    "existing Doré AI Conversation remains untouched",
+    "planned library.books remains deferred and non-executable"
+  ],
+  "on_failure": "Diagnose without replacing existing Search/Conversation. Preserve parent goal and return evidence.",
+  "paid_api_allowed": false
+}
