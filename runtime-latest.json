@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-02T19:52:52.237987+00:00",
+  "published_at": "2026-09-02T19:53:27.306496+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -1067,10 +1067,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788378479.512259,
-    "last_self_update_check_at": "2026-09-02T19:47:59.512275+00:00",
-    "last_telemetry_epoch": 1788378728.2424698,
-    "last_telemetry_at": "2026-09-02T19:52:08.242499+00:00",
+    "last_self_update_check_epoch": 1788378804.239927,
+    "last_self_update_check_at": "2026-09-02T19:53:24.239933+00:00",
+    "last_telemetry_epoch": 1788378774.0965881,
+    "last_telemetry_at": "2026-09-02T19:52:54.096604+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-02T19:52:51.557774+00:00",
     "last_agent_state": "PENDING_PEER_NONBLOCKING",
@@ -5433,14 +5433,6 @@
   },
   "events": [
     {
-      "at": "2026-09-02T19:37:45.757421+00:00",
-      "event": "A2A_SUPERVISION",
-      "a2a_state": "A2A_PEER_PENDING_NONBLOCKING",
-      "action": "CONTINUE_AUTONOMOUS_WORK",
-      "peer_required": true,
-      "unchanged_cycles": 1
-    },
-    {
       "at": "2026-09-02T19:38:18.664811+00:00",
       "event": "WAKE",
       "reason": "NO_USER_INPUT_CONTINUE"
@@ -5872,6 +5864,20 @@
       "peer_required": true,
       "peer_blocking": false,
       "unchanged_cycles": 1
+    },
+    {
+      "at": "2026-09-02T19:53:26.773400+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/storybook/package.json",
+        "dore-design/knowledge-lab/storybook/.storybook/main.js",
+        "dore-design/knowledge-lab/storybook/.storybook/preview.js",
+        "dore-design/knowledge-lab/storybook/.storybook/vitest.setup.js",
+        "dore-design/knowledge-lab/storybook/vitest.config.js",
+        "dore-design/knowledge-lab/storybook/scripts/storybook-evidence.mjs"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
