@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.8",
-  "published_at": "2026-09-02T19:36:54.200066+00:00",
+  "published_at": "2026-09-02T19:37:29.382993+00:00",
   "runtime": "dore.resident-runtime.v0.9",
   "ownership": {
     "supervisor": "launchd",
@@ -959,10 +959,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788377515.761643,
-    "last_self_update_check_at": "2026-09-02T19:31:55.761648+00:00",
-    "last_telemetry_epoch": 1788377783.1087098,
-    "last_telemetry_at": "2026-09-02T19:36:23.108722+00:00",
+    "last_self_update_check_epoch": 1788377846.527595,
+    "last_self_update_check_at": "2026-09-02T19:37:26.527602+00:00",
+    "last_telemetry_epoch": 1788377816.421715,
+    "last_telemetry_at": "2026-09-02T19:36:56.421734+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-02T19:36:53.558820+00:00",
     "last_agent_state": "PEER_RESEARCH_QUEUED",
@@ -4498,14 +4498,6 @@
   },
   "events": [
     {
-      "at": "2026-09-02T19:25:18.760223+00:00",
-      "event": "A2A_SUPERVISION",
-      "a2a_state": "A2A_WAITING_PEER",
-      "action": "PEER_RESPONSE_REQUIRED",
-      "peer_required": true,
-      "unchanged_cycles": 2549
-    },
-    {
       "at": "2026-09-02T19:25:51.928591+00:00",
       "event": "WAKE",
       "reason": "NO_USER_INPUT_CONTINUE"
@@ -4924,6 +4916,15 @@
       "action": "PEER_RESPONSE_REQUIRED",
       "peer_required": true,
       "unchanged_cycles": 2570
+    },
+    {
+      "at": "2026-09-02T19:37:28.787877+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "local/dore-local/a2a_supervisor.py",
+        "local/dore-local/dore_agent_core.py"
+      ],
+      "source": "origin/main"
     }
   ]
 }
