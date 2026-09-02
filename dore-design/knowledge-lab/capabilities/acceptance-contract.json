@@ -1,0 +1,24 @@
+{
+  "schema": "dore.capability-upgrade-acceptance.v1",
+  "must_preserve": [
+    "/dore/dore-search.js",
+    "Doré AI Conversation",
+    "Bible reference parsing",
+    "Bible keyword/fuzzy search",
+    "Hebrew/Greek original-language search"
+  ],
+  "must_add": [
+    "objective capability registry",
+    "deferred capability discovery",
+    "explicit native execution ownership",
+    "free-only provider policy"
+  ],
+  "must_not": [
+    "create a second Doré Search product",
+    "replace Doré AI Conversation",
+    "copy existing Bible Search implementation into an adapter",
+    "make planned providers executable before acceptance",
+    "introduce paid API dependency"
+  ],
+  "next_gate": "local and CI acceptance before library.books adapter"
+}
