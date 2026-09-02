@@ -264,3 +264,47 @@ The 22/22 lab exam is a bounded evidence-discipline milestone on the then-curren
 
 **Boundary / caution**
 This retained capability is proven at the executable-consumer/service-boundary level. It does not prove a distributed macOS App has completed a live end-to-end run against the production Doré endpoint, and it does not prove P01 completion.
+
+## CAP-013 — Parent-goal-preserving autonomous capability recovery
+
+**Learned from:** `CW-013 — Autonomous Capability Recovery 01` and `DORÉ-AUTONOMOUS-CAPABILITY-RECOVERY-RETENTION-LEDGER-2026-09-01.md`.
+
+**Reusable capabilities retained**
+- preserve a valid parent goal across a capability failure;
+- classify reusable capability gaps rather than immediately patching a fixture;
+- select/build a provenance-bearing reusable repair;
+- verify the repair before resuming execution;
+- resume the same parent goal and require terminal acceptance;
+- persist learning/research-required state when recovery is not actually proven.
+
+**Useful in current/future work**
+- P01 tooling dependencies once its approved environment path exists;
+- Library ingestion/runtime repair;
+- Search service-boundary/tooling failures;
+- design and visual-production pipelines;
+- Cloudflare/runtime work;
+- future self-equipping episodes exposed by real product work.
+
+**Boundary / caution**
+One Storybook/design-tooling episode proves only the bounded recovery contract. It does not prove materially different-domain blind transfer, longitudinal self-equipping autonomy, broader Evolution completion or any reserved `DORÉ_ALIVE` state.
+
+## CAP-014 — Persistent external design-surface execution with independent readback
+
+**Learned from:** `CW-014 — Penpot Remote MCP persistent-design bridge 01`, `dore-core/evidence/PENPOT-BRIDGE-01-LIVE-EVIDENCE-2026-08-26.md`, and Sweep Checkpoint 28.
+
+**Reusable capabilities retained**
+- initialize an external editable design surface through protected runtime credentials;
+- discover tools and resolve the live design context;
+- perform small/idempotent persistent editable writes;
+- independently read back the same object to distinguish persistence from transient responses;
+- separate connectivity/transport proof from visual-quality proof;
+- require rendered/export inspection before treating a visual result as complete.
+
+**Useful in current/future work**
+- visual-system prototyping;
+- purpose-built Doré website-asset production;
+- Design Working Memory experiments;
+- later cross-surface design execution and visual-production workflows.
+
+**Boundary / caution**
+This capability proves persistent bridge execution/readback only. It does not prove D4 rendered correction, visual quality, responsive/print transfer, or `VIS-GRAMMAR` completion.
