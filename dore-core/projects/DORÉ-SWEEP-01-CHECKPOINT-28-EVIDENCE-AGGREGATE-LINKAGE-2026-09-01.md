@@ -14,14 +14,14 @@ Status: BOUNDED RECONCILIATION COMPLETE / SWEEP REMAINS ACTIVE_PARALLEL
 
 ## Reconciliation findings
 
-1. The aggregate completed-work/capability files still end at `CW-012` / `CAP-012`. The already reconciled autonomous capability-recovery milestone therefore remains correctly reserved as `CW-013` / `CAP-013` through its dedicated retention/linkage ledgers. No operational status change is warranted.
-2. The Penpot bridge evidence family is a second legitimate bounded historical completion that is already represented correctly in the Master Register but is not yet represented as a numbered aggregate completed-work/capability item.
+1. At the time of this checkpoint, the aggregate completed-work/capability files ended at `CW-012` / `CAP-012`. The already reconciled autonomous capability-recovery milestone was therefore reserved as `CW-013` / `CAP-013` through its dedicated retention/linkage ledgers. No operational status change was warranted.
+2. The Penpot bridge evidence family is a second legitimate bounded historical completion that was already represented correctly in the Master Register but was not yet represented as a numbered aggregate completed-work/capability item.
 3. `PENPOT-BRIDGE-01` directly proves a live chain from Doré runtime secret handling through Penpot Remote MCP discovery and focused-file resolution to a persistent editable write, followed by an independent readback of the same board. This is stronger than an architecture memo or one-shot response and supports a bounded `VERIFIED_COMPLETE` bridge milestone.
 4. The same evidence explicitly does **not** prove Visual Constitution completion, typography/foundation-layer completion, visual quality, D4 rendered visual readback/correction, responsive/print transfer, or full Westside visual-grammar completion. The first styling attempt in fact exposed a real `Text.getRange()` defect. `VIS-GRAMMAR` therefore remains `ACTIVE_PARALLEL / BUILDING`.
-5. To prevent this bounded bridge milestone from disappearing during later aggregate compaction, the next safe aggregate identities are now reserved as:
+5. To prevent this bounded bridge milestone from disappearing during later aggregate compaction, the next safe aggregate identities were reserved as:
    - `CW-014 — Penpot Remote MCP persistent-design bridge 01`;
    - `CAP-014 — persistent external design-surface execution with independent readback`.
-6. `CW-013/CAP-013` and `CW-014/CAP-014` are bookkeeping/linkage reservations only. They do not add new autonomy evidence, do not promote broader Evolution, and do not promote Brand V1 or visual grammar.
+6. `CW-013/CAP-013` and `CW-014/CAP-014` were bookkeeping/linkage reservations only. They did not add new autonomy evidence, did not promote broader Evolution, and did not promote Brand V1 or visual grammar.
 7. No P01 subtitle runtime, deployment, source order, credentials, bindings, blocker state, or recovery action was modified.
 
 ## CW-014 retrospective evaluation
@@ -67,3 +67,24 @@ Useful in visual-system prototyping, purpose-built Doré asset production, desig
 ## Sweep disposition
 
 This batch explicitly accounts for the repository's `dore-core/evidence/` family (currently the Penpot bridge evidence) and closes another aggregate-linkage gap. Sweep 01 remains `ACTIVE_PARALLEL`; remaining source/product-history families and aggregate compaction still prevent `VERIFIED_COMPLETE`.
+
+## 2026-09-02 revalidation — aggregate compaction completed
+
+A later bounded Sweep pass rechecked this checkpoint against the current aggregate ledgers and the dedicated autonomous-recovery retention/linkage records.
+
+The historical statements above that `CW-013/CAP-013` and `CW-014/CAP-014` were only reserved identities are now **SUPERSEDED as current-state descriptions**. The canonical aggregate outputs now actually contain:
+
+- `CW-013 — Autonomous Capability Recovery 01`;
+- `CAP-013 — Parent-goal-preserving autonomous capability recovery`;
+- `CW-014 — Penpot Remote MCP persistent-design bridge 01`;
+- `CAP-014 — Persistent external design-surface execution with independent readback`.
+
+Therefore the aggregate-linkage bookkeeping debt is now `VERIFIED_COMPLETE / CLOSED`. This revalidation creates no new capability claim and does not alter the governing workstream statuses:
+
+- `EVOLUTION`: remains `CORE/CONTINUOUS / ACTIVE_PARALLEL`;
+- materially different-domain blind transfer: remains `UNKNOWN_NEEDS_EVIDENCE`;
+- `VIS-GRAMMAR`: remains `ACTIVE_PARALLEL / BUILDING`;
+- Penpot D4 rendered visual readback/correction: remains unproven;
+- Sweep 01: remains `ACTIVE_PARALLEL`.
+
+The canonical Master Register already carries the correct operational classifications, so no row-status change is warranted from this bookkeeping reconciliation. No P01 runtime, deployment, source order, credential, binding, subtitle logic, blocker state, or recovery action was changed.
