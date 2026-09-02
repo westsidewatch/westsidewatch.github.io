@@ -1,0 +1,17 @@
+{
+  "schema": "dore.tool-experience.v1",
+  "status": "contract-only",
+  "purpose": "Future evidence-backed memory of which capability sequences work for which task contexts.",
+  "fields": [
+    "task_fingerprint",
+    "capability_sequence",
+    "providers_used",
+    "evidence",
+    "outcome",
+    "failure_reason",
+    "information_gain",
+    "verified_at"
+  ],
+  "promotion_rule": "Never learn a reflex from an unverified or provenance-free outcome.",
+  "note": "This is not active routing in v0.1. It exists to keep the capability layer compatible with Doré Long-Term Memory work."
+}
