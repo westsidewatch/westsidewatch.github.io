@@ -1,0 +1,47 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-autonomous-chatgpt-conversation-peer-mode-20260902",
+  "kind": "TASK",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "high",
+  "related_goal": "A2A autonomous operating model",
+  "task": {
+    "goal": "Refactor the current A2A/Storybook control policy so Doré is always-on and autonomous while ChatGPT is a conversation-activated asynchronous peer, without paid OpenAI API usage.",
+    "operating_model": {
+      "dore": "always-on autonomous worker and Storybook/Design Lab driver",
+      "chatgpt": "conversation-activated peer; absence is normal and must never block Doré ordinary work",
+      "a2a": "durable asynchronous collaboration layer",
+      "human": "sets goals/direction; never acts as loop start/continue button"
+    },
+    "hard_invariants": [
+      "No paid OpenAI API or other pay-per-token model dependency.",
+      "ChatGPT offline/not invoked is NORMAL, not a Doré failure condition.",
+      "Doré must continue useful Storybook/design/research work without waiting for ChatGPT.",
+      "Ordinary insufficient references, weak design quality, need for another design direction, or failed specimen must remain inside Doré autonomous local research/experiment loop.",
+      "A pending ChatGPT peer request must be durable and non-blocking: checkpoint it and continue another information-gaining action or another runnable goal.",
+      "Escalate to ChatGPT only for a genuine unresolved capability/knowledge boundary after Doré has exhausted distinct information-gaining local/free/OSS research paths, or for a decision that explicitly requires the human/ChatGPT conversation.",
+      "When ChatGPT later enters via user conversation, durable A2A state must allow it to discover pending requests/results and contribute; Doré then consumes that contribution asynchronously.",
+      "No WAITING_PEER state may freeze the resident Storybook/Design Lab loop.",
+      "Locked homepage #262 remains read-only unless the user explicitly changes direction."
+    ],
+    "required_engineering": [
+      "Change Agent Core/research policy so PEER_RESEARCH_QUEUED is non-blocking for ordinary autonomous work.",
+      "Represent peer handoff as durable pending work rather than a global blocking state.",
+      "Ensure resident runtime continues selecting runnable autonomous actions/goals while a peer handoff is pending.",
+      "Update loop contract/runtime manifest/telemetry semantics to distinguish PENDING_PEER_NONBLOCKING from genuine HUMAN_GATE.",
+      "Remove or neutralize any higher-order supervisor behavior that treats absent ChatGPT as a stall requiring the whole project loop to wait.",
+      "Preserve provenance and exact research_id matching when a later ChatGPT response arrives.",
+      "Keep research local-first: Knowledge Lab, skills, failure memory, free public sources, mature OSS, local Storybook experiments.",
+      "Resume design-reference-library-expansion-20260901 autonomously and continue toward its existing acceptance gates."
+    ],
+    "acceptance": [
+      "With no new ChatGPT response, Doré completes multiple autonomous Storybook/design-lab iterations and telemetry shows forward progress.",
+      "A pending peer request can coexist with active autonomous work and does not produce a global A2A_WAITING_PEER freeze.",
+      "User silence does not stop Storybook/design-lab progress.",
+      "When a matching peer response later appears, Doré consumes it by research_id and incorporates it without losing the parent goal.",
+      "No paid API is called or required.",
+      "Return canonical result with changed files, tests, telemetry evidence, and current design-reference acceptance counts."
+    ]
+  }
+}
