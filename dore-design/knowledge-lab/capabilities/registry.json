@@ -1,0 +1,71 @@
+{
+  "schema": "dore.capability-registry.v1",
+  "purpose": "Discovery metadata for capabilities Doré already owns or may load. This registry does not replace native tools, Search, Conversation, or Agent Core.",
+  "principles": [
+    "reuse-native-capability",
+    "discover-before-load",
+    "preserve-provenance",
+    "free-local-first",
+    "no-paid-api-baseline",
+    "evidence-before-learning"
+  ],
+  "capabilities": [
+    {
+      "id": "bible.scripture-search",
+      "type": "knowledge",
+      "service": "bible",
+      "status": "existing",
+      "execution": "native",
+      "entrypoint": "/dore/dore-search.js",
+      "strengths": ["scripture-reference", "traditional-simplified-chinese-folding", "keyword", "fuzzy-text"],
+      "cost": "local",
+      "network": false,
+      "authority": "existing-dore-index",
+      "load": "deferred"
+    },
+    {
+      "id": "bible.original-language-search",
+      "type": "knowledge",
+      "service": "bible",
+      "status": "existing",
+      "execution": "native",
+      "entrypoint": "/dore/dore-search.js",
+      "data": "/dore/original-index.json",
+      "strengths": ["hebrew", "greek", "lemma", "surface-form", "morphology"],
+      "cost": "local",
+      "network": false,
+      "authority": "existing-dore-original-index",
+      "load": "deferred"
+    },
+    {
+      "id": "library.books",
+      "type": "knowledge",
+      "service": "library",
+      "status": "planned",
+      "execution": "adapter",
+      "providers": ["dawn-library", "zotero-local", "open-library", "doab"],
+      "cost": "free-only",
+      "load": "deferred"
+    },
+    {
+      "id": "academic.scholarship",
+      "type": "knowledge",
+      "service": "academic",
+      "status": "planned",
+      "execution": "adapter",
+      "providers": ["crossref", "openalex"],
+      "cost": "free-only",
+      "load": "deferred"
+    },
+    {
+      "id": "heritage.maps-images",
+      "type": "knowledge",
+      "service": "heritage",
+      "status": "planned",
+      "execution": "adapter",
+      "providers": ["library-of-congress", "iiif"],
+      "cost": "free-only",
+      "load": "deferred"
+    }
+  ]
+}
