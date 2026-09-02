@@ -72,3 +72,13 @@ A fresh bounded history check confirms the same persistence pattern is still act
 The observed timestamps remain consistent with the previously documented roughly five-minute cadence and interleaving writers. This is retention evidence that the observability path remains live; it is also further confirmation that the source-control-churn debt is persistent rather than a one-day anomaly.
 
 No new blocker, completion milestone, P01 impact, or canonical status change is justified. The Master Register's existing `MEM-SWEEP-01` interpretation already captures this as `MAINTENANCE` / completed-observability revisit debt, so no canonical row rewrite is required from this bounded revalidation.
+
+## 2026-09-02 revalidation
+
+A fresh bounded history + commit-diff check confirms the same behavior is still active on 2026-09-02. Recent history continues to alternate heartbeat/probe persistence commits; the heartbeat commit `6705d0865a151546afaad89b64e06123f94b53ca` changed the seed/heartbeat/claim timestamps and advanced `heard_count` from `1015` to `1016` while preserving `http_status=200`, `state=CONSOLIDATED`, `deduplicated=true`, `schema_reconciled=true` and successful claim behavior.
+
+This is useful retention evidence that the repaired sensory path remains live two days after the original maintenance finding. It also confirms that the high-frequency Git-history churn is ongoing rather than transient: timestamp/counter-only evidence is still being persisted to source history at the configured rolling cadence.
+
+Current classification remains unchanged: historical repair `VERIFIED_COMPLETE`; persistence mechanism `MAINTENANCE`; high-frequency Git persistence `COMPLETED_REVISIT_CANDIDATE`; broader heterogeneous-signal robustness still `UNKNOWN_NEEDS_EVIDENCE`. The canonical Master Register already expresses this operational truth, so no row/status rewrite is warranted.
+
+P01 impact remains none: no subtitle runtime, deployment, binding, credential, source order, blocker, or resume state was changed.
