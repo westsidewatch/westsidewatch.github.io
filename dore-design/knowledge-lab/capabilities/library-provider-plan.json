@@ -1,0 +1,19 @@
+{
+  "schema": "dore.library-provider-plan.v1",
+  "capability": "library.books",
+  "status": "non-executable-until-acceptance",
+  "selection_policy": "free-local-first",
+  "providers": [
+    {"id": "dawn-library", "role": "internal-curated-knowledge", "priority": 1, "state": "future"},
+    {"id": "zotero-local", "role": "local-stewardship", "priority": 2, "state": "needs-local-capability-check"},
+    {"id": "open-library", "role": "book-discovery-and-editions", "priority": 3, "state": "researched"},
+    {"id": "doab", "role": "open-access-books", "priority": 4, "state": "researched"}
+  ],
+  "promotion_gate": [
+    "existing Doré Search regression PASS",
+    "capability registry acceptance PASS",
+    "provider provenance preserved",
+    "provider-specific limits respected",
+    "no paid API dependency"
+  ]
+}
