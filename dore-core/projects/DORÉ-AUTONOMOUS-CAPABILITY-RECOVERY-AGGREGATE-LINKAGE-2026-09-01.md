@@ -45,3 +45,19 @@ None. This bounded Sweep reconciliation did not change subtitle runtime, deploym
 ## Sweep disposition
 
 This aggregate-linkage bookkeeping item is now closed. It does not make Sweep 01 `VERIFIED_COMPLETE`; remaining unreviewed or incompletely reconciled source/product-history families must still be processed in bounded batches.
+
+## Sweep revalidation — 2026-09-02
+
+A bounded Sweep 01 re-read of this linkage record together with `DORÉ-AUTONOMOUS-CAPABILITY-RECOVERY-RETENTION-LEDGER-2026-09-01.md` and the canonical `EVOLUTION` / `MEM-SWEEP-01` Master Register interpretation found no new contradiction and no status drift.
+
+The current governing classification remains unchanged:
+
+- `AUTONOMOUS_CAPABILITY_RECOVERY_01`: bounded `VERIFIED_COMPLETE`;
+- aggregate-linkage bookkeeping debt: closed;
+- broader `EVOLUTION`: `CORE/CONTINUOUS / ACTIVE_PARALLEL`;
+- materially different-domain blind transfer: `UNKNOWN_NEEDS_EVIDENCE`;
+- broader A2A↔Storybook road-test closure: `ACTIVE_PARALLEL / EVALUATION`.
+
+No new completed-work, revisit, superseded/retired, or missing-evidence entry is justified by this revalidation batch. The canonical register already states the correct operational truth, so it was intentionally left unchanged rather than creating bookkeeping churn.
+
+P01 impact remains none: no subtitle runtime, deployment, source-order, credential, binding, blocker, or recovery action was modified.
