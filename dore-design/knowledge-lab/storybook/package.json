@@ -1,19 +1,27 @@
 {
   "name": "dore-design-knowledge-lab-storybook",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "test-storybook": "vitest --project=storybook --run",
+    "evidence-storybook": "node scripts/storybook-evidence.mjs",
+    "autonomy-check": "npm run build-storybook && npm run test-storybook && npm run evidence-storybook"
   },
   "dependencies": {
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
   "devDependencies": {
-    "@storybook/react-vite": "^9.1.3",
-    "storybook": "^9.1.3",
-    "vite": "^7.1.3"
+    "@playwright/test": "^1.55.0",
+    "@storybook/addon-a11y": "^9.1.20",
+    "@storybook/addon-vitest": "^9.1.20",
+    "@storybook/react-vite": "^9.1.20",
+    "@vitest/browser-playwright": "^3.2.4",
+    "storybook": "^9.1.20",
+    "vite": "^7.3.6",
+    "vitest": "^3.2.4"
   }
 }
