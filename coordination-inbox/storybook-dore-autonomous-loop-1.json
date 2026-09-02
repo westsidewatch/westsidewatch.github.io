@@ -1,0 +1,50 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "storybook-dore-autonomous-loop-1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "engineering_task",
+  "priority": "high",
+  "related_goal": "design-reference-library-expansion-20260901",
+  "requires_reply": true,
+  "task": {
+    "goal": "Make Doré own and continuously run the Storybook design-lab loop without requiring ChatGPT peer on ordinary design research iterations.",
+    "authority": "User explicitly approved: 改成讓多雷自己跑",
+    "preserve": [
+      "parent goal design-reference-library-expansion-20260901",
+      "minimum 40 qualified references",
+      "minimum 6 source families",
+      "three materially distinct Storybook homepage directions",
+      "provenance/license/rejection evidence",
+      "Storybook build verification",
+      "A2A as higher-order escalation channel"
+    ],
+    "required_behavior": [
+      "For continuous Storybook/design-lab goals, RESEARCH_REQUIRED must first remain inside Doré autonomous self-research rather than immediately becoming PEER_RESEARCH_QUEUED.",
+      "Doré must autonomously search local Knowledge Lab, source catalog, maintained OSS/GitHub and other already-available research capabilities; normalize and checkpoint new references; choose hypotheses; generate Storybook specimens; build; verify; reject/promote; and continue without user input.",
+      "If an iteration does not meet the 40-reference/6-family/3-direction acceptance gate, keep the parent ACTIVE and start a materially different self-research iteration with information gain. Do not treat a successful Storybook build as completion of the research parent.",
+      "Use A2A peer escalation only after Doré has exhausted materially different self-research hypotheses or hits a capability/permission boundary that local tools cannot resolve. Ordinary reference expansion and design iteration are not peer gates.",
+      "If the current research job is already PEER_RESEARCH_QUEUED solely because the reference threshold is unmet, reclaim it into Doré self-research and continue the exact parent goal.",
+      "Do not modify the locked approved #262 homepage while running the laboratory. Storybook is the experiment surface."
+    ],
+    "engineering": {
+      "preferred_files": [
+        "local/dore-local/dore_agent_core.py",
+        "local/dore-local/research_executor.py",
+        "dore-design/knowledge-lab/a2a/loop-contract-v1.json"
+      ],
+      "policy": "storybook_self_research_first",
+      "peer_escalation": "exception_after_local_information_gain_exhausted",
+      "no_user_input_continue": true
+    },
+    "acceptance": [
+      "A continuous Storybook design-lab parent does not stop at PEER_RESEARCH_QUEUED merely because reference/family thresholds are unmet.",
+      "Current design-reference-library-expansion-20260901 is reclaimed from A2A_WAITING_PEER into an autonomous Doré research/experiment state.",
+      "At least one no-user-input autonomous iteration executes after the policy change.",
+      "Parent identity remains design-reference-library-expansion-20260901.",
+      "Storybook static build remains PASS when an experiment is produced.",
+      "Telemetry shows Doré progressing without PEER_RESPONSE_REQUIRED for ordinary Storybook research.",
+      "Canonical result is written to coordination-outbox/result-storybook-dore-autonomous-loop-1.json with evidence."
+    ]
+  }
+}
