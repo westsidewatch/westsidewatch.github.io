@@ -29,7 +29,7 @@ const server = spawn('python3', ['-m', 'http.server', '6106', '--bind', '127.0.0
 await sleep(900);
 
 const result = {
-  schema: 'dore.storybook-evidence.v1.1',
+  schema: 'dore.storybook-evidence.v1.2',
   created_at: new Date().toISOString(),
   source: 'Storybook static build + Playwright Chromium',
   purpose: 'Observation layer. Design-gate failures are learning signals, not evidence-infrastructure failures.',
@@ -104,19 +104,20 @@ try {
 
 const desktopHashes = result.candidates.map(x => x.viewports?.desktop?.sha256).filter(Boolean);
 const distinctCount = new Set(desktopHashes).size;
-const allViews = result.candidates.flatMap(x => Object.values(x.viewports || {}));
+const allViews = result.candidates.flatMap(x => Object.entries(x.viewports || {}).map(([viewport, v]) => ({ story_id: x.id, viewport, ...v })));
 const westsideCandidates = result.candidates.filter(x => x.westside_candidate);
 const fitSignals = westsideCandidates.map(x => {
   const views = Object.values(x.viewports || {});
   return views.some(v => v.metrics?.westside_text_signal) && views.some(v => v.metrics?.brand_color_signal);
 });
-const stableCount = allViews.filter(v => v.visual_stable).length;
+const failedRender = allViews.filter(v => !v.render_pass).map(v => ({ story_id: v.story_id, viewport: v.viewport, text_length: v.metrics?.text_length, page_errors: v.page_errors, console_errors: v.console_errors }));
+const unstable = allViews.filter(v => !v.visual_stable).map(v => ({ story_id: v.story_id, viewport: v.viewport, sha256: v.sha256, repeat_sha256: v.repeat_sha256 }));
 result.gates = {
   BUILD_PASS: true,
-  RENDER_PASS: allViews.length > 0 && allViews.every(v => v.render_pass),
+  RENDER_PASS: allViews.length > 0 && failedRender.length === 0,
   FUNCTION_PASS: 'authoritative_in_vitest',
   A11Y_PASS: 'authoritative_in_storybook_vitest_addon',
-  VISUAL_STABLE: allViews.length > 0 && allViews.every(v => v.visual_stable),
+  VISUAL_STABLE: allViews.length > 0 && unstable.length === 0,
   RESPONSIVE_PASS: allViews.length > 0 && allViews.every(v => v.responsive_pass),
   DESIGN_DISTINCT: result.candidates.length >= 3 ? distinctCount >= 3 : 'INSUFFICIENT_CANDIDATES',
   WESTSIDE_FIT: fitSignals.length > 0 && fitSignals.every(Boolean),
@@ -125,8 +126,10 @@ result.summary = {
   candidate_count: result.candidates.length,
   westside_candidate_count: westsideCandidates.length,
   distinct_desktop_screenshots: distinctCount,
-  stable_viewports: stableCount,
+  stable_viewports: allViews.length - unstable.length,
   total_viewports: allViews.length,
+  failed_render: failedRender,
+  unstable_viewports: unstable,
   evidence_dir: evidenceDir,
   browser_ok: !result.browser_error,
 };
