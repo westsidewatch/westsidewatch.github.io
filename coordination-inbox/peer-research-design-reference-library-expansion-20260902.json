@@ -1,0 +1,40 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "peer-research-design-reference-library-expansion-20260902",
+  "kind": "PEER_RESEARCH_RESPONSE",
+  "parent_goal_id": "design-reference-library-expansion-20260901",
+  "research_id": "research-design-reference-library-expansion-20260901-34f1f41b395b5ed5",
+  "state": "KNOWLEDGE_RETURNED",
+  "provenance_preserved": true,
+  "instruction": "Resume the existing Design Reference Library Expansion parent. Normalize, qualify, license-check, score, cluster and experiment with these peer-researched candidates. Do not count a URL merely to hit 40. Extract reusable grammar: typography roles, density, composition, whitespace/release zones, image treatment, navigation, interaction, responsive behavior, anti-patterns. Merge with mono-color-skill and existing Westside references. Keep the parent active until >=40 qualified references across >=6 source families and >=3 materially distinct Storybook homepage directions are built and verified.",
+  "peer_findings": [
+    {"name":"Remarque","url":"https://github.com/williamzujkowski/remarque","family":"open-source editorial design system","lesson":"Typography-first editorial system; book typography, strict font roles, constrained reading measure, perceptual color."},
+    {"name":"OpenDesign Warm Editorial","url":"https://github.com/nexu-io/open-design/blob/main/design-systems/warm-editorial/DESIGN.md","family":"open-source design system/template","lesson":"Warm paper substrate, serif-led magazine hierarchy, scarce accent, explicit color roles."},
+    {"name":"OpenDesign WIRED-inspired","url":"https://github.com/nexu-io/open-design/blob/main/design-systems/wired/DESIGN.md","family":"media/editorial reference system","lesson":"Broadsheet density, rules instead of cards, typography stack, photography supplies most chroma, no rounded SaaS cards."},
+    {"name":"Postext","url":"https://github.com/drnachio/postext","family":"editorial typography tooling","lesson":"Programmable web typesetting; footnotes, margin notes, spacing rules, professional editorial layout primitives."},
+    {"name":"Quire","url":"https://founddream.github.io/Quire/","family":"editorial document design system","lesson":"Content archetypes and density limits; one-accent scarcity; explicit rules preventing every surface from acting important."},
+    {"name":"Museum as Code","url":"https://github.com/xodn348/museum-as-code/blob/main/DESIGN.md","family":"cultural/archive design system","lesson":"Cultural identity encoded as visual system with explicit typography scale and source-of-truth design spec; study method, not its Korean aesthetic."},
+    {"name":"Phosphor Design System","url":"https://github.com/joaquinbozzalla/phosphor-design-system","family":"open-source editorial design system","lesson":"Complete themed editorial system with tokens, long-form application and explicit anti-patterns; useful as grammar packaging example, not aesthetic target."},
+    {"name":"Project Broadsheet","url":"https://projectbroadsheet.com/about/","family":"independent publishing system","lesson":"Publication-first information architecture: homepage, sections, archive, newsletter and editorial affordances rather than SaaS landing-page composition."},
+    {"name":"OpenDesign / opendesign","url":"https://github.com/vustudio/opendesign","family":"AI design knowledge system","lesson":"Large reusable design-system/skill library; deterministic visual directions instead of improvisational AI styling. Strong evidence for reuse-before-rebuild."},
+    {"name":"OpenDesign resource library","url":"https://opendesign.cc/en/","family":"AI-readable design reference library","lesson":"Machine-readable DESIGN.md plus deeper 11-layer design specs, computed styles, fonts and screenshot evidence; candidate model for Doré Knowledge Lab normalization."},
+    {"name":"Storybook Design System","url":"https://github.com/storybookjs/design-system","family":"component/design-system infrastructure","lesson":"Mature pattern for centralizing and visually verifying reusable UI instead of rewriting components; use for lab mechanics, not Westside visual identity."},
+    {"name":"mono-color-skill","url":"https://github.com/yanliudesign/mono-color-skill","family":"AI design skill / composition grammar","lesson":"Treat references as grammar, not templates; controlled ink roles, substrate, composition families, focal event and release zones. Translate method into New Westside-specific grammar."}
+  ],
+  "westside_hypotheses": [
+    "Direction A — Night Watch / Image Field: engraving or photographic field dominates 60–80%; typography collides with crop; night blue is state, gold is scarce dawn event; no card grid.",
+    "Direction B — Scripture / Typographic Declaration: Chinese scripture or editorial title is the primary visual object; warm paper and large release zones; marginal metadata and mono indexing; almost no decorative UI.",
+    "Direction C — Stone Archive / Cultural Publication: maps, archival plates, temple stone, dates, annotations and ruled information create navigation; entry points behave as indexed places/paths rather than feature cards."
+  ],
+  "negative_specimens": [
+    "Penpot blue/gold fortress homepage: semantically on-theme but generic cultural-institution template; symbols decorate rather than generate layout.",
+    "Existing near-identical Storybook homepage micro-variants: reject as insufficiently distinct.",
+    "Generic SaaS cards, rounded component grids, evenly distributed emphasis, and safe left-copy/right-image hero layouts are anti-patterns for this research goal."
+  ],
+  "acceptance_next": [
+    "Increase qualified catalog beyond current 21 only after normalization and rejection checks.",
+    "Populate at least 6 real source families rather than leaving family count at zero.",
+    "Build the three directions as Storybook specimens using real Westside content.",
+    "Verify visual and structural distinction before promotion to Doré Design; do not modify locked approved homepage during experiments."
+  ]
+}
