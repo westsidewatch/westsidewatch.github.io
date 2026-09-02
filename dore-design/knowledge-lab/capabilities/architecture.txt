@@ -1,0 +1,26 @@
+Doré Agent Core
+  |
+  +-- existing Doré Search -------------------- PRESERVED
+  +-- existing Doré AI Conversation ----------- PRESERVED
+  |
+  +-- Capability Discovery v0.1
+        |
+        +-- Registry (what Doré can use)
+        +-- Discover (type -> service -> capability)
+        +-- Deferred load
+        |
+        +-- bible
+        |     +-- scripture-search ---------- native existing
+        |     +-- original-language-search -- native existing
+        |
+        +-- library -------------------------- deferred
+        |     +-- Dawn Library
+        |     +-- Zotero Local
+        |     +-- Open Library
+        |     +-- DOAB
+        |
+        +-- academic ------------------------- deferred
+        +-- heritage ------------------------- deferred
+
+Execution remains with native capability/provider.
+Evidence later feeds verified tool-experience memory.
