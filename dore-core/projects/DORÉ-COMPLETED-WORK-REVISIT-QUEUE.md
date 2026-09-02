@@ -105,3 +105,25 @@ Reopen only when `VIS-GRAMMAR` has produced evidence-backed, cross-surface rules
 Use the current production homepage as the control. Apply only the newly proven grammar to the same real content and product functions, then compare against the baseline on desktop/mobile, bilingual typography, material/texture behavior, Scripture readability, search discoverability, wall/gate/dawn symbolism and ability to generalize to other products. Do not replace the live homepage with conceptual placeholders.
 
 **Current disposition:** keep production stable; maintain the August 2026 build as the historical baseline; revisit after visual-grammar evidence is mature enough for a real A/B implementation.
+
+## RQ-005 — Join operational-information synchronization
+
+**Source completed milestone:** live `/join/` ministry portal implementation plus the already-closed Priority-B site-media migration/cutover milestone.
+
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for operational-data governance only; the live Join surface itself remains `MAINTENANCE`.
+
+**Current priority:** LOW / WATCHLIST, subordinate to P01 and not a standalone active project.
+
+**Why it may deserve revisit**
+The Join portal is materially implemented and useful: it connects readers to Doré Bible Search, ONE, Westside Watch, WeChat, Zoom, ministry contacts and the Church surface. Its migrated background and QR assets use the canonical site-asset endpoint. However, schedule, Zoom and contact values are hard-coded in the presentation layer. Source presence proves implementation, not freshness, authorization or synchronization with the church's governing operational truth.
+
+**What remains valid from the completed milestone**
+The lightweight portal structure, cross-product doorway role and asset-code delivery pattern remain sound. No evidence in the bounded review indicates that Join is broken or that the closed Priority-B media migration should be reopened.
+
+**Revisit trigger**
+Raise priority if church schedule/contact/Zoom information changes; a canonical church operational-data source/API/file is introduced; Join is redesigned under Brand V1; or a stale-value discrepancy appears between Join and another official surface.
+
+**Desired future evaluation**
+Keep stable editorial/brand content local to the page, but source time-sensitive ministry facts from one canonical, explicitly verified operational-data source shared with Church surfaces where practical. Verify freshness and fallback behavior without disturbing the proven asset-code delivery path.
+
+**Current disposition:** keep production stable; watch for a governance trigger; do not interrupt P01.
