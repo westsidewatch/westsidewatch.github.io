@@ -83,26 +83,22 @@ Keep `AUTONOMOUS_CAPABILITY_RECOVERY_01` closed as bounded `VERIFIED_COMPLETE` a
 
 ## Capability-retention classification
 
-Suggested canonical retention ID when the main Capability Retention Map is next compacted/reconciled:
+Canonical aggregate identities are now compacted into the primary ledgers:
 
-`CAP-013 — Parent-goal-preserving autonomous capability recovery`
+- `CW-013 — Autonomous Capability Recovery 01` in `DORÉ-COMPLETED-WORK-LEDGER.md`;
+- `CAP-013 — Parent-goal-preserving autonomous capability recovery` in `DORÉ-CAPABILITY-RETENTION-MAP.md`.
 
-Suggested completed-work ID when the main Completed Work Ledger is next compacted/reconciled:
+This dedicated ledger remains the detailed provenance source; the aggregate entries intentionally stay concise.
 
-`CW-013 — Autonomous Capability Recovery 01`
+## Sweep revalidation — 2026-09-02
 
-These IDs are reserved here to prevent the verified milestone from disappearing between ledgers; this supplement is governing evidence until those canonical aggregate files are next safely rewritten.
+Sweep 01 completed the dependency-safe aggregate rewrite that had previously been deferred. `CW-013` and `CAP-013` are now present in the canonical aggregate ledgers, and `CW-014` / `CAP-014` were compacted in the same bounded batch for the Penpot bridge milestone. The former aggregate-linkage gap is therefore closed as `MAINTENANCE / BOOKKEEPING_DEBT` completed, with no new capability claim created.
 
-## Sweep revalidation — 2026-09-01
-
-A bounded Sweep 01 re-read of the canonical `DORÉ-MASTER-WORK-REGISTER.md`, `DORÉ-COMPLETED-WORK-LEDGER.md`, this retention ledger, and `DORÉ-AUTONOMOUS-CAPABILITY-RECOVERY-AGGREGATE-LINKAGE-2026-09-01.md` confirms that the governing operational interpretation remains correct and that the aggregate-linkage gap is still real: the Completed Work Ledger currently ends at `CW-012`, while this bounded verified milestone remains represented through the Master Register plus the dedicated evidence/retention ledgers. No status promotion or demotion is warranted.
-
-Current bounded classification therefore remains:
+Current bounded classification remains:
 
 - `AUTONOMOUS_CAPABILITY_RECOVERY_01`: `VERIFIED_COMPLETE`;
 - broader `EVOLUTION`: `CORE/CONTINUOUS / ACTIVE_PARALLEL`;
-- materially different-domain blind transfer: `UNKNOWN_NEEDS_EVIDENCE`;
-- aggregate identity reservation: `CW-013` / `CAP-013` retained until the next dependency-safe aggregate rewrite.
+- materially different-domain blind transfer: `UNKNOWN_NEEDS_EVIDENCE`.
 
 This is bookkeeping/evidence reconciliation only. It does not constitute a second autonomous-recovery proof and must not be counted as transfer evidence.
 
