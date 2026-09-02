@@ -425,3 +425,67 @@ Reopen the bounded milestone only if the service contract/schema changes, WSS st
 
 **Disposition**
 Keep the first external-worker integration milestone closed. Continue WSS as `ACTIVE_PARALLEL` until a packaged App run against the live endpoint is independently verified and recorded.
+
+## CW-013 — Autonomous Capability Recovery 01
+
+**Current classification:** `VERIFIED_COMPLETE` for one bounded parent-goal-preserving autonomous recovery episode; broader `EVOLUTION` remains `CORE/CONTINUOUS / ACTIVE_PARALLEL`.
+
+**Original objective**
+Prove that Doré can encounter a real capability failure during a real parent task, classify a reusable gap, apply and verify a provenance-bearing reusable repair, then resume the same parent goal to terminal acceptance without converting failure into a false PASS.
+
+**Completion evidence**
+- `dore-core/projects/DORÉ-AUTONOMOUS-CAPABILITY-RECOVERY-RETENTION-LEDGER-2026-09-01.md` records the bounded verified milestone and points to the canonical A2A/Storybook evidence ledger.
+- Terminal PASS receipt associated with commit `0ed626411ecb9ff5075293581edc43a0031a4638` (`result-autonomous-loop-acceptance-1`) persists the real `@storybook/addon-essentials@^9.1.3` ETARGET failure, parent-goal preservation, selection/application of the reusable `storybook9-package-model-repair` skill, verified repair, resumed parent goal, successful build and `autonomous_recovery.state = VERIFIED`.
+
+**Current quality judgment**
+Strong for the narrow recovery contract because the evidence is a persisted terminal execution receipt after a real failure. It does not prove materially different-domain blind transfer, longitudinal self-equipping autonomy, A2A conformance, broader `EVOLUTION` completion or a reserved `DORÉ_ALIVE` state.
+
+**What Doré learned / retained**
+- preserve the parent goal when a capability failure does not invalidate the task;
+- distinguish a reusable capability gap from a fixture-specific patch;
+- preserve provenance for the selected/built repair;
+- verify the repair before resuming;
+- resume the same parent goal and require terminal acceptance before calling recovery complete;
+- retain `LEARNING / RESEARCH_REQUIRED` rather than fabricating success when recovery is not proven.
+
+**Weaknesses / debt**
+- only one bounded recovery episode is verified;
+- materially different-domain blind transfer without method re-teaching remains unproven;
+- the broader A2A↔Storybook road-test and common Nervous System authority/conformance layers remain separately open.
+
+**Revisit trigger**
+Reopen this bounded milestone only if the terminal receipt is invalidated or regression evidence shows the repair/parent-goal resume claim was false. Stronger autonomy claims require a materially different-domain real episode.
+
+**Disposition**
+Keep `AUTONOMOUS_CAPABILITY_RECOVERY_01` closed. Reuse the recovery pattern while keeping broader Evolution evidence-gated.
+
+## CW-014 — Penpot Remote MCP persistent-design bridge 01
+
+**Current classification:** `VERIFIED_COMPLETE` for bounded persistent external design-surface connectivity/readback; `VIS-GRAMMAR` remains `ACTIVE_PARALLEL / BUILDING`.
+
+**Original objective**
+Establish a real executable bridge by which Doré can operate on a live editable Penpot design surface through protected runtime credentials, persist a design object, and independently verify that persistence.
+
+**Completion evidence**
+- `dore-core/evidence/PENPOT-BRIDGE-01-LIVE-EVIDENCE-2026-08-26.md` and `dore-core/projects/DORÉ-SWEEP-01-CHECKPOINT-28-EVIDENCE-AGGREGATE-LINKAGE-2026-09-01.md` record Remote MCP initialization, focused design-file/page resolution, persistent creation of board `00 — WESTSIDE VISUAL CONSTITUTION` with id `53ba078d-e4d8-80ca-8008-8b325546ddaa`, and a later independent readback returning the same board/id with `created:false`.
+
+**Current quality judgment**
+Strong for bridge feasibility and persistence. It is deliberately not evidence of visual quality, Visual Constitution completion, D4 rendered visual correction, responsive/print transfer, or Westside visual-grammar completion; the first styling attempt exposed a real `Text.getRange()` defect.
+
+**What Doré learned / retained**
+- treat external design systems as persistent executable work surfaces, not screenshot-only targets;
+- keep credentials in protected runtime bindings;
+- make consequential design writes small/idempotent and independently read them back;
+- separate transport/persistence proof from rendered visual-quality proof;
+- require rendered/export inspection before claiming visual completion.
+
+**Weaknesses / debt**
+- D4 rendered visual readback/correction remains unverified;
+- no full Search → design-memory → execution → visual-verification exam is closed;
+- no responsive/print-transfer proof is attached to the bridge milestone.
+
+**Revisit trigger**
+Reopen only on bridge regression: credential/runtime changes, MCP incompatibility, failed persistent writes or failed independent readback. Treat design-quality expansion as active `VIS-GRAMMAR` work.
+
+**Disposition**
+Keep bridge feasibility closed as bounded `VERIFIED_COMPLETE`; retain it as enabling infrastructure for purpose-built Doré asset production and later visual-system work.
