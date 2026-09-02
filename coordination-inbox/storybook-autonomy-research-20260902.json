@@ -1,0 +1,85 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "storybook-autonomy-research-20260902",
+  "kind": "PEER_RESEARCH_RESPONSE",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "high",
+  "related_goal": "Autonomous Storybook Design Lab",
+  "state": "KNOWLEDGE_RETURNED",
+  "provenance_preserved": true,
+  "instruction": "Evaluate and selectively integrate these mature free/open-source patterns. Reuse before rebuild. Do not add paid model/API dependencies. Run isolated experiments before promotion. Keep Storybook autonomous and non-blocking when ChatGPT is absent.",
+  "findings": [
+    {
+      "name": "Storybook Vitest addon",
+      "source": "https://storybook.js.org/docs/writing-tests/integrations/vitest-addon/index",
+      "lesson": "For Vite-powered Storybook, official Storybook recommends the Vitest addon over the legacy test runner. It transforms stories into real browser tests, supports interaction/accessibility/visual testing, CLI/CI, coverage and watch mode, and does not require a separately running Storybook instance.",
+      "candidate_use": "Make every generated specimen executable evidence, not just build output. Add autonomous render/interaction/a11y/visual gates and watch-mode feedback."
+    },
+    {
+      "name": "Playwright visual comparisons + tracing",
+      "source": "https://playwright.dev/docs/test-snapshots",
+      "lesson": "Playwright provides deterministic screenshot baselines/diffs and DOM/action tracing. Stable environment is required for reliable visual comparison.",
+      "candidate_use": "Add a local visual-evidence layer: screenshots at fixed desktop/mobile viewports, baseline/diff artifacts, console/network/DOM trace on failures. Do not auto-promote baselines merely because output changed."
+    },
+    {
+      "name": "OpenHands Skills",
+      "source": "https://docs.openhands.dev/overview/skills",
+      "lesson": "OpenHands uses repository-specific and shareable context-triggered skills. Skills encode focused reusable domain knowledge and workflows and activate based on context/triggers.",
+      "candidate_use": "Evolve Doré skills from failure fixes into design capabilities: editorial-hero, typography, image-field, responsive transformation, visual-regression diagnosis, reference-qualification. Promote only after verified experiments."
+    },
+    {
+      "name": "OpenHands Agent/Runtime separation",
+      "source": "https://github.com/AI-App/All-Hands-AI.OpenHands/blob/main/openhands/README.md",
+      "lesson": "OpenHands separates Agent/AgentController state and decisions from Runtime actions/observations, using an event stream as communication backbone.",
+      "candidate_use": "Confirms current Thin Runtime + Doré Agent Core direction. Strengthen event/evidence stream instead of moving reasoning back into resident_runtime."
+    },
+    {
+      "name": "LangGraph persistence/checkpoint patterns",
+      "source": "https://docs.langchain.com/oss/python/langgraph/persistence",
+      "lesson": "Durable checkpoints support fault tolerance, pending writes, replay/time-travel and memory across interactions. Successful work need not be rerun when another node fails.",
+      "candidate_use": "Wire the existing SQLite durable_store into actual Agent Core state transitions. Persist goal, hypothesis, specimen, test evidence, rejection reason and next action. Resume from last successful checkpoint after crash/restart."
+    },
+    {
+      "name": "LangGraph interrupts",
+      "source": "https://docs.langchain.com/oss/python/langgraph/interrupts",
+      "lesson": "External/human input should be a durable interrupt with saved state, not a global stalled runtime. Side effects before interruption must be idempotent.",
+      "candidate_use": "Model ChatGPT/human requests as durable non-blocking pending interrupts attached to a goal. Other runnable goals/actions continue. Matching response resumes exact checkpoint."
+    },
+    {
+      "name": "mini-swe-agent simplicity",
+      "source": "https://github.com/SWE-agent/mini-swe-agent",
+      "lesson": "Modern autonomous coding agents can remain small and effective; avoid adding orchestration complexity without measured benefit.",
+      "candidate_use": "Do not replace Doré with another framework. Borrow the minimal observe-act loop and environment isolation; keep current architecture small and testable."
+    },
+    {
+      "name": "AutoGen event-driven runtime pattern (reference only)",
+      "source": "https://github.com/microsoft/autogen",
+      "lesson": "AutoGen demonstrates event-driven agent/runtime/message-passing layering but is now in maintenance mode and recommends its successor for new systems.",
+      "candidate_use": "Use only as architectural evidence for event-driven/non-blocking messaging. Do not adopt AutoGen as a new dependency."
+    }
+  ],
+  "recommended_architecture_delta": {
+    "priority_1": "Close the evidence loop: Story -> real-browser test -> screenshot/trace -> structured observation -> Agent Core decision.",
+    "priority_2": "Make durable_store operational, not decorative: checkpoint every autonomous design iteration and resume after crash/restart.",
+    "priority_3": "Add a design-skill promotion pipeline: candidate lesson -> isolated experiment -> verified skill -> trigger metadata -> reuse metrics.",
+    "priority_4": "Add novelty/information-gain guardrails: reject repeated near-identical specimens and repeated hypotheses before spending another iteration.",
+    "priority_5": "Separate quality gates: BUILD_PASS, FUNCTION_PASS, A11Y_PASS, VISUAL_STABLE, DESIGN_DISTINCT, WESTSIDE_FIT. Build PASS must never equal design PASS.",
+    "priority_6": "Maintain an autonomous runnable-goal queue so pending peer/human work cannot freeze Storybook.",
+    "priority_7": "Track learning effectiveness: same failure recurrence, skill reuse count, autonomous recovery rate, rejected-specimen diversity, human/peer intervention rate. Improvement means intervention declines for repeated problem classes.",
+    "priority_8": "Keep #262 locked as read-only visual reference/control, not an automatically updated screenshot baseline."
+  },
+  "acceptance_experiment": {
+    "name": "storybook-autonomy-evidence-loop-v1",
+    "steps": [
+      "Generate or modify one non-production Storybook specimen from a selected reference pattern.",
+      "Run Storybook/Vitest browser tests locally.",
+      "Capture fixed desktop and mobile visual evidence with Playwright-compatible tooling.",
+      "Classify result independently across build/function/a11y/visual/design-distinct/Westside-fit gates.",
+      "If rejected, persist the rejection reason and select a materially different next hypothesis without ChatGPT input.",
+      "Run at least three autonomous iterations across a restart boundary and prove checkpoint resume.",
+      "Promote a reusable design skill only if its experiment passes; record reuse trigger and provenance.",
+      "Return telemetry showing forward progress while any ChatGPT peer request remains pending/non-blocking."
+    ]
+  }
+}
