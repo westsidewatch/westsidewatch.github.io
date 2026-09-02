@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dore.provider-metadata.v1",
+  "type": "object",
+  "required": ["id", "domain", "role", "cost", "network", "provenance", "limitations"],
+  "properties": {
+    "id": {"type": "string"},
+    "domain": {"type": "string"},
+    "role": {"type": "string"},
+    "inputs": {"type": "array", "items": {"type": "string"}},
+    "outputs": {"type": "array", "items": {"type": "string"}},
+    "authority": {"type": "string"},
+    "freshness": {"type": "string"},
+    "cost": {"enum": ["local", "free", "free-only"]},
+    "network": {"type": "boolean"},
+    "provenance": {"type": "string"},
+    "limitations": {"type": "array", "items": {"type": "string"}},
+    "observed_success": {"type": "object"}
+  },
+  "additionalProperties": true
+}
