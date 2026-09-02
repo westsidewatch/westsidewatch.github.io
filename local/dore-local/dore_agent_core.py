@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""Doré Agent Core v0.2 — autonomous reasoning/research/learning controller.
+"""Doré Agent Core v0.3 — autonomous reasoning/research/learning controller.
 
 ChatGPT is an asynchronous conversation-activated peer. A pending peer request is
 never a global stop condition: Doré checkpoints the handoff, keeps doing useful
 local/free/OSS work, polls for a matching research_id reply on later wakes, and
 only HUMAN_GATE may stop for a non-proxyable human decision/permission.
+
+Storybook browser evidence is a first-class learning signal. Infrastructure PASS
+may coexist with design-gate failures; those failures are checkpointed and fed
+back into the next materially different local design hypothesis.
 """
 from __future__ import annotations
 import hashlib, json, os, subprocess, sys, time
@@ -12,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
 sys.path.insert(0,str(LOCAL))
-VERSION='dore.agent-core.v0.2'
+VERSION='dore.agent-core.v0.3'
 ALT_RESEARCH_HINTS=[
  'Search a different local Knowledge Lab/skill/failure-memory path before repeating execution.',
  'Search a different maintained OSS or official-documentation source family and extract an executable pattern.',
@@ -46,8 +50,8 @@ def latest_learning(goal_id):
    d=read_json(p)
    if isinstance(d,dict) and d.get('state')=='RESEARCH_REQUIRED' and str(d.get('parent_source_message_id') or goal_id)==goal_id:return p,d
  return None,None
-def synthetic_gap(ctx,result):
- LEARNING.mkdir(parents=True,exist_ok=True);p=LEARNING/f"{ctx['goal_id']}.json";diag={'returncode':result.get('returncode'),'stdout':(result.get('stdout') or '')[-5000:],'stderr':(result.get('stderr') or '')[-5000:],'result':result.get('result')};data={'schema':'dore.learning-evidence.v2','state':'RESEARCH_REQUIRED','created_at':now(),'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'failure_fingerprint':fingerprint(diag),'question':'Research the capability or knowledge gap exposed by this failed real-work attempt. Find new evidence before another experiment.','diagnostic':diag,'retry_parent':False};atomic_json(p,data);return p,data
+def synthetic_gap(ctx,result,question=None):
+ LEARNING.mkdir(parents=True,exist_ok=True);p=LEARNING/f"{ctx['goal_id']}.json";diag={'returncode':result.get('returncode'),'stdout':(result.get('stdout') or '')[-5000:],'stderr':(result.get('stderr') or '')[-5000:],'result':result.get('result')};data={'schema':'dore.learning-evidence.v2','state':'RESEARCH_REQUIRED','created_at':now(),'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'failure_fingerprint':fingerprint(diag),'question':question or 'Research the capability or knowledge gap exposed by this failed real-work attempt. Find new evidence before another experiment.','diagnostic':diag,'retry_parent':False};atomic_json(p,data);return p,data
 def transition(p,job,state,**extra):
  h=list(job.get('history') or []);h.append({'at':now(),'state':state});job={**job,'state':state,'updated_at':now(),'history':h,**extra};atomic_json(p,job);return job
 def ensure_job(ctx,learning):
@@ -63,7 +67,7 @@ def exec_json(script,args=(),timeout=600,input_text=None):
  except Exception:pass
  return {'ok':cp.returncode==0 and isinstance(parsed,dict) and bool(parsed.get('ok')),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:],'result':parsed}
 def drive(ctx,lp,learning,jp=None,job=None,reason='NO_USER_INPUT_CONTINUE'):
- msg={'schema':'dore.agent-core.v0.2','message_id':f'agent-{int(time.time())}','kind':'autonomous_driver','sender':'dore-agent-core','recipient':'dore','related_goal':ctx['goal'],'task':{'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'trigger':reason,'learning_evidence':str(lp) if lp else None,'failure_fingerprint':(learning or {}).get('failure_fingerprint'),'research_job':str(jp) if jp else None,'knowledge_artifact':(job or {}).get('knowledge_artifact')}};return exec_json(DRIVER,timeout=1200,input_text=json.dumps(msg,ensure_ascii=False))
+ msg={'schema':'dore.agent-core.v0.3','message_id':f'agent-{int(time.time())}','kind':'autonomous_driver','sender':'dore-agent-core','recipient':'dore','related_goal':ctx['goal'],'task':{'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'trigger':reason,'learning_evidence':str(lp) if lp else None,'failure_fingerprint':(learning or {}).get('failure_fingerprint'),'research_job':str(jp) if jp else None,'knowledge_artifact':(job or {}).get('knowledge_artifact')}};return exec_json(DRIVER,timeout=1200,input_text=json.dumps(msg,ensure_ascii=False))
 def remember(ctx,result,verified=False,resolution=None):
  try:
   from failure_memory import remember_failure
@@ -88,13 +92,32 @@ def _source_count(result):
   elif isinstance(v,list):
    for x in v:walk(x)
  walk(result);return best
+def _storybook_observation(result):
+ parsed=result.get('result') if isinstance(result,dict) else None
+ if not isinstance(parsed,dict):return None
+ evidence=parsed.get('browser_evidence') or {}
+ observation=evidence.get('observation') if isinstance(evidence,dict) else None
+ if isinstance(observation,dict):return observation
+ driver=parsed.get('driver') or {}
+ for state in reversed(driver.get('states') or []):
+  if isinstance(state,dict) and isinstance(state.get('observation'),dict):return state.get('observation')
+ return None
+def _failed_design_gates(observation):
+ if not isinstance(observation,dict):return []
+ gates=observation.get('gates') or {};design=['VISUAL_STABLE','DESIGN_DISTINCT','WESTSIDE_FIT']
+ return [name for name in design if gates.get(name) is False or gates.get(name)=='INSUFFICIENT_CANDIDATES']
 def complete_goal(ctx,result):
  try:
   from goal_queue import set_status
-  meta=ctx.get('metadata') or {};minimum=int(meta.get('minimum_qualified_references') or 0);count=_source_count(result)
-  if meta.get('continuous') and count<minimum:
-   set_status(ctx['goal_id'],'ACTIVE',current_qualified_references=count,minimum_qualified_references=minimum,acceptance_met=False,last_activity_result=result.get('result'));synthetic_gap(ctx,{'returncode':0,'stdout':f'Acceptance gate unmet: {count}/{minimum} qualified references. Expand source families, continue autonomous research, checkpoint peer handoff without blocking, then resume.','stderr':'','result':{'acceptance_met':False,'current_qualified_references':count,'minimum_qualified_references':minimum}});return False
-  set_status(ctx['goal_id'],'PASS',result=result.get('result'),acceptance_met=True);return True
+  meta=ctx.get('metadata') or {};minimum=int(meta.get('minimum_qualified_references') or 0);prior=int(meta.get('current_qualified_references') or 0);count=max(prior,_source_count(result));observation=_storybook_observation(result);failed_design=_failed_design_gates(observation)
+  if meta.get('continuous') and (count<minimum or failed_design):
+   set_status(ctx['goal_id'],'ACTIVE',current_qualified_references=count,minimum_qualified_references=minimum,acceptance_met=False,last_activity_result=result.get('result'),last_design_observation=observation,failed_design_gates=failed_design)
+   parts=[]
+   if count<minimum:parts.append(f'qualified references remain {count}/{minimum}; expand qualified source families without discarding prior count')
+   if failed_design:parts.append('Storybook design observation failed '+', '.join(failed_design)+'; choose a materially different design hypothesis and verify it with the next browser-evidence run')
+   question='; '.join(parts)+'. Use local Knowledge Lab, verified skills and free/OSS references first. Do not wait for ChatGPT; keep any peer handoff non-blocking.'
+   synthetic_gap(ctx,{'returncode':0,'stdout':question,'stderr':'','result':{'acceptance_met':False,'current_qualified_references':count,'minimum_qualified_references':minimum,'design_observation':observation,'failed_design_gates':failed_design}},question=question);return False
+  set_status(ctx['goal_id'],'PASS',result=result.get('result'),acceptance_met=True,current_qualified_references=count,last_design_observation=observation,failed_design_gates=[]);return True
  except Exception:return False
 def mark_active(ctx,result,**extra):
  try:
@@ -128,7 +151,6 @@ def step():
   elif not peer_pending:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'events':events,'continue':True}
  else:reason='NO_USER_INPUT_CONTINUE'
  emit('ACT',reason=reason)
- # A pending peer handoff is deliberately not injected as knowledge into the local attempt.
  result=drive(ctx,lp,learning,None if peer_pending else jp,None if peer_pending else job,reason);emit('OBSERVE',driver_ok=bool(result.get('ok')),returncode=result.get('returncode'))
  if peer_pending and jp and job:
   job,same=record_nonblocking_attempt(jp,job,result);mark_active(ctx,result,pending_peer_research_id=job.get('research_id'),peer_blocking=False,autonomous_iteration=job.get('autonomous_iteration'));emit('AUTONOMOUS_PROGRESS_WITH_PEER_PENDING',research_id=job.get('research_id'),iteration=job.get('autonomous_iteration'),information_gain_rotation=same)
