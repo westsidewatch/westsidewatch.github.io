@@ -1,7 +1,7 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.2",
-  "updated_at": "2026-09-01",
-  "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest; A2A supervision is a higher-order control plane over project loops; autonomous decision ownership lives in Doré Agent Core, not Resident Runtime.",
+  "schema": "dore.runtime-control-manifest.v1.3",
+  "updated_at": "2026-09-02",
+  "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest. ChatGPT is a conversation-activated asynchronous peer; pending peer work never blocks Doré autonomous Storybook/Design Lab work.",
   "files": [
     "local/dore-local/resident_runtime.py",
     "local/dore-local/a2a_supervisor.py",
@@ -31,7 +31,13 @@
     "dore-design/knowledge-lab/a2a/loop-contract-v1.json",
     "dore-design/knowledge-lab/a2a/agent-card.json",
     "dore-design/knowledge-lab/a2a/runtime-control-manifest.json",
-    "dore-design/knowledge-lab/tools/research-bridge-v0.1.md"
+    "dore-design/knowledge-lab/tools/research-bridge-v0.1.md",
+    "dore-design/knowledge-lab/storybook/package.json",
+    "dore-design/knowledge-lab/storybook/.storybook/main.js",
+    "dore-design/knowledge-lab/storybook/.storybook/preview.js",
+    "dore-design/knowledge-lab/storybook/.storybook/vitest.setup.js",
+    "dore-design/knowledge-lab/storybook/vitest.config.js",
+    "dore-design/knowledge-lab/storybook/scripts/storybook-evidence.mjs"
   ],
   "required_local_durable_state": [
     "~/.dore/runtime/goals.json",
@@ -45,12 +51,14 @@
     "~/.dore/coordination/failure-memory.jsonl",
     "~/.dore/coordination/shared-learning.jsonl",
     "~/.dore/coordination/chatgpt-to-dore.jsonl",
-    "~/.dore/coordination/dore-to-chatgpt.jsonl"
+    "~/.dore/coordination/dore-to-chatgpt.jsonl",
+    "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json"
   ],
   "ownership": {
     "launchd": ["process liveness"],
-    "resident_runtime": ["wake/sleep", "process supervision", "mechanical checkpoint", "self-update", "heartbeat", "telemetry"],
-    "a2a_supervisor": ["higher-order A2A health", "project-loop stall detection", "peer-required escalation signal", "A2A-over-project-loop authority"],
-    "dore_agent_core": ["goal reasoning", "gap detection", "resource search", "candidate selection", "hypothesis", "experiment choice", "information gain", "verification", "skill promotion", "next action", "resume parent"]
+    "resident_runtime": ["wake/sleep","process supervision","mechanical checkpoint","self-update","heartbeat","telemetry"],
+    "a2a_supervisor": ["asynchronous A2A health","non-blocking peer visibility","project-loop stall observation"],
+    "dore_agent_core": ["goal reasoning","gap detection","resource search","candidate selection","hypothesis","experiment choice","information gain","verification","skill promotion","next action","resume parent"],
+    "storybook_lab": ["Vitest real-browser story tests","Playwright desktop/mobile evidence","responsive evidence","design observations"]
   }
 }
