@@ -61,3 +61,18 @@ The current governing classification remains unchanged:
 No new completed-work, revisit, superseded/retired, or missing-evidence entry is justified by this revalidation batch. The canonical register already states the correct operational truth, so it was intentionally left unchanged rather than creating bookkeeping churn.
 
 P01 impact remains none: no subtitle runtime, deployment, source-order, credential, binding, blocker, or recovery action was modified.
+
+## Sweep revalidation — 2026-09-03
+
+This bounded pass rechecked the primary A2A/Storybook autonomy ledger, the dedicated recovery-retention ledger, the current aggregate completed-work ledger, the separate Checkpoint 28 evidence/linkage record, and the canonical `EVOLUTION` / `MEM-SWEEP-01` interpretation.
+
+Findings:
+
+1. `CW-013` is present in the canonical completed-work ledger with the same narrow `VERIFIED_COMPLETE` contract recorded here; no completion inflation or regression was found.
+2. Checkpoint 28 independently preserves the Penpot bridge aggregate linkage and its 2026-09-02 compaction revalidation; no duplicate capability claim should be created from that bookkeeping history.
+3. The canonical Master Register already carries the correct current operational truth for `EVOLUTION` and explicitly accounts for the A2A/Storybook bounded recovery family under `MEM-SWEEP-01`. A register rewrite would add churn without changing classification, so no canonical status edit is warranted in this pass.
+4. The Sweep narrative currently preserves Checkpoint 27 in the main sweep file while Checkpoint 28 is a separate durable checkpoint artifact. This is `MAINTENANCE / BOOKKEEPING_DEBT`, not missing evidence and not a blocker: future consolidation should link the standalone checkpoint into the main sweep chronology without renumbering or inventing a new milestone.
+5. No new revisit candidate, superseded/retired work item, or missing-evidence entry is justified by this batch.
+6. P01 remains untouched: no subtitle runtime, deployment, source order, credential, binding, blocker, or recovery action changed.
+
+Current classification remains unchanged. Sweep 01 remains `ACTIVE_PARALLEL` and this ordinary revalidation does not justify user notification.
