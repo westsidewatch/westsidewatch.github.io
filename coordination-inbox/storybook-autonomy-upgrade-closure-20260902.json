@@ -1,0 +1,33 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "storybook-autonomy-upgrade-closure-20260902",
+  "kind": "TASK",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "high",
+  "related_goal": "Storybook autonomous evidence loop closure",
+  "task": {
+    "goal": "Close the entire Storybook autonomy upgrade on the current architecture with no paid API.",
+    "must_use_current_main": true,
+    "requirements": [
+      "Self-update all runtime-control-manifest files from origin/main, including Storybook evidence script and dependency config.",
+      "Run the real Storybook pipeline: build-storybook -> Vitest Storybook browser tests -> Playwright desktop/mobile evidence.",
+      "Treat evidence capture infrastructure separately from design quality. A valid capture with failing DESIGN_DISTINCT or WESTSIDE_FIT is an observation for the next autonomous hypothesis, not an infrastructure failure.",
+      "Confirm FUNCTION and A11Y from the authoritative Storybook Vitest run; visual capture owns render/stability/responsive/design-fit observations.",
+      "On a failed design gate, checkpoint the observation, choose a materially different information-gaining design hypothesis, and continue autonomously rather than waiting for ChatGPT.",
+      "Prove pending peer work remains non-blocking while this runs.",
+      "Prove no paid API usage.",
+      "Run loop contract acceptance and the Storybook autonomy-check.",
+      "Return canonical PASS only when the infrastructure pipeline is fully functional, at least three autonomous iterations are evidenced, and restart/self-update persistence is evidenced. Design-reference-library parent acceptance may remain open if its separate 40-reference/6-family/3-direction product goal is not yet met."
+    ],
+    "deliver": [
+      "canonical result",
+      "changed files",
+      "test results",
+      "latest telemetry state",
+      "autonomous iteration count",
+      "browser evidence gates",
+      "paid_api_used=false"
+    ]
+  }
+}
