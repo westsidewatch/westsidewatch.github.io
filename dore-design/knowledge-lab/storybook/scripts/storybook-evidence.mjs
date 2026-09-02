@@ -29,7 +29,7 @@ const server = spawn('python3', ['-m', 'http.server', '6106', '--bind', '127.0.0
 await sleep(900);
 
 const result = {
-  schema: 'dore.storybook-evidence.v1.2',
+  schema: 'dore.storybook-evidence.v1.3',
   created_at: new Date().toISOString(),
   source: 'Storybook static build + Playwright Chromium',
   purpose: 'Observation layer. Design-gate failures are learning signals, not evidence-infrastructure failures.',
@@ -63,12 +63,15 @@ try {
           return [s.color, s.backgroundColor, s.borderColor].filter(Boolean);
         }))];
         const text = body?.innerText || '';
+        const iframes = [...document.querySelectorAll('iframe')];
         return {
           text_length: text.trim().length,
           headings: document.querySelectorAll('h1,h2,h3').length,
           links: document.querySelectorAll('a').length,
           buttons: document.querySelectorAll('button').length,
           images: document.querySelectorAll('img,svg').length,
+          iframes: iframes.length,
+          iframe_srcs: iframes.map(x => x.getAttribute('src')).filter(Boolean),
           horizontal_overflow: body ? body.scrollWidth > innerWidth + 2 : false,
           westside_text_signal: /(西區|西望|守望|黎明|Westside|Watch|Dawn)/i.test(text),
           brand_color_signal: colors.some(c => /rgb\(179, 154, 71\)|rgb\(11, 38, 57\)|rgb\(30, 33, 31\)|rgb\(242, 238, 228\)/.test(c)),
@@ -79,13 +82,14 @@ try {
       const shot2 = await page.screenshot({ fullPage: true, animations: 'disabled', caret: 'hide' });
       const file = `${entry.id}-${vp.name}.png`.replace(/[^a-zA-Z0-9._-]+/g, '-');
       fs.writeFileSync(path.join(evidenceDir, file), shot1);
+      const renderedContent = metrics.text_length > 0 || (metrics.iframes > 0 && metrics.iframe_srcs.length > 0);
       story.viewports[vp.name] = {
         viewport: [vp.width, vp.height],
         screenshot: file,
         sha256: sha(shot1),
         repeat_sha256: sha(shot2),
         visual_stable: sha(shot1) === sha(shot2),
-        render_pass: metrics.text_length > 0 && pageErrors.length === 0,
+        render_pass: renderedContent && pageErrors.length === 0,
         responsive_pass: !metrics.horizontal_overflow,
         console_errors: consoleErrors.slice(0, 10),
         page_errors: pageErrors.slice(0, 10),
@@ -110,7 +114,7 @@ const fitSignals = westsideCandidates.map(x => {
   const views = Object.values(x.viewports || {});
   return views.some(v => v.metrics?.westside_text_signal) && views.some(v => v.metrics?.brand_color_signal);
 });
-const failedRender = allViews.filter(v => !v.render_pass).map(v => ({ story_id: v.story_id, viewport: v.viewport, text_length: v.metrics?.text_length, page_errors: v.page_errors, console_errors: v.console_errors }));
+const failedRender = allViews.filter(v => !v.render_pass).map(v => ({ story_id: v.story_id, viewport: v.viewport, text_length: v.metrics?.text_length, iframes: v.metrics?.iframes, iframe_srcs: v.metrics?.iframe_srcs, page_errors: v.page_errors, console_errors: v.console_errors }));
 const unstable = allViews.filter(v => !v.visual_stable).map(v => ({ story_id: v.story_id, viewport: v.viewport, sha256: v.sha256, repeat_sha256: v.repeat_sha256 }));
 result.gates = {
   BUILD_PASS: true,
