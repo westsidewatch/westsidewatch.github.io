@@ -1,0 +1,12 @@
+{
+  "schema": "dore.capability-registry.v1",
+  "purpose": "Describe discoverable capabilities without replacing Doré Search, Conversation, Agent Core, or native execution paths.",
+  "principles": ["reuse-native-capability","discover-before-load","preserve-provenance","free-local-first","evidence-before-learning"],
+  "capabilities": [
+    {"id":"bible.scripture-search","type":"knowledge","service":"bible","status":"existing","execution":"native","entrypoint":"/dore/dore-search.js","strengths":["scripture-reference","traditional-simplified-chinese-folding","keyword","fuzzy-text"],"cost":"local","network":false,"load":"deferred"},
+    {"id":"bible.original-language-search","type":"knowledge","service":"bible","status":"existing","execution":"native","entrypoint":"/dore/dore-search.js","data":"/dore/original-index.json","strengths":["hebrew","greek","lemma","surface-form","morphology"],"cost":"local","network":false,"load":"deferred"},
+    {"id":"library.books","type":"knowledge","service":"library","status":"planned","execution":"adapter","providers":["dawn-library","zotero-local","open-library","doab"],"cost":"free-only","load":"deferred"},
+    {"id":"academic.scholarship","type":"knowledge","service":"academic","status":"planned","execution":"adapter","providers":["crossref","openalex"],"cost":"free-only","load":"deferred"},
+    {"id":"heritage.maps-images","type":"knowledge","service":"heritage","status":"planned","execution":"adapter","providers":["library-of-congress","iiif"],"cost":"free-only","load":"deferred"}
+  ]
+}
