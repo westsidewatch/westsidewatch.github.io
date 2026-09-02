@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Doré Agent Core v0.1 — owns reasoning, research, learning and next-action choice.
+"""Doré Agent Core v0.2 — autonomous reasoning/research/learning controller.
 
-Runtime is deliberately not the agent. The Agent Core owns the stochastic/control
-loop: observe -> detect gap -> research -> experiment -> verify -> promote ->
-resume parent. The resident runtime only wakes this process, persists mechanical
-state, supervises execution and publishes telemetry.
+ChatGPT is an asynchronous conversation-activated peer. A pending peer request is
+never a global stop condition: Doré checkpoints the handoff, keeps doing useful
+local/free/OSS work, polls for a matching research_id reply on later wakes, and
+only HUMAN_GATE may stop for a non-proxyable human decision/permission.
 """
 from __future__ import annotations
 import hashlib, json, os, subprocess, sys, time
@@ -12,7 +12,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
 sys.path.insert(0,str(LOCAL))
-VERSION='dore.agent-core.v0.1'
+VERSION='dore.agent-core.v0.2'
+ALT_RESEARCH_HINTS=[
+ 'Search a different local Knowledge Lab/skill/failure-memory path before repeating execution.',
+ 'Search a different maintained OSS or official-documentation source family and extract an executable pattern.',
+ 'Compare at least two alternatives and run the smallest falsifiable Storybook experiment.',
+ 'Inspect current Storybook evidence and choose a materially different hypothesis rather than repeating the same build.',
+]
 def now():return datetime.now(timezone.utc).isoformat()
 def read_json(p,default=None):
  try:return json.loads(Path(p).read_text(encoding='utf-8'))
@@ -46,9 +52,10 @@ def transition(p,job,state,**extra):
  h=list(job.get('history') or []);h.append({'at':now(),'state':state});job={**job,'state':state,'updated_at':now(),'history':h,**extra};atomic_json(p,job);return job
 def ensure_job(ctx,learning):
  RESEARCH.mkdir(parents=True,exist_ok=True);failure=(learning or {}).get('failure_fingerprint') or fingerprint(learning or {'goal':ctx['goal_id']});rid=f"research-{ctx['goal_id']}-{fingerprint(failure)[:16]}";p=RESEARCH/f'{rid}.json';old=read_json(p,{}) or {}
+ acceptance={'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))}
  if old:
-  old['acceptance']={'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))};atomic_json(p,old);return p,old
- q=((learning or {}).get('knowledge_request') or {}).get('question') or (learning or {}).get('question') or 'Find a mature evidence-backed repair, verify it in isolation, promote it, then resume this exact parent goal.';job={'schema':'dore.research-job.v0.3','research_id':rid,'state':'RESEARCH_QUEUED','created_at':now(),'updated_at':now(),'iteration':1,'parent_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'parent_goal_preserved':True,'failure_fingerprint':failure,'question':q,'preferred_sources':['local Knowledge Lab','verified skills/failure memory','official docs','maintained mature OSS','standards/specs'],'acceptance_test':'smallest falsifiable parent-specific experiment','promotion_target':'verified skill/failure-memory/shared-learning','human_gate':False,'acceptance':{'minimum_qualified_references':int((ctx.get('metadata') or {}).get('minimum_qualified_references') or 0),'minimum_source_families':int((ctx.get('metadata') or {}).get('minimum_source_families') or 0),'continuous':bool((ctx.get('metadata') or {}).get('continuous'))},'history':[{'at':now(),'state':'RESEARCH_QUEUED'}]};atomic_json(p,job);return p,job
+  old['acceptance']=acceptance;atomic_json(p,old);return p,old
+ q=((learning or {}).get('knowledge_request') or {}).get('question') or (learning or {}).get('question') or 'Find a mature evidence-backed repair, verify it in isolation, promote it, then resume this exact parent goal.';job={'schema':'dore.research-job.v0.4','research_id':rid,'state':'RESEARCH_QUEUED','created_at':now(),'updated_at':now(),'iteration':1,'parent_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'parent_goal_preserved':True,'failure_fingerprint':failure,'question':q,'preferred_sources':['local Knowledge Lab','verified skills/failure memory','official docs','maintained mature OSS','standards/specs'],'acceptance_test':'smallest falsifiable parent-specific experiment','promotion_target':'verified skill/failure-memory/shared-learning','human_gate':False,'peer_policy':'conversation-activated-nonblocking','acceptance':acceptance,'history':[{'at':now(),'state':'RESEARCH_QUEUED'}]};atomic_json(p,job);return p,job
 def exec_json(script,args=(),timeout=600,input_text=None):
  if not script.exists():return {'ok':False,'error':'component_missing:'+str(script)}
  cp=subprocess.run([sys.executable,str(script),*map(str,args)],cwd=str(ROOT),text=True,capture_output=True,timeout=timeout,input=input_text);parsed=None
@@ -56,7 +63,7 @@ def exec_json(script,args=(),timeout=600,input_text=None):
  except Exception:pass
  return {'ok':cp.returncode==0 and isinstance(parsed,dict) and bool(parsed.get('ok')),'returncode':cp.returncode,'stdout':(cp.stdout or '')[-12000:],'stderr':(cp.stderr or '')[-12000:],'result':parsed}
 def drive(ctx,lp,learning,jp=None,job=None,reason='NO_USER_INPUT_CONTINUE'):
- msg={'schema':'dore.agent-core.v0.1','message_id':f'agent-{int(time.time())}','kind':'autonomous_driver','sender':'dore-agent-core','recipient':'dore','related_goal':ctx['goal'],'task':{'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'trigger':reason,'learning_evidence':str(lp) if lp else None,'failure_fingerprint':(learning or {}).get('failure_fingerprint'),'research_job':str(jp) if jp else None,'knowledge_artifact':(job or {}).get('knowledge_artifact')}};return exec_json(DRIVER,timeout=1200,input_text=json.dumps(msg,ensure_ascii=False))
+ msg={'schema':'dore.agent-core.v0.2','message_id':f'agent-{int(time.time())}','kind':'autonomous_driver','sender':'dore-agent-core','recipient':'dore','related_goal':ctx['goal'],'task':{'parent_source_message_id':ctx['goal_id'],'parent_goal':ctx['goal'],'project_loop':ctx['project_loop'],'trigger':reason,'learning_evidence':str(lp) if lp else None,'failure_fingerprint':(learning or {}).get('failure_fingerprint'),'research_job':str(jp) if jp else None,'knowledge_artifact':(job or {}).get('knowledge_artifact')}};return exec_json(DRIVER,timeout=1200,input_text=json.dumps(msg,ensure_ascii=False))
 def remember(ctx,result,verified=False,resolution=None):
  try:
   from failure_memory import remember_failure
@@ -86,18 +93,26 @@ def complete_goal(ctx,result):
   from goal_queue import set_status
   meta=ctx.get('metadata') or {};minimum=int(meta.get('minimum_qualified_references') or 0);count=_source_count(result)
   if meta.get('continuous') and count<minimum:
-   set_status(ctx['goal_id'],'ACTIVE',current_qualified_references=count,minimum_qualified_references=minimum,acceptance_met=False,last_activity_result=result.get('result'))
-   synthetic_gap(ctx,{'returncode':0,'stdout':f'Acceptance gate unmet: {count}/{minimum} qualified references. Expand source families, request peer research, checkpoint new evidence, then resume.','stderr':'','result':{'acceptance_met':False,'current_qualified_references':count,'minimum_qualified_references':minimum}})
-   return False
+   set_status(ctx['goal_id'],'ACTIVE',current_qualified_references=count,minimum_qualified_references=minimum,acceptance_met=False,last_activity_result=result.get('result'));synthetic_gap(ctx,{'returncode':0,'stdout':f'Acceptance gate unmet: {count}/{minimum} qualified references. Expand source families, continue autonomous research, checkpoint peer handoff without blocking, then resume.','stderr':'','result':{'acceptance_met':False,'current_qualified_references':count,'minimum_qualified_references':minimum}});return False
   set_status(ctx['goal_id'],'PASS',result=result.get('result'),acceptance_met=True);return True
  except Exception:return False
-def a2a_task(ctx,state_name):
+def mark_active(ctx,result,**extra):
+ try:
+  from goal_queue import set_status
+  return set_status(ctx['goal_id'],'ACTIVE',last_activity_result=result.get('result'),**extra)
+ except Exception:return None
+def a2a_task(ctx,state_name,**metadata):
  try:
   from a2a_adapter import dore_to_a2a_task
-  return dore_to_a2a_task(source_message_id=ctx['goal_id'],parent_goal=ctx['goal'],state=state_name,metadata={'projectLoop':ctx['project_loop'],'agentCore':VERSION})
+  return dore_to_a2a_task(source_message_id=ctx['goal_id'],parent_goal=ctx['goal'],state=state_name,metadata={'projectLoop':ctx['project_loop'],'agentCore':VERSION,'chatgptMode':'conversation-activated-peer',**metadata})
  except Exception as e:return {'error':repr(e)}
+def record_nonblocking_attempt(jp,job,result):
+ diag={'returncode':result.get('returncode'),'ok':bool(result.get('ok')),'stdout':(result.get('stdout') or '')[-1800:],'stderr':(result.get('stderr') or '')[-1800:],'result':result.get('result')};fp=fingerprint(diag);attempts=list(job.get('nonblocking_attempts') or []);previous=attempts[-1].get('fingerprint') if attempts else None;attempts.append({'at':now(),'fingerprint':fp,'driver_ok':bool(result.get('ok'))});attempts=attempts[-12:];same=fp==previous;iteration=int(job.get('autonomous_iteration') or 0)+1;job={**job,'nonblocking_attempts':attempts,'autonomous_iteration':iteration,'peer_request_pending':True,'peer_blocking':False,'last_autonomous_result':diag,'updated_at':now()}
+ if same:
+  hint=ALT_RESEARCH_HINTS[(iteration-1)%len(ALT_RESEARCH_HINTS)];job['question']=str(job.get('question') or '')+f'\nAutonomous information-gain iteration {iteration}: {hint}';job['history']=list(job.get('history') or [])+[{'at':now(),'state':'INFORMATION_GAIN_ROTATION','hint':hint}]
+ atomic_json(jp,job);return job,same
 def step():
- ctx=context();lp,learning=latest_learning(ctx['goal_id']);jp=job=None;events=[]
+ ctx=context();lp,learning=latest_learning(ctx['goal_id']);jp=job=None;events=[];peer_pending=False;rr=None;peer=None
  def emit(name,**extra):events.append({'at':now(),'event':name,**extra})
  if learning and learning.get('state')=='RESEARCH_REQUIRED':
   jp,job=ensure_job(ctx,learning)
@@ -106,12 +121,22 @@ def step():
    if job.get('state') not in {'KNOWLEDGE_RETURNED','PEER_RESEARCH_QUEUED'}:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'research_job':job,'events':events,'continue':True,'research_diagnostic':rr,'a2a_task':a2a_task(ctx,job.get('state'))}
   if job.get('state')=='PEER_RESEARCH_QUEUED':
    peer=exec_json(PEER_BRIDGE,[jp],timeout=60);job=read_json(jp,job) or job;emit(job.get('state') or 'PEER_RESEARCH_QUEUED',research_id=job.get('research_id'))
-   if job.get('state')!='KNOWLEDGE_RETURNED':return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'research_job':job,'events':events,'continue':True,'peer_diagnostic':peer,'a2a_task':a2a_task(ctx,job.get('state'))}
-  if job.get('state')=='KNOWLEDGE_RETURNED':job=transition(jp,job,'EXPERIMENTING');reason='KNOWLEDGE_RETURNED_EXPERIMENT';emit('EXPERIMENTING',research_id=job.get('research_id'))
+   if job.get('state')!='KNOWLEDGE_RETURNED':
+    peer_pending=True;job=transition(jp,job,'PEER_RESEARCH_QUEUED',peer_request_pending=True,peer_blocking=False,peer_mode='conversation-activated');emit('PENDING_PEER_NONBLOCKING',research_id=job.get('research_id'));reason='PEER_PENDING_CONTINUE_AUTONOMOUS'
+  if job.get('state')=='KNOWLEDGE_RETURNED':job=transition(jp,job,'EXPERIMENTING',peer_request_pending=False,peer_blocking=False);reason='KNOWLEDGE_RETURNED_EXPERIMENT';emit('EXPERIMENTING',research_id=job.get('research_id'))
   elif job.get('state')=='RESUME_PARENT':reason='RESUME_PARENT'
-  else:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'events':events,'continue':True}
+  elif not peer_pending:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'events':events,'continue':True}
  else:reason='NO_USER_INPUT_CONTINUE'
- emit('ACT',reason=reason);result=drive(ctx,lp,learning,jp,job,reason);emit('OBSERVE',driver_ok=bool(result.get('ok')),returncode=result.get('returncode'))
+ emit('ACT',reason=reason)
+ # A pending peer handoff is deliberately not injected as knowledge into the local attempt.
+ result=drive(ctx,lp,learning,None if peer_pending else jp,None if peer_pending else job,reason);emit('OBSERVE',driver_ok=bool(result.get('ok')),returncode=result.get('returncode'))
+ if peer_pending and jp and job:
+  job,same=record_nonblocking_attempt(jp,job,result);mark_active(ctx,result,pending_peer_research_id=job.get('research_id'),peer_blocking=False,autonomous_iteration=job.get('autonomous_iteration'));emit('AUTONOMOUS_PROGRESS_WITH_PEER_PENDING',research_id=job.get('research_id'),iteration=job.get('autonomous_iteration'),information_gain_rotation=same)
+  if same:
+   emit('RESEARCHING_ALTERNATIVE',research_id=job.get('research_id'));rr2=exec_json(RESEARCH_EXECUTOR,[jp]);job=read_json(jp,job) or job;emit(job.get('state') or 'RESEARCHING',research_id=job.get('research_id'))
+   if job.get('state')=='KNOWLEDGE_RETURNED':emit('KNOWLEDGE_RETURNED',research_id=job.get('research_id'))
+  state='PENDING_PEER_NONBLOCKING' if job.get('state')!='KNOWLEDGE_RETURNED' else 'KNOWLEDGE_RETURNED'
+  return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':True,'peer_pending':True,'peer_blocking':False,'peer_diagnostic':peer,'research_diagnostic':rr,'a2a_task':a2a_task(ctx,state,peerBlocking=False,researchId=job.get('research_id'))}
  if jp and job:
   if result.get('ok'):
    done=complete_goal(ctx,result)
@@ -122,7 +147,7 @@ def step():
   done=complete_goal(ctx,result);state='PASS' if done else 'RESEARCH_REQUIRED';emit('PASS' if done else 'ACCEPTANCE_UNMET')
  else:
   lp,learning=synthetic_gap(ctx,result);state='RESEARCH_REQUIRED';emit('GAP_DETECTED',failure_fingerprint=learning.get('failure_fingerprint'));emit('RESEARCH_REQUIRED')
- return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':state!='PASS','a2a_task':a2a_task(ctx,state)}
+ return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':state!='PASS','peer_pending':False,'peer_blocking':False,'a2a_task':a2a_task(ctx,state)}
 if __name__=='__main__':
  try:out=step()
  except Exception as e:out={'ok':False,'agent_core':VERSION,'state':'AGENT_ERROR','error':repr(e),'continue':True}
