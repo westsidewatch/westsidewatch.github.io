@@ -81,3 +81,19 @@ The original construction/bake-off phase is closed. Penpot, OpenPencil, Framesmi
 The next phase is production and evolution: use Doré Design for actual Westside Watch / ONE work, discover missing capabilities through that work, add them to the self-owned product, verify them, and teach Doré through the same real production loop.
 
 The project now succeeds or fails on the quality and reliability of real design work produced in Doré Design, not on whether an upstream provider passes an experiment.
+
+## Sweep 01 classification — 2026-09-01
+
+Memory Consolidation Sweep 01 independently reconciled the working-foundation claim against the project/build records and GitHub Actions run `33379900466`.
+
+Current evidence-bounded interpretation:
+
+- Doré Design 0.9 working product foundation: bounded `VERIFIED_COMPLETE`;
+- Doré Design production/evolution: `ACTIVE_PARALLEL`;
+- provider bake-off as an operational prerequisite: `SUPERSEDED / PHASE_CLOSED`;
+- rendered aesthetic readback/correction and full Westside visual competence: still `UNKNOWN_NEEDS_EVIDENCE` under the existing Design Working Memory / `VIS-GRAMMAR` D4 gate;
+- current New Westside homepage work remains candidate production work, not evidence that Brand V1 or the full visual grammar has graduated.
+
+Durable reconciliation: `dore-core/projects/DORÉ-DORÉ-DESIGN-FOUNDATION-EVIDENCE-LEDGER-2026-09-01.md`.
+
+This classification does not modify or interrupt P01.
