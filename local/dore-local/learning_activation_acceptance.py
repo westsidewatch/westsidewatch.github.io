@@ -21,6 +21,9 @@ def main():
   check('durable learning request preempts active product loop',selected.get('goal_id')=='fixture-peer-followup',selected)
   check('preempted loop is checkpointed',rows['product']['status']=='PAUSED',rows['product'])
   check('activation reason is durable and explicit',(selected.get('metadata') or {}).get('activation_reason')=='DURABLE_RESEARCH_REQUIRED',selected)
+  goal_queue.enqueue('older-learning','other',priority='critical',source='coordination_worker',metadata={'execution_kind':'coordination_message','requires_reply':True,'message':{'message_id':'older-learning'}})
+  older=Path(td)/'coordination'/'learning'/'older-learning.json';older.write_text(json.dumps({'state':'RESEARCH_REQUIRED','observed_at':'2026-09-02T00:00:00Z'}))
+  selected_again=goal_queue.current();check('active learning claim is idempotent within nested driver reads',selected_again.get('goal_id')=='fixture-peer-followup' and goal_queue.get('fixture-peer-followup').get('status')=='ACTIVE',selected_again)
   import coordination_completion
   importlib.reload(coordination_completion);sent=[];coordination_completion.send_to_chatgpt=lambda *a,**k: sent.append((a,k)) or {'message_id':k.get('message_id')}
   ctx={'goal_id':'fixture-peer-followup','goal':'newsroom','metadata':{'message':message}}

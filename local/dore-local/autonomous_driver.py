@@ -41,8 +41,8 @@ def latest_learning(parent):
  except Exception:return None
 def queued_metadata(parent):
  try:
-  from goal_queue import current
-  row=current() or {};return (row.get('metadata') or {}) if str(row.get('goal_id'))==str(parent) else {}
+  from goal_queue import get
+  row=get(parent) or {};return row.get('metadata') or {}
  except Exception:return {}
 def find_story():
  c=list((STORYBOOK/'src'/'stories').glob('NewWestsideEditorialHero.stories.*'));return c[0] if c else None

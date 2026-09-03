@@ -44,9 +44,12 @@ def _activation_candidate(goals):
   evidence=_learning_evidence(row)
   if evidence:candidates.append((str(evidence.get('observed_at') or row.get('updated_at') or ''),row,evidence))
  return max(candidates,key=lambda x:x[0]) if candidates else None
+def get(goal_id):
+ return next((x for x in load().get('goals',[]) if str(x.get('goal_id'))==str(goal_id)),None)
 def current():
  data=load()
  goals=data.get('goals',[]);active=next((x for x in goals if x.get('status')=='ACTIVE'),None);activation=_activation_candidate(goals)
+ if active and (active.get('metadata') or {}).get('activation_reason')=='DURABLE_RESEARCH_REQUIRED':return active
  if activation and (not active or activation[1].get('goal_id')!=active.get('goal_id')):
   _,candidate,evidence=activation
   if active:
