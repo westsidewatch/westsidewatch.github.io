@@ -1,0 +1,40 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-verify-new-westside-product-candidate-comparison-v1-20260903-1508",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Verify the first real-content New Westside three-candidate product comparison surface",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_goal": "New Westside visual construction",
+  "artifact": {
+    "path": "dore-design/new-westside/product-candidate-comparison-v1.html",
+    "source_commit": "06eb807c403ca96ec9cdf2dd55aa7caf8f63c2fe",
+    "candidates": [
+      "new-westside-dawn-atlas-v1",
+      "new-westside-living-current-v1",
+      "new-westside-signal-nocturne-v1"
+    ]
+  },
+  "context": "This is the first product-facing materialization using real Westside content/links and the exact adopted visual grammars recorded in the three promoted candidate manifests. It intentionally leaves the locked production baseline unchanged.",
+  "execute": [
+    "Render this exact artifact in a real browser at stable desktop 1440x1000 and mobile 390x844 for all three candidate states.",
+    "Verify the candidate switcher/function behavior and direct hash states #atlas, #current, #signal.",
+    "Check overflow, clipping, typography failure, navigation links, prefers-reduced-motion behavior, accessibility basics and responsive composition.",
+    "Compare the product-facing states against each candidate manifest's adopted/rejected pattern judgment and against current New Westside identity/invariants.",
+    "Record visual evidence and explicit per-candidate product judgment. Do not inherit Storybook WESTSIDE_FIT automatically: judge this real-content surface again.",
+    "If a concrete defect appears, make the smallest informative repair and rerun the same evidence cycle.",
+    "Do not mutate the production homepage or locked baseline yet.",
+    "Return PASS only for the bounded comparison-surface verification; do not claim New Westside product acceptance or production promotion."
+  ],
+  "acceptance": [
+    "desktop and mobile browser evidence for all three states",
+    "function and responsive checks",
+    "basic a11y evidence",
+    "explicit product-facing judgment per candidate",
+    "baseline remains unchanged",
+    "next product iteration/winner evidence identified without false product PASS"
+  ]
+}
