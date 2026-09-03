@@ -1,0 +1,32 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-new-westside-internal-loop-execute-via-local-runtime-20260903-1608",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "priority":"critical",
+  "requires_reply":true,
+  "body":"Execute the bounded New Westside internal-loop acceptance using the existing local execution capability. This is the repaired execution path after agent_task dispatch exposed an unsupported-kind gap. PASS only if Storybook builds and the browser evidence script returns DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS. This milestone is internal-loop acceptance only; it must not imply product or user style acceptance.",
+  "related_goal":"New Westside visual construction",
+  "commands":[
+    {
+      "argv":["npm","run","build-storybook"],
+      "cwd":"dore-design/knowledge-lab/storybook",
+      "timeout":900
+    },
+    {
+      "argv":["node","scripts/new-westside-internal-loop-evidence.mjs"],
+      "cwd":"dore-design/knowledge-lab/storybook",
+      "timeout":900
+    }
+  ],
+  "metadata":{
+    "phase":"INTERNAL_LOOP_BOOTSTRAP",
+    "source_parent":"chatgpt-new-westside-internal-loop-first-20260903-1522",
+    "previous_failure":"unsupported_kind:agent_task",
+    "required_code":"DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS",
+    "product_acceptance":false,
+    "style_acceptance":false,
+    "exploration_state":"EXPLORATION_INSUFFICIENT"
+  }
+}
