@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-03T13:24:20.094661+00:00",
+  "published_at": "2026-09-03T13:24:58.856619+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -4271,10 +4271,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788441565.651707,
-    "last_self_update_check_at": "2026-09-03T13:19:25.651712+00:00",
-    "last_telemetry_epoch": 1788441782.3171608,
-    "last_telemetry_at": "2026-09-03T13:23:02.317180+00:00",
+    "last_self_update_check_epoch": 1788441892.3180559,
+    "last_self_update_check_at": "2026-09-03T13:24:52.318066+00:00",
+    "last_telemetry_epoch": 1788441862.293804,
+    "last_telemetry_at": "2026-09-03T13:24:22.293824+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-03T13:24:19.432284+00:00",
     "last_agent_state": "PENDING_PEER_NONBLOCKING",
@@ -14767,18 +14767,6 @@
   },
   "events": [
     {
-      "at": "2026-09-03T12:55:53.708343+00:00",
-      "event": "WAKE",
-      "reason": "NO_USER_INPUT_CONTINUE"
-    },
-    {
-      "at": "2026-09-03T12:56:53.443334+00:00",
-      "event": "AGENT_OBSERVATION",
-      "state": "PENDING_PEER_NONBLOCKING",
-      "ok": true,
-      "returncode": 0
-    },
-    {
       "at": "2026-09-03T12:56:53.443888+00:00",
       "event": "A2A_SUPERVISION",
       "a2a_state": "A2A_PEER_PENDING_NONBLOCKING",
@@ -15221,6 +15209,26 @@
       "peer_required": true,
       "peer_blocking": false,
       "unchanged_cycles": 1
+    },
+    {
+      "at": "2026-09-03T13:24:52.947425+00:00",
+      "event": "CONTROL_MANIFEST_UPDATED",
+      "source": "origin/main"
+    },
+    {
+      "at": "2026-09-03T13:24:58.234422+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/a2a/runtime-control-manifest.json",
+        "local/dore-local/resident_runtime.py",
+        "local/dore-local/coordination_worker.py",
+        "local/dore-local/peer_collaboration.py",
+        "local/dore-local/test_peer_collaboration.py",
+        "local/dore-local/a2a_response_stall_acceptance.py",
+        "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
