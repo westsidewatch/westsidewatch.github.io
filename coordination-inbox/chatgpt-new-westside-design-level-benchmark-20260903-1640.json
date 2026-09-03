@@ -1,0 +1,75 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-new-westside-design-level-benchmark-20260903-1640",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_goal": "New Westside visual construction",
+  "objective": "Measure Doré's present design ability through a real, constrained New Westside benchmark rather than through technical PASS alone.",
+  "state": "DESIGN_LEVEL_BENCHMARK",
+  "user_intent": "看看現在多雷的設計水平如何",
+  "constraints": {
+    "no_product_promotion": true,
+    "no_style_acceptance_inference": true,
+    "baseline_immutable": true,
+    "exploration_state": "EXPLORATION_INSUFFICIENT",
+    "same_real_content_across_concepts": true,
+    "do_not_repackage_existing_three_candidates": true,
+    "do_not_count_palette_swaps_or_minor_grid_changes_as_distinct": true
+  },
+  "brief": {
+    "brand": "Westside Watch / 西望",
+    "primary_statement": "WATCH FOR THE DAWN.",
+    "real_destinations": [
+      {"name":"Journal","href":"/journal/","description":"守望，一座光明的城"},
+      {"name":"ONE","href":"/one/","description":"逐卷逐章查考聖經"},
+      {"name":"Living Water West","href":"/","description":"教會生活與聚會"},
+      {"name":"黎明書局","href":"/library/","description":"閱讀、研究與資源"},
+      {"name":"The Gate","href":"/join/","description":"進入西區守望"}
+    ],
+    "content_principle": "The design must make the relationship among Journal, ONE, Church, Library and Join understandable; beauty may not hide IA failure."
+  },
+  "execute_now": [
+    "Generate at least six materially distinct homepage experiment families from the same real content.",
+    "At least four families must use fundamentally different composition/interaction models, not merely different style skins.",
+    "Challenge the current design grammar. Include meaningful contrast across image-led vs type-led vs spatial/architectural, dense editorial vs contemplative, continuous narrative vs portal/city, static print-derived vs motion/interaction-led, monumental vs intimate, classical vs contemporary bilingual typography.",
+    "Do not automatically reuse the dominant dark-green/gold, giant serif hero, ruled-grid, or current threshold-spine grammar. Reuse only when independently justified by the concept.",
+    "Use real Westside copy and the five real destinations in every serious candidate.",
+    "Render each concept in a real browser at desktop 1440x1000 and mobile 390x844.",
+    "Collect render, responsive, semantic, visual-stability and basic accessibility evidence.",
+    "For every concept, state one strong design idea, one weakness, one rejected pattern, and one reason it is materially distinct from every other concept.",
+    "Run an explicit diversity audit across structure, hierarchy, typography, image system, motion/interaction, information architecture and mobile transformation.",
+    "Do not select a winner. The purpose is to expose present design range and quality, not converge."
+  ],
+  "quality_bar": {
+    "must_demonstrate": [
+      "composition beyond generic landing-page templates",
+      "credible editorial hierarchy",
+      "purposeful bilingual typography",
+      "real information architecture",
+      "distinct mobile composition rather than desktop collapse",
+      "visual identity appropriate to Westside without assuming current experiments are correct",
+      "ability to reject weak ideas, not merely produce variants"
+    ],
+    "failure_conditions": [
+      "six concepts are mostly palette/font swaps",
+      "all concepts inherit the same hero-plus-cards skeleton",
+      "technical browser PASS is presented as design-quality PASS",
+      "current three promoted Storybook candidates are recycled as the benchmark set",
+      "no real-content stress test",
+      "no explicit self-critique or diversity evidence"
+    ]
+  },
+  "required_result": {
+    "status": "PASS only when the benchmark actually demonstrates design range with browser evidence",
+    "evidence": [
+      "six or more concept identifiers",
+      "desktop and mobile evidence for each",
+      "diversity audit",
+      "per-concept design judgment",
+      "explicit statement that product_acceptance=false and style_acceptance=false",
+      "rank the demonstrated capability dimensions without choosing a production winner"
+    ]
+  }
+}
