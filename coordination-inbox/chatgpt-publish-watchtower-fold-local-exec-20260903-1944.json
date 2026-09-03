@@ -1,0 +1,39 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-publish-watchtower-fold-local-exec-20260903-1944",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/watchtower-fold-editor-publication",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; import json,datetime,shutil; home=Path.home()/'.dore/design'; home.mkdir(parents=True,exist_ok=True); ws=home/'westside-watch.workspace.json'; hist=home/'workspace-history'; hist.mkdir(exist_ok=True); now=datetime.datetime.now(datetime.timezone.utc).isoformat(); default={'schema':'dore.design.workspace.v1','id':'westside-watch','name':'Westside Watch — Doré Design','revision':1,'updated_at':now,'tokens':{'paper':'#FAF9F5','ink':'#252525','night':'#102A43','gold':'#A2872A','morning':'#D2BC69'},'pages':[]}; w=json.loads(ws.read_text(encoding='utf-8')) if ws.exists() else default; rev=int(w.get('revision',1)); backup=hist/f'westside-watch.r{rev:05d}.json'; backup.write_text(json.dumps(w,ensure_ascii=False,indent=2),encoding='utf-8') if ws.exists() and not backup.exists() else None; pid='new-westside-watchtower-fold'; page={'id':pid,'name':'New Westside · Watchtower Fold','canvas':{'w':1440,'h':1000},'experimental_only':True,'product_acceptance':False,'style_acceptance':False,'nodes':[{'id':'wt-kicker','type':'text','text':'WESTSIDE WATCH · VAUGHAN / TORONTO','x':40,'y':28,'w':430,'size':14},{'id':'wt-zh','type':'text','text':'西望','x':670,'y':24,'w':110,'size':25},{'id':'wt-rule-top','type':'rule','x':28,'y':60,'w':1384,'h':1},{'id':'wt-eyebrow','type':'text','text':'01 / A PLACE OF WATCHING   ·   ROM 13:12','x':42,'y':100,'w':510,'size':14},{'id':'wt-title','type':'text','role':'hero','text':'WATCH\\nFOR THE\\nDAWN.','x':42,'y':170,'w':530,'size':112},{'id':'wt-title-zh','type':'text','text':'守望黎明','x':48,'y':555,'w':360,'size':55},{'id':'wt-deck','type':'text','text':'在黑夜仍然守望，在清晨尚未來到以前保存光。\\n文章、聖經、教會生活與研究，不是五個並列的按鈕，\\n而是一座可以行走的城。','x':48,'y':690,'w':500,'size':23},{'id':'wt-threshold','type':'block','x':650,'y':105,'w':720,'h':720,'eyebrow':'A CITY BEFORE MORNING · 五個入口','title':'THRESHOLD CITY','body':'一條在黑暗中被晨光切開的行走路徑。'},{'id':'wt-dawn-axis','type':'rule','x':795,'y':125,'w':4,'h':650},{'id':'wt-journal','type':'text','text':'01   JOURNAL\\n守望，一座光明的城','x':735,'y':245,'w':520,'size':42},{'id':'wt-one','type':'text','text':'02   ONE\\n逐卷逐章查考聖經','x':865,'y':355,'w':430,'size':38},{'id':'wt-church','type':'text','text':'03   LIVING WATER WEST\\n教會生活與聚會','x':705,'y':470,'w':530,'size':36},{'id':'wt-library','type':'text','text':'04   黎明書局\\n閱讀、研究與資源','x':905,'y':585,'w':390,'size':38},{'id':'wt-gate','type':'text','text':'05   THE GATE\\n進入西區守望','x':790,'y':700,'w':430,'size':38},{'id':'wt-verse-rule','type':'rule','x':28,'y':850,'w':1384,'h':1},{'id':'wt-verse','type':'text','role':'hero','text':'THE NIGHT IS FAR SPENT,\\nTHE DAY IS AT HAND.','x':42,'y':880,'w':680,'size':44},{'id':'wt-note','type':'text','text':'Experimental only · no user style acceptance · no production promotion','x':860,'y':925,'w':500,'size':13}]}; pages=w.setdefault('pages',[]); pages=[p for p in pages if p.get('id')!=pid]+[page]; w['pages']=pages; w['revision']=rev+1; w['updated_at']=now; tmp=ws.with_suffix('.tmp'); tmp.write_text(json.dumps(w,ensure_ascii=False,indent=2),encoding='utf-8'); tmp.replace(ws); print(json.dumps({'ok':True,'code':'WATCHTOWER_EDITOR_PAGE_PUBLISHED','workspace':str(ws),'page_id':pid,'page_name':page['name'],'revision':w['revision'],'node_count':len(page['nodes']),'experimental_only':True,'product_acceptance':False,'style_acceptance':False},ensure_ascii=False))"
+      ],
+      "cwd": "~/.dore",
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "from pathlib import Path; import json; ws=Path.home()/'.dore/design/westside-watch.workspace.json'; w=json.loads(ws.read_text(encoding='utf-8')); p=next((x for x in w.get('pages',[]) if x.get('id')=='new-westside-watchtower-fold'),None); assert p is not None; assert p.get('name')=='New Westside · Watchtower Fold'; assert len(p.get('nodes',[]))>=15; assert p.get('experimental_only') is True; assert p.get('product_acceptance') is False; assert p.get('style_acceptance') is False; print(json.dumps({'ok':True,'code':'WATCHTOWER_EDITOR_PERSISTENCE_VERIFIED','page_id':p['id'],'page_name':p['name'],'node_count':len(p['nodes']),'canvas':p['canvas']},ensure_ascii=False))"
+      ],
+      "cwd": "~/.dore",
+      "timeout": 30
+    },
+    {
+      "argv": [
+        "python3",
+        "-c",
+        "import urllib.request,json; u='http://127.0.0.1:4310/api/workspace'; r=urllib.request.urlopen(u,timeout=5); w=json.loads(r.read().decode()); p=next((x for x in w.get('pages',[]) if x.get('id')=='new-westside-watchtower-fold'),None); assert p is not None; print(json.dumps({'ok':True,'code':'WATCHTOWER_EDITOR_LIVE_API_VISIBLE','page_id':p['id'],'page_name':p['name'],'revision':w.get('revision')},ensure_ascii=False))"
+      ],
+      "cwd": "~/.dore",
+      "timeout": 15
+    }
+  ]
+}
