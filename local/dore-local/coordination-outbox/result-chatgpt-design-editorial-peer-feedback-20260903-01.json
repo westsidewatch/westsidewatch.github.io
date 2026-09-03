@@ -1,0 +1,31 @@
+{
+  "body": "{\"source_message_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"task_status\": \"LEARNING\", \"attempt\": 1, \"terminal\": false, \"transport\": \"PASS\", \"execution\": \"FAIL\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": false, \"state\": \"RESEARCH_QUEUED\", \"learning\": {\"loop\": \"dore.autonomous-capability-loop.v0.1\", \"message_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"parent_goal\": \"storybook-dore-design-promotion\", \"observed_at\": \"2026-09-03T20:05:37.573723+00:00\", \"state\": \"RESEARCH_REQUIRED\", \"parent_goal_preserved\": true, \"failure_fingerprint\": \"TaskResultError: task_failed\", \"retry_parent\": false, \"knowledge_request\": {\"question\": \"Find a mature, evidence-backed way to resolve this capability gap, create a minimal reusable Doré skill, verify it in isolation, then resume the preserved parent goal.\", \"failure\": \"TaskResultError: task_failed\", \"reuse_before_rebuild\": true}, \"evidence_path\": \"/Users/chenjingyu/.dore/coordination/learning/chatgpt-design-editorial-peer-feedback-20260903-01.json\"}, \"goal_queue\": {\"goal_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"status\": \"PENDING\"}, \"original_failure\": {\"ok\": false, \"state\": \"RESEARCH_REQUIRED\", \"terminal_eligible\": false, \"response_type\": \"UNSUPPORTED_PEER_SEMANTICS\", \"reason\": \"peer_kind_requires_research:peer_collaboration\", \"reviewed_message_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"semantic_binding\": {\"source_message_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"request_kind\": \"peer_collaboration\", \"request_subject\": \"A2A peer review after editor rejected all three promoted homepage candidates\"}, \"error\": \"TaskResultError: task_failed\", \"parent_goal_preserved\": true, \"learning\": {\"loop\": \"dore.autonomous-capability-loop.v0.1\", \"message_id\": \"chatgpt-design-editorial-peer-feedback-20260903-01\", \"parent_goal\": \"storybook-dore-design-promotion\", \"observed_at\": \"2026-09-03T20:05:37.573723+00:00\", \"state\": \"RESEARCH_REQUIRED\", \"parent_goal_preserved\": true, \"failure_fingerprint\": \"TaskResultError: task_failed\", \"retry_parent\": false, \"knowledge_request\": {\"question\": \"Find a mature, evidence-backed way to resolve this capability gap, create a minimal reusable Doré skill, verify it in isolation, then resume the preserved parent goal.\", \"failure\": \"TaskResultError: task_failed\", \"reuse_before_rebuild\": true}, \"evidence_path\": \"/Users/chenjingyu/.dore/coordination/learning/chatgpt-design-editorial-peer-feedback-20260903-01.json\"}}, \"parent_goal_preserved\": true, \"handoff_to_resident_runtime\": true}}",
+  "created_at": "2026-09-03T20:05:37.857261+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "autonomous-capability-loop",
+    "resident-goal-queue",
+    "research-bridge-executable",
+    "research-required",
+    "goal-queue-handoff",
+    "source-message:chatgpt-design-editorial-peer-feedback-20260903-01"
+  ],
+  "message_id": "result-chatgpt-design-editorial-peer-feedback-20260903-01",
+  "message_sha256": "0aad35f9d2fd4dfbb7198072593d2243fdc22bd9243e1f4dfd92ad1e05662a5b",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "PASS",
+    "source_message_id": "chatgpt-design-editorial-peer-feedback-20260903-01",
+    "task_status": "LEARNING",
+    "terminal": false
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "storybook-dore-design-promotion",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: A2A peer review after editor rejected all three promoted homepage candidates",
+  "thread_id": "storybook-dore-design-editorial-learning-v1"
+}
