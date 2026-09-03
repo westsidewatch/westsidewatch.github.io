@@ -2,12 +2,28 @@
   "schema": "dore.design-candidate-registry.v1",
   "candidates": [
     {
+      "id": "new-westside-dawn-atlas-v1",
+      "name": "Dawn Atlas / 黎明圖譜",
+      "status": "candidate",
+      "manifest": "dore-design/candidates/new-westside-dawn-atlas-v1/manifest.json",
+      "page_id": "homepage-concept-index",
+      "source_story_id": "new-westside-homepage-concepts--dawn-atlas"
+    },
+    {
       "id": "new-westside-living-current-v1",
       "name": "Living Current / 活水流域",
       "status": "candidate",
       "manifest": "dore-design/candidates/new-westside-living-current-v1/manifest.json",
       "page_id": "homepage-concept-dispatch",
       "source_story_id": "new-westside-homepage-concepts--living-current"
+    },
+    {
+      "id": "new-westside-signal-nocturne-v1",
+      "name": "Signal Nocturne / 夜間信號",
+      "status": "candidate",
+      "manifest": "dore-design/candidates/new-westside-signal-nocturne-v1/manifest.json",
+      "page_id": "homepage-concept-folio",
+      "source_story_id": "new-westside-homepage-concepts--signal-nocturne"
     }
   ]
 }

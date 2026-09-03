@@ -1,35 +1,35 @@
 {
   "schema": "dore.design-candidate.v1",
-  "id": "new-westside-living-current-v1",
-  "name": "Living Current / 活水流域",
+  "id": "new-westside-dawn-atlas-v1",
+  "name": "Dawn Atlas / 黎明圖譜",
   "status": "candidate",
   "source": {
     "kind": "storybook",
-    "story_id": "new-westside-homepage-concepts--living-current",
+    "story_id": "new-westside-homepage-concepts--dawn-atlas",
     "story_file": "dore-design/knowledge-lab/storybook/src/stories/HomepageConcepts.stories.jsx",
     "evidence": "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json"
   },
   "provenance": {
     "references": [
       {
-        "id": "wordpress-themes",
-        "provenance": "https://wordpress.org/themes/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "figma-community",
+        "provenance": "https://www.figma.com/community",
+        "source_family": "design-community"
       },
       {
-        "id": "hugo-themes",
-        "provenance": "https://themes.gohugo.io/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "penpot-libraries-templates",
+        "provenance": "https://penpot.app/penpothub/libraries-templates",
+        "source_family": "design-community"
       },
       {
-        "id": "its-nice-that",
-        "provenance": "https://www.itsnicethat.com/",
-        "source_family": "independent-design-publication"
+        "id": "astro-themes",
+        "provenance": "https://astro.build/themes/",
+        "source_family": "static-site-template-registry"
       },
       {
-        "id": "creative-independent",
-        "provenance": "https://thecreativeindependent.com/",
-        "source_family": "independent-design-publication"
+        "id": "eleventy-starters",
+        "provenance": "https://www.11ty.dev/docs/starter/",
+        "source_family": "static-site-template-registry"
       },
       {
         "id": "new-westside-visual-language",
@@ -38,8 +38,8 @@
       }
     ],
     "source_families": [
-      "independent-design-publication",
-      "oss-cms-theme-registry",
+      "design-community",
+      "static-site-template-registry",
       "new-westside-brand"
     ]
   },
@@ -51,24 +51,24 @@
     },
     "reference_lineage": [
       {
-        "id": "wordpress-themes",
-        "provenance": "https://wordpress.org/themes/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "figma-community",
+        "provenance": "https://www.figma.com/community",
+        "source_family": "design-community"
       },
       {
-        "id": "hugo-themes",
-        "provenance": "https://themes.gohugo.io/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "penpot-libraries-templates",
+        "provenance": "https://penpot.app/penpothub/libraries-templates",
+        "source_family": "design-community"
       },
       {
-        "id": "its-nice-that",
-        "provenance": "https://www.itsnicethat.com/",
-        "source_family": "independent-design-publication"
+        "id": "astro-themes",
+        "provenance": "https://astro.build/themes/",
+        "source_family": "static-site-template-registry"
       },
       {
-        "id": "creative-independent",
-        "provenance": "https://thecreativeindependent.com/",
-        "source_family": "independent-design-publication"
+        "id": "eleventy-starters",
+        "provenance": "https://www.11ty.dev/docs/starter/",
+        "source_family": "static-site-template-registry"
       },
       {
         "id": "new-westside-visual-language",
@@ -78,13 +78,13 @@
     ],
     "pattern_judgment": {
       "adopted": [
-        "vertical title frame",
-        "two-ink field",
-        "modular editorial cards"
+        "edge-cropped hero",
+        "archival axis",
+        "ruled collision grid"
       ],
       "rejected": [
-        "dashboard chrome",
-        "uniform card grid"
+        "generic centered SaaS hero",
+        "decorative gradient cards"
       ],
       "westside_reason": "Preserves watchfulness, living water, editorial gravity and a restrained print-derived system."
     }
@@ -92,7 +92,7 @@
   "template": {
     "entrypoint": "dore-design/homepage_candidates.py",
     "renderer": "homepage-candidate",
-    "page_id": "homepage-concept-dispatch",
+    "page_id": "homepage-concept-index",
     "editable_bindings": [
       "home-title.text",
       "home-deck.text",
@@ -105,14 +105,14 @@
       "library-territory.title"
     ],
     "assets": [
-      "inline:living-current",
+      "inline:dawn-atlas",
       "static/images/westside-watch-masthead-landscape.svg"
     ]
   },
   "promotion_gate": {
     "ok": true,
     "schema": "dore.promotion-gate.v1",
-    "candidate_id": "new-westside-living-current-v1",
+    "candidate_id": "new-westside-dawn-atlas-v1",
     "checks": {
       "BUILD_PASS": true,
       "RENDER_PASS": true,
@@ -141,8 +141,8 @@
           1440,
           1000
         ],
-        "screenshot": "new-westside-homepage-concepts--living-current-desktop.png",
-        "sha256": "96830dd15b7ca9b838e6d443688b3303d652bf131f58ed1e5b4e170ea9a2c80b",
+        "screenshot": "new-westside-homepage-concepts--dawn-atlas-desktop.png",
+        "sha256": "7211ba9ac7e3b946e2937d2ed58ccf493c051311b3b9b372e93b901b56f29eef",
         "render_pass": true,
         "responsive_pass": true
       },
@@ -151,8 +151,8 @@
           390,
           844
         ],
-        "screenshot": "new-westside-homepage-concepts--living-current-mobile.png",
-        "sha256": "0c2cfb8eb956c7baff128e12ee54c83fd07d3cfe88508f9a5550d232c3861a88",
+        "screenshot": "new-westside-homepage-concepts--dawn-atlas-mobile.png",
+        "sha256": "47b78fc5fc0fd88c090b606a58c913e047757fe4f87967d9336b93f58ed344a1",
         "render_pass": true,
         "responsive_pass": true
       }

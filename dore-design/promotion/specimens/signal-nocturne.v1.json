@@ -1,0 +1,84 @@
+{
+  "schema": "dore.storybook-promotion-specimen.v2",
+  "candidate_id": "new-westside-signal-nocturne-v1",
+  "name": "Signal Nocturne / 夜間信號",
+  "source_story_id": "new-westside-homepage-concepts--signal-nocturne",
+  "source_story_file": "dore-design/knowledge-lab/storybook/src/stories/HomepageConcepts.stories.jsx",
+  "target_page_id": "homepage-concept-folio",
+  "renderer": "homepage-candidate",
+  "template_entrypoint": "dore-design/homepage_candidates.py",
+  "editable_bindings": [
+    "home-title.text",
+    "home-deck.text",
+    "watch-kicker.text",
+    "verse.text",
+    "journal-tower.title",
+    "journal-tower.body",
+    "one-territory.title",
+    "church-territory.title",
+    "library-territory.title"
+  ],
+  "assets": [
+    "inline:signal-nocturne",
+    "static/images/westside-watch-masthead-landscape.svg"
+  ],
+  "references": [
+    {
+      "id": "the-pudding",
+      "provenance": "https://pudding.cool/",
+      "source_family": "interactive-editorial"
+    },
+    {
+      "id": "emergence-magazine",
+      "provenance": "https://emergencemagazine.org/",
+      "source_family": "literary-independent-publication"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "source_families": [
+    "interactive-editorial",
+    "literary-independent-publication",
+    "new-westside-brand"
+  ],
+  "reference_lineage": [
+    {
+      "id": "the-pudding",
+      "provenance": "https://pudding.cool/",
+      "source_family": "interactive-editorial"
+    },
+    {
+      "id": "emergence-magazine",
+      "provenance": "https://emergencemagazine.org/",
+      "source_family": "literary-independent-publication"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "pattern_judgment": {
+    "adopted": [
+      "central overprint",
+      "high-contrast nocturne",
+      "signal-object field"
+    ],
+    "rejected": [
+      "stock photography hero",
+      "soft lifestyle minimalism"
+    ],
+    "westside_reason": "Preserves watchfulness, living water, editorial gravity and a restrained print-derived system."
+  },
+  "knowledge_corpus": {
+    "sha256": "948631c75c2176e8adae31d6f7a78ec1a582a871a32169d7248c222d26ad5e5d",
+    "source_count": 44,
+    "goal_status": "PASS"
+  },
+  "baseline_262_sha256": "e1eb928a030fa9af1924513d34b73c93afa5afc69878fd93494cb6f9cc8fa034",
+  "baseline_composition_signature": "threshold-editorial-fortress-5x8",
+  "composition_signature": "nocturne-signal-star-asymmetric-two-column"
+}

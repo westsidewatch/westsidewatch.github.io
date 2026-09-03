@@ -1,35 +1,25 @@
 {
   "schema": "dore.design-candidate.v1",
-  "id": "new-westside-living-current-v1",
-  "name": "Living Current / 活水流域",
+  "id": "new-westside-signal-nocturne-v1",
+  "name": "Signal Nocturne / 夜間信號",
   "status": "candidate",
   "source": {
     "kind": "storybook",
-    "story_id": "new-westside-homepage-concepts--living-current",
+    "story_id": "new-westside-homepage-concepts--signal-nocturne",
     "story_file": "dore-design/knowledge-lab/storybook/src/stories/HomepageConcepts.stories.jsx",
     "evidence": "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json"
   },
   "provenance": {
     "references": [
       {
-        "id": "wordpress-themes",
-        "provenance": "https://wordpress.org/themes/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "the-pudding",
+        "provenance": "https://pudding.cool/",
+        "source_family": "interactive-editorial"
       },
       {
-        "id": "hugo-themes",
-        "provenance": "https://themes.gohugo.io/",
-        "source_family": "oss-cms-theme-registry"
-      },
-      {
-        "id": "its-nice-that",
-        "provenance": "https://www.itsnicethat.com/",
-        "source_family": "independent-design-publication"
-      },
-      {
-        "id": "creative-independent",
-        "provenance": "https://thecreativeindependent.com/",
-        "source_family": "independent-design-publication"
+        "id": "emergence-magazine",
+        "provenance": "https://emergencemagazine.org/",
+        "source_family": "literary-independent-publication"
       },
       {
         "id": "new-westside-visual-language",
@@ -38,8 +28,8 @@
       }
     ],
     "source_families": [
-      "independent-design-publication",
-      "oss-cms-theme-registry",
+      "interactive-editorial",
+      "literary-independent-publication",
       "new-westside-brand"
     ]
   },
@@ -51,24 +41,14 @@
     },
     "reference_lineage": [
       {
-        "id": "wordpress-themes",
-        "provenance": "https://wordpress.org/themes/",
-        "source_family": "oss-cms-theme-registry"
+        "id": "the-pudding",
+        "provenance": "https://pudding.cool/",
+        "source_family": "interactive-editorial"
       },
       {
-        "id": "hugo-themes",
-        "provenance": "https://themes.gohugo.io/",
-        "source_family": "oss-cms-theme-registry"
-      },
-      {
-        "id": "its-nice-that",
-        "provenance": "https://www.itsnicethat.com/",
-        "source_family": "independent-design-publication"
-      },
-      {
-        "id": "creative-independent",
-        "provenance": "https://thecreativeindependent.com/",
-        "source_family": "independent-design-publication"
+        "id": "emergence-magazine",
+        "provenance": "https://emergencemagazine.org/",
+        "source_family": "literary-independent-publication"
       },
       {
         "id": "new-westside-visual-language",
@@ -78,13 +58,13 @@
     ],
     "pattern_judgment": {
       "adopted": [
-        "vertical title frame",
-        "two-ink field",
-        "modular editorial cards"
+        "central overprint",
+        "high-contrast nocturne",
+        "signal-object field"
       ],
       "rejected": [
-        "dashboard chrome",
-        "uniform card grid"
+        "stock photography hero",
+        "soft lifestyle minimalism"
       ],
       "westside_reason": "Preserves watchfulness, living water, editorial gravity and a restrained print-derived system."
     }
@@ -92,7 +72,7 @@
   "template": {
     "entrypoint": "dore-design/homepage_candidates.py",
     "renderer": "homepage-candidate",
-    "page_id": "homepage-concept-dispatch",
+    "page_id": "homepage-concept-folio",
     "editable_bindings": [
       "home-title.text",
       "home-deck.text",
@@ -105,14 +85,14 @@
       "library-territory.title"
     ],
     "assets": [
-      "inline:living-current",
+      "inline:signal-nocturne",
       "static/images/westside-watch-masthead-landscape.svg"
     ]
   },
   "promotion_gate": {
     "ok": true,
     "schema": "dore.promotion-gate.v1",
-    "candidate_id": "new-westside-living-current-v1",
+    "candidate_id": "new-westside-signal-nocturne-v1",
     "checks": {
       "BUILD_PASS": true,
       "RENDER_PASS": true,
@@ -141,8 +121,8 @@
           1440,
           1000
         ],
-        "screenshot": "new-westside-homepage-concepts--living-current-desktop.png",
-        "sha256": "96830dd15b7ca9b838e6d443688b3303d652bf131f58ed1e5b4e170ea9a2c80b",
+        "screenshot": "new-westside-homepage-concepts--signal-nocturne-desktop.png",
+        "sha256": "2ff93edfb7763b25ca0b80e7043d8ae88958c82bfb0e5e6095ed7c6b800f00ed",
         "render_pass": true,
         "responsive_pass": true
       },
@@ -151,8 +131,8 @@
           390,
           844
         ],
-        "screenshot": "new-westside-homepage-concepts--living-current-mobile.png",
-        "sha256": "0c2cfb8eb956c7baff128e12ee54c83fd07d3cfe88508f9a5550d232c3861a88",
+        "screenshot": "new-westside-homepage-concepts--signal-nocturne-mobile.png",
+        "sha256": "b42a3703809cee9524689dab301055600e16b33a0eff57621222cbf8364fe8ae",
         "render_pass": true,
         "responsive_pass": true
       }

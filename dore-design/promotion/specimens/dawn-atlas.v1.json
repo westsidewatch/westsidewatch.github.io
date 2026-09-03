@@ -1,0 +1,104 @@
+{
+  "schema": "dore.storybook-promotion-specimen.v2",
+  "candidate_id": "new-westside-dawn-atlas-v1",
+  "name": "Dawn Atlas / 黎明圖譜",
+  "source_story_id": "new-westside-homepage-concepts--dawn-atlas",
+  "source_story_file": "dore-design/knowledge-lab/storybook/src/stories/HomepageConcepts.stories.jsx",
+  "target_page_id": "homepage-concept-index",
+  "renderer": "homepage-candidate",
+  "template_entrypoint": "dore-design/homepage_candidates.py",
+  "editable_bindings": [
+    "home-title.text",
+    "home-deck.text",
+    "watch-kicker.text",
+    "verse.text",
+    "journal-tower.title",
+    "journal-tower.body",
+    "one-territory.title",
+    "church-territory.title",
+    "library-territory.title"
+  ],
+  "assets": [
+    "inline:dawn-atlas",
+    "static/images/westside-watch-masthead-landscape.svg"
+  ],
+  "references": [
+    {
+      "id": "figma-community",
+      "provenance": "https://www.figma.com/community",
+      "source_family": "design-community"
+    },
+    {
+      "id": "penpot-libraries-templates",
+      "provenance": "https://penpot.app/penpothub/libraries-templates",
+      "source_family": "design-community"
+    },
+    {
+      "id": "astro-themes",
+      "provenance": "https://astro.build/themes/",
+      "source_family": "static-site-template-registry"
+    },
+    {
+      "id": "eleventy-starters",
+      "provenance": "https://www.11ty.dev/docs/starter/",
+      "source_family": "static-site-template-registry"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "source_families": [
+    "design-community",
+    "static-site-template-registry",
+    "new-westside-brand"
+  ],
+  "reference_lineage": [
+    {
+      "id": "figma-community",
+      "provenance": "https://www.figma.com/community",
+      "source_family": "design-community"
+    },
+    {
+      "id": "penpot-libraries-templates",
+      "provenance": "https://penpot.app/penpothub/libraries-templates",
+      "source_family": "design-community"
+    },
+    {
+      "id": "astro-themes",
+      "provenance": "https://astro.build/themes/",
+      "source_family": "static-site-template-registry"
+    },
+    {
+      "id": "eleventy-starters",
+      "provenance": "https://www.11ty.dev/docs/starter/",
+      "source_family": "static-site-template-registry"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "pattern_judgment": {
+    "adopted": [
+      "edge-cropped hero",
+      "archival axis",
+      "ruled collision grid"
+    ],
+    "rejected": [
+      "generic centered SaaS hero",
+      "decorative gradient cards"
+    ],
+    "westside_reason": "Preserves watchfulness, living water, editorial gravity and a restrained print-derived system."
+  },
+  "knowledge_corpus": {
+    "sha256": "948631c75c2176e8adae31d6f7a78ec1a582a871a32169d7248c222d26ad5e5d",
+    "source_count": 44,
+    "goal_status": "PASS"
+  },
+  "baseline_262_sha256": "e1eb928a030fa9af1924513d34b73c93afa5afc69878fd93494cb6f9cc8fa034",
+  "baseline_composition_signature": "threshold-editorial-fortress-5x8",
+  "composition_signature": "edge-cropped-atlas-route-twelve-column-grid"
+}

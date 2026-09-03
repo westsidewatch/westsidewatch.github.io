@@ -1,0 +1,11 @@
+{
+  "schema":"dore.mail.v1","message_id":"dore-storybook-three-candidate-promotion-v1-canonical-acceptance-20260903-01","thread_id":"dore-storybook-three-candidate-promotion-v1","sender":"chatgpt","recipient":"dore","priority":"critical","kind":"local_exec","requires_reply":true,"related_goal":"storybook-to-dore-design-three-candidate-promotion-v1","subject":"Canonical acceptance for knowledge-driven three-candidate promotion",
+  "commands":[
+    {"argv":["python3","dore-design/promotion_capability_audit.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["npm","run","autonomy-check"],"cwd":"/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["python3","dore-design/install_homepage_candidates.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["launchctl","kickstart","-k","gui/501/io.westsidewatch.dore-design"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","-c","import json,time,urllib.request\nfor _ in range(40):\n try:\n  h=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/health',timeout=3));c=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/candidates',timeout=3));assert h.get('version')=='1.9.0' and len(c.get('candidates',[]))==3 and all(x.get('knowledge') and set((x.get('viewport_evidence') or {}).keys())=={'desktop','mobile'} for x in c['candidates']);print(json.dumps({'ok':True,'version':h['version'],'candidate_ids':[x['id'] for x in c['candidates']]}));break\n except Exception:time.sleep(.25)\nelse:raise SystemExit('three_candidate_gallery_not_ready')"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body":"Audit actual Doré Design 1.9.0, compress the PASS 44-source knowledge into three materially distinct Westside directions, run Storybook browser evidence and promotion gates, expose three complete editable candidates with lineage, adopted/rejected patterns and desktop/mobile evidence, verify feedback reaches Knowledge Lab, and prove #262 byte and visual invariants. Return one terminal canonical receipt."
+}

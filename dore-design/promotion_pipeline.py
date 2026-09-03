@@ -19,6 +19,7 @@ CANDIDATES = ROOT / "dore-design" / "candidates"
 REGISTRY = CANDIDATES / "registry.json"
 BASELINE = ROOT / "dore-design" / "new-westside" / "homepage-v3-threshold-promoted.html"
 FEEDBACK = Path(os.environ.get("DORE_DESIGN_DATA", Path.home() / ".dore" / "design")) / "candidate-feedback.jsonl"
+KNOWLEDGE_FEEDBACK = Path(os.environ.get("DORE_LOCAL_HOME", Path.home() / ".dore")) / "knowledge-lab" / "candidate-feedback.jsonl"
 REQUIRED_GATES = ("BUILD_PASS", "RENDER_PASS", "FUNCTION_PASS", "A11Y_PASS", "VISUAL_STABLE", "RESPONSIVE_PASS", "DESIGN_DISTINCT", "WESTSIDE_FIT")
 
 
@@ -52,6 +53,8 @@ def evaluate(spec):
         "RENDERER_AVAILABLE": (ROOT / str(spec.get("template_entrypoint") or "")).is_file(),
         "STORY_AVAILABLE": (ROOT / str(spec.get("source_story_file") or "")).is_file(),
         "MATERIALLY_DISTINCT": bool(spec.get("composition_signature")) and spec.get("composition_signature") != spec.get("baseline_composition_signature"),
+        "KNOWLEDGE_LINEAGE": (spec.get("knowledge_corpus") or {}).get("goal_status") == "PASS" and len(spec.get("reference_lineage") or []) >= 3,
+        "PATTERN_JUDGMENT": bool((spec.get("pattern_judgment") or {}).get("adopted")) and bool((spec.get("pattern_judgment") or {}).get("rejected")),
     })
     failed = [name for name, passed in checks.items() if not passed]
     return {"ok": not failed, "schema": "dore.promotion-gate.v1", "candidate_id": spec.get("candidate_id"), "checks": checks, "failed": failed}
@@ -69,8 +72,10 @@ def promote_spec(spec):
         "status": "candidate",
         "source": {"kind": "storybook", "story_id": spec["source_story_id"], "story_file": spec["source_story_file"], "evidence": spec["evidence"]},
         "provenance": {"references": spec["references"], "source_families": spec["source_families"]},
+        "knowledge": {"corpus": spec.get("knowledge_corpus"), "reference_lineage": spec.get("reference_lineage"), "pattern_judgment": spec.get("pattern_judgment")},
         "template": {"entrypoint": spec["template_entrypoint"], "renderer": spec["renderer"], "page_id": spec["target_page_id"], "editable_bindings": spec["editable_bindings"], "assets": spec.get("assets") or []},
         "promotion_gate": result,
+        "evidence": {"viewports": spec.get("viewport_evidence") or {}},
         "baseline_262": {"immutable": True, "sha256": spec["baseline_262_sha256"], "targeted": False},
     }
     folder = CANDIDATES / candidate_id
@@ -112,6 +117,7 @@ def promote_storybook_evidence(spec_path, evidence_path):
         "DESIGN_DISTINCT": global_gates.get("DESIGN_DISTINCT") is True,
         "WESTSIDE_FIT": bool(views) and all(x.get("metrics", {}).get("westside_text_signal") and (x.get("metrics", {}).get("brand_color_signal") or x.get("metrics", {}).get("editorial_system_signal")) for x in views),
     }
+    spec["viewport_evidence"] = {name: {"viewport": view.get("viewport"), "screenshot": view.get("screenshot"), "sha256": view.get("sha256"), "render_pass": view.get("render_pass"), "responsive_pass": view.get("responsive_pass")} for name, view in (story.get("viewports") or {}).items()}
     evidence_file = Path(evidence_path).resolve()
     try: spec["evidence"] = str(evidence_file.relative_to(ROOT).as_posix())
     except ValueError: spec["evidence"] = str(evidence_file)
@@ -131,6 +137,9 @@ def list_candidates():
     rows = []
     for item in data.get("candidates", []):
         row = dict(item)
+        manifest = read_json(ROOT / str(item.get("manifest") or ""), {}) or {}
+        row["knowledge"] = manifest.get("knowledge")
+        row["viewport_evidence"] = (manifest.get("evidence") or {}).get("viewports")
         decision = decisions.get(item.get("id"))
         row["runtime_status"] = decision.get("decision") if decision else item.get("status", "candidate")
         row["last_judgment"] = decision
@@ -146,6 +155,9 @@ def record_judgment(candidate_id, decision, reason="", signals=None):
     row = {"schema": "dore.design-feedback.v1", "candidate_id": candidate_id, "decision": decision, "reason": str(reason).strip(), "signals": list(signals or []), "created_at": now(), "returns_to": ["storybook", "knowledge-lab"]}
     FEEDBACK.parent.mkdir(parents=True, exist_ok=True)
     with FEEDBACK.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+    KNOWLEDGE_FEEDBACK.parent.mkdir(parents=True, exist_ok=True)
+    with KNOWLEDGE_FEEDBACK.open("a", encoding="utf-8") as handle:
         handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
     return {"ok": True, "feedback": row, "candidate_status": decision, "baseline_262_modified": False}
 

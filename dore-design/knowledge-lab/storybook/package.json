@@ -8,8 +8,8 @@
     "build-storybook": "storybook build",
     "test-storybook": "vitest --project=storybook --run",
     "evidence-storybook": "node scripts/storybook-evidence.mjs",
-    "promote-design": "python3 ../../promotion_pipeline.py promote-storybook ../../promotion/specimens/living-current.v1.json ../evidence/storybook-autonomy/latest.json",
-    "promotion-check": "python3 ../../promotion_acceptance.py",
+    "promote-design": "python3 ../../promote_three_candidates.py",
+    "promotion-check": "python3 ../../promotion_three_acceptance.py",
     "autonomy-check": "npm run build-storybook && npm run test-storybook && npm run evidence-storybook && npm run promote-design && npm run promotion-check"
   },
   "dependencies": {

@@ -1,32 +1,104 @@
 {
-  "schema": "dore.storybook-promotion-specimen.v1",
+  "schema": "dore.storybook-promotion-specimen.v2",
   "candidate_id": "new-westside-living-current-v1",
   "name": "Living Current / 活水流域",
   "source_story_id": "new-westside-homepage-concepts--living-current",
   "source_story_file": "dore-design/knowledge-lab/storybook/src/stories/HomepageConcepts.stories.jsx",
-  "evidence": "dore-design/knowledge-lab/evidence/storybook-promotion/new-westside-living-current-v1.json",
   "target_page_id": "homepage-concept-dispatch",
   "renderer": "homepage-candidate",
   "template_entrypoint": "dore-design/homepage_candidates.py",
-  "editable_bindings": ["home-title.text", "home-deck.text", "watch-kicker.text", "verse.text", "journal-tower.title", "journal-tower.body", "one-territory.title", "church-territory.title", "library-territory.title"],
-  "assets": ["inline:living-current-water-field", "static/images/westside-watch-masthead-landscape.svg"],
-  "references": [
-    {"id": "mono-color-layout-system", "kind": "design-system", "provenance": "user-supplied reference study"},
-    {"id": "independent-editorial-grid", "kind": "editorial-reference", "provenance": "Doré Knowledge Lab reference corpus"},
-    {"id": "new-westside-visual-language", "kind": "brand-language", "provenance": "dore-design/new-westside"}
+  "editable_bindings": [
+    "home-title.text",
+    "home-deck.text",
+    "watch-kicker.text",
+    "verse.text",
+    "journal-tower.title",
+    "journal-tower.body",
+    "one-territory.title",
+    "church-territory.title",
+    "library-territory.title"
   ],
-  "source_families": ["design-system", "independent-editorial", "new-westside-brand"],
+  "assets": [
+    "inline:living-current",
+    "static/images/westside-watch-masthead-landscape.svg"
+  ],
+  "references": [
+    {
+      "id": "wordpress-themes",
+      "provenance": "https://wordpress.org/themes/",
+      "source_family": "oss-cms-theme-registry"
+    },
+    {
+      "id": "hugo-themes",
+      "provenance": "https://themes.gohugo.io/",
+      "source_family": "oss-cms-theme-registry"
+    },
+    {
+      "id": "its-nice-that",
+      "provenance": "https://www.itsnicethat.com/",
+      "source_family": "independent-design-publication"
+    },
+    {
+      "id": "creative-independent",
+      "provenance": "https://thecreativeindependent.com/",
+      "source_family": "independent-design-publication"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "source_families": [
+    "independent-design-publication",
+    "oss-cms-theme-registry",
+    "new-westside-brand"
+  ],
+  "reference_lineage": [
+    {
+      "id": "wordpress-themes",
+      "provenance": "https://wordpress.org/themes/",
+      "source_family": "oss-cms-theme-registry"
+    },
+    {
+      "id": "hugo-themes",
+      "provenance": "https://themes.gohugo.io/",
+      "source_family": "oss-cms-theme-registry"
+    },
+    {
+      "id": "its-nice-that",
+      "provenance": "https://www.itsnicethat.com/",
+      "source_family": "independent-design-publication"
+    },
+    {
+      "id": "creative-independent",
+      "provenance": "https://thecreativeindependent.com/",
+      "source_family": "independent-design-publication"
+    },
+    {
+      "id": "new-westside-visual-language",
+      "provenance": "dore-design/new-westside",
+      "source_family": "new-westside-brand"
+    }
+  ],
+  "pattern_judgment": {
+    "adopted": [
+      "vertical title frame",
+      "two-ink field",
+      "modular editorial cards"
+    ],
+    "rejected": [
+      "dashboard chrome",
+      "uniform card grid"
+    ],
+    "westside_reason": "Preserves watchfulness, living water, editorial gravity and a restrained print-derived system."
+  },
+  "knowledge_corpus": {
+    "sha256": "948631c75c2176e8adae31d6f7a78ec1a582a871a32169d7248c222d26ad5e5d",
+    "source_count": 44,
+    "goal_status": "PASS"
+  },
   "baseline_262_sha256": "e1eb928a030fa9af1924513d34b73c93afa5afc69878fd93494cb6f9cc8fa034",
   "baseline_composition_signature": "threshold-editorial-fortress-5x8",
-  "composition_signature": "vertical-current-rail-fluid-field-modular-cards",
-  "gates": {
-    "BUILD_PASS": true,
-    "RENDER_PASS": true,
-    "FUNCTION_PASS": true,
-    "A11Y_PASS": true,
-    "VISUAL_STABLE": true,
-    "RESPONSIVE_PASS": true,
-    "DESIGN_DISTINCT": true,
-    "WESTSIDE_FIT": true
-  }
+  "composition_signature": "vertical-current-rail-fluid-field-modular-cards"
 }
