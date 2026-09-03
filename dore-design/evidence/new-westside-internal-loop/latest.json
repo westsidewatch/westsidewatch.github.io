@@ -1,0 +1,163 @@
+{
+  "schema": "dore.new-westside-internal-loop-evidence.v1",
+  "parent_goal": "New Westside visual construction",
+  "state": "INTERNAL_LOOP_PASS",
+  "created_at": "2026-09-03T20:16:04.576Z",
+  "product_acceptance": false,
+  "style_acceptance": false,
+  "exploration_state": "EXPLORATION_INSUFFICIENT",
+  "iterations": [
+    {
+      "iteration": 1,
+      "story_id": "new-westside-internal-loop--iteration-01-threshold-spine",
+      "name": "Iteration 01 Threshold Spine",
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "iteration-1-desktop.png",
+          "sha256": "adc4c7c5b3b52bbb0667f6fa0a0afe05b83b3e0a1a21ff3b53c85e90b0e4295c",
+          "repeat_sha256": "adc4c7c5b3b52bbb0667f6fa0a0afe05b83b3e0a1a21ff3b53c85e90b0e4295c",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "semantic_pass": true,
+          "page_errors": [],
+          "metrics": {
+            "iteration": "1",
+            "hypothesis": "hierarchy-before-atmosphere",
+            "consumes_learning": "",
+            "h1_count": 1,
+            "h2_count": 5,
+            "nav_count": 1,
+            "required_links_present": true,
+            "bilingual": true,
+            "horizontal_overflow": false,
+            "text_length": 435
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "iteration-1-mobile.png",
+          "sha256": "a0398eadc0e4610c8f1676f337649ebfbec13507f9bf3fd67c3a76ace7cef5a3",
+          "repeat_sha256": "a0398eadc0e4610c8f1676f337649ebfbec13507f9bf3fd67c3a76ace7cef5a3",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "semantic_pass": true,
+          "page_errors": [],
+          "metrics": {
+            "iteration": "1",
+            "hypothesis": "hierarchy-before-atmosphere",
+            "consumes_learning": "",
+            "h1_count": 1,
+            "h2_count": 5,
+            "nav_count": 1,
+            "required_links_present": true,
+            "bilingual": true,
+            "horizontal_overflow": false,
+            "text_length": 435
+          }
+        }
+      }
+    },
+    {
+      "iteration": 2,
+      "story_id": "new-westside-internal-loop--iteration-02-responsive-thresholds",
+      "name": "Iteration 02 Responsive Thresholds",
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "iteration-2-desktop.png",
+          "sha256": "446b64af7c7be7f0394d631b4cdb073d931a70ca3a12cddaacc8497c4b496231",
+          "repeat_sha256": "446b64af7c7be7f0394d631b4cdb073d931a70ca3a12cddaacc8497c4b496231",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "semantic_pass": true,
+          "page_errors": [],
+          "metrics": {
+            "iteration": "2",
+            "hypothesis": "semantic-spine-with-responsive-thresholds",
+            "consumes_learning": "preserve-semantic-spine;reduce-mobile-annotation-density;make-section-thresholds-explicit;avoid-equal-tile-grid",
+            "h1_count": 1,
+            "h2_count": 5,
+            "nav_count": 1,
+            "required_links_present": true,
+            "bilingual": true,
+            "horizontal_overflow": false,
+            "text_length": 516
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "iteration-2-mobile.png",
+          "sha256": "a3fc0c6d60d01091998aa4d74a2c37dfcac1098ed884d4a7877539bb31e705bd",
+          "repeat_sha256": "a3fc0c6d60d01091998aa4d74a2c37dfcac1098ed884d4a7877539bb31e705bd",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "semantic_pass": true,
+          "page_errors": [],
+          "metrics": {
+            "iteration": "2",
+            "hypothesis": "semantic-spine-with-responsive-thresholds",
+            "consumes_learning": "preserve-semantic-spine;reduce-mobile-annotation-density;make-section-thresholds-explicit;avoid-equal-tile-grid",
+            "h1_count": 1,
+            "h2_count": 5,
+            "nav_count": 1,
+            "required_links_present": true,
+            "bilingual": true,
+            "horizontal_overflow": false,
+            "text_length": 470
+          }
+        }
+      }
+    }
+  ],
+  "learning": {
+    "iteration_1_hypothesis": "hierarchy-before-atmosphere",
+    "accepted_provisional": [
+      "preserve-semantic-spine",
+      "keep-major-destinations-readable",
+      "real-content-before-style-acceptance"
+    ],
+    "rejected_provisional": [
+      "equal-tile-grid-as-default",
+      "mobile-side-annotation-density"
+    ],
+    "next_hypothesis": "semantic-spine-with-responsive-thresholds",
+    "required_consumption": [
+      "preserve-semantic-spine",
+      "reduce-mobile-annotation-density",
+      "make-section-thresholds-explicit",
+      "avoid-equal-tile-grid"
+    ]
+  },
+  "gates": {
+    "ITERATION_1_BROWSER_PASS": true,
+    "ITERATION_1_LEARNING_PERSISTED": true,
+    "ITERATION_2_BROWSER_PASS": true,
+    "ITERATION_2_CONSUMES_ITERATION_1_LEARNING": true,
+    "MATERIAL_ITERATION_CHANGE": true,
+    "TECHNICAL_AND_DESIGN_JUDGMENT_SEPARATED": true,
+    "USER_STYLE_ACCEPTANCE_NOT_INFERRED": true
+  },
+  "design_judgment": {
+    "iteration_1": "PROVISIONAL_LEARNING: route hierarchy is testable and readable; mobile side annotations should be reduced before deeper visual exploration.",
+    "iteration_2": "PROVISIONAL_LEARNING: preserves semantic route while applying reduced mobile annotations and non-equal threshold composition; still not a style candidate or user-approved direction."
+  },
+  "ok": true,
+  "code": "DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS"
+}
