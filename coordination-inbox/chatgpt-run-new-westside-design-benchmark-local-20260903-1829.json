@@ -1,0 +1,17 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-run-new-westside-design-benchmark-local-20260903-1829",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/new-westside-design-level-benchmark",
+  "body": "Execute the New Westside design-level benchmark, persist browser evidence and commit the completed artifact. This is the same preserved parent goal; no production/style acceptance claim.",
+  "commands": [
+    {"argv":["node","scripts/new-westside-design-level-benchmark.mjs"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["git","add","dore-design/new-westside/homepage-v4-watchtower-fold.html","dore-design/evidence/new-westside-design-benchmark-v1"],"cwd":".","timeout":120},
+    {"argv":["git","commit","-m","dore-design: complete Watchtower Fold benchmark with browser evidence"],"cwd":".","timeout":120},
+    {"argv":["git","push","origin","main"],"cwd":".","timeout":180}
+  ]
+}
