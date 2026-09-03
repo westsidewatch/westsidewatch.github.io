@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-03T15:30:58.431622+00:00",
+  "published_at": "2026-09-03T15:31:36.193165+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -4688,10 +4688,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788449165.7845051,
-    "last_self_update_check_at": "2026-09-03T15:26:05.784513+00:00",
-    "last_telemetry_epoch": 1788449376.078891,
-    "last_telemetry_at": "2026-09-03T15:29:36.078905+00:00",
+    "last_self_update_check_epoch": 1788449490.603442,
+    "last_self_update_check_at": "2026-09-03T15:31:30.603463+00:00",
+    "last_telemetry_epoch": 1788449460.4753568,
+    "last_telemetry_at": "2026-09-03T15:31:00.475381+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-03T15:30:57.877930+00:00",
     "last_agent_state": "PENDING_PEER_NONBLOCKING",
@@ -15917,18 +15917,6 @@
   },
   "events": [
     {
-      "at": "2026-09-03T15:09:09.659465+00:00",
-      "event": "WAKE",
-      "reason": "NO_USER_INPUT_CONTINUE"
-    },
-    {
-      "at": "2026-09-03T15:09:09.663238+00:00",
-      "event": "COORDINATION_OBSERVATION",
-      "ok": true,
-      "state": "SPAWNED",
-      "pid": 80702
-    },
-    {
       "at": "2026-09-03T15:09:56.353588+00:00",
       "event": "AGENT_OBSERVATION",
       "state": "PENDING_PEER_NONBLOCKING",
@@ -16363,6 +16351,29 @@
       "peer_required": true,
       "peer_blocking": false,
       "unchanged_cycles": 1
+    },
+    {
+      "at": "2026-09-03T15:31:31.028708+00:00",
+      "event": "CONTROL_MANIFEST_UPDATED",
+      "source": "origin/main"
+    },
+    {
+      "at": "2026-09-03T15:31:35.658200+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/a2a/runtime-control-manifest.json",
+        "local/dore-local/dore_agent_core.py",
+        "local/dore-local/autonomous_driver.py",
+        "local/dore-local/goal_queue.py",
+        "local/dore-local/research_executor.py",
+        "local/dore-local/coordination_worker.py",
+        "local/dore-local/peer_collaboration.py",
+        "local/dore-local/coordination_completion.py",
+        "local/dore-local/learning_activation_acceptance.py",
+        "local/dore-local/test_peer_collaboration.py"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
