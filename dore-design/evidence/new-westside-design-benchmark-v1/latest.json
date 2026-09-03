@@ -1,0 +1,96 @@
+{
+  "schema": "dore.new-westside-design-benchmark.v1",
+  "parent_goal": "New Westside visual construction",
+  "state": "DESIGN_LEVEL_BENCHMARK_COMPLETE",
+  "artifact": "dore-design/new-westside/homepage-v4-watchtower-fold.html",
+  "hypothesis": "Treat Westside as a threshold-city rather than a navigation dashboard: identity occupies one spatial mass, while five destinations become a processional route cut by a single dawn seam.",
+  "family": "Watchtower Fold / 守望折頁",
+  "product_acceptance": false,
+  "style_acceptance": false,
+  "experimental_only": true,
+  "viewports": {
+    "desktop": {
+      "viewport": [
+        1440,
+        1000
+      ],
+      "screenshot": "dore-design/evidence/new-westside-design-benchmark-v1/watchtower-fold-desktop.png",
+      "sha256": "9a61723ae72e548c5be7f11d77e6f8e61378da53373c23fa5feaae1afcafa6f9",
+      "repeat_sha256": "9a61723ae72e548c5be7f11d77e6f8e61378da53373c23fa5feaae1afcafa6f9",
+      "visual_stable": true,
+      "render_pass": true,
+      "responsive_pass": true,
+      "semantic_pass": true,
+      "page_errors": [],
+      "metrics": {
+        "h1": 1,
+        "required_destinations": true,
+        "bilingual": true,
+        "horizontal_overflow": false,
+        "benchmark": "watchtower-fold",
+        "hypothesis": "threshold-city-not-dashboard"
+      }
+    },
+    "mobile": {
+      "viewport": [
+        390,
+        844
+      ],
+      "screenshot": "dore-design/evidence/new-westside-design-benchmark-v1/watchtower-fold-mobile.png",
+      "sha256": "52aff4effe1a8ed164323ed3498c88097f58fdcf74398f6ffa98a16f5454038f",
+      "repeat_sha256": "52aff4effe1a8ed164323ed3498c88097f58fdcf74398f6ffa98a16f5454038f",
+      "visual_stable": true,
+      "render_pass": true,
+      "responsive_pass": true,
+      "semantic_pass": true,
+      "page_errors": [],
+      "metrics": {
+        "h1": 1,
+        "required_destinations": true,
+        "bilingual": true,
+        "horizontal_overflow": false,
+        "benchmark": "watchtower-fold",
+        "hypothesis": "threshold-city-not-dashboard"
+      }
+    }
+  },
+  "critique": {
+    "strengths": [
+      "Clear spatial thesis: identity field versus navigable city field.",
+      "Five destinations have hierarchy and procession without equal-card dashboard treatment.",
+      "Bilingual type is integrated into the spatial structure rather than appended as translation.",
+      "Mobile is recomposed into alternating path segments around a vertical dawn seam rather than merely shrinking desktop.",
+      "Material strategy is architectural and light-based, with no dependency on stock imagery."
+    ],
+    "risks": [
+      "The monumental serif language can still drift toward contemporary editorial-site familiarity.",
+      "The abstract architectural field may need real photography or archival material in later experiments to deepen Westside specificity.",
+      "The city/path metaphor is stronger than prior card grids, but it still needs user judgment before becoming brand language."
+    ],
+    "provisional_learning": {
+      "accept": [
+        "threshold-as-spatial-structure",
+        "destination-procession-not-equal-cards",
+        "mobile-recomposition-around-one-visual-axis"
+      ],
+      "reject": [
+        "generic-equal-card-navigation",
+        "desktop-only-composition-thinking"
+      ],
+      "next_question": "Can real Westside documentary imagery or stone/print material be fused into the threshold-city structure without weakening orientation?"
+    }
+  },
+  "created_at": "2026-09-03T22:44:50.728Z",
+  "gates": {
+    "NEW_ARTIFACT": true,
+    "DESKTOP_BROWSER_PASS": true,
+    "MOBILE_BROWSER_PASS": true,
+    "REAL_CONTENT_PRESENT": true,
+    "MATERIAL_NEW_FAMILY": true,
+    "DESIGN_SELF_CRITIQUE": true,
+    "DURABLE_PROVISIONAL_LEARNING": true,
+    "NO_FALSE_PRODUCT_ACCEPTANCE": true
+  },
+  "ok": true,
+  "code": "DORE_NEW_WESTSIDE_DESIGN_BENCHMARK_PASS"
+}
