@@ -64,14 +64,14 @@ jobs:
         working-directory: .
         run: |
           set -euo pipefail
-          mkdir -p dore-design/evidence/new-westside-internal-loop
+          mkdir -p dore-design/evidence/new-westside-internal-loop/runtime
           cp "$HOME/.dore/new-westside/internal-loop/latest.json" dore-design/evidence/new-westside-internal-loop/latest.json
           cp "$HOME/.dore/new-westside/internal-loop/"iteration-*.png dore-design/evidence/new-westside-internal-loop/
           cp "$HOME/.dore/new-westside/internal-loop-runtime/latest.json" dore-design/evidence/new-westside-internal-loop/runtime-latest.json
           cp "$HOME/.dore/new-westside/internal-loop-runtime/iteration-1-learning.json" dore-design/evidence/new-westside-internal-loop/iteration-1-learning.json
           cp "$HOME/.dore/new-westside/internal-loop-runtime/generated/iteration-1.html" dore-design/evidence/new-westside-internal-loop/generated-iteration-1.html
           cp "$HOME/.dore/new-westside/internal-loop-runtime/generated/iteration-2.html" dore-design/evidence/new-westside-internal-loop/generated-iteration-2.html
-          cp "$HOME/.dore/new-westside/internal-loop-runtime/"iteration-*.png dore-design/evidence/new-westside-internal-loop/runtime-
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/"iteration-*.png dore-design/evidence/new-westside-internal-loop/runtime/
           git config user.name WATCHMAN
           git config user.email westsidewatchca@gmail.com
           git add dore-design/evidence/new-westside-internal-loop
