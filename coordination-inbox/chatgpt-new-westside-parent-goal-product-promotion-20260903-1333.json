@@ -1,0 +1,65 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-new-westside-parent-goal-product-promotion-20260903-1333",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Resume and close the real New Westside parent goal through Storybook build, visual verification, and product promotion",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_goal": "New Westside visual construction",
+  "context": {
+    "verified_capabilities": [
+      "multi-loop control plane v1 bounded acceptance",
+      "Storybook three-candidate promotion v1 bounded acceptance",
+      "autonomous learning activation and single-owner queue",
+      "visual learning evidence reconciliation",
+      "Dawn incremental enrichment",
+      "Newsroom control plane and real-signal loop",
+      "A2A delivery and STALL recovery"
+    ],
+    "promoted_candidates": [
+      "new-westside-dawn-atlas-v1",
+      "new-westside-living-current-v1",
+      "new-westside-signal-nocturne-v1"
+    ],
+    "known_boundary": "The three promoted outputs are still candidates. Capability acceptance is not product acceptance and must not be reported as New Westside completion."
+  },
+  "objective": "Use the already-built Doré capabilities on the actual New Westside product surface. Continue the preserved parent goal without restarting research from zero. Take the promoted Storybook candidates into a real product build, collect browser/visual/responsive/accessibility evidence on the actual surface, compare against the locked production baseline and Westside visual invariants, select/promote only an evidence-backed winner or explicitly return FAIL/LEARNING if none qualifies, then persist canonical product acceptance evidence.",
+  "required_sequence": [
+    "reconcile current New Westside parent-goal state and reuse existing knowledge/evidence",
+    "finish any remaining reference expansion only if it materially blocks product judgment; do not treat 40 references as a substitute for product evidence",
+    "materialize the three promoted candidates on the real New Westside homepage/product surface without mutating the locked baseline prematurely",
+    "run deterministic build and real-browser verification across stable desktop/mobile viewports",
+    "collect render, function, accessibility, responsive, visual-stability, asset, and product-invariant evidence",
+    "perform explicit Westside visual judgment comparing the real product candidates and baseline",
+    "promote exactly one qualifying product state only if evidence supports it; if no candidate qualifies, preserve parent goal and enter LEARNING/REPAIR rather than false PASS",
+    "after promotion, rerun product monitor and verify no Journal/site boundary or cover-wall regression",
+    "persist canonical receipt and memory/register reconciliation distinguishing capability acceptance from product acceptance"
+  ],
+  "acceptance_contract": {
+    "pass_requires": [
+      "real New Westside product build succeeds",
+      "real-browser visual evidence exists for desktop and mobile",
+      "accessibility and responsive checks pass",
+      "locked baseline immutability is demonstrated until explicit promotion",
+      "winner has explicit WESTSIDE_FIT judgment backed by evidence",
+      "product monitor passes after promotion",
+      "canonical receipt identifies exact promoted product state and commit/evidence lineage"
+    ],
+    "forbidden_false_pass": [
+      "Storybook static build alone",
+      "candidate promotion capability alone",
+      "reference-count progress alone",
+      "memo-only or register-only reconciliation",
+      "transport PASS without product evidence"
+    ]
+  },
+  "loop_contract": {
+    "on_stall": "diagnose -> smallest informative repair -> resume same parent goal",
+    "on_failure": "preserve parent goal; produce information gain; do not blind retry",
+    "on_learning_gap": "activate durable learning safely under single-owner semantics, then resume",
+    "on_pass": "only emit PASS when acceptance_contract.pass_requires are all evidenced"
+  }
+}
