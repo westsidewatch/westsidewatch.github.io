@@ -1,0 +1,42 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-start-new-westside-product-build-20260903-1504",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Start the real New Westside product build now; participate whenever Doré can add evidence-backed value",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_goal": "New Westside visual construction",
+  "decision": "Begin product engineering now. Doré should participate directly wherever its current capabilities can materially improve research, construction, verification, diagnosis, learning, or promotion. Do not delay product work to expand Doré speculatively.",
+  "starting_assets": {
+    "promoted_storybook_candidates": [
+      "new-westside-dawn-atlas-v1",
+      "new-westside-living-current-v1",
+      "new-westside-signal-nocturne-v1"
+    ],
+    "locked_baseline": "preserve until explicit evidence-backed product promotion",
+    "existing_capabilities": [
+      "Storybook candidate promotion",
+      "browser evidence and visual verification",
+      "visual learning and research",
+      "multi-loop control plane",
+      "durable autonomous learning",
+      "A2A delivery and recovery",
+      "product monitor and Westside invariants"
+    ]
+  },
+  "execute_now": [
+    "Reconcile the actual current New Westside product surface and build path.",
+    "Materialize the three promoted directions against the real homepage/product surface without replacing the locked baseline.",
+    "Build and render stable desktop and mobile states.",
+    "Collect function, responsive, accessibility, visual-stability, asset and product-invariant evidence.",
+    "Judge the three directions against the actual Westside identity and baseline, not Storybook capability alone.",
+    "Iterate product defects; when a defect exposes a Doré capability gap, make the smallest reusable Doré update and immediately return to this parent goal.",
+    "Promote exactly one product state only when evidence supports explicit WESTSIDE_FIT; otherwise continue LEARNING/REPAIR without false PASS.",
+    "After promotion, run product monitor plus Journal/site boundary and cover-wall regression checks and persist canonical product acceptance evidence."
+  ],
+  "collaboration_rule": "Doré is a participant in the product team, not a prerequisite gate. Join whenever useful; if a task can proceed without Doré, product work should continue. If Doré discovers a better product or capability path, act autonomously within existing architecture; architecture placement changes follow the agreed governance rules.",
+  "pass_boundary": "The parent goal closes only on real New Westside product evidence. Storybook PASS, research progress, Doré capability PASS, transport PASS, or memo completion cannot substitute for product acceptance."
+}
