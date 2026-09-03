@@ -61,6 +61,19 @@ chinese:
     access: human_only
     state: access_survey_required
 
+chinese_baseline:
+  state: open
+  classification: ACTIVE / UNKNOWN_NEEDS_EVIDENCE
+  evidence: DORÉ-CHINESE-WITNESS-BASELINE-EVIDENCE-LEDGER-2026-09-03.md
+  current_boundary: >-
+    CUV ingestion is real progress, but the remaining baseline witnesses still require
+    lawful-access/canonical-route evidence and sourced version dossiers. No Chinese
+    baseline completion token is justified yet.
+  smallest_future_proof: >-
+    Resolve the four access_survey_required witnesses into sourced access states,
+    verify lawful canonical-reference routes for all non-local baseline witnesses,
+    and persist at least one bounded Chinese cross-version comparison benchmark.
+
 english:
   - id: webu
     name: World English Bible Updated
