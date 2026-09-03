@@ -1,0 +1,17 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-fix-watchtower-editor-click-v2-20260903-1955",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "priority":"critical",
+  "requires_reply":true,
+  "related_goal":"dore-design/watchtower-fold-editor-publication",
+  "body":"Install the current clickable-page editor build into the live local runtime, restart port 4310, and verify Watchtower Fold is present.",
+  "commands":[
+    {"argv":["git","fetch","origin","main"],"cwd":"/Users/chenjingyu/.dore/control-checkout","timeout":120},
+    {"argv":["bash","-lc","mkdir -p ~/.dore/design-runtime; git show origin/main:dore-design/app.py > ~/.dore/design-runtime/app.py; git show origin/main:dore-design/app_workspace.py > ~/.dore/design-runtime/app_workspace.py; git show origin/main:dore-design/app_product.py > ~/.dore/design-runtime/app_product.py"],"cwd":"/Users/chenjingyu/.dore/control-checkout","timeout":120},
+    {"argv":["bash","-lc","pkill -f app_product.py || true; sleep 1; cd ~/.dore/design-runtime; nohup python3 app_product.py > ~/.dore/design/editor.log 2>&1 &"],"cwd":"/Users/chenjingyu/.dore","timeout":30},
+    {"argv":["python3","-c","import json,urllib.request,time;time.sleep(2);h=json.loads(urllib.request.urlopen('http://127.0.0.1:4310/api/health',timeout=5).read());assert h.get('page_activation_fix') is True,h;w=json.loads(urllib.request.urlopen('http://127.0.0.1:4310/api/workspace',timeout=5).read());p=next((x for x in w['pages'] if x.get('id')=='new-westside-watchtower-fold'),None);assert p is not None;print(json.dumps({'ok':True,'code':'WATCHTOWER_EDITOR_CLICK_FIX_LIVE','revision':w.get('revision'),'page_name':p.get('name')},ensure_ascii=False))"],"cwd":"/Users/chenjingyu/.dore","timeout":30}
+  ]
+}
