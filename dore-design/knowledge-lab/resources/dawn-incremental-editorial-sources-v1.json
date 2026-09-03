@@ -1,0 +1,19 @@
+{
+  "schema":"dore.dawn-incremental-source-catalog.v1",
+  "verified_at":"2026-09-03",
+  "policy":{"cost":"free-access-only","use":"design-reference-only","asset_copy":false,"qualification_required":["stable_id","url","authority","source_family","rights","provenance_status"]},
+  "sources":[
+    {"id":"figma-community","url":"https://www.figma.com/community","authority":"Figma","source_family":"design-community","rights":"reference-only; item license must be checked","provenance_status":"reachable-with-bot-restriction"},
+    {"id":"penpot-libraries-templates","url":"https://penpot.app/penpothub/libraries-templates","authority":"Penpot","source_family":"design-community","rights":"reference-only; item license must be checked","provenance_status":"http-200"},
+    {"id":"webflow-templates","url":"https://webflow.com/templates","authority":"Webflow","source_family":"no-code-template-marketplace","rights":"reference-only; template terms apply","provenance_status":"http-200"},
+    {"id":"framer-marketplace-templates","url":"https://www.framer.com/marketplace/templates/","authority":"Framer","source_family":"no-code-template-marketplace","rights":"reference-only; template terms apply","provenance_status":"http-200"},
+    {"id":"wordpress-themes","url":"https://wordpress.org/themes/","authority":"WordPress.org","source_family":"oss-cms-theme-registry","rights":"GPL themes; verify individual package","provenance_status":"http-200"},
+    {"id":"hugo-themes","url":"https://themes.gohugo.io/","authority":"Hugo","source_family":"oss-cms-theme-registry","rights":"open-source per repository; verify individual license","provenance_status":"http-200"},
+    {"id":"astro-themes","url":"https://astro.build/themes/","authority":"Astro","source_family":"static-site-template-registry","rights":"open-source per repository; verify individual license","provenance_status":"http-200"},
+    {"id":"eleventy-starters","url":"https://www.11ty.dev/docs/starter/","authority":"Eleventy","source_family":"static-site-template-registry","rights":"open-source per repository; verify individual license","provenance_status":"http-200"},
+    {"id":"its-nice-that","url":"https://www.itsnicethat.com/","authority":"It’s Nice That","source_family":"independent-design-publication","rights":"reference-only; no content or asset reuse","provenance_status":"http-200"},
+    {"id":"creative-independent","url":"https://thecreativeindependent.com/","authority":"The Creative Independent","source_family":"independent-design-publication","rights":"reference-only; no content or asset reuse","provenance_status":"http-200"},
+    {"id":"the-pudding","url":"https://pudding.cool/","authority":"The Pudding","source_family":"interactive-editorial","rights":"reference-only; individual project terms apply","provenance_status":"http-200"},
+    {"id":"emergence-magazine","url":"https://emergencemagazine.org/","authority":"Emergence Magazine","source_family":"literary-independent-publication","rights":"reference-only; no content or asset reuse","provenance_status":"http-200"}
+  ]
+}

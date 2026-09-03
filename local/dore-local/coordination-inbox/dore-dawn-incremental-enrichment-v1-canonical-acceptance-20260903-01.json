@@ -1,0 +1,9 @@
+{
+  "schema":"dore.mail.v1","message_id":"dore-dawn-incremental-enrichment-v1-canonical-acceptance-20260903-01","thread_id":"dore-dawn-incremental-enrichment-v1","sender":"chatgpt","recipient":"dore","priority":"critical","kind":"local_exec","requires_reply":true,"related_goal":"design-reference-library-expansion-20260901","subject":"Canonical acceptance for Dawn Incremental Enrichment 1.0",
+  "commands":[
+    {"argv":["python3","-m","unittest","discover","-s","local/dore-local","-p","test_dawn_incremental_enrichment.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/dawn_incremental_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/dawn_incremental_live_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body":"Starting from the consumed 32-source working set, run delta-only Dawn enrichment. Return at least 8 genuinely new qualified sources with provenance, rights and at least 6 source families; prove a repeated third pass returns zero; update the durable Storybook workflow and parent goal to PASS only at >=40 references and >=6 families. Return one terminal canonical receipt."
+}

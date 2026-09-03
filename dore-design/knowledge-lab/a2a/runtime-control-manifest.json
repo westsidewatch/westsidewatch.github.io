@@ -1,5 +1,5 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.7",
+  "schema": "dore.runtime-control-manifest.v1.8",
   "updated_at": "2026-09-03",
   "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest, including canonical acceptance envelopes and their executable dependencies. ChatGPT is a conversation-activated asynchronous peer; pending peer work never blocks Doré autonomous Storybook/Design Lab work.",
   "files": [
@@ -13,6 +13,10 @@
     "local/dore-local/dawn_library_enrichment.py",
     "local/dore-local/control_plane_acceptance.py",
     "local/dore-local/test_multi_loop_control_plane.py",
+    "local/dore-local/dawn_incremental_enrichment.py",
+    "local/dore-local/dawn_incremental_acceptance.py",
+    "local/dore-local/dawn_incremental_live_acceptance.py",
+    "local/dore-local/test_dawn_incremental_enrichment.py",
     "local/dore-local/autonomous_driver.py",
     "local/dore-local/goal_queue.py",
     "local/dore-local/autonomous_capability_loop.py",
@@ -69,8 +73,11 @@
     "local/dore-local/coordination-inbox/dore-storybook-promotion-v1-canonical-acceptance-20260902-01.json",
     "local/dore-local/coordination-inbox/dore-multi-loop-agency-v1-canonical-acceptance-20260903-01.json",
     "local/dore-local/coordination-inbox/dore-multi-loop-control-plane-v1-canonical-acceptance-20260903-01.json",
+    "local/dore-local/coordination-inbox/dore-dawn-incremental-enrichment-v1-canonical-acceptance-20260903-01.json",
     "dore-design/knowledge-lab/a2a/multi-loop-agency-v1.md",
-    "dore-design/knowledge-lab/a2a/multi-loop-control-plane-v1.md"
+    "dore-design/knowledge-lab/a2a/multi-loop-control-plane-v1.md",
+    "dore-design/knowledge-lab/a2a/dawn-incremental-enrichment-v1.md",
+    "dore-design/knowledge-lab/resources/dawn-incremental-editorial-sources-v1.json"
   ],
   "required_local_durable_state": [
     "~/.dore/runtime/goals.json",

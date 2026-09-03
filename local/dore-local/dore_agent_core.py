@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
 sys.path.insert(0,str(LOCAL))
-VERSION='dore.agent-core.v0.5'
+VERSION='dore.agent-core.v0.6'
 ALT_RESEARCH_HINTS=[
  'Search a different local Knowledge Lab/skill/failure-memory path before repeating execution.',
  'Search a different maintained OSS or official-documentation source family and extract an executable pattern.',
@@ -141,6 +141,9 @@ def step():
   from multi_loop_control_plane import agent_cycle
   control_plane=agent_cycle(ctx);emit('CONTROL_PLANE',**control_plane)
  except Exception as e:control_plane={'ok':False,'error':repr(e)};emit('CONTROL_PLANE_ERROR',error=repr(e))
+ if control_plane.get('goal_pass'):
+  emit('PASS',reason='incremental enrichment satisfied reference and source-family gates')
+  return {'ok':True,'agent_core':VERSION,'state':'PASS','parent':ctx,'events':events,'continue':False,'peer_pending':False,'peer_blocking':False,'control_plane':control_plane,'a2a_task':a2a_task(ctx,'PASS',controlPlane='dore.multi-loop-control-plane.v1.0')}
  if learning and learning.get('state')=='RESEARCH_REQUIRED':
   jp,job=ensure_job(ctx,learning)
   if job.get('state') in {'RESEARCH_QUEUED','RESEARCHING','RESEARCH_BLOCKED'}:

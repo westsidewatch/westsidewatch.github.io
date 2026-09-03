@@ -40,7 +40,7 @@ def consume(loop_id,asset,*,state_path=STORE):
  data=load(state_path);row=data['workflows'][loop_id]
  if asset['knowledge_id'] not in row['consumed_assets']:row['consumed_assets'].append(asset['knowledge_id'])
  refs={str(x.get('id') or x.get('url')) for x in (row['metadata'].get('references') or [])};new=[x for x in asset.get('sources',[]) if str(x.get('id') or x.get('url')) not in refs]
- row['metadata']['references']=(row['metadata'].get('references') or [])+new;row['metadata']['current_qualified_references']=len(row['metadata']['references']);event(data,'KNOWLEDGE_REUSE',loop_id=loop_id,knowledge_id=asset['knowledge_id'],new_references=len(new));save(data,state_path);return {'new_references':len(new),'total':len(row['metadata']['references'])}
+ row['metadata']['references']=(row['metadata'].get('references') or [])+new;row['metadata']['current_qualified_references']=len(row['metadata']['references']);families=sorted({str(x.get('source_family')) for x in row['metadata']['references'] if x.get('source_family')});row['metadata']['source_families']=families;row['metadata']['current_source_families']=len(families);event(data,'KNOWLEDGE_REUSE',loop_id=loop_id,knowledge_id=asset['knowledge_id'],new_references=len(new),source_families=len(families));save(data,state_path);return {'new_references':len(new),'total':len(row['metadata']['references']),'source_families':len(families)}
 def agent_cycle(goal):
  """Run the one-shot Dawn enrichment handoff, then leave Storybook active."""
  if 'storybook' not in str(goal.get('project_loop','')).lower() and 'reference' not in str(goal.get('goal','')).lower():return {'ok':True,'managed':False}
@@ -49,4 +49,16 @@ def agent_cycle(goal):
   from dawn_library_enrichment import enrich
   seed=enrich()['sources'][:int((goal.get('metadata') or {}).get('current_qualified_references') or 21)];register(story,goal.get('goal','Storybook reference expansion'),kind='storybook',priority=60,metadata={'references':seed,'minimum_qualified_references':int((goal.get('metadata') or {}).get('minimum_qualified_references') or 40)});wake(story,'agent-core-parent-goal');route()
   register(dawn,'Enrich reusable publishing knowledge',kind='dawn-library',priority=65);wake(dawn,'repository-source-material',gravity=20);route();asset=enrich();share(dawn,asset);complete(dawn);reuse=consume(story,asset);return {'ok':True,'managed':True,'handoff_completed':True,'active':story,'knowledge_id':asset['knowledge_id'],'reference_working_set':reuse['total']}
- selected=route();return {'ok':True,'managed':True,'handoff_completed':False,'active':selected.get('loop_id') if selected else data.get('active')}
+ selected=route();data=load();row=data['workflows'][story];minimum=int(row['metadata'].get('minimum_qualified_references') or 40);family_min=int((goal.get('metadata') or {}).get('minimum_source_families') or 6)
+ if int(row['metadata'].get('current_qualified_references') or 0)<minimum:
+  from dawn_incremental_enrichment import incremental_enrich
+  refs=row['metadata'].get('references') or [];asset=incremental_enrich([str(x.get('id') or x.get('url')) for x in refs],row.get('consumed_assets'));wake(dawn,'missing-source-families',gravity=25);route();receipt=share(dawn,asset);complete(dawn);reuse=consume(story,asset);data=load();story_row=data['workflows'][story]
+  passed=reuse['total']>=minimum and reuse['source_families']>=family_min and asset['source_count']>=8 and asset['duplicate_count']==0
+  if passed:
+   story_row['status']='PASS';data['active']=None;event(data,'GOAL_PASS',loop_id=story,qualified_references=reuse['total'],source_families=reuse['source_families']);save(data)
+   try:
+    from goal_queue import set_status
+    set_status(goal.get('goal_id'),'PASS',acceptance_met=True,current_qualified_references=reuse['total'],current_source_families=reuse['source_families'],incremental_knowledge_asset=asset['knowledge_id'])
+   except Exception:pass
+  return {'ok':True,'managed':True,'incremental_handoff_completed':True,'active':None if passed else story,'knowledge_id':asset['knowledge_id'],'new_sources':reuse['new_references'],'qualified_references':reuse['total'],'source_families':reuse['source_families'],'goal_pass':passed,'deduplicated':receipt['deduplicated']}
+ return {'ok':True,'managed':True,'handoff_completed':False,'active':selected.get('loop_id') if selected else data.get('active')}
