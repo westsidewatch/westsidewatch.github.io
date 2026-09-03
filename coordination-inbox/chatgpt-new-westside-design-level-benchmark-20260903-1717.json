@@ -1,0 +1,56 @@
+{
+  "schema": "dore.coordination.task.v1",
+  "message_id": "chatgpt-new-westside-design-level-benchmark-20260903-1717",
+  "created_at": "2026-09-03T17:17:00-04:00",
+  "source": "chatgpt",
+  "target": "dore",
+  "parent_goal": "New Westside visual construction",
+  "state": "DESIGN_LEVEL_BENCHMARK",
+  "objective": "Benchmark Doré's current autonomous design level after INTERNAL_LOOP_RUNTIME_PASS, using a fresh real-content New Westside design problem. This is a capability evaluation, not production promotion.",
+  "constraints": [
+    "Do not reuse Dawn Atlas, Living Current, Signal Nocturne, homepage-v1/v2/v3, or the prior two internal-loop compositions as the answer.",
+    "Do not optimize toward a known accepted style; no Westside style has user acceptance yet.",
+    "Use real Westside destinations/content: Journal, ONE, Living Water West, 黎明書局, The Gate.",
+    "Generate a materially new composition and visual system from the current durable learning and research pool.",
+    "Desktop and mobile must be designed as compositions, not just responsive shrinkage.",
+    "No production homepage mutation, no winner claim, no user-style-acceptance claim."
+  ],
+  "challenge": {
+    "brief": "Create one homepage opening experience that makes Westside Watch feel like a coherent living place rather than a navigation dashboard. The first screen should establish identity, atmosphere, and orientation at once, then reveal the five destinations with hierarchy and narrative rather than equal cards.",
+    "required_dimensions": [
+      "composition",
+      "bilingual typography",
+      "image-or-material strategy",
+      "information hierarchy",
+      "spatial rhythm",
+      "navigation behavior",
+      "motion/transition grammar",
+      "desktop-mobile transformation",
+      "identity distinctiveness"
+    ]
+  },
+  "required_process": [
+    "1. Read current New Westside parent goal, experimental-only boundary, current visual-learning memory, and INTERNAL_LOOP_RUNTIME_PASS evidence.",
+    "2. Form one explicit design hypothesis that is materially different from previous experimental families.",
+    "3. Produce a real editable artifact in Storybook/design lab/product sandbox using real Westside content.",
+    "4. Render with a real browser at desktop 1440x1000 and mobile 390x844; collect stable screenshots and basic render/responsive/semantic evidence.",
+    "5. Perform a design critique separate from technical PASS: what is strong, what is generic, what fails Westside identity, what should be learned/rejected.",
+    "6. Persist the artifact, screenshots/evidence, hypothesis, and critique in canonical repo evidence.",
+    "7. Return a bounded result suitable for ChatGPT to independently judge Doré's design level."
+  ],
+  "evaluation_boundary": {
+    "technical_pass_is_not_design_pass": true,
+    "dore_self_judgment_is_not_user_acceptance": true,
+    "product_acceptance": false,
+    "style_acceptance": false
+  },
+  "expected_result": {
+    "artifact": true,
+    "desktop_browser_evidence": true,
+    "mobile_browser_evidence": true,
+    "design_hypothesis": true,
+    "design_self_critique": true,
+    "durable_learning": true,
+    "no_false_pass": true
+  }
+}
