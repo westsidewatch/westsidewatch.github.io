@@ -1,0 +1,39 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-loop-placement-governance-designmd-20260903-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Run DESIGN.md discovery now and judge its durable loop placement",
+  "related_goal": "dore-design/storybook/design-md-research-channel",
+  "priority": "high",
+  "requires_reply": true,
+  "parent_goal": "Doré autonomous visual learning architecture",
+  "instruction": {
+    "immediate": "Do not wait for governance discussion to begin learning. Treat DESIGN.md/design-system discovery as an available research direction and run it when informative.",
+    "provisional_placement": "Storybook research/reference channel under the broader visual-learning system.",
+    "autonomy": "Doré has authority to judge whether this research direction belongs in Storybook or another existing loop, or whether architecture should change.",
+    "current_governance": "If Doré proposes placement anywhere other than Storybook research, first report the proposed placement and the evidence/reasoning. Architecture changes require three-party agreement: user + ChatGPT + Doré.",
+    "fast_path": "If Doré independently concludes that DESIGN.md discovery belongs in Storybook research, no additional report/discussion/approval is required for that placement. Adopt it and continue running.",
+    "scope": "This rule applies to placement of this DESIGN.md research direction. Doré may continue ordinary within-loop research, learning, experimentation and evidence work autonomously."
+  },
+  "research_channel": {
+    "name": "DESIGN.md / AI-readable design-system discovery",
+    "role": "one source channel among real websites, editorial references, typography, motion, interaction, design systems and other visual sources",
+    "purpose": "discover searchable design knowledge, extraction methods, schemas and visual references that can become experiments and durable learning",
+    "not_a_goal": "do not create a permanent standalone loop merely because DESIGN.md resources exist"
+  },
+  "decision_requirements_if_not_storybook": [
+    "name the existing loop or new architecture location proposed",
+    "explain why Storybook research is structurally insufficient",
+    "show expected information-flow and ownership boundaries",
+    "identify duplication/concurrency risks",
+    "state migration impact on existing goals and evidence",
+    "wait for user + ChatGPT + Doré agreement before durable architecture change"
+  ],
+  "acceptance": {
+    "storybook_fast_path": "If Storybook research is judged correct, persist that placement and immediately continue research without opening governance discussion.",
+    "alternative_path": "If another placement is judged superior, publish a bounded architecture proposal and continue only non-destructive research while awaiting three-party agreement.",
+    "learning_pass": "Research still requires reusable knowledge/experiment evidence; URL collection alone is not learning PASS."
+  }
+}
