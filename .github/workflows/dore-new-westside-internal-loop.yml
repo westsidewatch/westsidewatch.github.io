@@ -1,0 +1,68 @@
+name: Doré New Westside Internal Loop
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-design/knowledge-lab/storybook/src/stories/NewWestsideInternalLoop.stories.jsx'
+      - 'dore-design/knowledge-lab/storybook/scripts/new-westside-internal-loop-evidence.mjs'
+      - '.github/workflows/dore-new-westside-internal-loop.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-new-westside-internal-loop
+  cancel-in-progress: false
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dore-design/knowledge-lab/storybook
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: dore-design/knowledge-lab/storybook/package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Build Storybook
+        run: npm run build-storybook
+      - name: Run two-iteration browser loop
+        run: node scripts/new-westside-internal-loop-evidence.mjs | tee /tmp/new-westside-internal-loop.json
+      - name: Assert internal-loop acceptance
+        run: |
+          python3 - <<'PY'
+          import json
+          line=open('/tmp/new-westside-internal-loop.json',encoding='utf-8').read().strip().splitlines()[-1]
+          p=json.loads(line)
+          assert p['ok'] is True, p
+          assert p['code']=='DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS', p
+          assert p['gates']['ITERATION_2_CONSUMES_ITERATION_1_LEARNING'] is True, p
+          assert p['product_acceptance'] is False and p['style_acceptance'] is False, p
+          print('DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS')
+          PY
+      - name: Persist canonical browser evidence
+        working-directory: .
+        run: |
+          set -euo pipefail
+          mkdir -p dore-design/evidence/new-westside-internal-loop
+          cp "$HOME/.dore/new-westside/internal-loop/latest.json" dore-design/evidence/new-westside-internal-loop/latest.json
+          cp "$HOME/.dore/new-westside/internal-loop/"iteration-*.png dore-design/evidence/new-westside-internal-loop/
+          git config user.name WATCHMAN
+          git config user.email westsidewatchca@gmail.com
+          git add dore-design/evidence/new-westside-internal-loop
+          if ! git diff --cached --quiet; then
+            git commit -m "dore-design: persist New Westside internal-loop PASS evidence [skip ci]"
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
