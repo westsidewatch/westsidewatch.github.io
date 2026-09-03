@@ -1,0 +1,30 @@
+{
+  "schema": "dore.coordination.task.v1",
+  "message_id": "dawn-library-books-v1",
+  "project": "Dawn Library / Issue #273",
+  "goal": "Implement the first executable library.books vertical slice behind the existing Doré Capability Discovery Layer without replacing Doré Search or Conversation.",
+  "constraints": {
+    "paid_api_allowed": false,
+    "free_only": true,
+    "local_first": true,
+    "reuse_before_rebuild": true,
+    "do_not_modify_locked_homepage_262": true,
+    "do_not_replace_existing_dore_search": true,
+    "do_not_replace_existing_conversation": true
+  },
+  "first_provider": {
+    "preferred": "Open Library",
+    "reason": "free public low-volume book discovery; no paid API dependency",
+    "rules": ["respect provider limits", "identify client where required", "cache where appropriate", "preserve provenance", "no hidden paid fallback"]
+  },
+  "engineering_loop": ["DISCOVER", "LOAD", "EXECUTE", "EVIDENCE", "LEARN"],
+  "acceptance": [
+    "library.books changes from planned/deferred to executable only after adapter verification",
+    "existing Bible Search regression remains PASS",
+    "Conversation remains untouched",
+    "normalized book results preserve provider provenance",
+    "no API key or paid service is required for baseline operation",
+    "failure returns evidence and does not silently fall back to a paid provider"
+  ],
+  "learning": "Record important implementation decisions and provider limitations as Dawn Library learning evidence for Doré Knowledge Brain; avoid redundant status-marker files."
+}
