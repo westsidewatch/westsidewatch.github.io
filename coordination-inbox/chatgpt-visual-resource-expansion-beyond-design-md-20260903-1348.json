@@ -1,0 +1,71 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-visual-resource-expansion-beyond-design-md-20260903-1348",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Expand visual-learning source discovery beyond DESIGN.md and learn from rendered evidence",
+  "related_goal": "dore-design/visual-learning/resource-expansion",
+  "priority": "high",
+  "requires_reply": true,
+  "parent_goal": "Doré autonomous visual learning and New Westside visual quality",
+  "premise": "Doré's learning architecture is already beyond static markdown memory: research evidence, Storybook specimens/candidates, browser render evidence, visual judgment, durable learning, provenance, baseline immutability, WESTSIDE_FIT and product promotion are separate stages. DESIGN.md is therefore an input/reference format, not the learning system itself.",
+  "seed_resources": [
+    {"url":"https://getdesign.md/","role":"large catalog of real-product DESIGN.md analyses; use as searchable reference direction"},
+    {"url":"https://www.getdesignsystem.io/","role":"URL-to-design-system extraction; compare token/schema extraction"},
+    {"url":"https://getdesignmd.net/","role":"URL/screenshot to DESIGN.md plus live preview; study evidence extraction"},
+    {"url":"https://freedesign.md/","role":"deterministic extraction of colors/type/spacing/radii/components; inspect reproducible pipeline"},
+    {"url":"https://designmd.directory/","role":"directory of examples/templates/design skills and agent workflows"},
+    {"url":"https://designmd.ai/","role":"community design-system library; useful for broad pattern discovery, not authority"},
+    {"url":"https://www.design-extractor.com/","role":"URL extraction into DESIGN.md/Tailwind/tokens"},
+    {"url":"https://github.com/adityarajdigital/designmd","role":"open-source live-browser measurement of computed visual system including breakpoints/motion/interaction states"},
+    {"url":"https://github.com/iFurySt/DESIGN.md","role":"open DESIGN.md creator skill and preview artifacts; inspect method rather than copy styles"},
+    {"url":"https://github.com/VoltAgent/design-md","role":"curated agent-readable visual directions and format examples"}
+  ],
+  "search_expansion_required": [
+    "Find substantially more VISUAL-FIRST sources beyond DESIGN.md: high-quality editorial sites, digital magazines, cultural institutions, architecture/arts sites, experimental typography, motion/WebGL sites, award-winning web design, interaction galleries, design-system showcases, component-pattern libraries, responsive layout references, and real production sites.",
+    "Prefer sources with actual rendered pages, interaction, motion, responsive states, screenshots/video/browser-inspectable evidence over text-only commentary.",
+    "Build source families instead of one flat bookmark list; score sources for visual distinctiveness, evidence accessibility, transferability to Westside, and risk of generic SaaS contamination.",
+    "For every useful source, extract observations into reusable structured knowledge and test at least selected high-value patterns through Storybook/browser specimens.",
+    "Reject superficial copying. Learn composition grammar, hierarchy, typography behavior, image treatment, spatial rhythm, navigation, motion timing, responsive transformation, materiality, editorial density and interaction principles."
+  ],
+  "learning_pipeline": [
+    "DISCOVER source",
+    "CAPTURE rendered/browser evidence",
+    "DECOMPOSE visual grammar and implementation evidence",
+    "JUDGE transferable vs non-transferable patterns",
+    "STORE structured durable knowledge with provenance/confidence",
+    "SYNTHESIZE into controlled Storybook specimen/candidate",
+    "VERIFY in real browser desktop/mobile including motion where applicable",
+    "COMPARE against locked Westside baseline and identity invariants",
+    "PROMOTE only evidence-backed knowledge/patterns; otherwise reject or keep experimental",
+    "REUSE learned knowledge in New Westside without blind duplicate research"
+  ],
+  "priority_visual_dimensions": [
+    "editorial composition and asymmetric grids",
+    "serif/display typography and bilingual Chinese/English hierarchy",
+    "photography/illustration integration",
+    "materiality: paper, stone, dawn light, archival print",
+    "motion and transition grammar",
+    "WebGL only where meaningfully useful rather than decorative",
+    "responsive transformation from desktop to mobile",
+    "navigation and threshold/entry experiences",
+    "high-density content without visual clutter",
+    "accessibility-preserving expressive design"
+  ],
+  "westside_filter": {
+    "prefer": ["editorial", "cultural", "architectural", "sacred/monumental without kitsch", "archival", "print-to-digital", "typographic", "cinematic but restrained", "material and spatial"],
+    "deprioritize": ["generic SaaS dashboard", "neon AI gradients", "template startup landing pages", "copycat Apple/Linear/Cursor aesthetics", "motion without semantic value"]
+  },
+  "acceptance": {
+    "pass_requires": [
+      "expanded source map with multiple visual-first families",
+      "actual rendered evidence for representative sources",
+      "structured observations with provenance and confidence",
+      "accepted/rejected transfer judgments",
+      "at least one new Storybook/browser experiment derived from newly discovered visual sources",
+      "downstream reuse path into active New Westside parent goal"
+    ],
+    "forbidden_false_pass": ["bookmark list only", "DESIGN.md collection only", "text summary only", "reference-count milestone without visual evidence", "style copying without Westside judgment"]
+  }
+}
