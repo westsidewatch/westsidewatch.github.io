@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
 sys.path.insert(0,str(LOCAL))
-VERSION='dore.agent-core.v0.3'
+VERSION='dore.agent-core.v0.4'
 ALT_RESEARCH_HINTS=[
  'Search a different local Knowledge Lab/skill/failure-memory path before repeating execution.',
  'Search a different maintained OSS or official-documentation source family and extract an executable pattern.',
@@ -104,7 +104,7 @@ def _storybook_observation(result):
  return None
 def _failed_design_gates(observation):
  if not isinstance(observation,dict):return []
- gates=observation.get('gates') or {};design=['VISUAL_STABLE','DESIGN_DISTINCT','WESTSIDE_FIT']
+ gates=observation.get('gates') or {};design=['VISUAL_STABLE','RESPONSIVE_PASS','DESIGN_DISTINCT','WESTSIDE_FIT']
  return [name for name in design if gates.get(name) is False or gates.get(name)=='INSUFFICIENT_CANDIDATES']
 def complete_goal(ctx,result):
  try:
@@ -135,7 +135,7 @@ def record_nonblocking_attempt(jp,job,result):
   hint=ALT_RESEARCH_HINTS[(iteration-1)%len(ALT_RESEARCH_HINTS)];job['question']=str(job.get('question') or '')+f'\nAutonomous information-gain iteration {iteration}: {hint}';job['history']=list(job.get('history') or [])+[{'at':now(),'state':'INFORMATION_GAIN_ROTATION','hint':hint}]
  atomic_json(jp,job);return job,same
 def step():
- ctx=context();lp,learning=latest_learning(ctx['goal_id']);jp=job=None;events=[];peer_pending=False;rr=None;peer=None
+ ctx=context();lp,learning=latest_learning(ctx['goal_id']);jp=job=None;events=[];peer_pending=False;rr=None;peer=None;agency_pre=None
  def emit(name,**extra):events.append({'at':now(),'event':name,**extra})
  if learning and learning.get('state')=='RESEARCH_REQUIRED':
   jp,job=ensure_job(ctx,learning)
@@ -143,9 +143,12 @@ def step():
    emit('RESEARCHING',research_id=job.get('research_id'));rr=exec_json(RESEARCH_EXECUTOR,[jp]);job=read_json(jp,job) or job;emit(job.get('state') or 'RESEARCHING',research_id=job.get('research_id'))
    if job.get('state') not in {'KNOWLEDGE_RETURNED','PEER_RESEARCH_QUEUED'}:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'research_job':job,'events':events,'continue':True,'research_diagnostic':rr,'a2a_task':a2a_task(ctx,job.get('state'))}
   if job.get('state')=='PEER_RESEARCH_QUEUED':
-   peer=exec_json(PEER_BRIDGE,[jp],timeout=60);job=read_json(jp,job) or job;emit(job.get('state') or 'PEER_RESEARCH_QUEUED',research_id=job.get('research_id'))
+   from multi_loop_agency import checkpoint,peer_poll_due
+   prior={'result':(ctx.get('metadata') or {}).get('last_activity_result')};agency_pre=checkpoint(ctx,prior,job)
+   if peer_poll_due(agency_pre):peer=exec_json(PEER_BRIDGE,[jp],timeout=60);job=read_json(jp,job) or job;emit(job.get('state') or 'PEER_RESEARCH_QUEUED',research_id=job.get('research_id'))
+   else:emit('PEER_WAIT_SLEEP',research_id=job.get('research_id'),until=agency_pre.get('peer_cooldown_until'))
    if job.get('state')!='KNOWLEDGE_RETURNED':
-    peer_pending=True;job=transition(jp,job,'PEER_RESEARCH_QUEUED',peer_request_pending=True,peer_blocking=False,peer_mode='conversation-activated');emit('PENDING_PEER_NONBLOCKING',research_id=job.get('research_id'));reason='PEER_PENDING_CONTINUE_AUTONOMOUS'
+    peer_pending=True;job=transition(jp,job,'PEER_RESEARCH_QUEUED',peer_request_pending=True,peer_blocking=False,peer_mode='conversation-activated');emit('PENDING_PEER_NONBLOCKING',research_id=job.get('research_id'));reason=(agency_pre.get('decision') or {}).get('route') or 'PEER_PENDING_CONTINUE_AUTONOMOUS'
   if job.get('state')=='KNOWLEDGE_RETURNED':job=transition(jp,job,'EXPERIMENTING',peer_request_pending=False,peer_blocking=False);reason='KNOWLEDGE_RETURNED_EXPERIMENT';emit('EXPERIMENTING',research_id=job.get('research_id'))
   elif job.get('state')=='RESUME_PARENT':reason='RESUME_PARENT'
   elif not peer_pending:return {'ok':True,'agent_core':VERSION,'state':job.get('state'),'parent':ctx,'events':events,'continue':True}
@@ -153,8 +156,9 @@ def step():
  emit('ACT',reason=reason)
  result=drive(ctx,lp,learning,None if peer_pending else jp,None if peer_pending else job,reason);emit('OBSERVE',driver_ok=bool(result.get('ok')),returncode=result.get('returncode'))
  if peer_pending and jp and job:
-  job,same=record_nonblocking_attempt(jp,job,result);mark_active(ctx,result,pending_peer_research_id=job.get('research_id'),peer_blocking=False,autonomous_iteration=job.get('autonomous_iteration'));emit('AUTONOMOUS_PROGRESS_WITH_PEER_PENDING',research_id=job.get('research_id'),iteration=job.get('autonomous_iteration'),information_gain_rotation=same)
-  if same:
+  from multi_loop_agency import checkpoint
+  agency=checkpoint(ctx,result,job);job,same=record_nonblocking_attempt(jp,job,result);mark_active(ctx,result,pending_peer_research_id=job.get('research_id'),peer_blocking=False,autonomous_iteration=job.get('autonomous_iteration'),agency=agency);emit('MATERIAL_PROGRESS' if agency['assessment']['progress'] else 'REPEATED_ACTIVITY_NOT_PROGRESS',research_id=job.get('research_id'),iteration=job.get('autonomous_iteration'),agency=agency)
+  if same and not agency['decision']['yield_peer']:
    emit('RESEARCHING_ALTERNATIVE',research_id=job.get('research_id'));rr2=exec_json(RESEARCH_EXECUTOR,[jp]);job=read_json(jp,job) or job;emit(job.get('state') or 'RESEARCHING',research_id=job.get('research_id'))
    if job.get('state')=='KNOWLEDGE_RETURNED':emit('KNOWLEDGE_RETURNED',research_id=job.get('research_id'))
   state='PENDING_PEER_NONBLOCKING' if job.get('state')!='KNOWLEDGE_RETURNED' else 'KNOWLEDGE_RETURNED'
