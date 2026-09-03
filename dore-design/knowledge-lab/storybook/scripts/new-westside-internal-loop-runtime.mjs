@@ -54,11 +54,39 @@ const viewports=[{name:'desktop',width:1440,height:1000},{name:'mobile',width:39
 async function observe(file,iteration){
   const out={};
   for(const vp of viewports){
-    const page=await browser.newPage({viewport:{width:vp.width,height:vp.height},reducedMotion:'reduce'}); const pageErrors=[];page.on('pageerror',e=>pageErrors.push(String(e)));
-    await page.goto(`${origin}/${file}`,{waitUntil:'networkidle'}); await page.addStyleTag({content:'*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}'}); await page.waitForTimeout(80);
-    const metrics=await page.evaluate(()=>{const r=document.querySelector('[data-loop-iteration]');const text=r?.innerText||'';const aux=r?.querySelector('[data-aux-note]');const links=[...r.querySelectorAll('a')].map(a=>(a.textContent||'').trim());const required=['Journal','ONE','Living Water West','黎明書局','The Gate'];return{iteration:r?.dataset.loopIteration,hypothesis:r?.dataset.hypothesis||'',consumes_learning:r?.dataset.consumesLearning||'',h1_count:r?.querySelectorAll('h1').length||0,h2_count:r?.querySelectorAll('h2').length||0,nav_count:r?.querySelectorAll('nav[aria-label="Primary"]').length||0,required_links_present:required.every(x=>links.includes(x)),bilingual:/[\u3400-\u9fff]/.test(text)&&/[A-Za-z]/.test(text),horizontal_overflow:document.documentElement.scrollWidth>innerWidth+2,auxiliary_words:aux?(aux.innerText||'').trim().split(/\s+/).filter(Boolean).length:0,text_length:text.trim().length});
-    const a=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'});await page.waitForTimeout(80);const b=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'});const shot=`iteration-${iteration}-${vp.name}.png`;fs.writeFileSync(path.join(evidenceRoot,shot),a);
-    out[vp.name]={viewport:[vp.width,vp.height],screenshot:shot,sha256:sha(a),repeat_sha256:sha(b),visual_stable:sha(a)===sha(b),render_pass:metrics.text_length>100&&pageErrors.length===0,responsive_pass:!metrics.horizontal_overflow,semantic_pass:metrics.h1_count===1&&metrics.h2_count>=5&&metrics.nav_count===1&&metrics.required_links_present&&metrics.bilingual,page_errors:pageErrors,metrics};await page.close();
+    const page=await browser.newPage({viewport:{width:vp.width,height:vp.height},reducedMotion:'reduce'});
+    const pageErrors=[];
+    page.on('pageerror',e=>pageErrors.push(String(e)));
+    await page.goto(`${origin}/${file}`,{waitUntil:'networkidle'});
+    await page.addStyleTag({content:'*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}'});
+    await page.waitForTimeout(80);
+    const metrics=await page.evaluate(()=>{
+      const r=document.querySelector('[data-loop-iteration]');
+      const text=r?.innerText||'';
+      const aux=r?.querySelector('[data-aux-note]');
+      const links=[...(r?.querySelectorAll('a')||[])].map(a=>(a.textContent||'').trim());
+      const required=['Journal','ONE','Living Water West','黎明書局','The Gate'];
+      return {
+        iteration:r?.dataset.loopIteration||'',
+        hypothesis:r?.dataset.hypothesis||'',
+        consumes_learning:r?.dataset.consumesLearning||'',
+        h1_count:r?.querySelectorAll('h1').length||0,
+        h2_count:r?.querySelectorAll('h2').length||0,
+        nav_count:r?.querySelectorAll('nav[aria-label="Primary"]').length||0,
+        required_links_present:required.every(x=>links.includes(x)),
+        bilingual:/[\u3400-\u9fff]/.test(text)&&/[A-Za-z]/.test(text),
+        horizontal_overflow:document.documentElement.scrollWidth>innerWidth+2,
+        auxiliary_words:aux?(aux.innerText||'').trim().split(/\s+/).filter(Boolean).length:0,
+        text_length:text.trim().length,
+      };
+    });
+    const a=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'});
+    await page.waitForTimeout(80);
+    const b=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'});
+    const shot=`iteration-${iteration}-${vp.name}.png`;
+    fs.writeFileSync(path.join(evidenceRoot,shot),a);
+    out[vp.name]={viewport:[vp.width,vp.height],screenshot:shot,sha256:sha(a),repeat_sha256:sha(b),visual_stable:sha(a)===sha(b),render_pass:metrics.text_length>100&&pageErrors.length===0,responsive_pass:!metrics.horizontal_overflow,semantic_pass:metrics.h1_count===1&&metrics.h2_count>=5&&metrics.nav_count===1&&metrics.required_links_present&&metrics.bilingual,page_errors:pageErrors,metrics};
+    await page.close();
   }
   return out;
 }
@@ -74,13 +102,15 @@ learning.next_hypothesis=learning.actions.includes('reduce-mobile-auxiliary-dens
 fs.writeFileSync(path.join(evidenceRoot,'iteration-1-learning.json'),JSON.stringify(learning,null,2)+'\n');
 fs.writeFileSync(path.join(generatedRoot,'iteration-2.html'),iteration2(learning));
 const i2=await observe('iteration-2.html',2);
-await browser.close();server.close();
+await browser.close();
+server.close();
 const i2Pass=Object.values(i2).every(v=>v.render_pass&&v.responsive_pass&&v.semantic_pass&&v.visual_stable);
 const consumed=i2.desktop.metrics.consumes_learning.split(';').filter(Boolean);
 const reuse=learning.actions.every(x=>consumed.includes(x))&&i2.mobile.metrics.consumes_learning===i2.desktop.metrics.consumes_learning;
 const distinct=i1.desktop.sha256!==i2.desktop.sha256;
 const result={schema:'dore.new-westside-internal-loop-runtime-evidence.v1',parent_goal:'New Westside visual construction',state:'INTERNAL_LOOP_RUNTIME_PASS',created_at:new Date().toISOString(),product_acceptance:false,style_acceptance:false,exploration_state:'EXPLORATION_INSUFFICIENT',iteration_1:{hypothesis:'hierarchy-before-atmosphere',viewports:i1},learning,iteration_2:{hypothesis:learning.next_hypothesis,generated_from_learning:true,viewports:i2},gates:{ITERATION_1_BROWSER_PASS:i1Pass,ITERATION_1_LEARNING_DERIVED_FROM_BROWSER:learning.derived_from_browser_evidence,ITERATION_1_LEARNING_PERSISTED:fs.existsSync(path.join(evidenceRoot,'iteration-1-learning.json')),ITERATION_2_GENERATED_FROM_ITERATION_1_LEARNING:true,ITERATION_2_BROWSER_PASS:i2Pass,ITERATION_2_CONSUMES_ITERATION_1_LEARNING:reuse,MATERIAL_ITERATION_CHANGE:distinct,TECHNICAL_AND_DESIGN_JUDGMENT_SEPARATED:true,USER_STYLE_ACCEPTANCE_NOT_INFERRED:true}};
-result.ok=Object.values(result.gates).every(Boolean);result.code=result.ok?'DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_PASS':'DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_FAIL';
+result.ok=Object.values(result.gates).every(Boolean);
+result.code=result.ok?'DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_PASS':'DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_FAIL';
 fs.writeFileSync(path.join(evidenceRoot,'latest.json'),JSON.stringify(result,null,2)+'\n');
 console.log(JSON.stringify({ok:result.ok,code:result.code,state:result.state,gates:result.gates,learning:result.learning,evidence:path.join(evidenceRoot,'latest.json'),product_acceptance:false,style_acceptance:false,exploration_state:result.exploration_state}));
 process.exit(result.ok?0:5);
