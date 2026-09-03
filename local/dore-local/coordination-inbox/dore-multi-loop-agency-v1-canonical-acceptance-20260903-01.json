@@ -1,0 +1,19 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-multi-loop-agency-v1-canonical-acceptance-20260903-01",
+  "thread_id": "dore-multi-loop-agency-v1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "design-reference-library-expansion-20260901",
+  "subject": "Canonical acceptance for Doré Multi-Loop Agency 1.0",
+  "commands": [
+    {"argv": ["python3", "-m", "unittest", "discover", "-s", "local/dore-local", "-p", "test_multi_loop_agency.py"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120},
+    {"argv": ["python3", "local/dore-local/multi_loop_agency_acceptance.py"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120},
+    {"argv": ["launchctl", "kickstart", "-k", "gui/501/io.westsidewatch.dore-design"], "cwd": "/Users/chenjingyu/westsidewatch.github.io", "timeout": 120},
+    {"argv": ["npm", "run", "autonomy-check"], "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook", "timeout": 1200}
+  ],
+  "body": "Replay iteration 445, prove repeated activity is not progress, prove a zero-reply peer enters non-blocking cooldown, prioritize the real responsive failure, restart Doré Design with the repaired Signal Nocturne layout, and run real Storybook browser evidence. Do not mark the parent goal complete while references remain 21/40 and source families remain below acceptance. Return one terminal canonical PASS/FAIL receipt."
+}
