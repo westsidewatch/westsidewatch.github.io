@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-03T06:55:40.952068+00:00",
+  "published_at": "2026-09-03T06:56:18.501517+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -3279,10 +3279,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788418252.011324,
-    "last_self_update_check_at": "2026-09-03T06:50:52.011330+00:00",
-    "last_telemetry_epoch": 1788418463.959667,
-    "last_telemetry_at": "2026-09-03T06:54:23.959682+00:00",
+    "last_self_update_check_epoch": 1788418573.016001,
+    "last_self_update_check_at": "2026-09-03T06:56:13.016008+00:00",
+    "last_telemetry_epoch": 1788418542.949294,
+    "last_telemetry_at": "2026-09-03T06:55:42.949309+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-03T06:55:40.317864+00:00",
     "last_agent_state": "PENDING_PEER_NONBLOCKING",
@@ -11791,20 +11791,6 @@
   },
   "events": [
     {
-      "at": "2026-09-03T06:29:49.452187+00:00",
-      "event": "A2A_SUPERVISION",
-      "a2a_state": "A2A_PEER_PENDING_NONBLOCKING",
-      "action": "CONTINUE_AUTONOMOUS_WORK",
-      "peer_required": true,
-      "peer_blocking": false,
-      "unchanged_cycles": 1
-    },
-    {
-      "at": "2026-09-03T06:30:21.709434+00:00",
-      "event": "WAKE",
-      "reason": "NO_USER_INPUT_CONTINUE"
-    },
-    {
       "at": "2026-09-03T06:31:05.412864+00:00",
       "event": "AGENT_OBSERVATION",
       "state": "PENDING_PEER_NONBLOCKING",
@@ -12245,6 +12231,31 @@
       "peer_required": true,
       "peer_blocking": false,
       "unchanged_cycles": 1
+    },
+    {
+      "at": "2026-09-03T06:56:13.457186+00:00",
+      "event": "CONTROL_MANIFEST_UPDATED",
+      "source": "origin/main"
+    },
+    {
+      "at": "2026-09-03T06:56:17.954500+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/a2a/runtime-control-manifest.json",
+        "dore-design/knowledge-lab/storybook/package.json",
+        "dore-design/multipage_wysiwyg.py",
+        "dore-design/promotion_pipeline.py",
+        "dore-design/knowledge_compression.py",
+        "dore-design/promote_three_candidates.py",
+        "dore-design/promotion_capability_audit.py",
+        "dore-design/promotion_three_acceptance.py",
+        "dore-design/knowledge-lab/storybook/scripts/page-hash.mjs",
+        "dore-design/promotion/specimens/living-current.v1.json",
+        "dore-design/promotion/specimens/dawn-atlas.v1.json",
+        "dore-design/promotion/specimens/signal-nocturne.v1.json"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
