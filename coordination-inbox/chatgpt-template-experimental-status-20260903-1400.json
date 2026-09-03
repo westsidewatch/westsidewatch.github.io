@@ -1,0 +1,48 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-template-experimental-status-20260903-1400",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Correct New Westside design-state semantics: current templates are experiments, not accepted style",
+  "related_goal": "dore-design/new-westside-storybook-loop",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_goal": "New Westside visual construction",
+  "correction": {
+    "statement": "All current New Westside templates/candidates are experimental exploration artifacts only. Their existence, Storybook promotion-gate PASS, browser PASS, or use on a real-content comparison surface does NOT mean their visual style is accepted by the user or becomes Westside's canonical style.",
+    "status_of_current_templates": "EXPERIMENTAL_ONLY",
+    "user_style_acceptance": "NOT_GRANTED",
+    "canonical_brand_style": "UNRESOLVED",
+    "production_promotion_permission": "NOT_GRANTED_BY_TEMPLATE_EXISTENCE"
+  },
+  "applies_to": [
+    "homepage-v1.html",
+    "homepage-v2-living-fortress.html",
+    "homepage-v3-threshold-promoted.html",
+    "new-westside-dawn-atlas-v1",
+    "new-westside-living-current-v1",
+    "new-westside-signal-nocturne-v1",
+    "product-candidate-comparison-v1.html"
+  ],
+  "required_semantics": [
+    "Treat all current visual outputs as hypothesis space / experiments.",
+    "Do not infer user preference, brand approval, or canonical Westside style from technical gate success.",
+    "WESTSIDE_FIT is an internal evidence judgment, not equivalent to user aesthetic acceptance.",
+    "A technically qualified candidate may still be rejected aesthetically without contradiction.",
+    "Do not promote any experimental style into the canonical homepage solely because it wins automated comparison.",
+    "Any future design-memory/DESIGN.md equivalent must distinguish observed invariants from provisional experiments and explicit user-approved style decisions.",
+    "Preserve the ability to generate materially different directions rather than converging around the current experimental family."
+  ],
+  "next_engineering_effect": {
+    "comparison_surface": "May continue as an experiment/test harness only.",
+    "visual_learning": "Learn both positive and negative evidence from experiments.",
+    "new_westside": "Continue exploration; do not collapse candidate selection into canonical style acceptance.",
+    "promotion_gate": "Requires explicit product evidence plus explicit style-acceptance state; technical PASS alone is insufficient."
+  },
+  "acceptance": [
+    "Canonical state/register records current templates as experimental, not approved style.",
+    "Future result receipts preserve separation between technical qualification, WESTSIDE_FIT, and explicit user style acceptance.",
+    "No production homepage replacement is claimed from current candidate family without a separate explicit acceptance event."
+  ]
+}
