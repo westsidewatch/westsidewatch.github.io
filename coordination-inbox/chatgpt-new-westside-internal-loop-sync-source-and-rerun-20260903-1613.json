@@ -1,0 +1,22 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-new-westside-internal-loop-sync-source-and-rerun-20260903-1613",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "priority":"critical",
+  "requires_reply":true,
+  "body":"Repair the newly observed checkout/materialization gap: A2A delivery can see a remote task before the execution checkout contains the task's referenced source artifacts. Fetch and fast-forward the control checkout first, assert the internal-loop story and evidence script exist, then build and execute the same internal-loop acceptance. PASS only on the browser evidence gate; no product/style acceptance.",
+  "related_goal":"New Westside visual construction",
+  "commands":[
+    {"argv":["git","fetch","origin","main"],"cwd":".","timeout":180},
+    {"argv":["git","merge","--ff-only","origin/main"],"cwd":".","timeout":180},
+    {"argv":["test","-f","dore-design/knowledge-lab/storybook/src/stories/NewWestsideInternalLoop.stories.jsx"],"cwd":".","timeout":30},
+    {"argv":["test","-f","dore-design/knowledge-lab/storybook/scripts/new-westside-internal-loop-evidence.mjs"],"cwd":".","timeout":30},
+    {"argv":["npm","ci"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["npx","playwright","install","chromium"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["npm","run","build-storybook"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["node","scripts/new-westside-internal-loop-evidence.mjs"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900}
+  ],
+  "metadata":{"phase":"INTERNAL_LOOP_BOOTSTRAP","previous_failure":"execution checkout did not yet contain newly delivered source artifact","required_code":"DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS","product_acceptance":false,"style_acceptance":false,"exploration_state":"EXPLORATION_INSUFFICIENT"}
+}
