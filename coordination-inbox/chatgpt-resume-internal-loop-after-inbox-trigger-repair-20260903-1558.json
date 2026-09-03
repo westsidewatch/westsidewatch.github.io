@@ -1,0 +1,18 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-resume-internal-loop-after-inbox-trigger-repair-20260903-1558",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"agent_task",
+  "priority":"critical",
+  "requires_reply":true,
+  "body":"Resume the same New Westside internal-loop bootstrap parent goal after repairing the canonical coordination-inbox trigger mismatch. First reconcile source task chatgpt-new-westside-internal-loop-first-20260903-1522 and execute it rather than opening a new design direction. Produce iteration 1 and iteration 2 with explicit learning reuse and browser evidence. If pickup still fails, return bounded transport/consumer diagnosis rather than product PASS.",
+  "related_goal":"New Westside visual construction",
+  "parent_message_id":"chatgpt-new-westside-internal-loop-first-20260903-1522",
+  "repair_context":{
+    "fault":"The GitHub coordination transport workflow watched local/dore-local/coordination-inbox/** while ChatGPT A2A tasks are committed to canonical coordination-inbox/**. Therefore canonical task commits did not trigger this transport workflow.",
+    "repair_commit":"d11ee03ee452faf4e61494e1f9099619d27a7450",
+    "repair":"Added coordination-inbox/** to workflow push/PR paths and added a canonical A2A delivery-plane visibility check."
+  },
+  "pass_boundary":"Do not call INTERNAL_LOOP_PASS until two consecutive experiment iterations exist and iteration 2 demonstrably consumes durable learning from iteration 1."
+}
