@@ -1,5 +1,5 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.9",
+  "schema": "dore.runtime-control-manifest.v1.10",
   "updated_at": "2026-09-03",
   "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest, including canonical acceptance envelopes and their executable dependencies. ChatGPT is a conversation-activated asynchronous peer; pending peer work never blocks Doré autonomous Storybook/Design Lab work.",
   "files": [
@@ -29,6 +29,9 @@
     "local/dore-local/coordination_goal_executor.py",
     "local/dore-local/coordination_worker.py",
     "local/dore-local/coordination_mailbox.py",
+    "local/dore-local/a2a_delivery_plane.py",
+    "local/dore-local/test_a2a_delivery_plane.py",
+    "local/dore-local/a2a_delivery_plane_acceptance.py",
     "local/dore-local/loop_contract_acceptance.py",
     "local/dore-local/durable_store.py",
     "local/dore-local/retry_policy.py",
@@ -87,6 +90,7 @@
     "dore-design/knowledge-lab/a2a/multi-loop-agency-v1.md",
     "dore-design/knowledge-lab/a2a/multi-loop-control-plane-v1.md",
     "dore-design/knowledge-lab/a2a/dawn-incremental-enrichment-v1.md",
+    "dore-design/knowledge-lab/a2a/a2a-delivery-plane-v1.md",
     "dore-design/knowledge-lab/resources/dawn-incremental-editorial-sources-v1.json"
   ],
   "required_local_durable_state": [
@@ -96,6 +100,9 @@
     "~/.dore/runtime/heartbeat.json",
     "~/.dore/runtime/a2a-supervision.json",
     "~/.dore/a2a-supervisor/state.json",
+    "~/.dore/a2a-delivery/inbox/",
+    "~/.dore/a2a-delivery/delivery-acks.jsonl",
+    "~/.dore/a2a-delivery/events.jsonl",
     "~/.dore/control-plane/state.json",
     "~/.dore/control-plane/knowledge-assets.jsonl",
     "~/.dore/coordination/learning/",
@@ -110,6 +117,7 @@
     "launchd": ["process liveness"],
     "resident_runtime": ["wake/sleep","process supervision","mechanical checkpoint","self-update","heartbeat","telemetry"],
     "a2a_supervisor": ["asynchronous A2A health","non-blocking peer visibility","project-loop stall observation"],
+    "a2a_delivery_plane": ["checkout-independent origin/ref ingestion","durable inbound mailbox","identity/hash validation","replay dedupe","identity-conflict quarantine","delivery ACK distinct from execution receipt"],
     "dore_agent_core": ["goal reasoning","evidence-delta progress evaluation","multi-loop control-plane routing","peer cooldown","gap detection","resource search","candidate selection","hypothesis","experiment choice","information gain","verification","skill promotion","next action","resume parent"],
     "multi_loop_control_plane": ["wake","route","priority","yield","resume","share","record","durable workflow checkpoints"],
     "storybook_lab": ["Vitest real-browser story tests","Playwright desktop/mobile evidence","responsive evidence","design observations"]

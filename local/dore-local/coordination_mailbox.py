@@ -20,7 +20,7 @@ def read_jsonl(path):
 def _published_versions():
  out={}
  for x in read_jsonl(DELIVERY):
-  if x.get('published') is True and x.get('message_id'):out[x['message_id']]=x.get('message_sha256')
+  if x.get('published') is True and x.get('message_id'):out[x['message_id']]=x.get('message_sha256') or '*'
  return out
 def _run(args,timeout=60,cwd=None):return subprocess.run(args,cwd=cwd or ROOT,text=True,capture_output=True,timeout=timeout)
 def _fetch_main():return _run(['git','fetch','origin',MAIN_REFSPEC],60)
@@ -63,7 +63,7 @@ def flush_outbox():
  results=[]
  for mid in order:
   msg=latest[mid];sha=msg.get('message_sha256')
-  if published.get(mid)==sha:continue
+  if published.get(mid) in {sha,'*'}:continue
   result=_git_publish(msg);rec={'schema':'dore.mail-delivery.v2','message_id':mid,'message_sha256':sha,'attempted_at':now(),**result};_append(DELIVERY,rec);results.append(rec)
   if not result.get('published'):break
  return results

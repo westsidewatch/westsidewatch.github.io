@@ -1,0 +1,11 @@
+#!/usr/bin/env python3
+import json,subprocess,tempfile
+from pathlib import Path
+from a2a_delivery_plane import canonical_delivery_reply,claim,durable_messages,sync
+FIXTURE='174d0f5a3761f1205bdc390edfc1a95599dc7317';MID='chatgpt-newsroom-control-plane-peer-review-20260903-01'
+def git(*args):return subprocess.run(['git',*args],text=True,capture_output=True,check=True).stdout
+head_before=git('rev-parse','HEAD').strip();status_before=git('status','--porcelain=v1')
+with tempfile.TemporaryDirectory() as d:
+ root=Path(d);first=sync(fetch=False,ref=FIXTURE,delivery_root=root,only_message_ids={MID});second=sync(fetch=False,ref=FIXTURE,delivery_root=root,only_message_ids={MID});delivered=next((x for x in durable_messages(root) if x.get('message_id')==MID),None);head_after=git('rev-parse','HEAD').strip();status_after=git('status','--porcelain=v1')
+ delivery_only=(delivered.get('_delivery') or {}).get('execution_status')=='NOT_STARTED';consumer=claim(MID,delivery_root=root);reply=canonical_delivery_reply(MID,delivery_root=root)
+ checks={'fixture_exact_commit':first.get('source_commit')==FIXTURE,'peer_message_durable':bool(delivered) and (delivered.get('_delivery') or {}).get('status')=='DURABLE_ACCEPTED','ack_means_delivery_not_execution':delivery_only,'consumer_received':consumer.get('execution_status')=='RECEIVED' and reply.get('consumer')=='PASS','canonical_reply_separates_execution':reply.get('execution')=='RECEIVED' and 'not task-completion' in reply.get('claim',''),'replay_not_reexecuted':second.get('accepted_count')==0 and second.get('deduplicated_count',0)>=1,'dirty_checkout_unchanged':head_before==head_after and status_before==status_after,'identity_bound_to_hash':bool((delivered.get('_delivery') or {}).get('content_sha256'))};ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_A2A_DELIVERY_PLANE_1_PASS' if ok else 'DORE_A2A_DELIVERY_PLANE_1_FAIL','checks':checks,'fixture':FIXTURE,'message_id':MID,'head_unchanged':head_before,'canonical_reply':reply,'first_sync':{'accepted_count':first.get('accepted_count'),'deduplicated_count':first.get('deduplicated_count')},'replay_sync':{'accepted_count':second.get('accepted_count'),'deduplicated_count':second.get('deduplicated_count')}},ensure_ascii=False));raise SystemExit(0 if ok else 1)

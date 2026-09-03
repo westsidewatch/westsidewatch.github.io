@@ -10,6 +10,7 @@ import json,os,subprocess
 from datetime import datetime,timezone
 from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,flush_outbox,receive_from_chatgpt
+from a2a_delivery_plane import DELIVERY as DELIVERY_ROOT,durable_messages,sync as sync_delivery
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
@@ -28,11 +29,14 @@ def set_task(state,mid,status,**extra):
  record=state.setdefault('tasks',{}).setdefault(mid,{});record.update({'status':status,'updated_at':now(),**extra});state['last_task_id']=mid;state['last_task_status']=status;save(state);return record
 def pending(prev):
  done=set(prev.get('repo_inbox_processed') or []);out=[]
+ for m in durable_messages(DELIVERY_ROOT):
+  if m.get('message_id') and m['message_id'] not in done:out.append(m)
+ durable_ids={m.get('message_id') for m in out}
  if REPO_INBOX.exists():
   for p in REPO_INBOX.glob('*.json'):
    try:m=json.loads(p.read_text(encoding='utf-8'))
    except Exception:continue
-   if m.get('message_id') and m['message_id'] not in done:m['_source_name']=p.name;out.append(m)
+   if m.get('message_id') and m['message_id'] not in done and m['message_id'] not in durable_ids:m['_source_name']=p.name;out.append(m)
  out.sort(key=lambda m:(PRIORITY.get(str(m.get('priority','normal')).lower(),2),0 if str(m.get('related_goal','')).startswith('dore-design') else 1,str(m.get('_source_name',''))))
  for m in out:m.pop('_source_name',None)
  return done,out
@@ -100,7 +104,7 @@ def _finish_pass(state,done,msg,result,attempt,evidence):
 def handoff_research(state,done,msg,attempt,learning,failure_result):
  mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);row=enqueue(mid,goal,priority=str(msg.get('priority') or 'normal').lower(),source='coordination_worker',metadata={'execution_kind':'coordination_message','message':msg,'project_loop':'A2A <-> coordination real work','requires_reply':bool(msg.get('requires_reply',True))});handoff={'ok':False,'state':'RESEARCH_QUEUED','learning':learning,'goal_queue':{'goal_id':row.get('goal_id'),'status':row.get('status')},'original_failure':failure_result,'parent_goal_preserved':True,'handoff_to_resident_runtime':True};done.add(mid);state['repo_inbox_processed']=sorted(done);state.setdefault('research_handoffs',{})[mid]={'at':now(),'goal':goal,'status':'RESEARCH_QUEUED'};state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);set_task(state,mid,'RESEARCH_QUEUED',attempt=attempt,terminal=False,result=handoff);reply(msg,handoff,evidence_for(msg)+['research-required','goal-queue-handoff'],'LEARNING',attempt,False);return handoff
 def main():
- flush_outbox();state=load_state();done,queue=pending(state);state['queue_depth']=len(queue);state['checked_at']=now();save(state);failures=0
+ flush_outbox();state=load_state();delivery=sync_delivery(skip_message_ids=set(state.get('repo_inbox_processed') or []));state['last_delivery_sync']={k:v for k,v in delivery.items() if k!='results'};done,queue=pending(state);state['queue_depth']=len(queue);state['checked_at']=now();save(state);failures=0
  for msg in queue[:MAX_PER_RUN]:
   mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);attempt=(state.get('attempts') or {}).get(mid,0)+1;state.setdefault('attempts',{})[mid]=attempt;state['active_goal']=goal;state['active_message_id']=mid;set_task(state,mid,'RECEIVED',attempt=attempt,goal=goal,kind=msg.get('kind'));set_task(state,mid,'RUNNING',attempt=attempt,started_at=now())
   try:
