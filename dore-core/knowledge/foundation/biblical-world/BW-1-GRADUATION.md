@@ -34,7 +34,7 @@ Capabilities included in the gate:
 The final end-to-end report `reports/DORÉ-BW1-ENTITY-GRADUATION.json` records PASS with:
 
 - **4,293** cleaned derived entities;
-- **3,592** conservative Chinese aligned aliases;
+- **2,876** conservative Chinese aligned aliases;
 - Mary person resolution PASS;
 - Samaria place resolution PASS;
 - Mary/Samaria identity separation PASS;
@@ -70,3 +70,7 @@ These examples are diagnostic stimuli, not hard-coded answer keys. Transfer beha
 Proceed to **BW-2 Geography**, carrying the same dual-learning rule:
 
 **Knowledge + Reflex**, with Doré Search and ONE continuing as work/learning nodes.
+
+## Sweep 01 reconciliation — 2026-09-02
+
+The earlier prose count of **3,592** Chinese aligned aliases conflicted with the persisted machine graduation report, whose `counts.chinese_aliases` value is **2,876**. The machine report is the stronger milestone evidence, so this graduation record has been corrected to 2,876. This numerical correction does **not** invalidate the bounded BW-1 PASS because every named boolean graduation check remains true in the persisted report. It does, however, establish a durable rule for completed-work review: when narrative milestone prose and its machine report disagree on a measured count, the machine report governs until a newer reproducible report proves otherwise.
