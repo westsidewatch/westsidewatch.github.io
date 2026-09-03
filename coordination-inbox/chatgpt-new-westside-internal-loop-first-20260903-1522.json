@@ -1,0 +1,36 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-new-westside-internal-loop-first-20260903-1522",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"agent_task",
+  "priority":"critical",
+  "requires_reply":true,
+  "parent_goal":"New Westside visual construction",
+  "subject":"First make the internal design experimentation loop run end-to-end; do not chase experiment quantity yet",
+  "user_decision":"先建立內在跑通",
+  "interpretation":"Before broadening style/design experiments, establish a reliable internal closed loop that can repeatedly turn product intent and references into experiments, evidence, judgment, learning, and the next experiment without manual orchestration at every step.",
+  "phase":"INTERNAL_LOOP_BOOTSTRAP",
+  "loop_contract":[
+    "1. Read current New Westside parent goal, known invariants, experimental-only boundary, and existing visual-learning knowledge.",
+    "2. Select or research one bounded design hypothesis because it answers a concrete New Westside question, not because a template already exists.",
+    "3. Materialize a real editable experiment in Storybook/design lab or product sandbox using real or representative Westside content.",
+    "4. Build it deterministically and render in a real browser at desktop and mobile.",
+    "5. Collect technical evidence: render, function, responsive, accessibility, visual stability, assets, reduced motion where applicable.",
+    "6. Perform design evidence judgment separately from technical PASS: what was learned about composition, typography, materiality, information hierarchy, interaction, motion, bilingual behavior, and Westside identity.",
+    "7. Persist both accepted and rejected pattern learning with provenance; experimental observations must remain provisional and must not become user-approved brand rules.",
+    "8. Use that learning to generate the next materially informed hypothesis/experiment automatically, preserving the same New Westside parent goal.",
+    "9. Demonstrate at least one complete second iteration that consumes the previous iteration's learning. This proves the loop is actually closed rather than a one-shot pipeline.",
+    "10. If the loop itself fails, diagnose and repair the smallest reusable Doré capability gap, verify the repair in this same episode, then resume."
+  ],
+  "pass_boundary":"INTERNAL_LOOP_PASS requires evidence of two consecutive experiment iterations where iteration 2 explicitly consumes durable learning from iteration 1, with browser evidence and no false product/style acceptance. One experiment, a research memo, a Storybook build alone, reference accumulation, or transport PASS is insufficient.",
+  "product_boundary":"Do not select a winner, promote production, or claim the current visual style is accepted. New Westside remains EXPLORATION_INSUFFICIENT after this internal-loop milestone unless later user/product evidence changes it.",
+  "autonomy":"Doré should run this internal loop with minimal user interruption. ChatGPT and Doré may repair execution/capability issues autonomously within existing architecture. Durable architecture relocation still follows prior governance.",
+  "output_required":[
+    "iteration-1 hypothesis + artifact + desktop/mobile browser evidence + technical result + design learning",
+    "durable accepted/rejected provisional learning record",
+    "iteration-2 hypothesis showing explicit reuse of iteration-1 learning",
+    "iteration-2 artifact + browser evidence + technical/design result",
+    "canonical INTERNAL_LOOP_PASS or bounded FAIL/LEARNING receipt"
+  ]
+}
