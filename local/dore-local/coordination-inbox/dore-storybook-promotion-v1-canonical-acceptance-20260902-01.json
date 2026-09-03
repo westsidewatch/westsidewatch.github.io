@@ -1,0 +1,35 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-storybook-promotion-v1-canonical-acceptance-20260902-01",
+  "thread_id": "dore-storybook-promotion-v1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "storybook-to-dore-design-promotion-pipeline-v1",
+  "subject": "Canonical acceptance for Storybook to Doré Design promotion pipeline v1",
+  "commands": [
+    {
+      "argv": ["npm", "run", "autonomy-check"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io/dore-design/knowledge-lab/storybook",
+      "timeout": 900
+    },
+    {
+      "argv": ["python3", "dore-design/install_homepage_candidates.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["launchctl", "kickstart", "-k", "gui/501/io.westsidewatch.dore-design"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "-c", "import json,time,urllib.request\nfor _ in range(40):\n try:\n  h=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/health',timeout=3));c=json.load(urllib.request.urlopen('http://127.0.0.1:4310/api/candidates',timeout=3));assert h.get('version')=='1.9.0' and h.get('promotion_pipeline')=='storybook-to-dore-design-v1' and len(c.get('candidates',[]))>=1;print(json.dumps({'ok':True,'health':h,'candidates':c},ensure_ascii=False));break\n except Exception:\n  time.sleep(.25)\nelse: raise SystemExit('dore_design_1_9_not_ready')"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Run the complete Storybook build/test/evidence/promotion loop on Doré Mac, install the promoted candidate without modifying locked homepage #262, restart the resident Doré Design service, verify version 1.9 and candidate gallery visibility, then return one terminal canonical PASS/FAIL receipt with exact command evidence."
+}

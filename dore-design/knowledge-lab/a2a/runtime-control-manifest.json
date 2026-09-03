@@ -1,5 +1,5 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.4",
+  "schema": "dore.runtime-control-manifest.v1.5",
   "updated_at": "2026-09-02",
   "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest, including canonical acceptance envelopes and their executable dependencies. ChatGPT is a conversation-activated asynchronous peer; pending peer work never blocks Doré autonomous Storybook/Design Lab work.",
   "files": [
@@ -42,11 +42,25 @@
     "dore-design/knowledge-lab/a2a/runtime-control-manifest.json",
     "dore-design/knowledge-lab/tools/research-bridge-v0.1.md",
     "dore-design/knowledge-lab/storybook/package.json",
+    "dore-design/knowledge-lab/storybook/package-lock.json",
     "dore-design/knowledge-lab/storybook/.storybook/main.js",
     "dore-design/knowledge-lab/storybook/.storybook/preview.js",
     "dore-design/knowledge-lab/storybook/.storybook/vitest.setup.js",
     "dore-design/knowledge-lab/storybook/vitest.config.js",
-    "dore-design/knowledge-lab/storybook/scripts/storybook-evidence.mjs"
+    "dore-design/knowledge-lab/storybook/scripts/storybook-evidence.mjs",
+    "dore-design/app_visual_v2.py",
+    "dore-design/multipage_wysiwyg.py",
+    "dore-design/install_homepage_candidates.py",
+    "dore-design/promotion_pipeline.py",
+    "dore-design/promotion_acceptance.py",
+    "dore-design/promotion/specimens/living-current.v1.json",
+    "dore-design/candidates/registry.json",
+    "dore-design/candidates/new-westside-living-current-v1/manifest.json",
+    "dore-design/knowledge-lab/evidence/storybook-promotion/new-westside-living-current-v1.json",
+    "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json",
+    "dore-design/knowledge-lab/evidence/storybook-autonomy/new-westside-homepage-concepts--living-current-desktop.png",
+    "dore-design/knowledge-lab/evidence/storybook-autonomy/new-westside-homepage-concepts--living-current-mobile.png",
+    "local/dore-local/coordination-inbox/dore-storybook-promotion-v1-canonical-acceptance-20260902-01.json"
   ],
   "required_local_durable_state": [
     "~/.dore/runtime/goals.json",

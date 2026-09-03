@@ -8,7 +8,9 @@
     "build-storybook": "storybook build",
     "test-storybook": "vitest --project=storybook --run",
     "evidence-storybook": "node scripts/storybook-evidence.mjs",
-    "autonomy-check": "npm run build-storybook && npm run test-storybook && npm run evidence-storybook"
+    "promote-design": "python3 ../../promotion_pipeline.py promote-storybook ../../promotion/specimens/living-current.v1.json ../evidence/storybook-autonomy/latest.json",
+    "promotion-check": "python3 ../../promotion_acceptance.py",
+    "autonomy-check": "npm run build-storybook && npm run test-storybook && npm run evidence-storybook && npm run promote-design && npm run promotion-check"
   },
   "dependencies": {
     "react": "^19.1.1",

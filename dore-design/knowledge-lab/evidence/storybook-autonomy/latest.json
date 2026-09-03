@@ -1,0 +1,479 @@
+{
+  "schema": "dore.storybook-evidence.v1.3",
+  "created_at": "2026-09-03T03:43:39.476Z",
+  "source": "Storybook static build + Playwright Chromium",
+  "purpose": "Observation layer. Design-gate failures are learning signals, not evidence-infrastructure failures.",
+  "candidates": [
+    {
+      "id": "research-editorialhero--dawn",
+      "title": "Research/EditorialHero",
+      "name": "Dawn",
+      "westside_candidate": false,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "research-editorialhero--dawn-desktop.png",
+          "sha256": "c9cc998c3ea5e79d6a4457241549dbcc0c8b778f854422e263438c03f7f3e61a",
+          "repeat_sha256": "c9cc998c3ea5e79d6a4457241549dbcc0c8b778f854422e263438c03f7f3e61a",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 58,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=research-editorialhero--dawn&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": false
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "research-editorialhero--dawn-mobile.png",
+          "sha256": "99d119023f648d68bc78a5379c881ffb9f6ba1fc55f031f2ca23120d22337f1b",
+          "repeat_sha256": "99d119023f648d68bc78a5379c881ffb9f6ba1fc55f031f2ca23120d22337f1b",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 58,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=research-editorialhero--dawn&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": false
+          }
+        }
+      }
+    },
+    {
+      "id": "research-editorialhero--long-deck",
+      "title": "Research/EditorialHero",
+      "name": "Long Deck",
+      "westside_candidate": false,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "research-editorialhero--long-deck-desktop.png",
+          "sha256": "6fedbbf87303657443f8026b75a72c9526d121d1b407d3030e3c87324bba804a",
+          "repeat_sha256": "6fedbbf87303657443f8026b75a72c9526d121d1b407d3030e3c87324bba804a",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 96,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=research-editorialhero--long-deck&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": false
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "research-editorialhero--long-deck-mobile.png",
+          "sha256": "f37637e6822ccdf30f2379e6de42794e0b2c5fec208cf1bc3f7c40951529ea93",
+          "repeat_sha256": "f37637e6822ccdf30f2379e6de42794e0b2c5fec208cf1bc3f7c40951529ea93",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 96,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=research-editorialhero--long-deck&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": false
+          }
+        }
+      }
+    },
+    {
+      "id": "new-westside-homepage-concepts--dawn-atlas",
+      "title": "New Westside/Homepage Concepts",
+      "name": "Dawn Atlas",
+      "westside_candidate": true,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "new-westside-homepage-concepts--dawn-atlas-desktop.png",
+          "sha256": "7211ba9ac7e3b946e2937d2ed58ccf493c051311b3b9b372e93b901b56f29eef",
+          "repeat_sha256": "7211ba9ac7e3b946e2937d2ed58ccf493c051311b3b9b372e93b901b56f29eef",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 542,
+            "headings": 6,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-index",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "new-westside-homepage-concepts--dawn-atlas-mobile.png",
+          "sha256": "47b78fc5fc0fd88c090b606a58c913e047757fe4f87967d9336b93f58ed344a1",
+          "repeat_sha256": "47b78fc5fc0fd88c090b606a58c913e047757fe4f87967d9336b93f58ed344a1",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 539,
+            "headings": 6,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-index",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        }
+      }
+    },
+    {
+      "id": "new-westside-homepage-concepts--living-current",
+      "title": "New Westside/Homepage Concepts",
+      "name": "Living Current",
+      "westside_candidate": true,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "new-westside-homepage-concepts--living-current-desktop.png",
+          "sha256": "96830dd15b7ca9b838e6d443688b3303d652bf131f58ed1e5b4e170ea9a2c80b",
+          "repeat_sha256": "96830dd15b7ca9b838e6d443688b3303d652bf131f58ed1e5b4e170ea9a2c80b",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 504,
+            "headings": 6,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-dispatch",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "new-westside-homepage-concepts--living-current-mobile.png",
+          "sha256": "0c2cfb8eb956c7baff128e12ee54c83fd07d3cfe88508f9a5550d232c3861a88",
+          "repeat_sha256": "0c2cfb8eb956c7baff128e12ee54c83fd07d3cfe88508f9a5550d232c3861a88",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 501,
+            "headings": 6,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-dispatch",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        }
+      }
+    },
+    {
+      "id": "new-westside-homepage-concepts--signal-nocturne",
+      "title": "New Westside/Homepage Concepts",
+      "name": "Signal Nocturne",
+      "westside_candidate": true,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "new-westside-homepage-concepts--signal-nocturne-desktop.png",
+          "sha256": "9e3e4b36eda9a8383848439befdbf2aaee3393adf97b6d117b36cf2b2dac40ad",
+          "repeat_sha256": "9e3e4b36eda9a8383848439befdbf2aaee3393adf97b6d117b36cf2b2dac40ad",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": false,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 373,
+            "headings": 4,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-folio",
+            "horizontal_overflow": true,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "new-westside-homepage-concepts--signal-nocturne-mobile.png",
+          "sha256": "fd54cac55142eb021b8a69d1109c69613d531925040acb60627a59a83412e16f",
+          "repeat_sha256": "fd54cac55142eb021b8a69d1109c69613d531925040acb60627a59a83412e16f",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": false,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 370,
+            "headings": 4,
+            "links": 3,
+            "buttons": 0,
+            "images": 1,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://localhost:4310/editor-canvas?page=homepage-concept-folio",
+            "horizontal_overflow": true,
+            "westside_text_signal": true,
+            "brand_color_signal": false,
+            "editorial_system_signal": true
+          }
+        }
+      }
+    },
+    {
+      "id": "new-westside-research-editorial-hero--locked-baseline",
+      "title": "New Westside/Research/Editorial Hero",
+      "name": "Locked Baseline",
+      "westside_candidate": true,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "new-westside-research-editorial-hero--locked-baseline-desktop.png",
+          "sha256": "11eefcb0139a48b81f918869be8a75c67903a53a6011598434062600a44c4ee7",
+          "repeat_sha256": "11eefcb0139a48b81f918869be8a75c67903a53a6011598434062600a44c4ee7",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 240,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=new-westside-research-editorial-hero--locked-baseline&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": true,
+            "editorial_system_signal": false
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "new-westside-research-editorial-hero--locked-baseline-mobile.png",
+          "sha256": "0e3e2ffec5e710e809e2a166e37b790ac4698bcb84f19ab9bc443ebf8900e5c5",
+          "repeat_sha256": "0e3e2ffec5e710e809e2a166e37b790ac4698bcb84f19ab9bc443ebf8900e5c5",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 240,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=new-westside-research-editorial-hero--locked-baseline&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": true,
+            "editorial_system_signal": false
+          }
+        }
+      }
+    },
+    {
+      "id": "new-westside-research-editorial-hero--threshold-study",
+      "title": "New Westside/Research/Editorial Hero",
+      "name": "Threshold Study",
+      "westside_candidate": true,
+      "viewports": {
+        "desktop": {
+          "viewport": [
+            1440,
+            1000
+          ],
+          "screenshot": "new-westside-research-editorial-hero--threshold-study-desktop.png",
+          "sha256": "949af503a10fad08541b6246482818e949631313d08aab1e19240c7e4cab53c8",
+          "repeat_sha256": "949af503a10fad08541b6246482818e949631313d08aab1e19240c7e4cab53c8",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 240,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=new-westside-research-editorial-hero--threshold-study&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": true,
+            "editorial_system_signal": false
+          }
+        },
+        "mobile": {
+          "viewport": [
+            390,
+            844
+          ],
+          "screenshot": "new-westside-research-editorial-hero--threshold-study-mobile.png",
+          "sha256": "7955567dc05144737dd8ae796d8f17b63c85ed65b06133dd19712779e3d2793b",
+          "repeat_sha256": "7955567dc05144737dd8ae796d8f17b63c85ed65b06133dd19712779e3d2793b",
+          "visual_stable": true,
+          "render_pass": true,
+          "responsive_pass": true,
+          "console_errors": [],
+          "page_errors": [],
+          "metrics": {
+            "text_length": 240,
+            "headings": 3,
+            "links": 4,
+            "buttons": 3,
+            "images": 0,
+            "iframes": 0,
+            "iframe_srcs": [],
+            "observed_url": "http://127.0.0.1:6106/iframe.html?id=new-westside-research-editorial-hero--threshold-study&viewMode=story",
+            "horizontal_overflow": false,
+            "westside_text_signal": true,
+            "brand_color_signal": true,
+            "editorial_system_signal": false
+          }
+        }
+      }
+    }
+  ],
+  "gates": {
+    "BUILD_PASS": true,
+    "RENDER_PASS": true,
+    "FUNCTION_PASS": "authoritative_in_vitest",
+    "A11Y_PASS": "authoritative_in_storybook_vitest_addon",
+    "VISUAL_STABLE": true,
+    "RESPONSIVE_PASS": false,
+    "DESIGN_DISTINCT": true,
+    "WESTSIDE_FIT": true
+  },
+  "summary": {
+    "candidate_count": 7,
+    "westside_candidate_count": 5,
+    "distinct_desktop_screenshots": 7,
+    "stable_viewports": 14,
+    "total_viewports": 14,
+    "failed_render": [],
+    "unstable_viewports": [],
+    "evidence_dir": "/private/tmp/dore-promotion-v1/dore-design/knowledge-lab/evidence/storybook-autonomy",
+    "browser_ok": true
+  },
+  "infrastructure_ok": true,
+  "ok": true
+}

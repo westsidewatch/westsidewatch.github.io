@@ -6,6 +6,7 @@ from http.server import ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs
 import app_visual as visual
 import multipage_wysiwyg,journal_wysiwyg
+import promotion_pipeline
 ROOT=Path(__file__).resolve().parent.parent
 PACKAGE=journal_wysiwyg.PACKAGE
 COORD=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()/'coordination'
@@ -56,6 +57,7 @@ class H(visual.H):
             except FileNotFoundError:return self.out(503,{'ok':False,'error':'editable_journal_not_imported','run':'python3 dore-design/journal_import.py'})
             return self.send_bytes(200,html.encode(),'text/html; charset=utf-8')
         if path=='/api/coordination/status':return self.out(200,coordination_status())
+        if path=='/api/candidates':return self.out(200,promotion_pipeline.list_candidates())
         if path=='/api/journal/status':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='journal-vol-00'),None)
             return self.out(200,{'ok':bool(p and journal_wysiwyg.available()),'page_id':'journal-vol-00','editable':True,'runtime_mirror':False,'node_count':len(p.get('nodes',[])) if p else 0,'template_imported':journal_wysiwyg.available(),'renderer':p.get('renderer') if p else None,'revision':w.get('revision'),'asset_fallback':'package+repo-static'})
@@ -67,8 +69,17 @@ class H(visual.H):
         if path=='/api/health':
             w=visual.base.workspace();journal=next((p for p in w.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
             candidates=[p for p in w.get('pages',[]) if str(p.get('id','')).startswith('homepage-concept-')]
-            return self.out(200,{'ok':len(candidates)>=3,'service':'dore-design','version':'1.8.0','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'baseline-plus-editable-homepage-concepts','preview_mode':'multi-homepage-shared-workspace','homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'coordination_hardening':'1.0','coordination_status':'/api/coordination/status','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False,'journal_asset_fallback':'package+repo-static'})
+            promoted=promotion_pipeline.list_candidates().get('candidates',[])
+            return self.out(200,{'ok':len(candidates)>=3 and len(promoted)>=1,'service':'dore-design','version':'1.9.0','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'baseline-plus-editable-homepage-concepts','preview_mode':'multi-homepage-shared-workspace','homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'promoted_candidate_count':len(promoted),'promotion_pipeline':'storybook-to-dore-design-v1','candidate_gallery':'/api/candidates','coordination_hardening':'1.0','coordination_status':'/api/coordination/status','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False,'journal_asset_fallback':'package+repo-static'})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
+    def do_POST(self):
+        if urlparse(self.path).path=='/api/candidates/judgment':
+            try:
+                size=int(self.headers.get('Content-Length','0'));payload=json.loads(self.rfile.read(size) or b'{}')
+                result=promotion_pipeline.record_judgment(payload.get('candidate_id'),payload.get('decision'),payload.get('reason',''),payload.get('signals') or [])
+                return self.out(200,result)
+            except Exception as e:return self.out(400,{'ok':False,'error':type(e).__name__+': '+str(e)})
+        return super().do_POST()
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('DORE_DESIGN_PORT','4310'))),H).serve_forever()
