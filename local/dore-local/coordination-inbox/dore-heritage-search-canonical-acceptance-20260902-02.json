@@ -1,0 +1,35 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-heritage-search-canonical-acceptance-20260902-02",
+  "thread_id": "dore-heritage-search-v1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-heritage-search-v1",
+  "subject": "Resume canonical acceptance after syncing capability registry dependency",
+  "commands": [
+    {
+      "argv": ["python3", "local/dore-local/heritage_image_search_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/free_api_gate_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/capability_registry_acceptance.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "local/dore-local/heritage_image_search.py", "morning star engraving", "--limit", "1"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Resume the preserved parent goal after the first canonical run identified a missing runtime dependency. Return terminal PASS only when all three acceptance programs and the live free Openverse search pass on Doré Mac."
+}
