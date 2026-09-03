@@ -1,5 +1,5 @@
 {
-  "schema": "dore.runtime-control-manifest.v1.6",
+  "schema": "dore.runtime-control-manifest.v1.7",
   "updated_at": "2026-09-03",
   "purpose": "Every file required to execute Doré locally. Runtime self-update syncs this manifest, including canonical acceptance envelopes and their executable dependencies. ChatGPT is a conversation-activated asynchronous peer; pending peer work never blocks Doré autonomous Storybook/Design Lab work.",
   "files": [
@@ -9,6 +9,10 @@
     "local/dore-local/multi_loop_agency.py",
     "local/dore-local/multi_loop_agency_acceptance.py",
     "local/dore-local/test_multi_loop_agency.py",
+    "local/dore-local/multi_loop_control_plane.py",
+    "local/dore-local/dawn_library_enrichment.py",
+    "local/dore-local/control_plane_acceptance.py",
+    "local/dore-local/test_multi_loop_control_plane.py",
     "local/dore-local/autonomous_driver.py",
     "local/dore-local/goal_queue.py",
     "local/dore-local/autonomous_capability_loop.py",
@@ -64,7 +68,9 @@
     "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json",
     "local/dore-local/coordination-inbox/dore-storybook-promotion-v1-canonical-acceptance-20260902-01.json",
     "local/dore-local/coordination-inbox/dore-multi-loop-agency-v1-canonical-acceptance-20260903-01.json",
-    "dore-design/knowledge-lab/a2a/multi-loop-agency-v1.md"
+    "local/dore-local/coordination-inbox/dore-multi-loop-control-plane-v1-canonical-acceptance-20260903-01.json",
+    "dore-design/knowledge-lab/a2a/multi-loop-agency-v1.md",
+    "dore-design/knowledge-lab/a2a/multi-loop-control-plane-v1.md"
   ],
   "required_local_durable_state": [
     "~/.dore/runtime/goals.json",
@@ -73,6 +79,8 @@
     "~/.dore/runtime/heartbeat.json",
     "~/.dore/runtime/a2a-supervision.json",
     "~/.dore/a2a-supervisor/state.json",
+    "~/.dore/control-plane/state.json",
+    "~/.dore/control-plane/knowledge-assets.jsonl",
     "~/.dore/coordination/learning/",
     "~/.dore/coordination/research/",
     "~/.dore/coordination/failure-memory.jsonl",
@@ -85,7 +93,8 @@
     "launchd": ["process liveness"],
     "resident_runtime": ["wake/sleep","process supervision","mechanical checkpoint","self-update","heartbeat","telemetry"],
     "a2a_supervisor": ["asynchronous A2A health","non-blocking peer visibility","project-loop stall observation"],
-    "dore_agent_core": ["goal reasoning","evidence-delta progress evaluation","multi-loop priority and routing","peer cooldown","gap detection","resource search","candidate selection","hypothesis","experiment choice","information gain","verification","skill promotion","next action","resume parent"],
+    "dore_agent_core": ["goal reasoning","evidence-delta progress evaluation","multi-loop control-plane routing","peer cooldown","gap detection","resource search","candidate selection","hypothesis","experiment choice","information gain","verification","skill promotion","next action","resume parent"],
+    "multi_loop_control_plane": ["wake","route","priority","yield","resume","share","record","durable workflow checkpoints"],
     "storybook_lab": ["Vitest real-browser story tests","Playwright desktop/mobile evidence","responsive evidence","design observations"]
   }
 }

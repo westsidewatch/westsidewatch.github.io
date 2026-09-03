@@ -1,0 +1,14 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"dore-multi-loop-control-plane-v1-canonical-acceptance-20260903-01",
+  "thread_id":"dore-multi-loop-control-plane-v1",
+  "sender":"chatgpt","recipient":"dore","priority":"critical","kind":"local_exec","requires_reply":true,
+  "related_goal":"design-reference-library-expansion-20260901",
+  "subject":"Canonical acceptance for Storybook plus Dawn Library Control Plane 1.0",
+  "commands":[
+    {"argv":["python3","-m","unittest","discover","-s","local/dore-local","-p","test_multi_loop_control_plane.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","local/dore-local/control_plane_acceptance.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","-c","import json,sys;sys.path.insert(0,'local/dore-local');from multi_loop_control_plane import agent_cycle;print(json.dumps(agent_cycle({'goal_id':'design-reference-library-expansion-20260901','goal':'Storybook reference expansion','project_loop':'Storybook','metadata':{'current_qualified_references':21,'minimum_qualified_references':40}}),ensure_ascii=False))"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120}
+  ],
+  "body":"Use real repository research and source catalog data. Prove Storybook starts, Dawn Library wakes, priority causes Storybook checkpoint/yield, Dawn publishes one provenance-preserving deduplicated KnowledgeAsset, Storybook resumes and reuses it, and the 40-reference parent remains active. A2A is capability recovery, not a third business workflow. Return one terminal canonical receipt."
+}
