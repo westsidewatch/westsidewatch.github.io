@@ -1,0 +1,159 @@
+{
+  "schema": "dore.new-westside-internal-loop-runtime-evidence.v1",
+  "parent_goal": "New Westside visual construction",
+  "state": "INTERNAL_LOOP_RUNTIME_PASS",
+  "created_at": "2026-09-03T20:22:00.518Z",
+  "product_acceptance": false,
+  "style_acceptance": false,
+  "exploration_state": "EXPLORATION_INSUFFICIENT",
+  "iteration_1": {
+    "hypothesis": "hierarchy-before-atmosphere",
+    "viewports": {
+      "desktop": {
+        "viewport": [
+          1440,
+          1000
+        ],
+        "screenshot": "iteration-1-desktop.png",
+        "sha256": "0ae95597a792b95d26402a2ecdb894cc83b6a4bb8f82a4d093d86f2dfd069bf0",
+        "repeat_sha256": "0ae95597a792b95d26402a2ecdb894cc83b6a4bb8f82a4d093d86f2dfd069bf0",
+        "visual_stable": true,
+        "render_pass": true,
+        "responsive_pass": true,
+        "semantic_pass": true,
+        "page_errors": [],
+        "metrics": {
+          "iteration": "1",
+          "hypothesis": "hierarchy-before-atmosphere",
+          "consumes_learning": "",
+          "h1_count": 1,
+          "h2_count": 5,
+          "nav_count": 1,
+          "required_links_present": true,
+          "bilingual": true,
+          "horizontal_overflow": false,
+          "auxiliary_words": 21,
+          "text_length": 466
+        }
+      },
+      "mobile": {
+        "viewport": [
+          390,
+          844
+        ],
+        "screenshot": "iteration-1-mobile.png",
+        "sha256": "4d199a4e673a94ecb22ad1e41465de84426ca6bcd6e2fbdec2833a1c0af39eab",
+        "repeat_sha256": "4d199a4e673a94ecb22ad1e41465de84426ca6bcd6e2fbdec2833a1c0af39eab",
+        "visual_stable": true,
+        "render_pass": true,
+        "responsive_pass": true,
+        "semantic_pass": true,
+        "page_errors": [],
+        "metrics": {
+          "iteration": "1",
+          "hypothesis": "hierarchy-before-atmosphere",
+          "consumes_learning": "",
+          "h1_count": 1,
+          "h2_count": 5,
+          "nav_count": 1,
+          "required_links_present": true,
+          "bilingual": true,
+          "horizontal_overflow": false,
+          "auxiliary_words": 21,
+          "text_length": 466
+        }
+      }
+    }
+  },
+  "learning": {
+    "schema": "dore.new-westside-design-learning.v1",
+    "source_iteration": 1,
+    "derived_from_browser_evidence": true,
+    "accepted": [
+      "preserve-semantic-spine",
+      "keep-major-destinations-readable",
+      "real-content-before-style-acceptance"
+    ],
+    "rejected": [
+      "mobile-auxiliary-density"
+    ],
+    "actions": [
+      "reduce-mobile-auxiliary-density",
+      "preserve-semantic-spine"
+    ],
+    "next_hypothesis": "preserve-semantic-spine-with-reduced-mobile-annotation-density"
+  },
+  "iteration_2": {
+    "hypothesis": "preserve-semantic-spine-with-reduced-mobile-annotation-density",
+    "generated_from_learning": true,
+    "viewports": {
+      "desktop": {
+        "viewport": [
+          1440,
+          1000
+        ],
+        "screenshot": "iteration-2-desktop.png",
+        "sha256": "debd52c61ebf456cef0a357d8ba03879bad30534a1da13d6dc45f8086f72a969",
+        "repeat_sha256": "debd52c61ebf456cef0a357d8ba03879bad30534a1da13d6dc45f8086f72a969",
+        "visual_stable": true,
+        "render_pass": true,
+        "responsive_pass": true,
+        "semantic_pass": true,
+        "page_errors": [],
+        "metrics": {
+          "iteration": "2",
+          "hypothesis": "preserve-semantic-spine-with-reduced-mobile-annotation-density",
+          "consumes_learning": "reduce-mobile-auxiliary-density;preserve-semantic-spine",
+          "h1_count": 1,
+          "h2_count": 5,
+          "nav_count": 1,
+          "required_links_present": true,
+          "bilingual": true,
+          "horizontal_overflow": false,
+          "auxiliary_words": 0,
+          "text_length": 402
+        }
+      },
+      "mobile": {
+        "viewport": [
+          390,
+          844
+        ],
+        "screenshot": "iteration-2-mobile.png",
+        "sha256": "1fabdd26e4a9f26df80a2843de8b77c2af104a6ed1d2381f3e6b37587f26ad77",
+        "repeat_sha256": "1fabdd26e4a9f26df80a2843de8b77c2af104a6ed1d2381f3e6b37587f26ad77",
+        "visual_stable": true,
+        "render_pass": true,
+        "responsive_pass": true,
+        "semantic_pass": true,
+        "page_errors": [],
+        "metrics": {
+          "iteration": "2",
+          "hypothesis": "preserve-semantic-spine-with-reduced-mobile-annotation-density",
+          "consumes_learning": "reduce-mobile-auxiliary-density;preserve-semantic-spine",
+          "h1_count": 1,
+          "h2_count": 5,
+          "nav_count": 1,
+          "required_links_present": true,
+          "bilingual": true,
+          "horizontal_overflow": false,
+          "auxiliary_words": 0,
+          "text_length": 350
+        }
+      }
+    }
+  },
+  "gates": {
+    "ITERATION_1_BROWSER_PASS": true,
+    "ITERATION_1_LEARNING_DERIVED_FROM_BROWSER": true,
+    "ITERATION_1_LEARNING_PERSISTED": true,
+    "ITERATION_2_GENERATED_FROM_ITERATION_1_LEARNING": true,
+    "ITERATION_2_BROWSER_PASS": true,
+    "ITERATION_2_CONSUMES_ITERATION_1_LEARNING": true,
+    "MATERIAL_ITERATION_CHANGE": true,
+    "TECHNICAL_AND_DESIGN_JUDGMENT_SEPARATED": true,
+    "USER_STYLE_ACCEPTANCE_NOT_INFERRED": true
+  },
+  "ok": true,
+  "code": "DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_PASS"
+}

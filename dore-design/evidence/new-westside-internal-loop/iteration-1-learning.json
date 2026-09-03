@@ -1,0 +1,18 @@
+{
+  "schema": "dore.new-westside-design-learning.v1",
+  "source_iteration": 1,
+  "derived_from_browser_evidence": true,
+  "accepted": [
+    "preserve-semantic-spine",
+    "keep-major-destinations-readable",
+    "real-content-before-style-acceptance"
+  ],
+  "rejected": [
+    "mobile-auxiliary-density"
+  ],
+  "actions": [
+    "reduce-mobile-auxiliary-density",
+    "preserve-semantic-spine"
+  ],
+  "next_hypothesis": "preserve-semantic-spine-with-reduced-mobile-annotation-density"
+}
