@@ -6,7 +6,7 @@ terminal merely because retry count was reached: it is checkpointed, enqueued as
 a durable resident goal, and the runtime owns research/resume from that point.
 """
 from __future__ import annotations
-import json,os,subprocess
+import fcntl,json,os,subprocess
 from datetime import datetime,timezone
 from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,flush_outbox,receive_from_chatgpt
@@ -16,7 +16,8 @@ from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
 from autonomous_capability_loop import attempt_learning_recovery
 from goal_queue import enqueue
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve();STATE=HOME/'coordination'/'worker-state.json';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
+from peer_collaboration import respond as peer_respond
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve();STATE=HOME/'coordination'/'worker-state.json';LOCK=HOME/'coordination'/'worker.lock';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'};PRIORITY={'critical':0,'high':1,'normal':2,'low':3}
 class TaskResultError(RuntimeError):
  def __init__(self,result):self.result=result if isinstance(result,dict) else {'ok':False,'error':str(result)};super().__init__(str(self.result.get('cause') or self.result.get('error') or 'task_failed'))
@@ -81,6 +82,7 @@ def peer_research_result(msg):
  return {'ok':True,'receipt':receipt,'research_id':rid or None,'bridge':bridged}
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
+ if kind in {'peer_review','peer_diagnostic'}:return peer_respond(msg,ROOT)
  if kind=='dore_design_bakeoff':return run_script('dore_design_bakeoff.py')
  if kind=='dore_design_elimination':return run_script('dore_design_elimination.py',3600)
  if kind=='dore_design_framesmith_mcp_trial':return run_script('dore_design_framesmith_mcp_trial.py',1800)
@@ -104,6 +106,9 @@ def _finish_pass(state,done,msg,result,attempt,evidence):
 def handoff_research(state,done,msg,attempt,learning,failure_result):
  mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);row=enqueue(mid,goal,priority=str(msg.get('priority') or 'normal').lower(),source='coordination_worker',metadata={'execution_kind':'coordination_message','message':msg,'project_loop':'A2A <-> coordination real work','requires_reply':bool(msg.get('requires_reply',True))});handoff={'ok':False,'state':'RESEARCH_QUEUED','learning':learning,'goal_queue':{'goal_id':row.get('goal_id'),'status':row.get('status')},'original_failure':failure_result,'parent_goal_preserved':True,'handoff_to_resident_runtime':True};done.add(mid);state['repo_inbox_processed']=sorted(done);state.setdefault('research_handoffs',{})[mid]={'at':now(),'goal':goal,'status':'RESEARCH_QUEUED'};state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);set_task(state,mid,'RESEARCH_QUEUED',attempt=attempt,terminal=False,result=handoff);reply(msg,handoff,evidence_for(msg)+['research-required','goal-queue-handoff'],'LEARNING',attempt,False);return handoff
 def main():
+ LOCK.parent.mkdir(parents=True,exist_ok=True);lock=LOCK.open('w')
+ try:fcntl.flock(lock.fileno(),fcntl.LOCK_EX|fcntl.LOCK_NB)
+ except BlockingIOError:return 0
  flush_outbox();state=load_state();delivery=sync_delivery(skip_message_ids=set(state.get('repo_inbox_processed') or []));state['last_delivery_sync']={k:v for k,v in delivery.items() if k!='results'};done,queue=pending(state);state['queue_depth']=len(queue);state['checked_at']=now();save(state);failures=0
  for msg in queue[:MAX_PER_RUN]:
   mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);attempt=(state.get('attempts') or {}).get(mid,0)+1;state.setdefault('attempts',{})[mid]=attempt;state['active_goal']=goal;state['active_message_id']=mid;set_task(state,mid,'RECEIVED',attempt=attempt,goal=goal,kind=msg.get('kind'));set_task(state,mid,'RUNNING',attempt=attempt,started_at=now())

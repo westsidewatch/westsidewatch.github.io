@@ -11,7 +11,7 @@ import fcntl, json, os, shutil, subprocess, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 VERSION='dore.resident-runtime.v0.10'
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';SUPERVISOR=LOCAL/'a2a_supervisor.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';SUPERVISION=RUNTIME/'a2a-supervision.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';SUPERVISOR=LOCAL/'a2a_supervisor.py';COORDINATION=LOCAL/'coordination_worker.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';SUPERVISION=RUNTIME/'a2a-supervision.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
 INTERVAL=max(10,int(os.environ.get('DORE_RUNTIME_INTERVAL_SECONDS','30')));TELEMETRY_INTERVAL=max(60,int(os.environ.get('DORE_RUNTIME_TELEMETRY_SECONDS','120')));SELF_UPDATE_INTERVAL=max(120,int(os.environ.get('DORE_RUNTIME_SELF_UPDATE_SECONDS','300')))
 def now():return datetime.now(timezone.utc).isoformat()
 def read_json(p,default=None):
@@ -44,6 +44,12 @@ def supervisor_step(agent_result):
  except Exception:pass
  if not isinstance(parsed,dict):return {'ok':False,'a2a_state':'A2A_SUPERVISOR_ERROR','action_required':'REPAIR_CONTROL_PLANE','peer_required':False,'stderr':(cp.stderr or '')[-2000:]}
  return parsed
+def coordination_step():
+ if not COORDINATION.exists():return {'ok':False,'state':'COORDINATION_WORKER_MISSING'}
+ env=os.environ.copy();env['PATH']='/opt/homebrew/bin:/usr/local/bin:'+env.get('PATH','/usr/bin:/bin:/usr/sbin:/sbin')
+ try:
+  child=subprocess.Popen([sys.executable,str(COORDINATION)],cwd=str(ROOT),env=env,stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True);return {'ok':True,'state':'SPAWNED','pid':child.pid}
+ except Exception as e:return {'ok':False,'state':'SPAWN_FAILED','error':type(e).__name__+': '+str(e)}
 def telemetry_repo():
  remote=run(['git','remote','get-url','origin'],timeout=30)
  if remote.returncode or not remote.stdout.strip():raise RuntimeError('origin_remote_unavailable')
@@ -98,7 +104,7 @@ def self_update():
   event('SELF_UPDATED',files=changed,source='origin/main',two_phase_manifest_sync=True);publish(True)
   if 'local/dore-local/resident_runtime.py' in changed:os.execv(sys.executable,[sys.executable,str(SELF)])
 def tick():
- event('WAKE',reason='NO_USER_INPUT_CONTINUE');result=agent_step();parsed=(result.get('result') or {}) if isinstance(result,dict) else {};state=str(parsed.get('state') or ('AGENT_ERROR' if not result.get('ok') else 'UNKNOWN'));supervision=supervisor_step(result);atomic_json(SUPERVISION,supervision);st=read_json(STATE,{}) or {};st.update({'runtime':VERSION,'last_tick_at':now(),'last_event':'A2A_SUPERVISION','last_agent_state':state,'last_agent_result':result,'last_a2a_state':supervision.get('a2a_state'),'last_a2a_action':supervision.get('action_required')});atomic_json(STATE,st);atomic_json(HEARTBEAT,{'runtime':VERSION,'at':now(),'state':state,'a2a_state':supervision.get('a2a_state'),'a2a_action':supervision.get('action_required'),'peer_required':supervision.get('peer_required',False),'peer_blocking':supervision.get('peer_blocking',False),'agent_core':parsed.get('agent_core'),'continue':parsed.get('continue',True),'next_tick_seconds':INTERVAL});event('AGENT_OBSERVATION',state=state,ok=bool(result.get('ok')),returncode=result.get('returncode'));event('A2A_SUPERVISION',a2a_state=supervision.get('a2a_state'),action=supervision.get('action_required'),peer_required=supervision.get('peer_required'),peer_blocking=supervision.get('peer_blocking'),unchanged_cycles=supervision.get('unchanged_cycles'));publish(True)
+ event('WAKE',reason='NO_USER_INPUT_CONTINUE');coordination=coordination_step();event('COORDINATION_OBSERVATION',**coordination);result=agent_step();parsed=(result.get('result') or {}) if isinstance(result,dict) else {};state=str(parsed.get('state') or ('AGENT_ERROR' if not result.get('ok') else 'UNKNOWN'));supervision=supervisor_step(result);atomic_json(SUPERVISION,supervision);st=read_json(STATE,{}) or {};st.update({'runtime':VERSION,'last_tick_at':now(),'last_event':'A2A_SUPERVISION','last_coordination_result':coordination,'last_agent_state':state,'last_agent_result':result,'last_a2a_state':supervision.get('a2a_state'),'last_a2a_action':supervision.get('action_required')});atomic_json(STATE,st);atomic_json(HEARTBEAT,{'runtime':VERSION,'at':now(),'state':state,'coordination_state':coordination.get('state'),'a2a_state':supervision.get('a2a_state'),'a2a_action':supervision.get('action_required'),'peer_required':supervision.get('peer_required',False),'peer_blocking':supervision.get('peer_blocking',False),'agent_core':parsed.get('agent_core'),'continue':parsed.get('continue',True),'next_tick_seconds':INTERVAL});event('AGENT_OBSERVATION',state=state,ok=bool(result.get('ok')),returncode=result.get('returncode'));event('A2A_SUPERVISION',a2a_state=supervision.get('a2a_state'),action=supervision.get('action_required'),peer_required=supervision.get('peer_required'),peer_blocking=supervision.get('peer_blocking'),unchanged_cycles=supervision.get('unchanged_cycles'));publish(True)
 def main():
  RUNTIME.mkdir(parents=True,exist_ok=True)
  with LOCK.open('w') as lock:

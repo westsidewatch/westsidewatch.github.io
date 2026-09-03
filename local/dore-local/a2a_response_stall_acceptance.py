@@ -1,0 +1,8 @@
+#!/usr/bin/env python3
+import json,tempfile
+from pathlib import Path
+import coordination_worker as worker
+from a2a_delivery_plane import accept,claim
+FIXTURE='chatgpt-newsroom-control-plane-peer-review-20260903-01';msg={'schema':'dore.mail.v1','message_id':FIXTURE,'sender':'chatgpt','recipient':'dore','kind':'peer_review','priority':'high','requires_reply':True,'related_goal':'newsroom-multi-loop-control-plane-v1','body':'Review Newsroom packaging, four risks, disagreement, and missing architecture risks.'}
+with tempfile.TemporaryDirectory() as d:
+ root=Path(d);ack=accept(msg,source_ref='174d0f5a3761f1205bdc390edfc1a95599dc7317',source_commit='174d0f5a3761f1205bdc390edfc1a95599dc7317',source_path='real-fixture',delivery_root=root);received=claim(FIXTURE,delivery_root=root);result=worker.dispatch(msg);reply={'schema':'dore.execution-receipt.v1','source_message_id':FIXTURE,'transport':'PASS','delivery':ack['delivery_status'],'consumer':received['execution_status'],'execution':'PASS' if result.get('ok') else 'FAIL','substantive_reply':result};checks={'received_to_running':received['execution_status']=='RECEIVED','semantic_dispatch':result.get('response_type')=='SUBSTANTIVE_PEER_REVIEW','risk_judgment_present':bool((result.get('architecture_judgment') or {}).get('underweighted_risk')),'newsroom_decision_present':bool(result.get('newsroom_packaging_plan')),'canonical_execution_receipt':reply['execution']=='PASS' and reply['source_message_id']==FIXTURE};ok=all(checks.values());print(json.dumps({'ok':ok,'code':'DORE_A2A_RESPONSE_STALL_REPAIR_PASS' if ok else 'DORE_A2A_RESPONSE_STALL_REPAIR_FAIL','first_missing_transition':'RECEIVED -> TASK_REGISTERED','checks':checks,'canonical_reply':reply},ensure_ascii=False));raise SystemExit(0 if ok else 1)
