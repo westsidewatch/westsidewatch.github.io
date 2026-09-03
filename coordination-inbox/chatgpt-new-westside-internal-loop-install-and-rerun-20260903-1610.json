@@ -1,0 +1,18 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-new-westside-internal-loop-install-and-rerun-20260903-1610",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "priority":"critical",
+  "requires_reply":true,
+  "body":"Repair the observed missing Storybook runtime dependency in the control checkout, then rerun the same preserved New Westside internal-loop acceptance. PASS only on DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS. Do not infer product/style acceptance.",
+  "related_goal":"New Westside visual construction",
+  "commands":[
+    {"argv":["npm","ci"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["npx","playwright","install","chromium"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["npm","run","build-storybook"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900},
+    {"argv":["node","scripts/new-westside-internal-loop-evidence.mjs"],"cwd":"dore-design/knowledge-lab/storybook","timeout":900}
+  ],
+  "metadata":{"phase":"INTERNAL_LOOP_BOOTSTRAP","previous_failure":"storybook: command not found","required_code":"DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS","product_acceptance":false,"style_acceptance":false,"exploration_state":"EXPLORATION_INSUFFICIENT"}
+}
