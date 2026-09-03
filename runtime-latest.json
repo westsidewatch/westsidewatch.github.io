@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-03T05:20:20.582775+00:00",
+  "published_at": "2026-09-03T05:20:57.309013+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -2879,10 +2879,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788412504.208937,
-    "last_self_update_check_at": "2026-09-03T05:15:04.208944+00:00",
-    "last_telemetry_epoch": 1788412738.076389,
-    "last_telemetry_at": "2026-09-03T05:18:58.076411+00:00",
+    "last_self_update_check_epoch": 1788412852.885209,
+    "last_self_update_check_at": "2026-09-03T05:20:52.885218+00:00",
+    "last_telemetry_epoch": 1788412822.762364,
+    "last_telemetry_at": "2026-09-03T05:20:22.762382+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-03T05:20:19.851016+00:00",
     "last_agent_state": "PENDING_PEER_NONBLOCKING",
@@ -10729,11 +10729,6 @@
   },
   "events": [
     {
-      "at": "2026-09-03T04:52:13.716877+00:00",
-      "event": "WAKE",
-      "reason": "NO_USER_INPUT_CONTINUE"
-    },
-    {
       "at": "2026-09-03T04:53:04.693262+00:00",
       "event": "AGENT_OBSERVATION",
       "state": "PENDING_PEER_NONBLOCKING",
@@ -11183,6 +11178,15 @@
       "peer_required": true,
       "peer_blocking": false,
       "unchanged_cycles": 1
+    },
+    {
+      "at": "2026-09-03T05:20:56.726565+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "dore-design/knowledge-lab/evidence/storybook-autonomy/latest.json"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
