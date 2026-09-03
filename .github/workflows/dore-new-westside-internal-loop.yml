@@ -6,6 +6,7 @@ on:
     paths:
       - 'dore-design/knowledge-lab/storybook/src/stories/NewWestsideInternalLoop.stories.jsx'
       - 'dore-design/knowledge-lab/storybook/scripts/new-westside-internal-loop-evidence.mjs'
+      - 'dore-design/knowledge-lab/storybook/scripts/new-westside-internal-loop-runtime.mjs'
       - '.github/workflows/dore-new-westside-internal-loop.yml'
   workflow_dispatch:
 
@@ -37,32 +38,45 @@ jobs:
         run: npx playwright install --with-deps chromium
       - name: Build Storybook
         run: npm run build-storybook
-      - name: Run two-iteration browser loop
+      - name: Verify Storybook two-iteration experiment
         run: node scripts/new-westside-internal-loop-evidence.mjs | tee /tmp/new-westside-internal-loop.json
+      - name: Run generated internal learning loop
+        run: node scripts/new-westside-internal-loop-runtime.mjs | tee /tmp/new-westside-internal-runtime-loop.json
       - name: Assert internal-loop acceptance
         run: |
           python3 - <<'PY'
           import json
-          line=open('/tmp/new-westside-internal-loop.json',encoding='utf-8').read().strip().splitlines()[-1]
-          p=json.loads(line)
-          assert p['ok'] is True, p
-          assert p['code']=='DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS', p
-          assert p['gates']['ITERATION_2_CONSUMES_ITERATION_1_LEARNING'] is True, p
-          assert p['product_acceptance'] is False and p['style_acceptance'] is False, p
+          def last(path):
+              return json.loads(open(path,encoding='utf-8').read().strip().splitlines()[-1])
+          story=last('/tmp/new-westside-internal-loop.json')
+          runtime=last('/tmp/new-westside-internal-runtime-loop.json')
+          assert story['ok'] is True, story
+          assert story['code']=='DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS', story
+          assert runtime['ok'] is True, runtime
+          assert runtime['code']=='DORE_NEW_WESTSIDE_INTERNAL_RUNTIME_LOOP_PASS', runtime
+          assert runtime['gates']['ITERATION_1_LEARNING_DERIVED_FROM_BROWSER'] is True, runtime
+          assert runtime['gates']['ITERATION_2_GENERATED_FROM_ITERATION_1_LEARNING'] is True, runtime
+          assert runtime['gates']['ITERATION_2_CONSUMES_ITERATION_1_LEARNING'] is True, runtime
+          assert runtime['product_acceptance'] is False and runtime['style_acceptance'] is False, runtime
           print('DORE_NEW_WESTSIDE_INTERNAL_LOOP_PASS')
           PY
-      - name: Persist canonical browser evidence
+      - name: Persist canonical browser and runtime evidence
         working-directory: .
         run: |
           set -euo pipefail
           mkdir -p dore-design/evidence/new-westside-internal-loop
           cp "$HOME/.dore/new-westside/internal-loop/latest.json" dore-design/evidence/new-westside-internal-loop/latest.json
           cp "$HOME/.dore/new-westside/internal-loop/"iteration-*.png dore-design/evidence/new-westside-internal-loop/
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/latest.json" dore-design/evidence/new-westside-internal-loop/runtime-latest.json
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/iteration-1-learning.json" dore-design/evidence/new-westside-internal-loop/iteration-1-learning.json
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/generated/iteration-1.html" dore-design/evidence/new-westside-internal-loop/generated-iteration-1.html
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/generated/iteration-2.html" dore-design/evidence/new-westside-internal-loop/generated-iteration-2.html
+          cp "$HOME/.dore/new-westside/internal-loop-runtime/"iteration-*.png dore-design/evidence/new-westside-internal-loop/runtime-
           git config user.name WATCHMAN
           git config user.email westsidewatchca@gmail.com
           git add dore-design/evidence/new-westside-internal-loop
           if ! git diff --cached --quiet; then
-            git commit -m "dore-design: persist New Westside internal-loop PASS evidence [skip ci]"
+            git commit -m "dore-design: persist generated New Westside internal-loop PASS evidence [skip ci]"
             git pull --rebase origin main
             git push origin HEAD:main
           fi
