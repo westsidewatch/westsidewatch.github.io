@@ -1,0 +1,26 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-publish-watchtower-fold-in-dore-editor-20260903-1938",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "priority": "critical",
+  "requires_reply": true,
+  "body": {
+    "goal": "Publish the completed experimental Watchtower Fold New Westside design inside the existing Doré Design editor/workspace so the user can inspect and edit it there.",
+    "source_artifact": "dore-design/new-westside/homepage-v4-watchtower-fold.html",
+    "source_evidence": "dore-design/evidence/new-westside-design-benchmark-v1/latest.json",
+    "editor": "dore-design/app_product.py + app_workspace.py",
+    "requirements": [
+      "Do not replace or mutate the production Westside homepage.",
+      "Add Watchtower Fold as an experimental New Westside page/workspace surface visible in the existing Doré Design editor.",
+      "Preserve its actual composition as faithfully as the editor model permits; if the current node model cannot faithfully represent it, add the smallest reusable editor capability needed rather than flattening it into a misleading approximation.",
+      "The design must be inspectable in the editor and remain editable, not merely linked as a static screenshot.",
+      "Keep experimental_only=true, product_acceptance=false, style_acceptance=false semantics.",
+      "Verify editor load/render, page selection, editable elements, desktop composition visibility, and persistence without breaking existing Cover/Contents/Feature pages.",
+      "Repair any editor/runtime defect encountered and continue until the editor publication is verified PASS.",
+      "Return the exact editor page/surface name and canonical evidence."
+    ],
+    "pass_boundary": "PASS requires Watchtower Fold visibly present and editable inside Doré Design editor with verification evidence. A source HTML file, screenshot, link, transport receipt, or production deployment alone is not PASS."
+  }
+}
