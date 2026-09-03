@@ -67,56 +67,102 @@ english:
     role: baseline
     access: local_corpus
     state: ingested
+    evidence: language-core-run-32590171607
   - id: kjv
     name: King James Version
     role: baseline
-    access: local_corpus_candidate
-    state: source_and_license_survey_required
+    access: local_corpus
+    state: ingested_verified
+    provider: TheologyCommons/Bible.TEI.KJV
+    snapshot: 014f6966aad1dc8888b088cd11ea8216a46fa738
+    evidence: language-core-run-32590171607
+    notes: Persisted run-31 artifact reports 66 books, 31,102 verses, zero validation errors and PASS.
   - id: asv
     name: American Standard Version
     role: baseline
-    access: local_corpus_candidate
-    state: source_and_license_survey_required
+    access: local_corpus
+    state: ingested_verified
+    provider: openbibleinfo/American-Standard-Version-Bible
+    snapshot: 5c83ee265c75b3b1c056435eff622a875f1edc45
+    evidence: language-core-run-32590171607
+    notes: Persisted run-31 artifact reports 66 books, 31,157 verses, zero validation errors and PASS.
   - id: rsv
     name: Revised Standard Version
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: Bible Gateway
+    evidence: language-core-run-32590171607
+    notes: Genesis 1:1 canonical route verified without retaining protected text.
   - id: nrsvue
     name: New Revised Standard Version Updated Edition
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 3523 canonical route verified without retaining protected text.
   - id: nasb
-    name: New American Standard Bible
+    name: New American Standard Bible 2020
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 2692 canonical route verified without retaining protected text.
   - id: esv
     name: English Standard Version
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 59 canonical route verified without retaining protected text; licensed API remains preferable where authorized.
   - id: niv
     name: New International Version
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 111 canonical route verified without retaining protected text.
   - id: nlt
     name: New Living Translation
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 116 canonical route verified without retaining protected text.
   - id: net
     name: NET Bible
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 107 canonical route verified without retaining protected text.
   - id: csb
     name: Christian Standard Bible
     role: baseline
-    access: human_only
-    state: licensed_access_survey_required
+    access: external_reader
+    state: canonical_route_verified
+    provider: YouVersion
+    evidence: language-core-run-32590171607
+    notes: Version 1713 canonical route verified without retaining protected text.
+
+english_baseline:
+  state: verified_complete
+  milestone: ENGLISH_BIBLICAL_WITNESS_BASELINE_COMPLETE
+  evidence:
+    workflow_run: 32590171607
+    artifact: 9480118432
+    schema: dore.english-baseline.v2
+    result: 11/11 PASS
+  guardrail: >-
+    The earlier run 32589955459 was workflow-successful but its v1 artifact was
+    PARTIAL (3 PASS / 8 CREDENTIAL_REQUIRED) before the runner became fail-closed.
+    Do not use workflow conclusion or commit wording alone as completion evidence.
 
 completion_gate:
   requires:
@@ -126,4 +172,5 @@ completion_gate:
     - every licensed_api/external_reader witness has a tested canonical-reference route
     - comparison benchmarks span Chinese, English, and original-language evidence
   on_pass: BIBLICAL_CORPUS_READING_COMPLETE
-  after_pass_default_for_new_versions: research_on_demand
+  current_state: open
+  notes: English baseline is verified complete; broader Chinese baseline and comparison requirements remain open.
