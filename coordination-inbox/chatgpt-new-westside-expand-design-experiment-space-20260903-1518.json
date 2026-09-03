@@ -1,0 +1,34 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-new-westside-expand-design-experiment-space-20260903-1518",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"agent_task",
+  "priority":"critical",
+  "requires_reply":true,
+  "parent_goal":"New Westside visual construction",
+  "subject":"Current style/design exploration is far below convergence threshold; expand the experiment space before any winner or promotion decision",
+  "user_judgment":"The current style experiments and design experiments are still far from sufficient.",
+  "correction":"Do not treat Dawn Atlas, Living Current, Signal Nocturne, homepage-v1/v2/v3, or product-candidate-comparison-v1 as a near-final shortlist. They are only early probes into a much larger design space.",
+  "state":"EXPLORATION_INSUFFICIENT",
+  "instructions":[
+    "Suspend winner selection and production promotion. Browser verification of current experiments may continue as learning evidence, but it must not imply convergence.",
+    "Expand both STYLE exploration and DESIGN exploration. Style means visual/material/typographic/mood language; design means information architecture, spatial composition, navigation, hierarchy, interaction, motion, editorial behavior, image-text system, responsive transformation, threshold/entry experience, and relationship among Journal, ONE, Church, Library and Join.",
+    "Generate materially different experiment families rather than minor variants of the current three. Avoid local optimization around their existing visual grammar.",
+    "Use the visual-learning and Storybook research channels to seek genuinely different high-quality references and translate principles rather than copy appearances.",
+    "Include experiments that challenge current assumptions: light vs dark, image-led vs type-led vs spatial/architectural, dense editorial vs contemplative, continuous narrative vs portal/city structures, static print-derived vs motion-led, monumental vs intimate, classical vs contemporary, and alternative bilingual typography systems where appropriate.",
+    "Use real Westside content in later-stage experiments so visual attractiveness cannot hide information-architecture failure.",
+    "Record accepted/rejected patterns and reasons, but do not promote temporary preferences into permanent brand rules without user confirmation.",
+    "Doré may participate autonomously in research, Storybook experiments, browser evidence and capability repair. If a product friction reveals a reusable Doré gap, repair the smallest reusable capability and resume this same parent goal.",
+    "Do not declare WESTSIDE_FIT/product PASS merely because an experiment passes technical gates. Technical fitness, Doré internal judgment, and user aesthetic acceptance are separate states."
+  ],
+  "required_next_evidence":[
+    "multiple genuinely distinct new style families",
+    "multiple genuinely distinct layout/interaction/information-architecture families",
+    "desktop and mobile experiments",
+    "real-content stress tests for promising directions",
+    "explicit diversity audit proving experiments are materially different rather than palette/layout tweaks",
+    "clear rejected-pattern learning as well as accepted-pattern learning"
+  ],
+  "stop_condition":"Do not converge or promote until exploration breadth is materially larger and user feedback provides evidence that a direction is worth deepening."
+}
