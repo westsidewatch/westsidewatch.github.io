@@ -1,0 +1,31 @@
+{
+  "body": "{\"source_message_id\": \"dore-heritage-search-canonical-acceptance-20260902-02\", \"task_status\": \"PASS\", \"attempt\": 1, \"terminal\": true, \"transport\": \"PASS\", \"execution\": \"PASS\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"PASS\", \"journal_cover_wall\": {\"journal_live\": true, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": true, \"cover_wall_reference_present\": true, \"cover_wall_asset_served\": true}, \"alerts\": []}, \"result\": {\"ok\": true, \"results\": [{\"index\": 1, \"argv\": [\"python3\", \"local/dore-local/heritage_image_search_acceptance.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"DORE_HERITAGE_IMAGE_SEARCH_ACCEPTANCE=PASS\\n\", \"stderr\": \"\"}, {\"index\": 2, \"argv\": [\"python3\", \"local/dore-local/free_api_gate_acceptance.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"DORE_FREE_API_GATE_ACCEPTANCE=PASS\\n\", \"stderr\": \"\"}, {\"index\": 3, \"argv\": [\"python3\", \"local/dore-local/capability_registry_acceptance.py\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"DORE_CAPABILITY_REGISTRY_ACCEPTANCE=PASS\\n\", \"stderr\": \"\"}, {\"index\": 4, \"argv\": [\"python3\", \"local/dore-local/heritage_image_search.py\", \"morning star engraving\", \"--limit\", \"1\"], \"cwd\": \"/Users/chenjingyu/westsidewatch.github.io\", \"returncode\": 0, \"stdout\": \"{\\n  \\\"schema\\\": \\\"dore.heritage-image-search.v1\\\",\\n  \\\"ok\\\": true,\\n  \\\"capability\\\": \\\"heritage.maps-images\\\",\\n  \\\"provider\\\": \\\"openverse\\\",\\n  \\\"query\\\": \\\"morning star engraving\\\",\\n  \\\"result_count\\\": 1,\\n  \\\"results\\\": [\\n    {\\n      \\\"id\\\": \\\"8ab60d69-fcf0-4b11-9e2a-5ba3747b73ea\\\",\\n      \\\"title\\\": \\\"Lucifer (the morning star). Engraving by G.H. Frezza, 1704\\\",\\n      \\\"creator\\\": null,\\n      \\\"creator_url\\\": null,\\n      \\\"provider\\\": \\\"wikimedia\\\",\\n      \\\"source\\\": \\\"wikimedia\\\",\\n      \\\"source_url\\\": \\\"https://commons.wikimedia.org/w/index.php?curid=36617961\\\",\\n      \\\"image_url\\\": \\\"https://upload.wikimedia.org/wikipedia/commons/2/2b/Lucifer_%28the_morning_star%29._Engraving_by_G.H._Frezza%2C_1704%2C_Wellcome_V0035916.jpg\\\",\\n      \\\"thumbnail\\\": \\\"https://api.openverse.org/v1/images/8ab60d69-fcf0-4b11-9e2a-5ba3747b73ea/thumb/\\\",\\n      \\\"width\\\": 2309,\\n      \\\"height\\\": 3025,\\n      \\\"license\\\": \\\"by\\\",\\n      \\\"license_version\\\": \\\"4.0\\\",\\n      \\\"license_url\\\": \\\"https://creativecommons.org/licenses/by/4.0/\\\",\\n      \\\"attribution\\\": \\\"\\\\\\\"Lucifer (the morning star). Engraving by G.H. Frezza, 1704\\\\\\\" is licensed under CC BY 4.0. To view a copy of this license, visit https://creativecommons.org/licenses/by/4.0/.\\\",\\n      \\\"rights_status\\\": \\\"discovered_unverified\\\",\\n      \\\"production_approved\\\": false,\\n      \\\"required_next_gate\\\": \\\"verify license and provenance on original source item page\\\"\\n    }\\n  ],\\n  \\\"provenance_preserved\\\": true,\\n  \\\"production_approved\\\": false,\\n  \\\"free_api_budget\\\": {\\n    \\\"provider\\\": \\\"openverse\\\",\\n    \\\"used\\\": 3,\\n    \\\"limit\\\": 180\\n  }\\n}\\n\", \"stderr\": \"\"}]}}",
+  "created_at": "2026-09-03T00:58:57.233943+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "autonomous-capability-loop",
+    "resident-goal-queue",
+    "research-bridge-executable",
+    "dore-local-exec",
+    "local-self-repair",
+    "source-message:dore-heritage-search-canonical-acceptance-20260902-02"
+  ],
+  "message_id": "result-dore-heritage-search-canonical-acceptance-20260902-02",
+  "message_sha256": "fec792ce4849bf0fa210eb922f503b67869c8a36a4542fc914de518ee7baced8",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "PASS",
+    "source_message_id": "dore-heritage-search-canonical-acceptance-20260902-02",
+    "task_status": "PASS",
+    "terminal": true
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "dore-heritage-search-v1",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: Resume canonical acceptance after syncing capability registry dependency",
+  "thread_id": "dore-heritage-search-v1"
+}
