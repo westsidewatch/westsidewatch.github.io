@@ -11,7 +11,7 @@ import fcntl, json, os, shutil, subprocess, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
 VERSION='dore.resident-runtime.v0.10'
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';SUPERVISOR=LOCAL/'a2a_supervisor.py';COORDINATION=LOCAL/'coordination_worker.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';SUPERVISION=RUNTIME/'a2a-supervision.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'.dore'/'control-checkout')).expanduser();PRODUCT_ROOT=Path(os.environ.get('DORE_PRODUCT_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';RUNTIME=HOME/'runtime';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';SELF=LOCAL/'resident_runtime.py';AGENT=LOCAL/'dore_agent_core.py';SUPERVISOR=LOCAL/'a2a_supervisor.py';COORDINATION=LOCAL/'coordination_worker.py';STATE=RUNTIME/'state.json';EVENTS=RUNTIME/'events.jsonl';HEARTBEAT=RUNTIME/'heartbeat.json';SUPERVISION=RUNTIME/'a2a-supervision.json';LOCK=RUNTIME/'runtime.lock';TELEMETRY_REPO=RUNTIME/'telemetry-repo';TELEMETRY_BRANCH=os.environ.get('DORE_RUNTIME_TELEMETRY_BRANCH','dore-runtime-telemetry');MANIFEST=A2A/'runtime-control-manifest.json'
 INTERVAL=max(10,int(os.environ.get('DORE_RUNTIME_INTERVAL_SECONDS','30')));TELEMETRY_INTERVAL=max(60,int(os.environ.get('DORE_RUNTIME_TELEMETRY_SECONDS','120')));SELF_UPDATE_INTERVAL=max(120,int(os.environ.get('DORE_RUNTIME_SELF_UPDATE_SECONDS','300')))
 def now():return datetime.now(timezone.utc).isoformat()
 def read_json(p,default=None):
@@ -32,7 +32,7 @@ def tail_events(n=64):
  return out
 def agent_step():
  if not AGENT.exists():return {'ok':False,'state':'AGENT_CORE_MISSING','error':str(AGENT),'continue':True}
- env=os.environ.copy();env['PATH']='/opt/homebrew/bin:/usr/local/bin:'+env.get('PATH','/usr/bin:/bin:/usr/sbin:/sbin');env['DORE_A2A_SUPERVISION_FILE']=str(SUPERVISION)
+ env=os.environ.copy();env['PATH']='/opt/homebrew/bin:/usr/local/bin:'+env.get('PATH','/usr/bin:/bin:/usr/sbin:/sbin');env['DORE_A2A_SUPERVISION_FILE']=str(SUPERVISION);env['DORE_REPO_ROOT']=str(PRODUCT_ROOT);env['DORE_CONTROL_ROOT']=str(ROOT)
  cp=run([sys.executable,str(AGENT)],timeout=1800,env=env);parsed=None
  try:parsed=json.loads((cp.stdout or '').strip().splitlines()[-1])
  except Exception:pass

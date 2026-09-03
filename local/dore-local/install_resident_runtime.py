@@ -17,6 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(os.environ.get("DORE_REPO_ROOT", Path.home() / "westsidewatch.github.io")).expanduser()
+PRODUCT_ROOT = Path(os.environ.get("DORE_PRODUCT_ROOT", Path.home() / "westsidewatch.github.io")).expanduser()
 HOME = Path(os.environ.get("DORE_LOCAL_HOME", Path.home() / ".dore")).expanduser()
 RUNTIME = ROOT / "local" / "dore-local" / "resident_runtime.py"
 MANIFEST_REL = "dore-design/knowledge-lab/a2a/runtime-control-manifest.json"
@@ -88,6 +89,7 @@ def main() -> int:
         "StandardErrorPath": str(LOGDIR / "launchd.stderr.log"),
         "EnvironmentVariables": {
             "DORE_REPO_ROOT": str(ROOT),
+            "DORE_PRODUCT_ROOT": str(PRODUCT_ROOT),
             "DORE_LOCAL_HOME": str(HOME),
             "DORE_RUNTIME_INTERVAL_SECONDS": os.environ.get("DORE_RUNTIME_INTERVAL_SECONDS", "30"),
             "DORE_RUNTIME_STALL_SECONDS": os.environ.get("DORE_RUNTIME_STALL_SECONDS", "90"),
