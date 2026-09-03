@@ -1,0 +1,50 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "dore-heritage-search-canonical-acceptance-20260902-01",
+  "thread_id": "dore-heritage-search-v1",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "priority": "critical",
+  "kind": "local_exec",
+  "requires_reply": true,
+  "related_goal": "dore-heritage-search-v1",
+  "subject": "Canonical acceptance for Doré heritage image search and free-only API gate",
+  "commands": [
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/heritage_image_search_acceptance.py"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/free_api_gate_acceptance.py"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/capability_registry_acceptance.py"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "local/dore-local/heritage_image_search.py",
+        "morning star engraving",
+        "--limit",
+        "1"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    }
+  ],
+  "body": "Execute the complete acceptance suite on the canonical Doré Mac resident environment. Return a canonical result containing the exact source_message_id, command outputs, live Openverse result, free API budget evidence, and terminal PASS/FAIL. Do not treat repository commit or CI success as this acceptance receipt."
+}
