@@ -5,11 +5,12 @@ import hashlib,json,os,subprocess
 from datetime import datetime,timezone
 from pathlib import Path
 
-VERSION='dore.a2a-delivery-plane.v1.0'
+VERSION='dore.a2a-delivery-plane.v1.1'
 ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve()
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()
 DELIVERY=HOME/'a2a-delivery';REMOTE_REF=os.environ.get('DORE_A2A_REMOTE_REF','origin/main')
-INBOX_PREFIX='local/dore-local/coordination-inbox';MAIN_REFSPEC='+refs/heads/main:refs/remotes/origin/main'
+INBOX_PREFIXES=('coordination-inbox','local/dore-local/coordination-inbox')
+MAIN_REFSPEC='+refs/heads/main:refs/remotes/origin/main'
 def now():return datetime.now(timezone.utc).isoformat()
 def canonical_hash(message):
  payload={k:v for k,v in message.items() if not str(k).startswith('_delivery')};raw=json.dumps(payload,ensure_ascii=False,sort_keys=True,separators=(',',':'));return hashlib.sha256(raw.encode()).hexdigest()
@@ -32,9 +33,12 @@ def remote_commit(ref=REMOTE_REF):
  if cp.returncode:raise RuntimeError('remote_ref_unavailable:'+cp.stderr[-300:])
  return cp.stdout.strip()
 def remote_paths(ref=REMOTE_REF):
- cp=_run(['git','ls-tree','-r','--name-only',ref,'--',INBOX_PREFIX],30)
- if cp.returncode:raise RuntimeError('remote_tree_unavailable:'+cp.stderr[-300:])
- return sorted(x for x in cp.stdout.splitlines() if x.endswith('.json'))
+ found=[]
+ for prefix in INBOX_PREFIXES:
+  cp=_run(['git','ls-tree','-r','--name-only',ref,'--',prefix],30)
+  if cp.returncode:raise RuntimeError('remote_tree_unavailable:'+cp.stderr[-300:])
+  found.extend(x for x in cp.stdout.splitlines() if x.endswith('.json'))
+ return sorted(set(found))
 def remote_message(path,ref=REMOTE_REF):
  cp=_run(['git','show',f'{ref}:{path}'],20)
  if cp.returncode:raise RuntimeError('remote_message_unavailable:'+path)
