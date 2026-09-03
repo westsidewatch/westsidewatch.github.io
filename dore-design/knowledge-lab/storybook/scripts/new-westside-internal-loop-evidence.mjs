@@ -49,20 +49,22 @@ try {
       await page.addStyleTag({content:'*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}'}).catch(()=>{});
       await page.waitForTimeout(120);
       const metrics=await page.evaluate(()=>{
-        const root=document.querySelector('[data-new-westside-internal-loop]');
-        const links=[...document.querySelectorAll('a')].map(a=>({text:(a.textContent||'').trim(),href:a.getAttribute('href')}));
+        const experiment=document.querySelector('[data-new-westside-internal-loop]');
+        if (!experiment) return {missing_experiment_root:true};
+        const links=[...experiment.querySelectorAll('a')].map(a=>({text:(a.textContent||'').trim(),href:a.getAttribute('href')}));
         const required=['Journal','ONE','Living Water West','黎明書局','The Gate'];
+        const text=experiment.innerText||'';
         return {
-          iteration:root?.getAttribute('data-iteration')||null,
-          hypothesis:root?.getAttribute('data-hypothesis')||null,
-          consumes_learning:root?.getAttribute('data-consumes-learning')||'',
-          h1_count:document.querySelectorAll('h1').length,
-          h2_count:document.querySelectorAll('h2').length,
-          nav_count:document.querySelectorAll('nav[aria-label="Primary"]').length,
+          iteration:experiment.getAttribute('data-iteration')||null,
+          hypothesis:experiment.getAttribute('data-hypothesis')||null,
+          consumes_learning:experiment.getAttribute('data-consumes-learning')||'',
+          h1_count:experiment.querySelectorAll('h1').length,
+          h2_count:experiment.querySelectorAll('h2').length,
+          nav_count:experiment.querySelectorAll('nav[aria-label="Primary"]').length,
           required_links_present:required.every(name=>links.some(x=>x.text===name)),
-          bilingual:/[\u3400-\u9fff]/.test(document.body.innerText)&&/[A-Za-z]/.test(document.body.innerText),
+          bilingual:/[\u3400-\u9fff]/.test(text)&&/[A-Za-z]/.test(text),
           horizontal_overflow:document.documentElement.scrollWidth>innerWidth+2,
-          text_length:(document.body.innerText||'').trim().length,
+          text_length:text.trim().length,
         };
       });
       const shot1=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'}); await page.waitForTimeout(100); const shot2=await page.screenshot({fullPage:true,animations:'disabled',caret:'hide'});
@@ -75,7 +77,6 @@ try {
 } finally { if(browser) await browser.close(); server.kill('SIGTERM'); }
 
 const i1=result.iterations[0], i2=result.iterations[1];
-const allViews=result.iterations.flatMap(x=>Object.values(x.viewports));
 const learning={
   iteration_1_hypothesis:'hierarchy-before-atmosphere',
   accepted_provisional:['preserve-semantic-spine','keep-major-destinations-readable','real-content-before-style-acceptance'],
