@@ -22,4 +22,6 @@ heritage=get('heritage.maps-images')
 assert heritage and heritage['execution']=='adapter'
 assert heritage['entrypoint']=='local/dore-local/heritage_image_search.py'
 assert heritage['production_approval'] is False
+assert heritage['cost']=='free-only' and heritage['paid_fallback'] is False
+assert heritage['credentials']=='none' and heritage['daily_request_limit']>0
 print('DORE_CAPABILITY_REGISTRY_ACCEPTANCE=PASS')

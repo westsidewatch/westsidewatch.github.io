@@ -2,9 +2,14 @@
 """Free/open image discovery with provenance-first, production-safe results."""
 from __future__ import annotations
 import argparse,json,urllib.parse,urllib.request
+from free_api_gate import reserve
 
 ENDPOINT='https://api.openverse.org/v1/images/'
 ALLOWED={'cc0','pdm','by','by-sa'}
+FREE_API_POLICY={
+ 'provider':'openverse','billing':'free-only','credentials':'none',
+ 'paid_fallback':False,'daily_request_limit':180,'per_call_result_limit':20
+}
 
 def _request(url:str,timeout:int=20)->dict:
  # HTTP header values stay ASCII-only: some edge security layers reject the
@@ -31,13 +36,14 @@ def normalize(item:dict)->dict|None:
 def search(query:str,limit:int=12,requester=_request)->dict:
  query=query.strip()
  if not query:raise ValueError('empty_query')
- limit=max(1,min(int(limit),20))
+ limit=max(1,min(int(limit),FREE_API_POLICY['per_call_result_limit']))
+ budget=reserve(FREE_API_POLICY)
  params=urllib.parse.urlencode({'q':query,'page_size':limit,'license':','.join(sorted(ALLOWED))})
  raw=requester(ENDPOINT+'?'+params);results=[]
  for item in raw.get('results') or []:
   row=normalize(item)
   if row:results.append(row)
- return {'schema':'dore.heritage-image-search.v1','ok':True,'capability':'heritage.maps-images','provider':'openverse','query':query,'result_count':len(results),'results':results,'provenance_preserved':True,'production_approved':False}
+ return {'schema':'dore.heritage-image-search.v1','ok':True,'capability':'heritage.maps-images','provider':'openverse','query':query,'result_count':len(results),'results':results,'provenance_preserved':True,'production_approved':False,'free_api_budget':budget}
 
 def main():
  p=argparse.ArgumentParser();p.add_argument('query');p.add_argument('--limit',type=int,default=12);a=p.parse_args()

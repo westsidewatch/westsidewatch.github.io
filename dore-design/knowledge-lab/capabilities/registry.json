@@ -7,6 +7,6 @@
     {"id":"bible.original-language-search","type":"knowledge","service":"bible","status":"existing","execution":"native","entrypoint":"/dore/dore-search.js","data":"/dore/original-index.json","strengths":["hebrew","greek","lemma","surface-form","morphology"],"cost":"local","network":false,"load":"deferred"},
     {"id":"library.books","type":"knowledge","service":"library","status":"planned","execution":"adapter","providers":["dawn-library","zotero-local","open-library","doab"],"cost":"free-only","load":"deferred"},
     {"id":"academic.scholarship","type":"knowledge","service":"academic","status":"planned","execution":"adapter","providers":["crossref","openalex"],"cost":"free-only","load":"deferred"},
-    {"id":"heritage.maps-images","type":"knowledge","service":"heritage","status":"existing","execution":"adapter","entrypoint":"local/dore-local/heritage_image_search.py","providers":["openverse"],"rights_gate":"original-item-verification-required","production_approval":false,"cost":"free-only","network":true,"load":"deferred"}
+    {"id":"heritage.maps-images","type":"knowledge","service":"heritage","status":"existing","execution":"adapter","entrypoint":"local/dore-local/heritage_image_search.py","providers":["openverse"],"rights_gate":"original-item-verification-required","production_approval":false,"cost":"free-only","credentials":"none","paid_fallback":false,"daily_request_limit":180,"per_call_result_limit":20,"network":true,"load":"deferred"}
   ]
 }
