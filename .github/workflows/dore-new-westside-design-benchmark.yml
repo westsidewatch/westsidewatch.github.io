@@ -1,0 +1,59 @@
+name: Doré New Westside Design Benchmark
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-design/knowledge-lab/storybook/scripts/new-westside-design-level-benchmark.mjs'
+      - '.github/workflows/dore-new-westside-design-benchmark.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-new-westside-design-benchmark
+  cancel-in-progress: false
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Storybook dependencies
+        working-directory: dore-design/knowledge-lab/storybook
+        run: npm ci
+      - name: Install Chromium
+        working-directory: dore-design/knowledge-lab/storybook
+        run: npx playwright install --with-deps chromium
+      - name: Run Doré design benchmark
+        working-directory: dore-design/knowledge-lab/storybook/scripts
+        run: node new-westside-design-level-benchmark.mjs
+      - name: Assert benchmark PASS
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('dore-design/evidence/new-westside-design-benchmark-v1/latest.json'))
+          assert p.get('ok') is True, p
+          assert p.get('code') == 'DORE_NEW_WESTSIDE_DESIGN_BENCHMARK_PASS', p
+          assert p.get('product_acceptance') is False
+          assert p.get('style_acceptance') is False
+          assert all(p.get('gates',{}).values()), p.get('gates')
+          print(p['code'])
+          PY
+      - name: Persist benchmark artifact and evidence
+        run: |
+          git config user.name 'WATCHMAN'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add dore-design/new-westside/homepage-v4-watchtower-fold.html dore-design/evidence/new-westside-design-benchmark-v1
+          if git diff --cached --quiet; then
+            echo 'Benchmark evidence already current.'
+          else
+            git commit -m 'dore-design: persist Watchtower Fold benchmark evidence [skip ci]'
+            git push origin HEAD:main
+          fi
