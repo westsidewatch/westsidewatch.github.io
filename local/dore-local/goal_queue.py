@@ -39,7 +39,7 @@ def _activation_candidate(goals):
  candidates=[]
  for row in goals:
   meta=row.get('metadata') or {}
-  if row.get('status')!='PENDING' or meta.get('execution_kind')!='coordination_message':continue
+  if row.get('status') not in {'PENDING','PAUSED','ACTIVE'} or meta.get('execution_kind')!='coordination_message':continue
   if not meta.get('requires_reply'):continue
   evidence=_learning_evidence(row)
   if evidence:candidates.append((str(evidence.get('observed_at') or row.get('updated_at') or ''),row,evidence))
@@ -48,12 +48,14 @@ def get(goal_id):
  return next((x for x in load().get('goals',[]) if str(x.get('goal_id'))==str(goal_id)),None)
 def current():
  data=load()
- goals=data.get('goals',[]);active=next((x for x in goals if x.get('status')=='ACTIVE'),None);activation=_activation_candidate(goals)
- if active and (active.get('metadata') or {}).get('activation_reason')=='DURABLE_RESEARCH_REQUIRED':return active
- if activation and (not active or activation[1].get('goal_id')!=active.get('goal_id')):
+ goals=data.get('goals',[]);active_rows=[x for x in goals if x.get('status')=='ACTIVE'];active=active_rows[0] if active_rows else None;activation=_activation_candidate(goals)
+ if activation:
   _,candidate,evidence=activation
-  if active:
-   active['status']='PAUSED';active['updated_at']=now();active.setdefault('history',[]).append({'at':now(),'status':'PAUSED','reason':'LEARNING_ACTIVATION_PREEMPT','preempted_by':candidate.get('goal_id')})
+  already_single=len(active_rows)==1 and active_rows[0].get('goal_id')==candidate.get('goal_id')
+  if already_single:return candidate
+  for row in active_rows:
+   if row.get('goal_id')==candidate.get('goal_id'):continue
+   row['status']='PAUSED';row['updated_at']=now();row.setdefault('history',[]).append({'at':now(),'status':'PAUSED','reason':'LEARNING_ACTIVATION_PREEMPT','preempted_by':candidate.get('goal_id')})
   candidate['status']='ACTIVE';candidate['updated_at']=now();candidate['metadata']={**(candidate.get('metadata') or {}),'activation_reason':'DURABLE_RESEARCH_REQUIRED','learning_evidence_path':str(HOME/'coordination'/'learning'/(str(candidate.get('goal_id'))+'.json'))};candidate.setdefault('history',[]).append({'at':now(),'status':'ACTIVE','reason':'LEARNING_QUEUE_WAKE','research_state':evidence.get('state')});save(data);return candidate
  if active:return active
  pending=next((x for x in data.get('goals',[]) if x.get('status')=='PENDING'),None)

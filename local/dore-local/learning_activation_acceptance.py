@@ -24,6 +24,8 @@ def main():
   goal_queue.enqueue('older-learning','other',priority='critical',source='coordination_worker',metadata={'execution_kind':'coordination_message','requires_reply':True,'message':{'message_id':'older-learning'}})
   older=Path(td)/'coordination'/'learning'/'older-learning.json';older.write_text(json.dumps({'state':'RESEARCH_REQUIRED','observed_at':'2026-09-02T00:00:00Z'}))
   selected_again=goal_queue.current();check('active learning claim is idempotent within nested driver reads',selected_again.get('goal_id')=='fixture-peer-followup' and goal_queue.get('fixture-peer-followup').get('status')=='ACTIVE',selected_again)
+  data=goal_queue.load();older_row=next(x for x in data['goals'] if x['goal_id']=='older-learning');older_row['status']='ACTIVE';goal_queue.save(data)
+  converged=goal_queue.current();active_count=sum(1 for x in goal_queue.load()['goals'] if x.get('status')=='ACTIVE');check('multiple stale ACTIVE claims converge to one evidence-selected owner',converged.get('goal_id')=='fixture-peer-followup' and active_count==1,{'selected':converged,'active_count':active_count})
   import coordination_completion
   importlib.reload(coordination_completion);sent=[];coordination_completion.send_to_chatgpt=lambda *a,**k: sent.append((a,k)) or {'message_id':k.get('message_id')}
   ctx={'goal_id':'fixture-peer-followup','goal':'newsroom','metadata':{'message':message}}
