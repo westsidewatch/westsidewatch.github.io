@@ -1,0 +1,22 @@
+name: Doré heritage image search
+on:
+  push:
+    paths:
+      - 'local/dore-local/heritage_image_search.py'
+      - 'local/dore-local/heritage_image_search_acceptance.py'
+      - 'dore-design/knowledge-lab/capabilities/**'
+      - '.github/workflows/dore-heritage-image-search.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/heritage_image_search.py'
+      - 'local/dore-local/heritage_image_search_acceptance.py'
+      - 'dore-design/knowledge-lab/capabilities/**'
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - run: python3 local/dore-local/heritage_image_search_acceptance.py
+      - run: python3 local/dore-local/capability_registry_acceptance.py

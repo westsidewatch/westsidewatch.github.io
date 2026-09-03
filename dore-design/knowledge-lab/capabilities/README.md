@@ -10,4 +10,9 @@ This is an enhancement layer around Doré's existing Search and AI Conversation,
 
 Method record: inspect existing capability -> research mature patterns -> reject conflicting architecture -> define minimal hypothesis -> isolate -> accept -> promote.
 
-Next gate: CI plus Doré canonical local PASS. Only then implement the first executable `library.books` adapter for Dawn Library.
+`heritage.maps-images` now has a first executable Openverse discovery adapter.
+Its results are candidates only: every item remains production-blocked until its
+license and provenance are verified on the original provider page.
+
+Next gate: add provider-specific verification for Wikimedia Commons and museum
+IIIF records, then implement the first executable `library.books` adapter.

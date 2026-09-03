@@ -18,4 +18,8 @@ assert all(x['entrypoint']=='/dore/dore-search.js' for x in bible)
 assert get('library.books') is None
 library=get('library.books',include_planned=True)
 assert library and library['status']=='planned' and library['cost']=='free-only'
+heritage=get('heritage.maps-images')
+assert heritage and heritage['execution']=='adapter'
+assert heritage['entrypoint']=='local/dore-local/heritage_image_search.py'
+assert heritage['production_approval'] is False
 print('DORE_CAPABILITY_REGISTRY_ACCEPTANCE=PASS')
