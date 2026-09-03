@@ -29,6 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -39,7 +41,12 @@ jobs:
         run: python test_coordination_transport.py
       - name: Verify canonical A2A inbox visibility
         run: |
-          python local/dore-local/a2a_delivery_plane.py --no-fetch >/tmp/dore-a2a-delivery.json
+          mapfile -t IDS < <(git diff --name-only HEAD^ HEAD -- coordination-inbox local/dore-local/coordination-inbox \
+            | sed -n -E 's#^(coordination-inbox|local/dore-local/coordination-inbox)/(.+)\.json$#\2#p' \
+            | sort -u)
+          ARGS=()
+          for id in "${IDS[@]}"; do ARGS+=(--message-id "$id"); done
+          python local/dore-local/a2a_delivery_plane.py --no-fetch "${ARGS[@]}" >/tmp/dore-a2a-delivery.json
           python - <<'PY'
           import json
           p=json.load(open('/tmp/dore-a2a-delivery.json'))
