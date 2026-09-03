@@ -25,12 +25,16 @@ const entries = Object.values(index.entries || {}).filter(e => e.type === 'story
 let candidates = entries.filter(e => /new\s*westside|westside|editorial/i.test(`${e.title || ''} ${e.name || ''} ${e.id || ''}`));
 if (!candidates.length) candidates = entries;
 
-const server = spawn('python3', ['-m', 'http.server', '6106', '--bind', '127.0.0.1', '--directory', staticDir], { stdio: 'ignore' });
+// Resident and canonical loops may overlap. A fixed port lets one run kill or
+// replace another run's evidence server, producing a false infrastructure FAIL.
+const evidencePort = Number(process.env.DORE_STORYBOOK_EVIDENCE_PORT || (16000 + (process.pid % 20000)));
+const evidenceOrigin = `http://127.0.0.1:${evidencePort}`;
+const server = spawn('python3', ['-m', 'http.server', String(evidencePort), '--bind', '127.0.0.1', '--directory', staticDir], { stdio: 'ignore' });
 let serverReady = false;
 for (let attempt = 0; attempt < 30; attempt += 1) {
   if (server.exitCode !== null) break;
   try {
-    const response = await fetch('http://127.0.0.1:6106/index.json');
+    const response = await fetch(`${evidenceOrigin}/index.json`);
     if (response.ok) { serverReady = true; break; }
   } catch {}
   await sleep(100);
@@ -60,7 +64,7 @@ try {
       const pageErrors = [];
       page.on('console', m => { if (m.type() === 'error' && !benignConsole(m.text())) consoleErrors.push(m.text()); });
       page.on('pageerror', e => pageErrors.push(String(e)));
-      const url = `http://127.0.0.1:6106/iframe.html?id=${encodeURIComponent(entry.id)}&viewMode=story`;
+      const url = `${evidenceOrigin}/iframe.html?id=${encodeURIComponent(entry.id)}&viewMode=story`;
       await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 });
       const freeze = '*,*::before,*::after{animation:none!important;transition:none!important;caret-color:transparent!important}html{scroll-behavior:auto!important}';
       for (const frame of page.frames()) await frame.addStyleTag({ content: freeze }).catch(() => {});
