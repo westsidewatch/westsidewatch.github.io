@@ -43,6 +43,12 @@ The BW-1 reconciliation file was corrected on 2026-09-03 in commit `db5e6af616a4
 
 When an early section-level record says a later aggregate milestone is still reserved, Sweep reconciliation must check for later aggregate evidence before treating the reserve statement as current truth. Chronology and machine receipts outrank an earlier local snapshot for current milestone state.
 
+## Sweep linkage
+
+This reconciliation is the durable evidence ledger for **Memory Consolidation Sweep 01 Checkpoint 29**. The bounded batch revalidated `CW-002`, classified the earlier 2026-09-02 whole-curriculum-not-complete statement as `SUPERSEDED_CURRENT_TRUTH` while retaining it as chronology, and found no reason to reopen the completed Biblical World foundation milestone. The canonical Master Work Register already lists Biblical World as reconciled under `MEM-SWEEP-01`, so no workstream status promotion or demotion is required from this checkpoint.
+
+Sweep 01 remains `ACTIVE_PARALLEL`; this checkpoint does not justify `VERIFIED_COMPLETE` and exposes no new human/environment blocker.
+
 ## P01 impact
 
 None. P01 remains unchanged and its existing production audio/transcription environment dependency is not touched by this reconciliation.
