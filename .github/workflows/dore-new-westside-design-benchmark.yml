@@ -21,7 +21,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -51,9 +51,9 @@ jobs:
           git config user.name 'WATCHMAN'
           git config user.email 'westsidewatchca@gmail.com'
           git add dore-design/new-westside/homepage-v4-watchtower-fold.html dore-design/evidence/new-westside-design-benchmark-v1
-          if git diff --cached --quiet; then
-            echo 'Benchmark evidence already current.'
-          else
+          if ! git diff --cached --quiet; then
             git commit -m 'dore-design: persist Watchtower Fold benchmark evidence [skip ci]'
-            git push origin HEAD:main
           fi
+          git fetch origin main
+          git rebase origin/main
+          git push origin HEAD:main
