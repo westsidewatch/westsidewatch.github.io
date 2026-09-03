@@ -6,15 +6,19 @@ on:
     paths:
       - 'local/dore-local/coordination_mailbox.py'
       - 'local/dore-local/coordination_worker.py'
+      - 'local/dore-local/a2a_delivery_plane.py'
       - 'local/dore-local/test_coordination_transport.py'
       - 'local/dore-local/coordination-inbox/**'
+      - 'coordination-inbox/**'
       - '.github/workflows/dore-coordination-transport.yml'
   pull_request:
     paths:
       - 'local/dore-local/coordination_mailbox.py'
       - 'local/dore-local/coordination_worker.py'
+      - 'local/dore-local/a2a_delivery_plane.py'
       - 'local/dore-local/test_coordination_transport.py'
       - 'local/dore-local/coordination-inbox/**'
+      - 'coordination-inbox/**'
       - '.github/workflows/dore-coordination-transport.yml'
 
 permissions:
@@ -29,7 +33,17 @@ jobs:
         with:
           python-version: '3.12'
       - name: Compile transport
-        run: python -m py_compile local/dore-local/coordination_mailbox.py local/dore-local/coordination_worker.py local/dore-local/test_coordination_transport.py
+        run: python -m py_compile local/dore-local/coordination_mailbox.py local/dore-local/coordination_worker.py local/dore-local/a2a_delivery_plane.py local/dore-local/test_coordination_transport.py
       - name: Run offline transport contract
         working-directory: local/dore-local
         run: python test_coordination_transport.py
+      - name: Verify canonical A2A inbox visibility
+        run: |
+          python local/dore-local/a2a_delivery_plane.py --no-fetch >/tmp/dore-a2a-delivery.json
+          python - <<'PY'
+          import json
+          p=json.load(open('/tmp/dore-a2a-delivery.json'))
+          assert p.get('ok'), p
+          assert p.get('code') == 'A2A_DELIVERY_SYNC_PASS', p
+          print(json.dumps({'ok': True, 'code': 'CANONICAL_COORDINATION_INBOX_VISIBLE', 'source_commit': p.get('source_commit'), 'accepted_count': p.get('accepted_count')}, ensure_ascii=False))
+          PY
