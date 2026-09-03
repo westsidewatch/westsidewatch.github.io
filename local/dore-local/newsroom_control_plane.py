@@ -8,6 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from multi_loop_control_plane import complete, event, load, register, route, save, share, wake
+from newsroom_signal_store import commit as commit_signal_operation, ingest as ingest_signal
 
 VERSION = "dore.newsroom-control-plane.v1.0"
 NEWSROOM_LOOP = "newsroom-world-response"
@@ -100,7 +101,8 @@ def draft_response(signal, matches):
             if source.get("url"):
                 citations.append({"publisher": source.get("publisher") or source.get("title") or "Dawn Library", "url": source["url"]})
     unique = list({x["url"]: x for x in citations}.values())
-    draft_id = "newsroom-draft-" + hashlib.sha256(str(signal["signal_id"]).encode()).hexdigest()[:12]
+    revision = int(signal.get("revision") or 1)
+    draft_id = "newsroom-draft-" + hashlib.sha256(f'{signal["signal_id"]}:{revision}'.encode()).hexdigest()[:12]
     return {"schema": "dore.newsroom-draft.v1", "draft_id": draft_id, "signal_id": signal["signal_id"], "status": "EDITORIAL_REVIEW", "publishable": False, "prayer": {"title": "為此刻守望", "body": "在尚未掌握全部情況以前，我們先為受影響的人、回應者與需要作判斷的人禱告；求真實被看見，求傷害不被利用。"}, "report": {"title": signal["title"], "summary": signal["summary"], "known": "Only claims supported by the attached provenance are retained.", "unknown": list(signal.get("unknowns") or [])}, "citations": unique, "requires_human_editor": True, "created_at": now()}
 
 
@@ -137,3 +139,18 @@ def run_episode(signal, *, state_path, asset_path, enrichment_asset=None):
     event(state, "NEWSROOM_EPISODE_COMPLETE", loop_id=NEWSROOM_LOOP, signal_id=signal["signal_id"], draft_id=draft["draft_id"], human_editor_required=True)
     save(state, state_path)
     return {"ok": True, "code": "NEWSROOM_DRAFT_READY", "preempted": True, "initial_route": routed["loop_id"] if routed else None, "gravity": gravity, "reused_assets": [x["asset"]["knowledge_id"] for x in matches], "knowledge_gaps": gaps, "enriched": enriched, "draft": draft, "resumed_loop": resumed["loop_id"] if resumed else None, "published": False, "events": [x["event"] for x in load(state_path)["events"]]}
+
+
+def ingest_and_run(observation, *, signal_store_path, state_path, asset_path, update_kind="ACTIVE", enrichment_asset=None):
+    """Idempotently ingest one observation and transactionally run it."""
+    receipt = ingest_signal(observation, store_path=signal_store_path, update_kind=update_kind)
+    if receipt["action"] == "DEDUPLICATED":
+        return {"ok": True, "code": "WORLD_SIGNAL_DEDUPLICATED", "signal_id": receipt["signal"]["signal_id"], "revision": receipt["signal"]["revision"], "published": False}
+    signal = receipt["signal"]
+    if update_kind == "RETRACTION":
+        result = {"ok": True, "code": "WORLD_SIGNAL_RETRACTED", "signal_id": signal["signal_id"], "revision": signal["revision"], "published": False, "requires_human_editor": True}
+    else:
+        signal.setdefault("topics", []);signal.setdefault("urgency", 3);signal.setdefault("local_relevance", 2);signal.setdefault("mission_relevance", 3);signal.setdefault("verification_confidence", 5);signal.setdefault("human_impact", 3);signal.setdefault("unknowns", ["independent corroboration and full impact"])
+        result = run_episode(signal, state_path=state_path, asset_path=asset_path, enrichment_asset=enrichment_asset)
+    commit_signal_operation(receipt["operation"]["operation_id"], store_path=signal_store_path, result=result)
+    return {**result, "signal_id": signal["signal_id"], "revision": signal["revision"], "update_kind": update_kind, "operation_id": receipt["operation"]["operation_id"]}

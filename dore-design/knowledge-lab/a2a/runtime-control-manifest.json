@@ -16,6 +16,10 @@
     "local/dore-local/newsroom_control_plane.py",
     "local/dore-local/newsroom_control_plane_acceptance.py",
     "local/dore-local/test_newsroom_control_plane.py",
+    "local/dore-local/newsroom_signal_store.py",
+    "local/dore-local/real_signal_connector.py",
+    "local/dore-local/test_real_signal_loop.py",
+    "local/dore-local/real_signal_live_acceptance.py",
     "local/dore-local/dawn_incremental_enrichment.py",
     "local/dore-local/dawn_incremental_acceptance.py",
     "local/dore-local/dawn_incremental_live_acceptance.py",
@@ -98,6 +102,7 @@
     "dore-design/knowledge-lab/a2a/multi-loop-agency-v1.md",
     "dore-design/knowledge-lab/a2a/multi-loop-control-plane-v1.md",
     "dore-design/knowledge-lab/a2a/newsroom-control-plane-v1.md",
+    "dore-design/knowledge-lab/a2a/real-signal-loop-v1.md",
     "dore-design/knowledge-lab/a2a/dawn-incremental-enrichment-v1.md",
     "dore-design/knowledge-lab/a2a/a2a-delivery-plane-v1.md",
     "dore-design/knowledge-lab/resources/dawn-incremental-editorial-sources-v1.json"
@@ -114,6 +119,7 @@
     "~/.dore/a2a-delivery/events.jsonl",
     "~/.dore/control-plane/state.json",
     "~/.dore/control-plane/knowledge-assets.jsonl",
+    "~/.dore/newsroom/signals.json",
     "~/.dore/coordination/learning/",
     "~/.dore/coordination/research/",
     "~/.dore/coordination/failure-memory.jsonl",
@@ -129,6 +135,7 @@
     "a2a_delivery_plane": ["checkout-independent origin/ref ingestion","durable inbound mailbox","identity/hash validation","replay dedupe","identity-conflict quarantine","delivery ACK distinct from execution receipt"],
     "dore_agent_core": ["goal reasoning","evidence-delta progress evaluation","multi-loop control-plane routing","peer cooldown","gap detection","resource search","candidate selection","hypothesis","experiment choice","information gain","verification","skill promotion","next action","resume parent"],
     "multi_loop_control_plane": ["wake","route","priority","yield","resume","share","record","durable workflow checkpoints"],
+    "newsroom_real_signal_loop": ["free-only official feed ingestion","provenance and content integrity","event identity, replay dedupe, correction and retraction revisions","prepared/committed operation recovery","human editorial and publication gate"],
     "storybook_lab": ["Vitest real-browser story tests","Playwright desktop/mobile evidence","responsive evidence","design observations"]
   }
 }
