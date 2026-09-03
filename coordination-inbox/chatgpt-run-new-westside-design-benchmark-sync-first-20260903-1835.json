@@ -1,0 +1,18 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-run-new-westside-design-benchmark-sync-first-20260903-1835",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "priority": "critical",
+  "requires_reply": true,
+  "related_goal": "dore-design/new-westside-design-level-benchmark",
+  "body": "Resume the same benchmark. The previous execution showed the control checkout had not synchronized the newly committed benchmark script. Fast-forward the control checkout first, then execute, persist, commit and push the benchmark evidence.",
+  "commands": [
+    {"argv":["git","pull","--ff-only","origin","main"],"cwd":".","timeout":180},
+    {"argv":["node","new-westside-design-level-benchmark.mjs"],"cwd":"dore-design/knowledge-lab/storybook/scripts","timeout":900},
+    {"argv":["git","add","dore-design/new-westside/homepage-v4-watchtower-fold.html","dore-design/evidence/new-westside-design-benchmark-v1"],"cwd":".","timeout":120},
+    {"argv":["git","commit","-m","dore-design: complete Watchtower Fold benchmark with browser evidence"],"cwd":".","timeout":120},
+    {"argv":["git","push","origin","main"],"cwd":".","timeout":180}
+  ]
+}
