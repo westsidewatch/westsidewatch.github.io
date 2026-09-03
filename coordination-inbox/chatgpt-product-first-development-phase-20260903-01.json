@@ -1,0 +1,37 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-product-first-development-phase-20260903-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Shift engineering priority from capability scaffolding to product-first capability evolution",
+  "related_goal": "dore/product-first-evolution",
+  "priority": "critical",
+  "requires_reply": true,
+  "decision": "Doré's initial capability foundation is sufficient to begin proving itself through real products. Future capability work should normally be pulled by concrete product friction, failure, missing evidence, or reusable opportunity discovered while building products, rather than by speculative framework expansion.",
+  "primary_parent_goal": "New Westside visual construction",
+  "operating_model": [
+    "Build the real product with the capabilities already available.",
+    "When product execution exposes a Doré capability gap, diagnose it in the same parent-goal episode.",
+    "Implement the smallest reusable capability improvement that resolves the observed product problem.",
+    "Verify the capability improvement against the product that exposed it.",
+    "Persist durable learning/evidence, then resume and complete the product parent goal.",
+    "Generalize only after evidence shows reuse value; avoid speculative abstraction before product proof."
+  ],
+  "priority_order": [
+    "New Westside real product build and product promotion",
+    "Storybook visual research and candidate experiments that materially improve product judgment",
+    "A2A/resident-loop repair only when product/learning tasks reveal an actual pickup or execution fault",
+    "Doré capability updates pulled by observed product failures/gaps",
+    "additional autonomy/control-plane expansion only after product evidence justifies it"
+  ],
+  "loop_contract": {
+    "product_failure": "Do not route around the failure with a memo. Preserve the product parent goal, diagnose, repair the reusable capability when appropriate, and resume the same product episode.",
+    "capability_update": "Capability PASS requires evidence that the update fixes or improves the real product episode that motivated it.",
+    "product_pass": "Capability improvement alone never closes the product parent goal; product acceptance evidence is still required.",
+    "learning": "Accepted/rejected product judgments should feed visual learning and Storybook knowledge for future reuse.",
+    "architecture": "Do not add permanent loops/framework layers unless concrete product evidence shows the existing architecture is insufficient."
+  },
+  "success_pattern": "PRODUCT -> friction/evidence gap -> Doré diagnosis -> smallest reusable capability update -> verification -> PRODUCT resumes -> product acceptance -> durable learning",
+  "anti_pattern": "capability idea -> new framework -> new framework -> more governance -> product still unfinished"
+}
