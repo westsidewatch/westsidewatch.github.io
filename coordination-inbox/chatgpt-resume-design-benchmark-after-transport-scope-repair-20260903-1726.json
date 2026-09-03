@@ -1,0 +1,21 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-resume-design-benchmark-after-transport-scope-repair-20260903-1726",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "priority": "critical",
+  "requires_reply": true,
+  "parent_message_id": "chatgpt-benchmark-dore-current-new-westside-design-level-20260903-1719",
+  "body": {
+    "goal": "Resume the already-requested New Westside design-level benchmark after transport repair. Do not start a different parent goal.",
+    "instructions": [
+      "Reconcile the original benchmark task and execute it now.",
+      "Produce a genuinely new New Westside opening design using real Westside content; do not submit Dawn Atlas, Living Current, Signal Nocturne, homepage v1/v2/v3, or the prior internal-loop compositions as the answer.",
+      "Materialize an editable artifact and verify it in a real browser on desktop and mobile.",
+      "Return artifact path, browser evidence, design rationale, provisional design judgment, and bounded result evidence.",
+      "Do not claim user aesthetic acceptance, production promotion, or final Westside style acceptance."
+    ],
+    "pass_boundary": "A transport receipt alone is not PASS. PASS requires a new design artifact plus real-browser desktop/mobile evidence and a canonical result for this benchmark."
+  }
+}
