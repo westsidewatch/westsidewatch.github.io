@@ -10,7 +10,7 @@ from __future__ import annotations
 import json, os, re, shutil, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';EVIDENCE=ROOT/'dore-design'/'knowledge-lab'/'evidence';SKILLS=ROOT/'dore-design'/'knowledge-lab'/'skills';STORYBOOK=ROOT/'dore-design'/'knowledge-lab'/'storybook';MANUAL=ROOT/'dore-design'/'knowledge-lab'/'tools'/'research-bridge-v0.1.md';COMMON_BIN=['/opt/homebrew/bin','/usr/local/bin',str(Path.home()/'.nvm/current/bin')]
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();CONTROL_ROOT=Path(os.environ.get('DORE_CONTROL_ROOT',ROOT)).expanduser();LOCAL=CONTROL_ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';EVIDENCE=ROOT/'dore-design'/'knowledge-lab'/'evidence';SKILLS=ROOT/'dore-design'/'knowledge-lab'/'skills';STORYBOOK=ROOT/'dore-design'/'knowledge-lab'/'storybook';MANUAL=CONTROL_ROOT/'dore-design'/'knowledge-lab'/'tools'/'research-bridge-v0.1.md';COMMON_BIN=['/opt/homebrew/bin','/usr/local/bin',str(Path.home()/'.nvm/current/bin')]
 sys.path.insert(0,str(LOCAL))
 VERSION='dore.autonomous-driver.v0.5'
 def now():return datetime.now(timezone.utc).isoformat()

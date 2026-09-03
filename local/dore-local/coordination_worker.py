@@ -82,7 +82,7 @@ def peer_research_result(msg):
  return {'ok':True,'receipt':receipt,'research_id':rid or None,'bridge':bridged}
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
- if kind in {'peer_review','peer_diagnostic'}:return peer_respond(msg,ROOT)
+ if isinstance(kind,str) and kind.startswith('peer_') and kind!='peer_research_result':return peer_respond(msg,ROOT)
  if kind=='dore_design_bakeoff':return run_script('dore_design_bakeoff.py')
  if kind=='dore_design_elimination':return run_script('dore_design_elimination.py',3600)
  if kind=='dore_design_framesmith_mcp_trial':return run_script('dore_design_framesmith_mcp_trial.py',1800)

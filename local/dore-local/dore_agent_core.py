@@ -14,7 +14,7 @@ from __future__ import annotations
 import hashlib, json, os, subprocess, sys, time
 from datetime import datetime, timezone
 from pathlib import Path
-HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();LOCAL=ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
+HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser();CONTROL_ROOT=Path(os.environ.get('DORE_CONTROL_ROOT',ROOT)).expanduser();LOCAL=CONTROL_ROOT/'local'/'dore-local';LEARNING=HOME/'coordination'/'learning';RESEARCH=HOME/'coordination'/'research';A2A=CONTROL_ROOT/'dore-design'/'knowledge-lab'/'a2a';PROJECT_STATE=A2A/'project-state.json';DRIVER=LOCAL/'autonomous_driver.py';RESEARCH_EXECUTOR=LOCAL/'research_executor.py';PEER_BRIDGE=LOCAL/'peer_research_bridge.py'
 sys.path.insert(0,str(LOCAL))
 VERSION='dore.agent-core.v0.6'
 ALT_RESEARCH_HINTS=[
@@ -129,6 +129,10 @@ def a2a_task(ctx,state_name,**metadata):
   from a2a_adapter import dore_to_a2a_task
   return dore_to_a2a_task(source_message_id=ctx['goal_id'],parent_goal=ctx['goal'],state=state_name,metadata={'projectLoop':ctx['project_loop'],'agentCore':VERSION,'chatgptMode':'conversation-activated-peer',**metadata})
  except Exception as e:return {'error':repr(e)}
+def semantic_driver_bound(ctx,result):
+ if (ctx.get('metadata') or {}).get('execution_kind')!='coordination_message':return True
+ parsed=result.get('result') if isinstance(result.get('result'),dict) else {};dispatched=((parsed.get('coordination_goal') or {}).get('result') or {})
+ return bool(dispatched.get('ok')) and dispatched.get('reviewed_message_id')==ctx.get('goal_id') and dispatched.get('terminal_eligible') is not False
 def record_nonblocking_attempt(jp,job,result):
  diag={'returncode':result.get('returncode'),'ok':bool(result.get('ok')),'stdout':(result.get('stdout') or '')[-1800:],'stderr':(result.get('stderr') or '')[-1800:],'result':result.get('result')};fp=fingerprint(diag);attempts=list(job.get('nonblocking_attempts') or []);previous=attempts[-1].get('fingerprint') if attempts else None;attempts.append({'at':now(),'fingerprint':fp,'driver_ok':bool(result.get('ok'))});attempts=attempts[-12:];same=fp==previous;iteration=int(job.get('autonomous_iteration') or 0)+1;job={**job,'nonblocking_attempts':attempts,'autonomous_iteration':iteration,'peer_request_pending':True,'peer_blocking':False,'last_autonomous_result':diag,'updated_at':now()}
  if same:
@@ -172,8 +176,20 @@ def step():
   return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':True,'peer_pending':True,'peer_blocking':False,'peer_diagnostic':peer,'research_diagnostic':rr,'a2a_task':a2a_task(ctx,state,peerBlocking=False,researchId=job.get('research_id'))}
  if jp and job:
   if result.get('ok'):
+   if not semantic_driver_bound(ctx,result):
+    result={**result,'ok':False,'error':'semantic_completion_binding_failed'};job=reject(ctx,jp,job,result);mark_active(ctx,result,acceptance_met=False,semantic_completion_rejected=True);state='RESEARCH_QUEUED';emit('SEMANTIC_COMPLETION_REJECTED');emit('RESEARCH_QUEUED')
+    return {'ok':True,'agent_core':VERSION,'state':state,'parent':ctx,'driver_result':result,'research_job':job,'events':events,'continue':True,'peer_pending':False,'peer_blocking':False,'a2a_task':a2a_task(ctx,state)}
    done=complete_goal(ctx,result)
-   if done:job=verified(ctx,jp,job,result);state='RESUME_PARENT';emit('VERIFIED');emit('PROMOTED');emit('RESUME_PARENT')
+   if done:
+    job=verified(ctx,jp,job,result);state='RESUME_PARENT';emit('VERIFIED');emit('PROMOTED');emit('RESUME_PARENT')
+    if (ctx.get('metadata') or {}).get('execution_kind')=='coordination_message':
+     try:
+      from coordination_completion import complete
+      completion=complete(ctx,job,result);emit('CANONICAL_COMPLETION_RECEIPT',**completion)
+      if not completion.get('ok'):
+       from goal_queue import set_status
+       set_status(ctx['goal_id'],'ACTIVE',acceptance_met=False,completion_error=completion);job=transition(jp,job,'RESEARCH_QUEUED',completion_error=completion);state='RESEARCH_REQUIRED'
+     except Exception as e:completion={'ok':False,'error':repr(e)};emit('COMPLETION_RECEIPT_FAILED',error=repr(e))
    else:job=transition(jp,{**job,'acceptance_unmet':True},'RESEARCH_QUEUED');state='RESEARCH_REQUIRED';emit('ACCEPTANCE_UNMET');emit('RESEARCH_QUEUED')
   else:job=reject(ctx,jp,job,result);state='RESEARCH_QUEUED';emit('REJECTED');emit('RESEARCH_QUEUED')
  elif result.get('ok'):

@@ -4,13 +4,15 @@ from __future__ import annotations
 import json, os, re, shutil, subprocess, sys
 from datetime import datetime, timezone
 from pathlib import Path
-ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve();HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();RESEARCH=HOME/'coordination'/'research';KNOWLEDGE=ROOT/'dore-design'/'knowledge-lab';CATALOG=KNOWLEDGE/'resources'/'source-catalog.json';LOCAL=ROOT/'local'/'dore-local';sys.path.insert(0,str(LOCAL))
+ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve();CONTROL_ROOT=Path(os.environ.get('DORE_CONTROL_ROOT',ROOT)).expanduser().resolve();HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();RESEARCH=HOME/'coordination'/'research';KNOWLEDGE=ROOT/'dore-design'/'knowledge-lab';CATALOG=KNOWLEDGE/'resources'/'source-catalog.json';LOCAL=CONTROL_ROOT/'local'/'dore-local';sys.path.insert(0,str(LOCAL))
 def now():return datetime.now(timezone.utc).isoformat()
 def read_json(p,default=None):
  try:return json.loads(Path(p).read_text(encoding='utf-8'))
  except Exception:return default
 def atomic_json(p,v):
  p=Path(p);p.parent.mkdir(parents=True,exist_ok=True);t=p.with_suffix(p.suffix+'.tmp');t.write_text(json.dumps(v,ensure_ascii=False,indent=2),encoding='utf-8');t.replace(p)
+def transition(p,job,state,**extra):
+ job.update({'state':state,'updated_at':now(),**extra});job.setdefault('history',[]).append({'at':now(),'state':state});atomic_json(p,job);return job
 def run(argv,cwd=ROOT,timeout=90):
  try:
   cp=subprocess.run(argv,cwd=str(cwd),text=True,capture_output=True,timeout=timeout);return {'available':True,'argv':argv,'returncode':cp.returncode,'stdout':(cp.stdout or '')[-16000:],'stderr':(cp.stderr or '')[-8000:]}
@@ -77,7 +79,7 @@ def execute(job_path):
  p=Path(job_path);job=read_json(p,{}) or {}
  if not job.get('research_id'):return {'ok':False,'error':'invalid_research_job'}
  if job.get('state') in {'KNOWLEDGE_RETURNED','VERIFIED','PROMOTED','RESUME_PARENT'}:return {'ok':True,'state':job.get('state'),'job':job}
- job['state']='RESEARCHING';job['updated_at']=now();atomic_json(p,job);qs=terms(str(job.get('question') or '')+' '+str(job.get('failure_fingerprint') or ''));local=local_search(qs);catalog=catalog_search(qs);external,probes=external_search(qs);artifact={'schema':'dore.knowledge-artifact.v1','knowledge_id':'knowledge-'+job['research_id'],'research_id':job['research_id'],'created_at':now(),'discovered_by':'dore-research-executor','query_terms':qs,'sources':{'local':local,'catalog':catalog,'external':external},'tool_probes':probes,'provenance_preserved':True,'reuse_before_rebuild':True,'parent_goal':job.get('parent_goal')};artifact['evidence_count']=len(local)+len(catalog)+len(external)
+ transition(p,job,'RESEARCHING');qs=terms(str(job.get('question') or '')+' '+str(job.get('failure_fingerprint') or ''));local=local_search(qs);catalog=catalog_search(qs);external,probes=external_search(qs);artifact={'schema':'dore.knowledge-artifact.v1','knowledge_id':'knowledge-'+job['research_id'],'research_id':job['research_id'],'created_at':now(),'discovered_by':'dore-research-executor','query_terms':qs,'sources':{'local':local,'catalog':catalog,'external':external},'tool_probes':probes,'provenance_preserved':True,'reuse_before_rebuild':True,'parent_goal':job.get('parent_goal')};artifact['evidence_count']=len(local)+len(catalog)+len(external)
  gate=acceptance(job,artifact);artifact['acceptance']=gate
  if artifact['evidence_count'] and gate['met']:
   artifact.update({'lesson':'Relevant resources found. Derive a falsifiable hypothesis and verify it in the smallest parent-specific experiment before promotion.','hypothesis_status':'CANDIDATES_FOUND','experiment_required':True})
@@ -85,8 +87,8 @@ def execute(job_path):
    from shared_learning import record
    artifact['shared_learning_candidate']=record(artifact,learned_by='dore',status='CANDIDATE',parent_goal=job.get('parent_goal'))
   except Exception as e:artifact['shared_learning_candidate']={'ok':False,'error':repr(e)}
-  job.update({'state':'KNOWLEDGE_RETURNED','knowledge_artifact':artifact,'updated_at':now()});atomic_json(p,job);return {'ok':True,'state':'KNOWLEDGE_RETURNED','research_id':job['research_id'],'knowledge_artifact':artifact}
- peer=peer_escalate(job,artifact);job.update({'peer_research':peer,'knowledge_artifact':artifact,'state':'PEER_RESEARCH_QUEUED' if peer.get('queued') else 'RESEARCH_BLOCKED','updated_at':now()});atomic_json(p,job);return {'ok':False,'state':job['state'],'research_id':job['research_id'],'peer_research':peer,'knowledge_artifact':artifact}
+  transition(p,job,'KNOWLEDGE_RETURNED',knowledge_artifact=artifact);return {'ok':True,'state':'KNOWLEDGE_RETURNED','research_id':job['research_id'],'knowledge_artifact':artifact}
+ peer=peer_escalate(job,artifact);transition(p,job,'PEER_RESEARCH_QUEUED' if peer.get('queued') else 'RESEARCH_BLOCKED',peer_research=peer,knowledge_artifact=artifact);return {'ok':False,'state':job['state'],'research_id':job['research_id'],'peer_research':peer,'knowledge_artifact':artifact}
 if __name__=='__main__':
  if len(sys.argv)!=2:print(json.dumps({'ok':False,'error':'usage: research_executor.py JOB.json'}));raise SystemExit(2)
  out=execute(sys.argv[1]);print(json.dumps(out,ensure_ascii=False));raise SystemExit(0 if out.get('ok') else 3)

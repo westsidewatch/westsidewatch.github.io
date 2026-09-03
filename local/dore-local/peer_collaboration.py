@@ -4,9 +4,18 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
+def _bound(message,result):
+ result=dict(result);result['reviewed_message_id']=message.get('message_id');result['semantic_binding']={'source_message_id':message.get('message_id'),'request_kind':message.get('kind'),'request_subject':message.get('subject')};return result
+
 def respond(message,root):
  body=message.get('body');text=json.dumps(body,ensure_ascii=False) if isinstance(body,dict) else str(body or '')
  kind=message.get('kind');root=Path(root)
  if kind=='peer_diagnostic':
-  return {'ok':True,'state':'PASS','response_type':'A2A_RESPONSE_STALL_DIAGNOSIS','first_missing_transition':'RECEIVED -> TASK_REGISTERED','evidence':{'coordination_worker_not_supervised_by_resident_runtime':True,'peer_kinds_previously_unsupported':True},'repair':'Resident Runtime now supervises coordination_worker each tick; worker has semantic peer_review/peer_diagnostic dispatch.','diagnosis_agreement':'The diagnosis is correct. Delivery was healthy; response orchestration was not.','additional_risk':'A poison message must not block later peer mail; each message needs isolated failure state.'}
- return {'ok':True,'state':'PASS','response_type':'SUBSTANTIVE_PEER_REVIEW','reviewed_message_id':message.get('message_id'),'position':{'isolate_delivery_plane_first':'AGREE','newsroom_packaging':'DEFER_UNTIL_DELIVERY_AND_RESPONSE_PATH_PASS','four_risks':'AGREE'},'architecture_judgment':{'underweighted_risk':'Authenticated origin/authority remains weaker than content integrity: a valid hash proves unchanged content, not that the sender was authorized.','additional_risks':['coordination worker supervision was not part of Resident Runtime liveness','one malformed or unsupported message could become a queue poison pill','delivery and response require separate latency/stall telemetry']},'newsroom_packaging_plan':['keep Newsroom changes isolated','require real-signal replay/idempotency','add starvation recovery before live priority preemption','retain human publish identity and correction/retraction gates'],'evidence_basis':{'request_mentions_newsroom':'Newsroom' in text,'response_side_effects':[]}}
+  # A diagnosis that asks for a repair is work intake, not completion. Returning
+  # ok=True here previously allowed an unrelated cached template to become a
+  # FALSE_TERMINAL_PASS.
+  return _bound(message,{'ok':False,'state':'RESEARCH_REQUIRED','terminal_eligible':False,'response_type':'PEER_DIAGNOSTIC_INTAKE','diagnostic_scope':'SEMANTIC_RESPONSE_MISMATCH' if 'SEMANTIC_RESPONSE_MISMATCH' in text else 'REQUEST_SCOPED_DIAGNOSIS','requested_transition':'RESEARCH_QUEUED -> RESEARCH_STARTED' if 'RESEARCH_QUEUED' in text and 'RESEARCH_STARTED' in text else None,'reason':'diagnosis_requires_evidence_bound_repair_before_terminal_pass'})
+ if kind in {'peer_review','peer_review_followup'}:
+  boundaries=['real-signal replay/idempotency','starvation recovery and resume guarantee','Control Plane/KnowledgeAsset crash consistency','human publish identity and correction/retraction']
+  return _bound(message,{'ok':True,'state':'PASS','terminal_eligible':True,'response_type':'SUBSTANTIVE_PEER_REVIEW_FOLLOWUP' if kind=='peer_review_followup' else 'SUBSTANTIVE_PEER_REVIEW','position':{'newsroom_packaging':'PROCEED_AFTER_AUTONOMOUS_LEARNING_CLOSURE','authority_before_packaging':'NOT_REQUIRED','authority_before_live_ingress_or_publish':'REQUIRED'},'architecture_judgment':{'agreement':'A2A hardening gaps should not indefinitely block isolated Newsroom packaging.','remaining_boundaries':boundaries,'additional_risks':boundaries},'smallest_real_signal_experiment':'Ingest one public signal through two source observations plus one corrected update; verify canonical signal identity, provenance, replay idempotency, priority yield/resume, no autonomous publish, and correction propagation.','evidence_basis':{'request_mentions_newsroom':'newsroom' in text.lower(),'response_side_effects':[]}})
+ return _bound(message,{'ok':False,'state':'RESEARCH_REQUIRED','terminal_eligible':False,'response_type':'UNSUPPORTED_PEER_SEMANTICS','reason':'peer_kind_requires_research:'+str(kind)})
