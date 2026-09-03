@@ -1,0 +1,82 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-design-md-learning-intake-20260903-1343",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "agent_task",
+  "subject": "Learn the DESIGN.md ecosystem as structured visual-design knowledge, not as a blind dependency",
+  "related_goal": "dore-design/visual-learning/design-md-ecosystem",
+  "priority": "high",
+  "requires_reply": true,
+  "parent_goal": "Doré visual learning and New Westside product-quality improvement",
+  "source": {
+    "type": "user-provided Threads screenshots",
+    "topic": "DESIGN.md as an AI-readable design-system layer for coding agents",
+    "resources_to_research": [
+      "styles.refero.design",
+      "designmd.me",
+      "open-design.ai",
+      "designmd.supply",
+      "getdesign.md",
+      "aura.build",
+      "neuform.ai",
+      "design-md.hyperbrowser.ai",
+      "typeui.sh"
+    ]
+  },
+  "learning_thesis": [
+    "README.md explains what a project is; AGENTS.md explains how an agent should develop it; DESIGN.md can encode what the product should look and feel like.",
+    "Useful DESIGN.md knowledge includes color, typography, spacing, radius, components, visual language, motion and product-specific style rules.",
+    "The highest-value direction for Doré is website/product -> extracted visual language -> structured design knowledge -> Storybook candidates -> browser evidence -> product promotion.",
+    "Do not copy fashionable product styles into Westside. Learn extraction methods, schema patterns, visual-analysis methods, and agent-readable representation; preserve Westside identity and locked baselines."
+  ],
+  "placement": {
+    "primary": "Autonomous Visual Learning / knowledge layer",
+    "secondary": "Storybook research/reference pipeline",
+    "downstream": "New Westside candidate generation and visual judgment",
+    "not_primary": [
+      "runtime control plane",
+      "Newsroom",
+      "generic README/AGENTS governance"
+    ]
+  },
+  "required_sequence": [
+    "Research each listed resource and distinguish reference library, DESIGN.md generator/extractor, inspiration-to-build tool, and implementation utility.",
+    "Extract reusable concepts and schemas rather than merely bookmarking URLs.",
+    "Compare these concepts against Doré's existing visual-learning, Storybook candidate, provenance, baseline-immutability and WESTSIDE_FIT mechanisms.",
+    "Identify concrete gaps where a Doré-native DESIGN.md or equivalent design-memory artifact would improve consistency and agent comprehension.",
+    "If justified, propose/implement the smallest Doré-native structured design-memory layer that is generated from evidence and remains subordinate to Westside identity, not external style imitation.",
+    "Feed useful findings into the active New Westside parent goal without declaring product PASS from research alone.",
+    "Persist durable learning evidence and canonical receipt with source lineage, confidence, accepted/rejected patterns, and downstream reuse points."
+  ],
+  "special_focus": {
+    "refero": "real-product style systems and AI-readable pattern references",
+    "getdesignmd": "decomposition of real products into color/typography/spacing/components/visual language",
+    "hyperbrowser": "website -> DESIGN.md extraction workflow",
+    "typeui": "design skills/prompts/layout/CLI/Figma/browser-extension ecosystem and DESIGN.md generation",
+    "neuform": "screenshot -> visual direction -> DESIGN.md -> agent workflow, especially motion/WebGL/high-visual landing pages",
+    "aura": "compression of inspiration -> analysis -> prompt -> AI implementation",
+    "designmd_me_open_design_supply": "schema/ecosystem exploration and reusable conventions"
+  },
+  "acceptance": {
+    "pass_requires": [
+      "actual research evidence for the resource family",
+      "structured reusable learning artifact",
+      "explicit mapping into Doré visual-learning architecture",
+      "accepted and rejected pattern judgments",
+      "at least one concrete downstream reuse path for New Westside/Storybook",
+      "no false claim that external DESIGN.md equals Westside design truth"
+    ],
+    "forbidden_false_pass": [
+      "URL list only",
+      "memo-only summary with no reusable knowledge",
+      "copying Apple/Linear/Cursor or another brand wholesale",
+      "declaring New Westside visually accepted from DESIGN.md research"
+    ]
+  },
+  "loop_contract": {
+    "on_gap": "use autonomous learning under single-owner semantics, persist evidence, then resume",
+    "on_tool_limit": "record bounded evidence and continue with accessible sources rather than inventing findings",
+    "on_completion": "publish result and reconcile learning into the canonical visual-learning register"
+  }
+}
