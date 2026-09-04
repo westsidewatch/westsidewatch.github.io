@@ -72,6 +72,16 @@ This registry includes the modern design-system sources previously discussed, th
 
 Future Doré research must consult and update this registry rather than relying on recollection of a chat link.
 
+## Research source boundary
+
+Canonical boundary file:
+
+`dore-design/projects/new-westside-visual-construction/SOURCE-BOUNDARIES.md`
+
+Do not use Buddhist, occult, New Age, or other non-Christian religious institutions as research hosts, teaching authorities, reference registries, or recommended source links for this project. If a secular/historic design artifact is mirrored on such a site, replace that host with an official publisher, archive, museum, library, rights-holder, or neutral design-history source.
+
+The previously surfaced `buddhistuniversity.net` mirror of the NYCTA Graphics Standards Manual is explicitly rejected and must not be surfaced or used again.
+
 ## Child product loop
 
 The Brand Bible / VI / CI study has been promoted from ad-hoc research into a distinct nested product loop:
@@ -99,6 +109,7 @@ Future Doré/project work should consult:
 - historical primary sources such as `Westside Watch Brand Standards.pdf`;
 - relevant conversation transcripts;
 - the durable external-reference registry;
+- `SOURCE-BOUNDARIES.md`;
 - the Brand Bible child product loop;
 - current research notes and evidence.
 
