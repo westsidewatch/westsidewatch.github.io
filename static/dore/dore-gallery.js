@@ -34,6 +34,12 @@
   const intelligenceRuntime=document.createElement('script');
   intelligenceRuntime.src='/dore/dore-bible-intelligence.js?v=search2-20260904a';
   intelligenceRuntime.async=false;
+  intelligenceRuntime.onload=()=>{
+    const openCrossrefs=document.createElement('script');
+    openCrossrefs.src='/dore/dore-open-crossrefs.js?v=neuu-openbible-20260904a';
+    openCrossrefs.async=false;
+    document.head.appendChild(openCrossrefs);
+  };
   document.head.appendChild(intelligenceRuntime);
 
   const brainRuntime=document.createElement('script');
