@@ -30,9 +30,10 @@
   window.ONE_MAP_CAPTION_AUDIT={...audit,ok:true};document.documentElement.dataset.oneMapCaptions=`PASS:${audit.maps}-maps:${audit.completed}-completed`;
 })();
 
-/* Doré-owned open cross-reference graph. ONE is a consumer, not a duplicate database. */
+/* Doré-owned open cross-reference graph. ONE is a browser consumer, not a duplicate database. */
 (()=>{
   "use strict";
+  if(typeof window?.addEventListener!=='function'||typeof document==='undefined'||typeof document.createElement!=='function')return;
   const bind=()=>{
     const engine=window.DoreBibleIntelligence;
     if(!engine?.openCrossrefs)return false;
