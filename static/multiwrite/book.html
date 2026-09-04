@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多寫 · 書稿</title>
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./book.css">
+</head>
+<body class="book-shell">
+  <header class="book-topbar">
+    <a class="book-back" href="./">← 我的書</a>
+    <div class="book-brand">多寫 · MULTIWRITE</div>
+  </header>
+
+  <main class="book-layout">
+    <aside class="book-sidebar">
+      <div class="book-title-wrap">
+        <div class="book-kicker">IMPORTED MANUSCRIPT</div>
+        <h1 id="bookTitle">載入中…</h1>
+        <p id="bookSubtitle"></p>
+      </div>
+      <nav id="toc" class="book-toc" aria-label="章節目錄"></nav>
+    </aside>
+
+    <section class="book-reader">
+      <article id="readerContent" class="reader-paper">
+        <p class="reader-loading">正在載入書稿…</p>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="./book.js"></script>
+</body>
+</html>
