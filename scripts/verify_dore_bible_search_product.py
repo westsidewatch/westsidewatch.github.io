@@ -17,6 +17,8 @@ def main():
     join=Path('join/index.html').read_text(encoding='utf-8')
     one_js=Path('static/one/one-opening-simple.js').read_text(encoding='utf-8')
     one_crossref=Path('static/one/one-cross-reference-scripture-global-audit.js').read_text(encoding='utf-8')
+    one_crossref_ui=Path('static/one/one-dore-crossref-ui.js').read_text(encoding='utf-8')
+    one_crossref_ui_css=Path('static/one/one-dore-crossref-ui.css').read_text(encoding='utf-8')
     one_css=Path('static/one/one-opening-simple.css').read_text(encoding='utf-8')
     home=Path('layouts/index.html').read_text(encoding='utf-8')
     assets=Path('static/one/one-dore-assets-241.js').read_text(encoding='utf-8')
@@ -43,7 +45,6 @@ def main():
     check('DoreBibleIntelligence' in intelligence and 'ingestScriptureThreads' in intelligence and 'related(ref,opts={})' in intelligence,'shared_bible_intelligence_graph',failures)
     check('crossReferenceShared' in one_js and 'shared.related' in one_js and 'shared.query' in one_js,'one_consumes_shared_bible_intelligence',failures)
     check('gilead-jabesh-saul' in intelligence and 'wilderness-temptation-deuteronomy' in intelligence and 'ot-spirit-false-premise' in intelligence,'search2_semantic_reflexes',failures)
-    # Search 2.0 large open-corpus acceptance: no hand-coded fixture may satisfy this gate.
     stats=manifest.get('stats',{})
     check(manifest.get('schema')=='dore.crossrefs.manifest.v1','open_crossrefs_manifest_schema',failures)
     check(manifest.get('source_dataset')=='neuu-bible-crossrefs','open_crossrefs_dataset',failures)
@@ -55,8 +56,11 @@ def main():
     check('relatedAsync' in open_crossrefs and 'traceOpenCrossref' in open_crossrefs and 'CC BY 4.0' not in open_crossrefs,'open_crossrefs_lazy_runtime',failures)
     check('dore-open-crossrefs.js' in gallery,'search_consumes_open_crossrefs',failures)
     check('shared.relatedAsync' in one_crossref and 'shared.openRelated' in one_crossref and 'shared.trace' in one_crossref and 'dore-open-crossrefs.js' in one_crossref,'one_consumes_open_crossrefs',failures)
+    check('one-dore-crossref-ui.js' in one_js and 'one-dore-crossref-ui.css' in one_js,'one_crossref_ui_loader',failures)
+    check('百萬串珠圖' in one_crossref_ui and 'source_votes' in one_crossref_ui and 'relatedAsync' in one_crossref_ui and '查看關係路徑與來源' in one_crossref_ui,'one_visible_crossref_intelligence',failures)
+    check('dore-crossref-results' in one_crossref_ui_css and '@media(max-width:780px)' in one_crossref_ui_css,'one_crossref_ui_responsive',failures)
     verdict='PASS' if not failures else 'FAIL'
-    result={'schema':'dore.work-node.bible-search.v3','verdict':verdict,'work_node':'DORE_BIBLE_SEARCH','status':'AVAILABLE' if verdict=='PASS' else 'NOT_READY','function_url':'/dore/search/','failures':failures,'entrances':['JOIN','ONE','WESTSIDE_WATCH_MAIN'],'capabilities':['canonical_reference','chapter_reference','cuv_webu_keyword','fuzzy_recall_candidates','original_surface','lemma','morphology','provenance_display','dore_original_archive_241','shared_bible_intelligence_graph','weighted_multi_hop_relations','semantic_study_intents','one_shared_intelligence_bridge','neuu_openbible_tsk_crossrefs','million_edge_crossref_graph','lazy_book_crossref_shards','traceable_open_crossrefs','one_open_crossref_bridge'],'crossrefs':stats,'performance':{'core_index_bytes':core_path.stat().st_size,'original_index_bytes':orig_path.stat().st_size,'crossrefs_manifest_bytes':manifest_path.stat().st_size if manifest_path.exists() else 0,'original_index_loading':'lazy','crossrefs_loading':'lazy_by_source_book','dore_archive_loading':'two-slot_lazy_cycle'},'governance':'External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; this is still not completion of permanent issue #281.'}
+    result={'schema':'dore.work-node.bible-search.v4','verdict':verdict,'work_node':'DORE_BIBLE_SEARCH','status':'AVAILABLE' if verdict=='PASS' else 'NOT_READY','function_url':'/dore/search/','failures':failures,'entrances':['JOIN','ONE','WESTSIDE_WATCH_MAIN'],'capabilities':['canonical_reference','chapter_reference','cuv_webu_keyword','fuzzy_recall_candidates','original_surface','lemma','morphology','provenance_display','dore_original_archive_241','shared_bible_intelligence_graph','weighted_multi_hop_relations','semantic_study_intents','one_shared_intelligence_bridge','neuu_openbible_tsk_crossrefs','million_edge_crossref_graph','lazy_book_crossref_shards','traceable_open_crossrefs','one_open_crossref_bridge','one_visible_crossref_graph_ui','crossref_source_vote_weight_ui','crossref_multihop_trace_ui'],'crossrefs':stats,'performance':{'core_index_bytes':core_path.stat().st_size,'original_index_bytes':orig_path.stat().st_size,'crossrefs_manifest_bytes':manifest_path.stat().st_size if manifest_path.exists() else 0,'original_index_loading':'lazy','crossrefs_loading':'lazy_by_source_book','dore_archive_loading':'two-slot_lazy_cycle'},'governance':'External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; ONE must expose the graph visibly with source/vote/weight/path controls. This is still not completion of permanent issue #281.'}
     OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps(result,ensure_ascii=False,indent=2,sort_keys=True)+'\n',encoding='utf-8');print(json.dumps(result,ensure_ascii=False,indent=2))
     if verdict!='PASS':raise SystemExit(1)
 if __name__=='__main__':main()

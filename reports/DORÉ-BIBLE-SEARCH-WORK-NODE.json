@@ -17,7 +17,10 @@
     "million_edge_crossref_graph",
     "lazy_book_crossref_shards",
     "traceable_open_crossrefs",
-    "one_open_crossref_bridge"
+    "one_open_crossref_bridge",
+    "one_visible_crossref_graph_ui",
+    "crossref_source_vote_weight_ui",
+    "crossref_multihop_trace_ui"
   ],
   "crossrefs": {
     "books": 66,
@@ -37,7 +40,7 @@
   ],
   "failures": [],
   "function_url": "/dore/search/",
-  "governance": "External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; this is still not completion of permanent issue #281.",
+  "governance": "External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; ONE must expose the graph visibly with source/vote/weight/path controls. This is still not completion of permanent issue #281.",
   "performance": {
     "core_index_bytes": 10235111,
     "crossrefs_loading": "lazy_by_source_book",
@@ -46,7 +49,7 @@
     "original_index_bytes": 10184152,
     "original_index_loading": "lazy"
   },
-  "schema": "dore.work-node.bible-search.v3",
+  "schema": "dore.work-node.bible-search.v4",
   "status": "AVAILABLE",
   "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
