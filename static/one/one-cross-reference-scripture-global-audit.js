@@ -29,3 +29,29 @@
   }
   window.ONE_MAP_CAPTION_AUDIT={...audit,ok:true};document.documentElement.dataset.oneMapCaptions=`PASS:${audit.maps}-maps:${audit.completed}-completed`;
 })();
+
+/* Doré-owned open cross-reference graph. ONE is a consumer, not a duplicate database. */
+(()=>{
+  "use strict";
+  const bind=()=>{
+    const engine=window.DoreBibleIntelligence;
+    if(!engine?.openCrossrefs)return false;
+    const data=window.ONE_DATA||(window.ONE_DATA={});
+    const shared=data.crossReferenceShared||(data.crossReferenceShared={});
+    shared.openCrossrefs=engine.openCrossrefs;
+    shared.relatedAsync=(ref,opts)=>engine.relatedAsync(ref,opts);
+    shared.openRelated=(ref,opts)=>engine.openRelated(ref,opts);
+    shared.trace=(from,to,opts)=>engine.traceOpenCrossref(from,to,opts);
+    document.documentElement.dataset.oneOpenCrossrefs='READY';
+    window.dispatchEvent(new CustomEvent('one:open-crossrefs-ready',{detail:{consumer:'ONE',engine:engine.openCrossrefs.version}}));
+    return true;
+  };
+  const load=()=>{
+    if(bind())return;
+    if(!window.DoreBibleIntelligence){setTimeout(load,25);return;}
+    if(document.getElementById('dore-open-crossrefs-runtime')){setTimeout(bind,25);return;}
+    const script=document.createElement('script');script.id='dore-open-crossrefs-runtime';script.src='/dore/dore-open-crossrefs.js?v=neuu-openbible-20260904a';script.async=false;script.onload=bind;document.head.appendChild(script);
+  };
+  window.addEventListener('dore:open-crossrefs-ready',bind);
+  load();
+})();
