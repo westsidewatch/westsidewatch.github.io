@@ -6,6 +6,10 @@
     if(document.getElementById("dore-bible-intelligence-runtime"))return;
     const script=document.createElement("script");script.id="dore-bible-intelligence-runtime";script.src="/dore/dore-bible-intelligence.js?v=search2-20260904b";script.async=false;script.onload=bindBibleIntelligence;document.head.appendChild(script);
   };
+  const loadCrossrefUI=()=>{
+    if(!document.getElementById("one-dore-crossref-style")){const link=document.createElement("link");link.id="one-dore-crossref-style";link.rel="stylesheet";link.href="/one/one-dore-crossref-ui.css?v=20260904a";document.head.appendChild(link);}
+    if(!document.getElementById("one-dore-crossref-ui-runtime")){const script=document.createElement("script");script.id="one-dore-crossref-ui-runtime";script.src="/one/one-dore-crossref-ui.js?v=20260904a";script.defer=true;document.head.appendChild(script);}
+  };
   const bindBibleIntelligence=()=>{
     const engine=window.DoreBibleIntelligence;if(!engine)return;
     const D=window.ONE_DATA||(window.ONE_DATA={});
@@ -17,10 +21,11 @@
     shared.graphSearch=(query,opts)=>engine.graphSearch(query,opts);
     shared.trace=ref=>engine.related(ref,{depth:4,limit:50});
     if(Array.isArray(shared.scriptureThreads))engine.ingestScriptureThreads(shared.scriptureThreads,{consumer:"one",source_dataset:"one-scripture-thread"});
+    loadCrossrefUI();
     window.dispatchEvent(new CustomEvent("one:bible-intelligence-ready",{detail:engine.stats()}));
   };
   window.addEventListener("one:cross-reference-scripture-ready",bindBibleIntelligence);
-  loadBibleIntelligence();
+  loadBibleIntelligence();loadCrossrefUI();
 
   const coverPortals=document.querySelector(".cover-portals");
   if(coverPortals&&!coverPortals.querySelector(".dore-inline-search")){
