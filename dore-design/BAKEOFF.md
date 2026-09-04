@@ -1,12 +1,17 @@
 # Doré Design — Provider Bake-off
 
-This is an engineering selection process, not a feature-list comparison.
+Status: `SUPERSEDED / PHASE_CLOSED / HISTORICAL_EVIDENCE`
+
+Current governing product state: `dore-design/PROJECT.md`.
+Durable Sweep evidence: `dore-core/projects/DORÉ-DORÉ-DESIGN-FOUNDATION-EVIDENCE-LEDGER-2026-09-01.md`.
+
+This file preserves the original engineering selection process and its acceptance gates. It is **not** a current execution plan and must not reactivate Penpot, OpenPencil, Framesmith, Doop, Tela, or any other provider as a prerequisite for Doré Design operation.
 
 ## Shared production brief
 
-Every provider receives the same Westside Watch homepage design objective and brand constraints. No candidate passes merely because it installs, connects, or creates a rectangle.
+Every provider received the same Westside Watch homepage design objective and brand constraints. No candidate passed merely because it installed, connected, or created a rectangle.
 
-## Gates
+## Historical gates
 
 | Gate | Requirement |
 |---|---|
@@ -21,21 +26,27 @@ Every provider receives the same Westside Watch homepage design objective and br
 | G8 | Repeated-operation stability test passes |
 | G9 | Failure/recovery behavior is observable and bounded |
 
-## Candidates
+## Historical candidates
 
-| Candidate | Base-engine potential | Components to inspect | Status |
+| Candidate | Base-engine potential | Components inspected / intended | Historical status |
 |---|---|---|---|
-| Penpot | yes | canvas, document model, plugin/MCP, export | compatibility investigation |
-| OpenPencil | high | canvas, MCP, CLI, node tools, import/export | priority experiment |
-| Framesmith | possible supporting engine | scene graph, renderer, headless visual review | experiment |
-| Doop | possible | agent-native canvas, MCP, collaboration, memory | experiment |
-| Tela | possible component/base | SVG canvas, local-first state, RPC/dispatch | experiment |
+| Penpot | yes | canvas, document model, plugin/MCP, export | provider experiment; no longer prerequisite |
+| OpenPencil | high | canvas, MCP, CLI, node tools, import/export | provider experiment; no longer prerequisite |
+| Framesmith | possible supporting engine | scene graph, renderer, headless visual review | component/reference source only |
+| Doop | possible | agent-native canvas, MCP, collaboration, memory | component/reference source only |
+| Tela | possible component/base | SVG canvas, local-first state, RPC/dispatch | component/reference source only |
 
-## Decision rule
+## Historical decision rule
 
-The first stable provider is allowed to become the provisional base; testing continues far enough to identify superior reusable components in other candidates. Doré Design should combine compatible strengths through clean boundaries rather than becoming permanently coupled to the first winner.
+The first stable provider was allowed to become a provisional base while testing continued far enough to identify reusable components in other candidates. That rule served the construction phase.
 
-## Evidence required per candidate
+It is now superseded by the accepted self-owned Doré Design architecture:
+
+`shared structured workspace → human + Doré mutation → deterministic render/export → machine verification → revision/history`
+
+Upstream projects may still contribute ideas or compatible components, but provider success is no longer a product prerequisite.
+
+## Historical evidence required per candidate
 
 - exact source/revision/version
 - license
@@ -49,3 +60,7 @@ The first stable provider is allowed to become the provisional base; testing con
 - failures/workarounds
 - components recommended for reuse
 - final disposition: reject / observe / component / provisional base / base
+
+## Current interpretation
+
+Do not resume this bake-off merely because Doré Design needs a new feature. New capabilities should be driven first by real production gaps in the self-owned product. Reopen a provider investigation only when a concrete missing capability is better satisfied by reusing an upstream component than by extending Doré Design directly, and treat that as bounded component research rather than a return to the original provider-selection phase.
