@@ -68,7 +68,7 @@ Current sequence:
 07 Westside Night / 西區的夜晚 — Bible Study / 查經
 08 Elim / 以琳 — Devotion / 靈修
 09 Beersheba / 別是巴 — Meditation / 默想
-10 Bethel / 伯利特 — Church Life / 教會生活
+10 Bethel / 伯特利 — Church Life / 教會生活
 11 Horeb / 何烈山 — Praise / 頌讚
 12 Maranatha / 瑪拉拿 — Prayer / 禱告
 
