@@ -6,6 +6,8 @@ body { margin:0; color:var(--ink); background:var(--paper); font-family:'Noto Se
 button,input,textarea,select { font:inherit; }
 button { cursor:pointer; }
 .topbar { height:72px; display:flex; align-items:center; gap:24px; padding:0 clamp(20px,5vw,72px); border-bottom:1px solid var(--line); background:rgba(245,241,231,.92); position:sticky; top:0; z-index:10; backdrop-filter:blur(12px); }
+.site-back { color:var(--muted); text-decoration:none; font-size:13px; white-space:nowrap; }
+.site-back:hover,.site-back:focus-visible { color:var(--gold); outline:none; }
 .brand { color:var(--ink); text-decoration:none; font-size:25px; font-weight:600; letter-spacing:.16em; }
 .tagline { color:var(--muted); font-size:13px; }
 main { width:min(1180px,calc(100% - 40px)); margin:0 auto; padding:64px 0 110px; }
@@ -56,4 +58,4 @@ pre { margin:0; padding:12px; max-height:180px; overflow:auto; white-space:pre-w
 .status { margin-top:18px; padding:14px 16px; border-left:3px solid var(--gold); background:#f0ead9; }
 .status[data-kind="error"] { border-left-color:#8a3636; background:#f5e5e2; }
 footer { padding:30px 40px; border-top:1px solid var(--line); color:var(--muted); text-align:center; font-size:12px; }
-@media (max-width:780px) { .tagline{display:none}.hero,.section-heading,.preview-head,.finish-bar{display:block}.hero-actions{margin-top:26px}.import-grid{grid-template-columns:1fr}.preview-controls{grid-template-columns:1fr 1fr 40px 40px}.finish-bar .button{margin-top:18px;width:100%}main{width:min(100% - 24px,1180px);padding-top:38px}.import-shell{padding:20px}.preview-item{grid-template-columns:40px 1fr} }
+@media (max-width:780px) { .tagline{display:none}.topbar{gap:14px}.site-back{font-size:12px}.hero,.section-heading,.preview-head,.finish-bar{display:block}.hero-actions{margin-top:26px}.import-grid{grid-template-columns:1fr}.preview-controls{grid-template-columns:1fr 1fr 40px 40px}.finish-bar .button{margin-top:18px;width:100%}main{width:min(100% - 24px,1180px);padding-top:38px}.import-shell{padding:20px}.preview-item{grid-template-columns:40px 1fr} }
