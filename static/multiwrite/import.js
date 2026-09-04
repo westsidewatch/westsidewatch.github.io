@@ -4,14 +4,17 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const state = { nodes: [], sources: [], files: [] };
 
 const DB_NAME = 'multiwrite-v1';
+const DB_VERSION = 2;
 const STORE = 'books';
+const DRAFT_STORE = 'drafts';
 
 function openDb() {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
     request.onupgradeneeded = () => {
       const db = request.result;
       if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(DRAFT_STORE)) db.createObjectStore(DRAFT_STORE, { keyPath: 'id' });
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -23,8 +26,8 @@ async function saveBook(book) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, 'readwrite');
     tx.objectStore(STORE).put(book);
-    tx.oncomplete = () => resolve(book);
-    tx.onerror = () => reject(tx.error);
+    tx.oncomplete = () => { db.close(); resolve(book); };
+    tx.onerror = () => { db.close(); reject(tx.error); };
   });
 }
 
@@ -33,8 +36,8 @@ async function listBooks() {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(STORE, 'readonly');
     const request = tx.objectStore(STORE).getAll();
-    request.onsuccess = () => resolve(request.result || []);
-    request.onerror = () => reject(request.error);
+    request.onsuccess = () => { const result = request.result || []; db.close(); resolve(result); };
+    request.onerror = () => { db.close(); reject(request.error); };
   });
 }
 
@@ -74,7 +77,9 @@ async function extractPdf(file) {
       .trim();
     pages.push(pageText);
   }
-  return pages.join('\n\n');
+  const result = pages.join('\n\n').trim();
+  if (!result) throw new Error('這份 PDF 沒有可擷取文字；v1 不會自動 OCR。請改用可選取文字的 PDF、DOCX 或貼上文字。');
+  return result;
 }
 
 async function extractFile(file) {
@@ -183,7 +188,7 @@ async function renderLibrary() {
         <p>${escapeHtml(book.subtitle || '')}</p>
         <div class="book-meta">${book.nodes?.length ?? book.structure?.length ?? 0} 個內容單元</div>`;
       return isGolden
-        ? `<a class="book-card book-card-link" href="./book.html?id=${encodeURIComponent(book.id)}" aria-label="打開《${escapeHtml(book.title)}》">${body}<div class="book-open">打開書稿 →</div></a>`
+        ? `<a class="book-card book-card-link" href="/multiwrite/book.html?id=${encodeURIComponent(book.id)}" aria-label="打開《${escapeHtml(book.title)}》">${body}<div class="book-open">打開書稿 →</div></a>`
         : `<article class="book-card">${body}</article>`;
     }).join('');
   } catch (error) {
