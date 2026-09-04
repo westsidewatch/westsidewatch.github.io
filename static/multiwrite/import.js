@@ -175,13 +175,17 @@ async function renderLibrary() {
       list.innerHTML = '<div class="empty">還沒有書稿。可以建立新書，或把舊稿匯入。</div>';
       return;
     }
-    list.innerHTML = items.map((book) => `
-      <article class="book-card">
-        <div class="book-kicker">${book.import?.goldenCase ? 'IMPORTED · GOLDEN CASE' : 'MY BOOK'}</div>
+    list.innerHTML = items.map((book) => {
+      const isGolden = Boolean(book.import?.goldenCase);
+      const body = `
+        <div class="book-kicker">${isGolden ? 'IMPORTED · GOLDEN CASE' : 'MY BOOK'}</div>
         <h3>${escapeHtml(book.title)}</h3>
         <p>${escapeHtml(book.subtitle || '')}</p>
-        <div class="book-meta">${book.nodes?.length ?? book.structure?.length ?? 0} 個內容單元</div>
-      </article>`).join('');
+        <div class="book-meta">${book.nodes?.length ?? book.structure?.length ?? 0} 個內容單元</div>`;
+      return isGolden
+        ? `<a class="book-card book-card-link" href="./book.html?id=${encodeURIComponent(book.id)}" aria-label="打開《${escapeHtml(book.title)}》">${body}<div class="book-open">打開書稿 →</div></a>`
+        : `<article class="book-card">${body}</article>`;
+    }).join('');
   } catch (error) {
     list.innerHTML = `<div class="empty">書庫讀取失敗：${escapeHtml(error.message)}</div>`;
   }
