@@ -1,7 +1,6 @@
 import { ROLE_OPTIONS, buildBook, mergeImports, validateBook } from './import-core.mjs';
 
 const $ = (sel, root = document) => root.querySelector(sel);
-const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
 const state = { nodes: [], sources: [], files: [] };
 
 const DB_NAME = 'multiwrite-v1';
@@ -67,7 +66,13 @@ async function extractPdf(file) {
   for (let pageNo = 1; pageNo <= pdf.numPages; pageNo += 1) {
     const page = await pdf.getPage(pageNo);
     const text = await page.getTextContent();
-    pages.push(text.items.map((item) => item.str).join(' '));
+    const pageText = text.items
+      .map((item) => `${item.str}${item.hasEOL ? '\n' : ' '}`)
+      .join('')
+      .replace(/[ \t]+\n/g, '\n')
+      .replace(/[ \t]{2,}/g, ' ')
+      .trim();
+    pages.push(pageText);
   }
   return pages.join('\n\n');
 }
