@@ -31,8 +31,14 @@
   const boot=()=>{unlockSearch();placeSearchMeta()};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 
+  const intelligenceRuntime=document.createElement('script');
+  intelligenceRuntime.src='/dore/dore-bible-intelligence.js?v=search2-20260904a';
+  intelligenceRuntime.async=false;
+  document.head.appendChild(intelligenceRuntime);
+
   const brainRuntime=document.createElement('script');
   brainRuntime.src='/dore/dore-brain-bridge.js?v=brain-bridge-20260823a';
+  brainRuntime.async=false;
   document.head.appendChild(brainRuntime);
 
   const parserRuntime=document.createElement('script');
