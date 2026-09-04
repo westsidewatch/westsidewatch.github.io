@@ -23,9 +23,10 @@
         "kind": "academic-appendix-source",
         "bytes": 622814,
         "sha256": "97d4b5174e564a9777be62764bf4959c2c8009b7280386c2a1aeb3fd3e8e460d",
-        "extractedTextBytes": 39264,
-        "extractedTextLines": 966,
-        "extractedTextSha256": "50ac7ed46a577856255bc4c458975fe9ef619ad1161c8cf9f02fd4e4a9901a76"
+        "materializedTextBytes": 39264,
+        "materializedTextLines": 966,
+        "materializedTextSha256": "50ac7ed46a577856255bc4c458975fe9ef619ad1161c8cf9f02fd4e4a9901a76",
+        "bibliographyCompletion": "recovered-directly-from-backing-pdf"
       }
     ]
   },
@@ -50,7 +51,8 @@
       "source": "天國語言極簡史｜論文.pdf",
       "files": [
         "appendix-academic-paper-part-01.txt",
-        "appendix-academic-paper-part-02.txt"
+        "appendix-academic-paper-part-02.txt",
+        "appendix-academic-paper-part-03.txt"
       ]
     }
   ]
