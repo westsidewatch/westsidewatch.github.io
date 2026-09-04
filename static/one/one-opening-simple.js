@@ -1,10 +1,28 @@
 /* ONE opening rail compatibility layer. */
 (() => {
   "use strict";
+  const loadBibleIntelligence=()=>{
+    if(window.DoreBibleIntelligence){bindBibleIntelligence();return;}
+    if(document.getElementById("dore-bible-intelligence-runtime"))return;
+    const script=document.createElement("script");script.id="dore-bible-intelligence-runtime";script.src="/dore/dore-bible-intelligence.js?v=search2-20260904a";script.async=false;script.onload=bindBibleIntelligence;document.head.appendChild(script);
+  };
+  const bindBibleIntelligence=()=>{
+    const engine=window.DoreBibleIntelligence;if(!engine)return;
+    const D=window.ONE_DATA||(window.ONE_DATA={});
+    const shared=D.crossReferenceShared||(D.crossReferenceShared={});
+    shared.bibleIntelligence=engine;
+    shared.related=(ref,opts)=>engine.related(ref,opts);
+    shared.query=query=>engine.conceptSearch(query);
+    if(Array.isArray(shared.scriptureThreads))engine.ingestScriptureThreads(shared.scriptureThreads,{consumer:"one",source_dataset:"one-scripture-thread"});
+    window.dispatchEvent(new CustomEvent("one:bible-intelligence-ready",{detail:engine.stats()}));
+  };
+  window.addEventListener("one:cross-reference-scripture-ready",bindBibleIntelligence);
+  loadBibleIntelligence();
+
   const coverPortals=document.querySelector(".cover-portals");
   if(coverPortals&&!coverPortals.querySelector(".dore-inline-search")){
     coverPortals.querySelector(".dore-search-mark")?.remove();
-    const form=document.createElement("form");form.className="dore-inline-search";form.setAttribute("role","search");form.setAttribute("aria-label","搜索");form.innerHTML='<input type="search" name="q" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off"><button type="submit">搜索</button>';
+    const form=document.createElement("form");form.className="dore-inline-search";form.setAttribute("role","search");form.setAttribute("aria-label","搜索");form.innerHTML='<input type="search" name="q" aria-label="搜索" placeholder="搜索經文、串珠、人物、地點、原文…" autocomplete="off"><button type="submit">搜索</button>';
     form.addEventListener("submit",e=>{e.preventDefault();const q=form.elements.q.value.trim();if(q)location.href="/dore/search/?q="+encodeURIComponent(q)});coverPortals.prepend(form);
   }
   const scriptureTrigger=document.getElementById("open-scripture");if(scriptureTrigger){const staticScripture=document.createElement("div");staticScripture.className="cover-scripture-static";staticScripture.setAttribute("aria-label","詩篇 36:9");staticScripture.innerHTML=scriptureTrigger.innerHTML;scriptureTrigger.replaceWith(staticScripture);document.getElementById("light-reading")?.remove();}
