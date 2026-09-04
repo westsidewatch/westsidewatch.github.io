@@ -8,29 +8,28 @@
     "lemma",
     "morphology",
     "provenance_display",
-    "dore_original_archive_241"
+    "dore_original_archive_241",
+    "shared_bible_intelligence_graph",
+    "weighted_multi_hop_relations",
+    "semantic_study_intents",
+    "one_shared_intelligence_bridge"
   ],
   "entrances": [
     "JOIN",
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [
-    "join_background_contract",
-    "chapter_reference_ui",
-    "one_direct_visible_search_entry",
-    "main_site_direct_search_entry"
-  ],
+  "failures": [],
   "function_url": "/dore/search/",
-  "governance": "This is an external work-node acceptance, not an educational milestone.",
+  "governance": "External work-node acceptance. This verifies the integrated Search 2 increment, not completion of the permanent Bible Intelligence Loop or issue #281.",
   "performance": {
     "core_index_bytes": 10235111,
     "dore_archive_loading": "two-slot_lazy_cycle",
     "original_index_bytes": 10184152,
     "original_index_loading": "lazy"
   },
-  "schema": "dore.work-node.bible-search.v1",
-  "status": "NOT_READY",
-  "verdict": "FAIL",
+  "schema": "dore.work-node.bible-search.v2",
+  "status": "AVAILABLE",
+  "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
 }

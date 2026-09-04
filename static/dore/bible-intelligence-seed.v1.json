@@ -1,0 +1,54 @@
+{
+  "schema": "dore.bible-intelligence-seed.v1",
+  "sources": [
+    {
+      "id": "dore-curated-scripture",
+      "type": "canonical-scripture-relations",
+      "license": "references/facts",
+      "status": "active",
+      "authority": "Canonical Scripture relationship anchors; verse text is resolved from Doré local Scripture index."
+    },
+    {
+      "id": "crossreferences-org-tsk",
+      "type": "phrase-level-cross-reference-method",
+      "license": "CC-BY-4.0",
+      "status": "approved-for-ingestion",
+      "authority": "Phrase-level Treasury of Scripture Knowledge cross-reference structure; source attribution required.",
+      "homepage": "https://github.com/CrossReferences-org/bible-cross-references"
+    },
+    {
+      "id": "openbible-crossrefs",
+      "type": "weighted-cross-reference-method",
+      "license": "CC-BY-4.0",
+      "status": "approved-for-ingestion",
+      "authority": "Weighted public cross-reference graph; keep source weight and provenance distinct from Doré-derived relations.",
+      "homepage": "https://www.openbible.info/labs/cross-references/"
+    }
+  ],
+  "concepts": [
+    {
+      "id": "gilead-jabesh-saul",
+      "aliases": ["基列雅比", "雅比城", "基列的雅比", "jabesh gilead", "jabesh-gilead", "掃羅與雅比"],
+      "lead": "基列雅比與掃羅形成一條跨越士師時代、掃羅作王與掃羅死後的歷史線。",
+      "keywords": ["基列雅比", "掃羅", "士師", "葬埋掃羅"],
+      "refs": ["bible.ref.JDG.21.8", "bible.ref.1SA.11.1", "bible.ref.1SA.31.11", "bible.ref.2SA.2.4", "bible.ref.1CH.10.11"],
+      "relations": ["entity_history", "entity_history", "entity_history", "parallel"]
+    },
+    {
+      "id": "wilderness-temptation-deuteronomy",
+      "aliases": ["耶穌受試探", "曠野試探", "耶穌在曠野", "申命記六到八章", "wilderness temptation"],
+      "lead": "耶穌在曠野受試探的福音記載，應與祂回答所引用／呼應的申命記 6–8 章一起閱讀。",
+      "keywords": ["曠野", "耶穌", "試探", "申命記"],
+      "refs": ["bible.ref.MAT.4.1", "bible.ref.MRK.1.12", "bible.ref.LUK.4.1", "bible.ref.DEU.8.3", "bible.ref.DEU.6.16", "bible.ref.DEU.6.13"],
+      "relations": ["parallel", "parallel", "quotation", "quotation", "quotation"]
+    },
+    {
+      "id": "ot-spirit-false-premise",
+      "aliases": ["舊約聖靈", "舊約沒有聖靈", "神的靈", "耶和華的靈", "旧约圣灵", "神的灵"],
+      "lead": "這個前提不成立：舊約多次提到神的靈、耶和華的靈，也直接出現「聖靈」的表述。",
+      "keywords": ["神的靈", "耶和華的靈", "聖靈", "我的靈"],
+      "refs": ["bible.ref.GEN.1.2", "bible.ref.JDG.3.10", "bible.ref.1SA.16.13", "bible.ref.PSA.51.11", "bible.ref.ISA.63.10", "bible.ref.EZK.36.27"],
+      "relations": ["topic", "topic", "topic", "topic", "topic"]
+    }
+  ]
+}

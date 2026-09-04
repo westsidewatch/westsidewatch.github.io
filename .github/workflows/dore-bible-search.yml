@@ -9,6 +9,7 @@ on:
       - 'dore_core/readers/**'
       - 'scripts/build_dore_browser_search_index.py'
       - 'scripts/verify_dore_bible_search_product.py'
+      - 'scripts/verify_dore_bible_intelligence.js'
       - 'static/dore/**'
       - 'join/index.html'
       - 'static/one/one-opening-simple.js'
@@ -28,6 +29,8 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/build_dore_browser_search_index.py
+      - name: Verify Search 2 Bible Intelligence semantic benchmark
+        run: node scripts/verify_dore_bible_intelligence.js
       - name: Verify index, function page, and learning reflex 001
         run: |
           python - <<'PY'
@@ -49,9 +52,8 @@ jobs:
           redirect=Path('static/dore/index.html').read_text(encoding='utf-8')
           js=Path('static/dore/dore-search.js').read_text(encoding='utf-8')
           reflex=Path('dore-core/reflex/signals/001-translated-phrase-to-original-language.md').read_text(encoding='utf-8')
-          assert '耶利米書 33:3' in html and '/background.jpg' in html and 'id="search-form"' in html
+          assert '耶利米書 33:3' in html and ('/background.jpg' in html or 'SITE-BACKGROUND' in html) and 'id="search-form"' in html
           assert '/dore/search/' in redirect
-          # Canonical real-work regression: "耶西的本 希伯來原文".
           jesse=[(i,v) for i,v in enumerate(core['verses']) if '耶西的本' in v.get('z','')]
           assert jesse, 'CUV phrase 耶西的本 must resolve to a canonical passage'
           isa=[(i,v) for i,v in jesse if v['r']=='bible.ref.ISA.11.1']

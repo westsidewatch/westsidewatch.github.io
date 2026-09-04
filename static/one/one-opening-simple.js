@@ -1,14 +1,35 @@
 /* ONE opening rail compatibility layer. */
 (() => {
   "use strict";
+  const loadBibleIntelligence=()=>{
+    if(window.DoreBibleIntelligence){bindBibleIntelligence();return;}
+    if(document.getElementById("dore-bible-intelligence-runtime"))return;
+    const script=document.createElement("script");script.id="dore-bible-intelligence-runtime";script.src="/dore/dore-bible-intelligence.js?v=search2-20260904b";script.async=false;script.onload=bindBibleIntelligence;document.head.appendChild(script);
+  };
+  const bindBibleIntelligence=()=>{
+    const engine=window.DoreBibleIntelligence;if(!engine)return;
+    const D=window.ONE_DATA||(window.ONE_DATA={});
+    const shared=D.crossReferenceShared||(D.crossReferenceShared={});
+    shared.bibleIntelligence=engine;
+    shared.related=(ref,opts)=>engine.related(ref,opts);
+    shared.query=(query,opts)=>engine.query(query,opts);
+    shared.conceptSearch=query=>engine.conceptSearch(query);
+    shared.graphSearch=(query,opts)=>engine.graphSearch(query,opts);
+    shared.trace=ref=>engine.related(ref,{depth:4,limit:50});
+    if(Array.isArray(shared.scriptureThreads))engine.ingestScriptureThreads(shared.scriptureThreads,{consumer:"one",source_dataset:"one-scripture-thread"});
+    window.dispatchEvent(new CustomEvent("one:bible-intelligence-ready",{detail:engine.stats()}));
+  };
+  window.addEventListener("one:cross-reference-scripture-ready",bindBibleIntelligence);
+  loadBibleIntelligence();
+
   const coverPortals=document.querySelector(".cover-portals");
   if(coverPortals&&!coverPortals.querySelector(".dore-inline-search")){
     coverPortals.querySelector(".dore-search-mark")?.remove();
-    const form=document.createElement("form");form.className="dore-inline-search";form.setAttribute("role","search");form.setAttribute("aria-label","搜索");form.innerHTML='<input type="search" name="q" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off"><button type="submit">搜索</button>';
+    const form=document.createElement("form");form.className="dore-inline-search";form.setAttribute("role","search");form.setAttribute("aria-label","搜索");form.innerHTML='<input type="search" name="q" aria-label="搜索" placeholder="搜索經文、串珠、人物、地點、原文…" autocomplete="off"><button type="submit">搜索</button>';
     form.addEventListener("submit",e=>{e.preventDefault();const q=form.elements.q.value.trim();if(q)location.href="/dore/search/?q="+encodeURIComponent(q)});coverPortals.prepend(form);
   }
   const scriptureTrigger=document.getElementById("open-scripture");if(scriptureTrigger){const staticScripture=document.createElement("div");staticScripture.className="cover-scripture-static";staticScripture.setAttribute("aria-label","詩篇 36:9");staticScripture.innerHTML=scriptureTrigger.innerHTML;scriptureTrigger.replaceWith(staticScripture);document.getElementById("light-reading")?.remove();}
-  const scriptureStyle=document.createElement("style");scriptureStyle.textContent=`.dore-inline-search{display:flex;align-items:center;min-width:min(25rem,80vw);border-bottom:1px solid currentColor;padding:.35rem 0;opacity:.9}.dore-inline-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:inherit;font:400 .82rem "Noto Serif TC",serif}.dore-inline-search button{border:0;background:transparent;color:var(--dawn,#c7a858);font:500 .75rem "Noto Serif TC",serif;cursor:pointer}.one-scripture-reload{margin-left:.65rem;padding:0;border:0;color:inherit;background:transparent;font:inherit;text-decoration:underline;text-underline-offset:.18em;cursor:pointer}.one-scripture-reload:hover{opacity:.68}.one-scripture-reload:focus-visible{outline:1px solid currentColor;outline-offset:.2rem}`;document.head.append(scriptureStyle);
+  const scriptureStyle=document.createElement("style");scriptureStyle.textContent=`.dore-inline-search{display:flex;align-items:center;min-width:min(25rem,80vw);border-bottom:1px solid currentColor;padding:.35rem 0;opacity:.9}.dore-inline-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:inherit;font:400 .82rem "Noto Serif TC",serif}.dore-inline-search button{border:0;background:transparent;color:var(--dawn,#c7a858);font:500 .75rem "Noto Serif TC",serif;cursor:pointer}.one-scripture-reload{margin-left:.65rem;padding:0;border:0;color:inherit;background:transparent;font:inherit;text-decoration:underline;text-underline-offset:.18em;cursor:pointer}.one-scripture-reload:hover{opacity:.68}.one-scripture-reload:focus-visible{outline:1px solid currentColor;outline-offset:.2rem}`;document.head.appendChild(scriptureStyle);
   const freshYouVersionUrl=source=>{try{const url=new URL(source,location.href);url.searchParams.set("one_embed",String(Date.now()));return url.toString();}catch(error){return source+(source.includes("?")?"&":"?")+"one_embed="+Date.now();}};
   const enhanceEnglishScripture=root=>{root.querySelectorAll?.('.scripture-reading__pages article[lang="en"]').forEach(article=>{if(article.dataset.oneEnglishReady==="true")return;const frame=article.querySelector("iframe"),head=article.querySelector(":scope > div"),canonical=head?.querySelector('a[href*="bible.com"]'),source=frame?.dataset.src||frame?.getAttribute("src")||canonical?.href;if(!frame||!head||!source)return;article.dataset.oneEnglishReady="true";frame.dataset.oneBaseSrc=source;frame.removeAttribute("data-src");frame.loading="eager";frame.src=freshYouVersionUrl(source);const reload=document.createElement("button");reload.type="button";reload.className="one-scripture-reload";reload.textContent="Reload English";reload.setAttribute("aria-label","重新載入本章英文 NIV 經文");reload.addEventListener("click",()=>{reload.disabled=true;const oldText=reload.textContent;reload.textContent="Reloading…";frame.src="about:blank";requestAnimationFrame(()=>requestAnimationFrame(()=>{frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source);setTimeout(()=>{reload.disabled=false;reload.textContent=oldText},900)}))});head.append(reload);frame.addEventListener("error",()=>{if(frame.dataset.oneNetworkRetry==="true")return;frame.dataset.oneNetworkRetry="true";frame.src=freshYouVersionUrl(frame.dataset.oneBaseSrc||source)});});};
   const chapterDetail=document.getElementById("chapter-detail");if(chapterDetail){enhanceEnglishScripture(chapterDetail);const scriptureObserver=new MutationObserver(()=>enhanceEnglishScripture(chapterDetail));scriptureObserver.observe(chapterDetail,{childList:true,subtree:true});}
