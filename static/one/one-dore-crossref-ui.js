@@ -41,9 +41,7 @@
   }
 
   function resultMarkup(item,index){
-    const path=(item.path||[]).map(refLabel);
-    const provenance=item.provenance||{};
-    const votes=Number(item.source_votes||0);
+    const path=(item.path||[]).map(refLabel),provenance=item.provenance||{},votes=Number(item.source_votes||0);
     return `<article class="dore-crossref-card">
       <header><span>${String(index+1).padStart(2,'0')}</span><div><strong>${esc(refLabel(item.reference))}</strong><small>${esc(relationLabel(item.relation_type))}</small></div><b>${esc(scoreLabel(item.score))}</b></header>
       <div class="dore-crossref-meta"><span>${esc(sourceLabel(item))}</span>${votes?`<span>${votes.toLocaleString()} votes</span>`:''}<span>${Number(item.depth||1)} hop${Number(item.depth||1)>1?'s':''}</span></div>
@@ -61,7 +59,7 @@
     results.innerHTML='<p class="dore-crossref-loading">Doré 正在沿圖譜尋找關係…</p>';
     try{
       const engine=await ensureOpenRuntime();
-      const links=await engine.relatedAsync(ref,{depth,limit:18,source});
+      const links=source==='all'?await engine.relatedAsync(ref,{depth,limit:18}):await engine.openCrossrefs.graph(ref,{depth,limit:18,source});
       if(token!==renderToken||!panel.isConnected)return;
       if(!links.length){results.innerHTML=`<p class="dore-crossref-empty">${esc(refLabel(ref))} 暫未找到符合目前篩選條件的串珠。可切換來源或路徑深度。</p>`;return;}
       results.innerHTML=links.map(resultMarkup).join('');
