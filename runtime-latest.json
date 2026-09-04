@@ -1,6 +1,6 @@
 {
   "schema": "dore.runtime.telemetry.v0.9",
-  "published_at": "2026-09-04T01:25:31.918600+00:00",
+  "published_at": "2026-09-04T01:26:10.027169+00:00",
   "runtime": "dore.resident-runtime.v0.10",
   "ownership": {
     "supervisor": "launchd",
@@ -6597,10 +6597,10 @@
     "driver_passed": false,
     "last_progress_at": "2026-09-01T09:42:43.382585+00:00",
     "last_progress_epoch": 1788255763.382598,
-    "last_self_update_check_epoch": 1788484831.9485,
-    "last_self_update_check_at": "2026-09-04T01:20:31.948509+00:00",
-    "last_telemetry_epoch": 1788485093.089109,
-    "last_telemetry_at": "2026-09-04T01:24:53.089135+00:00",
+    "last_self_update_check_epoch": 1788485164.081486,
+    "last_self_update_check_at": "2026-09-04T01:26:04.081494+00:00",
+    "last_telemetry_epoch": 1788485133.970347,
+    "last_telemetry_at": "2026-09-04T01:25:33.970365+00:00",
     "telemetry_branch": "dore-runtime-telemetry",
     "last_tick_at": "2026-09-04T01:25:31.374357+00:00",
     "last_agent_state": "RESEARCH_QUEUED",
@@ -10194,13 +10194,6 @@
   },
   "events": [
     {
-      "at": "2026-09-04T01:14:25.772799+00:00",
-      "event": "COORDINATION_OBSERVATION",
-      "ok": true,
-      "state": "SPAWNED",
-      "pid": 67397
-    },
-    {
       "at": "2026-09-04T01:14:36.946844+00:00",
       "event": "AGENT_OBSERVATION",
       "state": "RESEARCH_QUEUED",
@@ -10644,6 +10637,15 @@
       "peer_required": false,
       "peer_blocking": null,
       "unchanged_cycles": 8
+    },
+    {
+      "at": "2026-09-04T01:26:09.413488+00:00",
+      "event": "SELF_UPDATED",
+      "files": [
+        "local/dore-local/coordination_worker.py"
+      ],
+      "source": "origin/main",
+      "two_phase_manifest_sync": true
     }
   ]
 }
