@@ -60,11 +60,46 @@ Each transcript should contain:
 
 - `conversations/2026-09-03-origin-design-theory-book-project.md` — the conversation in which Toronto/Vaughan were removed from visual-locality logic; typography was corrected; the Visual Constitution became an examination; the examination became a teachable design theory and book project; the theological origin layer was recovered; the Sacred Palette meanings were restored from the Brand Standards; and the project was defined simultaneously as design textbook, theological reflection, evangelistic book and Westside Watch Journal special issue.
 
+## Durable external-reference rule
+
+External sources that materially influence the project must not exist only in chat. They must be entered into the durable source registry with their exact URL, source class, learning purpose, provenance, anti-copy warning, and intended manuscript/Storybook transfer.
+
+Canonical registry:
+
+`dore-design/research/BRAND-BIBLE-VI-CI-REFERENCE-REGISTRY-2026-09-03.md`
+
+This registry includes the modern design-system sources previously discussed, the DESIGN.md ecosystem, mature living brand bibles, historic CI/VI manuals, editorial/cultural systems, Pentagram generative identity case studies, and visual-museum discovery sources.
+
+Future Doré research must consult and update this registry rather than relying on recollection of a chat link.
+
+## Child product loop
+
+The Brand Bible / VI / CI study has been promoted from ad-hoc research into a distinct nested product loop:
+
+`dore-design/projects/new-westside-visual-construction/BRAND-BIBLE-PRODUCT-LOOP.md`
+
+Classification: `PRODUCT_CHILD_LOOP / BRAND_BIBLE_VI_CI_BOOK`.
+
+This loop is not a peer general-learning loop. Its end condition is a product: the New Westside design textbook / theological reflection / evangelistic book / Westside Watch Journal special issue.
+
+Every complete iteration must leave three durable outputs:
+
+1. learning/source evidence;
+2. visual/Storybook evidence when applicable;
+3. book-quality manuscript prose.
+
+General Doré learning may feed this loop. This loop, however, must feed the actual book, the New Westside visual system, Doré Design/Storybook experiments, and the future Journal special issue.
+
 ## Continuity rule
 
-Future Doré/project work should consult both:
+Future Doré/project work should consult:
 
-- the canonical project file; and
-- relevant conversation transcripts.
+- the canonical project file;
+- the New Westside Visual Constitution;
+- historical primary sources such as `Westside Watch Brand Standards.pdf`;
+- relevant conversation transcripts;
+- the durable external-reference registry;
+- the Brand Bible child product loop;
+- current research notes and evidence.
 
 When a later summary conflicts with a preserved conversation and no explicit superseding decision exists, do not silently overwrite the earlier intent. Surface the conflict and preserve provenance.
