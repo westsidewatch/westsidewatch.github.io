@@ -1,4 +1,4 @@
-const CHINESE_NUM = '[一二三四五六七八九十百千零〇兩两\d]+';
+const CHINESE_NUM = '[一二三四五六七八九十百千零〇兩两0-9]+';
 
 export const ROLE_OPTIONS = [
   ['book_title', '書名'],
@@ -29,7 +29,7 @@ export function detectHeading(line, index = 0) {
     return { level, title, role: inferRole(title, level, index) };
   }
 
-  const chapterRe = new RegExp(`^第${CHINESE_NUM}章(?:補遺)?[\s　:：—-]*(.*)$`);
+  const chapterRe = new RegExp(`^第${CHINESE_NUM}章(?:補遺)?[\\s　:：—-]*(.*)$`);
   const chapter = raw.match(chapterRe);
   if (chapter) return { level: 1, title: raw, role: 'chapter' };
 
