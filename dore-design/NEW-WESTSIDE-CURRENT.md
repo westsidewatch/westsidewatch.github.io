@@ -1,46 +1,61 @@
 # New Westside — Current Visual State
 
 Status: CURRENT
-Updated: 2026-08-31
-Authority order: live site content (`data/volumes/vol-00.yaml`) → this current visual state → historical design notes.
+Updated: 2026-09-03
+Authority order: `NEW-WESTSIDE-VISUAL-CONSTITUTION.md` → live site content (`data/volumes/vol-00.yaml`) → this current visual state → historical design notes.
+
+## Canonical visual constitution
+
+The permanent convergence core is now consolidated in:
+
+`dore-design/NEW-WESTSIDE-VISUAL-CONSTITUTION.md`
+
+That document is authoritative for the New Westside visual core, including the governing method **Expand first. Converge later.** This file records current implementation/design state and must not be used to narrow the exploration space or silently redefine the permanent style.
 
 ## Active Doré Design surface
 
-- Visible default: `new-westside/homepage-v2-living-fortress.html`.
-- Direction: **A · Living Fortress**, selected by the user as the first complete Homepage V2 candidate.
-- Status: Candidate 01 — visible and testable, not silently promoted to final approval.
-- `homepage-v1.html` remains a retained anti-reference and must not return as the resident default.
-- The homepage exposes Journal as a 5:8 portal; `/journal/` and `/vol-00/` remain separate publication surfaces.
+Doré Design is the working surface for editable experiments and generated HTML preview/export. Current experimental pages are evidence and discussion material, not style acceptance.
+
+Previously retained candidate directions, including Living Fortress, Watchtower Fold and later multi-family experiments, remain experimental references only. No candidate may be silently promoted to final approval.
+
+The homepage exposes Journal as a distinct publication surface; `/journal/` and `/vol-00/` remain separate publication surfaces.
 
 ## Visual DNA
-Westside New Classicism = **Light · Line · Paper · Engraving · Architecture**.
 
-- Paper carries reading.
-- Ink carries language and engraving.
-- Night carries watching.
-- First Light Gold is highlight/trace, never a large decorative gold field.
-- Sacred Surface is a distinct historical/biblical surface used selectively, not the default reading paper.
-- Classical elements must perform information or structural work; ornament may not exist independently.
+Canonical DNA remains:
+
+**Light · Line · Paper · Engraving · Architecture**  
+**光 · 線 · 紙 · 刻 · 築**
+
+Interpretation and anti-lock-in rules are defined by the constitution.
 
 ## Editorial grammar
-**Brick · Battlement · Flow**.
 
-- Brick = content unit.
-- Battlement = editorial weight / skyline / negative-space construction.
-- Flow = time; content may rise, yield, return to light, and move through the wall.
-- 5:8 is the highest editorial-gravity proportion.
-- `Color is metadata, not architecture.` Classification retreats to thin traces/lines; scale, position, whitespace and flow carry hierarchy.
-- The wall is architecture. Do not draw a decorative castle behind ordinary cards.
-- Motion is quiet rearrangement, not a realtime-dashboard effect.
+Canonical permanent grammar remains:
 
-## Homepage structure
-The permanent website and each Journal issue are related but independent: **the website is the city; each Journal is an exhibition inside the city**.
+**Brick · Battlement · Flow**  
+**磚 · 垛 · 流**
 
-Homepage must read as Westside Watch before it reads as any single issue. It therefore uses the permanent grammar: visual DNA + Brick/Battlement/Flow + editorial gravity + a single central Gate. A current Journal may temporarily receive the highest editorial gravity as a 5:8 Journal Tower without taking over the brand.
+5:8 remains the highest editorial-gravity container. Black-vinyl-wall density, Editorial Gravity, Huarongdao-style yielding/rearrangement and battlement/city skyline are part of the permanent information/motion grammar, not merely decorative references.
 
-Avoid generic SaaS cards, rounded card chrome, ornamental castle silhouettes, giant JOURNAL/CHURCH labels, and a uniform feed.
+## Website and Journal
+
+The permanent website and each Journal issue are related but independent:
+
+**the website is the city; each Journal is an exhibition inside the city.**
+
+Homepage must read as Westside Watch before it reads as any single issue. A current Journal may temporarily receive the highest Editorial Gravity without taking over the permanent brand grammar.
+
+## Expansion state
+
+The design process is currently in **EXPANSION**, not convergence.
+
+Do not reduce expansion to variations of paper/white background + gold lines + large serif type. Doré should continue learning and materializing materially different design traditions and should mature selected experiments into complete web templates, not only concept sketches.
+
+Expansion and maturity are separate axes. A wide design world must be built before final New Westside convergence.
 
 ## Current Vol.00 content source
+
 Never reconstruct the numbered structure from chat memory. Read `data/volumes/vol-00.yaml`.
 
 Current sequence:
@@ -53,14 +68,16 @@ Current sequence:
 07 Westside Night / 西區的夜晚 — Bible Study / 查經
 08 Elim / 以琳 — Devotion / 靈修
 09 Beersheba / 別是巴 — Meditation / 默想
-10 Bethel / 伯特利 — Church Life / 教會生活
+10 Bethel / 伯利特 — Church Life / 教會生活
 11 Horeb / 何烈山 — Praise / 頌讚
 12 Maranatha / 瑪拉拿 — Prayer / 禱告
 
 Historical structural labels that conflict with this sequence are superseded and must never be used to fill gaps.
 
 ## Build continuation
-Do not restart visual discovery. Continue the established chain:
-Inventory → Visual Language Lab → Visual DNA → Design System Scope → Foundations → Brick System → Living Wall → Homepage.
 
-Doré Design is now the working design surface. ChatGPT owns mainline architecture and implementation; Doré observes the construction, executes bounded local operations, verifies the same artifact, and learns from the evidence.
+Continue the design-learning chain without premature convergence:
+
+**Museum / external learning → materially different experiments → mature templates → browser evidence → critique → durable learning → broad comparison → user-led convergence → Design System foundations → Brick System → Living Wall → Homepage implementation.**
+
+Doré Design remains the working editable design surface. Technical PASS is not aesthetic acceptance. User aesthetic acceptance remains the authority for style acceptance.
