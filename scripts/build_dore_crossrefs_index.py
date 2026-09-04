@@ -11,7 +11,6 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import shutil
 import subprocess
 import tempfile
 from collections import defaultdict
@@ -29,7 +28,7 @@ BOOK_ALIASES = {
     "GEN":"GEN","EXO":"EXO","LEV":"LEV","NUM":"NUM","DEU":"DEU","JOS":"JOS","JOSH":"JOS","JDG":"JDG","JUDG":"JDG","RUT":"RUT","RUTH":"RUT",
     "1SA":"1SA","1SAM":"1SA","2SA":"2SA","2SAM":"2SA","1KI":"1KI","1KGS":"1KI","2KI":"2KI","2KGS":"2KI","1CH":"1CH","1CHR":"1CH","2CH":"2CH","2CHR":"2CH",
     "EZR":"EZR","NEH":"NEH","EST":"EST","ESTH":"EST","JOB":"JOB","PSA":"PSA","PS":"PSA","PSALM":"PSA","PRO":"PRO","PRV":"PRO","ECC":"ECC","QOH":"ECC","SNG":"SNG","SONG":"SNG","SOS":"SNG",
-    "ISA":"ISA","JER":"JER","LAM":"LAM","EZK":"EZK","EZE":"EZK","DAN":"DAN","HOS":"HOS","JOL":"JOL","JOEL":"JOL","AMO":"AMO","OBA":"OBA","OBAD":"OBA","JON":"JON","JONAH":"JON","MIC":"MIC","NAM":"NAM","NAH":"NAM","HAB":"HAB","ZEP":"ZEP","HAG":"HAG","ZEC":"ZEC","MAL":"MAL",
+    "ISA":"ISA","JER":"JER","LAM":"LAM","EZK":"EZK","EZE":"EZK","DAN":"DAN","HOS":"HOS","JOL":"JOL","JOE":"JOL","JOEL":"JOL","AMO":"AMO","OBA":"OBA","OBAD":"OBA","JON":"JON","JONAH":"JON","MIC":"MIC","NAM":"NAM","NAH":"NAM","HAB":"HAB","ZEP":"ZEP","HAG":"HAG","ZEC":"ZEC","MAL":"MAL",
     "MAT":"MAT","MATT":"MAT","MRK":"MRK","MARK":"MRK","LUK":"LUK","LUKE":"LUK","JHN":"JHN","JOH":"JHN","JOHN":"JHN","ACT":"ACT","ROM":"ROM","1CO":"1CO","1COR":"1CO","2CO":"2CO","2COR":"2CO","GAL":"GAL","EPH":"EPH","PHP":"PHP","PHIL":"PHP","COL":"COL","1TH":"1TH","1THES":"1TH","2TH":"2TH","2THES":"2TH","1TI":"1TI","1TIM":"1TI","2TI":"2TI","2TIM":"2TI","TIT":"TIT","PHM":"PHM","HEB":"HEB","JAS":"JAS","JAM":"JAS","1PE":"1PE","1PET":"1PE","2PE":"2PE","2PET":"2PE","1JN":"1JN","1JOHN":"1JN","2JN":"2JN","2JOHN":"2JN","3JN":"3JN","3JOHN":"3JN","JUD":"JUD","JUDE":"JUD","REV":"REV",
 }
 BOOKS = [
@@ -80,7 +79,7 @@ def unpack_target(item: Any) -> tuple[str | None, int, int]:
         return canonical(item), 0, 2
     if not isinstance(item, dict):
         return None, 0, 0
-    target = item.get("target_verse") or item.get("to_verse") or item.get("target") or item.get("ref") or item.get("verse")
+    target = item.get("to") or item.get("target_verse") or item.get("to_verse") or item.get("target") or item.get("ref") or item.get("verse")
     votes = int(item.get("votes") or item.get("vote_count") or 0)
     return canonical(str(target or "")), votes, source_mask(item)
 
@@ -96,9 +95,9 @@ def iter_edges(data: Any) -> Iterable[tuple[str, str, int, int]]:
             refs = []
             for target, meta in raw_refs.items():
                 if isinstance(meta, dict):
-                    refs.append({"target_verse": target, **meta})
+                    refs.append({"to": target, **meta})
                 else:
-                    refs.append({"target_verse": target})
+                    refs.append({"to": target})
         elif isinstance(raw_refs, list):
             refs = raw_refs
         else:
@@ -132,7 +131,6 @@ def build(source_path: Path, upstream_commit: str) -> dict[str, Any]:
     with source_path.open("r", encoding="utf-8") as fh:
         data = json.load(fh)
 
-    # pair -> [max votes, OR source mask]
     pairs: dict[tuple[str, str], list[int]] = {}
     raw_edges = 0
     for a, b, votes, mask in iter_edges(data):
