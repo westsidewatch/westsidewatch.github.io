@@ -20,7 +20,10 @@
     "one_open_crossref_bridge",
     "one_visible_crossref_graph_ui",
     "crossref_source_vote_weight_ui",
-    "crossref_multihop_trace_ui"
+    "crossref_multihop_trace_ui",
+    "one_scripture_first_crossref_ui",
+    "crossref_click_to_explore",
+    "crossref_readable_desktop_layout"
   ],
   "crossrefs": {
     "books": 66,
@@ -38,11 +41,9 @@
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [
-    "one_visible_crossref_intelligence"
-  ],
+  "failures": [],
   "function_url": "/dore/search/",
-  "governance": "External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; ONE must expose the graph visibly with source/vote/weight/path controls. This is still not completion of permanent issue #281.",
+  "governance": "External work-node acceptance. The million-edge graph must remain traceable and ONE must expose Scripture text before technical metadata, with click-to-explore reading flow and readable desktop/mobile proportions. This is still not completion of permanent issue #281.",
   "performance": {
     "core_index_bytes": 10235111,
     "crossrefs_loading": "lazy_by_source_book",
@@ -51,8 +52,8 @@
     "original_index_bytes": 10184152,
     "original_index_loading": "lazy"
   },
-  "schema": "dore.work-node.bible-search.v4",
-  "status": "NOT_READY",
-  "verdict": "FAIL",
+  "schema": "dore.work-node.bible-search.v5",
+  "status": "AVAILABLE",
+  "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
 }
