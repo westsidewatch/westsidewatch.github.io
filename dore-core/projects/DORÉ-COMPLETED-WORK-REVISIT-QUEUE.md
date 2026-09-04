@@ -85,12 +85,12 @@ The revisit is not complete merely when the two reported examples pass. Doré mu
 
 **Source completed milestones:** the August 2026 homepage rebuild around the watchful-city concept (`339679b4`), the later 5:8 / 8:5 editorial-ratio unification (`051afa76`), and subsequent live homepage Doré Search integration (`e2b7d577`).
 
-**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for the bounded homepage visual-language milestone; the live `MAIN` workstream remains maintenance and the separate `VIS-GRAMMAR` workstream remains discovery.
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for the bounded homepage visual-language milestone; the live `MAIN` workstream remains maintenance and the separate `VIS-GRAMMAR` workstream is now `ACTIVE_PARALLEL / BUILDING`.
 
 **Current priority:** MEDIUM / TRIGGERED, subordinate to P01 and to completing the visual-grammar evidence base.
 
 **Why the revisit trigger has fired**
-The original rebuild successfully established a coherent watchful-city identity using Watch Night, First Light Gold, a Jerusalem wall / Golden Gate treatment, temple-stone texture, bilingual Scripture and later an explicit 5:8 / 8:5 publication-ratio system. Current repository state still carries those decisions and now embeds direct Doré Search in the homepage. At the same time, the canonical plan explicitly says Brand V1 must wait for a proven visual grammar and records `VIS-GRAMMAR` as discovery rather than complete. Therefore the August homepage treatment should be preserved as a legitimate historical completion but not mistaken for the final ecosystem-wide visual system.
+The original rebuild successfully established a coherent watchful-city identity using Watch Night, First Light Gold, a Jerusalem wall / Golden Gate treatment, temple-stone texture, bilingual Scripture and later an explicit 5:8 / 8:5 publication-ratio system. Current repository state still carries those decisions and now embeds direct Doré Search in the homepage. At the same time, the canonical plan explicitly says Brand V1 must wait for a proven visual grammar and records `VIS-GRAMMAR` as `ACTIVE_PARALLEL / BUILDING`, not complete. Therefore the August homepage treatment should be preserved as a legitimate historical completion but not mistaken for the final ecosystem-wide visual system.
 
 **What remains valid from the original milestone**
 The homepage learned several durable brand primitives: watch/night/dawn sequencing; city-wall / gate symbolism; temple-stone materiality; bilingual Scripture; the 5:8 portrait and 8:5 landscape publication ratios; and the principle that product utility such as Doré Search can live inside the brand center rather than as a disconnected tool.
