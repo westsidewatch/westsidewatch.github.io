@@ -12,8 +12,24 @@
     "shared_bible_intelligence_graph",
     "weighted_multi_hop_relations",
     "semantic_study_intents",
-    "one_shared_intelligence_bridge"
+    "one_shared_intelligence_bridge",
+    "neuu_openbible_tsk_crossrefs",
+    "million_edge_crossref_graph",
+    "lazy_book_crossref_shards",
+    "traceable_open_crossrefs",
+    "one_open_crossref_bridge"
   ],
+  "crossrefs": {
+    "books": 66,
+    "directed_edges": 1117426,
+    "raw_edges": 1117426,
+    "source_counts": {
+      "both": 606368,
+      "openbible": 487484,
+      "tsk": 23574
+    },
+    "unique_verses": 31060
+  },
   "entrances": [
     "JOIN",
     "ONE",
@@ -21,14 +37,16 @@
   ],
   "failures": [],
   "function_url": "/dore/search/",
-  "governance": "External work-node acceptance. This verifies the integrated Search 2 increment, not completion of the permanent Bible Intelligence Loop or issue #281.",
+  "governance": "External work-node acceptance. Open cross-reference capability must be backed by the generated NEUU/OpenBible+TSK corpus with traceable CC BY 4.0 provenance; this is still not completion of permanent issue #281.",
   "performance": {
     "core_index_bytes": 10235111,
+    "crossrefs_loading": "lazy_by_source_book",
+    "crossrefs_manifest_bytes": 4973,
     "dore_archive_loading": "two-slot_lazy_cycle",
     "original_index_bytes": 10184152,
     "original_index_loading": "lazy"
   },
-  "schema": "dore.work-node.bible-search.v2",
+  "schema": "dore.work-node.bible-search.v3",
   "status": "AVAILABLE",
   "verdict": "PASS",
   "work_node": "DORE_BIBLE_SEARCH"
