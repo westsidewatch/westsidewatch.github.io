@@ -7,6 +7,7 @@ let currentItem = null;
 let currentIndex = -1;
 let currentOriginalText = '';
 let editing = false;
+let autosaveTimer = null;
 
 const DB_NAME = 'multiwrite-v1';
 const DB_VERSION = 2;
@@ -34,8 +35,8 @@ async function getDraft(index) {
   return new Promise((resolve, reject) => {
     const tx = db.transaction(DRAFT_STORE, 'readonly');
     const req = tx.objectStore(DRAFT_STORE).get(draftId(index));
-    req.onsuccess = () => resolve(req.result || null);
-    req.onerror = () => reject(req.error);
+    req.onsuccess = () => { const value = req.result || null; db.close(); resolve(value); };
+    req.onerror = () => { db.close(); reject(req.error); };
   });
 }
 
@@ -43,15 +44,9 @@ async function putDraft(index, text) {
   const db = await openDb();
   return new Promise((resolve, reject) => {
     const tx = db.transaction(DRAFT_STORE, 'readwrite');
-    tx.objectStore(DRAFT_STORE).put({
-      id: draftId(index),
-      bookId,
-      index,
-      text,
-      updatedAt: new Date().toISOString()
-    });
-    tx.oncomplete = resolve;
-    tx.onerror = () => reject(tx.error);
+    tx.objectStore(DRAFT_STORE).put({ id: draftId(index), bookId, index, text, updatedAt: new Date().toISOString() });
+    tx.oncomplete = () => { db.close(); resolve(); };
+    tx.onerror = () => { db.close(); reject(tx.error); };
   });
 }
 
@@ -73,7 +68,8 @@ function renderMarkdownish(text = '') {
     const h = line.match(/^(#{1,4})\s+(.+)$/);
     if (h) {
       flushPara();
-      out.push(`<h${Math.min(h[1].length + 1, 5)}>${escapeHtml(h[2])}</h${Math.min(h[1].length + 1, 5)}>`);
+      const level = Math.min(h[1].length + 1, 5);
+      out.push(`<h${level}>${escapeHtml(h[2])}</h${level}>`);
       continue;
     }
     if (!line.trim()) {
@@ -87,7 +83,7 @@ function renderMarkdownish(text = '') {
 }
 
 async function fetchText(path) {
-  const res = await fetch(path);
+  const res = await fetch(path, { cache: 'no-store' });
   if (!res.ok) throw new Error(`無法載入 ${path}`);
   return res.text();
 }
@@ -96,39 +92,62 @@ function setSaveState(text) {
   $('#saveState').textContent = text;
 }
 
+function roleLabel(item) {
+  return item.role === 'appendix' ? 'APPENDIX' : item.role === 'front_matter' ? 'FRONT MATTER' : 'CHAPTER';
+}
+
 function renderReader(text, draft = false) {
-  const reader = $('#readerContent');
-  reader.innerHTML = `
-    <div class="reader-role">${escapeHtml(currentItem.role === 'appendix' ? 'APPENDIX' : currentItem.role === 'front_matter' ? 'FRONT MATTER' : 'CHAPTER')}</div>
+  $('#readerContent').innerHTML = `
+    <div class="reader-role">${roleLabel(currentItem)}</div>
     <h2>${escapeHtml(currentItem.title || '')}</h2>
     <div class="draft-badge" ${draft ? '' : 'hidden'}>工作版本</div>
     <div class="reader-body">${renderMarkdownish(text)}</div>`;
 }
 
+function bindEditorAutosave() {
+  const editor = $('#chapterEditor');
+  if (!editor) return;
+  editor.addEventListener('input', () => {
+    setSaveState('有未儲存修改');
+    clearTimeout(autosaveTimer);
+    autosaveTimer = setTimeout(async () => {
+      try {
+        await putDraft(currentIndex, editor.value);
+        setSaveState('已自動儲存');
+      } catch (error) {
+        setSaveState('自動儲存失敗');
+      }
+    }, 700);
+  });
+}
+
 function renderEditor(text) {
-  const reader = $('#readerContent');
-  reader.innerHTML = `
-    <div class="reader-role">${escapeHtml(currentItem.role === 'appendix' ? 'APPENDIX' : currentItem.role === 'front_matter' ? 'FRONT MATTER' : 'CHAPTER')}</div>
+  $('#readerContent').innerHTML = `
+    <div class="reader-role">${roleLabel(currentItem)}</div>
     <h2>${escapeHtml(currentItem.title || '')}</h2>
-    <p class="edit-note">你正在編輯工作版本。原始匯入稿不會被覆蓋。</p>
+    <p class="edit-note">工作版本 · 可直接修改或在末尾續寫。原始匯入稿不會被覆蓋。</p>
     <textarea id="chapterEditor" class="chapter-editor" spellcheck="true" aria-label="章節內容">${escapeHtml(text)}</textarea>`;
-  $('#chapterEditor').focus();
+  bindEditorAutosave();
+  const editor = $('#chapterEditor');
+  editor.focus();
+  editor.setSelectionRange(editor.value.length, editor.value.length);
 }
 
 async function loadPart(item, index) {
+  clearTimeout(autosaveTimer);
   currentItem = item;
   currentIndex = index;
   editing = false;
   $('#toggleEdit').textContent = '編輯';
+  $('#toggleEdit').disabled = true;
   $('#saveDraft').hidden = true;
   document.querySelectorAll('.toc-link').forEach((el) => el.classList.toggle('active', Number(el.dataset.index) === index));
   $('#readerContent').innerHTML = '<p class="reader-loading">正在載入…</p>';
   try {
     const base = `./books/${bookId}/`;
     let text = '';
-    if (item.file) {
-      text = await fetchText(base + item.file);
-    } else if (Array.isArray(item.files)) {
+    if (item.file) text = await fetchText(base + item.file);
+    else if (Array.isArray(item.files)) {
       const parts = await Promise.all(item.files.map((file) => fetchText(base + file)));
       text = parts.join('\n\n');
     }
@@ -136,46 +155,65 @@ async function loadPart(item, index) {
     const draft = await getDraft(index);
     renderReader(draft?.text ?? text, Boolean(draft));
     setSaveState(draft ? '工作版本已儲存' : '原稿唯讀');
+    $('#toggleEdit').disabled = false;
     $('#readerContent').scrollIntoView({ block: 'start' });
   } catch (error) {
     $('#readerContent').innerHTML = `<p class="reader-error">${escapeHtml(error.message)}</p>`;
+    setSaveState('載入失敗');
   }
 }
 
 async function toggleEdit() {
-  if (!currentItem) return;
-  if (!editing) {
-    const draft = await getDraft(currentIndex);
-    renderEditor(draft?.text ?? currentOriginalText);
-    editing = true;
-    $('#toggleEdit').textContent = '取消';
-    $('#saveDraft').hidden = false;
-    setSaveState('編輯中');
-  } else {
-    const draft = await getDraft(currentIndex);
-    renderReader(draft?.text ?? currentOriginalText, Boolean(draft));
-    editing = false;
-    $('#toggleEdit').textContent = '編輯';
-    $('#saveDraft').hidden = true;
-    setSaveState(draft ? '工作版本已儲存' : '原稿唯讀');
+  if (!currentItem || $('#toggleEdit').disabled) return;
+  try {
+    if (!editing) {
+      const draft = await getDraft(currentIndex);
+      renderEditor(draft?.text ?? currentOriginalText);
+      editing = true;
+      $('#toggleEdit').textContent = '取消';
+      $('#saveDraft').hidden = false;
+      setSaveState('編輯中');
+    } else {
+      const draft = await getDraft(currentIndex);
+      renderReader(draft?.text ?? currentOriginalText, Boolean(draft));
+      editing = false;
+      $('#toggleEdit').textContent = '編輯';
+      $('#saveDraft').hidden = true;
+      setSaveState(draft ? '工作版本已儲存' : '原稿唯讀');
+    }
+  } catch (error) {
+    setSaveState(`編輯失敗：${error.message}`);
   }
 }
 
 async function saveDraft() {
   const editor = $('#chapterEditor');
   if (!editor) return;
-  setSaveState('儲存中…');
-  await putDraft(currentIndex, editor.value);
-  renderReader(editor.value, true);
-  editing = false;
-  $('#toggleEdit').textContent = '編輯';
-  $('#saveDraft').hidden = true;
-  setSaveState('已儲存');
+  clearTimeout(autosaveTimer);
+  try {
+    setSaveState('儲存中…');
+    await putDraft(currentIndex, editor.value);
+    const savedText = editor.value;
+    renderReader(savedText, true);
+    editing = false;
+    $('#toggleEdit').textContent = '編輯';
+    $('#saveDraft').hidden = true;
+    setSaveState('已儲存');
+  } catch (error) {
+    setSaveState(`儲存失敗：${error.message}`);
+  }
 }
 
 async function init() {
+  $('#homeLink').addEventListener('click', (event) => {
+    event.preventDefault();
+    location.assign('/multiwrite/');
+  });
+  $('#toggleEdit').addEventListener('click', toggleEdit);
+  $('#saveDraft').addEventListener('click', saveDraft);
+
   try {
-    const manifestRes = await fetch(`./books/${bookId}/manifest.json`);
+    const manifestRes = await fetch(`./books/${bookId}/manifest.json`, { cache: 'no-store' });
     if (!manifestRes.ok) throw new Error('找不到這本書。');
     currentBook = await manifestRes.json();
     document.title = `${currentBook.title} · 多寫`;
@@ -194,13 +232,11 @@ async function init() {
       loadPart(currentBook.structure[Number(button.dataset.index)], Number(button.dataset.index));
     });
 
-    $('#toggleEdit').addEventListener('click', toggleEdit);
-    $('#saveDraft').addEventListener('click', saveDraft);
-
     const firstChapter = Math.max(0, currentBook.structure.findIndex((item) => item.role === 'chapter'));
-    loadPart(currentBook.structure[firstChapter], firstChapter);
+    await loadPart(currentBook.structure[firstChapter], firstChapter);
   } catch (error) {
     $('#readerContent').innerHTML = `<p class="reader-error">${escapeHtml(error.message)}</p>`;
+    setSaveState('載入失敗');
   }
 }
 
