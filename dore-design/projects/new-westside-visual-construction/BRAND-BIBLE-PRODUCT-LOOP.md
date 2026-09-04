@@ -1,7 +1,9 @@
 # New Westside Brand Bible Product Loop
 
 Status: ACTIVE CHILD PRODUCT LOOP
-Parent: `dore-design/projects/NEW-WESTSIDE-VISUAL-CONSTRUCTION-EXAM-01.md`
+Parent product: `dore-design/publishing/books/BOOK-01-HOLY-SPIRIT-AND-DESIGN.md`
+Parent publishing program: `dore-design/publishing/PUBLISHING-PROGRAM.md`
+Canonical New Westside project: `dore-design/projects/NEW-WESTSIDE-VISUAL-CONSTRUCTION-EXAM-01.md`
 Reference registry: `dore-design/research/BRAND-BIBLE-VI-CI-REFERENCE-REGISTRY-2026-09-03.md`
 Established: 2026-09-03
 
@@ -13,37 +15,41 @@ It differs from ordinary Doré learning loops in three ways:
 
 1. it must continuously learn from external mature brand-bible / VI / CI / design-system sources;
 2. each learning cycle must write durable manuscript material and produce visual experiments;
-3. its completion target is a real publishable product: the New Westside design textbook / theological reflection / evangelistic book / Westside Watch Journal special issue.
+3. its completion target is a real publishable product: **Book 01 — 《聖靈也會參與設計嗎？》**, together with its New Westside design system, interactive/print publication, and Westside Watch Journal special issue.
 
-Therefore this loop is nested under the New Westside book project. It may consume results from broader Doré museum/design/skill/research loops, but its acceptance criteria are product-oriented.
+Therefore this loop is nested under Book 01, while Book 01 participates in the broader Westside Publishing Program. It may consume results from broader Doré museum/design/skill/research loops, but its acceptance criteria are product-oriented.
 
 ## 2. Loop identity
 
 **Class:** PRODUCT_CHILD_LOOP
 **Domain:** BRAND_BIBLE_VI_CI_BOOK
-**Parent product:** New Westside Visual Construction / 《聖靈也會參與設計嗎？》
+**Parent product:** Book 01 — 《聖靈也會參與設計嗎？》
 **Production mutation:** prohibited without separate user approval
 **Aesthetic authority:** user
 **Technical PASS:** evidence of execution only; never equivalent to aesthetic acceptance or book completion
 
 ## 3. Input hierarchy
 
-1. New Westside Visual Constitution
-2. historical primary sources, especially `Westside Watch Brand Standards.pdf`
-3. project conversation archive
-4. durable reference registry
-5. modern design-system research notes
-6. source-specific external study
-7. Storybook/browser evidence
-8. Doré critique and manuscript synthesis
+1. Book 01 product brief
+2. New Westside Visual Constitution
+3. historical primary sources, especially `Westside Watch Brand Standards.pdf`
+4. project conversation archive
+5. durable reference registry
+6. modern design-system research notes
+7. source-specific external study
+8. Storybook/browser evidence
+9. Doré critique and manuscript synthesis
 
 External brands may teach method and document architecture; they never supersede New Westside’s theological/design origin.
+
+Common source boundary:
+`dore-design/projects/new-westside-visual-construction/SOURCE-BOUNDARIES.md`
 
 ## 4. Recurring cycle
 
 Each iteration follows:
 
-**Select source family → inspect complete source → map architecture → identify governing theory → study layout/typography/page sequencing → write source dossier → derive transferable methods → reject surface-copy temptations → create original Storybook experiment → browser evidence → critique → write manuscript passage → update New Westside theory → queue next source/experiment.**
+**Select source family → inspect complete source → map architecture → identify governing theory → study layout/typography/page sequencing → write source dossier → derive transferable methods → reject surface-copy temptations → create original Storybook experiment → browser evidence → critique → write manuscript passage → update New Westside theory → update Book 01 publication design → queue next source/experiment.**
 
 A cycle with only web notes is incomplete.
 A cycle with only a visual experiment is incomplete.
@@ -80,6 +86,8 @@ DesignMD, getdesign.md, Open Design and verified DESIGN.md ecosystem tools, alwa
 ### Visual museums
 SiteInspire, Land-book, Godly, Awwwards, Httpster, One Page Love, Mobbin and other verified sources. These expand visual language but do not substitute for brand-system theory.
 
+All source-family use remains subject to the project’s theological/source boundaries. Formal design learning must not import idol-centered or unrelated sacred content into Westside visual language.
+
 ## 6. Required outputs per iteration
 
 ### A. Source dossier
@@ -112,7 +120,7 @@ Study the guideline as an *artifact*:
 - balance of prose and examples;
 - print/digital differences.
 
-This study is explicitly allowed to feed Storybook visual learning.
+This study is explicitly allowed to feed Storybook visual learning and the HTML/print Book 01 publication design.
 
 ### C. Storybook transfer
 Build an original New Westside experiment from the *method learned*, not the source style.
@@ -142,7 +150,16 @@ The passage must be tagged for likely destination:
 - JOURNAL_SPECIAL
 - CROSS_LAYER
 
-### E. Theory delta
+### E. Publication-design delta
+Record what the study changes in the book as an artifact:
+- HTML open-book / gate / city experience;
+- spread/page sequencing;
+- print equivalent;
+- diagrams/specimens;
+- navigation/indexing;
+- Journal special presentation.
+
+### F. Theory delta
 Record:
 - what Westside theory changed;
 - what was strengthened;
@@ -167,14 +184,14 @@ A substantial chapter explains what mature brand systems have in common, where t
 ### M5 — Storybook transfer library
 A growing set of original visual experiments proves that external learning materially expands Doré’s visual vocabulary without copying external brands.
 
-### M6 — New Westside Brand Bible prototype
-A complete prototype publication structure exists with real prose, diagrams, specimen pages, design-system rules, theological reflection and gospel trajectory.
+### M6 — Book 01 prototype
+A complete prototype publication structure exists with real prose, diagrams, specimen pages, design-system rules, theological reflection, gospel trajectory and HTML/print mapping.
 
-### M7 — Multiple mature New Westside website templates
+### M7 — Multiple mature New Westside website/book templates
 The same core theory generates materially different complete visual systems/pages.
 
 ### M8 — Book / Journal product
-The accumulated work is edited into a coherent publishable book/resource and Westside Watch special issue.
+The accumulated work is edited into Book 01 and the Westside Watch special issue, including 《守望，一座光明的城》 as a major exhibition/entry surface.
 
 ## 8. Loop-level acceptance gates
 
@@ -192,8 +209,9 @@ For each iteration require evidence of:
 5. Storybook or equivalent visual transfer when visually applicable;
 6. deterministic browser evidence for interactive/web experiments;
 7. manuscript passage written;
-8. theory delta recorded;
-9. outputs linked from project index/reference registry.
+8. publication-design delta recorded;
+9. theory delta recorded;
+10. outputs linked from project index/reference registry.
 
 ## 9. Relationship to other loops
 
@@ -211,7 +229,7 @@ But it has a different end condition from general learning loops:
 
 > **General loop goal: improve Doré.**
 >
-> **This child loop goal: improve Doré while producing the New Westside book/design system/Journal as a real product.**
+> **This child loop goal: improve Doré while producing Book 01 / New Westside visual system / Journal as a real product.**
 
 Learning is therefore a means and a product simultaneously.
 
@@ -239,4 +257,4 @@ Priority batch:
 9. DTCG / Atlassian / Carbon / USWDS — operational design-system writing and implementation.
 10. DESIGN.md ecosystem — agent-readable persistent transfer.
 
-This batch is not a finite list. The loop is expected to discover additional mature sources and add them to the durable registry with provenance.
+This batch is not finite. The loop is expected to discover additional mature sources and add them to the durable registry with provenance.
