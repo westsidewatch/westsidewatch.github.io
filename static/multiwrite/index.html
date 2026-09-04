@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>多寫 · 我的書</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="./">多寫</a>
+    <span class="tagline">把寫過的帶進來，從這裡繼續。</span>
+  </header>
+
+  <main>
+    <section class="hero" id="library">
+      <div>
+        <p class="eyebrow">MY BOOKS</p>
+        <h1>我的書</h1>
+        <p class="lede">建立新書，或把已經寫了很多年的舊稿完整帶進來。匯入只整理結構，不改寫你的文字。</p>
+      </div>
+      <div class="hero-actions">
+        <button class="button secondary" type="button">＋ 建立新書</button>
+        <button class="button primary" id="openImport" type="button">匯入舊稿</button>
+      </div>
+    </section>
+
+    <section class="book-grid" id="bookList" aria-live="polite"></section>
+
+    <section class="import-shell" id="importPanel" hidden>
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">IMPORT</p>
+          <h2>匯入舊稿</h2>
+          <p>TXT、Markdown、DOCX、PDF，或直接貼上文字。可一次選擇多個檔案。</p>
+        </div>
+        <button class="text-button" id="cancelImport" type="button">關閉</button>
+      </div>
+
+      <div class="import-grid">
+        <div class="drop-zone" id="dropZone">
+          <div class="drop-mark">↓</div>
+          <h3>把檔案拖到這裡</h3>
+          <p>系統只辨識書名、章、節與附錄，不擅自潤色或重寫。</p>
+          <button class="button secondary" id="chooseFiles" type="button">選擇檔案</button>
+          <input id="fileInput" type="file" multiple accept=".txt,.md,.markdown,.docx,.pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" hidden>
+        </div>
+
+        <div class="paste-box">
+          <label for="pasteInput">或直接貼上文字</label>
+          <textarea id="pasteInput" rows="12" placeholder="# 書名&#10;&#10;# 第一章　……&#10;&#10;正文……"></textarea>
+          <button class="button secondary" id="parsePaste" type="button">辨識這段文字</button>
+        </div>
+      </div>
+
+      <div id="stepPreview" class="preview-section" hidden>
+        <div class="preview-head">
+          <div>
+            <p class="eyebrow">PREVIEW</p>
+            <h2>確認結構</h2>
+            <p>辨識錯了可以直接改。這一步不會更動原文。</p>
+          </div>
+          <strong id="previewCount">0 個區塊</strong>
+        </div>
+
+        <div class="title-field">
+          <label for="bookTitle">書名（可留空，由第一個書名區塊自動帶入）</label>
+          <input id="bookTitle" type="text" placeholder="書名">
+        </div>
+
+        <div id="preview" class="preview-list"></div>
+
+        <div class="finish-bar">
+          <div>
+            <strong>原稿保護</strong>
+            <p>加入我的書時，不呼叫 AI，不改寫、不刪字；只保存你確認過的結構。</p>
+          </div>
+          <button class="button primary" id="importAction" type="button" disabled>加入我的書</button>
+        </div>
+      </div>
+
+      <div id="status" class="status" hidden role="status"></div>
+    </section>
+  </main>
+
+  <footer>Multiwrite · Import v1</footer>
+  <script type="module" src="./import.js"></script>
+</body>
+</html>
