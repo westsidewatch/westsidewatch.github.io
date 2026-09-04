@@ -8,11 +8,14 @@ on:
       - 'dore_core/language/**'
       - 'dore_core/readers/**'
       - 'scripts/build_dore_browser_search_index.py'
+      - 'scripts/build_dore_crossrefs_index.py'
       - 'scripts/verify_dore_bible_search_product.py'
       - 'scripts/verify_dore_bible_intelligence.js'
+      - 'scripts/verify_dore_open_crossrefs.js'
       - 'static/dore/**'
       - 'join/index.html'
       - 'static/one/one-opening-simple.js'
+      - 'static/one/one-cross-reference-scripture-global-audit.js'
       - 'layouts/index.html'
       - '.github/workflows/dore-bible-search.yml'
 permissions:
@@ -20,6 +23,7 @@ permissions:
 jobs:
   build-search:
     runs-on: ubuntu-latest
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -29,6 +33,12 @@ jobs:
         env:
           PYTHONPATH: .
         run: python scripts/build_dore_browser_search_index.py
+      - name: Build NEUU OpenBible + TSK cross-reference shards
+        run: |
+          git lfs install
+          python scripts/build_dore_crossrefs_index.py
+      - name: Verify million-edge open cross-reference ingestion
+        run: node scripts/verify_dore_open_crossrefs.js
       - name: Verify Search 2 Bible Intelligence semantic benchmark
         run: node scripts/verify_dore_bible_intelligence.js
       - name: Verify index, function page, and learning reflex 001
@@ -40,10 +50,15 @@ jobs:
           original_path=Path('static/dore/original-index.json')
           core=json.loads(core_path.read_text(encoding='utf-8'))
           original=json.loads(original_path.read_text(encoding='utf-8'))
+          manifest=json.loads(Path('static/dore/crossrefs/manifest.json').read_text(encoding='utf-8'))
           assert core['schema']=='dore.browser-search-core.v1'
           assert original['schema']=='dore.browser-original-index.v1'
           assert len(core['verses']) >= 31000
           assert original['lemma'] and original['morphology'] and original['original_surface']
+          assert manifest['schema']=='dore.crossrefs.manifest.v1'
+          assert manifest['stats']['directed_edges'] >= 1_000_000
+          assert manifest['stats']['unique_verses'] >= 30_000
+          assert manifest['license']=='CC BY 4.0' and manifest['contains_bible_text'] is False
           refs={v['r'] for v in core['verses']}
           assert 'bible.ref.JHN.3.16' in refs
           assert 'bible.ref.JER.33.3' in refs
@@ -64,7 +79,7 @@ jobs:
           assert surfaces and lemmas, 'Isaiah 11:1 must have OSHB original-language evidence'
           assert 'translated-to-original' in js and 'originalEvidence' in js
           assert '耶西的本 希伯來原文' in reflex
-          print({'status':'PASS','function_url':'/dore/search/','reflex':'001-translated-phrase-to-original-language','query':'耶西的本 希伯來原文','passage':'bible.ref.ISA.11.1','original_surfaces':surfaces,'lemmas':lemmas})
+          print({'status':'PASS','function_url':'/dore/search/','reflex':'001-translated-phrase-to-original-language','crossrefs':manifest['stats'],'query':'耶西的本 希伯來原文','passage':'bible.ref.ISA.11.1','original_surfaces':surfaces,'lemmas':lemmas})
           PY
       - name: Accept Doré Bible Search work node
         run: python scripts/verify_dore_bible_search_product.py
@@ -75,18 +90,19 @@ jobs:
           path: |
             static/dore/search-index.json
             static/dore/original-index.json
+            static/dore/crossrefs/
             reports/DORÉ-BIBLE-SEARCH-WORK-NODE.json
       - name: Persist public search indexes and acceptance evidence
         if: always() && github.event_name == 'push'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add static/dore/search-index.json static/dore/original-index.json reports/DORÉ-BIBLE-SEARCH-WORK-NODE.json 2>/dev/null || true
+          git add static/dore/search-index.json static/dore/original-index.json static/dore/crossrefs reports/DORÉ-BIBLE-SEARCH-WORK-NODE.json 2>/dev/null || true
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dore): publish Bible Search work-node evidence [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
-              git pull --rebase origin main
+              git pull --rebase origin "${GITHUB_REF_NAME}"
             done
             exit 1
           fi
