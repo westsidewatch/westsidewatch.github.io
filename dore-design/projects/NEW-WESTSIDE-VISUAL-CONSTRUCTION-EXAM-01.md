@@ -1,190 +1,262 @@
 # New Westside Visual Construction Examination · 01
 
-Status: ACTIVE PROJECT
+Status: ACTIVE BOOK / DESIGN-RESEARCH / JOURNAL PROJECT
 Established: 2026-09-03
 Canonical input: `dore-design/NEW-WESTSIDE-VISUAL-CONSTITUTION.md`
+Historical primary source: `Westside Watch Brand Standards.pdf`
 Research input: `dore-design/research/MODERN-DESIGN-SYSTEM-LEARNING-2026-09-03.md`
-Purpose: turn the New Westside visual core into a teachable, generative design theory, prove that theory through multiple mature but materially different website templates, and preserve the resulting theory as future editorial/book material.
 
-## 1. Why this project exists
+## 0. Project identity
 
-This is not a request for another homepage mockup. It is a design-school assignment for Doré.
+This project **is the writing of a book**. The New Westside website examination is the studio/research method through which the book is learned, tested, illustrated and written.
 
-Doré must move through four levels:
+The same work must become four things at once:
 
-**remember → understand → explain → create**.
+1. **A design textbook / practical resource** — a teachable theory of visual-system construction that another designer can learn from and transfer to a new problem.
+2. **A theological reflection book** — an inquiry into creativity, inspiration, discernment, beauty, order, making, technology/AI, human craft and seeking the presence and leading of the Holy Spirit in design.
+3. **An evangelistic book** — the design discussion must ultimately bear witness to the gospel rather than merely discuss Christian aesthetics.
+4. **A special issue of Westside Watch Journal** — the research, writing, experiments, failures and final visual systems must themselves be edited and art-directed as a collectible issue.
 
-Remembering `Light · Line · Paper · Engraving · Architecture` or `Brick · Battlement · Flow` is insufficient. Doré must be able to explain why these ideas exist, derive design decisions from them, teach those derivations to another designer, test them against real content, and use the same theory to create many mature visual outcomes without collapsing into one repeated style.
+Working theological/editorial question:
 
-The project therefore treats New Westside as both:
+# **聖靈也會參與設計嗎？**
 
-1. a real website design-system construction problem;
-2. a body of design knowledge that must become teachable theory.
+Related larger inquiry: **《聖靈也會編程嗎？》**.
 
-## 2. Final thesis
+The project must not reduce either question to a slogan or presume that an AI can certify divine revelation. It records human prayer, stated reception, Scripture, discernment, design translation, testing, critique and further discernment.
+
+## 1. Source order: receive before style
+
+New Westside did not begin with visual trends. Its names, colors, sections, Scripture, intentions and structures were developed in a context of prayer, seeking God's presence and asking for the Holy Spirit's leading.
+
+Therefore preserve two connected layers:
+
+**Origin / theological layer**
+
+Prayer / seeking → reception as recorded by the human author → Scripture → discernment → naming → annotation → intention
+
+**Design translation layer**
+
+Principle → grammar → token → component → composition → interaction → experience → test → critique → renewed discernment
+
+Do not rewrite later UI semantics as if they were the original spiritual source. Preserve provenance and distinguish original notes, later interpretation, design inference and external research.
+
+The historical Brand Standards is a primary source. Its statements such as “每一個顏色都有一段救恩歷史”, its Theological Color System, Build Don't Decorate, Rhythm Creates Identity, Light Over Shadow and Symbol Before Illustration are source material to be studied, not silently modernized away.
+
+## 2. Doré's role: learn and write while learning
+
+Doré is not assigned only to build templates and report afterward. **Learning and writing are simultaneous.**
+
+Every research cycle must produce durable manuscript material.
+
+Required cycle:
+
+**Search / read → source notes → observation → principle → reason → rule → counterexample → experiment → evidence → critique → revision → transfer → manuscript passage**.
+
+Doré must learn how mature technical design resources teach: how they move from principles/foundations to decisions, tokens, components, examples, do/don't guidance, implementation and maintenance. Study current sources such as Material, Apple HIG, Atlassian Design System, Carbon, Fluent, USWDS, WCAG and DTCG, plus mature editorial/brand/cultural systems.
+
+External systems are method teachers, not style sources to copy.
+
+Current research note: modern design-system documentation treats writing itself as part of the system. Carbon, for example, publishes explicit documentation/content guidance; DTCG defines a stable, interoperable source-of-truth format for design decisions rather than treating tokens as mere color variables. These are models for the book's technical rigor, not templates for its visual identity.
+
+For every useful external source record:
+- source and date/version where relevant;
+- problem it solves;
+- governing theory;
+- chapter/documentation architecture;
+- how it teaches rather than merely specifies;
+- how foundations become decisions/components/pages;
+- examples/counterexamples;
+- implementation or validation method;
+- what New Westside can learn;
+- what New Westside should reject;
+- manuscript idea generated by the encounter.
+
+## 3. Four simultaneous reading layers
+
+Every substantial chapter should be capable of being read on four levels without forcing every paragraph to perform all four jobs.
+
+### A. Design / textbook layer
+
+The reader learns an actual transferable method. Technical claims require sources/evidence. Concepts must become usable rules, examples, counterexamples and exercises.
+
+### B. Theology / reflection layer
+
+Ask what the design problem reveals about creation, order, beauty, truth, attention, waiting, naming, embodiment, material, light, witness, discernment, human agency and tools.
+
+Theology must arise from Scripture and serious reflection, not from decorative analogy alone.
+
+### C. Gospel / witness layer
+
+The book's deepest trajectory is not “Christian designers can make distinctive brands.” It is witness to Christ: darkness and light, word and Spirit, living water, sin and redemption, the suffering King, resurrection hope, watchfulness and the coming Day.
+
+Evangelism should emerge through truthful explanation, testimony, Scripture and the logic of the work rather than being pasted on as a promotional ending.
+
+### D. Journal / editorial layer
+
+Each chapter must also be imaginable as a Westside Watch spread/sequence: opening image, Scripture, essay, technical diagram, specimen, experiment, margin note, failed draft, testimony, prayer or visual pause. The final book research therefore continuously generates Journal-ready material.
+
+## 4. Design textbook thesis
 
 A mature design system is not a bag of motifs and not a template library. It is a **generative theory of decisions**.
 
-The examination asks:
+Doré must move through:
 
-> Can Doré turn the New Westside Visual Constitution into a coherent theory that explains what to do, why to do it, when not to do it, and how the same core can generate materially different mature designs?
+**remember → understand → explain → create → teach → transfer**.
 
-The answer cannot be asserted. It must be demonstrated by artifacts.
+The textbook must answer not only “what is the Westside rule?” but:
+- Why does this rule exist?
+- What human/reading/editorial problem does it solve?
+- What theological or editorial source, if any, precedes it?
+- How is it represented technically?
+- When should it not be used?
+- What would misuse look like?
+- Can the principle survive when its familiar visual motif is removed?
+- Can another designer learn it and create something new rather than imitate an example?
 
-## 3. Theoretical construction paper
+## 5. Core design curriculum to be written
 
-Before convergence, Doré must write a teachable New Westside design theory. It must include at least:
+The manuscript and experiments must develop at least these areas:
 
-### 3.1 World and theological-design questions
+### 5.1 World and theological-design questions
+Watch / waiting / discernment / witness; Night → Watching → First Light → Dawn → Day; City / Gate / Road / Living Water; Scripture, memory, proclamation, gathering and people; stability × movement; sacred × ordinary; classical × contemporary; reading × discovery.
 
-- Watch / waiting / discernment / witness
-- Night → Watching → First Light → Dawn → Day
-- City / Gate / Road / Living Water
-- Scripture, memory, proclamation, gathering and people
-- stability × movement
-- sacred × ordinary
-- classical × contemporary
-- reading × discovery
+### 5.2 Visual DNA
+Teach **Light · Line · Paper · Engraving · Architecture / 光 · 線 · 紙 · 刻 · 築** as operations and principles, not motifs.
 
-The theory must distinguish theological meaning from decorative symbolism. Biblical identity cannot be reduced to antique paper, gold, stone or serif type.
+For each: origin, meaning, function, manifestations, non-manifestations, cliché/misuse, interaction with content/IA, experiments in materially different visual languages.
 
-### 3.2 Visual DNA as principles
+### 5.3 Editorial grammar
+Teach **Brick · Battlement · Flow / 磚 · 垛 · 流**, 5:8 mother proportion, Editorial Gravity, black-vinyl-wall density, Huarongdao yielding, skyline, resurfacing / returning to light, and desktop-to-mobile transformation.
 
-Teach **Light · Line · Paper · Engraving · Architecture** as design operations, not materials to paste onto pages.
+### 5.4 Material theory
+Living Paper, Sacred Surface / Papyric Texture, Temple Stone provenance, Doré engraving intensity, and original-artwork/editorial-content distinction.
 
-For every principle explain:
-- meaning;
-- design function;
-- possible manifestations;
-- non-manifestations;
-- misuse / cliché;
-- relationship to information architecture, interaction and content;
-- examples across materially different visual languages.
+### 5.5 Theological color system → modern color system
+Preserve the original Sacred Palette names, annotations and salvation-history meanings. Then teach how those source meanings become a modern operational system:
 
-### 3.3 Editorial grammar as a system
+**origin / theological annotation → brand primitive → perceptual family → semantic token → contextual mode → component token → accessible implementation**.
 
-Teach **Brick · Battlement · Flow**, 5:8 mother proportion, Editorial Gravity, black-vinyl-wall density, Huarongdao yielding, skyline, resurfacing / returning to light, desktop-to-mobile transformation.
+Do not confuse the final token with the original meaning. The technical system serves and extends the source; it does not overwrite it.
 
-The theory must explain why these rules exist and how they change under different content and device conditions.
+### 5.6 Typography
+Current practical website foundation: free serif typography in both languages, currently Cormorant Garamond + Noto Serif TC, chosen for classical character and bilingual practicality without paid-font dependency. This can improve later. Didot-class premium typography remains a future study when licensing is appropriate.
 
-### 3.4 Material theory
+Teach optical bilingual balance, hierarchy, reading rhythm, line length, leading, contrast and editorial voice rather than merely publishing a font list.
 
-Teach Living Paper, Sacred Surface / Papyric Texture, Temple Stone provenance, Doré engraving intensity and original-artwork/editorial-content distinction.
+### 5.7 Motion
+Motion explains state, editorial change, relationship, threshold or continuity. Huarongdao is choreography, not animation decoration. Reduced-motion behavior preserves meaning.
 
-### 3.5 Color theory
+### 5.8 Accessibility
+Accessibility is part of the design language rather than a late compliance patch. Study focus, keyboard, contrast, reflow, reduced motion and content clarity as possible expressions of the system.
 
-Build beyond the historical Sacred Palette:
-
-brand primitives → perceptual families → semantic tokens → contextual modes → component tokens → accessibility / gamut / real-product validation.
-
-The 2019 HSB/HSV PDF is historical methodology, not canonical implementation. Gold remains First Light / Highlight & Trace, not a generic primary accent.
-
-### 3.6 Typography theory
-
-Current practical foundation: free serif typography in both languages, currently Cormorant Garamond + Noto Serif TC, selected for classical character and bilingual practicality without paid-font dependency. This is not immutable. Future typography may improve; Didot-class premium typography is a possible later study when licensing is appropriate.
-
-The theory must study optical bilingual balance rather than merely matching CSS font sizes.
-
-### 3.7 Motion theory
-
-Motion must explain state, editorial change, relationship, threshold or continuity. Huarongdao is choreography, not animation decoration. Reduced-motion behavior must preserve meaning.
-
-### 3.8 Accessibility as design language
-
-Accessibility is not a late compliance patch. Explore whether focus can become First Light, whether reflow can reveal hierarchy, and how keyboard, contrast and reduced motion can belong to the identity without weakening it.
-
-## 4. Learn before answering
-
-Doré must study mature modern design systems and complete design philosophies, not only inspiration galleries. Reference classes include Material, Apple HIG, Atlassian Design System, Fluent, USWDS, WCAG, DTCG/token systems, mature editorial/brand systems, cultural/museum systems and materially distinct web traditions.
-
-For each useful source Doré records:
-- what problem the system solves;
-- its governing theory;
-- how foundations become components/pages;
-- what makes it recognizable without surface copying;
-- what New Westside can learn;
-- what New Westside should reject;
-- source/provenance.
-
-Do not copy another system's visual surface. Learn the method by which it becomes coherent.
-
-## 5. The examination
+## 6. Examination / studio research
 
 ### Paper A — Design thesis
-
-Write a defensible New Westside Design Thesis. Identify the essential tensions and the generative rules that resolve them. Surface adjectives do not count as theory.
+Write a defensible New Westside Design Thesis. Surface adjectives do not count as theory.
 
 ### Paper B — Complete system
-
-Construct a complete system covering typography, color, tokens, grids, spacing, ratios, imagery, materials, engraving, editorial gravity, Brick/Battlement/Flow, navigation, interaction, motion, responsive transformation, accessibility, content states and art direction.
-
-Every major rule must include rationale and at least one counterexample/misuse.
+Construct typography, color/tokens, grids, spacing, ratios, imagery, materials, engraving, Editorial Gravity, Brick/Battlement/Flow, navigation, interaction, motion, responsive transformation, accessibility, content states and art direction. Every major rule includes rationale and counterexample.
 
 ### Paper C — Closed-book identity test
-
-Create a Westside surface **without relying on First Light Gold, Temple Stone, Doré original artwork or an oversized serif hero**. It must still be defensibly generated from the same core. This tests understanding rather than motif dependence.
+Create a Westside surface **without relying on First Light Gold, Temple Stone, Doré original artwork or an oversized serif hero**. It must remain defensibly generated from the same core.
 
 ### Paper D — Generative identity test
-
-Using one theory, create multiple complete templates that are materially different in composition and visual language while remaining explainably related at the core.
-
-A repeated template with palette swaps fails.
+Using one theory, create multiple complete templates materially different in composition and visual language. Palette swaps and repeated compositions fail.
 
 ### Paper E — Real website proof
+Eventually cover Homepage, Journal/editorial wall, ONE, 黎明書局, The Gate, long reading, dense content and mobile-native transformation with real content stress.
 
-The mature proof set must eventually cover real New Westside surfaces such as:
-- Homepage
-- Journal entry / editorial wall
-- ONE entry
-- 黎明書局 entry
-- The Gate
-- long-reading page
-- dense-content state
-- mobile-native transformation
+## 7. Required visual outcome: a studio wall of mature templates
 
-Use real content stress, not lorem ipsum as the primary proof.
+The project does not end with one winner. It must generate many complete, mature, materially different New Westside templates sharing the same underlying theory.
 
-## 6. Required final outcome: many mature templates
+Explore image-led, type-led without giant-heading dependence, dense editorial, restrained/minimal, maximal/expressive, browser-native/brutalist, documentary/community, spatial/interactive, sacred/architectural and directions not anticipated by this brief.
 
-The examination does **not** end with one winner. Its final studio wall must contain many complete, mature, materially different New Westside website templates that share the same underlying design theory.
+Every template records hypothesis, theory used, theory withheld, learned traditions, difference, core relationship, strongest risk, critique and next learning.
 
-Required diversity includes, but is not limited to:
-- image-led;
-- type-led without giant-heading dependence;
-- dense editorial;
-- restrained/minimal;
-- maximal/expressive;
-- browser-native/brutalist;
-- documentary/community;
-- spatial/interactive;
-- sacred/architectural;
-- at least one direction not anticipated when this brief was written.
+Canonical delivery:
 
-Each template must be a complete design proposition, not a moodboard or hero sketch.
+**Theory → Doré Design editable artifact → same-source HTML Preview/Export → browser evidence → critique → durable learning → manuscript passage → next variant**.
 
-Each must explain:
-- hypothesis;
-- theory used;
-- theory deliberately withheld;
-- learned tradition(s);
-- what makes this variant different;
-- what makes it still New Westside at the level of reasoning;
-- strongest risk;
-- what the next variant should learn from it.
+Production homepage must not be mutated by this project without separate user aesthetic acceptance.
 
-## 7. Doré Design delivery path
+## 8. Book architecture — provisional, learned rather than frozen
 
-All examination designs first enter Doré Design as editable drafts.
+The eventual book/special issue should be allowed to emerge from the research, but the working architecture is:
 
-Canonical path:
+**Prologue — Why ask whether the Holy Spirit participates in design?**
 
-**Theory → Doré Design editable artifact → same-source HTML Preview/Export → browser evidence → critique → learning → next variant**.
+**Part I · RECEIVE / 領受**
+Names, Scripture, prayer, colors, the original Brand Standards, what it means to record a received idea without turning personal discernment into universal revelation.
 
-Production homepage must not be mutated by this examination. User aesthetic acceptance remains the only authority that can promote a style toward production convergence.
+**Part II · DISCERN / 分辨**
+What design is; Build Don't Decorate; truth vs decoration; rhythm; attention; restraint; cliché; how to judge an idea.
 
-## 8. Evaluation
+**Part III · NAME / 命名**
+Sacred Palette, Living Water, First Light, Watch Night, the sections of the city; naming as theology, information architecture and editorial act.
 
-Suggested rubric:
+**Part IV · BUILD / 建造**
+Design systems as generative theories: foundations, tokens, typography, material, grid, Brick/Battlement/Flow, components, accessibility and implementation.
+
+**Part V · WATCH / 守望**
+Editorial Gravity, changing content, Huarongdao, time, waiting, revision, AI/Doré as tool, what a machine can judge and what it cannot.
+
+**Part VI · TEST / 試驗**
+The examination: competing templates, failures, closed-book identity test, critique, evidence and revision.
+
+**Part VII · WITNESS / 見證**
+From design to gospel: Word and Spirit, darkness and dawn, Living Water, Crimson Robe, the suffering King, grace entering the story, testimony and invitation.
+
+**Epilogue — Watch for the Dawn**
+Not a claim that the work has captured God, but a return to watching, prayer, service and hope.
+
+This outline is a hypothesis. Doré must improve it through research and writing rather than obey it mechanically.
+
+## 9. Journal special issue requirement
+
+The final project must be editable into a Westside Watch special issue, not merely exported from a technical manual.
+
+Possible recurring editorial forms:
+- Scripture opening;
+- design essay;
+- theological meditation;
+- annotated specimen;
+- system diagram;
+- before/after experiment;
+- rejected design and critique;
+- field note / Doré learning note;
+- testimony;
+- prayer;
+- Selah visual pause;
+- final gallery of materially different New Westside templates.
+
+The Journal issue should itself demonstrate the design theory it teaches.
+
+## 10. Gospel integrity
+
+The evangelistic purpose is canonical, not optional. But the project must avoid three failures:
+
+1. **Decoration evangelism** — attaching crosses, verses or Christian vocabulary to unrelated design claims.
+2. **Overclaiming revelation** — treating every aesthetic preference or AI output as the Holy Spirit's instruction.
+3. **Technique as gospel** — implying that good design, creativity or beauty saves.
+
+The gospel layer must distinguish Creator and creation, Word and design, Spirit and tool, grace and technique. Design can witness, point, serve and embody attention; it does not replace the gospel it seeks to communicate.
+
+## 11. Evidence and manuscript archive
+
+Do not preserve only winners. Preserve source notes, hypotheses, rejected directions, before/after states, critique, browser screenshots, rationale, failed assumptions, user judgments, theory revisions, external references, token evolution, theological questions and manuscript passages.
+
+Failures are research evidence and potential Journal/book material.
+
+Every significant learning cycle must leave behind both:
+- **machine/design evidence**, and
+- **human-readable manuscript prose**.
+
+No “learned” claim is complete if nothing durable was written.
+
+## 12. Evaluation
+
 - Concept / theoretical coherence — 20%
 - Identity / depth of New Westside interpretation — 20%
 - System completeness / generativity — 20%
@@ -193,79 +265,33 @@ Suggested rubric:
 - Responsive / accessibility — 10%
 - Originality / escape from learned clichés — 5%
 
-Technical PASS means only that the submission is complete and testable. Doré self-critique is not aesthetic acceptance. `WESTSIDE_FIT` and `style_acceptance` may not be self-declared as user approval.
+In addition, book-track evaluation asks:
+- Is it teachable?
+- Is it technically defensible?
+- Does it distinguish source, interpretation and experiment?
+- Is the theology serious rather than ornamental?
+- Does it bear intelligible gospel witness?
+- Is it readable by someone who did not build Westside?
+- Can it become a compelling Journal issue rather than internal documentation?
 
-## 9. Teaching requirement
+Technical PASS means only complete/testable. Doré self-critique is not aesthetic acceptance. User aesthetic acceptance remains the authority for visual promotion.
 
-Every important conclusion must be written so that a future reader can learn the method and apply it to a new problem.
+## 13. Completion definition
 
-Required teaching pattern:
-
-**Observation → Principle → Reason → Rule → Counterexample → Experiment → Evidence → Revision → Transfer**.
-
-A conclusion such as “use gold sparingly” is insufficient. The material must teach why First Light works as an event/edge, what informational job it performs, when it fails, and how the underlying principle can survive without gold.
-
-The goal is not merely for Doré to remember the answer. The goal is for Doré to **learn how to create the next answer**.
-
-## 10. Publication / book track
-
-The accumulated theory, experiments, failures, critiques and mature designs are simultaneously source material for a future editorial publication.
-
-Working editorial question:
-
-# **聖靈也會參與設計嗎？**
-
-This belongs to the same larger inquiry as the unwritten working-title project **《聖靈也會編程嗎？》**, but it must not presume a simplistic theological answer.
-
-The publication can ask, through actual design practice:
-- What is creativity?
-- What is inspiration and what is craft?
-- What is discernment?
-- Can order, beauty, attention, restraint, truthfulness and service be understood theologically?
-- What is the relationship between human making, tools/AI and spiritual discernment?
-- Does a Christian visual language require Christian-looking decoration?
-- How can Scripture shape a design process without becoming visual cliché?
-- What does it mean to watch, wait, revise and judge in creative work?
-
-Potential forms:
-- a future book/chapter;
-- a standalone printed design essay;
-- a special Journal issue;
-- a hybrid design manual + theological reflection + process archive.
-
-The website examination is therefore not merely implementation. It is primary research for this publication.
-
-## 11. Evidence to preserve for publication
-
-Do not keep only successful final templates. Preserve:
-- hypotheses;
-- rejected directions;
-- before/after states;
-- critique;
-- browser screenshots;
-- rationale;
-- failed assumptions;
-- user judgments;
-- theory revisions;
-- source references;
-- token/system evolution;
-- theological questions raised by actual design decisions.
-
-Failures are editorial evidence, not waste.
-
-## 12. Completion definition
-
-This project is not complete when a script exits 0, when a design renders, or when Doré produces one attractive homepage.
+This project is not complete when a script exits 0, a design renders, one attractive homepage exists, or a manuscript outline exists.
 
 It is complete only when objective evidence shows:
 1. a coherent, teachable New Westside design theory exists;
-2. the theory traces from principle → token/rule → component → complete page;
-3. multiple materially different mature templates have been produced from it;
-4. the closed-book identity test demonstrates motif independence;
-5. desktop/mobile and interaction/accessibility evidence exists;
-6. each design has rationale, critique and durable learning;
-7. production remains unchanged unless separately approved;
-8. the accumulated theory/process has been organized as publication-ready source material;
-9. no design has been falsely promoted as user-approved.
+2. the theory traces origin/principle → rule/token → component → complete page;
+3. Doré has learned from mature external systems and produced cited durable writing from that learning;
+4. multiple materially different mature templates demonstrate generativity;
+5. the closed-book identity test demonstrates motif independence;
+6. desktop/mobile, interaction and accessibility evidence exists;
+7. theological reflection has been developed alongside actual design decisions;
+8. the gospel/witness trajectory is explicit and theologically distinguished from design technique;
+9. the accumulated material forms a substantial manuscript/resource;
+10. the same material can be edited into a Westside Watch Journal special issue;
+11. production remains unchanged unless separately approved;
+12. no design is falsely promoted as user-approved and no AI output is falsely certified as divine revelation.
 
-Until then: **ACTIVE PROJECT / EXAMINATION IN PROGRESS**.
+Until then: **ACTIVE BOOK / DESIGN-RESEARCH / JOURNAL PROJECT**.
