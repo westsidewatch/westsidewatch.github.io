@@ -92,7 +92,21 @@ body{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif}
 @media(max-width:900px){.book-frontispiece .movement-grid{grid-template-columns:repeat(3,1fr)}.book-frontispiece .chapter-grid{grid-template-columns:repeat(4,1fr)}}
 @media(max-width:650px){.book-frontispiece{padding:3rem 1.5rem}.book-frontispiece .head{grid-template-columns:1fr}.book-frontispiece .movement-grid{grid-template-columns:1fr 1fr}.book-frontispiece .chapter-grid{grid-template-columns:repeat(2,1fr)}.map-reading__route{grid-template-columns:1fr}.map-reading__route ol{grid-template-columns:1fr}.one-scroll{padding:2.5rem 2rem}.one-scroll__rail{min-width:52rem}}
 
-.connection-section>h3 small{display:block;margin-top:.45rem;color:var(--muted);font:italic .6rem var(--display);letter-spacing:.12em}.connection-section .connection-grid{grid-template-columns:1fr}.connection-section .connection-grid article{padding:clamp(1.5rem,3vw,2.5rem) 0;border-bottom:1px solid var(--line)}.connection-section .connection-grid article:first-child{padding-top:0}.connection-section .connection-grid header{display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:start}.connection-section .connection-grid header>span{color:var(--gold);font:italic 1rem var(--display)}.connection-section .connection-grid strong{display:block;color:var(--night);font:400 clamp(1.25rem,2vw,1.7rem) var(--display)}.connection-section .connection-grid small{display:block;margin-top:.2rem;color:var(--gold);font-size:.72rem;letter-spacing:.08em}.connection-section blockquote{max-width:56rem;margin:1.25rem 0 0 4rem;color:var(--night);font-size:clamp(1rem,1.3vw,1.15rem);line-height:2}.connection-section blockquote:before{color:var(--gold);content:"「"}.connection-section blockquote:after{color:var(--gold);content:"」"}@media(max-width:650px){.connection-section blockquote{margin-left:0}.connection-section .connection-grid header{grid-template-columns:2.25rem 1fr}}
+.connection-section{grid-template-columns:minmax(9rem,2fr) minmax(0,10fr)}
+.connection-section>h3 small{display:block;margin-top:.45rem;color:var(--muted);font:italic .6rem var(--display);letter-spacing:.12em}
+.connection-section>.connection-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(1rem,2vw,2rem);width:100%;min-width:0}
+.connection-section .connection-grid article{min-width:0;padding:0 clamp(.25rem,1vw,.75rem) clamp(1.5rem,3vw,2.5rem);border-bottom:1px solid var(--line)}
+.connection-section .connection-grid header{display:grid;grid-template-columns:2.25rem minmax(0,1fr);gap:.75rem;align-items:start}
+.connection-section .connection-grid header>span{color:var(--gold);font:italic 1rem var(--display)}
+.connection-section .connection-grid strong{display:block;color:var(--night);font:400 clamp(1.05rem,1.5vw,1.45rem) var(--display);overflow-wrap:anywhere}
+.connection-section .connection-grid small{display:block;margin-top:.2rem;color:var(--gold);font-size:.72rem;letter-spacing:.08em}
+.connection-section blockquote{max-width:none;margin:1.25rem 0 0;color:var(--night);font-size:clamp(.98rem,1.15vw,1.1rem);line-height:2}
+.connection-section blockquote:before{color:var(--gold);content:"「"}.connection-section blockquote:after{color:var(--gold);content:"」"}
+.connection-section .connection-note{margin:1rem 0 0;font-size:.82rem;line-height:1.75}
+.connection-section .connection-note span{display:block;margin-bottom:.35rem;color:var(--gold);font-size:.58rem;letter-spacing:.1em}
+.connection-section>.dore-crossref-intelligence{grid-column:1/-1;min-width:0}
+@media(max-width:1000px){.connection-section>.connection-grid{grid-template-columns:1fr}}
+@media(max-width:650px){.connection-section{grid-template-columns:1fr}.connection-section>.dore-crossref-intelligence{grid-column:auto}.connection-section .connection-grid header{grid-template-columns:2.25rem minmax(0,1fr)}}
 
 /* Dawn Library cards translated into ONE's engraved, classical-frontispiece register. */
 .assistant-head{margin-top:clamp(7rem,12vw,12rem);padding-top:clamp(4rem,7vw,7rem);border-top:1px solid var(--line)}
