@@ -1,6 +1,7 @@
 const CHINESE_NUM = '[一二三四五六七八九十百千零〇兩两0-9]+';
 const APPENDIX_RE = /^(?:附錄|附录)(?:[一二三四五六七八九十百千零〇兩两0-9\s　:：—-]|$)|^Appendix\b/i;
 const FRONT_MATTER_RE = /^(?:序言|前言|引言|後記|后记)(?:[\s　:：—-]|$)|^(?:Preface|Foreword|Introduction|Afterword)\b/i;
+const chapterPattern = `^第${CHINESE_NUM}章(?:補遺)?(?:[\\s　:：—-]+.*)?$`;
 
 export const ROLE_OPTIONS = [
   ['book_title', '書名'],
@@ -31,9 +32,7 @@ export function detectHeading(line, index = 0) {
     return { level, title, role: inferRole(title, level, index) };
   }
 
-  const chapterRe = new RegExp(`^第${CHINESE_NUM}章(?:補遺)?[\\s　:：—-]*(.*)$`);
-  if (chapterRe.test(raw)) return { level: 1, title: raw, role: 'chapter' };
-
+  if (new RegExp(chapterPattern).test(raw)) return { level: 1, title: raw, role: 'chapter' };
   if (APPENDIX_RE.test(raw)) return { level: 1, title: raw, role: 'appendix' };
   if (FRONT_MATTER_RE.test(raw)) return { level: 1, title: raw, role: 'front_matter' };
   return null;
@@ -42,7 +41,7 @@ export function detectHeading(line, index = 0) {
 export function inferRole(title, level = 1, index = 0) {
   const t = title.trim();
   if (APPENDIX_RE.test(t)) return 'appendix';
-  if (new RegExp(`^第${CHINESE_NUM}章`).test(t) || /^Chapter\s+\w+/i.test(t)) return 'chapter';
+  if (new RegExp(chapterPattern).test(t) || /^Chapter\s+\w+/i.test(t)) return 'chapter';
   if (FRONT_MATTER_RE.test(t)) return 'front_matter';
   if (index === 0 && level === 1) return 'book_title';
   if (level === 1) return 'chapter';
