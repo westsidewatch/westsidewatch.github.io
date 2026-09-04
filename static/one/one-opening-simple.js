@@ -7,8 +7,8 @@
     const script=document.createElement("script");script.id="dore-bible-intelligence-runtime";script.src="/dore/dore-bible-intelligence.js?v=search2-20260904b";script.async=false;script.onload=bindBibleIntelligence;document.head.appendChild(script);
   };
   const loadCrossrefUI=()=>{
-    if(!document.getElementById("one-dore-crossref-style")){const link=document.createElement("link");link.id="one-dore-crossref-style";link.rel="stylesheet";link.href="/one/one-dore-crossref-ui.css?v=20260904a";document.head.appendChild(link);}
-    if(!document.getElementById("one-dore-crossref-ui-runtime")){const script=document.createElement("script");script.id="one-dore-crossref-ui-runtime";script.src="/one/one-dore-crossref-ui.js?v=20260904a";script.defer=true;document.head.appendChild(script);}
+    if(!document.getElementById("one-dore-crossref-style")){const link=document.createElement("link");link.id="one-dore-crossref-style";link.rel="stylesheet";link.href="/one/one-dore-crossref-ui.css?v=20260904b";document.head.appendChild(link);}
+    if(!document.getElementById("one-dore-crossref-ui-runtime")){const script=document.createElement("script");script.id="one-dore-crossref-ui-runtime";script.src="/one/one-dore-crossref-ui.js?v=20260904b";script.defer=true;document.head.appendChild(script);}
   };
   const bindBibleIntelligence=()=>{
     const engine=window.DoreBibleIntelligence;if(!engine)return;
