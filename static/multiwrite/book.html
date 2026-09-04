@@ -4,15 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>多寫 · 書稿</title>
-  <link rel="stylesheet" href="./styles.css?v=20260904-3">
-  <link rel="stylesheet" href="./book.css?v=20260904-3">
+  <link rel="stylesheet" href="./styles.css?v=20260904-4">
+  <link rel="stylesheet" href="./book.css?v=20260904-4">
 </head>
 <body class="book-shell">
   <header class="book-topbar">
-    <a class="book-back" href="./">← 我的書</a>
+    <a class="book-back" id="homeLink" href="/multiwrite/">← 我的書</a>
     <div class="book-actions">
-      <span id="saveState" class="save-state">原稿唯讀</span>
-      <button id="toggleEdit" class="book-action" type="button">編輯</button>
+      <span id="saveState" class="save-state">載入中</span>
+      <button id="toggleEdit" class="book-action" type="button" disabled>編輯</button>
       <button id="saveDraft" class="book-action primary" type="button" hidden>儲存</button>
     </div>
     <div class="book-brand">多寫 · MULTIWRITE</div>
@@ -35,6 +35,6 @@
     </section>
   </main>
 
-  <script type="module" src="./book.js?v=20260904-3"></script>
+  <script type="module" src="./book.js?v=20260904-4"></script>
 </body>
 </html>
