@@ -30,14 +30,6 @@ const D=context.DoreBibleIntelligence;
 assert(D,'Doré Bible Intelligence API must be exported');
 
 (async()=>{
-  const before={
-    gilead_multi_hop:false,
-    wilderness_synoptic_deuteronomy:false,
-    old_testament_spirit_premise_challenged:false,
-    simplified_alias:false,
-    traceable_graph:false
-  };
-
   const g=await D.conceptSearch('基列雅比和掃羅死後有什麼關係？');
   assert(g&&g.evidence.some(x=>x.reference==='bible.ref.JDG.21.8'));
   assert(g.evidence.some(x=>x.reference==='bible.ref.1SA.31.11'));
@@ -52,16 +44,16 @@ assert(D,'Doré Bible Intelligence API must be exported');
   assert(s.lead.includes('前提不成立'),'false premise must be challenged');
   for(const r of ['bible.ref.GEN.1.2','bible.ref.PSA.51.11','bible.ref.ISA.63.10'])assert(s.evidence.some(x=>x.reference===r),`missing ${r}`);
 
-  const simp=await D.conceptSearch('为什么旧约里没有圣灵？');
+  const simp=await D.conceptSearch('旧约圣灵在哪里？');
   assert(simp&&simp.concept_id==='ot-spirit-false-premise','Simplified Chinese intent must fold to Traditional');
   assert(D.related('bible.ref.JDG.21.8',{depth:2}).every(x=>x.source_dataset&&x.provenance),'graph results must retain provenance');
 
-  const after={
-    gilead_multi_hop:true,
-    wilderness_synoptic_deuteronomy:true,
-    old_testament_spirit_premise_challenged:true,
-    simplified_alias:true,
+  const evidence={
+    gilead_multi_hop:chain.find(x=>x.reference==='bible.ref.1SA.31.11'),
+    wilderness_refs:w.evidence.map(x=>x.reference),
+    old_testament_spirit:{lead:s.lead,refs:s.evidence.map(x=>x.reference)},
+    simplified_alias:simp.concept_id,
     traceable_graph:true
   };
-  console.log(JSON.stringify({schema:'dore.search2.semantic-benchmark.v1',before,after,engine:D.stats()},null,2));
+  console.log(JSON.stringify({schema:'dore.search2.semantic-benchmark.v1',status:'PASS',evidence,engine:D.stats()},null,2));
 })().catch(err=>{console.error(err);process.exit(1)});
