@@ -3,7 +3,7 @@
 Date: 2026-09-05
 Status: CANONICAL_ADDENDUM / SWEEP_RECONCILED
 Parent register: `DORÉ-MASTER-WORK-REGISTER.md`
-Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-IMAGE-ITERATION-DESIGN-HANDOFF-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-RESIDENT-IMAGE-PIPELINE-EVIDENCE-LEDGER-2026-09-05.md`
+Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-IMAGE-ITERATION-DESIGN-HANDOFF-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-RESIDENT-IMAGE-PIPELINE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-RESIDENT-IMAGE-AUTORUN-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-COMPANION-NATIVE-MESSAGING-EVIDENCE-LEDGER-2026-09-05.md`
 P01 impact: NONE
 
 ## Canonical interpretation
@@ -24,7 +24,11 @@ A third bounded visual-runtime submilestone is now real: Doré Image has a bound
 
 A fourth bounded resident-image submilestone is now real: Doré can compile visual recipes into a provider workflow, request a resident render, fetch the returned image bytes into Doré-owned storage, enforce content-type/empty/size guards, hash and persist a content-addressable artifact record with provenance/recipe/brief, and emit critic input that explicitly refuses visual acceptance until actual vision observations exist. Correction direction can re-enter a later generation prompt. This is `VERIFIED_COMPLETE_SUBMILESTONE` implementation evidence, not a real-media acceptance result. The introducing commits have no associated GitHub workflow-run receipt, and the bounded tests use synthetic/fake provider bytes; real ComfyUI/model execution, real visual review and real product application remain `UNKNOWN_NEEDS_EVIDENCE`.
 
-Sweep recheck on 2026-09-05 queried both the GitHub combined-status surface and commit-associated workflow-run surface for head `45f1373b342d12ddeb2e78f87ff7a278b13b9432`; both returned no persisted status/run receipts. Additional commit-associated workflow-run checks for image-substrate commits `80305920ce2012a445ae7f75b5b75576e12df900` and `7daf1c176d365ff65cbd9d8865534673f2407699` likewise returned no runs. Therefore absence of a receipt remains an evidence gap, not a failure result, and no status promotion or demotion is justified.
+A fifth resident-runtime submilestone is now real: `scripts/dore_image_autorun.py` and `dore.image.resident.v1` add a bounded zero-terminal execution seam around the resident image pipeline. The runtime discovers local configuration, distinguishes `NOT_READY` / `IDLE` / `PASS`, rejects non-loopback renderer endpoints, health-checks the resident renderer, consumes a queued image job, persists `last-completed.json`, and removes the consumed job only after generation returns. This is `VERIFIED_COMPLETE_SUBMILESTONE` orchestration evidence, not proof of a real configured ComfyUI/model render. The introducing commit has no persisted workflow-run receipt; missing/unreachable resident configuration remains readiness evidence until an actual configured runtime attempt proves a blocker.
+
+A sixth control-plane transport submilestone is now real: Firefox Native Messaging is the governing Companion→Doré production-carrier direction, preserving the existing `dore.a2a/1` adapter/control-plane seam while keeping `localhost:4312` as compatibility/debug fallback. The native host is a bounded local stdio carrier, the installer preflights downloaded host code before switching the current snapshot, and follow-on contract tests pin native-first ordering, host/extension identity and fallback role. This is `VERIFIED_COMPLETE_SUBMILESTONE` implementation/contract evidence. The associated commit-run surfaces currently contain no persisted workflow receipt and there is no persisted live Mac browser→native→host→adapter→Design acceptance, so latest-head CI and live-native acceptance remain `UNKNOWN_NEEDS_EVIDENCE`. The old idea of `4312` as the primary Companion production carrier is superseded; retain it under `MAINTENANCE` until live native acceptance is persisted.
+
+Sweep recheck on 2026-09-05 queried both the GitHub combined-status surface and commit-associated workflow-run surface for head `45f1373b342d12ddeb2e78f87ff7a278b13b9432`; both returned no persisted status/run receipts. Additional commit-associated workflow-run checks for image-substrate commits `80305920ce2012a445ae7f75b5b75576e12df900`, `7daf1c176d365ff65cbd9d8865534673f2407699`, resident-autorun commit `69c4a40a2e082749a7d03c54a68948305a24f3fa`, Native Messaging commit `56b767c1fd4957f7597c231a64029902d012c985` and native-contract follow-on `5a47ff781ae876058561af2a08395512184ebbc3` likewise returned no runs. Therefore absence of a receipt remains an evidence gap, not a failure result, and no status promotion or demotion is justified.
 
 The consolidation rule is canonical: repeated compatible success can nominate a capability candidate; matching failure blocks the candidate; no production/reflex promotion is automatic. Production promotion still requires regression evidence and existing authority/governance gates.
 
@@ -40,8 +44,9 @@ Do not promote this workstream beyond foundation/submilestone status until evide
 - bounded active-capability count and ordinary-run cost as registry size grows;
 - real Image + Design flow over one typed task state without conversational handoff;
 - one real purpose-built Westside asset (prefer Doré-derived light texture or Bethlehem-star grammar rather than an original Doré artwork) completing generation → real resident/provider render → fetched durable bytes + checksum/provenance → real vision observations → critic/correction if needed → accepted artifact → typed Design application with persisted identity/provenance and before/after acceptance evidence;
-- latest-head capability-runtime CI PASS including the local A2A bridge test and Image iteration/handoff/resident-pipeline coverage;
-- live resident `localhost:4312` typed-envelope dispatch through the mature adapter with request/idempotency identity preserved;
+- latest-head capability-runtime CI PASS including the local A2A bridge, Companion Native contract, Image iteration/handoff/resident-pipeline and resident-autorun coverage;
+- live Mac Companion→Firefox Native Messaging→native host→mature adapter→Design dispatch with request/idempotency identity preserved;
+- keep `localhost:4312` only as compatibility/debug fallback until that live-native proof passes, then reconsider retirement;
 - negative/unauthorized mutation behavior at the authority boundary;
 - a repeated real workflow compiling downward to fewer deliberative/model calls;
 - materially different-domain transfer;
@@ -53,13 +58,13 @@ This runtime gives `EVOLUTION` a concrete embodiment substrate, but does not pro
 
 ### Relation to A2A / coordination
 
-The current Design/control-plane direction supersedes the idea of adding another independent local control daemon for the same mature path. Legacy A2A compatibility remains valid, but typed capability routing should converge through the established adapter/runtime seam. Typed envelopes improve protocol discipline; they do not by themselves prove authenticated mutation authority, so existing authority-hardening debt remains open.
+The current Design/control-plane direction supersedes the idea of adding another independent local control daemon for the same mature path. Legacy A2A compatibility remains valid, but typed capability routing should converge through the established adapter/runtime seam. Firefox Native Messaging now supersedes resident HTTP as the preferred Companion production carrier while leaving `4312` in place as bounded compatibility/debug fallback pending live Mac acceptance. Typed/native envelopes improve protocol and carrier discipline; they do not by themselves prove authenticated mutation authority, so existing authority-hardening debt remains open.
 
 ### Relation to VISUAL work
 
 Purpose-built Doré visual assets and future Doré Image generation should use the shared `visual` faculty/capability path rather than creating a second visual agent identity. Original Doré works remain curated content; purpose-built Doré-derived website assets remain a separate visual-grammar production problem.
 
-For Doré Image quality work, one-shot generation as the default final-production model is superseded by the bounded correction-loop direction where visual acceptance matters. Provider-returned image references should likewise not remain ephemeral when an asset enters Doré's production/evaluation loop: the governing path is durable bytes + checksum/provenance + real review. Where Image hands an accepted asset to Design, free-form conversational transfer is likewise superseded by the typed image-patch contract. These are architectural directions, not claims that the real visual-production loop is already complete.
+For Doré Image quality work, one-shot generation as the default final-production model is superseded by the bounded correction-loop direction where visual acceptance matters. Provider-returned image references should likewise not remain ephemeral when an asset enters Doré's production/evaluation loop: the governing path is durable bytes + checksum/provenance + real review. Resident autorun now provides the bounded zero-terminal seam that can consume a queued visual job once local renderer configuration is present. Where Image hands an accepted asset to Design, free-form conversational transfer is likewise superseded by the typed image-patch contract. These are architectural directions, not claims that the real visual-production loop is already complete.
 
 ### Relation to P01
 
