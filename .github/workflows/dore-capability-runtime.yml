@@ -6,10 +6,13 @@ on:
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
       - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/companion_4312.py'
+      - 'local/dore-local/install_companion.sh'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
+      - 'tests/test_dore_companion_4312.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -20,10 +23,13 @@ on:
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
       - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/companion_4312.py'
+      - 'local/dore-local/install_companion.sh'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
+      - 'tests/test_dore_companion_4312.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -49,6 +55,9 @@ jobs:
           python -m unittest discover -s tests -p 'test_dore_provider*.py' -v
           python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
           python -m unittest tests.test_dore_local_a2a_control_bridge -v
+          python -m unittest tests.test_dore_companion_4312 -v
+      - name: Validate macOS installer shell
+        run: bash -n local/dore-local/install_companion.sh
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
       - name: Run shared-state visual execution probe
