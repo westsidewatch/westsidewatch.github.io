@@ -19,7 +19,7 @@ class CompanionNativeContractTest(unittest.TestCase):
     def test_companion_1_manifest_is_installable_firefox_extension(self) -> None:
         manifest = json.loads((EXT / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["manifest_version"], 2)
-        self.assertEqual(manifest["version"], "1.0.0")
+        self.assertEqual(manifest["version"], "1.1.0")
         self.assertIn("nativeMessaging", manifest["permissions"])
         self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
         self.assertIn("background.js", manifest["background"]["scripts"])
