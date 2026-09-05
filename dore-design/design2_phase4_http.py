@@ -30,6 +30,24 @@ def install(handler_cls,base,root):
 
     def do_GET(self):
         u=urlparse(self.path);path=u.path;q=parse_qs(u.query)
+        if path=='/api/health':
+            w=base.workspace()
+            reg=design2_publication._load(registry)
+            return self.out(200,{
+                'ok':True,
+                'service':'dore-design',
+                'version':'2.0-dev-phase4',
+                'workspace_id':w.get('id'),
+                'revision':w.get('revision'),
+                'source_of_truth':'structured-workspace',
+                'resident_entrypoint':'app_design2.py',
+                'canonical_renderer':True,
+                'immutable_publication':True,
+                'save_publish_separated':True,
+                'rollback':True,
+                'current_release':reg.get('current_release'),
+                'fallback_entrypoint':'app_visual_v2.py',
+            })
         if path=='/api/design2/publication':
             reg=design2_publication._load(registry)
             return self.out(200,{'ok':True,'registry':reg})
