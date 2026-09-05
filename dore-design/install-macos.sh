@@ -31,16 +31,15 @@ assert h.get('resident_entrypoint')=='app_design2.py'
 assert h.get('immutable_publication') is True
 print(json.dumps(h,ensure_ascii=False))
 PY
-    # Migration bridge: install the browser-independent local A2A control plane.
-    if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
-      bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
-    fi
-    # Best-effort zero-cost external entry. If gh auth can mint a runner token,
-    # this installs a user-level launchd GitHub runner with no sudo and no paid API.
-    # A blocked runner install must not break Design rollout; its exact reason is
-    # emitted for the migration result so we can resolve only the missing piece.
-    if [[ -f "$ROOT/local/dore-local/install-github-relay-macos.sh" ]]; then
-      bash "$ROOT/local/dore-local/install-github-relay-macos.sh" || true
+    # A production action may itself be executing through the Unix control
+    # plane. Never restart that plane mid-RPC or the caller loses the response.
+    if [[ "${DORE_SKIP_CONTROL_PLANE_REFRESH:-0}" != "1" ]]; then
+      if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
+        bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
+      fi
+      if [[ -f "$ROOT/local/dore-local/install-github-relay-macos.sh" ]]; then
+        bash "$ROOT/local/dore-local/install-github-relay-macos.sh" || true
+      fi
     fi
     exit 0
   fi
