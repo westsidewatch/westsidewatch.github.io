@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "DORÉ A2A Companion",
+  "version": "0.1.0",
+  "description": "Connects ChatGPT Plus to the local DORÉ typed capability bridge.",
+  "browser_specific_settings": {
+    "gecko": {"id": "dore-a2a@westsidewatch.local", "strict_min_version": "128.0"}
+  },
+  "permissions": [],
+  "host_permissions": ["http://127.0.0.1:4312/*"],
+  "content_scripts": [{
+    "matches": ["https://chatgpt.com/*"],
+    "js": ["content.js"],
+    "run_at": "document_idle"
+  }]
+}
