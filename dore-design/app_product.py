@@ -5,6 +5,11 @@ from html import escape
 from http.server import ThreadingHTTPServer
 from urllib.parse import urlparse, parse_qs
 import app_workspace as base
+import multiwrite_integration as multiwrite
+
+# Extend the established DORÉ DESIGN workspace in place. Multiwrite is a page
+# family inside this product, never a parallel editor.
+multiwrite.install_workspace(base)
 
 
 def page_html(w, pid):
@@ -53,13 +58,14 @@ html=html.replace('<a id="exportLink" class="btn" target="_blank">SVG Export</a>
 html=html.replace("exportLink.href='/api/export.svg?page='+encodeURIComponent(active);", "previewLink.href='/preview/'+encodeURIComponent(active);exportHtmlLink.href='/api/export.html?page='+encodeURIComponent(active);exportLink.href='/api/export.svg?page='+encodeURIComponent(active);")
 inject="""function activatePage(id){if(!id||!w?.pages?.some(p=>p.id===id))return;active=id;selected=null;render()}pages.addEventListener('click',ev=>{let item=ev.target.closest('.pitem');if(item)activatePage(item.dataset.pageId)});pages.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){let item=ev.target.closest('.pitem');if(item){ev.preventDefault();activatePage(item.dataset.pageId)}}});function startDrag(ev,e,n){if(ev.button!==0)return;ev.preventDefault();ev.stopPropagation();selected=n.id;drag={el:e,id:n.id,sx:ev.clientX,sy:ev.clientY,x:n.x,y:n.y,nx:n.x,ny:n.y};e.setPointerCapture?.(ev.pointerId);renderInspectorOnly(n)}function renderInspectorOnly(n){let x=document.getElementById('ix'),y=document.getElementById('iy');if(x)x.value=n.x;if(y)y.value=n.y}window.addEventListener('pointermove',ev=>{if(!drag)return;drag.nx=Math.round(drag.x+ev.clientX-drag.sx);drag.ny=Math.round(drag.y+ev.clientY-drag.sy);drag.el.style.left=drag.nx+'px';drag.el.style.top=drag.ny+'px'});window.addEventListener('pointerup',async ev=>{if(!drag)return;let d=drag;drag=null;w=await api('/api/workspace',{op:'set_node',page_id:active,id:d.id,patch:{x:d.nx,y:d.ny}});selected=d.id;render()});"""
 html=html.replace("async function mut(x){w=await api('/api/workspace',x);render()}",inject+"async function mut(x){w=await api('/api/workspace',x);render()}")
+html=multiwrite.augment_html(html)
 base.HTML=html
 
 class H(base.H):
     def do_GET(self):
         u=urlparse(self.path); p=u.path
         if p=='/api/health':
-            return self.out(200,{'ok':True,'service':'dore-design','version':'1.0','workspace':'multi-page','direct_manipulation':True,'page_activation_fix':True,'html_preview':True,'html_export':True})
+            return self.out(200,{'ok':True,'service':'dore-design','version':'1.0','workspace':'multi-page','direct_manipulation':True,'page_activation_fix':True,'html_preview':True,'html_export':True,'multiwrite_semantic_design':True})
         if p=='/api/export.html':
             pid=(parse_qs(u.query).get('page') or ['cover'])[0]
             return self.out(200,page_html(base.workspace(),pid),'text/html')
