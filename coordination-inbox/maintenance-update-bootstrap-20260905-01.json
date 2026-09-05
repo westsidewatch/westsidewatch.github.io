@@ -1,0 +1,16 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "maintenance-update-bootstrap-20260905-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Bootstrap guarded maintenance.update capability, then hand control to the updated worker",
+  "related_goal": "dore-resident/guarded-self-maintenance",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {"argv":["git","pull","--ff-only","origin","main"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":180},
+    {"argv":["python3","-m","py_compile","local/dore-local/maintenance_update.py","local/dore-local/coordination_worker.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":60},
+    {"argv":["python3","local/dore-local/coordination_worker.py"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":300}
+  ]
+}
