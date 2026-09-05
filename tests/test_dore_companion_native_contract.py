@@ -57,6 +57,16 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn("DORÉ A2A ·", source)
         self.assertIn('"dore:a2a-result"', source)
 
+    def test_installer_prepares_native_host_and_exact_extension_manifest(self) -> None:
+        source = (EXT / "install_companion_1.command").read_text(encoding="utf-8")
+        self.assertIn('install_native_messaging.sh', source)
+        self.assertIn('companion-1.0', source)
+        self.assertIn('dore-companion@westsidewatch.ca', source)
+        self.assertIn('about:debugging#/runtime/this-firefox', source)
+        self.assertIn('Load Temporary Add-on', source)
+        self.assertNotIn('openai.com/v1', source.lower())
+        self.assertNotIn('api.openai.com', source.lower())
+
 
 if __name__ == "__main__":
     unittest.main()
