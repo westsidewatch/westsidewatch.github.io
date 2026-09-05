@@ -2,7 +2,7 @@
 """DORÉ Firefox Native Messaging host.
 
 Local carrier only: Firefox Companion -> stdio framing -> a2a_adapter ->
-DORÉ ControlPlane.  It deliberately does not create a daemon, listen on a
+DORÉ ControlPlane. It deliberately does not create a daemon, listen on a
 socket, call OpenAI APIs, or use GitHub as a runtime message bus.
 """
 from __future__ import annotations
@@ -20,6 +20,7 @@ SERVICE = "dore-a2a-native"
 HOST_NAME = "ca.dore.companion"
 LEGACY_CAPABILITY = "design2.stage2.acceptance"
 MAX_MESSAGE_BYTES = 1024 * 1024
+CARRIER_ID_KEY = "__dore_transport_id"
 ROOT = Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2]).expanduser().resolve()
 
 if str(ROOT) not in sys.path:
@@ -82,6 +83,14 @@ def _legacy_stage2_requested(payload: dict[str, Any]) -> bool:
     return capability == LEGACY_CAPABILITY or command in {"/dore stage2", "dore stage2"}
 
 
+def _with_carrier_id(request: dict[str, Any], response: dict[str, Any]) -> dict[str, Any]:
+    carrier_id = request.get(CARRIER_ID_KEY)
+    if isinstance(carrier_id, str) and carrier_id:
+        response = dict(response)
+        response[CARRIER_ID_KEY] = carrier_id
+    return response
+
+
 def health_payload() -> dict[str, Any]:
     return {
         "ok": True,
@@ -96,26 +105,25 @@ def health_payload() -> dict[str, Any]:
 
 def route_payload(payload: dict[str, Any]) -> dict[str, Any]:
     if payload.get("action") in {"native.health", "health"}:
-        return health_payload()
+        return _with_carrier_id(payload, health_payload())
 
     try:
         typed = ADAPTER.handle_companion_payload(payload)
     except Exception as exc:
-        return {
+        return _with_carrier_id(payload, {
             "ok": False,
             "protocol": PROTOCOL,
             "status": "failed",
             "error": {"code": "adapter_error", "message": str(exc)},
-        }
+        })
 
     if typed is not None:
-        return typed
+        return _with_carrier_id(payload, typed)
 
     # Keep the already-PASSing Stage 2 diagnostic contract while transport is
-    # migrated.  This is compatibility only; production typed traffic goes
-    # through a2a_adapter above.
+    # migrated. Production typed traffic goes through a2a_adapter above.
     if _legacy_stage2_requested(payload):
-        return {
+        return _with_carrier_id(payload, {
             "ok": True,
             "service": SERVICE,
             "protocol": PROTOCOL,
@@ -124,18 +132,18 @@ def route_payload(payload: dict[str, Any]) -> dict[str, Any]:
             "status": "PASS",
             "diagnostic": True,
             "transport": "firefox-native-messaging",
-        }
+        })
 
-    return {
+    return _with_carrier_id(payload, {
         "ok": False,
         "protocol": PROTOCOL,
         "status": "failed",
         "error": {"code": "unsupported_payload", "message": "unsupported Companion payload"},
-    }
+    })
 
 
 def serve(stdin: BinaryIO | None = None, stdout: BinaryIO | None = None) -> int:
-    # stdout is protocol-only.  Any diagnostic output must go to stderr.
+    # stdout is protocol-only. Any diagnostic output must go to stderr.
     source = stdin or sys.stdin.buffer
     sink = stdout or sys.stdout.buffer
     while True:
@@ -147,7 +155,7 @@ def serve(stdin: BinaryIO | None = None, stdout: BinaryIO | None = None) -> int:
         except (EOFError, ValueError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             print(f"[dore-native] framing error: {exc}", file=sys.stderr, flush=True)
             return 2
-        except Exception as exc:  # Last-resort boundary: preserve the port.
+        except Exception as exc:
             print(f"[dore-native] fatal error: {exc}", file=sys.stderr, flush=True)
             response = {
                 "ok": False,
