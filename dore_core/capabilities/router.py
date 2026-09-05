@@ -13,12 +13,18 @@ def _tokens(text: str) -> Counter[str]:
     return Counter(m.group(0).casefold() for m in _WORD_RE.finditer(text))
 
 
+def _overlap(a: Counter[str], b: Counter[str]) -> int:
+    return sum(min(a[t], b[t]) for t in a)
+
+
 class SparseCapabilityRouter:
     """Free-first L0/L1 router.
 
-    L0 exact trigger matching runs first. L1 uses a deterministic lexical score
-    over compact manifests. No model, embedding service or provider is required.
-    A future semantic adapter may be plugged in only for unresolved cases.
+    L0 exact trigger matching runs first. L1 is intentionally conservative:
+    an approximate route must still be anchored in a capability trigger, not
+    merely in generic words from its description. This prevents unrelated
+    domains from waking dormant faculties because they share words such as
+    "language", "original", "review", or "design".
     """
 
     def __init__(self, registry: CapabilityRegistry, *, max_active: int = 3) -> None:
@@ -48,22 +54,29 @@ class SparseCapabilityRouter:
         q = _tokens(query)
         ranked: list[tuple[float, str]] = []
         for manifest in self.registry.all():
-            d = _tokens(manifest.searchable_text)
-            overlap = sum(min(q[t], d[t]) for t in q)
-            if overlap:
-                score = overlap / max(1, sum(q.values()))
-                ranked.append((score, manifest.id))
+            best_trigger_score = 0.0
+            for trigger in manifest.triggers:
+                t = _tokens(trigger)
+                if not t:
+                    continue
+                shared = _overlap(q, t)
+                trigger_coverage = shared / sum(t.values())
+                query_coverage = shared / max(1, sum(q.values()))
+                score = 0.75 * trigger_coverage + 0.25 * query_coverage
+                best_trigger_score = max(best_trigger_score, score)
+            if best_trigger_score >= 0.60:
+                ranked.append((best_trigger_score, manifest.id))
         ranked.sort(key=lambda x: (-x[0], x[1]))
 
         if ranked:
             best = ranked[0][0]
-            chosen = tuple(cid for score, cid in ranked if score >= max(0.25, best * 0.6))[: self.max_active]
+            chosen = tuple(cid for score, cid in ranked if score >= max(0.60, best * 0.85))[: self.max_active]
             decision = RouteDecision(
                 intent=query,
                 capability_ids=chosen,
                 level="L1",
                 confidence=min(0.95, best),
-                reason="local lexical capability search",
+                reason="trigger-anchored local lexical capability search",
             )
         else:
             decision = RouteDecision(

@@ -1,0 +1,47 @@
+name: Doré Capability Runtime
+
+on:
+  pull_request:
+    paths:
+      - 'dore_core/capabilities/**'
+      - 'tests/test_dore_*capability*.py'
+      - 'scripts/dore_capability_benchmark.py'
+      - 'scripts/dore_renderer_probe.py'
+      - '.github/workflows/dore-capability-runtime.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'dore_core/capabilities/**'
+      - 'tests/test_dore_*capability*.py'
+      - 'scripts/dore_capability_benchmark.py'
+      - 'scripts/dore_renderer_probe.py'
+      - '.github/workflows/dore-capability-runtime.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  sparse-runtime-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run capability runtime tests
+        run: python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
+      - name: Run zero-metered-cost benchmark
+        run: python scripts/dore_capability_benchmark.py
+      - name: Verify renderer probe fails closed when absent
+        run: |
+          set +e
+          python scripts/dore_renderer_probe.py > /tmp/dore-renderer-probe.json
+          code=$?
+          cat /tmp/dore-renderer-probe.json
+          if [ "$code" -ne 2 ]; then
+            echo "Expected NOT_READY/exit 2 without resident renderer, got $code"
+            exit 1
+          fi
