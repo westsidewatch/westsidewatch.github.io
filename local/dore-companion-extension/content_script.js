@@ -1,12 +1,14 @@
-/* DORÉ Companion 1.2 ChatGPT content script. */
+/* DORÉ Companion 1.3 ChatGPT content script. */
 
 const BADGE_ID = "dore-a2a-companion-status";
+const TERMINAL_HOLD_MS = 30000;
 let lastCommand = "";
 let lastCommandAt = 0;
 let healthTimer = null;
 let pendingComposerCommand = "";
 let commandInFlight = false;
-const seenSubmittedCommands = new Set();
+let terminalHoldUntil = 0;
+const seenMessageNodes = new WeakSet();
 
 function ensureBadge() {
   let badge = document.getElementById(BADGE_ID);
@@ -20,16 +22,18 @@ function ensureBadge() {
   return badge;
 }
 
-function setBadge(state, detail) {
+function setBadge(state, detail, hold = false) {
   const badge = ensureBadge();
   const normalized = String(state || "OFFLINE").toUpperCase();
   badge.textContent = `DORÉ A2A · ${normalized}`;
   badge.title = detail || "";
-  badge.style.opacity = ["ONLINE","PASS","CAPTURED","SENT"].includes(normalized) ? "1" : normalized === "WORKING" ? ".9" : ".72";
+  badge.dataset.doreDetail = detail || "";
+  badge.style.opacity = ["ONLINE","PASS","CAPTURED","SENT","FAILED","ERROR"].includes(normalized) ? "1" : ".8";
+  if (hold) terminalHoldUntil = Date.now() + TERMINAL_HOLD_MS;
 }
 
 async function refreshHealth() {
-  if (commandInFlight) return;
+  if (commandInFlight || Date.now() < terminalHoldUntil) return;
   try {
     const reply = await browser.runtime.sendMessage({ type: "dore.health" });
     if (reply && reply.online) setBadge("ONLINE", `transport: ${reply.transport || "native"}`);
@@ -62,8 +66,7 @@ function normalizeCommand(raw) {
 function currentComposerCommand() {
   const direct = normalizeCommand(readNode(composerRoot()));
   if (direct) return direct;
-  const candidates = Array.from(document.querySelectorAll('textarea,[contenteditable="true"]'));
-  for (const node of candidates) {
+  for (const node of Array.from(document.querySelectorAll('textarea,[contenteditable="true"]'))) {
     const text = normalizeCommand(readNode(node));
     if (text) return text;
   }
@@ -74,34 +77,34 @@ function rememberComposer() {
   const command = currentComposerCommand();
   if (command) {
     pendingComposerCommand = command;
+    terminalHoldUntil = 0;
     setBadge("CAPTURED", command);
   }
 }
 
-function userMessageText(node) {
-  if (!(node instanceof Element)) return "";
+function submittedRoots(node) {
+  if (!(node instanceof Element)) return [];
   const roots = [];
   if (node.matches('[data-message-author-role="user"]')) roots.push(node);
   roots.push(...node.querySelectorAll('[data-message-author-role="user"]'));
-  for (const root of roots) {
-    const text = normalizeCommand(readNode(root));
-    if (text) return text;
-  }
-  return "";
+  return roots;
 }
 
 function observeSubmittedMessages() {
-  const scan = (node) => {
-    const command = userMessageText(node);
-    if (!command) return;
-    const key = `${command}::${location.pathname}`;
-    if (seenSubmittedCommands.has(key)) return;
-    seenSubmittedCommands.add(key);
-    setBadge("CAPTURED", `submitted: ${command}`);
-    dispatchCommand(command, "submitted-message");
-  };
+  // Existing messages are history, not new commands. Mark them seen without dispatch.
+  document.querySelectorAll('[data-message-author-role="user"]').forEach((node) => seenMessageNodes.add(node));
 
-  document.querySelectorAll('[data-message-author-role="user"]').forEach(scan);
+  const scan = (node) => {
+    for (const root of submittedRoots(node)) {
+      if (seenMessageNodes.has(root)) continue;
+      seenMessageNodes.add(root);
+      const command = normalizeCommand(readNode(root));
+      if (!command) continue;
+      terminalHoldUntil = 0;
+      setBadge("CAPTURED", `submitted: ${command}`);
+      dispatchCommand(command, "submitted-message");
+    }
+  };
 
   const observer = new MutationObserver((mutations) => {
     for (const mutation of mutations) {
@@ -112,6 +115,15 @@ function observeSubmittedMessages() {
   return observer;
 }
 
+function resultDetail(result) {
+  if (!result || typeof result !== "object") return String(result || "empty result");
+  if (result.error && typeof result.error === "object") {
+    return `${result.error.code || "error"}: ${result.error.message || JSON.stringify(result.error)}`;
+  }
+  if (result.error) return String(result.error);
+  return JSON.stringify(result);
+}
+
 async function dispatchCommand(raw, source = "composer") {
   const command = normalizeCommand(raw);
   if (!command) return;
@@ -120,6 +132,7 @@ async function dispatchCommand(raw, source = "composer") {
   lastCommand = command;
   lastCommandAt = now;
   pendingComposerCommand = "";
+  terminalHoldUntil = 0;
   commandInFlight = true;
   setBadge("SENT", `${source}: ${command}`);
   try {
@@ -127,13 +140,14 @@ async function dispatchCommand(raw, source = "composer") {
     if (reply && reply.ok && reply.result) {
       const result = reply.result;
       const status = String(result.status || (result.ok ? "PASS" : "RESULT")).toUpperCase();
-      setBadge(status === "COMPLETED" ? "PASS" : status, JSON.stringify(result));
+      const visible = status === "COMPLETED" || status === "SUCCEEDED" ? "PASS" : status;
+      setBadge(visible, resultDetail(result), true);
       window.dispatchEvent(new CustomEvent("dore:a2a-result", { detail: result }));
     } else {
-      setBadge("OFFLINE", reply && reply.error ? reply.error : "DORÉ command failed");
+      setBadge("ERROR", reply && reply.error ? reply.error : "DORÉ command failed before result", true);
     }
   } catch (error) {
-    setBadge("OFFLINE", String(error && error.message ? error.message : error));
+    setBadge("ERROR", String(error && error.message ? error.message : error), true);
   } finally {
     commandInFlight = false;
   }
@@ -142,21 +156,18 @@ async function dispatchCommand(raw, source = "composer") {
 document.addEventListener("input", rememberComposer, true);
 document.addEventListener("beforeinput", rememberComposer, true);
 document.addEventListener("pointerdown", rememberComposer, true);
-
 document.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
   rememberComposer();
   const command = currentComposerCommand() || pendingComposerCommand;
   if (command) dispatchCommand(command, "keydown");
 }, true);
-
 document.addEventListener("click", (event) => {
   const button = event.target && event.target.closest ? event.target.closest("button") : null;
   if (!button) return;
   const command = currentComposerCommand() || pendingComposerCommand;
   if (command) dispatchCommand(command, "click");
 }, true);
-
 document.addEventListener("submit", () => {
   const command = currentComposerCommand() || pendingComposerCommand;
   if (command) dispatchCommand(command, "submit");
