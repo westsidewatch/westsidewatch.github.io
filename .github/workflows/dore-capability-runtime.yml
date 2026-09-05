@@ -11,11 +11,13 @@ on:
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/test_native_host.py'
       - 'local/dore-local/install_native_messaging.sh'
+      - 'local/dore-companion-extension/**'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
       - 'tests/test_dore_companion_4312.py'
+      - 'tests/test_dore_companion_native_contract.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -31,11 +33,13 @@ on:
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/test_native_host.py'
       - 'local/dore-local/install_native_messaging.sh'
+      - 'local/dore-companion-extension/**'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
       - 'tests/test_dore_companion_4312.py'
+      - 'tests/test_dore_companion_native_contract.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -62,6 +66,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
           python -m unittest tests.test_dore_local_a2a_control_bridge -v
           python -m unittest tests.test_dore_companion_4312 -v
+          python -m unittest tests.test_dore_companion_native_contract -v
           python local/dore-local/test_native_host.py
       - name: Validate macOS installer shells
         run: |
