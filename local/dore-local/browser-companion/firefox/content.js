@@ -1,5 +1,12 @@
 (() => {
   const PROTOCOL = 'dore.a2a.v1';
+  const COMMANDS = Object.freeze({
+    'health': 'dore.health',
+    'stage2': 'design2.stage2.acceptance',
+    'tests': 'design2.tests',
+    'preview': 'design2.preview'
+  });
+  let lastCommand = '';
   function send(msg) { return browser.runtime.sendMessage({protocol:PROTOCOL,...msg}); }
   async function health() { return send({type:'health'}); }
   async function invoke(capability, params = {}) {
@@ -11,28 +18,54 @@
     if (!el) {
       el=document.createElement('button'); el.id='dore-a2a-status'; el.type='button';
       Object.assign(el.style,{position:'fixed',right:'12px',bottom:'12px',zIndex:'2147483647',font:'11px system-ui',padding:'5px 8px',border:'0',borderRadius:'8px',opacity:'.82',cursor:'pointer'});
-      el.title='Click to run DORÉ A2A capability gate';
-      el.addEventListener('click', async () => {
-        el.disabled=true;el.textContent='DORÉ A2A · TESTING';
-        try {
-          const r=await invoke('design2.stage2.acceptance',{});
-          const ok=!!(r && r.ok && r.result && r.result.ok);
-          el.textContent=ok?'DORÉ A2A · GATE PASS':'DORÉ A2A · GATE FAIL';
-          el.style.background=ok?'#dfe8c8':'#f0c7c7';el.style.color='#29251e';
-          console.info('[DORÉ A2A gate]',r);
-        } catch (e) {
-          el.textContent='DORÉ A2A · GATE ERROR';el.style.background='#f0c7c7';el.style.color='#29251e';console.error('[DORÉ A2A gate]',e);
-        } finally {el.disabled=false;}
-      });
+      el.title='DORÉ A2A local status';
       document.documentElement.appendChild(el);
     }
     return el;
   }
-  async function probe() {
-    const el=ensureBadge();
-    try { const h=await health(); el.textContent=h.ok?'DORÉ A2A · LOCAL':'DORÉ A2A · WAIT'; el.style.background='#efe4bd';el.style.color='#29251e'; }
-    catch (_) { el.textContent='DORÉ A2A · OFFLINE';el.style.background='#eee';el.style.color='#666'; }
+  function setBadge(text, ok = null) {
+    const el=ensureBadge(); el.textContent=text;
+    el.style.background=ok===true?'#dfe8c8':ok===false?'#f0c7c7':'#efe4bd';
+    el.style.color='#29251e';
   }
-  globalThis.DORE_A2A_COMPANION = Object.freeze({health,invoke});
+  async function runUserCommand(name) {
+    const capability=COMMANDS[name];
+    if (!capability) { setBadge('DORÉ A2A · UNKNOWN',false); return; }
+    setBadge(`DORÉ A2A · ${name.toUpperCase()}…`);
+    try {
+      const r=await invoke(capability,{});
+      const ok=!!(r && r.ok && r.result && r.result.ok !== false);
+      setBadge(ok?`DORÉ A2A · ${name.toUpperCase()} PASS`:`DORÉ A2A · ${name.toUpperCase()} FAIL`,ok);
+      console.info('[DORÉ A2A user command]',name,r);
+    } catch(e) {
+      setBadge(`DORÉ A2A · ${name.toUpperCase()} ERROR`,false);
+      console.error('[DORÉ A2A user command]',name,e);
+    }
+  }
+  function composerText() {
+    const el=document.querySelector('#prompt-textarea') || document.querySelector('textarea[data-testid="prompt-textarea"]');
+    if (!el) return '';
+    return String('value' in el ? el.value : el.innerText || el.textContent || '').trim();
+  }
+  function maybeRunCommand() {
+    const text=composerText();
+    const m=text.match(/^\/dore\s+(health|stage2|tests|preview)\s*$/i);
+    if (!m || text===lastCommand) return;
+    lastCommand=text;
+    runUserCommand(m[1].toLowerCase());
+    setTimeout(()=>{ if(lastCommand===text) lastCommand=''; },3000);
+  }
+  document.addEventListener('keydown',e=>{
+    if (e.key==='Enter' && !e.shiftKey && !e.isComposing) maybeRunCommand();
+  },true);
+  document.addEventListener('click',e=>{
+    const b=e.target && e.target.closest && e.target.closest('button[data-testid="send-button"],button[aria-label*="Send"],button[aria-label*="傳送"],button[aria-label*="发送"]');
+    if (b) maybeRunCommand();
+  },true);
+  async function probe() {
+    try { const h=await health(); setBadge(h.ok?'DORÉ A2A · LOCAL':'DORÉ A2A · WAIT'); }
+    catch (_) { const el=ensureBadge();el.textContent='DORÉ A2A · OFFLINE';el.style.background='#eee';el.style.color='#666'; }
+  }
+  globalThis.DORE_A2A_COMPANION = Object.freeze({health,invoke,runUserCommand,commands:Object.keys(COMMANDS)});
   probe(); setInterval(probe,30000);
 })();
