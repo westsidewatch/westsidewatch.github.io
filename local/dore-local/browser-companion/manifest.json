@@ -1,0 +1,1 @@
+{"manifest_version":3,"name":"DORÉ A2A Companion","version":"0.1.0","description":"Connect the user's ChatGPT Plus tab to the local DORÉ capability bridge.","permissions":[],"host_permissions":["http://127.0.0.1:4312/*"],"content_scripts":[{"matches":["https://chatgpt.com/*","https://chat.openai.com/*"],"js":["companion.js"],"run_at":"document_idle"}]}
