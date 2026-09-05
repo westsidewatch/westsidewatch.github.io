@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Doré coordination ingress with autonomous-loop handoff.
-
-Immediate work still executes here. An unknown technical capability gap is never
-terminal merely because retry count was reached: it is checkpointed, enqueued as
-a durable resident goal, and the runtime owns research/resume from that point.
-"""
+"""Doré coordination ingress with autonomous-loop handoff."""
 from __future__ import annotations
 import fcntl,json,os,subprocess
 from datetime import datetime,timezone
@@ -71,8 +66,7 @@ def local_exec(msg):
   if cp.returncode!=0:return {'ok':False,'results':results,'failed_index':i,'failed_command':argv,'failed_returncode':cp.returncode,'failed_stdout':row['stdout'],'failed_stderr':row['stderr']}
  return {'ok':True,'results':results}
 def peer_research_result(msg):
- receipt=receive_from_chatgpt(msg);rid=str((msg.get('metadata') or {}).get('research_id') or '')
- bridged=None
+ receipt=receive_from_chatgpt(msg);rid=str((msg.get('metadata') or {}).get('research_id') or '');bridged=None
  if rid:
   research=HOME/'coordination'/'research';matches=list(research.glob(rid+'.json')) if research.exists() else []
   if matches:
@@ -83,6 +77,7 @@ def peer_research_result(msg):
 def dispatch(msg):
  kind=msg.get('kind');task=str(msg.get('body') or msg.get('task') or '').strip()
  if isinstance(kind,str) and kind.startswith('peer_') and kind!='peer_research_result':return peer_respond(msg,ROOT)
+ if kind=='maintenance.update':return run_script('maintenance_update.py',300)
  if kind=='dore_design_bakeoff':return run_script('dore_design_bakeoff.py')
  if kind=='dore_design_elimination':return run_script('dore_design_elimination.py',3600)
  if kind=='dore_design_framesmith_mcp_trial':return run_script('dore_design_framesmith_mcp_trial.py',1800)
@@ -100,6 +95,7 @@ def dispatch(msg):
 def evidence_for(msg):
  base=['coordination-hardening-v1','product-invariant-monitor','autonomous-capability-loop','resident-goal-queue','research-bridge-executable']
  if msg.get('kind')=='local_exec':base+=['dore-local-exec','local-self-repair']
+ if msg.get('kind')=='maintenance.update':base+=['guarded-maintenance-update','fast-forward-only','dirty-worktree-refusal']
  return base
 def _finish_pass(state,done,msg,result,attempt,evidence):
  mid=msg['message_id'];done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence,'PASS',attempt,True)
