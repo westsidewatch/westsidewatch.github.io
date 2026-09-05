@@ -1,5 +1,6 @@
 """Staging manifest and allowlisted publication targets for DORÉ DESIGN 2.0."""
-import hashlib,json
+import hashlib
+import design2_checks
 
 ALLOWED_TARGETS={
     'multiwrite-home':'multiwrite-home',
@@ -17,6 +18,7 @@ def resolve_target(page_id,target):
 def build_manifest(candidate,target,rendered_html):
     snap=candidate.get('snapshot') or {}
     resolve_target(snap.get('page_id'),target)
+    checks=design2_checks.require(snap,rendered_html)
     html_hash=hashlib.sha256(rendered_html.encode('utf-8')).hexdigest()
     return {
         'schema':'dore.design.staging-manifest.v1',
@@ -26,6 +28,7 @@ def build_manifest(candidate,target,rendered_html):
         'snapshot_sha256':snap.get('sha256'),
         'target':target,
         'render_sha256':html_hash,
+        'checks':checks,
     }
 
 
