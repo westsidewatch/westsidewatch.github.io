@@ -22,3 +22,4 @@ once("if p=='/api/workspace':return self.out(200,workspace())", "if p=='/api/wor
 
 p.write_text(s,encoding='utf-8')
 print('patched',p)
+# migration-v1
