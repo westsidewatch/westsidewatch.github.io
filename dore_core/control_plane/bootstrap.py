@@ -2,6 +2,9 @@ from __future__ import annotations
 
 from pathlib import Path
 
+# Import concrete runtime modules directly. Do not import these symbols from
+# dore_core.capabilities package-level exports: the sparse package intentionally
+# exposes only its lightweight public surface.
 from dore_core.capabilities.executor import CapabilityExecutor
 from dore_core.capabilities.registry import default_registry
 from dore_core.capabilities.runtime import LazyCapabilityRuntime
