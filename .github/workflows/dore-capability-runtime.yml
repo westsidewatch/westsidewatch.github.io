@@ -30,11 +30,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run capability runtime tests
-        run: |
-          python -m unittest -v \
-            tests.test_dore_sparse_capability_router \
-            tests.test_dore_lazy_capability_runtime \
-            tests.test_dore_capability_benchmark
+        run: python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
       - name: Verify renderer probe fails closed when absent
