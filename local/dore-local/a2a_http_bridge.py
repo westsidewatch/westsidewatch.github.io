@@ -1,0 +1,29 @@
+#!/usr/bin/env python3
+"""DORÉ Plus localhost bridge.
+
+A browser companion or future MCP adapter can call this loopback-only endpoint.
+It accepts only the typed dore.a2a.v1 contract; no arbitrary command endpoint.
+"""
+from __future__ import annotations
+import json, os
+from http.server import BaseHTTPRequestHandler,ThreadingHTTPServer
+from a2a_protocol import MAX_REQUEST_BYTES,PROTOCOL,response,validate
+from a2a_runtime import build_registry
+REGISTRY=build_registry()
+class H(BaseHTTPRequestHandler):
+ def _out(self,status,payload):
+  b=json.dumps(payload,ensure_ascii=False).encode();self.send_response(status);self.send_header('Content-Type','application/json; charset=utf-8');self.send_header('Cache-Control','no-store');self.send_header('Content-Length',str(len(b)));self.end_headers();self.wfile.write(b)
+ def do_GET(self):
+  if self.path=='/health':return self._out(200,{'ok':True,'service':'dore-a2a-plus','protocol':PROTOCOL,'capabilities':REGISTRY.describe()})
+  return self._out(404,{'ok':False,'error':'not_found'})
+ def do_POST(self):
+  if self.path!='/invoke':return self._out(404,{'ok':False,'error':'not_found'})
+  try:
+   n=int(self.headers.get('Content-Length','0'))
+   if n<=0 or n>MAX_REQUEST_BYTES:raise ValueError('invalid_content_length')
+   req=validate(json.loads(self.rfile.read(n)))
+   result=REGISTRY.invoke(req['capability'],req['params']);return self._out(200 if result.get('ok',True) else 422,response(req,result=result))
+  except Exception as e:return self._out(400,{'protocol':PROTOCOL,'ok':False,'error':type(e).__name__+': '+str(e)})
+ def log_message(self,*_):pass
+if __name__=='__main__':
+ port=int(os.environ.get('DORE_A2A_PORT','4312'));ThreadingHTTPServer(('127.0.0.1',port),H).serve_forever()
