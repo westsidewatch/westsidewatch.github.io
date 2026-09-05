@@ -59,7 +59,7 @@ jobs:
             exit 1
           fi
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
-          grep -q 'EDIT IN DORÉ DESIGN' <(curl -fsS http://127.0.0.1:4310/)
+          grep -q 'Edit in Doré Design' <(curl -fsS http://127.0.0.1:4310/)
           grep -q 'DORÉ · MULTIWRITE DESIGN' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
           grep -q '多寫' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
           grep -q 'Write on. Make it a book.' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
