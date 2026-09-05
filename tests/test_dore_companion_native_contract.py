@@ -9,7 +9,7 @@ EXT = ROOT / "local" / "dore-companion-extension"
 
 
 class CompanionNativeContractTest(unittest.TestCase):
-    def test_manifest_contract_matches_native_host(self) -> None:
+    def test_native_manifest_contract_matches_native_host(self) -> None:
         manifest = json.loads((EXT / "manifest.native-messaging.json").read_text(encoding="utf-8"))
         self.assertIn("nativeMessaging", manifest["permissions"])
         self.assertEqual(
@@ -19,6 +19,20 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertEqual(manifest["dore_native_messaging"]["host"], "ca.dore.companion")
         self.assertEqual(manifest["dore_native_messaging"]["fallback_role"], "compatibility-debug-only")
 
+    def test_companion_1_manifest_is_installable_firefox_extension(self) -> None:
+        manifest = json.loads((EXT / "manifest.json").read_text(encoding="utf-8"))
+        self.assertEqual(manifest["manifest_version"], 2)
+        self.assertEqual(manifest["version"], "1.0.0")
+        self.assertIn("nativeMessaging", manifest["permissions"])
+        self.assertEqual(
+            manifest["browser_specific_settings"]["gecko"]["id"],
+            "dore-companion@westsidewatch.ca",
+        )
+        self.assertIn("background.js", manifest["background"]["scripts"])
+        script = manifest["content_scripts"][0]
+        self.assertIn("https://chatgpt.com/*", script["matches"])
+        self.assertIn("content_script.js", script["js"])
+
     def test_transport_prefers_native_and_keeps_4312_only_as_fallback(self) -> None:
         source = (EXT / "native_transport.js").read_text(encoding="utf-8")
         self.assertIn('browser.runtime.connectNative(DORE_NATIVE_HOST)', source)
@@ -26,6 +40,22 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('const DORE_FALLBACK_URL = "http://127.0.0.1:4312/a2a"', source)
         self.assertLess(source.index("sendViaNative(payload)"), source.index("sendVia4312(payload)"))
         self.assertIn("__dore_transport_id", source)
+
+    def test_background_routes_dore_commands_through_transport_module(self) -> None:
+        source = (EXT / "background.js").read_text(encoding="utf-8")
+        self.assertIn('import(browser.runtime.getURL("native_transport.js"))', source)
+        self.assertIn('message.type === "dore.command"', source)
+        self.assertIn('protocol: "dore.a2a/1"', source)
+        self.assertIn("transport.sendDorePayload", source)
+        self.assertIn("transport.nativeHealth", source)
+
+    def test_content_script_captures_command_and_surfaces_status(self) -> None:
+        source = (EXT / "content_script.js").read_text(encoding="utf-8")
+        self.assertIn('startsWith("/dore")', source)
+        self.assertIn('type: "dore.command"', source)
+        self.assertIn('type: "dore.health"', source)
+        self.assertIn("DORÉ A2A ·", source)
+        self.assertIn('"dore:a2a-result"', source)
 
 
 if __name__ == "__main__":
