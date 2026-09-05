@@ -1,0 +1,14 @@
+{
+  "permissions": ["nativeMessaging"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "dore-companion@westsidewatch.ca"
+    }
+  },
+  "dore_native_messaging": {
+    "host": "ca.dore.companion",
+    "transport_module": "native_transport.js",
+    "fallback": "http://127.0.0.1:4312/a2a",
+    "fallback_role": "compatibility-debug-only"
+  }
+}
