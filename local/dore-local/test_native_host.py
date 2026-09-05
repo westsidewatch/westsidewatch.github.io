@@ -31,7 +31,6 @@ def test_framing_round_trip() -> None:
     payload = {"action": "native.health", "unicode": "多雷"}
     stream = io.BytesIO(frame(payload))
     assert HOST.read_message(stream) == payload
-
     out = io.BytesIO()
     HOST.write_message(out, payload)
     assert unframe(out.getvalue()) == payload
@@ -46,10 +45,15 @@ def test_native_health() -> None:
     assert result["paid_runtime"] is False
 
 
-def test_adapter_discover_passthrough() -> None:
-    result = HOST.route_payload({"protocol": "dore.a2a/1", "action": "discover"})
-    assert result["protocol"] == "dore.a2a/1"
+def test_carrier_identity_survives_adapter() -> None:
+    carrier = "carrier-123"
+    result = HOST.route_payload({
+        "protocol": "dore.a2a/1",
+        "action": "discover",
+        "__dore_transport_id": carrier,
+    })
     assert result["status"] == "succeeded"
+    assert result["__dore_transport_id"] == carrier
     assert any(c["id"] == "design" for c in result["consumers"])
 
 
@@ -61,17 +65,18 @@ def test_legacy_stage2_compatibility() -> None:
 
 
 def test_process_loop_one_message() -> None:
-    source = io.BytesIO(frame({"action": "native.health"}))
+    source = io.BytesIO(frame({"action": "native.health", "__dore_transport_id": "loop-1"}))
     sink = io.BytesIO()
     assert HOST.serve(source, sink) == 0
     result = unframe(sink.getvalue())
     assert result["service"] == "dore-a2a-native"
+    assert result["__dore_transport_id"] == "loop-1"
 
 
 def main() -> None:
     test_framing_round_trip()
     test_native_health()
-    test_adapter_discover_passthrough()
+    test_carrier_identity_survives_adapter()
     test_legacy_stage2_compatibility()
     test_process_loop_one_message()
     print("DORÉ Native Messaging host: PASS")
