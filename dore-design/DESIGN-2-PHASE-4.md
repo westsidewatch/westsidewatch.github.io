@@ -1,25 +1,38 @@
 # DORÉ DESIGN 2.0 — Phase 4
 
-Status: ACTIVE
+Status: IMPLEMENTING
 Issue: #294
 
-## Gate
-Canonical renderer + Preview/Publish immutable snapshot pipeline + rollback.
+## Implemented
+- immutable page snapshot with SHA-256 integrity
+- deterministic canonical snapshot renderer
+- candidate registry isolated from mutable workspace state
+- revision-bound preview
+- explicit publish promotion
+- current-release + last-known-good metadata
+- rollback
+- structural / URL / executable-content validation before promotion
+- resident 2.0 entrypoint layered on the current product
+- tests for snapshot immutability, publish/rollback and validation rejection
+
+## HTTP contract
+- `POST /api/design2/candidate`
+- `GET /api/design2/preview?candidate=<id>`
+- `POST /api/design2/publish`
+- `GET /design2/published`
+- `POST /api/design2/rollback`
+- `GET /api/design2/publication`
 
 ## Invariants
-- One canonical DORÉ document feeds editor preview and published rendering.
 - Save never publishes.
-- Preview renders an exact immutable candidate revision.
-- Publish requires page ID + exact revision and rejects stale candidates.
-- Build goes staging -> validate -> promote.
-- Last-known-good publication metadata is preserved and rollback remains available.
-- Publication targets are allowlisted; no arbitrary filesystem path or executable input.
-- Published output contains no editor runtime or Moveable/Selecto dependency.
+- Published output reads the promoted immutable candidate, never live mutable workspace state.
+- Publish is candidate/revision-bound.
+- Invalid snapshot integrity, duplicate IDs, executable attributes and unsafe URL schemes block promotion.
+- Published output contains no editor runtime dependency.
 
-## First implementation slice
-1. Canonical revision snapshot object with content hash.
-2. Candidate registry separated from mutable workspace state.
-3. Deterministic renderer entry point over a supplied snapshot.
-4. Validation contract and staging manifest.
-5. Promotion metadata with previous/last-known-good revision.
-6. Rollback operation that selects a prior validated immutable release.
+## Remaining closure gates
+1. Add explicit staging manifest and allowlisted generation targets.
+2. Add preview/public parity assertion over the same candidate hash.
+3. Add accessibility/link/smoke validator hooks.
+4. Run resident acceptance and only then switch the installed service entrypoint from fallback to `app_design2.py`.
+5. Keep 1.9.1 fallback until parity acceptance passes.
