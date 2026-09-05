@@ -22,15 +22,17 @@ def create_candidate(workspace,page_id,registry_path):
     _atomic_json(registry_path,reg)
     return row
 
-def promote(candidate_id,registry_path):
+def promote(candidate_id,registry_path,manifest=None):
     reg=_load(registry_path);row=(reg.get('candidates') or {}).get(candidate_id)
     if not row: raise ValueError('candidate_not_found')
     validation=design2_validation.require_valid(row['snapshot'])
+    if manifest is None: raise ValueError('staging_manifest_required')
+    if manifest.get('candidate_id')!=candidate_id or manifest.get('snapshot_sha256')!=row['snapshot'].get('sha256'): raise ValueError('staging_manifest_mismatch')
     previous=reg.get('current_release')
-    release={'candidate_id':candidate_id,'page_id':row['snapshot']['page_id'],'revision':row['snapshot']['revision'],'sha256':row['snapshot']['sha256'],'previous':previous,'validation':validation}
+    release={'candidate_id':candidate_id,'page_id':row['snapshot']['page_id'],'revision':row['snapshot']['revision'],'sha256':row['snapshot']['sha256'],'previous':previous,'validation':validation,'staging':manifest}
     reg['last_known_good']=previous or reg.get('last_known_good')
     reg['current_release']=release
-    row['status']='published';row['validation']=validation
+    row['status']='published';row['validation']=validation;row['staging']=manifest
     _atomic_json(registry_path,reg)
     return release
 
