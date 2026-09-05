@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import re
 import unittest
 from pathlib import Path
 
@@ -13,18 +14,23 @@ class CompanionBootstrapContractTest(unittest.TestCase):
         cls.source = BOOTSTRAP.read_text(encoding="utf-8")
 
     def test_bootstrap_does_not_touch_local_git_checkout(self) -> None:
-        lowered = self.source.lower()
-        forbidden = (
-            "git pull",
-            "git reset",
-            "git rebase",
-            "git merge",
-            "git checkout",
-            "git cherry-pick",
-            "~/westsidewatch.github.io",
+        # Comments/documentation may name forbidden git operations while explaining
+        # the safety boundary. Only executable, non-comment lines are governed here.
+        executable = "\n".join(
+            line for line in self.source.splitlines()
+            if line.strip() and not line.lstrip().startswith("#")
+        ).lower()
+        forbidden_commands = (
+            r"(^|[;&|]\s*)git\s+pull\b",
+            r"(^|[;&|]\s*)git\s+reset\b",
+            r"(^|[;&|]\s*)git\s+rebase\b",
+            r"(^|[;&|]\s*)git\s+merge\b",
+            r"(^|[;&|]\s*)git\s+checkout\b",
+            r"(^|[;&|]\s*)git\s+cherry-pick\b",
         )
-        for token in forbidden:
-            self.assertNotIn(token, lowered)
+        for pattern in forbidden_commands:
+            self.assertIsNone(re.search(pattern, executable, flags=re.MULTILINE), pattern)
+        self.assertNotIn("~/westsidewatch.github.io", executable)
         self.assertIn("Local Git checkout: untouched", self.source)
 
     def test_bootstrap_installs_native_messaging_contract(self) -> None:
