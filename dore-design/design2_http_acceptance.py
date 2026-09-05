@@ -18,19 +18,30 @@ def post(path,payload):
         return json.load(r)
 
 status=get_json('/api/preview/status')
-rev=int(status['revision'])
+rev1=int(status['revision'])
 page='multiwrite-home'
-first=post('/api/design2/candidate',{'page_id':page,'revision':rev})['candidate']
-preview=get_text('/api/design2/preview?candidate='+first['id'])
-assert '多寫' in preview or 'Write on. Make it a book.' in preview
-r1=post('/api/design2/publish',{'candidate_id':first['id'],'revision':rev,'target':page})['release']
+first=post('/api/design2/candidate',{'page_id':page,'revision':rev1})['candidate']
+preview1=get_text('/api/design2/preview?candidate='+first['id'])
+assert '多寫' in preview1 or 'Write on. Make it a book.' in preview1
+r1=post('/api/design2/publish',{'candidate_id':first['id'],'revision':rev1,'target':page})['release']
 published1=get_text('/design2/published')
 assert r1['candidate_id']==first['id']
-assert published1==preview
-# A second immutable candidate/release proves last-known-good + rollback.
-second=post('/api/design2/candidate',{'page_id':page,'revision':rev})['candidate']
-r2=post('/api/design2/publish',{'candidate_id':second['id'],'revision':rev,'target':page})['release']
+assert published1==preview1
+
+# Mutate the live workspace. The already published immutable snapshot must not move.
+w2=post('/api/workspace',{'op':'design_decision','page_id':page,'decision':{'color':'watch-night','hierarchy':'display','axis':'left','density':'2','lines':'2'}})
+rev2=int(w2['revision'])
+assert rev2>rev1
+assert get_text('/design2/published')==published1
+
+# Publish the new revision, then roll back to the previous known-good release.
+second=post('/api/design2/candidate',{'page_id':page,'revision':rev2})['candidate']
+assert second['id']!=first['id']
+preview2=get_text('/api/design2/preview?candidate='+second['id'])
+assert preview2!=preview1
+r2=post('/api/design2/publish',{'candidate_id':second['id'],'revision':rev2,'target':page})['release']
 assert r2['previous']['candidate_id']==first['id']
+assert get_text('/design2/published')==preview2
 restored=post('/api/design2/rollback',{})['release']
 assert restored['candidate_id']==first['id']
 assert get_text('/design2/published')==published1
