@@ -1,7 +1,7 @@
 # DORÉ MASTER WORK REGISTER — ADDENDUM: SPARSE CAPABILITY RUNTIME
 
 Date: 2026-09-05
-Status: CANONICAL_ADDENDUM
+Status: CANONICAL_ADDENDUM / SWEEP_RECONCILED
 Parent register: `DORÉ-MASTER-WORK-REGISTER.md`
 Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`
 P01 impact: NONE
@@ -18,7 +18,9 @@ Doré's runtime identity is one persistent intelligence with sparsely activated 
 
 A bounded implementation milestone is now real: compact capability manifests, lazy activation, trigger-anchored routing, typed shared visual state, one-state execution, replaceable providers, focused probes/tests and an offline evidence-based consolidation ledger exist in repository code. This is `VERIFIED_COMPLETE_SUBMILESTONE`, not completion of the full sparse-embodiment architecture.
 
-A second bounded convergence submilestone is now also real: the mature local A2A adapter v0.3 lazily constructs the shared capability runtime/executor and routes typed `dore.a2a/1` control envelopes into the Design control plane instead of creating a second local intelligence/server path. The same bounded commit sequence adds the canonical resident localhost `4312` / Companion path and Design as the first control-plane consumer, while capability-runtime CI configuration now includes the adapter bridge test. This is implementation evidence and a `VERIFIED_COMPLETE_SUBMILESTONE`; it is **not** yet latest-head CI/runtime acceptance because no persisted combined-status receipt was available in the bounded review.
+A second bounded convergence submilestone is now also real: the mature local A2A adapter v0.3 lazily constructs the shared capability runtime/executor and routes typed `dore.a2a/1` control envelopes into the Design control plane instead of creating a second local intelligence/server path. The same bounded commit sequence adds the canonical resident localhost `4312` / Companion path and Design as the first control-plane consumer, while capability-runtime CI configuration now includes the adapter bridge test. This is implementation evidence and a `VERIFIED_COMPLETE_SUBMILESTONE`; it is **not** yet latest-head CI/runtime acceptance.
+
+Sweep recheck on 2026-09-05 queried both the GitHub combined-status surface and commit-associated workflow-run surface for head `45f1373b342d12ddeb2e78f87ff7a278b13b9432`; both returned no persisted status/run receipts. Therefore absence of a receipt remains an evidence gap, not a failure result, and no status promotion or demotion is justified.
 
 The consolidation rule is canonical: repeated compatible success can nominate a capability candidate; matching failure blocks the candidate; no production/reflex promotion is automatic. Production promotion still requires regression evidence and existing authority/governance gates.
 
