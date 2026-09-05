@@ -41,7 +41,9 @@
     "ONE",
     "WESTSIDE_WATCH_MAIN"
   ],
-  "failures": [],
+  "failures": [
+    "one_crossref_readable_layout"
+  ],
   "function_url": "/dore/search/",
   "governance": "External work-node acceptance. The million-edge graph must remain traceable and ONE must expose Scripture text before technical metadata, with click-to-explore reading flow and readable desktop/mobile proportions. This is still not completion of permanent issue #281.",
   "performance": {
@@ -53,7 +55,7 @@
     "original_index_loading": "lazy"
   },
   "schema": "dore.work-node.bible-search.v5",
-  "status": "AVAILABLE",
-  "verdict": "PASS",
+  "status": "NOT_READY",
+  "verdict": "FAIL",
   "work_node": "DORE_BIBLE_SEARCH"
 }
