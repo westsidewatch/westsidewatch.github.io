@@ -77,7 +77,7 @@ jobs:
           p=next(x for x in w['pages'] if x['id']=='multiwrite-home'); assert p['design']['decision']=={'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}
           print('DORE_MULTIWRITE_INTEGRATION_PASS')
           PY
-      - name: DORÉ Design 2.0 Phase 4 and 5 resident acceptance
+      - name: DORÉ Design 2.0 Phase 4 5 and 6 resident acceptance
         shell: bash
         run: |
           set -euo pipefail
@@ -85,7 +85,7 @@ jobs:
           export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/dore-design2-publication.json"
           export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/dore-design2-recommendations.json"
           export DORE_DESIGN_PORT=4310
-          python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py
+          python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py
           python3 dore-design/workspace_cli.py get >/tmp/dd2-workspace.json
           python3 dore-design/upgrade_living_fortress_v2.py >/tmp/dd2-upgrade.json
           python3 dore-design/app_design2.py >/tmp/dd2-http.log 2>&1 &
@@ -96,6 +96,7 @@ jobs:
           python3 -c "import json; h=json.load(open('/tmp/dd2-health.json')); assert h['version']=='2.0-dev-phase4' and h['resident_entrypoint']=='app_design2.py' and h['immutable_publication'] is True"
           python3 dore-design/design2_http_acceptance.py
           python3 dore-design/design2_phase5_acceptance.py
+          python3 dore-design/design2_phase6_acceptance.py
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
