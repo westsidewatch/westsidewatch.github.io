@@ -2,7 +2,7 @@
 import json,os
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
-import design2_publication,design2_renderer
+import design2_publication,design2_renderer,design2_staging
 
 
 def _registry(root):
@@ -43,7 +43,10 @@ def install(handler_cls,base,root):
             if not rel:return self.out(404,{'ok':False,'error':'no_published_release'})
             row=candidate_row(rel.get('candidate_id'))
             if not row:return self.out(500,{'ok':False,'error':'published_candidate_missing'})
-            return send_html(self,design2_renderer.render_snapshot(row['snapshot']))
+            html=design2_renderer.render_snapshot(row['snapshot'])
+            manifest=rel.get('staging') or {}
+            if not design2_staging.same_render(manifest,html):return self.out(500,{'ok':False,'error':'published_render_hash_mismatch'})
+            return send_html(self,html)
         return original_get(self)
 
     def do_POST(self):
@@ -59,10 +62,11 @@ def install(handler_cls,base,root):
             try:
                 p=body(self);cid=p.get('candidate_id');row=candidate_row(cid)
                 if not row:raise ValueError('candidate_not_found')
-                current=base.workspace()
                 if int(p.get('revision',-1))!=int(row['snapshot']['revision']):raise ValueError('publish_revision_mismatch')
-                # Publishing is bound to the immutable candidate revision, not current mutable workspace state.
-                release=design2_publication.promote(cid,registry)
+                target=p.get('target')
+                html=design2_renderer.render_snapshot(row['snapshot'])
+                manifest=design2_staging.build_manifest(row,target,html)
+                release=design2_publication.promote(cid,registry,manifest)
                 return self.out(200,{'ok':True,'release':release,'published':'/design2/published'})
             except Exception as e:return self.out(400,{'ok':False,'error':str(e)})
         if path=='/api/design2/rollback':
