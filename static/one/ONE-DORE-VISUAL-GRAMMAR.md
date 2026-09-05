@@ -153,7 +153,37 @@ For each generated Revelation chapter, select references by visual grammar. Exam
 - Rev 19: white-horse rider must be studied against Doré equestrian and battle plates before generation.
 - Rev 22: colour exception still preserves Doré composition, figure scale, spatial hierarchy and engraved structural drawing beneath the colour treatment.
 
-## 11. Generation brief — mandatory fields
+## 11. Anti-AI image signature gate — locked rejection policy
+
+The objective is a plausible ONE Studio continuation of Doré's original pictorial world, not an image that advertises contemporary generative-image production. Any conspicuous AI-image signature is a rejection condition even when the image is attractive, detailed or superficially engraved.
+
+Strictly reject:
+
+- cinematic concept-art, videogame, fantasy-poster, disaster-film or wallpaper composition;
+- a colour digital painting generated first and converted later with monochrome, etching, edge-detection, paper or antiquing filters;
+- digital glow, lens flare, volumetric-light spectacle, depth-of-field blur, bloom or decorative supernatural effects without textual and theological necessity;
+- uniform micro-detail, equal sharpness at every depth, evenly distributed cross-hatching or complexity without visual hierarchy;
+- excessive symmetry, generic centered hero staging, empty spectacle and ornamental objects without narrative function;
+- plastic skin, fashion-model or superhero anatomy, modern portrait posing and glossy fantasy animals;
+- malformed or duplicated hands, limbs, faces, bodies, horses, architectural elements, textures, lettering or background figures;
+- fused objects, impossible tangencies, inconsistent perspective, scale discontinuity, nonfunctional stairs/doors/walls and architecture assembled from incompatible periods;
+- generic ancient cities, European fantasy castles, archaeological collage or modern visual assumptions substituted for Scripture-led staging;
+- fake paper grain, noise, scratches, sepia or dense hatching used to conceal weak drawing;
+- repeated AI-default clouds, smoke, rubble, rays, birds, crowds or debris that do not carry narrative meaning;
+- any plate whose most accurate description is “AI art in the style of Doré.”
+
+The review must inspect the image at full plate, cover size and local-detail scale. It must ask:
+
+1. If the engraving texture were removed, would the underlying composition, gesture, value and spatial hierarchy still be recognizably Doré-derived?
+2. Can every principal light, figure, object, architectural mass and area of darkness be justified by Scripture or recorded visual ancestry?
+3. Does detail show human editorial selection and material-specific line logic rather than generative averaging?
+4. Would the plate look immediately modern or synthetic when inserted among authenticated Doré Bible plates?
+5. Do anatomy, animal construction, architecture and perspective survive close inspection?
+6. Does the image pass both the Biblical Test and Lost Plate Test without relying on texture, paper effects or provenance labels?
+
+If any answer fails, the asset remains a draft. Post-processing may clean a technically sound plate but may never be used to disguise an AI-native composition or repair missing Doré intelligence.
+
+## 12. Generation brief — mandatory fields
 
 No generation call should be made until these are written:
 
@@ -171,7 +201,7 @@ No generation call should be made until these are written:
 12. Cover-safe title zone without baking typography into the source image.
 13. Body 5:8 plate legibility check.
 
-## 12. Review gate
+## 13. Review gate
 
 A generated image may enter `ONE_STUDIO_ASSET_REGISTRY` only when all are true:
 
@@ -185,6 +215,7 @@ A generated image may enter `ONE_STUDIO_ASSET_REGISTRY` only when all are true:
 - linework follows form;
 - light has a coherent theological/narrative source;
 - no obvious modern fantasy/cinematic visual language dominates;
+- no prohibited AI-image signature in §11 is visible at full-plate, cover-size or local-detail inspection;
 - image remains readable both as a full-bleed cover and inside the 5:8 body plate;
 - provenance remains ONE Studio and never claims Doré authorship.
 
