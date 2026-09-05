@@ -1,151 +1,35 @@
 import { buildExportBackup, mergeExportSections, safeFilename } from './export-core.mjs';
-
-const DB_NAME = 'multiwrite-v1';
-const DB_VERSION = 2;
-const DRAFT_STORE = 'drafts';
-const params = new URLSearchParams(location.search);
-const bookId = params.get('id') || 'kingdom-language';
-
-function openDb() {
-  return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, DB_VERSION);
-    request.onupgradeneeded = () => {
-      const db = request.result;
-      if (!db.objectStoreNames.contains('books')) db.createObjectStore('books', { keyPath: 'id' });
-      if (!db.objectStoreNames.contains(DRAFT_STORE)) db.createObjectStore(DRAFT_STORE, { keyPath: 'id' });
-    };
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = () => reject(request.error);
-  });
-}
-
-function draftId(index) { return `${bookId}:${index}`; }
-async function getDraft(index) {
-  const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(DRAFT_STORE, 'readonly');
-    const req = tx.objectStore(DRAFT_STORE).get(draftId(index));
-    req.onsuccess = () => { const value = req.result || null; db.close(); resolve(value); };
-    req.onerror = () => { db.close(); reject(req.error); };
-  });
-}
-async function putDraft(index, text) {
-  const db = await openDb();
-  return new Promise((resolve, reject) => {
-    const tx = db.transaction(DRAFT_STORE, 'readwrite');
-    tx.objectStore(DRAFT_STORE).put({ id: draftId(index), bookId, index, text, updatedAt: new Date().toISOString() });
-    tx.oncomplete = () => { db.close(); resolve(); };
-    tx.onerror = () => { db.close(); reject(tx.error); };
-  });
-}
-async function fetchText(path) {
-  const response = await fetch(path, { cache: 'no-store' });
-  if (!response.ok) throw new Error(`無法載入 ${path}`);
-  return response.text();
-}
-async function fetchOriginal(item) {
-  const base = `./books/${bookId}/`;
-  if (item.file) return fetchText(base + item.file);
-  if (Array.isArray(item.files)) return (await Promise.all(item.files.map((file) => fetchText(base + file)))).join('\n\n');
-  return '';
-}
-async function persistOpenEditor() {
-  const editor = document.querySelector('#chapterEditor');
-  const active = document.querySelector('.toc-link.active');
-  if (!editor || !active) return;
-  const index = Number(active.dataset.index);
-  if (Number.isInteger(index)) await putDraft(index, editor.value);
-}
-async function collectBook() {
-  const response = await fetch(`./books/${bookId}/manifest.json`, { cache: 'no-store' });
-  if (!response.ok) throw new Error('找不到這本書。');
-  const book = await response.json();
-  const sections = await Promise.all(book.structure.map(async (item, index) => {
-    const draft = await getDraft(index);
-    return { index, role: item.role, title: item.title || '', draft: Boolean(draft), text: draft?.text ?? await fetchOriginal(item) };
-  }));
-  return { book, sections };
-}
-function downloadFile(filename, content, type) {
-  const blob = content instanceof Blob ? content : new Blob([content], { type });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = filename; document.body.appendChild(a); a.click(); a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
-}
-function loadScript(src, globalName) {
-  if (globalName && window[globalName]) return Promise.resolve(window[globalName]);
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = src; script.onload = () => resolve(globalName ? window[globalName] : true);
-    script.onerror = () => reject(new Error('導出元件載入失敗，請檢查網路後重試。'));
-    document.head.appendChild(script);
-  });
-}
-function plainLines(text = '') {
-  return String(text).replace(/\r\n?/g, '\n').split('\n').map(line => line.replace(/^#{1,6}\s+/, ''));
-}
-async function exportDocx(book, sections, baseName) {
-  const docx = await loadScript('https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.umd.cjs', 'docx');
-  const { Document, Packer, Paragraph, HeadingLevel, PageBreak, TextRun } = docx;
-  const children = [
-    new Paragraph({ text: book.title || '', heading: HeadingLevel.TITLE }),
-    ...(book.subtitle ? [new Paragraph({ text: book.subtitle, heading: HeadingLevel.SUBTITLE })] : []),
-    new Paragraph({ children: [new PageBreak()] }),
-  ];
-  sections.forEach((section, sectionIndex) => {
-    if (section.title) children.push(new Paragraph({ text: section.title, heading: section.role === 'section' ? HeadingLevel.HEADING_2 : HeadingLevel.HEADING_1 }));
-    plainLines(section.text).forEach((line) => {
-      const heading = line.match(/^\s*$/) ? null : String(line);
-      children.push(new Paragraph({ children: heading ? [new TextRun(heading)] : [] }));
-    });
-    if (sectionIndex < sections.length - 1) children.push(new Paragraph({ children: [new PageBreak()] }));
-  });
-  const document = new Document({ sections: [{ properties: {}, children }] });
-  const blob = await Packer.toBlob(document);
-  downloadFile(`${baseName}.docx`, blob, 'application/vnd.openxmlformats-officedocument.wordprocessingml.document');
-}
-function escapeHtml(value = '') {
-  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-}
-function printHtml(book, sections) {
-  const body = sections.map(section => `<section class="chapter"><h1>${escapeHtml(section.title)}</h1>${String(section.text).replace(/\r\n?/g,'\n').split(/\n\s*\n/).map(p => `<p>${escapeHtml(p.replace(/^#{1,6}\s+/gm,'')).replace(/\n/g,'<br>')}</p>`).join('')}</section>`).join('');
-  return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>${escapeHtml(book.title)}</title><style>@page{size:A4;margin:22mm 20mm}body{font-family:"Noto Serif TC","Songti TC","PMingLiU",serif;color:#1f1c17;font-size:12pt;line-height:1.9}main{max-width:165mm;margin:auto}.cover{height:235mm;display:flex;flex-direction:column;justify-content:center;text-align:center;page-break-after:always}.cover h1{font-size:28pt;font-weight:500}.cover h2{font-size:15pt;font-weight:400}.chapter{page-break-before:always}.chapter:first-of-type{page-break-before:auto}.chapter h1{font-size:20pt;margin:0 0 2em}.chapter p{text-indent:2em;margin:.8em 0;orphans:3;widows:3}button{position:fixed;right:18px;top:18px;padding:10px 16px}@media print{button{display:none}}</style></head><body><button onclick="window.print()">儲存為 PDF / 列印</button><main><div class="cover"><h1>${escapeHtml(book.title)}</h1>${book.subtitle ? `<h2>${escapeHtml(book.subtitle)}</h2>` : ''}</div>${body}</main><script>setTimeout(()=>window.print(),350)<\/script></body></html>`;
-}
-function exportPdf(book, sections) {
-  const popup = window.open('', '_blank');
-  if (!popup) throw new Error('瀏覽器阻止了 PDF 視窗，請允許此網站開啟彈出視窗。');
-  popup.document.open(); popup.document.write(printHtml(book, sections)); popup.document.close();
-}
-function injectControls() {
-  if (document.querySelector('#exportBook')) return;
-  const actions = document.querySelector('.book-actions');
-  if (!actions) return;
-  const wrap = document.createElement('div');
-  wrap.className = 'export-controls';
-  wrap.innerHTML = `<select id="exportFormat" class="export-select" aria-label="導出格式"><option value="docx">Word · DOCX</option><option value="pdf">PDF · 列印版</option><option value="md">Markdown</option><option value="txt">TXT</option><option value="json">JSON 備份</option></select><button id="exportBook" class="book-action" type="button">導出</button>`;
-  actions.before(wrap);
-  document.querySelector('#exportBook').addEventListener('click', exportBook);
-}
-async function exportBook() {
-  const button = document.querySelector('#exportBook');
-  const format = document.querySelector('#exportFormat')?.value || 'docx';
-  const saveState = document.querySelector('#saveState');
-  if (!button) return;
-  const originalLabel = button.textContent; button.disabled = true; button.textContent = '導出中…';
-  try {
-    await persistOpenEditor();
-    const { book, sections } = await collectBook();
-    const baseName = safeFilename(book.title || bookId);
-    if (format === 'docx') await exportDocx(book, sections, baseName);
-    else if (format === 'pdf') exportPdf(book, sections);
-    else if (format === 'json') downloadFile(`${baseName}.multiwrite.json`, JSON.stringify(buildExportBackup(book, sections), null, 2), 'application/json;charset=utf-8');
-    else {
-      const ext = format === 'txt' ? 'txt' : 'md';
-      downloadFile(`${baseName}.${ext}`, mergeExportSections(sections), format === 'txt' ? 'text/plain;charset=utf-8' : 'text/markdown;charset=utf-8');
-    }
-    if (saveState) saveState.textContent = format === 'pdf' ? '已開啟 PDF 列印版' : `已導出 ${format.toUpperCase()}`;
-  } catch (error) { if (saveState) saveState.textContent = `導出失敗：${error.message}`; }
-  finally { button.disabled = false; button.textContent = originalLabel; }
-}
+const DB_NAME='multiwrite-v1',DB_VERSION=2,DRAFT_STORE='drafts';
+const params=new URLSearchParams(location.search),bookId=params.get('id')||'kingdom-language';
+const SETTINGS_KEY=`multiwrite-export-v3:${bookId}`;
+const DEFAULTS={paper:'A5',margin:18,fontSize:11,font:'noto-serif',chapterBreak:true,pageNumbers:true,header:true,cover:true,coverStyle:'classic'};
+const FONTS={
+'noto-serif':{label:'Noto Serif TC · 思源宋體',css:'"Noto Serif TC","Songti TC",serif',google:'Noto+Serif+TC:wght@400;600;700',docx:'Noto Serif TC'},
+'noto-sans':{label:'Noto Sans TC · 思源黑體',css:'"Noto Sans TC",sans-serif',google:'Noto+Sans+TC:wght@400;500;700',docx:'Noto Sans TC'},
+'ibm-plex':{label:'IBM Plex Sans TC',css:'"IBM Plex Sans TC",sans-serif',google:'IBM+Plex+Sans+TC:wght@400;500;600',docx:'IBM Plex Sans TC'},
+'zen-old':{label:'Zen Old Mincho · 古典明朝',css:'"Zen Old Mincho","Noto Serif TC",serif',google:'Zen+Old+Mincho:wght@400;600;700',docx:'Zen Old Mincho'},
+'lxgw':{label:'LXGW WenKai TC · 霞鶩文楷',css:'"LXGW WenKai TC","Noto Serif TC",serif',google:'LXGW+WenKai+TC:wght@400;500;700',docx:'LXGW WenKai TC'}
+};
+function settings(){try{return {...DEFAULTS,...JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}')}}catch{return {...DEFAULTS}}}
+function saveSettings(s){localStorage.setItem(SETTINGS_KEY,JSON.stringify(s))}
+function openDb(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB_NAME,DB_VERSION);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains('books'))d.createObjectStore('books',{keyPath:'id'});if(!d.objectStoreNames.contains(DRAFT_STORE))d.createObjectStore(DRAFT_STORE,{keyPath:'id'})};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+function draftId(i){return `${bookId}:${i}`}
+async function getDraft(i){const d=await openDb();return new Promise((resolve,reject)=>{const r=d.transaction(DRAFT_STORE,'readonly').objectStore(DRAFT_STORE).get(draftId(i));r.onsuccess=()=>{const v=r.result||null;d.close();resolve(v)};r.onerror=()=>{d.close();reject(r.error)}})}
+async function putDraft(i,text){const d=await openDb();return new Promise((resolve,reject)=>{const tx=d.transaction(DRAFT_STORE,'readwrite');tx.objectStore(DRAFT_STORE).put({id:draftId(i),bookId,index:i,text,updatedAt:new Date().toISOString()});tx.oncomplete=()=>{d.close();resolve()};tx.onerror=()=>{d.close();reject(tx.error)}})}
+async function fetchText(path){const r=await fetch(path,{cache:'no-store'});if(!r.ok)throw new Error(`無法載入 ${path}`);return r.text()}
+async function fetchOriginal(item){const base=`./books/${bookId}/`;if(item.file)return fetchText(base+item.file);if(Array.isArray(item.files))return (await Promise.all(item.files.map(f=>fetchText(base+f)))).join('\n\n');return ''}
+async function persistOpenEditor(){const e=document.querySelector('#chapterEditor'),a=document.querySelector('.toc-link.active');if(e&&a){const i=Number(a.dataset.index);if(Number.isInteger(i))await putDraft(i,e.value)}}
+async function collectBook(){const r=await fetch(`./books/${bookId}/manifest.json`,{cache:'no-store'});if(!r.ok)throw new Error('找不到這本書。');const book=await r.json();const sections=await Promise.all(book.structure.map(async(item,index)=>{const draft=await getDraft(index);return {index,role:item.role,title:item.title||'',draft:Boolean(draft),text:draft?.text??await fetchOriginal(item)}}));return {book,sections}}
+function downloadFile(filename,content,type){const blob=content instanceof Blob?content:new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500)}
+function loadScript(src,globalName){if(window[globalName])return Promise.resolve(window[globalName]);return new Promise((resolve,reject)=>{const s=document.createElement('script');s.src=src;s.onload=()=>resolve(window[globalName]);s.onerror=()=>reject(new Error('導出元件載入失敗，請檢查網路後重試。'));document.head.appendChild(s)})}
+function cleanLines(text=''){return String(text).replace(/\r\n?/g,'\n').split('\n').map(x=>x.replace(/^#{1,6}\s+/,''))}
+function paperTwips(p){return p==='A4'?{width:11906,height:16838}:{width:8391,height:11906}}
+async function exportDocx(book,sections,baseName,opt){const dx=await loadScript('https://cdn.jsdelivr.net/npm/docx@9.5.1/dist/index.umd.cjs','docx');const {Document,Packer,Paragraph,HeadingLevel,PageBreak,TextRun,Header,Footer,PageNumber,AlignmentType}=dx;const f=FONTS[opt.font]||FONTS['noto-serif'],paper=paperTwips(opt.paper),margin=Math.round(opt.margin*56.7);const children=[];if(opt.cover){children.push(new Paragraph({alignment:AlignmentType.CENTER,spacing:{before:2600,after:500},children:[new TextRun({text:book.title||'',bold:true,size:52,font:f.docx})]}));if(book.subtitle)children.push(new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:book.subtitle,size:28,font:f.docx})]}));children.push(new Paragraph({children:[new PageBreak()]}))}sections.forEach((section,si)=>{if(section.title)children.push(new Paragraph({text:section.title,heading:section.role==='section'?HeadingLevel.HEADING_2:HeadingLevel.HEADING_1,pageBreakBefore:opt.chapterBreak&&si>0}));cleanLines(section.text).forEach(line=>children.push(new Paragraph({spacing:{line:Math.round(opt.fontSize*1.8*20),after:100},children:line?[new TextRun({text:line,size:opt.fontSize*2,font:f.docx})]:[]}))) });const header=opt.header?{default:new Header({children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({text:book.title||'',size:16,font:f.docx})]})]})}:undefined;const footer=opt.pageNumbers?{default:new Footer({children:[new Paragraph({alignment:AlignmentType.CENTER,children:[new TextRun({children:[PageNumber.CURRENT],size:16,font:f.docx})]})]})}:undefined;const document=new Document({styles:{default:{document:{run:{font:f.docx,size:opt.fontSize*2}}}},sections:[{properties:{page:{size:paper,margin:{top:margin,right:margin,bottom:margin,left:margin}}},headers:header,footers:footer,children}]});downloadFile(`${baseName}.docx`,await Packer.toBlob(document),'application/vnd.openxmlformats-officedocument.wordprocessingml.document')}
+function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function printHtml(book,sections,opt){const f=FONTS[opt.font]||FONTS['noto-serif'];const body=sections.map((s,i)=>`<section class="chapter ${opt.chapterBreak&&i?'newpage':''}"><h1>${esc(s.title)}</h1>${String(s.text).replace(/\r\n?/g,'\n').split(/\n\s*\n/).map(p=>`<p>${esc(p.replace(/^#{1,6}\s+/gm,'')).replace(/\n/g,'<br>')}</p>`).join('')}</section>`).join('');const cover=opt.cover?`<div class="cover ${opt.coverStyle}"><div class="cover-rule"></div><h1>${esc(book.title)}</h1>${book.subtitle?`<h2>${esc(book.subtitle)}</h2>`:''}<div class="cover-mark">MULTIWRITE · WESTSIDE WATCH</div></div>`:'';return `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>${esc(book.title)}</title><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=${f.google}&display=swap"><style>@page{size:${opt.paper};margin:${opt.margin}mm;${opt.pageNumbers?'@bottom-center{content:counter(page);font-size:9pt}':''}${opt.header?`@top-center{content:"${esc(book.title).replace(/"/g,'')}";font-size:8pt}`:''}}*{box-sizing:border-box}body{font-family:${f.css};color:#1f1c17;font-size:${opt.fontSize}pt;line-height:1.85;margin:0}main{margin:auto}.cover{height:${opt.paper==='A4'?'245mm':'170mm'};display:flex;flex-direction:column;justify-content:center;text-align:center;page-break-after:always}.cover h1{font-size:30pt;font-weight:600;letter-spacing:.08em;margin:0 0 16mm}.cover h2{font-size:14pt;font-weight:400}.cover-rule{width:28mm;border-top:1px solid #9c813e;margin:0 auto 16mm}.cover-mark{margin-top:30mm;font-size:7pt;letter-spacing:.2em}.cover.minimal .cover-rule,.cover.minimal .cover-mark{display:none}.chapter.newpage{break-before:page;page-break-before:always}.chapter h1{font-size:20pt;font-weight:600;margin:0 0 2em;break-after:avoid}.chapter p{text-indent:2em;margin:.75em 0;orphans:3;widows:3}button{position:fixed;right:18px;top:18px;padding:10px 16px;z-index:9}@media print{button{display:none}}</style></head><body><button onclick="window.print()">儲存為 PDF / 列印</button><main>${cover}${body}</main><script>setTimeout(()=>window.print(),700)<\/script></body></html>`}
+function exportPdf(book,sections,opt){const p=window.open('','_blank');if(!p)throw new Error('瀏覽器阻止了 PDF 視窗，請允許此網站開啟彈出視窗。');p.document.open();p.document.write(printHtml(book,sections,opt));p.document.close()}
+function studioHtml(){const o=settings();return `<div class="export-studio-backdrop" id="exportStudio"><section class="export-studio"><header><div><span class="export-kicker">PUBLICATION EXPORT</span><h2>出版設定</h2></div><button type="button" id="closeExportStudio">×</button></header><div class="export-grid"><label>紙張尺寸<select data-setting="paper"><option value="A5" ${o.paper==='A5'?'selected':''}>A5 · 書籍</option><option value="A4" ${o.paper==='A4'?'selected':''}>A4 · 文件</option></select></label><label>印刷字體<select data-setting="font">${Object.entries(FONTS).map(([k,v])=>`<option value="${k}" ${o.font===k?'selected':''}>${v.label}</option>`).join('')}</select></label><label>正文字號<select data-setting="fontSize">${[9,10,10.5,11,12,13,14].map(n=>`<option value="${n}" ${Number(o.fontSize)===n?'selected':''}>${n} pt</option>`).join('')}</select></label><label>頁邊距<select data-setting="margin">${[12,15,18,20,22,25,30].map(n=>`<option value="${n}" ${Number(o.margin)===n?'selected':''}>${n} mm</option>`).join('')}</select></label><label>封面樣式<select data-setting="coverStyle"><option value="classic" ${o.coverStyle==='classic'?'selected':''}>古典</option><option value="minimal" ${o.coverStyle==='minimal'?'selected':''}>極簡</option></select></label></div><div class="export-toggles"><label><input type="checkbox" data-setting="cover" ${o.cover?'checked':''}> 封面</label><label><input type="checkbox" data-setting="chapterBreak" ${o.chapterBreak?'checked':''}> 章節另起新頁</label><label><input type="checkbox" data-setting="pageNumbers" ${o.pageNumbers?'checked':''}> 頁碼</label><label><input type="checkbox" data-setting="header" ${o.header?'checked':''}> 頁眉顯示書名</label></div><footer><span>設定同時套用到 DOCX 與 PDF</span><button class="book-action primary" id="applyExportSettings" type="button">完成</button></footer></section></div>`}
+function openStudio(){document.body.insertAdjacentHTML('beforeend',studioHtml());const root=document.querySelector('#exportStudio');const close=()=>root.remove();root.querySelector('#closeExportStudio').onclick=close;root.addEventListener('click',e=>{if(e.target===root)close()});root.querySelector('#applyExportSettings').onclick=()=>{const o=settings();root.querySelectorAll('[data-setting]').forEach(el=>{const k=el.dataset.setting;o[k]=el.type==='checkbox'?el.checked:(['fontSize','margin'].includes(k)?Number(el.value):el.value)});saveSettings(o);close();const st=document.querySelector('#saveState');if(st)st.textContent='出版設定已儲存'} }
+function injectControls(){if(document.querySelector('#exportBook'))return;const actions=document.querySelector('.book-actions');if(!actions)return;const wrap=document.createElement('div');wrap.className='export-controls';wrap.innerHTML=`<button id="exportSettings" class="book-action" type="button">出版設定</button><select id="exportFormat" class="export-select" aria-label="導出格式"><option value="docx">Word · DOCX</option><option value="pdf">PDF · 列印版</option><option value="md">Markdown</option><option value="txt">TXT</option><option value="json">JSON 備份</option></select><button id="exportBook" class="book-action" type="button">導出</button>`;actions.before(wrap);document.querySelector('#exportSettings').onclick=openStudio;document.querySelector('#exportBook').onclick=exportBook}
+async function exportBook(){const b=document.querySelector('#exportBook'),format=document.querySelector('#exportFormat')?.value||'docx',state=document.querySelector('#saveState');if(!b)return;const old=b.textContent;b.disabled=true;b.textContent='導出中…';try{await persistOpenEditor();const {book,sections}=await collectBook(),base=safeFilename(book.title||bookId),opt=settings();if(format==='docx')await exportDocx(book,sections,base,opt);else if(format==='pdf')exportPdf(book,sections,opt);else if(format==='json')downloadFile(`${base}.multiwrite.json`,JSON.stringify({...buildExportBackup(book,sections),publication:opt},null,2),'application/json;charset=utf-8');else downloadFile(`${base}.${format==='txt'?'txt':'md'}`,mergeExportSections(sections),format==='txt'?'text/plain;charset=utf-8':'text/markdown;charset=utf-8');if(state)state.textContent=format==='pdf'?'已開啟 PDF 列印版':`已導出 ${format.toUpperCase()}`}catch(e){if(state)state.textContent=`導出失敗：${e.message}`}finally{b.disabled=false;b.textContent=old}}
 injectControls();
