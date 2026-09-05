@@ -19,7 +19,7 @@ class CompanionNativeContractTest(unittest.TestCase):
     def test_companion_1_manifest_is_installable_firefox_extension(self) -> None:
         manifest = json.loads((EXT / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["manifest_version"], 2)
-        self.assertEqual(manifest["version"], "1.1.0")
+        self.assertEqual(manifest["version"], "1.2.0")
         self.assertIn("nativeMessaging", manifest["permissions"])
         self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
         self.assertIn("background.js", manifest["background"]["scripts"])
@@ -50,6 +50,8 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('type: "dore.health"', source)
         self.assertIn("DORÉ A2A ·", source)
         self.assertIn('"dore:a2a-result"', source)
+        self.assertIn('setBadge("CAPTURED"', source)
+        self.assertIn('setBadge("SENT"', source)
 
     def test_command_capture_survives_chatgpt_dom_and_locale_changes(self) -> None:
         source = (EXT / "content_script.js").read_text(encoding="utf-8")
@@ -59,6 +61,9 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('document.addEventListener("submit"', source)
         self.assertIn('document.addEventListener("click"', source)
         self.assertIn("pendingComposerCommand", source)
+        self.assertIn('data-message-author-role="user"', source)
+        self.assertIn("MutationObserver", source)
+        self.assertIn("observeSubmittedMessages", source)
         self.assertNotIn('label.includes("send")', source)
         self.assertNotIn('label.includes("submit")', source)
 
