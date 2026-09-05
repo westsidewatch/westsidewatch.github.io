@@ -5,8 +5,28 @@ from pathlib import Path
 from http.server import ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs
 import app_visual as visual
+import multiwrite_integration
+
+# Multiwrite belongs to the resident DORÉ DESIGN workspace. Mount its page and
+# semantic decision API before the WYSIWYG shell reads the workspace.
+multiwrite_integration.install_workspace(visual.base)
+
 import multipage_wysiwyg,journal_wysiwyg
+import multiwrite_wysiwyg
 import promotion_pipeline
+
+# Extend the existing multi-page editor instead of launching a second design lab.
+multipage_wysiwyg.SUPPORTED.add('multiwrite-home')
+_original_render_canvas=multipage_wysiwyg.render_canvas
+def _render_canvas(page_id='homepage',edit=False):
+    if page_id=='multiwrite-home':return multiwrite_wysiwyg.render_canvas(edit=edit)
+    return _original_render_canvas(page_id,edit=edit)
+multipage_wysiwyg.render_canvas=_render_canvas
+# The base editor hard-codes its supported Set in the HTML payload; promote
+# Multiwrite there too, then attach its semantic inspector to the same UI.
+multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home'])")
+multipage_wysiwyg.EDITOR_HTML=multiwrite_wysiwyg.augment_editor(multipage_wysiwyg.EDITOR_HTML)
+
 ROOT=Path(__file__).resolve().parent.parent
 PACKAGE=journal_wysiwyg.PACKAGE
 COORD=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()/'coordination'
@@ -61,16 +81,21 @@ class H(visual.H):
         if path=='/api/journal/status':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='journal-vol-00'),None)
             return self.out(200,{'ok':bool(p and journal_wysiwyg.available()),'page_id':'journal-vol-00','editable':True,'runtime_mirror':False,'node_count':len(p.get('nodes',[])) if p else 0,'template_imported':journal_wysiwyg.available(),'renderer':p.get('renderer') if p else None,'revision':w.get('revision'),'asset_fallback':'package+repo-static'})
+        if path=='/api/multiwrite/status':
+            w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None)
+            return self.out(200,{'ok':bool(p),'page_id':'multiwrite-home','editable':True,'semantic_design':bool(p and p.get('design')),'design':p.get('design') if p else None,'editor':'/editor?page=multiwrite-home','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
         if path=='/api/mirror/status':return self.out(200,{'ok':True,'retired':True,'mode':'retired-runtime-mirror','journal':'/journal/','replacement':'workspace-page:journal-vol-00'})
         if path=='/api/preview/status':
             w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='homepage'),None);journal=next((p for p in w.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
             candidates=[p for p in w.get('pages',[]) if str(p.get('id','')).startswith('homepage-concept-')]
-            return self.out(200,{'ok':bool(home and journal and len(candidates)>=3),'mode':'multi-homepage-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':'homepage','page_count':len(w.get('pages',[])),'homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'runtime_mirror':False,'structure_editor':'/structure-editor'})
+            multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None)
+            return self.out(200,{'ok':bool(home and journal and multiwrite and len(candidates)>=3),'mode':'multi-homepage-shared-workspace','workspace_id':w.get('id'),'revision':w.get('revision'),'page_id':'homepage','page_count':len(w.get('pages',[])),'homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'multiwrite_page':'multiwrite-home','multiwrite_semantic_design':bool(multiwrite and multiwrite.get('design')),'editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'runtime_mirror':False,'structure_editor':'/structure-editor'})
         if path=='/api/health':
             w=visual.base.workspace();journal=next((p for p in w.get('pages',[]) if p.get('id')=='journal-vol-00'),None)
             candidates=[p for p in w.get('pages',[]) if str(p.get('id','')).startswith('homepage-concept-')]
             promoted=promotion_pipeline.list_candidates().get('candidates',[])
-            return self.out(200,{'ok':len(candidates)>=3 and len(promoted)>=1,'service':'dore-design','version':'1.9.0','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'baseline-plus-editable-homepage-concepts','preview_mode':'multi-homepage-shared-workspace','homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'promoted_candidate_count':len(promoted),'promotion_pipeline':'storybook-to-dore-design-v1','candidate_gallery':'/api/candidates','coordination_hardening':'1.0','coordination_status':'/api/coordination/status','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False,'journal_asset_fallback':'package+repo-static'})
+            multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None)
+            return self.out(200,{'ok':len(candidates)>=3 and len(promoted)>=1 and bool(multiwrite),'service':'dore-design','version':'1.9.1','workspace':'new-westside','source_of_truth':'structured-workspace','layout_source':'baseline-plus-editable-homepage-concepts','preview_mode':'multi-homepage-shared-workspace','homepage_candidate_count':len(candidates),'homepage_candidates':[p.get('id') for p in candidates],'promoted_candidate_count':len(promoted),'promotion_pipeline':'storybook-to-dore-design-v1','candidate_gallery':'/api/candidates','coordination_hardening':'1.0','coordination_status':'/api/coordination/status','editor':'/editor','editor_canvas':'/editor-canvas','preview':'/','preview_edit_entry':True,'structure_editor':'/structure-editor','page_count':len(w.get('pages',[])),'journal':'/journal/','journal_page_id':'journal-vol-00','journal_editable':bool(journal),'journal_mode':'editable-workspace-page','journal_source':'one-time-main-site-import','runtime_mirror':False,'journal_asset_fallback':'package+repo-static','multiwrite_page':'multiwrite-home','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_semantic_design':bool(multiwrite and multiwrite.get('design'))})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
