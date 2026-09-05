@@ -17,6 +17,8 @@ jobs:
     timeout-minutes: 2
     steps:
       - uses: actions/checkout@v4
+      - name: Refresh DORÉ Unix control plane from this checkout
+        run: bash local/dore-local/install-unix-a2a-macos.sh
       - name: Execute DORÉ capability through local Unix socket
         env:
           GITHUB_TOKEN: ${{ github.token }}
