@@ -51,7 +51,7 @@ class Companion4312ContractTests(unittest.TestCase):
         self.assertEqual(body["protocol"], "dore.a2a/1")
         self.assertEqual(body["status"], "succeeded")
         consumers = {c["id"]: c for c in body["consumers"]}
-        self.assertEqual(consumers["design"]["capability_ids"], ["design.compose", "design.verify"])
+        self.assertEqual(consumers["design"]["capability_ids"], ("design.compose", "design.verify"))
 
     def test_typed_design_compose_and_status_round_trip(self):
         request = {
@@ -62,7 +62,12 @@ class Companion4312ContractTests(unittest.TestCase):
             "session_id": "session-1",
             "consumer_id": "design",
             "capability_id": "design.compose",
-            "payload": {"asset_candidate": {"kind": "test", "content": {"title": "DORÉ"}}},
+            "payload": {
+                "asset_candidate": {
+                    "asset_id": "synthetic:companion-4312",
+                    "kind": "test-double",
+                }
+            },
         }
         code, first = self.service.route_payload(request)
         self.assertEqual(code, 200)
