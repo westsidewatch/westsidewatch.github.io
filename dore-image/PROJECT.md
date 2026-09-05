@@ -2,30 +2,55 @@
 
 Status: ACTIVE FOUNDATION
 Established: 2026-09-05
-Parent system: Doré Core + Doré Design
+Parent system: Doré Core
+Runtime faculty: Doré Visual
 
 ## Mission
 
-Doré Image is Doré's self-owned image-generation and visual-asset capability.
+Doré Image is the engineering project that builds Doré's native image-generation capability. It is not a second Doré, a separate visual agent, or a peer intelligence that must converse with Doré Design.
 
-The fixed goal is not merely to call an image model. The fixed goal is for Doré to understand a visual brief, form an original design grammar, generate or transform imagery, inspect the result, correct it, and deliver reusable production assets into Doré Design and real Westside Watch / ONE products.
+The fixed goal is not merely to call an image model. The fixed goal is for one Doré to understand a visual brief, form an original design grammar, generate or transform imagery, inspect the result, correct it, compose it into structured design, and deliver reusable production assets into real Westside Watch / ONE products.
 
 The terminal capability target is:
 
 > Doré can independently generate original images and website design elements from an intent or product need, while preserving Doré/Westside visual identity, source truth, editability where appropriate, and machine-verifiable production evidence.
 
-## Why this is a separate project
+## Project boundary is not an intelligence boundary
 
-Doré Design already provides a shared structured workspace, SVG rendering/export, machine inspection and a human/machine editing surface. That is the design workspace and composition engine.
+Doré Core already defines Doré as one persistent intelligence with bounded faculties and adapters, and explicitly states that faculties are not independent agents. The reflex layer already defines the transferable route `STIMULUS -> INTENT -> ROUTE -> EVIDENCE -> OUTCOME -> REFLEX UPDATE`.
 
-Doré Image is the image-making engine and visual-language compiler that Doré Design does not itself provide.
+Therefore Doré Image and Doré Design remain separate engineering workstreams only where separate code, tests, release discipline or runtime machinery is useful. At runtime they are capabilities of one `visual` faculty.
 
-The two systems therefore have separate responsibilities:
+Normal visual execution must not use a free-form Image-agent <-> Design-agent conversation loop.
 
-- **Doré Image:** visual brief -> visual grammar -> generation/control -> image critique -> approved image/asset package.
-- **Doré Design:** approved asset package + typography/layout/data -> structured editable composition -> render/export/verification.
+Instead:
 
-Doré Image must integrate with Doré Design, not replace it.
+`product need -> visual intent -> style grammar -> image generation/control -> image critique -> structured composition -> verification -> accepted asset`
+
+All stages share typed task state and are routed by Doré's capability/reflex layer.
+
+Canonical architecture: `dore-core/architecture/DORE-CAPABILITY-EMBODIMENT-2026-09-05.md`.
+
+## Relationship with Doré Design
+
+Doré Design remains a structured visual workspace and manipulation engine: editable pages/layers, shared state, SVG rendering/export, direct human/machine editing and deterministic verification.
+
+Doré Image builds generation/control/inspection machinery that feeds the same Doré Visual faculty.
+
+Runtime capability map:
+
+- `visual.direct` — product/creative intent;
+- `visual.grammar` — Doré visual grammar/style recipe;
+- `image.generate` — raster/illustrative generation;
+- `image.control` — reference/pose/depth/line/inpaint control;
+- `image.critic` — visual inspection and diagnosis;
+- `design.compose` — structured Doré Design manipulation;
+- `design.typography` — hierarchy/type behavior;
+- `design.svg` — native vector/site element generation;
+- `design.verify` — structural/render/responsive checks;
+- `asset.publish` — accepted asset registration/provenance.
+
+These are Doré capabilities, not mini-agents.
 
 ## Founding observation
 
@@ -41,14 +66,18 @@ Doré Image must therefore learn from mature public work, extract transferable m
 
 ## Non-negotiable product principles
 
-1. **Original grammar, not style mimicry.** References are evidence and grammar sources, never templates to reconstruct.
-2. **Renderer-agnostic core.** Doré's visual reasoning and recipe manifest must not be hard-wired to one image model or provider.
-3. **Local/free path first where practical.** The base project must not require metered AI/API spending for normal experimentation. Optional render adapters may exist separately.
-4. **Generation is only one stage.** Every run must support inspect -> critique -> revise -> accept/reject.
-5. **Real product transfer is the graduation test.** A beautiful isolated demo is not enough; assets must survive insertion into Westside Watch / ONE / Journal / book / site production.
-6. **Website elements are first-class outputs.** Hero art, section illustrations, ornaments, textures, separators, icon-like marks, background plates and responsive crops belong to the project alongside posters and editorial images.
-7. **Structured/vector output when appropriate.** Raster generation may provide visual material, but SVG/vector reconstruction or direct structural composition should be preferred for marks, ornaments, dividers and reusable site elements.
-8. **Evidence before capability promotion.** A technique becomes a Doré capability only after repeatable real-work evidence.
+1. **One Doré.** Image and design are faculties/capabilities of one persistent intelligence.
+2. **Sparse activation.** Image/design instructions, models and provider schemas stay dormant until routed to a visual task.
+3. **Typed state, not conversational handoff.** Normal stages exchange `VisualBrief`, `StyleRecipe`, `AssetCandidate`, `CritiqueResult`, `DesignPatch` and `VerificationResult`, not recursive agent chat.
+4. **Original grammar, not style mimicry.** References are evidence and grammar sources, never templates to reconstruct.
+5. **Renderer-agnostic core.** Doré's visual reasoning and recipe manifest must not be hard-wired to one image model or provider.
+6. **Local/free path first where practical.** The base project must not require metered AI/API spending for normal experimentation. Optional render adapters may exist separately.
+7. **Generation is only one stage.** Every run must support inspect -> critique -> revise -> accept/reject.
+8. **Real product transfer is the graduation test.** A beautiful isolated demo is not enough; assets must survive insertion into Westside Watch / ONE / Journal / book / site production.
+9. **Website elements are first-class outputs.** Hero art, section illustrations, ornaments, textures, separators, icon-like marks, background plates and responsive crops belong to the capability family alongside posters/editorial images.
+10. **Structured/vector output when appropriate.** Raster generation may provide visual material, but SVG/vector reconstruction or direct structural composition should be preferred for marks, ornaments, dividers and reusable site elements.
+11. **Evidence before capability promotion.** A technique becomes a Doré capability only after repeatable real-work evidence.
+12. **Projects train; capabilities remain.** When this project produces a verified transferable ability it must graduate into Doré's capability registry/reflex routing so the active project machinery need not remain in every future task.
 
 ## Initial capability classes
 
@@ -68,7 +97,7 @@ Doré Image must therefore learn from mature public work, extract transferable m
 
 ## Doré Original
 
-`Doré Original` is the first native style-system family to be developed inside Doré Image.
+`Doré Original` is the first native style-system family to be developed inside Doré Image and ultimately retained as Doré Visual capability.
 
 It is not defined as "make it look like Gustave Doré" and it is not a single locked appearance. It is a family of reusable visual grammars built from Doré's own product history, Westside visual constitution, ONE, Journal, publishing work, biblical-world research and controlled study of public design/print systems.
 
@@ -81,21 +110,22 @@ The first subfamilies to validate are:
 
 These names are internal product families, not claims of artistic authorship by historical artists.
 
-## Output contract
+## Output/state contract
 
-A mature Doré Image run should be able to persist:
+A mature Doré Visual run should persist only the typed artifacts required by later stages:
 
 ```text
-brief/source
-  -> analysis
-  -> style-spec / recipe-manifest
-  -> render-adapter manifest
-  -> candidate assets
-  -> critique/evaluation
-  -> correction history
-  -> accepted asset package
-  -> Doré Design insertion metadata
+VisualBrief
+  -> StyleRecipe
+  -> AssetCandidate[]
+  -> CritiqueResult
+  -> accepted AssetCandidate
+  -> DesignPatch
+  -> VerificationResult
+  -> AssetRecord
 ```
+
+Each artifact must have an ID, schema version, provenance and content hash. Each capability reads only the fields it requires.
 
 The accepted asset package should include, where relevant:
 
@@ -112,16 +142,18 @@ The accepted asset package should include, where relevant:
 
 ## Foundation acceptance gate
 
-Doré Image Foundation is not complete until one real product task proves the entire chain:
+Doré Image Foundation is not complete until one real product task proves the entire chain inside one Doré capability route:
 
 1. Doré receives a concrete Westside Watch / ONE visual need.
-2. Doré selects or builds a visual grammar without the user writing the production prompt.
-3. Doré produces at least three candidates through a callable renderer.
-4. Doré inspects and scores the candidates.
-5. Doré performs at least one evidence-driven correction.
-6. Doré accepts one asset and rejects the others with recorded reasons.
-7. The asset enters Doré Design or the website as a real production element.
-8. Responsive/export behavior is verified.
-9. The recipe and learning evidence are retained for a later transfer test.
+2. The reflex/router activates the minimal Doré Visual capability set; unrelated capability bodies remain unloaded.
+3. Doré selects or builds a visual grammar without the user writing the production prompt.
+4. Doré produces at least three candidates through a callable renderer.
+5. Doré inspects and scores the candidates.
+6. Doré performs at least one evidence-driven correction.
+7. Doré accepts one asset and rejects the others with recorded reasons.
+8. The accepted asset enters Doré Design/the website through shared typed state, without a free-form inter-agent handoff.
+9. Responsive/export behavior is verified.
+10. Recipe and learning evidence are retained for transfer.
+11. A second comparable task demonstrates lower cognitive/runtime overhead through reuse or reflex compilation.
 
 Until that gate passes, status remains `ACTIVE FOUNDATION`.
