@@ -1,19 +1,11 @@
 (() => {
-  const ENDPOINT = 'http://127.0.0.1:4312';
   const PROTOCOL = 'dore.a2a.v1';
-  async function call(path, options) {
-    const r = await fetch(ENDPOINT + path, options);
-    const body = await r.json();
-    if (!r.ok || body.ok === false) throw new Error(body.error || `DORÉ HTTP ${r.status}`);
-    return body;
-  }
-  async function health() { return call('/health'); }
+  function send(msg) { return browser.runtime.sendMessage({protocol:PROTOCOL,...msg}); }
+  async function health() { return send({type:'health'}); }
   async function invoke(capability, params = {}) {
     if (typeof capability !== 'string' || !capability) throw new Error('invalid_capability');
-    return call('/invoke', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({protocol:PROTOCOL,request_id:crypto.randomUUID(),capability,params})});
+    return send({type:'invoke',request_id:crypto.randomUUID(),capability,params});
   }
-  // Isolated-world API: intentionally not a general page->extension RPC surface.
-  // A small visible status marker is enough to prove the transport is alive.
   async function probe() {
     let el = document.getElementById('dore-a2a-status');
     if (!el) {
