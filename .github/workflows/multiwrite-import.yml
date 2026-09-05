@@ -6,11 +6,13 @@ on:
     paths:
       - 'static/multiwrite/**'
       - 'tests/multiwrite-import.test.mjs'
+      - 'tests/multiwrite-export.test.mjs'
       - '.github/workflows/multiwrite-import.yml'
   pull_request:
     paths:
       - 'static/multiwrite/**'
       - 'tests/multiwrite-import.test.mjs'
+      - 'tests/multiwrite-export.test.mjs'
       - '.github/workflows/multiwrite-import.yml'
   workflow_dispatch:
 
@@ -26,7 +28,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run Import v1 parser regression tests
-        run: node --test tests/multiwrite-import.test.mjs
+      - name: Run Multiwrite regression tests
+        run: node --test tests/multiwrite-import.test.mjs tests/multiwrite-export.test.mjs
       - name: Validate golden-case manifest
         run: node -e "const fs=require('fs'); const p='static/multiwrite/books/kingdom-language/manifest.json'; const m=JSON.parse(fs.readFileSync(p,'utf8')); if(m.schema!=='multiwrite.book.v1'||m.import.aiTransformed!==false||!Array.isArray(m.structure)||m.structure.length<14) process.exit(1); console.log('golden manifest ok:',m.structure.length,'units')"
