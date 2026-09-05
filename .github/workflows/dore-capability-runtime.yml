@@ -7,6 +7,7 @@ on:
       - 'tests/test_dore_*capability*.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
+      - 'scripts/dore_visual_pipeline_probe.py'
       - '.github/workflows/dore-capability-runtime.yml'
   push:
     branches: [main]
@@ -15,6 +16,7 @@ on:
       - 'tests/test_dore_*capability*.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
+      - 'scripts/dore_visual_pipeline_probe.py'
       - '.github/workflows/dore-capability-runtime.yml'
 
 permissions:
@@ -35,6 +37,8 @@ jobs:
         run: python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
+      - name: Run shared-state visual execution probe
+        run: python scripts/dore_visual_pipeline_probe.py
       - name: Verify renderer probe fails closed when absent
         run: |
           set +e
