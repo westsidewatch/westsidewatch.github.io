@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
   "name": "DORÉ A2A Companion",
-  "version": "1.4.0",
-  "description": "Local zero-cost production A2A bridge from ChatGPT to DORÉ through Firefox Native Messaging.",
-  "permissions": ["nativeMessaging", "http://127.0.0.1:4312/*"],
+  "version": "2.0.0",
+  "description": "Zero-cost ChatGPT assistant-directive control plane to DORÉ through Firefox Native Messaging.",
+  "permissions": ["nativeMessaging"],
   "browser_specific_settings": {"gecko": {"id": "dore-companion@westsidewatch.ca", "strict_min_version": "109.0"}},
   "background": {"scripts": ["background.js"], "persistent": true},
   "content_scripts": [{"matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"], "js": ["content_script.js"], "run_at": "document_idle"}],

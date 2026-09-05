@@ -1,0 +1,28 @@
+name: DORE A2A True Control Plane
+on:
+  push:
+    paths:
+      - 'local/dore-companion-extension/**'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-local/production_actions.py'
+      - 'local/dore-local/assistant_directive_acceptance.py'
+      - '.github/workflows/dore-a2a-true-control-plane.yml'
+  pull_request:
+    paths:
+      - 'local/dore-companion-extension/**'
+      - 'local/dore-local/**'
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.11'}
+      - name: Python syntax
+        run: python -m py_compile local/dore-local/native_host.py local/dore-local/production_actions.py local/dore-local/assistant_directive_acceptance.py
+      - name: JavaScript syntax
+        run: node --check local/dore-companion-extension/background.js && node --check local/dore-companion-extension/content_script.js && node --check local/dore-companion-extension/native_transport.js
+      - name: Assistant directive acceptance
+        run: python local/dore-local/assistant_directive_acceptance.py
+      - name: Installer static contract
+        run: bash -n local/dore-local/install_native_messaging.sh && bash -n local/dore-companion-extension/install_companion_1.command

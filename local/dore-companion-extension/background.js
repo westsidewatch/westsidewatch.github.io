@@ -1,83 +1,9 @@
-/* DORÉ Companion 1.4 production A2A bridge. */
-
-let transportModulePromise = null;
-let sequence = 0;
-const sessionId = `session-${crypto.randomUUID()}`;
-
-function transportModule() {
-  if (!transportModulePromise) transportModulePromise = import(browser.runtime.getURL("native_transport.js"));
-  return transportModulePromise;
-}
-
-function conversationId() {
-  const match = locationFromSender || "chatgpt";
-  return match;
-}
-let locationFromSender = "chatgpt";
-
-function nextRequestId() {
-  sequence += 1;
-  return `req-${Date.now()}-${sequence}-${crypto.randomUUID()}`;
-}
-
-function client() {
-  return { name: "dore-companion", version: "1.4.0", transport_preference: "firefox-native-messaging" };
-}
-
-function envelopeFromCommand(command, context = {}) {
-  const raw = String(command || "").trim();
-  const normalized = raw.toLowerCase();
-  if (normalized === "/dore stage2" || normalized === "dore stage2") {
-    return { command: raw, source: "chatgpt-companion-1.4", client: client() };
-  }
-
-  if (normalized === "/dore design" || normalized === "/dore design live") {
-    return {
-      protocol: "dore.a2a/1",
-      action: "dispatch",
-      request_id: nextRequestId(),
-      conversation_id: String(context.conversation_id || "chatgpt-unknown"),
-      session_id: sessionId,
-      consumer_id: "design",
-      capability_id: "design.compose",
-      payload: {
-        asset_candidate: {
-          asset_id: "a2a:production-live-gate",
-          provider: "dore-control-plane",
-          kind: "typed-live-gate",
-          rendered: false,
-          claim_boundary: "production A2A control-plane live gate"
-        }
-      },
-      source: "chatgpt-companion-1.4",
-      client: client()
-    };
-  }
-
-  return { protocol: "dore.a2a/1", command: raw, source: "chatgpt-companion-1.4", client: client() };
-}
-
-async function probeHealth() {
-  try {
-    const transport = await transportModule();
-    const result = await transport.nativeHealth();
-    return { online: Boolean(result && result.ok), transport: result && result.transport ? result.transport : "unknown", result };
-  } catch (error) {
-    return { online: false, transport: "unavailable", error: String(error && error.message ? error.message : error) };
-  }
-}
-
-browser.runtime.onMessage.addListener((message, sender) => {
-  if (!message || typeof message !== "object") return undefined;
-  if (message.type === "dore.health") return probeHealth();
-  if (message.type === "dore.command") {
-    const command = String(message.command || "").trim();
-    if (!command.toLowerCase().startsWith("/dore")) return Promise.resolve({ ok: false, ignored: true, reason: "not-a-dore-command" });
-    const context = { conversation_id: String(message.conversation_id || (sender && sender.tab && sender.tab.url) || "chatgpt-unknown") };
-    return transportModule()
-      .then((transport) => transport.sendDorePayload(envelopeFromCommand(command, context)))
-      .then((result) => ({ ok: result && result.status !== "failed", result, stage: "control-plane" }))
-      .catch((error) => ({ ok: false, stage: "transport", error: String(error && error.message ? error.message : error) }));
-  }
-  return undefined;
-});
+/* DORÉ Companion 2.0 production A2A bridge. */
+let transportModulePromise=null,sequence=0;const sessionId=`session-${crypto.randomUUID()}`;
+function transportModule(){if(!transportModulePromise)transportModulePromise=import(browser.runtime.getURL("native_transport.js"));return transportModulePromise}
+function nextRequestId(){sequence+=1;return `req-${Date.now()}-${sequence}-${crypto.randomUUID()}`}
+function client(){return {name:"dore-companion",version:"2.0.0",transport_preference:"firefox-native-messaging"}}
+function envelopeFromCommand(command,context={}){const raw=String(command||"").trim(),n=raw.toLowerCase();if(n==="/dore stage2"||n==="dore stage2")return {command:raw,source:"chatgpt-companion-2.0",client:client()};if(n==="/dore design"||n==="/dore design live")return {protocol:"dore.a2a/1",action:"dispatch",request_id:nextRequestId(),conversation_id:String(context.conversation_id||"chatgpt-unknown"),session_id:sessionId,consumer_id:"design",capability_id:"design.compose",payload:{asset_candidate:{asset_id:"a2a:production-live-gate",provider:"dore-control-plane",kind:"typed-live-gate",rendered:false}},source:"chatgpt-companion-2.0",client:client()};return {protocol:"dore.a2a/1",command:raw,source:"chatgpt-companion-2.0",client:client()}}
+function envelopeFromDirective(d,context={}){return {protocol:"dore.a2a/1",action:"production.execute",request_id:String(d.request_id||nextRequestId()),conversation_id:String(context.conversation_id||"chatgpt-unknown"),session_id:sessionId,capability:String(d.capability||""),args:d.args&&typeof d.args==="object"?d.args:{},source:"chatgpt-assistant-directive",client:client()}}
+async function probeHealth(){try{const t=await transportModule(),r=await t.nativeHealth();return {online:Boolean(r&&r.ok),transport:r&&r.transport||"unknown",result:r}}catch(e){return {online:false,transport:"unavailable",error:String(e&&e.message||e)}}}
+browser.runtime.onMessage.addListener((message,sender)=>{if(!message||typeof message!=="object")return undefined;if(message.type==="dore.health")return probeHealth();if(message.type==="dore.directive"){const d=message.directive||{};if(typeof d.capability!=="string"||!d.capability.startsWith("design."))return Promise.resolve({ok:false,error:"directive capability denied"});const ctx={conversation_id:String(message.conversation_id||(sender&&sender.tab&&sender.tab.url)||"chatgpt-unknown")};return transportModule().then(t=>t.sendDorePayload(envelopeFromDirective(d,ctx))).then(result=>({ok:Boolean(result&&result.ok),result,stage:"assistant-directive"})).catch(e=>({ok:false,stage:"transport",error:String(e&&e.message||e)}))}if(message.type==="dore.command"){const command=String(message.command||"").trim();if(!command.toLowerCase().startsWith("/dore"))return Promise.resolve({ok:false,ignored:true});const ctx={conversation_id:String(message.conversation_id||(sender&&sender.tab&&sender.tab.url)||"chatgpt-unknown")};return transportModule().then(t=>t.sendDorePayload(envelopeFromCommand(command,ctx))).then(result=>({ok:result&&result.status!=="failed",result,stage:"control-plane"})).catch(e=>({ok:false,stage:"transport",error:String(e&&e.message||e)}))}return undefined});
