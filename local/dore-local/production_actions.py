@@ -7,8 +7,10 @@ from urllib import request
 
 CAPABILITIES={"design.production.rollout"}
 
-def _run(argv:list[str],cwd:Path|None=None,timeout:int=120)->dict:
-    p=subprocess.run(argv,cwd=str(cwd) if cwd else None,text=True,capture_output=True,timeout=timeout)
+def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
+    child_env=os.environ.copy()
+    if env: child_env.update(env)
+    p=subprocess.run(argv,cwd=str(cwd) if cwd else None,text=True,capture_output=True,timeout=timeout,env=child_env)
     return {"argv":argv,"returncode":p.returncode,"stdout":p.stdout[-8000:],"stderr":p.stderr[-8000:]}
 
 def _health()->dict:
@@ -16,8 +18,6 @@ def _health()->dict:
         return json.loads(r.read().decode("utf-8"))
 
 def design_production_rollout(args:dict|None=None)->dict:
-    # Prefer the control-plane checkout that launched this service. This keeps
-    # production rollout isolated from any unrelated/diverged personal clone.
     repo=Path(
         os.environ.get("DORE_WORKTREE")
         or os.environ.get("DORE_REPO_ROOT")
@@ -29,7 +29,11 @@ def design_production_rollout(args:dict|None=None)->dict:
     if fetch["returncode"]: return {"ok":False,"status":"failed","step":"fetch","result":fetch}
     ff=_run(["git","merge","--ff-only","origin/main"],repo)
     if ff["returncode"]: return {"ok":False,"status":"failed","step":"fast_forward","result":ff}
-    install=_run(["bash",str(repo/"dore-design"/"install-macos.sh")],repo)
+    install=_run(
+        ["bash",str(repo/"dore-design"/"install-macos.sh")],
+        repo,
+        env={"DORE_SKIP_CONTROL_PLANE_REFRESH":"1"},
+    )
     if install["returncode"]: return {"ok":False,"status":"failed","step":"install","result":install}
     health=_health()
     specimen={}
