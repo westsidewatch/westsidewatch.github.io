@@ -47,6 +47,28 @@ class ControlPlane:
         with self._lock:
             cached = self._results.get(request.request_id)
             if cached is not None:
+                identity = (
+                    request.conversation_id,
+                    request.session_id,
+                    request.consumer_id,
+                    request.capability_id,
+                )
+                cached_identity = (
+                    cached.conversation_id,
+                    cached.session_id,
+                    cached.consumer_id,
+                    cached.capability_id,
+                )
+                if identity != cached_identity:
+                    return ControlResult(
+                        request_id=request.request_id,
+                        conversation_id=request.conversation_id,
+                        session_id=request.session_id,
+                        consumer_id=request.consumer_id,
+                        capability_id=request.capability_id,
+                        status="failed",
+                        error="request_id already bound to another request identity",
+                    )
                 return replace(cached, replayed=True)
 
             consumer = self._consumers.get(request.consumer_id)
