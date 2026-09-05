@@ -16,12 +16,13 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertEqual(manifest["dore_native_messaging"]["host"], "ca.dore.companion")
         self.assertEqual(manifest["dore_native_messaging"]["fallback_role"], "compatibility-debug-only")
 
-    def test_companion_1_manifest_is_installable_firefox_extension(self) -> None:
+    def test_companion_manifest_is_installable_firefox_extension(self) -> None:
         manifest = json.loads((EXT / "manifest.json").read_text(encoding="utf-8"))
         self.assertEqual(manifest["manifest_version"], 2)
-        self.assertEqual(manifest["version"], "1.2.0")
+        self.assertEqual(manifest["version"], "1.3.0")
         self.assertIn("nativeMessaging", manifest["permissions"])
         self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
+        self.assertNotIn("applications", manifest)
         self.assertIn("background.js", manifest["background"]["scripts"])
         script = manifest["content_scripts"][0]
         self.assertIn("https://chatgpt.com/*", script["matches"])
@@ -42,6 +43,10 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('protocol: "dore.a2a/1"', source)
         self.assertIn("transport.sendDorePayload", source)
         self.assertIn("transport.nativeHealth", source)
+        self.assertIn('normalized === "/dore stage2"', source)
+        stage2_block = source[source.index('if (normalized === "/dore stage2"'):source.index('return {\n    protocol: "dore.a2a/1"')]
+        self.assertNotIn('protocol: "dore.a2a/1"', stage2_block)
+        self.assertIn('version: "1.3.0"', source)
 
     def test_content_script_captures_command_and_surfaces_status(self) -> None:
         source = (EXT / "content_script.js").read_text(encoding="utf-8")
@@ -52,6 +57,18 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('"dore:a2a-result"', source)
         self.assertIn('setBadge("CAPTURED"', source)
         self.assertIn('setBadge("SENT"', source)
+        self.assertIn('setBadge("ERROR"', source)
+        self.assertIn("TERMINAL_HOLD_MS = 30000", source)
+        self.assertIn("Date.now() < terminalHoldUntil", source)
+        self.assertIn('status === "COMPLETED" || status === "SUCCEEDED" ? "PASS"', source)
+
+    def test_submitted_message_capture_is_replay_safe_and_repeatable(self) -> None:
+        source = (EXT / "content_script.js").read_text(encoding="utf-8")
+        self.assertIn("const seenMessageNodes = new WeakSet()", source)
+        self.assertIn("Existing messages are history, not new commands", source)
+        self.assertIn("seenMessageNodes.add(node)", source)
+        self.assertNotIn("seenSubmittedCommands", source)
+        self.assertNotIn("location.pathname", source)
 
     def test_command_capture_survives_chatgpt_dom_and_locale_changes(self) -> None:
         source = (EXT / "content_script.js").read_text(encoding="utf-8")
