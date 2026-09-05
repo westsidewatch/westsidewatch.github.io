@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Doré <-> A2A compatibility adapter v0.3.
+"""Doré <-> A2A compatibility adapter v0.4.
 
-This is the mature local A2A seam used by Companion/runtime code.  The legacy
-A2A task helpers remain unchanged; the typed ``dore.a2a/1`` control-plane
-bridge is added here so the working transport does not need a second server.
+The typed ``dore.a2a/1`` control plane is the production seam used by the
+browser Companion. Synthetic visual handlers remain available for non-resident
+capabilities, while Design is promoted to the resident Doré Design service.
 """
 from __future__ import annotations
 import json, os, uuid
@@ -28,10 +28,6 @@ def knowledge_artifact_to_a2a(knowledge):return artifact('Doré Knowledge Artifa
 def validate_task(task):
  missing=sorted({'kind','id','contextId','status'}-set(task));return {'ok':not missing and task.get('kind')=='task','missing':missing,'kind_ok':task.get('kind')=='task','state':(task.get('status') or {}).get('state')}
 
-# ---- Typed control-plane bridge -------------------------------------------------
-# Keep this in the established adapter instead of introducing another localhost
-# daemon.  Companion/:4312 can hand the JSON body it already receives directly to
-# handle_control_envelope().  Imports are lazy so legacy A2A use stays lightweight.
 _CONTROL_PLANE=None
 
 def _build_control_plane():
@@ -39,9 +35,12 @@ def _build_control_plane():
  from dore_core.capabilities.registry import default_registry
  from dore_core.capabilities.runtime import LazyCapabilityRuntime
  from dore_core.capabilities.synthetic_visual import synthetic_visual_handlers
+ from dore_core.capabilities.resident_design import resident_design_handlers
  from dore_core.control_plane.runtime import build_design_control_plane
  registry=default_registry();runtime=LazyCapabilityRuntime(registry,root=str(ROOT));executor=CapabilityExecutor(registry,runtime)
  for capability_id,handler in synthetic_visual_handlers().items():executor.register_handler(capability_id,handler)
+ # Resident handlers intentionally override the synthetic Design test doubles.
+ for capability_id,handler in resident_design_handlers().items():executor.register_handler(capability_id,handler)
  return build_design_control_plane(registry,executor)
 
 def control_plane():
@@ -50,12 +49,10 @@ def control_plane():
  return _CONTROL_PLANE
 
 def handle_control_envelope(envelope):
- """Dispatch one ``dore.a2a/1`` envelope through the existing local adapter."""
  from dore_core.control_plane.transport import handle_envelope
  return handle_envelope(control_plane(),envelope)
 
 def handle_companion_payload(payload):
- """Minimal mature-path router: legacy payloads are untouched; typed A2A is local."""
  if isinstance(payload,dict) and payload.get('protocol')=='dore.a2a/1':return handle_control_envelope(payload)
  return None
 
