@@ -1,0 +1,26 @@
+name: DORE A2A GitHub Relay
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  relay:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      startsWith(github.event.issue.title, '[DORÉ A2A]')
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 2
+    steps:
+      - uses: actions/checkout@v4
+      - name: Execute DORÉ capability through local Unix socket
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          DORE_ISSUE_TITLE: ${{ github.event.issue.title }}
+          DORE_ISSUE_BODY: ${{ github.event.issue.body }}
+          DORE_ISSUE_NUMBER: ${{ github.event.issue.number }}
+        run: python3 local/dore-local/github_issue_bridge.py
