@@ -4,8 +4,10 @@ on:
   pull_request:
     paths:
       - 'dore_core/capabilities/**'
+      - 'dore_core/control_plane/**'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
+      - 'tests/test_dore_control_plane*.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -14,8 +16,10 @@ on:
     branches: [main]
     paths:
       - 'dore_core/capabilities/**'
+      - 'dore_core/control_plane/**'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_provider*.py'
+      - 'tests/test_dore_control_plane*.py'
       - 'scripts/dore_capability_benchmark.py'
       - 'scripts/dore_renderer_probe.py'
       - 'scripts/dore_visual_pipeline_probe.py'
@@ -39,6 +43,7 @@ jobs:
         run: |
           python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
           python -m unittest discover -s tests -p 'test_dore_provider*.py' -v
+          python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
       - name: Run shared-state visual execution probe
