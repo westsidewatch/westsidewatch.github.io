@@ -6,7 +6,8 @@
   <meta name="theme-color" content="#CEBD74">
   <title>DORÉ · 多寫</title>
   <meta name="description" content="DORÉ 多寫——讓所寫的，成為書。寫作、閱讀與成書，在同一個地方發生。">
-  <link rel="stylesheet" href="./styles.css?v=20260905-8">
+  <link rel="stylesheet" href="./styles.css?v=20260905-9">
+  <link rel="stylesheet" href="./home-v2.css?v=20260905-1">
 </head>
 <body>
   <header class="topbar">
@@ -16,13 +17,12 @@
 
   <main>
     <section class="product-hero" aria-labelledby="doreWriteTitle">
-      <div class="hero-rules" aria-hidden="true"><i></i><i></i><i></i></div>
       <div class="hero-copy">
         <p class="product-overline">DORÉ</p>
         <h1 id="doreWriteTitle">多寫</h1>
         <p class="product-slogan">讓所寫的，成為書。<span>Write on. Make it a book.</span></p>
         <blockquote class="product-scripture">
-          <p>「我的心湧出美辭；我論到我為王作的事；我的舌頭是快手筆。」</p>
+          <p>「我心裡湧出美辭；我論到我為王做的事；我的舌頭是快手筆。」</p>
           <p class="scripture-en">“My heart is inditing a good matter: I speak of the things which I have made touching the king: my tongue is the pen of a ready writer.”</p>
           <cite>詩篇 45:1 · Psalm 45:1</cite>
         </blockquote>
@@ -44,67 +44,27 @@
     </section>
 
     <section class="product-path" aria-label="多寫的三個動作">
-      <article>
-        <p class="path-index">I</p>
-        <h3>回歸</h3>
-        <p>多年以前寫下的，不必重新開始。把 TXT、Markdown、DOCX、PDF 或文字帶進來，原稿仍是原稿。</p>
-      </article>
-      <article>
-        <p class="path-index">II</p>
-        <h3>更新</h3>
-        <p>章節不是檔案清單，而是一本可以閱讀的書。進入正文，沿著原來的文字繼續往前。</p>
-      </article>
-      <article>
-        <p class="path-index">III</p>
-        <h3>成書</h3>
-        <p>字體、紙張、頁邊、章節起頁與輸出，都從同一份書稿出發。寫完，不必搬家。</p>
-      </article>
+      <article><p class="path-index">I</p><h3>回歸</h3><p>多年以前寫下的，不必重新開始。把 TXT、Markdown、DOCX、PDF 或文字帶進來，原稿仍是原稿。</p></article>
+      <article><p class="path-index">II</p><h3>更新</h3><p>章節不是檔案清單，而是一本可以閱讀的書。進入正文，沿著原來的文字繼續往前。</p></article>
+      <article><p class="path-index">III</p><h3>成書</h3><p>字體、紙張、頁邊、章節起頁與輸出，都從同一份書稿出發。寫完，不必搬家。</p></article>
     </section>
 
     <section class="library-section" id="library">
-      <div class="library-heading">
-        <div>
-          <p class="eyebrow">MY LIBRARY</p>
-          <h2>我的書</h2>
-          <p class="library-description">每一本都從這裡打開。正在寫的、從舊稿匯入的，都留在同一座書庫裡。</p>
-        </div>
-        <div class="hero-actions">
-          <button class="button secondary" type="button">＋ 建立新書</button>
-          <button class="button primary" id="openImport" type="button">匯入舊稿</button>
-        </div>
-      </div>
+      <div class="library-heading"><div><p class="eyebrow">MY LIBRARY</p><h2>我的書</h2><p class="library-description">每一本都從這裡打開。正在寫的、從舊稿匯入的，都留在同一座書庫裡。</p></div><div class="hero-actions"><button class="button secondary" type="button">＋ 建立新書</button><button class="button primary" id="openImport" type="button">匯入舊稿</button></div></div>
       <section class="book-grid" id="bookList" aria-live="polite"></section>
     </section>
 
     <section class="import-shell" id="importPanel" hidden>
       <div class="section-heading"><div><p class="eyebrow">IMPORT</p><h2>匯入舊稿</h2><p>TXT、Markdown、DOCX、PDF，或直接貼上文字。可一次選擇多個檔案。</p></div><button class="text-button" id="cancelImport" type="button">關閉</button></div>
-      <div class="import-grid">
-        <div class="drop-zone" id="dropZone"><div class="drop-mark">↓</div><h3>把檔案拖到這裡</h3><p>只辨識書名、章、節與附錄，不擅自潤色，不替你重寫。</p><button class="button secondary" id="chooseFiles" type="button">選擇檔案</button><input id="fileInput" type="file" multiple accept=".txt,.md,.markdown,.docx,.pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" hidden></div>
-        <div class="paste-box"><label for="pasteInput">或直接貼上文字</label><textarea id="pasteInput" rows="12" placeholder="# 書名&#10;&#10;# 第一章　……&#10;&#10;正文……"></textarea><button class="button secondary" id="parsePaste" type="button">辨識這段文字</button></div>
-      </div>
-      <div id="stepPreview" class="preview-section" hidden>
-        <div class="preview-head"><div><p class="eyebrow">PREVIEW</p><h2>確認結構</h2><p>辨識錯了可以直接改。這一步不會更動原文。</p></div><strong id="previewCount">0 個區塊</strong></div>
-        <div class="title-field"><label for="bookTitle">書名（可留空，由第一個書名區塊自動帶入）</label><input id="bookTitle" type="text" placeholder="書名"></div>
-        <div id="preview" class="preview-list"></div>
-        <div class="finish-bar"><div><strong>原稿保護</strong><p>加入我的書時，不呼叫 AI，不改寫、不刪字；只保存你確認過的結構。</p></div><button class="button primary" id="importAction" type="button" disabled>加入我的書</button></div>
-      </div>
+      <div class="import-grid"><div class="drop-zone" id="dropZone"><div class="drop-mark">↓</div><h3>把檔案拖到這裡</h3><p>只辨識書名、章、節與附錄，不擅自潤色，不替你重寫。</p><button class="button secondary" id="chooseFiles" type="button">選擇檔案</button><input id="fileInput" type="file" multiple accept=".txt,.md,.markdown,.docx,.pdf,text/plain,text/markdown,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf" hidden></div><div class="paste-box"><label for="pasteInput">或直接貼上文字</label><textarea id="pasteInput" rows="12" placeholder="# 書名&#10;&#10;# 第一章　……&#10;&#10;正文……"></textarea><button class="button secondary" id="parsePaste" type="button">辨識這段文字</button></div></div>
+      <div id="stepPreview" class="preview-section" hidden><div class="preview-head"><div><p class="eyebrow">PREVIEW</p><h2>確認結構</h2><p>辨識錯了可以直接改。這一步不會更動原文。</p></div><strong id="previewCount">0 個區塊</strong></div><div class="title-field"><label for="bookTitle">書名（可留空，由第一個書名區塊自動帶入）</label><input id="bookTitle" type="text" placeholder="書名"></div><div id="preview" class="preview-list"></div><div class="finish-bar"><div><strong>原稿保護</strong><p>加入我的書時，不呼叫 AI，不改寫、不刪字；只保存你確認過的結構。</p></div><button class="button primary" id="importAction" type="button" disabled>加入我的書</button></div></div>
       <div id="status" class="status" hidden role="status"></div>
     </section>
   </main>
 
-  <section class="dore-signature">
-    <p class="sig-name">DORÉ</p>
-    <p class="sig-motto">為真理而生，為光明而行。</p>
-    <p class="sig-sdg">SOLI DEO GLORIA</p>
-  </section>
-
+  <section class="dore-signature"><p class="sig-name">DORÉ</p><p class="sig-motto">為真理而生，為光明而行。</p><p class="sig-sdg">SOLI DEO GLORIA</p></section>
   <footer><div><strong>DORÉ</strong><br>多寫</div><div><a href="/dore/search/">DORÉ Search</a> · <a href="/one/">ONE</a> · <a href="/">Westside Watch</a></div></footer>
   <script type="module" src="./import.js?v=20260905-5"></script>
-  <script>
-    document.getElementById('heroImport')?.addEventListener('click',()=>{
-      document.getElementById('openImport')?.click();
-      requestAnimationFrame(()=>document.getElementById('importPanel')?.scrollIntoView({behavior:'smooth',block:'start'}));
-    });
-  </script>
+  <script>document.getElementById('heroImport')?.addEventListener('click',()=>{document.getElementById('openImport')?.click();requestAnimationFrame(()=>document.getElementById('importPanel')?.scrollIntoView({behavior:'smooth',block:'start'}));});</script>
 </body>
 </html>
