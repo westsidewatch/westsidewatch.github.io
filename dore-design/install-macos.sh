@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 ROOT="${DORE_REPO_ROOT:-$HOME/westsidewatch.github.io}"
-APP="$ROOT/dore-design/app_visual_v2.py"
+APP="$ROOT/dore-design/app_design2.py"
 PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.dore-design.plist"
 LOGDIR="$HOME/.dore/logs"
 mkdir -p "$LOGDIR" "$HOME/Library/LaunchAgents"
@@ -22,7 +22,17 @@ launchctl bootout "gui/$(id -u)/io.westsidewatch.dore-design" >/dev/null 2>&1 ||
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl kickstart -k "gui/$(id -u)/io.westsidewatch.dore-design"
 for i in {1..30}; do
-  if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then cat /tmp/dore-design-health.json; echo; exit 0; fi
+  if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then
+    python3 - <<'PY'
+import json
+h=json.load(open('/tmp/dore-design-health.json'))
+assert h.get('version')=='2.0-dev-phase4'
+assert h.get('resident_entrypoint')=='app_design2.py'
+assert h.get('immutable_publication') is True
+print(json.dumps(h,ensure_ascii=False))
+PY
+    exit 0
+  fi
   sleep 0.25
 done
 echo '{"ok":false,"error":"dore_design_health_timeout"}' >&2
