@@ -54,7 +54,11 @@ jobs:
             sleep .1
           done
           if [ "$ready" != 1 ]; then echo '--- resident startup log ---'; cat /tmp/dd-http.log; exit 1; fi
-          python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json
+          if ! python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json 2>/tmp/dd-local-acceptance.err; then
+            echo '--- local acceptance error ---'; cat /tmp/dd-local-acceptance.err
+            echo '--- resident log ---'; cat /tmp/dd-http.log
+            exit 1
+          fi
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
           grep -q 'EDIT IN DORÉ DESIGN' <(curl -fsS http://127.0.0.1:4310/)
           grep -q 'DORÉ · MULTIWRITE DESIGN' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
