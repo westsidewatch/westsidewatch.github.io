@@ -11,5 +11,7 @@ async function submit(url){show(`<article class="video-subtitle-answer"><header>
 function intercept(e){const form=e.target;if(!(form instanceof HTMLFormElement)||form.id!=='search-form')return;const q=$('#search-input')?.value?.trim();if(!q||!videoUrl(q))return;e.preventDefault();e.stopImmediatePropagation();submit(q)}
 const style=document.createElement('style');style.textContent='.video-subtitle-answer{padding:2vw .15vw 1.2vw}.video-subtitle-answer header{display:flex;gap:1vw;align-items:baseline;border-bottom:1px solid rgba(82,62,20,.2);padding-bottom:.8vw;margin-bottom:1.2vw}.video-subtitle-answer header strong{color:#8c6818;font:500 1.35rem "Cormorant Garamond",serif}.video-subtitle-answer header span,.video-boundary{font-size:.75rem;opacity:.62}.video-subtitle-answer p{line-height:1.9}.subtitle-output{white-space:pre-wrap;line-height:1.8;padding:1rem;border:1px solid rgba(82,62,20,.16);background:rgba(255,249,227,.18)}';document.head.appendChild(style);
 document.addEventListener('submit',intercept,true);
+function loadImageCommandRouter(){if(window.DoreImageCommand||document.getElementById('dore-image-command-router'))return;const s=document.createElement('script');s.id='dore-image-command-router';s.src='/dore/dore-image-command.js?v=20260905a';s.async=false;document.head.appendChild(s)}
+loadImageCommandRouter();
 window.DoreVideoSubtitle={isVideoUrl:videoUrl,submit};
 })();
