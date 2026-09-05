@@ -4,6 +4,7 @@ import hashlib
 import json
 import time
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
@@ -103,3 +104,23 @@ class ComfyUIRenderer:
     def image_url(self, ref: dict[str, str]) -> str:
         query = urlencode({k: ref.get(k, "") for k in ("filename", "subfolder", "type")})
         return self.descriptor.endpoint.rstrip("/") + "/view?" + query
+
+    def fetch_image(self, ref: dict[str, str], target: Path, *, max_bytes: int = 64 * 1024 * 1024) -> Path:
+        """Copy one rendered image from the resident provider into Doré-owned storage."""
+        if max_bytes <= 0:
+            raise ValueError("max_bytes must be positive")
+        req = Request(self.image_url(ref), headers={"Accept": "image/*", "User-Agent": "Dore/1"})
+        with urlopen(req, timeout=self.timeout) as response:  # nosec B310: configured resident provider
+            content_type = str(response.headers.get("Content-Type", ""))
+            if content_type and not content_type.lower().startswith("image/"):
+                raise RuntimeError(f"renderer returned non-image content type: {content_type}")
+            data = response.read(max_bytes + 1)
+        if not data:
+            raise RuntimeError("renderer returned empty image bytes")
+        if len(data) > max_bytes:
+            raise RuntimeError("renderer image exceeds byte limit")
+        target.parent.mkdir(parents=True, exist_ok=True)
+        tmp = target.with_suffix(target.suffix + ".tmp")
+        tmp.write_bytes(data)
+        tmp.replace(target)
+        return target
