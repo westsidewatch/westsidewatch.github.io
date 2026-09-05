@@ -1,10 +1,12 @@
-/* DORÉ Companion 1.1 ChatGPT content script. */
+/* DORÉ Companion 1.2 ChatGPT content script. */
 
 const BADGE_ID = "dore-a2a-companion-status";
 let lastCommand = "";
 let lastCommandAt = 0;
 let healthTimer = null;
 let pendingComposerCommand = "";
+let commandInFlight = false;
+const seenSubmittedCommands = new Set();
 
 function ensureBadge() {
   let badge = document.getElementById(BADGE_ID);
@@ -23,15 +25,18 @@ function setBadge(state, detail) {
   const normalized = String(state || "OFFLINE").toUpperCase();
   badge.textContent = `DORÉ A2A · ${normalized}`;
   badge.title = detail || "";
-  badge.style.opacity = normalized === "ONLINE" || normalized === "PASS" ? "1" : normalized === "WORKING" ? ".9" : ".72";
+  badge.style.opacity = ["ONLINE","PASS","CAPTURED","SENT"].includes(normalized) ? "1" : normalized === "WORKING" ? ".9" : ".72";
 }
 
 async function refreshHealth() {
+  if (commandInFlight) return;
   try {
     const reply = await browser.runtime.sendMessage({ type: "dore.health" });
     if (reply && reply.online) setBadge("ONLINE", `transport: ${reply.transport || "native"}`);
     else setBadge("OFFLINE", reply && reply.error ? reply.error : "DORÉ native host unavailable");
-  } catch (error) { setBadge("OFFLINE", String(error && error.message ? error.message : error)); }
+  } catch (error) {
+    setBadge("OFFLINE", String(error && error.message ? error.message : error));
+  }
 }
 
 function readNode(node) {
@@ -49,43 +54,91 @@ function composerRoot() {
     document.querySelector('main [contenteditable="true"]');
 }
 
+function normalizeCommand(raw) {
+  const text = String(raw || "").replace(/\u00a0/g, " ").trim();
+  return text.toLowerCase().startsWith("/dore") ? text : "";
+}
+
 function currentComposerCommand() {
-  const direct = String(readNode(composerRoot()) || "").trim();
-  if (direct.toLowerCase().startsWith("/dore")) return direct;
+  const direct = normalizeCommand(readNode(composerRoot()));
+  if (direct) return direct;
   const candidates = Array.from(document.querySelectorAll('textarea,[contenteditable="true"]'));
   for (const node of candidates) {
-    const text = String(readNode(node) || "").trim();
-    if (text.toLowerCase().startsWith("/dore")) return text;
+    const text = normalizeCommand(readNode(node));
+    if (text) return text;
   }
   return "";
 }
 
 function rememberComposer() {
   const command = currentComposerCommand();
-  if (command) pendingComposerCommand = command;
+  if (command) {
+    pendingComposerCommand = command;
+    setBadge("CAPTURED", command);
+  }
 }
 
-async function dispatchCommand(raw) {
-  const command = String(raw || "").trim();
-  if (!command.toLowerCase().startsWith("/dore")) return;
+function userMessageText(node) {
+  if (!(node instanceof Element)) return "";
+  const roots = [];
+  if (node.matches('[data-message-author-role="user"]')) roots.push(node);
+  roots.push(...node.querySelectorAll('[data-message-author-role="user"]'));
+  for (const root of roots) {
+    const text = normalizeCommand(readNode(root));
+    if (text) return text;
+  }
+  return "";
+}
+
+function observeSubmittedMessages() {
+  const scan = (node) => {
+    const command = userMessageText(node);
+    if (!command) return;
+    const key = `${command}::${location.pathname}`;
+    if (seenSubmittedCommands.has(key)) return;
+    seenSubmittedCommands.add(key);
+    setBadge("CAPTURED", `submitted: ${command}`);
+    dispatchCommand(command, "submitted-message");
+  };
+
+  document.querySelectorAll('[data-message-author-role="user"]').forEach(scan);
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      for (const node of mutation.addedNodes) scan(node);
+    }
+  });
+  observer.observe(document.documentElement, { childList: true, subtree: true });
+  return observer;
+}
+
+async function dispatchCommand(raw, source = "composer") {
+  const command = normalizeCommand(raw);
+  if (!command) return;
   const now = Date.now();
-  if (command === lastCommand && now - lastCommandAt < 2000) return;
+  if (command === lastCommand && now - lastCommandAt < 2500) return;
   lastCommand = command;
   lastCommandAt = now;
   pendingComposerCommand = "";
-  setBadge("WORKING", command);
+  commandInFlight = true;
+  setBadge("SENT", `${source}: ${command}`);
   try {
-    const reply = await browser.runtime.sendMessage({ type: "dore.command", command });
+    const reply = await browser.runtime.sendMessage({ type: "dore.command", command, source });
     if (reply && reply.ok && reply.result) {
       const result = reply.result;
-      const status = String(result.status || (result.ok ? "PASS" : "ONLINE")).toUpperCase();
+      const status = String(result.status || (result.ok ? "PASS" : "RESULT")).toUpperCase();
       setBadge(status === "COMPLETED" ? "PASS" : status, JSON.stringify(result));
       window.dispatchEvent(new CustomEvent("dore:a2a-result", { detail: result }));
-    } else setBadge("OFFLINE", reply && reply.error ? reply.error : "DORÉ command failed");
-  } catch (error) { setBadge("OFFLINE", String(error && error.message ? error.message : error)); }
+    } else {
+      setBadge("OFFLINE", reply && reply.error ? reply.error : "DORÉ command failed");
+    }
+  } catch (error) {
+    setBadge("OFFLINE", String(error && error.message ? error.message : error));
+  } finally {
+    commandInFlight = false;
+  }
 }
 
-// Track the live composer continuously. ChatGPT can clear/reparent it during submit.
 document.addEventListener("input", rememberComposer, true);
 document.addEventListener("beforeinput", rememberComposer, true);
 document.addEventListener("pointerdown", rememberComposer, true);
@@ -94,26 +147,26 @@ document.addEventListener("keydown", (event) => {
   if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
   rememberComposer();
   const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command);
+  if (command) dispatchCommand(command, "keydown");
 }, true);
 
-// Send-button capture deliberately does not depend on English aria-labels/test ids.
 document.addEventListener("click", (event) => {
   const button = event.target && event.target.closest ? event.target.closest("button") : null;
   if (!button) return;
-  const form = button.closest("form");
-  if (!form && !button.closest('main')) return;
   const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command);
+  if (command) dispatchCommand(command, "click");
 }, true);
 
-// Form submit is the most stable semantic boundary across ChatGPT UI revisions/locales.
 document.addEventListener("submit", () => {
   const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command);
+  if (command) dispatchCommand(command, "submit");
 }, true);
 
 ensureBadge();
+const submittedObserver = observeSubmittedMessages();
 refreshHealth();
 healthTimer = window.setInterval(refreshHealth, 10000);
-window.addEventListener("beforeunload", () => { if (healthTimer) window.clearInterval(healthTimer); }, { once: true });
+window.addEventListener("beforeunload", () => {
+  if (healthTimer) window.clearInterval(healthTimer);
+  submittedObserver.disconnect();
+}, { once: true });
