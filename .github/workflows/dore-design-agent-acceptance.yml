@@ -47,13 +47,12 @@ jobs:
           python3 dore-design/app_visual_v2.py >/tmp/dd-http.log 2>&1 &
           pid=$!
           trap 'kill $pid 2>/dev/null || true' EXIT
-          ready=0
-          for i in {1..40}; do
-            if curl -fsS http://127.0.0.1:4310/api/health >/tmp/dd-health.json; then ready=1; break; fi
-            if ! kill -0 "$pid" 2>/dev/null; then echo '--- resident startup log ---'; cat /tmp/dd-http.log; exit 1; fi
-            sleep .1
-          done
-          if [ "$ready" != 1 ]; then echo '--- resident startup log ---'; cat /tmp/dd-http.log; exit 1; fi
+          sleep 1
+          if ! curl -fsS http://127.0.0.1:4310/api/health >/tmp/dd-health.json; then
+            echo '--- resident startup log ---'
+            cat /tmp/dd-http.log
+            exit 1
+          fi
           if ! python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json 2>/tmp/dd-local-acceptance.err; then
             echo '--- local acceptance error ---'; cat /tmp/dd-local-acceptance.err
             echo '--- resident log ---'; cat /tmp/dd-http.log
