@@ -1,0 +1,27 @@
+name: DORÉ Human Execution Fuse
+
+on:
+  pull_request:
+    paths:
+      - 'dore_core/governance/**'
+      - 'dore-core/constitution/CONSTITUTION.md'
+      - 'tests/test_human_execution_fuse.py'
+      - '.github/workflows/dore-human-execution-fuse.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'dore_core/governance/**'
+      - 'dore-core/constitution/CONSTITUTION.md'
+      - 'tests/test_human_execution_fuse.py'
+      - '.github/workflows/dore-human-execution-fuse.yml'
+
+jobs:
+  fuse-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run human execution fuse contract
+        run: python -m pytest -q tests/test_human_execution_fuse.py
