@@ -3,7 +3,7 @@
 Date: 2026-09-05
 Status: CANONICAL_ADDENDUM / SWEEP_RECONCILED
 Parent register: `DORÉ-MASTER-WORK-REGISTER.md`
-Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`
+Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-IMAGE-ITERATION-DESIGN-HANDOFF-EVIDENCE-LEDGER-2026-09-05.md`
 P01 impact: NONE
 
 ## Canonical interpretation
@@ -20,6 +20,8 @@ A bounded implementation milestone is now real: compact capability manifests, la
 
 A second bounded convergence submilestone is now also real: the mature local A2A adapter v0.3 lazily constructs the shared capability runtime/executor and routes typed `dore.a2a/1` control envelopes into the Design control plane instead of creating a second local intelligence/server path. The same bounded commit sequence adds the canonical resident localhost `4312` / Companion path and Design as the first control-plane consumer, while capability-runtime CI configuration now includes the adapter bridge test. This is implementation evidence and a `VERIFIED_COMPLETE_SUBMILESTONE`; it is **not** yet latest-head CI/runtime acceptance.
 
+A third bounded visual-runtime submilestone is now real: Doré Image has a bounded `generate → vision observations → critic → correction → regenerate` loop with explicit iteration limits/terminal reasons, and accepted image artifacts can cross into Doré Design through typed `dore.design.image-patch.v1` payloads preserving asset identity, checksum, geometry and provenance. Unit tests verify correction-then-accept behavior, identity preservation and invalid-geometry refusal. This is `VERIFIED_COMPLETE_SUBMILESTONE` implementation evidence only: the tested renderer and vision reader are synthetic, no commit-associated workflow run receipt is persisted for the introducing commit, and no real purpose-built Westside asset has yet been proven through live generation → real visual judgment → correction → real Design application.
+
 Sweep recheck on 2026-09-05 queried both the GitHub combined-status surface and commit-associated workflow-run surface for head `45f1373b342d12ddeb2e78f87ff7a278b13b9432`; both returned no persisted status/run receipts. Therefore absence of a receipt remains an evidence gap, not a failure result, and no status promotion or demotion is justified.
 
 The consolidation rule is canonical: repeated compatible success can nominate a capability candidate; matching failure blocks the candidate; no production/reflex promotion is automatic. Production promotion still requires regression evidence and existing authority/governance gates.
@@ -35,7 +37,8 @@ Do not promote this workstream beyond foundation/submilestone status until evide
 - non-visual tasks keeping visual skill bodies/provider schemas dormant;
 - bounded active-capability count and ordinary-run cost as registry size grows;
 - real Image + Design flow over one typed task state without conversational handoff;
-- latest-head capability-runtime CI PASS including the local A2A bridge test;
+- one real purpose-built Westside asset (prefer Doré-derived light texture or Bethlehem-star grammar rather than an original Doré artwork) completing generation → real vision observations → critic/correction if needed → accepted artifact → typed Design application with persisted identity/provenance and before/after acceptance evidence;
+- latest-head capability-runtime CI PASS including the local A2A bridge test and Image iteration/handoff coverage;
 - live resident `localhost:4312` typed-envelope dispatch through the mature adapter with request/idempotency identity preserved;
 - negative/unauthorized mutation behavior at the authority boundary;
 - a repeated real workflow compiling downward to fewer deliberative/model calls;
@@ -53,6 +56,8 @@ The current Design/control-plane direction supersedes the idea of adding another
 ### Relation to VISUAL work
 
 Purpose-built Doré visual assets and future Doré Image generation should use the shared `visual` faculty/capability path rather than creating a second visual agent identity. Original Doré works remain curated content; purpose-built Doré-derived website assets remain a separate visual-grammar production problem.
+
+For Doré Image quality work, one-shot generation as the default final-production model is superseded by the bounded correction-loop direction where visual acceptance matters. Where Image hands an accepted asset to Design, free-form conversational transfer is likewise superseded by the typed image-patch contract. These are architectural directions, not claims that the real visual-production loop is already complete.
 
 ### Relation to P01
 
