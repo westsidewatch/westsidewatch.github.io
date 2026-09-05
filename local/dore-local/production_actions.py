@@ -16,7 +16,13 @@ def _health()->dict:
         return json.loads(r.read().decode("utf-8"))
 
 def design_production_rollout(args:dict|None=None)->dict:
-    repo=Path(os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
+    # Prefer the control-plane checkout that launched this service. This keeps
+    # production rollout isolated from any unrelated/diverged personal clone.
+    repo=Path(
+        os.environ.get("DORE_WORKTREE")
+        or os.environ.get("DORE_REPO_ROOT")
+        or Path.home()/"westsidewatch.github.io"
+    ).expanduser().resolve()
     if not (repo/".git").exists():
         return {"ok":False,"status":"failed","error":{"code":"worktree_missing","message":str(repo)}}
     fetch=_run(["git","fetch","origin","main"],repo)
