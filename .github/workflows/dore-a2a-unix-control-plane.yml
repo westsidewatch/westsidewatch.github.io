@@ -1,0 +1,36 @@
+name: DORE A2A Unix Control Plane
+
+on:
+  pull_request:
+    paths:
+      - 'local/dore-local/unix_rpc_server.py'
+      - 'local/dore-local/unix_rpc_client.py'
+      - 'local/dore-local/install-unix-a2a-macos.sh'
+      - 'local/dore-local/test_unix_rpc.py'
+      - '.github/workflows/dore-a2a-unix-control-plane.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/unix_rpc_server.py'
+      - 'local/dore-local/unix_rpc_client.py'
+      - 'local/dore-local/install-unix-a2a-macos.sh'
+      - 'local/dore-local/test_unix_rpc.py'
+
+jobs:
+  core-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile A2A Unix control plane
+        run: python -m py_compile local/dore-local/unix_rpc_server.py local/dore-local/unix_rpc_client.py local/dore-local/test_unix_rpc.py
+      - name: Run JSON-RPC contract acceptance
+        run: python local/dore-local/test_unix_rpc.py
+      - name: Guard browser-independent architecture
+        run: |
+          ! grep -q '127\.0\.0\.1:4312' local/dore-local/unix_rpc_server.py
+          ! grep -q 'firefox' local/dore-local/unix_rpc_client.py
+          grep -q 'launch_activate_socket' local/dore-local/unix_rpc_server.py
+          grep -q '<key>Sockets</key>' local/dore-local/install-unix-a2a-macos.sh

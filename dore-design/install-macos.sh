@@ -31,6 +31,13 @@ assert h.get('resident_entrypoint')=='app_design2.py'
 assert h.get('immutable_publication') is True
 print(json.dumps(h,ensure_ascii=False))
 PY
+    # Migration bridge: the already-working Design production rollout now also
+    # installs the browser-independent A2A control plane from the freshly
+    # fast-forwarded checkout. This is intentionally one-way; future clients
+    # use ~/.dore/run/dore.sock directly and do not require Firefox.
+    if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
+      bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
+    fi
     exit 0
   fi
   sleep 0.25
