@@ -5,6 +5,7 @@ import json
 import os
 from pathlib import Path
 
+from dore_core.capabilities.image_design_bridge import local_asset_url, place_in_design
 from dore_core.capabilities.image_pipeline import generate_resident_image, result_payload
 from dore_core.capabilities.image_renderer import ComfyUIRenderer
 from dore_core.capabilities.image_runtime_config import load_resident_image_config
@@ -44,11 +45,26 @@ def run(config_path: Path = DEFAULT_CONFIG, job_path: Path = DEFAULT_JOB) -> dic
         seed=int(job.get("seed", 1)), output_dir=(ROOT / config.output_dir),
         correction_direction=str(job.get("correction") or ""),
     )
+    design={"status":"SKIPPED","reason":"design-not-requested"}
+    if job.get("design", True):
+        d=dict(job.get("design") or {}) if isinstance(job.get("design"),dict) else {}
+        try:
+            workspace=place_in_design(
+                result.artifact,
+                design_endpoint=str(d.get("endpoint") or os.environ.get("DORE_DESIGN_ENDPOINT","http://127.0.0.1:4310/api/workspace")),
+                page_id=str(d.get("page_id") or "cover"),
+                placement=d.get("placement"),
+                asset_url=str(d.get("asset_url") or local_asset_url(result.artifact)),
+                fit=str(d.get("fit") or "cover"),
+            )
+            design={"status":"PASS","page_id":str(d.get("page_id") or "cover"),"revision":workspace.get("revision")}
+        except Exception as e:
+            design={"status":"NOT_READY","reason":"design-unreachable-or-rejected","error":type(e).__name__}
     done = job_path.with_name("last-completed.json")
     done.parent.mkdir(parents=True, exist_ok=True)
-    done.write_text(json.dumps({"job": job, "result": result_payload(result)}, ensure_ascii=False, indent=2), encoding="utf-8")
+    done.write_text(json.dumps({"job": job, "result": result_payload(result), "design":design}, ensure_ascii=False, indent=2), encoding="utf-8")
     job_path.unlink()
-    return {"status": "PASS", **result_payload(result)}
+    return {"status": "PASS", **result_payload(result), "design":design}
 
 
 def main() -> int:
