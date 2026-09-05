@@ -12,7 +12,7 @@ let autosaveTimer = null;
 const DB_NAME = 'multiwrite-v1';
 const DB_VERSION = 2;
 const DRAFT_STORE = 'drafts';
-const SIZE_KEY = 'multiwrite-workspace-size-v2';
+const SIZE_KEY = 'multiwrite-workspace-size-v3';
 
 function openDb() {
   return new Promise((resolve, reject) => {
@@ -135,31 +135,45 @@ function renderEditor(text) {
 }
 
 function autoWorkspaceScale() {
-  const width = Math.max(window.innerWidth || document.documentElement.clientWidth || 0, 1);
-  if (width <= 700) return 1;
-  if (width <= 1100) return 1;
+  const viewportWidth = Math.max(window.innerWidth || document.documentElement.clientWidth || 0, 1);
+  if (viewportWidth <= 700) return 1;
 
-  // Fit the writing workspace to the actual CSS viewport. A browser that is
-  // zoomed out exposes a wider CSS viewport, so the workspace grows with it.
-  // This avoids trying to infer browser zoom from screen/device metrics.
-  const fitted = width / 1800;
-  return Math.min(1.8, Math.max(1, fitted));
+  const screenWidth = Math.max(
+    window.screen?.availWidth || 0,
+    window.screen?.width || 0,
+    viewportWidth
+  );
+  const referenceWidth = Math.max(viewportWidth, screenWidth);
+
+  // Desktop writing distance: large displays should open at a readable scale
+  // without requiring browser zoom. Keep medium screens conservative and let
+  // very wide desktops approach the 150–180% range that is comfortable here.
+  if (referenceWidth >= 2400) return 1.75;
+  if (referenceWidth >= 2100) return 1.65;
+  if (referenceWidth >= 1800) return 1.55;
+  if (referenceWidth >= 1550) return 1.45;
+  if (referenceWidth >= 1350) return 1.32;
+  if (referenceWidth >= 1150) return 1.18;
+  return 1;
 }
 
 function applyWorkspaceSize() {
-  const manual = Number(localStorage.getItem(SIZE_KEY) || '1');
+  const manualRaw = localStorage.getItem(SIZE_KEY);
+  const manual = Number(manualRaw || '1');
   const auto = autoWorkspaceScale();
   const effective = Math.min(2, Math.max(0.9, auto * manual));
   document.documentElement.style.setProperty('--workspace-zoom', String(effective));
   const label = $('#workspaceSizeLabel');
-  if (label) label.textContent = `${Math.round(effective * 100)}%`;
-  document.documentElement.dataset.workspaceAuto = localStorage.getItem(SIZE_KEY) ? 'manual' : 'auto';
+  if (label) label.textContent = manualRaw ? `${Math.round(effective * 100)}%` : `AUTO ${Math.round(effective * 100)}%`;
+  document.documentElement.dataset.workspaceAuto = manualRaw ? 'manual' : 'auto';
 }
 
 function changeWorkspaceSize(delta) {
-  const current = Number(localStorage.getItem(SIZE_KEY) || '1');
-  const next = Math.min(1.35, Math.max(0.75, Math.round((current + delta) * 20) / 20));
-  localStorage.setItem(SIZE_KEY, String(next));
+  const auto = autoWorkspaceScale();
+  const currentEffective = Number(localStorage.getItem(SIZE_KEY) || '1') * auto;
+  const targetEffective = Math.min(2, Math.max(0.9, Math.round((currentEffective + delta) * 20) / 20));
+  const manualFactor = targetEffective / auto;
+  localStorage.setItem(SIZE_KEY, String(manualFactor));
   applyWorkspaceSize();
 }
 
