@@ -1,4 +1,4 @@
-/* DORÉ Companion 1.0 background bridge. */
+/* DORÉ Companion 1.3 background bridge. */
 
 let transportModulePromise = null;
 
@@ -10,13 +10,31 @@ function transportModule() {
 }
 
 function envelopeFromCommand(command) {
+  const normalized = String(command || "").trim().toLowerCase();
+
+  // Stage 2 is the frozen live diagnostic contract.  Keep it deliberately
+  // outside the typed dispatch envelope so already-installed Native Hosts can
+  // reach their legacy compatibility path instead of failing typed transport
+  // validation on request/session fields that this diagnostic does not need.
+  if (normalized === "/dore stage2" || normalized === "dore stage2") {
+    return {
+      command,
+      source: "chatgpt-companion-1.3",
+      client: {
+        name: "dore-companion",
+        version: "1.3.0",
+        transport_preference: "firefox-native-messaging"
+      }
+    };
+  }
+
   return {
     protocol: "dore.a2a/1",
     command,
-    source: "chatgpt-companion-1.0",
+    source: "chatgpt-companion-1.3",
     client: {
       name: "dore-companion",
-      version: "1.0.0",
+      version: "1.3.0",
       transport_preference: "firefox-native-messaging"
     }
   };
