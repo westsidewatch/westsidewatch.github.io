@@ -1,6 +1,6 @@
 # DORÉ DESIGN 2.0 — Phase 4
 
-Status: IMPLEMENTING
+Status: IMPLEMENTING / SOFTWARE GATES BUILT
 Issue: #294
 
 ## Implemented
@@ -13,6 +13,7 @@ Issue: #294
 - rollback
 - structural / URL / executable-content validation before promotion
 - allowlisted staging targets and staging manifest
+- accessibility / link / published-runtime smoke checks
 - published-render hash parity check
 - resident 2.0 entrypoint layered on the current product
 - tests for snapshot immutability, publish/rollback, validation rejection and render parity
@@ -31,10 +32,9 @@ Issue: #294
 - Publish is candidate/revision-bound.
 - Invalid snapshot integrity, duplicate IDs, executable attributes and unsafe URL schemes block promotion.
 - Promotion requires an allowlisted target and staging manifest.
+- Image accessibility, link shape, editor-runtime absence and snapshot marker are checked before promotion.
 - Public rendering must hash-match the staged candidate rendering.
 - Published output contains no editor runtime dependency.
 
-## Remaining closure gates
-1. Add accessibility/link/smoke validator hooks.
-2. Run resident acceptance and only then switch the installed service entrypoint from fallback to `app_design2.py`.
-3. Keep 1.9.1 fallback until parity acceptance passes.
+## Remaining closure gate
+Run CI + resident/local acceptance. Only after that passes may the installed service switch from the 1.9.1 fallback entrypoint to `app_design2.py`. The fallback remains available until parity acceptance.
