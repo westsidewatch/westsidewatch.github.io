@@ -12,10 +12,7 @@ class CompanionNativeContractTest(unittest.TestCase):
     def test_native_manifest_contract_matches_native_host(self) -> None:
         manifest = json.loads((EXT / "manifest.native-messaging.json").read_text(encoding="utf-8"))
         self.assertIn("nativeMessaging", manifest["permissions"])
-        self.assertEqual(
-            manifest["browser_specific_settings"]["gecko"]["id"],
-            "dore-companion@westsidewatch.ca",
-        )
+        self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
         self.assertEqual(manifest["dore_native_messaging"]["host"], "ca.dore.companion")
         self.assertEqual(manifest["dore_native_messaging"]["fallback_role"], "compatibility-debug-only")
 
@@ -24,10 +21,7 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertEqual(manifest["manifest_version"], 2)
         self.assertEqual(manifest["version"], "1.0.0")
         self.assertIn("nativeMessaging", manifest["permissions"])
-        self.assertEqual(
-            manifest["browser_specific_settings"]["gecko"]["id"],
-            "dore-companion@westsidewatch.ca",
-        )
+        self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
         self.assertIn("background.js", manifest["background"]["scripts"])
         script = manifest["content_scripts"][0]
         self.assertIn("https://chatgpt.com/*", script["matches"])
@@ -56,6 +50,17 @@ class CompanionNativeContractTest(unittest.TestCase):
         self.assertIn('type: "dore.health"', source)
         self.assertIn("DORÉ A2A ·", source)
         self.assertIn('"dore:a2a-result"', source)
+
+    def test_command_capture_survives_chatgpt_dom_and_locale_changes(self) -> None:
+        source = (EXT / "content_script.js").read_text(encoding="utf-8")
+        self.assertIn("#prompt-textarea", source)
+        self.assertIn('document.addEventListener("input", rememberComposer, true)', source)
+        self.assertIn('document.addEventListener("keydown"', source)
+        self.assertIn('document.addEventListener("submit"', source)
+        self.assertIn('document.addEventListener("click"', source)
+        self.assertIn("pendingComposerCommand", source)
+        self.assertNotIn('label.includes("send")', source)
+        self.assertNotIn('label.includes("submit")', source)
 
     def test_installer_prepares_native_host_and_exact_extension_manifest(self) -> None:
         source = (EXT / "install_companion_1.command").read_text(encoding="utf-8")
