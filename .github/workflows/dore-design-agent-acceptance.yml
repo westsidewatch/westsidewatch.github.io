@@ -60,7 +60,7 @@ jobs:
           fi
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
           grep -q 'Edit in Doré Design' <(curl -fsS http://127.0.0.1:4310/)
-          grep -q 'DORÉ · MULTIWRITE DESIGN' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
+          grep -q 'DORÉ · 多寫' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
           grep -q '多寫' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
           grep -q 'Write on. Make it a book.' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
           python3 - <<'PY'
@@ -84,6 +84,22 @@ jobs:
           assert p['design']['decision']=={'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}
           print('DORE_MULTIWRITE_INTEGRATION_PASS')
           PY
+      - name: DORÉ Design 2.0 Phase 4 resident acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DORE_DESIGN_DATA="${{ runner.temp }}/dore-design2-http"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/dore-design2-publication.json"
+          export DORE_DESIGN_PORT=4310
+          python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py
+          python3 dore-design/workspace_cli.py get >/tmp/dd2-workspace.json
+          python3 dore-design/upgrade_living_fortress_v2.py >/tmp/dd2-upgrade.json
+          python3 dore-design/app_design2.py >/tmp/dd2-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          sleep 1
+          curl -fsS http://127.0.0.1:4310/api/health >/tmp/dd2-health.json
+          python3 dore-design/design2_http_acceptance.py
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
