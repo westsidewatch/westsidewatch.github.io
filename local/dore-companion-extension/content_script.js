@@ -1,183 +1,21 @@
-/* DORÉ Companion 1.3 ChatGPT content script. */
+/* DORÉ Companion 1.4 ChatGPT content script. */
 
 const BADGE_ID = "dore-a2a-companion-status";
 const TERMINAL_HOLD_MS = 30000;
-let lastCommand = "";
-let lastCommandAt = 0;
-let healthTimer = null;
-let pendingComposerCommand = "";
-let commandInFlight = false;
-let terminalHoldUntil = 0;
+let lastCommand = "", lastCommandAt = 0, healthTimer = null, pendingComposerCommand = "", commandInFlight = false, terminalHoldUntil = 0;
 const seenMessageNodes = new WeakSet();
-
-function ensureBadge() {
-  let badge = document.getElementById(BADGE_ID);
-  if (badge) return badge;
-  badge = document.createElement("div");
-  badge.id = BADGE_ID;
-  badge.textContent = "DORÉ A2A · CHECKING";
-  badge.setAttribute("role", "status");
-  badge.style.cssText = ["position:fixed","right:14px","bottom:14px","z-index:2147483647","padding:6px 9px","border-radius:999px","font:600 11px/1.2 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif","letter-spacing:.04em","background:rgba(20,20,20,.88)","color:#d7bd72","border:1px solid rgba(215,189,114,.55)","box-shadow:0 2px 12px rgba(0,0,0,.18)","pointer-events:none"].join(";");
-  document.documentElement.appendChild(badge);
-  return badge;
-}
-
-function setBadge(state, detail, hold = false) {
-  const badge = ensureBadge();
-  const normalized = String(state || "OFFLINE").toUpperCase();
-  badge.textContent = `DORÉ A2A · ${normalized}`;
-  badge.title = detail || "";
-  badge.dataset.doreDetail = detail || "";
-  badge.style.opacity = ["ONLINE","PASS","CAPTURED","SENT","FAILED","ERROR"].includes(normalized) ? "1" : ".8";
-  if (hold) terminalHoldUntil = Date.now() + TERMINAL_HOLD_MS;
-}
-
-async function refreshHealth() {
-  if (commandInFlight || Date.now() < terminalHoldUntil) return;
-  try {
-    const reply = await browser.runtime.sendMessage({ type: "dore.health" });
-    if (reply && reply.online) setBadge("ONLINE", `transport: ${reply.transport || "native"}`);
-    else setBadge("OFFLINE", reply && reply.error ? reply.error : "DORÉ native host unavailable");
-  } catch (error) {
-    setBadge("OFFLINE", String(error && error.message ? error.message : error));
-  }
-}
-
-function readNode(node) {
-  if (!node) return "";
-  if (node instanceof HTMLTextAreaElement || node instanceof HTMLInputElement) return node.value || "";
-  return node.innerText || node.textContent || "";
-}
-
-function composerRoot() {
-  return document.querySelector('#prompt-textarea') ||
-    document.querySelector('[data-testid="composer-text-input"]') ||
-    document.querySelector('form textarea') ||
-    document.querySelector('form [contenteditable="true"]') ||
-    document.querySelector('main textarea') ||
-    document.querySelector('main [contenteditable="true"]');
-}
-
-function normalizeCommand(raw) {
-  const text = String(raw || "").replace(/\u00a0/g, " ").trim();
-  return text.toLowerCase().startsWith("/dore") ? text : "";
-}
-
-function currentComposerCommand() {
-  const direct = normalizeCommand(readNode(composerRoot()));
-  if (direct) return direct;
-  for (const node of Array.from(document.querySelectorAll('textarea,[contenteditable="true"]'))) {
-    const text = normalizeCommand(readNode(node));
-    if (text) return text;
-  }
-  return "";
-}
-
-function rememberComposer() {
-  const command = currentComposerCommand();
-  if (command) {
-    pendingComposerCommand = command;
-    terminalHoldUntil = 0;
-    setBadge("CAPTURED", command);
-  }
-}
-
-function submittedRoots(node) {
-  if (!(node instanceof Element)) return [];
-  const roots = [];
-  if (node.matches('[data-message-author-role="user"]')) roots.push(node);
-  roots.push(...node.querySelectorAll('[data-message-author-role="user"]'));
-  return roots;
-}
-
-function observeSubmittedMessages() {
-  // Existing messages are history, not new commands. Mark them seen without dispatch.
-  document.querySelectorAll('[data-message-author-role="user"]').forEach((node) => seenMessageNodes.add(node));
-
-  const scan = (node) => {
-    for (const root of submittedRoots(node)) {
-      if (seenMessageNodes.has(root)) continue;
-      seenMessageNodes.add(root);
-      const command = normalizeCommand(readNode(root));
-      if (!command) continue;
-      terminalHoldUntil = 0;
-      setBadge("CAPTURED", `submitted: ${command}`);
-      dispatchCommand(command, "submitted-message");
-    }
-  };
-
-  const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-      for (const node of mutation.addedNodes) scan(node);
-    }
-  });
-  observer.observe(document.documentElement, { childList: true, subtree: true });
-  return observer;
-}
-
-function resultDetail(result) {
-  if (!result || typeof result !== "object") return String(result || "empty result");
-  if (result.error && typeof result.error === "object") {
-    return `${result.error.code || "error"}: ${result.error.message || JSON.stringify(result.error)}`;
-  }
-  if (result.error) return String(result.error);
-  return JSON.stringify(result);
-}
-
-async function dispatchCommand(raw, source = "composer") {
-  const command = normalizeCommand(raw);
-  if (!command) return;
-  const now = Date.now();
-  if (command === lastCommand && now - lastCommandAt < 2500) return;
-  lastCommand = command;
-  lastCommandAt = now;
-  pendingComposerCommand = "";
-  terminalHoldUntil = 0;
-  commandInFlight = true;
-  setBadge("SENT", `${source}: ${command}`);
-  try {
-    const reply = await browser.runtime.sendMessage({ type: "dore.command", command, source });
-    if (reply && reply.ok && reply.result) {
-      const result = reply.result;
-      const status = String(result.status || (result.ok ? "PASS" : "RESULT")).toUpperCase();
-      const visible = status === "COMPLETED" || status === "SUCCEEDED" ? "PASS" : status;
-      setBadge(visible, resultDetail(result), true);
-      window.dispatchEvent(new CustomEvent("dore:a2a-result", { detail: result }));
-    } else {
-      setBadge("ERROR", reply && reply.error ? reply.error : "DORÉ command failed before result", true);
-    }
-  } catch (error) {
-    setBadge("ERROR", String(error && error.message ? error.message : error), true);
-  } finally {
-    commandInFlight = false;
-  }
-}
-
-document.addEventListener("input", rememberComposer, true);
-document.addEventListener("beforeinput", rememberComposer, true);
-document.addEventListener("pointerdown", rememberComposer, true);
-document.addEventListener("keydown", (event) => {
-  if (event.key !== "Enter" || event.shiftKey || event.isComposing) return;
-  rememberComposer();
-  const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command, "keydown");
-}, true);
-document.addEventListener("click", (event) => {
-  const button = event.target && event.target.closest ? event.target.closest("button") : null;
-  if (!button) return;
-  const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command, "click");
-}, true);
-document.addEventListener("submit", () => {
-  const command = currentComposerCommand() || pendingComposerCommand;
-  if (command) dispatchCommand(command, "submit");
-}, true);
-
-ensureBadge();
-const submittedObserver = observeSubmittedMessages();
-refreshHealth();
-healthTimer = window.setInterval(refreshHealth, 10000);
-window.addEventListener("beforeunload", () => {
-  if (healthTimer) window.clearInterval(healthTimer);
-  submittedObserver.disconnect();
-}, { once: true });
+function ensureBadge(){let b=document.getElementById(BADGE_ID);if(b)return b;b=document.createElement("div");b.id=BADGE_ID;b.textContent="DORÉ A2A · CHECKING";b.setAttribute("role","status");b.style.cssText=["position:fixed","right:14px","bottom:14px","z-index:2147483647","padding:6px 9px","border-radius:999px","font:600 11px/1.2 -apple-system,BlinkMacSystemFont,Segoe UI,sans-serif","letter-spacing:.04em","background:rgba(20,20,20,.88)","color:#d7bd72","border:1px solid rgba(215,189,114,.55)","box-shadow:0 2px 12px rgba(0,0,0,.18)","pointer-events:none"].join(";");document.documentElement.appendChild(b);return b}
+function setBadge(s,d,h=false){const b=ensureBadge(),n=String(s||"OFFLINE").toUpperCase();b.textContent=`DORÉ A2A · ${n}`;b.title=d||"";b.dataset.doreDetail=d||"";b.style.opacity=["ONLINE","PASS","CAPTURED","SENT","FAILED","ERROR"].includes(n)?"1":".8";if(h)terminalHoldUntil=Date.now()+TERMINAL_HOLD_MS}
+async function refreshHealth(){if(commandInFlight||Date.now()<terminalHoldUntil)return;try{const r=await browser.runtime.sendMessage({type:"dore.health"});if(r&&r.online)setBadge("ONLINE",`transport: ${r.transport||"native"}`);else setBadge("OFFLINE",r&&r.error?r.error:"DORÉ native host unavailable")}catch(e){setBadge("OFFLINE",String(e&&e.message?e.message:e))}}
+function readNode(n){if(!n)return"";if(n instanceof HTMLTextAreaElement||n instanceof HTMLInputElement)return n.value||"";return n.innerText||n.textContent||""}
+function composerRoot(){return document.querySelector('#prompt-textarea')||document.querySelector('[data-testid="composer-text-input"]')||document.querySelector('form textarea')||document.querySelector('form [contenteditable="true"]')||document.querySelector('main textarea')||document.querySelector('main [contenteditable="true"]')}
+function normalizeCommand(raw){const t=String(raw||"").replace(/\u00a0/g," ").trim();return t.toLowerCase().startsWith("/dore")?t:""}
+function currentComposerCommand(){const d=normalizeCommand(readNode(composerRoot()));if(d)return d;for(const n of Array.from(document.querySelectorAll('textarea,[contenteditable="true"]'))){const t=normalizeCommand(readNode(n));if(t)return t}return""}
+function rememberComposer(){const c=currentComposerCommand();if(c){pendingComposerCommand=c;terminalHoldUntil=0;setBadge("CAPTURED",c)}}
+function submittedRoots(n){if(!(n instanceof Element))return[];const r=[];if(n.matches('[data-message-author-role="user"]'))r.push(n);r.push(...n.querySelectorAll('[data-message-author-role="user"]'));return r}
+function observeSubmittedMessages(){document.querySelectorAll('[data-message-author-role="user"]').forEach(n=>seenMessageNodes.add(n));const scan=n=>{for(const root of submittedRoots(n)){if(seenMessageNodes.has(root))continue;seenMessageNodes.add(root);const c=normalizeCommand(readNode(root));if(!c)continue;terminalHoldUntil=0;setBadge("CAPTURED",`submitted: ${c}`);dispatchCommand(c,"submitted-message")}};const o=new MutationObserver(ms=>{for(const m of ms)for(const n of m.addedNodes)scan(n)});o.observe(document.documentElement,{childList:true,subtree:true});return o}
+function resultDetail(r){if(!r||typeof r!=="object")return String(r||"empty result");if(r.error&&typeof r.error==="object")return `${r.error.code||"error"}: ${r.error.message||JSON.stringify(r.error)}`;if(r.error)return String(r.error);return JSON.stringify(r)}
+function conversationId(){const m=location.pathname.match(/\/c\/([^/?#]+)/);return m?`chatgpt:${m[1]}`:`chatgpt:${location.pathname}`}
+async function dispatchCommand(raw,source="composer"){const command=normalizeCommand(raw);if(!command)return;const now=Date.now();if(command===lastCommand&&now-lastCommandAt<2500)return;lastCommand=command;lastCommandAt=now;pendingComposerCommand="";terminalHoldUntil=0;commandInFlight=true;setBadge("SENT",`${source}: ${command}`);try{const reply=await browser.runtime.sendMessage({type:"dore.command",command,source,conversation_id:conversationId()});if(reply&&reply.ok&&reply.result){const r=reply.result,status=String(r.status||(r.ok?"PASS":"RESULT")).toUpperCase(),visible=status==="COMPLETED"||status==="SUCCEEDED"?"PASS":status;setBadge(visible,resultDetail(r),true);window.dispatchEvent(new CustomEvent("dore:a2a-result",{detail:r}))}else{const detail=reply&&reply.result?resultDetail(reply.result):(reply&&reply.error?reply.error:`${reply&&reply.stage?reply.stage+": ":""}DORÉ command failed`);setBadge("ERROR",detail,true)}}catch(e){setBadge("ERROR",String(e&&e.message?e.message:e),true)}finally{commandInFlight=false}}
+document.addEventListener("input",rememberComposer,true);document.addEventListener("beforeinput",rememberComposer,true);document.addEventListener("pointerdown",rememberComposer,true);document.addEventListener("keydown",e=>{if(e.key!=="Enter"||e.shiftKey||e.isComposing)return;rememberComposer();const c=currentComposerCommand()||pendingComposerCommand;if(c)dispatchCommand(c,"keydown")},true);document.addEventListener("click",e=>{const b=e.target&&e.target.closest?e.target.closest("button"):null;if(!b)return;const c=currentComposerCommand()||pendingComposerCommand;if(c)dispatchCommand(c,"click")},true);document.addEventListener("submit",()=>{const c=currentComposerCommand()||pendingComposerCommand;if(c)dispatchCommand(c,"submit")},true);
+ensureBadge();const submittedObserver=observeSubmittedMessages();refreshHealth();healthTimer=window.setInterval(refreshHealth,10000);window.addEventListener("beforeunload",()=>{if(healthTimer)window.clearInterval(healthTimer);submittedObserver.disconnect()},{once:true});

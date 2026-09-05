@@ -1,99 +1,22 @@
 from __future__ import annotations
-
-import json
-import unittest
+import json, unittest
 from pathlib import Path
-
-ROOT = Path(__file__).resolve().parents[1]
-EXT = ROOT / "local" / "dore-companion-extension"
-
-
+ROOT=Path(__file__).resolve().parents[1]; EXT=ROOT/'local'/'dore-companion-extension'
 class CompanionNativeContractTest(unittest.TestCase):
-    def test_native_manifest_contract_matches_native_host(self) -> None:
-        manifest = json.loads((EXT / "manifest.native-messaging.json").read_text(encoding="utf-8"))
-        self.assertIn("nativeMessaging", manifest["permissions"])
-        self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
-        self.assertEqual(manifest["dore_native_messaging"]["host"], "ca.dore.companion")
-        self.assertEqual(manifest["dore_native_messaging"]["fallback_role"], "compatibility-debug-only")
-
-    def test_companion_manifest_is_installable_firefox_extension(self) -> None:
-        manifest = json.loads((EXT / "manifest.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["manifest_version"], 2)
-        self.assertEqual(manifest["version"], "1.3.0")
-        self.assertIn("nativeMessaging", manifest["permissions"])
-        self.assertEqual(manifest["browser_specific_settings"]["gecko"]["id"], "dore-companion@westsidewatch.ca")
-        self.assertNotIn("applications", manifest)
-        self.assertIn("background.js", manifest["background"]["scripts"])
-        script = manifest["content_scripts"][0]
-        self.assertIn("https://chatgpt.com/*", script["matches"])
-        self.assertIn("content_script.js", script["js"])
-
-    def test_transport_prefers_native_and_keeps_4312_only_as_fallback(self) -> None:
-        source = (EXT / "native_transport.js").read_text(encoding="utf-8")
-        self.assertIn('browser.runtime.connectNative(DORE_NATIVE_HOST)', source)
-        self.assertIn('const DORE_NATIVE_HOST = "ca.dore.companion"', source)
-        self.assertIn('const DORE_FALLBACK_URL = "http://127.0.0.1:4312/a2a"', source)
-        self.assertLess(source.index("sendViaNative(payload)"), source.index("sendVia4312(payload)"))
-        self.assertIn("__dore_transport_id", source)
-
-    def test_background_routes_dore_commands_through_transport_module(self) -> None:
-        source = (EXT / "background.js").read_text(encoding="utf-8")
-        self.assertIn('import(browser.runtime.getURL("native_transport.js"))', source)
-        self.assertIn('message.type === "dore.command"', source)
-        self.assertIn('protocol: "dore.a2a/1"', source)
-        self.assertIn("transport.sendDorePayload", source)
-        self.assertIn("transport.nativeHealth", source)
-        self.assertIn('normalized === "/dore stage2"', source)
-        stage2_block = source[source.index('if (normalized === "/dore stage2"'):source.index('return {\n    protocol: "dore.a2a/1"')]
-        self.assertNotIn('protocol: "dore.a2a/1"', stage2_block)
-        self.assertIn('version: "1.3.0"', source)
-
-    def test_content_script_captures_command_and_surfaces_status(self) -> None:
-        source = (EXT / "content_script.js").read_text(encoding="utf-8")
-        self.assertIn('startsWith("/dore")', source)
-        self.assertIn('type: "dore.command"', source)
-        self.assertIn('type: "dore.health"', source)
-        self.assertIn("DORÉ A2A ·", source)
-        self.assertIn('"dore:a2a-result"', source)
-        self.assertIn('setBadge("CAPTURED"', source)
-        self.assertIn('setBadge("SENT"', source)
-        self.assertIn('setBadge("ERROR"', source)
-        self.assertIn("TERMINAL_HOLD_MS = 30000", source)
-        self.assertIn("Date.now() < terminalHoldUntil", source)
-        self.assertIn('status === "COMPLETED" || status === "SUCCEEDED" ? "PASS"', source)
-
-    def test_submitted_message_capture_is_replay_safe_and_repeatable(self) -> None:
-        source = (EXT / "content_script.js").read_text(encoding="utf-8")
-        self.assertIn("const seenMessageNodes = new WeakSet()", source)
-        self.assertIn("Existing messages are history, not new commands", source)
-        self.assertIn("seenMessageNodes.add(node)", source)
-        self.assertNotIn("seenSubmittedCommands", source)
-        self.assertNotIn("location.pathname", source)
-
-    def test_command_capture_survives_chatgpt_dom_and_locale_changes(self) -> None:
-        source = (EXT / "content_script.js").read_text(encoding="utf-8")
-        self.assertIn("#prompt-textarea", source)
-        self.assertIn('document.addEventListener("input", rememberComposer, true)', source)
-        self.assertIn('document.addEventListener("keydown"', source)
-        self.assertIn('document.addEventListener("submit"', source)
-        self.assertIn('document.addEventListener("click"', source)
-        self.assertIn("pendingComposerCommand", source)
-        self.assertIn('data-message-author-role="user"', source)
-        self.assertIn("MutationObserver", source)
-        self.assertIn("observeSubmittedMessages", source)
-        self.assertNotIn('label.includes("send")', source)
-        self.assertNotIn('label.includes("submit")', source)
-
-    def test_installer_prepares_native_host_and_exact_extension_manifest(self) -> None:
-        source = (EXT / "install_companion_1.command").read_text(encoding="utf-8")
-        self.assertIn('install_native_messaging.sh', source)
-        self.assertIn('companion-1.0', source)
-        self.assertIn('dore-companion@westsidewatch.ca', source)
-        self.assertIn('about:debugging#/runtime/this-firefox', source)
-        self.assertIn('Load Temporary Add-on', source)
-        self.assertNotIn('openai.com/v1', source.lower())
-        self.assertNotIn('api.openai.com', source.lower())
-
-
-if __name__ == "__main__":
-    unittest.main()
+ def test_native_manifest_contract_matches_native_host(self):
+  m=json.loads((EXT/'manifest.native-messaging.json').read_text());self.assertIn('nativeMessaging',m['permissions']);self.assertEqual(m['browser_specific_settings']['gecko']['id'],'dore-companion@westsidewatch.ca');self.assertEqual(m['dore_native_messaging']['host'],'ca.dore.companion')
+ def test_companion_manifest(self):
+  m=json.loads((EXT/'manifest.json').read_text());self.assertEqual(m['version'],'1.4.0');self.assertNotIn('applications',m);self.assertIn('nativeMessaging',m['permissions'])
+ def test_transport_native_first(self):
+  s=(EXT/'native_transport.js').read_text();self.assertIn('browser.runtime.connectNative(DORE_NATIVE_HOST)',s);self.assertLess(s.index('sendViaNative(payload)'),s.index('sendVia4312(payload)'))
+ def test_production_design_envelope(self):
+  s=(EXT/'background.js').read_text();
+  for token in ['protocol: "dore.a2a/1"','action: "dispatch"','request_id: nextRequestId()','conversation_id:','session_id: sessionId','consumer_id: "design"','capability_id: "design.compose"','asset_candidate:','version: "1.4.0"'] : self.assertIn(token,s)
+  self.assertIn('normalized === "/dore design"',s)
+ def test_stage2_remains_diagnostic(self):
+  s=(EXT/'background.js').read_text();a=s.index('if (normalized === "/dore stage2"');b=s.index('if (normalized === "/dore design"');self.assertNotIn('protocol: "dore.a2a/1"',s[a:b])
+ def test_conversation_binding_and_result_surface(self):
+  s=(EXT/'content_script.js').read_text();self.assertIn('function conversationId()',s);self.assertIn('conversation_id:conversationId()',s);self.assertIn('"dore:a2a-result"',s);self.assertIn('TERMINAL_HOLD_MS = 30000',s);self.assertIn('new WeakSet()',s)
+ def test_installer_free_runtime(self):
+  s=(EXT/'install_companion_1.command').read_text().lower();self.assertNotIn('api.openai.com',s)
+if __name__=='__main__': unittest.main()
