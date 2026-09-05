@@ -12,8 +12,10 @@ Issue: #294
 - current-release + last-known-good metadata
 - rollback
 - structural / URL / executable-content validation before promotion
+- allowlisted staging targets and staging manifest
+- published-render hash parity check
 - resident 2.0 entrypoint layered on the current product
-- tests for snapshot immutability, publish/rollback and validation rejection
+- tests for snapshot immutability, publish/rollback, validation rejection and render parity
 
 ## HTTP contract
 - `POST /api/design2/candidate`
@@ -28,11 +30,11 @@ Issue: #294
 - Published output reads the promoted immutable candidate, never live mutable workspace state.
 - Publish is candidate/revision-bound.
 - Invalid snapshot integrity, duplicate IDs, executable attributes and unsafe URL schemes block promotion.
+- Promotion requires an allowlisted target and staging manifest.
+- Public rendering must hash-match the staged candidate rendering.
 - Published output contains no editor runtime dependency.
 
 ## Remaining closure gates
-1. Add explicit staging manifest and allowlisted generation targets.
-2. Add preview/public parity assertion over the same candidate hash.
-3. Add accessibility/link/smoke validator hooks.
-4. Run resident acceptance and only then switch the installed service entrypoint from fallback to `app_design2.py`.
-5. Keep 1.9.1 fallback until parity acceptance passes.
+1. Add accessibility/link/smoke validator hooks.
+2. Run resident acceptance and only then switch the installed service entrypoint from fallback to `app_design2.py`.
+3. Keep 1.9.1 fallback until parity acceptance passes.
