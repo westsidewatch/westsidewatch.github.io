@@ -12,7 +12,7 @@ let autosaveTimer = null;
 const DB_NAME = 'multiwrite-v1';
 const DB_VERSION = 2;
 const DRAFT_STORE = 'drafts';
-const SIZE_KEY = 'multiwrite-workspace-size';
+const SIZE_KEY = 'multiwrite-workspace-size-v2';
 
 function openDb() {
   return new Promise((resolve, reject) => {
@@ -134,28 +134,31 @@ function renderEditor(text) {
   editor.setSelectionRange(editor.value.length, editor.value.length);
 }
 
-function browserZoomCompensation() {
-  const screenWidth = Math.max(window.screen?.availWidth || window.screen?.width || window.innerWidth, 1);
-  const ratio = window.innerWidth / screenWidth;
-  if (ratio >= 1.8) return 1.8;
-  if (ratio >= 1.55) return 1.6;
-  if (ratio >= 1.3) return 1.35;
-  if (ratio >= 1.14) return 1.15;
-  return 1;
+function autoWorkspaceScale() {
+  const width = Math.max(window.innerWidth || document.documentElement.clientWidth || 0, 1);
+  if (width <= 700) return 1;
+  if (width <= 1100) return 1;
+
+  // Fit the writing workspace to the actual CSS viewport. A browser that is
+  // zoomed out exposes a wider CSS viewport, so the workspace grows with it.
+  // This avoids trying to infer browser zoom from screen/device metrics.
+  const fitted = width / 1800;
+  return Math.min(1.8, Math.max(1, fitted));
 }
 
 function applyWorkspaceSize() {
   const manual = Number(localStorage.getItem(SIZE_KEY) || '1');
-  const auto = browserZoomCompensation();
+  const auto = autoWorkspaceScale();
   const effective = Math.min(2, Math.max(0.9, auto * manual));
   document.documentElement.style.setProperty('--workspace-zoom', String(effective));
   const label = $('#workspaceSizeLabel');
   if (label) label.textContent = `${Math.round(effective * 100)}%`;
+  document.documentElement.dataset.workspaceAuto = localStorage.getItem(SIZE_KEY) ? 'manual' : 'auto';
 }
 
 function changeWorkspaceSize(delta) {
   const current = Number(localStorage.getItem(SIZE_KEY) || '1');
-  const next = Math.min(1.5, Math.max(0.8, Math.round((current + delta) * 10) / 10));
+  const next = Math.min(1.35, Math.max(0.75, Math.round((current + delta) * 20) / 20));
   localStorage.setItem(SIZE_KEY, String(next));
   applyWorkspaceSize();
 }
@@ -234,8 +237,8 @@ async function saveDraft() {
 async function init() {
   applyWorkspaceSize();
   window.addEventListener('resize', applyWorkspaceSize);
-  $('#sizeDown')?.addEventListener('click', () => changeWorkspaceSize(-0.1));
-  $('#sizeUp')?.addEventListener('click', () => changeWorkspaceSize(0.1));
+  $('#sizeDown')?.addEventListener('click', () => changeWorkspaceSize(-0.05));
+  $('#sizeUp')?.addEventListener('click', () => changeWorkspaceSize(0.05));
   $('#sizeReset')?.addEventListener('click', () => { localStorage.removeItem(SIZE_KEY); applyWorkspaceSize(); });
 
   $('#homeLink').addEventListener('click', (event) => {
