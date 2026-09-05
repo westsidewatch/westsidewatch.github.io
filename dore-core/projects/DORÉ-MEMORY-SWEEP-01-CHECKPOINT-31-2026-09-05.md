@@ -11,16 +11,19 @@ P01 impact: NONE
 
 - `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`;
 - `DORÉ-MASTER-WORK-REGISTER-ADDENDUM-SPARSE-CAPABILITY-RUNTIME-2026-09-05.md`;
-- current combined-status surface for commit `45f1373b342d12ddeb2e78f87ff7a278b13b9432`.
+- `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`;
+- `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`;
+- current combined-status and commit-associated workflow-run surfaces for commit `45f1373b342d12ddeb2e78f87ff7a278b13b9432`.
 
 ## Reconciliation findings
 
 1. The local A2A control-plane bridge is a legitimate `VERIFIED_COMPLETE_SUBMILESTONE` inside an active sparse-capability-runtime workstream, not a whole-system A2A completion. The established adapter now converges typed `dore.a2a/1` envelopes into the shared lazy capability runtime/Design control plane while preserving legacy compatibility.
 2. The architectural idea of introducing another independent localhost control daemon for the same Design/control-plane path is `SUPERSEDED` by adapter convergence. This supersession should remain durable so old transport ideas do not silently reactivate as active work.
-3. End-to-end operational acceptance remains `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`. A fresh combined-status lookup for commit `45f1373b342d12ddeb2e78f87ff7a278b13b9432` returned no status contexts, so the existing evidence boundary is unchanged: workflow configuration and implementation commits are not a latest-head CI PASS receipt.
+3. End-to-end operational acceptance remains `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`. Fresh lookups for commit `45f1373b342d12ddeb2e78f87ff7a278b13b9432` returned neither combined status contexts nor commit-associated workflow runs. The evidence boundary is therefore unchanged: workflow configuration and implementation commits are not a latest-head CI PASS receipt, while receipt absence is not a failing test result.
 4. Existing authority debt remains open. Typed envelopes improve protocol structure but do not prove authenticated mutation authority; one negative/unauthorized mutation test is still part of the smallest acceptance packet.
 5. The sparse-capability canonical addendum correctly keeps visual capability embodiment separate from original Doré curation: Doré Image/Design are capabilities of one persistent intelligence, while purpose-built Doré-derived website assets remain a visual-grammar production problem and original Doré works remain curated content.
-6. No contradiction was found requiring status promotion, retirement, or new blocker classification. No P01 action, state, ordering, deployment, credential, binding, or subtitle/audio-transcription dependency was touched.
+6. Constitution reconciliation confirms the same authority envelope: `tool access != authority`, `suggestion != permission`, and consequential promotion/action remains human-governed even as bounded autonomous execution grows.
+7. No contradiction was found requiring status promotion, retirement, or new blocker classification. No P01 action, state, ordering, deployment, credential, binding, or subtitle/audio-transcription dependency was touched.
 
 ## Current classifications
 
@@ -29,6 +32,7 @@ P01 impact: NONE
 - Latest-head CI + resident runtime acceptance: `ACTIVE / UNKNOWN_NEEDS_EVIDENCE`.
 - Second independent local control daemon idea for the same mature path: `SUPERSEDED`.
 - Authenticated mutation authority: `ACTIVE / UNKNOWN_NEEDS_EVIDENCE` under existing Nervous-System authority hardening.
+- Constitution: `CORE/CONTINUOUS`, unchanged.
 
 ## Smallest next evidence packet
 
@@ -41,6 +45,12 @@ Preserve the already-defined acceptance packet rather than adding new architectu
 5. one non-visual request proving visual bodies/provider schemas remain dormant.
 
 This packet would close only the local bridge/runtime acceptance boundary, not whole-system A2A or self-equipping autonomy.
+
+## Durable persistence performed in this checkpoint
+
+- canonical sparse-capability addendum reconciled to `CANONICAL_ADDENDUM / SWEEP_RECONCILED` and updated with the two-surface receipt recheck;
+- A2A local-bridge evidence ledger updated with the same receipt boundary;
+- this checkpoint updated so the reviewed source family and evidence gap are explicitly accounted for.
 
 ## Sweep disposition
 
