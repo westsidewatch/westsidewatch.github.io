@@ -3,7 +3,7 @@
 Date: 2026-09-05
 Status: CANONICAL_ADDENDUM
 Parent register: `DORÉ-MASTER-WORK-REGISTER.md`
-Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`
+Evidence: `DORÉ-SPARSE-CAPABILITY-RUNTIME-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-A2A-CONTROL-PLANE-LOCAL-BRIDGE-EVIDENCE-LEDGER-2026-09-05.md`, `DORÉ-CONSTITUTION-RECONCILIATION-EVIDENCE-LEDGER-2026-09-05.md`
 P01 impact: NONE
 
 ## Canonical interpretation
@@ -21,6 +21,8 @@ A bounded implementation milestone is now real: compact capability manifests, la
 A second bounded convergence submilestone is now also real: the mature local A2A adapter v0.3 lazily constructs the shared capability runtime/executor and routes typed `dore.a2a/1` control envelopes into the Design control plane instead of creating a second local intelligence/server path. The same bounded commit sequence adds the canonical resident localhost `4312` / Companion path and Design as the first control-plane consumer, while capability-runtime CI configuration now includes the adapter bridge test. This is implementation evidence and a `VERIFIED_COMPLETE_SUBMILESTONE`; it is **not** yet latest-head CI/runtime acceptance because no persisted combined-status receipt was available in the bounded review.
 
 The consolidation rule is canonical: repeated compatible success can nominate a capability candidate; matching failure blocks the candidate; no production/reflex promotion is automatic. Production promotion still requires regression evidence and existing authority/governance gates.
+
+The constitutional authority envelope is also canonical here: `tool access != authority`, `suggestion != permission`, and human review continues to govern consequential promotion/action. Sparse capability activation, typed routing, A2A compatibility, local execution, Penpot access, Cloudflare access or future connectors may prove capability inside an already-authorized scope; none of them silently expand Doré's permission boundary.
 
 Provider diagnostics now follow a minimum-necessary metadata rule: command lines, private filesystem paths, model paths, tokens and unknown provider fields are not retained in Doré evidence/CI logs. Preserve this as a regression invariant.
 
