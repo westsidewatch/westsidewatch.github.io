@@ -3,65 +3,73 @@ from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
 from html import escape
-import json,os,datetime,re,copy,hashlib
+import copy,datetime,hashlib,json,mimetypes,os,re
 import app as core
-DATA=core.DATA;WS=DATA/'westside-watch.workspace.json';HIST=DATA/'workspace-history';HIST.mkdir(exist_ok=True);EXPORTS=DATA/'exports';EXPORTS.mkdir(exist_ok=True)
+DATA=core.DATA;WS=DATA/'westside-watch.workspace.json';HIST=DATA/'workspace-history';HIST.mkdir(exist_ok=True);ROOT=Path(__file__).resolve().parents[1]
+IMG_EXT={'.png','.jpg','.jpeg','.webp'}
 def now():return datetime.datetime.now(datetime.timezone.utc).isoformat()
-def atomic_obj(p,obj):
- t=p.with_suffix(p.suffix+'.tmp');t.write_text(json.dumps(obj,ensure_ascii=False,indent=2),encoding='utf-8');t.replace(p)
-def atomic_text(p,text):
- t=p.with_suffix(p.suffix+'.tmp');t.write_text(text,encoding='utf-8');t.replace(p)
+def atomic(p,o):
+ t=p.with_suffix(p.suffix+'.tmp');t.write_text(json.dumps(o,ensure_ascii=False,indent=2),encoding='utf-8');t.replace(p)
 def page(w,pid):return next((x for x in w.get('pages',[]) if x.get('id')==pid),None)
+def page_name(w,name):
+ k=re.sub(r'\s+','',str(name or '')).casefold();return next((x for x in w.get('pages',[]) if re.sub(r'\s+','',str(x.get('name',''))).casefold()==k),None) if k else None
+def target_page(w,p):return page_name(w,p.get('page_name')) or page(w,p.get('page_id'))
 def unique(base,used):
- v=base;i=1
+ base=re.sub(r'[^A-Za-z0-9._-]+','-',str(base or 'node')).strip('-')[:64] or 'node';v=base;i=1
  while v in used:i+=1;v=f'{base}-{i}'
  return v
-def obsolete_node(n):
- text=' '.join(str(n.get(k,'')) for k in ('text','title','eyebrow','body')).strip()
- return n.get('id')=='section-10' or bool(re.fullmatch(r'(?:\d+\s*[·.-]\s*)?(?:安提阿|antioch)',text,re.I))
-def clean_obsolete(w):
- changed=False
- for p in w.get('pages',[]):
-  old=len(p.get('nodes',[]));p['nodes']=[n for n in p.get('nodes',[]) if not obsolete_node(n)];changed|=old!=len(p['nodes'])
- return changed
+def obsolete(n):
+ text=' '.join(str(n.get(k,'')) for k in ('text','title','eyebrow','body')).strip();return n.get('id')=='section-10' or bool(re.fullmatch(r'(?:\d+\s*[·.-]\s*)?(?:安提阿|antioch)',text,re.I))
 def default_workspace():
- d=core.default_doc();d['canvas']={'w':1200,'h':930};d['nodes']=[n for n in d['nodes'] if not obsolete_node(n)]
- return {'schema':'dore.design.workspace.v1','id':'westside-watch','name':'Westside Watch — Doré Design','revision':1,'updated_at':now(),'tokens':d['tokens'],'pages':[{'id':'cover','name':'Cover','canvas':d['canvas'],'nodes':d['nodes']},{'id':'contents','name':'Contents / Editorial Wall','canvas':{'w':1200,'h':930},'nodes':[{'id':'contents-title','type':'text','role':'hero','text':'CONTENTS','x':72,'y':72,'w':600,'size':74},{'id':'contents-rule','type':'rule','x':72,'y':172,'w':1056,'h':1},{'id':'contents-note','type':'text','text':'Editorial wall · information as brick, weight as battlement, time as flow','x':72,'y':220,'w':900,'size':22}]},{'id':'feature-story','name':'Feature / Story','canvas':{'w':1200,'h':930},'nodes':[{'id':'story-kicker','type':'text','text':'FEATURE','x':72,'y':72,'w':300,'size':18},{'id':'story-title','type':'text','role':'hero','text':'WATCH FOR\nTHE DAWN','x':72,'y':140,'w':760,'size':78},{'id':'story-rule','type':'rule','x':72,'y':350,'w':1056,'h':1},{'id':'story-body','type':'text','text':'A structured story page ready for real editorial content.','x':72,'y':410,'w':760,'size':24}]}]}
+ d=core.default_doc();d['canvas']={'w':1200,'h':930};d['nodes']=[n for n in d['nodes'] if not obsolete(n)]
+ return {'schema':'dore.design.workspace.v1','id':'westside-watch','name':'Westside Watch — Doré Design','revision':1,'updated_at':now(),'tokens':d['tokens'],'pages':[{'id':'cover','name':'Cover','canvas':d['canvas'],'nodes':d['nodes']},{'id':'contents','name':'Contents / Editorial Wall','canvas':{'w':1200,'h':930},'nodes':[{'id':'contents-title','type':'text','role':'hero','text':'CONTENTS','x':72,'y':72,'w':600,'size':74}]},{'id':'feature-story','name':'Feature / Story','canvas':{'w':1200,'h':930},'nodes':[{'id':'story-title','type':'text','role':'hero','text':'WATCH FOR\nTHE DAWN','x':72,'y':140,'w':760,'size':78}]}]}
+def valid_uri(uri):
+ s=str(uri or '').strip();u=urlparse(s)
+ if not s:return False
+ if u.scheme in {'http','https'}:
+  q=(parse_qs(u.query).get('name') or [''])[0];return u.hostname in {'127.0.0.1','localhost'} and (Path(u.path).suffix.lower() in IMG_EXT or Path(q).suffix.lower() in IMG_EXT)
+ return Path(s).suffix.lower() in IMG_EXT
 def validate(w):
  e=[]
  if w.get('schema')!='dore.design.workspace.v1':e.append('schema')
- pages=w.get('pages');
- if not isinstance(pages,list) or not pages:e.append('pages');return e
+ ps=w.get('pages')
+ if not isinstance(ps,list) or not ps:return e+['pages']
  pids=[]
- for p in pages:
-  pid=p.get('id');pids.append(pid)
+ for p in ps:
+  pid=p.get('id');pids.append(pid);c=p.get('canvas') or {}
   if not core.valid_id(pid):e.append(f'page_id:{pid}')
-  c=p.get('canvas') or {}
-  if not isinstance(c.get('w'),(int,float)) or not isinstance(c.get('h'),(int,float)) or c.get('w',0)<=0 or c.get('h',0)<=0:e.append(f'canvas:{pid}')
+  if not all(isinstance(c.get(k),(int,float)) and c.get(k)>0 for k in ('w','h')):e.append(f'canvas:{pid}')
   ids=[]
   for n in p.get('nodes',[]):
-   nid=n.get('id');ids.append(nid)
+   nid=n.get('id');ids.append(nid);typ=n.get('type')
    if not core.valid_id(nid):e.append(f'node_id:{pid}:{nid}')
-   if n.get('type') not in {'text','rule','block'}:e.append(f'node_type:{pid}:{nid}')
+   if typ not in {'text','rule','block','image'}:e.append(f'node_type:{pid}:{nid}')
    for k in ('x','y','w'):
     if not isinstance(n.get(k),(int,float)):e.append(f'{pid}:{nid}:{k}')
+   if typ=='image':
+    if not isinstance(n.get('h'),(int,float)) or n.get('h',0)<=0:e.append(f'{pid}:{nid}:h')
+    if n.get('fit','cover') not in {'cover','contain','fill'}:e.append(f'{pid}:{nid}:fit')
+    if not valid_uri(n.get('uri')):e.append(f'{pid}:{nid}:uri')
+    if not re.fullmatch(r'[0-9a-fA-F]{64}',str(n.get('sha256',''))):e.append(f'{pid}:{nid}:sha256')
   if len(ids)!=len(set(ids)):e.append(f'duplicate_nodes:{pid}')
  if len(pids)!=len(set(pids)):e.append('duplicate_pages')
  return e
 def snapshot(w):
  p=HIST/f"westside-watch.r{int(w.get('revision',0)):05d}.json"
- if not p.exists():atomic_obj(p,w)
-def save(w,snapshot_before=True):
- errs=validate(w)
- if errs:raise ValueError('invalid_workspace:'+','.join(errs))
- if snapshot_before and WS.exists():snapshot(json.loads(WS.read_text(encoding='utf-8')))
- w['revision']=int(w.get('revision',0))+1;w['updated_at']=now();atomic_obj(WS,w);return w
+ if not p.exists():atomic(p,w)
+def save(w):
+ e=validate(w)
+ if e:raise ValueError('invalid_workspace:'+','.join(e))
+ if WS.exists():snapshot(json.loads(WS.read_text(encoding='utf-8')))
+ w['revision']=int(w.get('revision',0))+1;w['updated_at']=now();atomic(WS,w);return w
 def workspace():
- if not WS.exists():atomic_obj(WS,default_workspace())
- w=json.loads(WS.read_text(encoding='utf-8'))
- if clean_obsolete(w):save(w)
- errs=validate(w)
- if errs:raise ValueError('invalid_workspace:'+','.join(errs))
+ if not WS.exists():atomic(WS,default_workspace())
+ w=json.loads(WS.read_text(encoding='utf-8'));changed=False
+ for p in w.get('pages',[]):
+  old=len(p.get('nodes',[]));p['nodes']=[n for n in p.get('nodes',[]) if not obsolete(n)];changed|=old!=len(p['nodes'])
+ if changed:save(w)
+ e=validate(w)
+ if e:raise ValueError('invalid_workspace:'+','.join(e))
  return w
 def history():
  rows=[]
@@ -72,9 +80,17 @@ def history():
 def undo():
  rows=[r for r in history() if not r.get('current')]
  if not rows:raise ValueError('no_history')
- src=HIST/rows[-1]['path'];target=json.loads(src.read_text(encoding='utf-8'));cur=workspace();snapshot(cur);target['revision']=cur['revision']+1;target['updated_at']=now();atomic_obj(WS,target);return target
+ cur=workspace();snapshot(cur);w=json.loads((HIST/rows[-1]['path']).read_text(encoding='utf-8'));w['revision']=cur['revision']+1;w['updated_at']=now();atomic(WS,w);return w
+def place_image(w,p):
+ pg=target_page(w,p)
+ if not pg:raise ValueError('page_not_found')
+ a=copy.deepcopy(p.get('asset') or {});s=copy.deepcopy(p.get('shape') or {});pl=s.get('placement') or s;uri=str(a.get('uri') or '');sha=str(a.get('sha256') or '');fit=str(s.get('fit') or 'cover')
+ if not valid_uri(uri) or not re.fullmatch(r'[0-9a-fA-F]{64}',sha):raise ValueError('invalid_image_asset')
+ if fit not in {'cover','contain','fill'}:raise ValueError('invalid_image_fit')
+ if not all(isinstance(pl.get(k),(int,float)) for k in ('x','y','w','h')) or pl['w']<=0 or pl['h']<=0:raise ValueError('invalid_image_placement')
+ nid=unique(s.get('id') or 'image-'+sha[:16],{n['id'] for n in pg['nodes']});pg['nodes'].append({'id':nid,'type':'image','x':pl['x'],'y':pl['y'],'w':pl['w'],'h':pl['h'],'uri':uri,'sha256':sha,'fit':fit,'role':s.get('role') or 'editorial-image','asset_id':a.get('id') or sha[:16],'provenance':a.get('provenance') or {}})
 def mutate(w,p):
- op=p.get('op');pid=p.get('page_id');pg=page(w,pid) if pid else None
+ op=p.get('op');pg=target_page(w,p)
  if op=='add_page':
   pid=unique(p.get('id') or 'page',{x['id'] for x in w['pages']});w['pages'].append({'id':pid,'name':p.get('name') or 'Untitled Page','canvas':{'w':1200,'h':930},'nodes':[]})
  elif op=='duplicate_page':
@@ -83,16 +99,14 @@ def mutate(w,p):
  elif op=='delete_page':
   if not pg:raise ValueError('page_not_found')
   if len(w['pages'])<=1:raise ValueError('cannot_delete_last_page')
-  w['pages']=[x for x in w['pages'] if x['id']!=pid]
+  w['pages']=[x for x in w['pages'] if x['id']!=pg['id']]
  elif op=='rename_page':
   if not pg:raise ValueError('page_not_found')
   pg['name']=str(p.get('name') or pg['name'])[:80]
  elif op=='set_canvas':
   if not pg:raise ValueError('page_not_found')
-  patch=p.get('patch') or {}
-  for k in ('w','h'):
-   if k in patch:
-    v=patch[k]
+  for k,v in (p.get('patch') or {}).items():
+   if k in {'w','h'}:
     if not isinstance(v,(int,float)) or v<=0:raise ValueError('invalid_canvas')
     pg['canvas'][k]=v
  elif op=='token':
@@ -105,60 +119,81 @@ def mutate(w,p):
  elif op=='add_rule':
   if not pg:raise ValueError('page_not_found')
   nid=unique(p.get('id') or 'rule',{x['id'] for x in pg['nodes']});pg['nodes'].append({'id':nid,'type':'rule','x':80,'y':160+len(pg['nodes'])*20,'w':600,'h':1})
+ elif op=='apply_image_patch':
+  q=p.get('patch') or {}
+  if q.get('schema')!='dore.design.image-patch.v1':raise ValueError('invalid_image_patch_schema')
+  place_image(w,{'page_id':q.get('page_id'),'page_name':q.get('page_name'),'asset':{'id':q.get('asset_id'),'uri':q.get('uri'),'sha256':q.get('sha256'),'provenance':q.get('provenance') or {}},'shape':{'id':'image-'+str(q.get('sha256',''))[:16],'placement':q.get('placement') or {},'fit':q.get('fit') or 'cover','role':q.get('role') or 'editorial-image'}})
+ elif op=='place_image':place_image(w,p)
  elif op=='set_node':
   if not pg:raise ValueError('page_not_found')
   n=next((x for x in pg['nodes'] if x['id']==p.get('id')),None)
   if not n:raise ValueError('node_not_found')
-  patch=copy.deepcopy(p.get('patch') or {});patch.pop('id',None);n.update(patch)
+  q=copy.deepcopy(p.get('patch') or {});q.pop('id',None);q.pop('type',None);n.update(q)
  elif op=='delete_node':
   if not pg:raise ValueError('page_not_found')
   before=len(pg['nodes']);pg['nodes']=[x for x in pg['nodes'] if x['id']!=p.get('id')]
-  if len(pg['nodes'])==before:raise ValueError('node_not_found')
+  if before==len(pg['nodes']):raise ValueError('node_not_found')
  elif op=='duplicate_node':
   if not pg:raise ValueError('page_not_found')
   n=next((x for x in pg['nodes'] if x['id']==p.get('id')),None)
   if not n:raise ValueError('node_not_found')
-  q=copy.deepcopy(n);q['id']=unique(n['id']+'-copy',{x['id'] for x in pg['nodes']});q['x']=q.get('x',0)+24;q['y']=q.get('y',0)+24;pg['nodes'].append(q)
+  q=copy.deepcopy(n);q['id']=unique(n['id']+'-copy',{x['id'] for x in pg['nodes']});q['x']+=24;q['y']+=24;pg['nodes'].append(q)
  elif op=='undo':return undo()
  else:raise ValueError('unsupported_op')
- clean_obsolete(w);return save(w)
+ return save(w)
 def page_svg(w,pid):
  p=page(w,pid)
  if not p:raise ValueError('page_not_found')
  t=w['tokens'];cw=p['canvas']['w'];ch=p['canvas']['h'];out=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{cw}" height="{ch}" viewBox="0 0 {cw} {ch}"><rect width="100%" height="100%" fill="{escape(t["paper"])}"/>']
  for n in p['nodes']:
   if n['type']=='rule':out.append(f'<rect x="{n["x"]}" y="{n["y"]}" width="{n["w"]}" height="{n.get("h",1)}" fill="{escape(t["gold"])}"/>');continue
+  if n['type']=='image':
+   par={'cover':'xMidYMid slice','contain':'xMidYMid meet','fill':'none'}[n.get('fit','cover')];out.append(f'<image x="{n["x"]}" y="{n["y"]}" width="{n["w"]}" height="{n["h"]}" href="/api/image?page={escape(pid)}&amp;node={escape(n["id"])}" preserveAspectRatio="{par}"/>');continue
   texts=[(n.get('text',''),n.get('size',18),t['night'] if n.get('role')=='hero' else t['ink'],0)] if n['type']=='text' else [(n.get('eyebrow',''),13,t['gold'],20),(n.get('title',''),52,t['ink'],80),(n.get('body',''),18,t['ink'],250)]
   if n['type']=='block':out.append(f'<rect x="{n["x"]}" y="{n["y"]}" width="{n["w"]}" height="8" fill="{escape(t["gold"])}"/>')
   for text,size,color,dy in texts:
    for j,line in enumerate(str(text).split('\n')):out.append(f'<text x="{n["x"]}" y="{n["y"]+dy+(j+1)*size}" font-family="Georgia,serif" font-size="{size}" fill="{escape(color)}">{escape(line)}</text>')
  out.append('</svg>');return ''.join(out)
 def verify(w=None):
- w=w or workspace();errs=validate(w);hashes={};render=True
- for p in w.get('pages',[]):
-  s=page_svg(w,p['id']);hashes[p['id']]=hashlib.sha256(s.encode()).hexdigest();render=render and len(s)>100
- checks={'schema_valid':not errs,'multi_page':len(w.get('pages',[]))>=2,'unique_page_ids':len({p['id'] for p in w['pages']})==len(w['pages']),'node_structure_valid':not any('node_' in e or 'duplicate_nodes' in e for e in errs),'render_all_pages':render,'history_available':len(history())>=1,'obsolete_structure_removed':not any(obsolete_node(n) for p in w['pages'] for n in p.get('nodes',[]))}
- return {'ok':all(checks.values()),'document_id':w['id'],'revision':w['revision'],'page_count':len(w['pages']),'node_count':sum(len(p['nodes']) for p in w['pages']),'checks':checks,'errors':errs,'page_render_sha256':hashes}
-HTML='''<!doctype html><html><head><meta charset="utf-8"><title>Doré Design</title><style>*{box-sizing:border-box}html,body{margin:0;height:100%;font-family:system-ui;background:#c9c9c7;color:#202020}#top{height:52px;background:#171717;color:#eee;display:flex;align-items:center;gap:8px;padding:0 14px;position:relative;z-index:2}button,a.btn{border:1px solid #777;background:#fff;color:#222;padding:7px 9px;cursor:pointer;text-decoration:none;font-size:12px}#top button,#top a.btn{background:#303030;color:#fff;border-color:#555}.app{height:calc(100% - 52px);display:grid;grid-template-columns:270px 1fr 300px}.side{background:#f2f1ed;overflow:auto;padding:14px;border-right:1px solid #aaa}.right{border-right:0;border-left:1px solid #aaa}.pages{display:grid;gap:7px}.pitem{border:1px solid #bbb;background:#fff;padding:9px;cursor:pointer}.pitem.on{border:2px solid #252525}.stagewrap{overflow:auto;padding:34px}.stage{position:relative;margin:auto;background:var(--paper);box-shadow:0 10px 35px #0003;overflow:hidden}.node{position:absolute;font-family:Georgia,serif;white-space:pre-line;line-height:1.05}.node.sel{outline:2px solid #777;outline-offset:3px}.rule{background:var(--gold)}.block{border-top:8px solid var(--gold);padding-top:20px}.block h2{font:52px/1.05 Georgia,serif;white-space:pre-line}.small{font-size:11px;color:#666}h3{font-size:11px;letter-spacing:.14em;text-transform:uppercase}.layer{padding:7px 4px;border-bottom:1px solid #ddd;cursor:pointer}.layer.on{font-weight:700;background:#e3e0d7}input,textarea{width:100%;margin:4px 0;padding:6px}textarea{height:110px}.danger{border-color:#9b4b4b}.actions{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}.token{display:grid;grid-template-columns:1fr 80px;gap:6px;margin:5px 0}</style></head><body><div id="top"><b>DORÉ DESIGN 0.8</b><span id="status">workspace</span><button onclick="undo()">Undo</button><button onclick="addPage()">+ Page</button><button onclick="addText()">+ Text</button><button onclick="addRule()">+ Rule</button><button onclick="duplicateNode()">Duplicate Layer</button><button class="danger" onclick="deleteNode()">Delete Layer</button><button onclick="verifyNow()">Verify</button><a id="exportLink" class="btn" target="_blank">SVG Export</a></div><div class="app"><aside class="side"><h3>Pages</h3><div id="pages" class="pages"></div><div class="actions"><button onclick="duplicatePage()">Duplicate Page</button><button class="danger" onclick="deletePage()">Delete Page</button></div><h3>Layers</h3><div id="layers"></div><h3>Tokens</h3><div id="tokens"></div></aside><main class="stagewrap"><div id="stage"></div></main><aside class="side right"><h3>Page</h3><input id="pname" onchange="renamePage(this.value)"><div class="actions"><input id="cw" style="width:90px"><input id="ch" style="width:90px"><button onclick="saveCanvas()">Canvas</button></div><h3>Inspector</h3><div id="inspector" class="small">Select a layer.</div><h3>Verification</h3><pre id="verification" class="small"></pre><h3>Document</h3><pre id="meta" class="small"></pre></aside></div><script>let w,active='cover',selected=null;const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));async function api(path='/api/workspace',body){let r=await fetch(path,body?{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)}:{});let j=await r.json();if(!r.ok)throw Error(j.error);return j}async function load(){w=await api();if(!w.pages.some(p=>p.id===active))active=w.pages[0].id;render()}function pg(){return w.pages.find(p=>p.id===active)}function render(){let p=pg();pages.innerHTML=w.pages.map(x=>`<div class="pitem ${x.id===active?'on':''}" onclick="active='${x.id}';selected=null;render()"><b>${esc(x.name)}</b><div class="small">${x.nodes.length} layers · ${esc(x.id)}</div></div>`).join('');layers.innerHTML=p.nodes.map(n=>`<div class="layer ${n.id===selected?'on':''}" onclick="selected='${n.id}';render()">${esc(n.id)} · ${esc(n.type)}</div>`).join('');tokens.innerHTML=Object.entries(w.tokens).map(([k,v])=>`<div class="token"><span>${esc(k)}</span><input value="${esc(v)}" onchange="setToken('${k}',this.value)"></div>`).join('');pname.value=p.name;cw.value=p.canvas.w;ch.value=p.canvas.h;exportLink.href='/api/export.svg?page='+encodeURIComponent(active);let s=document.createElement('div');s.className='stage';s.style.width=p.canvas.w+'px';s.style.height=p.canvas.h+'px';Object.entries(w.tokens).forEach(([k,v])=>s.style.setProperty('--'+k,v));for(const n of p.nodes){let e=document.createElement('div');e.className='node '+n.type+(n.id===selected?' sel':'');e.style.cssText=`left:${n.x}px;top:${n.y}px;width:${n.w}px;${n.h?'height:'+n.h+'px;':''}${n.size?'font-size:'+n.size+'px;':''}${n.role==='hero'?'color:var(--night);':''}`;if(n.type==='rule')e.innerHTML='';else if(n.type==='block')e.innerHTML=`<div>${esc(n.eyebrow||'')}</div><h2>${esc(n.title||'').replaceAll('\\n','<br>')}</h2><p>${esc(n.body||'')}</p>`;else e.innerHTML=esc(n.text||'').replaceAll('\\n','<br>');e.onclick=ev=>{ev.stopPropagation();selected=n.id;render()};s.appendChild(e)}stage.innerHTML='';stage.appendChild(s);let n=p.nodes.find(x=>x.id===selected);inspector.innerHTML=n?`<b>${esc(n.id)}</b><input id="ix" value="${n.x}"><input id="iy" value="${n.y}"><input id="iw" value="${n.w}"><input id="isize" value="${n.size||18}"><textarea id="itext">${esc(n.text||n.title||'')}</textarea><div class="actions"><button onclick="saveNode()">Save</button><button onclick="duplicateNode()">Duplicate</button><button class="danger" onclick="deleteNode()">Delete</button></div>`:'Select a layer.';meta.textContent=`${w.schema}\nr${w.revision}\n${w.pages.length} pages`;status.textContent=`${w.name} · r${w.revision} · ${w.pages.length} pages`}async function mut(x){w=await api('/api/workspace',x);render()}async function addPage(){await mut({op:'add_page'});active=w.pages.at(-1).id;selected=null;render()}async function renamePage(name){await mut({op:'rename_page',page_id:active,name})}async function addText(){await mut({op:'add_text',page_id:active,text:'New editorial text'});selected=pg().nodes.at(-1)?.id;render()}async function addRule(){await mut({op:'add_rule',page_id:active});selected=pg().nodes.at(-1)?.id;render()}async function saveNode(){if(!selected)return;let n=pg().nodes.find(x=>x.id===selected),patch={x:+ix.value,y:+iy.value,w:+iw.value,size:+isize.value};if(n.type==='block')patch.title=itext.value;else patch.text=itext.value;await mut({op:'set_node',page_id:active,id:selected,patch})}async function deleteNode(){if(!selected)return;await mut({op:'delete_node',page_id:active,id:selected});selected=null;render()}async function duplicateNode(){if(!selected)return;await mut({op:'duplicate_node',page_id:active,id:selected});selected=pg().nodes.at(-1)?.id;render()}async function deletePage(){if(w.pages.length<=1)return;await mut({op:'delete_page',page_id:active});active=w.pages[0].id;selected=null;render()}async function duplicatePage(){await mut({op:'duplicate_page',page_id:active});active=w.pages.at(-1).id;selected=null;render()}async function setToken(key,value){await mut({op:'token',key,value})}async function saveCanvas(){await mut({op:'set_canvas',page_id:active,patch:{w:+cw.value,h:+ch.value}})}async function undo(){w=await api('/api/workspace',{op:'undo'});if(!w.pages.some(p=>p.id===active))active=w.pages[0].id;selected=null;render()}async function verifyNow(){verification.textContent=JSON.stringify(await api('/api/verify'),null,2)}document.addEventListener('keydown',e=>{if((e.key==='Delete'||e.key==='Backspace')&&selected&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName)){e.preventDefault();deleteNode()}if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='z'){e.preventDefault();undo()}});load()</script></body></html>'''
+ w=w or workspace();e=validate(w);hashes={};render=True
+ for p in w['pages']:
+  s=page_svg(w,p['id']);hashes[p['id']]=hashlib.sha256(s.encode()).hexdigest();render&=len(s)>100
+ checks={'schema_valid':not e,'multi_page':len(w['pages'])>=2,'unique_page_ids':len({p['id'] for p in w['pages']})==len(w['pages']),'node_structure_valid':not any('node_' in x or 'duplicate_nodes' in x for x in e),'render_all_pages':render,'history_available':len(history())>=1,'obsolete_structure_removed':not any(obsolete(n) for p in w['pages'] for n in p.get('nodes',[]))}
+ return {'ok':all(checks.values()),'document_id':w['id'],'revision':w['revision'],'page_count':len(w['pages']),'node_count':sum(len(p['nodes']) for p in w['pages']),'checks':checks,'errors':e,'page_render_sha256':hashes}
+HTML='''<!doctype html><meta charset="utf-8"><title>Doré Design</title><style>*{box-sizing:border-box}body{margin:0;font-family:system-ui;background:#c9c9c7}#top{height:52px;background:#171717;color:#eee;padding:14px}.app{display:grid;grid-template-columns:260px 1fr;height:calc(100vh - 52px)}aside{background:#f2f1ed;padding:14px;overflow:auto}.stagewrap{overflow:auto;padding:34px}.stage{position:relative;margin:auto;background:#faf9f5;box-shadow:0 10px 35px #0003;overflow:hidden}.node{position:absolute;font-family:Georgia,serif;white-space:pre-line}.node img{width:100%;height:100%;display:block}.p{padding:8px;background:white;border:1px solid #bbb;margin:5px 0;cursor:pointer}.on{border:2px solid #222}</style><div id="top"><b>DORÉ DESIGN 0.9</b> · native image workspace · <span id="status"></span></div><div class="app"><aside><b>Pages</b><div id="pages"></div><hr><b>Layers</b><div id="layers"></div></aside><main class="stagewrap"><div id="stage"></div></main></div><script>let w,active='cover';const e=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));async function load(){w=await(await fetch('/api/workspace')).json();if(!w.pages.some(p=>p.id===active))active=w.pages[0].id;render()}function render(){let p=w.pages.find(x=>x.id===active);pages.innerHTML=w.pages.map(x=>`<div class="p ${x.id===active?'on':''}" onclick="active='${x.id}';render()"><b>${e(x.name)}</b><br><small>${e(x.id)}</small></div>`).join('');layers.innerHTML=p.nodes.map(n=>`<div>${e(n.id)} · ${e(n.type)}</div>`).join('');let s=document.createElement('div');s.className='stage';s.style.width=p.canvas.w+'px';s.style.height=p.canvas.h+'px';for(const n of p.nodes){let x=document.createElement('div');x.className='node';x.style.cssText=`left:${n.x}px;top:${n.y}px;width:${n.w}px;${n.h?'height:'+n.h+'px;':''}${n.size?'font-size:'+n.size+'px;':''}`;if(n.type==='image')x.innerHTML=`<img src="/api/image?page=${encodeURIComponent(active)}&node=${encodeURIComponent(n.id)}" style="object-fit:${n.fit==='fill'?'fill':n.fit}">`;else if(n.type==='rule')x.style.cssText+='background:#A2872A;height:'+(n.h||1)+'px';else x.textContent=n.text||n.title||'';s.appendChild(x)}stage.innerHTML='';stage.appendChild(s);status.textContent=w.name+' · r'+w.revision}load()</script>'''
+def image_node(q):
+ w=workspace();pid=(q.get('page') or [''])[0];nid=(q.get('node') or [''])[0];pg=page(w,pid) if pid else None;return next((n for n in (pg or {}).get('nodes',[]) if n.get('id')==nid and n.get('type')=='image'),None)
+def read_local(uri):
+ p=Path(str(uri)).expanduser().resolve()
+ if p.suffix.lower() not in IMG_EXT or not p.is_file():raise FileNotFoundError('image_not_found')
+ if ROOT not in p.parents and not (Path.home().resolve() in p.parents and '.dore' in p.parts):raise ValueError('image_path_not_allowed')
+ return p,p.read_bytes()
 class H(BaseHTTPRequestHandler):
- def out(self,status,body,ctype='application/json'):
-  raw=body.encode() if isinstance(body,str) else json.dumps(body,ensure_ascii=False).encode();self.send_response(status);self.send_header('Content-Type',ctype+'; charset=utf-8');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
+ def out(self,s,b,ct='application/json'):
+  raw=b.encode() if isinstance(b,str) else json.dumps(b,ensure_ascii=False).encode();self.send_response(s);self.send_header('Content-Type',ct+'; charset=utf-8');self.send_header('Content-Length',str(len(raw)));self.end_headers();self.wfile.write(raw)
  def do_GET(self):
   u=urlparse(self.path);p=u.path
   try:
    if p=='/':return self.out(200,HTML,'text/html')
-   if p=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'0.8','workspace':'multi-page'})
+   if p=='/api/health':return self.out(200,{'ok':True,'service':'dore-design','version':'0.9','workspace':'multi-page+image'})
    if p=='/api/workspace':return self.out(200,workspace())
    if p=='/api/history':return self.out(200,history())
    if p=='/api/verify':return self.out(200,verify())
-   if p=='/api/export.svg':
-    pid=(parse_qs(u.query).get('page') or ['cover'])[0];return self.out(200,page_svg(workspace(),pid),'image/svg+xml')
+   if p=='/api/export.svg':return self.out(200,page_svg(workspace(),(parse_qs(u.query).get('page') or ['cover'])[0]),'image/svg+xml')
+   if p=='/api/image':
+    n=image_node(parse_qs(u.query))
+    if not n:raise FileNotFoundError('image_node_not_found')
+    uri=str(n.get('uri'));pr=urlparse(uri)
+    if pr.scheme in {'http','https'}:self.send_response(302);self.send_header('Location',uri);self.end_headers();return
+    fp,data=read_local(uri);ct=mimetypes.guess_type(fp.name)[0] or 'application/octet-stream';self.send_response(200);self.send_header('Content-Type',ct);self.send_header('Content-Length',str(len(data)));self.end_headers();self.wfile.write(data);return
    return self.out(404,{'ok':False,'error':'not_found'})
-  except Exception as e:return self.out(400,{'ok':False,'error':type(e).__name__+': '+str(e)})
+  except Exception as ex:return self.out(400,{'ok':False,'error':type(ex).__name__+': '+str(ex)})
  def do_POST(self):
   try:
    if urlparse(self.path).path!='/api/workspace':return self.out(404,{'ok':False,'error':'not_found'})
-   n=int(self.headers.get('Content-Length','0'));payload=json.loads(self.rfile.read(n) or b'{}');return self.out(200,mutate(workspace(),payload))
-  except Exception as e:return self.out(400,{'ok':False,'error':type(e).__name__+': '+str(e)})
+   n=int(self.headers.get('Content-Length','0'))
+   if n<=0 or n>262144:raise ValueError('invalid_request_size')
+   return self.out(200,mutate(workspace(),json.loads(self.rfile.read(n) or b'{}')))
+  except Exception as ex:return self.out(400,{'ok':False,'error':type(ex).__name__+': '+str(ex)})
  def log_message(self,*a):pass
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('DORE_DESIGN_PORT','4310'))),H).serve_forever()
