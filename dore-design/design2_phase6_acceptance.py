@@ -43,6 +43,6 @@ published=get_text('/design2/published')
 assert published==preview
 assert release['page_id']=='multiwrite-home' and int(release['revision'])==new_rev
 learning=get_json('/api/design2/recommendations')['log']
-row=learning['recommendations'][proposal['id']]
+row=next(e for e in learning['events'] if e.get('id')==proposal['id'])
 assert row['decision']=='accept' and int(row['result_revision'])==new_rev
 print('DORE_DESIGN2_PHASE6_MULTIWRITE_PRODUCTION_SPECIMEN_PASS')
