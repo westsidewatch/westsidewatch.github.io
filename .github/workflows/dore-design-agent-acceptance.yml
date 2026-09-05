@@ -49,44 +49,58 @@ jobs:
           trap 'kill $pid 2>/dev/null || true' EXIT
           sleep 1
           if ! curl -fsS http://127.0.0.1:4310/api/health >/tmp/dd-health.json; then
-            echo '--- resident startup log ---'
-            cat /tmp/dd-http.log
-            exit 1
+            echo '--- resident startup log ---'; cat /tmp/dd-http.log; exit 1
           fi
           if ! python3 dore-design/local_acceptance.py >/tmp/dd-local-acceptance.json 2>/tmp/dd-local-acceptance.err; then
             echo '--- local acceptance error ---'; cat /tmp/dd-local-acceptance.err
-            echo '--- resident log ---'; cat /tmp/dd-http.log
-            exit 1
+            echo '--- resident log ---'; cat /tmp/dd-http.log; exit 1
           fi
           grep -q 'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS' /tmp/dd-local-acceptance.json
           grep -q 'Edit in Doré Design' <(curl -fsS http://127.0.0.1:4310/)
-          grep -q 'DORÉ · MULTIWRITE DESIGN' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
+          grep -q 'DORÉ · 多寫' <(curl -fsS 'http://127.0.0.1:4310/editor?page=multiwrite-home')
           grep -q '多寫' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
           grep -q 'Write on. Make it a book.' <(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=multiwrite-home')
           python3 - <<'PY'
           import json, urllib.request
           base='http://127.0.0.1:4310'
-          def get(path):
-              return json.load(urllib.request.urlopen(base+path))
+          def get(path): return json.load(urllib.request.urlopen(base+path))
           def post(path,payload):
               req=urllib.request.Request(base+path,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
               return json.load(urllib.request.urlopen(req))
           h=get('/api/health')
           assert h['version']=='1.9.1' and h['journal_mode']=='editable-workspace-page'
           assert h['multiwrite_page']=='multiwrite-home' and h['multiwrite_semantic_design'] is True
-          m=get('/api/multiwrite/status')
-          assert m['ok'] and m['editable'] and m['semantic_design']
+          m=get('/api/multiwrite/status'); assert m['ok'] and m['editable'] and m['semantic_design']
           w=post('/api/workspace',{'op':'design_decision','page_id':'multiwrite-home','decision':{'color':'watch-night','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}})
-          p=next(x for x in w['pages'] if x['id']=='multiwrite-home')
-          assert p['design']['decision']['color']=='watch-night'
+          p=next(x for x in w['pages'] if x['id']=='multiwrite-home'); assert p['design']['decision']['color']=='watch-night'
           w=post('/api/workspace',{'op':'design_decision','page_id':'multiwrite-home','decision':{'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}})
-          p=next(x for x in w['pages'] if x['id']=='multiwrite-home')
-          assert p['design']['decision']=={'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}
+          p=next(x for x in w['pages'] if x['id']=='multiwrite-home'); assert p['design']['decision']=={'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}
           print('DORE_MULTIWRITE_INTEGRATION_PASS')
           PY
+      - name: DORÉ Design 2.0 Phase 4 5 and 6 resident acceptance
+        shell: bash
+        run: |
+          set -euo pipefail
+          export DORE_DESIGN_DATA="${{ runner.temp }}/dore-design2-http"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/dore-design2-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/dore-design2-recommendations.json"
+          export DORE_DESIGN_PORT=4310
+          python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py
+          python3 dore-design/workspace_cli.py get >/tmp/dd2-workspace.json
+          python3 dore-design/upgrade_living_fortress_v2.py >/tmp/dd2-upgrade.json
+          python3 dore-design/app_design2.py >/tmp/dd2-http.log 2>&1 &
+          pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          sleep 1
+          curl -fsS http://127.0.0.1:4310/api/health >/tmp/dd2-health.json
+          python3 -c "import json; h=json.load(open('/tmp/dd2-health.json')); assert h['version']=='2.0-dev-phase4' and h['resident_entrypoint']=='app_design2.py' and h['immutable_publication'] is True"
+          python3 dore-design/design2_http_acceptance.py
+          python3 dore-design/design2_phase5_acceptance.py
+          python3 dore-design/design2_phase6_acceptance.py
       - name: macOS installer static contract
         run: |
           bash -n dore-design/install-macos.sh
-          grep -q 'dore-design/app_visual_v2.py' dore-design/install-macos.sh
+          grep -q 'dore-design/app_design2.py' dore-design/install-macos.sh
+          ! grep -q 'APP=.*app_visual_v2.py' dore-design/install-macos.sh
       - name: Acceptance gate
         run: echo DORE_DESIGN_PRODUCT_ACCEPTANCE_PASS
