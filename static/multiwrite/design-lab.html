@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DORÉ · 多寫設計試驗室</title>
+  <link rel="stylesheet" href="./design-lab.css?v=20260905-1">
+</head>
+<body>
+  <header class="lab-topbar">
+    <a href="/multiwrite/" class="lab-back">← 多寫</a>
+    <div class="lab-title"><strong>DORÉ</strong><span>多寫 · 設計試驗室</span></div>
+    <div class="lab-state" id="saveState">本機試驗</div>
+  </header>
+
+  <main class="lab-layout">
+    <aside class="lab-panel">
+      <section class="lab-intro">
+        <p class="eyebrow">DESIGN BY MEANING</p>
+        <h1>不要先改 CSS。<br>先決定它是什麼。</h1>
+        <p>這個樣板把設計操作改成多雷可理解的語義：色彩角色、層級、中央軸、密度與邊線。每次選擇都立即作用在右側頁面。</p>
+      </section>
+
+      <section class="dore-recommendation">
+        <div class="recommend-head"><span>DORÉ RECOMMENDS</span><button id="applyDore" type="button">套用</button></div>
+        <strong>Living Paper · Quiet · Centered</strong>
+        <p>理由：首屏是「顯現」，第二頁是「承載」。金色應留給首屏與強調，正文區回到紙；標題低於 slogan；中央軸延續 Gate 的傳統。</p>
+      </section>
+
+      <div class="control-group">
+        <label for="colorRole">背景角色</label>
+        <select id="colorRole">
+          <option value="paper">Living Paper · 活紙</option>
+          <option value="first-light">First Light · 初光</option>
+          <option value="watch-night">Watch Night · 守望夜</option>
+          <option value="olive">Olive Branch · 橄欖</option>
+        </select>
+        <small id="colorReason">紙承載正文；讓首屏的金保有稀缺性。</small>
+      </div>
+
+      <div class="control-group">
+        <label for="hierarchy">標題層級</label>
+        <select id="hierarchy">
+          <option value="quiet">Quiet · 次於 slogan</option>
+          <option value="equal">Equal · 接近 slogan</option>
+          <option value="display">Display · 章節式</option>
+        </select>
+        <small>首頁第二屏預設不應壓過首屏品牌宣言。</small>
+      </div>
+
+      <div class="control-group">
+        <label for="axis">版面軸線</label>
+        <select id="axis">
+          <option value="center">Centered · Gate 中央軸</option>
+          <option value="editorial">Editorial · 編輯式偏置</option>
+        </select>
+        <small>中央軸是 Gate → DORÉ → 多寫可以延續的家族語法。</small>
+      </div>
+
+      <div class="control-group">
+        <label for="density">空間密度</label>
+        <input id="density" type="range" min="0" max="2" step="1" value="1">
+        <div class="ticks"><span>緊</span><span>平衡</span><span>鬆</span></div>
+      </div>
+
+      <div class="control-group">
+        <label for="lineStrength">邊線強度</label>
+        <input id="lineStrength" type="range" min="0" max="2" step="1" value="1">
+        <div class="ticks"><span>無</span><span>淡</span><span>明</span></div>
+      </div>
+
+      <div class="lab-actions">
+        <button id="resetDesign" type="button">恢復多雷推薦</button>
+        <button id="copyState" type="button" class="primary">複製設計決策</button>
+      </div>
+
+      <details class="css-output">
+        <summary>查看系統生成的 CSS</summary>
+        <pre id="cssText"></pre>
+      </details>
+    </aside>
+
+    <section class="lab-canvas" aria-label="即時設計預覽">
+      <div class="device-label">LIVE PRODUCT PREVIEW</div>
+      <article class="prototype" id="prototype" data-color="paper" data-hierarchy="quiet" data-axis="center" data-density="1" data-lines="1">
+        <section class="proto-hero">
+          <p class="proto-overline">DORÉ</p>
+          <h2>多寫</h2>
+          <p class="proto-slogan">讓所寫的，成為書。<span>Write on. Make it a book.</span></p>
+        </section>
+        <section class="proto-story">
+          <div class="story-head">
+            <p class="story-number">01</p>
+            <p class="story-eyebrow">THE WRITING PLACE</p>
+            <h3>寫作、閱讀與成書，<br>在同一個地方發生。</h3>
+            <p class="story-copy">不是先寫成一份文件，再把文件交給出版。你打開的是正在成形的書；讀到哪裡，就可以從哪裡繼續。</p>
+          </div>
+          <div class="story-path">
+            <article><span>I</span><h4>回歸</h4><p>多年以前寫下的，不必重新開始。原稿仍是原稿。</p></article>
+            <article><span>II</span><h4>更新</h4><p>章節不是檔案清單，而是一本可以閱讀的書。</p></article>
+            <article><span>III</span><h4>成書</h4><p>字體、紙張、頁邊與輸出，都從同一份書稿出發。</p></article>
+          </div>
+        </section>
+      </article>
+    </section>
+  </main>
+
+  <script type="module" src="./design-lab.js?v=20260905-1"></script>
+</body>
+</html>
