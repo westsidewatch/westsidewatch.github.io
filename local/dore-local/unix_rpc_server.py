@@ -7,7 +7,6 @@ import ctypes
 import json
 import os
 import socket
-import sys
 from pathlib import Path
 
 import native_host
@@ -36,14 +35,30 @@ def _launchd_socket() -> socket.socket:
     return sock
 
 
+def _peer_uid(fd: int) -> int | None:
+    """Read the peer euid from a connected BSD socket on macOS."""
+    libc = ctypes.CDLL(None)
+    fn = getattr(libc, "getpeereid", None)
+    if fn is None:
+        return None
+    euid = ctypes.c_uint(0)
+    egid = ctypes.c_uint(0)
+    fn.argtypes = [ctypes.c_int, ctypes.POINTER(ctypes.c_uint), ctypes.POINTER(ctypes.c_uint)]
+    fn.restype = ctypes.c_int
+    if fn(fd, ctypes.byref(euid), ctypes.byref(egid)) != 0:
+        return None
+    return int(euid.value)
+
+
 def _peer_allowed(writer: asyncio.StreamWriter) -> bool:
     sock = writer.get_extra_info("socket")
     if sock is None:
         return False
-    getter = getattr(sock, "getpeereid", None)
-    if getter is None:
-        return sys.platform != "darwin"
-    uid, _gid = getter()
+    uid = _peer_uid(sock.fileno())
+    if uid is None:
+        # CI and non-macOS contract tests do not have getpeereid(3); the actual
+        # production target is macOS where failure to resolve the peer is deny.
+        return os.uname().sysname != "Darwin"
     return uid == os.getuid()
 
 
