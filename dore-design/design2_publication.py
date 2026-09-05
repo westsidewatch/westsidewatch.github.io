@@ -1,7 +1,7 @@
 """Candidate registry and promotion metadata for DORÉ DESIGN 2.0 Phase 4."""
 import json,os,tempfile
 from pathlib import Path
-import design2_snapshot
+import design2_snapshot,design2_validation
 
 def _atomic_json(path,data):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -14,9 +14,10 @@ def _atomic_json(path,data):
 
 def create_candidate(workspace,page_id,registry_path):
     snap=design2_snapshot.snapshot(workspace,page_id)
+    validation=design2_validation.validate_snapshot(snap)
     reg=_load(registry_path)
     cid=f"{page_id}-r{snap['revision']}-{snap['sha256'][:12]}"
-    row={'id':cid,'status':'candidate','snapshot':snap}
+    row={'id':cid,'status':'validated' if validation['ok'] else 'rejected','snapshot':snap,'validation':validation}
     reg.setdefault('candidates',{})[cid]=row
     _atomic_json(registry_path,reg)
     return row
@@ -24,12 +25,12 @@ def create_candidate(workspace,page_id,registry_path):
 def promote(candidate_id,registry_path):
     reg=_load(registry_path);row=(reg.get('candidates') or {}).get(candidate_id)
     if not row: raise ValueError('candidate_not_found')
-    if not design2_snapshot.verify(row['snapshot']): raise ValueError('invalid_snapshot')
+    validation=design2_validation.require_valid(row['snapshot'])
     previous=reg.get('current_release')
-    release={'candidate_id':candidate_id,'page_id':row['snapshot']['page_id'],'revision':row['snapshot']['revision'],'sha256':row['snapshot']['sha256'],'previous':previous}
+    release={'candidate_id':candidate_id,'page_id':row['snapshot']['page_id'],'revision':row['snapshot']['revision'],'sha256':row['snapshot']['sha256'],'previous':previous,'validation':validation}
     reg['last_known_good']=previous or reg.get('last_known_good')
     reg['current_release']=release
-    row['status']='published'
+    row['status']='published';row['validation']=validation
     _atomic_json(registry_path,reg)
     return release
 
