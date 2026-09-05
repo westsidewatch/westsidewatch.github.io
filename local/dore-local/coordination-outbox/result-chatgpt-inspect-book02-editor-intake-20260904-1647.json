@@ -1,0 +1,33 @@
+{
+  "body": "{\"source_message_id\": \"chatgpt-inspect-book02-editor-intake-20260904-1647\", \"task_status\": \"LEARNING\", \"attempt\": 1, \"terminal\": false, \"transport\": \"PASS\", \"execution\": \"FAIL\", \"product_monitor\": {\"ok\": true, \"returncode\": 0, \"stderr\": \"\", \"product_monitor\": \"WARN\", \"journal_cover_wall\": {\"journal_live\": false, \"cover_wall_required_by_source\": true, \"cover_wall_dom_present\": false, \"cover_wall_reference_present\": false, \"cover_wall_asset_served\": false}, \"alerts\": [{\"code\": \"JOURNAL_COVER_ASSET_MISSING\", \"severity\": \"warning\", \"asset\": \"/images/jerusalem-wall.png\", \"http_status\": 404}, {\"code\": \"JOURNAL_COVER_ASSET_NOT_BOUND\", \"severity\": \"warning\", \"asset\": \"/images/jerusalem-wall.png\"}]}, \"result\": {\"ok\": false, \"state\": \"RESEARCH_QUEUED\", \"learning\": {\"loop\": \"dore.autonomous-capability-loop.v0.1\", \"message_id\": \"chatgpt-inspect-book02-editor-intake-20260904-1647\", \"parent_goal\": \"publishing-book02-manuscript-intake\", \"observed_at\": \"2026-09-05T04:08:44.818751+00:00\", \"state\": \"RESEARCH_REQUIRED\", \"parent_goal_preserved\": true, \"failure_fingerprint\": \"RuntimeError: completion_contract_required_for_local_exec\", \"retry_parent\": false, \"knowledge_request\": {\"question\": \"Find a mature, evidence-backed way to resolve this capability gap, create a minimal reusable Doré skill, verify it in isolation, then resume the preserved parent goal.\", \"failure\": \"RuntimeError: completion_contract_required_for_local_exec\", \"reuse_before_rebuild\": true}, \"evidence_path\": \"/Users/chenjingyu/.dore/coordination/learning/chatgpt-inspect-book02-editor-intake-20260904-1647.json\"}, \"goal_queue\": {\"goal_id\": \"chatgpt-inspect-book02-editor-intake-20260904-1647\", \"status\": \"PENDING\"}, \"original_failure\": {\"ok\": false, \"error\": \"RuntimeError: completion_contract_required_for_local_exec\", \"parent_goal_preserved\": true, \"learning\": {\"loop\": \"dore.autonomous-capability-loop.v0.1\", \"message_id\": \"chatgpt-inspect-book02-editor-intake-20260904-1647\", \"parent_goal\": \"publishing-book02-manuscript-intake\", \"observed_at\": \"2026-09-05T04:08:44.818751+00:00\", \"state\": \"RESEARCH_REQUIRED\", \"parent_goal_preserved\": true, \"failure_fingerprint\": \"RuntimeError: completion_contract_required_for_local_exec\", \"retry_parent\": false, \"knowledge_request\": {\"question\": \"Find a mature, evidence-backed way to resolve this capability gap, create a minimal reusable Doré skill, verify it in isolation, then resume the preserved parent goal.\", \"failure\": \"RuntimeError: completion_contract_required_for_local_exec\", \"reuse_before_rebuild\": true}, \"evidence_path\": \"/Users/chenjingyu/.dore/coordination/learning/chatgpt-inspect-book02-editor-intake-20260904-1647.json\"}}, \"parent_goal_preserved\": true, \"handoff_to_resident_runtime\": true}}",
+  "created_at": "2026-09-05T04:08:44.869458+00:00",
+  "evidence_refs": [
+    "coordination-hardening-v1",
+    "product-invariant-monitor",
+    "autonomous-capability-loop",
+    "resident-goal-queue",
+    "research-bridge-executable",
+    "dore-local-exec",
+    "local-self-repair",
+    "research-required",
+    "goal-queue-handoff",
+    "source-message:chatgpt-inspect-book02-editor-intake-20260904-1647"
+  ],
+  "message_id": "result-chatgpt-inspect-book02-editor-intake-20260904-1647",
+  "message_sha256": "62894d3583f80b7d8fb167125b817a9e38d4ea86ffdd12dddd998b91639b98a5",
+  "metadata": {
+    "attempt": 1,
+    "product_monitor": "WARN",
+    "source_message_id": "chatgpt-inspect-book02-editor-intake-20260904-1647",
+    "task_status": "LEARNING",
+    "terminal": false
+  },
+  "priority": "high",
+  "recipient": "chatgpt",
+  "related_goal": "publishing-book02-manuscript-intake",
+  "requires_reply": false,
+  "schema": "dore.mail.v2",
+  "sender": "dore",
+  "subject": "Doré execution: Inspect live Book 02 publishing editor before exact intake",
+  "thread_id": "e394a2b9-165c-46db-9edc-ba61f3a29b60"
+}
