@@ -19,8 +19,9 @@ MODEL_DIR="$IMAGE_HOME/models"
 MODEL_NAME="stable-diffusion-v1-4-Q4_0.gguf"
 MODEL_PATH="$MODEL_DIR/$MODEL_NAME"
 MODEL_URL="${DORE_IMAGE_MODEL_URL:-https://huggingface.co/second-state/stable-diffusion-v-1-4-GGUF/resolve/main/stable-diffusion-v1-4-Q4_0.gguf}"
+TOOLCHAIN="$IMAGE_HOME/toolchain"
 
-mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs" "$IMAGE_HOME" "$MODEL_DIR" "$(dirname "$SDCPP_HOME")"
+mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs" "$IMAGE_HOME" "$MODEL_DIR" "$(dirname "$SDCPP_HOME")" "$TOOLCHAIN"
 touch "$DORE/logs/image-local.log" "$DORE/logs/image-local.err.log" "$DORE/logs/comfyui.log" "$DORE/logs/comfyui.err.log"
 
 probe_comfy(){ curl -fsS --max-time 2 http://127.0.0.1:8188/system_stats >/dev/null 2>&1 || curl -fsS --max-time 2 http://127.0.0.1:8188/ >/dev/null 2>&1; }
@@ -32,6 +33,19 @@ try:
   print(choices[0] if isinstance(choices,list) and choices else '')
 except Exception: print('')
 PY
+}
+
+resolve_cmake(){
+  if command -v cmake >/dev/null 2>&1; then command -v cmake; return 0; fi
+  if [ -x "/Applications/CMake.app/Contents/bin/cmake" ]; then echo "/Applications/CMake.app/Contents/bin/cmake"; return 0; fi
+  local pyroot="$TOOLCHAIN/python"
+  local private_cmake="$pyroot/cmake/data/bin/cmake"
+  if [ ! -x "$private_cmake" ]; then
+    "$PY" -m pip --version >/dev/null 2>&1 || "$PY" -m ensurepip --user >/dev/null 2>&1 || true
+    "$PY" -m pip install --disable-pip-version-check --no-input --upgrade --target "$pyroot" "cmake==3.31.6" >&2
+  fi
+  [ -x "$private_cmake" ] || return 1
+  echo "$private_cmake"
 }
 
 # Reuse an already healthy ComfyUI installation when it truly has a checkpoint.
@@ -64,7 +78,9 @@ EOF
 else
   # No model-backed renderer exists: self-equip stable-diffusion.cpp instead of
   # silently falling through to the decorative SVG emergency renderer.
-  for cmd in git cmake curl; do command -v "$cmd" >/dev/null 2>&1 || { echo "ERROR: required build tool missing: $cmd" >&2; exit 30; }; done
+  for cmd in git curl; do command -v "$cmd" >/dev/null 2>&1 || { echo "ERROR: required tool missing: $cmd" >&2; exit 30; }; done
+  CMAKE_BIN="$(resolve_cmake)" || { echo "ERROR: unable to self-equip cmake" >&2; exit 30; }
+  "$CMAKE_BIN" --version | head -1
   if [ ! -d "$SDCPP_HOME/.git" ]; then
     rm -rf "$SDCPP_HOME"
     git clone --recursive --depth 1 --branch "$SDCPP_REF" https://github.com/leejet/stable-diffusion.cpp.git "$SDCPP_HOME"
@@ -74,8 +90,8 @@ else
     git -C "$SDCPP_HOME" submodule update --init --recursive --depth 1
   fi
   if [ ! -x "$SDCPP_BIN" ]; then
-    cmake -S "$SDCPP_HOME" -B "$SDCPP_HOME/build" -DCMAKE_BUILD_TYPE=Release -DSD_WEBP=OFF -DSD_WEBM=OFF -DGGML_METAL=OFF
-    cmake --build "$SDCPP_HOME/build" --config Release --target sd-cli -j 2
+    "$CMAKE_BIN" -S "$SDCPP_HOME" -B "$SDCPP_HOME/build" -DCMAKE_BUILD_TYPE=Release -DSD_WEBP=OFF -DSD_WEBM=OFF -DGGML_METAL=OFF
+    "$CMAKE_BIN" --build "$SDCPP_HOME/build" --config Release --target sd-cli -j 2
   fi
   [ -x "$SDCPP_BIN" ] || { echo "ERROR: stable-diffusion.cpp build did not produce sd-cli" >&2; exit 31; }
   if [ ! -f "$MODEL_PATH" ] || [ "$(wc -c < "$MODEL_PATH" | tr -d ' ')" -lt 1000000000 ]; then
