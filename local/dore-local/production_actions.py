@@ -5,7 +5,7 @@ import json, os, subprocess
 from pathlib import Path
 from urllib import request
 
-CAPABILITIES={"design.production.rollout"}
+CAPABILITIES={"design.production.rollout","search.local.repair"}
 
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
     child_env=os.environ.copy()
@@ -13,38 +13,44 @@ def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->
     p=subprocess.run(argv,cwd=str(cwd) if cwd else None,text=True,capture_output=True,timeout=timeout,env=child_env)
     return {"argv":argv,"returncode":p.returncode,"stdout":p.stdout[-8000:],"stderr":p.stderr[-8000:]}
 
-def _health()->dict:
-    with request.urlopen("http://127.0.0.1:4310/api/health",timeout=5) as r:
-        return json.loads(r.read().decode("utf-8"))
+def _repo()->Path:
+    return Path(os.environ.get("DORE_WORKTREE") or os.environ.get("DORE_REPO_ROOT") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
+
+def _json(url:str,timeout:int=5)->dict:
+    with request.urlopen(url,timeout=timeout) as r:return json.loads(r.read().decode("utf-8"))
+
+def _health()->dict:return _json("http://127.0.0.1:4310/api/health")
+
+def _sync(repo:Path)->dict|None:
+    if not (repo/".git").exists():return {"ok":False,"status":"failed","error":{"code":"worktree_missing","message":str(repo)}}
+    fetch=_run(["git","fetch","origin","main"],repo)
+    if fetch["returncode"]:return {"ok":False,"status":"failed","step":"fetch","result":fetch}
+    ff=_run(["git","merge","--ff-only","origin/main"],repo)
+    if ff["returncode"]:return {"ok":False,"status":"failed","step":"fast_forward","result":ff}
+    return None
 
 def design_production_rollout(args:dict|None=None)->dict:
-    repo=Path(
-        os.environ.get("DORE_WORKTREE")
-        or os.environ.get("DORE_REPO_ROOT")
-        or Path.home()/"westsidewatch.github.io"
-    ).expanduser().resolve()
-    if not (repo/".git").exists():
-        return {"ok":False,"status":"failed","error":{"code":"worktree_missing","message":str(repo)}}
-    fetch=_run(["git","fetch","origin","main"],repo)
-    if fetch["returncode"]: return {"ok":False,"status":"failed","step":"fetch","result":fetch}
-    ff=_run(["git","merge","--ff-only","origin/main"],repo)
-    if ff["returncode"]: return {"ok":False,"status":"failed","step":"fast_forward","result":ff}
-    install=_run(
-        ["bash",str(repo/"dore-design"/"install-macos.sh")],
-        repo,
-        env={"DORE_SKIP_CONTROL_PLANE_REFRESH":"1"},
-    )
-    if install["returncode"]: return {"ok":False,"status":"failed","step":"install","result":install}
-    health=_health()
-    specimen={}
-    try:
-        with request.urlopen("http://127.0.0.1:4310/api/design2/specimen",timeout=5) as r:
-            specimen=json.loads(r.read().decode("utf-8"))
-    except Exception as exc:
-        specimen={"ok":False,"error":str(exc)}
+    repo=_repo();err=_sync(repo)
+    if err:return err
+    install=_run(["bash",str(repo/"dore-design"/"install-macos.sh")],repo,env={"DORE_SKIP_CONTROL_PLANE_REFRESH":"1"})
+    if install["returncode"]:return {"ok":False,"status":"failed","step":"install","result":install}
+    health=_health();specimen={}
+    try:specimen=_json("http://127.0.0.1:4310/api/design2/specimen")
+    except Exception as exc:specimen={"ok":False,"error":str(exc)}
     ok=bool(health.get("ok") and health.get("resident_entrypoint")=="app_design2.py" and health.get("immutable_publication") is True and specimen.get("ok"))
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"design.production.rollout","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"specimen":specimen,"install_tail":install["stdout"][-2000:]}
 
+def search_local_repair(args:dict|None=None)->dict:
+    repo=_repo();err=_sync(repo)
+    if err:return err
+    install=_run(["bash",str(repo/"local"/"dore-local"/"install-launchagent.sh")],repo,env={"DORE_REPO_ROOT":str(repo)},timeout=180)
+    if install["returncode"]:return {"ok":False,"status":"failed","step":"install","result":install}
+    try:health=_json("http://127.0.0.1:8788/health")
+    except Exception as exc:return {"ok":False,"status":"failed","step":"health","error":str(exc),"install_tail":install["stdout"][-2000:]}
+    ok=bool(health.get("ok") and health.get("search_loopback") is True)
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"search.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"install_tail":install["stdout"][-2000:]}
+
 def execute(capability:str,args:dict|None=None)->dict:
-    if capability=="design.production.rollout": return design_production_rollout(args)
+    if capability=="design.production.rollout":return design_production_rollout(args)
+    if capability=="search.local.repair":return search_local_repair(args)
     return {"ok":False,"status":"failed","error":{"code":"unsupported_production_action","message":capability}}
