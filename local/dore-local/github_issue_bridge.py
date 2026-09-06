@@ -19,7 +19,7 @@ PROTOCOL = "dore.a2a/1"
 TITLE_PREFIX = "[DORÉ A2A]"
 CAP_RE = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
 MAX_COMMENT_BYTES = 60000
-LONG_CAPABILITIES = {"design.production.rollout", "search.local.repair", "image.local.repair"}
+LONG_CAPABILITIES = {"design.production.rollout", "search.local.repair", "image.local.repair", "wake.runtime.install"}
 
 
 def fail(message: str) -> dict:
