@@ -11,10 +11,13 @@ import multipage_wysiwyg,journal_wysiwyg
 import multiwrite_wysiwyg
 import promotion_pipeline
 import design2_ui
+import design2_snap_guides
 multipage_wysiwyg.SUPPORTED.add('multiwrite-home')
 _original_render_canvas=multipage_wysiwyg.render_canvas
 def _render_canvas(page_id='homepage',edit=False):
-    if page_id=='multiwrite-home':return multiwrite_wysiwyg.render_canvas(edit=edit)
+    if page_id=='multiwrite-home':
+        html=multiwrite_wysiwyg.render_canvas(edit=edit)
+        return design2_snap_guides.augment(html) if edit else html
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
 multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home'])")
@@ -65,7 +68,7 @@ class H(visual.H):
         if path=='/api/multiwrite/status':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(p),'page_id':'multiwrite-home','editable':True,'semantic_design':bool(p and p.get('design')),'design':p.get('design') if p else None,'editor':'/editor?page=multiwrite-home','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
         if path=='/api/health':
-            w=visual.base.workspace();multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(multiwrite),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home'})
+            w=visual.base.workspace();multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(multiwrite),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home'})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
