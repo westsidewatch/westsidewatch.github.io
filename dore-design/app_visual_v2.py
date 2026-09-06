@@ -11,6 +11,7 @@ import design2_layer_ops
 design2_layer_ops.install(visual.base)
 import design2_multiwrite_cover
 design2_multiwrite_cover.ensure(visual.base)
+import design2_cover_render
 import multipage_wysiwyg,journal_wysiwyg
 import multiwrite_wysiwyg
 import promotion_pipeline
@@ -27,6 +28,10 @@ def _render_canvas(page_id='homepage',edit=False):
         if edit:
             html=design2_snap_guides.augment(html)
             html=design2_canvas_state.augment(html)
+        return html
+    if page_id=='multiwrite-cover':
+        html=design2_cover_render.render(visual.base,page_id,edit=edit)
+        if edit: html=design2_canvas_state.augment(html)
         return html
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
