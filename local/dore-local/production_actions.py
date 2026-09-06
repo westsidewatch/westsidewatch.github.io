@@ -63,7 +63,7 @@ def image_local_repair(args:dict|None=None)->dict:
     if install["returncode"]:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"install","result":install}
     try:health=_json("http://127.0.0.1:8790/health",10)
     except Exception as exc:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"health","error":str(exc),"install_tail":install["stdout"][-2000:]}
-    if not (health.get("ok") and health.get("renderer") is True and health.get("config") is True):
+    if not (health.get("ok") and health.get("renderer") is True and (health.get("native_svg") is True or health.get("config") is True)):
         return {"ok":False,"status":"failed","capability":"image.local.repair","step":"renderer_ready","health":health,"install_tail":install["stdout"][-2000:]}
     try:
         generated=_post_json("http://127.0.0.1:8790/generate",{"message":"生成一張極簡測試圖片，大量留白"},{"X-Dore-Origin":"dore-search"},240)
