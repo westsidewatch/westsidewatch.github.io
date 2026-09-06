@@ -1,4 +1,4 @@
-"""Resident HTTP integration for DORÉ DESIGN 2.0 Phase 4."""
+"""Resident HTTP integration for DORÉ DESIGN 2.0 publication + production health."""
 import json,os
 from pathlib import Path
 from urllib.parse import urlparse,parse_qs
@@ -31,26 +31,22 @@ def install(handler_cls,base,root):
     def do_GET(self):
         u=urlparse(self.path);path=u.path;q=parse_qs(u.query)
         if path=='/api/health':
-            w=base.workspace()
-            reg=design2_publication._load(registry)
+            w=base.workspace();reg=design2_publication._load(registry)
+            try:
+                import design2_closeout_acceptance
+                closeout=design2_closeout_acceptance.check(base)
+            except Exception as e:
+                closeout={'ok':False,'error':type(e).__name__+': '+str(e)}
             return self.out(200,{
-                'ok':True,
-                'service':'dore-design',
-                'version':'2.0-dev-phase4',
-                'workspace_id':w.get('id'),
-                'revision':w.get('revision'),
-                'source_of_truth':'structured-workspace',
-                'resident_entrypoint':'app_design2.py',
-                'canonical_renderer':True,
-                'immutable_publication':True,
-                'save_publish_separated':True,
-                'rollback':True,
-                'current_release':reg.get('current_release'),
-                'fallback_entrypoint':'app_visual_v2.py',
+                'ok':bool(closeout.get('ok')),
+                'service':'dore-design','version':'2.0-production','phase':7,
+                'workspace_id':w.get('id'),'revision':w.get('revision'),
+                'source_of_truth':'structured-workspace','resident_entrypoint':'app_design2.py',
+                'canonical_renderer':True,'immutable_publication':True,'save_publish_separated':True,'rollback':True,
+                'current_release':reg.get('current_release'),'fallback_entrypoint':'app_visual_v2.py','closeout':closeout,
             })
         if path=='/api/design2/publication':
-            reg=design2_publication._load(registry)
-            return self.out(200,{'ok':True,'registry':reg})
+            reg=design2_publication._load(registry);return self.out(200,{'ok':True,'registry':reg})
         if path=='/api/design2/preview':
             cid=(q.get('candidate') or [''])[0];row=candidate_row(cid)
             if not row:return self.out(404,{'ok':False,'error':'candidate_not_found'})
@@ -61,8 +57,7 @@ def install(handler_cls,base,root):
             if not rel:return self.out(404,{'ok':False,'error':'no_published_release'})
             row=candidate_row(rel.get('candidate_id'))
             if not row:return self.out(500,{'ok':False,'error':'published_candidate_missing'})
-            html=design2_renderer.render_snapshot(row['snapshot'])
-            manifest=rel.get('staging') or {}
+            html=design2_renderer.render_snapshot(row['snapshot']);manifest=rel.get('staging') or {}
             if not design2_staging.same_render(manifest,html):return self.out(500,{'ok':False,'error':'published_render_hash_mismatch'})
             return send_html(self,html)
         return original_get(self)
@@ -81,10 +76,7 @@ def install(handler_cls,base,root):
                 p=body(self);cid=p.get('candidate_id');row=candidate_row(cid)
                 if not row:raise ValueError('candidate_not_found')
                 if int(p.get('revision',-1))!=int(row['snapshot']['revision']):raise ValueError('publish_revision_mismatch')
-                target=p.get('target')
-                html=design2_renderer.render_snapshot(row['snapshot'])
-                manifest=design2_staging.build_manifest(row,target,html)
-                release=design2_publication.promote(cid,registry,manifest)
+                html=design2_renderer.render_snapshot(row['snapshot']);manifest=design2_staging.build_manifest(row,p.get('target'),html);release=design2_publication.promote(cid,registry,manifest)
                 return self.out(200,{'ok':True,'release':release,'published':'/design2/published'})
             except Exception as e:return self.out(400,{'ok':False,'error':str(e)})
         if path=='/api/design2/rollback':
