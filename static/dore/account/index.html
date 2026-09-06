@@ -33,13 +33,13 @@
 <input id="email" name="email" type="email" autocomplete="email" placeholder="name@example.com" required>
 <button class="email-submit" type="submit">發送驗證連結</button>
 </form>
-<p class="note" id="status" role="status">身份服務尚未配置；完成 Supabase 公開設定與 Google／Apple 等提供者設定後，登入按鈕即可啟用。</p>
+<p class="note" id="status" role="status">身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。</p>
 <p class="legal">DORÉ 不收集 Google 或 Apple 密碼。OAuth/OIDC、驗證連結與 session 由正式身份服務處理。</p>
 </section>
 </main>
 <footer class="footer">Westside Watch · DORÉ</footer>
 </div>
-<script>window.DORE_AUTH_CONFIG={url:"{{ getenv \"DoreAuthURL\" }}",publishableKey:"{{ getenv \"DoreAuthPublishableKey\" }}"};</script>
+<script>window.DORE_AUTH_CONFIG=window.DORE_AUTH_CONFIG||{url:"",publishableKey:""};</script>
 <script src="/dore/account/auth.js" defer></script>
 </body>
 </html>
