@@ -16,6 +16,8 @@
     github: 'github'
   };
 
+  const SUPABASE_JS_URL = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0';
+  const ACCOUNT_URL = window.location.origin + '/dore/account/';
   let client = null;
 
   function message(text) {
@@ -30,12 +32,23 @@
     if (form) form.hidden = signedIn;
   }
 
+  function showAuthErrorFromRedirect() {
+    const hash = window.location.hash.startsWith('#') ? window.location.hash.slice(1) : '';
+    if (!hash) return false;
+    const params = new URLSearchParams(hash);
+    const error = params.get('error_description') || params.get('error');
+    if (!error) return false;
+    message('登入未完成：' + error.replace(/\+/g, ' '));
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.search);
+    return true;
+  }
+
   async function loadClient() {
     if (!config.url || !config.publishableKey) return null;
     if (!window.supabase) {
       await new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+        script.src = SUPABASE_JS_URL;
         script.onload = resolve;
         script.onerror = reject;
         document.head.appendChild(script);
@@ -72,7 +85,7 @@
       message('正在前往登入服務……');
       const { error } = await auth.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: window.location.origin + '/dore/account/' }
+        options: { redirectTo: ACCOUNT_URL }
       });
       if (error) message(error.message);
     } catch (error) {
@@ -100,7 +113,7 @@
         const { error } = await auth.auth.signInWithOtp({
           email: email.value.trim(),
           options: {
-            emailRedirectTo: window.location.origin + '/dore/account/',
+            emailRedirectTo: ACCOUNT_URL,
             shouldCreateUser: true
           }
         });
@@ -127,10 +140,11 @@
 
   (async function init() {
     try {
+      const redirectError = showAuthErrorFromRedirect();
       const auth = await loadClient();
       if (!auth) {
         setAuthenticated(null);
-        message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
+        if (!redirectError) message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
         return;
       }
       auth.auth.onAuthStateChange((event, session) => {
@@ -139,6 +153,7 @@
         if (event === 'SIGNED_OUT') message('已登出。');
       });
       await refreshSession();
+      if (redirectError) message('登入未完成，請重新選擇登入方式。');
     } catch (error) {
       setAuthenticated(null);
       message('身份服務載入失敗，請稍後再試。');
