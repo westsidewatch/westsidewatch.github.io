@@ -1,0 +1,32 @@
+name: DORÉ Wake Runtime
+
+on:
+  push:
+    paths:
+      - 'dore-core/runtime/wake_runtime.py'
+      - 'dore-core/runtime/install_wake_launchd.py'
+      - 'dore-core/tests/test_wake_runtime.py'
+      - '.github/workflows/dore-wake-runtime.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Run wake runtime tests
+        run: python -m unittest dore-core/tests/test_wake_runtime.py -v
+      - name: Smoke durable queue
+        run: |
+          DB="$RUNNER_TEMP/dore-wake.sqlite3"
+          python dore-core/runtime/wake_runtime.py --db "$DB" init
+          python dore-core/runtime/wake_runtime.py --db "$DB" enqueue --kind probe --idempotency-key ci-smoke --payload-json '{"argv":["python","-c","raise SystemExit(0)"]}'
+          python dore-core/runtime/wake_runtime.py --db "$DB" run-once --limit 1
+          python dore-core/runtime/wake_runtime.py --db "$DB" status | grep '"state": "passed"'
