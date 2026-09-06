@@ -9,6 +9,8 @@ import multiwrite_integration
 multiwrite_integration.install_workspace(visual.base)
 import design2_layer_ops
 design2_layer_ops.install(visual.base)
+import design2_multiwrite_cover
+design2_multiwrite_cover.ensure(visual.base)
 import multipage_wysiwyg,journal_wysiwyg
 import multiwrite_wysiwyg
 import promotion_pipeline
@@ -17,7 +19,7 @@ import design2_snap_guides
 import design2_layers_ui
 import design2_canvas_state
 import design2_arrange_ui
-multipage_wysiwyg.SUPPORTED.add('multiwrite-home')
+multipage_wysiwyg.SUPPORTED.update({'multiwrite-home','multiwrite-cover'})
 _original_render_canvas=multipage_wysiwyg.render_canvas
 def _render_canvas(page_id='homepage',edit=False):
     if page_id=='multiwrite-home':
@@ -28,7 +30,7 @@ def _render_canvas(page_id='homepage',edit=False):
         return html
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
-multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home'])")
+multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home','multiwrite-cover'])")
 multipage_wysiwyg.EDITOR_HTML=multiwrite_wysiwyg.augment_editor(multipage_wysiwyg.EDITOR_HTML)
 multipage_wysiwyg.EDITOR_HTML=design2_ui.install(multipage_wysiwyg.EDITOR_HTML)
 multipage_wysiwyg.EDITOR_HTML=design2_layers_ui.install(multipage_wysiwyg.EDITOR_HTML)
@@ -76,9 +78,9 @@ class H(visual.H):
         if path=='/api/coordination/status':return self.out(200,coordination_status())
         if path=='/api/candidates':return self.out(200,promotion_pipeline.list_candidates())
         if path=='/api/multiwrite/status':
-            w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(p),'page_id':'multiwrite-home','editable':True,'semantic_design':bool(p and p.get('design')),'design':p.get('design') if p else None,'editor':'/editor?page=multiwrite-home','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
+            w=visual.base.workspace();home=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);cover=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'page_id':'multiwrite-home','cover_page_id':'multiwrite-cover','editable':True,'semantic_design':bool(home and home.get('design')),'design':home.get('design') if home else None,'editor':'/editor?page=multiwrite-home','cover_editor':'/editor?page=multiwrite-cover','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
         if path=='/api/health':
-            w=visual.base.workspace();multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(multiwrite),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','layers':'reorder+visibility+lock','inspector':'geometry+arrange','arrange':'align+group','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home'})
+            w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);cover=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','layers':'reorder+visibility+lock','inspector':'geometry+arrange','arrange':'align+distribute+spacing+zorder+group','assets':'frame+local-image','multiwrite_cover':'editable-page','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_cover_editor':'/editor?page=multiwrite-cover'})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
