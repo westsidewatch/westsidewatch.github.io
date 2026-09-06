@@ -15,18 +15,24 @@ import promotion_pipeline
 import design2_ui
 import design2_snap_guides
 import design2_layers_ui
+import design2_canvas_state
+import design2_arrange_ui
 multipage_wysiwyg.SUPPORTED.add('multiwrite-home')
 _original_render_canvas=multipage_wysiwyg.render_canvas
 def _render_canvas(page_id='homepage',edit=False):
     if page_id=='multiwrite-home':
         html=multiwrite_wysiwyg.render_canvas(edit=edit)
-        return design2_snap_guides.augment(html) if edit else html
+        if edit:
+            html=design2_snap_guides.augment(html)
+            html=design2_canvas_state.augment(html)
+        return html
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
 multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home'])")
 multipage_wysiwyg.EDITOR_HTML=multiwrite_wysiwyg.augment_editor(multipage_wysiwyg.EDITOR_HTML)
 multipage_wysiwyg.EDITOR_HTML=design2_ui.install(multipage_wysiwyg.EDITOR_HTML)
 multipage_wysiwyg.EDITOR_HTML=design2_layers_ui.install(multipage_wysiwyg.EDITOR_HTML)
+multipage_wysiwyg.EDITOR_HTML=design2_arrange_ui.install(multipage_wysiwyg.EDITOR_HTML)
 ROOT=Path(__file__).resolve().parent.parent
 PACKAGE=journal_wysiwyg.PACKAGE
 COORD=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()/'coordination'
@@ -72,7 +78,7 @@ class H(visual.H):
         if path=='/api/multiwrite/status':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(p),'page_id':'multiwrite-home','editable':True,'semantic_design':bool(p and p.get('design')),'design':p.get('design') if p else None,'editor':'/editor?page=multiwrite-home','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
         if path=='/api/health':
-            w=visual.base.workspace();multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(multiwrite),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','layers':'reorder+visibility-state+lock-state','inspector':'geometry','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home'})
+            w=visual.base.workspace();multiwrite=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);return self.out(200,{'ok':bool(multiwrite),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','layers':'reorder+visibility+lock','inspector':'geometry+arrange','arrange':'align+group','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home'})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
