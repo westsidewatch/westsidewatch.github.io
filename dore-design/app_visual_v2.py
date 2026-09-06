@@ -1,23 +1,17 @@
 #!/usr/bin/env python3
-"""Doré Design resident product: structured workspace + Design 2.0 UI."""
+"""Doré Design 2.0 production resident product."""
 import json,mimetypes,os
 from pathlib import Path
 from http.server import ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs
 import app_visual as visual
-import multiwrite_integration
-multiwrite_integration.install_workspace(visual.base)
-import design2_layer_ops
-design2_layer_ops.install(visual.base)
-import design2_multiwrite_cover
-design2_multiwrite_cover.ensure(visual.base)
-import design2_cover_render,design2_cover_interaction,design2_cover_manifest,design2_cover_acceptance
-import multipage_wysiwyg,journal_wysiwyg
-import multiwrite_wysiwyg
-import promotion_pipeline
+import multiwrite_integration;multiwrite_integration.install_workspace(visual.base)
+import design2_layer_ops;design2_layer_ops.install(visual.base)
+import design2_multiwrite_cover;design2_multiwrite_cover.ensure(visual.base)
+import design2_cover_render,design2_cover_interaction,design2_cover_manifest,design2_cover_acceptance,design2_closeout_acceptance
+import multipage_wysiwyg,journal_wysiwyg,multiwrite_wysiwyg,promotion_pipeline
 import design2_ui,design2_snap_guides,design2_layers_ui,design2_canvas_state,design2_arrange_ui,design2_cover_asset_ui,design2_typography_ui
-multipage_wysiwyg.SUPPORTED.update({'multiwrite-home','multiwrite-cover'})
-_original_render_canvas=multipage_wysiwyg.render_canvas
+multipage_wysiwyg.SUPPORTED.update({'multiwrite-home','multiwrite-cover'});_original_render_canvas=multipage_wysiwyg.render_canvas
 def _render_canvas(page_id='homepage',edit=False):
     if page_id=='multiwrite-home':
         html=multiwrite_wysiwyg.render_canvas(edit=edit)
@@ -25,28 +19,22 @@ def _render_canvas(page_id='homepage',edit=False):
         return html
     if page_id=='multiwrite-cover':
         html=design2_cover_render.render(visual.base,page_id,edit=edit)
-        if edit:html=design2_cover_interaction.augment(html)
-        return html
+        return design2_cover_interaction.augment(html) if edit else html
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
 multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home','multiwrite-cover'])")
-multipage_wysiwyg.EDITOR_HTML=multiwrite_wysiwyg.augment_editor(multipage_wysiwyg.EDITOR_HTML)
-multipage_wysiwyg.EDITOR_HTML=design2_ui.install(multipage_wysiwyg.EDITOR_HTML)
-multipage_wysiwyg.EDITOR_HTML=design2_layers_ui.install(multipage_wysiwyg.EDITOR_HTML)
-multipage_wysiwyg.EDITOR_HTML=design2_arrange_ui.install(multipage_wysiwyg.EDITOR_HTML)
-multipage_wysiwyg.EDITOR_HTML=design2_cover_asset_ui.install(multipage_wysiwyg.EDITOR_HTML)
-multipage_wysiwyg.EDITOR_HTML=design2_typography_ui.install(multipage_wysiwyg.EDITOR_HTML)
+for installer in (multiwrite_wysiwyg.augment_editor,design2_ui.install,design2_layers_ui.install,design2_arrange_ui.install,design2_cover_asset_ui.install,design2_typography_ui.install):multipage_wysiwyg.EDITOR_HTML=installer(multipage_wysiwyg.EDITOR_HTML)
 ROOT=Path(__file__).resolve().parent.parent;PACKAGE=journal_wysiwyg.PACKAGE;COORD=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()/'coordination';STRUCTURE_HTML=visual.HTML
 PREVIEW_EDIT_ENTRY='''<style>.dore-preview-edit{position:fixed;right:18px;bottom:18px;z-index:2147483647;padding:9px 12px;background:#171814dd;color:#eee!important;text-decoration:none!important;font:10px ui-monospace,monospace}</style><a class="dore-preview-edit" href="/editor?page=homepage">Edit in Doré Design</a>'''
 def home_preview():return multipage_wysiwyg.render_canvas('homepage',edit=False).replace('</body>',PREVIEW_EDIT_ENTRY+'</body>',1)
 def safe_file(root,request_path):
     if not root.exists():return None
-    rel=request_path.lstrip('/');candidate=(root/rel).resolve();base=root.resolve()
+    candidate=(root/request_path.lstrip('/')).resolve();base=root.resolve()
     try:candidate.relative_to(base)
     except ValueError:return None
     if candidate.is_dir():candidate=candidate/'index.html'
     return candidate if candidate.is_file() else None
-def design_asset(request_path):return safe_file(PACKAGE,request_path) or safe_file(ROOT/'static',request_path)
+def design_asset(p):return safe_file(PACKAGE,p) or safe_file(ROOT/'static',p)
 def read_json(path):
     try:return json.loads(path.read_text()) if path.exists() else {}
     except:return {}
@@ -59,33 +47,30 @@ class H(visual.H):
         u=urlparse(self.path);path=u.path;q=parse_qs(u.query)
         if path=='/':return self.send_bytes(200,home_preview().encode(),'text/html; charset=utf-8')
         if path=='/editor':
-            active=(q.get('page') or ['homepage'])[0]
-            if active not in multipage_wysiwyg.SUPPORTED:active='homepage'
-            return self.send_bytes(200,multipage_wysiwyg.render_editor(active).encode(),'text/html; charset=utf-8')
+            active=(q.get('page') or ['homepage'])[0];active=active if active in multipage_wysiwyg.SUPPORTED else 'homepage';return self.send_bytes(200,multipage_wysiwyg.render_editor(active).encode(),'text/html; charset=utf-8')
         if path=='/editor-canvas':
             page_id=(q.get('page') or ['homepage'])[0]
-            try:html=multipage_wysiwyg.render_canvas(page_id,edit=True)
+            try:return self.send_bytes(200,multipage_wysiwyg.render_canvas(page_id,edit=True).encode(),'text/html; charset=utf-8')
             except (ValueError,FileNotFoundError) as e:return self.out(404,{'ok':False,'error':str(e),'page_id':page_id})
-            return self.send_bytes(200,html.encode(),'text/html; charset=utf-8')
         if path=='/structure-editor':return self.send_bytes(200,STRUCTURE_HTML.encode(),'text/html; charset=utf-8')
         if path in ('/journal','/journal/','/vol-00','/vol-00/'):
-            try:html=multipage_wysiwyg.render_canvas('journal-vol-00',edit=False)
+            try:return self.send_bytes(200,multipage_wysiwyg.render_canvas('journal-vol-00',edit=False).encode(),'text/html; charset=utf-8')
             except FileNotFoundError:return self.out(503,{'ok':False,'error':'editable_journal_not_imported'})
-            return self.send_bytes(200,html.encode(),'text/html; charset=utf-8')
         if path=='/api/coordination/status':return self.out(200,coordination_status())
         if path=='/api/candidates':return self.out(200,promotion_pipeline.list_candidates())
         if path=='/api/design2/multiwrite-cover':return self.out(200,design2_cover_manifest.status(visual.base))
         if path=='/api/design2/multiwrite-cover/acceptance':return self.out(200,design2_cover_acceptance.check(visual.base))
+        if path=='/api/design2/closeout':return self.out(200,design2_closeout_acceptance.check(visual.base))
         if path=='/api/multiwrite/status':
-            w=visual.base.workspace();home=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);cover=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'page_id':'multiwrite-home','cover_page_id':'multiwrite-cover','editable':True,'semantic_design':bool(home and home.get('design')),'design':home.get('design') if home else None,'editor':'/editor?page=multiwrite-home','cover_editor':'/editor?page=multiwrite-cover','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
+            w=visual.base.workspace();home=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);cover=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'page_id':'multiwrite-home','cover_page_id':'multiwrite-cover','editable':True,'editor':'/editor?page=multiwrite-home','cover_editor':'/editor?page=multiwrite-cover','revision':w.get('revision')})
         if path=='/api/health':
-            w=visual.base.workspace();home=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-home'),None);cover=next((p for p in w.get('pages',[]) if p.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'service':'dore-design','version':'2.0-ui-rebuild','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'snap-guides-multiselect','layers':'reorder+visibility+lock','inspector':'geometry+arrange+cover-image+typography','arrange':'align+distribute+spacing+zorder+group','assets':'frame+local-image+cover-art','typography':'family+size+weight+color+leading+tracking+align','multiwrite_cover':'editable-direct-manipulation+image-tools+type-tools','editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_cover_editor':'/editor?page=multiwrite-cover'})
+            w=visual.base.workspace();close=design2_closeout_acceptance.check(visual.base);return self.out(200,{'ok':close['ok'],'service':'dore-design','version':'2.0-production','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'direct-manipulation+resize+snap+guides+multiselect','layers':'atomic-zorder+visibility+lock','inspector':'geometry+arrange+cover-image+typography','arrange':'align+distribute+spacing+atomic-zorder+group','assets':'frame+local-image+cover-art+8mb-guard','typography':'family+size+weight+color+leading+tracking+align','multiwrite_cover':'editable-direct-manipulation+resize+image-tools+type-tools','batch':'atomic-batch-set+atomic-zorder','closeout':close,'editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_cover_editor':'/editor?page=multiwrite-cover'})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
     def do_POST(self):
         if urlparse(self.path).path=='/api/candidates/judgment':
-            try:size=int(self.headers.get('Content-Length','0'));payload=json.loads(self.rfile.read(size) or b'{}');result=promotion_pipeline.record_judgment(payload.get('candidate_id'),payload.get('decision'),payload.get('reason',''),payload.get('signals') or []);return self.out(200,result)
+            try:size=int(self.headers.get('Content-Length','0'));payload=json.loads(self.rfile.read(size) or b'{}');return self.out(200,promotion_pipeline.record_judgment(payload.get('candidate_id'),payload.get('decision'),payload.get('reason',''),payload.get('signals') or []))
             except Exception as e:return self.out(400,{'ok':False,'error':type(e).__name__+': '+str(e)})
         return super().do_POST()
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',int(os.environ.get('DORE_DESIGN_PORT','4310'))),H).serve_forever()
