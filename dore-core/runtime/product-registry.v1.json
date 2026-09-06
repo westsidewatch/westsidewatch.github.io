@@ -1,0 +1,46 @@
+{
+  "schema": "dore.product-registry.v1",
+  "principle": "one_dore_many_faculties_many_products",
+  "core": {
+    "id": "dore-core",
+    "role": "persistent intelligence and governed capability layer",
+    "owns": ["identity", "memory", "knowledge", "research", "provenance", "judgment", "capability-routing", "permissions", "learning", "verification"],
+    "does_not_own": ["product-specific UI", "foundation-model identity", "cloud infrastructure identity"]
+  },
+  "runtime_planes": [
+    {"id":"dore-local","role":"local memory/reasoning runtime","transport":"127.0.0.1:8788","consumer":["search","design","future-products"]},
+    {"id":"dore-a2a","role":"bounded external control plane","transport":"github-event -> self-hosted-runner -> unix-domain-socket -> dore","consumer":["chatgpt","automation"]},
+    {"id":"dore-design-runtime","role":"structured design workspace runtime","transport":"127.0.0.1:4310","consumer":["design","multiwrite","image"]},
+    {"id":"dore-image-local","role":"local image capability adapter","transport":"127.0.0.1:8790 -> local renderer","consumer":["search","design","one","journal","multiwrite"]}
+  ],
+  "products": [
+    {"id":"search","name":"Doré Search","kind":"interface","core_faculties":["research","retrieval","conversation","memory","capability-routing"],"produces":["queries","conversations","capability-commands"],"consumes":["dore-local","bible-intelligence","dore-image-local"],"must_not_be":"the intelligence itself"},
+    {"id":"one","name":"ONE","kind":"scripture-product","core_faculties":["biblical-world","cross-reference","original-language","chronology","people","places","research"],"produces":["study-navigation","chapter-experiences","maps","timelines"],"consumes":["bible-intelligence","design","image","dawn-library"]},
+    {"id":"design","name":"Doré Design","kind":"production-tool","core_faculties":["visual-director","brand-memory","judgment","verification"],"produces":["structured-design-artifacts","publication-candidates"],"consumes":["dore-design-runtime","image"],"must_not_be":"a separate Doré identity"},
+    {"id":"image","name":"Doré Image","kind":"capability","core_faculties":["visual-director","asset-steward","provenance","critic"],"produces":["image-assets","renderer-manifests","critique-evidence"],"consumes":["local-renderer","design"],"must_not_be":"an anonymous renderer wrapper"},
+    {"id":"multiwrite","name":"多寫 / Multiwrite","kind":"writing-product","core_faculties":["editor","research","memory","search","visual-director"],"produces":["books","longform","editable-layouts"],"consumes":["search","design","image","dawn-library"]},
+    {"id":"journal","name":"Westside Journal","kind":"editorial-product","core_faculties":["editor","research","theology","visual-director","asset-steward"],"produces":["journal-issues","features","devotionals"],"consumes":["one","dawn-library","design","image"]},
+    {"id":"dawn-library","name":"黎明書局 / Dawn Library","kind":"knowledge-product","core_faculties":["librarian","research","provenance","knowledge-graph","curation"],"produces":["governed-resources","metadata","curations","knowledge-links"],"consumes":["external-open-resources","core-memory"],"must_not_be":"a bookmark collection"},
+    {"id":"a-day","name":"A Day / Daily Bread","kind":"outreach-product","core_faculties":["editor","theological-moment","distribution-learning","visual-director"],"produces":["daily-master","platform-variants","deep-links"],"consumes":["dawn-library","one","journal","image","site-analytics"]},
+    {"id":"storybook","name":"Storybook Learning Loop","kind":"learning-project","core_faculties":["research","autonomous-learning","memory","evaluation"],"produces":["learned-patterns","evidence","capability-upgrades"],"consumes":["open-source-resources"],"must_not_be":"a standalone product brain"},
+    {"id":"westside-site","name":"Westside Watch Main Site","kind":"public-surface","core_faculties":["brand-steward","editor","routing"],"produces":["public-pages","entry-points"],"consumes":["journal","one","dawn-library","search","a-day"]},
+    {"id":"church","name":"Church / Ministry","kind":"human-authority-domain","core_faculties":["scripture-research","translation","proofreading"],"produces":["teaching-context","ministry-context"],"consumes":["one","search","dawn-library"],"human_authority":"decisive"},
+    {"id":"books","name":"Books / Publishing Projects","kind":"project-family","core_faculties":["editor","research","memory","design","image"],"produces":["manuscripts","appendices","publication-packages"],"consumes":["multiwrite","dawn-library","design","search"]}
+  ],
+  "learning_projects": [
+    {"id":"bible-intelligence","role":"shared Scripture intelligence growth loop","feeds":["search","one","multiwrite","dawn-library"]},
+    {"id":"a2a-growth","role":"agent relationship/control-plane learning","feeds":["all bounded execution"]},
+    {"id":"visual-learning","role":"shared design/image/motion learning","feeds":["design","image","journal","one","a-day","multiwrite"]},
+    {"id":"library-genesis","role":"resource stewardship learning","feeds":["dawn-library","search","one","journal","multiwrite"]}
+  ],
+  "hard_invariants": [
+    "Doré Core is the intelligence; products are consumers and training environments.",
+    "A product may own its document/state schema but may not fork Doré identity, memory, research or judgment into a second brain.",
+    "External resources are nutrition: digest principles/data with provenance before promoting a Doré-native capability.",
+    "Provider adapters are replaceable; provider identity never becomes Doré identity.",
+    "Shared capabilities belong in Core when at least two products need the same semantics or when provenance/permission/verification must be uniform.",
+    "Product-specific UI and interaction stay in the product unless a reusable semantic operation has been proven across products.",
+    "Every autonomous action must expose transport, execution and product-result evidence separately.",
+    "Human authority remains decisive for doctrine, pastoral sensitivity, rights-uncertain publication and irreversible public actions."
+  ]
+}
