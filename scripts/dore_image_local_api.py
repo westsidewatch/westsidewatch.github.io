@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 import sys
 import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
@@ -28,6 +29,10 @@ _ALLOWED_ORIGINS = {
 _IMAGE_SUFFIXES = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg", ".webp": "image/webp"}
 
 
+def _config_path() -> Path:
+    return Path(os.environ.get("DORE_IMAGE_CONFIG", str(DEFAULT_CONFIG))).expanduser().resolve()
+
+
 def _origin_allowed(origin: str) -> bool:
     if not origin:
         return False
@@ -37,14 +42,13 @@ def _origin_allowed(origin: str) -> bool:
 
 
 def _safe_artifact(artifact: dict, asset_url: str) -> dict:
-    """Return browser-safe artifact metadata; never expose workstation paths."""
     safe = {k: artifact[k] for k in ("id", "sha256", "bytes", "mime_type") if k in artifact}
     safe["asset_url"] = asset_url
     return safe
 
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "DoreImageLocal/1.1"
+    server_version = "DoreImageLocal/1.2"
 
     def _cors(self) -> None:
         origin = self.headers.get("Origin", "")
@@ -61,6 +65,7 @@ class Handler(BaseHTTPRequestHandler):
         self.send_response(status)
         self._cors()
         self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
         self.send_header("Content-Length", str(len(raw)))
         self.end_headers()
         self.wfile.write(raw)
@@ -72,20 +77,25 @@ class Handler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
+        cfg_path = _config_path()
         if parsed.path == "/health":
-            cfg = DEFAULT_CONFIG.exists()
+            cfg = cfg_path.exists()
             renderer = False
             detail = "resident-config-missing"
+            endpoint = None
+            model = None
             if cfg:
                 try:
-                    config = load_resident_image_config(DEFAULT_CONFIG)
+                    config = load_resident_image_config(cfg_path)
+                    endpoint = config.endpoint
+                    model = config.model
                     from dore_core.capabilities.image_renderer import ComfyUIRenderer
                     from dore_core.capabilities.providers import ProviderDescriptor
                     renderer = ComfyUIRenderer(ProviderDescriptor("local-image-renderer", "http-json", config.endpoint, "local_free")).health().ok
                     detail = "ready" if renderer else "renderer-unreachable"
                 except Exception as exc:
                     detail = type(exc).__name__
-            self._json(200, {"ok": True, "node": "dore-image-local", "config": cfg, "renderer": renderer, "detail": detail})
+            self._json(200, {"ok": True, "node": "dore-image-local", "config": cfg, "renderer": renderer, "detail": detail, "endpoint": endpoint, "model": model, "config_path": str(cfg_path)})
             return
         if parsed.path == "/asset":
             raw_name = parse_qs(parsed.query).get("name", [""])[0]
@@ -94,7 +104,7 @@ class Handler(BaseHTTPRequestHandler):
                 self._json(400, {"ok": False, "error": "invalid asset name"})
                 return
             try:
-                config = load_resident_image_config(DEFAULT_CONFIG)
+                config = load_resident_image_config(cfg_path)
                 root = (ROOT / config.output_dir).resolve()
                 target = (root / name).resolve()
                 if root not in target.parents or not target.is_file():
@@ -103,6 +113,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_response(200)
                 self._cors()
                 self.send_header("Content-Type", _IMAGE_SUFFIXES[target.suffix.lower()])
+                self.send_header("Cache-Control", "no-store")
                 self.send_header("Content-Length", str(len(data)))
                 self.end_headers()
                 self.wfile.write(data)
@@ -136,11 +147,11 @@ class Handler(BaseHTTPRequestHandler):
             job_dir.mkdir(parents=True, exist_ok=True)
             with _LOCK:
                 job_path = job_dir / "search-ai-next.json"
-                job = {"subject": command.subject, "brief": command.brief, "seed": command.seed, "source": "dore-search-ai"}
+                job = {"subject": command.subject, "brief": command.brief, "seed": command.seed, "source": "dore-search-ai", "design": False}
                 job_path.write_text(json.dumps(job, ensure_ascii=False, indent=2), encoding="utf-8")
-                result = autorun(DEFAULT_CONFIG, job_path)
+                result = autorun(_config_path(), job_path)
             if result.get("status") != "PASS":
-                self._json(503, {"ok": False, "status": result.get("status", "FAIL"), "error": "image generation failed"})
+                self._json(503, {"ok": False, "status": result.get("status", "FAIL"), "error": "image generation failed", "reason": result.get("reason")})
                 return
             artifact = dict(result.get("artifact") or {})
             name = Path(str(artifact.get("uri", ""))).name
@@ -159,7 +170,7 @@ class Handler(BaseHTTPRequestHandler):
 
 def main() -> int:
     server = ThreadingHTTPServer((HOST, PORT), Handler)
-    print(json.dumps({"status": "READY", "node": "dore-image-local", "host": HOST, "port": PORT}))
+    print(json.dumps({"status": "READY", "node": "dore-image-local", "host": HOST, "port": PORT, "config": str(_config_path())}))
     server.serve_forever()
     return 0
 
