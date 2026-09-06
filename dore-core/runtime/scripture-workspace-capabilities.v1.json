@@ -1,24 +1,30 @@
 {
   "schema":"dore.scripture-workspace-capabilities.v1",
   "principle":"one_artifact_model_many_product_surfaces",
-  "shared_identity":{"scripture":"ONE Canon Index","notes":"dore.study-note.v1","retrieval":"rebuildable shared artifact projection"},
+  "core_owner":"dore-core",
+  "shared_identity":{"scripture":"ONE Canon Index","notes":"dore.study-note.v1","library_sources":"dore.library-source-ref.v1","retrieval":"rebuildable shared artifact projection"},
   "capabilities":[
-    {"id":"scripture.resolve","faculty":"biblical-world","inputs":["query_or_reference"],"outputs":["scripture_anchor"],"activation":"L0_first","consumers":["search","one","multiwrite"]},
-    {"id":"study.note.create","faculty":"editor","inputs":["content","anchors","provenance"],"outputs":["study_note"],"authority":"user_content_protected","consumers":["one","multiwrite","search"]},
+    {"id":"scripture.resolve","faculty":"biblical-world","inputs":["query_or_reference"],"outputs":["scripture_anchor"],"activation":"L0_first","consumers":["search","one","multiwrite","dawn-library"]},
+    {"id":"study.note.create","faculty":"editor","inputs":["content","anchors","source_refs","provenance"],"outputs":["study_note"],"authority":"user_content_protected","consumers":["one","multiwrite","search"]},
     {"id":"study.note.update","faculty":"editor","inputs":["note_id","patch","expected_revision"],"outputs":["study_note","revision"],"authority":"protected_text_requires_user_mutation","consumers":["one","multiwrite"]},
     {"id":"study.note.get","faculty":"memory","inputs":["note_id"],"outputs":["study_note"],"consumers":["one","multiwrite","search"]},
     {"id":"study.note.list","faculty":"memory","inputs":["scope","filters"],"outputs":["study_note_refs"],"consumers":["one","multiwrite","search"]},
-    {"id":"retrieval.fuzzy","faculty":"retrieval","inputs":["query","scope","context"],"outputs":["retrieval_hits"],"activation":"L0_then_L1_then_L2_if_needed","ranking_floor":["exact-scripture","lexical","user-anchor-entity","explicit-scripture-graph","topic-semantic","broad-semantic"],"consumers":["search","one","multiwrite"]},
-    {"id":"study.related","faculty":"retrieval","inputs":["artifact_or_scripture_context"],"outputs":["retrieval_hits"],"consumers":["one","multiwrite"]},
-    {"id":"study.promote","faculty":"editor","inputs":["note_or_selection","target_kind"],"outputs":["writing_artifact"],"preserves":["source_lineage","provenance","authorship"],"consumers":["multiwrite"]},
-    {"id":"product.open","faculty":"routing","inputs":["artifact_id","target_surface"],"outputs":["typed_deep_link"],"consumers":["search","one","multiwrite"]}
+    {"id":"library.source.resolve","faculty":"library","inputs":["source_query","scripture_context"],"outputs":["library_source_refs"],"activation":"L0_then_L1","consumers":["search","one","multiwrite","dawn-library"]},
+    {"id":"library.source.attach","faculty":"library","inputs":["note_id","library_source_ref"],"outputs":["study_note_revision"],"preserves":["source_identity","locator","provenance"],"consumers":["one","multiwrite"]},
+    {"id":"retrieval.fuzzy","faculty":"retrieval","inputs":["query","scope","context"],"outputs":["retrieval_hits"],"activation":"L0_then_L1_then_L2_if_needed","ranking_floor":["exact-scripture","lexical","user-anchor-entity","explicit-scripture-graph","library-source-link","topic-semantic","broad-semantic"],"consumers":["search","one","multiwrite","dawn-library"]},
+    {"id":"study.related","faculty":"retrieval","inputs":["artifact_or_scripture_context"],"outputs":["retrieval_hits"],"consumers":["one","multiwrite","dawn-library"]},
+    {"id":"study.promote","faculty":"editor","inputs":["note_or_selection","target_kind"],"outputs":["writing_artifact"],"preserves":["source_lineage","provenance","authorship","library_source_refs"],"consumers":["multiwrite"]},
+    {"id":"library.loop.observe","faculty":"library","inputs":["verified_query","source_use","note_outcome"],"outputs":["library_loop_evidence"],"rule":"learn retrieval/source-use patterns; never silently rewrite protected notes","consumers":["dawn-library-loop"]},
+    {"id":"product.open","faculty":"routing","inputs":["artifact_id","target_surface"],"outputs":["typed_deep_link"],"consumers":["search","one","multiwrite","dawn-library"]}
   ],
-  "forbidden_duplicate_implementations":["one.search","one.notes","multiwrite.search","multiwrite.bible-search"],
+  "forbidden_duplicate_implementations":["one.search","one.notes","multiwrite.search","multiwrite.bible-search","dawn-library.private-note-store"],
   "product_surfaces":{
-    "one":{"role":"read_explore_context","actions":["find","write","open-related-note"]},
+    "one":{"role":"read_explore_context","actions":["find","write","open-related-note","open-source"]},
     "multiwrite":{"role":"capture_develop_publish","workspace":"bible-study-notes"},
-    "search":{"role":"global_natural_language_reentry","must_not_own":"retrieval intelligence"}
+    "search":{"role":"global_natural_language_reentry","must_not_own":"retrieval intelligence"},
+    "dawn-library":{"role":"source_memory_and_research_depth","must_not_own":"user notes or scripture identity","loop":"retrieval/source evidence -> verified usefulness -> durable Doré library capability"}
   },
+  "core_consolidation":{"rule":"黎明書局 is a major evidence/resource organ of one Doré Core, not a separate intelligence","flow":"source -> LibrarySourceRef -> StudyNote/ScriptureAnchor -> retrieval evidence -> 黎明書局 loop -> verified Core capability","no_copy_boundary":true},
   "baseline_cost":"local_free",
   "semantic_retrieval_policy":"defer embeddings until deterministic fuzzy baseline and real-query regression are measured"
 }
