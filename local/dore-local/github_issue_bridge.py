@@ -19,7 +19,8 @@ PROTOCOL = "dore.a2a/1"
 TITLE_PREFIX = "[DORÉ A2A]"
 CAP_RE = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
 MAX_COMMENT_BYTES = 60000
-LONG_CAPABILITIES = {"design.production.rollout", "search.local.repair", "image.local.repair", "wake.runtime.install"}
+LONG_CAPABILITIES = {"design.production.rollout", "search.local.repair", "wake.runtime.install"}
+CAPABILITY_TIMEOUTS = {"image.local.repair": 3900.0}
 
 
 def fail(message: str) -> dict:
@@ -82,7 +83,7 @@ def main() -> int:
         if not isinstance(args, dict):
             raise ValueError("args_must_be_object")
 
-        timeout = 360.0 if capability in LONG_CAPABILITIES else 15.0
+        timeout = CAPABILITY_TIMEOUTS.get(capability, 360.0 if capability in LONG_CAPABILITIES else 15.0)
         rpc = call("dore.call", {"capability": capability, "args": args}, timeout=timeout)
         result = {
             "ok": "result" in rpc,
