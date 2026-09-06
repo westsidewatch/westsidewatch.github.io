@@ -1,0 +1,86 @@
+{
+  "schema": "dore.common-substrate.v1",
+  "owner": "dore-core",
+  "principle": "one_local_truth_many_product_projections",
+  "canonical_store": {
+    "engine": "sqlite",
+    "default_runtime_target": "~/.dore/data/dore.sqlite3",
+    "journal": "WAL",
+    "dependency_floor": "python-stdlib",
+    "source_of_truth": [
+      "artifacts",
+      "immutable-revisions",
+      "typed-links",
+      "provenance-edges"
+    ],
+    "rebuildable": [
+      "full-text-index",
+      "semantic-index",
+      "product-view-cache"
+    ]
+  },
+  "artifact_kinds": [
+    "study-note",
+    "scripture-anchor",
+    "library-source",
+    "conversation-message",
+    "research-evidence",
+    "writing-artifact",
+    "design-artifact",
+    "learning-evidence"
+  ],
+  "provenance_model": {
+    "inspiration": "W3C PROV starting-point model",
+    "native_primitives": ["entity/artifact", "activity", "agent", "relation", "evidence_ref"],
+    "minimum_relations": ["derived-from", "used", "generated-by", "attributed-to", "attached-source"],
+    "rule": "store only the small Doré-native subset required for trust, replay and verification"
+  },
+  "retrieval_ladder": [
+    {"level":"L0","engine":"deterministic identity/typed links/exact fields","required":true},
+    {"level":"L1","engine":"SQLite FTS5 when available; deterministic text fallback otherwise","required":true},
+    {"level":"L2","engine":"optional semantic projection","required":false,"promotion_gate":"real-query regression must prove useful gain"}
+  ],
+  "authority": {
+    "default_human_artifact": "USER + protected",
+    "mutation_gate": "expected_revision",
+    "history": "append immutable revision before current-state advance",
+    "rule": "learning and retrieval may add links/evidence but may not silently rewrite protected human text"
+  },
+  "product_boundaries": {
+    "one": "owns Canon/navigation/view state, not note storage or retrieval intelligence",
+    "multiwrite": "owns writing document/layout state, not Scripture note identity or search",
+    "search": "owns conversation/re-entry UI state, not memory/retrieval intelligence",
+    "dawn-library": "owns governed source metadata/curation, not user-note identity",
+    "dore-local": "runtime adapter over Core storage, not a second memory model"
+  },
+  "research_absorption": [
+    {
+      "source_family":"SQLite",
+      "absorbed":"single-file transactional store, WAL, FTS projection",
+      "rejected":"new resident database service"
+    },
+    {
+      "source_family":"W3C PROV",
+      "absorbed":"Entity/Activity/Agent-derived provenance semantics",
+      "rejected":"full RDF/OWL runtime"
+    },
+    {
+      "source_family":"Fossil/Git artifact design",
+      "absorbed":"stable artifact identity + manifest/revision lineage principle",
+      "rejected":"embedding a VCS as Core storage"
+    },
+    {
+      "source_family":"sqlite-vec",
+      "absorbed":"future optional SQLite-local semantic projection pattern",
+      "rejected":"mandatory vector dependency before deterministic retrieval is measured"
+    }
+  ],
+  "hard_invariants": [
+    "There is one canonical local artifact truth for shared Doré knowledge.",
+    "Search indexes are projections and can be destroyed/rebuilt without losing truth.",
+    "Every protected mutation is revision-gated and leaves immutable history.",
+    "Every promoted research claim can carry provenance without requiring a heavyweight ontology runtime.",
+    "No product may fork shared memory/retrieval into a private second brain.",
+    "New dependencies must reduce total system burden or remain optional adapters."
+  ]
+}
