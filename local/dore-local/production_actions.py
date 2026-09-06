@@ -99,8 +99,6 @@ def wake_runtime_install(args:dict|None=None)->dict:
         return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install,"smoke_task_id":smoke_task_id}
     uid=os.getuid();label=f"gui/{uid}/org.westsidewatch.dore.wake"
     launch=_run(["/bin/launchctl","print",label],repo,timeout=15)
-    # Explicitly demand one launchd cycle. launchd may hold kickstart until its
-    # minimum runtime elapses; the task state, not kickstart's return code, is the gate.
     kick=_run(["/bin/launchctl","kickstart","-k",label],repo,timeout=45)
     state={"stdout":"","returncode":1,"stderr":"not_polled","argv":[]};smoke_row={};smoke_pass=False
     for _ in range(30):
@@ -118,16 +116,20 @@ def wake_runtime_install(args:dict|None=None)->dict:
     ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke_pass)
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_task_id":smoke_task_id,"smoke_state":smoke_row.get("state"),"smoke_passed":smoke_pass,"kickstart_returncode":kick["returncode"],"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:],"wake_out_tail":out_log,"wake_err_tail":err_log}
 
+def _acceptance_script(repo:Path,name:str)->dict:
+    script=repo/"dore-core"/"runtime"/name
+    run=_run(["python3",str(script)],repo,timeout=60)
+    try:evidence=json.loads(run["stdout"])
+    except Exception:evidence={"ok":False,"error":"invalid_acceptance_output","stdout":run["stdout"]}
+    return {"ok":bool(run["returncode"]==0 and evidence.get("ok") is True),"evidence":evidence,"stderr_tail":run["stderr"][-2000:]}
+
 def core_substrate_acceptance(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
     if err:return err
-    script=repo/"dore-core"/"runtime"/"common_substrate_acceptance.py"
-    run=_run(["python3",str(script)],repo,timeout=60)
-    evidence={}
-    try:evidence=json.loads(run["stdout"])
-    except Exception:evidence={"ok":False,"error":"invalid_acceptance_output","stdout":run["stdout"]}
-    ok=bool(run["returncode"]==0 and evidence.get("ok") is True)
-    return {"ok":ok,"status":"completed" if ok else "failed","capability":"core.substrate.acceptance","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"acceptance":evidence,"stderr_tail":run["stderr"][-2000:]}
+    common=_acceptance_script(repo,"common_substrate_acceptance.py")
+    conversation=_acceptance_script(repo,"conversation_substrate_acceptance.py")
+    ok=bool(common["ok"] and conversation["ok"])
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"core.substrate.acceptance","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"acceptance":{"common":common["evidence"],"conversation":conversation["evidence"]},"stderr_tail":{"common":common["stderr_tail"],"conversation":conversation["stderr_tail"]}}
 
 def execute(capability:str,args:dict|None=None)->dict:
     if capability=="design.production.rollout":return design_production_rollout(args)
