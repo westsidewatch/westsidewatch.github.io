@@ -84,28 +84,39 @@ def wake_runtime_install(args:dict|None=None)->dict:
     installer=repo/"dore-core"/"runtime"/"install_wake_launchd.py"
     db=Path.home()/"Library"/"Application Support"/"Dore"/"wake-state.sqlite3"
     plist=Path.home()/"Library"/"LaunchAgents"/"org.westsidewatch.dore.wake.plist"
-    # Queue the probe before bootstrap. RunAtLoad/kickstart inside the installer must
-    # be the mechanism that processes it; this makes the smoke test a real launchd test.
+    log_dir=Path.home()/"Library"/"Application Support"/"Dore"/"logs"
     init=_run(["python3",str(runtime),"--db",str(db),"init"],repo,timeout=15)
     if init["returncode"]:
         return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"db_init","result":init}
-    smoke=_run(["python3",str(runtime),"--db",str(db),"enqueue","--kind","probe","--payload-json",json.dumps({"argv":["/usr/bin/true"]}),"--idempotency-key","wake-local-install-smoke-v2","--max-attempts","1"],repo,timeout=15)
+    smoke=_run(["python3",str(runtime),"--db",str(db),"enqueue","--kind","probe","--payload-json",json.dumps({"argv":["/usr/bin/true"]}),"--idempotency-key","wake-local-install-smoke-v3","--max-attempts","1"],repo,timeout=15)
     if smoke["returncode"]:
         return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_enqueue","result":smoke}
+    try: smoke_task_id=str(json.loads(smoke["stdout"])["task_id"])
+    except Exception:
+        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_id","result":smoke}
     install=_run(["python3",str(installer),"--repo",str(repo)],repo,timeout=120)
     if install["returncode"]:
-        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install}
+        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install,"smoke_task_id":smoke_task_id}
     uid=os.getuid();label=f"gui/{uid}/org.westsidewatch.dore.wake"
     launch=_run(["/bin/launchctl","print",label],repo,timeout=15)
-    state={"stdout":"","returncode":1,"stderr":"not_polled","argv":[]}
-    smoke_pass=False
-    for _ in range(20):
+    # Explicitly demand one launchd cycle. launchd may hold kickstart until its
+    # minimum runtime elapses; the task state, not kickstart's return code, is the gate.
+    kick=_run(["/bin/launchctl","kickstart","-k",label],repo,timeout=45)
+    state={"stdout":"","returncode":1,"stderr":"not_polled","argv":[]};smoke_row={};smoke_pass=False
+    for _ in range(30):
         state=_run(["python3",str(runtime),"--db",str(db),"status"],repo,timeout=15)
-        if state["returncode"]==0 and ('"state": "passed"' in state["stdout"] or '"state":"passed"' in state["stdout"]):
-            smoke_pass=True;break
+        if state["returncode"]==0:
+            try:
+                rows=json.loads(state["stdout"])
+                smoke_row=next((r for r in rows if str(r.get("id"))==smoke_task_id),{})
+                if smoke_row.get("state")=="passed":smoke_pass=True;break
+                if smoke_row.get("state")=="failed":break
+            except Exception:pass
         time.sleep(0.5)
+    out_log=(log_dir/"wake.out.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.out.log").is_file() else ""
+    err_log=(log_dir/"wake.err.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.err.log").is_file() else ""
     ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke_pass)
-    return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_enqueued":True,"smoke_passed":smoke_pass,"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:]}
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_task_id":smoke_task_id,"smoke_state":smoke_row.get("state"),"smoke_passed":smoke_pass,"kickstart_returncode":kick["returncode"],"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:],"wake_out_tail":out_log,"wake_err_tail":err_log}
 
 def core_substrate_acceptance(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
