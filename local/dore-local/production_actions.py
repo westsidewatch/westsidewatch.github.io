@@ -5,7 +5,7 @@ import json, os, subprocess
 from pathlib import Path
 from urllib import request
 
-CAPABILITIES={"design.production.rollout","search.local.repair"}
+CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair"}
 
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
     child_env=os.environ.copy()
@@ -18,6 +18,12 @@ def _repo()->Path:
 
 def _json(url:str,timeout:int=5)->dict:
     with request.urlopen(url,timeout=timeout) as r:return json.loads(r.read().decode("utf-8"))
+
+def _post_json(url:str,payload:dict,headers:dict|None=None,timeout:int=240)->dict:
+    data=json.dumps(payload,ensure_ascii=False).encode("utf-8")
+    h={"Content-Type":"application/json","Accept":"application/json"};h.update(headers or {})
+    req=request.Request(url,data=data,method="POST",headers=h)
+    with request.urlopen(req,timeout=timeout) as r:return json.loads(r.read().decode("utf-8"))
 
 def _health()->dict:return _json("http://127.0.0.1:4310/api/health")
 
@@ -50,7 +56,24 @@ def search_local_repair(args:dict|None=None)->dict:
     ok=bool(health.get("ok") and health.get("search_loopback") is True)
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"search.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"install_tail":install["stdout"][-2000:]}
 
+def image_local_repair(args:dict|None=None)->dict:
+    repo=_repo();err=_sync(repo)
+    if err:return err
+    install=_run(["bash",str(repo/"local"/"dore-local"/"install-image-local-macos.sh")],repo,timeout=240)
+    if install["returncode"]:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"install","result":install}
+    try:health=_json("http://127.0.0.1:8790/health",10)
+    except Exception as exc:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"health","error":str(exc),"install_tail":install["stdout"][-2000:]}
+    if not (health.get("ok") and health.get("renderer") is True and health.get("config") is True):
+        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"renderer_ready","health":health,"install_tail":install["stdout"][-2000:]}
+    try:
+        generated=_post_json("http://127.0.0.1:8790/generate",{"message":"生成一張極簡測試圖片，大量留白"},{"X-Dore-Origin":"dore-search"},240)
+    except Exception as exc:
+        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"generate","health":health,"error":str(exc),"install_tail":install["stdout"][-2000:]}
+    ok=bool(generated.get("ok") and generated.get("capability")=="image.generate" and (generated.get("artifact") or {}).get("sha256"))
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"image.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"generation":generated,"install_tail":install["stdout"][-2000:]}
+
 def execute(capability:str,args:dict|None=None)->dict:
     if capability=="design.production.rollout":return design_production_rollout(args)
     if capability=="search.local.repair":return search_local_repair(args)
+    if capability=="image.local.repair":return image_local_repair(args)
     return {"ok":False,"status":"failed","error":{"code":"unsupported_production_action","message":capability}}
