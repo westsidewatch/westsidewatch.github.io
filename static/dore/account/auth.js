@@ -16,7 +16,7 @@
     github: 'github'
   };
 
-  const SUPABASE_JS_URL = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.116.0';
+  const SUPABASE_JS_FALLBACK = 'https://unpkg.com/@supabase/supabase-js@2.115.0';
   const ACCOUNT_URL = window.location.origin + '/dore/account/';
   let client = null;
 
@@ -48,53 +48,59 @@
     if (!window.supabase) {
       await new Promise((resolve, reject) => {
         const script = document.createElement('script');
-        script.src = SUPABASE_JS_URL;
+        script.src = SUPABASE_JS_FALLBACK;
         script.onload = resolve;
         script.onerror = reject;
         document.head.appendChild(script);
       });
     }
+    if (!window.supabase?.createClient) throw new Error('Supabase JavaScript client 未載入');
     if (!client) client = window.supabase.createClient(config.url, config.publishableKey);
     return client;
   }
 
   async function refreshSession() {
-    const auth = await loadClient();
-    if (!auth) {
+    try {
+      const auth = await loadClient();
+      if (!auth) {
+        setAuthenticated(null);
+        message('身份服務尚未配置。');
+        return;
+      }
+      const { data, error } = await auth.auth.getSession();
+      if (error) throw error;
+      setAuthenticated(data.session?.user || null);
+      if (data.session?.user) message('已登入 DORÉ。');
+      else message('請選擇登入方式。');
+    } catch (error) {
       setAuthenticated(null);
-      message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
-      return;
+      message('身份服務載入失敗：' + (error?.message || '未知錯誤'));
     }
-    const { data, error } = await auth.auth.getSession();
-    if (error) {
-      setAuthenticated(null);
-      message(error.message);
-      return;
-    }
-    setAuthenticated(data.session?.user || null);
-    if (data.session?.user) message('已登入 DORÉ。');
   }
 
   async function signIn(provider) {
+    message('正在連接登入服務……');
     try {
       const auth = await loadClient();
       if (!auth) {
         message('身份服務尚未配置。');
         return;
       }
-      message('正在前往登入服務……');
       const { error } = await auth.auth.signInWithOAuth({
         provider,
         options: { redirectTo: ACCOUNT_URL }
       });
-      if (error) message(error.message);
+      if (error) message('登入服務錯誤：' + error.message);
     } catch (error) {
-      message('身份服務載入失敗，請稍後再試。');
+      message('登入服務錯誤：' + (error?.message || '未知錯誤'));
     }
   }
 
   providers.forEach((button) => {
-    button.addEventListener('click', () => signIn(providerMap[button.dataset.provider]));
+    button.addEventListener('click', (event) => {
+      event.preventDefault();
+      signIn(providerMap[button.dataset.provider]);
+    });
   });
 
   if (form) {
@@ -104,6 +110,7 @@
         email?.reportValidity();
         return;
       }
+      message('正在發送驗證連結……');
       try {
         const auth = await loadClient();
         if (!auth) {
@@ -117,34 +124,35 @@
             shouldCreateUser: true
           }
         });
-        message(error ? error.message : '驗證連結已發送，請檢查你的電子郵箱。');
+        message(error ? '郵箱登入錯誤：' + error.message : '驗證連結已發送，請檢查你的電子郵箱。');
       } catch (error) {
-        message('身份服務載入失敗，請稍後再試。');
+        message('郵箱登入錯誤：' + (error?.message || '未知錯誤'));
       }
     });
   }
 
   if (logout) {
     logout.addEventListener('click', async () => {
-      const auth = await loadClient();
-      if (!auth) return;
-      const { error } = await auth.auth.signOut();
-      if (error) {
-        message(error.message);
-        return;
+      try {
+        const auth = await loadClient();
+        if (!auth) return;
+        const { error } = await auth.auth.signOut();
+        if (error) throw error;
+        setAuthenticated(null);
+        message('已登出。');
+      } catch (error) {
+        message('登出錯誤：' + (error?.message || '未知錯誤'));
       }
-      setAuthenticated(null);
-      message('已登出。');
     });
   }
 
   (async function init() {
+    const redirectError = showAuthErrorFromRedirect();
     try {
-      const redirectError = showAuthErrorFromRedirect();
       const auth = await loadClient();
       if (!auth) {
         setAuthenticated(null);
-        if (!redirectError) message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
+        if (!redirectError) message('身份服務尚未配置。');
         return;
       }
       auth.auth.onAuthStateChange((event, session) => {
@@ -156,7 +164,7 @@
       if (redirectError) message('登入未完成，請重新選擇登入方式。');
     } catch (error) {
       setAuthenticated(null);
-      message('身份服務載入失敗，請稍後再試。');
+      message('身份服務載入失敗：' + (error?.message || '未知錯誤'));
     }
   })();
 })();
