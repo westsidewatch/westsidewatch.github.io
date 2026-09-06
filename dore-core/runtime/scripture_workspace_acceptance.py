@@ -1,17 +1,18 @@
 #!/usr/bin/env python3
-"""Executable acceptance for the shared Doré Scripture workspace.
-No product UI, model, network, or paid API is required.
-"""
+"""Executable acceptance: ScriptureWorkspace is a facade over the common substrate."""
 from __future__ import annotations
-import json
-import tempfile
+import json, sys, tempfile
 from pathlib import Path
+
+CORE = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(CORE))
 from scripture_workspace import ScriptureAnchor, LibrarySourceRef, ScriptureWorkspace
 
 
 def run() -> dict:
     with tempfile.TemporaryDirectory(prefix="dore-scripture-workspace-") as td:
-        ws = ScriptureWorkspace(Path(td))
+        root=Path(td)
+        ws = ScriptureWorkspace(root)
         anchor = ScriptureAnchor(canon_id="40:6", book="馬太福音", chapter=6, labels=("主禱文", "父", "憂慮"))
         source = LibrarySourceRef(source_id="dawn:test:fatherhood", locator="chapter-1", title="父與兒子的語言", author="Test Source")
         note = ws.create_note(
@@ -22,6 +23,7 @@ def run() -> dict:
         fuzzy = ws.fuzzy("父 兒子 一天的憂慮")
         scripture = ws.fuzzy("40:6")
         library = ws.fuzzy("父與兒子的語言")
+        source_art = ws.store.get_artifact(source.source_id)
         stale_blocked = False
         ws.update_note(note.id, text=loaded.text + " 更新。", expected_revision=1)
         try:
@@ -29,18 +31,27 @@ def run() -> dict:
         except ValueError as exc:
             stale_blocked = str(exc) == "stale_revision"
         revised = ws.get_note(note.id)
+        history=ws.store.history(note.id)
+        prov=ws.store.provenance_for(note.id)
+        links=ws.store.links_for(note.id)
         checks = {
+            "single_sqlite_truth": ws.store.db_path == root/"dore.sqlite3" and ws.store.db_path.exists(),
+            "no_new_json_note_truth": not (root/"notes"/f"{note.id}.json").exists(),
             "same_note_id": loaded.id == note.id == revised.id,
             "scripture_identity_preserved": loaded.anchors[0].canon_id == "40:6",
-            "library_source_preserved": loaded.source_refs[0].source_id == "dawn:test:fatherhood",
+            "library_source_is_artifact": source_art.kind == "library-source" and source_art.authority == "SOURCE",
+            "library_source_preserved": loaded.source_refs[0].source_id == source.source_id,
             "fuzzy_personal_recall": bool(fuzzy) and fuzzy[0]["note_id"] == note.id,
             "fuzzy_scripture_recall": bool(scripture) and scripture[0]["note_id"] == note.id,
             "fuzzy_library_recall": bool(library) and library[0]["note_id"] == note.id,
             "revision_incremented": revised.revision == 2,
             "stale_revision_blocked": stale_blocked,
+            "immutable_history": [x["revision"] for x in history] == [1,2],
+            "provenance_shared": any(x["relation"]=="attached-source" for x in prov),
+            "typed_link_shared": any(x["relation"]=="cites" for x in links),
             "protected_by_default": revised.protected and revised.authorship == "USER",
         }
-        return {"schema":"dore.scripture-workspace.acceptance.v1","ok":all(checks.values()),"checks":checks}
+        return {"schema":"dore.scripture-workspace.acceptance.v2","ok":all(checks.values()),"checks":checks,"fts5_available":ws.store.fts5_available}
 
 
 if __name__ == "__main__":
