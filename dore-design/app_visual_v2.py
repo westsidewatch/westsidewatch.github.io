@@ -11,7 +11,7 @@ import design2_layer_ops
 design2_layer_ops.install(visual.base)
 import design2_multiwrite_cover
 design2_multiwrite_cover.ensure(visual.base)
-import design2_cover_render,design2_cover_interaction
+import design2_cover_render,design2_cover_interaction,design2_cover_manifest
 import multipage_wysiwyg,journal_wysiwyg
 import multiwrite_wysiwyg
 import promotion_pipeline
@@ -72,6 +72,7 @@ class H(visual.H):
             return self.send_bytes(200,html.encode(),'text/html; charset=utf-8')
         if path=='/api/coordination/status':return self.out(200,coordination_status())
         if path=='/api/candidates':return self.out(200,promotion_pipeline.list_candidates())
+        if path=='/api/design2/multiwrite-cover':return self.out(200,design2_cover_manifest.status(visual.base))
         if path=='/api/multiwrite/status':
             w=visual.base.workspace();home=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-home'),None);cover=next((x for x in w.get('pages',[]) if x.get('id')=='multiwrite-cover'),None);return self.out(200,{'ok':bool(home and cover),'page_id':'multiwrite-home','cover_page_id':'multiwrite-cover','editable':True,'semantic_design':bool(home and home.get('design')),'design':home.get('design') if home else None,'editor':'/editor?page=multiwrite-home','cover_editor':'/editor?page=multiwrite-cover','canvas':'/editor-canvas?page=multiwrite-home','revision':w.get('revision')})
         if path=='/api/health':
