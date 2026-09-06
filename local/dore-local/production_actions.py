@@ -64,18 +64,21 @@ def search_local_repair(args:dict|None=None)->dict:
 def image_local_repair(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
     if err:return err
-    install=_run(["bash",str(repo/"local"/"dore-local"/"install-image-local-macos.sh")],repo,timeout=240)
+    install=_run(["bash",str(repo/"local"/"dore-local"/"install-image-local-macos.sh")],repo,timeout=3600)
     if install["returncode"]:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"install","result":install}
-    try:health=_json("http://127.0.0.1:8790/health",10)
-    except Exception as exc:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"health","error":str(exc),"install_tail":install["stdout"][-2000:]}
-    if not (health.get("ok") and health.get("renderer") is True and (health.get("native_svg") is True or health.get("config") is True)):
-        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"renderer_ready","health":health,"install_tail":install["stdout"][-2000:]}
+    try:health=_json("http://127.0.0.1:8790/health",15)
+    except Exception as exc:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"health","error":str(exc),"install_tail":install["stdout"][-3000:]}
+    allowed={"comfyui","stable-diffusion.cpp"}
+    if not (health.get("ok") and health.get("renderer") is True and health.get("model_backed") is True and health.get("renderer_mode") in allowed and health.get("config") is True):
+        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"model_backed_renderer_ready","health":health,"install_tail":install["stdout"][-3000:]}
     try:
-        generated=_post_json("http://127.0.0.1:8790/generate",{"message":"生成一張極簡測試圖片，大量留白"},{"X-Dore-Origin":"dore-search"},240)
+        generated=_post_json("http://127.0.0.1:8790/generate",{"message":"生成一張自然晨光中的古典石門，真實攝影質感，大量留白"},{"X-Dore-Origin":"dore-search"},1500)
     except Exception as exc:
-        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"generate","health":health,"error":str(exc),"install_tail":install["stdout"][-2000:]}
-    ok=bool(generated.get("ok") and generated.get("capability")=="image.generate" and (generated.get("artifact") or {}).get("sha256"))
-    return {"ok":ok,"status":"completed" if ok else "failed","capability":"image.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"generation":generated,"install_tail":install["stdout"][-2000:]}
+        return {"ok":False,"status":"failed","capability":"image.local.repair","step":"generate","health":health,"error":str(exc),"install_tail":install["stdout"][-3000:]}
+    art=generated.get("artifact") or {}
+    raster=art.get("mime_type") in {"image/png","image/jpeg","image/webp"}
+    ok=bool(generated.get("ok") and generated.get("capability")=="image.generate" and generated.get("model_backed") is True and generated.get("renderer") in allowed and art.get("sha256") and raster and int(art.get("bytes") or 0)>1024)
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"image.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"generation":generated,"install_tail":install["stdout"][-3000:]}
 
 def wake_runtime_install(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
@@ -86,39 +89,30 @@ def wake_runtime_install(args:dict|None=None)->dict:
     plist=Path.home()/"Library"/"LaunchAgents"/"org.westsidewatch.dore.wake.plist"
     log_dir=Path.home()/"Library"/"Application Support"/"Dore"/"logs"
     init=_run(["python3",str(runtime),"--db",str(db),"init"],repo,timeout=15)
-    if init["returncode"]:
-        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"db_init","result":init}
+    if init["returncode"]: return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"db_init","result":init}
     smoke=_run(["python3",str(runtime),"--db",str(db),"enqueue","--kind","probe","--payload-json",json.dumps({"argv":["/usr/bin/true"]}),"--idempotency-key","wake-local-install-smoke-v3","--max-attempts","1"],repo,timeout=15)
-    if smoke["returncode"]:
-        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_enqueue","result":smoke}
+    if smoke["returncode"]: return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_enqueue","result":smoke}
     try: smoke_task_id=str(json.loads(smoke["stdout"])["task_id"])
-    except Exception:
-        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_id","result":smoke}
+    except Exception: return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_id","result":smoke}
     install=_run(["python3",str(installer),"--repo",str(repo)],repo,timeout=120)
-    if install["returncode"]:
-        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install,"smoke_task_id":smoke_task_id}
-    uid=os.getuid();label=f"gui/{uid}/org.westsidewatch.dore.wake"
-    launch=_run(["/bin/launchctl","print",label],repo,timeout=15)
-    kick=_run(["/bin/launchctl","kickstart","-k",label],repo,timeout=45)
+    if install["returncode"]: return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install,"smoke_task_id":smoke_task_id}
+    uid=os.getuid();label=f"gui/{uid}/org.westsidewatch.dore.wake";launch=_run(["/bin/launchctl","print",label],repo,timeout=15);kick=_run(["/bin/launchctl","kickstart","-k",label],repo,timeout=45)
     state={"stdout":"","returncode":1,"stderr":"not_polled","argv":[]};smoke_row={};smoke_pass=False
     for _ in range(30):
         state=_run(["python3",str(runtime),"--db",str(db),"status"],repo,timeout=15)
         if state["returncode"]==0:
             try:
-                rows=json.loads(state["stdout"])
-                smoke_row=next((r for r in rows if str(r.get("id"))==smoke_task_id),{})
+                rows=json.loads(state["stdout"]);smoke_row=next((r for r in rows if str(r.get("id"))==smoke_task_id),{})
                 if smoke_row.get("state")=="passed":smoke_pass=True;break
                 if smoke_row.get("state")=="failed":break
             except Exception:pass
         time.sleep(0.5)
-    out_log=(log_dir/"wake.out.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.out.log").is_file() else ""
-    err_log=(log_dir/"wake.err.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.err.log").is_file() else ""
+    out_log=(log_dir/"wake.out.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.out.log").is_file() else "";err_log=(log_dir/"wake.err.log").read_text(errors="replace")[-3000:] if (log_dir/"wake.err.log").is_file() else ""
     ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke_pass)
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_task_id":smoke_task_id,"smoke_state":smoke_row.get("state"),"smoke_passed":smoke_pass,"kickstart_returncode":kick["returncode"],"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:],"wake_out_tail":out_log,"wake_err_tail":err_log}
 
 def _acceptance_script(repo:Path,name:str)->dict:
-    script=repo/"dore-core"/"runtime"/name
-    run=_run(["python3",str(script)],repo,timeout=60)
+    script=repo/"dore-core"/"runtime"/name;run=_run(["python3",str(script)],repo,timeout=60)
     try:evidence=json.loads(run["stdout"])
     except Exception:evidence={"ok":False,"error":"invalid_acceptance_output","stdout":run["stdout"]}
     return {"ok":bool(run["returncode"]==0 and evidence.get("ok") is True),"evidence":evidence,"stderr_tail":run["stderr"][-2000:]}
@@ -126,9 +120,7 @@ def _acceptance_script(repo:Path,name:str)->dict:
 def core_substrate_acceptance(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
     if err:return err
-    common=_acceptance_script(repo,"common_substrate_acceptance.py")
-    conversation=_acceptance_script(repo,"conversation_substrate_acceptance.py")
-    ok=bool(common["ok"] and conversation["ok"])
+    common=_acceptance_script(repo,"common_substrate_acceptance.py");conversation=_acceptance_script(repo,"conversation_substrate_acceptance.py");ok=bool(common["ok"] and conversation["ok"])
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"core.substrate.acceptance","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"acceptance":{"common":common["evidence"],"conversation":conversation["evidence"]},"stderr_tail":{"common":common["stderr_tail"],"conversation":conversation["stderr_tail"]}}
 
 def execute(capability:str,args:dict|None=None)->dict:
