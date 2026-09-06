@@ -1,0 +1,35 @@
+{
+  "status": "PASS",
+  "request_id": "wake-runtime-local-activation-20260905-03",
+  "issue": 388,
+  "capability": "wake.runtime.install",
+  "verified_head": "3b8ebe605cf8c16420432a7a7b84e08537b24f29",
+  "launchd": {
+    "label": "gui/501/org.westsidewatch.dore.wake",
+    "loaded": true,
+    "plist_present": true,
+    "run_interval_seconds": 900,
+    "queue_directories_enabled": true,
+    "low_priority_io": true
+  },
+  "durable_state": {
+    "sqlite_present": true,
+    "path": "~/Library/Application Support/Dore/wake-state.sqlite3"
+  },
+  "current_smoke": {
+    "task_id": "bfaa918c-da37-4202-bf65-226c5a123ef4",
+    "state": "passed",
+    "attempts": 1,
+    "max_attempts": 1,
+    "probe": "/usr/bin/true",
+    "returncode": 0
+  },
+  "kickstart_returncode": 0,
+  "wake_log": {
+    "processed": 1,
+    "passed": 1,
+    "failed_or_retry": 0,
+    "stderr_empty": true
+  },
+  "acceptance_note": "PASS is bound to the current smoke task id; earlier smoke tasks cannot satisfy this gate. This supersedes the failed v1 activation and the v2 false-positive acceptance defect."
+}
