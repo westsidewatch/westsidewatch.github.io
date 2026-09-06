@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bounded local production actions exposed to the DORÉ Native Messaging host."""
 from __future__ import annotations
-import json, os, subprocess
+import json, os, subprocess, time
 from pathlib import Path
 from urllib import request
 
@@ -10,8 +10,13 @@ CAPABILITIES={"design.production.rollout","search.local.repair","image.local.rep
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
     child_env=os.environ.copy()
     if env: child_env.update(env)
-    p=subprocess.run(argv,cwd=str(cwd) if cwd else None,text=True,capture_output=True,timeout=timeout,env=child_env)
-    return {"argv":argv,"returncode":p.returncode,"stdout":p.stdout[-8000:],"stderr":p.stderr[-8000:]}
+    try:
+        p=subprocess.run(argv,cwd=str(cwd) if cwd else None,text=True,capture_output=True,timeout=timeout,env=child_env)
+        return {"argv":argv,"returncode":p.returncode,"stdout":p.stdout[-8000:],"stderr":p.stderr[-8000:]}
+    except subprocess.TimeoutExpired as exc:
+        out=exc.stdout.decode() if isinstance(exc.stdout,bytes) else (exc.stdout or "")
+        err=exc.stderr.decode() if isinstance(exc.stderr,bytes) else (exc.stderr or "")
+        return {"argv":argv,"returncode":124,"stdout":out[-8000:],"stderr":(err+f"\ntimeout_after={timeout}s")[-8000:]}
 
 def _repo()->Path:
     return Path(os.environ.get("DORE_WORKTREE") or os.environ.get("DORE_REPO_ROOT") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
@@ -77,19 +82,30 @@ def wake_runtime_install(args:dict|None=None)->dict:
     if err:return err
     runtime=repo/"dore-core"/"runtime"/"wake_runtime.py"
     installer=repo/"dore-core"/"runtime"/"install_wake_launchd.py"
+    db=Path.home()/"Library"/"Application Support"/"Dore"/"wake-state.sqlite3"
+    plist=Path.home()/"Library"/"LaunchAgents"/"org.westsidewatch.dore.wake.plist"
+    # Queue the probe before bootstrap. RunAtLoad/kickstart inside the installer must
+    # be the mechanism that processes it; this makes the smoke test a real launchd test.
+    init=_run(["python3",str(runtime),"--db",str(db),"init"],repo,timeout=15)
+    if init["returncode"]:
+        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"db_init","result":init}
+    smoke=_run(["python3",str(runtime),"--db",str(db),"enqueue","--kind","probe","--payload-json",json.dumps({"argv":["/usr/bin/true"]}),"--idempotency-key","wake-local-install-smoke-v2","--max-attempts","1"],repo,timeout=15)
+    if smoke["returncode"]:
+        return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"smoke_enqueue","result":smoke}
     install=_run(["python3",str(installer),"--repo",str(repo)],repo,timeout=120)
     if install["returncode"]:
         return {"ok":False,"status":"failed","capability":"wake.runtime.install","step":"install","result":install}
     uid=os.getuid();label=f"gui/{uid}/org.westsidewatch.dore.wake"
     launch=_run(["/bin/launchctl","print",label],repo,timeout=15)
-    db=Path.home()/"Library"/"Application Support"/"Dore"/"wake-state.sqlite3"
-    plist=Path.home()/"Library"/"LaunchAgents"/"org.westsidewatch.dore.wake.plist"
-    smoke=_run(["python3",str(runtime),"--db",str(db),"enqueue","--kind","probe","--payload-json",json.dumps({"argv":["/usr/bin/true"]}),"--idempotency-key","wake-local-install-smoke-v1","--max-attempts","1"],repo,timeout=15)
-    kick=_run(["/bin/launchctl","kickstart","-k",label],repo,timeout=15)
-    state=_run(["python3",str(runtime),"--db",str(db),"status"],repo,timeout=15)
-    smoke_pass='"state": "passed"' in state["stdout"] or '"state":"passed"' in state["stdout"]
-    ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke["returncode"]==0 and kick["returncode"]==0 and smoke_pass)
-    return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_enqueued":smoke["returncode"]==0,"smoke_passed":smoke_pass,"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:]}
+    state={"stdout":"","returncode":1,"stderr":"not_polled","argv":[]}
+    smoke_pass=False
+    for _ in range(20):
+        state=_run(["python3",str(runtime),"--db",str(db),"status"],repo,timeout=15)
+        if state["returncode"]==0 and ('"state": "passed"' in state["stdout"] or '"state":"passed"' in state["stdout"]):
+            smoke_pass=True;break
+        time.sleep(0.5)
+    ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke_pass)
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_enqueued":True,"smoke_passed":smoke_pass,"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:]}
 
 def core_substrate_acceptance(args:dict|None=None)->dict:
     repo=_repo();err=_sync(repo)
