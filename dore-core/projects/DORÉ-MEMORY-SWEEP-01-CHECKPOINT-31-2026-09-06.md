@@ -17,3 +17,31 @@ Completed-work evaluation: objective was one persistent intelligence and no dupl
 Durable update: canonical extension added at DORÉ-MASTER-WORK-REGISTER-ADDENDUM-A2A-LOCAL-BRIDGE-2026-09-06.md. P01 state, ordering and blocker are unchanged. Sweep remains ACTIVE_PARALLEL.
 
 Next proof: latest-head CI PASS; resident 4312 health; typed dispatch with request/idempotency identity; unauthorized mutation refusal; non-visual request with visual bodies dormant.
+
+## Checkpoint 31A — purpose-built Doré website asset-family correction
+
+Bounded evidence reviewed:
+
+- `dore-core/projects/DORÉ-JOURNAL-VISUAL-HISTORY-EVIDENCE-LEDGER-2026-08-26.md`
+- canonical `VIS-GRAMMAR`, `DORE-EXHIBITION`, `MAIN`, `JOURNAL-PRINT` interpretations in `DORÉ-MASTER-WORK-REGISTER.md`
+- current product-direction decision separating original Doré works from Doré-derived website grammar
+
+Findings:
+
+1. The previously attempted Figma A/B/C comparison is invalid evidence: it used labels/placeholders rather than rendered assets and did not compare the same real production content under controlled visual changes. Retain only as a failed experiment; do not count it toward `VIS-GRAMMAR` completion.
+2. Original Doré works are curated/exhibition content and should appear as a scrolling exhibition/card relationship. They are not the default raw material for interface decoration.
+3. The required website language is a fresh, purpose-built asset family drawn from Doré logic and current Westside principles: engraved light fields/textures, Bethlehem-star variants, water/wave texture, cloud/sky texture, stone/wall/city-edge forms, dividers/section marks, and responsive digital/print equivalents.
+4. A valid comparison is only `current production Journal` versus the exact same real content and geometry with the proven purpose-built asset family applied. Placeholder labels, generic line art, or direct original-plate collage do not qualify.
+
+Classification changes:
+
+- invalid placeholder comparison: `RETIRED` as evidence; preserve as historical failed experiment
+- purpose-built Doré-derived website asset family: `ACTIVE_PARALLEL / BUILDING`
+- original Doré exhibition cards: `READY` under `DORE-EXHIBITION`
+- current Journal baseline/control: `COMPLETED_REVISIT_CANDIDATE`
+
+Smallest next proof:
+
+Produce one real-content, same-geometry Journal specimen pair with current production baseline versus newly drawn light/sky/star/water/wall assets, with no original Doré plate used as decoration. Record mobile/print notes and whether the family creates recognizable Westside differentiation without reducing reading comfort.
+
+P01 isolation: unchanged. Sweep remains `ACTIVE_PARALLEL`.
