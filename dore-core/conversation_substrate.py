@@ -5,12 +5,14 @@ into SharedArtifactStore. Archive JSON is export/evidence only, never a truth st
 """
 from __future__ import annotations
 from pathlib import Path
-from typing import Iterable
-import importlib.util, sqlite3
+import importlib.util, sqlite3, sys
 
 _CORE=Path(__file__).resolve().parent
 _spec=importlib.util.spec_from_file_location("dore_substrate",_CORE/"substrate.py")
-_mod=importlib.util.module_from_spec(_spec); assert _spec and _spec.loader; _spec.loader.exec_module(_mod)
+assert _spec and _spec.loader
+_mod=importlib.util.module_from_spec(_spec)
+sys.modules[_spec.name]=_mod
+_spec.loader.exec_module(_mod)
 SharedArtifactStore=_mod.SharedArtifactStore
 ProvenanceEdge=_mod.ProvenanceEdge
 
