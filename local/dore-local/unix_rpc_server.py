@@ -56,8 +56,6 @@ def _peer_allowed(writer: asyncio.StreamWriter) -> bool:
         return False
     uid = _peer_uid(sock.fileno())
     if uid is None:
-        # CI and non-macOS contract tests do not have getpeereid(3); the actual
-        # production target is macOS where failure to resolve the peer is deny.
         return os.uname().sysname != "Darwin"
     return uid == os.getuid()
 
@@ -76,6 +74,7 @@ def dispatch(request: dict) -> dict:
         return _jsonrpc_error(request_id, -32602, "params must be an object")
 
     if method in {"dore.health", "health"}:
+        callable_caps = [x["id"] for x in native_host.BUS.discover(native_host.PRODUCTION) if x.get("callable")]
         result = {
             "ok": True,
             "service": SERVICE,
@@ -85,8 +84,20 @@ def dispatch(request: dict) -> dict:
             "socket": "~/.dore/run/dore.sock",
             "browser_required": False,
             "paid_runtime": False,
-            "production_capabilities": sorted(native_host.PRODUCTION.CAPABILITIES),
+            "production_capabilities": sorted(callable_caps),
         }
+    elif method in {"capability.list", "dore.capabilities"}:
+        result = {
+            "ok": True,
+            "owner": "dore-core",
+            "capabilities": native_host.BUS.discover(native_host.PRODUCTION, include_planned=bool(params.get("include_planned"))),
+        }
+    elif method in {"capability.resolve", "dore.resolve"}:
+        capability = str(params.get("capability") or "")
+        if not capability:
+            return _jsonrpc_error(request_id, -32602, "capability is required")
+        descriptor = native_host.BUS.resolve(capability, native_host.PRODUCTION)
+        result = {"ok": descriptor is not None, "capability": capability, "descriptor": descriptor}
     elif method in {"dore.call", "capability.call"}:
         capability = str(params.get("capability") or "")
         if not capability:
@@ -94,6 +105,7 @@ def dispatch(request: dict) -> dict:
         payload = {
             "capability": capability,
             "args": params.get("args") or {},
+            "caller_product": params.get("caller_product"),
             "conversation_id": params.get("conversation_id"),
             "session_id": params.get("session_id"),
             "request_id": params.get("request_id"),
