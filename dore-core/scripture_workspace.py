@@ -1,5 +1,8 @@
-"""Doré shared Scripture workspace: ONE + Multiwrite + Search + 黎明書局.
-Stdlib-only canonical artifact skeleton. Product surfaces are adapters, not owners.
+"""Doré shared Scripture workspace backed by the canonical Core substrate.
+
+ONE, Multiwrite, Search and 黎明書局 share artifact IDs and one SQLite truth.
+The old JSON note directory is compatibility input only and can be migrated once;
+it is no longer a second writable store.
 """
 from __future__ import annotations
 from dataclasses import dataclass, asdict, field
@@ -7,13 +10,15 @@ from pathlib import Path
 from typing import Any
 import json, re, time, uuid
 
+from substrate import SharedArtifactStore, ArtifactLink, ProvenanceEdge
+
 SCHEMA_ANCHOR = "dore.scripture-anchor.v1"
 SCHEMA_NOTE = "dore.study-note.v1"
 SCHEMA_SOURCE = "dore.library-source-ref.v1"
 
 @dataclass(frozen=True)
 class ScriptureAnchor:
-    canon_id: str                 # ONE Canon Index identity, e.g. 40:6
+    canon_id: str
     book: str = ""
     chapter: int | None = None
     verse_start: int | None = None
@@ -23,9 +28,8 @@ class ScriptureAnchor:
 
 @dataclass(frozen=True)
 class LibrarySourceRef:
-    """Reference into 黎明書局; source stays independent from user interpretation."""
     source_id: str
-    locator: str = ""             # page/chapter/section/fragment
+    locator: str = ""
     title: str = ""
     author: str = ""
     claim_class: str = "SOURCE"
@@ -50,45 +54,62 @@ class StudyNote:
         return asdict(self)
 
 class ScriptureWorkspace:
-    """Single local artifact store. ONE/Multiwrite/Search/黎明書局 share IDs."""
+    """Compatibility facade over SharedArtifactStore, not a separate datastore."""
     def __init__(self, root: str | Path):
         self.root = Path(root)
-        self.notes_dir = self.root / "notes"
-        self.notes_dir.mkdir(parents=True, exist_ok=True)
+        self.root.mkdir(parents=True, exist_ok=True)
+        self.store = SharedArtifactStore(self.root / "dore.sqlite3")
+        self.legacy_notes_dir = self.root / "notes"
+        self._migrate_legacy_json_once()
 
     def create_note(self, text: str, anchors=None, source_refs=None, entities=None, topics=None) -> StudyNote:
-        note = StudyNote(
-            id="note-" + uuid.uuid4().hex,
-            text=text,
-            anchors=list(anchors or []), source_refs=list(source_refs or []),
-            entities=list(entities or []), topics=list(topics or []),
+        anchors = list(anchors or [])
+        source_refs = list(source_refs or [])
+        entities = list(entities or [])
+        topics = list(topics or [])
+        note_id = "note-" + uuid.uuid4().hex
+        metadata = self._metadata(anchors, source_refs, entities, topics)
+        provenance = []
+        for src in source_refs:
+            self._ensure_source_artifact(src)
+            provenance.append(ProvenanceEdge(
+                relation="attached-source", source_id=src.source_id, target_id=note_id,
+                activity="study-note-create", agent="user", evidence_ref=self._source_evidence(src),
+            ))
+        art = self.store.create_artifact(
+            kind="study-note", artifact_id=note_id, body=text, metadata=metadata,
+            authority="USER", protected=True, provenance=provenance,
         )
-        self._save(note)
-        return note
+        for src in source_refs:
+            self.store.add_link(ArtifactLink(note_id, src.source_id, "cites"))
+        return self._from_artifact(art)
 
     def get_note(self, note_id: str) -> StudyNote:
-        p = self.notes_dir / f"{note_id}.json"
-        return self._decode(json.loads(p.read_text(encoding="utf-8")))
+        art = self.store.get_artifact(note_id)
+        if art.kind != "study-note":
+            raise KeyError(note_id)
+        return self._from_artifact(art)
 
     def update_note(self, note_id: str, *, text: str, expected_revision: int) -> StudyNote:
-        note = self.get_note(note_id)
-        if note.revision != expected_revision:
-            raise ValueError("stale_revision")
-        note.text = text
-        note.revision += 1
-        note.updated_at = time.time()
-        self._save(note)
-        return note
+        cur = self.store.get_artifact(note_id)
+        if cur.kind != "study-note":
+            raise KeyError(note_id)
+        art = self.store.update_artifact(
+            note_id, body=text, metadata=cur.metadata,
+            expected_revision=expected_revision, authority="USER",
+        )
+        return self._from_artifact(art)
 
     def list_notes(self) -> list[StudyNote]:
-        return [self._decode(json.loads(p.read_text(encoding="utf-8"))) for p in sorted(self.notes_dir.glob("note-*.json"))]
+        with self.store.connect() as c:
+            rows = c.execute("SELECT * FROM dore_artifacts WHERE kind='study-note' ORDER BY updated_at DESC").fetchall()
+        return [self._from_artifact(self.store._decode(r)) for r in rows]
 
     def fuzzy(self, query: str, limit: int = 20) -> list[dict[str, Any]]:
-        """Cheap L0 fuzzy retrieval. No embedding/runtime dependency.
-        Ranking: scripture identity > lexical coverage > entities/topics > library source metadata.
-        """
+        """Deterministic L0 fuzzy projection over the canonical artifact truth."""
         q = self._tokens(query)
-        if not q: return []
+        if not q:
+            return []
         hits=[]
         for n in self.list_notes():
             anchor_text=" ".join(a.canon_id+" "+a.book+" "+" ".join(a.labels) for a in n.anchors)
@@ -98,8 +119,63 @@ class ScriptureWorkspace:
             exact_anchor = any(a.canon_id.lower() in query.lower() for a in n.anchors)
             coverage=lambda bag: len(q & bag)/max(1,len(q))
             score=(4.0 if exact_anchor else 0.0)+2.0*coverage(body)+1.6*coverage(anchors)+1.3*coverage(entities)+0.8*coverage(sources)
-            if score>0: hits.append({"note_id":n.id,"score":round(score,4),"revision":n.revision,"anchors":[a.canon_id for a in n.anchors],"source_refs":[s.source_id for s in n.source_refs]})
+            if score>0:
+                hits.append({"note_id":n.id,"artifact_id":n.id,"score":round(score,4),"revision":n.revision,"anchors":[a.canon_id for a in n.anchors],"source_refs":[s.source_id for s in n.source_refs],"engine":"scripture-l0"})
         return sorted(hits,key=lambda x:(-x["score"],x["note_id"]))[:limit]
+
+    def _ensure_source_artifact(self, src: LibrarySourceRef) -> None:
+        try:
+            self.store.get_artifact(src.source_id)
+            return
+        except KeyError:
+            pass
+        self.store.create_artifact(
+            kind="library-source", artifact_id=src.source_id,
+            body=(src.title or src.source_id),
+            metadata={"locator":src.locator,"title":src.title,"author":src.author,"claim_class":src.claim_class,"schema":src.schema},
+            authority="SOURCE", protected=True,
+        )
+
+    def _migrate_legacy_json_once(self) -> None:
+        if not self.legacy_notes_dir.is_dir():
+            return
+        marker = self.root / ".scripture-json-migrated-v1"
+        if marker.exists():
+            return
+        migrated=0
+        for p in sorted(self.legacy_notes_dir.glob("note-*.json")):
+            try:
+                d=json.loads(p.read_text(encoding="utf-8"))
+                note=self._decode_legacy(d)
+                try:
+                    self.store.get_artifact(note.id)
+                    continue
+                except KeyError:
+                    pass
+                meta=self._metadata(note.anchors,note.source_refs,note.entities,note.topics)
+                for src in note.source_refs:
+                    self._ensure_source_artifact(src)
+                art=self.store.create_artifact(kind="study-note",artifact_id=note.id,body=note.text,metadata=meta,authority=note.authorship,protected=note.protected)
+                for src in note.source_refs:
+                    self.store.add_link(ArtifactLink(art.id,src.source_id,"cites"))
+                migrated += 1
+            except Exception:
+                continue
+        marker.write_text(json.dumps({"schema":"dore.scripture-json-migration.v1","migrated":migrated,"legacy":"read-only"}),encoding="utf-8")
+
+    @staticmethod
+    def _metadata(anchors, source_refs, entities, topics):
+        return {
+            "schema":SCHEMA_NOTE,
+            "anchors":[asdict(x) for x in anchors],
+            "source_refs":[asdict(x) for x in source_refs],
+            "entities":list(entities),
+            "topics":list(topics),
+        }
+
+    @staticmethod
+    def _source_evidence(src: LibrarySourceRef) -> str:
+        return src.source_id + ("#"+src.locator if src.locator else "")
 
     @staticmethod
     def _tokens(text: str) -> set[str]:
@@ -109,11 +185,21 @@ class ScriptureWorkspace:
         words.update(han[i:i+n] for n in (2,3) for i in range(max(0,len(han)-n+1)))
         return {x for x in words if x}
 
-    def _save(self,note:StudyNote):
-        p=self.notes_dir/f"{note.id}.json"; tmp=p.with_suffix(".tmp")
-        tmp.write_text(json.dumps(note.to_dict(),ensure_ascii=False,indent=2),encoding="utf-8")
-        tmp.replace(p)
+    @staticmethod
+    def _decode_legacy(d:dict[str,Any])->StudyNote:
+        d=dict(d)
+        d["anchors"]=[ScriptureAnchor(**x) for x in d.get("anchors",[])]
+        d["source_refs"]=[LibrarySourceRef(**x) for x in d.get("source_refs",[])]
+        return StudyNote(**d)
 
     @staticmethod
-    def _decode(d:dict[str,Any])->StudyNote:
-        d=dict(d); d["anchors"]=[ScriptureAnchor(**x) for x in d.get("anchors",[])]; d["source_refs"]=[LibrarySourceRef(**x) for x in d.get("source_refs",[])]; return StudyNote(**d)
+    def _from_artifact(art) -> StudyNote:
+        m=art.metadata
+        return StudyNote(
+            id=art.id,text=art.body,
+            anchors=[ScriptureAnchor(**x) for x in m.get("anchors",[])],
+            source_refs=[LibrarySourceRef(**x) for x in m.get("source_refs",[])],
+            entities=list(m.get("entities",[])),topics=list(m.get("topics",[])),
+            authorship=art.authority,protected=art.protected,revision=art.revision,
+            created_at=art.created_at,updated_at=art.updated_at,
+        )
