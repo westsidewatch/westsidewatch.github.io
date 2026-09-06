@@ -5,11 +5,29 @@
   const form = document.getElementById('email-form');
   const email = document.getElementById('email');
   const providers = [...document.querySelectorAll('[data-provider]')];
+  const sessionPanel = document.getElementById('session-panel');
+  const sessionEmail = document.getElementById('session-email');
+  const logout = document.getElementById('logout');
 
-  const providerMap = { google: 'google', apple: 'apple', microsoft: 'azure', github: 'github' };
+  const providerMap = {
+    google: 'google',
+    apple: 'apple',
+    microsoft: 'azure',
+    github: 'github'
+  };
+
+  let client = null;
 
   function message(text) {
     if (status) status.textContent = text;
+  }
+
+  function setAuthenticated(user) {
+    const signedIn = Boolean(user);
+    if (sessionPanel) sessionPanel.hidden = !signedIn;
+    if (sessionEmail) sessionEmail.textContent = signedIn ? (user.email || '已登入') : '';
+    providers.forEach((button) => { button.hidden = signedIn; });
+    if (form) form.hidden = signedIn;
   }
 
   async function loadClient() {
@@ -23,17 +41,36 @@
         document.head.appendChild(script);
       });
     }
-    return window.supabase.createClient(config.url, config.publishableKey);
+    if (!client) client = window.supabase.createClient(config.url, config.publishableKey);
+    return client;
+  }
+
+  async function refreshSession() {
+    const auth = await loadClient();
+    if (!auth) {
+      setAuthenticated(null);
+      message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
+      return;
+    }
+    const { data, error } = await auth.auth.getSession();
+    if (error) {
+      setAuthenticated(null);
+      message(error.message);
+      return;
+    }
+    setAuthenticated(data.session?.user || null);
+    if (data.session?.user) message('已登入 DORÉ。');
   }
 
   async function signIn(provider) {
     try {
-      const client = await loadClient();
-      if (!client) {
+      const auth = await loadClient();
+      if (!auth) {
         message('身份服務尚未配置。');
         return;
       }
-      const { error } = await client.auth.signInWithOAuth({
+      message('正在前往登入服務……');
+      const { error } = await auth.auth.signInWithOAuth({
         provider,
         options: { redirectTo: window.location.origin + '/dore/account/' }
       });
@@ -44,7 +81,6 @@
   }
 
   providers.forEach((button) => {
-    button.removeAttribute('aria-disabled');
     button.addEventListener('click', () => signIn(providerMap[button.dataset.provider]));
   });
 
@@ -56,14 +92,17 @@
         return;
       }
       try {
-        const client = await loadClient();
-        if (!client) {
+        const auth = await loadClient();
+        if (!auth) {
           message('身份服務尚未配置。');
           return;
         }
-        const { error } = await client.auth.signInWithOtp({
+        const { error } = await auth.auth.signInWithOtp({
           email: email.value.trim(),
-          options: { emailRedirectTo: window.location.origin + '/dore/account/' }
+          options: {
+            emailRedirectTo: window.location.origin + '/dore/account/',
+            shouldCreateUser: true
+          }
         });
         message(error ? error.message : '驗證連結已發送，請檢查你的電子郵箱。');
       } catch (error) {
@@ -71,4 +110,38 @@
       }
     });
   }
+
+  if (logout) {
+    logout.addEventListener('click', async () => {
+      const auth = await loadClient();
+      if (!auth) return;
+      const { error } = await auth.auth.signOut();
+      if (error) {
+        message(error.message);
+        return;
+      }
+      setAuthenticated(null);
+      message('已登出。');
+    });
+  }
+
+  (async function init() {
+    try {
+      const auth = await loadClient();
+      if (!auth) {
+        setAuthenticated(null);
+        message('身份服務尚未配置；完成 Supabase 公開設定與登入提供者設定後，登入按鈕即可啟用。');
+        return;
+      }
+      auth.auth.onAuthStateChange((event, session) => {
+        setAuthenticated(session?.user || null);
+        if (event === 'SIGNED_IN') message('已登入 DORÉ。');
+        if (event === 'SIGNED_OUT') message('已登出。');
+      });
+      await refreshSession();
+    } catch (error) {
+      setAuthenticated(null);
+      message('身份服務載入失敗，請稍後再試。');
+    }
+  })();
 })();
