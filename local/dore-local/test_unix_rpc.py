@@ -19,6 +19,20 @@ def main() -> int:
     assert result["lifecycle"] == "launchd-socket-activation"
     assert result["browser_required"] is False
     assert result["paid_runtime"] is False
+    assert "image.generate" in result["production_capabilities"]
+
+    listed = MOD.dispatch({"jsonrpc": "2.0", "id": "l1", "method": "capability.list", "params": {}})
+    assert listed["result"]["ok"] is True
+    assert listed["result"]["owner"] == "dore-core"
+    image = next(x for x in listed["result"]["capabilities"] if x["id"] == "image.generate")
+    assert image["callable"] is True
+    assert image["provider"] == "dore-image-local"
+
+    resolved = MOD.dispatch({"jsonrpc": "2.0", "id": "r1", "method": "capability.resolve", "params": {"capability": "image.generate"}})
+    assert resolved["result"]["ok"] is True
+    assert resolved["result"]["descriptor"]["owner"] == "dore-core"
+    assert resolved["result"]["descriptor"]["callable"] is True
+    assert resolved["result"]["descriptor"]["provider"] == "dore-image-local"
 
     legacy = MOD.dispatch({
         "jsonrpc": "2.0",
