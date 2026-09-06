@@ -1,0 +1,24 @@
+{
+  "schema":"dore.scripture-workspace-capabilities.v1",
+  "principle":"one_artifact_model_many_product_surfaces",
+  "shared_identity":{"scripture":"ONE Canon Index","notes":"dore.study-note.v1","retrieval":"rebuildable shared artifact projection"},
+  "capabilities":[
+    {"id":"scripture.resolve","faculty":"biblical-world","inputs":["query_or_reference"],"outputs":["scripture_anchor"],"activation":"L0_first","consumers":["search","one","multiwrite"]},
+    {"id":"study.note.create","faculty":"editor","inputs":["content","anchors","provenance"],"outputs":["study_note"],"authority":"user_content_protected","consumers":["one","multiwrite","search"]},
+    {"id":"study.note.update","faculty":"editor","inputs":["note_id","patch","expected_revision"],"outputs":["study_note","revision"],"authority":"protected_text_requires_user_mutation","consumers":["one","multiwrite"]},
+    {"id":"study.note.get","faculty":"memory","inputs":["note_id"],"outputs":["study_note"],"consumers":["one","multiwrite","search"]},
+    {"id":"study.note.list","faculty":"memory","inputs":["scope","filters"],"outputs":["study_note_refs"],"consumers":["one","multiwrite","search"]},
+    {"id":"retrieval.fuzzy","faculty":"retrieval","inputs":["query","scope","context"],"outputs":["retrieval_hits"],"activation":"L0_then_L1_then_L2_if_needed","ranking_floor":["exact-scripture","lexical","user-anchor-entity","explicit-scripture-graph","topic-semantic","broad-semantic"],"consumers":["search","one","multiwrite"]},
+    {"id":"study.related","faculty":"retrieval","inputs":["artifact_or_scripture_context"],"outputs":["retrieval_hits"],"consumers":["one","multiwrite"]},
+    {"id":"study.promote","faculty":"editor","inputs":["note_or_selection","target_kind"],"outputs":["writing_artifact"],"preserves":["source_lineage","provenance","authorship"],"consumers":["multiwrite"]},
+    {"id":"product.open","faculty":"routing","inputs":["artifact_id","target_surface"],"outputs":["typed_deep_link"],"consumers":["search","one","multiwrite"]}
+  ],
+  "forbidden_duplicate_implementations":["one.search","one.notes","multiwrite.search","multiwrite.bible-search"],
+  "product_surfaces":{
+    "one":{"role":"read_explore_context","actions":["find","write","open-related-note"]},
+    "multiwrite":{"role":"capture_develop_publish","workspace":"bible-study-notes"},
+    "search":{"role":"global_natural_language_reentry","must_not_own":"retrieval intelligence"}
+  },
+  "baseline_cost":"local_free",
+  "semantic_retrieval_policy":"defer embeddings until deterministic fuzzy baseline and real-query regression are measured"
+}
