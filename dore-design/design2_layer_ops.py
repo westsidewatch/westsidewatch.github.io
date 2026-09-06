@@ -5,11 +5,20 @@ def install(base):
     original=base.mutate
     def mutate(w,payload):
         op=payload.get('op')
-        if op not in ('reorder_node','align_nodes','group_nodes','ungroup_nodes','distribute_nodes','stack_nodes','center_nodes'):
+        if op not in ('reorder_node','align_nodes','group_nodes','ungroup_nodes','distribute_nodes','stack_nodes','center_nodes','add_frame','set_asset'):
             return original(w,payload)
         pid=payload.get('page_id');pg=base.page(w,pid) if pid else None
         if not pg: raise ValueError('page_not_found')
         nodes=pg.get('nodes',[])
+        if op=='add_frame':
+            used={n.get('id') for n in nodes};base_id=str(payload.get('id') or 'frame');nid=base_id;i=1
+            while nid in used:i+=1;nid=f'{base_id}-{i}'
+            frame={'id':nid,'type':'block','role':'frame','x':float(payload.get('x',120)),'y':float(payload.get('y',180)),'w':float(payload.get('w',960)),'h':float(payload.get('h',540)),'frame_fill':'transparent','frame_stroke':'#b49a55'}
+            nodes.append(frame);pg['nodes']=nodes;return base.save(w)
+        if op=='set_asset':
+            aid=payload.get('asset_id');patch=payload.get('patch') or {};assets=w.setdefault('assets',{})
+            if not aid or aid not in assets: raise ValueError('asset_not_found')
+            safe={k:v for k,v in patch.items() if k in ('uri','name','mime')};assets[aid].update(safe);return base.save(w)
         if op=='reorder_node':
             nid=payload.get('id');index=payload.get('index');old=next((i for i,n in enumerate(nodes) if n.get('id')==nid),None)
             if old is None: raise ValueError('node_not_found')
@@ -18,7 +27,7 @@ def install(base):
         ids=[x for x in payload.get('ids',[]) if isinstance(x,str)];chosen=[n for n in nodes if n.get('id') in ids]
         if not chosen: raise ValueError('nodes_not_found')
         if op=='group_nodes':
-            gid=payload.get('group_id') or 'group';
+            gid=payload.get('group_id') or 'group'
             for n in chosen:n['group_id']=gid
         elif op=='ungroup_nodes':
             for n in chosen:n.pop('group_id',None)
