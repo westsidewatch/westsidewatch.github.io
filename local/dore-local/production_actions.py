@@ -5,7 +5,7 @@ import json, os, subprocess
 from pathlib import Path
 from urllib import request
 
-CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install"}
+CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install","core.substrate.acceptance"}
 
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
     child_env=os.environ.copy()
@@ -91,9 +91,21 @@ def wake_runtime_install(args:dict|None=None)->dict:
     ok=bool(launch["returncode"]==0 and db.is_file() and plist.is_file() and smoke["returncode"]==0 and kick["returncode"]==0 and smoke_pass)
     return {"ok":ok,"status":"completed" if ok else "failed","capability":"wake.runtime.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"label":label,"plist":str(plist),"db":str(db),"launchctl_loaded":launch["returncode"]==0,"smoke_enqueued":smoke["returncode"]==0,"smoke_passed":smoke_pass,"install_tail":install["stdout"][-2000:],"launchctl_tail":launch["stdout"][-2500:],"state_tail":state["stdout"][-4000:]}
 
+def core_substrate_acceptance(args:dict|None=None)->dict:
+    repo=_repo();err=_sync(repo)
+    if err:return err
+    script=repo/"dore-core"/"runtime"/"common_substrate_acceptance.py"
+    run=_run(["python3",str(script)],repo,timeout=60)
+    evidence={}
+    try:evidence=json.loads(run["stdout"])
+    except Exception:evidence={"ok":False,"error":"invalid_acceptance_output","stdout":run["stdout"]}
+    ok=bool(run["returncode"]==0 and evidence.get("ok") is True)
+    return {"ok":ok,"status":"completed" if ok else "failed","capability":"core.substrate.acceptance","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"acceptance":evidence,"stderr_tail":run["stderr"][-2000:]}
+
 def execute(capability:str,args:dict|None=None)->dict:
     if capability=="design.production.rollout":return design_production_rollout(args)
     if capability=="search.local.repair":return search_local_repair(args)
     if capability=="image.local.repair":return image_local_repair(args)
     if capability=="wake.runtime.install":return wake_runtime_install(args)
+    if capability=="core.substrate.acceptance":return core_substrate_acceptance(args)
     return {"ok":False,"status":"failed","error":{"code":"unsupported_production_action","message":capability}}
