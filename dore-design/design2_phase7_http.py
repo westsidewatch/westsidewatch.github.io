@@ -1,0 +1,12 @@
+#!/usr/bin/env python3
+"""Phase 7 production metadata overlay for resident entrypoint."""
+def install(H,base):
+    old=H.do_GET
+    def do_GET(self):
+        from urllib.parse import urlparse
+        if urlparse(self.path).path=='/api/design2/production-health':
+            import design2_closeout_acceptance
+            c=design2_closeout_acceptance.check(base)
+            return self.out(200,{'ok':c['ok'],'service':'dore-design','version':'2.0-production','phase':7,'closeout':c})
+        return old(self)
+    H.do_GET=do_GET
