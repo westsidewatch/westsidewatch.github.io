@@ -1,7 +1,8 @@
 #!/bin/bash
 set -euo pipefail
-ROOT="$HOME/westsidewatch.github.io"
-DORE="$HOME/.dore"
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+ROOT="${DORE_REPO_ROOT:-$(cd "$SCRIPT_DIR/../.." && pwd)}"
+DORE="${DORE_LOCAL_HOME:-$HOME/.dore}"
 PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.dore-local.plist"
 UPDATER_PLIST="$HOME/Library/LaunchAgents/io.westsidewatch.dore-updater.plist"
 LABEL="io.westsidewatch.dore-local"
@@ -11,6 +12,7 @@ DOMAIN="gui/$UIDN"
 mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs"
 touch "$DORE/logs/local-api.log" "$DORE/logs/local-api.err.log" "$DORE/logs/updater.log" "$DORE/logs/updater.err.log"
 PY="$(command -v python3)"
+[ -f "$ROOT/local/dore-local/dore_local.py" ] || { echo "ERROR: canonical Doré Local source missing at $ROOT" >&2; exit 2; }
 cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -23,6 +25,7 @@ cat > "$PLIST" <<EOF
  <key>DORE_LOCAL_PORT</key><string>8788</string>
  <key>DORE_LOCAL_MODEL</key><string>gemma4:e4b</string>
  <key>OLLAMA_BASE_URL</key><string>http://127.0.0.1:11434</string>
+ <key>DORE_REPO_ROOT</key><string>$ROOT</string>
 </dict>
 <key>RunAtLoad</key><true/>
 <key>KeepAlive</key><true/>
@@ -65,5 +68,8 @@ done
 sleep 2
 launchctl print "$DOMAIN/$LABEL" >/dev/null 2>&1 || { echo "ERROR: Doré Local LaunchAgent not registered" >&2; exit 4; }
 launchctl print "$DOMAIN/$UPDATER_LABEL" >/dev/null 2>&1 || { echo "ERROR: Doré updater LaunchAgent not registered" >&2; exit 6; }
-if curl -fsS http://127.0.0.1:8788/health >/dev/null 2>&1; then echo DORE_LOCAL_AUTOSTART_PASS; else echo "ERROR: Doré Local health check failed" >&2; exit 5; fi
+HEALTH="$(curl -fsS http://127.0.0.1:8788/health)" || { echo "ERROR: Doré Local health check failed" >&2; tail -80 "$DORE/logs/local-api.err.log" >&2 2>/dev/null || true; exit 5; }
+echo "$HEALTH"
+echo DORE_LOCAL_CANONICAL_ROOT="$ROOT"
+echo DORE_LOCAL_AUTOSTART_PASS
 echo DORE_LOCAL_UPDATER_REGISTERED
