@@ -53,6 +53,13 @@ class WestsideContextTests(unittest.TestCase):
         self.assertTrue(results)
         self.assertEqual(results[0].title, "ONE")
 
+    def test_cjk_substring_fallback_retrieves_context(self) -> None:
+        db = sqlite3.connect(":memory:")
+        build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
+        results = search(db, "查經與共同學習", limit=3)
+        self.assertTrue(results)
+        self.assertEqual(results[0].title, "以馬忤斯 Emmaus")
+
     def test_context_packet_recovers_canonical_ancestors(self) -> None:
         db = sqlite3.connect(":memory:")
         build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
