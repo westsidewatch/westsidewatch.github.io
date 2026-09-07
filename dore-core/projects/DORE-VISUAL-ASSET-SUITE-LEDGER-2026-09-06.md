@@ -31,13 +31,19 @@ A named motif list, generic engraving filter, direct reuse of original Dore plat
 ## Current classification
 
 - Purpose-built Dore-derived asset suite: ACTIVE_PARALLEL / BUILDING
+- First light-texture + Bethlehem-star family: READY as next bounded build target, not yet completed
 - Original Dore exhibition or curation: READY
 - August Journal visual milestone: COMPLETED_REVISIT_CANDIDATE and current production control
+- Placeholder A/B/C comparison: SUPERSEDED as invalid proof
 - Brand V1 propagation: gated
 
 ## Revisit trigger
 
 Reopen the current Journal only after the first real asset family survives the minimum proof above. Keep the current Journal as the control; do not replace it with a concept-only comparison.
+
+## Checkpoint 41 reconciliation (2026-09-06)
+
+The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Doré works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
 
 ## P01 isolation
 
