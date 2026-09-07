@@ -13,6 +13,7 @@ from pathlib import Path
 
 SCHEMA_VERSION = 1
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+CJK_RE = re.compile(r"[\u3400-\u9fff]+")
 
 
 @dataclass(frozen=True)
@@ -53,7 +54,11 @@ def compile_markdown(markdown: str, source_path: str = "") -> list[ContextNode]:
     nodes: list[ContextNode] = []
     stack: list[tuple[int, str]] = []
     for ordinal, (start, level, title) in enumerate(headings):
-        end = headings[ordinal + 1][0] if ordinal + 1 < len(headings) else len(lines)
+        end = len(lines)
+        for candidate_start, candidate_level, _ in headings[ordinal + 1 :]:
+            if candidate_level <= level:
+                end = candidate_start
+                break
         while stack and stack[-1][0] >= level:
             stack.pop()
         parent_id = stack[-1][1] if stack else None
@@ -145,8 +150,19 @@ def _rows_to_nodes(rows: list[tuple]) -> list[ContextNode]:
 
 
 def _fallback_terms(query: str) -> list[str]:
-    """Split mixed Latin/CJK queries into small deterministic LIKE terms."""
-    return [term for term in re.split(r"\s+", query.strip()) if term]
+    """Split mixed queries into useful deterministic local search terms."""
+    terms: list[str] = []
+    for token in re.split(r"\s+", query.strip()):
+        if not token:
+            continue
+        terms.append(token)
+        for run in CJK_RE.findall(token):
+            if len(run) >= 2:
+                terms.extend(run[i : i + 2] for i in range(len(run) - 1))
+                terms.extend(run[i : i + 3] for i in range(len(run) - 2))
+                if len(run) >= 4:
+                    terms.append(run[:4])
+    return list(dict.fromkeys(terms))
 
 
 def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNode]:
@@ -154,8 +170,8 @@ def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNo
 
     FTS5 is the primary ranked retriever. The local fallback matters for mixed
     CJK/Latin queries because unicode61 does not provide Chinese word segmentation.
-    When FTS5 cannot satisfy every term, fallback ranks nodes by matched terms,
-    title matches, then canonical source order. It remains local and dependency-free.
+    When FTS5 cannot satisfy a query, fallback uses CJK n-grams plus literal terms,
+    then ranks by matched terms, title matches, and canonical source order.
     """
     if not query.strip() or limit < 1:
         return []
