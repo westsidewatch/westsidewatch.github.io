@@ -27,6 +27,14 @@ class ContextNode:
     ordinal: int
 
 
+@dataclass(frozen=True)
+class ContextPacket:
+    """A matched node plus its canonical ancestor chain."""
+
+    match: ContextNode
+    ancestors: tuple[ContextNode, ...]
+
+
 def _slug(value: str) -> str:
     value = re.sub(r"[^0-9A-Za-z\u3400-\u9fff]+", "-", value.strip().lower())
     return value.strip("-") or "section"
@@ -109,6 +117,29 @@ def build_index(markdown: str, db: sqlite3.Connection, source_path: str = "") ->
     return source_sha
 
 
+def _node(db: sqlite3.Connection, node_id: str) -> ContextNode:
+    row = db.execute(
+        """SELECT node_id,title,level,parent_id,content,source_path,source_sha256,ordinal
+           FROM context_nodes WHERE node_id = ?""",
+        (node_id,),
+    ).fetchone()
+    if row is None:
+        raise KeyError(f"unknown context node: {node_id}")
+    return ContextNode(*row)
+
+
+def ancestor_chain(db: sqlite3.Connection, node: ContextNode) -> tuple[ContextNode, ...]:
+    """Return canonical ancestors from root toward the matched node's parent."""
+    chain: list[ContextNode] = []
+    parent_id = node.parent_id
+    while parent_id is not None:
+        parent = _node(db, parent_id)
+        chain.append(parent)
+        parent_id = parent.parent_id
+    chain.reverse()
+    return tuple(chain)
+
+
 def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNode]:
     """Return the most relevant compiled context nodes using SQLite FTS5 ranking."""
     if not query.strip() or limit < 1:
@@ -120,6 +151,15 @@ def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNo
         (query, limit),
     ).fetchall()
     return [ContextNode(*row) for row in rows]
+
+
+def search_context(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextPacket]:
+    """Search and attach each match's canonical ancestor chain.
+
+    This is the minimal bridge from lexical retrieval to usable structural context:
+    retrieval stays FTS5-only, while hierarchy is recovered from the same projection.
+    """
+    return [ContextPacket(match=node, ancestors=ancestor_chain(db, node)) for node in search(db, query, limit)]
 
 
 def build_index_from_file(source: Path, database: Path) -> str:
