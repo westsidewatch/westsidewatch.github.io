@@ -144,12 +144,18 @@ def _rows_to_nodes(rows: list[tuple]) -> list[ContextNode]:
     return [ContextNode(*row) for row in rows]
 
 
-def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNode]:
-    """Return relevant context nodes with FTS5 first and substring fallback.
+def _fallback_terms(query: str) -> list[str]:
+    """Split mixed Latin/CJK queries into small deterministic LIKE terms."""
+    return [term for term in re.split(r"\s+", query.strip()) if term]
 
-    FTS5 is the primary ranked retriever. The tiny LIKE fallback matters for CJK
-    substring queries because unicode61 does not provide a word-segmentation model
-    for Chinese. It remains local, deterministic, and dependency-free.
+
+def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNode]:
+    """Return relevant context nodes with FTS5 first and deterministic LIKE fallback.
+
+    FTS5 is the primary ranked retriever. The local fallback matters for mixed
+    CJK/Latin queries because unicode61 does not provide Chinese word segmentation.
+    When FTS5 cannot satisfy every term, fallback ranks nodes by matched terms,
+    title matches, then canonical source order. It remains local and dependency-free.
     """
     if not query.strip() or limit < 1:
         return []
@@ -165,16 +171,29 @@ def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNo
     if rows:
         return _rows_to_nodes(rows)
 
-    needle = query.strip()
-    like = f"%{needle}%"
-    rows = db.execute(
-        """SELECT node_id,title,level,parent_id,content,source_path,source_sha256,ordinal
-           FROM context_nodes
-           WHERE title LIKE ? OR content LIKE ?
-           ORDER BY ordinal LIMIT ?""",
-        (like, like, limit),
-    ).fetchall()
-    return _rows_to_nodes(rows)
+    terms = _fallback_terms(query)
+    if not terms:
+        return []
+    candidates: dict[str, tuple[int, int, ContextNode]] = {}
+    for term in terms:
+        like = f"%{term}%"
+        rows = db.execute(
+            """SELECT node_id,title,level,parent_id,content,source_path,source_sha256,ordinal
+               FROM context_nodes
+               WHERE title LIKE ? OR content LIKE ?""",
+            (like, like),
+        ).fetchall()
+        for row in rows:
+            node = ContextNode(*row)
+            title_match = int(term.casefold() in node.title.casefold())
+            matched, title_score, _ = candidates.get(node.node_id, (0, 0, node))
+            candidates[node.node_id] = (matched + 1, title_score + title_match, node)
+
+    ranked = sorted(
+        candidates.values(),
+        key=lambda item: (-item[0], -item[1], item[2].ordinal),
+    )
+    return [item[2] for item in ranked[:limit]]
 
 
 def search_context(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextPacket]:
