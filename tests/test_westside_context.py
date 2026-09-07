@@ -60,6 +60,13 @@ class WestsideContextTests(unittest.TestCase):
         self.assertTrue(results)
         self.assertEqual(results[0].title, "以馬忤斯 Emmaus")
 
+    def test_question_form_recalls_cjk_heading(self) -> None:
+        db = sqlite3.connect(":memory:")
+        build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
+        results = search(db, "多雷探索是什么意思？", limit=1)
+        self.assertEqual(len(results), 1)
+        self.assertEqual(results[0].title, "MASTER SITE ARCHITECTURE")
+
     def test_context_packet_recovers_canonical_ancestors(self) -> None:
         db = sqlite3.connect(":memory:")
         build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
