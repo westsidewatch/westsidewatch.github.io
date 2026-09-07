@@ -352,37 +352,39 @@ Storybook is not a main-site block and was never bound to Dawn Library. It is th
 
 It covers Journal, Mount of Olives, Church, About, global functions such as 多雷搜索, and future design-system components. It does not create a separate public product hierarchy.
 
-## 9. Discussion-index rule
+## 9. 多雷探索 / Doré Exploration
 
-This file is not only a structure diagram. It is the index for continuing project discussion.
+「多雷探索」是一个已经约定的工作指令，不是主站结构中的公开栏目、产品、页面或独立工具，也不是「多雷搜索」的同义词。
 
-Each node should accumulate, under its own description, the relevant decisions, ideas, plans, constraints, implementation notes, and future outlook discovered in project conversations and research. This prevents important reasoning from becoming scattered across chats and files.
+当用户提出「多雷探索」时，表示针对当前具体问题，启动一次系统性的方案探索与研究：
 
-When discussing a known block or column, discussion should be anchored to its corresponding node here. Historical documents may contain obsolete names or structures; they are evidence of prior thinking, not automatic authority over the current canonical structure.
+1. **全网研究** — 不局限于现有项目或单一来源，全面寻找世界上已经存在的相关方案、工具、框架、实践与资料。
+2. **优先开源资源** — 优先检查成熟的开源项目、公开资料、可自部署组件、现成 libraries / frameworks 与已有实现。
+3. **优先成熟方案** — 不因为某个方案新颖就优先采用；需要考察实际使用、维护状态、社区／生态、稳定性、问题记录与长期可用性。
+4. **成本优先考虑免费** — 优先寻找免费或无需持续付费的方案；如果存在收费部分，需要同时寻找和比较免费替代方案。
+5. **轻量与低占用** — 特别评估 CPU、RAM、储存、依赖数量、部署复杂度以及对现有系统的负担；不是追求大而全。
+6. **稳定与易维护** — 评估部署稳定性、故障排查难度、依赖健康、升级风险以及长期维护成本。
+7. **优先利用现成能力** — 核心原则是「先研究世界上已经有什么，再决定我们需要自己做什么」，避免为了一个需求重新制造已经存在的系统。
+8. **最后回到 Doré Core** — 将探索结果与现有 Doré Core 的 Memory / Context / Retrieval / Knowledge / Search、Provider、Research、Graph、现有工具及产品适配器进行对照，判断哪些可以直接使用、哪些可以 adapter 接入、哪些需要改造、哪些才值得自行实现。
 
-## 10. Non-negotiable conclusions
+「多雷探索」的输出不是简单地推荐一个工具，而应回答：
 
-- Living Water Westside Watch = 西望 = 西望品牌 = 主站.
-- The public main-site top-level structure is Journal / Mount of Olives / Church / About.
-- 多雷搜索 is a global function, not a top-level content block.
-- Doré / 多雷 is internal core and is not a public main-site block.
-- Journal has four movements, twelve fixed columns, and three interludes.
-- 伯利恆一日 Bethlehem is one column; A Day is its live/daily content form, not another column.
-- 以馬忤斯 Emmaus is the formal column name; 西區的夜晚 is descriptive language only.
-- ONE and 多寫 are workspaces under Emmaus, not peer Journal columns.
-- There is no 安提阿 / Antioch Journal column.
-- 黎明書局 is an editorial curation and knowledge system, not a URL list.
-- 三晨星 / 光譜 / 策展集 are the three underlying editorial logics: value judgment / knowledge context / learning path.
-- **知識脈絡 is a core Library concept and is made visible, organized, and navigable through Spectrum; it is not an optional generic tag.**
-- Storybook is a whole-site design training/validation environment, not a public site block.
-- Only the user may change the main-site structure.
+```text
+这个问题全世界已经有什么？
+↓
+哪些是成熟的？
+↓
+哪些是开源的？
+↓
+哪些是真正免费的？
+↓
+哪些足够小、占用少、稳定、好维护？
+↓
+哪些能够与现有 Doré Core / 项目直接整合？
+↓
+哪些已经不需要我们自己重新造？
+↓
+最后才决定需要自己开发什么。
+```
 
-## 11. Change Log
-
-### 2026-09-07
-- Re-established this file as the single canonical master site architecture.
-- Reconciled Journal naming and order.
-- Re-established Mount of Olives as the public name for 橄欖山.
-- Removed Doré as a public main-site block.
-- Recorded Dawn Library as an editorial curation and knowledge system.
-- Expanded Dawn Library model to explicitly preserve Three Stars, Spectrum, Collection, **知識脈絡**, living-resource/content-generation loops, Resource Master, Resource Cards, Doré learning outputs, and downstream support relationships.
+因此，「多雷探索」是 Doré 面对工程、知识、工具或系统问题时的**全面外部学习／方案发现程序**。它本身不改变主站结构；任何涉及主站结构的修改仍必须由用户决定。
