@@ -57,10 +57,10 @@ def run(source: Path, limit: int) -> int:
         actual = ()
         for packet in packets:
             chain = tuple(node.title for node in packet.ancestors) + (packet.match.title,)
-            if all(expected in chain for expected in expected_chain):
+            if chain == expected_chain:
                 actual = chain
                 break
-        ok = bool(actual)
+        ok = actual == expected_chain
         if not ok:
             failures.append(f"context: {query} -> {' > '.join(expected_chain)}")
         print(f"[{'PASS' if ok else 'MISS'}] {query}")
