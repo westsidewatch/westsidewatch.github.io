@@ -57,6 +57,10 @@ The bounded review confirms that the repository's Doré runtime/product surfaces
 
 The new Capability Embodiment architecture clarifies that visual production should be one Doré visual route with sparse capability activation and typed durable artifacts, not free-form multi-agent handoffs. This strengthens the asset-suite acceptance contract but does not count as visual completion. No reusable light-texture or Bethlehem-star source assets, provenance packet, identical-real-content comparison, or production-relevant verification evidence was found. Current classifications remain unchanged: purpose-built asset suite `ACTIVE_PARALLEL / BUILDING`; first light + star family `READY`; original works `READY` curation; August Journal `COMPLETED_REVISIT_CANDIDATE`; placeholder A/B/C `SUPERSEDED`. P01 remains untouched. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-46-2026-09-07.md`.
 
+## Checkpoint 47 reconciliation (2026-09-07)
+
+The bounded review confirms that the Capability Embodiment architecture is a governing route model, not evidence that the visual asset suite exists. The first valid deliverable remains one real purpose-built light-texture family plus Bethlehem-star variants emitted through the unified Doré visual route and retained with typed provenance. Original Doré works remain separate `READY` curation content for exhibition/reader cards. No source assets, typed capability-run chain, identical-real-content comparison, browser/print proof, or cross-product transfer evidence was found; no status promotion or Brand V1 propagation is justified. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-47-2026-09-07.md`.
+
 ## P01 isolation
 
 This ledger changes no P01 ordering, deployment, credentials, audio, transcription, or blocker state.
