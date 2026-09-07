@@ -3,7 +3,7 @@ from __future__ import annotations
 import sqlite3
 import unittest
 
-from dore_core.context.compiler import build_index, compile_markdown, search
+from dore_core.context.compiler import build_index, compile_markdown, search, search_context
 
 
 ARCHITECTURE_FIXTURE = """# MASTER SITE ARCHITECTURE
@@ -53,11 +53,25 @@ class WestsideContextTests(unittest.TestCase):
         self.assertTrue(results)
         self.assertEqual(results[0].title, "ONE")
 
+    def test_context_packet_recovers_canonical_ancestors(self) -> None:
+        db = sqlite3.connect(":memory:")
+        build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
+        packets = search_context(db, "查經前哨站", limit=1)
+        self.assertEqual(len(packets), 1)
+        self.assertEqual(packets[0].match.title, "ONE")
+        self.assertEqual([node.title for node in packets[0].ancestors], [
+            "MASTER SITE ARCHITECTURE",
+            "2. Journal",
+            "WALK",
+            "以馬忤斯 Emmaus",
+        ])
+
     def test_empty_query_does_not_touch_search(self) -> None:
         db = sqlite3.connect(":memory:")
         build_index(ARCHITECTURE_FIXTURE, db)
         self.assertEqual(search(db, ""), [])
         self.assertEqual(search(db, "   "), [])
+        self.assertEqual(search_context(db, ""), [])
 
 
 if __name__ == "__main__":
