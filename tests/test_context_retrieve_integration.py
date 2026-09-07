@@ -33,7 +33,7 @@ class ContextRetrieveIntegrationTests(unittest.TestCase):
         self.assertNotIn("write", packets[0])
         self.assertNotIn("delete", packets[0])
         count = self.db.execute("SELECT COUNT(*) FROM context_nodes").fetchone()[0]
-        self.assertEqual(count, 5)
+        self.assertEqual(count, 7)
 
 
 if __name__ == "__main__":
