@@ -54,7 +54,11 @@ def compile_markdown(markdown: str, source_path: str = "") -> list[ContextNode]:
     nodes: list[ContextNode] = []
     stack: list[tuple[int, str]] = []
     for ordinal, (start, level, title) in enumerate(headings):
-        end = headings[ordinal + 1][0] if ordinal + 1 < len(headings) else len(lines)
+        end = len(lines)
+        for candidate_start, candidate_level, _ in headings[ordinal + 1 :]:
+            if candidate_level <= level:
+                end = candidate_start
+                break
         while stack and stack[-1][0] >= level:
             stack.pop()
         parent_id = stack[-1][1] if stack else None
