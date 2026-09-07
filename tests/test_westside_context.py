@@ -33,6 +33,10 @@ Journal is the publication core.
 ## 3. News Broadcast
 
 Cross-column function.
+
+## 9. 多雷探索 / Doré Exploration
+
+针对当前具体问题，启动一次系统性的方案探索与研究。
 """
 
 
@@ -65,7 +69,7 @@ class WestsideContextTests(unittest.TestCase):
         build_index(ARCHITECTURE_FIXTURE, db, "docs/MASTER_SITE_ARCHITECTURE.md")
         results = search(db, "多雷探索是什么意思？", limit=1)
         self.assertEqual(len(results), 1)
-        self.assertEqual(results[0].title, "MASTER SITE ARCHITECTURE")
+        self.assertEqual(results[0].title, "9. 多雷探索 / Doré Exploration")
 
     def test_context_packet_recovers_canonical_ancestors(self) -> None:
         db = sqlite3.connect(":memory:")
