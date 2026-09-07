@@ -30,7 +30,7 @@ A named motif list, generic engraving filter, direct reuse of original Dore plat
 
 ## Current classification
 
-- Purpose-built Dore-derived asset suite: ACTIVE_PARALLEL / BUILDING
+- Purpose-built Dore-derived website asset suite: ACTIVE_PARALLEL / BUILDING
 - First light-texture + Bethlehem-star family: READY as next bounded build target, not yet completed
 - Original Dore exhibition or curation: READY
 - August Journal visual milestone: COMPLETED_REVISIT_CANDIDATE and current production control
@@ -43,11 +43,15 @@ Reopen the current Journal only after the first real asset family survives the m
 
 ## Checkpoint 41 reconciliation (2026-09-06)
 
-The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Doré works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
+The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Dore works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
 
 ## Checkpoint 44 reconciliation (2026-09-07)
 
 The boundary is reaffirmed after reviewing the latest Sweep checkpoint and canonical register: Doré originals are content/curriculum for a curated scroll card, while interface grammar must be a fresh, purpose-built suite generated from New Westside visual principles. The first proof target remains a real light-texture family plus Bethlehem-star variants; the current Journal remains the control. No source assets or verification packet were found in this batch, so no status promotion is justified. The obsolete placeholder A/B/C comparison remains superseded and must not be used as evidence. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-44-2026-09-07.md`.
+
+## Checkpoint 45 reconciliation (2026-09-07)
+
+The bounded review confirms that the repository's Doré runtime/product surfaces are not themselves evidence of a completed New Westside visual asset family. The current governing interpretation remains: original Doré works belong in curated exhibition/reader cards; purpose-built Doré-style interface assets must be freshly generated from the current visual principles; concept-only cards, generic filters and placeholder strokes are invalid proof. The first valid build remains one complete reusable light-texture family plus Bethlehem-star variants, applied to identical real Journal or Search content beside the current production control and validated across browser, desktop/mobile, print-equivalent, accessibility/performance and critique/revision surfaces. No source assets or proof packet were found in this batch; no promotion or propagation is justified. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-45-2026-09-07.md`.
 
 ## P01 isolation
 
