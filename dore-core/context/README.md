@@ -2,33 +2,29 @@
 
 This is an internal Doré engineering layer. It does **not** change the public main-site architecture.
 
-## Principle
+## Boundary
 
-`docs/MASTER_SITE_ARCHITECTURE.md` remains the canonical structural source of truth. The compiler reads it and produces a disposable, versioned projection for retrieval. It never writes back to the source.
+`docs/MASTER_SITE_ARCHITECTURE.md` remains the canonical structural source of truth. The compiler reads it and produces a disposable local projection. It never writes back to the source.
+
+The adapter boundary is:
+
+```text
+canonical Markdown
+      ↓
+context compiler
+      ↓
+SQLite / FTS5
+      ↓
+Context Packet (match + canonical ancestors + provenance)
+      ↓
+Doré Core faculties / existing Knowledge / Memory / Graph
+```
+
+`Context Packet` is data, not an instruction and not a write capability.
 
 ## First implementation
 
-The first slice deliberately uses only Python standard library + SQLite FTS5:
-
-```text
-Canonical Markdown
-      ↓
-heading hierarchy compiler
-      ↓
-compact context_nodes
-      ↓
-SQLite FTS5
-      ↓
-relevant context
-      ↓
-Doré Core
-```
-
-No vector database, embedding API, cloud memory service, GraphRAG framework, or third-party runtime is required.
-
-## Why this is the first slice
-
-The current objective is **能力越大、負擔越小**. We therefore establish a deterministic lexical baseline before adding semantic/vector retrieval. If this baseline satisfies the real Doré context benchmark, additional machinery is not justified.
+The first slice uses only Python standard library + SQLite FTS5. CJK substring retrieval has a local `LIKE` fallback because SQLite's default `unicode61` tokenizer does not perform Chinese word segmentation.
 
 The projection preserves:
 
@@ -39,9 +35,7 @@ The projection preserves:
 - source-order ordinal
 - complete section content
 
-This makes the result traceable back to the canonical Markdown while keeping retrieval separate from the source of truth.
-
-## Explicit non-goals
+## Non-goals
 
 - no modification of `MASTER_SITE_ARCHITECTURE.md`
 - no new public main-site block
@@ -49,5 +43,9 @@ This makes the result traceable back to the canonical Markdown while keeping ret
 - no third-party memory framework
 - no external API
 - no automatic structural decisions
+- no new graph database
+- no vector database before benchmark evidence requires one
 
-The next step is benchmark-driven integration: compare this minimal FTS5 projection against the selected open-source retrieval candidates before introducing any larger dependency.
+## Engineering rule
+
+The target is **能力越大、負擔越小**. Start with the smallest local mechanism that can recover the context Doré actually needs. Expand only when a measured retrieval gap cannot be solved by the existing layer.
