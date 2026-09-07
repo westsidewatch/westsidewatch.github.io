@@ -43,7 +43,7 @@ Reopen the current Journal only after the first real asset family survives the m
 
 ## Checkpoint 41 reconciliation (2026-09-06)
 
-The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Dore works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
+The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Doré works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
 
 ## Checkpoint 44 reconciliation (2026-09-07)
 
@@ -72,6 +72,10 @@ The bounded review of Checkpoint 48, the Capability Embodiment architecture, the
 ## Checkpoint 50 reconciliation (2026-09-07)
 
 The bounded review of the governing Sweep brief, canonical Master Work Register, latest Sweep checkpoint and current visual-asset ledger found no new production artifact or proof packet. The valid distinction remains: original Doré works are curation content for scroll/reader cards, while the website requires a freshly generated, purpose-built Doré-style asset suite from New Westside principles. The first valid build remains one real light-texture family plus Bethlehem-star variants, emitted through the unified Doré visual route with typed provenance and then applied to identical real Journal or Search content beside the current production control. The prior placeholder A/B/C comparison remains `SUPERSEDED` and invalid evidence. No status promotion, retirement, or Brand V1 propagation is justified; P01 remains untouched. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-50-2026-09-07.md`.
+
+## Checkpoint 51 reconciliation (2026-09-07)
+
+A bounded review of the Work Test 001 ledger and latest Sweep state adds no new visual production artifact. The visual acceptance contract therefore remains unchanged: original Doré works are curated content; purpose-built interface assets must be freshly generated, provenance-bearing, reusable, and validated on identical real Journal/Search content. The placeholder A/B/C comparison remains superseded and invalid proof. Current classifications remain `ACTIVE_PARALLEL / BUILDING` for the asset suite and `READY` for the first light-texture + Bethlehem-star build target. P01 remains untouched. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-51-2026-09-07.md`.
 
 ## P01 isolation
 
