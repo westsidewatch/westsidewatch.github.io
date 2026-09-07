@@ -19,7 +19,7 @@ class ContextPacketTests(unittest.TestCase):
         self.assertEqual([n["title"] for n in data["ancestors"]], ["Main Site", "Journal", "WALK"])
         self.assertEqual(data["match"]["title"], "以馬忤斯 Emmaus")
         self.assertEqual(data["match"]["source_sha256"], source_sha)
-        self.assertEqual(data["path"], [n["node_id"] for n in packet.ancestors] + [packet.match.node_id])
+        self.assertEqual(data["path"], [n.node_id for n in packet.ancestors] + [packet.match.node_id])
 
     def test_packet_is_not_a_write_path(self) -> None:
         markdown = "# Main Site\n## Journal\n"
