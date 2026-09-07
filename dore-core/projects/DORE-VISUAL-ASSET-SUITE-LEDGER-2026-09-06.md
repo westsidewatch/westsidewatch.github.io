@@ -61,6 +61,10 @@ The new Capability Embodiment architecture clarifies that visual production shou
 
 The bounded review confirms that the Capability Embodiment architecture is a governing route model, not evidence that the visual asset suite exists. The first valid deliverable remains one real purpose-built light-texture family plus Bethlehem-star variants emitted through the unified Doré visual route and retained with typed provenance. Original Doré works remain separate `READY` curation content for exhibition/reader cards. No source assets, typed capability-run chain, identical-real-content comparison, browser/print proof, or cross-product transfer evidence was found; no status promotion or Brand V1 propagation is justified. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-47-2026-09-07.md`.
 
+## Checkpoint 48 reconciliation (2026-09-07)
+
+A bounded reconciliation of the latest Sweep checkpoint, the canonical Master Work Register, and this visual-asset ledger found no new production artifact that changes the current visual status. The governing split is retained without ambiguity: original Doré works are curated reader/exhibition content, while the website requires a freshly generated, purpose-built Doré-style asset suite derived from New Westside principles. The valid first build remains a real light-texture family plus Bethlehem-star variants, emitted through the unified Doré visual route with typed provenance and then applied to identical real Journal or Search content beside the current production control. The prior placeholder A/B/C comparison remains `SUPERSEDED` and cannot be cited as evidence. No source assets, generation packet, browser/print proof, or transfer proof was found in this bounded batch; classifications remain unchanged and P01 remains untouched. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-48-2026-09-07.md`.
+
 ## P01 isolation
 
 This ledger changes no P01 ordering, deployment, credentials, audio, transcription, or blocker state.
