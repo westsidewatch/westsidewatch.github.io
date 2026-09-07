@@ -81,3 +81,13 @@ No P01 runtime, deployment, audio/transcription dependency, credential, binding,
 ## Sweep disposition
 
 This batch adds a bounded maintenance/revisit finding and accounts for the current reflex/sensory active-state family. Sweep 01 remains `ACTIVE_PARALLEL`; no new `HUMAN_DECISION_BLOCKED` or `ENVIRONMENT_BLOCKED` condition is established.
+
+## Revalidation — 2026-09-07
+
+A bounded live-state recheck found no lifecycle transition since the 2026-09-04 reconciliation:
+
+- `sensory-active.json` still contains the same three 2026-08-28 signals in `RESEARCHING` with no `brain_node` and no terminal disposition;
+- the fresh heartbeat at `2026-09-07T22:10:29.884Z` is healthy (`ok=true`), reports `changed=false`, and still surfaces the Search/conversation probe as `RESEARCHING`;
+- `reconciled_consolidated` remains `1`, confirming that the historical consolidated signal is still recognized while the three later signals remain unresolved.
+
+This strengthens, but does not change, the earlier classification: transport health is intact; active-signal aging/provenance remains `COMPLETED_REVISIT_CANDIDATE` debt under `RQ-001`; no regression, completion promotion, or blocker claim is justified. The smallest future proof remains a bounded stale-state policy plus signal-class provenance and explicit terminal-state evidence. P01 remains untouched.
