@@ -140,24 +140,48 @@ def ancestor_chain(db: sqlite3.Connection, node: ContextNode) -> tuple[ContextNo
     return tuple(chain)
 
 
+def _rows_to_nodes(rows: list[tuple]) -> list[ContextNode]:
+    return [ContextNode(*row) for row in rows]
+
+
 def search(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextNode]:
-    """Return the most relevant compiled context nodes using SQLite FTS5 ranking."""
+    """Return relevant context nodes with FTS5 first and substring fallback.
+
+    FTS5 is the primary ranked retriever. The tiny LIKE fallback matters for CJK
+    substring queries because unicode61 does not provide a word-segmentation model
+    for Chinese. It remains local, deterministic, and dependency-free.
+    """
     if not query.strip() or limit < 1:
         return []
+    try:
+        rows = db.execute(
+            """SELECT n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal
+               FROM context_fts f JOIN context_nodes n ON n.node_id=f.node_id
+               WHERE context_fts MATCH ? ORDER BY bm25(context_fts) LIMIT ?""",
+            (query, limit),
+        ).fetchall()
+    except sqlite3.OperationalError:
+        rows = []
+    if rows:
+        return _rows_to_nodes(rows)
+
+    needle = query.strip()
+    like = f"%{needle}%"
     rows = db.execute(
-        """SELECT n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal
-           FROM context_fts f JOIN context_nodes n ON n.node_id=f.node_id
-           WHERE context_fts MATCH ? ORDER BY bm25(context_fts) LIMIT ?""",
-        (query, limit),
+        """SELECT node_id,title,level,parent_id,content,source_path,source_sha256,ordinal
+           FROM context_nodes
+           WHERE title LIKE ? OR content LIKE ?
+           ORDER BY ordinal LIMIT ?""",
+        (like, like, limit),
     ).fetchall()
-    return [ContextNode(*row) for row in rows]
+    return _rows_to_nodes(rows)
 
 
 def search_context(db: sqlite3.Connection, query: str, limit: int = 8) -> list[ContextPacket]:
     """Search and attach each match's canonical ancestor chain.
 
     This is the minimal bridge from lexical retrieval to usable structural context:
-    retrieval stays FTS5-only, while hierarchy is recovered from the same projection.
+    retrieval stays FTS5-first, while hierarchy is recovered from the same projection.
     """
     return [ContextPacket(match=node, ancestors=ancestor_chain(db, node)) for node in search(db, query, limit)]
 
