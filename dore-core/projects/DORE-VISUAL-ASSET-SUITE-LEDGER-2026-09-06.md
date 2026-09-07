@@ -45,6 +45,10 @@ Reopen the current Journal only after the first real asset family survives the m
 
 The earlier A/B/C placeholder comparison is explicitly superseded as invalid evidence. The first valid production target is narrowed to one complete light-texture family plus Bethlehem-star variants, with real reusable source assets and generation provenance. The same real Journal or Search content must remain the control; identical-content comparison requires desktop, mobile, print-equivalent, accessibility/performance, critique/revision and cross-product transfer evidence. Original Doré works remain separate READY curation content for scroll/reader cards. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-41-2026-09-06.md`.
 
+## Checkpoint 44 reconciliation (2026-09-07)
+
+The boundary is reaffirmed after reviewing the latest Sweep checkpoint and canonical register: Doré originals are content/curriculum for a curated scroll card, while interface grammar must be a fresh, purpose-built suite generated from New Westside visual principles. The first proof target remains a real light-texture family plus Bethlehem-star variants; the current Journal remains the control. No source assets or verification packet were found in this batch, so no status promotion is justified. The obsolete placeholder A/B/C comparison remains superseded and must not be used as evidence. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-44-2026-09-07.md`.
+
 ## P01 isolation
 
 This ledger changes no P01 ordering, deployment, credentials, audio, transcription, or blocker state.
