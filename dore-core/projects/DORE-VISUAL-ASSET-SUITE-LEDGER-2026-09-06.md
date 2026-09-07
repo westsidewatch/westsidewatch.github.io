@@ -53,6 +53,10 @@ The boundary is reaffirmed after reviewing the latest Sweep checkpoint and canon
 
 The bounded review confirms that the repository's Doré runtime/product surfaces are not themselves evidence of a completed New Westside visual asset family. The current governing interpretation remains: original Doré works belong in curated exhibition/reader cards; purpose-built Doré-style interface assets must be freshly generated from the current visual principles; concept-only cards, generic filters and placeholder strokes are invalid proof. The first valid build remains one complete reusable light-texture family plus Bethlehem-star variants, applied to identical real Journal or Search content beside the current production control and validated across browser, desktop/mobile, print-equivalent, accessibility/performance and critique/revision surfaces. No source assets or proof packet were found in this batch; no promotion or propagation is justified. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-45-2026-09-07.md`.
 
+## Checkpoint 46 reconciliation (2026-09-07)
+
+The new Capability Embodiment architecture clarifies that visual production should be one Doré visual route with sparse capability activation and typed durable artifacts, not free-form multi-agent handoffs. This strengthens the asset-suite acceptance contract but does not count as visual completion. No reusable light-texture or Bethlehem-star source assets, provenance packet, identical-real-content comparison, or production-relevant verification evidence was found. Current classifications remain unchanged: purpose-built asset suite `ACTIVE_PARALLEL / BUILDING`; first light + star family `READY`; original works `READY` curation; August Journal `COMPLETED_REVISIT_CANDIDATE`; placeholder A/B/C `SUPERSEDED`. P01 remains untouched. See `DORE-MEMORY-SWEEP-01-CHECKPOINT-46-2026-09-07.md`.
+
 ## P01 isolation
 
 This ledger changes no P01 ordering, deployment, credentials, audio, transcription, or blocker state.
