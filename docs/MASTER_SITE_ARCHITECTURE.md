@@ -1,34 +1,17 @@
-# Living Water Westside Watch — 主站唯一結構與功能定案
+# MASTER SITE ARCHITECTURE
 
-> **Status: Canonical / Current**  
-> **唯一主站結構索引與描述文件。**  
-> 本文件不是普通網站說明，而是 Living Water Westside Watch（西望／西望品牌／主站）的結構索引。主站每一個層級都在本文件下保存其已確定的定位、邊界、內容思想、計劃與展望；今後討論某個板塊或欄目，原則上都從本文件相應節點繼續，不讓相關決策散落在不同對話、備忘或工程文件中。
+> Canonical master index for Living Water Westside Watch / 西望 / 西望品牌 / 主站.
+>
+> This document is the single structural source of truth. Structure may only be changed by the user. Other agents, AI systems, Doré, Codex, engineering tools, and Storybook may inspect, discuss, and propose changes, but may not independently modify the site structure.
 
-## 0. 結構治理與權威規則
-
-1. **主站結構唯一修改權屬於使用者本人。** 除使用者之外，任何人、AI、多雷、Codex、工程工具、Storybook 或其他系統均沒有權限自行修改主站結構。
-2. 我們可以發現衝突、整理歷史、提出建議，但不能把建議自行變成結構變更。遇到結構衝突，必須交由使用者裁決。
-3. 使用者最新明確定論高於所有歷史資料。本文件是已定案結構的唯一索引；舊 MD、PDF、對話整理、品牌規範或工程筆記只能作歷史參考，不能自行覆蓋本文件。
-4. **「主站結構」是固定關鍵詞。** 使用者說「主站結構」時，表示正在討論本結構的細化、補充或正式修改。
-5. 主站結構與板塊／欄目的詳細描述分層保存：結構確定什麼，描述就記錄什麼；描述的新增不等於擅自新增結構層級。
-6. **不存在「安提阿」欄目。** 舊文件中的 Antioch 一律視為歷史版本，不得恢復。
-7. Journal 固定為 **12 個欄目 + 3 個間奏**；功能可以調用它們，但不得因此增加新的 Journal 欄目。
-8. 「欄目」「內容」「工具」「功能」「跨欄目服務」「設計系統」是不同層級，不能混寫。
-9. **Living Water Westside Watch = 西望 = 西望品牌 = 主站。** 它們是同一個產品，不再另外生發其他「主站」概念。
-10. 多雷是內部核心，不是公開主站板塊；公開主站結構中唯一顯明的多雷功能是**多雷搜索**。
-11. Storybook 不是黎明書局的子項，也不是主站板塊；它是整個 Living Water Westside Watch 設計系統的訓練／驗證環境。
-12. 多雷搜索不是 AI 對話模式，而是獨立的搜索／檢索系統。
-13. 任何正式結構變更，必須先得到使用者明確決定，再更新本文件；未經決定不得先改網站、工程、多雷或 Storybook。
-
----
-
-# 1. 主站總體結構
-
-**Living Water Westside Watch = 西望 = 西望品牌 = 主站。**
+## 1. Main Site
 
 ```text
 Living Water Westside Watch
-│
+＝ 西望
+＝ 西望品牌
+＝ 主站
+
 ├── Journal
 ├── 橄欖山 Mount of Olives
 ├── Church
@@ -38,240 +21,44 @@ Living Water Westside Watch
 └── 多雷搜索
 ```
 
-四個第一級板塊是主站內容結構；「多雷搜索」屬於全站功能層，不是四個內容板塊之一。
+## 2. Journal
 
----
+Journal is the publication / journal core. It is organized into four movements, twelve fixed columns, and three interludes.
 
-# 2. Journal
+### WATCH
+- 米斯巴 Mizpah — 卷首、守望的起點。開啟一期的閱讀方向，可承載主題、核心經文、編者觀察與閱讀入口。
+- 伯利恆一日 Bethlehem — 每日靈糧。A Day is its live/daily content form, not a thirteenth column and not a structural child. Daily scripture content follows verified-source rules and Toronto-date rotation; scripture text is not AI-generated or rewritten.
+- The Gate 門 — 時代觀察、公共信仰思考、守望論壇。面向世界、時代與公共處境；與何烈山的啟示／認識神／敬拜邊界不同。
+- 迦密 Carmel — 重大特稿、本期核心 Feature / Living Feature。是內容重量容器，可成為一期核心。
 
-## 2.1 定位
+### Interlude
+- Selah 細拉 — WATCH → WALK 的停頓、默想與回應。
 
-Journal 是西望的**期刊核心與出版物母體**。它不是普通文章列表，也不是把網站文章排成一本網頁雜誌，而是一套「數位先活、編輯後成刊、紙本保存成熟成果」的出版系統。
+### WALK
+- 以斯帖 Esther — 歷史見證、人物專稿。歷史人物、神學家、作者、牧者、宣教士與歷代見證人。
+- 亞杜蘭洞 Adullam — 當代見證、人物訪談。現今仍在服事的人物、呼召、事奉、掙扎與見證。
+- 以馬忤斯 Emmaus — 同行入口、查經與共同學習工作台。「西區的夜晚」只作描述，不是正式欄目名稱。Emmaus 下承 ONE 與多寫，二者不是 Journal 同層欄目。
+  - ONE — 查經前哨站；按卷、逐章敘事，不是逐節講解；提供背景、歷史、地圖、經文筆記、進度等。
+  - 多寫 — 寫作／研究工作台，承載查經筆記、研究材料、寫作與成熟成果。
 
-固定結構只有：四個樂章 WATCH、WALK、WITNESS、WORSHIP；十二個固定欄目；三個間奏。
+### Interlude
+- 遠方無聲鴿 Jonath-elem-rechokim — WALK → WITNESS 的間奏；源自詩篇 56:1 的詩歌題名／調名意象。
 
-```text
-Journal
-│
-├── WATCH
-│   ├── 米斯巴 Mizpah
-│   ├── 伯利恆一日 Bethlehem
-│   ├── The Gate 門
-│   └── 迦密 Carmel
-│
-├── Selah 細拉
-│
-├── WALK
-│   ├── 以斯帖 Esther
-│   ├── 亞杜蘭洞 Adullam
-│   └── 以馬忤斯 Emmaus
-│
-├── 遠方無聲鴿 Jonath-elem-rechokim
-│
-├── WITNESS
-│   ├── 以琳 Elim
-│   ├── 別是巴 Beersheba
-│   ├── 伯特利 Bethel
-│   └── 何烈山 Horeb
-│
-├── 基尼烈 Kinneret
-│
-└── WORSHIP
-    └── 瑪拉拿 Maranatha
-```
+### WITNESS
+- 以琳 Elim — 神的供應、恩典與生命；根於出埃及記 15:27，可承載靈修、禱告、生命恢復與供應見證。
+- 別是巴 Beersheba — 人的回應、盟約中的生命；信靠、順服、委身、記念神信實與盟約生活。
+- 伯特利 Bethel — 神家中的共同生活、教會生活；團契、服事、彼此建立。
+- 何烈山 Horeb — 神的啟示、認識神、因神是神而敬拜；不是單純神學知識。
 
-**層級規則：**
+### Interlude
+- 基尼烈 Kinneret — WITNESS → WORSHIP 的間奏，承接見證並流向敬拜。
 
-- 伯利恆一日 Bethlehem 本身就是固定欄目名稱；「A Day」只描述它作為每日活體內容的形式，不另建立下一層欄目。
-- 以馬忤斯 Emmaus 是正式欄目名稱；「西區的夜晚」只出現在欄目描述中，不作正式欄目名稱。
-- ONE、多寫屬於以馬忤斯的工具／工作空間，不是第 13、14 個欄目。
-- Vol.00、Vol.01 等是期數，不是新的主站板塊。
-- 新聞播報是跨欄目功能，不是第 13 個欄目。
+### WORSHIP
+- 瑪拉拿 Maranatha — 閉卷禱告、盼望主再來；感恩、回應、代求、交託與等候。
 
-## 2.2 出版生命週期
+## 3. News Broadcast
 
-Journal 同時具有三個時間尺度：
-
-```text
-即時／每日       → 網站活體內容
-一期／Vol.        → 編輯、設計、閱讀與出版單位
-長期／Archive     → 歷史期數、紙本收藏與知識保存
-```
-
-網站與紙本是同一編輯生命的兩種出版形態：網站承擔即時、每日、聲音、更新、互動、時間性；紙本承擔編輯、選編、定稿、版式、紙張、重量、觸感、收藏與保存。紙本不是網站 PDF，而是正式出版物。
-
-## 2.3 Vol.00 與未來期數
-
-Vol.00 是 founding volume，也是整套 Journal 結構的第一個完整實驗場，不是永久固定的網站模板。
-
-目前主題定位：**Vol.00 — The Foundations of a Watchful City**。
-
-未來形成 Vol.00、Vol.01、Vol.02……的正式期數體系。每一期都屬於同一刊物，但可以有自己的主題、封面、圖像、色彩、排版、動畫或聲音方向。Westside Watch 的長期 Visual Grammar 保持穩定，單期 Journal 保留 editorial freedom。
-
-## 2.4 網站 → 編輯 → 紙本 → Archive
-
-```text
-日常內容／即時觀察
-        ↓
-網站持續閱讀與更新
-        ↓
-Living Feature／核心內容形成
-        ↓
-編輯判斷、選編、整理
-        ↓
-一期 Journal
-        ↓
-紙本出版／收藏
-        ↓
-Archive／長期知識保存
-```
-
-## 2.5 Journal 首頁與閱讀體驗
-
-Journal 首頁應像一張安靜的閱覽桌，而不是電商式文章卡片網格。Vol.00 作為有封面、比例、厚度與出版物身份的主體；未來多期形成書架／期刊陳列。讀者可以自然經過 Cover → Opening → Contents → 四樂章，而不是被大量導航卡片切碎。
-
-## 2.6 A Day／伯利恆每日內容系統
-
-伯利恆是每日靈糧的母欄目；「A Day」是它的網站活體形式，不是獨立欄目。
-
-計劃包括：動態開卷頁；先試行一季經文節奏；保存經文、譯本、出處、日期、主題、節期、簡短默想、來源與審核狀態；按多倫多日期每日自然翻頁；穩定後擴充全年；加入節期、講道主題與教會生活的插入／覆寫；測試漏日、時區、無動態版本與內容回退。
-
-經文內容不得由 AI 自行生成或改寫；系統展示已核對內容，保存來源、日期與修訂紀錄。
-
-## 2.7 印刷與多媒體展望
-
-未來紙本以期數為單位，從網站活內容中選編成熟成果。紙本可以用克制的 QR Code／短網址連接聲音、影像或相應數位內容，但不應因此變成宣傳單。聲音、影像與間奏可以形成網站的沉浸層；紙本保留靜默、觸感、收藏與保存。
-
-## 2.8 Journal 設計研究與工程方向
-
-後續研究集中於長文出版、Living Feature、網路與紙本共享內容世界、文字／聲音／影像共同服務主題、動態開卷與長篇閱讀、多期 Journal／Archive，以及印前／印刷／裝訂／分發。工程路線包括十二欄目使命與邊界文件、動態開卷、A Day、日期／時區／回退測試、Living Feature 聚合、社交內容草稿、正式多期／Archive，以及後續印刷工作流。
-
----
-
-# 3. Journal 十二欄目描述
-
-## 3.1 米斯巴 Mizpah
-
-**定位：卷首／守望的起點。**
-
-把讀者帶入本期的守望位置，可以承載本期命題、核心經文、編輯觀察與閱讀方向。它不是普通 Editor's Note，而是整期閱讀的起點。
-
-## 3.2 伯利恆一日 Bethlehem
-
-**定位：每日靈糧。**
-
-伯利恆是「神的話進入人的日常」的固定入口。其活體形式是每日開啟的一頁內容，即 A Day；A Day 不再作為下層欄目存在。
-
-神學方向圍繞道成肉身、光進入世界、基督是生命的糧，以及神的話進入日常。紙本 Journal 可以從一段時間的每日內容中選編成熟成果，但不受紙本期數限制。
-
-## 3.3 The Gate 門
-
-**定位：時代觀察／公共信仰思考／守望論壇。**
-
-The Gate 是「大門」，不是後門。可以承載約稿、時代觀察、公共信仰思考、守望神學對話以及面向世界與教會的信仰問題。
-
-與何烈山的邊界：The Gate 關注時代、世界與公共處境中的信仰回應；何烈山關注神的啟示、認識神與因神是神而敬拜。
-
-## 3.4 迦密 Carmel
-
-**定位：重大特稿／本期核心 Feature / Living Feature。**
-
-迦密不是普通 Feature 標籤，而是內容重量容器。它可以佔據一期很大的篇幅、成為一期核心，甚至成為整期主題。
-
-## 3.5 以斯帖 Esther
-
-**定位：歷史見證／人物專稿。**
-
-核心是 Past Witness：透過已經走過歷史道路、留下信仰見證的人物看見神在歷史中的工作。對象可以包括屬靈前輩、神學家、作者、牧者、宣教士、教會歷史人物與信仰見證者。選題服從期刊主題，不建立固定人物名單。
-
-## 3.6 亞杜蘭洞 Adullam
-
-**定位：當代見證／人物訪談。**
-
-核心是 Present Witness：透過仍然活著、仍在服事的人看見神今天的工作。對象包括牧師、教會領袖、神學教師、宣教士、信徒領袖及在不同領域忠心服事的人。形式以 Interview 為主，可涉及生命歷程、蒙召、服事、信仰掙扎、教會負擔與給下一代的勸勉。
-
-以斯帖與亞杜蘭洞共同構成 WITNESS 的歷史見證 + 當代見證；兩者選題皆服從期刊主題，而非固定人物列表。
-
-## 3.7 以馬忤斯 Emmaus
-
-**定位：同行入口／查經與共同學習工作台。**
-
-「西區的夜晚」是其描述性名稱，不是正式欄目名稱。以馬忤斯代表與人同行、在路上重新理解經文與共同學習。
-
-```text
-以馬忤斯 Emmaus
-├── ONE
-└── 多寫
-```
-
-ONE 是查經研究入口；多寫是寫作／查經工作空間。多寫未來可以保存查經筆記、經文關聯與研究材料，並使用全站共享的多雷搜索模糊搜索能力找回不完整、近似或記憶模糊的筆記內容。
-
-## 3.8 以琳 Elim
-
-**定位：神的供應／恩典與生命。**
-
-核心不是泛泛的「靈修」，而是神如何供應、恢復、滋養祂的百姓。可承載靈修、禱告、生命恢復與恩典見證等內容。
-
-## 3.9 別是巴 Beersheba
-
-**定位：人的回應／盟約中的生命。**
-
-承擔人對神恩典的回應：信靠、順服、委身、記念神的信實，以及活在盟約關係中的生命實踐。
-
-## 3.10 伯特利 Bethel
-
-**定位：神家中的共同生活／教會生活。**
-
-伯特利不是每日靈糧欄目；每日靈糧屬於伯利恆。伯特利承擔教會生活、團契、服事、彼此建造，以及進入神的家並與神的百姓共同生活。
-
-## 3.11 何烈山 Horeb
-
-**定位：神的啟示／認識神／因神是神而敬拜。**
-
-核心不是單純「神學」或知識分類，而是：神主動啟示自己 → 人看見神 → 人認識神 → 成為守望者 → 進入敬拜。
-
-何烈山與 The Gate 保持清楚邊界：The Gate 處理時代與公共信仰思考；何烈山處理神的啟示、認識神以及因神是神而敬拜。
-
-## 3.12 瑪拉拿 Maranatha
-
-**定位：閉卷禱告／盼望主再來。**
-
-不是普通結語，而是依本期主題作感恩、回應、代求、交託與等候主再來。
-
----
-
-# 4. Journal 三個間奏
-
-三個間奏是 Journal 固定結構的一部分，但不是第 13–15 個欄目。
-
-```text
-WATCH → WALK
-Selah 細拉
-
-WALK → WITNESS
-遠方無聲鴿 Jonath-elem-rechokim
-
-WITNESS → WORSHIP
-基尼烈 Kinneret
-```
-
-## 4.1 Selah 細拉
-
-第一間奏，位於 WATCH 與 WALK 之間。功能是停頓、轉調、讓守望進入同行。
-
-## 4.2 遠方無聲鴿 Jonath-elem-rechokim
-
-第二間奏，位於 WALK 與 WITNESS 之間。它是從同行進入見證的轉場，保留詩篇樂調名稱的希伯來轉寫。
-
-## 4.3 基尼烈 Kinneret
-
-第三間奏，位於 WITNESS 與 WORSHIP 之間。功能是從見證轉向敬拜。
-
----
-
-# 5. 跨欄目功能：新聞播報
-
-新聞播報不是 Journal 第 13 欄，而是跨欄目功能。
+Cross-column function, not a thirteenth Journal column.
 
 ```text
 新聞播報
@@ -281,17 +68,12 @@ WITNESS → WORSHIP
 └── 基尼烈 Kinneret
 ```
 
-A Day 仍然屬於伯利恆一日；三個間奏仍然屬於 Journal。「秒報」是新聞播報內部的滾動／即時信息機制，不表示畫面必須每秒刷新。
+“秒報” is a rolling / instant news mechanism, not a literal every-second refresh requirement.
 
----
-
-# 6. 橄欖山 Mount of Olives
-
-橄欖山是主站的品牌內容／延伸內容空間，與 Journal、Church、About 同級；不是 Journal 的附屬，也不是另一個產品。
+## 4. 橄欖山 Mount of Olives
 
 ```text
 橄欖山 Mount of Olives
-│
 ├── 黎明書局 / Dawn Library
 ├── 白晝咖啡館 / Daylight Café
 ├── 守望禱告會 / Watch Prayer
@@ -300,145 +82,231 @@ A Day 仍然屬於伯利恆一日；三個間奏仍然屬於 Journal。「秒報
 └── Newsletter
 ```
 
-公開主站結構中不設多雷板塊。多雷是內部核心；公開可見的相關功能只有全站「多雷搜索」。
+### 4.1 黎明書局 / Dawn Library
 
-## 6.1 黎明書局 / Dawn Library
+#### Positioning
+Dawn Library is a digital resource and curation system with editorial judgment. It is not a website bookmark collection, URL list, search-results dump, or passive database. Its core question is: **哪些資源值得被保存、推薦、使用？**
 
-**定位：具有編輯判斷與策展邏輯的數位書局，是西望的資源生命系統。**
+Root principle:
 
-黎明書局不是網站收藏、資源網址集合、搜索結果整理或 bookmark collection。核心問題不是「有多少資源」，而是：**哪些資源值得被保存、推薦、使用？**
+> 經文在中心、工具服務經文、資源服務學習、設計服務使命。
 
-根本原則：**經文在中心、工具服務經文、資源服務學習、設計服務使命。**
+The Library is a continuously accumulating knowledge/resource system, not a Journal issue-by-issue publication. Its resources may serve Journal, ONE, 多雷搜索、Church、Social、Visual research and other functions.
 
-### 三層編輯模型
+#### The three-layer editorial model
 
 ```text
-Morning Star／三晨星
+Morning Star / 三晨星
         ↓
-Spectrum／光譜
+Spectrum / 光譜
         ↓
-Collection／策展集
+Collection / 策展集
 ```
 
-Morning Star 是西望的編輯推薦標準，不是人氣、流量或使用量排名；回答「哪些資源值得長期保存與推薦？」
+These are three distinct underlying editorial logics:
 
-Spectrum 不是普通 tag，而是看見資源在真理結構與學習道路中的位置；回答「不同資源如何共同呈現某一真理主題？」
+- **三晨星 Morning Star —「什麼值得留下？」**
+  - Not popularity, traffic, clicks, or usage ranking.
+  - It is the Westside Watch editorial judgment standard for identifying resources that are genuinely valuable, trustworthy, useful, and worth long-term recommendation and preservation.
+  - It is also a living output mechanism: daily recommendations can be selected under a **本週主題**, so Three Stars is not merely a static rating/index.
 
-Collection 把資源組織成可以走的學習道路；回答「讀者如何從入口走向深入？」
+- **光譜 Spectrum —「這些知識彼此是什麼關係？」**
+  - Spectrum was the corrected name replacing Topics.
+  - It is not an ordinary tag or category. It reveals the **知識脈絡** and truth structure surrounding a question: how Scripture text, original languages, history, theology, archaeology, art, people, geography, and other resources illuminate one another.
+  - Spectrum therefore builds relationships across resources and across disciplines, allowing the user to see how a body of knowledge is connected rather than merely where an item is filed.
+  - It also expresses learning depth, such as **Beginner → Intermediate → Advanced → Academic**, and where appropriate other paths such as **Inspiration → Creation → Professional**.
+  - **知識脈絡** is a core concept of Spectrum: the Library does not merely collect knowledge; it records, exposes, and navigates the relationships and development of knowledge around Scripture and learning questions.
 
-### 資源策展生命週期
+- **策展集 Collection —「應該怎麼學？」**
+  - Not a folder of similar URLs.
+  - A Collection is an editorially designed **學習道路**: where to enter, what to read first, what follows, when original-language tools become useful, when to enter historical/background material, and what is appropriate for deeper study.
+  - Collections can intentionally combine Scripture tools, books, articles, courses, historical resources, original-language tools, visual material, and other resource types when they serve one learning purpose.
+  - A Collection should have a clear purpose, intended audience, learning/use order, cross-category composition where useful, and editorial guidance.
+
+#### Knowledge context / 知識脈絡
+
+Knowledge context is not a fourth peer layer replacing the three-layer model. It is the relational logic that Spectrum makes visible and that the whole Library gradually accumulates.
+
+The distinction is:
+
+```text
+三晨星：判斷價值
+光譜：建立／看見知識脈絡與真理結構
+策展集：把知識脈絡轉化為可行走的學習道路
+```
+
+This means a resource can be understood not only by its metadata or category, but by its relationships to Scripture, other resources, historical development, concepts, people, places, disciplines, and levels of study. Over time, this accumulated knowledge context becomes one of the Library's most important forms of intellectual capital and supports ONE、 多雷搜索、Journal、字幕插件等 downstream systems.
+
+#### Resource lifecycle
 
 ```text
 Candidate Resource Pool
         ↓
 Editorial Selection
         ↓
-Morning Star
+Morning Star / 三晨星
         ↓
-Spectrum
+Spectrum / 光譜／知識脈絡
         ↓
-Collection
+Collection / 策展集
         ↓
 Resource Card
         ↓
-Dawn Library 館藏
+Dawn Library collection
 ```
 
-因此「找到網站 → 列網址 → 做卡」不等於完成館藏。
-
-### Resource Master
-
-Resource Master 是所有在線資源的底層唯一資料來源。既有模型包括 Resource ID、Name、Official URL、Category、Subcategory、Language、Resource Type、Description、Audio Available、Free / Paid、Morning Star Index、Related Spectrum、Related Collection。
-
-早期第一階段以 GitHub Repository 保存，以支持靜態網站、版本控制、未來轉資料庫與推薦系統發展。
-
-### 既有資源分類
-
-1. Bible Text
-2. Bible Study Tools
-3. Reference Resources
-4. Commentary Resources
-5. Christian Learning Resources
-6. Church Resources
-
-這些是資源資料模型的分類，不是橄欖山新增的六個公開主站板塊。
-
-### Resource Card
-
-Resource Card 不是資料摘要，而是一本「書」在黎明書局中的呈現。至少包括名稱、類別、定位、推薦理由、Spectrum、三晨星、使用場景。
-
-### 資源工作的兩個階段
-
-**Phase 1 — Resource Inventory：** 搜集、分類、展示、截圖、MD 記錄，形成 Candidate Resource Pool。
-
-**Phase 2 — Editorial Curation：** 編輯甄選、三晨星、Spectrum、顏色分類、卡片、Collection，形成真正館藏。
-
-### 長期知識循環
+The Library must not collapse into:
 
 ```text
-發現 → 閱讀 → 筆記 → 研究 → 編碼
-→ 三晨星判斷 → 光譜建構 → 策展 → 形成館藏
-→ 被 ONE／搜索／字幕／Journal／Visual 等使用
-→ 發現不足 → 再研究 → 回流黎明書局
+找到網站 → 列出網址 → 完成資源卡
 ```
 
-黎明書局的成長不以「完成多少課程」衡量，而以館藏增長、成熟 Study、Spectrum／Collection 完整度、Scripture coverage、Cross-links、Sources verified，以及被 ONE、Search、Journal、Visual 等重新使用的程度衡量。
+#### Resource work phases
 
-### 視覺方向
+**Phase 1 — Resource Inventory / 資源盤點**
+- collect resources
+- classify
+- display during inventory stage
+- preserve screenshots where useful
+- maintain Markdown records
+- produce the Candidate Resource Pool
 
-Resource Card 的既有方向：豎版、大量留白、清楚的編號與文字層級、古典目錄中的藏書卡氣質。西望既定的 5:8 修長比例也服務 Resource Card、ONE、JOIN 及網站內容卡片。
+**Phase 2 — Editorial Curation / 編輯策展**
+- editorial selection
+- Three Stars judgment
+- Spectrum / knowledge-context positioning
+- color classification where applicable
+- Resource Card creation
+- Collection construction
 
-### 工程成熟度與展望
+#### Resource Master
 
-黎明書局不是從零開始。既有 `data/resources.json` 已形成 Resource Master 胚胎，並已有「經文在中心、工具服務經文、資源服務學習、設計服務使命」以及年度→月度→每週→每日三晨星→Journal／Social→回流資源池的早期節奏。
+Resource Master is the underlying single source of truth for individual online resources. Early-stage implementation may live in `data/resources.json` and be version-controlled in GitHub, with future migration to a database if needed.
 
-第一個正式里程碑：**LIBRARY / M1 — Existing Collection Understood**。先讀懂現有館藏：資源、來源、權威性、版權、經文／人物／地點／歷史／神學關係，以及如何支持 ONE、Journal、Search、Visual、Church、Social；完成後再有目的地擴建館藏。
+Core fields include:
+- Resource ID
+- Resource Name
+- Official URL
+- Category
+- Subcategory
+- Language
+- Resource Type
+- Description
+- Audio Available
+- Free / Paid
+- Morning Star Index
+- Related Spectrum
+- Related Collection
 
-歷史工程下一步包括：`data/resources.json`、橄欖山／黎明書局接入、分類頁、Resource Card、搜索。
+The Library should keep the public-facing structure simple while retaining richer internal intelligence. General resources should not create unnecessary front-end categories; books may require finer classification because books need stronger reading guidance.
 
-黎明書局提供資源與知識基礎，但不因此取得其他主站板塊的結構權。它可以服務 Journal、ONE、多雷搜索、Church、Social、視覺研究等；這是內容／知識調用關係，不是主站結構變更。
+#### Resource Card
 
-## 6.2 白晝咖啡館 / Daylight Café
+A Resource Card is not merely a data summary. It is the presentation of a resource as a “book” in Dawn Library. It should communicate at least:
+- name
+- category
+- positioning
+- recommendation reason
+- Spectrum / knowledge context
+- Three Stars
+- use scenario
 
-**定位：生活與文化空間。**
+Visual direction: vertical, generous whitespace, clear numbering/text hierarchy, classical catalogue/library-card character, aligned with the wider Westside Watch visual grammar. The standard card ratio is 5:8.
 
-它是西望的 common room，服務信仰與工作、城市生活、文化、對話與普通白晝生活。可以承載信仰與工作、城市、咖啡、建築、電影、日常等長尾內容。
+#### Living resource / content-generation system
 
-白晝咖啡館不屬於 Journal 十二個固定欄目，也不是 Church 聚會公告頁。
+Dawn Library is a living resource system. Resources are meant to be activated, recombined, and reused rather than merely stored.
 
-## 6.3 守望禱告會 / Watch Prayer
+```text
+年度方向
+↓
+月度策展
+↓
+本週主題
+↓
+每日三晨星
+↓
+Journal / Social Media
+```
 
-**定位：持續性的禱告內容系列／禱告空間。**
+A broader feedback loop is:
 
-它連接經文、代禱與「守望黎明」的品牌主題，可以與真實教會禱告生活相連，但不等同於 Church 的 Prayer Meeting 公告頁。長期方向不是單純文章，而是持續的禱告內容生命。
+```text
+資源池
+↓
+Weekly Theme / 本週主題
+↓
+Three Stars / 三晨星
+↓
+Curated Collection / 策展集
+↓
+Spectrum / 光譜／知識脈絡
+↓
+Journal / ONE / Social Media / other tools
+↓
+新的研究與內容沉澱回資源池
+```
 
-## 6.4 Podcast
+Therefore the Library is not merely a database or collection; it is a **生命系統／內容生成系統**.
 
-**定位：未來聲音出版與對話渠道。**
+#### Doré learning relationship
 
-預留給對話、朗讀、教導、人物聲音與其他適合聲音完成的內容，是西望出版生命的音頻延伸。
+Dawn Library also functions as the mature public layer of Doré's long-term learning and research:
 
-## 6.5 Video
+> 神學院是 Doré 的課程；黎明書局是他的筆記本、作業本和畢業成果庫。
 
-**定位：未來視覺內容渠道。**
+Internally, Doré may have notebooks, coursework, research notes, and portfolio material that are not ready for public release. Only sufficiently mature, verified, and editorially selected work should become public Library material.
 
-預留給視覺散文、教導、敬拜、紀錄性材料與其他適合影像完成的敘事，不是把 Journal 文章簡單改成影片。
+Thus the long-term relationship is:
 
-## 6.6 Newsletter
+```text
+Doré learning / research
+↓
+notes / coursework / research materials
+↓
+maturity + verification
+↓
+editorial judgment
+↓
+public Library collection
+```
 
-**定位：持續通信渠道。**
+The Library's intellectual quality is therefore also a visible measure of Doré's accumulated learning, synthesis, systematization, and ability to form coherent knowledge context.
 
-可用於發布新卷、新文章、聚會與資源，建立讀者訂閱關係。出版與訂閱細節留待後續設計。
+#### Engineering / downstream role
 
-## 6.7 橄欖山板塊治理
+Dawn Library is expected to support:
+- ONE Bible study research
+- global 多雷搜索
+- Journal research and publication
+- Church learning
+- subtitle/media plugins
+- visual research
+- future knowledge and recommendation functions
 
-每一個橄欖山下轄板塊都必須在本文件保存名稱、定位、與 Journal／Church 的邊界、內容生命週期、計劃與展望。未來若要新增橄欖山板塊，必須先由使用者正式決定並更新本文件，再進入工程實作。
+The goal is not only to store more resources, but to improve the system's ability to summarize, relate, retrieve, recommend, and reuse knowledge while keeping Scripture at the center.
 
----
+### 4.2 白晝咖啡館 / Daylight Café
 
-# 7. Church
+Life/culture/common room for faith and work, city life, culture, coffee, architecture, film, conversation, and ordinary daylight. Not a Journal column and not a Church meeting page.
 
-Church 與 Journal、橄欖山、About 同級，服務真實教會生活。
+### 4.3 守望禱告會 / Watch Prayer
+
+A continuous prayer content series / prayer space connected to Scripture, intercession, and the Watch for the Dawn theme. Distinct from Church → Prayer Meeting, which is the actual church meeting entry.
+
+### 4.4 Podcast
+
+Audio-native channel for conversations, readings, teaching, people’s voices, and other audio content.
+
+### 4.5 Video
+
+Visual-native channel for visual essays, teaching, worship, documentary material, and other video content.
+
+### 4.6 Newsletter
+
+Ongoing communication/subscription channel for new issues, articles, meetings, resources, and related updates.
+
+## 5. Church
 
 ```text
 Church
@@ -450,150 +318,71 @@ Church
 └── Giving
 ```
 
-## 7.1 About
+Church is a public top-level sibling of Journal, Mount of Olives, and About. Journal → Emmaus may serve Bible Study, but does not replace the Church structure. Mount of Olives → Watch Prayer is a content/prayer series; Church → Prayer Meeting is the actual church meeting entry.
 
-教會自身介紹與身份資訊。它屬於 Church，不與主站第一級 About 混為同一層。
+## 6. About
 
-## 7.2 Sunday Worship
+Top-level main-site About. It covers the identity, background, mission, brand/site explanation, and necessary information about Living Water Westside Watch / 西望. It is distinct from Church → About.
 
-主日崇拜入口，承擔教會正式敬拜、信息與相關聚會資訊。
+## 7. 全站功能：多雷搜索
 
-## 7.3 Bible Study
+Global search/retrieval function, not AI Chat and not a content block.
 
-教會查經與學習生活入口。可以與 Journal → 以馬忤斯 Emmaus 互相連接，但兩者歸屬不同：以馬忤斯是 Journal 欄目；Church Bible Study 是教會生活入口。
+Search scopes:
+1. Bible World Knowledge
+2. Main Site content
+3. Tool-internal content
 
-## 7.4 Prayer Meeting
+Main-site scope can include Journal, interludes, Mount of Olives, Church, About, News Broadcast and related published content. Tool-internal scope includes ONE, 多寫 and future internal tool content.
 
-教會實際禱告聚會入口。它與橄欖山 → 守望禱告會有內容關係，但不是同一個結構節點。
+Core search behavior includes:
+- partial terms
+- incomplete phrases
+- approximate terms
+- Chinese/English mapping
+- common typos
+- incomplete names, places, and Scripture terms
+- semantic recall where the user remembers the meaning but not the exact title
 
-## 7.5 Contact
+Search and knowledge relationships may improve internal indexing within privacy and permission boundaries. Public product remains search/retrieval, not chat.
 
-教會聯絡資訊與實際聯繫入口。
+## 8. Storybook / Design Training Environment
 
-## 7.6 Giving
+Storybook is not a main-site block and was never bound to Dawn Library. It is the design training/validation environment for the entire Living Water Westside Watch design system.
 
-教會奉獻入口與相關說明。
+It covers Journal, Mount of Olives, Church, About, global functions such as 多雷搜索, and future design-system components. It does not create a separate public product hierarchy.
 
----
+## 9. Discussion-index rule
 
-# 8. About
+This file is not only a structure diagram. It is the index for continuing project discussion.
 
-About 是主站第一級資訊入口，負責主站本身的關於資訊、品牌／網站背景及必要的網站資訊。
+Each node should accumulate, under its own description, the relevant decisions, ideas, plans, constraints, implementation notes, and future outlook discovered in project conversations and research. This prevents important reasoning from becoming scattered across chats and files.
 
-它不是 Journal、橄欖山或 Church 的子項。後續所有 About 的詳細描述、品牌歷史、使命、網站說明等，都應歸入本節，而不是散落到其他板塊的描述中。
+When discussing a known block or column, discussion should be anchored to its corresponding node here. Historical documents may contain obsolete names or structures; they are evidence of prior thinking, not automatic authority over the current canonical structure.
 
----
+## 10. Non-negotiable conclusions
 
-# 9. 全站功能：多雷搜索
+- Living Water Westside Watch = 西望 = 西望品牌 = 主站.
+- The public main-site top-level structure is Journal / Mount of Olives / Church / About.
+- 多雷搜索 is a global function, not a top-level content block.
+- Doré / 多雷 is internal core and is not a public main-site block.
+- Journal has four movements, twelve fixed columns, and three interludes.
+- 伯利恆一日 Bethlehem is one column; A Day is its live/daily content form, not another column.
+- 以馬忤斯 Emmaus is the formal column name; 西區的夜晚 is descriptive language only.
+- ONE and 多寫 are workspaces under Emmaus, not peer Journal columns.
+- There is no 安提阿 / Antioch Journal column.
+- 黎明書局 is an editorial curation and knowledge system, not a URL list.
+- 三晨星 / 光譜 / 策展集 are the three underlying editorial logics: value judgment / knowledge context / learning path.
+- **知識脈絡 is a core Library concept and is made visible, organized, and navigable through Spectrum; it is not an optional generic tag.**
+- Storybook is a whole-site design training/validation environment, not a public site block.
+- Only the user may change the main-site structure.
 
-## 9.1 定位
+## 11. Change Log
 
-**多雷搜索**是西望的全站搜索／知識檢索系統。它不是 AI Chat，不承擔聊天介面，也不是公開內容板塊。
-
-```text
-全站功能
-└── 多雷搜索
-```
-
-## 9.2 三個核心搜索範圍
-
-1. **聖經世界知識**：人物、地名、歷史、地理、時間線、經文關聯、背景、Bible world knowledge 等。
-2. **主站內容**：Journal、三個間奏、橄欖山、Church、About、新聞播報及已發布內容。
-3. **工具內內容**：ONE、多寫查經筆記及未來工具的內部索引。
-
-## 9.3 模糊搜索
-
-核心能力至少支持：部分詞語、不完整詞組、近似詞、中英文映射、常見錯字、不完整人名／地名／經文詞，以及「記得意思但不記得精確標題」的搜索。
-
-多寫未來的查經筆記搜索應直接使用這套共享能力，不另造孤立搜索系統。
-
-## 9.4 搜索與知識學習
-
-在隱私與權限邊界內，搜索查詢、結果關聯與使用資料可以成為內部索引、知識關係與學習改進的來源；但搜索產品本身保持為搜索／檢索產品。
-
----
-
-# 10. 全站設計系統與 Storybook
-
-Storybook 的範圍是**整個 Living Water Westside Watch**，不是黎明書局。
-
-它需要訓練／驗證主站首頁與公共框架、Journal、十二欄目、三個間奏、橄欖山全部已定板塊、Church、About，以及多雷搜索等全站功能。
-
-西望既定視覺語法包括 Didot 英文、Didot Italic、HYRuishou 等中文品牌字體方向、既定背景與文字色彩系統、聖殿石質感、城牆垛、晨星及 5:8 修長卡片比例。
-
-Journal 每期可以有自己的 editorial art direction，但不能因此破壞整個西望長期 Visual Grammar。
-
----
-
-# 11. 主站結構索引的工作方法
-
-今後任何一個層級的討論，都應回到本文件相應位置。
-
-```text
-主站結構
-│
-├── Journal
-│   ├── 每個樂章
-│   ├── 每個固定欄目
-│   └── 每個間奏
-│
-├── 橄欖山 Mount of Olives
-│   └── 每個板塊
-│
-├── Church
-│   └── 每個板塊／入口
-│
-├── About
-│
-└── 全站功能
-    └── 多雷搜索
-```
-
-因此：討論 Journal，就更新 Journal 描述；討論某個 Journal 欄目，就更新該欄目描述；討論橄欖山，就更新橄欖山描述；討論黎明書局，就更新黎明書局板塊描述；討論 Church，就更新 Church 或其具體子項描述；討論 About，就更新 About 描述；討論多雷搜索，就更新全站功能／多雷搜索描述。
-
-**這份文件就是後續討論的索引，不再讓同一個板塊的核心思想分散在不同對話中。**
-
----
-
-# 12. 當前不可違反的結構結論
-
-1. Living Water Westside Watch = 西望 = 西望品牌 = 主站。
-2. 主站結構只有使用者本人可以修改。
-3. Journal、橄欖山 Mount of Olives、Church、About 是主站第一級板塊。
-4. 多雷搜索是全站功能，不是第一級內容板塊。
-5. 多雷是內部核心，不作公開主站板塊。
-6. Journal 有且只有 12 個固定欄目 + 3 個間奏。
-7. 沒有安提阿。
-8. 伯利恆一日 Bethlehem 是固定欄目名稱，不再建立 A Day 下層欄目。
-9. 西區的夜晚只出現在以馬忤斯欄目描述中；正式欄目名稱是以馬忤斯 Emmaus。
-10. ONE、多寫都在以馬忤斯之下，不是 Journal 欄目。
-11. Selah 細拉位於 WATCH 與 WALK 之間。
-12. 遠方無聲鴿 Jonath-elem-rechokim 位於 WALK 與 WITNESS 之間。
-13. 基尼烈 Kinneret 位於 WITNESS 與 WORSHIP 之間。
-14. 新聞播報是跨欄目功能，不是新欄目。
-15. 橄欖山使用英文名稱 Mount of Olives，不再以 Website 作為展示名稱。
-16. 橄欖山目前六個公開板塊為：黎明書局、白晝咖啡館、守望禱告會、Podcast、Video、Newsletter。
-17. 黎明書局的核心是編輯判斷、策展與知識調用，不是網址收藏。
-18. 黎明書局的核心編輯模型是 Morning Star → Spectrum → Collection。
-19. 黎明書局的 Resource Master 是底層資料來源；Resource Card 是館藏呈現；候選資源必須經過策展才成為真正館藏。
-20. Church 與 Journal、橄欖山、About 同級；Journal 的以馬忤斯可以服務 Bible Study，但不與 Church 混層。
-21. Storybook 訓練整個西望設計系統，不屬於黎明書局。
-22. 任何新的結構節點都必須先由使用者決定並寫入本文件，再進入工程實作。
-
----
-
-# 13. 變更記錄
-
-## 2026-09-07 — 主站結構與板塊描述索引重建
-
-- 正式確立「主站結構」為後續結構細化與修改的固定關鍵詞。
-- 正式確立主站結構唯一修改權屬於使用者。
-- 正式確立 Living Water Westside Watch = 西望 = 西望品牌 = 主站，不再生發其他主站概念。
-- 將多雷從公開主站板塊中移除；多雷作為內部核心，公開只保留多雷搜索。
-- 將 Website 展示名稱正式改為 **橄欖山 Mount of Olives**。
-- 將伯利恆正式改為 **伯利恆一日 Bethlehem**，A Day 不再作為下層欄目。
-- 將正式 Journal 欄目改為 **以馬忤斯 Emmaus**；「西區的夜晚」只保留在欄目描述中。
-- 確定三個間奏的完整順序與英文名稱：Selah 細拉、遠方無聲鴿 Jonath-elem-rechokim、基尼烈 Kinneret。
-- 為主站第一級板塊、Journal 十二欄目、三個間奏、橄欖山板塊、Church、About、新聞播報及多雷搜索建立集中描述。
-- 將既有專案備忘與歷史討論中可確認的定位、編輯模型、出版計劃、資源策展模型、工程展望與板塊邊界回收至相應節點。
-- 今後討論任何板塊或欄目，優先在本文件對應描述下繼續，不再讓同一主題的核心決策散落在不同備忘中。
+### 2026-09-07
+- Re-established this file as the single canonical master site architecture.
+- Reconciled Journal naming and order.
+- Re-established Mount of Olives as the public name for 橄欖山.
+- Removed Doré as a public main-site block.
+- Recorded Dawn Library as an editorial curation and knowledge system.
+- Expanded Dawn Library model to explicitly preserve Three Stars, Spectrum, Collection, **知識脈絡**, living-resource/content-generation loops, Resource Master, Resource Cards, Doré learning outputs, and downstream support relationships.
