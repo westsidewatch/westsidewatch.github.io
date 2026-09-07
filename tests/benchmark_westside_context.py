@@ -1,9 +1,4 @@
-"""Real-world baseline benchmark for the Westside Context projection.
-
-This benchmark intentionally measures the smallest current implementation first:
-canonical Markdown -> SQLite/FTS5 -> ranked context nodes.
-It does not modify the canonical architecture and does not require network/API access.
-"""
+"""Real-world baseline benchmark for the Westside Context projection."""
 from __future__ import annotations
 
 import argparse
@@ -11,7 +6,7 @@ import sqlite3
 import sys
 from pathlib import Path
 
-from dore_core.context.compiler import build_index, search
+from dore_core.context.compiler import build_index, search, search_context
 
 
 QUERIES = (
@@ -29,47 +24,65 @@ QUERIES = (
     ("多雷探索", "9. 多雷探索 / Doré Exploration"),
 )
 
+CONTEXT_CASES = (
+    ("ONE 查經前哨站", ("Main Site", "2. Journal", "WALK", "以馬忤斯 Emmaus")),
+    ("黎明書局", ("Main Site", "4. 橄欖山 / Mount of Olives", "4.1 黎明書局 / Dawn Library")),
+    ("多雷探索", ("Main Site", "9. 多雷探索 / Doré Exploration")),
+)
+
 
 def run(source: Path, limit: int) -> int:
     markdown = source.read_text(encoding="utf-8")
     db = sqlite3.connect(":memory:")
     source_sha = build_index(markdown, db, str(source))
+    failures = []
 
-    passed = 0
     print(f"source: {source}")
     print(f"sha256: {source_sha}")
     print(f"queries: {len(QUERIES)}")
-    print()
 
     for query, expected in QUERIES:
         results = search(db, query, limit=limit)
         titles = [node.title for node in results]
         ok = any(expected in title for title in titles)
-        passed += int(ok)
-        mark = "PASS" if ok else "MISS"
-        print(f"[{mark}] {query}")
-        print("       " + " | ".join(titles[:limit]))
+        if not ok:
+            failures.append(f"retrieval: {query} -> {expected}")
+        print(f"[{'PASS' if ok else 'MISS'}] {query}")
 
-    print()
-    print(f"baseline: {passed}/{len(QUERIES)} queries retrieved the expected context node")
-    return 0 if passed == len(QUERIES) else 1
+    print(f"\nretrieval baseline: {len(QUERIES) - sum('retrieval:' in x for x in failures)}/{len(QUERIES)}")
+    print("context packet cases:")
+
+    for query, expected_chain in CONTEXT_CASES:
+        packets = search_context(db, query, limit=limit)
+        actual = ()
+        for packet in packets:
+            chain = tuple(node.title for node in packet.ancestors) + (packet.match.title,)
+            if all(expected in chain for expected in expected_chain):
+                actual = chain
+                break
+        ok = bool(actual)
+        if not ok:
+            failures.append(f"context: {query} -> {' > '.join(expected_chain)}")
+        print(f"[{'PASS' if ok else 'MISS'}] {query}")
+        if actual:
+            print("       " + " > ".join(actual))
+
+    if failures:
+        print("\nFAILURES:")
+        for failure in failures:
+            print(f"- {failure}")
+    else:
+        print("\nALL CONTEXT BASELINES PASS")
+    return 0 if not failures else 1
 
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument(
-        "--source",
-        type=Path,
-        default=Path("docs/MASTER_SITE_ARCHITECTURE.md"),
-        help="canonical Westside architecture Markdown file",
-    )
+    parser.add_argument("--source", type=Path, default=Path("docs/MASTER_SITE_ARCHITECTURE.md"))
     parser.add_argument("--limit", type=int, default=5)
     args = parser.parse_args()
-    if args.limit < 1:
-        print("--limit must be >= 1", file=sys.stderr)
-        return 2
-    if not args.source.is_file():
-        print(f"source not found: {args.source}", file=sys.stderr)
+    if args.limit < 1 or not args.source.is_file():
+        print("invalid benchmark arguments/source", file=sys.stderr)
         return 2
     return run(args.source, args.limit)
 
