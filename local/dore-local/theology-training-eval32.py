@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -16,7 +17,10 @@ CACHE_ROOT = Path.home() / "Library" / "Caches" / "Dore" / "theology-training"
 HF_HOME = CACHE_ROOT / "hf"
 PY = CACHE_ROOT / "venv" / "bin" / "python"
 MODEL = "mlx-community/gemma-4-e4b-it-4bit"
-ADAPTER = CACHE_ROOT / "runs" / "n32" / "adapter" / "adapter.safetensors"
+ADAPTER_DIR = CACHE_ROOT / "runs" / "n32" / "adapter"
+ADAPTER = ADAPTER_DIR / "adapter.safetensors"
+ADAPTER_CONFIG = ADAPTER_DIR / "adapter_config.json"
+EVAL_ADAPTER_DIR = CACHE_ROOT / "runs" / "n32" / "eval-adapter"
 
 CASES = [
     {"id":"zh_prayer","prompt":"請為一位正在懼怕中的基督徒寫兩句禱告。","groups":[["天父","父神"],["耶穌","基督"]]},
@@ -39,13 +43,27 @@ def score(text: str, groups: list[list[str]]) -> tuple[int, int]:
     return hits, len(groups)
 
 
+def prepare_adapter_bundle() -> Path:
+    """Build the directory layout expected by mlx_vlm.load(adapter_path=...)."""
+    if not ADAPTER.is_file() or ADAPTER.stat().st_size <= 0:
+        raise SystemExit("micro32 adapter missing")
+    if not ADAPTER_CONFIG.is_file():
+        raise SystemExit("micro32 adapter config missing")
+    if EVAL_ADAPTER_DIR.exists():
+        shutil.rmtree(EVAL_ADAPTER_DIR)
+    EVAL_ADAPTER_DIR.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(ADAPTER_CONFIG, EVAL_ADAPTER_DIR / "adapter_config.json")
+    shutil.copy2(ADAPTER, EVAL_ADAPTER_DIR / "adapters.safetensors")
+    return EVAL_ADAPTER_DIR
+
+
 def worker(mode: str) -> None:
     from mlx_vlm import generate, load
     from mlx_vlm.prompt_utils import apply_chat_template
 
     kwargs = {}
     if mode == "adapter":
-        kwargs["adapter_path"] = str(ADAPTER)
+        kwargs["adapter_path"] = str(EVAL_ADAPTER_DIR)
     model, processor = load(MODEL, **kwargs)
     rows = []
     for case in CASES:
@@ -83,21 +101,20 @@ def main() -> None:
         raise SystemExit("no caller arguments are accepted")
     if not PY.is_file():
         raise SystemExit("isolated MLX-VLM environment missing")
-    if not ADAPTER.is_file() or ADAPTER.stat().st_size <= 0:
-        raise SystemExit("micro32 adapter missing")
+    adapter_bundle = prepare_adapter_bundle()
 
     base = run_mode("base")
     adapter = run_mode("adapter")
     base_score = aggregate(base)
     adapter_score = aggregate(adapter)
-    # Acceptance: adapted model must meet a high held-out concept threshold and must not regress.
     passed = adapter_score["ratio"] >= 0.80 and adapter_score["hits"] >= base_score["hits"]
     report = {
         "ok": passed,
         "status": "completed" if passed else "failed",
-        "protocol": "dore.theology-training-eval32/1",
+        "protocol": "dore.theology-training-eval32/2",
         "model": MODEL,
         "adapter": str(ADAPTER),
+        "adapter_bundle": str(adapter_bundle),
         "adapter_bytes": ADAPTER.stat().st_size,
         "cases": len(CASES),
         "base_score": base_score,
