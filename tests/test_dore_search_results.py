@@ -39,12 +39,12 @@ class DoreSearchResultTests(unittest.TestCase):
         calls = {"memory": 0}
 
         def qmd_search(text, *, semantic, deep, limit):
-            self.assertEqual(text, "這句讓我想到曠野裡的嗎哪")
-            self.assertTrue(semantic)
+            self.assertEqual(text, "曠野 嗎哪")
+            self.assertFalse(semantic)
             self.assertFalse(deep)
             return {
                 "ok": True,
-                "lane": "hybrid-no-rerank",
+                "lane": "bm25",
                 "results": [{"title": "嗎哪與曠野", "snippet": "曠野中的嗎哪", "path": "notes/manna.md"}],
             }
 
@@ -61,13 +61,18 @@ class DoreSearchResultTests(unittest.TestCase):
 
         self.assertEqual(calls["memory"], 0)
         self.assertFalse(result["large_model_invoked"])
+        self.assertEqual(result["retrieval_query"], "曠野 嗎哪")
         self.assertEqual(result["results"][0]["title"], "嗎哪與曠野")
         self.assertEqual(result["results"][0]["provenance"][0]["kind"], "document")
+        self.assertEqual(result["results"][0]["provenance"][0]["lane"], "bm25")
 
     def test_explicit_search_may_add_current_memory_and_merge_duplicate(self):
         calls = {"memory": 0}
 
         def qmd_search(text, *, semantic, deep, limit):
+            self.assertEqual(text, "這句讓我想到曠野裡的嗎哪")
+            self.assertTrue(semantic)
+            self.assertFalse(deep)
             return {
                 "ok": True,
                 "lane": "hybrid-no-rerank",
