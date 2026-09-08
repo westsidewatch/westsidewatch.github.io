@@ -5,6 +5,7 @@ on:
     paths:
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
+      - 'dore_core/intelligence/**'
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
@@ -14,6 +15,7 @@ on:
       - 'local/dore-local/bootstrap_companion_1.command'
       - 'local/dore-companion-extension/**'
       - 'tests/test_dore_*capability*.py'
+      - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -29,6 +31,7 @@ on:
     paths:
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
+      - 'dore_core/intelligence/**'
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
@@ -38,6 +41,7 @@ on:
       - 'local/dore-local/bootstrap_companion_1.command'
       - 'local/dore-companion-extension/**'
       - 'tests/test_dore_*capability*.py'
+      - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -66,6 +70,7 @@ jobs:
       - name: Run capability runtime tests
         run: |
           python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
+          python -m unittest discover -s tests -p 'test_dore_intelligence*.py' -v
           python -m unittest discover -s tests -p 'test_dore_provider*.py' -v
           python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
           python -m unittest tests.test_dore_local_a2a_control_bridge -v
