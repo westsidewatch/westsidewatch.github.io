@@ -26,6 +26,8 @@ def test_verify_dataset_and_stage_split():
         write_jsonl(root / "test.jsonl", 4)
         dataset = mod.verify_dataset(root, 32)
         assert dataset["train_rows"] == 32
+        assert dataset["valid_rows"] == 4
+        assert dataset["test_rows"] == 4
 
         work = Path(tmp) / "work"
         stage = mod.stage_split(dataset, work)
@@ -34,11 +36,19 @@ def test_verify_dataset_and_stage_split():
         assert mod.count_jsonl(stage / "test.jsonl") == 4
 
 
-def test_build_command_keeps_adapter_separate():
-    command = mod.build_command("local-model", "/tmp/train.jsonl", "/tmp/valid.jsonl", Path("/tmp/adapter"), 80)
+def test_build_command_uses_isolated_mlx_vlm_and_keeps_adapter_separate():
+    command = mod.build_command(
+        "local-model",
+        Path("/tmp/dataset"),
+        Path("/tmp/adapter/adapter.safetensors"),
+        80,
+    )
     joined = " ".join(command)
-    assert "mlx_lm.lora" in joined
-    assert "--adapter-path /tmp/adapter" in joined
-    assert "--num-layers 4" in joined
-    assert "--mask-prompt" in joined
+    assert command[0] == str(mod.PY)
+    assert "mlx_vlm.lora" in joined
+    assert "--model-path local-model" in joined
+    assert "--dataset /tmp/dataset" in joined
+    assert "--output-path /tmp/adapter/adapter.safetensors" in joined
+    assert "--train-on-completions" in joined
+    assert "mlx_lm.lora" not in joined
     assert "fuse" not in joined.lower()
