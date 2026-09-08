@@ -11,6 +11,8 @@ on:
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
+      - 'local/dore-local/install-knowledge-substrates-macos.sh'
+      - 'local/dore-local/knowledge-substrate-poc.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/test_native_host.py'
       - 'local/dore-local/install_native_messaging.sh'
@@ -20,6 +22,7 @@ on:
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
       - 'tests/test_dore_living_retrieval.py'
+      - 'tests/test_dore_knowledge_substrate_install.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -41,6 +44,8 @@ on:
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
+      - 'local/dore-local/install-knowledge-substrates-macos.sh'
+      - 'local/dore-local/knowledge-substrate-poc.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/test_native_host.py'
       - 'local/dore-local/install_native_messaging.sh'
@@ -50,6 +55,7 @@ on:
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
       - 'tests/test_dore_living_retrieval.py'
+      - 'tests/test_dore_knowledge_substrate_install.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -81,6 +87,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dore_intelligence*.py' -v
           python -m unittest tests.test_dore_substrates -v
           python -m unittest tests.test_dore_living_retrieval -v
+          python -m unittest tests.test_dore_knowledge_substrate_install -v
           python -m unittest discover -s tests -p 'test_dore_provider*.py' -v
           python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
           python -m unittest tests.test_dore_local_a2a_control_bridge -v
@@ -92,7 +99,9 @@ jobs:
         run: |
           bash -n local/dore-local/install_companion.sh
           bash -n local/dore-local/install_native_messaging.sh
+          bash -n local/dore-local/install-knowledge-substrates-macos.sh
           bash -n local/dore-local/bootstrap_companion_1.command
+          python -m py_compile local/dore-local/knowledge-substrate-poc.py
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
       - name: Run shared-state visual execution probe
