@@ -2,8 +2,9 @@
 """Run exactly the first 32-example Doré theology adapter training step.
 
 This entrypoint is intentionally fixed: no arbitrary shell command, dataset path, size,
-or model arguments are accepted from A2A callers. The quarantine root is owner-configured
-through DORE_THEOLOGY_QUARANTINE and is re-validated by theology-training-poc.py.
+or model arguments are accepted from A2A callers. By default it consumes Doré's isolated,
+reproducible cache quarantine built by theology-training-stage32.py. An owner process may
+override that root with DORE_THEOLOGY_QUARANTINE; theology-training-poc.py re-validates it.
 """
 from __future__ import annotations
 
@@ -12,6 +13,8 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+
+DEFAULT_QUARANTINE = Path.home() / "Library" / "Caches" / "Dore" / "theology-training" / "quarantine-v1"
 
 
 def repo_root() -> Path:
@@ -35,19 +38,21 @@ def build_command(repo: Path, quarantine: Path) -> list[str]:
 
 def main() -> None:
     repo = repo_root()
-    quarantine_raw = os.environ.get("DORE_THEOLOGY_QUARANTINE")
-    if not quarantine_raw:
+    quarantine = Path(os.environ.get("DORE_THEOLOGY_QUARANTINE") or DEFAULT_QUARANTINE).expanduser().resolve()
+    required = [quarantine / "train-32.jsonl", quarantine / "valid.jsonl", quarantine / "test.jsonl"]
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
         print(json.dumps({
             "ok": False,
             "status": "failed",
             "error": {
-                "code": "quarantine_not_configured",
-                "message": "Set DORE_THEOLOGY_QUARANTINE to the isolated external training dataset root.",
+                "code": "quarantine_not_staged",
+                "message": "Run theology.training.stage32 before micro32.",
+                "missing": missing,
             },
         }, ensure_ascii=False, indent=2))
         raise SystemExit(2)
 
-    quarantine = Path(quarantine_raw).expanduser().resolve()
     poc = repo / "local" / "dore-local" / "theology-training-poc.py"
     if not poc.is_file():
         print(json.dumps({
@@ -92,8 +97,9 @@ def main() -> None:
     report = {
         "ok": ok,
         "status": "completed" if ok else "failed",
-        "protocol": "dore.theology-training-micro32/1",
+        "protocol": "dore.theology-training-micro32/2",
         "training_size": 32,
+        "quarantine": str(quarantine),
         "canonical_ingest": False,
         "paid_api_required": False,
         "arbitrary_shell_allowed": False,
