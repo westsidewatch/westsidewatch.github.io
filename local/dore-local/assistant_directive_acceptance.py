@@ -20,6 +20,7 @@ background=(ROOT/'local/dore-companion-extension/background.js').read_text()
 manifest=json.loads((ROOT/'local/dore-companion-extension/manifest.json').read_text())
 assert 'DORE_DIRECTIVE' in content and 'data-message-author-role="assistant"' in content
 assert 'dore.directive' in background and 'design.' in background
+assert 'knowledge.substrates.install' in background and 'ASSISTANT_DIRECTIVE_ALLOWLIST' in background
 assert manifest['version']=='2.0.0' and 'nativeMessaging' in manifest['permissions']
 assert not any(str(x).startswith('http://127.0.0.1:4312') for x in manifest['permissions'])
 print('DORE_A2A_ASSISTANT_DIRECTIVE_CONTROL_PLANE_PASS')
