@@ -8,6 +8,8 @@ import urllib.request
 import uuid
 from pathlib import Path
 
+from dore_core.bible.theological_boundary import christian_ministry_gate
+
 CAPABILITIES={"theology.live.acceptance"}
 
 
@@ -27,13 +29,8 @@ def _post(message:str,conversation_id:str)->dict:
         return json.loads(response.read().decode("utf-8"))
 
 
-def _positive_close(text:str)->bool:
-    import re
-    t=(text or '').strip()
-    close=t[-180:]
-    christ=bool(re.search(r'耶[穌稣].{0,10}基督|Jesus\s+Christ|in\s+(?:the\s+)?name\s+of\s+Jesus',close,re.I))
-    amen=bool(re.search(r'(?:阿們|阿们|Amen)[。.!！\s]*$',t,re.I))
-    return christ and amen
+def _prayer_admitted(text:str)->bool:
+    return christian_ministry_gate(text,task="prayer").allowed
 
 
 def execute(capability:str,args=None):
@@ -61,8 +58,8 @@ def execute(capability:str,args=None):
         "health":bool(health.get("ok")),
         "model":health.get("model"),
         "guarded_entrypoint":("DORE_LOCAL_GUARDED_ENTRYPOINT=" in install["stdout"]),
-        "zh_prayer_ok":bool(zh.get("ok")) and _positive_close(zh_reply),
-        "en_prayer_ok":bool(en.get("ok")) and _positive_close(en_reply),
+        "zh_prayer_ok":bool(zh.get("ok")) and _prayer_admitted(zh_reply),
+        "en_prayer_ok":bool(en.get("ok")) and _prayer_admitted(en_reply),
         "comparative_allowed":bool(compare.get("ok")) and not compare_blocked and bool(compare_reply.strip()),
         "local_endpoint":True,
     }
