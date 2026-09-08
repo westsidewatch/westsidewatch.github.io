@@ -43,6 +43,7 @@ def test_native_health() -> None:
     assert result["transport"] == "firefox-native-messaging"
     assert result["resident"] is False
     assert result["paid_runtime"] is False
+    assert "knowledge.substrates.install" in result["production_capabilities"]
 
 
 def test_carrier_identity_survives_adapter() -> None:
