@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'static/dore/dore-search.js'
+      - 'dore-core/runtime/capability-registry.v1.json'
       - 'dore-design/knowledge-lab/capabilities/**'
       - 'local/dore-local/capability_registry.py'
       - 'local/dore-local/capability_registry_acceptance.py'
