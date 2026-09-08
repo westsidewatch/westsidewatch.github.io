@@ -1,12 +1,15 @@
 """Doré Living Retrieval: fuzzy search begins before explicit search.
 
-The orchestrator is intentionally small. It chooses the lightest retrieval lane and
-returns evidence only; it never grants retrieved text authority or executes it.
+The orchestrator chooses the lightest retrieval lane and returns evidence only; it
+never grants retrieved text authority or executes it. Provider payloads are normalized
+into a stable Doré Search result contract before products see them.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Any, Callable
+
+from dore_core.retrieval.results import merge_results
 
 
 @dataclass(frozen=True)
@@ -48,17 +51,13 @@ def plan(text: str, *, explicit_search: bool = False, deep_requested: bool = Fal
     if association_like:
         return RetrievalPlan(True, True, False, explicit_search, "association intent: hybrid without rerank")
 
-    # Chinese prose often contains no spaces. Do not mistake a short natural-language
-    # sentence for a compact identifier simply because split() returns one token.
     if _looks_like_cjk_phrase(q):
         return RetrievalPlan(True, True, False, explicit_search, "CJK natural-language phrase: hybrid without rerank")
 
-    # Short identifiers, references, names, and compact terms stay deterministic/lexical.
     compact = len(q) <= 18 and len(q.split()) <= 3
     if compact:
         return RetrievalPlan(True, False, False, explicit_search, "compact query: BM25 first")
 
-    # Longer natural-language fragments receive local hybrid retrieval without rerank.
     return RetrievalPlan(True, True, False, explicit_search, "natural-language query: hybrid without rerank")
 
 
@@ -76,6 +75,7 @@ def retrieve(
         return {
             "ok": True,
             "plan": p,
+            "results": [],
             "qmd": None,
             "memory": None,
             "evidence": [],
@@ -94,9 +94,11 @@ def retrieve(
         if memory.get("ok"):
             evidence.append({"source": "longmemory", "payload": memory})
 
+    results = merge_results(qmd, memory, limit=limit)
     return {
-        "ok": bool(evidence) or bool(qmd.get("ok")),
+        "ok": bool(results) or bool(evidence) or bool(qmd.get("ok")),
         "plan": p,
+        "results": results,
         "qmd": qmd,
         "memory": memory,
         "evidence": evidence,
