@@ -4,7 +4,7 @@ from __future__ import annotations
 import json, os, subprocess, time
 from pathlib import Path
 from urllib import request
-CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install","core.substrate.acceptance"}
+CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install","core.substrate.acceptance","knowledge.substrates.install"}
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
  child_env=os.environ.copy();child_env.update(env or {})
  try:
@@ -84,10 +84,23 @@ def core_substrate_acceptance(args=None):
  repo=_repo();err=_sync(repo)
  if err:return err
  common=_acceptance_script(repo,"common_substrate_acceptance.py");conversation=_acceptance_script(repo,"conversation_substrate_acceptance.py");ok=bool(common["ok"] and conversation["ok"]);return {"ok":ok,"status":"completed" if ok else "failed","capability":"core.substrate.acceptance","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"acceptance":{"common":common["evidence"],"conversation":conversation["evidence"]},"stderr_tail":{"common":common["stderr_tail"],"conversation":conversation["stderr_tail"]}}
+def knowledge_substrates_install(args=None):
+ repo=_repo();err=_sync(repo)
+ if err:return err
+ script=repo/"local"/"dore-local"/"install-knowledge-substrates-macos.sh"
+ if not script.is_file():return {"ok":False,"status":"failed","capability":"knowledge.substrates.install","error":{"code":"installer_missing","message":str(script)}}
+ run=_run(["bash",str(script)],repo,timeout=1800,env={"DORE_REPO_ROOT":str(repo)})
+ evidence={}
+ if run["stdout"].strip():
+  try:evidence=json.loads(run["stdout"].splitlines()[-1])
+  except Exception:evidence={"ok":False,"error":"invalid_poc_output","stdout_tail":run["stdout"][-4000:]}
+ ok=bool(run["returncode"]==0 and evidence.get("ok") is True and evidence.get("authority") is False and evidence.get("offline_core") is True)
+ return {"ok":ok,"status":"completed" if ok else "failed","capability":"knowledge.substrates.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"evidence":evidence,"install_tail":run["stdout"][-4000:],"stderr_tail":run["stderr"][-4000:]}
 def execute(capability,args=None):
  if capability=="design.production.rollout":return design_production_rollout(args)
  if capability=="search.local.repair":return search_local_repair(args)
  if capability=="image.local.repair":return image_local_repair(args)
  if capability=="wake.runtime.install":return wake_runtime_install(args)
  if capability=="core.substrate.acceptance":return core_substrate_acceptance(args)
+ if capability=="knowledge.substrates.install":return knowledge_substrates_install(args)
  return {"ok":False,"status":"failed","error":{"code":"unsupported_production_action","message":capability}}
