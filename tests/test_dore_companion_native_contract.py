@@ -1,7 +1,7 @@
 from __future__ import annotations
 import json, unittest
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1]; EXT=ROOT/'local'/'dore-companion-extension'
+ROOT=Path(__file__).resolve().parents[1]; EXT=ROOT/'local'/'dore-companion-extension'; LOCAL=ROOT/'local'/'dore-local'
 
 class CompanionNativeContractTest(unittest.TestCase):
  def test_native_manifest_contract_matches_native_host(self):
@@ -23,5 +23,7 @@ class CompanionNativeContractTest(unittest.TestCase):
   s=(EXT/'background.js').read_text();self.assertIn('ASSISTANT_DIRECTIVE_ALLOWLIST',s);self.assertIn('"knowledge.substrates.install"',s);self.assertNotIn('capability.startsWith("knowledge.")',s)
  def test_installer_free_runtime(self):
   s=(EXT/'install_companion_1.command').read_text().lower();self.assertNotIn('api.openai.com',s)
+ def test_native_snapshot_binds_real_worktree_for_git_actions(self):
+  s=(LOCAL/'install_native_messaging.sh').read_text();self.assertIn('export DORE_REPO_ROOT=',s);self.assertIn('export DORE_WORKTREE=',s);self.assertIn('/westsidewatch.github.io',s);self.assertIn('.git',s)
 
 if __name__=='__main__': unittest.main()

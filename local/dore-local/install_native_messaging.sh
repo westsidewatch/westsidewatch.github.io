@@ -9,6 +9,7 @@ ARCHIVE_URL="https://github.com/${REPO}/archive/refs/heads/main.zip"
 APP_ROOT="$HOME/Library/Application Support/DoreA2A"
 RELEASES="$APP_ROOT/native-releases"
 CURRENT="$APP_ROOT/native-current"
+DEFAULT_WORKTREE="$HOME/westsidewatch.github.io"
 HOST_NAME="ca.dore.companion"
 EXTENSION_ID="${DORE_COMPANION_EXTENSION_ID:-dore-companion@westsidewatch.ca}"
 MANIFEST_DIR="$HOME/Library/Application Support/Mozilla/NativeMessagingHosts"
@@ -56,11 +57,16 @@ cat > "$LAUNCHER" <<EOF
 #!/bin/bash
 set -euo pipefail
 export DORE_REPO_ROOT="${CURRENT}/repo"
+# The host itself runs from an immutable, preflighted snapshot. Production actions
+# need a mutable git worktree for fetch/fast-forward. Bind the conventional Doré
+# checkout only when it is a real git worktree; otherwise actions fail closed.
+if [[ -d "${DEFAULT_WORKTREE}/.git" ]]; then
+  export DORE_WORKTREE="${DEFAULT_WORKTREE}"
+fi
 exec "${PYTHON3}" "${CURRENT}/repo/local/dore-local/native_host.py"
 EOF
 chmod 755 "$LAUNCHER"
 
-# Native Messaging host manifests require an absolute executable path.
 cat > "$MANIFEST" <<EOF
 {
   "name": "${HOST_NAME}",
@@ -72,7 +78,6 @@ cat > "$MANIFEST" <<EOF
 EOF
 chmod 644 "$MANIFEST"
 
-# JSON syntax and exact contract check.
 MANIFEST="$MANIFEST" "$PYTHON3" - <<'PY'
 import json, os
 p=os.environ['MANIFEST']
@@ -88,12 +93,14 @@ PY
 echo "[3/4] Installed Firefox Native Messaging host."
 echo "host=${HOST_NAME} extension_id=${EXTENSION_ID}"
 echo "manifest=${MANIFEST}"
+if [[ -d "$DEFAULT_WORKTREE/.git" ]]; then
+  echo "production_worktree=${DEFAULT_WORKTREE}"
+else
+  echo "production_worktree=UNAVAILABLE (production actions requiring git will fail closed)"
+fi
 
-# Do not stop the old 4312 service here. It remains a compatibility/debug
-# fallback until browser->native->adapter->Design live acceptance passes.
 echo "[4/4] 4312 compatibility path left unchanged."
 
-# Keep newest three native snapshots.
 find "$RELEASES" -mindepth 1 -maxdepth 1 -type d -print0 | xargs -0 ls -dt 2>/dev/null | tail -n +4 | while IFS= read -r old; do rm -rf "$old"; done || true
 
 echo "DORÉ Native Messaging install: PASS"
