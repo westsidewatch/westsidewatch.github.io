@@ -15,7 +15,13 @@ from urllib import request
 
 from dore_core.retrieval.living import retrieve as living_retrieve
 from dore_core.substrates.longmemory import LongMemoryConfig, available as longmemory_available, recall as longmemory_recall
-from dore_core.substrates.qmd import QMDConfig, available as qmd_available, search as qmd_search
+from dore_core.substrates.qmd import (
+    PRODUCTION_COLLECTION,
+    QMDConfig,
+    available as qmd_available,
+    production_config,
+    search as qmd_search,
+)
 
 HERE = Path(__file__).resolve().parent
 
@@ -123,15 +129,31 @@ def _image_generate(args: dict[str, Any], caller_product: str | None = None) -> 
     return result
 
 
-def _fuzzy_search(args: dict[str, Any]) -> dict[str, Any]:
+def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
+    explicit = str(args.get("host") or "").strip().lower()
+    if explicit:
+        return explicit
+    product = str(caller_product or "").strip().lower()
+    if product == "one" or product.startswith("one-"):
+        return "one"
+    if product == "multiwrite" or product.startswith("multiwrite-"):
+        return "multiwrite"
+    return "unknown"
+
+
+def _fuzzy_search(args: dict[str, Any], caller_product: str | None = None) -> dict[str, Any]:
     query = str(args.get("query") or args.get("text") or "").strip()
     if not query:
         return {"ok": False, "status": "failed", "error": {"code": "invalid_args", "message": "query or text is required"}}
     if not qmd_available():
         return {"ok": False, "status": "not_ready", "capability": "context.fuzzy-search", "authority": False, "error": {"code": "substrate_unavailable", "message": "local retrieval substrate is not installed on this runtime"}}
 
-    collection = str(args.get("collection") or os.environ.get("DORE_QMD_COLLECTION") or "").strip() or None
-    qmd_config = QMDConfig(collection=collection)
+    requested_collection = str(args.get("collection") or os.environ.get("DORE_QMD_COLLECTION") or "").strip()
+    if not requested_collection or requested_collection == PRODUCTION_COLLECTION:
+        qmd_config = production_config(collection=PRODUCTION_COLLECTION)
+    else:
+        qmd_config = QMDConfig(collection=requested_collection)
+
     db = Path(os.environ.get("DORE_LONGMEMORY_DB") or (Path.home() / ".dore" / "knowledge" / "longmemory.db"))
     project = str(args.get("project") or os.environ.get("DORE_LONGMEMORY_PROJECT") or "dore")
     memory_config = LongMemoryConfig(db=db, project=project)
@@ -151,6 +173,9 @@ def _fuzzy_search(args: dict[str, Any]) -> dict[str, Any]:
         explicit_search=bool(args.get("explicit_search", False)),
         deep_requested=bool(args.get("deep", False)),
         limit=int(args.get("limit") or 8),
+        host=_search_host(args, caller_product),
+        mode=str(args.get("mode") or "prepare").strip().lower(),
+        embedded=bool(args.get("embedded", False)),
     )
     plan = internal["plan"]
     return {
@@ -166,10 +191,13 @@ def _fuzzy_search(args: dict[str, Any]) -> dict[str, Any]:
             "memory_recall": plan.recall_memory,
             "reason": plan.reason,
         },
+        "context_policy": internal.get("context_policy"),
+        "search_scope": "production" if qmd_config.collection == PRODUCTION_COLLECTION else "requested-collection",
         "authority": False,
         "large_model_invoked": False,
         "core_route": {
             "capability": "context.fuzzy-search",
+            "caller_product": caller_product,
             "transport": "core-adapter",
         },
     }
@@ -195,7 +223,7 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
         if capability == "image.generate":
             return _image_generate(args, caller_product)
         if capability == "context.fuzzy-search":
-            result = _fuzzy_search(args)
+            result = _fuzzy_search(args, caller_product)
         elif capability == "knowledge.recall":
             result = _knowledge_recall(args)
         elif capability in production.CAPABILITIES:
