@@ -1,6 +1,6 @@
 /* DORÉ Companion 2.0 production A2A bridge. */
 let transportModulePromise=null,sequence=0;const sessionId=`session-${crypto.randomUUID()}`;
-const ASSISTANT_DIRECTIVE_ALLOWLIST=new Set(["knowledge.substrates.install"]);
+const ASSISTANT_DIRECTIVE_ALLOWLIST=new Set(["knowledge.substrates.install","system.self-maintain"]);
 function transportModule(){if(!transportModulePromise)transportModulePromise=import(browser.runtime.getURL("native_transport.js"));return transportModulePromise}
 function nextRequestId(){sequence+=1;return `req-${Date.now()}-${sequence}-${crypto.randomUUID()}`}
 function client(){return {name:"dore-companion",version:"2.0.0",transport_preference:"firefox-native-messaging"}}
