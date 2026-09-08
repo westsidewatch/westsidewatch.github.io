@@ -9,7 +9,8 @@ P01 impact: NONE
 - commit `6d8c61d659fff6998daa60af9d93877016e65931` — BI-1 domain contracts and engineering baseline;
 - commit `50bf068cf42a779009abb7bd9e96b37aae319a38` — production corpus index + bounded local action;
 - commit `311f51e935f23e4757b08c6508cb74bf4564a344` — Christian ministry theological boundary implementation;
-- commits `f7b9ab38fb284e7fd99f2ea0097f2a77e344cbef`, `3c8204b2a777c4e8d0e33b734b22017f12bb419f`, `790409d0d5ac629d7300d098173399be90c373c2`, `27d84113dfb81db520ef1cc14c9eae603a20981a`, `29fa404dd978e408751f0f89ecc2436682ba4c94`, `46ef68176fefab3d3546a97060988b2e1928a3d9` — bounded real-Mac theology acceptance/control-plane wiring and canonical gate reuse.
+- commits `f7b9ab38fb284e7fd99f2ea0097f2a77e344cbef`, `3c8204b2a777c4e8d0e33b734b22017f12bb419f`, `790409d0d5ac629d7300d098173399be90c373c2`, `27d84113dfb81db520ef1cc14c9eae603a20981a`, `29fa404dd978e408751f0f89ecc2436682ba4c94`, `46ef68176fefab3d3546a97060988b2e1928a3d9` — bounded real-Mac theology acceptance/control-plane wiring and canonical gate reuse;
+- commit `37661d22d6fad89c0cee70f3bb5fcd72c238d652` — post-checkpoint prayer-delivery refinement: prayer-specific instruction now requires the prayer itself without explanatory framing, and the canonical close validator accepts presentation-only punctuation/Markdown/quotation wrappers after final Amen while still rejecting lexical/devotional material after Amen.
 
 ## Reconciliation
 
@@ -21,17 +22,21 @@ P01 impact: NONE
 
 4. **Acceptance wiring is materially stronger than unit-only evidence.** A bounded real-Mac `theology.live.acceptance` capability was added to the local control plane, wired to the active A2A checkout, and later changed to validate live prayer output through the same canonical `christian_ministry_gate` rather than duplicating acceptance logic. This is the correct single-authority direction.
 
-5. **Do not overclaim VERIFIED_COMPLETE yet.** The inspected commits prove implementation and acceptance-harness wiring, but this bounded batch did not recover a persisted terminal acceptance artifact showing all required live checks passing across Chinese/English prayer, comparative-research exception, multi-turn drift, worship/blessing/devotional/sermon/Bible teaching, provider/model changes and rejected-candidate non-disclosure. Current theological-boundary classification: `ACTIVE / PARTIALLY_VERIFIED`; missing evidence is the persisted full regression result.
+5. **The prayer boundary received one useful post-checkpoint refinement, but this is not new completion evidence.** Commit `37661d22d6fad89c0cee70f3bb5fcd72c238d652` makes prayer delivery stricter at instruction time while making deterministic validation tolerant of presentation-only wrappers after the terminal Amen. Classification: `ACTIVE / IMPLEMENTATION_REFINEMENT`. It supersedes the narrower final-Amen punctuation matcher as implementation detail, but does not supersede the canonical theology gate or change the evidence threshold for completion.
 
-6. **Architecture convergence improved.** BI-1 and the theology boundary both reinforce the same durable rule already present elsewhere: models/substrates propose; Doré owns evidence, ranking, policy and admission. This should be retained as a cross-product authority principle under CORE/NERVOUS-SYSTEM rather than duplicated per product.
+6. **Do not overclaim VERIFIED_COMPLETE yet.** The inspected commits prove implementation and acceptance-harness wiring, but this bounded batch did not recover a persisted terminal acceptance artifact showing all required live checks passing across Chinese/English prayer, comparative-research exception, multi-turn drift, worship/blessing/devotional/sermon/Bible teaching, provider/model changes and rejected-candidate non-disclosure. Current theological-boundary classification remains `ACTIVE / PARTIALLY_VERIFIED`; missing evidence is the persisted full regression result.
 
-7. **No P01 action or state changed.** The production audio/transcription environment dependency remains isolated and untouched.
+7. **Architecture convergence improved.** BI-1 and the theology boundary both reinforce the same durable rule already present elsewhere: models/substrates propose; Doré owns evidence, ranking, policy and admission. This should be retained as a cross-product authority principle under CORE/NERVOUS-SYSTEM rather than duplicated per product.
+
+8. **No P01 action or state changed.** The production audio/transcription environment dependency remains isolated and untouched.
 
 ## Current dispositions
 
 - BI-1 domain contracts: `ACTIVE / FOUNDATION`.
 - Search production QMD corpus index: `ACTIVE / IMPLEMENTED_NEEDS_RUNTIME_PROOF`.
 - Christian ministry theological boundary: `ACTIVE / PARTIALLY_VERIFIED`.
+- Prayer-delivery/presentation-wrapper refinement: `ACTIVE / IMPLEMENTATION_REFINEMENT`; retain under the canonical theology gate.
+- Narrower pre-refinement terminal-Amen matcher: `SUPERSEDED` as implementation detail by commit `37661d22d6fad89c0cee70f3bb5fcd72c238d652`.
 - Canonical admission reuse in live acceptance: retain; duplicate acceptance logic is superseded.
 - Bible Intelligence global completion: not justified.
 
