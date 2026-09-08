@@ -7,6 +7,7 @@ on:
       - 'dore_core/control_plane/**'
       - 'dore_core/intelligence/**'
       - 'dore_core/substrates/**'
+      - 'dore_core/retrieval/**'
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
@@ -18,6 +19,7 @@ on:
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
+      - 'tests/test_dore_living_retrieval.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -35,6 +37,7 @@ on:
       - 'dore_core/control_plane/**'
       - 'dore_core/intelligence/**'
       - 'dore_core/substrates/**'
+      - 'dore_core/retrieval/**'
       - 'local/dore-local/a2a_adapter.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
@@ -46,6 +49,7 @@ on:
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
+      - 'tests/test_dore_living_retrieval.py'
       - 'tests/test_dore_provider*.py'
       - 'tests/test_dore_control_plane*.py'
       - 'tests/test_dore_local_a2a_control_bridge.py'
@@ -76,6 +80,7 @@ jobs:
           python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
           python -m unittest discover -s tests -p 'test_dore_intelligence*.py' -v
           python -m unittest tests.test_dore_substrates -v
+          python -m unittest tests.test_dore_living_retrieval -v
           python -m unittest discover -s tests -p 'test_dore_provider*.py' -v
           python -m unittest discover -s tests -p 'test_dore_control_plane*.py' -v
           python -m unittest tests.test_dore_local_a2a_control_bridge -v
