@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Doré Theology Alignment micro-POC.
+"""Doré Theology Alignment micro-POC through the isolated MLX-VLM toolchain.
 
 Purpose:
 - train/evaluate a tiny LoRA adapter for abstract Christian theological alignment
 - keep adversarial fixtures quarantined outside Doré Core/Knowledge/Memory
 - never ingest training/eval records into canonical Doré stores
-- stop training as soon as minimum sufficient learning is reached
+- keep the adapter separate from the runtime/base model
+- stop at the requested learning-curve size (32/64/128/256)
 
-This script is a local orchestration wrapper around mlx-lm. It does not download
-models or data automatically and does not call paid/cloud APIs.
+The orchestration is deliberately cache-only during execution. Model/tool downloads belong
+to an explicit preparation step, never to the training action itself.
 """
 from __future__ import annotations
 
@@ -17,10 +18,13 @@ import json
 import os
 import shutil
 import subprocess
-import sys
+import time
 from pathlib import Path
 
-DEFAULT_TRAINING_MODEL = os.environ.get("DORE_THEOLOGY_MLX_MODEL")
+CACHE_ROOT = Path.home() / "Library" / "Caches" / "Dore" / "theology-training"
+VENV = CACHE_ROOT / "venv"
+PY = VENV / "bin" / "python"
+DEFAULT_TRAINING_MODEL = os.environ.get("DORE_THEOLOGY_MLX_MODEL", "mlx-community/gemma-4-e4b-it-4bit")
 SIZES = (32, 64, 128, 256)
 
 
@@ -57,34 +61,51 @@ def verify_dataset(root: Path, size: int) -> dict:
         if not p.is_file():
             die(f"missing quarantined split: {p}")
     train_n = count_jsonl(train)
+    valid_n = count_jsonl(valid)
+    test_n = count_jsonl(test)
     if train_n != size:
         die(f"expected {size} training rows, found {train_n}")
-    return {"train": str(train), "valid": str(valid), "test": str(test), "train_rows": train_n}
+    if valid_n < 1 or test_n < 1:
+        die("valid/test quarantine splits must be non-empty")
+    return {
+        "train": str(train),
+        "valid": str(valid),
+        "test": str(test),
+        "train_rows": train_n,
+        "valid_rows": valid_n,
+        "test_rows": test_n,
+    }
 
 
-def mlx_available() -> bool:
-    return shutil.which("mlx_lm.lora") is not None or importable("mlx_lm")
-
-
-def importable(name: str) -> bool:
-    try:
-        __import__(name)
-        return True
-    except Exception:
+def mlx_vlm_available() -> bool:
+    if not PY.is_file():
         return False
+    probe = subprocess.run(
+        [str(PY), "-c", "import mlx_vlm, datasets"],
+        text=True,
+        capture_output=True,
+        timeout=30,
+    )
+    return probe.returncode == 0
 
 
-def build_command(model: str, train_file: str, valid_file: str, adapter_dir: Path, iters: int) -> list[str]:
+def build_command(model: str, dataset_dir: Path, adapter_file: Path, iters: int) -> list[str]:
     return [
-        sys.executable, "-m", "mlx_lm.lora",
-        "--model", model,
-        "--train",
-        "--data", str(Path(train_file).parent),
-        "--adapter-path", str(adapter_dir),
+        str(PY), "-m", "mlx_vlm.lora",
+        "--model-path", model,
+        "--dataset", str(dataset_dir),
+        "--split", "train",
         "--iters", str(iters),
         "--batch-size", "1",
-        "--num-layers", "4",
-        "--mask-prompt",
+        "--learning-rate", "2e-5",
+        "--lora-rank", "8",
+        "--lora-alpha", "16",
+        "--max-seq-length", "2048",
+        "--train-on-completions",
+        "--steps-per-report", "10",
+        "--steps-per-eval", "20",
+        "--val-batches", "4",
+        "--output-path", str(adapter_file),
     ]
 
 
@@ -105,14 +126,11 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quarantine", required=True, help="external isolated dataset directory")
     ap.add_argument("--size", type=int, choices=SIZES, default=32)
-    ap.add_argument("--model", default=DEFAULT_TRAINING_MODEL, help="MLX model path/id; independent of DORE_LOCAL_MODEL")
-    ap.add_argument("--work", default="/tmp/dore-theology-poc")
+    ap.add_argument("--model", default=DEFAULT_TRAINING_MODEL, help="MLX-VLM model path/id; independent of DORE_LOCAL_MODEL")
+    ap.add_argument("--work", default=str(CACHE_ROOT / "runs"))
     ap.add_argument("--iters", type=int, default=80)
-    ap.add_argument("--execute", action="store_true", help="actually invoke mlx-lm")
+    ap.add_argument("--execute", action="store_true", help="actually invoke MLX-VLM LoRA training")
     args = ap.parse_args()
-
-    if not args.model:
-        die("MLX training model is not configured; set DORE_THEOLOGY_MLX_MODEL or --model")
 
     quarantine = Path(args.quarantine)
     require_quarantine(quarantine)
@@ -123,32 +141,56 @@ def main() -> None:
         shutil.rmtree(work)
     work.mkdir(parents=True)
     stage = stage_split(dataset, work)
-    adapter = work / "adapter"
+    adapter_dir = work / "adapter"
+    adapter_dir.mkdir(parents=True, exist_ok=True)
+    adapter_file = adapter_dir / "adapter.safetensors"
 
-    command = build_command(args.model, str(stage / "train.jsonl"), str(stage / "valid.jsonl"), adapter, args.iters)
+    command = build_command(args.model, stage, adapter_file, args.iters)
     report = {
         "ok": True,
-        "protocol": "dore.theology-training-poc/2",
+        "protocol": "dore.theology-training-poc/3",
+        "training_backend": "mlx-vlm",
         "training_model": args.model,
         "runtime_model": os.environ.get("DORE_LOCAL_MODEL", "gemma4:e4b"),
         "training_size": args.size,
+        "dataset_rows": {
+            "train": dataset["train_rows"],
+            "valid": dataset["valid_rows"],
+            "test": dataset["test_rows"],
+        },
         "quarantine": str(quarantine.resolve()),
         "canonical_ingest": False,
         "paid_api_required": False,
-        "network_required_by_orchestrator": False,
+        "network_action_performed": False,
         "adapter_fused_into_base": False,
-        "adapter_path": str(adapter),
+        "adapter_path": str(adapter_file),
         "command": command,
         "executed": False,
     }
 
     if args.execute:
-        if not mlx_available():
-            die("mlx-lm is not installed/available on this Mac")
-        proc = subprocess.run(command, cwd=str(work), text=True)
+        if not mlx_vlm_available():
+            die("isolated MLX-VLM training environment is not prepared")
+        env = os.environ.copy()
+        env["HF_HUB_OFFLINE"] = "1"
+        env["TRANSFORMERS_OFFLINE"] = "1"
+        started = time.monotonic()
+        proc = subprocess.run(
+            command,
+            cwd=str(work),
+            text=True,
+            capture_output=True,
+            timeout=6900,
+            env=env,
+        )
         report["executed"] = True
         report["returncode"] = proc.returncode
-        report["ok"] = proc.returncode == 0
+        report["seconds"] = round(time.monotonic() - started, 3)
+        report["stdout_tail"] = proc.stdout[-5000:]
+        report["stderr_tail"] = proc.stderr[-5000:]
+        report["ok"] = proc.returncode == 0 and adapter_file.is_file()
+        report["adapter_present"] = adapter_file.is_file()
+        report["adapter_bytes"] = adapter_file.stat().st_size if adapter_file.is_file() else 0
 
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
