@@ -1,6 +1,7 @@
 import importlib.util
 import json
 import tempfile
+import unittest
 from pathlib import Path
 
 
@@ -17,38 +18,42 @@ def write_jsonl(path: Path, count: int) -> None:
             fh.write(json.dumps({"messages": [{"role": "user", "content": f"case {i}"}, {"role": "assistant", "content": "safe"}]}) + "\n")
 
 
-def test_verify_dataset_and_stage_split():
-    with tempfile.TemporaryDirectory() as tmp:
-        root = Path(tmp) / "quarantine"
-        root.mkdir()
-        write_jsonl(root / "train-32.jsonl", 32)
-        write_jsonl(root / "valid.jsonl", 4)
-        write_jsonl(root / "test.jsonl", 4)
-        dataset = mod.verify_dataset(root, 32)
-        assert dataset["train_rows"] == 32
-        assert dataset["valid_rows"] == 4
-        assert dataset["test_rows"] == 4
+class TheologyTrainingPOCTest(unittest.TestCase):
+    def test_verify_dataset_and_stage_split(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp) / "quarantine"
+            root.mkdir()
+            write_jsonl(root / "train-32.jsonl", 32)
+            write_jsonl(root / "valid.jsonl", 4)
+            write_jsonl(root / "test.jsonl", 4)
+            dataset = mod.verify_dataset(root, 32)
+            self.assertEqual(dataset["train_rows"], 32)
+            self.assertEqual(dataset["valid_rows"], 4)
+            self.assertEqual(dataset["test_rows"], 4)
 
-        work = Path(tmp) / "work"
-        stage = mod.stage_split(dataset, work)
-        assert mod.count_jsonl(stage / "train.jsonl") == 32
-        assert mod.count_jsonl(stage / "valid.jsonl") == 4
-        assert mod.count_jsonl(stage / "test.jsonl") == 4
+            work = Path(tmp) / "work"
+            stage = mod.stage_split(dataset, work)
+            self.assertEqual(mod.count_jsonl(stage / "train.jsonl"), 32)
+            self.assertEqual(mod.count_jsonl(stage / "valid.jsonl"), 4)
+            self.assertEqual(mod.count_jsonl(stage / "test.jsonl"), 4)
+
+    def test_build_command_uses_isolated_mlx_vlm_and_keeps_adapter_separate(self):
+        command = mod.build_command(
+            "local-model",
+            Path("/tmp/dataset"),
+            Path("/tmp/adapter/adapter.safetensors"),
+            80,
+        )
+        joined = " ".join(command)
+        self.assertEqual(command[0], str(mod.PY))
+        self.assertIn("mlx_vlm.lora", joined)
+        self.assertIn("--model-path local-model", joined)
+        self.assertIn("--dataset /tmp/dataset", joined)
+        self.assertIn("--output-path /tmp/adapter/adapter.safetensors", joined)
+        self.assertIn("--train-on-completions", joined)
+        self.assertNotIn("mlx_lm.lora", joined)
+        self.assertNotIn("fuse", joined.lower())
 
 
-def test_build_command_uses_isolated_mlx_vlm_and_keeps_adapter_separate():
-    command = mod.build_command(
-        "local-model",
-        Path("/tmp/dataset"),
-        Path("/tmp/adapter/adapter.safetensors"),
-        80,
-    )
-    joined = " ".join(command)
-    assert command[0] == str(mod.PY)
-    assert "mlx_vlm.lora" in joined
-    assert "--model-path local-model" in joined
-    assert "--dataset /tmp/dataset" in joined
-    assert "--output-path /tmp/adapter/adapter.safetensors" in joined
-    assert "--train-on-completions" in joined
-    assert "mlx_lm.lora" not in joined
-    assert "fuse" not in joined.lower()
+if __name__ == "__main__":
+    unittest.main()
