@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import subprocess
 from pathlib import Path
 
 CACHE_ROOT = Path.home() / "Library" / "Caches" / "Dore" / "theology-training"
@@ -37,24 +38,43 @@ def main() -> None:
         print(json.dumps({"ok":False,"status":"failed","error":{"code":"training_venv_missing","message":str(py)}}))
         raise SystemExit(2)
 
-    os.environ["HF_HOME"] = str(HF_HOME)
-    os.environ.pop("HF_HUB_OFFLINE", None)
-    os.environ.pop("TRANSFORMERS_OFFLINE", None)
     HF_HOME.mkdir(parents=True, exist_ok=True)
+    env = os.environ.copy()
+    env["HF_HOME"] = str(HF_HOME)
+    env.pop("HF_HUB_OFFLINE", None)
+    env.pop("TRANSFORMERS_OFFLINE", None)
 
-    from huggingface_hub import snapshot_download
+    code = r'''
+import json
+from huggingface_hub import snapshot_download
+model = "mlx-community/gemma-4-e4b-it-4bit"
+revision = "main"
+cache_dir = __import__("os").path.expanduser("~/Library/Caches/Dore/theology-training/hf/hub")
+path = snapshot_download(repo_id=model, revision=revision, cache_dir=cache_dir)
+offline = snapshot_download(repo_id=model, revision=revision, cache_dir=cache_dir, local_files_only=True)
+print(json.dumps({"path": path, "offline": offline}))
+'''
     try:
-        path = Path(snapshot_download(repo_id=MODEL_ID, revision=REVISION, cache_dir=str(HF_HOME / "hub"))).resolve()
-        # Immediately prove the same revision is resolvable with no network.
-        offline = Path(snapshot_download(repo_id=MODEL_ID, revision=REVISION, cache_dir=str(HF_HOME / "hub"), local_files_only=True)).resolve()
+        proc = subprocess.run([str(py), "-c", code], text=True, capture_output=True, timeout=3600, env=env)
     except Exception as exc:
-        print(json.dumps({"ok":False,"status":"failed","error":{"code":"model_prefetch_failed","message":str(exc)}}, ensure_ascii=False, indent=2))
+        print(json.dumps({"ok":False,"status":"failed","error":{"code":"model_prefetch_exception","message":str(exc)}}, ensure_ascii=False, indent=2))
+        raise SystemExit(2)
+    if proc.returncode != 0:
+        print(json.dumps({"ok":False,"status":"failed","returncode":proc.returncode,"stderr_tail":proc.stderr[-5000:],"stdout_tail":proc.stdout[-3000:]}, ensure_ascii=False, indent=2))
+        raise SystemExit(2)
+
+    try:
+        payload = json.loads(proc.stdout)
+        path = Path(payload["path"]).resolve()
+        offline = Path(payload["offline"]).resolve()
+    except Exception as exc:
+        print(json.dumps({"ok":False,"status":"failed","error":{"code":"invalid_prefetch_result","message":str(exc)},"stdout_tail":proc.stdout[-3000:]}, ensure_ascii=False, indent=2))
         raise SystemExit(2)
 
     nfiles, nbytes, digest = tree_digest(offline)
     report = {
-        "ok": True,
-        "status": "completed",
+        "ok": path == offline and offline.is_dir(),
+        "status": "completed" if path == offline and offline.is_dir() else "failed",
         "protocol": "dore.theology-training-prefetch-model/1",
         "model": MODEL_ID,
         "revision": REVISION,
@@ -69,7 +89,7 @@ def main() -> None:
         "adapter_fused_into_base": False,
     }
     print(json.dumps(report, ensure_ascii=False, indent=2))
-    raise SystemExit(0 if report["offline_resolve_verified"] else 2)
+    raise SystemExit(0 if report["ok"] else 2)
 
 
 if __name__ == "__main__":
