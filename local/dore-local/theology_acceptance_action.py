@@ -12,7 +12,7 @@ CAPABILITIES={"theology.live.acceptance"}
 
 
 def _repo()->Path:
-    return Path(os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
+    return Path(os.environ.get("DORE_REPO_ROOT") or os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
 
 
 def _run(argv:list[str],cwd:Path,timeout:int=300)->dict:
@@ -73,6 +73,7 @@ def execute(capability:str,args=None):
         "capability":capability,
         "checks":checks,
         "evidence":{
+            "repo":str(repo),
             "installer_returncode":install["returncode"],
             "guarded_entrypoint_declared":checks["guarded_entrypoint"],
             "zh_reply_admitted":checks["zh_prayer_ok"],
