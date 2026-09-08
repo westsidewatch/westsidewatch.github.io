@@ -1,0 +1,1 @@
+Acceptance rerun follows the guarded production path only. No adversarial devotional text is admitted to Doré Core, Knowledge, Memory, or canonical training data.
