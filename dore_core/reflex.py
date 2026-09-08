@@ -20,11 +20,21 @@ class ReflexResult:
 
 
 def retrieve_text(index:BibleSearchIndex, text:str, *, limit:int=20)->ReflexResult:
-    """RC2: true exact evidence suppresses containment; fuzzy is fallback only."""
+    """RC2: exact/containment evidence first; fuzzy candidates stay explicitly fuzzy.
+
+    ``text`` mode includes a phrase-aware fuzzy fallback internally, so route
+    classification must inspect the actual normalized surfaces rather than assume
+    every non-1.0 text hit is containment evidence.
+    """
     textual=index.search(SearchQuery(text,mode='text',limit=limit))
     strict=[h for h in textual if h.score==1.0]
     if strict:return ReflexResult('text-retrieval',('exact',),tuple(strict),1.0,'strict normalized textual evidence')
-    if textual:return ReflexResult('text-retrieval',('exact','normalized-containment'),tuple(textual),0.9,'containment evidence; not fuzzy')
+    qnorm=index._norm(text)
+    containment=[h for h in textual if qnorm and (qnorm in index._norm(h.surface) or index._norm(h.surface) in qnorm)]
+    if containment:return ReflexResult('text-retrieval',('exact','normalized-containment'),tuple(containment),0.9,'containment evidence; not fuzzy')
+    if textual:
+        confidence=textual[0].score
+        return ReflexResult('text-retrieval',('exact','normalized-containment','bounded-fuzzy'),tuple(textual),confidence,'fuzzy candidates are not facts')
     fuzzy=index.search(SearchQuery(text,mode='fuzzy',limit=limit))
     confidence=fuzzy[0].score if fuzzy else 0.0
     return ReflexResult('text-retrieval',('exact','normalized-containment','bounded-fuzzy'),tuple(fuzzy),confidence,'fuzzy candidates are not facts')
