@@ -13,18 +13,31 @@ class LivingRetrievalTests(unittest.TestCase):
         self.assertFalse(p.deep)
         self.assertFalse(p.recall_memory)
 
-    def test_note_fragment_uses_hybrid_without_rerank(self):
+    def test_passive_note_fragment_uses_bm25_reflex(self):
         p = plan("這句讓我想到曠野裡的嗎哪")
         self.assertTrue(p.lexical)
-        self.assertTrue(p.semantic)
+        self.assertFalse(p.semantic)
         self.assertFalse(p.deep)
         self.assertFalse(p.recall_memory)
+        self.assertIn("passive association reflex", p.reason)
+
+    def test_passive_association_reduces_to_lexical_terms(self):
+        seen = {}
+        def qmd(text, **kwargs):
+            seen["text"] = text
+            seen.update(kwargs)
+            return {"ok": True, "results": [], "authority": False, "lane": "bm25"}
+        out = retrieve("這句讓我想到曠野裡的嗎哪", qmd_search=qmd)
+        self.assertEqual(seen["text"], "曠野 嗎哪")
+        self.assertFalse(seen["semantic"])
+        self.assertFalse(seen["deep"])
+        self.assertEqual(out["retrieval_query"], "曠野 嗎哪")
 
     def test_memory_is_not_woken_for_passive_presearch(self):
         calls = []
         def qmd(text, **kwargs):
             calls.append(("qmd", kwargs))
-            return {"ok": True, "results": ["x"], "authority": False}
+            return {"ok": True, "results": [], "authority": False, "lane": "bm25"}
         def memory(text, **kwargs):
             calls.append(("memory", kwargs))
             return {"ok": True, "payload": ["m"], "authority": False}
@@ -32,16 +45,17 @@ class LivingRetrievalTests(unittest.TestCase):
         self.assertEqual([c[0] for c in calls], ["qmd"])
         self.assertFalse(out["authority"])
 
-    def test_explicit_search_can_add_strict_memory_evidence(self):
+    def test_explicit_search_can_use_hybrid_and_add_strict_memory_evidence(self):
         calls = []
         def qmd(text, **kwargs):
             calls.append(("qmd", kwargs))
-            return {"ok": True, "results": [], "authority": False}
+            return {"ok": True, "results": [], "authority": False, "lane": "hybrid-no-rerank"}
         def memory(text, **kwargs):
             calls.append(("memory", kwargs))
             return {"ok": True, "payload": {"current": True}, "authority": False}
         out = retrieve("主站現在的欄目結構是什麼", qmd_search=qmd, memory_recall=memory, explicit_search=True)
         self.assertEqual([c[0] for c in calls], ["qmd", "memory"])
+        self.assertTrue(calls[0][1]["semantic"])
         self.assertEqual(calls[1][1]["mode"], "strict")
         self.assertFalse(out["authority"])
 
