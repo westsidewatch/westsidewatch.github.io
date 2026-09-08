@@ -25,6 +25,7 @@ CAPABILITY_TIMEOUTS = {
     "image.local.repair": 3900.0,
     "theology.live.acceptance": 900.0,
     "theology.training.prepare": 2100.0,
+    "theology.training.prefetch_model": 3600.0,
     "theology.training.stage32": 60.0,
     "theology.training.micro32": 7200.0,
 }
