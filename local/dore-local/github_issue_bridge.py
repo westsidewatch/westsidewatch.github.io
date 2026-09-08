@@ -28,6 +28,7 @@ CAPABILITY_TIMEOUTS = {
     "theology.training.prefetch_model": 3600.0,
     "theology.training.stage32": 60.0,
     "theology.training.micro32": 7200.0,
+    "theology.training.eval32": 3600.0,
 }
 
 
