@@ -27,7 +27,7 @@ class CompanionNativeContractTest(unittest.TestCase):
   s=(LOCAL/'install_native_messaging.sh').read_text();self.assertIn('export DORE_REPO_ROOT=',s);self.assertIn('export DORE_WORKTREE=',s);self.assertIn('/westsidewatch.github.io',s);self.assertIn('.git',s)
  def test_self_maintenance_is_bounded_and_reversible(self):
   host=(LOCAL/'native_host.py').read_text();action=(LOCAL/'self_maintenance_action.py').read_text();bootstrap=(LOCAL/'bootstrap-self-maintenance.command').read_text()
-  self.assertIn('system.self-maintain',host);self.assertIn('system.self-maintain',action)
+  self.assertIn('_load("self_maintenance_action")',host);self.assertIn('MAINTENANCE.execute',host);self.assertIn('system.self-maintain',action)
   self.assertNotIn('shell=True',action);self.assertIn('git branch "$SAFE_BRANCH" "$OLD_HEAD"',bootstrap);self.assertIn('git rebase --abort',bootstrap);self.assertIn('working tree is not clean',bootstrap)
 
 if __name__=='__main__': unittest.main()
