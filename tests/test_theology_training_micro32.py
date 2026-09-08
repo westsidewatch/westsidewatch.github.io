@@ -1,4 +1,5 @@
 import importlib.util
+import unittest
 from pathlib import Path
 
 
@@ -9,18 +10,23 @@ assert spec.loader is not None
 spec.loader.exec_module(mod)
 
 
-def test_micro32_command_is_fixed_and_non_shell():
-    repo = Path("/tmp/repo")
-    quarantine = Path("/tmp/quarantine")
-    command = mod.build_command(repo, quarantine)
-    assert command[0] == mod.sys.executable
-    assert command[1] == "/tmp/repo/local/dore-local/theology-training-poc.py"
-    assert command[2:] == [
-        "--quarantine", "/tmp/quarantine",
-        "--size", "32",
-        "--execute",
-    ]
-    assert "shell" not in " ".join(command).lower()
-    assert "64" not in command
-    assert "128" not in command
-    assert "256" not in command
+class TheologyTrainingMicro32Test(unittest.TestCase):
+    def test_micro32_command_is_fixed_and_non_shell(self):
+        repo = Path("/tmp/repo")
+        quarantine = Path("/tmp/quarantine")
+        command = mod.build_command(repo, quarantine)
+        self.assertEqual(command[0], mod.sys.executable)
+        self.assertEqual(command[1], "/tmp/repo/local/dore-local/theology-training-poc.py")
+        self.assertEqual(command[2:], [
+            "--quarantine", "/tmp/quarantine",
+            "--size", "32",
+            "--execute",
+        ])
+        self.assertNotIn("shell", " ".join(command).lower())
+        self.assertNotIn("64", command)
+        self.assertNotIn("128", command)
+        self.assertNotIn("256", command)
+
+
+if __name__ == "__main__":
+    unittest.main()
