@@ -1,7 +1,7 @@
 """Minimal, dependency-free Westside Context compiler and local retriever.
 
-Design rule: canonical Markdown remains the source of truth. This module creates a
-small derived SQLite projection; it never writes back to the canonical architecture.
+Canonical Markdown remains the source of truth. This module creates a derived,
+read-only SQLite projection and never writes back to the architecture document.
 """
 from __future__ import annotations
 
@@ -13,7 +13,9 @@ from pathlib import Path
 
 SCHEMA_VERSION = 1
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+?)\s*$")
+STRUCTURAL_BULLET_RE = re.compile(r"^-\s+(.+?)\s+[—–-]\s+(.+)$")
 CJK_RE = re.compile(r"[\u3400-\u9fff]+")
+CANONICAL_MARKER = "> Canonical master index for Living Water Westside Watch"
 
 
 @dataclass(frozen=True)
@@ -40,32 +42,63 @@ def _slug(value: str) -> str:
 
 
 def compile_markdown(markdown: str, source_path: str = "") -> list[ContextNode]:
-    """Compile headings while indexing only each section's direct text.
+    """Compile Markdown plus canonical structural bullets into context nodes.
 
-    Hierarchy is represented by parent_id, so parent nodes do not duplicate every
-    descendant's words. This keeps retrieval specific while ancestor context remains
-    recoverable through ContextPacket.
+    The canonical master file expresses Journal columns as top-level bullets rather
+    than Markdown headings. In canonical mode those bullets become derived child
+    nodes so Doré can retrieve a column such as Emmaus without changing the source
+    document. Indented bullets remain evidence inside their parent column; they do
+    not become competing structural nodes.
     """
     source_sha = hashlib.sha256(markdown.encode("utf-8")).hexdigest()
     lines = markdown.splitlines()
+    canonical_mode = CANONICAL_MARKER in markdown
     headings: list[tuple[int, int, str]] = []
     for line_no, line in enumerate(lines):
         match = HEADING_RE.match(line)
         if match:
-            headings.append((line_no, len(match.group(1)), match.group(2)))
+            title = match.group(2)
+            if canonical_mode and len(match.group(1)) == 1 and title == "MASTER SITE ARCHITECTURE":
+                title = "Living Water Westside Watch"
+            headings.append((line_no, len(match.group(1)), title))
+
     nodes: list[ContextNode] = []
     stack: list[tuple[int, str]] = []
-    for ordinal, (start, level, title) in enumerate(headings):
-        # Searchable content stops at the next heading of any level. Structural
-        # descendants remain available via parent_id rather than copied into content.
-        end = headings[ordinal + 1][0] if ordinal + 1 < len(headings) else len(lines)
+    heading_nodes: list[tuple[int, int, ContextNode]] = []
+    ordinal = 0
+    for idx, (start, level, title) in enumerate(headings):
+        end = headings[idx + 1][0] if idx + 1 < len(headings) else len(lines)
         while stack and stack[-1][0] >= level:
             stack.pop()
         parent_id = stack[-1][1] if stack else None
-        node_id = f"{_slug(title)}-{ordinal + 1:04d}"
+        ordinal += 1
+        node_id = f"{_slug(title)}-{ordinal:04d}"
         content = "\n".join(lines[start:end]).strip()
-        nodes.append(ContextNode(node_id, title, level, parent_id, content, source_path, source_sha, ordinal))
+        node = ContextNode(node_id, title, level, parent_id, content, source_path, source_sha, ordinal - 1)
+        nodes.append(node)
+        heading_nodes.append((start, end, node))
         stack.append((level, node_id))
+
+    if canonical_mode:
+        # Promote only unindented descriptive bullets (`- Name — description`).
+        # Their indented children stay within the bullet's evidence block.
+        promoted: list[ContextNode] = []
+        for start, end, parent in heading_nodes:
+            bullet_starts: list[tuple[int, re.Match[str]]] = []
+            for line_no in range(start + 1, end):
+                match = STRUCTURAL_BULLET_RE.match(lines[line_no])
+                if match:
+                    bullet_starts.append((line_no, match))
+            for bidx, (line_no, match) in enumerate(bullet_starts):
+                block_end = bullet_starts[bidx + 1][0] if bidx + 1 < len(bullet_starts) else end
+                title = match.group(1).strip().strip("*`")
+                ordinal += 1
+                node_id = f"{_slug(title)}-{ordinal:04d}"
+                content = "\n".join(lines[line_no:block_end]).strip()
+                promoted.append(ContextNode(node_id, title, min(parent.level + 1, 6), parent.node_id, content, source_path, source_sha, ordinal - 1))
+        nodes.extend(promoted)
+
+    nodes.sort(key=lambda n: n.ordinal)
     return nodes
 
 
@@ -88,8 +121,7 @@ def build_index(markdown: str, db: sqlite3.Connection, source_path: str = "") ->
     source_sha = hashlib.sha256(markdown.encode("utf-8")).hexdigest()
     with db:
         initialize(db); db.execute("DELETE FROM context_fts"); db.execute("DELETE FROM context_nodes")
-        db.executemany("""INSERT INTO context_nodes(node_id,title,level,parent_id,content,source_path,source_sha256,ordinal) VALUES (?,?,?,?,?,?,?,?)""",
-                       [(n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal) for n in nodes])
+        db.executemany("INSERT INTO context_nodes(node_id,title,level,parent_id,content,source_path,source_sha256,ordinal) VALUES (?,?,?,?,?,?,?,?)",[(n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal) for n in nodes])
         db.executemany("INSERT INTO context_fts(node_id,title,content) VALUES (?,?,?)",[(n.node_id,n.title,n.content) for n in nodes])
         db.execute("INSERT OR REPLACE INTO context_meta(key,value) VALUES('schema_version',?)",(str(SCHEMA_VERSION),))
         db.execute("INSERT OR REPLACE INTO context_meta(key,value) VALUES('source_sha256',?)",(source_sha,))
@@ -126,12 +158,9 @@ def _fallback_terms(query:str)->list[str]:
 
 
 def search(db:sqlite3.Connection,query:str,limit:int=8)->list[ContextNode]:
-    """FTS5-first retrieval with deterministic mixed-CJK fallback."""
     if not query.strip() or limit<1:return []
     try:
-        rows=db.execute("""SELECT n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal
-                           FROM context_fts f JOIN context_nodes n ON n.node_id=f.node_id
-                           WHERE context_fts MATCH ? ORDER BY bm25(context_fts) LIMIT ?""",(query,limit)).fetchall()
+        rows=db.execute("SELECT n.node_id,n.title,n.level,n.parent_id,n.content,n.source_path,n.source_sha256,n.ordinal FROM context_fts f JOIN context_nodes n ON n.node_id=f.node_id WHERE context_fts MATCH ? ORDER BY bm25(context_fts) LIMIT ?",(query,limit)).fetchall()
     except sqlite3.OperationalError: rows=[]
     if rows:return _rows_to_nodes(rows)
     terms=_fallback_terms(query)
@@ -141,7 +170,7 @@ def search(db:sqlite3.Connection,query:str,limit:int=8)->list[ContextNode]:
         like=f"%{term}%"
         rows=db.execute("SELECT node_id,title,level,parent_id,content,source_path,source_sha256,ordinal FROM context_nodes WHERE title LIKE ? OR content LIKE ?",(like,like)).fetchall()
         for row in rows:
-            node=ContextNode(*row); title_match=int(term.casefold() in node.title.casefold()); matched,title_score,_=candidates.get(node.node_id,(0,0,node)); candidates[node.node_id]=(matched+1,title_score+title_match,node)
+            node=ContextNode(*row);title_match=int(term.casefold() in node.title.casefold());matched,title_score,_=candidates.get(node.node_id,(0,0,node));candidates[node.node_id]=(matched+1,title_score+title_match,node)
     ranked=sorted(candidates.values(),key=lambda item:(-item[0],-item[1],-item[2].level,item[2].ordinal))
     return [item[2] for item in ranked[:limit]]
 
