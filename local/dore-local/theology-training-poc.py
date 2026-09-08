@@ -172,6 +172,9 @@ def main() -> None:
         if not mlx_vlm_available():
             die("isolated MLX-VLM training environment is not prepared")
         env = os.environ.copy()
+        hf_home = CACHE_ROOT / "hf"
+        env["HF_HOME"] = str(hf_home)
+        env["HF_HUB_CACHE"] = str(hf_home / "hub")
         env["HF_HUB_OFFLINE"] = "1"
         env["TRANSFORMERS_OFFLINE"] = "1"
         started = time.monotonic()
