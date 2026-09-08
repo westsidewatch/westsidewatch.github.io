@@ -40,10 +40,11 @@ def test_native_health() -> None:
     result = HOST.route_payload({"action": "native.health"})
     assert result["ok"] is True
     assert result["protocol"] == "dore.a2a/1"
-    assert result["transport"] == "firefox-native-messaging"
+    assert result["transport"] == "local-routing-host"
     assert result["resident"] is False
     assert result["paid_runtime"] is False
     assert "knowledge.substrates.install" in result["production_capabilities"]
+    assert "theology.training.readiness" in result["production_capabilities"]
 
 
 def test_carrier_identity_survives_adapter() -> None:
@@ -62,7 +63,7 @@ def test_legacy_stage2_compatibility() -> None:
     result = HOST.route_payload({"command": "/dore stage2"})
     assert result["status"] == "PASS"
     assert result["capability"] == "design2.stage2.acceptance"
-    assert result["transport"] == "firefox-native-messaging"
+    assert result["transport"] == "local-routing-host"
 
 
 def test_process_loop_one_message() -> None:
@@ -80,7 +81,7 @@ def main() -> None:
     test_carrier_identity_survives_adapter()
     test_legacy_stage2_compatibility()
     test_process_loop_one_message()
-    print("DORÉ Native Messaging host: PASS")
+    print("DORÉ local routing host: PASS")
 
 
 if __name__ == "__main__":
