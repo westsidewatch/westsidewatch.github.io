@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
-"""DORÉ Firefox Native Messaging host: on-demand, zero-cloud local control plane."""
+"""DORÉ local routing host: on-demand, zero-cloud local control plane."""
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
-from typing import Any,BinaryIO
 PROTOCOL="dore.a2a/1";SERVICE="dore-a2a-native";HOST_NAME="ca.dore.companion";LEGACY_CAPABILITY="design2.stage2.acceptance";MAX_MESSAGE_BYTES=1024*1024;CARRIER_ID_KEY="__dore_transport_id"
 ROOT=Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2]).expanduser().resolve()
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");BUS=_load("capability_bus")
+ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");BUS=_load("capability_bus")
 def _read_exact(stream,size):
  b=b""
  while len(b)<size:
@@ -34,12 +33,15 @@ def _with_id(req,res):
 def health_payload():
  production=[x["id"] for x in BUS.discover(PRODUCTION) if x.get("callable")]
  maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()))
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"firefox-native-messaging","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance))}
+ theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()))
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology))}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "")
  if cap in getattr(MAINTENANCE,"CAPABILITIES",set()):
   return _with_id(payload,MAINTENANCE.execute(cap,payload.get("args") or {}))
+ if cap in getattr(THEOLOGY,"CAPABILITIES",set()):
+  return _with_id(payload,THEOLOGY.execute(cap,payload.get("args") or {}))
  descriptor=BUS.resolve(cap,PRODUCTION) if cap else None
  if descriptor and descriptor.get("callable"):
   return _with_id(payload,BUS.call(cap,payload.get("args") or {},PRODUCTION,caller_product=payload.get("caller_product")))
@@ -47,8 +49,8 @@ def route_payload(payload):
  except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}})
  if typed is not None:return _with_id(payload,typed)
  cmd=str(payload.get("command") or payload.get("text") or "").strip().lower()
- if cap==LEGACY_CAPABILITY or cmd in {"/dore stage2","dore stage2"}:return _with_id(payload,{"ok":True,"service":SERVICE,"protocol":PROTOCOL,"capability":LEGACY_CAPABILITY,"available":True,"status":"PASS","diagnostic":True,"transport":"firefox-native-messaging"})
- return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"unsupported_payload","message":"unsupported Companion payload"}})
+ if cap==LEGACY_CAPABILITY or cmd in {"/dore stage2","dore stage2"}:return _with_id(payload,{"ok":True,"service":SERVICE,"protocol":PROTOCOL,"capability":LEGACY_CAPABILITY,"available":True,"status":"PASS","diagnostic":True,"transport":"local-routing-host"})
+ return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"unsupported_payload","message":"unsupported local routing payload"}})
 def serve(stdin=None,stdout=None):
  source=stdin or sys.stdin.buffer;sink=stdout or sys.stdout.buffer
  while True:
