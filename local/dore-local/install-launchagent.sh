@@ -12,13 +12,15 @@ DOMAIN="gui/$UIDN"
 mkdir -p "$HOME/Library/LaunchAgents" "$DORE/logs"
 touch "$DORE/logs/local-api.log" "$DORE/logs/local-api.err.log" "$DORE/logs/updater.log" "$DORE/logs/updater.err.log"
 PY="$(command -v python3)"
+ENTRY="$ROOT/local/dore-local/dore_local_guarded.py"
 [ -f "$ROOT/local/dore-local/dore_local.py" ] || { echo "ERROR: canonical Doré Local source missing at $ROOT" >&2; exit 2; }
+[ -f "$ENTRY" ] || { echo "ERROR: guarded Doré Local entrypoint missing at $ENTRY" >&2; exit 3; }
 cat > "$PLIST" <<EOF
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0"><dict>
 <key>Label</key><string>$LABEL</string>
-<key>ProgramArguments</key><array><string>$PY</string><string>$ROOT/local/dore-local/dore_local.py</string></array>
+<key>ProgramArguments</key><array><string>$PY</string><string>$ENTRY</string></array>
 <key>EnvironmentVariables</key><dict>
  <key>DORE_LOCAL_HOME</key><string>$DORE</string>
  <key>DORE_LOCAL_HOST</key><string>127.0.0.1</string>
@@ -26,6 +28,7 @@ cat > "$PLIST" <<EOF
  <key>DORE_LOCAL_MODEL</key><string>gemma4:e4b</string>
  <key>OLLAMA_BASE_URL</key><string>http://127.0.0.1:11434</string>
  <key>DORE_REPO_ROOT</key><string>$ROOT</string>
+ <key>DORE_THEOLOGY_RETRIES</key><string>1</string>
 </dict>
 <key>RunAtLoad</key><true/>
 <key>KeepAlive</key><true/>
@@ -71,5 +74,6 @@ launchctl print "$DOMAIN/$UPDATER_LABEL" >/dev/null 2>&1 || { echo "ERROR: Doré
 HEALTH="$(curl -fsS http://127.0.0.1:8788/health)" || { echo "ERROR: Doré Local health check failed" >&2; tail -80 "$DORE/logs/local-api.err.log" >&2 2>/dev/null || true; exit 5; }
 echo "$HEALTH"
 echo DORE_LOCAL_CANONICAL_ROOT="$ROOT"
+echo DORE_LOCAL_GUARDED_ENTRYPOINT="$ENTRY"
 echo DORE_LOCAL_AUTOSTART_PASS
 echo DORE_LOCAL_UPDATER_REGISTERED
