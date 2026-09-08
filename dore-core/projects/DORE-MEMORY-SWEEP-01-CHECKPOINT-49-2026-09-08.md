@@ -5,7 +5,8 @@ Status: ACTIVE_PARALLEL
 P01 impact: NONE
 Parent: `DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md`
 Canonical register: `DORÉ-MASTER-WORK-REGISTER.md`
-Linked missing-evidence ledger: `DORÉ-MISSING-EVIDENCE-REGISTER.md`
+Evidence ledger: `DORÉ-COMMON-SUBSTRATE-EVIDENCE-LEDGER-2026-09-08.md`
+Linked missing-evidence register: `DORÉ-MISSING-EVIDENCE-REGISTER.md`
 
 ## Bounded evidence reviewed
 
@@ -27,7 +28,7 @@ Linked missing-evidence ledger: `DORÉ-MISSING-EVIDENCE-REGISTER.md`
 
 ## Missing-evidence action
 
-Record a bounded missing-evidence item requiring one persisted successful `dore.common-substrate-acceptance.v2` run with explicit per-workspace results for scripture/design/video/code. That future proof may promote only the acceptance claim it actually demonstrates.
+The linked Common Substrate evidence ledger records the bounded missing-proof requirement: one persisted successful `dore.common-substrate-acceptance.v2` run with explicit per-workspace results for scripture/design/video/code. That future proof may promote only the acceptance claim it actually demonstrates.
 
 This is ordinary verification debt and is neither `HUMAN_DECISION_BLOCKED` nor `ENVIRONMENT_BLOCKED`.
 
