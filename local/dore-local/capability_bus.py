@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 from urllib import request
 
+from dore_core.retrieval.living import retrieve as living_retrieve
 from dore_core.substrates.longmemory import LongMemoryConfig, available as longmemory_available, recall as longmemory_recall
 from dore_core.substrates.qmd import QMDConfig, available as qmd_available, search as qmd_search
 
@@ -48,9 +49,10 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "service": "retrieval",
         "status": "existing",
         "execution": "core-adapter",
-        "provider": "qmd-local",
+        "provider": "dore-search",
         "load": "deferred",
         "authority": False,
+        "result": "dore-search-results",
     },
     "knowledge.recall": {
         "id": "knowledge.recall",
@@ -126,11 +128,51 @@ def _fuzzy_search(args: dict[str, Any]) -> dict[str, Any]:
     if not query:
         return {"ok": False, "status": "failed", "error": {"code": "invalid_args", "message": "query or text is required"}}
     if not qmd_available():
-        return {"ok": False, "status": "not_ready", "capability": "context.fuzzy-search", "authority": False, "error": {"code": "substrate_unavailable", "message": "qmd is not installed on this runtime"}}
-    semantic = bool(args.get("semantic", True))
-    deep = bool(args.get("deep", False))
+        return {"ok": False, "status": "not_ready", "capability": "context.fuzzy-search", "authority": False, "error": {"code": "substrate_unavailable", "message": "local retrieval substrate is not installed on this runtime"}}
+
     collection = str(args.get("collection") or os.environ.get("DORE_QMD_COLLECTION") or "").strip() or None
-    return qmd_search(query, QMDConfig(collection=collection), semantic=semantic, deep=deep, limit=int(args.get("limit") or 8))
+    qmd_config = QMDConfig(collection=collection)
+    db = Path(os.environ.get("DORE_LONGMEMORY_DB") or (Path.home() / ".dore" / "knowledge" / "longmemory.db"))
+    project = str(args.get("project") or os.environ.get("DORE_LONGMEMORY_PROJECT") or "dore")
+    memory_config = LongMemoryConfig(db=db, project=project)
+
+    def search_documents(text: str, *, semantic: bool, deep: bool, limit: int) -> dict[str, Any]:
+        return qmd_search(text, qmd_config, semantic=semantic, deep=deep, limit=limit)
+
+    def recall_current(text: str, *, mode: str) -> dict[str, Any]:
+        if not longmemory_available():
+            return {"ok": False, "authority": False, "error": "memory_unavailable"}
+        return longmemory_recall(text, memory_config, mode=mode)
+
+    internal = living_retrieve(
+        query,
+        qmd_search=search_documents,
+        memory_recall=recall_current,
+        explicit_search=bool(args.get("explicit_search", False)),
+        deep_requested=bool(args.get("deep", False)),
+        limit=int(args.get("limit") or 8),
+    )
+    plan = internal["plan"]
+    return {
+        "ok": internal.get("ok", False),
+        "status": "completed" if internal.get("ok", False) else "failed",
+        "capability": "context.fuzzy-search",
+        "query": query,
+        "results": internal.get("results", []),
+        "retrieval": {
+            "lexical": plan.lexical,
+            "semantic": plan.semantic,
+            "deep": plan.deep,
+            "memory_recall": plan.recall_memory,
+            "reason": plan.reason,
+        },
+        "authority": False,
+        "large_model_invoked": False,
+        "core_route": {
+            "capability": "context.fuzzy-search",
+            "transport": "core-adapter",
+        },
+    }
 
 
 def _knowledge_recall(args: dict[str, Any]) -> dict[str, Any]:
