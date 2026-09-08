@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any, Callable
 
+from dore_core.bible.context_policy import SearchContextPolicy
+from dore_core.bible.result import apply_bible_context_result_policy
 from dore_core.retrieval.results import merge_results
 
 
@@ -85,6 +87,21 @@ def plan(text: str, *, explicit_search: bool = False, deep_requested: bool = Fal
     return RetrievalPlan(True, False, False, False, "passive natural-language reflex: BM25 first")
 
 
+def _empty_response(reason: str, policy: SearchContextPolicy) -> dict[str, Any]:
+    return {
+        "ok": True,
+        "plan": RetrievalPlan(False, False, False, False, reason),
+        "retrieval_query": "",
+        "results": [],
+        "qmd": None,
+        "memory": None,
+        "evidence": [],
+        "context_policy": policy.to_dict(),
+        "authority": False,
+        "large_model_invoked": False,
+    }
+
+
 def retrieve(
     text: str,
     *,
@@ -93,34 +110,42 @@ def retrieve(
     explicit_search: bool = False,
     deep_requested: bool = False,
     limit: int = 6,
+    host: str = "unknown",
+    mode: str = "prepare",
+    embedded: bool = False,
 ) -> dict[str, Any]:
+    """Retrieve with product context while preserving the existing call contract.
+
+    Defaults keep legacy behavior. Prepare permits ambient retrieval; Live only permits
+    explicit/deep retrieval; Present performs no retrieval at all. Embedded Multiwrite
+    inside ONE suppresses ONE self-results after provider-neutral normalization.
+    """
+    policy = SearchContextPolicy(host=host, mode=mode, embedded=embedded)
+    if not policy.search_enabled:
+        return _empty_response("present mode: search disabled by context policy", policy)
+    if not policy.ambient_enabled and not explicit_search and not deep_requested:
+        return _empty_response("live mode: ambient retrieval disabled by context policy", policy)
+
     p = plan(text, explicit_search=explicit_search, deep_requested=deep_requested)
     if not p.lexical:
-        return {
-            "ok": True,
-            "plan": p,
-            "retrieval_query": "",
-            "results": [],
-            "qmd": None,
-            "memory": None,
-            "evidence": [],
-            "authority": False,
-            "large_model_invoked": False,
-        }
+        response = _empty_response(p.reason, policy)
+        response["plan"] = p
+        return response
 
     retrieval_query = text if p.semantic or p.deep or explicit_search else _passive_lexical_query(text)
     qmd = qmd_search(retrieval_query, semantic=p.semantic, deep=p.deep, limit=limit)
     evidence: list[dict[str, Any]] = []
     if qmd.get("ok"):
-        evidence.append({"source": "qmd", "payload": qmd})
+        evidence.append({"source": "document-retrieval", "payload": qmd})
 
     memory = None
     if p.recall_memory and memory_recall is not None:
         memory = memory_recall(text, mode="strict")
         if memory.get("ok"):
-            evidence.append({"source": "longmemory", "payload": memory})
+            evidence.append({"source": "personal-memory", "payload": memory})
 
-    results = merge_results(qmd, memory, limit=limit)
+    normalized = merge_results(qmd, memory, limit=limit)
+    results = apply_bible_context_result_policy(normalized, policy)
     return {
         "ok": bool(results) or bool(evidence) or bool(qmd.get("ok")),
         "plan": p,
@@ -129,6 +154,7 @@ def retrieve(
         "qmd": qmd,
         "memory": memory,
         "evidence": evidence,
+        "context_policy": policy.to_dict(),
         "authority": False,
         "large_model_invoked": False,
     }

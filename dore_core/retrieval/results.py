@@ -6,7 +6,7 @@ preserved as source kind/locator/lane while substrate/provider names stay intern
 from __future__ import annotations
 
 import hashlib
-from typing import Any, Iterable
+from typing import Any
 
 
 def _as_items(payload: Any) -> list[dict[str, Any]]:
@@ -56,16 +56,25 @@ def _normalize_item(item: dict[str, Any], *, source_kind: str, lane: str, fallba
     title = _text(_pick(item, "title", "name", "heading", "label"))
     snippet = _text(_pick(item, "snippet", "text", "content", "body", "summary", "excerpt", "memory"))
     locator = _text(_pick(item, "uri", "url", "path", "file", "source", "locator", "id"))
+    semantic_kind = _text(_pick(item, "source_kind", "kind", "source_type")).lower() or source_kind
+    source_ref = _text(_pick(item, "source_ref", "reference", "ref")) or None
+    relation = _text(_pick(item, "relation", "relationship")) or None
+    evidence_status = _text(item.get("evidence_status")).lower() or None
+    canonical_reference = item.get("canonical_reference") if isinstance(item.get("canonical_reference"), dict) else None
+    actions = item.get("actions") if isinstance(item.get("actions"), list) else None
     if not title and locator:
         title = locator.rsplit("/", 1)[-1]
     if not snippet and title:
         snippet = title
-    return {
+    out = {
         "id": _identity(title, snippet, locator),
         "title": title,
         "snippet": snippet,
         "locator": locator or None,
         "score": _score(item, fallback_score),
+        "source_kind": semantic_kind,
+        "source_ref": source_ref,
+        "relation": relation,
         "provenance": [{
             "kind": source_kind,
             "locator": locator or None,
@@ -73,6 +82,13 @@ def _normalize_item(item: dict[str, Any], *, source_kind: str, lane: str, fallba
             "authority": False,
         }],
     }
+    if evidence_status:
+        out["evidence_status"] = evidence_status
+    if canonical_reference is not None:
+        out["canonical_reference"] = canonical_reference
+    if actions is not None:
+        out["actions"] = list(actions)
+    return out
 
 
 def _dedupe_key(item: dict[str, Any]) -> str:
