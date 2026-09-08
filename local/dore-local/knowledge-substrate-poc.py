@@ -46,35 +46,47 @@ def main():
     add = run([str(qmd), "collection", "add", str(notes), "--name", "dore-poc"], repo, 120, env)
     update = run([str(qmd), "update"], repo, 120, env)
     search = run([str(qmd), "search", "嗎哪 曠野", "-c", "dore-poc", "--json", "-n", "5"], repo, 120, env)
+    qmd_search_hit = search["returncode"] == 0 and "manna.md" in search["stdout"] and "嗎哪與曠野" in search["stdout"]
     evidence["qmd"] = {
         "collection_add_rc": add["returncode"],
+        "collection_add_stdout": add["stdout"][-2000:],
+        "collection_add_stderr": add["stderr"][-2000:],
         "update_rc": update["returncode"],
         "search_rc": search["returncode"],
         "search_stdout": search["stdout"][-4000:],
+        "search_hit": qmd_search_hit,
         "lane": "bm25",
         "large_model_invoked": False,
         "authority": False,
     }
 
-    # LongMemory POC: prove local CLI and reserve an isolated SQLite path.
-    # No Doré canonical knowledge is ingested at POC stage.
+    # LongMemory POC: prove the local CLI surface is callable and reserve an
+    # isolated SQLite path. The current `lom` CLI reports help/version through
+    # a non-zero status, so acceptance is based on the stable command surface,
+    # not on conventional help exit-code assumptions.
     lm_root = data / "longmemory" / "poc"
     lm_root.mkdir(parents=True, exist_ok=True)
     db = lm_root / "dore-poc.db"
     version = run([str(longmemory), "--version"], repo, 30)
-    help_run = run([str(longmemory), "recall", "--help"], repo, 30)
+    help_run = run([str(longmemory), "--help"], repo, 30)
+    lm_text = "\n".join([version["stdout"], version["stderr"], help_run["stdout"], help_run["stderr"]]).lower()
+    lm_cli_surface = "longmemory cli" in lm_text and "add <text>" in lm_text and "query <text>" in lm_text
     evidence["longmemory"] = {
         "version_rc": version["returncode"],
         "version": version["stdout"].strip() or version["stderr"].strip(),
-        "recall_help_rc": help_run["returncode"],
+        "help_rc": help_run["returncode"],
+        "cli_surface_detected": lm_cli_surface,
         "db": str(db),
         "db_isolated": True,
         "canonical_ingest": False,
         "authority": False,
     }
 
-    qmd_ok = add["returncode"] == 0 and update["returncode"] == 0 and search["returncode"] == 0 and "manna.md" in search["stdout"]
-    lm_ok = version["returncode"] == 0 and help_run["returncode"] == 0
+    # Collection creation is intentionally idempotent: a repeated POC may see
+    # "already exists" while search/update continue to work. Actual retrieval
+    # behavior is therefore the acceptance signal.
+    qmd_ok = update["returncode"] == 0 and qmd_search_hit
+    lm_ok = lm_cli_surface
     evidence["ok"] = bool(qmd_ok and lm_ok)
     evidence["acceptance"] = {
         "qmd_bm25_local": qmd_ok,
