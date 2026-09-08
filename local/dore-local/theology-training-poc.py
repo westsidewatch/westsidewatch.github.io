@@ -20,7 +20,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-DEFAULT_MODEL = os.environ.get("DORE_LOCAL_MODEL", "gemma4:e4b")
+DEFAULT_TRAINING_MODEL = os.environ.get("DORE_THEOLOGY_MLX_MODEL")
 SIZES = (32, 64, 128, 256)
 
 
@@ -63,12 +63,18 @@ def verify_dataset(root: Path, size: int) -> dict:
 
 
 def mlx_available() -> bool:
-    return shutil.which("mlx_lm.lora") is not None or shutil.which("mlx_lm") is not None
+    return shutil.which("mlx_lm.lora") is not None or importable("mlx_lm")
+
+
+def importable(name: str) -> bool:
+    try:
+        __import__(name)
+        return True
+    except Exception:
+        return False
 
 
 def build_command(model: str, train_file: str, valid_file: str, adapter_dir: Path, iters: int) -> list[str]:
-    # mlx-lm CLI accepts a dataset directory rather than arbitrary split names.
-    # Caller prepares an ephemeral stage directory containing train/valid/test.jsonl.
     return [
         sys.executable, "-m", "mlx_lm.lora",
         "--model", model,
@@ -99,11 +105,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--quarantine", required=True, help="external isolated dataset directory")
     ap.add_argument("--size", type=int, choices=SIZES, default=32)
-    ap.add_argument("--model", default=DEFAULT_MODEL)
+    ap.add_argument("--model", default=DEFAULT_TRAINING_MODEL, help="MLX model path/id; independent of DORE_LOCAL_MODEL")
     ap.add_argument("--work", default="/tmp/dore-theology-poc")
     ap.add_argument("--iters", type=int, default=80)
     ap.add_argument("--execute", action="store_true", help="actually invoke mlx-lm")
     args = ap.parse_args()
+
+    if not args.model:
+        die("MLX training model is not configured; set DORE_THEOLOGY_MLX_MODEL or --model")
 
     quarantine = Path(args.quarantine)
     require_quarantine(quarantine)
@@ -119,8 +128,9 @@ def main() -> None:
     command = build_command(args.model, str(stage / "train.jsonl"), str(stage / "valid.jsonl"), adapter, args.iters)
     report = {
         "ok": True,
-        "protocol": "dore.theology-training-poc/1",
-        "model": args.model,
+        "protocol": "dore.theology-training-poc/2",
+        "training_model": args.model,
+        "runtime_model": os.environ.get("DORE_LOCAL_MODEL", "gemma4:e4b"),
         "training_size": args.size,
         "quarantine": str(quarantine.resolve()),
         "canonical_ingest": False,
