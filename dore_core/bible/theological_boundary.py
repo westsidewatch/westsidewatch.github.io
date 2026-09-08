@@ -38,18 +38,16 @@ def christian_ministry_instruction(task:str)->str:
 
 
 def _prayer_has_christian_close(text:str)->bool:
-    """Positive admission test: require an explicitly Christian prayer close.
-
-    Positive validation avoids storing a contamination vocabulary in Core.
-    """
+    """Positive admission test for an explicitly Christian prayer close."""
     t=(text or '').strip()
     if not t:
         return False
-    close=t[-180:]
-    has_christ=(
-        bool(re.search(r'耶[穌稣].{0,10}基督',close,re.I))
-        or bool(re.search(r'Jesus\s+Christ',close,re.I))
-        or bool(re.search(r'in\s+(?:the\s+)?name\s+of\s+Jesus',close,re.I))
+    close=t[-220:]
+    has_christ=bool(
+        re.search(r'耶[穌稣](?:.{0,14}基督|.{0,14}(?:的)?名)',close,re.I)
+        or re.search(r'Jesus(?:\s+Christ)?(?:[’\']s)?\s+name',close,re.I)
+        or re.search(r'in\s+(?:the\s+)?name\s+of\s+(?:the\s+Lord\s+)?Jesus(?:\s+Christ)?',close,re.I)
+        or re.search(r'Jesus\s+Christ',close,re.I)
     )
     has_amen=bool(re.search(r'(?:阿們|阿们|Amen)[。.!！\s]*$',t,re.I))
     return has_christ and has_amen
