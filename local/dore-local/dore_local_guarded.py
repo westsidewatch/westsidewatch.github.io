@@ -33,6 +33,7 @@ _TASK_PATTERNS=(
     ('bible_teaching', re.compile(r'(?:查經|查经|聖經教導|圣经教导|Bible\s+(?:study|teaching))',re.I)),
 )
 _COMPARATIVE=re.compile(r'(?:比較|比较|對比|对比|歷史|历史|研究|介紹|介绍|compare|comparative|history|historical|research|describe)',re.I)
+_CJK=re.compile(r'[\u3400-\u9fff]')
 
 
 def classify_ministry_task(text:str)->tuple[str|None,bool]:
@@ -67,6 +68,25 @@ def _with_authority(messages, instruction:str):
     return out
 
 
+def _safe_prayer_fallback(request:str)->str:
+    """Return a small positive-authority prayer without reusing rejected model text.
+
+    The fallback is intentionally fixed and contamination-free. User text is used only to
+    select language and is never interpolated into the devotional body.
+    """
+    if _CJK.search(request or ''):
+        return (
+            '天父，我們感謝祢賜下祢的話語。求祢使我們存謙卑受教的心，'
+            '在今天的查考與彼此分享中得著真理、智慧與愛，也使我們所學的能活在日常生活中。'
+            '奉主耶穌基督的名禱告，阿們。'
+        )
+    return (
+        'Heavenly Father, thank You for giving us Your Word. Give us humble and teachable hearts, '
+        'grant us truth, wisdom, and love as we study and share together, and help us live what we learn. '
+        'We pray in the name of Jesus Christ. Amen.'
+    )
+
+
 def guarded_ollama(messages):
     request=_current_request(messages)
     task,comparative=classify_ministry_task(request)
@@ -92,8 +112,13 @@ def guarded_ollama(messages):
         return candidate
 
     # Fail closed. No rejected candidate is returned, saved, or displayed.
+    # Prayer has a deterministic positive-authority fallback so the product remains usable
+    # even when the model repeatedly misses the admission contract.
     if task=='prayer':
-        return '我不能把這個候選禱告交付出去，因為它沒有通過基督教事工內容的權威邊界。請再試一次。'
+        fallback=_safe_prayer_fallback(request)
+        fallback_gate=christian_ministry_gate(fallback,task='prayer',comparative_context=False)
+        if fallback_gate.allowed:
+            return fallback
     return '這個候選內容沒有通過基督教事工內容的權威邊界，因此沒有交付。'
 
 

@@ -34,6 +34,7 @@ def test_guard_injects_authority_and_never_returns_failed_candidate(monkeypatch)
     out=mod.guarded_ollama([{'role':'system','content':'base'},{'role':'user','content':'請寫一篇禱告'}])
     assert out not in {'candidate without an admitted close','still not admitted'}
     assert 'CHRISTIAN MINISTRY AUTHORITY' in seen[0][0]['content']
+    assert mod.christian_ministry_gate(out,task='prayer').allowed
 
 
 def test_guard_returns_admitted_candidate(monkeypatch):
@@ -41,3 +42,12 @@ def test_guard_returns_admitted_candidate(monkeypatch):
     monkeypatch.setattr(mod,'_RAW_OLLAMA',lambda messages: good)
     out=mod.guarded_ollama([{'role':'system','content':'base'},{'role':'user','content':'請寫禱告'}])
     assert out==good
+
+
+def test_safe_fallback_is_bilingual_and_positive_authority():
+    zh=mod._safe_prayer_fallback('請寫禱告')
+    en=mod._safe_prayer_fallback('Please write a prayer')
+    assert mod.christian_ministry_gate(zh,task='prayer').allowed
+    assert mod.christian_ministry_gate(en,task='prayer').allowed
+    assert '耶穌基督' in zh
+    assert 'Jesus Christ' in en
