@@ -20,7 +20,10 @@ TITLE_PREFIX = "[DORÉ A2A]"
 CAP_RE = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
 MAX_COMMENT_BYTES = 60000
 LONG_CAPABILITIES = {"design.production.rollout", "search.local.repair", "wake.runtime.install"}
-CAPABILITY_TIMEOUTS = {"image.local.repair": 3900.0}
+CAPABILITY_TIMEOUTS = {
+    "context.fuzzy-search": 45.0,
+    "image.local.repair": 3900.0,
+}
 
 
 def fail(message: str) -> dict:
