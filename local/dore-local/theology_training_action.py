@@ -12,13 +12,14 @@ import subprocess
 import sys
 from pathlib import Path
 
-CAPABILITIES={"theology.training.readiness","theology.training.prepare","theology.training.stage32","theology.training.prefetch_model","theology.training.micro32"}
+CAPABILITIES={"theology.training.readiness","theology.training.prepare","theology.training.stage32","theology.training.prefetch_model","theology.training.micro32","theology.training.eval32"}
 SCRIPTS={
     "theology.training.readiness":("theology-training-readiness.py",90),
     "theology.training.prepare":("theology-training-prepare.py",2100),
     "theology.training.stage32":("theology-training-stage32.py",60),
     "theology.training.prefetch_model":("theology-training-prefetch-model.py",3700),
     "theology.training.micro32":("theology-training-micro32.py",7200),
+    "theology.training.eval32":("theology-training-eval32.py",3300),
 }
 
 
