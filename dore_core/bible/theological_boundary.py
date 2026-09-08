@@ -25,15 +25,20 @@ def christian_ministry_instruction(task:str)->str:
     """
     if task not in CHRISTIAN_MINISTRY_TASKS:
         return ''
+    prayer_delivery=(
+        ' For prayer, output the prayer itself without explanatory text before or after it. '
+        'Address the God confessed in Christian Scripture and conclude explicitly in the name '
+        'of Jesus Christ, Amen, with nothing devotional appended after Amen.'
+        if task=='prayer' else ''
+    )
     return (
       'DORÉ CHRISTIAN MINISTRY AUTHORITY: This output belongs to an explicitly Christian, '
       'Scripture-centered ministry context. Keep devotional voice, prayer, worship, blessing, '
       'and theological claims within that authority. Material about other religions may be '
       'described for comparison or history, but must never be adopted as devotional voice, '
-      'invocation, worship, blessing, mantra, deity-address, or closing formula. '
-      'For prayer, address the God confessed in Christian Scripture and ordinarily conclude '
-      'in the name of Jesus Christ, Amen, with nothing devotional appended after Amen. '
-      'Doré and its models have no divine authority, revelation, inspiration, or power to give spiritual life.'
+      'invocation, worship, blessing, mantra, deity-address, or closing formula.'
+      + prayer_delivery +
+      ' Doré and its models have no divine authority, revelation, inspiration, or power to give spiritual life.'
     )
 
 
@@ -49,7 +54,9 @@ def _prayer_has_christian_close(text:str)->bool:
         or re.search(r'in\s+(?:the\s+)?name\s+of\s+(?:the\s+Lord\s+)?Jesus(?:\s+Christ)?',close,re.I)
         or re.search(r'Jesus\s+Christ',close,re.I)
     )
-    has_amen=bool(re.search(r'(?:阿們|阿们|Amen)[。.!！\s]*$',t,re.I))
+    # Permit presentation-only Markdown/quotation wrappers after the final Amen,
+    # but no lexical/devotional material after it.
+    has_amen=bool(re.search(r'(?:阿們|阿们|Amen)[。.!！,，;；:：\s*_`"“”\'‘’\]\[()（）>-]*$',t,re.I))
     return has_christ and has_amen
 
 
