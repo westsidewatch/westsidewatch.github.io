@@ -11,6 +11,12 @@ spec.loader.exec_module(mod)
 
 
 class TheologyTrainingMicro32Test(unittest.TestCase):
+    def test_default_quarantine_is_isolated_cache(self):
+        text = str(mod.DEFAULT_QUARANTINE)
+        self.assertIn("Library/Caches/Dore/theology-training/quarantine-v1", text)
+        self.assertNotIn("Library/Application Support/Dore", text)
+        self.assertNotIn("/.dore", text)
+
     def test_micro32_command_is_fixed_and_non_shell(self):
         repo = Path("/tmp/repo")
         quarantine = Path("/tmp/quarantine")
