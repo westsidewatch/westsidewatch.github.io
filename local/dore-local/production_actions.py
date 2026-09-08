@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Bounded local production actions exposed to the DORÉ Native Messaging host."""
+"""Bounded local production actions exposed to the DORÉ local control plane."""
 from __future__ import annotations
 import json, os, subprocess, time
 from pathlib import Path
 from urllib import request
-CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install","core.substrate.acceptance","knowledge.substrates.install"}
+CAPABILITIES={"design.production.rollout","search.local.repair","image.local.repair","wake.runtime.install","core.substrate.acceptance","knowledge.substrates.install","search.production.index"}
 def _run(argv:list[str],cwd:Path|None=None,timeout:int=120,env:dict|None=None)->dict:
  child_env=os.environ.copy();child_env.update(env or {})
  try:
@@ -96,6 +96,16 @@ def knowledge_substrates_install(args=None):
   except Exception:evidence={"ok":False,"error":"invalid_poc_output","stdout_tail":run["stdout"][-4000:]}
  ok=bool(run["returncode"]==0 and evidence.get("ok") is True and evidence.get("authority") is False and evidence.get("offline_core") is True)
  return {"ok":ok,"status":"completed" if ok else "failed","capability":"knowledge.substrates.install","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"evidence":evidence,"install_tail":run["stdout"][-4000:],"stderr_tail":run["stderr"][-4000:]}
+def search_production_index(args=None):
+ repo=_repo();err=_sync(repo)
+ if err:return err
+ base=Path.home()/"Library"/"Application Support"/"Dore"/"local-ai";qmd=base/"bin"/"qmd";script=repo/"local"/"dore-local"/"search-production-index.py"
+ if not qmd.is_file():return {"ok":False,"status":"failed","capability":"search.production.index","error":{"code":"qmd_missing","message":str(qmd)}}
+ run=_run(["python3",str(script),"--repo",str(repo),"--qmd",str(qmd),"--data",str(base/"data")],repo,timeout=600)
+ try:evidence=json.loads(run["stdout"].splitlines()[-1])
+ except Exception:evidence={"ok":False,"error":"invalid_index_output","stdout_tail":run["stdout"][-4000:]}
+ ok=bool(run["returncode"]==0 and evidence.get("ok") is True and evidence.get("authority") is False)
+ return {"ok":ok,"status":"completed" if ok else "failed","capability":"search.production.index","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"evidence":evidence,"stderr_tail":run["stderr"][-3000:]}
 def execute(capability,args=None):
  if capability=="design.production.rollout":return design_production_rollout(args)
  if capability=="search.local.repair":return search_local_repair(args)
@@ -103,4 +113,5 @@ def execute(capability,args=None):
  if capability=="wake.runtime.install":return wake_runtime_install(args)
  if capability=="core.substrate.acceptance":return core_substrate_acceptance(args)
  if capability=="knowledge.substrates.install":return knowledge_substrates_install(args)
+ if capability=="search.production.index":return search_production_index(args)
  return {"ok":False,"status":"failed","error":{"code":"unsupported_production_action","message":capability}}
