@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Bounded A2A actions for Doré theology-alignment training readiness.
+"""Bounded A2A actions for Doré theology-alignment training.
 
-This module exposes only fixed local scripts. It does not accept shell commands, does not
-perform canonical ingest, and does not install packages or download models.
+Only fixed repository scripts are callable. No arbitrary command or path is accepted.
+Training artifacts live under the user cache or /tmp; nothing is canonically ingested.
 """
 from __future__ import annotations
 
@@ -12,54 +12,38 @@ import subprocess
 import sys
 from pathlib import Path
 
-CAPABILITIES={"theology.training.readiness"}
+CAPABILITIES={"theology.training.readiness","theology.training.prepare"}
+SCRIPTS={
+    "theology.training.readiness":("theology-training-readiness.py",90),
+    "theology.training.prepare":("theology-training-prepare.py",2100),
+}
 
 
 def _repo()->Path:
-    return Path(
-        os.environ.get("DORE_REPO_ROOT")
-        or os.environ.get("DORE_WORKTREE")
-        or Path.home()/"westsidewatch.github.io"
-    ).expanduser().resolve()
+    return Path(os.environ.get("DORE_REPO_ROOT") or os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
 
 
 def execute(capability:str,args=None):
     if capability not in CAPABILITIES:
         return {"ok":False,"status":"failed","error":{"code":"unsupported_action","message":capability}}
     repo=_repo()
-    script=repo/"local"/"dore-local"/"theology-training-readiness.py"
+    name,timeout=SCRIPTS[capability]
+    script=repo/"local"/"dore-local"/name
     if not script.is_file():
-        return {"ok":False,"status":"failed","error":{"code":"readiness_script_missing","message":str(script)}}
+        return {"ok":False,"status":"failed","error":{"code":"training_script_missing","message":str(script)}}
     try:
-        proc=subprocess.run(
-            [sys.executable,str(script)],
-            cwd=str(repo),
-            text=True,
-            capture_output=True,
-            timeout=60,
-            env=os.environ.copy(),
-        )
+        proc=subprocess.run([sys.executable,str(script)],cwd=str(repo),text=True,capture_output=True,timeout=timeout,env=os.environ.copy())
     except Exception as exc:
-        return {"ok":False,"status":"failed","error":{"code":"readiness_exception","message":str(exc)}}
+        return {"ok":False,"status":"failed","error":{"code":"training_action_exception","message":str(exc)}}
     if proc.returncode!=0:
-        return {
-            "ok":False,
-            "status":"failed",
-            "returncode":proc.returncode,
-            "stderr_tail":proc.stderr[-2000:],
-        }
+        return {"ok":False,"status":"failed","returncode":proc.returncode,"stderr_tail":proc.stderr[-3000:],"stdout_tail":proc.stdout[-3000:]}
     try:
         report=json.loads(proc.stdout)
     except Exception as exc:
-        return {
-            "ok":False,
-            "status":"failed",
-            "error":{"code":"invalid_readiness_json","message":str(exc)},
-            "stdout_tail":proc.stdout[-2000:],
-        }
+        return {"ok":False,"status":"failed","error":{"code":"invalid_training_json","message":str(exc)},"stdout_tail":proc.stdout[-3000:]}
     return {
         "ok":bool(report.get("ok")),
         "status":"completed" if report.get("ok") else "failed",
         "capability":capability,
-        "readiness":report,
+        "report":report,
     }
