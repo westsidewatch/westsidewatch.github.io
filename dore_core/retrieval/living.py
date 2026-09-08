@@ -32,12 +32,30 @@ _CJK_SENTENCE_CUES = (
     "的", "了", "是", "和", "與", "与", "在", "中", "裡", "里", "嗎", "吗", "呢", "為什麼", "为什么",
 )
 
+_PASSIVE_SEPARATORS = (
+    "裡的", "里的", "中的", "之中的", "之中", "當中的", "当中的", "裡面", "里面",
+)
+
 
 def _looks_like_cjk_phrase(q: str) -> bool:
     cjk_count = sum(1 for ch in q if "\u3400" <= ch <= "\u9fff")
     if cjk_count < 5:
         return False
     return any(cue in q for cue in _CJK_SENTENCE_CUES) or cjk_count >= 9
+
+
+def _passive_lexical_query(text: str) -> str:
+    """Reduce association prose to deterministic lexical terms without an AI model."""
+    q = " ".join(text.split())
+    reduced = q
+    for cue in sorted(_ASSOCIATION_CUES, key=len, reverse=True):
+        reduced = reduced.replace(cue, " ")
+    for separator in _PASSIVE_SEPARATORS:
+        reduced = reduced.replace(separator, " ")
+    for punctuation in "，。！？；：、,.!?;:（）()「」『』《》<>\"'":
+        reduced = reduced.replace(punctuation, " ")
+    reduced = " ".join(reduced.split())
+    return reduced if len(reduced) >= 2 else q
 
 
 def plan(text: str, *, explicit_search: bool = False, deep_requested: bool = False) -> RetrievalPlan:
@@ -49,16 +67,22 @@ def plan(text: str, *, explicit_search: bool = False, deep_requested: bool = Fal
 
     association_like = any(cue in q for cue in _ASSOCIATION_CUES)
     if association_like:
-        return RetrievalPlan(True, True, False, explicit_search, "association intent: hybrid without rerank")
+        if explicit_search:
+            return RetrievalPlan(True, True, False, True, "explicit association search: hybrid without rerank")
+        return RetrievalPlan(True, False, False, False, "passive association reflex: reduced BM25")
 
     if _looks_like_cjk_phrase(q):
-        return RetrievalPlan(True, True, False, explicit_search, "CJK natural-language phrase: hybrid without rerank")
+        if explicit_search:
+            return RetrievalPlan(True, True, False, True, "explicit CJK natural-language search: hybrid without rerank")
+        return RetrievalPlan(True, False, False, False, "passive CJK natural-language reflex: BM25 first")
 
     compact = len(q) <= 18 and len(q.split()) <= 3
     if compact:
         return RetrievalPlan(True, False, False, explicit_search, "compact query: BM25 first")
 
-    return RetrievalPlan(True, True, False, explicit_search, "natural-language query: hybrid without rerank")
+    if explicit_search:
+        return RetrievalPlan(True, True, False, True, "explicit natural-language search: hybrid without rerank")
+    return RetrievalPlan(True, False, False, False, "passive natural-language reflex: BM25 first")
 
 
 def retrieve(
@@ -75,6 +99,7 @@ def retrieve(
         return {
             "ok": True,
             "plan": p,
+            "retrieval_query": "",
             "results": [],
             "qmd": None,
             "memory": None,
@@ -83,7 +108,8 @@ def retrieve(
             "large_model_invoked": False,
         }
 
-    qmd = qmd_search(text, semantic=p.semantic, deep=p.deep, limit=limit)
+    retrieval_query = text if p.semantic or p.deep or explicit_search else _passive_lexical_query(text)
+    qmd = qmd_search(retrieval_query, semantic=p.semantic, deep=p.deep, limit=limit)
     evidence: list[dict[str, Any]] = []
     if qmd.get("ok"):
         evidence.append({"source": "qmd", "payload": qmd})
@@ -98,6 +124,7 @@ def retrieve(
     return {
         "ok": bool(results) or bool(evidence) or bool(qmd.get("ok")),
         "plan": p,
+        "retrieval_query": retrieval_query,
         "results": results,
         "qmd": qmd,
         "memory": memory,
