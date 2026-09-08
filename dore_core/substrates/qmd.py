@@ -6,12 +6,16 @@ reranking off unless deep=True, preserving the minimum-capability rule.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
 Runner = Callable[[list[str]], subprocess.CompletedProcess[str]]
+
+_MANAGED_BIN = Path.home() / "Library" / "Application Support" / "Dore" / "local-ai" / "bin" / "qmd"
 
 
 @dataclass(frozen=True)
@@ -20,8 +24,21 @@ class QMDConfig:
     binary: str = "qmd"
 
 
+def resolve_binary(binary: str = "qmd") -> str:
+    """Resolve Doré-managed QMD without relying on an interactive-shell PATH."""
+    if binary != "qmd":
+        return binary
+    configured = str(os.environ.get("DORE_QMD_BIN") or "").strip()
+    if configured and Path(configured).is_file():
+        return configured
+    if _MANAGED_BIN.is_file():
+        return str(_MANAGED_BIN)
+    return shutil.which("qmd") or "qmd"
+
+
 def available(binary: str = "qmd") -> bool:
-    return shutil.which(binary) is not None
+    resolved = resolve_binary(binary)
+    return Path(resolved).is_file() if resolved != binary or "/" in resolved else shutil.which(resolved) is not None
 
 
 def _run(argv: list[str]) -> subprocess.CompletedProcess[str]:
@@ -42,7 +59,7 @@ def search(query: str, config: QMDConfig = QMDConfig(), *, semantic: bool = Fals
     else:
         command = "search"
         lane = "bm25"
-    argv = [config.binary, command, query, "--json", "-n", str(limit)]
+    argv = [resolve_binary(config.binary), command, query, "--json", "-n", str(limit)]
     if config.collection:
         argv += ["-c", config.collection]
     if semantic and not deep:

@@ -6,6 +6,7 @@ LongMemory without transferring identity, authority, or product contracts to it.
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import subprocess
 from dataclasses import dataclass
@@ -13,6 +14,8 @@ from pathlib import Path
 from typing import Callable
 
 Runner = Callable[[list[str]], subprocess.CompletedProcess[str]]
+
+_MANAGED_BIN = Path.home() / "Library" / "Application Support" / "Dore" / "local-ai" / "bin" / "longmemory"
 
 
 @dataclass(frozen=True)
@@ -22,8 +25,21 @@ class LongMemoryConfig:
     binary: str = "longmemory"
 
 
+def resolve_binary(binary: str = "longmemory") -> str:
+    """Resolve Doré-managed LongMemory without relying on an interactive-shell PATH."""
+    if binary != "longmemory":
+        return binary
+    configured = str(os.environ.get("DORE_LONGMEMORY_BIN") or "").strip()
+    if configured and Path(configured).is_file():
+        return configured
+    if _MANAGED_BIN.is_file():
+        return str(_MANAGED_BIN)
+    return shutil.which("longmemory") or "longmemory"
+
+
 def available(binary: str = "longmemory") -> bool:
-    return shutil.which(binary) is not None
+    resolved = resolve_binary(binary)
+    return Path(resolved).is_file() if resolved != binary or "/" in resolved else shutil.which(resolved) is not None
 
 
 def _run(argv: list[str]) -> subprocess.CompletedProcess[str]:
@@ -35,7 +51,7 @@ def recall(query: str, config: LongMemoryConfig, *, mode: str = "strict", runner
         return {"ok": True, "results": [], "substrate": "longmemory", "authority": False}
     if mode not in {"strict", "historical", "associative", "world_grounded"}:
         raise ValueError("unsupported LongMemory recall mode")
-    argv = [config.binary, "recall", query, "--mode", mode, "--db", str(config.db), "--project", config.project, "--json"]
+    argv = [resolve_binary(config.binary), "recall", query, "--mode", mode, "--db", str(config.db), "--project", config.project, "--json"]
     result = runner(argv)
     if result.returncode != 0:
         return {"ok": False, "substrate": "longmemory", "authority": False, "error": result.stderr.strip() or "longmemory_failed"}
@@ -47,7 +63,7 @@ def recall(query: str, config: LongMemoryConfig, *, mode: str = "strict", runner
 
 
 def project_context(task: str, config: LongMemoryConfig, *, runner: Runner = _run) -> dict:
-    argv = [config.binary, "project", "context", task, "--db", str(config.db), "--project", config.project, "--json"]
+    argv = [resolve_binary(config.binary), "project", "context", task, "--db", str(config.db), "--project", config.project, "--json"]
     result = runner(argv)
     if result.returncode != 0:
         return {"ok": False, "substrate": "longmemory", "authority": False, "error": result.stderr.strip() or "longmemory_failed"}
