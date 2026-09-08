@@ -19,7 +19,8 @@ def command_output(cmd: list[str]) -> str | None:
 
 
 def main() -> None:
-    model = os.environ.get("DORE_LOCAL_MODEL", "gemma4:e4b")
+    runtime_model = os.environ.get("DORE_LOCAL_MODEL", "gemma4:e4b")
+    training_model = os.environ.get("DORE_THEOLOGY_MLX_MODEL")
     mlx_spec = importlib.util.find_spec("mlx_lm")
     mlx_version = None
     if mlx_spec is not None:
@@ -27,22 +28,39 @@ def main() -> None:
 
     ollama = shutil.which("ollama")
     ollama_models = command_output([ollama, "list"]) if ollama else None
+    training_model_path = None
+    training_model_local = False
+    if training_model:
+        candidate = os.path.expanduser(training_model)
+        if os.path.exists(candidate):
+            training_model_path = os.path.realpath(candidate)
+            training_model_local = True
 
     report = {
         "ok": True,
-        "protocol": "dore.theology-training-readiness/1",
+        "protocol": "dore.theology-training-readiness/2",
         "machine": platform.machine(),
         "macos": platform.mac_ver()[0],
-        "configured_model": model,
-        "configured_model_source": "DORE_LOCAL_MODEL" if os.environ.get("DORE_LOCAL_MODEL") else "bootstrap-default",
+        "runtime_model": runtime_model,
+        "runtime_model_source": "DORE_LOCAL_MODEL" if os.environ.get("DORE_LOCAL_MODEL") else "bootstrap-default",
+        "runtime_model_visible_in_ollama_list": bool(ollama_models and runtime_model in ollama_models),
+        "training_model": training_model,
+        "training_model_source": "DORE_THEOLOGY_MLX_MODEL" if training_model else None,
+        "training_model_local_path": training_model_path,
+        "training_model_local": training_model_local,
+        "training_model_configured": bool(training_model),
         "mlx_lm_installed": mlx_spec is not None,
         "mlx_lm_version": mlx_version,
         "ollama_installed": bool(ollama),
-        "configured_model_visible_in_ollama_list": bool(ollama_models and model in ollama_models),
         "paid_api_required": False,
         "canonical_ingest": False,
         "network_action_performed": False,
     }
+    report["training_ready"] = bool(
+        report["machine"] == "arm64"
+        and report["mlx_lm_installed"]
+        and report["training_model_configured"]
+    )
     print(json.dumps(report, ensure_ascii=False, indent=2))
 
 
