@@ -91,3 +91,15 @@ A bounded live-state recheck found no lifecycle transition since the 2026-09-04 
 - `reconciled_consolidated` remains `1`, confirming that the historical consolidated signal is still recognized while the three later signals remain unresolved.
 
 This strengthens, but does not change, the earlier classification: transport health is intact; active-signal aging/provenance remains `COMPLETED_REVISIT_CANDIDATE` debt under `RQ-001`; no regression, completion promotion, or blocker claim is justified. The smallest future proof remains a bounded stale-state policy plus signal-class provenance and explicit terminal-state evidence. P01 remains untouched.
+
+## Revalidation — 2026-09-08
+
+A second bounded live-state recheck again finds no lifecycle transition:
+
+- `sensory-active.json` is unchanged at the state level: the same three signals claimed on 2026-08-28 remain `RESEARCHING`, still have `brain_node: null`, and still lack an explicit terminal/aging disposition;
+- the fresh heartbeat at `2026-09-08T09:09:07.107Z` is healthy (`ok=true`), reports `changed=false`, and continues to surface the Search/conversation probe as `RESEARCHING`;
+- `reconciled_consolidated` remains `1`, so the historical consolidated signal continues to reconcile correctly while the later active signals remain unresolved.
+
+The aging interval is therefore now materially longer without evidence of progress, but the classification still does not change: this is **lifecycle/observability debt, not transport failure**. `RQ-001` remains the correct revisit home; priority remains dependency-safe/watchlist rather than an active blocker. The next proof remains an explicit stale-state policy, signal-class provenance, and bounded terminal-state behavior that cannot silently discard legitimate work or promote diagnostic fixtures into durable learning.
+
+No P01 subtitle runtime, deployment, audio/transcription dependency, credential, binding, blocker, or resume state was modified.
