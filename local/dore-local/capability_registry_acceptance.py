@@ -5,7 +5,9 @@ ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from capability_registry import discover,get
 registry=json.loads((ROOT/'dore-design'/'knowledge-lab'/'capabilities'/'registry.json').read_text(encoding='utf-8'))
+canonical=json.loads((ROOT/'dore-core'/'runtime'/'capability-registry.v1.json').read_text(encoding='utf-8'))
 assert registry['schema']=='dore.capability-registry.v1'
+assert canonical['schema']=='dore.capability-registry.v1'
 search_js=ROOT/'static'/'dore'/'dore-search.js'
 assert search_js.exists(),'existing static/dore/dore-search.js must remain present'
 text=search_js.read_text(encoding='utf-8')
@@ -15,9 +17,13 @@ bible=discover(service='bible')
 assert {x['id'] for x in bible}>={'bible.scripture-search','bible.original-language-search'}
 assert all(x['execution']=='native' for x in bible)
 assert all(x['entrypoint']=='/dore/dore-search.js' for x in bible)
-assert get('library.books') is None
-library=get('library.books',include_planned=True)
-assert library and library['status']=='planned' and library['cost']=='free-only'
+library=get('library.books')
+assert library and library['status']=='existing' and library['cost']=='free-only'
+# The Knowledge Lab copy is a projection; overlapping capability status must not drift from Core.
+core_status={x['id']:x['status'] for x in canonical['capabilities']}
+lab_status={x['id']:x['status'] for x in registry['capabilities']}
+for capability_id in set(core_status)&set(lab_status):
+ assert lab_status[capability_id]==core_status[capability_id],f'capability status drift: {capability_id}'
 heritage=get('heritage.maps-images')
 assert heritage and heritage['execution']=='adapter'
 assert heritage['entrypoint']=='local/dore-local/heritage_image_search.py'
