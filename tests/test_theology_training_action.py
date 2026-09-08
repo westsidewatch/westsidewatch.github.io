@@ -11,7 +11,12 @@ spec.loader.exec_module(mod)
 
 
 class TheologyTrainingActionTest(unittest.TestCase):
-    def test_micro32_is_registered_as_fixed_capability(self):
+    def test_stage32_and_micro32_are_fixed_capabilities(self):
+        self.assertIn("theology.training.stage32", mod.CAPABILITIES)
+        self.assertEqual(
+            mod.SCRIPTS["theology.training.stage32"],
+            ("theology-training-stage32.py", 60),
+        )
         self.assertIn("theology.training.micro32", mod.CAPABILITIES)
         self.assertEqual(
             mod.SCRIPTS["theology.training.micro32"],
