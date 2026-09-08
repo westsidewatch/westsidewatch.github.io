@@ -24,7 +24,8 @@ class SubstrateBusTests(unittest.TestCase):
     def test_virtual_substrates_are_core_owned_capabilities(self):
         found = {x["id"]: x for x in BUS.discover(ProductionStub())}
         self.assertTrue(found["context.fuzzy-search"]["callable"])
-        self.assertEqual(found["context.fuzzy-search"]["provider"], "qmd-local")
+        self.assertEqual(found["context.fuzzy-search"]["provider"], "dore-search")
+        self.assertEqual(found["context.fuzzy-search"]["result"], "dore-search-results")
         self.assertFalse(found["context.fuzzy-search"]["authority"])
         self.assertTrue(found["knowledge.recall"]["callable"])
         self.assertEqual(found["knowledge.recall"]["provider"], "longmemory-local")
@@ -38,6 +39,30 @@ class SubstrateBusTests(unittest.TestCase):
         self.assertFalse(out["authority"])
         self.assertEqual(out["core_route"]["capability"], "context.fuzzy-search")
         self.assertEqual(out["core_route"]["caller_product"], "multiwrite")
+        self.assertEqual(out["core_route"]["provider"], "dore-search")
+
+    def test_fuzzy_search_public_result_hides_substrate_names(self):
+        fake_qmd = {
+            "ok": True,
+            "lane": "hybrid-no-rerank",
+            "results": [{"title": "嗎哪與曠野", "snippet": "曠野中的嗎哪", "path": "notes/manna.md"}],
+        }
+        with patch.object(BUS, "qmd_available", return_value=True), \
+             patch.object(BUS, "qmd_search", return_value=fake_qmd), \
+             patch.object(BUS, "longmemory_available", return_value=False):
+            out = BUS.call(
+                "context.fuzzy-search",
+                {"query": "這句讓我想到曠野裡的嗎哪"},
+                ProductionStub(),
+                caller_product="multiwrite",
+            )
+        self.assertTrue(out["ok"])
+        self.assertEqual(out["results"][0]["title"], "嗎哪與曠野")
+        self.assertFalse(out["retrieval"]["memory_recall"])
+        self.assertFalse(out["large_model_invoked"])
+        serialized = str(out).lower()
+        self.assertNotIn("qmd-local", serialized)
+        self.assertNotIn("longmemory-local", serialized)
 
     def test_longmemory_absence_fails_closed_without_becoming_authority(self):
         with patch.object(BUS, "longmemory_available", return_value=False):
