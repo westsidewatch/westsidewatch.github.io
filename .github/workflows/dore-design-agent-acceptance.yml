@@ -21,8 +21,9 @@ jobs:
         run: python3 dore-design/integration_test.py
       - name: Workspace product lifecycle
         run: |
-          python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/app_visual.py dore-design/app_visual_v2.py dore-design/multiwrite_integration.py dore-design/multiwrite_wysiwyg.py dore-design/multipage_wysiwyg.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py dore-design/upgrade_living_fortress_v2.py dore-design/deploy_visual_current.py
+          python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/app_visual.py dore-design/app_visual_v2.py dore-design/multiwrite_integration.py dore-design/multiwrite_wysiwyg.py dore-design/multipage_wysiwyg.py dore-design/template_library.py dore-design/template_library_selftest.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py dore-design/upgrade_living_fortress_v2.py dore-design/deploy_visual_current.py
           python3 dore-design/workspace_selftest.py
+          python3 dore-design/template_library_selftest.py
       - name: Workspace machine control surface
         env:
           DORE_DESIGN_DATA: ${{ runner.temp }}/dore-design-workspace
@@ -68,9 +69,10 @@ jobs:
               req=urllib.request.Request(base+path,data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
               return json.load(urllib.request.urlopen(req))
           h=get('/api/health')
-          assert h['version']=='1.9.1' and h['journal_mode']=='editable-workspace-page'
-          assert h['multiwrite_page']=='multiwrite-home' and h['multiwrite_semantic_design'] is True
-          m=get('/api/multiwrite/status'); assert m['ok'] and m['editable'] and m['semantic_design']
+          assert h['version']=='2.0-production' and h['source_of_truth']=='structured-workspace'
+          assert h['templates']['count']==3 and h['templates']['external_editor_dependency'] is False
+          m=get('/api/multiwrite/status'); assert m['ok'] and m['editable']
+          t=get('/api/templates'); assert t['ok'] and t['count']==3 and t['external_editor_dependency'] is False
           w=post('/api/workspace',{'op':'design_decision','page_id':'multiwrite-home','decision':{'color':'watch-night','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}})
           p=next(x for x in w['pages'] if x['id']=='multiwrite-home'); assert p['design']['decision']['color']=='watch-night'
           w=post('/api/workspace',{'op':'design_decision','page_id':'multiwrite-home','decision':{'color':'paper','hierarchy':'quiet','axis':'center','density':'1','lines':'1'}})
