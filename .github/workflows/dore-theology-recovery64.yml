@@ -1,0 +1,54 @@
+name: DORE Theology Recovery64
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  recovery64:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      github.event.issue.title == '[DORÉ RECOVERY64] run'
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run fixed recovery64 continuation
+        id: recovery
+        run: |
+          set +e
+          python3 local/dore-local/theology-training-recovery64.py > /tmp/dore-recovery64.json 2>&1
+          code=$?
+          cat /tmp/dore-recovery64.json
+          echo "code=$code" >> "$GITHUB_OUTPUT"
+          exit 0
+      - name: Post bounded result
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          p='/tmp/dore-recovery64.json'
+          try:
+              text=open(p,encoding='utf-8').read()
+              data=json.loads(text)
+          except Exception as e:
+              data={'ok':False,'status':'failed','error':f'invalid_recovery_report:{e}'}
+          body='[DORÉ_RECOVERY64_RESULT '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+']'
+          raw=json.dumps({'body':body},ensure_ascii=False).encode()
+          req=urllib.request.Request(f"https://api.github.com/repos/{os.environ['REPO']}/issues/{os.environ['ISSUE']}/comments",data=raw,method='POST',headers={'Authorization':f"Bearer {os.environ['GH_TOKEN']}",'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'dore-recovery64'})
+          urllib.request.urlopen(req,timeout=20).read()
+          PY
+      - name: Enforce recovery result
+        run: |
+          python3 - <<'PY'
+          import json
+          data=json.load(open('/tmp/dore-recovery64.json',encoding='utf-8'))
+          raise SystemExit(0 if data.get('ok') else 1)
+          PY
