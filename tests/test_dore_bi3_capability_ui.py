@@ -8,6 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 UI = ROOT / "static" / "dore" / "dore-multiwrite-bible-study.js"
+MULTIWRITE_HOST = ROOT / "static" / "multiwrite" / "bible-study.js"
+ONE_HOST = ROOT / "static" / "one" / "one-bi3-embedded.js"
 
 
 class MultiwriteBibleStudyUIContractTests(unittest.TestCase):
@@ -28,6 +30,31 @@ class MultiwriteBibleStudyUIContractTests(unittest.TestCase):
         self.assertIn("canonical_reference", source)
         self.assertIn("evidence_status", source)
         self.assertIn("source_ref", source)
+
+    def test_multiwrite_host_persists_study_document_without_provider_leakage(self):
+        source = MULTIWRITE_HOST.read_text(encoding="utf-8")
+        self.assertIn("studyDocuments", source)
+        self.assertIn("dore.study-document.v1", source)
+        self.assertIn("host: 'multiwrite'", source)
+        self.assertIn("embedded: false", source)
+        self.assertIn("context.fuzzy-search", source)
+        self.assertIn("doc.flow", source)
+        self.assertIn("doc.kept", source)
+        for forbidden in ("QMD", "Concord", "SWORD", "OpenAI"):
+            self.assertNotIn(forbidden, source)
+
+    def test_one_host_uses_same_prepare_controller_and_embedded_context(self):
+        source = ONE_HOST.read_text(encoding="utf-8")
+        self.assertIn("studyDocuments", source)
+        self.assertIn("dore.study-document.v1", source)
+        self.assertIn("host:'one'", source)
+        self.assertIn("embedded:true", source)
+        self.assertIn("context.fuzzy-search", source)
+        self.assertIn("DoreMultiwriteBibleStudy", source)
+        self.assertIn("doc.flow", source)
+        self.assertIn("doc.kept", source)
+        for forbidden in ("QMD", "Concord", "SWORD", "OpenAI"):
+            self.assertNotIn(forbidden, source)
 
     @unittest.skipUnless(shutil.which("node"), "Node is required for JS behavior acceptance")
     def test_prepare_search_preserves_context_and_dispatches_typed_action(self):
