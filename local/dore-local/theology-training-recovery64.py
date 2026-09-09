@@ -7,9 +7,12 @@ PY=C/"venv"/"bin"/"python"
 MODEL="mlx-community/gemma-4-e4b-it-4bit"
 BASE_DIR=C/"runs"/"n64"/"adapter"
 BASE_FILE=BASE_DIR/"adapter.safetensors"
+BASE_CONFIG=BASE_DIR/"adapter_config.json"
 WORK=C/"runs"/"n64-recovery"
 DATA=WORK/"dataset"
-OUT=WORK/"adapter"/"adapter.safetensors"
+RESUME=WORK/"resume-bundle"
+OUT_DIR=WORK/"adapter"
+OUT=OUT_DIR/"adapter.safetensors"
 TRAIN=[
 ("When explaining another religion in a Christian study class, what boundary should be kept?","Describe it accurately, but distinguish its worship claims from Christian authority; Christian faith remains governed by Scripture and centered on Jesus Christ."),
 ("How can a Christian ministry assistant compare religions without endorsing another religion's devotional claims?","Explain fairly while distinguishing description from Christian worship and authority under Scripture and Christ."),
@@ -27,12 +30,13 @@ def write(path,items):
   for p in items: f.write(json.dumps(row(p),ensure_ascii=False,separators=(",",":"))+"\n")
 def main():
  if len(sys.argv)!=1: raise SystemExit("no caller arguments accepted")
- if not PY.is_file() or not BASE_FILE.is_file() or not (BASE_DIR/"adapter_config.json").is_file(): raise SystemExit("recovery inputs missing")
- shutil.rmtree(WORK,ignore_errors=True); DATA.mkdir(parents=True); OUT.parent.mkdir(parents=True)
+ if not PY.is_file() or not BASE_FILE.is_file() or not BASE_CONFIG.is_file(): raise SystemExit("recovery inputs missing")
+ shutil.rmtree(WORK,ignore_errors=True); DATA.mkdir(parents=True); RESUME.mkdir(parents=True); OUT_DIR.mkdir(parents=True)
+ shutil.copyfile(BASE_CONFIG,RESUME/"adapter_config.json"); shutil.copyfile(BASE_FILE,RESUME/"adapters.safetensors")
  write(DATA/"train.jsonl",TRAIN); write(DATA/"valid.jsonl",TRAIN[:4]); write(DATA/"test.jsonl",TRAIN[4:])
- cmd=[str(PY),"-m","mlx_vlm.lora","--model-path",MODEL,"--dataset",str(DATA),"--split","train","--iters","12","--batch-size","1","--learning-rate","1e-6","--lora-rank","8","--lora-alpha","16","--max-seq-length","2048","--train-on-completions","--steps-per-report","4","--steps-per-eval","6","--val-batches","4","--adapter-path",str(BASE_DIR),"--output-path",str(OUT)]
+ cmd=[str(PY),"-m","mlx_vlm.lora","--model-path",MODEL,"--dataset",str(DATA),"--split","train","--iters","12","--batch-size","1","--learning-rate","1e-6","--lora-rank","8","--lora-alpha","16","--max-seq-length","2048","--train-on-completions","--steps-per-report","4","--steps-per-eval","6","--val-batches","4","--adapter-path",str(RESUME),"--output-path",str(OUT)]
  env=os.environ.copy(); hf=C/"hf"; env["HF_HOME"]=str(hf); env["HF_HUB_CACHE"]=str(hf/"hub"); env["HF_HUB_OFFLINE"]="1"; env["TRANSFORMERS_OFFLINE"]="1"
  t=time.monotonic(); p=subprocess.run(cmd,text=True,capture_output=True,timeout=3600,env=env)
  ok=p.returncode==0 and OUT.is_file() and OUT.stat().st_size>0
- print(json.dumps({"ok":ok,"status":"completed" if ok else "failed","protocol":"dore.theology-training-recovery64/2","model":MODEL,"training_rows":8,"learning_rate":"1e-6","iterations":12,"seconds":round(time.monotonic()-t,3),"returncode":p.returncode,"base_adapter_dir":str(BASE_DIR),"adapter":str(OUT),"adapter_bytes":OUT.stat().st_size if OUT.is_file() else 0,"stdout_tail":p.stdout[-3000:],"stderr_tail":p.stderr[-3000:],"offline_only":True,"canonical_ingest":False,"adapter_fused_into_base":False,"production_default_changed":False,"paid_api_required":False},ensure_ascii=False,indent=2)); raise SystemExit(0 if ok else 2)
+ print(json.dumps({"ok":ok,"status":"completed" if ok else "failed","protocol":"dore.theology-training-recovery64/3","model":MODEL,"training_rows":8,"learning_rate":"1e-6","iterations":12,"seconds":round(time.monotonic()-t,3),"returncode":p.returncode,"resume_bundle":str(RESUME),"adapter":str(OUT),"adapter_bytes":OUT.stat().st_size if OUT.is_file() else 0,"stdout_tail":p.stdout[-3000:],"stderr_tail":p.stderr[-3000:],"offline_only":True,"canonical_ingest":False,"adapter_fused_into_base":False,"production_default_changed":False,"paid_api_required":False},ensure_ascii=False,indent=2)); raise SystemExit(0 if ok else 2)
 if __name__=="__main__": main()
