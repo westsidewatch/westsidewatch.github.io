@@ -24,8 +24,8 @@ def verify_dataset(root,size):
 def mlx_vlm_available():
     if not PY.is_file(): return False
     p=subprocess.run([str(PY),"-c","import mlx_vlm, datasets"],text=True,capture_output=True,timeout=30); return p.returncode==0
-def build_command(model,dataset_dir,adapter_file,iters,learning_rate):
-    return [str(PY),"-m","mlx_vlm.lora","--model-path",model,"--dataset",str(dataset_dir),"--split","train","--iters",str(iters),"--batch-size","1","--learning-rate",learning_rate,"--lora-rank","8","--lora-alpha","16","--max-seq-length","2048","--train-on-completions","--steps-per-report","10","--steps-per-eval","20","--val-batches","4","--output-path",str(adapter_file)]
+def build_command(model,dataset_dir,adapter_file,iters,learning_rate="2e-5"):
+    return [str(PY),"-m","mlx_vlm.lora","--model-path",model,"--dataset",str(dataset_dir),"--split","train","--iters",str(iters),"--batch-size","1","--learning-rate",str(learning_rate),"--lora-rank","8","--lora-alpha","16","--max-seq-length","2048","--train-on-completions","--steps-per-report","10","--steps-per-eval","20","--val-batches","4","--output-path",str(adapter_file)]
 def stage_split(dataset,work):
     stage=work/"dataset"; stage.mkdir(parents=True,exist_ok=True)
     for src,dst in {dataset["train"]:stage/"train.jsonl",dataset["valid"]:stage/"valid.jsonl",dataset["test"]:stage/"test.jsonl"}.items(): shutil.copyfile(src,dst)
