@@ -8,6 +8,8 @@ ROOT=Path(__file__).resolve().parent
 SCRIPT=ROOT/"theology-shadow64-acceptance.py"
 ACTION=ROOT/"theology_training_action.py"
 RECOVERY=ROOT/"theology-training-recovery64.py"
+EVAL_CANDIDATE=ROOT/"theology-training-eval64-candidate.py"
+SHADOW_CANDIDATE=ROOT/"theology-shadow64-candidate.py"
 
 class Shadow64AcceptanceBoundsTest(unittest.TestCase):
     def test_script_is_fixed_and_shadow_only(self):
@@ -31,8 +33,8 @@ class Shadow64AcceptanceBoundsTest(unittest.TestCase):
 
     def test_action_surface_is_fixed(self):
         text=ACTION.read_text(encoding="utf-8")
-        self.assertIn('"theology.shadow.acceptance64"',text)
-        self.assertIn('"theology-shadow64-acceptance.py",3900',text)
+        self.assertIn('"theology.shadow.acceptance64":("theology-shadow64-candidate.py",3900)',text)
+        self.assertIn('"theology.training.eval64":("theology-training-eval64-candidate.py",3300)',text)
         self.assertIn('"theology.training.recovery64"',text)
         self.assertIn('"theology-training-recovery64.py",3900',text)
         self.assertNotIn('shell=True',text)
@@ -52,5 +54,14 @@ class Shadow64AcceptanceBoundsTest(unittest.TestCase):
         self.assertIn('"adapter_fused_into_base":False',text)
         self.assertIn('"production_default_changed":False',text)
         self.assertIn('no caller arguments accepted',text)
+
+    def test_candidate_selection_is_fixed_and_not_caller_controlled(self):
+        for path in (EVAL_CANDIDATE,SHADOW_CANDIDATE):
+            text=path.read_text(encoding="utf-8")
+            self.assertIn('"n64-recovery"/"adapter"/"adapter.safetensors"',text)
+            self.assertIn('SELECTED=RECOVERY if RECOVERY.is_file() else ORIGINAL',text)
+            self.assertIn('CONFIG=m.CACHE_ROOT/"runs"/"n64"/"adapter"/"adapter_config.json"',text)
+            self.assertNotIn('argparse',text)
+            self.assertNotIn('shell=True',text)
 
 if __name__=="__main__": unittest.main()
