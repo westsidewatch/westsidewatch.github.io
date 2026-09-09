@@ -1,0 +1,56 @@
+{
+  "schema": "dore.living-water.stream-taxonomy.v1",
+  "surface": "living-water-candidate-04.page-2",
+  "visible_labels": false,
+  "source_model": "journal-four-w-internal-taxonomy",
+  "presentation_rule": "The four rows are never named or exposed as W labels. Users only see content and motion.",
+  "streams": [
+    {
+      "id": "stream-1",
+      "internal_key": "journal-w-1",
+      "visible_label": null,
+      "selection": {
+        "category_role": "internal-broad-classification",
+        "priority_inputs": ["editorial_importance", "freshness", "feature_status", "cross_site_relevance"],
+        "display": "content-only"
+      }
+    },
+    {
+      "id": "stream-2",
+      "internal_key": "journal-w-2",
+      "visible_label": null,
+      "selection": {
+        "category_role": "internal-broad-classification",
+        "priority_inputs": ["editorial_importance", "freshness", "feature_status", "cross_site_relevance"],
+        "display": "content-only"
+      }
+    },
+    {
+      "id": "stream-3",
+      "internal_key": "journal-w-3",
+      "visible_label": null,
+      "selection": {
+        "category_role": "internal-broad-classification",
+        "priority_inputs": ["editorial_importance", "freshness", "feature_status", "cross_site_relevance"],
+        "display": "content-only"
+      }
+    },
+    {
+      "id": "stream-4",
+      "internal_key": "journal-w-4",
+      "visible_label": null,
+      "selection": {
+        "category_role": "internal-broad-classification",
+        "priority_inputs": ["editorial_importance", "freshness", "feature_status", "cross_site_relevance"],
+        "display": "content-only"
+      }
+    }
+  ],
+  "constraints": [
+    "No W label appears in the UI.",
+    "A row is an editorial selection channel, not a visible category tab.",
+    "Items from across the site may enter a row only when they match that row's internal Journal W classification.",
+    "Weight changes span, dwell and velocity; taxonomy decides which current an item belongs to.",
+    "The visual layer must remain understandable without explanatory copy."
+  ]
+}
