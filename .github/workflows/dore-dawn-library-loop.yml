@@ -1,0 +1,54 @@
+name: DORÉ Dawn Library Continuous Loop
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 9 * * 2,5'
+  push:
+    paths:
+      - 'static/dawn-library/**'
+      - 'scripts/run_dawn_library_loop.py'
+      - '.github/workflows/dore-dawn-library-loop.yml'
+permissions:
+  contents: write
+jobs:
+  library-loop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Produce Dawn Library measurable outputs
+        run: python scripts/run_dawn_library_loop.py
+      - name: Validate collection outputs
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
+          assert r['results']['books']['published'] >= 4
+          assert r['results']['books']['verified'] >= 3
+          assert len(r['results']['collections']) >= 5
+          print(json.dumps(r['results'],ensure_ascii=False,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dawn-library-loop-results
+          path: |
+            reports/DAWN-LIBRARY-LOOP.json
+            static/dawn-library/collections.json
+            static/dawn-library/biblical-world/catalog.json
+      - name: Persist loop results
+        if: github.event_name != 'pull_request'
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add reports/DAWN-LIBRARY-LOOP.json static/dawn-library/collections.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dawn): persist library loop results [skip ci]'
+            for attempt in 1 2 3 4; do
+              if git push; then exit 0; fi
+              git pull --rebase origin "${GITHUB_REF_NAME}"
+            done
+            exit 1
+          fi
