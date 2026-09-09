@@ -18,7 +18,8 @@ P01 impact: NONE
 - `static/one/one-bi3-embedded.js` and ONE loader integration;
 - `local/dore-companion-extension/site_bridge.js` + background allowlist path;
 - `tests/test_dore_bi3_capability_ui.py`;
-- recent BI-3/hotfix commit chronology on 2026-09-09.
+- recent BI-3/hotfix commit chronology on 2026-09-09;
+- GitHub Actions runs on PR #521 head `1f65f3d4f57b3414ef602ee15e6501e5af5a868b`, PR #523 head `128fb4d215838bfdfc896398e604fa088041e7a8`, and PR #525 head `c06bc8394fc890b7728a919d618505b08a8fb2d0`.
 
 ## Original objective
 
@@ -36,6 +37,17 @@ Make Bible Study a Doré capability that can appear inside Multiwrite and ONE wi
 8. PR #523 is important negative evidence: immediately after BI-3 integration, production-facing regressions existed in new-book entry, DB-version alignment, local-book opening and panel focus. They were subsequently repaired and regression coverage was added. This means the implementation history is real, but merge existence alone cannot be treated as product-completion evidence.
 9. PR #525 moved the Bible Study workspace onto the Multiwrite home surface alongside My Library, with `Keep / Flow` summary rendering and the same `context.fuzzy-search` bridge contract.
 
+## CI reconciliation
+
+The earlier bounded review understated the available CI evidence.
+
+- PR #521 head `1f65f3d4f57b3414ef602ee15e6501e5af5a868b` has persisted successful workflow runs including `Doré Capability Runtime` run `34319916071`, `Multiwrite Import v1` run `34319915999`, `Doré Foundation Tests` run `34319916002`, ONE cross-reference preflight, ONE Global Audit and the A2A control-plane workflow.
+- `Doré Capability Runtime` run `34319916071` completed successfully; its recorded steps include minimum-sufficient Bible routing tests, capability runtime tests, zero-metered-cost benchmark and shared-state visual execution probe.
+- PR #523 hotfix head `128fb4d215838bfdfc896398e604fa088041e7a8` also has persisted successful `Doré Capability Runtime` run `34320863465`, `Multiwrite Import v1` run `34320863506`, and `Doré Foundation Tests` run `34320863452`. This is stronger evidence that the repaired BI-3/hotfix state passed the capability/runtime gate.
+- PR #525 head `c06bc8394fc890b7728a919d618505b08a8fb2d0` has a persisted successful `Multiwrite Import v1` run `34321336202`, but no `Doré Capability Runtime` run is present for that head in the commit-associated workflow evidence. The likely explanation is path gating, but that should not be invented as proof.
+
+Therefore repository/CI implementation evidence is materially stronger than previously recorded, but it still does not establish the full live product path.
+
 ## Classification
 
 - BI-3 shared Prepare controller: `ACTIVE_PARALLEL / IMPLEMENTED_SLICE`.
@@ -47,27 +59,30 @@ Make Bible Study a Doré capability that can appear inside Multiwrite and ONE wi
 
 ## Completion evidence boundary
 
-The following are real evidence:
+The following are now durably evidenced:
 
 - merged implementation PRs;
 - source-level architecture boundaries;
 - explicit regression tests and Node acceptance code;
+- successful Capability Runtime / Foundation / Multiwrite CI on the original BI-3 head;
+- successful Capability Runtime / Foundation / Multiwrite CI on the immediate post-merge hotfix head;
+- successful Multiwrite Import CI on the later homepage-integration head;
 - hotfix chronology showing concrete runtime defects were found and repaired.
 
-The following were **not** found in this bounded review and therefore must not be claimed:
+The following remain **not established** by this bounded evidence and therefore must not be claimed:
 
-- persisted CI run showing `tests/test_dore_bi3_capability_ui.py` PASS on the merged production head;
 - one recorded live browser acceptance from Multiwrite page → site bridge → Native Messaging → Doré Core `context.fuzzy-search` → evidence-bearing result → Keep/Flow persistence → reload/readback;
 - one equivalent live ONE embedded acceptance proving the same shared capability boundary;
 - production proof that provider-neutral fuzzy retrieval quality is acceptable across real study queries rather than only contract fixtures;
 - evidence that Present/projection has a real downstream consumer rather than only an admitted action payload;
-- cross-device/server-backed StudyDocument durability.
+- cross-device/server-backed StudyDocument durability;
+- a final full Capability Runtime run specifically associated with PR #525 head after the homepage relocation.
 
-Therefore BI-3 must **not** be marked `VERIFIED_COMPLETE` from repository implementation alone.
+Therefore BI-3 still must **not** be marked `VERIFIED_COMPLETE` as a live product capability. The stronger CI evidence narrows the missing proof to live end-to-end behavior and the final integrated-head/runtime boundary rather than source-test absence.
 
 ## Current quality judgment
 
-Architecturally the slice is stronger than the earlier pattern of embedding retrieval intelligence independently in each product: shared controller + typed result/action contract + bounded site bridge are reusable and reduce provider leakage. The immediate post-merge hotfixes show the product integration was still fragile at the entry/runtime layer, especially around IndexedDB schema coordination and local/static book duality. The current implementation should be retained and tested, not rewritten from scratch.
+Architecturally the slice is stronger than the earlier pattern of embedding retrieval intelligence independently in each product: shared controller + typed result/action contract + bounded site bridge are reusable and reduce provider leakage. The immediate post-merge hotfixes show the product integration was still fragile at the entry/runtime layer, especially around IndexedDB schema coordination and local/static book duality. The successful post-hotfix Capability Runtime run materially improves confidence in the repaired implementation, while the absence of a recorded live browser round-trip still prevents product-completion promotion. The current implementation should be retained and tested, not rewritten from scratch.
 
 ## Durable learning / capability retained
 
@@ -80,7 +95,7 @@ This is a reusable pattern for future Doré product capabilities. The product sh
 - three Multiwrite paths now participate in the same IndexedDB version and object-store evolution; schema coordination is a real maintenance surface;
 - StudyDocument persistence is browser-local and product-hosted, so it is not yet canonical cross-device memory;
 - the bridge depends on the local Companion/native runtime being present; fallback/absence behavior is currently a product runtime concern;
-- implementation and source tests exist, but merged live acceptance evidence is not yet durable;
+- repository and CI evidence are strong for the implementation slice, but live browser/native/Core round-trip acceptance is not yet durable;
 - `Present` is part of the action vocabulary but BI-4/live projection completion is explicitly outside this slice.
 
 ## Revisit triggers
