@@ -2,7 +2,8 @@ name: DORÉ Dawn Library Continuous Loop
 on:
   workflow_dispatch:
   schedule:
-    - cron: '23 9 * * 2,5'
+    # Bootstrap phase: the library is still sparse, so grow and measure it every day.
+    - cron: '23 9 * * *'
   push:
     paths:
       - 'static/dawn-library/**'
