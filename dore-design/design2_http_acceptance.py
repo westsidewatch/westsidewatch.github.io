@@ -17,7 +17,7 @@ def post(path,payload):
         body=e.read().decode('utf-8','replace');raise RuntimeError(f'HTTP {e.code} {path}: {body}') from e
 
 try:
-    stage='revision';status=get_json('/api/preview/status');rev1=int(status['revision']);page='multiwrite-home'
+    stage='revision';status=get_json('/api/workspace');rev1=int(status['revision']);page='multiwrite-home'
     stage='candidate-1';first=post('/api/design2/candidate',{'page_id':page,'revision':rev1})['candidate']
     stage='preview-1';preview1=get_text('/api/design2/preview?candidate='+first['id']);assert '多寫' in preview1 or 'Write on. Make it a book.' in preview1
     stage='publish-1';r1=post('/api/design2/publish',{'candidate_id':first['id'],'revision':rev1,'target':page})['release'];published1=get_text('/design2/published');assert r1['candidate_id']==first['id'] and published1==preview1
