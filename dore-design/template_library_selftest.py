@@ -28,4 +28,12 @@ assert result['page_id'] in Multi.SUPPORTED and result['page_id'] in homepage_ca
 source=next(p for p in base.w['pages'] if p['id']==first['source_page_id'])
 page['nodes'][0]['text']='Detached edit'
 assert source['nodes'][0]['text']=='Template'
+
+# Simulate a resident restart: dynamic renderer registration is in memory only,
+# so persisted template lineage must rebuild it from the structured workspace.
+homepage_candidates.PAGES.pop(result['page_id'],None);Multi.SUPPORTED.discard(result['page_id'])
+assert result['page_id'] not in homepage_candidates.PAGES and result['page_id'] not in Multi.SUPPORTED
+template_library.register_runtime_pages(base,homepage_candidates,Multi)
+assert result['page_id'] in homepage_candidates.PAGES and result['page_id'] in Multi.SUPPORTED
+assert homepage_candidates.PAGES[result['page_id']]==homepage_candidates.PAGES[first['source_page_id']]
 print('DORE_TEMPLATE_LIBRARY_SELFTEST_PASS')
