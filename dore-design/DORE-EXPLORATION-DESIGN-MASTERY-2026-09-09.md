@@ -9,6 +9,38 @@ Preserve the current Doré Exploration findings before the next research round. 
 
 Core Doré principle: capability should grow while burden shrinks. Mature human work should be absorbed where possible; immature areas remain open to continued exploration.
 
+## Doré Design North Star — FIXED PRODUCT PURPOSE
+
+Doré Design is **not** a general-purpose AI website builder and does not need to serve arbitrary websites, industries, or brands. Its unique advantage is specialization and accumulated continuity: it only needs to know, design, and continuously learn New Westside.
+
+Its single product mission is:
+
+> **Build New Westside into one of the world's most design-rich and most contemporary Bible / theology brands, and into the most design-rich and most contemporary Bible / theology journal-magazine websites.**
+
+This is not a side use case. The Bible/theology **journal-magazine publication form is part of the brand identity itself**.
+
+Doré should therefore not optimize for generic SaaS, ecommerce, restaurant, real-estate, corporate, dashboard, or universal website-builder competence. It should develop extraordinary depth in the visual and editorial worlds relevant to New Westside: Bible, theology, church history, books, publishing, scripture, classical art, engraving, sacred architecture, manuscripts, maps, archives, museums, editorial design, typography, long-form reading, visual storytelling, devotional/contemplative space, and contemporary digital publication.
+
+The target synthesis is:
+
+`Bible × Theology × Contemporary Editorial × Art Direction × Digital Publication`
+
+The desired result is not `church website + articles` and not `Bible tool + blog`. New Westside should behave and feel like a genuinely art-directed contemporary publication and Bible/theology brand.
+
+Future design references should therefore be drawn not only from AI website builders or generic website galleries, but from the strongest examples of editorial magazines, cultural journals, art publishing, museum publishing, literary magazines, Bible publishing, theological journals, typography, information architecture, reading products, sacred visual language, and contemporary digital publications.
+
+The design-quality benchmark is correspondingly higher than `a decent modern website`. Doré outputs should increasingly demonstrate genuine publication art direction.
+
+Doré does not need to defeat frontier general-purpose models at universal design. Its potential advantage is that frontier tools must design for everyone, while Doré can accumulate a continuous, structured understanding of one brand: New Westside — its visual language, editorial structure, accepted and rejected designs, human corrections, production history, content forms, theology/Bible publication needs, and evolving identity.
+
+Therefore mature open-source and external design intelligence should be used to close Doré's current quality gap quickly, while New Westside-specific production history and human correction become its long-term specialization advantage.
+
+The governing question for future Doré Exploration is no longer simply `Is this important for AI Design?` It is:
+
+> **Can this materially help New Westside become one of the world's most design-rich and most contemporary Bible/theology brands and journal-magazine websites?**
+
+If not, it should be deprioritized even when fashionable. If yes, it deserves deeper exploration.
+
 ## Context
 
 The current problem is not merely producing more templates. Doré should eventually become capable of autonomous, high-quality, non-homogeneous design. This field is comparatively immature, so mature products, mature open-source systems, large design corpora, and professional design knowledge deserve especially deep exploration.
