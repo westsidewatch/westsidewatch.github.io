@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Resident HTTP acceptance for DORÉ DESIGN 2.0 immutable publication."""
-import json,urllib.request,urllib.error
-BASE='http://127.0.0.1:4310';stage='bootstrap'
+import json,os,urllib.request,urllib.error
+BASE=f"http://127.0.0.1:{os.environ.get('DORE_DESIGN_PORT','4310')}";stage='bootstrap'
 
 def get_json(path):
     with urllib.request.urlopen(BASE+path) as r:return json.load(r)
