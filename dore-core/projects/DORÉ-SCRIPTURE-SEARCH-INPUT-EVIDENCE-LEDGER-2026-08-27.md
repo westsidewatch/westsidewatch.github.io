@@ -124,3 +124,15 @@ Current disposition remains evidence-correct:
 This checkpoint also confirms that the earlier service-boundary drift finding remains material: Core and browser parsing capability cannot be treated as one graduated faculty until one shared acceptance corpus proves parity against the micro-unit contract.
 
 P01 protection rechecked: no subtitle-path code, runtime state, deployment, binding, credential, ordering, or blocker state was modified by Sweep 01.
+
+## Checkpoint 52 revalidation — 2026-09-09
+
+A fresh bounded review of the current micro-unit, Core Search service and browser Search confirms that the 2026-08-27/28 evidence boundary is still current rather than stale.
+
+- Core `BOOK_ALIASES` still covers only a small subset of books; `_normalize_ref` remains single-reference and still lacks the required range + multi-reference + overlap-dedupe path.
+- Browser `parseReference` remains materially stronger for single-reference Arabic/Chinese/range variants, but is still a single-reference parser; no shared all-66 abbreviation, two-/three-reference, mixed single/range and deterministic overlap-dedupe transfer fixture was found.
+- The Core/browser duplication therefore remains an unresolved parity/service-boundary debt rather than a graduated shared faculty.
+- `ME-010` remains valid; `SEARCH` remains correctly classified `MAINTENANCE + DISCOVERY`; no completion, revisit, supersession or retirement promotion is warranted.
+- The canonical Master Register already preserves the correct Search status/evidence boundary, so this revalidation requires no row/status mutation.
+
+P01 remains untouched; no new blocker was created or discovered.
