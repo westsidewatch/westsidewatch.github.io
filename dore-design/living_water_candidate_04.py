@@ -27,12 +27,9 @@ JS=r'''<script src="/one/one-dore-cover-registry.js"></script><script src="/one/
 
 def render(edit=False):
     html=c01.render(edit)
-    start=html.find('<section class="live-nav"')
-    if start<0:return html
-    end=html.find('</section>',start)
-    if end<0:return html
-    end+=len('</section>')
-    html=html[:start]+NAV+html[end:]
+    marker='<section class="world dark">'
+    if marker not in html:return html
+    html=html.replace(marker,NAV+marker,1)
     html=html.replace('</style>',CSS+'</style>',1)
     html=html.replace('</body>',JS+'</body>',1)
     return html
