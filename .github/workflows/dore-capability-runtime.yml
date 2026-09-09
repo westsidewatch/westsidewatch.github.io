@@ -92,7 +92,7 @@ jobs:
         with:
           python-version: '3.12'
       - name: Run minimum-sufficient Bible routing tests
-        run: python -m pytest -q tests/test_bible_query_planner.py
+        run: python -m unittest tests.test_bible_query_planner -v
       - name: Run capability runtime tests
         run: |
           python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
