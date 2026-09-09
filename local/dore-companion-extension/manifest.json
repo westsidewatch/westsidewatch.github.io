@@ -6,6 +6,9 @@
   "permissions": ["nativeMessaging"],
   "browser_specific_settings": {"gecko": {"id": "dore-companion@westsidewatch.ca", "strict_min_version": "109.0"}},
   "background": {"scripts": ["background.js"], "persistent": true},
-  "content_scripts": [{"matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"], "js": ["content_script.js"], "run_at": "document_idle"}],
+  "content_scripts": [
+    {"matches": ["https://chatgpt.com/*", "https://chat.openai.com/*"], "js": ["content_script.js"], "run_at": "document_idle"},
+    {"matches": ["https://westsidewatch.github.io/*"], "js": ["site_bridge.js"], "run_at": "document_idle"}
+  ],
   "web_accessible_resources": []
 }

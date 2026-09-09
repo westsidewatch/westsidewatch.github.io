@@ -10,3 +10,7 @@
   new MutationObserver(sync).observe(document.querySelector('#now-kicker'),{childList:true,subtree:true,characterData:true});sync();
   button.onclick=async()=>{const old=button.textContent;button.disabled=true;button.textContent='正在生成 GIF…';try{const response=await fetch(gif,{cache:'no-store'});if(!response.ok)throw new Error(String(response.status));const blob=await response.blob(),file=new File([blob],'ONE-馬太福音-第3章-動態-R5.gif',{type:'image/gif'}),payload={title:'ONE · 馬太福音第 3 章',text:'ONE 動態封面｜馬太福音第 3 章',files:[file]};if(navigator.share&&(!navigator.canShare||navigator.canShare({files:[file]}))){await navigator.share(payload);button.textContent='已開啟分享'}else{const link=document.createElement('a'),url=URL.createObjectURL(blob);link.href=url;link.download=file.name;document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);button.textContent='GIF 已下載'}}catch(error){button.textContent=error?.name==='AbortError'?'已取消分享':'請重試'}finally{button.disabled=false;setTimeout(()=>button.textContent=old,1800)}};
 })();
+(()=>{
+  const load=(src)=>new Promise((resolve,reject)=>{if([...document.scripts].some(s=>s.src.includes(src))){resolve();return}const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=reject;document.body.append(script)});
+  load('/dore/dore-multiwrite-bible-study.js?v=20260909-bi3').then(()=>load('/one/one-bi3-embedded.js?v=20260909-bi3')).catch(error=>console.warn('[DORÉ BI-3 ONE loader]',error));
+})();

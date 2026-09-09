@@ -10,8 +10,9 @@ let editing = false;
 let autosaveTimer = null;
 
 const DB_NAME = 'multiwrite-v1';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const DRAFT_STORE = 'drafts';
+const STUDY_STORE = 'studyDocuments';
 const SIZE_KEY = 'multiwrite-workspace-size-v3';
 
 function openDb() {
@@ -21,6 +22,7 @@ function openDb() {
       const db = request.result;
       if (!db.objectStoreNames.contains('books')) db.createObjectStore('books', { keyPath: 'id' });
       if (!db.objectStoreNames.contains(DRAFT_STORE)) db.createObjectStore(DRAFT_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(STUDY_STORE)) db.createObjectStore(STUDY_STORE, { keyPath: 'id' });
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -145,9 +147,6 @@ function autoWorkspaceScale() {
   );
   const referenceWidth = Math.max(viewportWidth, screenWidth);
 
-  // Desktop writing distance: large displays should open at a readable scale
-  // without requiring browser zoom. Keep medium screens conservative and let
-  // very wide desktops approach the 150–180% range that is comfortable here.
   if (referenceWidth >= 2400) return 1.75;
   if (referenceWidth >= 2100) return 1.65;
   if (referenceWidth >= 1800) return 1.55;
