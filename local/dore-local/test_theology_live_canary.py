@@ -31,6 +31,12 @@ class TheologyLiveCanaryTest(unittest.TestCase):
         self.assertIn('"adapter_fused_into_base":False',ACCEPT)
         self.assertIn('"canonical_ingest":False',ACCEPT)
 
+    def test_live_scorer_is_bilingual_without_lowering_threshold(self):
+        self.assertIn('"Scripture","Bible","聖經","經文","神的話"',ACCEPT)
+        self.assertIn('"revelation","authority","啟示","權威"',ACCEPT)
+        self.assertIn('hits/total>=0.80',ACCEPT)
+        self.assertIn('"bilingual_scoring":True',ACCEPT)
+
     def test_workflow_is_owner_only_bounded_and_self_hosted(self):
         self.assertIn("github.event.issue.user.login == github.repository_owner",WORKFLOW)
         self.assertIn("github.event.issue.title == '[DORÉ THEOLOGY CANARY] run'",WORKFLOW)
