@@ -28,13 +28,25 @@ def test_old_single_note_migrates_into_first_node():
     assert "dore.study-document.v2" in JS
 
 
-def test_ambient_search_follows_editor_context():
+def test_ambient_search_follows_editor_context_without_duplicate_keyup_work():
     assert "cursorContext()" in JS
-    assert "slice(Math.max(0,pos-100),pos)" in JS
+    assert "slice(Math.max(0,pos-180),pos)" in JS
     assert "queueAmbient()" in JS
     assert "ambientTimer=setTimeout" in JS
-    assert "280" in JS
+    assert "},160)" in JS
+    assert "addEventListener('keyup'" not in JS
+    assert "lastAmbientQuery" in JS
     assert "繼續寫即可" in JS
+
+
+def test_chinese_chapter_intent_is_parsed_before_fuzzy_text_scoring():
+    assert "function chapterNumber" in JS
+    assert "function parseChapterIntent" in JS
+    assert "第?\\s*([零〇一二兩三四五六七八九十百\\d]+)" in JS
+    assert "chapterIndex" in JS
+    assert "findContextBook" in JS
+    assert "buildChapterResult" in JS
+    assert "章節命中 100%" in JS
 
 
 def test_ambient_result_requires_user_click_for_deeper_action():
@@ -46,11 +58,15 @@ def test_ambient_result_requires_user_click_for_deeper_action():
     assert "加入流程" in JS
 
 
-def test_fuzzy_search_remains_lightweight_local_fallback():
+def test_fuzzy_search_uses_prefiltered_cached_local_corpus():
     assert "/dore/search-index.json" in JS
     assert "localSimilarity" in JS
     assert "dice(" in JS
-    assert "fetch(FULL_INDEX" in JS
+    assert "cache:'force-cache'" in JS
+    assert "gramIndex" in JS
+    assert "function prefilter" in JS
+    assert ".slice(0,350)" in JS
+    assert "requestIdleCallback" in JS
     assert "model" not in JS.lower()
 
 
