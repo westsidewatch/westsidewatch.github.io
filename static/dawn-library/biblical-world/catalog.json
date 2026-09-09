@@ -1,0 +1,41 @@
+{
+  "schema": "dawn.library.catalog.v1",
+  "id": "biblical-world",
+  "title": "聖經世界",
+  "description": "黎明書局的聖經世界公版館藏。此檔只保存書籍身份、來源與封面索引，不保存全文。",
+  "storagePolicy": "index-only",
+  "items": [
+    {
+      "id": "josephus-antiquities",
+      "work": {"title": "The Antiquities of the Jews", "author": "Flavius Josephus", "language": "en"},
+      "edition": {"label": "William Whiston translation", "translator": "William Whiston", "publicDomain": true},
+      "relations": ["猶太歷史", "第二聖殿", "新約背景"],
+      "cover": {"mode": "one-fallback", "title": "THE ANTIQUITIES OF THE JEWS", "author": "FLAVIUS JOSEPHUS"},
+      "sources": [{"provider": "Project Gutenberg", "kind": "remote-public", "url": "https://www.gutenberg.org/ebooks/2848", "format": "html/epub", "downloadOnCatalog": false}]
+    },
+    {
+      "id": "josephus-war",
+      "work": {"title": "The Wars of the Jews", "author": "Flavius Josephus", "language": "en"},
+      "edition": {"label": "William Whiston translation", "translator": "William Whiston", "publicDomain": true},
+      "relations": ["猶太歷史", "第二聖殿", "耶路撒冷"],
+      "cover": {"mode": "one-fallback", "title": "THE WARS OF THE JEWS", "author": "FLAVIUS JOSEPHUS"},
+      "sources": [{"provider": "Project Gutenberg", "kind": "remote-public", "url": "https://www.gutenberg.org/ebooks/2850", "format": "html/epub", "downloadOnCatalog": false}]
+    },
+    {
+      "id": "eusebius-church-history",
+      "work": {"title": "The Church History of Eusebius", "author": "Eusebius of Caesarea", "language": "en"},
+      "edition": {"publicDomain": true},
+      "relations": ["早期教會", "教父", "教會歷史"],
+      "cover": {"mode": "one-fallback", "title": "CHURCH HISTORY", "author": "EUSEBIUS"},
+      "sources": []
+    },
+    {
+      "id": "augustine-confessions",
+      "work": {"title": "The Confessions of Saint Augustine", "author": "Augustine of Hippo", "language": "en"},
+      "edition": {"publicDomain": true},
+      "relations": ["教父", "早期教會", "神學"],
+      "cover": {"mode": "one-fallback", "title": "CONFESSIONS", "author": "AUGUSTINE"},
+      "sources": [{"provider": "Project Gutenberg", "kind": "remote-public", "url": "https://www.gutenberg.org/ebooks/3296", "format": "html/epub", "downloadOnCatalog": false}]
+    }
+  ]
+}
