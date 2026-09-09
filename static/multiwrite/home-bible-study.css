@@ -1,0 +1,9 @@
+.home-study-workspace{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.9fr);gap:24px;align-items:start}
+.home-study-label,.home-study-note-head label{display:block;margin:0 0 10px;color:#8A681E;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase}
+.home-study-notes{min-width:0;padding:18px;border:1px solid rgba(85,65,24,.14);background:rgba(255,255,255,.28)}
+.home-study-note-head{display:flex;justify-content:space-between;gap:16px;align-items:baseline}
+.home-study-note-head span{font-size:.72rem;color:#786b54}
+#homeBibleNotes{display:block;width:100%;min-height:360px;resize:vertical;box-sizing:border-box;border:0;border-top:1px solid rgba(85,65,24,.12);padding:18px 4px 8px;background:transparent;color:#342e24;font:inherit;font-size:.94rem;line-height:1.85;outline:none}
+#homeBibleNotes:focus{border-top-color:rgba(138,104,30,.48)}
+.home-study-note-help{margin:10px 0 0;color:#786b54;font-size:.72rem;line-height:1.55}
+@media(max-width:900px){.home-study-workspace{grid-template-columns:1fr}.home-study-notes{margin-top:4px}#homeBibleNotes{min-height:280px}}
