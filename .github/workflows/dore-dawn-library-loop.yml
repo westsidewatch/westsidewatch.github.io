@@ -29,6 +29,8 @@ jobs:
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           assert r['results']['books']['published'] >= 4
           assert r['results']['books']['verified'] >= 3
+          assert 'growthToday' in r['results']
+          assert 'cadence' in r['results']
           assert len(r['results']['collections']) >= 5
           print(json.dumps(r['results'],ensure_ascii=False,indent=2))
           PY
@@ -37,6 +39,7 @@ jobs:
           name: dawn-library-loop-results
           path: |
             reports/DAWN-LIBRARY-LOOP.json
+            reports/DAWN-LIBRARY-GROWTH.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/catalog.json
       - name: Persist loop results
@@ -44,7 +47,7 @@ jobs:
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DAWN-LIBRARY-LOOP.json static/dawn-library/collections.json
+          git add reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json static/dawn-library/collections.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): persist library loop results [skip ci]'
             for attempt in 1 2 3 4; do
