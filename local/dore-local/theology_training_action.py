@@ -15,7 +15,7 @@ SCRIPTS={
 "theology.training.micro64":("theology-training-micro64.py",7200),
 "theology.training.eval64":("theology-training-eval64-candidate.py",3300),
 "theology.training.recovery64":("theology-training-recovery64.py",3900),
-"theology.shadow.acceptance64":("theology-shadow64-candidate.py",3900),
+"theology.shadow.acceptance64":("theology-training-shadow64-candidate.py",3900),
 }
 def _repo()->Path:
     return Path(os.environ.get("DORE_REPO_ROOT") or os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
