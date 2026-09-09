@@ -1,0 +1,55 @@
+name: Doré Design Phase Regression Diagnostic
+
+on:
+  push:
+    paths:
+      - 'dore-design/**'
+      - '.github/workflows/dore-design-phase-regression-diagnostic.yml'
+  workflow_dispatch:
+
+jobs:
+  phase4:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Phase 4 immutable publication regression
+        run: |
+          export DORE_DESIGN_DATA="${{ runner.temp }}/phase4-data"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/phase4-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/phase4-recommendations.json"
+          export DORE_DESIGN_PORT=4310
+          python3 dore-design/workspace_cli.py get >/dev/null
+          python3 dore-design/upgrade_living_fortress_v2.py >/dev/null
+          python3 dore-design/app_design2.py >/tmp/phase4.log 2>&1 &
+          pid=$!; trap 'kill $pid 2>/dev/null || true' EXIT; sleep 1
+          python3 dore-design/design2_http_acceptance.py
+  phase5:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Phase 5 recommendation regression
+        run: |
+          export DORE_DESIGN_DATA="${{ runner.temp }}/phase5-data"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/phase5-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/phase5-recommendations.json"
+          export DORE_DESIGN_PORT=4310
+          python3 dore-design/workspace_cli.py get >/dev/null
+          python3 dore-design/upgrade_living_fortress_v2.py >/dev/null
+          python3 dore-design/app_design2.py >/tmp/phase5.log 2>&1 &
+          pid=$!; trap 'kill $pid 2>/dev/null || true' EXIT; sleep 1
+          python3 dore-design/design2_phase5_acceptance.py
+  phase6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Phase 6 Multiwrite specimen regression
+        run: |
+          export DORE_DESIGN_DATA="${{ runner.temp }}/phase6-data"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/phase6-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/phase6-recommendations.json"
+          export DORE_DESIGN_PORT=4310
+          python3 dore-design/workspace_cli.py get >/dev/null
+          python3 dore-design/upgrade_living_fortress_v2.py >/dev/null
+          python3 dore-design/app_design2.py >/tmp/phase6.log 2>&1 &
+          pid=$!; trap 'kill $pid 2>/dev/null || true' EXIT; sleep 1
+          python3 dore-design/design2_phase6_acceptance.py
