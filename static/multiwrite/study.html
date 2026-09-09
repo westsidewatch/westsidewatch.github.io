@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#CEBD74">
+<title>DORÉ · 多寫 · 查經筆記</title>
+<meta name="description" content="多寫查經筆記 Prepare：用多雷搜索找經文，把證據留下來，整理成可繼續寫作與預備的查經稿。">
+<link rel="stylesheet" href="./styles.css?v=20260905-9">
+<link rel="stylesheet" href="./study.css?v=20260909-1">
+</head>
+<body class="study-page">
+<header class="topbar"><a class="brand-lockup" href="/multiwrite/" aria-label="DORÉ 多寫"><strong>DORÉ</strong><span>多寫</span></a><nav class="topnav"><a href="/multiwrite/">我的書</a><a href="/dore/search/">DORÉ SEARCH</a><a href="/one/">ONE</a><a href="/">WESTSIDE WATCH</a></nav></header>
+<main class="study-shell">
+<header class="study-heading"><div><p class="eyebrow">BIBLE STUDY · PREPARE</p><h1>查經筆記</h1><p>先找證據，再寫筆記。搜索是多雷自己的能力；普通查經搜索不啟動生成模型。</p></div><span class="runtime-badge" title="BI-3 keeps deterministic retrieval separate from model generation">SEARCH FIRST · MODEL OFF</span></header>
+<section class="study-grid" aria-label="查經筆記工作區">
+<section class="study-canvas" aria-labelledby="notesTitle"><div class="canvas-head"><div><p class="eyebrow">STUDY DOCUMENT</p><h2 id="notesTitle">預備稿</h2></div><input id="studyTitle" class="title-input" value="新的查經筆記" aria-label="查經筆記標題"></div><textarea id="studyNotes" class="study-notes" placeholder="從這裡開始寫。你加入的經文證據會保留在右側，正文仍由你自己決定。"></textarea><div class="saved-evidence"><div class="panel-head"><div><p class="eyebrow">KEPT EVIDENCE</p><h3>已留下的經文</h3></div><span id="keepCount">0</span></div><div id="keptList" class="kept-list"><p class="empty-copy">還沒有留下經文。</p></div></div></section>
+<aside class="study-rail" aria-labelledby="ghostTitle"><div class="panel-head"><div><p class="eyebrow">DORÉ · GHOST</p><h2 id="ghostTitle">找經文</h2></div><span>Prepare</span></div><form id="ghostForm" class="ghost-form"><label for="ghostQuery">可以輸入經文位置、記得的詞句或模糊問題</label><div class="ghost-input-row"><input id="ghostQuery" type="search" autocomplete="off" placeholder="例如：保羅說萬事互相效力在哪裡？"><button type="submit">搜索</button></div></form><div class="search-state" id="searchState" role="status">多雷搜索待命。這一步不啟動生成模型。</div><div class="rail-results" id="railResults"><article class="rail-card rail-card-intro"><strong>搜索仍是多雷</strong><p>BI-3 不建立第二套 Bible Search。按下搜索後把查詢交給既有 DORÉ Bible Search；找到經文後，可在這裡以 BibleReference 形式留下證據。</p><a id="searchHandoff" class="rail-link" href="/dore/search/" target="dore-bible-search">打開多雷搜索 →</a></article></div><section class="reference-capture" aria-labelledby="captureTitle"><p class="eyebrow">KEEP</p><h3 id="captureTitle">留下搜索結果</h3><p class="capture-help">把已確認的經文位置與需要保留的摘錄放回多寫。這一步只建立 StudyBlock，不改寫正文。</p><label>經文位置<input id="referenceInput" placeholder="Romans 8:28 / 羅馬書 8:28"></label><label>摘錄／證據<textarea id="evidenceInput" rows="4" placeholder="貼入你剛剛確認的經文或研究證據"></textarea></label><button id="keepEvidence" class="keep-button" type="button">Keep · 留下</button></section><details class="contract-preview"><summary>StudyDocument 契約預覽</summary><pre id="contractPreview"></pre></details></aside>
+</section>
+</main>
+<script type="module" src="./study.js?v=20260909-1"></script>
+</body>
+</html>
