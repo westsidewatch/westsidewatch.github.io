@@ -9,6 +9,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 UI = ROOT / "static" / "dore" / "dore-multiwrite-bible-study.js"
 MULTIWRITE_HOST = ROOT / "static" / "multiwrite" / "bible-study.js"
+MULTIWRITE_BOOK = ROOT / "static" / "multiwrite" / "book.js"
 ONE_HOST = ROOT / "static" / "one" / "one-bi3-embedded.js"
 
 
@@ -42,6 +43,14 @@ class MultiwriteBibleStudyUIContractTests(unittest.TestCase):
         self.assertIn("doc.kept", source)
         for forbidden in ("QMD", "Concord", "SWORD", "OpenAI"):
             self.assertNotIn(forbidden, source)
+
+    def test_multiwrite_book_and_study_host_share_schema_version(self):
+        book = MULTIWRITE_BOOK.read_text(encoding="utf-8")
+        study = MULTIWRITE_HOST.read_text(encoding="utf-8")
+        self.assertIn("const DB_VERSION = 3", book)
+        self.assertIn("const DB_VERSION = 3", study)
+        self.assertIn("const STUDY_STORE = 'studyDocuments'", book)
+        self.assertIn("createObjectStore(STUDY_STORE", book)
 
     def test_one_host_uses_same_prepare_controller_and_embedded_context(self):
         source = ONE_HOST.read_text(encoding="utf-8")
