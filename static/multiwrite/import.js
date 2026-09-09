@@ -4,9 +4,10 @@ const $ = (sel, root = document) => root.querySelector(sel);
 const state = { nodes: [], sources: [], files: [] };
 
 const DB_NAME = 'multiwrite-v1';
-const DB_VERSION = 2;
+const DB_VERSION = 3;
 const STORE = 'books';
 const DRAFT_STORE = 'drafts';
+const STUDY_STORE = 'studyDocuments';
 
 function openDb() {
   return new Promise((resolve, reject) => {
@@ -15,6 +16,7 @@ function openDb() {
       const db = request.result;
       if (!db.objectStoreNames.contains(STORE)) db.createObjectStore(STORE, { keyPath: 'id' });
       if (!db.objectStoreNames.contains(DRAFT_STORE)) db.createObjectStore(DRAFT_STORE, { keyPath: 'id' });
+      if (!db.objectStoreNames.contains(STUDY_STORE)) db.createObjectStore(STUDY_STORE, { keyPath: 'id' });
     };
     request.onsuccess = () => resolve(request.result);
     request.onerror = () => reject(request.error);
@@ -187,9 +189,7 @@ async function renderLibrary() {
         <h3>${escapeHtml(book.title)}</h3>
         <p>${escapeHtml(book.subtitle || '')}</p>
         <div class="book-meta">${book.nodes?.length ?? book.structure?.length ?? 0} 個內容單元</div>`;
-      return isGolden
-        ? `<a class="book-card book-card-link" href="/multiwrite/book.html?id=${encodeURIComponent(book.id)}" aria-label="打開《${escapeHtml(book.title)}》">${body}<div class="book-open">打開書稿 →</div></a>`
-        : `<article class="book-card">${body}</article>`;
+      return `<a class="book-card book-card-link" href="/multiwrite/book.html?id=${encodeURIComponent(book.id)}" aria-label="打開《${escapeHtml(book.title)}》">${body}<div class="book-open">打開書稿 →</div></a>`;
     }).join('');
   } catch (error) {
     list.innerHTML = `<div class="empty">書庫讀取失敗：${escapeHtml(error.message)}</div>`;
