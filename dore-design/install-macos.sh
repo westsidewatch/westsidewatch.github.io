@@ -31,15 +31,19 @@ launchctl kickstart -k "gui/$(id -u)/io.westsidewatch.dore-design"
 VALID=0
 for i in {1..60}; do
   if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then
-    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-01 >/tmp/dore-design-candidate.json 2>/dev/null || true
+    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-01 >/tmp/dore-design-candidate-01.json 2>/dev/null || true
+    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-02 >/tmp/dore-design-candidate-02.json 2>/dev/null || true
     if python3 - <<'PY'
 import json,sys
-try:h=json.load(open('/tmp/dore-design-health.json'))
-except Exception:h={}
-try:c=json.load(open('/tmp/dore-design-candidate.json'))
-except Exception:c={}
-ok=(h.get('service')=='dore-design' and h.get('source_of_truth')=='structured-workspace' and c.get('ok') is True and c.get('page_id')=='living-water-candidate-01')
-print(json.dumps({'ok':ok,'health':h,'candidate':c},ensure_ascii=False))
+
+def load(path):
+    try:return json.load(open(path))
+    except Exception:return {}
+h=load('/tmp/dore-design-health.json')
+c1=load('/tmp/dore-design-candidate-01.json')
+c2=load('/tmp/dore-design-candidate-02.json')
+ok=(h.get('service')=='dore-design' and h.get('source_of_truth')=='structured-workspace' and c1.get('ok') is True and c1.get('page_id')=='living-water-candidate-01' and c2.get('ok') is True and c2.get('page_id')=='living-water-candidate-02')
+print(json.dumps({'ok':ok,'health':h,'candidate01':c1,'candidate02':c2},ensure_ascii=False))
 sys.exit(0 if ok else 1)
 PY
     then VALID=1;break;fi
@@ -58,7 +62,8 @@ fi
   echo "--- runtime root ---"; echo "$ROOT"
   echo "--- app ---"; echo "$APP"
   echo '--- health ---'; cat /tmp/dore-design-health.json 2>/dev/null || true
-  echo; echo '--- candidate ---'; cat /tmp/dore-design-candidate.json 2>/dev/null || true
+  echo; echo '--- candidate 01 ---'; cat /tmp/dore-design-candidate-01.json 2>/dev/null || true
+  echo; echo '--- candidate 02 ---'; cat /tmp/dore-design-candidate-02.json 2>/dev/null || true
   echo; echo '--- port owner ---'; lsof -nP -iTCP:4310 -sTCP:LISTEN 2>/dev/null || true
   echo '--- dore-design.err.log ---'; tail -n 120 "$LOGDIR/dore-design.err.log" 2>/dev/null || true
   echo '--- dore-design.out.log ---'; tail -n 80 "$LOGDIR/dore-design.out.log" 2>/dev/null || true
