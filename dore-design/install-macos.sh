@@ -26,9 +26,10 @@ for i in {1..30}; do
     python3 - <<'PY'
 import json
 h=json.load(open('/tmp/dore-design-health.json'))
-assert h.get('version')=='2.0-dev-phase4'
-assert h.get('resident_entrypoint')=='app_design2.py'
-assert h.get('immutable_publication') is True
+assert h.get('service')=='dore-design'
+assert h.get('version')=='2.0-production'
+assert h.get('source_of_truth')=='structured-workspace'
+assert h.get('ui')=='design2'
 print(json.dumps(h,ensure_ascii=False))
 PY
     if [[ "${DORE_SKIP_CONTROL_PLANE_REFRESH:-0}" != "1" ]]; then
