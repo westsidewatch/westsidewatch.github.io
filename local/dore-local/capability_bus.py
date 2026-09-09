@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 from urllib import request
 
+from dore_core.bible.query_planner import plan_bible_query
 from dore_core.retrieval.living import retrieve as living_retrieve
 from dore_core.substrates.longmemory import LongMemoryConfig, available as longmemory_available, recall as longmemory_recall
 from dore_core.substrates.qmd import (
@@ -59,6 +60,22 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "load": "deferred",
         "authority": False,
         "result": "dore-search-results",
+        "identity": "dore",
+        "execution_policy": "lowest-sufficient-capability",
+    },
+    "bible.query-plan": {
+        "id": "bible.query-plan",
+        "type": "context",
+        "service": "bible-routing",
+        "status": "existing",
+        "execution": "in-process",
+        "provider": "dore-core",
+        "load": "always-light",
+        "authority": False,
+        "result": "bible-query-plan",
+        "identity": "dore",
+        "execution_policy": "lowest-sufficient-capability",
+        "model_required": False,
     },
     "knowledge.recall": {
         "id": "knowledge.recall",
@@ -141,12 +158,37 @@ def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
     return "unknown"
 
 
+def _bible_query_plan(args: dict[str, Any]) -> dict[str, Any]:
+    query = str(args.get("query") or args.get("text") or "").strip()
+    if not query:
+        return {"ok": False, "status": "failed", "error": {"code": "invalid_args", "message": "query or text is required"}}
+    plan = plan_bible_query(
+        query,
+        explicit_search=bool(args.get("explicit_search", False)),
+        deep=bool(args.get("deep", False)),
+    )
+    return {
+        "ok": True,
+        "status": "completed",
+        "capability": "bible.query-plan",
+        "plan": plan.to_dict(),
+        "dore_identity": True,
+        "large_model_invoked": False,
+    }
+
+
 def _fuzzy_search(args: dict[str, Any], caller_product: str | None = None) -> dict[str, Any]:
     query = str(args.get("query") or args.get("text") or "").strip()
     if not query:
         return {"ok": False, "status": "failed", "error": {"code": "invalid_args", "message": "query or text is required"}}
     if not qmd_available():
         return {"ok": False, "status": "not_ready", "capability": "context.fuzzy-search", "authority": False, "error": {"code": "substrate_unavailable", "message": "local retrieval substrate is not installed on this runtime"}}
+
+    bible_plan = plan_bible_query(
+        query,
+        explicit_search=bool(args.get("explicit_search", False)),
+        deep=bool(args.get("deep", False)),
+    )
 
     requested_collection = str(args.get("collection") or os.environ.get("DORE_QMD_COLLECTION") or "").strip()
     if not requested_collection or requested_collection == PRODUCTION_COLLECTION:
@@ -191,6 +233,14 @@ def _fuzzy_search(args: dict[str, Any], caller_product: str | None = None) -> di
             "memory_recall": plan.recall_memory,
             "reason": plan.reason,
         },
+        "bible_plan": bible_plan.to_dict(),
+        "capability_runtime": {
+            "identity": "dore",
+            "execution_policy": "lowest-sufficient-capability",
+            "execution_level": bible_plan.execution_level,
+            "model_invoked": False,
+            "escalation_available": bible_plan.reasoning_allowed or bible_plan.semantic_allowed,
+        },
         "context_policy": internal.get("context_policy"),
         "search_scope": "production" if qmd_config.collection == PRODUCTION_COLLECTION else "requested-collection",
         "authority": False,
@@ -198,7 +248,9 @@ def _fuzzy_search(args: dict[str, Any], caller_product: str | None = None) -> di
         "core_route": {
             "capability": "context.fuzzy-search",
             "caller_product": caller_product,
+            "provider": "dore-search",
             "transport": "core-adapter",
+            "identity": "dore",
         },
     }
 
@@ -222,7 +274,9 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
     try:
         if capability == "image.generate":
             return _image_generate(args, caller_product)
-        if capability == "context.fuzzy-search":
+        if capability == "bible.query-plan":
+            result = _bible_query_plan(args)
+        elif capability == "context.fuzzy-search":
             result = _fuzzy_search(args, caller_product)
         elif capability == "knowledge.recall":
             result = _knowledge_recall(args)
