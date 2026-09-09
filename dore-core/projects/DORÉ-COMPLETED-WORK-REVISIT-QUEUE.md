@@ -15,6 +15,9 @@ This queue is only for work that was legitimately completed for its original mil
 **Why it may deserve revisit**
 The repair milestone is verified on deployed evidence, including consolidated state, deduplication, schema reconciliation, heartbeat success and Actions probing. However, current visible evidence is narrow and does not yet demonstrate heterogeneous signal classes, sustained volume, duplicate/error rates, or long-horizon learning quality.
 
+**2026-09-09 revalidation**
+The watchlist condition persists without becoming a production blocker. `sensory-active.json` still contains the same three signals in `RESEARCHING` state since 2026-08-28 with no assigned `brain_node`, while the 2026-09-09 heartbeat remains `ok: true` and the GitHub Actions probe also remains `ok: true`. This strengthens the lifecycle/provenance concern: observability is alive, but observability health is not end-to-end evidence that research signals reach an explicit terminal disposition. Preserve the historical repair milestone as complete; treat long-lived unresolved signal state as maintenance/revisit debt rather than sensory regression.
+
 **Do not reopen now because**
 The original repair objective has been met and there is no present production failure. P01 and other active mission-critical work have higher leverage.
 
@@ -24,10 +27,11 @@ Raise priority if any of the following occurs:
 - a schema migration changes signal/brain-node reconciliation;
 - Doré begins ingesting materially new classes of sensory signal;
 - enough real traffic exists to support a meaningful volume/quality benchmark;
-- a regression or learning-quality benchmark can be added at low marginal cost.
+- a regression or learning-quality benchmark can be added at low marginal cost;
+- long-lived `RESEARCHING` signals continue without an explicit terminal-state policy or disposition audit.
 
 **Desired future evaluation**
-Measure heterogeneous-signal success, deduplication accuracy, failed-claim/retry behavior, long-horizon persistence, false consolidation risk and sampled research-answer quality.
+Measure heterogeneous-signal success, deduplication accuracy, failed-claim/retry behavior, long-horizon persistence, false consolidation risk and sampled research-answer quality. For the currently aged signals, persist one evidence-backed terminal disposition per signal—resumed/completed, intentionally abandoned, superseded/deduplicated, or failed with retry/escalation state—and add an age/terminal-state invariant so a fresh heartbeat cannot mask indefinitely unresolved signal work.
 
 **Current disposition:** keep closed; watch for trigger.
 
