@@ -1,13 +1,13 @@
 /* DORÉ site capability bridge: Westside Watch products -> Native Messaging -> DORÉ Core. */
 const SITE_CAPABILITY='context.fuzzy-search';
 function safeDetail(value){
-  if(typeof cloneInto==='function')return cloneInto(value,document.defaultView);
+  if(typeof cloneInto==='function')return cloneInto(value,window);
   return value;
 }
 function emitResult(requestId,payload){
-  document.dispatchEvent(new CustomEvent('dore:context-fuzzy-search-result',{detail:safeDetail({request_id:requestId,payload})}));
+  window.dispatchEvent(new CustomEvent('dore:context-fuzzy-search-result',{detail:safeDetail({request_id:requestId,payload})}));
 }
-document.addEventListener('dore:context-fuzzy-search',async event=>{
+window.addEventListener('dore:context-fuzzy-search',async event=>{
   const detail=event.detail||{};
   if(detail.capability!==SITE_CAPABILITY||!detail.request_id)return;
   const context=detail.context&&typeof detail.context==='object'?detail.context:{};
