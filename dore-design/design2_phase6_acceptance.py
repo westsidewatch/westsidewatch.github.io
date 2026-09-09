@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """End-to-end Phase 6 acceptance for the Multiwrite production specimen."""
-import json,urllib.request
+import json,os,urllib.request
 
-BASE='http://127.0.0.1:4310'
+BASE=f"http://127.0.0.1:{os.environ.get('DORE_DESIGN_PORT','4310')}"
 
 def get_json(path):
     with urllib.request.urlopen(BASE+path) as r:return json.load(r)
