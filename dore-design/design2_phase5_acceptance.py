@@ -11,15 +11,16 @@ def post(path,payload):
     with urllib.request.urlopen(req) as r:return json.load(r)
 
 rev=int(get('/api/preview/status')['revision'])
-cmd={'op':'node.nudge','page_id':'multiwrite-home','ids':['mw-story-title'],'dx':8,'dy':0}
+cmd={'op':'node.text','page_id':'multiwrite-home','id':'mw-story-title','text':'PHASE 5 RECOMMENDATION ACCEPTED'}
 rec1=post('/api/design2/recommendation',{'page_id':'multiwrite-home','commands':[cmd],'reason':'test reject'})['recommendation']
 rej=post('/api/design2/recommendation/decision',{'recommendation_id':rec1['id'],'decision':'reject','revision':rev})['recommendation']
 assert rej['decision']=='reject' and rej['result_revision']==rev
-rec2=post('/api/design2/recommendation',{'page_id':'multiwrite-home','commands':[cmd],'reason':'test accept','signals':['alignment']})['recommendation']
+rec2=post('/api/design2/recommendation',{'page_id':'multiwrite-home','commands':[cmd],'reason':'test accept','signals':['renderer-visible-text']})['recommendation']
 acc=post('/api/design2/recommendation/decision',{'recommendation_id':rec2['id'],'decision':'accept','revision':rev})['recommendation']
 assert acc['decision']=='accept' and acc['result_revision']>rev
-log=get('/api/design2/recommendations')['log']
-rows={e['id']:e for e in log['events']}
+workspace=get('/api/workspace');page=next(p for p in workspace['pages'] if p['id']=='multiwrite-home');node=next(n for n in page['nodes'] if n['id']=='mw-story-title')
+assert node['text']=='PHASE 5 RECOMMENDATION ACCEPTED'
+log=get('/api/design2/recommendations')['log'];rows={e['id']:e for e in log['events']}
 assert rows[rec1['id']]['decision']=='reject'
 assert rows[rec2['id']]['decision']=='accept'
 assert rows[rec2['id']]['result_revision']==acc['result_revision']
