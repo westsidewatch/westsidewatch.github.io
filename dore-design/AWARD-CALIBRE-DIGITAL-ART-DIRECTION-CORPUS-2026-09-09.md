@@ -20,304 +20,389 @@ Internal design bar: **Red Dot-level or reject**. This is an aspirational benchm
 
 ---
 
+## New active hypotheses from 2026-09-09 design notes
+
+These are not yet frozen architecture; they must be tested through further exploration and prototypes.
+
+### H1 — New Westside may itself be “a Bible in motion”
+
+The We Choose the Moon precedent opens a larger possibility than a single Scripture feature: the **outer skeleton of New Westside itself may be biblical history**.
+
+Candidate thesis:
+
+> `Entering New Westside = entering the moving history of Scripture, from Old Testament to New Testament.`
+
+This may represent a return to the original purpose more faithfully than wrapping the site in a conventional publication shell and placing Scripture inside it as one section.
+
+This does **not** yet mean every page must be a timeline or animation. It means the site's global spatial/narrative skeleton may derive from salvation history, while Journal, ONE, 多寫, Archive, Search, Topics and other functions appear as living structures inside that world.
+
+### H2 — Doré engraving must define its own motion physics
+
+Do not begin with `Which animation library should we use?`
+
+Begin with:
+
+> `What physical laws already exist inside Doré engraving?`
+
+Candidate native visual physics:
+- black engraved line / hatch density;
+- light emerging from darkness;
+- paper grain and plate edge;
+- foreground / middle / background depth planes;
+- large-scale crop and continuation;
+- detail becoming visible only as the viewer approaches;
+- ink saturation / disappearance;
+- shadow fields opening into illuminated spaces;
+- static figures gaining force through camera movement rather than limb animation;
+- engraved architecture becoming spatial thresholds.
+
+These should generate a **Doré Motion Grammar**, rather than applying generic parallax, carousel or cinematic presets.
+
+### H3 — the site may be a river of multiple horizontal axes, not one strip
+
+A single horizontal scroll may be too literal and too poor.
+
+Candidate spatial metaphor:
+
+> `Entering New Westside feels like entering a river of history and time.`
+
+The experience may be composed of **five, six or more horizontal currents**, potentially using repeated 8:5 visual fields or related cinematic proportions. Different streams can carry eras, sections, columns, themes and editorial material. They may cross, recede, reappear and reveal one another.
+
+Possible experiential qualities:
+- entering history rather than opening a homepage;
+- cinema-scale visual fields;
+- multiple temporal currents rather than one flat timeline;
+- Journal sections, themes, books and places appearing as part of the historical flow;
+- light moving across city / stone / water surfaces;
+- living-water imagery with fish, plants, reflections and hidden depth;
+- visual life everywhere, but motion remaining disciplined rather than decorative.
+
+This is the first strong candidate for the missing interface metaphor:
+
+> **Scripture / salvation history as a living river of time.**
+
+It must be compared against alternative metaphors such as scroll/unrolling, pilgrimage, monumental frieze, archive, city, temple and constellation. The river metaphor is promising, not yet accepted.
+
+---
+
 ## Tier A — closest precedents to the New Westside Scripture Panorama
 
 ### 1. The Boat — SBS / Nam Le / Matt Huynh
 
 Why it matters:
 - A literary work was not decorated with motion; it was re-authored as a native digital reading form.
-- 49-page source became 222 hand-painted illustrations, 59 animated sequences, archival images, video and responsive sound.
 - Reader scroll becomes narrative pacing.
 - Illustration, text, sound and movement form one experience rather than separate modules.
-- Recognised by World Illustration Awards, AIMIA, FWA, Awwwards and Webby nomination/honours.
+- Recognised by major interactive/editorial awards including a Webby nomination for Best Individual Editorial Experience.
 
 Transferable principle:
 > `Illustration is not media inside the page; illustration can become the page's narrative space.`
 
 Doré application:
 - Strongest precedent so far for Doré engravings becoming scripture space rather than cards/backgrounds.
-- Study how largely static artwork can gain temporal force through layering, movement, occlusion, scale and scroll-bound sound/reveal.
+- Study how largely static artwork can gain temporal force through layering, movement, occlusion, scale and scroll-bound reveal.
 - Critical warning: do not imitate storm/parallax aesthetics. Learn the relationship between reading pace and image sequence.
 
 Experiment:
 - One biblical micro-narrative, 5–8 Doré scenes, no cards, no slideshow controls.
 - Scroll controls scene progression while text remains editorially readable.
-- Compare with ordinary page version and measure whether narrative comprehension and visual continuity improve.
 
 ### 2. We Choose the Moon — JFK Presidential Library / Martin Agency / Domani
 
 Why it matters:
 - Turned Apollo 11 history into a time-based digital journey rather than an archive page.
-- 11-stage mission structure, real historical audio, images and animated mission progress.
-- Original launch reproduced in real time; the site's information architecture was the historic journey itself.
-- Won major Cannes, D&AD, One Show, FWA and museum awards.
+- The site's information architecture was the historic journey itself.
+- Won the 2010 Online Journalism Award for Multimedia Feature Presentation among other major recognition.
 
 Transferable principle:
 > `When the source already has a canonical chronology, chronology itself can become the interface.`
 
 Doré application:
 - Scripture already contains chronology, eras, books, events, geography and canonical structure.
-- OT/NT panorama can make biblical history itself the global navigation spine.
+- This now raises a larger hypothesis: **the entire New Westside outer skeleton may derive from Scripture history**, not only one OT/NT subpage.
 - ONE can behave like the archival/deep-information layer behind each stage.
 
 Experiment:
-- Build a canonical structured prototype: `Testament -> Era -> Event -> Book -> ONE target`.
-- Visual timeline must remain subordinate to narrative art direction rather than become a data-dashboard timeline.
+- Prototype two architectures side by side:
+  1. conventional publication shell with Scripture Panorama inside;
+  2. Scripture-history shell with publication functions embedded inside it.
+- Compare clarity, identity, extensibility and emotional force.
 
 ### 3. The Museum of the World — British Museum + Google Arts & Culture Lab
 
 Why it matters:
 - Maps a huge cultural collection onto time and continents.
 - Visitors navigate relationships rather than browse a flat catalogue.
-- WebGL spatialisation transforms archive structure into an explorable world.
 
 Transferable principle:
 > `A large corpus becomes comprehensible when semantic relationships are spatialised.`
 
 Doré application:
-- Scripture panorama should not only be linear chronology. Person/place/book/prophecy/fulfilment relationships can open around the main line.
-- The main visual scroll can remain simple while ONE exposes deeper graph relationships.
-
-Failure risk:
-- Museum-of-data aesthetics can overwhelm scripture and destroy editorial calm.
-- Desktop-only spatial systems are unacceptable as the final New Westside solution.
-
-Experiment:
-- Keep one dominant narrative axis; expose graph relationships only on intentional interaction.
+- Scripture panorama should not only be linear chronology. Person/place/book/prophecy/fulfilment relationships can open around the main flow.
+- The main visual current can remain simple while ONE exposes deeper graph relationships.
 
 ### 4. Communication through the Ages — Red Dot awarded parallax site
 
 Why it matters:
-- Evolution through eras is represented by controlled visual continuity: fixed human position while background/costume/context changes.
-- Parallax is used to express gradual historical transformation, not merely depth.
+- Historical evolution is represented through controlled continuity: selected visual elements remain stable while eras transform around them.
 
 Transferable principle:
 > `Hold one visual invariant while history changes around it.`
 
 Doré application:
-- Strong candidate for covenant / promise / temple / sacrifice / kingdom motifs that persist while their historical expression changes.
-- Could produce visual continuity across OT and NT without repetitive templates.
-
-Experiment:
-- Choose one invariant symbol (light, altar, lamb, temple threshold, path, scroll) and test its transformation across 6 scenes.
+- Candidate invariants: light, altar, lamb, temple threshold, path, river, scroll, stone, city.
+- A river-current version could keep one living spatial field while eras change inside and around it.
 
 ### 5. KUUM — Red Dot awarded website
 
 Why it matters:
 - Product geometry and colour become the site's own interaction language.
-- Responsive navigation relies primarily on scrolling/sliding.
-- Jury specifically praised meticulous detail inside a restrained layout.
 
 Transferable principle:
 > `The subject's intrinsic formal properties should generate the interface language.`
 
 Doré application:
-- New Westside should not paste a generic motion system onto Doré engravings.
-- Engraving characteristics — line, darkness, light, plate edge, paper, scale, cropping, engraving density — should generate motion and transition rules.
+- Doré engraving characteristics — line, darkness, light, plate edge, paper, scale, cropping, engraved depth — must generate motion and transitions.
 
 Experiment:
-- Derive 5 motion rules directly from engraving behaviour, not from UI libraries.
+- Derive at least 8 motion rules directly from engraving visual physics before choosing implementation libraries.
 
 ---
 
 ## Tier B — spatial narrative / site-as-world precedents
 
-### 6. Hollow — Elaine McMillion Sheldon / Peabody winner
-
-Why it matters:
-- Peabody described it as an interactive collage / digitised diorama.
-- Visitors meander through people, memories, photos, statistics and place at their own pace.
-- Spatial exploration becomes documentary structure.
+### 6. Hollow — Elaine McMillion Sheldon
 
 Transferable principle:
 > `A site can be a place that contains stories, not merely a sequence of pages.`
 
 Doré application:
-- Biblical eras can behave like inhabited editorial spaces rather than menu categories.
-- Useful for Jerusalem, wilderness, Galilee, temple and exile experiences.
-
-Risk:
-- Free exploration can weaken canonical narrative progression.
-- Doré needs a strong main spine plus optional spatial wandering.
+- Biblical eras may behave like inhabited editorial spaces rather than menu categories.
 
 ### 7. Bear 71 — NFB / Jam3
 
 Why it matters:
-- Linear narration is laid over a data-driven spatial world containing moving animals and surveillance data.
-- NFB explicitly describes the project as intersection of story, form and technology.
-- Multi-user/data world is part of the thesis, not an effect.
+- Linear narration is laid over a data-driven spatial world containing moving entities and surveillance information.
+- Won major interactive recognition including FWA Site of the Year, Cannes Gold Cyber Lion and World Press Photo Digital Storytelling honours.
 
 Transferable principle:
 > `Linear story and explorable system can coexist.`
 
 Doré application:
-- Scripture panorama can carry canonical narrative while ONE supplies explorable data/relationships.
-- Confirms that panorama and ONE need not compete: one can be narrative spine, the other explorable knowledge field.
+- Scripture current can carry canonical narrative while ONE supplies explorable data/relationships.
+- Supports a `living field` model rather than one closed animation strip.
 
 ### 8. Inside Abbey Road — Google Creative Lab
-
-Why it matters:
-- Physical spatial navigation is also historical/contextual navigation.
-- 360-degree spaces contain archival videos/images and audio precisely where events happened.
-- One Show recognised it for website innovation; Webby-era coverage highlighted navigation/structure.
 
 Transferable principle:
 > `Deep information is strongest when attached to the spatial/narrative location where it belongs.`
 
 Doré application:
-- ONE entry points should emerge contextually from the panorama scene instead of as generic buttons.
-- Place, person, chapter, map and article links belong to their visual moment.
+- ONE targets should emerge from the exact historical/visual scene in which they become meaningful.
 
 ### 9. Seven Digital Deadly Sins — Guardian + NFB / Jam3
-
-Why it matters:
-- Content is organised as a weightless constellation rather than conventional article hierarchy.
-- Video, illustration, text and surveys reorganise during exploration.
-- Multiple Webby People's Voice wins plus Awwwards/FWA/Applied Arts/Communication Arts recognition.
 
 Transferable principle:
 > `A thematic corpus may need constellation logic rather than chronological logic.`
 
 Doré application:
-- Not for main OT/NT chronology, but highly relevant to Topics, theological motifs, prophecy/fulfilment, repeated biblical themes and Journal thematic exploration.
+- Useful for Topics, theological motifs, prophecy/fulfilment and Journal thematic material crossing the main historical flow.
 
-### 10. In Pieces / Species in Pieces — Bryan James
-
-Why it matters:
-- 30 endangered animals are generated from the same 30 geometric pieces.
-- A single conceptual mechanism explains both visual identity and subject matter.
-- Interactive exhibition is memorable because form and message are inseparable.
+### 10. Species in Pieces — Bryan James
 
 Transferable principle:
 > `The best signature interaction is a metaphor, not an effect.`
 
 Doré application:
-- The horizontal scripture animation needs one equally inevitable conceptual relationship to Scripture/Doré engraving.
-- “Horizontal because it looks cinematic” is too weak.
-- “Scroll/unrolling/history/revelation/canon/journey” must be tested until interaction and theological/editorial meaning become inseparable.
+- The new candidate `river of history / living water` must prove that its motion, theology, information architecture and visual system are inseparable. Otherwise it remains only a poetic description.
 
 ---
 
-## Tier C — radical digital-art-direction precedents
+## Tier C — new award-calibre horizontal / spatial cases added in this round
 
-### 11. The Wilderness Downtown — Google Creative Lab / Chris Milk / Aaron Koblin
+### 11. Bascule — D&AD Yellow Pencil, 2006
 
 Why it matters:
-- Uses the user's childhood address to personalise the work through Street View and choreographed browser windows.
-- The medium itself becomes part of the emotional story.
-- Webby winner/People's Voice, One Show Gold/Silver, D&AD Black/Yellow recognition.
+- One continuous 10,000-pixel page made scrolling itself the experience at a time when Flash sites usually relied on conventional scene navigation.
+- D&AD awarded the work a Yellow Pencil.
+
+Transferable principle:
+> `A familiar input can become the central spatial instrument when the entire site is authored around it.`
+
+Doré application:
+- Do not fear a site whose global navigation is fundamentally spatial, provided the spatial system is conceptually clear and usability remains intentional.
+
+Risk:
+- Historical precedent also warns against equating unconventional navigation with timeless usability.
+
+### 12. Microdot — D&AD Wood Pencil, 2026
+
+Why it matters:
+- Editing software's scrubber mechanics become website navigation.
+- Images develop like darkroom negatives while scrolling.
+- Slitscan processing drives transitions.
+- Despite heavy media/effects, the project reportedly maintained very high performance/accessibility/best-practice scores.
+
+Transferable principle:
+> `Borrow the native control metaphor of the subject's craft, then turn it into navigation.`
+
+Doré application:
+- Strong support for deriving interaction from **engraving / book / Scripture materiality** rather than generic web gestures.
+- Candidate examples: plate reveal, engraved darkness opening into light, scroll-edge/scrubber hybrids, page/plate registration marks.
+
+Experiment:
+- Build one prototype in which navigation control itself is derived from an engraving or scroll-making process.
+
+### 13. Farawayfarers — Red Dot / Lovie / other award recognition
+
+Why it matters:
+- Homepage uses an endless horizontal scroll with crosslinks and repeated content relationships.
+- The designers describe the result as a living travel experience rather than a conventional portfolio.
+
+Transferable principle:
+> `Horizontal continuity can hold multiple layers of reading and crosslinking, not only one linear sequence.`
+
+Doré application:
+- This is especially relevant to the new **multiple-current** hypothesis: horizontal axes can contain second-layer links and re-entry points rather than behave as one irreversible timeline.
+
+Experiment:
+- Prototype 3 horizontal currents with controlled crosslinks and test whether a user can move between chronology, Journal content and ONE without losing orientation.
+
+### 14. Prevint — multi-awarded horizontal-navigation precedent
+
+Why it matters:
+- Uses horizontal navigation for the high-level conceptual spectrum, then changes interaction mode for deeper storytelling.
+
+Transferable principle:
+> `One spatial grammar does not need to dominate every depth level.`
+
+Doré application:
+- Strong warning against forcing horizontal motion into every ONE/article/detail page.
+- Global historical river may be horizontal/spatial while deep reading returns to stable vertical editorial reading.
+
+### 15. MyFry — Penguin UK / Stefanie Posavec
+
+Why it matters:
+- The whole book becomes a visual index: chronology and thematic connections coexist in one navigable representation.
+- Won Guardian Digital Innovation recognition and appeared in the D&AD Awards book.
+
+Transferable principle:
+> `A canonical text can expose multiple simultaneous reading paths without destroying the original order.`
+
+Doré application:
+- Extremely relevant to Scripture: canonical order can remain intact while themes, people, places and fulfilment arcs cross-link across the historical field.
+- ONE can be the mechanism that resolves those alternative paths into study depth.
+
+Experiment:
+- Select one biblical motif and show it crossing 5 chronological scenes without visually overwhelming the main axis.
+
+### 16. Animate and Create — Awwwards Honorable Mention
+
+Why it matters:
+- Uses split-screen and horizontal scrolling to reveal different production stages.
+
+Transferable principle:
+> `Horizontal space can compare parallel layers, not only represent time.`
+
+Doré application:
+- Candidate use: visible historical narrative above/beside hidden theological/editorial layer; or image current paired with textual/scriptural current.
+
+### 17. Brontide — Awwwards Site of the Day
+
+Why it matters:
+- Uses horizontal layout, parallax, transitions, 3D/WebGL and navigation as an integrated product presentation system.
+
+Transferable principle:
+> `Horizontal motion can support strong product identity when image treatment and navigation are designed as one system.`
+
+Doré application:
+- Useful technical/art-direction benchmark, but conceptually weaker for Scripture than We Choose the Moon / The Boat / MyFry. Keep as implementation reference rather than thesis reference.
+
+---
+
+## Tier D — radical digital-art-direction precedents retained
+
+### 18. The Wilderness Downtown — Google Creative Lab / Chris Milk / Aaron Koblin
 
 Transferable principle:
 > `Native browser capability can become narrative language.`
 
 Doré application:
-- Do not assume the final scripture work must look like a conventional webpage.
-- Browser viewport, scroll, panels, layered windows, typography and user input can become part of art direction.
-- But avoid gimmick: New Westside needs contemplative coherence, not novelty for novelty's sake.
+- Browser viewport, layered panels, user position and controlled multi-window/multi-field choreography may be design material.
 
-### 12. The Johnny Cash Project — Chris Milk / Aaron Koblin
-
-Why it matters:
-- Thousands of participant drawings continuously reconstitute one music video.
-- The artifact remains alive because community contribution is built into the visual system.
-- Webby winner and NetArt recognition.
+### 19. The Johnny Cash Project — Chris Milk / Aaron Koblin
 
 Transferable principle:
 > `A digital publication can remain a living work rather than a finished static edition.`
 
 Doré application:
-- Long-term, Journal, Bible-study notes, community testimony or human-curated annotations could feed living layers around Scripture without altering canonical text.
-- This is not an immediate panorama requirement but is important to the phrase: “讓多雷的生命在舊約新約中活出來.”
+- Long-term relevance to Journal/community/annotation layers around Scripture.
 
-### 13. Penumbra — JetStyle / CSS Design Awards
-
-Why it matters:
-- Storytelling progresses through Lottie/shader animation around one celestial brand concept.
-- Useful current-era reference for combining authored visual atmosphere with modern browser rendering.
+### 20. Penumbra — contemporary shader/Lottie storytelling reference
 
 Transferable principle:
 > `Motion technology should serve one coherent visual cosmology.`
 
 Doré application:
-- Evaluate shader/mask/grain/light techniques as supporting engraving atmosphere, not as standalone tech demos.
+- Evaluate shader/mask/grain/light techniques as support for engraving atmosphere, not as independent spectacle.
 
 ---
 
-## First synthesis: what the precedents actually say
+## Second synthesis — what changed in this round
 
-The strongest references do **not** converge on one implementation technology. They converge on a deeper structure:
+### 1. The largest new possibility is architectural, not technical
 
-1. **Source material generates the interface metaphor.**
-   - Apollo mission -> mission timeline.
-   - museum collection -> time/culture field.
-   - endangered species -> fragments.
-   - refugee boat story -> unstable illustrated journey.
-   - wooden blocks -> block-based movement/form.
+We Choose the Moon no longer reads merely as a reference for the OT/NT Panorama. It suggests:
 
-2. **Navigation and story become the same system.**
-   The user does not finish a decorative animation and then enter the “real site.” Interaction itself advances through the subject.
+> **New Westside's outer skeleton itself may be salvation history.**
 
-3. **Art direction precedes effects.**
-   Award calibre comes from conceptual unity and obsessive detail, not motion density.
+This should be treated as a serious competing architecture and tested against the current publication-first shell.
 
-4. **A strong invariant holds the experience together.**
-   This may be chronology, space, one visual grammar, a persistent object, one geometric system or a continuous voice.
+### 2. `Horizontal` is becoming plural
 
-5. **Deep content attaches to the narrative position where it becomes meaningful.**
-   This is the strongest architectural argument for Panorama -> ONE.
+The better model may not be one long strip but a **field of horizontal currents**:
 
-6. **The best digital works exploit web-native behaviour while remaining legible.**
-   The browser is not merely a container for print design.
+`main chronology current + editorial current + thematic current + place/person current + Journal current + ONE entry current`
 
----
+They should not all move at once or receive equal visual weight. The challenge is orchestration.
 
-## New Westside implications — current hypotheses to test
+### 3. `River of history / living water` is the strongest new interface-metaphor candidate
 
-### Hypothesis A — Scripture Panorama is a navigation system, not a hero animation
+It has unusual potential because it can unite:
+- time;
+- movement;
+- biblical history;
+- Living Water identity;
+- light/reflection;
+- depth beneath the visible surface;
+- multiple currents;
+- life/forms appearing within one continuous world.
 
-Likely structure:
+But the metaphor must survive critique. If it produces only watery decoration, it fails.
 
-`New Westside -> Scripture -> OT / NT panorama -> era / event / book -> ONE`
+### 4. Doré Motion Grammar should be learned before implementation selection
 
-The panorama can appear in reduced visual-DNA forms elsewhere, but its full form should have a specific architectural home.
+The sequence should be:
 
-### Hypothesis B — horizontal movement must have biblical/editorial meaning
+`engraving visual physics -> motion grammar -> interaction primitive -> implementation technology`
 
-Candidate metaphors to test rather than assume:
-- scroll/unrolling;
-- pilgrimage/journey;
-- canonical sequence;
-- history moving toward fulfilment;
-- revelation unfolding;
-- visual frieze / monumental engraving panorama.
+Not:
 
-No metaphor is accepted yet.
+`GSAP/WebGL library -> effect -> attempt to make it look Doré-like`.
 
-### Hypothesis C — Doré engraving itself should determine motion grammar
+### 5. Deep reading probably should not remain horizontal
 
-Candidate primitives:
-- plate-to-plate reveal;
-- light emerging from black hatch density;
-- foreground/background engraving-plane separation;
-- crop continuation across scene boundaries;
-- paper/ink transitions;
-- fixed symbolic anchor with changing historical world;
-- restrained depth rather than generic parallax.
+Prevint and other precedents strengthen a likely architecture:
 
-### Hypothesis D — ONE is the knowledge depth layer
+`spatial/horizontal global exploration -> deliberate entry -> stable editorial reading / ONE depth`
 
-The panorama should know structured semantic targets from the beginning:
-
-`Testament -> Era -> Book -> Event -> Person -> Place -> Chapter -> ONE target`
-
-This must be data/semantic architecture, not hard-coded visual hyperlinks.
+This protects scripture reading, accessibility and comprehension.
 
 ---
 
 ## Doré feeding protocol for this project
 
 Every Storybook/prototype iteration should preserve:
-
 - design thesis;
 - references consulted;
 - extracted principle (not copied appearance);
@@ -330,7 +415,7 @@ Every Storybook/prototype iteration should preserve:
 - final reusable rule or pattern;
 - provenance/licensing status.
 
-The learning object is therefore:
+The learning object is:
 
 `reference -> principle -> hypothesis -> artifact -> critique -> revision -> retained capability`
 
@@ -340,13 +425,13 @@ Not:
 
 ## Next corpus round
 
-Deepen to 15–20 cases with special attention to:
-- award-winning horizontal/spatial editorial works;
-- museum/cultural timeline experiences;
-- magazine/editorial projects where motion and typography form the navigation system;
-- contemporary WebGL/GSAP/scroll implementations with source available;
-- high-quality mobile translations of desktop spatial experiences;
-- award jury statements explaining *why* a work succeeded;
-- cases where interaction damaged readability, accessibility or narrative pacing.
+Continue expanding beyond 20 only when a case adds a genuinely new mechanism. Next priority:
+- award-winning magazine/editorial sites where the **entire publication** behaves spatially;
+- museum/history/cultural experiences with multiple simultaneous time currents;
+- cinema/game title-sequence interaction that can inform a `history river` without becoming theatrical excess;
+- award-winning projects that use light, darkness, paper, ink, engraving, monochrome or photographic grain as motion material;
+- contemporary source-available implementations for multi-axis horizontal scenes, smooth scene pinning, image-plane depth, WebGL masks, texture/light reveals and accessible reduced-motion fallbacks;
+- mobile transformations of horizontal/spatial desktop works;
+- failure cases where spectacle destroyed reading/navigation.
 
-Then convert the best 5–7 mechanisms into bounded Storybook experiments before any full OT/NT implementation.
+The next engineering decision remains deferred until this exploration identifies a small number of mechanisms worthy of Storybook prototypes.
