@@ -1,0 +1,1 @@
+C04 hotfix: restore second-page insertion by inserting the C04 live-nav before the first Candidate 01 `.world dark` section. This preserves the new per-tile Doré image layer and C/D light test while restoring the second page.
