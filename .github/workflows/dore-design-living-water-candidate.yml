@@ -1,0 +1,20 @@
+name: Doré Design Living Water Candidate
+on:
+  pull_request:
+    paths:
+      - 'dore-design/living_water_candidate.py'
+      - 'dore-design/living_water_candidate_selftest.py'
+      - 'dore-design/app_visual_v2.py'
+      - 'dore-design/run_living_water_candidate_selftest.sh'
+      - '.github/workflows/dore-design-living-water-candidate.yml'
+  workflow_dispatch:
+jobs:
+  candidate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Candidate registration and syntax gate
+        run: sh dore-design/run_living_water_candidate_selftest.sh
