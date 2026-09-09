@@ -31,8 +31,6 @@ assert h.get('resident_entrypoint')=='app_design2.py'
 assert h.get('immutable_publication') is True
 print(json.dumps(h,ensure_ascii=False))
 PY
-    # A production action may itself be executing through the Unix control
-    # plane. Never restart that plane mid-RPC or the caller loses the response.
     if [[ "${DORE_SKIP_CONTROL_PLANE_REFRESH:-0}" != "1" ]]; then
       if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
         bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
@@ -45,5 +43,13 @@ PY
   fi
   sleep 0.25
 done
-echo '{"ok":false,"error":"dore_design_health_timeout"}' >&2
+{
+  echo '{"ok":false,"error":"dore_design_health_timeout"}'
+  echo '--- dore-design.err.log ---'
+  tail -n 120 "$LOGDIR/dore-design.err.log" 2>/dev/null || true
+  echo '--- dore-design.out.log ---'
+  tail -n 80 "$LOGDIR/dore-design.out.log" 2>/dev/null || true
+  echo '--- launchctl ---'
+  launchctl print "gui/$(id -u)/io.westsidewatch.dore-design" 2>/dev/null | tail -n 80 || true
+} >&2
 exit 1
