@@ -14,6 +14,7 @@ CAPABILITY_TIMEOUTS={
 "theology.training.prepare":2100.0,"theology.training.prefetch_model":3600.0,
 "theology.training.stage32":60.0,"theology.training.micro32":7200.0,"theology.training.eval32":3600.0,
 "theology.training.stage64":60.0,"theology.training.micro64":7200.0,"theology.training.eval64":3600.0,
+"theology.shadow.acceptance64":1200.0,
 }
 def fail(message): return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":message}
 def post_comment(repo,issue_number,token,payload):
