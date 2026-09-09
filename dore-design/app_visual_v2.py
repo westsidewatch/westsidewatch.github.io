@@ -8,12 +8,13 @@ import app_visual as visual
 import multiwrite_integration;multiwrite_integration.install_workspace(visual.base)
 import motion_prototypes;motion_prototypes.install_workspace(visual.base)
 import living_water_candidate;living_water_candidate.install_workspace(visual.base)
+import living_water_candidate_02;living_water_candidate_02.install_workspace(visual.base)
 import design2_layer_ops;design2_layer_ops.install(visual.base)
 import design2_multiwrite_cover;design2_multiwrite_cover.ensure(visual.base)
 import design2_cover_render,design2_cover_interaction,design2_cover_manifest,design2_cover_acceptance,design2_closeout_acceptance
 import multipage_wysiwyg,journal_wysiwyg,multiwrite_wysiwyg,promotion_pipeline,homepage_candidates,template_library
 import design2_ui,design2_snap_guides,design2_layers_ui,design2_canvas_state,design2_arrange_ui,design2_cover_asset_ui,design2_typography_ui
-multipage_wysiwyg.SUPPORTED.update({'multiwrite-home','multiwrite-cover',motion_prototypes.PAGE_ID,living_water_candidate.PAGE_ID});template_library.register_runtime_pages(visual.base,homepage_candidates,multipage_wysiwyg);_original_render_canvas=multipage_wysiwyg.render_canvas
+multipage_wysiwyg.SUPPORTED.update({'multiwrite-home','multiwrite-cover',motion_prototypes.PAGE_ID,living_water_candidate.PAGE_ID,living_water_candidate_02.PAGE_ID});template_library.register_runtime_pages(visual.base,homepage_candidates,multipage_wysiwyg);_original_render_canvas=multipage_wysiwyg.render_canvas
 def _render_canvas(page_id='homepage',edit=False):
     if page_id=='multiwrite-home':
         html=multiwrite_wysiwyg.render_canvas(edit=edit)
@@ -24,10 +25,11 @@ def _render_canvas(page_id='homepage',edit=False):
         return design2_cover_interaction.augment(html) if edit else html
     if page_id==motion_prototypes.PAGE_ID:return motion_prototypes.render_p1(edit=edit)
     if page_id==living_water_candidate.PAGE_ID:return living_water_candidate.render(edit=edit)
+    if page_id==living_water_candidate_02.PAGE_ID:return living_water_candidate_02.render(edit=edit)
     return _original_render_canvas(page_id,edit=edit)
 multipage_wysiwyg.render_canvas=_render_canvas
 multipage_wysiwyg.EDITOR_HTML=multipage_wysiwyg.EDITOR_HTML.replace("'journal-vol-00'])","'journal-vol-00','multiwrite-home','multiwrite-cover'])")
-for installer in (multiwrite_wysiwyg.augment_editor,design2_ui.install,design2_layers_ui.install,design2_arrange_ui.install,design2_cover_asset_ui.install,design2_typography_ui.install,template_library.install_editor,motion_prototypes.install_editor,living_water_candidate.install_editor):multipage_wysiwyg.EDITOR_HTML=installer(multipage_wysiwyg.EDITOR_HTML)
+for installer in (multiwrite_wysiwyg.augment_editor,design2_ui.install,design2_layers_ui.install,design2_arrange_ui.install,design2_cover_asset_ui.install,design2_typography_ui.install,template_library.install_editor,motion_prototypes.install_editor,living_water_candidate.install_editor,living_water_candidate_02.install_editor):multipage_wysiwyg.EDITOR_HTML=installer(multipage_wysiwyg.EDITOR_HTML)
 ROOT=Path(__file__).resolve().parent.parent;PACKAGE=journal_wysiwyg.PACKAGE;COORD=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()/'coordination';STRUCTURE_HTML=visual.HTML
 PREVIEW_EDIT_ENTRY='''<style>.dore-preview-edit{position:fixed;right:18px;bottom:18px;z-index:2147483647;padding:9px 12px;background:#171814dd;color:#eee!important;text-decoration:none!important;font:10px ui-monospace,monospace}</style><a class="dore-preview-edit" href="/editor?page=homepage">Edit in Doré Design</a>'''
 def home_preview():return multipage_wysiwyg.render_canvas('homepage',edit=False).replace('</body>',PREVIEW_EDIT_ENTRY+'</body>',1)
@@ -73,8 +75,10 @@ class H(visual.H):
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')==motion_prototypes.PAGE_ID),None);return self.out(200,{'ok':bool(p),'count':1 if p else 0,'page_id':motion_prototypes.PAGE_ID,'editor':'/editor?page='+motion_prototypes.PAGE_ID,'experiment':(p or {}).get('design_experiment')})
         if path=='/api/design-candidates/living-water-01':
             w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')==living_water_candidate.PAGE_ID),None);return self.out(200,{'ok':bool(p),'page_id':living_water_candidate.PAGE_ID,'editor':'/editor?page='+living_water_candidate.PAGE_ID,'experiment':(p or {}).get('design_experiment')})
+        if path=='/api/design-candidates/living-water-02':
+            w=visual.base.workspace();p=next((x for x in w.get('pages',[]) if x.get('id')==living_water_candidate_02.PAGE_ID),None);return self.out(200,{'ok':bool(p),'page_id':living_water_candidate_02.PAGE_ID,'editor':'/editor?page='+living_water_candidate_02.PAGE_ID,'experiment':(p or {}).get('design_experiment')})
         if path=='/api/health':
-            w=visual.base.workspace();close=design2_closeout_acceptance.check(visual.base);templates=template_library.list_templates();return self.out(200,{'ok':close['ok'],'service':'dore-design','version':'2.0-production','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'direct-manipulation+resize+snap+guides+multiselect','layers':'atomic-zorder+visibility+lock','inspector':'geometry+arrange+cover-image+typography','arrange':'align+distribute+spacing+atomic-zorder+group','assets':'frame+local-image+cover-art+8mb-guard','typography':'family+size+weight+color+leading+tracking+align','multiwrite_cover':'editable-direct-manipulation+resize+image-tools+type-tools','motion_lab':{'count':1,'p1':motion_prototypes.PAGE_ID},'design_candidates':{'living_water_01':living_water_candidate.PAGE_ID},'templates':{'count':templates['count'],'registry':templates['schema'],'instantiate':'detached-structured-workspace-copy','external_editor_dependency':False},'batch':'atomic-batch-set+atomic-zorder','closeout':close,'editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_cover_editor':'/editor?page=multiwrite-cover','motion_p1_editor':'/editor?page='+motion_prototypes.PAGE_ID,'living_water_01_editor':'/editor?page='+living_water_candidate.PAGE_ID})
+            w=visual.base.workspace();close=design2_closeout_acceptance.check(visual.base);templates=template_library.list_templates();return self.out(200,{'ok':close['ok'],'service':'dore-design','version':'2.0-production','workspace_id':w.get('id'),'revision':w.get('revision'),'source_of_truth':'structured-workspace','ui':'design2','interaction':'direct-manipulation+resize+snap+guides+multiselect','layers':'atomic-zorder+visibility+lock','inspector':'geometry+arrange+cover-image+typography','arrange':'align+distribute+spacing+atomic-zorder+group','assets':'frame+local-image+cover-art+8mb-guard','typography':'family+size+weight+color+leading+tracking+align','multiwrite_cover':'editable-direct-manipulation+resize+image-tools+type-tools','motion_lab':{'count':1,'p1':motion_prototypes.PAGE_ID},'design_candidates':{'living_water_01':living_water_candidate.PAGE_ID,'living_water_02':living_water_candidate_02.PAGE_ID},'templates':{'count':templates['count'],'registry':templates['schema'],'instantiate':'detached-structured-workspace-copy','external_editor_dependency':False},'batch':'atomic-batch-set+atomic-zorder','closeout':close,'editor':'/editor','multiwrite_editor':'/editor?page=multiwrite-home','multiwrite_cover_editor':'/editor?page=multiwrite-cover','motion_p1_editor':'/editor?page='+motion_prototypes.PAGE_ID,'living_water_01_editor':'/editor?page='+living_water_candidate.PAGE_ID,'living_water_02_editor':'/editor?page='+living_water_candidate_02.PAGE_ID})
         p=design_asset(path)
         if p:return self.send_bytes(200,p.read_bytes(),mimetypes.guess_type(str(p))[0] or 'application/octet-stream')
         return super().do_GET()
