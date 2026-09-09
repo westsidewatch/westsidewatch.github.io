@@ -125,7 +125,7 @@ function setPanel(open) {
   if (!panel || !toggle) return;
   panel.hidden = !open;
   toggle.setAttribute('aria-expanded', String(open));
-  if (open) controller?.focus();
+  if (open) document.querySelector('#bibleStudyMount input')?.focus();
 }
 
 function mount() {
