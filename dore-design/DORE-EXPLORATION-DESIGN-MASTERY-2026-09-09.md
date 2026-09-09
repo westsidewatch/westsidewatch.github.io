@@ -19,7 +19,19 @@ Its single product mission is:
 
 This is not a side use case. The Bible/theology **journal-magazine publication form is part of the brand identity itself**.
 
-Doré should therefore not optimize for generic SaaS, ecommerce, restaurant, real-estate, corporate, dashboard, or universal website-builder competence. It should develop extraordinary depth in the visual and editorial worlds relevant to New Westside: Bible, theology, church history, books, publishing, scripture, classical art, engraving, sacred architecture, manuscripts, maps, archives, museums, editorial design, typography, long-form reading, visual storytelling, devotional/contemplative space, and contemporary digital publication.
+### Narrow destination, unlimited design sources
+
+`Only serve New Westside` does **not** mean `only learn from theology or religious design`.
+
+Doré's destination is narrow; its design references are intentionally broad. It should actively learn from the strongest work in fashion, art, architecture, museums, literature, film, luxury, photography, exhibitions, news/editorial publishing, books, music, experimental web design, interaction design and other industries whenever those ideas can be transformed for New Westside.
+
+Theology must not become an aesthetic prison. The governing principle is:
+
+> **one client / one brand universe, but no industry boundary on design learning.**
+
+Doré should absorb transferable design intelligence rather than imitate the source industry's surface style.
+
+Doré should therefore not optimize for generic SaaS, ecommerce, restaurant, real-estate, corporate, dashboard, or universal website-builder competence. It should develop extraordinary depth in the visual and editorial worlds relevant to New Westside while remaining open to world-class ideas from outside those categories.
 
 The target synthesis is:
 
@@ -27,7 +39,7 @@ The target synthesis is:
 
 The desired result is not `church website + articles` and not `Bible tool + blog`. New Westside should behave and feel like a genuinely art-directed contemporary publication and Bible/theology brand.
 
-Future design references should therefore be drawn not only from AI website builders or generic website galleries, but from the strongest examples of editorial magazines, cultural journals, art publishing, museum publishing, literary magazines, Bible publishing, theological journals, typography, information architecture, reading products, sacred visual language, and contemporary digital publications.
+Future design references should therefore be drawn not only from AI website builders or generic website galleries, but from the strongest examples of editorial magazines, cultural journals, art publishing, museum publishing, literary magazines, Bible publishing, theological journals, typography, information architecture, reading products, sacred visual language, contemporary digital publications, and exceptional cross-industry design.
 
 The design-quality benchmark is correspondingly higher than `a decent modern website`. Doré outputs should increasingly demonstrate genuine publication art direction.
 
@@ -40,6 +52,52 @@ The governing question for future Doré Exploration is no longer simply `Is this
 > **Can this materially help New Westside become one of the world's most design-rich and most contemporary Bible/theology brands and journal-magazine websites?**
 
 If not, it should be deprioritized even when fashionable. If yes, it deserves deeper exploration.
+
+## First New Westside Design Thesis — Red Dot-level Scripture Panorama
+
+A first concrete design thesis has emerged from the exploration and should be tested through real work rather than diluted into another generic homepage template.
+
+### Core idea
+
+**Redesign the Old Testament and New Testament themselves as contemporary editorial/digital works.**
+
+The initial signature visual form is:
+
+> **Doré-original-style engraving imagery arranged as a horizontal, through-running static-animation / visual-scroll narrative.**
+
+The engravings are not decorative illustrations placed inside conventional cards. They become the spatial and temporal structure of the experience: a monumental horizontal scripture panorama / visual scroll through which biblical history unfolds.
+
+A possible Old Testament narrative rhythm can move through creation, Eden, flood, patriarchs, Exodus, wilderness, kingdom, temple, exile, prophets and waiting. A New Testament work can move through incarnation, Galilee, Jerusalem, cross, resurrection, Pentecost, church expansion and Revelation. These are conceptual examples, not yet a frozen information architecture.
+
+The Old and New Testaments may develop distinct art direction while remaining two related volumes within one New Westside visual world.
+
+### Quality gate — RED DOT LEVEL OR REJECT
+
+The horizontal static-animation / scripture-panorama concept is **not accepted merely because it works technically or looks attractive**.
+
+Its design acceptance bar is explicitly:
+
+> **Red Dot Award-level design quality.**
+
+This is an aspirational internal quality benchmark, not a claim of Red Dot endorsement or award status.
+
+A technically functioning horizontal scroll, parallax treatment, image carousel, timeline, or sequence of Doré images is **not sufficient**. If the result reads as an ordinary web effect, a template trick, a slideshow, or decorative animation, it fails the design thesis.
+
+The work must demonstrate award-calibre art direction across the whole system: concept, narrative rhythm, engraving treatment, typography, scale, whitespace, transitions, responsive translation, editorial hierarchy, interaction restraint, visual continuity, and the relationship between scripture and image.
+
+The benchmark applies to the **integrated work**, not to animation complexity. More motion does not imply higher quality. The intended phrase `static animation` emphasizes that the power may come from composition, sequencing, reveal and spatial movement of largely static Doré-style artwork rather than gratuitous animated effects.
+
+This is intended to become a potential visual mother-language for both website and journal-magazine design. The same art direction should be capable of translation into editorial spreads, chapter openings, large engravings, typography, annotations, visual pacing and digital reading experiences.
+
+The thesis can be summarized as:
+
+> **Scripture as monumental visual narrative.**
+
+### Immediate significance
+
+This project should function as a New Westside Design Laboratory and a real competence test for Doré Design. It should not be promoted into the brand grammar simply because it exists. If Doré cannot bring this work to the stated quality bar, the correct response is to continue learning, borrowing mature methods, iterating and rejecting weak candidates — not to lower the bar.
+
+If it succeeds, the resulting visual/editorial principles may become evidence for the wider New Westside website and journal-magazine language and may feed Storybook, the Template Registry and future design work.
 
 ## Context
 
