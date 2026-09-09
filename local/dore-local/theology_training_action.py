@@ -7,7 +7,7 @@ Training artifacts live under the user cache or /tmp; nothing is canonically ing
 from __future__ import annotations
 import json, os, subprocess, sys
 from pathlib import Path
-CAPABILITIES={"theology.training.readiness","theology.training.prepare","theology.training.stage32","theology.training.prefetch_model","theology.training.micro32","theology.training.eval32","theology.training.stage64","theology.training.micro64","theology.training.eval64"}
+CAPABILITIES={"theology.training.readiness","theology.training.prepare","theology.training.stage32","theology.training.prefetch_model","theology.training.micro32","theology.training.eval32","theology.training.stage64","theology.training.micro64","theology.training.eval64","theology.shadow.acceptance64"}
 SCRIPTS={
 "theology.training.readiness":("theology-training-readiness.py",90),
 "theology.training.prepare":("theology-training-prepare.py",2100),
@@ -18,6 +18,7 @@ SCRIPTS={
 "theology.training.stage64":("theology-training-stage64.py",60),
 "theology.training.micro64":("theology-training-micro64.py",7200),
 "theology.training.eval64":("theology-training-eval64.py",3300),
+"theology.shadow.acceptance64":("theology-shadow64-acceptance.py",3900),
 }
 def _repo()->Path:
     return Path(os.environ.get("DORE_REPO_ROOT") or os.environ.get("DORE_WORKTREE") or Path.home()/"westsidewatch.github.io").expanduser().resolve()
