@@ -14,7 +14,7 @@ def post(path,payload):
         body=e.read().decode('utf-8','replace');raise RuntimeError(f'HTTP {e.code} {path}: {body}') from e
 
 try:
-    stage='revision';rev=int(get('/api/preview/status')['revision'])
+    stage='revision';rev=int(get('/api/workspace')['revision'])
     cmd={'op':'node.text','page_id':'multiwrite-home','id':'mw-story-title','text':'PHASE 5 RECOMMENDATION ACCEPTED'}
     stage='propose-reject';rec1=post('/api/design2/recommendation',{'page_id':'multiwrite-home','commands':[cmd],'reason':'test reject'})['recommendation']
     stage='decide-reject';rej=post('/api/design2/recommendation/decision',{'recommendation_id':rec1['id'],'decision':'reject','revision':rev})['recommendation']
