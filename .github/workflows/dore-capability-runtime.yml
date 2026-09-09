@@ -3,12 +3,14 @@ name: Doré Capability Runtime
 on:
   pull_request:
     paths:
+      - 'dore_core/bible/**'
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
       - 'dore_core/intelligence/**'
       - 'dore_core/substrates/**'
       - 'dore_core/retrieval/**'
       - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/capability_bus.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
       - 'local/dore-local/install-knowledge-substrates-macos.sh'
@@ -19,6 +21,7 @@ on:
       - 'local/dore-local/install_native_messaging.sh'
       - 'local/dore-local/bootstrap_companion_1.command'
       - 'local/dore-companion-extension/**'
+      - 'tests/test_bible_query_planner.py'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
@@ -38,12 +41,14 @@ on:
   push:
     branches: [main]
     paths:
+      - 'dore_core/bible/**'
       - 'dore_core/capabilities/**'
       - 'dore_core/control_plane/**'
       - 'dore_core/intelligence/**'
       - 'dore_core/substrates/**'
       - 'dore_core/retrieval/**'
       - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/capability_bus.py'
       - 'local/dore-local/companion_4312.py'
       - 'local/dore-local/install_companion.sh'
       - 'local/dore-local/install-knowledge-substrates-macos.sh'
@@ -54,6 +59,7 @@ on:
       - 'local/dore-local/install_native_messaging.sh'
       - 'local/dore-local/bootstrap_companion_1.command'
       - 'local/dore-companion-extension/**'
+      - 'tests/test_bible_query_planner.py'
       - 'tests/test_dore_*capability*.py'
       - 'tests/test_dore_intelligence*.py'
       - 'tests/test_dore_substrates.py'
@@ -85,6 +91,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Run minimum-sufficient Bible routing tests
+        run: python -m pytest -q tests/test_bible_query_planner.py
       - name: Run capability runtime tests
         run: |
           python -m unittest discover -s tests -p 'test_dore_*capability*.py' -v
@@ -106,7 +114,7 @@ jobs:
           bash -n local/dore-local/install_native_messaging.sh
           bash -n local/dore-local/install-knowledge-substrates-macos.sh
           bash -n local/dore-local/bootstrap_companion_1.command
-          python -m py_compile local/dore-local/knowledge-substrate-poc.py local/dore-local/production_actions.py
+          python -m py_compile local/dore-local/knowledge-substrate-poc.py local/dore-local/production_actions.py local/dore-local/capability_bus.py dore_core/bible/query_planner.py
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
       - name: Run shared-state visual execution probe
