@@ -37,6 +37,12 @@ class TheologyLiveCanaryTest(unittest.TestCase):
         self.assertIn('hits/total>=0.80',ACCEPT)
         self.assertIn('"bilingual_scoring":True',ACCEPT)
 
+    def test_unrelated_cases_use_isolated_conversations(self):
+        self.assertIn('cid=f"theology-live-{RUN_ID}-{c[\'id\']}"',ACCEPT)
+        self.assertIn('"conversation_id":cid',ACCEPT)
+        self.assertIn('"isolated_conversations":True',ACCEPT)
+        self.assertNotIn('CID="theology-live-"',ACCEPT)
+
     def test_workflow_is_owner_only_bounded_and_self_hosted(self):
         self.assertIn("github.event.issue.user.login == github.repository_owner",WORKFLOW)
         self.assertIn("github.event.issue.title == '[DORÉ THEOLOGY CANARY] run'",WORKFLOW)
