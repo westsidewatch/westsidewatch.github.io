@@ -6,6 +6,9 @@ import template_library
 
 rows=template_library.list_templates()
 assert rows['ok'] and rows['count']==3, rows
+assert rows['schema']=='dore.design-template-registry.v1' and rows['runtime']=='structured-workspace'
+assert rows['external_editor_dependency'] is False
+assert len({x['id'] for x in rows['templates']})==rows['count']
 assert {x['source_page_id'] for x in rows['templates']}==set(homepage_candidates.PAGES), rows
 
 class Base:
