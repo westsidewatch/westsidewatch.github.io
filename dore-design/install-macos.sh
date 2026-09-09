@@ -19,38 +19,59 @@ cat > "$PLIST" <<EOF
 </dict></plist>
 EOF
 launchctl bootout "gui/$(id -u)/io.westsidewatch.dore-design" >/dev/null 2>&1 || true
+# Kill only a stale listener on the Design port before bootstrapping this checkout.
+if command -v lsof >/dev/null 2>&1; then
+  PIDS="$(lsof -tiTCP:4310 -sTCP:LISTEN 2>/dev/null || true)"
+  if [[ -n "$PIDS" ]]; then
+    echo "$PIDS" | xargs kill >/dev/null 2>&1 || true
+    sleep 0.25
+  fi
+fi
 launchctl bootstrap "gui/$(id -u)" "$PLIST"
 launchctl kickstart -k "gui/$(id -u)/io.westsidewatch.dore-design"
-for i in {1..40}; do
+VALID=0
+for i in {1..60}; do
   if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then
-    if /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-01 >/tmp/dore-design-candidate.json 2>/dev/null; then
-      python3 - <<'PY'
-import json
-h=json.load(open('/tmp/dore-design-health.json'))
-c=json.load(open('/tmp/dore-design-candidate.json'))
-assert h.get('service')=='dore-design'
-assert h.get('source_of_truth')=='structured-workspace'
-assert c.get('ok') is True
-assert c.get('page_id')=='living-water-candidate-01'
-print(json.dumps({'health':h,'candidate':c},ensure_ascii=False))
+    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-01 >/tmp/dore-design-candidate.json 2>/dev/null || true
+    if python3 - <<'PY'
+import json,sys
+try:
+    h=json.load(open('/tmp/dore-design-health.json'))
+except Exception:
+    h={}
+try:
+    c=json.load(open('/tmp/dore-design-candidate.json'))
+except Exception:
+    c={}
+ok=(h.get('service')=='dore-design' and h.get('source_of_truth')=='structured-workspace' and c.get('ok') is True and c.get('page_id')=='living-water-candidate-01')
+print(json.dumps({'ok':ok,'health':h,'candidate':c},ensure_ascii=False))
+sys.exit(0 if ok else 1)
 PY
-      if [[ "${DORE_SKIP_CONTROL_PLANE_REFRESH:-0}" != "1" ]]; then
-        if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
-          bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
-        fi
-        if [[ -f "$ROOT/local/dore-local/install-github-relay-macos.sh" ]]; then
-          bash "$ROOT/local/dore-local/install-github-relay-macos.sh" || true
-        fi
-      fi
-      exit 0
+    then
+      VALID=1
+      break
     fi
   fi
   sleep 0.25
 done
+if [[ "$VALID" == "1" ]]; then
+  if [[ "${DORE_SKIP_CONTROL_PLANE_REFRESH:-0}" != "1" ]]; then
+    if [[ -f "$ROOT/local/dore-local/install-unix-a2a-macos.sh" ]]; then
+      bash "$ROOT/local/dore-local/install-unix-a2a-macos.sh"
+    fi
+    if [[ -f "$ROOT/local/dore-local/install-github-relay-macos.sh" ]]; then
+      bash "$ROOT/local/dore-local/install-github-relay-macos.sh" || true
+    fi
+  fi
+  exit 0
+fi
 {
   echo '{"ok":false,"error":"dore_design_candidate_health_timeout"}'
+  echo "--- runtime root ---"; echo "$ROOT"
+  echo "--- app ---"; echo "$APP"
   echo '--- health ---'; cat /tmp/dore-design-health.json 2>/dev/null || true
-  echo '--- candidate ---'; cat /tmp/dore-design-candidate.json 2>/dev/null || true
+  echo; echo '--- candidate ---'; cat /tmp/dore-design-candidate.json 2>/dev/null || true
+  echo; echo '--- port owner ---'; lsof -nP -iTCP:4310 -sTCP:LISTEN 2>/dev/null || true
   echo '--- dore-design.err.log ---'
   tail -n 120 "$LOGDIR/dore-design.err.log" 2>/dev/null || true
   echo '--- dore-design.out.log ---'
