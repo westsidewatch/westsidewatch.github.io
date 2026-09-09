@@ -7,304 +7,295 @@ Status: EXPLORATION RECORD — NOT YET ARCHITECTURE
 
 This record preserves the current New Westside layout idea before engineering. It is an evolution of the earlier **5:8 vinyl wall**, not an unrelated replacement concept.
 
-The governing phrase is:
+The governing phrase remains:
 
-> **New Westside is a living river. The river is Scripture.**
-
-The current arrangement is the first concrete spatial model of that idea.
+> **New Westside is a living river. The river begins from Scripture, but the whole publication must not collapse into one repeated Bible-animation treatment.**
 
 ## Evolution from the vinyl wall
 
-The earlier New Westside visual system used upright `5:8` publication objects.
+`5:8 publication object -> 8:5 spatial/editorial field`
 
-The new move is not to discard them, but to rotate and transform the same visual unit:
+The earlier hypothesis made every lower 8:5 a Scripture-animation frame. The current exploration corrects that overreach.
 
-`5:8 publication object -> 8:5 Scripture frame`
+The largest first-screen 8:5 may remain **Scripture Cinema**: a monumental moving Scripture field whose chronology can run Genesis -> Revelation and which can be entered at different points.
 
-The decisive change is that `8:5` has two simultaneous identities:
+But below it, the 8:5 field is a **shared publication grammar**, not a mandatory Scripture-animation grammar. An 8:5 may be:
 
-1. **separate:** an independent, clickable scene / article / topic / curation object;
-2. **connected:** one frame in a continuous Scripture animation.
+- a Scripture scene;
+- a magazine/editorial composition;
+- a Journal feature;
+- a theme or curated issue object;
+- a photographic or typographic field;
+- a brand-colour field;
+- a book / Dawn Library object;
+- a ONE research entrance;
+- an interview, witness, prayer, church/community, audio or video object where the real site architecture supports it.
 
-Therefore:
+Therefore the lower site should not become `Bible animation repeated many times`.
 
-`8:5 × N = Bible film / living Scripture current`
+The stronger candidate is:
 
-The old vinyl wall found the form. The new work gives it a true indexing system: **Scripture itself**.
+> **one spatial publication world in which Scripture Cinema, magazine art direction, editorial sections, themes and brand identities can coexist.**
 
-## Homepage arrangement — current hypothesis
+## Homepage arrangement — revised hypothesis
 
-### 1. Largest 8:5 = Bible cinema
+### Layer A — Scripture Cinema / immersive world-entry
 
-The first screen is one very large `8:5` field. It is not a conventional hero block. It is a cinema screen through which the Bible is continuously moving horizontally.
+The first screen is one monumental 8:5 field rather than a conventional hero. It can function as Scripture Cinema: the visitor enters an already-moving biblical world rather than reading an introduction to the website.
 
-The animation is not required to start from Genesis every time. A visitor may enter the river at a different point on each visit. The Scripture world is understood as already moving before the visitor arrives.
+This preserves the principle:
 
-A deliberate `watch from the beginning` mode may allow the visitor to watch the full sequence from Genesis through Revelation, effectively watching a complete Bible film. The website itself is the film; this is not a separate video asset.
+> **Homepage as World, not Homepage as Introduction.**
 
-### 2. Below the cinema = many horizontal 8:5 currents
+The Refusenik Project is retained as a useful precedent specifically for full-viewport immersion: the work occupies the homepage rather than sitting inside a conventional hero container.
 
-Scrolling downward does not mean leaving Scripture.
+### Layer B — Living Magazine Field
 
-Below the large cinema, many rows of `8:5` objects extend horizontally. Together they form the evolved vinyl wall and continue vertically down the page.
+After the visitor scrolls down, the site does **not** need to keep rendering only Scripture animation.
 
-Each row may correspond to an actual New Westside editorial section, theme, curation, person/place stream, Scripture relation, or another verified part of the real site architecture. **Do not invent or restore obsolete sections from conversational memory; the current repository/site framework is authoritative.**
+Instead, rows/fields can express their own editorial identity according to verified New Westside section, theme, curation and brand context. The 8:5 ratio supplies spatial continuity, while art direction is allowed to change.
 
-Each row is horizontally animated, while the page itself extends vertically. The visitor can therefore move through the same Scripture world in both axes.
+A row may therefore establish its own:
 
-### 3. Every 8:5 remains individually enterable
+- typography;
+- brand colour / palette;
+- image treatment;
+- density and whitespace;
+- motion behavior;
+- editorial grid;
+- issue/section marker;
+- scale rhythm;
+- Scripture relationship;
+- degree of animation.
 
-Every `8:5` is both part of the continuous animation and an interactive portal. Selecting one can enter the corresponding structured content: article, topic, event, person, place, book/chapter, ONE research layer, or another valid destination.
+Some rows may move continuously; some may be nearly still. Some may be Doré engraving; some may be photographic, typographic, paper-like, colour-led or publication-cover-like. Motion must not become a compulsory style token.
 
-The important product behavior is:
+This protects New Westside's independent-magazine identity.
 
-> **connected = watch Scripture; separated = enter Scripture.**
+### Layer C — Spatial navigation
 
-### 4. Horizontal and vertical motion are one system
+The central architecture question is now:
 
-Horizontal motion expresses the continuity / time / movement of Scripture.
+> **How can the visitor move naturally between Scripture Cinema and a heterogeneous magazine/publication world without the site feeling like unrelated sections stacked under an animation?**
 
-Vertical motion exposes additional curated views of the same Scripture world.
+The current candidate answer is **spatial continuity without visual uniformity**.
 
-The page should therefore not feel like `hero + rows of carousels`. It should feel like one living field in which the visitor remains inside Scripture while moving both horizontally and vertically.
+The site can preserve common spatial laws — 8:5 fields, horizontal/vertical movement, transitions, scale, entry/return behavior, shared typography/brand constants — while individual editorial currents are free to adopt their own art direction.
 
-### 5. The 8:5 frame is the atomic visual grammar
+The river therefore describes **movement and relationship**, not one mandatory image style.
 
-The `8:5` object is no longer merely a card ratio. It can function as:
+## Important correction — Scripture is not the only visual content
 
-- cinematic frame;
-- Scripture scene;
-- editorial object;
-- clickable portal;
-- unit of montage;
-- unit of continuous composition;
-- unit of responsive re-editing.
+Earlier formulation:
 
-Adjacent frames may visually connect through horizon lines, architecture, roads, water, engraved darkness, light, paper fields, figures, or engraving density so that the sequence reads as one work rather than as independent thumbnails.
+`connected = watch Scripture; separated = enter Scripture`
 
-## Design problem now being explored
+is now too narrow for the entire homepage.
 
-The technical problem is not simply `how to make horizontal scrolling`.
+Revised formulation:
 
-The real problem is:
+> **The first great current can be Scripture. The publication below can show what New Westside sees, writes, studies, curates and publishes from within that world.**
 
-> **How can many individually clickable 8:5 objects form multiple horizontally animated rows and a vertically extending site while still reading as one continuous Bible film / living Scripture river rather than as a Netflix-like collection of carousels?**
+This creates a stronger relationship:
 
-This requires simultaneous exploration of:
+`Scripture Cinema -> editorial interpretation / curation -> deep reading / ONE / publication spaces`
 
-- continuous composition and visual continuity;
-- multi-row horizontal motion;
-- different row velocities / directions / phase positions;
-- a large hero/current that can start at a non-fixed Scripture position;
-- full-sequence watch mode;
-- click/tap interruption and reliable return to prior position;
-- responsive/mobile re-editing;
-- reduced-motion and accessibility behavior;
-- lazy rendering / virtualization for a potentially large number of 8:5 scenes;
-- preservation of Scripture indexing and editorial semantics beneath the animation.
+rather than:
 
-## Doré Exploration Round 01 — comparable design precedents
+`Scripture animation -> more Scripture animation -> more Scripture animation`.
 
-### A. Existing corpus cases that now become more relevant
+## Doré Exploration Round 02 — mature precedents for publication + spatial navigation
 
-Several already-recorded award-calibre references now map more directly to this layout thesis:
+### 1. MacGuffin — strongest new directional precedent
 
-- **Bascule** — continuous long-page experience where the scrolling field itself becomes the work; useful for thinking beyond conventional sections.
-- **Farawayfarers** — endless horizontal travel with crosslinks and deeper reading; especially relevant to continuous field + individually enterable objects.
-- **Microdot** — interface mechanics are derived from the subject's own physical/media grammar rather than imposed as generic animation; reinforces `Doré engraving physics -> motion grammar -> implementation`.
-- **We Choose the Moon** — canonical chronology becomes the information architecture; relevant to Scripture as the actual indexing system.
-- **Museum of the World** — historical/semantic relationships become spatial navigation; relevant to secondary Scripture/topic/person/place currents.
-- **The Boat** — illustration becomes narrative space rather than illustration inside a page.
+MacGuffin is an independent magazine whose physical and digital identities were deliberately connected. A published design interview explains a particularly relevant spatial rule: horizontal movement is used to navigate articles, while vertical movement exposes more practical/informational material. This is a mature example of assigning **different semantic meaning to different spatial axes**, rather than using horizontal scroll merely as an effect.
 
-These are not templates to copy. They validate pieces of the problem.
+Transferable New Westside principle:
 
-### B. New comparable references found in this round
+- X and Y do not have to mean the same thing everywhere;
+- horizontal can express editorial browsing / cinematic continuity;
+- vertical can move between editorial worlds, utility layers or deeper information;
+- the publication can remain recognizably a magazine while using spatial navigation.
 
-#### CANALS
+Primary/current site: https://www.macguffinmagazine.com/
+Design discussion: https://www.itsnicethat.com/articles/double-click-may-2022-online-magazine-digital-310522
 
-Communication Arts presents **CANALS** as a horizontally scrolling, magazine-like editorial experience about the history of Amsterdam's canals. It is useful because history, editorial art direction and horizontal movement are integrated rather than treated as a gallery effect.
+### 2. SFMOMA — strongest architecture precedent for one institution, many editorial identities
 
-Transferable question for New Westside: can each 8:5 current behave like an editorial spread sequence while still belonging to a larger historical river?
+SFMOMA's digital-publication work is unusually relevant because it solved the tension between a stable institutional website and individual publication identities.
 
-Source: https://www.commarts.com/webpicks/canals
+Their framework used a reusable site-level publication structure, while each publication could have its own immersive cover and its own colour palette. In-page navigation acts as a table of contents; the palette visually signals that the reader has entered a distinct publication space. The broader SFMOMA site also deliberately separates `exploring` navigation from `doing` navigation, and uses cinematic imagery, varying visual depths and contextual related-content rather than exposing an organization chart as the primary experience.
 
-#### Refuseniks & Activists
+Transferable New Westside principle:
 
-Awwwards documents a dark archival experience that uses horizontally scrolling historical photographs/documents to narrate a large Cold War migration story. It is relevant to New Westside because archive objects remain individually legible while belonging to a larger historical narrative field.
+> **shared architecture does not require shared art direction.**
 
-Transferable question: how can documentary/Scripture objects remain semantically clickable without breaking the sensation of continuous historical movement?
-
-Source: https://www.awwwards.com/inspiration/horizontal-scroll-gallery-refuseniks-activists
-
-### C. Current precedent conclusion
-
-No single reference found so far exactly matches the proposed New Westside system:
-
-`one giant continuously moving 8:5 Bible cinema + many vertically stacked horizontal 8:5 currents + every frame independently enterable + all rows remaining Scripture rather than generic media`.
-
-Therefore this is **not yet a solved-template problem**, but many of its constituent mechanisms are mature.
-
-The next search should continue until either:
-
-1. a genuinely close precedent appears; or
-2. evidence becomes strong that New Westside is combining mature mechanisms into a relatively original spatial system.
-
-## Doré Exploration Round 01 — mature implementation mechanisms
-
-### 1. Lenis — strong candidate for the global scroll layer
-
-Lenis is a mature MIT-licensed smooth-scroll library. Its current project explicitly supports native-scroll-based smoothing, vertical/horizontal/nested axes, WebGL/GSAP synchronization, snapping, infinite scrolling, and `prefers-reduced-motion` handling.
-
-Why it fits:
-
-- one scroll model can coordinate the site's vertical river with horizontal/nested currents;
-- lightweight and dependency-free aligns with Doré's `more capability, less burden` principle;
-- it preserves native scroll semantics rather than replacing the page with an opaque canvas;
-- it can be used only where required rather than becoming the content architecture.
-
-It should be tested, not automatically adopted.
+A Journal current, Dawn Library current, ONE entrance, theme curation or Scripture Cinema can share one spatial/navigation system while retaining a recognizably different editorial atmosphere.
 
 Sources:
-- https://github.com/darkroomengineering/lenis
-- https://github.com/darkroomengineering/lenis#features
+- https://www.sfmoma.org/read/new-sfmomadotorg/
+- https://www.sfmoma.org/read/expand-contract-designing-new-sfmoma-dot-org/
+- https://mw18.mwconf.org/paper/the-next-generation-of-digital-publishing-integrated-strategies-for-online-scholarly-content-at-sfmoma/index.html
 
-### 2. Embla Carousel — strong candidate for independently enterable 8:5 rows
+### 3. MERSI — magazine composition as digital transition grammar
 
-Embla is an MIT-licensed, dependency-free, framework-agnostic carousel engine designed for fluid motion and precise swiping. It has official autoplay support and loop mode.
+The 2026 MERSI case study is useful because the project deliberately sits between an architectural book and an interactive object. Project covers are transitional objects rather than thumbnails; entering a project feels like opening/revealing a publication surface. Project pages then use horizontal structures for cinematic/editorial navigation.
 
-Why it fits:
+Transferable New Westside principle:
 
-- each horizontal current can retain real DOM items and links;
-- rows can be independently draggable/swipeable;
-- it provides loop/autoplay mechanics without forcing a visual design;
-- Doré can own the 8:5 rendering and Scripture semantics.
+> **an 8:5 does not have to be a card. It can be a cover/spread whose physical transformation carries the visitor into the underlying content.**
 
-Important limitation: treating every current as an ordinary carousel would produce exactly the `Netflix rows` failure mode. Embla is therefore a possible **motion/gesture primitive**, not the design model.
+This is particularly useful for preserving magazine character when moving from a heterogeneous lower-homepage 8:5 into an article, issue, book or curated space.
 
-Sources:
-- https://github.com/davidjerleke/embla-carousel
-- https://www.embla-carousel.com/docs/v8/api/plugins
+Source: https://tympanus.net/codrops/2026/07/27/between-print-and-digital-the-making-of-mersis-website/
 
-### 3. GSAP ScrollTrigger — strong candidate for cinematic orchestration, not basic layout
+### 4. Pell Mell — strict architecture underneath apparently free editorial discovery
 
-ScrollTrigger remains a mature precise tool for scroll-linked timelines, pinned sequences and scrubbed animation. Lenis explicitly documents direct synchronization with ScrollTrigger.
+Pell Mell's 2026 case study describes an immersive, editorial-inspired discovery platform where navigation is intentionally quiet, while the underlying structure remains highly organized. The interface does not force a visible directory/grid even though the system beneath it is strict.
 
-Potential Doré use:
+Transferable New Westside principle:
 
-- hero Bible cinema scene choreography;
-- match-cut / light / engraving reveal sequences between 8:5 frames;
-- controlled transitions when a row becomes active;
-- `watch full Bible` mode timeline control.
+> **spatial freedom on the surface requires stronger hidden information architecture, not weaker IA.**
 
-Do not use GSAP to solve things CSS/layout can already solve. Its role should be high-value cinematic orchestration.
-
-Source: https://gsap.com/docs/v3/Plugins/ScrollTrigger/
-
-### 4. Native CSS Scroll-Driven Animations — strong lightweight baseline
-
-Modern CSS now supports scroll-driven animation timelines, allowing CSS animation progress to be linked directly to scroll progress.
-
-This should be the default comparison baseline before adding JavaScript animation code for simple opacity, transform, reveal and position relationships.
-
-Why it matters to Doré:
-
-> `if CSS can express it deterministically, do not make a runtime animation system guess or carry extra burden.`
-
-Source: https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Scroll-driven_animations
-
-### 5. IntersectionObserver — viewport activation / lazy river primitive
-
-The browser's Intersection Observer API provides asynchronous visibility/intersection observation without requiring continuous manual geometry polling.
-
-Potential uses:
-
-- start/pause row animation when near viewport;
-- lazy-load Doré images;
-- hydrate only active currents;
-- record which Scripture/current is actually visible;
-- reduce CPU/GPU burden deep down a long vertical page.
-
-Source: https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API
-
-### 6. Swiper / Motion — comparison candidates, not current preference
-
-Swiper is a mature feature-rich slider/carousel system with loop/autoplay/free-mode capabilities. Motion provides declarative scroll-linked animation primitives for React.
-
-They should remain comparison candidates. At present, Embla's smaller headless model appears more aligned with Doré's `own the visual grammar, borrow only the motion primitive` principle, while New Westside is currently Hugo rather than a React-native site.
+This supports keeping New Westside's canonical content structure stable while presenting a freer magazine field above it.
 
 Sources:
-- https://swiperjs.com/swiper-api
-- https://motion.dev/docs/react-use-scroll
+- https://pellmell.fr/
+- https://tympanus.net/codrops/2026/03/27/pell-mell-crafting-a-visual-exploration-platform-with-editorial-rhythm/
 
-## Candidate implementation algorithm — not yet engineering authorization
+### 5. Believer Magazine — issue colour as a publication-state system
 
-A lightweight architecture worth prototyping is emerging:
+The Believer redesign preserved the physical magazine character and gave the editorial team the ability to change the whole website colour scheme with each new issue so that the digital publication reflects the current cover/art direction.
 
-1. **Scripture index** assigns every 8:5 item stable semantic coordinates.
-2. **Row curator** groups items into verified New Westside rows/themes/sections without changing the Scripture identity of each item.
-3. **Phase function** assigns each row an initial horizontal offset; the hero can also enter at a non-fixed Scripture position.
-4. **Velocity field** gives rows restrained, intentionally different speeds/directions rather than identical carousel autoplay.
-5. **Loop window** repeats/recycles the visible sequence seamlessly when a row is designed as continuous.
-6. **Viewport activation** uses IntersectionObserver so only nearby currents animate/hydrate.
-7. **Frame renderer** keeps each 8:5 as a normal semantic/linkable DOM object.
-8. **Cinematic layer** uses CSS scroll timelines first, then GSAP only for transitions that require art-directed sequencing.
-9. **State preservation** records the visitor's Scripture position/current/row before entering an item and returns them to that visual location.
-10. **Reduced-motion mode** converts automatic currents to stable manually scrollable rows and keeps every destination reachable.
+Transferable New Westside principle:
 
-Conceptually:
+> **brand colour can be contextual and editorial, not only global.**
 
-`Scripture data -> curator/index -> 8:5 semantic frames -> horizontal current engine -> vertical river orchestrator -> cinematic transition layer`
+New Westside can retain First Light Gold / Living Water / Ink / Temple Stone as brand foundation while allowing a section, theme, issue or curation to establish a controlled local palette.
 
-The animation engine must not become the source of truth. Scripture/editorial data remains the source of truth.
+Source: https://wearecmyk.com/project/believer-magazine/
 
-## Template / pattern exploration
+### 6. Home Société — editorial horizontal navigation as one continuous message
 
-The first round did **not** find a mature drop-in template that should be installed unchanged. That is a useful result.
+Communication Arts documents Home Société as an editorial-inspired horizontal experience in which magazine-style layout and motion jointly guide navigation. It also required a separately validated vertical mobile translation.
 
-The strongest mature pattern is instead compositional:
+Transferable principle: horizontal movement can be an editorial reading mode, but responsive transformation must be designed as a first-class system rather than a late CSS fallback.
 
-- normal semantic DOM content;
-- headless horizontal row engine;
-- native vertical document flow;
-- optional smooth-scroll coordinator;
-- scroll-linked animation layer;
-- viewport-aware activation;
-- WebGL only for specific image/material effects that cannot be achieved cheaply otherwise.
+Source: https://www.commarts.com/webpicks/home-societe
 
-This is more compatible with Doré than importing a large award-site starter template, because the New Westside requirement is structurally unusual and must remain attached to real Scripture/editorial semantics.
+## Round 02 synthesis — a stronger model than “many Scripture rows”
 
-## Immediate Storybook prototype candidates
+The mature precedents converge on a more useful architecture:
 
-Exploration is not yet authorizing production replacement. The smallest useful Storybook experiments would be:
+### A. Stable canonical architecture
 
-### Prototype A — one continuous 8:5 Scripture current
+New Westside keeps real content identities, URLs, searchability and publication structure underneath the experience.
 
-Test 12–20 placeholder Scripture frames as one seamless composition. Validate continuous visual connection, independent clickability, keyboard/touch behavior and return-to-position.
+### B. Spatial shell / discovery layer
 
-### Prototype B — giant cinema + three independent currents
+The homepage and major portals expose that content as an art-directed spatial field rather than an organization chart.
 
-One large 8:5 hero/current plus three horizontal rows below it. Test different phase offsets and velocities while preserving a single visual world.
+### C. Multiple editorial atmospheres
 
-### Prototype C — vertical travel through moving Scripture
+Each section/theme/curation can own controlled local art direction — colour, typography treatment, image material, motion, density — without becoming a separate microsite.
 
-Five or six rows vertically stacked. Only rows near the viewport animate. Test whether downward scrolling still feels like watching Scripture rather than browsing a media catalogue.
+### D. Axis semantics
 
-### Prototype D — reduced-motion/mobile transformation
+Movement should have meaning. Candidate model to test:
 
-Transform the same structured data into a stable touch-first/mobile experience without maintaining a second content architecture.
+- **first monumental X-current:** Scripture / salvation-history cinema;
+- **Y movement:** move among ways New Westside publishes/sees the world;
+- **local X within a lower field:** browse that section/theme/curation editorially;
+- **enter / depth:** open the selected publication object into stable reading/research.
 
-No prototype is successful merely because it moves. The acceptance question is whether the whole field reads as **one living Scripture river**.
+This is no longer `X = Scripture everywhere`.
+
+### E. Shared spatial grammar, variable visual grammar
+
+This is the strongest new conclusion:
+
+> **Keep the geometry and navigation family coherent; let editorial art direction vary.**
+
+Possible invariants:
+
+- 8:5 as recurring publication/spatial field;
+- scale and transition logic;
+- shared brand type foundation;
+- common entry/return behavior;
+- canonical content model;
+- accessibility/navigation rules.
+
+Possible variables:
+
+- Doré engraving vs photography vs typography vs colour field;
+- local palette;
+- grid/spread composition;
+- still vs moving;
+- motion speed/direction;
+- text/image ratio;
+- issue/section-specific art direction.
+
+This is closer to how a strong independent magazine behaves: one publication identity, many art-directed stories/spreads.
+
+## New Storybook experiments to run before architecture freezes
+
+### Prototype E — Scripture Cinema -> heterogeneous magazine field
+
+Top: one monumental moving Scripture 8:5.
+
+Below: at least four deliberately different 8:5 currents:
+
+1. editorial/feature;
+2. Bible study / ONE;
+3. Dawn Library / book-publishing;
+4. one theme/curation using a strong local colour identity.
+
+Acceptance question: does the transition feel like one publication world, or like four unrelated websites?
+
+### Prototype F — same geometry, four art directions
+
+Keep identical 8:5 geometry and navigation mechanics, but give four currents radically different content treatments. Test whether shared spatial grammar is enough to preserve New Westside identity.
+
+### Prototype G — axis semantics
+
+Prototype explicit semantic movement:
+
+`Scripture Cinema --vertical--> editorial world --horizontal--> curated objects --enter--> reading/ONE`
+
+Test whether users can understand the spatial model without tutorial text.
+
+### Prototype H — magazine-cover transition
+
+Treat one lower 8:5 as a composed magazine cover/spread. On entry, transform the same object into the article/issue opening rather than cutting to an unrelated page. Test native View Transitions / FLIP-style transformation against a normal page navigation baseline.
+
+## Mature implementation mechanisms — retained from Round 01
+
+Candidate primitives remain Lenis, Embla, native CSS Scroll-Driven Animations, IntersectionObserver and selectively GSAP/FLIP/View Transitions. Their role is implementation only; none should determine the information architecture or visual identity.
+
+The key implementation principle is now stronger:
+
+> **the motion engine must support heterogeneous editorial fields, not force every field into the same carousel behavior.**
+
+## Current exploration conclusion
+
+The Living Scripture River should not be frozen as `a website made entirely of Bible animations`.
+
+The more mature direction is:
+
+> **Scripture Cinema gives New Westside its monumental opening and deepest historical axis. The rest of the homepage becomes a living independent magazine: multiple art-directed 8:5 editorial worlds sharing one spatial navigation system.**
+
+The relationship between them is not visual sameness. It is continuity of world, geometry, movement, brand, semantics and entry/return behavior.
+
+This conclusion remains a hypothesis to test in Storybook rather than production architecture.
 
 ## Engineering boundary
 
-This record does not authorize replacing the homepage or installing Lenis, Embla, GSAP, Swiper or another dependency in production.
+Do not replace the homepage or install a permanent animation/editorial framework from this exploration alone.
 
-The correct flow remains:
+Correct path:
 
-`Doré Exploration -> Storybook experiment -> compare mechanisms -> human critique -> promotion gate -> Template Registry / Design -> production`
+`Doré Exploration -> Storybook spatial/editorial prototypes -> human critique -> retained design intelligence -> promotion gate -> Template Registry / Doré Design -> production`
 
-The important learning artifact to preserve is:
+The Doré learning object for this round is:
 
-`old 5:8 vinyl wall -> rotation to 8:5 -> Scripture indexing -> continuous current -> multi-row vertical river -> tested implementation primitive -> critique -> retained Doré capability`
-
-This is explicitly a case where Doré should learn from its own previous design rather than restart from a new external template.
+`Bible-animation-only hypothesis -> observed magazine limitation -> mature editorial/spatial precedents -> shared spatial grammar + variable art direction hypothesis -> prototype -> critique -> retained capability`
