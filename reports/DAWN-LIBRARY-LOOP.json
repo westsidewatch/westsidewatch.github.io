@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.loop.report.v1",
-  "generatedAt": "2026-09-09T23:44:04.490821+00:00",
+  "generatedAt": "2026-09-09T23:45:54.959065+00:00",
   "results": {
     "books": {
       "published": 4,
@@ -10,6 +10,16 @@
       "providers": [
         "Project Gutenberg"
       ]
+    },
+    "growthToday": {
+      "books": 4,
+      "verifiedBooks": 3,
+      "relations": 8
+    },
+    "cadence": {
+      "recommended": "daily",
+      "recentVerifiedGrowthPerRun": 3.0,
+      "density": 3
     },
     "collections": [
       {
@@ -51,5 +61,5 @@
       "reason": "missing verified public source"
     }
   ],
-  "invariant": "A Dawn Library loop is successful only when it leaves inspectable persisted output."
+  "invariant": "A Dawn Library loop is successful only when it leaves inspectable persisted output and a comparable growth snapshot."
 }
