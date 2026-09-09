@@ -1,0 +1,72 @@
+name: DORE Theology Live Canary
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  live-canary:
+    if: >-
+      github.event.issue.user.login == github.repository_owner &&
+      github.event.issue.title == '[DORÉ THEOLOGY CANARY] run'
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start fixed localhost canary
+        run: |
+          set -euo pipefail
+          PY="$HOME/Library/Caches/Dore/theology-training/venv/bin/python"
+          test -x "$PY"
+          DORE_THEOLOGY_CANARY_PORT=8791 "$PY" local/dore-local/theology-live-canary-server.py > /tmp/dore-theology-live-canary-server.log 2>&1 &
+          echo $! > /tmp/dore-theology-live-canary.pid
+          for _ in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:8791/health >/tmp/dore-theology-live-canary-health.json 2>/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/dore-theology-live-canary-server.log
+          exit 2
+      - name: Run real chat-path acceptance
+        run: |
+          set +e
+          PY="$HOME/Library/Caches/Dore/theology-training/venv/bin/python"
+          "$PY" local/dore-local/theology-live-canary-acceptance.py > /tmp/dore-theology-live-canary-result.json 2>&1
+          echo $? > /tmp/dore-theology-live-canary-code
+          cat /tmp/dore-theology-live-canary-result.json
+          exit 0
+      - name: Stop canary process
+        if: always()
+        run: |
+          if [ -f /tmp/dore-theology-live-canary.pid ]; then kill "$(cat /tmp/dore-theology-live-canary.pid)" 2>/dev/null || true; fi
+      - name: Post bounded result
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          ISSUE: ${{ github.event.issue.number }}
+          REPO: ${{ github.repository }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request
+          p='/tmp/dore-theology-live-canary-result.json'
+          try:
+              data=json.load(open(p,encoding='utf-8'))
+          except Exception as e:
+              data={'ok':False,'status':'failed','error':f'invalid_canary_report:{e}'}
+          body='[DORÉ_THEOLOGY_CANARY_RESULT '+json.dumps(data,ensure_ascii=False,separators=(',',':'))+']'
+          raw=json.dumps({'body':body},ensure_ascii=False).encode()
+          req=urllib.request.Request(f"https://api.github.com/repos/{os.environ['REPO']}/issues/{os.environ['ISSUE']}/comments",data=raw,method='POST',headers={'Authorization':f"Bearer {os.environ['GH_TOKEN']}",'Accept':'application/vnd.github+json','Content-Type':'application/json','User-Agent':'dore-theology-live-canary'})
+          urllib.request.urlopen(req,timeout=20).read()
+          PY
+      - name: Enforce canary result
+        if: always()
+        run: |
+          python3 - <<'PY'
+          import json
+          try: data=json.load(open('/tmp/dore-theology-live-canary-result.json',encoding='utf-8'))
+          except Exception: raise SystemExit(2)
+          raise SystemExit(0 if data.get('ok') else 1)
+          PY
