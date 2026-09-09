@@ -1,0 +1,12 @@
+{
+  "schema": "dawn.library.collections.v1",
+  "generatedAt": "2026-09-09T23:30:00Z",
+  "collections": [
+    {"id":"biblical-world-books","title":"聖經世界 · 書籍","kind":"books","status":"active","published":4,"verified":3,"pending":1,"output":"/dawn-library/biblical-world/catalog.json"},
+    {"id":"biblical-people","title":"聖經世界 · 人物","kind":"entities","status":"active","output":"/dore/entity-index.json","producer":"dore-biblical-world"},
+    {"id":"biblical-geography","title":"聖經世界 · 地理","kind":"geography","status":"active","producer":"dore-biblical-world"},
+    {"id":"biblical-language","title":"聖經世界 · 語言與專名","kind":"language","status":"active","producer":"dore-biblical-world"},
+    {"id":"biblical-relations","title":"聖經世界 · 關係與背景","kind":"relations","status":"active","producer":"dore-biblical-world"}
+  ],
+  "rule":"Every loop must leave a countable, inspectable artifact. Discovery without persisted output is not a Dawn Library result."
+}
