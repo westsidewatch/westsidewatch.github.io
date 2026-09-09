@@ -8,6 +8,7 @@ class CompanionNativeContractTest(unittest.TestCase):
   m=json.loads((EXT/'manifest.native-messaging.json').read_text());self.assertIn('nativeMessaging',m['permissions']);self.assertEqual(m['browser_specific_settings']['gecko']['id'],'dore-companion@westsidewatch.ca');self.assertEqual(m['dore_native_messaging']['host'],'ca.dore.companion')
  def test_companion_manifest(self):
   m=json.loads((EXT/'manifest.json').read_text());self.assertEqual(m['version'],'2.0.0');self.assertNotIn('applications',m);self.assertIn('nativeMessaging',m['permissions'])
+  site=[x for x in m['content_scripts'] if 'site_bridge.js' in x.get('js',[])];self.assertEqual(len(site),1);self.assertEqual(site[0]['matches'],['https://westsidewatch.github.io/*'])
  def test_transport_native_first(self):
   s=(EXT/'native_transport.js').read_text();self.assertIn('browser.runtime.connectNative(DORE_NATIVE_HOST)',s);self.assertLess(s.index('sendViaNative(payload)'),s.index('sendVia4312(payload)'))
  def test_production_design_envelope(self):
@@ -21,6 +22,12 @@ class CompanionNativeContractTest(unittest.TestCase):
   s=(EXT/'content_script.js').read_text();self.assertIn('function conversationId()',s);self.assertIn('conversation_id:conversationId()',s);self.assertIn('DORÉ_LOCAL_RESULT',s);self.assertIn('TERMINAL_HOLD_MS=30000',s);self.assertIn('new WeakSet()',s)
  def test_assistant_directive_allowlist_is_bounded(self):
   s=(EXT/'background.js').read_text();self.assertIn('ASSISTANT_DIRECTIVE_ALLOWLIST',s);self.assertIn('"knowledge.substrates.install"',s);self.assertIn('"system.self-maintain"',s);self.assertNotIn('capability.startsWith("knowledge.")',s);self.assertNotIn('capability.startsWith("system.")',s)
+ def test_site_capability_bridge_is_bounded_to_fuzzy_search(self):
+  bg=(EXT/'background.js').read_text();bridge=(EXT/'site_bridge.js').read_text()
+  self.assertIn('SITE_CAPABILITY_ALLOWLIST=new Set(["context.fuzzy-search"])',bg);self.assertIn('message.type==="dore.site-capability"',bg);self.assertIn('caller_product:',bg)
+  self.assertIn("const SITE_CAPABILITY='context.fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search-result'",bridge);self.assertIn("limit:5",bridge)
+  for forbidden in ('QMD','Concord','SWORD','OpenAI'):
+   self.assertNotIn(forbidden,bridge)
  def test_installer_free_runtime(self):
   s=(EXT/'install_companion_1.command').read_text().lower();self.assertNotIn('api.openai.com',s)
  def test_native_snapshot_binds_real_worktree_for_git_actions(self):
