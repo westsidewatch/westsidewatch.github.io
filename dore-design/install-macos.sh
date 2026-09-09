@@ -33,6 +33,8 @@ for i in {1..60}; do
   if /usr/bin/curl -fsS http://127.0.0.1:4310/api/health >/tmp/dore-design-health.json 2>/dev/null; then
     /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-01 >/tmp/dore-design-candidate-01.json 2>/dev/null || true
     /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-02 >/tmp/dore-design-candidate-02.json 2>/dev/null || true
+    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-03 >/tmp/dore-design-candidate-03.json 2>/dev/null || true
+    /usr/bin/curl -fsS http://127.0.0.1:4310/api/design-candidates/living-water-04 >/tmp/dore-design-candidate-04.json 2>/dev/null || true
     if python3 - <<'PY'
 import json,sys
 
@@ -42,8 +44,10 @@ def load(path):
 h=load('/tmp/dore-design-health.json')
 c1=load('/tmp/dore-design-candidate-01.json')
 c2=load('/tmp/dore-design-candidate-02.json')
-ok=(h.get('service')=='dore-design' and h.get('source_of_truth')=='structured-workspace' and c1.get('ok') is True and c1.get('page_id')=='living-water-candidate-01' and c2.get('ok') is True and c2.get('page_id')=='living-water-candidate-02')
-print(json.dumps({'ok':ok,'health':h,'candidate01':c1,'candidate02':c2},ensure_ascii=False))
+c3=load('/tmp/dore-design-candidate-03.json')
+c4=load('/tmp/dore-design-candidate-04.json')
+ok=(h.get('service')=='dore-design' and h.get('source_of_truth')=='structured-workspace' and c1.get('ok') is True and c1.get('page_id')=='living-water-candidate-01' and c2.get('ok') is True and c2.get('page_id')=='living-water-candidate-02' and c3.get('ok') is True and c3.get('page_id')=='living-water-candidate-03' and c4.get('ok') is True and c4.get('page_id')=='living-water-candidate-04' and c4.get('editor')=='/editor?page=living-water-candidate-04')
+print(json.dumps({'ok':ok,'health':h,'candidate01':c1,'candidate02':c2,'candidate03':c3,'candidate04':c4},ensure_ascii=False))
 sys.exit(0 if ok else 1)
 PY
     then VALID=1;break;fi
@@ -64,6 +68,8 @@ fi
   echo '--- health ---'; cat /tmp/dore-design-health.json 2>/dev/null || true
   echo; echo '--- candidate 01 ---'; cat /tmp/dore-design-candidate-01.json 2>/dev/null || true
   echo; echo '--- candidate 02 ---'; cat /tmp/dore-design-candidate-02.json 2>/dev/null || true
+  echo; echo '--- candidate 03 ---'; cat /tmp/dore-design-candidate-03.json 2>/dev/null || true
+  echo; echo '--- candidate 04 ---'; cat /tmp/dore-design-candidate-04.json 2>/dev/null || true
   echo; echo '--- port owner ---'; lsof -nP -iTCP:4310 -sTCP:LISTEN 2>/dev/null || true
   echo '--- dore-design.err.log ---'; tail -n 120 "$LOGDIR/dore-design.err.log" 2>/dev/null || true
   echo '--- dore-design.out.log ---'; tail -n 80 "$LOGDIR/dore-design.out.log" 2>/dev/null || true
