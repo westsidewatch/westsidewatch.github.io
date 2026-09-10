@@ -1,0 +1,340 @@
+{
+  "schema": "dawn.library.catalog.v1",
+  "id": "biblical-world",
+  "title": "聖經世界",
+  "description": "黎明書局的聖經世界公版館藏。此檔只保存書籍身份、來源與封面索引，不保存全文。",
+  "storagePolicy": "index-only",
+  "items": [
+    {
+      "id": "josephus-antiquities",
+      "work": {
+        "title": "The Antiquities of the Jews",
+        "author": "Flavius Josephus",
+        "language": "en"
+      },
+      "edition": {
+        "label": "William Whiston translation",
+        "translator": "William Whiston",
+        "publicDomain": true
+      },
+      "relations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "THE ANTIQUITIES OF THE JEWS",
+        "author": "FLAVIUS JOSEPHUS"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/2848",
+          "format": "html/epub",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "josephus-war",
+      "work": {
+        "title": "The Wars of the Jews",
+        "author": "Flavius Josephus",
+        "language": "en"
+      },
+      "edition": {
+        "label": "William Whiston translation",
+        "translator": "William Whiston",
+        "publicDomain": true
+      },
+      "relations": [
+        "猶太歷史",
+        "第二聖殿",
+        "耶路撒冷"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "THE WARS OF THE JEWS",
+        "author": "FLAVIUS JOSEPHUS"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/2850",
+          "format": "html/epub",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "eusebius-church-history",
+      "work": {
+        "title": "The Church History of Eusebius",
+        "author": "Eusebius of Caesarea",
+        "language": "en"
+      },
+      "edition": {
+        "publicDomain": true
+      },
+      "relations": [
+        "早期教會",
+        "教父",
+        "教會歷史"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "CHURCH HISTORY",
+        "author": "EUSEBIUS"
+      },
+      "sources": []
+    },
+    {
+      "id": "augustine-confessions",
+      "work": {
+        "title": "The Confessions of Saint Augustine",
+        "author": "Augustine of Hippo",
+        "language": "en"
+      },
+      "edition": {
+        "publicDomain": true
+      },
+      "relations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "CONFESSIONS",
+        "author": "AUGUSTINE"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/3296",
+          "format": "html/epub",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "josephus-against-apion",
+      "work": {
+        "title": "Against Apion",
+        "author": "Flavius Josephus",
+        "language": "en"
+      },
+      "edition": {
+        "label": "William Whiston translation",
+        "translator": "William Whiston",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "relations": [
+        "猶太歷史",
+        "第二聖殿",
+        "猶太教",
+        "護教"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "AGAINST APION",
+        "author": "FLAVIUS JOSEPHUS"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/2849",
+          "format": "html/epub/text",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "schweitzer-historical-jesus",
+      "work": {
+        "title": "The Quest of the Historical Jesus",
+        "author": "Albert Schweitzer",
+        "language": "en"
+      },
+      "edition": {
+        "label": "William Montgomery translation",
+        "translator": "William Montgomery",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "relations": [
+        "耶穌研究",
+        "新約背景",
+        "歷史研究"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "THE QUEST OF THE HISTORICAL JESUS",
+        "author": "ALBERT SCHWEITZER"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/45422",
+          "format": "html/epub/text/pdf",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "kurtz-church-history",
+      "work": {
+        "title": "Church History (Volumes 1-3)",
+        "author": "J. H. Kurtz",
+        "language": "en"
+      },
+      "edition": {
+        "label": "John Macpherson translation",
+        "translator": "John Macpherson",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "relations": [
+        "教會歷史",
+        "早期教會",
+        "教父",
+        "宗教改革"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "CHURCH HISTORY",
+        "author": "J. H. KURTZ"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/51491",
+          "format": "html/epub/text",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "zh-wikisource-be347b0199af",
+      "work": {
+        "title": "聖經 (和合本)",
+        "language": "zh"
+      },
+      "edition": {
+        "label": "聖經 (和合本)",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "declaredBy": "中文維基文庫",
+        "provenanceRequired": true
+      },
+      "relations": [
+        "聖經世界",
+        "中文公版"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "聖經 (和合本)",
+        "author": ""
+      },
+      "sources": [
+        {
+          "provider": "中文維基文庫",
+          "kind": "remote-public",
+          "url": "https://zh.wikisource.org/wiki/%E8%81%96%E7%B6%93_%28%E5%92%8C%E5%90%88%E6%9C%AC%29",
+          "format": "html",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "zh-wikisource-73b76ba06e4a",
+      "work": {
+        "title": "聖經 (文理和合)",
+        "language": "zh"
+      },
+      "edition": {
+        "label": "聖經 (文理和合)",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "declaredBy": "中文維基文庫",
+        "provenanceRequired": true
+      },
+      "relations": [
+        "聖經世界",
+        "中文公版"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "聖經 (文理和合)",
+        "author": ""
+      },
+      "sources": [
+        {
+          "provider": "中文維基文庫",
+          "kind": "remote-public",
+          "url": "https://zh.wikisource.org/wiki/%E8%81%96%E7%B6%93_%28%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+          "format": "html",
+          "downloadOnCatalog": false
+        }
+      ]
+    },
+    {
+      "id": "zh-wikisource-1eb551a7ebc2",
+      "work": {
+        "title": "新約全書 (淺文理和合)",
+        "language": "zh"
+      },
+      "edition": {
+        "label": "新約全書 (淺文理和合)",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "declaredBy": "中文維基文庫",
+        "provenanceRequired": true
+      },
+      "relations": [
+        "聖經世界",
+        "中文公版"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "新約全書 (淺文理和合)",
+        "author": ""
+      },
+      "sources": [
+        {
+          "provider": "中文維基文庫",
+          "kind": "remote-public",
+          "url": "https://zh.wikisource.org/wiki/%E6%96%B0%E7%B4%84%E5%85%A8%E6%9B%B8_%28%E6%B7%BA%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+          "format": "html",
+          "downloadOnCatalog": false
+        }
+      ]
+    }
+  ]
+}

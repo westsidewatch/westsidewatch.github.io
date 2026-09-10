@@ -1,0 +1,66 @@
+{
+  "schema": "dawn.library.loop.report.v1",
+  "generatedAt": "2026-09-10T04:21:48.167114+00:00",
+  "results": {
+    "books": {
+      "published": 10,
+      "verified": 9,
+      "pending": 1,
+      "relations": 15,
+      "providers": [
+        "Project Gutenberg",
+        "中文維基文庫"
+      ]
+    },
+    "growthToday": {
+      "books": 0,
+      "verifiedBooks": 0,
+      "relations": 0
+    },
+    "cadence": {
+      "recommended": "daily",
+      "recentVerifiedGrowthPerRun": 1.5,
+      "density": 9
+    },
+    "collections": [
+      {
+        "id": "biblical-world-books",
+        "kind": "books",
+        "status": "active",
+        "output": "/dawn-library/biblical-world/catalog.json"
+      },
+      {
+        "id": "biblical-people",
+        "kind": "entities",
+        "status": "active",
+        "output": "/dore/entity-index.json"
+      },
+      {
+        "id": "biblical-geography",
+        "kind": "geography",
+        "status": "active",
+        "output": null
+      },
+      {
+        "id": "biblical-language",
+        "kind": "language",
+        "status": "active",
+        "output": null
+      },
+      {
+        "id": "biblical-relations",
+        "kind": "relations",
+        "status": "active",
+        "output": null
+      }
+    ]
+  },
+  "pendingBooks": [
+    {
+      "id": "eusebius-church-history",
+      "title": "The Church History of Eusebius",
+      "reason": "missing verified public source"
+    }
+  ],
+  "invariant": "A Dawn Library loop is successful only when it leaves inspectable persisted output and a comparable growth snapshot."
+}

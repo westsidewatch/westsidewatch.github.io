@@ -1,0 +1,16 @@
+{
+  "schema": "dawn.library.chinese-relevance-policy.v1",
+  "collection": "biblical-world-books",
+  "displayName": "黎明書局 · 聖經世界 · 中文",
+  "thresholds": {"qualified": 6, "deferred": 3},
+  "signals": {"goldenSeed": 8, "strongTerm": 3, "contextTerm": 1, "subpagePenalty": -2, "knownNoise": -8},
+  "strongTerms": ["聖經","和合本","文理和合","舊約","新約","猶太","以色列","耶路撒冷","約瑟夫","約瑟夫斯","猶太古史","猶太戰記","教會史","優西比烏","奧古斯丁","使徒","福音","希伯來","巴勒斯坦"],
+  "contextTerms": ["基督教","初代教會","早期教會","教父","第二聖殿","聖地","加利利","猶太地","羅馬","希臘文","考古","地理"],
+  "knownNoise": ["三藩市","舊金山","華盛頓","拿破崙","莎士比亞","紅樓夢","三國演義"],
+  "rules": [
+    "中文匹配使用 Unicode 正規化後的子字串，不使用英文 word-boundary 規則。",
+    "章、卷、篇等子頁不能因書名關鍵詞而被當成獨立書籍；優先保留作品根頁。",
+    "golden seed 仍須經 Edition/Rights Resolver，不因 relevance 自動入館。",
+    "search hit 不是 relevance；relevance 不是 rights verification；不下載全文。"
+  ]
+}

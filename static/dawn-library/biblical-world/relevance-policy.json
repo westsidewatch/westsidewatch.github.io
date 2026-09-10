@@ -1,0 +1,22 @@
+{
+  "schema": "dawn.library.relevance-policy.v1",
+  "collection": "biblical-world-books",
+  "displayName": "黎明書局 · 聖經世界",
+  "thresholds": {"qualified": 6, "defer": 3},
+  "signals": {
+    "exactQueryInTitle": 5,
+    "exactQueryInAuthor": 5,
+    "strongTerm": 3,
+    "contextTerm": 1,
+    "knownNoise": -8
+  },
+  "strongTerms": ["josephus", "eusebius", "augustine", "bible", "biblical", "jew", "jewish", "israel", "palestine", "jerusalem", "christian", "christianity", "church history", "apostle", "apostolic", "testament", "gospel", "hebrew"],
+  "contextTerms": ["rome", "roman", "greek", "judea", "galilee", "early church", "church father", "second temple", "archaeology", "geography", "nero"],
+  "knownNoise": ["wallenstein", "piccolomini", "thirty years war", "san francisco", "literary and philosophical essays"],
+  "rules": {
+    "queryMatchAloneNeverVerifies": true,
+    "qualifiedStillRequiresEditionRightsResolver": true,
+    "rejectedNeverEntersCatalog": true,
+    "noFullTextDownload": true
+  }
+}
