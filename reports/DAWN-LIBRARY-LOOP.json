@@ -1,26 +1,58 @@
 {
-  "schema": "dawn.library.loop.report.v1",
-  "generatedAt": "2026-09-10T20:27:04.861680+00:00",
+  "schema": "dawn.library.loop.report.v2",
+  "generatedAt": "2026-09-10T20:27:53.284334+00:00",
   "results": {
     "books": {
-      "published": 10,
-      "verified": 9,
+      "published": 20,
+      "verified": 19,
       "pending": 1,
-      "relations": 15,
+      "relations": 17,
       "providers": [
         "Project Gutenberg",
         "中文維基文庫"
       ]
     },
-    "growthToday": {
-      "books": 0,
-      "verifiedBooks": 0,
-      "relations": 0
+    "catalogDeltaToday": {
+      "books": 16,
+      "verifiedBooks": 16,
+      "relations": 9
+    },
+    "autonomousGrowthToday": {
+      "books": 10,
+      "titles": [
+        "The Life of Flavius Josephus",
+        "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
+        "Josephus",
+        "The Project Gutenberg Works of Flavius Josephus: An Index",
+        "King Alfred's Old English Version of St. Augustine's Soliloquies\nTurned into Modern English",
+        "Bible Atlas: A Manual of Biblical Geography and History",
+        "A Bible History of Baptism",
+        "St. Augustine, Florida's Colonial Capital",
+        "Selections From Josephus",
+        "Confessions of St. Augustine"
+      ]
+    },
+    "pipelineThisRun": {
+      "englishDiscoveredThisRun": 150,
+      "chineseDiscoveredThisRun": 0,
+      "englishPromotedThisRun": 10,
+      "englishPromotedTitles": [
+        "The Life of Flavius Josephus",
+        "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
+        "Josephus",
+        "The Project Gutenberg Works of Flavius Josephus: An Index",
+        "King Alfred's Old English Version of St. Augustine's Soliloquies\nTurned into Modern English",
+        "Bible Atlas: A Manual of Biblical Geography and History",
+        "A Bible History of Baptism",
+        "St. Augustine, Florida's Colonial Capital",
+        "Selections From Josephus",
+        "Confessions of St. Augustine"
+      ]
     },
     "cadence": {
       "recommended": "daily",
-      "recentVerifiedGrowthPerRun": 1.5,
-      "density": 9
+      "recentAutonomousGrowthPerDay": 5.0,
+      "density": 19
     },
     "collections": [
       {
@@ -62,5 +94,5 @@
       "reason": "missing verified public source"
     }
   ],
-  "invariant": "A Dawn Library loop is successful only when it leaves inspectable persisted output and a comparable growth snapshot."
+  "invariant": "Seed promotion is not autonomous growth. Autonomous growth requires loop discovery provenance plus verified rights and catalog promotion."
 }

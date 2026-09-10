@@ -1,5 +1,5 @@
 {
-  "schema": "dawn.library.growth.v1",
+  "schema": "dawn.library.growth.v2",
   "days": [
     {
       "date": "2026-09-09",
@@ -14,13 +14,28 @@
     },
     {
       "date": "2026-09-10",
-      "books": 10,
-      "verifiedBooks": 9,
-      "relations": 15,
+      "books": 20,
+      "verifiedBooks": 19,
+      "relations": 17,
       "growth": {
-        "books": 0,
-        "verifiedBooks": 0,
-        "relations": 0
+        "books": 16,
+        "verifiedBooks": 16,
+        "relations": 9
+      },
+      "autonomousGrowth": {
+        "books": 10,
+        "titles": [
+          "The Life of Flavius Josephus",
+          "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
+          "Josephus",
+          "The Project Gutenberg Works of Flavius Josephus: An Index",
+          "King Alfred's Old English Version of St. Augustine's Soliloquies\nTurned into Modern English",
+          "Bible Atlas: A Manual of Biblical Geography and History",
+          "A Bible History of Baptism",
+          "St. Augustine, Florida's Colonial Capital",
+          "Selections From Josephus",
+          "Confessions of St. Augustine"
+        ]
       }
     }
   ]
