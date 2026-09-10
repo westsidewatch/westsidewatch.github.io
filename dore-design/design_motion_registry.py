@@ -10,8 +10,8 @@ _LIVING_CURRENT_STYLE = r'''
 .products__grid.living-current-field{display:block;position:relative;overflow:hidden;min-height:calc(100vh - 204px)}
 .living-current-band{position:absolute;left:-12vw;display:flex;align-items:center;gap:3vw;width:124vw;will-change:transform}
 .living-current-band .product{flex:1 1 0;min-width:0;margin:0;will-change:transform,opacity}
-.living-current-band:nth-child(1){top:4%;animation:lw-current-a 42s linear infinite alternate}
-.living-current-band:nth-child(2){top:52%;animation:lw-current-b 55s linear infinite alternate;animation-delay:-17s}
+.living-current-band:nth-child(1){top:4%;animation:lw-current-a 28s linear infinite alternate}
+.living-current-band:nth-child(2){top:52%;animation:lw-current-b 34s linear infinite alternate;animation-delay:-11s}
 .products.living-current-focus .living-current-band{animation-play-state:paused}
 @media(max-width:900px){
  .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
