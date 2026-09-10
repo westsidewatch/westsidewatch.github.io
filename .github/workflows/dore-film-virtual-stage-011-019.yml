@@ -22,7 +22,7 @@ jobs:
           mkdir -p .virtualstage/input .virtualstage/output
           curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' -o .virtualstage/input/dore-011.jpg
           curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/c/c6/019.The_Meeting_of_Isaac_and_Rebekah.jpg' -o .virtualstage/input/dore-019.jpg
-      - name: Build projector-driven virtual stage and render one take
+      - name: Build corrected virtual stage and render one take
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
           MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
@@ -33,44 +33,50 @@ jobs:
           base=os.path.abspath('.virtualstage'); out=os.path.join(base,'output')
           bpy.ops.wm.read_factory_settings(use_empty=True); scene=bpy.context.scene
           scene.world=bpy.data.worlds.new('DORÉ_WORLD'); scene.world.color=(0.015,0.015,0.015)
-          def material_image(name,path):
+          def mat_image(name,path):
               img=bpy.data.images.load(path); img.colorspace_settings.name='sRGB'
               m=bpy.data.materials.new(name); m.use_nodes=True
               n=m.node_tree.nodes; l=m.node_tree.links
               for x in list(n): n.remove(x)
-              tex=n.new('ShaderNodeTexImage'); tex.image=img; tex.interpolation='Linear'
+              tex=n.new('ShaderNodeTexImage'); tex.image=img; tex.interpolation='Linear'; tex.extension='CLIP'
               em=n.new('ShaderNodeEmission'); outn=n.new('ShaderNodeOutputMaterial')
               l.new(tex.outputs['Color'],em.inputs['Color']); l.new(em.outputs['Emission'],outn.inputs['Surface'])
               return m,img
-          def image_wall(dore_id,path,center,width,yrot=0):
-              mat,img=material_image('DORE_'+dore_id,path)
-              aspect=img.size[0]/img.size[1]; height=width/aspect
-              bpy.ops.mesh.primitive_grid_add(x_subdivisions=41,y_subdivisions=31,size=2,location=center,rotation=(math.radians(90),0,yrot))
-              o=bpy.context.object; o.name='DORÉ_'+dore_id+'_PROJECTED_STAGE'; o.scale=(width/2,height/2,1)
-              # Shallow curved virtual-production wall: spatial response without deforming the source into a deep mesh.
-              for v in o.data.vertices:
-                  nx=v.co.x
-                  v.co.z += 0.11*(nx*nx)
-              # Native generated UVs on Grid preserve the canonical original across the wall.
-              o.data.materials.append(mat)
+          def wall(dore_id,path,center,width,yrot=0):
+              mat,img=mat_image('DORE_'+dore_id,path); aspect=img.size[0]/img.size[1]; height=width/aspect
+              cols,rows=40,30; verts=[]; uvs=[]; faces=[]
+              for j in range(rows+1):
+                  v=j/rows; y=(v-.5)*height
+                  for i in range(cols+1):
+                      u=i/cols; x=(u-.5)*width
+                      # wall faces camera along +Z; shallow concave LED-wall geometry only
+                      z=-0.10*(x/(width/2))**2
+                      verts.append((x,y,z)); uvs.append((u,v))
+              for j in range(rows):
+                  for i in range(cols):
+                      a=j*(cols+1)+i; b=a+1; c=a+(cols+1)+1; d=a+(cols+1)
+                      faces.append((a,b,c,d))
+              mesh=bpy.data.meshes.new('DORE_'+dore_id+'_WALL_MESH'); mesh.from_pydata(verts,[],faces); mesh.update()
+              uv=mesh.uv_layers.new(name='UVMap')
+              for poly in mesh.polygons:
+                  for li,vi in zip(poly.loop_indices,poly.vertices): uv.data[li].uv=uvs[vi]
+              o=bpy.data.objects.new('DORÉ_'+dore_id+'_PROJECTED_STAGE',mesh); bpy.context.collection.objects.link(o); o.location=center; o.rotation_euler[1]=yrot; o.data.materials.append(mat)
               return o
-          a=image_wall('011',os.path.join(base,'input/dore-011.jpg'),(0,0,-5.2),5.8,0)
-          b=image_wall('019',os.path.join(base,'input/dore-019.jpg'),(7.2,0,-11.0),5.3,math.radians(-12))
-          # Bridge world is geometry, not a third picture.
-          bpy.ops.mesh.primitive_plane_add(size=18,location=(3.5,-2.5,-8),rotation=(0,0,0)); bridge=bpy.context.object; bridge.name='BRIDGE_WORLD'
-          bm=bpy.data.materials.new('BRIDGE'); bm.use_nodes=True; bs=bm.node_tree.nodes.get('Principled BSDF'); bs.inputs['Base Color'].default_value=(0.035,0.035,0.035,1); bs.inputs['Roughness'].default_value=1
-          bridge.data.materials.append(bm)
+          wall('011',os.path.join(base,'input/dore-011.jpg'),(0,0,-5.2),5.8,0)
+          wall('019',os.path.join(base,'input/dore-019.jpg'),(7.2,0,-11.0),5.3,math.radians(-12))
+          bpy.ops.mesh.primitive_plane_add(size=18,location=(3.5,-2.5,-8)); bridge=bpy.context.object; bridge.name='BRIDGE_WORLD'
+          bm=bpy.data.materials.new('BRIDGE'); bm.use_nodes=True; bs=bm.node_tree.nodes.get('Principled BSDF'); bs.inputs['Base Color'].default_value=(0.035,0.035,0.035,1); bs.inputs['Roughness'].default_value=1; bridge.data.materials.append(bm)
           camd=bpy.data.cameras.new('ONE_CAMERA'); cam=bpy.data.objects.new('ONE_CAMERA',camd); bpy.context.collection.objects.link(cam); scene.camera=cam
           camd.sensor_fit='HORIZONTAL'; camd.sensor_width=36; camd.lens=46; camd.clip_start=.02; camd.clip_end=100
           keys=[(1,(0,0,0),(0,0,-5.2)),(32,(0.45,-.05,-1.5),(.2,0,-5.5)),(64,(1.9,-.15,-3.5),(3.2,0,-8.0)),(96,(4.5,-.1,-6.2),(6.2,0,-10.5)),(128,(7.2,0,-7.9),(7.2,0,-11.0))]
-          def look(target): cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler()
-          for f,loc,target in keys:
-              cam.location=loc; look(target); cam.keyframe_insert('location',frame=f); cam.keyframe_insert('rotation_euler',frame=f)
+          def look(t): cam.rotation_euler=(Vector(t)-cam.location).to_track_quat('-Z','Y').to_euler()
+          for f,loc,t in keys:
+              cam.location=loc; look(t); cam.keyframe_insert('location',frame=f); cam.keyframe_insert('rotation_euler',frame=f)
           for fc in cam.animation_data.action.fcurves:
               for kp in fc.keyframe_points: kp.interpolation='BEZIER'
           scene.render.engine='BLENDER_EEVEE'; scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100; scene.render.image_settings.file_format='PNG'; scene.view_settings.view_transform='Standard'; scene.frame_start=1; scene.frame_end=128; scene.render.fps=24; scene.render.filepath=os.path.join(out,'frame-')
           bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'virtual-stage-011-019.blend')); bpy.ops.render.render(animation=True)
-          json.dump({'experiment':'DORÉ-VIRTUAL-STAGE-011-019','representation':'shallow virtual-production walls + canonical Doré textures + bridge geometry','camera':'one continuous viewing camera','generation':False,'depth_mesh':False,'frames':128,'acceptance':'Can the camera visibly leave Doré 011, traverse world-space, and arrive at Doré 019 without a cut or slideshow reset?'},open(os.path.join(out,'metadata.json'),'w'),indent=2)
+          json.dump({'experiment':'DORÉ-VIRTUAL-STAGE-011-019-v2','representation':'explicit UV shallow virtual-production walls + bridge geometry','camera':'one continuous viewing camera','generation':False,'depth_mesh':False,'frames':128,'fix':'explicit XY wall geometry, explicit UV map, front-facing orientation, canonical image aspect','acceptance':'Doré 011 must be recognizable at opening; camera must leave it spatially; bridge must preserve continuity; Doré 019 must become recognizable at arrival; no cut or camera reset.'},open(os.path.join(out,'metadata.json'),'w'),indent=2)
           PY
           blender -b --python .virtualstage/build.py
       - name: Encode and build visual evidence
