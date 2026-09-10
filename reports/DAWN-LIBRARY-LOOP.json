@@ -1,25 +1,26 @@
 {
   "schema": "dawn.library.loop.report.v1",
-  "generatedAt": "2026-09-10T04:13:23.582515+00:00",
+  "generatedAt": "2026-09-10T04:16:50.501157+00:00",
   "results": {
     "books": {
-      "published": 7,
-      "verified": 6,
+      "published": 10,
+      "verified": 9,
       "pending": 1,
-      "relations": 13,
+      "relations": 15,
       "providers": [
-        "Project Gutenberg"
+        "Project Gutenberg",
+        "中文維基文庫"
       ]
     },
     "growthToday": {
-      "books": 0,
-      "verifiedBooks": 0,
-      "relations": 0
+      "books": 3,
+      "verifiedBooks": 3,
+      "relations": 2
     },
     "cadence": {
       "recommended": "daily",
-      "recentVerifiedGrowthPerRun": 1.5,
-      "density": 6
+      "recentVerifiedGrowthPerRun": 3.0,
+      "density": 9
     },
     "collections": [
       {
