@@ -7,7 +7,8 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'static/dawn-library/storefront.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-STOREFRONT.json'
-UA='Dore-Dawn-Library/1.1 (+https://westsidewatch.github.io)'
+BIBLICAL_CATALOG=ROOT/'static/dawn-library/biblical-world/catalog.json'
+UA='Dore-Dawn-Library/1.2 (+https://westsidewatch.github.io)'
 ATOM='http://www.w3.org/2005/Atom';NS={'atom':ATOM}
 now=datetime.now(timezone.utc).isoformat()
 
@@ -78,16 +79,21 @@ def standard_new_releases():
     return {'id':'standard-ebooks-new','title':'精品書架 · Standard Ebooks','kind':'premium-shelf','source':'Standard Ebooks','items':items}
 
 def wikisource_export_shelf():
-    # WS Export publishes a daily OPDS catalogue of works explicitly marked Ready for export.
-    root=fetch_xml('https://ws-export.wmcloud.org/opds/zh/Ready_for_export.xml')
-    items=atom_items(root,'Wikisource','remote-public-export',30,'source-license',False)
-    # Preserve the canonical Wikisource provenance; EPUB links are already emitted by WS Export OPDS.
-    for item in items:
-        item['language']='zh'
-        item['source']['catalog']='WS Export Ready for export OPDS'
-        item['rights']={'status':'source-license','declaredBy':'Wikisource','provenanceRequired':True}
-        item['quality']='export-ready'
-    return {'id':'wikisource-zh-ready','title':'中文典籍 · 維基文庫可匯出','kind':'source-shelf','source':'Wikisource','items':items}
+    # Chinese Wikisource does not publish the same Ready-for-export OPDS path as en.wikisource.
+    # Use our already rights-verified Chinese catalog as the authority, and attach WS Export EPUB URLs on demand.
+    catalog=json.loads(BIBLICAL_CATALOG.read_text())
+    items=[]
+    for book in catalog.get('items',[]):
+        work=book.get('work') or {};title=clean(work.get('title',''));lang=(work.get('language') or '').lower()
+        sources=book.get('sources') or []
+        src=next((s for s in sources if s.get('provider')=='中文維基文庫' and s.get('url')),None)
+        if not title or not src or not lang.startswith('zh'):continue
+        rights=book.get('rights') or {}
+        if rights.get('status')!='public-domain':continue
+        page=urllib.parse.unquote(src['url'].split('/wiki/',1)[-1]).replace('_',' ')
+        export='https://ws-export.wmcloud.org/?'+urllib.parse.urlencode({'format':'epub','lang':'zh','page':page})
+        items.append({'id':'wikisource-export-'+book['id'],'title':title,'author':clean(work.get('author','')),'language':'zh','source':{'provider':'Wikisource','url':src['url'],'downloadUrl':export,'kind':'remote-public-export','catalogId':book['id']},'cover':book.get('cover') or {'mode':'one-fallback'},'rights':{'status':'public-domain','declaredBy':'中文維基文庫','provenanceRequired':True},'quality':'verified-export-ready','contentDownloaded':False})
+    return {'id':'wikisource-zh-verified-export','title':'中文典籍 · 維基文庫 EPUB','kind':'source-shelf','source':'Wikisource','items':items[:30]}
 
 def metadata_map(raw):
     out={}
@@ -99,8 +105,7 @@ def metadata_map(raw):
         return out
     for row in rows if isinstance(rows,list) else []:
         if not isinstance(row,dict):continue
-        key=row.get('key') or row.get('metadataField') or row.get('field')
-        val=row.get('value')
+        key=row.get('key') or row.get('metadataField') or row.get('field');val=row.get('value')
         if isinstance(key,dict):key=key.get('key') or key.get('name')
         if key and val is not None:out.setdefault(str(key),[]).append(clean(str(val)))
     return out
@@ -120,10 +125,8 @@ def doab_records(data):
     if isinstance(emb,dict):
         for k in ('items','objects'):
             if isinstance(emb.get(k),list):return emb[k]
-        sr=emb.get('searchResult') or {}
-        if isinstance(sr,dict):
-            se=sr.get('_embedded') or {}
-            if isinstance(se,dict) and isinstance(se.get('objects'),list):return se['objects']
+        sr=emb.get('searchResult') or {};se=sr.get('_embedded') if isinstance(sr,dict) else {}
+        if isinstance(se,dict) and isinstance(se.get('objects'),list):return se['objects']
     return []
 
 def doab_shelf(label,query,limit=24):
@@ -132,39 +135,25 @@ def doab_shelf(label,query,limit=24):
     for row in rows:
         if not isinstance(row,dict):continue
         if 'indexableObject' in row and isinstance(row['indexableObject'],dict):row=row['indexableObject']
-        meta=metadata_map(row.get('metadata'))
-        title=first(meta,'dc.title','dc.title.main') or clean(row.get('name',''))
-        author=first(meta,'dc.contributor.author','dc.creator','dc.contributor')
-        language=first(meta,'dc.language','dc.language.iso') or 'en'
-        handle=clean(row.get('handle','')) or first(meta,'dc.identifier.uri')
-        page=http_url(handle) if handle.startswith('http') else (f'https://directory.doabooks.org/handle/{handle}' if handle else '')
-        doi=first(meta,'dc.identifier.doi','dc.identifier')
-        isbn=first(meta,'dc.identifier.isbn','dc.identifier.isbn13')
-        license_url=first(meta,'dc.rights.uri','dc.rights.license')
-        rights_text=first(meta,'dc.rights','dc.rights.accessRights')
-        download='';cover=''
+        meta=metadata_map(row.get('metadata'));title=first(meta,'dc.title','dc.title.main') or clean(row.get('name',''));author=first(meta,'dc.contributor.author','dc.creator','dc.contributor');language=first(meta,'dc.language','dc.language.iso') or 'en'
+        handle=clean(row.get('handle','')) or first(meta,'dc.identifier.uri');page=http_url(handle) if handle.startswith('http') else (f'https://directory.doabooks.org/handle/{handle}' if handle else '')
+        doi=first(meta,'dc.identifier.doi','dc.identifier');isbn=first(meta,'dc.identifier.isbn','dc.identifier.isbn13');license_url=first(meta,'dc.rights.uri','dc.rights.license');rights_text=first(meta,'dc.rights','dc.rights.accessRights');download='';cover=''
         for b in row.get('bitstreams') or []:
             if not isinstance(b,dict):continue
-            mime=(b.get('mimeType') or b.get('format') or '').lower();name=(b.get('name') or '').lower();link=http_url(b.get('retrieveLink') or b.get('link') or '')
-            if link.startswith('/'):
-                link='https://directory.doabooks.org'+link
+            mime=(b.get('mimeType') or b.get('format') or '').lower();name=(b.get('name') or '').lower();link=b.get('retrieveLink') or b.get('link') or ''
+            if isinstance(link,str) and link.startswith('/'):link='https://directory.doabooks.org'+link
+            link=http_url(link)
             if not download and (mime=='application/pdf' or name.endswith('.pdf')):download=link
             if not cover and (mime.startswith('image/') or re.search(r'cover.*\.(jpe?g|png|webp)$',name)):cover=link
         if not title or not page:continue
-        stable=handle or doi or isbn or title
-        slug=re.sub(r'[^a-z0-9]+','-',stable.lower()).strip('-')[-72:] or str(len(items)+1)
+        stable=handle or doi or isbn or title;slug=re.sub(r'[^a-z0-9]+','-',stable.lower()).strip('-')[-72:] or str(len(items)+1)
         items.append({'id':'doab-'+slug,'title':title,'author':author,'language':language,'identifiers':{'doi':doi or None,'isbn':isbn or None,'handle':handle or None},'source':{'provider':'DOAB','url':page,'downloadUrl':download or None,'kind':'remote-open-access'},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':'open-access','license':license_url or rights_text or None,'declaredBy':'DOAB','provenanceRequired':True},'quality':'open-access-scholarly','contentDownloaded':False})
         if len(items)>=limit:break
     return {'id':'doab-'+re.sub(r'[^a-z0-9]+','-',query.lower()).strip('-'),'title':label,'kind':'academic-shelf','source':'DOAB','items':items}
 
 shelf_specs=[('聖經與基督教','bible christianity',40),('早期教會與教父','early church fathers',36),('猶太與第二聖殿世界','jewish history josephus',36),('古代世界與考古','ancient history archaeology',36),('哲學與思想','philosophy classics',36),('傳記與回憶','biography memoir',36)]
 shelves=[];errors=[]
-for source_name,fn in [
-    ('Standard Ebooks',standard_new_releases),
-    ('Wikisource',wikisource_export_shelf),
-    ('DOAB theology',lambda:doab_shelf('開放學術 · 神學與宗教','theology OR biblical',24)),
-    ('DOAB archaeology',lambda:doab_shelf('開放學術 · 聖經世界與考古','archaeology AND religion',24)),
-]:
+for source_name,fn in [('Standard Ebooks',standard_new_releases),('Wikisource',wikisource_export_shelf),('DOAB theology',lambda:doab_shelf('開放學術 · 神學與宗教','theology OR biblical',24)),('DOAB archaeology',lambda:doab_shelf('開放學術 · 聖經世界與考古','archaeology AND religion',24))]:
     try:
         shelf=fn()
         if shelf.get('items'):shelves.append(shelf)
@@ -177,11 +166,8 @@ seen=set();total=0;cover_count=0;download_count=0;provider_counts={}
 for shelf in shelves:
     dedup=[]
     for item in shelf['items']:
-        key=item['id']
-        if key in seen:continue
-        seen.add(key);dedup.append(item)
-        cover_count+=1 if item.get('cover',{}).get('url') else 0
-        download_count+=1 if item.get('source',{}).get('downloadUrl') else 0
+        if item['id'] in seen:continue
+        seen.add(item['id']);dedup.append(item);cover_count+=1 if item.get('cover',{}).get('url') else 0;download_count+=1 if item.get('source',{}).get('downloadUrl') else 0
         p=item.get('source',{}).get('provider','unknown');provider_counts[p]=provider_counts.get(p,0)+1
     shelf['items']=dedup;total+=len(dedup)
 store={'schema':'dawn.library.storefront.v2','generatedAt':now,'title':'黎明書局','storagePolicy':'index-only','principle':'映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。','shelves':shelves,'metrics':{'shelves':len(shelves),'mappedBooks':total,'sourceCovers':cover_count,'directPublications':download_count,'providers':provider_counts},'errors':errors}
