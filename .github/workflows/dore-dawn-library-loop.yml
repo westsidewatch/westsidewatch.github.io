@@ -16,6 +16,9 @@ on:
       - 'scripts/promote_dawn_library_chinese_catalog.py'
       - 'scripts/run_dawn_library_loop.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
+concurrency:
+  group: dore-dawn-library-main
+  cancel-in-progress: false
 permissions:
   contents: write
 jobs:
@@ -99,12 +102,27 @@ jobs:
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DAWN-LIBRARY-*.json static/dawn-library/collections.json static/dawn-library/biblical-world/catalog.json static/dawn-library/biblical-world/discovery-state.json static/dawn-library/biblical-world/discovery-candidates.json static/dawn-library/biblical-world/chinese-candidates.json static/dawn-library/biblical-world/relevance-results.json static/dawn-library/biblical-world/chinese-relevance-results.json static/dawn-library/biblical-world/english-resolver-results.json static/dawn-library/biblical-world/chinese-resolver-results.json
-          if ! git diff --cached --quiet; then
+          add_outputs() {
+            git add reports/DAWN-LIBRARY-*.json static/dawn-library/collections.json static/dawn-library/biblical-world/catalog.json static/dawn-library/biblical-world/discovery-state.json static/dawn-library/biblical-world/discovery-candidates.json static/dawn-library/biblical-world/chinese-candidates.json static/dawn-library/biblical-world/relevance-results.json static/dawn-library/biblical-world/chinese-relevance-results.json static/dawn-library/biblical-world/english-resolver-results.json static/dawn-library/biblical-world/chinese-resolver-results.json
+          }
+          add_outputs
+          if git diff --cached --quiet; then exit 0; fi
+          for attempt in 1 2 3 4; do
             git commit -m 'chore(dawn): persist autonomous bilingual library growth [skip ci]'
-            for attempt in 1 2 3 4; do
-              if git push; then exit 0; fi
-              git pull --rebase origin "${GITHUB_REF_NAME}"
-            done
-            exit 1
-          fi
+            if git push; then exit 0; fi
+            # main moved while this run was working. Never rebase generated snapshots; regenerate them on the latest main.
+            git fetch origin main
+            git reset --hard origin/main
+            python scripts/run_dawn_library_discovery.py
+            python scripts/run_dawn_library_chinese_discovery.py
+            python scripts/run_dawn_library_relevance.py
+            python scripts/run_dawn_library_chinese_relevance.py
+            python scripts/run_dawn_library_english_resolver.py
+            python scripts/run_dawn_library_chinese_resolver.py
+            python scripts/promote_dawn_library_english_catalog.py
+            python scripts/promote_dawn_library_chinese_catalog.py
+            python scripts/run_dawn_library_loop.py
+            add_outputs
+            if git diff --cached --quiet; then exit 0; fi
+          done
+          exit 1
