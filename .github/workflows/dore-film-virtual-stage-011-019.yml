@@ -1,0 +1,93 @@
+name: DORÉ Film Virtual Stage 011-019
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-film-virtual-stage-011-019.yml'
+
+jobs:
+  virtual-stage-road-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install render stack
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender ffmpeg libegl1 libgl1 libglx-mesa0 mesa-utils
+          python -m pip install --quiet pillow
+      - name: Fetch canonical Doré originals
+        run: |
+          mkdir -p .virtualstage/input .virtualstage/output
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' -o .virtualstage/input/dore-011.jpg
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/c/c6/019.The_Meeting_of_Isaac_and_Rebekah.jpg' -o .virtualstage/input/dore-019.jpg
+      - name: Build projector-driven virtual stage and render one take
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
+        run: |
+          cat > .virtualstage/build.py <<'PY'
+          import bpy, os, math, json
+          from mathutils import Vector
+          base=os.path.abspath('.virtualstage'); out=os.path.join(base,'output')
+          bpy.ops.wm.read_factory_settings(use_empty=True); scene=bpy.context.scene
+          scene.world=bpy.data.worlds.new('DORÉ_WORLD'); scene.world.color=(0.015,0.015,0.015)
+          def material_image(name,path):
+              img=bpy.data.images.load(path); img.colorspace_settings.name='sRGB'
+              m=bpy.data.materials.new(name); m.use_nodes=True
+              n=m.node_tree.nodes; l=m.node_tree.links
+              for x in list(n): n.remove(x)
+              tex=n.new('ShaderNodeTexImage'); tex.image=img; tex.interpolation='Linear'
+              em=n.new('ShaderNodeEmission'); outn=n.new('ShaderNodeOutputMaterial')
+              l.new(tex.outputs['Color'],em.inputs['Color']); l.new(em.outputs['Emission'],outn.inputs['Surface'])
+              return m,img
+          def image_wall(dore_id,path,center,width,yrot=0):
+              mat,img=material_image('DORE_'+dore_id,path)
+              aspect=img.size[0]/img.size[1]; height=width/aspect
+              bpy.ops.mesh.primitive_grid_add(x_subdivisions=41,y_subdivisions=31,size=2,location=center,rotation=(math.radians(90),0,yrot))
+              o=bpy.context.object; o.name='DORÉ_'+dore_id+'_PROJECTED_STAGE'; o.scale=(width/2,height/2,1)
+              # Shallow curved virtual-production wall: spatial response without deforming the source into a deep mesh.
+              for v in o.data.vertices:
+                  nx=v.co.x
+                  v.co.z += 0.11*(nx*nx)
+              # Native generated UVs on Grid preserve the canonical original across the wall.
+              o.data.materials.append(mat)
+              return o
+          a=image_wall('011',os.path.join(base,'input/dore-011.jpg'),(0,0,-5.2),5.8,0)
+          b=image_wall('019',os.path.join(base,'input/dore-019.jpg'),(7.2,0,-11.0),5.3,math.radians(-12))
+          # Bridge world is geometry, not a third picture.
+          bpy.ops.mesh.primitive_plane_add(size=18,location=(3.5,-2.5,-8),rotation=(0,0,0)); bridge=bpy.context.object; bridge.name='BRIDGE_WORLD'
+          bm=bpy.data.materials.new('BRIDGE'); bm.use_nodes=True; bs=bm.node_tree.nodes.get('Principled BSDF'); bs.inputs['Base Color'].default_value=(0.035,0.035,0.035,1); bs.inputs['Roughness'].default_value=1
+          bridge.data.materials.append(bm)
+          camd=bpy.data.cameras.new('ONE_CAMERA'); cam=bpy.data.objects.new('ONE_CAMERA',camd); bpy.context.collection.objects.link(cam); scene.camera=cam
+          camd.sensor_fit='HORIZONTAL'; camd.sensor_width=36; camd.lens=46; camd.clip_start=.02; camd.clip_end=100
+          keys=[(1,(0,0,0),(0,0,-5.2)),(32,(0.45,-.05,-1.5),(.2,0,-5.5)),(64,(1.9,-.15,-3.5),(3.2,0,-8.0)),(96,(4.5,-.1,-6.2),(6.2,0,-10.5)),(128,(7.2,0,-7.9),(7.2,0,-11.0))]
+          def look(target): cam.rotation_euler=(Vector(target)-cam.location).to_track_quat('-Z','Y').to_euler()
+          for f,loc,target in keys:
+              cam.location=loc; look(target); cam.keyframe_insert('location',frame=f); cam.keyframe_insert('rotation_euler',frame=f)
+          for fc in cam.animation_data.action.fcurves:
+              for kp in fc.keyframe_points: kp.interpolation='BEZIER'
+          scene.render.engine='BLENDER_EEVEE'; scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100; scene.render.image_settings.file_format='PNG'; scene.view_settings.view_transform='Standard'; scene.frame_start=1; scene.frame_end=128; scene.render.fps=24; scene.render.filepath=os.path.join(out,'frame-')
+          bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'virtual-stage-011-019.blend')); bpy.ops.render.render(animation=True)
+          json.dump({'experiment':'DORÉ-VIRTUAL-STAGE-011-019','representation':'shallow virtual-production walls + canonical Doré textures + bridge geometry','camera':'one continuous viewing camera','generation':False,'depth_mesh':False,'frames':128,'acceptance':'Can the camera visibly leave Doré 011, traverse world-space, and arrive at Doré 019 without a cut or slideshow reset?'},open(os.path.join(out,'metadata.json'),'w'),indent=2)
+          PY
+          blender -b --python .virtualstage/build.py
+      - name: Encode and build visual evidence
+        run: |
+          ffmpeg -y -framerate 24 -i '.virtualstage/output/frame-%04d.png' -c:v libx264 -pix_fmt yuv420p .virtualstage/output/virtual-stage-011-019.mp4
+          python - <<'PY'
+          from PIL import Image,ImageDraw
+          from pathlib import Path
+          p=Path('.virtualstage/output'); ns=[1,32,64,96,128]; ims=[Image.open(p/f'frame-{n:04d}.png').convert('RGB') for n in ns]; w,h=ims[0].size
+          s=Image.new('RGB',(w*5,h+34),'black'); d=ImageDraw.Draw(s)
+          for i,(n,im) in enumerate(zip(ns,ims)): s.paste(im,(i*w,34)); d.text((i*w+10,10),f'frame {n}',fill='white')
+          s.save(p/'contact-sheet.png')
+          PY
+      - name: Upload virtual-stage evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-virtual-stage-011-019
+          path: .virtualstage/output/
+          if-no-files-found: error
+          retention-days: 14
