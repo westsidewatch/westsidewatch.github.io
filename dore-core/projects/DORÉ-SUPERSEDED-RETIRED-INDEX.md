@@ -197,6 +197,22 @@ This index prevents historical architecture, roadmaps and implementation checkpo
 
 **Current authority:** treat `DORE_LOCAL_MODEL` as the current local model source; keep the old independent visual override superseded and the cleanup workflow retired as an action. No P01 state follows from this historical cleanup artifact.
 
+## SR-016 — Doré Film fragile WebGL / remote-texture public-lab delivery path
+
+**Historical source:** the first Canonical Canvas public-lab delivery path recorded around `docs/dore/film/CANVAS-PLACEMENT-EXPERIMENT-01-ACCEPTANCE.md`, which still warned that browser-side texture/WebGL behavior required separate inspection.
+
+**Classification:** `SUPERSEDED` as the preferred public-lab delivery implementation; retained as engineering chronology.
+
+**Superseding evidence:** same-day Doré Film commits `d37d6ff30c4d345943081e6073b73d7db58b0295`, `1d37f2588ddd2e7391e96b6dee47084387e345d5`, and `acb9ba128060b0b5392a60e64db20dc106f0c5b0` remove blocking Wikimedia texture loading, publish a zero-dependency Canvas Lab and advance to a camera-first Canvas2D v3.
+
+**Conflict resolved:** the older public-lab delivery risk must not be reread as the current implementation preference or as a reason to reopen the camera-first/canonical-placement contract. The implementation changed while the authored Camera Spine, locked canonical Doré identity, lens/FOV-aware placement and one-camera production order remained retained.
+
+**Retained value:** the failed/fragile path documents why external/browser texture dependencies were reduced. It also reinforces the evidence rule that route/CI publication is not visual-director acceptance.
+
+**Important boundary:** superseding the public delivery path does not itself prove cinematic or aesthetic completion. Camera Spine 01 and Canonical Canvas Placement 01 each retain a bounded objective engineering PASS while rendered-motion/directorial acceptance remains `UNKNOWN_NEEDS_EVIDENCE`.
+
+**Current authority:** use the lower-dependency current camera-first public labs for ongoing visual evaluation. Evidence: `DORÉ-FILM-CAMERA-CANVAS-EVIDENCE-LEDGER-2026-09-10.md` and `DORE-MEMORY-SWEEP-01-CHECKPOINT-61-2026-09-10.md`. P01 is unchanged.
+
 ## Rule
 
 Superseded does not mean deleted or wrong in every detail. Historical documents remain provenance. Only their obsolete governing claims are prevented from reasserting current priority or policy.
