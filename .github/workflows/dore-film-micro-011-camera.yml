@@ -1,0 +1,235 @@
+name: DORÉ Film Micro 011 Camera
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-film-micro-011-camera.yml'
+
+jobs:
+  geometry-camera-parallax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install mature depth stack
+        run: |
+          python -m pip install --quiet pillow numpy
+          git clone --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3.git /tmp/depth-anything-3
+          python -m pip install -e /tmp/depth-anything-3
+
+      - name: Install Blender
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y blender
+          blender --version
+
+      - name: Fetch canonical Doré 011 source
+        run: |
+          mkdir -p .micro011c/input .micro011c/output
+          curl -L --fail --retry 3 \
+            'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' \
+            -o .micro011c/input/dore-011.jpg
+
+      - name: Infer DA3 depth and export Blender-ready geometry
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import numpy as np
+          import torch
+          from depth_anything_3.api import DepthAnything3
+
+          src = Path('.micro011c/input/dore-011.jpg')
+          out = Path('.micro011c/output')
+          model = DepthAnything3.from_pretrained('depth-anything/DA3-SMALL').to(device=torch.device('cpu'))
+          pred = model.inference([str(src)])
+          depth = np.asarray(pred.depth[0], dtype=np.float32)
+          K = np.asarray(pred.intrinsics[0], dtype=np.float32)
+          h, w = depth.shape
+
+          # Keep a dense-enough mesh for visible parallax while staying light for CI Blender.
+          stride = 2
+          d = depth[::stride, ::stride]
+          hh, ww = d.shape
+          yy, xx = np.mgrid[0:hh, 0:ww].astype(np.float32)
+          px = xx * stride
+          py = yy * stride
+          z = d
+          x = (px - K[0,2]) * z / K[0,0]
+          y = (py - K[1,2]) * z / K[1,1]
+          pts = np.stack([x, -y, -z], axis=-1).astype(np.float32)
+          np.save(out/'mesh-points.npy', pts)
+          np.save(out/'depth.npy', depth)
+          np.save(out/'intrinsics.npy', K)
+
+          meta = {
+            'experiment':'DORÉ-FILM-MICRO-011-CAMERA-01',
+            'source':'Doré Original Library ID 011',
+            'depth_shape':[h,w],
+            'mesh_stride':stride,
+            'mesh_grid':[hh,ww],
+            'vertices':int(hh*ww),
+            'approx_triangles':int((hh-1)*(ww-1)*2),
+            'intrinsics':K.tolist(),
+            'camera_tests':[
+              {'name':'canonical','location':[0.0,0.0,0.0]},
+              {'name':'lateral','location':[0.03,0.0,0.0]},
+              {'name':'push_lateral','location':[0.045,0.0,-0.04]}
+            ],
+            'rule':'Original texture only. No generated pixels, no segmentation, no character animation.'
+          }
+          (out/'camera-metadata.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
+          print(json.dumps(meta,indent=2))
+          PY
+
+      - name: Render three real camera positions through depth mesh
+        run: |
+          cat > .micro011c/render.py <<'PY'
+          import bpy, json, math, os
+          import numpy as np
+          from mathutils import Vector
+
+          base = os.path.abspath('.micro011c')
+          out = os.path.join(base, 'output')
+          pts = np.load(os.path.join(out, 'mesh-points.npy'))
+          K = np.load(os.path.join(out, 'intrinsics.npy'))
+          hh, ww, _ = pts.shape
+
+          bpy.ops.wm.read_factory_settings(use_empty=True)
+
+          verts = [tuple(v) for v in pts.reshape(-1,3)]
+          faces = []
+          for y in range(hh-1):
+              row = y*ww
+              nxt = (y+1)*ww
+              for x in range(ww-1):
+                  a=row+x; b=a+1; c=nxt+x; d=c+1
+                  faces.append((a,c,b))
+                  faces.append((b,c,d))
+
+          mesh = bpy.data.meshes.new('DORE_011_DEPTH_MESH')
+          mesh.from_pydata(verts, [], faces)
+          mesh.update()
+          obj = bpy.data.objects.new('DORE_011_WORLD', mesh)
+          bpy.context.collection.objects.link(obj)
+
+          uv = mesh.uv_layers.new(name='UVMap')
+          # Per-loop UVs preserve the Doré source as the texture source.
+          for poly in mesh.polygons:
+              for li in poly.loop_indices:
+                  vi = mesh.loops[li].vertex_index
+                  yy = vi // ww
+                  xx = vi % ww
+                  uv.data[li].uv = (xx/(ww-1), 1.0 - yy/(hh-1))
+
+          img = bpy.data.images.load(os.path.join(base,'input','dore-011.jpg'))
+          img.colorspace_settings.name = 'sRGB'
+          mat = bpy.data.materials.new('DORE_011_ORIGINAL_PIXEL_MATERIAL')
+          mat.use_nodes = True
+          nodes = mat.node_tree.nodes
+          links = mat.node_tree.links
+          for n in list(nodes): nodes.remove(n)
+          tex = nodes.new('ShaderNodeTexImage'); tex.image = img; tex.interpolation='Linear'
+          emission = nodes.new('ShaderNodeEmission')
+          output = nodes.new('ShaderNodeOutputMaterial')
+          links.new(tex.outputs['Color'], emission.inputs['Color'])
+          links.new(emission.outputs['Emission'], output.inputs['Surface'])
+          obj.data.materials.append(mat)
+
+          cam_data = bpy.data.cameras.new('Camera')
+          cam = bpy.data.objects.new('Camera', cam_data)
+          bpy.context.collection.objects.link(cam)
+          bpy.context.scene.camera = cam
+          cam.rotation_euler = (0.0, 0.0, 0.0)
+          # Blender camera looks along local -Z, matching reconstructed mesh coordinates.
+          sensor_width = 36.0
+          depth_w = 504.0
+          cam.data.sensor_fit = 'HORIZONTAL'
+          cam.data.sensor_width = sensor_width
+          cam.data.lens = float(K[0,0]) / depth_w * sensor_width
+          cam.data.clip_start = 0.01
+          cam.data.clip_end = 100.0
+
+          scene = bpy.context.scene
+          scene.render.engine = 'BLENDER_EEVEE'
+          scene.render.resolution_x = 1008
+          scene.render.resolution_y = 812
+          scene.render.resolution_percentage = 100
+          scene.render.image_settings.file_format = 'PNG'
+          scene.render.film_transparent = False
+          scene.world.color = (0.0,0.0,0.0)
+          scene.view_settings.view_transform = 'Standard'
+          scene.view_settings.look = 'Medium High Contrast'
+          scene.view_settings.exposure = 0
+          scene.view_settings.gamma = 1
+
+          poses = [
+              ('canonical',(0.0,0.0,0.0)),
+              ('lateral',(0.03,0.0,0.0)),
+              ('push_lateral',(0.045,0.0,-0.04)),
+          ]
+          rendered = []
+          for name, loc in poses:
+              cam.location = loc
+              scene.render.filepath = os.path.join(out, f'{name}.png')
+              bpy.ops.render.render(write_still=True)
+              rendered.append({'name':name,'location':list(loc),'path':f'{name}.png'})
+
+          data = json.load(open(os.path.join(out,'camera-metadata.json')))
+          data['blender_version'] = bpy.app.version_string
+          data['focal_length_mm'] = cam.data.lens
+          data['render_resolution'] = [scene.render.resolution_x, scene.render.resolution_y]
+          data['rendered'] = rendered
+          json.dump(data, open(os.path.join(out,'camera-metadata.json'),'w'), indent=2)
+          PY
+          blender -b --python .micro011c/render.py
+
+      - name: Build visual contact sheet and verify camera movement
+        run: |
+          python - <<'PY'
+          from PIL import Image, ImageOps, ImageDraw
+          import numpy as np, json
+          from pathlib import Path
+          out=Path('.micro011c/output')
+          names=['canonical','lateral','push_lateral']
+          ims=[Image.open(out/f'{n}.png').convert('RGB') for n in names]
+          # Pixel-difference evidence: camera movement must change geometry projection, not a static card.
+          arr=[np.asarray(i,dtype=np.int16) for i in ims]
+          mad01=float(np.abs(arr[0]-arr[1]).mean())
+          mad12=float(np.abs(arr[1]-arr[2]).mean())
+          meta=json.loads((out/'camera-metadata.json').read_text())
+          meta['mean_abs_pixel_delta']={'canonical_to_lateral':mad01,'lateral_to_push_lateral':mad12}
+          meta['acceptance']='PASS' if mad01>1.0 and mad12>1.0 else 'FAIL'
+          (out/'camera-metadata.json').write_text(json.dumps(meta,indent=2))
+          assert meta['acceptance']=='PASS', meta
+
+          canvas=Image.new('RGB',(ims[0].width*3, ims[0].height+44),'black')
+          draw=ImageDraw.Draw(canvas)
+          for idx,(n,im) in enumerate(zip(names,ims)):
+              canvas.paste(im,(idx*im.width,44))
+              draw.text((idx*im.width+12,12), n, fill='white')
+          canvas.save(out/'contact-sheet.png')
+          print(json.dumps(meta,indent=2))
+          PY
+          test -s .micro011c/output/canonical.png
+          test -s .micro011c/output/lateral.png
+          test -s .micro011c/output/push_lateral.png
+          test -s .micro011c/output/contact-sheet.png
+
+      - name: Upload camera experiment evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-micro-011-camera
+          path: .micro011c/output/
+          if-no-files-found: error
+          retention-days: 14
