@@ -67,6 +67,7 @@ jobs:
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
+          identities=json.loads(Path('static/dawn-library/identity-cache.json').read_text())
           eresolver=json.loads(Path('static/dawn-library/biblical-world/english-resolver-results.json').read_text())
           zresolver=json.loads(Path('static/dawn-library/biblical-world/chinese-resolver-results.json').read_text())
           assert er['qualifiedInput']==g['results']['qualified']==len(eresolver['items'])
@@ -89,7 +90,11 @@ jobs:
           assert store['storagePolicy']=='index-only'
           assert store['metrics']['mappedBooks']>=30
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
-          print(json.dumps({'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'storefrontMapped':store['metrics']['mappedBooks'],'storefrontShelves':[(s['title'],len(s['items'])) for s in store['shelves']]},ensure_ascii=False,indent=2))
+          assert isinstance(identities.get('items'),dict)
+          ia=[x for s in store['shelves'] for x in s['items'] if x.get('source',{}).get('provider')=='Internet Archive']
+          assert all(x.get('rights',{}).get('status')=='source-rights-check' for x in ia)
+          assert all(not x.get('source',{}).get('downloadUrl') for x in ia)
+          print(json.dumps({'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'storefrontMapped':store['metrics']['mappedBooks'],'identity':store['metrics'].get('identity',{}),'internetArchiveScans':len(ia),'storefrontShelves':[(s['title'],len(s['items'])) for s in store['shelves']]},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -97,6 +102,7 @@ jobs:
           path: |
             reports/DAWN-LIBRARY-*.json
             static/dawn-library/storefront.json
+            static/dawn-library/identity-cache.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/catalog.json
             static/dawn-library/biblical-world/discovery-state.json
@@ -112,7 +118,7 @@ jobs:
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
           add_outputs() {
-            git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
+            git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
           }
           regenerate() {
             python scripts/run_dawn_library_discovery.py
