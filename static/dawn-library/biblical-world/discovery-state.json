@@ -7,14 +7,14 @@
     "project-gutenberg": {
       "mode": "opds",
       "cursor": "per-query-opds-next",
-      "lastChecked": "2026-09-10T21:18:24.712165+00:00",
+      "lastChecked": "2026-09-10T21:20:21.924721+00:00",
       "queryCursors": {
         "Josephus": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus",
         "Eusebius": "https://www.gutenberg.org/ebooks/search.opds/?query=Eusebius",
-        "Augustine": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=51",
-        "Bible history": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history&start_index=451",
+        "Augustine": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=101",
+        "Bible history": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history&start_index=501",
         "Palestine geography": "https://www.gutenberg.org/ebooks/search.opds/?query=Palestine+geography",
-        "early church": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church&start_index=201"
+        "early church": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church"
       }
     }
   },
@@ -24,13 +24,13 @@
     "curated"
   ],
   "metrics": {
-    "discovered": 908,
+    "discovered": 957,
     "verified": 6,
     "curated": 7,
     "deferred": 1,
-    "candidateQueue": 877,
+    "candidateQueue": 926,
     "newThisRun": 49,
-    "pagesCheckedThisRun": 10
+    "pagesCheckedThisRun": 9
   },
   "rules": {
     "downloadFullTextDuringDiscovery": false,
