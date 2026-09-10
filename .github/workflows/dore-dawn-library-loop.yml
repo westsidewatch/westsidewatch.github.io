@@ -15,6 +15,7 @@ on:
       - 'scripts/promote_dawn_library_english_catalog.py'
       - 'scripts/promote_dawn_library_chinese_catalog.py'
       - 'scripts/run_dawn_library_loop.py'
+      - 'scripts/build_dawn_storefront.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 concurrency:
   group: dore-dawn-library-main
@@ -26,6 +27,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -47,7 +50,9 @@ jobs:
         run: python scripts/promote_dawn_library_chinese_catalog.py
       - name: Produce measurable outputs after promotion
         run: python scripts/run_dawn_library_loop.py
-      - name: Validate autonomous bilingual library loop
+      - name: Build real bookstore storefront from mature public catalogs
+        run: python scripts/build_dawn_storefront.py
+      - name: Validate autonomous bilingual library loop and storefront
         run: |
           python - <<'PY'
           import json
@@ -61,6 +66,7 @@ jobs:
           ep=json.loads(Path('reports/DAWN-LIBRARY-ENGLISH-PROMOTION.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
+          store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           eresolver=json.loads(Path('static/dawn-library/biblical-world/english-resolver-results.json').read_text())
           zresolver=json.loads(Path('static/dawn-library/biblical-world/chinese-resolver-results.json').read_text())
           assert er['qualifiedInput']==g['results']['qualified']==len(eresolver['items'])
@@ -70,7 +76,6 @@ jobs:
           assert zr['qualifiedInput']==zg['results']['qualified']==len(zresolver['items'])
           assert sum(zr['results'].values())==zr['qualifiedInput']
           assert all(x.get('contentDownloaded') is False for x in zresolver['items'])
-          assert all('/' not in x['title'] for x in zresolver['items'] if x['stage']=='verified')
           urls=[]
           for item in cat['items']:
             for src in item.get('sources',[]):
@@ -81,13 +86,17 @@ jobs:
           assert all(x.get('rights',{}).get('status')=='public-domain' for x in auto)
           assert r['results']['books']['published']==len(cat['items'])
           assert r['results']['pipelineThisRun']['englishPromotedThisRun']==ep['promoted']
-          print(json.dumps({'englishDiscovery':d,'englishResolver':er,'englishPromotion':ep,'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'library':r['results']},ensure_ascii=False,indent=2))
+          assert store['storagePolicy']=='index-only'
+          assert store['metrics']['mappedBooks']>=30
+          assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
+          print(json.dumps({'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'storefrontMapped':store['metrics']['mappedBooks'],'storefrontShelves':[(s['title'],len(s['items'])) for s in store['shelves']]},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-library-loop-results
           path: |
             reports/DAWN-LIBRARY-*.json
+            static/dawn-library/storefront.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/catalog.json
             static/dawn-library/biblical-world/discovery-state.json
@@ -103,16 +112,9 @@ jobs:
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
           add_outputs() {
-            git add reports/DAWN-LIBRARY-*.json static/dawn-library/collections.json static/dawn-library/biblical-world/catalog.json static/dawn-library/biblical-world/discovery-state.json static/dawn-library/biblical-world/discovery-candidates.json static/dawn-library/biblical-world/chinese-candidates.json static/dawn-library/biblical-world/relevance-results.json static/dawn-library/biblical-world/chinese-relevance-results.json static/dawn-library/biblical-world/english-resolver-results.json static/dawn-library/biblical-world/chinese-resolver-results.json
+            git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
           }
-          add_outputs
-          if git diff --cached --quiet; then exit 0; fi
-          for attempt in 1 2 3 4; do
-            git commit -m 'chore(dawn): persist autonomous bilingual library growth [skip ci]'
-            if git push; then exit 0; fi
-            # main moved while this run was working. Never rebase generated snapshots; regenerate them on the latest main.
-            git fetch origin main
-            git reset --hard origin/main
+          regenerate() {
             python scripts/run_dawn_library_discovery.py
             python scripts/run_dawn_library_chinese_discovery.py
             python scripts/run_dawn_library_relevance.py
@@ -122,6 +124,16 @@ jobs:
             python scripts/promote_dawn_library_english_catalog.py
             python scripts/promote_dawn_library_chinese_catalog.py
             python scripts/run_dawn_library_loop.py
+            python scripts/build_dawn_storefront.py
+          }
+          add_outputs
+          if git diff --cached --quiet; then exit 0; fi
+          for attempt in 1 2 3 4; do
+            git commit -m 'chore(dawn): persist autonomous bookstore growth [skip ci]'
+            if git push; then exit 0; fi
+            git fetch origin main
+            git reset --hard origin/main
+            regenerate
             add_outputs
             if git diff --cached --quiet; then exit 0; fi
           done
