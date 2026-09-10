@@ -1,6 +1,6 @@
 {
-  "schema": "dawn.library.storefront.report.v3",
-  "generatedAt": "2026-09-10T21:20:26.929962+00:00",
+  "schema": "dawn.library.storefront.report.v4",
+  "generatedAt": "2026-09-10T22:24:46.841250+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -25,6 +25,18 @@
       "title": "開放學術 · 聖經世界與考古",
       "books": 24,
       "source": "DOAB"
+    },
+    {
+      "id": "internet-archive-原版古籍-聖經歷史與地理",
+      "title": "原版古籍 · 聖經歷史與地理",
+      "books": 20,
+      "source": "Internet Archive"
+    },
+    {
+      "id": "internet-archive-原版古籍-教會歷史",
+      "title": "原版古籍 · 教會歷史",
+      "books": 20,
+      "source": "Internet Archive"
     },
     {
       "id": "gutenberg-bible-christianity",
@@ -63,14 +75,22 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 177,
-  "sourceCovers": 58,
+  "mappedBooks": 217,
+  "sourceCovers": 131,
   "directPublications": 18,
   "providers": {
     "Standard Ebooks": 15,
     "Wikisource": 3,
     "DOAB": 47,
+    "Internet Archive": 40,
     "Project Gutenberg": 112
+  },
+  "identity": {
+    "queriedThisRun": 60,
+    "resolved": 79,
+    "coversAdded": 33,
+    "internetArchiveLinks": 29,
+    "cacheEntries": 120
   },
   "errors": [],
   "contentDownloaded": false
