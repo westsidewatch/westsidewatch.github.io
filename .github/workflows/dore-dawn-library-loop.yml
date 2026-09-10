@@ -2,11 +2,12 @@ name: DORÉ Dawn Library Continuous Loop
 on:
   workflow_dispatch:
   schedule:
-    # Bootstrap phase: the library is still sparse, so grow and measure it every day.
+    # Bootstrap phase: the library is still sparse, so discover, grow and measure it every day.
     - cron: '23 9 * * *'
   push:
     paths:
       - 'static/dawn-library/**'
+      - 'scripts/run_dawn_library_discovery.py'
       - 'scripts/run_dawn_library_loop.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 permissions:
@@ -19,37 +20,50 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Produce Dawn Library measurable outputs
+      - name: Discover 黎明書局 Biblical World candidates
+        run: python scripts/run_dawn_library_discovery.py
+      - name: Produce 黎明書局 measurable outputs
         run: python scripts/run_dawn_library_loop.py
-      - name: Validate collection outputs
+      - name: Validate discovery and collection outputs
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+          d=json.loads(Path('reports/DAWN-LIBRARY-DISCOVERY.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
-          assert r['results']['books']['published'] >= 4
-          assert r['results']['books']['verified'] >= 3
+          candidates=json.loads(Path('static/dawn-library/biblical-world/discovery-candidates.json').read_text())
+          assert d['candidateQueue'] == len(candidates['items'])
+          assert all(item.get('contentDownloaded') is False for item in candidates['items'])
+          assert all(item.get('stage') == 'discovered' for item in candidates['items'])
+          assert r['results']['books']['published'] >= 7
+          assert r['results']['books']['verified'] >= 6
           assert 'growthToday' in r['results']
           assert 'cadence' in r['results']
           assert len(r['results']['collections']) >= 5
-          print(json.dumps(r['results'],ensure_ascii=False,indent=2))
+          print(json.dumps({'discovery':d,'library':r['results']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-library-loop-results
           path: |
+            reports/DAWN-LIBRARY-DISCOVERY.json
             reports/DAWN-LIBRARY-LOOP.json
             reports/DAWN-LIBRARY-GROWTH.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/catalog.json
+            static/dawn-library/biblical-world/discovery-state.json
+            static/dawn-library/biblical-world/discovery-candidates.json
       - name: Persist loop results
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json static/dawn-library/collections.json
+          git add reports/DAWN-LIBRARY-DISCOVERY.json reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json \
+            static/dawn-library/collections.json \
+            static/dawn-library/biblical-world/discovery-state.json \
+            static/dawn-library/biblical-world/discovery-candidates.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dawn): persist library loop results [skip ci]'
+            git commit -m 'chore(dawn): persist library discovery and growth [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin "${GITHUB_REF_NAME}"
