@@ -4,8 +4,8 @@ Status: ACTIVE / REQUIRED GATE
 Established: 2026-08-26
 Owner: Westside Watch
 Learner / executor: Doré
-Production surface: Penpot only
-Reference role of Figma: learning/examples only, never production
+Production surface: tool-agnostic; use the currently authorized design execution surface with verified read/write/render readback
+Historical workspace note: earlier `Penpot only / Figma learning-only` wording is superseded as current operational authority; workspace choice does not lower the visual-quality gate
 
 ## Purpose
 
@@ -15,7 +15,7 @@ The gate is not passed by creating boards, layers, names, containers, rectangles
 
 ## Failure evidence that triggered this curriculum
 
-Previous LIGHT attempts produced named elements, display cards, color blocks, thin lines, and empty/near-empty containers. MCP and workflow calls succeeded, but the visual result was not a usable asset. This is classified as a design-learning failure, not a Penpot transport failure.
+Previous LIGHT attempts produced named elements, display cards, color blocks, thin lines, and empty/near-empty containers. MCP and workflow calls succeeded, but the visual result was not a usable asset. This is classified as a design-learning failure, not a transport failure.
 
 Core defect:
 
@@ -39,7 +39,7 @@ Core defect:
 2. RESEARCH — study external visual references for atmospheric light, engraving-derived contemporary identity, editorial/museum systems, and digital use of historical visual grammars.
 3. DECOMPOSE — write transferable observations about direction, occlusion, value hierarchy, atmosphere, edge treatment, line density, negative space, scale, and material behavior.
 4. PROPOSE — produce at least three LIGHT-01 compositional hypotheses before drawing.
-5. BUILD — create only one candidate in Penpot; no family batch.
+5. BUILD — create only one candidate on the currently authorized design execution surface; no family batch.
 6. RENDER — export or otherwise obtain an actual visual rendering of the asset, not node metadata.
 7. SELF-CRITIQUE — compare render to constitution and reference observations. Empty shell / color block / generic glow / decorative ray = automatic FAIL.
 8. REVISE — repair or rebuild.
@@ -85,7 +85,7 @@ Any one condition fails the candidate:
 
 Visual Designer 01 passes only when one LIGHT-01 asset satisfies all of the following:
 
-- exists as real non-empty editable/vector content in Penpot;
+- exists as real non-empty editable/vector content on the authorized design execution surface;
 - actual rendered output has been inspected;
 - Doré records what changed after at least one critique/revision cycle;
 - transparent-background asset can be used independently;
@@ -100,7 +100,7 @@ Until this gate passes, SKY / STAR / WATER / CITY / EARTH / TRACE production is 
 
 Doré must graduate from:
 
-`Penpot operator`
+`design-tool operator`
 
 to:
 
