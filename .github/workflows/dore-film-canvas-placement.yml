@@ -1,0 +1,23 @@
+name: DORÉ FILM Canonical Canvas Placement
+on:
+  push:
+    paths:
+      - 'docs/dore/film/canvas-placement-experiment-01.json'
+      - 'docs/dore/film/camera-spine-experiment-01.json'
+      - 'docs/dore/film/tools/canvas-placement-validate.py'
+      - 'static/dore/film/canvas-motion-lab-01.html'
+      - 'static/one/one-dore-cover-registry.js'
+      - 'static/one/one-dore-assets-241.js'
+      - '.github/workflows/dore-film-canvas-placement.yml'
+  workflow_dispatch:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate canonical Doré canvas placement contract
+        run: python3 docs/dore/film/tools/canvas-placement-validate.py
+      - name: Guard locked ONE asset master
+        run: |
+          grep -q 'Status: \*\*LOCKED / CANONICAL / PROJECT-WIDE\*\*' static/one/ONE-ASSET-LIBRARIES-MASTER.md
+          git diff --exit-code -- static/one/ONE-ASSET-LIBRARIES-MASTER.md
