@@ -1,0 +1,109 @@
+name: DORÉ Film Micro 011 Depth
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-film-micro-011-depth.yml'
+      - 'docs/dore/film/micro-011/**'
+
+jobs:
+  da3-small-depth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Fetch canonical Doré 011 source
+        run: |
+          mkdir -p .micro011/input .micro011/output
+          curl -L --fail --retry 3 \
+            'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' \
+            -o .micro011/input/dore-011.jpg
+          python - <<'PY'
+          from PIL import Image
+          im = Image.open('.micro011/input/dore-011.jpg')
+          print('source_size=', im.size)
+          assert im.size == (2617, 2074), im.size
+          PY
+
+      - name: Install Depth Anything 3
+        run: |
+          python -m pip install --upgrade pip
+          git clone --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3.git /tmp/depth-anything-3
+          python -m pip install -e /tmp/depth-anything-3
+
+      - name: Run DA3-SMALL on Doré 011
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import numpy as np
+          from PIL import Image
+          import torch
+          from depth_anything_3.api import DepthAnything3
+
+          src = Path('.micro011/input/dore-011.jpg')
+          out = Path('.micro011/output')
+          out.mkdir(parents=True, exist_ok=True)
+
+          device = torch.device('cpu')
+          print('device=', device)
+          model = DepthAnything3.from_pretrained('depth-anything/DA3-SMALL').to(device=device)
+          prediction = model.inference([str(src)])
+
+          depth = np.asarray(prediction.depth[0], dtype=np.float32)
+          finite = np.isfinite(depth)
+          assert finite.any(), 'DA3 returned no finite depth'
+          lo = float(np.percentile(depth[finite], 1.0))
+          hi = float(np.percentile(depth[finite], 99.0))
+          denom = max(hi - lo, 1e-8)
+          vis = np.clip((depth - lo) / denom, 0.0, 1.0)
+          Image.fromarray((vis * 255).astype(np.uint8), mode='L').save(out / 'dore-011-da3-small-depth.png')
+          np.save(out / 'dore-011-da3-small-depth.npy', depth)
+
+          conf = getattr(prediction, 'conf', None)
+          if conf is not None:
+              np.save(out / 'dore-011-da3-small-confidence.npy', np.asarray(conf[0], dtype=np.float32))
+
+          intr = getattr(prediction, 'intrinsics', None)
+          extr = getattr(prediction, 'extrinsics', None)
+          meta = {
+              'experiment': 'DORÉ-FILM-MICRO-011-DEPTH-01',
+              'source': 'Doré Original Library ID 011',
+              'source_dimensions': [2617, 2074],
+              'model': 'depth-anything/DA3-SMALL',
+              'device': 'cpu',
+              'depth_shape': list(depth.shape),
+              'depth_p01': lo,
+              'depth_p99': hi,
+              'intrinsics': None if intr is None else np.asarray(intr[0]).tolist(),
+              'extrinsics': None if extr is None else np.asarray(extr[0]).tolist(),
+              'rule': 'No generation, no segmentation, no animation; geometry evidence only.'
+          }
+          (out / 'metadata.json').write_text(json.dumps(meta, indent=2), encoding='utf-8')
+          print(json.dumps(meta, indent=2))
+          PY
+
+      - name: Verify micro experiment outputs
+        run: |
+          test -s .micro011/output/dore-011-da3-small-depth.png
+          test -s .micro011/output/dore-011-da3-small-depth.npy
+          test -s .micro011/output/metadata.json
+          ls -lh .micro011/output
+
+      - name: Upload micro experiment evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-micro-011-da3-small-depth
+          path: .micro011/output/
+          if-no-files-found: error
+          retention-days: 14
