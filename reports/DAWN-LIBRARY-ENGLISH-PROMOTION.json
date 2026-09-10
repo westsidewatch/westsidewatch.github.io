@@ -1,16 +1,30 @@
 {
-  "schema": "dawn.library.english-promotion.report.v2",
-  "generatedAt": "2026-09-10T20:29:23.980775+00:00",
-  "promoted": 4,
+  "schema": "dawn.library.english-promotion.report.v3",
+  "generatedAt": "2026-09-10T20:30:30.475540+00:00",
+  "promoted": 5,
   "items": [
     {
-      "id": "gutenberg-1609",
-      "title": "The Bible, Douay-Rheims, Old Testament — Part 1"
+      "id": "gutenberg-1610",
+      "title": "The Bible, Douay-Rheims, Old Testament — Part 2"
     },
     {
-      "id": "gutenberg-52708",
-      "title": "A Confession of St. Augustine"
+      "id": "gutenberg-5879",
+      "title": "Reina Valera New Testament of the Bible 1862"
     },
+    {
+      "id": "gutenberg-31872",
+      "title": "The Christian Church in These Islands before the Coming of Augustine\nThree Lectures Delivered at St. Paul's in January 1894"
+    },
+    {
+      "id": "gutenberg-32883",
+      "title": "Fresh light from the ancient monuments : $b A sketch of the most striking confirmations of the Bible, from recent discoveries in Egypt, Palestine, Assyria, Babylonia, Asia Minor"
+    },
+    {
+      "id": "gutenberg-44039",
+      "title": "Hymns of the Early Church\r\nbeing translations from the poetry of the Latin church, arranged in the order of the Christian year"
+    }
+  ],
+  "removedFalsePositives": [
     {
       "id": "gutenberg-52853",
       "title": "Sketches of St. Augustine\r\nWith a view of its history and advantages as a resort for invalids"
@@ -20,24 +34,24 @@
       "title": "The unwritten history of old St. Augustine"
     }
   ],
-  "removedFalsePositives": [
+  "rejectedByQualityGate": [
     {
-      "id": "gutenberg-29434",
-      "title": "The Project Gutenberg Works of Flavius Josephus: An Index"
+      "sourceId": "24335",
+      "title": "Margaret Tudor: A Romance of Old St. Augustine",
+      "reason": "quality-gate"
     },
     {
-      "id": "gutenberg-59484",
-      "title": "St. Augustine, Florida's Colonial Capital"
-    }
-  ],
-  "rejectedByQualityGate": [
+      "sourceId": "29434",
+      "title": "The Project Gutenberg Works of Flavius Josephus: An Index",
+      "reason": "quality-gate"
+    },
     {
       "sourceId": "53608",
       "title": "The History of Saint Augustine, Florida",
       "reason": "quality-gate"
     }
   ],
-  "catalogTotal": 22,
+  "catalogTotal": 25,
   "origin": "autonomous-discovery",
   "contentDownloaded": false
 }

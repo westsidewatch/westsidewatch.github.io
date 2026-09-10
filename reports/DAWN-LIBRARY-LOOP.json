@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-10T20:29:24.065342+00:00",
+  "generatedAt": "2026-09-10T20:30:30.562698+00:00",
   "results": {
     "books": {
-      "published": 22,
-      "verified": 21,
+      "published": 25,
+      "verified": 24,
       "pending": 1,
       "relations": 17,
       "providers": [
@@ -13,12 +13,12 @@
       ]
     },
     "catalogDeltaToday": {
-      "books": 18,
-      "verifiedBooks": 18,
+      "books": 21,
+      "verifiedBooks": 21,
       "relations": 9
     },
     "autonomousGrowthToday": {
-      "books": 12,
+      "books": 15,
       "titles": [
         "The Life of Flavius Josephus",
         "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
@@ -30,25 +30,29 @@
         "Confessions of St. Augustine",
         "The Bible, Douay-Rheims, Old Testament — Part 1",
         "A Confession of St. Augustine",
-        "Sketches of St. Augustine\r\nWith a view of its history and advantages as a resort for invalids",
-        "The unwritten history of old St. Augustine"
+        "The Bible, Douay-Rheims, Old Testament — Part 2",
+        "Reina Valera New Testament of the Bible 1862",
+        "The Christian Church in These Islands before the Coming of Augustine\nThree Lectures Delivered at St. Paul's in January 1894",
+        "Fresh light from the ancient monuments : $b A sketch of the most striking confirmations of the Bible, from recent discoveries in Egypt, Palestine, Assyria, Babylonia, Asia Minor",
+        "Hymns of the Early Church\r\nbeing translations from the poetry of the Latin church, arranged in the order of the Christian year"
       ]
     },
     "pipelineThisRun": {
       "englishDiscoveredThisRun": 149,
       "chineseDiscoveredThisRun": 0,
-      "englishPromotedThisRun": 4,
+      "englishPromotedThisRun": 5,
       "englishPromotedTitles": [
-        "The Bible, Douay-Rheims, Old Testament — Part 1",
-        "A Confession of St. Augustine",
-        "Sketches of St. Augustine\r\nWith a view of its history and advantages as a resort for invalids",
-        "The unwritten history of old St. Augustine"
+        "The Bible, Douay-Rheims, Old Testament — Part 2",
+        "Reina Valera New Testament of the Bible 1862",
+        "The Christian Church in These Islands before the Coming of Augustine\nThree Lectures Delivered at St. Paul's in January 1894",
+        "Fresh light from the ancient monuments : $b A sketch of the most striking confirmations of the Bible, from recent discoveries in Egypt, Palestine, Assyria, Babylonia, Asia Minor",
+        "Hymns of the Early Church\r\nbeing translations from the poetry of the Latin church, arranged in the order of the Christian year"
       ]
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 6.0,
-      "density": 21
+      "recentAutonomousGrowthPerDay": 7.5,
+      "density": 24
     },
     "collections": [
       {
