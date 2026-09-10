@@ -64,14 +64,14 @@ jobs:
                       for i in range(ww-1):
                           a=j*ww+i+1; b=a+1; c=(j+1)*ww+i+1; d2=c+1
                           f.write(f'f {a}/{a} {c}/{c} {b}/{b}\n'); f.write(f'f {b}/{b} {c}/{c} {d2}/{d2}\n')
-              meta['anchors'].append({'dore_id':dore_id,'source':src.name,'depth_shape':[h,w],'mesh_grid':[hh,ww]})
+              meta['anchors'].append({'dore_id':dore_id,'source':src.name,'depth_shape':[h,w],'mesh_grid':[hh,ww],'normalized_median_depth':1.0})
           (out/'metadata.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
           PY
 
       - name: Build two projection stages with one continuous viewing camera
         env:
           LIBGL_ALWAYS_SOFTWARE: '1'
-          MESA_LOADER_DRIVER_OVERRIDE: 'llvmpipe'
+          MESA_LOADER_DRIVER_OVERRIDE: llvmpipe
         run: |
           cat > .handoff011019/build.py <<'PY'
           import bpy, os, json, math
@@ -86,8 +86,11 @@ jobs:
               if hasattr(bpy.ops.wm,'obj_import'): bpy.ops.wm.obj_import(filepath=path)
               else: bpy.ops.import_scene.obj(filepath=path)
               return bpy.context.selected_objects[0]
-          def make_stage(dore_id,img_name,location,scale=(4.4,4.4,4.4)):
-              obj=import_obj(os.path.join(out,f'dore-{dore_id}.obj')); obj.name=f'DORE_{dore_id}_STAGE'; obj.location=location; obj.scale=scale
+          def make_stage(dore_id,img_name,encounter_center,scale=4.4,rotation_y=0.0):
+              obj=import_obj(os.path.join(out,f'dore-{dore_id}.obj')); obj.name=f'DORE_{dore_id}_STAGE'
+              # DA3 normalized mesh median is local z=-1. Place that median surface exactly on the intended camera encounter plane.
+              obj.location=(encounter_center[0],encounter_center[1],encounter_center[2]+scale)
+              obj.scale=(scale,scale,scale); obj.rotation_euler[1]=rotation_y
               img=bpy.data.images.load(os.path.join(base,'input',img_name)); img.colorspace_settings.name='sRGB'
               mat=bpy.data.materials.new(f'DORE_{dore_id}_ORIGINAL'); mat.use_nodes=True
               nodes=mat.node_tree.nodes; links=mat.node_tree.links
@@ -96,7 +99,8 @@ jobs:
               emit=nodes.new('ShaderNodeEmission'); output=nodes.new('ShaderNodeOutputMaterial')
               links.new(tex.outputs['Color'],emit.inputs['Color']); links.new(emit.outputs['Emission'],output.inputs['Surface']); obj.data.materials.append(mat)
               return obj
-          a=make_stage('011','dore-011.jpg',(0,0,-4.0)); b=make_stage('019','dore-019.jpg',(7.0,0,-10.0)); b.rotation_euler[1]=math.radians(-18)
+          a=make_stage('011','dore-011.jpg',(0,0,-4.0),4.4,0.0)
+          b=make_stage('019','dore-019.jpg',(7.0,0,-10.0),4.4,math.radians(-18))
           bpy.ops.mesh.primitive_plane_add(size=30, location=(3.5,2.6,-9.0), rotation=(math.radians(90),0,0))
           bridge=bpy.context.object; bridge.name='BRIDGE_WORLD_PROXY'
           mat=bpy.data.materials.new('BRIDGE_NEUTRAL'); mat.use_nodes=True; bsdf=mat.node_tree.nodes.get('Principled BSDF')
@@ -114,7 +118,7 @@ jobs:
           scene.render.engine='BLENDER_EEVEE'; scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100
           scene.render.image_settings.file_format='PNG'; scene.view_settings.view_transform='Standard'; scene.frame_start=1; scene.frame_end=144; scene.render.fps=24; scene.render.filepath=os.path.join(out,'frame-')
           bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'two-anchor-handoff.blend')); bpy.ops.render.render(animation=True)
-          meta=json.load(open(os.path.join(out,'metadata.json'))); meta['frames']=144; meta['camera_keyframes']=[{'frame':f,'location':list(loc),'look_target':list(target)} for f,loc,target in keys]; meta['acceptance_question']='Can one uninterrupted viewing camera leave Doré 011 world-space and arrive in Doré 019 world-space without reverting to a slideshow or camera reset?'; json.dump(meta,open(os.path.join(out,'metadata.json'),'w'),indent=2)
+          meta=json.load(open(os.path.join(out,'metadata.json'))); meta['frames']=144; meta['camera_keyframes']=[{'frame':f,'location':list(loc),'look_target':list(target)} for f,loc,target in keys]; meta['stage_encounter_centers']={'011':[0,0,-4.0],'019':[7.0,0,-10.0]}; meta['acceptance_question']='Can one uninterrupted viewing camera leave Doré 011 world-space and arrive in Doré 019 world-space without reverting to a slideshow or camera reset?'; json.dump(meta,open(os.path.join(out,'metadata.json'),'w'),indent=2)
           PY
           blender -b --python .handoff011019/build.py
 
