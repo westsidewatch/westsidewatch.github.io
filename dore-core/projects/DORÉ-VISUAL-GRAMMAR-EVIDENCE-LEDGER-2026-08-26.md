@@ -127,6 +127,26 @@ Reconciliation judgment:
 
 Smallest next proof for this visual family remains exactly one accepted `LIGHT-01` asset with transparent-background reuse plus Living Paper and true-night render checks. The larger asset suite should not be claimed until that first proof exists.
 
+## Sweep batch 33 — Visual Designer 01 execution-authority source correction (2026-09-10)
+
+Bounded evidence reviewed:
+
+- current `dore-core/projects/DORÉ-VISUAL-DESIGNER-01-LIGHT.md`;
+- `dore-core/knowledge/VISUAL-CASE-STUDY-ROUND-01.md`;
+- this visual-grammar ledger's batch 29–32 authority and asset-suite interpretation;
+- current Master Register `VIS-LEARN`, `VIS-GRAMMAR`, `DORE-EXHIBITION`, and `BRAND-V1` rows.
+
+Reconciliation judgment:
+
+1. The LIGHT curriculum's literal `Production surface: Penpot only / Figma learning-only` wording had become stale relative to the already durable tool-agnostic authority interpretation. Leaving that phrase in the active project brief created a direct source-level contradiction that could silently reassert an obsolete workspace rule.
+2. The project brief has now been corrected in place: execution is tool-agnostic at the capability level and requires a currently authorized surface with verified read/write/render readback. The historical Penpot-only wording is explicitly marked superseded as current operational authority.
+3. This source correction does **not** relax the design gate. LIGHT-01 still requires real editable geometry, rendered inspection, critique/revision evidence, transparent-background reuse, Living Paper + true-night survival, and human editorial acceptance. Tool/API success remains non-evidence for design quality.
+4. The Round 01 learning corpus still has only seven first-synthesis hypotheses against its own ten-hypothesis/prototype completion gate, so `VIS-LEARN` remains `ACTIVE_PARALLEL` rather than complete.
+5. The Master Register's current workstream classifications remain correct: `VIS-GRAMMAR = ACTIVE_PARALLEL / BUILDING`, `DORE-EXHIBITION = READY`, `BRAND-V1 = READY`. No canonical status change is warranted from this source correction.
+6. No P01 subtitle action, state, deployment, audio/transcription dependency, or blocker condition was modified.
+
+Durable source correction commit: `3f2bcdef2bde6fc4258f681db5133f2e339a910d`.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
