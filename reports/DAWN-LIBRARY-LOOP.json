@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-10T21:06:52.384830+00:00",
+  "generatedAt": "2026-09-10T21:09:15.044841+00:00",
   "results": {
     "books": {
-      "published": 28,
-      "verified": 27,
+      "published": 29,
+      "verified": 28,
       "pending": 1,
       "relations": 17,
       "providers": [
@@ -13,12 +13,12 @@
       ]
     },
     "catalogDeltaToday": {
-      "books": 24,
-      "verifiedBooks": 24,
+      "books": 25,
+      "verifiedBooks": 25,
       "relations": 9
     },
     "autonomousGrowthToday": {
-      "books": 18,
+      "books": 19,
       "titles": [
         "The Life of Flavius Josephus",
         "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
@@ -37,23 +37,22 @@
         "Hymns of the Early Church\r\nbeing translations from the poetry of the Latin church, arranged in the order of the Christian year",
         "Reina Valera New Testament of the Bible 1602, Book of Matthew",
         "Reina Valera New Testament of the Bible 1865",
-        "A Brief Bible History: A Survey of the Old and New Testaments"
+        "A Brief Bible History: A Survey of the Old and New Testaments",
+        "Outline Studies in the Old Testament for Bible Teachers"
       ]
     },
     "pipelineThisRun": {
       "englishDiscoveredThisRun": 50,
       "chineseDiscoveredThisRun": 0,
-      "englishPromotedThisRun": 3,
+      "englishPromotedThisRun": 1,
       "englishPromotedTitles": [
-        "Reina Valera New Testament of the Bible 1602, Book of Matthew",
-        "Reina Valera New Testament of the Bible 1865",
-        "A Brief Bible History: A Survey of the Old and New Testaments"
+        "Outline Studies in the Old Testament for Bible Teachers"
       ]
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 9.0,
-      "density": 27
+      "recentAutonomousGrowthPerDay": 9.5,
+      "density": 28
     },
     "collections": [
       {
