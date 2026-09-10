@@ -1,0 +1,18 @@
+{
+  "schema": "dawn.library.sources.v1",
+  "displayName": "黎明書局",
+  "policy": "metadata-first-index-only",
+  "sources": [
+    {
+      "id": "project-gutenberg",
+      "label": "Project Gutenberg",
+      "role": "discovery-and-source-resolution",
+      "catalog": "https://www.gutenberg.org/ebooks/search.opds/",
+      "catalogFormat": "OPDS 1.x",
+      "metadataStrategy": "machine-readable-catalog",
+      "contentPolicy": "Do not bulk-download full text. Resolve identity and approved source only.",
+      "automationPolicy": "Use Project Gutenberg machine-readable catalogs/feeds rather than crawling ebook pages.",
+      "rightsPolicy": "Project Gutenberg rights statements are US-oriented; preserve source declaration and do not infer worldwide public-domain status."
+    }
+  ]
+}
