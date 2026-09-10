@@ -1,19 +1,30 @@
 {
-  "schema": "dawn.library.sources.v1",
+  "schema": "dawn.library.sources.v2",
   "displayName": "黎明書局",
   "policy": "metadata-first-index-only",
+  "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
   "sources": [
     {
       "id": "project-gutenberg",
       "label": "Project Gutenberg",
       "languages": ["en"],
-      "role": "discovery-and-source-resolution",
+      "role": "public-domain-catalog-and-source-resolution",
       "catalog": "https://www.gutenberg.org/ebooks/search.opds/",
       "catalogFormat": "OPDS 1.x",
       "metadataStrategy": "machine-readable-catalog",
       "contentPolicy": "Do not bulk-download full text. Resolve identity and approved source only.",
-      "automationPolicy": "Use Project Gutenberg machine-readable catalogs/feeds rather than crawling ebook pages.",
       "rightsPolicy": "Project Gutenberg rights statements are US-oriented; preserve source declaration and do not infer worldwide public-domain status."
+    },
+    {
+      "id": "standard-ebooks",
+      "label": "Standard Ebooks",
+      "languages": ["en"],
+      "role": "premium-public-domain-editions",
+      "catalog": "https://standardebooks.org/feeds/atom/new-releases",
+      "catalogFormat": "Atom / OPDS-compatible acquisition links",
+      "metadataStrategy": "feed-first-edition-metadata",
+      "contentPolicy": "Index curated editions and keep EPUB acquisition URLs remote until the user opens or adds a book.",
+      "rightsPolicy": "Preserve Standard Ebooks edition provenance and source rights declaration."
     },
     {
       "id": "zh-wikisource",
@@ -24,8 +35,40 @@
       "catalogFormat": "MediaWiki API",
       "metadataStrategy": "API-index-and-page-metadata",
       "contentPolicy": "Index metadata and canonical page references first. Do not bulk-copy full text into 黎明書局.",
-      "automationPolicy": "Use MediaWiki API and canonical Wikisource page identifiers; do not scrape rendered pages.",
       "rightsPolicy": "Preserve each work/page rights declaration and Wikisource licensing provenance. Do not infer public-domain status solely from age or presence on Wikisource."
+    },
+    {
+      "id": "wikisource-ws-export-zh",
+      "label": "Wikisource WS Export",
+      "languages": ["zh-Hant", "zh-Hans", "zh"],
+      "role": "export-ready-publication-source",
+      "catalog": "https://ws-export.wmcloud.org/opds/zh/Ready_for_export.xml",
+      "catalogFormat": "OPDS",
+      "metadataStrategy": "ready-for-export-publication-feed",
+      "contentPolicy": "Use WS Export EPUB acquisition links on demand; do not store full EPUBs in the catalog.",
+      "rightsPolicy": "Preserve Wikisource page/source licensing and attribution provenance."
+    },
+    {
+      "id": "doab",
+      "label": "Directory of Open Access Books",
+      "languages": ["mul"],
+      "role": "open-access-academic-catalog",
+      "catalog": "https://directory.doabooks.org/oai/",
+      "catalogFormat": "OAI-PMH / REST JSON",
+      "metadataStrategy": "metadata-and-license-first",
+      "contentPolicy": "Index DOAB metadata and publisher/OAPEN links; download content only on explicit user reading/import action.",
+      "rightsPolicy": "DOAB metadata is CC0; preserve each book's individual open-access license and hosting provenance."
+    },
+    {
+      "id": "open-library",
+      "label": "Open Library",
+      "languages": ["mul"],
+      "role": "identity-and-cover-resolution",
+      "catalog": "https://openlibrary.org/developers/api",
+      "catalogFormat": "REST APIs / data dumps",
+      "metadataStrategy": "resolve-once-and-cache-identifiers",
+      "contentPolicy": "Do not use Open Library as the bookstore content backend. Use it for Work/Edition/ISBN/cover identity completion.",
+      "rightsPolicy": "Preserve provenance for all resolved identifiers and covers; reading rights come from the actual publication source."
     }
   ]
 }
