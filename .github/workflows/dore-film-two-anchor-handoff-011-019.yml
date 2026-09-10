@@ -25,7 +25,7 @@ jobs:
           git clone --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3.git /tmp/depth-anything-3
           python -m pip install -e /tmp/depth-anything-3
           sudo apt-get update -qq
-          sudo apt-get install -y blender ffmpeg
+          sudo apt-get install -y blender ffmpeg libegl1 libgl1 libglx-mesa0 mesa-utils
           blender --version
 
       - name: Fetch canonical Doré originals
@@ -69,6 +69,9 @@ jobs:
           PY
 
       - name: Build two projection stages with one continuous viewing camera
+        env:
+          LIBGL_ALWAYS_SOFTWARE: '1'
+          MESA_LOADER_DRIVER_OVERRIDE: 'llvmpipe'
         run: |
           cat > .handoff011019/build.py <<'PY'
           import bpy, os, json, math
