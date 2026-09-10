@@ -13,8 +13,11 @@ def quality_ok(title):
     t=' '.join((title or '').lower().split())
     if not t:return False
     if 'project gutenberg works' in t and 'index' in t:return False
-    if 'augustine' in t and 'florida' in t:return False
     if re.search(r'\b(index|catalogue|catalog)\b$',t):return False
+    # "St. Augustine" is also a Florida place name. Keep theological/literary Augustine works,
+    # but reject obvious city/travel/history results produced by the name collision.
+    place_signals=('florida','colonial capital','resort for invalids','old st. augustine','sketches of st. augustine','unwritten history of old st. augustine')
+    if 'augustine' in t and any(s in t for s in place_signals):return False
     return True
 
 # Autonomous entries remain subject to the same quality gate on every run; bad loop output is self-correcting.
@@ -37,5 +40,5 @@ for x in resolver.get('items',[]):
     item={'id':ident,'work':{'title':title,'author':author,'language':'en'},'edition':{'label':f'Project Gutenberg #{gid}','publicDomain':True},'rights':{'status':'public-domain','jurisdiction':'USA','declaredBy':'Project Gutenberg','provenanceRequired':True,'evidenceUrl':x.get('edition',{}).get('metadataUrl')},'relations':x.get('suggestedRelations') or ['聖經世界'],'cover':{'mode':'one-fallback','title':title.upper(),'author':author.upper()},'sources':[{'provider':'Project Gutenberg','kind':'remote-public','url':url,'format':'html/epub/text','downloadOnCatalog':False}],'provenance':{'origin':'autonomous-discovery','discoveredAt':x.get('discoveredAt'),'verifiedAt':x.get('resolvedAt'),'catalogedAt':now}}
     catalog['items'].append(item);existing_urls.add(url);existing_ids.add(ident);added.append({'id':ident,'title':title})
 CAT.write_text(json.dumps(catalog,ensure_ascii=False,indent=2)+'\n');REPORT.parent.mkdir(parents=True,exist_ok=True)
-report={'schema':'dawn.library.english-promotion.report.v2','generatedAt':now,'promoted':len(added),'items':added,'removedFalsePositives':removed,'rejectedByQualityGate':rejected,'catalogTotal':len(catalog['items']),'origin':'autonomous-discovery','contentDownloaded':False}
+report={'schema':'dawn.library.english-promotion.report.v3','generatedAt':now,'promoted':len(added),'items':added,'removedFalsePositives':removed,'rejectedByQualityGate':rejected,'catalogTotal':len(catalog['items']),'origin':'autonomous-discovery','contentDownloaded':False}
 REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2))
