@@ -1,6 +1,6 @@
 {
-  "schema": "dawn.library.discovery-candidates.v1",
-  "generatedAt": "2026-09-10T02:14:05.575027+00:00",
+  "schema": "dawn.library.relevance-results.v1",
+  "generatedAt": "2026-09-10T02:14:08.779165+00:00",
   "items": [
     {
       "sourceId": "20",
@@ -13,14 +13,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "26",
@@ -33,14 +39,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "30",
@@ -53,14 +65,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "124",
@@ -73,14 +93,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "782",
@@ -93,14 +121,20 @@
         "聖經地理",
         "考古"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "1491",
@@ -114,14 +148,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "1653",
@@ -134,14 +174,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "2846",
@@ -155,14 +201,23 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "qualified",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "2847",
@@ -176,14 +231,23 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "qualified",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "2853",
@@ -196,14 +260,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:nero"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "3319",
@@ -217,14 +289,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "4978",
@@ -238,14 +316,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:san francisco"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "5637",
@@ -259,14 +345,22 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:literary and philosophical essays"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6518",
@@ -280,14 +374,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6525",
@@ -301,14 +401,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:piccolomini"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6549",
@@ -322,14 +430,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6775",
@@ -343,14 +457,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:thirty years war"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6785",
@@ -364,14 +486,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6786",
@@ -385,14 +515,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:piccolomini"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "6787",
@@ -406,14 +544,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "8294",
@@ -426,14 +572,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "8300",
@@ -446,14 +600,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "8525",
@@ -466,14 +628,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "9793",
@@ -487,14 +655,23 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "qualified",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "11618",
@@ -508,14 +685,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "12679",
@@ -528,14 +711,20 @@
         "聖經地理",
         "考古"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "15784",
@@ -548,14 +737,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "16119",
@@ -568,14 +763,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "16504",
@@ -588,14 +789,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "17611",
@@ -608,14 +815,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "17897",
@@ -628,14 +841,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "18191",
@@ -649,14 +868,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "18258",
@@ -670,14 +895,20 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "18269",
@@ -690,14 +921,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "18755",
@@ -710,14 +947,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "21615",
@@ -730,14 +973,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "21840",
@@ -751,14 +1000,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "22789",
@@ -771,14 +1026,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "23751",
@@ -792,14 +1053,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "24238",
@@ -812,14 +1079,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "24979",
@@ -832,14 +1105,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:church history"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "25459",
@@ -852,14 +1133,20 @@
         "聖經地理",
         "考古"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "26134",
@@ -872,14 +1159,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:gospel"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "26222",
@@ -892,14 +1187,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "26378",
@@ -912,14 +1213,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "26849",
@@ -932,14 +1239,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "27351",
@@ -952,14 +1265,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "28540",
@@ -972,14 +1291,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "29412",
@@ -993,14 +1318,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "29434",
@@ -1014,14 +1345,23 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "qualified",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "30107",
@@ -1034,14 +1374,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "30228",
@@ -1055,14 +1401,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "31885",
@@ -1075,14 +1427,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "33849",
@@ -1096,14 +1456,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "34912",
@@ -1117,14 +1483,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "35461",
@@ -1137,14 +1509,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "37404",
@@ -1157,14 +1535,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:church history"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "37696",
@@ -1178,14 +1564,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "39092",
@@ -1198,14 +1590,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:roman"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "39717",
@@ -1219,14 +1619,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "40342",
@@ -1240,14 +1646,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "40747",
@@ -1260,14 +1672,23 @@
         "聖經地理",
         "考古"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 4,
+        "stage": "deferred",
+        "reasons": [
+          "strong:biblical",
+          "context:geography"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "41070",
@@ -1280,14 +1701,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "41310",
@@ -1301,14 +1728,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "42435",
@@ -1322,14 +1755,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "42808",
@@ -1342,14 +1781,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "43931",
@@ -1363,14 +1808,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "43932",
@@ -1384,14 +1837,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "44104",
@@ -1404,14 +1865,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "44140",
@@ -1425,14 +1892,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45001",
@@ -1445,14 +1918,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45268",
@@ -1465,14 +1946,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45304",
@@ -1486,14 +1973,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45305",
@@ -1507,14 +2000,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45668",
@@ -1528,14 +2027,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45669",
@@ -1549,14 +2056,22 @@
         "教父",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:wallenstein"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45843",
@@ -1570,14 +2085,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45847",
@@ -1591,14 +2112,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "45848",
@@ -1612,14 +2139,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "47532",
@@ -1632,14 +2165,23 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 4,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christianity",
+          "context:rome"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "48247",
@@ -1653,14 +2195,22 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:early church"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "48480",
@@ -1673,14 +2223,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "50046",
@@ -1694,14 +2250,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "50685",
@@ -1714,14 +2276,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "50747",
@@ -1734,14 +2302,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "52878",
@@ -1755,14 +2331,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "53603",
@@ -1776,14 +2358,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "53767",
@@ -1797,14 +2385,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "55075",
@@ -1818,14 +2412,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "56035",
@@ -1839,14 +2439,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "56313",
@@ -1860,14 +2466,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "61614",
@@ -1880,14 +2492,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:apostolic"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "63596",
@@ -1901,14 +2521,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "64392",
@@ -1921,14 +2547,22 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "64488",
@@ -1941,14 +2575,22 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:roman"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "64837",
@@ -1962,14 +2604,23 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "qualified",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "65306",
@@ -1983,14 +2634,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "65497",
@@ -2003,14 +2660,22 @@
         "聖經地理",
         "考古"
       ],
-      "stage": "discovered",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "65739",
@@ -2023,14 +2688,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "66861",
@@ -2044,14 +2715,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "68302",
@@ -2065,14 +2742,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "69262",
@@ -2086,14 +2769,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "69566",
@@ -2106,14 +2795,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "70335",
@@ -2127,14 +2822,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "70343",
@@ -2148,14 +2849,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "70427",
@@ -2169,14 +2876,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "70561",
@@ -2189,14 +2902,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "70693",
@@ -2209,14 +2928,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "71897",
@@ -2230,14 +2955,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "71937",
@@ -2250,14 +2981,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "73440",
@@ -2271,14 +3008,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "73639",
@@ -2292,14 +3035,20 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "76266",
@@ -2312,14 +3061,20 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "76717",
@@ -2333,14 +3088,22 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:roman"
+        ],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "78120",
@@ -2354,14 +3117,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "79445",
@@ -2374,14 +3143,20 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     },
     {
       "sourceId": "79510",
@@ -2395,14 +3170,20 @@
         "早期教會",
         "神學"
       ],
-      "stage": "discovered",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
       "rights": {
         "status": "unverified",
         "jurisdiction": "USA",
         "declaredBy": "Project Gutenberg"
       },
-      "contentDownloaded": false
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T02:14:08.779165+00:00"
+      }
     }
   ]
 }
