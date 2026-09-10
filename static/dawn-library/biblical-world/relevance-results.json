@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.relevance-results.v1",
-  "generatedAt": "2026-09-10T13:40:26.128108+00:00",
+  "generatedAt": "2026-09-10T20:27:01.644110+00:00",
   "items": [
     {
       "sourceId": "20",
@@ -25,7 +25,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -51,7 +51,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -79,7 +79,33 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "58",
+      "provider": "Project Gutenberg",
+      "title": "Paradise Regained",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/58",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -107,7 +133,60 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "275",
+      "provider": "Project Gutenberg",
+      "title": "The Augsburg Confession",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/275",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "452",
+      "provider": "Project Gutenberg",
+      "title": "Lavengro: The Scholar, the Gypsy, the Priest",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/452",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -133,7 +212,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -160,7 +239,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "1615",
+      "provider": "Project Gutenberg",
+      "title": "Old English libraries :  the making, collection, and use of books during the Middle Ages",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/1615",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -186,7 +291,60 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "1994",
+      "provider": "Project Gutenberg",
+      "title": "Adventures Among Books",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/1994",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "2145",
+      "provider": "Project Gutenberg",
+      "title": "Ben-Hur: A tale of the Christ",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/2145",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -216,7 +374,7 @@
           "query-in-title",
           "strong:josephus"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -246,7 +404,7 @@
           "query-in-title",
           "strong:josephus"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -274,7 +432,7 @@
         "reasons": [
           "context:nero"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -301,7 +459,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -330,7 +488,7 @@
         "reasons": [
           "noise:san francisco"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -359,7 +517,7 @@
         "reasons": [
           "noise:literary and philosophical essays"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -386,7 +544,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -415,7 +573,7 @@
         "reasons": [
           "noise:piccolomini"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -442,7 +600,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -471,7 +629,7 @@
         "reasons": [
           "noise:thirty years war"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -500,7 +658,7 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -529,7 +687,7 @@
         "reasons": [
           "noise:piccolomini"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -558,7 +716,35 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "8001",
+      "provider": "Project Gutenberg",
+      "title": "The Bible, King James version, Book 1: Genesis",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/8001",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -586,7 +772,7 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -614,7 +800,7 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -640,7 +826,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "9660",
+      "provider": "Project Gutenberg",
+      "title": "The First Blast of the Trumpet against the monstrous regiment of Women",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/9660",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -670,7 +882,87 @@
           "query-in-title",
           "strong:josephus"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "10230",
+      "provider": "Project Gutenberg",
+      "title": "Remarks from a Visit to Edison Laboratory",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/10230",
+      "matchedQuery": "Josephus",
+      "suggestedRelations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "10231",
+      "provider": "Project Gutenberg",
+      "title": "Remarks from a Visit to Edison Laboratory",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/10231",
+      "matchedQuery": "Josephus",
+      "suggestedRelations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "10940",
+      "provider": "Project Gutenberg",
+      "title": "Manners, Customs, and Dress During the Middle Ages and During the Renaissance Period",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/10940",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -697,7 +989,34 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "12059",
+      "provider": "Project Gutenberg",
+      "title": "The World's Greatest Books — Volume 09 — Lives and Letters",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/12059",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -723,7 +1042,87 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "13871",
+      "provider": "Project Gutenberg",
+      "title": "The Practice of the Presence of God the Best Rule of a Holy Life",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/13871",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "13965",
+      "provider": "Project Gutenberg",
+      "title": "Portraits littéraires, Tome II (French)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/13965",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "15447",
+      "provider": "Project Gutenberg",
+      "title": "A History of English Romanticism in the Eighteenth Century",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/15447",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -749,7 +1148,34 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "15931",
+      "provider": "Project Gutenberg",
+      "title": "A History of English Romanticism in the Nineteenth Century",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/15931",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -775,7 +1201,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -801,7 +1227,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "16878",
+      "provider": "Project Gutenberg",
+      "title": "Observations upon the Prophecies of Daniel, and the Apocalypse of St. John",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/16878",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -827,7 +1279,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -853,7 +1305,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -880,7 +1332,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -907,7 +1359,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -933,7 +1385,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -959,7 +1411,87 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "19950",
+      "provider": "Project Gutenberg",
+      "title": "Summa Theologica, Part III (Tertia Pars)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/19950",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "21090",
+      "provider": "Project Gutenberg",
+      "title": "Brief History of English and American Literature",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/21090",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "21407",
+      "provider": "Project Gutenberg",
+      "title": "Figures of Several Centuries",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/21407",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -985,7 +1517,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1012,7 +1544,59 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "21859",
+      "provider": "Project Gutenberg",
+      "title": "Historical Sketches, Volume I (of 3)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/21859",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "21938",
+      "provider": "Project Gutenberg",
+      "title": "The Works of John Knox,  Volume 1 (of 6)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/21938",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1038,7 +1622,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1065,7 +1649,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1091,7 +1675,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1119,7 +1703,7 @@
         "reasons": [
           "strong:church history"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1145,7 +1729,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1173,7 +1757,7 @@
         "reasons": [
           "strong:gospel"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1199,7 +1783,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1225,7 +1809,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1251,7 +1835,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1277,7 +1861,36 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "27571",
+      "provider": "Project Gutenberg",
+      "title": "Christianity and Greek Philosophy",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/27571",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 4,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christianity",
+          "context:greek"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1303,7 +1916,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1330,7 +1943,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1360,7 +1973,7 @@
           "query-in-title",
           "strong:josephus"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1386,7 +1999,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1413,7 +2026,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "31078",
+      "provider": "Project Gutenberg",
+      "title": "Curiosities of Literature, Vol. 3",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/31078",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1441,7 +2080,33 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "33654",
+      "provider": "Project Gutenberg",
+      "title": "The Old English Herbals",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/33654",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1468,7 +2133,85 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "33896",
+      "provider": "Project Gutenberg",
+      "title": "Dante. An essay. To which is added a translation of De Monarchia.",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/33896",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "34632",
+      "provider": "Project Gutenberg",
+      "title": "Selected Sermons of Jonathan Edwards",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/34632",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "34904",
+      "provider": "Project Gutenberg",
+      "title": "Works of Martin Luther, with Introductions and Notes (Volume II)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/34904",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1495,7 +2238,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1521,7 +2264,87 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "36021",
+      "provider": "Project Gutenberg",
+      "title": "The Negro in the United States; a selected bibliography. Compiled by Dorothy B. Porter",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/36021",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "36590",
+      "provider": "Project Gutenberg",
+      "title": "The English Stage: Being an Account of the Victorian Drama",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/36590",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "37388",
+      "provider": "Project Gutenberg",
+      "title": "Tobacco Leaves: Being a Book of Facts for Smokers",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/37388",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1549,7 +2372,7 @@
         "reasons": [
           "strong:church history"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1576,7 +2399,35 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "38732",
+      "provider": "Project Gutenberg",
+      "title": "The Old Testament in the Light of the Historical Records and Legends of Assyria and Babylonia",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/38732",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:testament"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1604,7 +2455,7 @@
         "reasons": [
           "context:roman"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1631,7 +2482,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1658,7 +2509,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "40617",
+      "provider": "Project Gutenberg",
+      "title": "The Teaching and Cultivation of the French Language in England during Tudor and Stuart Times",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/40617",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1687,7 +2564,33 @@
           "strong:biblical",
           "context:geography"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "40886",
+      "provider": "Project Gutenberg",
+      "title": "The Works of John Knox, Volume 2 (of 6)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/40886",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1713,7 +2616,37 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "41140",
+      "provider": "Project Gutenberg",
+      "title": "Bible Atlas: A Manual of Biblical Geography and History",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/41140",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "qualified",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 7,
+        "stage": "qualified",
+        "reasons": [
+          "strong:bible",
+          "strong:biblical",
+          "context:geography"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1740,7 +2673,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1768,7 +2701,34 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "42148",
+      "provider": "Project Gutenberg",
+      "title": "Three Plays",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/42148",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1795,7 +2755,61 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "42515",
+      "provider": "Project Gutenberg",
+      "title": "The book of the ladies",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/42515",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "42759",
+      "provider": "Project Gutenberg",
+      "title": "Distributive Justice: The Right and Wrong of Our Present Distribution of Wealth",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/42759",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1821,7 +2835,62 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "43283",
+      "provider": "Project Gutenberg",
+      "title": "The Correspondence of Madame, Princess Palatine, Mother of the Regent; of Marie-Adélaïde de Savoie, Duchesse de Bourgogne; and of Madame de Maintenon, in Relation to Saint-Cyr",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/43283",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "43847",
+      "provider": "Project Gutenberg",
+      "title": "The Expositor's Bible: The Book of the Twelve Prophets, Vol. 1",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/43847",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1850,7 +2919,7 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1879,7 +2948,7 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1905,7 +2974,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1932,7 +3001,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "44795",
+      "provider": "Project Gutenberg",
+      "title": "Aids to Reflection; and, The Confessions of an Inquiring Spirit",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/44795",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1960,7 +3055,7 @@
         "reasons": [
           "strong:christian"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -1986,7 +3081,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2013,7 +3108,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2040,7 +3135,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2069,7 +3164,7 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2098,7 +3193,7 @@
         "reasons": [
           "noise:wallenstein"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2125,7 +3220,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2152,7 +3247,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2179,7 +3274,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "46921",
+      "provider": "Project Gutenberg",
+      "title": "The Thoughts of Blaise Pascal",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/46921",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2208,7 +3329,33 @@
           "strong:christianity",
           "context:rome"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "47809",
+      "provider": "Project Gutenberg",
+      "title": "Montreal, 1535-1914. Vol. 1. Under the French Régime, 1535-1760",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/47809",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2237,7 +3384,7 @@
         "reasons": [
           "context:early church"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2263,7 +3410,34 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "49450",
+      "provider": "Project Gutenberg",
+      "title": "Petrarch's Secret; or, the Soul's Conflict with Passion",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/49450",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2290,7 +3464,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2316,7 +3490,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2344,7 +3518,85 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "50857",
+      "provider": "Project Gutenberg",
+      "title": "St. Paul's Epistles to the Colossians and Philemon",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/50857",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "51034",
+      "provider": "Project Gutenberg",
+      "title": "The Invention of Printing.",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/51034",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "51702",
+      "provider": "Project Gutenberg",
+      "title": "A Guide to the Study of Fishes, Volume 2 (of 2)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/51702",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2371,7 +3623,61 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "53217",
+      "provider": "Project Gutenberg",
+      "title": "Cölestine, oder der eheliche Verdacht; Erster Theil (von 2) (German)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/53217",
+      "matchedQuery": "Josephus",
+      "suggestedRelations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "53218",
+      "provider": "Project Gutenberg",
+      "title": "Cölestine, oder der eheliche Verdacht; Zweiter Theil (von 2) (German)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/53218",
+      "matchedQuery": "Josephus",
+      "suggestedRelations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2398,7 +3704,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2425,7 +3731,88 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "53876",
+      "provider": "Project Gutenberg",
+      "title": "Nathaniel Parker Willis",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/53876",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "53884",
+      "provider": "Project Gutenberg",
+      "title": "A Biblical and Theological Dictionary",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/53884",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:biblical"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "54365",
+      "provider": "Project Gutenberg",
+      "title": "A History of the Old English Letter Foundries",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/54365",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2452,7 +3839,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2479,7 +3866,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2506,7 +3893,113 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "56578",
+      "provider": "Project Gutenberg",
+      "title": "The Writings of Thomas Jefferson, Vol. 9 (of 9)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/56578",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "57119",
+      "provider": "Project Gutenberg",
+      "title": "An Account of the Life and Writings of S. Irenæus, Bishop of Lyons and Martyr",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/57119",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "60518",
+      "provider": "Project Gutenberg",
+      "title": "Military Architecture in England During the Middle Ages",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/60518",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "60882",
+      "provider": "Project Gutenberg",
+      "title": "De l'Amour\n (French)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/60882",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2534,7 +4027,59 @@
         "reasons": [
           "strong:apostolic"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "61779",
+      "provider": "Project Gutenberg",
+      "title": "Crises in the History of the Papacy",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/61779",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "63127",
+      "provider": "Project Gutenberg",
+      "title": "Records of the Kirk of Scotland",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/63127",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2561,7 +4106,35 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "63978",
+      "provider": "Project Gutenberg",
+      "title": "The ecclesiastical architecture of Scotland from the earliest Christian times to the seventeenth century; vol. 2/3",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/63978",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2589,7 +4162,7 @@
         "reasons": [
           "strong:christian"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2617,7 +4190,7 @@
         "reasons": [
           "context:roman"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2647,7 +4220,35 @@
           "query-in-title",
           "strong:josephus"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "65014",
+      "provider": "Project Gutenberg",
+      "title": "The ecclesiastical architecture of Scotland from the earliest Christian times to the seventeenth century; vol. 3/3",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/65014",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "deferred",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2675,7 +4276,7 @@
         "reasons": [
           "strong:testament"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2702,7 +4303,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2728,7 +4329,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2756,7 +4357,7 @@
         "reasons": [
           "strong:bible"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2782,7 +4383,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2809,7 +4410,86 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "67116",
+      "provider": "Project Gutenberg",
+      "title": "Philosophumena; or, The refutation of all heresies, Volume II",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/67116",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "67320",
+      "provider": "Project Gutenberg",
+      "title": "Les confessions de saint Augustin, évêque d'Hippone: précédées de sa vie par S. Possidius, évêque de Calame... ; traduction nouvelle par L. Moreau (French)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/67320",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "67980",
+      "provider": "Project Gutenberg",
+      "title": "The life and times of the Rev. Samuel Wesley",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/67980",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2836,7 +4516,33 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "68385",
+      "provider": "Project Gutenberg",
+      "title": "Civilization in the United States: An inquiry by thirty Americans",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/68385",
+      "matchedQuery": "Bible history",
+      "suggestedRelations": [
+        "聖經背景",
+        "歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2863,7 +4569,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2889,7 +4595,60 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "69855",
+      "provider": "Project Gutenberg",
+      "title": "Letters, sentences and maxims",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/69855",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "70000",
+      "provider": "Project Gutenberg",
+      "title": "Wakeman's handbook of Irish antiquities",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/70000",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2916,7 +4675,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2943,7 +4702,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2970,7 +4729,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -2996,7 +4755,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3022,7 +4781,60 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "71223",
+      "provider": "Project Gutenberg",
+      "title": "Religion and the rise of capitalism :  A historical study",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/71223",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "71280",
+      "provider": "Project Gutenberg",
+      "title": "Lexicon Latinum :  Universae phraseologiae corpus congestum etc. (French) (Latin)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/71280",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3049,7 +4861,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3075,7 +4887,34 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "72936",
+      "provider": "Project Gutenberg",
+      "title": "The life of Jean Henri Fabre, the entomologist, 1823-1910",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/72936",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3102,7 +4941,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3129,7 +4968,61 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "74176",
+      "provider": "Project Gutenberg",
+      "title": "From Berlin to Bagdad and Babylon",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/74176",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "74216",
+      "provider": "Project Gutenberg",
+      "title": "La pénétration saharienne (1830-1906) (French)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/74216",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3155,7 +5048,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3181,7 +5074,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3210,7 +5103,37 @@
         "reasons": [
           "context:roman"
         ],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "77585",
+      "provider": "Project Gutenberg",
+      "title": "Confessions of St. Augustine",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/77585",
+      "matchedQuery": "Augustine",
+      "suggestedRelations": [
+        "教父",
+        "早期教會",
+        "神學"
+      ],
+      "stage": "qualified",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 8,
+        "stage": "qualified",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine"
+        ],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3237,7 +5160,60 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "78981",
+      "provider": "Project Gutenberg",
+      "title": "Journal de la société de 1789 - Nº IV (French)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/78981",
+      "matchedQuery": "Josephus",
+      "suggestedRelations": [
+        "猶太歷史",
+        "第二聖殿",
+        "新約背景"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
+      }
+    },
+    {
+      "sourceId": "79413",
+      "provider": "Project Gutenberg",
+      "title": "The works of the Rev. John Wesley, Vol. 16 (of 32)",
+      "author": "",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/79413",
+      "matchedQuery": "early church",
+      "suggestedRelations": [
+        "早期教會",
+        "教會歷史"
+      ],
+      "stage": "rejected",
+      "discoveredAt": "2026-09-10T20:26:52.967719+00:00",
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "contentDownloaded": false,
+      "relevance": {
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3263,7 +5239,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     },
     {
@@ -3290,7 +5266,7 @@
         "score": 0,
         "stage": "rejected",
         "reasons": [],
-        "evaluatedAt": "2026-09-10T13:40:26.128108+00:00"
+        "evaluatedAt": "2026-09-10T20:27:01.644110+00:00"
       }
     }
   ]

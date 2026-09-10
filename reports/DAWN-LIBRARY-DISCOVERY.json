@@ -1,12 +1,13 @@
 {
-  "schema": "dawn.library.discovery.report.v1",
-  "generatedAt": "2026-09-10T13:40:20.470560+00:00",
+  "schema": "dawn.library.discovery.report.v2",
+  "generatedAt": "2026-09-10T20:26:52.967719+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 6,
-  "newDiscovered": 4,
-  "candidateQueue": 121,
+  "pagesChecked": 10,
+  "newDiscovered": 74,
+  "candidateQueue": 195,
   "catalogBooks": 10,
   "errors": [],
-  "invariant": "Discovery only creates metadata candidates. It does not download full text or auto-promote candidates into the public catalog."
+  "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
