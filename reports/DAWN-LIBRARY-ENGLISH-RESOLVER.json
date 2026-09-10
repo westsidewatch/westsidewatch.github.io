@@ -1,12 +1,16 @@
 {
   "schema": "dawn.library.english-resolver.report.v1",
-  "generatedAt": "2026-09-10T20:32:45.190095+00:00",
-  "qualifiedInput": 0,
+  "generatedAt": "2026-09-10T21:06:51.781804+00:00",
+  "qualifiedInput": 3,
   "results": {
-    "verified": 0,
+    "verified": 3,
     "needs-review": 0,
     "blocked": 0
   },
-  "verifiedTitles": [],
+  "verifiedTitles": [
+    "Reina Valera New Testament of the Bible 1602, Book of Matthew (Spanish)",
+    "Reina Valera New Testament of the Bible 1865 (Spanish)",
+    "A Brief Bible History: A Survey of the Old and New Testaments"
+  ],
   "invariant": "Verification reads Gutenberg RDF metadata and explicit rights only; no book full text is stored."
 }
