@@ -1,0 +1,27 @@
+{
+  "schema": "dawn.library.discovery-state.v1",
+  "collection": "biblical-world-books",
+  "displayName": "黎明書局 · 聖經世界",
+  "stage": "bootstrap",
+  "sourceCursors": {
+    "project-gutenberg": {
+      "mode": "opds",
+      "cursor": null,
+      "lastChecked": null
+    }
+  },
+  "pipeline": ["discovered", "verified", "curated"],
+  "metrics": {
+    "discovered": 7,
+    "verified": 6,
+    "curated": 7,
+    "deferred": 1
+  },
+  "rules": {
+    "downloadFullTextDuringDiscovery": false,
+    "catalogEntryRequiresWorkIdentity": true,
+    "verifiedRequiresApprovedPublicSource": true,
+    "rightsMustPreserveJurisdiction": true,
+    "dedupeKey": "work+edition+translator+source-id"
+  }
+}
