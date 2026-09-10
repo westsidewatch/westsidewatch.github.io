@@ -1,0 +1,46 @@
+{
+  "schema": "dore-film-camera-spine/v0.1",
+  "id": "DF-CAM-EXP-01",
+  "title": "Patriarchs — First Walk Out of Text",
+  "status": "PREVIS_EXPERIMENT",
+  "canonical": false,
+  "purpose": "Test whether one continuous camera line can carry Abraham -> Isaac -> Jacob before Doré artwork, gold light, scripture rendering, or final animation are added.",
+  "coordinateSystem": {"units":"normalized-previs","up":"Y","forward":"-Z"},
+  "rules": {
+    "oneCamera": true,
+    "conventionalCuts": 0,
+    "full3DRequired": 0,
+    "directorPresets": false,
+    "cameraGrammarSources": ["TARR-01", "ANGELOPOULOS-01", "ANTONIONI-01"],
+    "note": "Director names are provenance for normalized camera grammar, never style presets."
+  },
+  "nodes": [
+    {"id":"P001","beat":"Abraham enters journey","p":[0,1.65,0],"look":[0,1.45,-5],"lens":40,"speed":0.28,"dwell":1.8,"grammar":"TARR-01","action":"acquire-subject"},
+    {"id":"P002","beat":"Follow Abraham","p":[0.7,1.6,-5],"look":[0.9,1.4,-9],"lens":42,"speed":0.38,"dwell":0.4,"grammar":"TARR-01","action":"follow"},
+    {"id":"P003","beat":"Abraham drifts from centre","p":[1.5,1.55,-10],"look":[2.3,1.35,-14],"lens":45,"speed":0.32,"dwell":0.7,"grammar":"TARR-01","action":"lag-subject"},
+    {"id":"P004","beat":"World takes frame","p":[3.2,1.7,-15],"look":[5.8,1.3,-21],"lens":38,"speed":0.24,"dwell":1.4,"grammar":"TARR-01","action":"subject-exits-space-remains"},
+    {"id":"P005","beat":"Abraham age begins to recede","p":[6.4,1.85,-21],"look":[9.5,1.3,-27],"lens":36,"speed":0.18,"dwell":1.8,"grammar":"ANGELOPOULOS-01","action":"empty-world"},
+    {"id":"P006","beat":"Promise carries through empty time","p":[10.2,2.1,-27],"look":[14.2,1.2,-34],"lens":35,"speed":0.16,"dwell":2.2,"grammar":"ANGELOPOULOS-01","action":"time-crossing","timeBridge":"ABRAHAM_TO_ISAAC"},
+    {"id":"P007","beat":"New figure appears at distance","p":[14.8,2.0,-34],"look":[18.5,1.35,-40],"lens":40,"speed":0.2,"dwell":1.3,"grammar":"ANGELOPOULOS-01","action":"new-generation-enters"},
+    {"id":"P008","beat":"Isaac acquired","p":[18.0,1.65,-40],"look":[20.0,1.4,-44],"lens":48,"speed":0.3,"dwell":1.1,"grammar":"TARR-01","action":"reacquire-subject"},
+    {"id":"P009","beat":"Follow Isaac","p":[20.4,1.6,-45],"look":[22.5,1.4,-50],"lens":45,"speed":0.34,"dwell":0.5,"grammar":"TARR-01","action":"follow"},
+    {"id":"P010","beat":"Isaac settles","p":[22.5,1.55,-50],"look":[24.2,1.3,-54],"lens":50,"speed":0.18,"dwell":1.5,"grammar":"TARR-01","action":"settle"},
+    {"id":"P011","beat":"Camera stops depending on Isaac","p":[24.0,1.6,-54],"look":[27.0,1.25,-59],"lens":45,"speed":0.14,"dwell":1.8,"grammar":"ANTONIONI-01","action":"leave-subject"},
+    {"id":"P012","beat":"Cross spatial threshold","p":[27.5,1.75,-59],"look":[31.5,1.3,-65],"lens":40,"speed":0.2,"dwell":0.8,"grammar":"ANTONIONI-01","action":"threshold"},
+    {"id":"P013","beat":"World exists without patriarch","p":[32.0,2.0,-65],"look":[37.0,1.1,-72],"lens":35,"speed":0.12,"dwell":2.6,"grammar":"ANTONIONI-01","action":"world-as-subject"},
+    {"id":"P014","beat":"Isaac age becomes Jacob age","p":[37.8,2.2,-72],"look":[42.0,1.3,-79],"lens":38,"speed":0.15,"dwell":2.0,"grammar":"ANGELOPOULOS-01","action":"time-crossing","timeBridge":"ISAAC_TO_JACOB"},
+    {"id":"P015","beat":"Jacob enters","p":[42.5,1.7,-79],"look":[45.0,1.4,-84],"lens":46,"speed":0.28,"dwell":1.0,"grammar":"TARR-01","action":"acquire-subject"},
+    {"id":"P016","beat":"Jacob departs","p":[45.5,1.6,-84],"look":[48.5,1.35,-90],"lens":42,"speed":0.4,"dwell":0.4,"grammar":"TARR-01","action":"follow"},
+    {"id":"P017","beat":"Road bends into wilderness","p":[49.0,1.7,-91],"look":[53.0,1.25,-98],"lens":38,"speed":0.36,"dwell":0.5,"grammar":"TARR-01","action":"corner-threshold"},
+    {"id":"P018","beat":"Jacob becomes small in world","p":[54.0,2.4,-99],"look":[58.0,1.2,-106],"lens":32,"speed":0.22,"dwell":1.4,"grammar":"TARR-01","action":"space-reveal"},
+    {"id":"P019","beat":"Night / Jacob sleeps","p":[59.0,2.8,-107],"look":[62.0,0.9,-112],"lens":40,"speed":0.08,"dwell":3.0,"grammar":"ANTONIONI-01","action":"still-space"},
+    {"id":"P020","beat":"Jacob's Dream — experiment terminus","p":[62.5,3.6,-113],"look":[62.0,4.8,-118],"lens":35,"speed":0.04,"dwell":4.0,"grammar":"ANTONIONI-01","action":"vertical-attention"}
+  ],
+  "acceptance": {
+    "continuousSpline": true,
+    "cameraTraversesAllNodes": true,
+    "timeBridges": ["ABRAHAM_TO_ISAAC", "ISAAC_TO_JACOB"],
+    "noDuplicateTrajectorySource": true,
+    "next": "Render this exact data as a moving camera path before adding canonical Doré canvases."
+  }
+}
