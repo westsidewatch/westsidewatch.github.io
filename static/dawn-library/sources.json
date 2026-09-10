@@ -1,5 +1,5 @@
 {
-  "schema": "dawn.library.sources.v2",
+  "schema": "dawn.library.sources.v3",
   "displayName": "黎明書局",
   "policy": "metadata-first-index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -69,6 +69,17 @@
       "metadataStrategy": "resolve-once-and-cache-identifiers",
       "contentPolicy": "Do not use Open Library as the bookstore content backend. Use it for Work/Edition/ISBN/cover identity completion.",
       "rightsPolicy": "Preserve provenance for all resolved identifiers and covers; reading rights come from the actual publication source."
+    },
+    {
+      "id": "internet-archive",
+      "label": "Internet Archive",
+      "languages": ["mul"],
+      "role": "original-scan-and-bookreader-source",
+      "catalog": "https://archive.org/advancedsearch.php",
+      "catalogFormat": "Advanced Search JSON / BookReader",
+      "metadataStrategy": "metadata-and-scan-reference-only",
+      "contentPolicy": "Index scan identity, cover thumbnail and BookReader URL only. Do not bulk-download scanned files.",
+      "rightsPolicy": "Do not infer public-domain status from Internet Archive availability. Keep source rights status explicit and require source-level verification before import."
     }
   ]
 }
