@@ -1,0 +1,13 @@
+{
+  "schema": "dawn.library.discovery-queries.v1",
+  "collection": "biblical-world-books",
+  "queries": [
+    {"q": "Josephus", "relations": ["猶太歷史", "第二聖殿", "新約背景"]},
+    {"q": "Eusebius", "relations": ["早期教會", "教父", "教會歷史"]},
+    {"q": "Augustine", "relations": ["教父", "早期教會", "神學"]},
+    {"q": "Bible history", "relations": ["聖經背景", "歷史"]},
+    {"q": "Palestine geography", "relations": ["聖經地理", "考古"]},
+    {"q": "early church", "relations": ["早期教會", "教會歷史"]}
+  ],
+  "policy": "Discovery seeds are broad enough to grow the collection but candidates remain unverified until a later resolver/checkpoint promotes them."
+}
