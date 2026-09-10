@@ -1,0 +1,100 @@
+name: DORÉ Film Micro 011 Geometry
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-film-micro-011-geometry.yml'
+
+jobs:
+  depth-to-geometry:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install mature depth stack
+        run: |
+          python -m pip install --quiet pillow numpy
+          git clone --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3.git /tmp/depth-anything-3
+          python -m pip install -e /tmp/depth-anything-3
+
+      - name: Fetch canonical Doré 011 source
+        run: |
+          mkdir -p .micro011g/input .micro011g/output
+          curl -L --fail --retry 3 \
+            'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' \
+            -o .micro011g/input/dore-011.jpg
+
+      - name: Infer depth and reconstruct image-space point cloud
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          import numpy as np
+          from PIL import Image
+          import torch
+          from depth_anything_3.api import DepthAnything3
+
+          src = Path('.micro011g/input/dore-011.jpg')
+          out = Path('.micro011g/output')
+          model = DepthAnything3.from_pretrained('depth-anything/DA3-SMALL').to(device=torch.device('cpu'))
+          pred = model.inference([str(src)])
+          depth = np.asarray(pred.depth[0], dtype=np.float32)
+          K = np.asarray(pred.intrinsics[0], dtype=np.float32)
+          h, w = depth.shape
+          yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
+          z = depth
+          x = (xx - K[0,2]) * z / K[0,0]
+          y = (yy - K[1,2]) * z / K[1,1]
+          pts = np.stack([x,y,z], axis=-1)
+          np.save(out/'dore-011-points.npy', pts)
+
+          # Produce a light-weight geometry proxy for the next camera test.
+          stride = 8
+          p = pts[::stride, ::stride].reshape(-1,3)
+          finite = np.isfinite(p).all(axis=1)
+          p = p[finite]
+          np.savetxt(out/'dore-011-points-stride8.xyz', p, fmt='%.6f')
+
+          # Depth-band occupancy: evidence that foreground / procession / distance separate spatially.
+          finite_d = depth[np.isfinite(depth)]
+          q = np.quantile(finite_d, [0,.2,.4,.6,.8,1]).tolist()
+          meta = {
+            'experiment':'DORÉ-FILM-MICRO-011-GEOMETRY-01',
+            'source':'Doré Original Library ID 011',
+            'depth_shape':[h,w],
+            'intrinsics':K.tolist(),
+            'point_grid_shape':list(pts.shape),
+            'proxy_points':int(len(p)),
+            'depth_quantiles':q,
+            'next_acceptance':'Move a virtual camera a small distance through this reconstructed geometry without treating the original as one flat card.',
+            'generation':False,
+            'segmentation':False
+          }
+          (out/'geometry-metadata.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
+          print(json.dumps(meta,indent=2))
+          PY
+
+      - name: Verify geometry evidence
+        run: |
+          test -s .micro011g/output/dore-011-points.npy
+          test -s .micro011g/output/dore-011-points-stride8.xyz
+          test -s .micro011g/output/geometry-metadata.json
+          ls -lh .micro011g/output
+
+      - name: Upload geometry evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-micro-011-geometry
+          path: .micro011g/output/
+          if-no-files-found: error
+          retention-days: 14
