@@ -1,0 +1,207 @@
+name: DORÉ Film Projection Stage 011
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - '.github/workflows/dore-film-projection-stage-011.yml'
+
+jobs:
+  projection-stage-road-test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install mature stack
+        run: |
+          python -m pip install --quiet pillow numpy
+          git clone --depth 1 https://github.com/ByteDance-Seed/Depth-Anything-3.git /tmp/depth-anything-3
+          python -m pip install -e /tmp/depth-anything-3
+          sudo apt-get update -qq
+          sudo apt-get install -y blender ffmpeg
+          blender --version
+
+      - name: Fetch canonical Doré 011
+        run: |
+          mkdir -p .projection011/input .projection011/output
+          curl -L --fail --retry 3 \
+            'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' \
+            -o .projection011/input/dore-011.jpg
+
+      - name: Recover coarse geometry with DA3
+        env:
+          HF_HUB_DISABLE_TELEMETRY: '1'
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import numpy as np, torch, json
+          from depth_anything_3.api import DepthAnything3
+
+          root=Path('.projection011')
+          src=root/'input/dore-011.jpg'
+          out=root/'output'
+          model=DepthAnything3.from_pretrained('depth-anything/DA3-SMALL').to(device=torch.device('cpu'))
+          pred=model.inference([str(src)])
+          depth=np.asarray(pred.depth[0],dtype=np.float32)
+          K=np.asarray(pred.intrinsics[0],dtype=np.float32)
+          h,w=depth.shape
+          stride=4
+          d=depth[::stride,::stride]
+          hh,ww=d.shape
+          yy,xx=np.mgrid[0:hh,0:ww].astype(np.float32)
+          px=xx*stride; py=yy*stride; z=d
+          x=(px-K[0,2])*z/K[0,0]
+          y=(py-K[1,2])*z/K[1,1]
+          pts=np.stack([x,-y,-z],axis=-1).astype(np.float32)
+          np.save(out/'points.npy',pts)
+          np.save(out/'intrinsics.npy',K)
+          meta={
+            'experiment':'DORE-011-PROJECTION-STAGE-ROAD-TEST',
+            'representation':'DA3 coarse geometry + Blender native UV Project',
+            'source':'Doré Original Library ID 011',
+            'depth_shape':[h,w],
+            'mesh_grid':[hh,ww],
+            'rule':'Road test only: no generated pixels, no segmentation, no actor animation, no fidelity polishing.'
+          }
+          (out/'metadata.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
+          PY
+
+      - name: Build virtual projection stage and animate viewing camera
+        run: |
+          cat > .projection011/build.py <<'PY'
+          import bpy, os, json, math
+          import numpy as np
+          from mathutils import Vector
+
+          base=os.path.abspath('.projection011')
+          out=os.path.join(base,'output')
+          pts=np.load(os.path.join(out,'points.npy'))
+          K=np.load(os.path.join(out,'intrinsics.npy'))
+          hh,ww,_=pts.shape
+
+          bpy.ops.wm.read_factory_settings(use_empty=True)
+
+          verts=[tuple(v) for v in pts.reshape(-1,3)]
+          faces=[]
+          for y in range(hh-1):
+              a0=y*ww; b0=(y+1)*ww
+              for x in range(ww-1):
+                  a=a0+x; b=a+1; c=b0+x; d=c+1
+                  faces.append((a,c,b)); faces.append((b,c,d))
+          mesh=bpy.data.meshes.new('DORE_011_STAGE_MESH')
+          mesh.from_pydata(verts,[],faces); mesh.update()
+          obj=bpy.data.objects.new('DORE_011_STAGE',mesh)
+          bpy.context.collection.objects.link(obj)
+
+          # UV layer is populated by Blender's mature UV Project modifier from a fixed canonical projector camera.
+          mesh.uv_layers.new(name='ProjectUV')
+
+          img=bpy.data.images.load(os.path.join(base,'input','dore-011.jpg'))
+          img.colorspace_settings.name='sRGB'
+          mat=bpy.data.materials.new('DORE_011_PROJECTED_ORIGINAL')
+          mat.use_nodes=True
+          nodes=mat.node_tree.nodes; links=mat.node_tree.links
+          for n in list(nodes): nodes.remove(n)
+          tex=nodes.new('ShaderNodeTexImage'); tex.image=img; tex.interpolation='Linear'
+          uvn=nodes.new('ShaderNodeUVMap'); uvn.uv_map='ProjectUV'
+          emit=nodes.new('ShaderNodeEmission')
+          output=nodes.new('ShaderNodeOutputMaterial')
+          links.new(uvn.outputs['UV'],tex.inputs['Vector'])
+          links.new(tex.outputs['Color'],emit.inputs['Color'])
+          links.new(emit.outputs['Emission'],output.inputs['Surface'])
+          obj.data.materials.append(mat)
+
+          # Canonical projector: fixed. At this camera position the stage should resolve back toward the Doré source.
+          proj_data=bpy.data.cameras.new('Doré Canonical Projector')
+          projector=bpy.data.objects.new('Doré Canonical Projector',proj_data)
+          bpy.context.collection.objects.link(projector)
+          projector.location=(0,0,0); projector.rotation_euler=(0,0,0)
+          proj_data.sensor_fit='HORIZONTAL'; proj_data.sensor_width=36.0
+          depth_w=504.0
+          proj_data.lens=float(K[0,0])/depth_w*36.0
+          proj_data.clip_start=.01; proj_data.clip_end=100
+
+          mod=obj.modifiers.new('Doré Canonical Projection','UV_PROJECT')
+          mod.uv_layer='ProjectUV'
+          mod.projectors[0].object=projector
+          mod.projector_count=1
+          mod.aspect_x=2617.0; mod.aspect_y=2074.0
+
+          # Viewing camera moves independently of the projector: virtual-stage test.
+          cam_data=bpy.data.cameras.new('Viewing Camera')
+          cam=bpy.data.objects.new('Viewing Camera',cam_data)
+          bpy.context.collection.objects.link(cam)
+          bpy.context.scene.camera=cam
+          cam.rotation_euler=(0,0,0)
+          cam_data.sensor_fit='HORIZONTAL'; cam_data.sensor_width=36.0; cam_data.lens=proj_data.lens
+          cam_data.clip_start=.01; cam_data.clip_end=100
+
+          scene=bpy.context.scene
+          scene.render.engine='BLENDER_EEVEE'
+          scene.render.resolution_x=1008; scene.render.resolution_y=798; scene.render.resolution_percentage=100
+          scene.render.image_settings.file_format='PNG'
+          scene.world.color=(0,0,0)
+          scene.view_settings.view_transform='Standard'
+          scene.frame_start=1; scene.frame_end=72; scene.render.fps=24
+
+          # One continuous short road test: start near canonical view, drift sideways, then push into the recovered stage.
+          keyframes=[
+            (1,  (0.0,0.0,0.0)),
+            (24, (0.018,0.0,-0.010)),
+            (48, (0.040,0.0,-0.035)),
+            (72, (0.065,0.0,-0.070)),
+          ]
+          for f,loc in keyframes:
+              cam.location=loc; cam.keyframe_insert(data_path='location',frame=f)
+          if cam.animation_data and cam.animation_data.action:
+              for fc in cam.animation_data.action.fcurves:
+                  for kp in fc.keyframe_points: kp.interpolation='BEZIER'
+
+          scene.render.filepath=os.path.join(out,'frame-')
+          bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'projection-stage.blend'))
+          bpy.ops.render.render(animation=True)
+
+          meta=json.load(open(os.path.join(out,'metadata.json')))
+          meta['blender_version']=bpy.app.version_string
+          meta['projector_lens_mm']=proj_data.lens
+          meta['frames']=72
+          meta['viewing_camera_keyframes']=[{'frame':f,'location':list(loc)} for f,loc in keyframes]
+          json.dump(meta,open(os.path.join(out,'metadata.json'),'w'),indent=2)
+          PY
+          blender -b --python .projection011/build.py
+
+      - name: Encode road-test video and contact sheet
+        run: |
+          ffmpeg -y -framerate 24 -i '.projection011/output/frame-%04d.png' -c:v libx264 -pix_fmt yuv420p .projection011/output/projection-stage-road-test.mp4
+          python - <<'PY'
+          from PIL import Image,ImageDraw
+          from pathlib import Path
+          p=Path('.projection011/output')
+          frames=[1,24,48,72]
+          ims=[Image.open(p/f'frame-{n:04d}.png').convert('RGB') for n in frames]
+          w,h=ims[0].size
+          sheet=Image.new('RGB',(w*2,h*2+60),'black')
+          draw=ImageDraw.Draw(sheet)
+          for i,(n,im) in enumerate(zip(frames,ims)):
+              x=(i%2)*w; y=(i//2)*h+30*(i//2)
+              sheet.paste(im,(x,y)); draw.text((x+12,y+10),f'frame {n}',fill='white')
+          sheet.save(p/'contact-sheet.png')
+          PY
+          test -s .projection011/output/projection-stage-road-test.mp4
+          test -s .projection011/output/contact-sheet.png
+          test -s .projection011/output/projection-stage.blend
+
+      - name: Upload projection-stage evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-projection-stage-011
+          path: .projection011/output/
+          if-no-files-found: error
+          retention-days: 14
