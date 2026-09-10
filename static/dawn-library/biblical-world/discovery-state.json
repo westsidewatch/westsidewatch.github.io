@@ -7,15 +7,21 @@
     "project-gutenberg": {
       "mode": "opds",
       "cursor": null,
-      "lastChecked": null
+      "lastChecked": "2026-09-10T00:36:16.328514+00:00"
     }
   },
-  "pipeline": ["discovered", "verified", "curated"],
+  "pipeline": [
+    "discovered",
+    "verified",
+    "curated"
+  ],
   "metrics": {
-    "discovered": 7,
+    "discovered": 124,
     "verified": 6,
     "curated": 7,
-    "deferred": 1
+    "deferred": 1,
+    "candidateQueue": 117,
+    "newThisRun": 117
   },
   "rules": {
     "downloadFullTextDuringDiscovery": false,
