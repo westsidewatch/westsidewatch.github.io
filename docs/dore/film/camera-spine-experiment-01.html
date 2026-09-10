@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DORÉ FILM · Camera Spine Experiment 01</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080808;color:#ddd;font:12px system-ui,sans-serif}canvas{display:block}.hud{position:fixed;left:18px;top:16px;z-index:2;pointer-events:none}.hud b{letter-spacing:.16em}.hud div{margin-top:5px;color:#999}.legend{position:fixed;right:18px;bottom:16px;text-align:right;color:#888;z-index:2}.progress{position:fixed;left:0;bottom:0;height:2px;background:#cdbd74;width:0;z-index:3}</style>
+</head><body>
+<div class="hud"><b>CAMERA SPINE · EXPERIMENT 01</b><div id="beat">P001 · Abraham enters journey</div><div id="grammar">TARR-01</div></div>
+<div class="legend">ONE CAMERA · ZERO CUTS<br>ABRAHAM → ISAAC → JACOB</div><div class="progress" id="progress"></div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js';
+const data=await fetch('./camera-spine-experiment-01.json').then(r=>r.json());
+const scene=new THREE.Scene();scene.background=new THREE.Color(0x080808);
+const camera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,500);
+const renderer=new THREE.WebGLRenderer({antialias:true});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);document.body.appendChild(renderer.domElement);
+const pts=data.nodes.map(n=>new THREE.Vector3(...n.p));
+const curve=new THREE.CatmullRomCurve3(pts,false,'centripetal',.5);
+const lineGeo=new THREE.BufferGeometry().setFromPoints(curve.getPoints(600));
+scene.add(new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0xcebd74,transparent:true,opacity:.62})));
+const nodeGroup=new THREE.Group();scene.add(nodeGroup);
+for(const n of data.nodes){const g=new THREE.SphereGeometry(.22,12,8);const m=new THREE.MeshBasicMaterial({color:0xe4e4e4});const s=new THREE.Mesh(g,m);s.position.set(...n.p);nodeGroup.add(s)}
+// proxy generations: deliberately not Doré artwork
+for(const [i,n] of [[0,data.nodes[0]],[1,data.nodes[7]],[2,data.nodes[14]]]){const geo=new THREE.PlaneGeometry(3.2,4.4);const mat=new THREE.MeshBasicMaterial({color:0x171717,side:THREE.DoubleSide,transparent:true,opacity:.9});const p=new THREE.Mesh(geo,mat);p.position.set(n.p[0]+2,n.p[1],n.p[2]-3);p.rotation.y=-.25;scene.add(p)}
+const pathCamera=new THREE.PerspectiveCamera(45,innerWidth/innerHeight,.1,300);scene.add(pathCamera);
+let start=performance.now(), duration=52000;
+const beat=document.getElementById('beat'), grammar=document.getElementById('grammar'), progress=document.getElementById('progress');
+function frame(now){const raw=((now-start)%duration)/duration;const t=raw;const pos=curve.getPointAt(t);pathCamera.position.copy(pos);const idx=Math.min(data.nodes.length-1,Math.floor(t*data.nodes.length));const n=data.nodes[idx];pathCamera.fov=n.lens?2*Math.atan(36/(2*n.lens))*180/Math.PI:45;pathCamera.updateProjectionMatrix();const ahead=curve.getPointAt(Math.min(.999,t+.008));const authored=new THREE.Vector3(...n.look);const look=ahead.clone().lerp(authored,.42);pathCamera.lookAt(look);beat.textContent=n.id+' · '+n.beat;grammar.textContent=n.grammar+' · '+n.action;progress.style.width=(t*100)+'%';renderer.render(scene,pathCamera);requestAnimationFrame(frame)}
+requestAnimationFrame(frame);
+addEventListener('resize',()=>{pathCamera.aspect=innerWidth/innerHeight;pathCamera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+</script></body></html>
