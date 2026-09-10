@@ -73,7 +73,7 @@ def render(edit=False):
  const thick='polygon(45% 0,55% 0,55% 45%,100% 45%,100% 55%,55% 55%,55% 100%,45% 100%,45% 55%,0 55%,0 45%,45% 45%)',thin='polygon(50% 0,50% 0,50% 50%,100% 50%,100% 50%,50% 50%,50% 100%,50% 100%,50% 50%,0 50%,0 50%,50% 50%)';
  function stop(){{animations.forEach(a=>{{try{{a.cancel()}}catch(e){{}}}});animations=[]}}
  function pv(p){{let i=+p.dataset.index;return(i%4===0||i%4===1)?right:left}}
- function side(p){{let i=+p.dataset.index,l=i%4<2;return products.filter(x=>l?(+x.dataset.index)%4<2:(+x.dataset.index)%4>=2)}}
+ function side(p){{return [p]}}
  function resetOne(preview){{clearTimeout(phaseTimer);phaseTimer=null;preview.classList.remove('is-one-live','is-one-reading');const panel=preview.querySelector('.one-live-preview'),images=preview.querySelector('.product-preview__images');if(panel){{panel.hidden=true;panel.style.transform='translateX(102%)';panel.style.opacity='0'}}if(images){{images.hidden=false;images.style.transform='translateX(0)'}}}}
  function setMode(preview,p){{resetOne(preview);const live=p.dataset.source==='ONE'&&p.dataset.oneBound==='true',panel=preview.querySelector('.one-live-preview');if(live){{preview.classList.add('is-one-live');panel.hidden=false;panel.style.transform='translateX(102%)';panel.style.opacity='0'}}return live}}
  function imgs(preview,id,cycle=true){{let all=[...preview.querySelectorAll('.product-preview__images img')];all.forEach(x=>x.style.opacity=0);let a=all.filter(x=>x.dataset.id==id),k=0;if(a.length)a[0].style.opacity=1;clearInterval(gallery);if(cycle)gallery=setInterval(()=>{{a.forEach(x=>x.style.opacity=0);if(a.length){{k=(k+1)%a.length;a[k].style.opacity=1}}}},500)}}
