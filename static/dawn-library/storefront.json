@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v2",
-  "generatedAt": "2026-09-10T21:15:05.138636+00:00",
+  "generatedAt": "2026-09-10T21:18:33.853827+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -344,6 +344,89 @@
       ]
     },
     {
+      "id": "wikisource-zh-verified-export",
+      "title": "中文典籍 · 維基文庫 EPUB",
+      "kind": "source-shelf",
+      "source": "Wikisource",
+      "items": [
+        {
+          "id": "wikisource-export-zh-wikisource-be347b0199af",
+          "title": "聖經 (和合本)",
+          "author": "",
+          "language": "zh",
+          "source": {
+            "provider": "Wikisource",
+            "url": "https://zh.wikisource.org/wiki/%E8%81%96%E7%B6%93_%28%E5%92%8C%E5%90%88%E6%9C%AC%29",
+            "downloadUrl": "https://ws-export.wmcloud.org/?format=epub&lang=zh&page=%E8%81%96%E7%B6%93+%28%E5%92%8C%E5%90%88%E6%9C%AC%29",
+            "kind": "remote-public-export",
+            "catalogId": "zh-wikisource-be347b0199af"
+          },
+          "cover": {
+            "mode": "one-fallback",
+            "title": "聖經 (和合本)",
+            "author": ""
+          },
+          "rights": {
+            "status": "public-domain",
+            "declaredBy": "中文維基文庫",
+            "provenanceRequired": true
+          },
+          "quality": "verified-export-ready",
+          "contentDownloaded": false
+        },
+        {
+          "id": "wikisource-export-zh-wikisource-73b76ba06e4a",
+          "title": "聖經 (文理和合)",
+          "author": "",
+          "language": "zh",
+          "source": {
+            "provider": "Wikisource",
+            "url": "https://zh.wikisource.org/wiki/%E8%81%96%E7%B6%93_%28%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+            "downloadUrl": "https://ws-export.wmcloud.org/?format=epub&lang=zh&page=%E8%81%96%E7%B6%93+%28%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+            "kind": "remote-public-export",
+            "catalogId": "zh-wikisource-73b76ba06e4a"
+          },
+          "cover": {
+            "mode": "one-fallback",
+            "title": "聖經 (文理和合)",
+            "author": ""
+          },
+          "rights": {
+            "status": "public-domain",
+            "declaredBy": "中文維基文庫",
+            "provenanceRequired": true
+          },
+          "quality": "verified-export-ready",
+          "contentDownloaded": false
+        },
+        {
+          "id": "wikisource-export-zh-wikisource-1eb551a7ebc2",
+          "title": "新約全書 (淺文理和合)",
+          "author": "",
+          "language": "zh",
+          "source": {
+            "provider": "Wikisource",
+            "url": "https://zh.wikisource.org/wiki/%E6%96%B0%E7%B4%84%E5%85%A8%E6%9B%B8_%28%E6%B7%BA%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+            "downloadUrl": "https://ws-export.wmcloud.org/?format=epub&lang=zh&page=%E6%96%B0%E7%B4%84%E5%85%A8%E6%9B%B8+%28%E6%B7%BA%E6%96%87%E7%90%86%E5%92%8C%E5%90%88%29",
+            "kind": "remote-public-export",
+            "catalogId": "zh-wikisource-1eb551a7ebc2"
+          },
+          "cover": {
+            "mode": "one-fallback",
+            "title": "新約全書 (淺文理和合)",
+            "author": ""
+          },
+          "rights": {
+            "status": "public-domain",
+            "declaredBy": "中文維基文庫",
+            "provenanceRequired": true
+          },
+          "quality": "verified-export-ready",
+          "contentDownloaded": false
+        }
+      ]
+    },
+    {
       "id": "doab-theology-or-biblical",
       "title": "開放學術 · 神學與宗教",
       "kind": "academic-shelf",
@@ -366,7 +449,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/d44e1a1d-2db3-4824-9472-81c71cbe3706/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -394,7 +478,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/5684df7d-75db-44ed-9ba8-148e63f92260/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -422,7 +507,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/85b6d635-c74f-46b5-b0a0-2eacfd017e2e/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -450,7 +536,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/7e93ed63-9d56-484b-9c53-b1534da6f928/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -478,7 +565,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/0ef83ee3-956c-4e5f-995d-e0e3ced2b9e8/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -506,7 +594,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/bd3ff407-ffed-426c-83e5-c44ed4b2916d/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -534,7 +623,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/6553c6a9-c879-46a4-9fe7-e0f8b52a63da/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -562,7 +652,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/038e9215-4cba-4080-860c-4755d4370b03/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -590,7 +681,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/da9132c0-9056-40ba-9b9d-6721a35ad623/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -618,7 +710,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/36c02fa1-c493-411f-a39c-07d35ccf4ad5/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -646,7 +739,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/c5da678e-4be6-4e5b-a6f2-dd0d890d358e/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -674,7 +768,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/e3abd54c-84e7-4ad3-ae6e-b79f226876d0/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -702,7 +797,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/b97639dd-09d2-4cd3-a5b4-34967467bbbe/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -730,7 +826,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/1a6bf02a-f2aa-40e6-8ec0-3a71f2c99131/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -758,7 +855,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/6dbe2683-883b-4b3d-8bc0-d942ef758cff/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -786,7 +884,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/a8b3beff-18eb-4436-b431-97cc04c5a409/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -814,7 +913,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/54b30ba4-9f00-4d42-b5ce-20dd14f05578/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -842,7 +942,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/4e780a3b-42a0-4e9e-97f3-4c2c7d24fea0/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -870,7 +971,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/0939d561-eea0-4110-9458-ca82aaec99b7/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -898,7 +1000,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/d86599f6-9ebd-4de6-a539-6851eaf306ae/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -926,7 +1029,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/3a4c558b-4185-467c-83cf-9201c47cf865/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -954,7 +1058,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/0d0573d8-5e7a-4280-a2fa-3788ed95b3ce/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -982,7 +1087,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/6da5839f-4785-4c39-8f35-35b56eedfb94/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1046,7 +1152,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/714eb08a-5fb5-452e-9080-3cbc40c58db6/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1074,7 +1181,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/a18eb7c3-f61e-41d7-9ace-8e061f61bca9/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1102,7 +1210,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/fe7e1c05-b6ec-4efb-afa2-67d03bb8bbba/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1130,7 +1239,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/07a277e9-215c-44ff-8c8d-9ba3fb5650a1/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1158,7 +1268,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/7e9589c5-1504-4620-8abd-dfa57777ef6f/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1214,7 +1325,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/de4210a3-a5ca-425b-a223-88f7a8561a0f/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1270,7 +1382,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/2a3dac7b-3912-44a3-94a3-5e2532896584/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1298,7 +1411,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/7ccdb54f-1187-4ee2-b68b-590a048a245d/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1326,7 +1440,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/e1d7da9c-84a3-493f-8905-745a8efc8abd/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1354,7 +1469,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/563abc66-9c8b-428c-8274-9ab6de4c88e6/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1382,7 +1498,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/ed8fa186-e684-42db-8246-89c4eed307b9/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1410,7 +1527,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/baa56a50-03f3-4f41-b714-2f145800f02d/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1466,7 +1584,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/b0b627ce-961e-4543-91be-525da76de403/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1494,7 +1613,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/b8f17aa1-1a4a-4cf4-a9d8-b65e703a65ba/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1522,7 +1642,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/c7606622-0dd6-40fa-a282-f730c8a4cfac/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1550,7 +1671,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/fac2da1d-f447-4908-a737-8bdfa8342db8/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1578,7 +1700,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/8f866612-98c4-4568-8ac2-8713daa803d6/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1606,7 +1729,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/06a4c56c-81f7-447a-a604-2b81d6f64ae1/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1634,7 +1758,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/b7ce2595-63c0-4069-88c6-4e45d8b3370c/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -1662,7 +1787,8 @@
             "kind": "remote-open-access"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://directory.doabooks.org/rest/bitstreams/d0960139-8123-43db-a6da-7bae0aeb2ac0/retrieve",
+            "mode": "source"
           },
           "rights": {
             "status": "open-access",
@@ -3965,20 +4091,16 @@
     }
   ],
   "metrics": {
-    "shelves": 9,
-    "mappedBooks": 174,
-    "sourceCovers": 15,
-    "directPublications": 15,
+    "shelves": 10,
+    "mappedBooks": 177,
+    "sourceCovers": 58,
+    "directPublications": 18,
     "providers": {
       "Standard Ebooks": 15,
+      "Wikisource": 3,
       "DOAB": 47,
       "Project Gutenberg": 112
     }
   },
-  "errors": [
-    {
-      "source": "Wikisource",
-      "error": "HTTPError: HTTP Error 404: Not Found"
-    }
-  ]
+  "errors": []
 }
