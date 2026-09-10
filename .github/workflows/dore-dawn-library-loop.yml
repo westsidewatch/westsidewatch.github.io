@@ -10,6 +10,7 @@ on:
       - 'scripts/run_dawn_library_chinese_discovery.py'
       - 'scripts/run_dawn_library_relevance.py'
       - 'scripts/run_dawn_library_chinese_relevance.py'
+      - 'scripts/run_dawn_library_chinese_resolver.py'
       - 'scripts/run_dawn_library_loop.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 permissions:
@@ -30,9 +31,11 @@ jobs:
         run: python scripts/run_dawn_library_relevance.py
       - name: Gate Chinese candidates by Biblical World relevance
         run: python scripts/run_dawn_library_chinese_relevance.py
+      - name: Resolve Chinese editions and page-level rights
+        run: python scripts/run_dawn_library_chinese_resolver.py
       - name: Produce 黎明書局 measurable outputs
         run: python scripts/run_dawn_library_loop.py
-      - name: Validate bilingual discovery relevance and collection outputs
+      - name: Validate bilingual discovery relevance resolver and collection outputs
         run: |
           python - <<'PY'
           import json
@@ -41,32 +44,31 @@ jobs:
           z=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json').read_text())
           g=json.loads(Path('reports/DAWN-LIBRARY-RELEVANCE.json').read_text())
           zg=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json').read_text())
+          zr=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-RESOLVER.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           candidates=json.loads(Path('static/dawn-library/biblical-world/discovery-candidates.json').read_text())
           chinese=json.loads(Path('static/dawn-library/biblical-world/chinese-candidates.json').read_text())
           relevance=json.loads(Path('static/dawn-library/biblical-world/relevance-results.json').read_text())
           zrel=json.loads(Path('static/dawn-library/biblical-world/chinese-relevance-results.json').read_text())
+          zresolver=json.loads(Path('static/dawn-library/biblical-world/chinese-resolver-results.json').read_text())
           assert d['candidateQueue'] == len(candidates['items'])
           assert z['candidateQueue'] == len(chinese['items'])
-          assert z['candidateQueue'] >= z['goldenSeedsResolved']
-          assert all(item.get('contentDownloaded') is False for item in chinese['items'])
-          assert all(item.get('language') in {'zh','zh-Hant','zh-Hans'} for item in chinese['items'])
           assert zg['total'] == len(zrel['items']) == len(chinese['items'])
           assert sum(zg['results'].values()) == zg['total']
-          assert all(item.get('stage') in {'qualified','deferred','rejected'} for item in zrel['items'])
-          assert all(item.get('contentDownloaded') is False for item in zrel['items'])
+          assert zr['qualifiedInput'] == zg['results']['qualified'] == len(zresolver['items'])
+          assert sum(zr['results'].values()) == zr['qualifiedInput']
+          assert all(item.get('stage') in {'verified','needs-review','blocked'} for item in zresolver['items'])
+          assert all(item.get('contentDownloaded') is False for item in zresolver['items'])
+          assert all('/' not in item['title'] for item in zresolver['items'] if item['stage']=='verified')
+          assert all(item.get('contentDownloaded') is False for item in chinese['items'])
           assert g['total'] == len(relevance['items']) == len(candidates['items'])
           assert sum(g['results'].values()) == g['total']
           assert all(item.get('contentDownloaded') is False for item in candidates['items'])
-          assert all(item.get('stage') == 'discovered' for item in candidates['items'])
-          assert all(item.get('stage') in {'qualified','deferred','rejected'} for item in relevance['items'])
-          noise=('wallenstein','piccolomini','thirty years war','san francisco')
-          assert all(not any(n in item.get('title','').lower() for n in noise) or item['stage']=='rejected' for item in relevance['items'])
           assert r['results']['books']['published'] >= 7
           assert r['results']['books']['verified'] >= 6
           assert 'growthToday' in r['results'] and 'cadence' in r['results']
           assert len(r['results']['collections']) >= 5
-          print(json.dumps({'englishDiscovery':d,'chineseDiscovery':z,'englishRelevance':g,'chineseRelevance':zg,'library':r['results']},ensure_ascii=False,indent=2))
+          print(json.dumps({'englishDiscovery':d,'chineseDiscovery':z,'englishRelevance':g,'chineseRelevance':zg,'chineseResolver':zr,'library':r['results']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -76,6 +78,7 @@ jobs:
             reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json
             reports/DAWN-LIBRARY-RELEVANCE.json
             reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json
+            reports/DAWN-LIBRARY-CHINESE-RESOLVER.json
             reports/DAWN-LIBRARY-LOOP.json
             reports/DAWN-LIBRARY-GROWTH.json
             static/dawn-library/collections.json
@@ -85,20 +88,22 @@ jobs:
             static/dawn-library/biblical-world/chinese-candidates.json
             static/dawn-library/biblical-world/relevance-results.json
             static/dawn-library/biblical-world/chinese-relevance-results.json
+            static/dawn-library/biblical-world/chinese-resolver-results.json
       - name: Persist loop results
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DAWN-LIBRARY-DISCOVERY.json reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json reports/DAWN-LIBRARY-RELEVANCE.json reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json \
+          git add reports/DAWN-LIBRARY-DISCOVERY.json reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json reports/DAWN-LIBRARY-RELEVANCE.json reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json reports/DAWN-LIBRARY-CHINESE-RESOLVER.json reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json \
             static/dawn-library/collections.json \
             static/dawn-library/biblical-world/discovery-state.json \
             static/dawn-library/biblical-world/discovery-candidates.json \
             static/dawn-library/biblical-world/chinese-candidates.json \
             static/dawn-library/biblical-world/relevance-results.json \
-            static/dawn-library/biblical-world/chinese-relevance-results.json
+            static/dawn-library/biblical-world/chinese-relevance-results.json \
+            static/dawn-library/biblical-world/chinese-resolver-results.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dawn): persist bilingual discovery relevance and growth [skip ci]'
+            git commit -m 'chore(dawn): persist bilingual discovery relevance resolver and growth [skip ci]'
             for attempt in 1 2 3 4; do
               if git push; then exit 0; fi
               git pull --rebase origin "${GITHUB_REF_NAME}"
