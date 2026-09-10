@@ -1,46 +1,55 @@
-"""Doré Design P1 — Living Water Reading Core motion lab."""
+"""Doré Design P1 — exact Codrops motion baseline.
+
+Temporary reset requested 2026-09-10: do not reinterpret the interaction yet.
+Both reference and working specimen render the upstream Codrops demo itself so the
+motion baseline is pixel/behaviour identical before Living Water adaptation resumes.
+Upstream: https://github.com/gwen-bo/codrops-grid-to-preview (MIT)
+"""
 
 PAGE_ID='motion-p1-living-current'
+UPSTREAM_DEMO='https://tympanus.net/Tutorials/GridToFullPreview/'
+
 
 def _page():
-    return {'id':PAGE_ID,'name':'Motion · P1 Reading Core','canvas':{'w':1440,'h':960},'nodes':[],'design_experiment':{'schema':'dore.design-experiment.v1','track':'motion-language','prototype':'P1','status':'prototype','source':'user-direction-2026-09-10','principles':['temporary-content-mix','weighted-8x5-currents','hover-focus-assembly','reading-current-inside-focus','one-dore-artwork-only']}}
+    return {
+        'id':PAGE_ID,
+        'name':'Motion · P1 Reading Core',
+        'canvas':{'w':1440,'h':960},
+        'nodes':[],
+        'design_experiment':{
+            'schema':'dore.design-experiment.v1',
+            'track':'motion-language',
+            'prototype':'P1',
+            'status':'prototype',
+            'source':'codrops-grid-to-preview-exact-baseline',
+            'principles':['upstream-motion-unchanged','no-custom-assembly','no-content-adaptation-yet']
+        }
+    }
+
 
 def install_workspace(base):
     original=base.workspace
     def workspace():
         w=original()
         for p in w.get('pages',[]):
-            if p.get('id')==PAGE_ID:p.update(_page());return base.save(w)
-        w['pages'].append(_page());return base.save(w)
+            if p.get('id')==PAGE_ID:
+                p.update(_page())
+                return base.save(w)
+        w['pages'].append(_page())
+        return base.save(w)
     base.workspace=workspace
+
 
 def install_editor(html):
     html=html.replace("'multiwrite-cover'])","'multiwrite-cover','motion-p1-living-current'])")
     return html.replace('DORÉ DESIGN 1.9 · PROMOTION PIPELINE','DORÉ DESIGN 2.0 · DESIGN LAB')
 
-def _card(kind,title,dore,weight,preview):
-    safe=preview.replace('&','&amp;').replace('"','&quot;').replace('<','&lt;').replace('>','&gt;')
-    d=(' data-dore="%s"'%dore) if dore else ''
-    cls='flow-card w%s%s'%(weight,' dore-card' if dore else '')
-    return '<button class="%s" data-kind="%s" data-title="%s"%s data-preview="%s"><span>%s</span><strong>%s</strong></button>'%(cls,kind,title,d,safe,kind,title)
-
-def _streams():
-    rows=[
-      [('ONE','馬太福音第七章',None,2,'不要論斷、祈求尋找叩門、窄門、兩種根基。'),('JOURNAL','米斯巴',None,1,'在守望中辨認正在發生的事。'),('JOURNAL','Feature',None,2,'較長篇幅的主題閱讀與編輯策展。'),('ONE','四福音合參',None,1,'把四福音的平行經文放回同一條敘事線。')],
-      [('DAWN LIBRARY','黎明書局',None,3,'書籍與查經資源進入同一個閱讀流。'),('JOURNAL','頌讚',None,1,'詩歌、讚美與敬拜內容。'),('ONE','本章故事',None,2,'先以故事進入一章，再展開背景、歷史與串珠。'),('JOURNAL','看見',None,1,'讓值得被看見的內容自然浮現。')],
-      [('JOURNAL','以琳',None,1,'停留、補給與閱讀。'),('ONE','馬太福音第六章',None,2,'天父、主禱文、先求祂的國和祂的義。'),('JOURNAL','伯特利 · 查經',None,2,'從經文出發，進入查考與分享。'),('DORÉ','Doré · Scripture',75,2,'本頁只保留這一塊多雷作品，用來測試圖片在流動與定睛拼合中的表現。')],
-      [('JOURNAL','以斯帖 · 見證人',None,2,'人物與見證在閱讀流中經過。'),('JOURNAL','守望者 · 對話',None,1,'對話與辨認形成另一種閱讀節奏。'),('JOURNAL','安提阿',None,1,'教會、差遣與群體。'),('JOURNAL','瑪拉拿 · 禱告',None,3,'主啊，我願你來。等待不是空白，內容仍然前行。')]
-    ]
-    out=[]
-    for i,row in enumerate(rows):
-        seq=''.join(_card(*x) for x in row)
-        out.append('<div class="current c%s"><div class="current-loop">%s</div><div class="current-loop" aria-hidden="true">%s</div></div>'%(i+1,seq,seq))
-    return ''.join(out)
 
 def render_p1(edit=False):
-    badge='<div class="badge">DORÉ DESIGN · MOTION LAB · P1</div>' if edit else ''
-    streams=_streams()
-    return '''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water Reading Core</title><style>
-*{box-sizing:border-box}html,body{margin:0;background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center;background-attachment:fixed;color:#252525;font-family:"Cormorant Garamond","Noto Serif TC",serif}.badge{position:fixed;z-index:99;top:10px;left:10px;background:rgba(239,228,185,.84);border:1px solid rgba(37,37,37,.42);padding:7px 9px;font:9px ui-monospace,monospace}.intro{padding:48px 5vw 24px;border-bottom:1px solid rgba(37,37,37,.28)}.ey,.id{font:10px ui-monospace,monospace;letter-spacing:.15em;color:#8e6817}.intro h1{font-size:clamp(38px,5vw,72px);font-weight:400;margin:.15em 0}.intro p{max-width:980px;color:#4e4738;line-height:1.5}.lab{display:grid;gap:30px;padding:30px 3vw 70px}.exp{border:1px solid rgba(37,37,37,.42);background:rgba(239,228,185,.34);overflow:hidden}.head{display:flex;gap:16px;align-items:baseline;padding:12px 14px;border-bottom:1px solid rgba(37,37,37,.24);background:rgba(239,228,185,.48)}.head h2{font-size:22px;font-weight:400;margin:0}.note{margin-left:auto;color:#6f654f;font:10px ui-monospace,monospace}.codrops-stage{height:min(74vh,720px);min-height:600px;background:#eee}.codrops-stage iframe{width:100%;height:100%;border:0}.sourcebar,.fusion-note{padding:10px 14px;color:#645c49;font:10px ui-monospace,monospace;background:rgba(239,228,185,.42)}.fusion{height:720px;position:relative;overflow:hidden;background-image:linear-gradient(rgba(206,189,116,.58),rgba(206,189,116,.58)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center}.flow-field{position:absolute;inset:0;overflow:hidden}.current{position:absolute;left:-10vw;display:flex;gap:14px;width:max-content;min-width:220vw;will-change:transform;transition:opacity .35s,filter .35s}.current-loop{display:flex;gap:14px;flex:0 0 auto;padding-right:14px}.c1{top:4%;animation:drift1 44s linear infinite}.c2{top:28%;animation:drift2 57s linear infinite}.c3{top:52%;animation:drift3 49s linear infinite}.c4{top:76%;animation:drift4 64s linear infinite}.flow-card{height:145px;width:232px;flex:0 0 auto;border:1px solid rgba(142,104,23,.36);background:linear-gradient(135deg,rgba(247,239,210,.92),rgba(205,188,126,.72));color:#252525;text-align:left;padding:13px;cursor:pointer;position:relative;overflow:hidden;transition:.22s;box-shadow:0 10px 26px rgba(70,53,19,.10)}.flow-card.w2{width:476px}.flow-card.w3{width:720px}.flow-card.dore-card{background:#24221b center/cover no-repeat;color:#f3eddd}.flow-card.dore-card:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,7,.82),rgba(9,9,7,.04) 70%)}.flow-card span,.flow-card strong{position:relative;z-index:1;display:block}.flow-card span{font:8px ui-monospace,monospace;color:#8e6817;letter-spacing:.12em}.dore-card span{color:#e3cf82}.flow-card strong{font-size:22px;font-weight:400;margin-top:8px}.flow-card.w2 strong{font-size:29px}.flow-card.w3 strong{font-size:34px}.flow-card.selected{border-color:#8e6817;transform:translateY(-4px)}.focus-stage{position:absolute;z-index:20;right:2.5%;top:6%;width:50%;height:88%;pointer-events:none;opacity:0;transition:opacity .18s;box-shadow:0 20px 52px rgba(71,52,16,.22);background:#bfae72}.fusion.focused .focus-stage{opacity:1;pointer-events:auto}.fusion.focused .current{opacity:.34;filter:grayscale(1) contrast(.92)}.focus-piece{position:absolute;overflow:hidden;opacity:0;will-change:transform,opacity}.focus-piece:before{content:"";position:absolute;inset:0;background-image:var(--focus-image);background-size:300% 200%;background-repeat:no-repeat;background-position:var(--bgx) var(--bgy)}.focus-stage:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.08) 45%,rgba(0,0,0,.58) 100%)}.focus-copy{position:absolute;z-index:5;left:5%;right:5%;bottom:7%;overflow:hidden}.focus-kicker{font:9px ui-monospace,monospace;letter-spacing:.16em;color:#f0d989}.focus-title{font-size:clamp(34px,4.6vw,68px);line-height:.94;font-weight:400;margin:.10em 0 .28em;color:#fffaf0;text-shadow:0 2px 20px #000}.reading-viewport{position:relative;overflow:hidden;height:104px;padding-top:13px}.reading-current{display:flex;width:max-content;gap:42px;animation:readX 24s linear infinite}.reading-item{width:330px;flex:0 0 auto;font-size:16px;line-height:1.52;color:#fffaf0;text-shadow:0 2px 15px #000}.focus-stage:hover .reading-current{animation-duration:38s}.clear{position:absolute;z-index:30;right:14px;top:14px;border:1px solid rgba(142,104,23,.58);background:rgba(239,228,185,.84);padding:8px 11px;cursor:pointer;opacity:0;pointer-events:none}.fusion.focused .clear{opacity:1;pointer-events:auto}@keyframes readX{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-28vw)}}@keyframes drift2{from{transform:translateX(-22vw)}to{transform:translateX(4vw)}}@keyframes drift3{from{transform:translateX(6vw)}to{transform:translateX(-24vw)}}@keyframes drift4{from{transform:translateX(-18vw)}to{transform:translateX(8vw)}}@media(max-width:760px){.fusion{height:680px}.focus-stage{left:4%;right:4%;width:auto;top:9%;height:82%}.flow-card{height:92px;width:148px}.flow-card.w2{width:306px}.flow-card.w3{width:464px}.current{min-width:260vw}.focus-title{font-size:38px}.reading-item{width:260px;font-size:14px}}@media(prefers-reduced-motion:reduce){.current,.reading-current{animation:none!important}}
-</style></head><body>'''+badge+'''<header class="intro"><div class="ey">MOTION LAB · P1 · TEMPORARY CONTENT MIX</div><h1>Living Water × Focus Assembly</h1><p>ONE、黎明書局與 Journal 暫時進入同一頁，只用來測試流動、定睛拼合與拼合後的內容滾動；分類與最終內容結構暫不固定。</p></header><main class="lab"><section class="exp"><div class="head"><span class="id">D</span><h2>Codrops · Original Reference</h2></div><div class="codrops-stage"><iframe src="https://tympanus.net/Tutorials/GridToFullPreview/" title="Codrops Grid To Full Preview"></iframe></div></section><section class="exp"><div class="head"><span class="id">E</span><h2>Mixed Reading Field</h2><span class="note">ONE × Dawn Library × Journal × one Doré artwork</span></div><div class="fusion" id="fusion"><div class="flow-field">'''+streams+'''</div><div class="focus-stage" id="focusStage"><div class="focus-copy"><div class="focus-kicker" id="fk"></div><h3 class="focus-title" id="ft"></h3><div class="reading-viewport"><div class="reading-current" id="readingCurrent"></div></div></div></div><button class="clear" id="clear">清除</button></div><div class="fusion-note">TEMP · flow → focus → assembly → internal reading current</div></section></main><script src="/one/one-dore-cover-registry.js"></script><script>
-(function(){var fusion=document.getElementById('fusion'),stage=document.getElementById('focusStage'),reading=document.getElementById('readingCurrent'),R=window.ONE_DORE_COVER_REGISTRY||{},commons='https://commons.wikimedia.org/wiki/Special:Redirect/file/',cards=[].slice.call(document.querySelectorAll('.flow-card')),hoverMode=matchMedia('(hover:hover) and (pointer:fine)').matches,timer=0;function fileFor(id){if(!id)return'';if(R.files)return R.files[id]||R.files[String(id)];var x=R[id]||R[String(id)];return x&&(x.filename||x.file||x.name)||x}function url(id,w){var n=fileFor(id);return n?commons+encodeURIComponent(n)+'?width='+(w||1200):''}function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}function clearPieces(){stage.querySelectorAll('.focus-piece').forEach(function(p){p.remove()})}function readingItems(c){var peers=cards.filter(function(x){return x!==c&&!x.closest('[aria-hidden="true"]')}).slice(0,2),arr=[c].concat(peers),one=arr.map(function(x){return '<div class="reading-item"><b>'+esc(x.dataset.title)+'</b><br>'+esc(x.dataset.preview)+'</div>'}).join('');return one+one}function activate(c){cards.forEach(function(x){x.classList.toggle('selected',x.dataset.title===c.dataset.title)});fusion.classList.add('focused');clearPieces();document.getElementById('fk').textContent=c.dataset.kind;document.getElementById('ft').textContent=c.dataset.title;reading.innerHTML=readingItems(c);var img=url(c.dataset.dore,1400);if(!img)img='linear-gradient(135deg,#8e6817,#d6c47f,#5f4c20)';var sr=stage.getBoundingClientRect(),cols=3,rows=2,cw=sr.width/cols,ch=sr.height/rows,source=c.getBoundingClientRect();for(var i=0;i<6;i++){var col=i%cols,row=Math.floor(i/cols),p=document.createElement('i');p.className='focus-piece';p.style.left=(col*cw)+'px';p.style.top=(row*ch)+'px';p.style.width=cw+'px';p.style.height=ch+'px';p.style.setProperty('--focus-image',img.indexOf('linear-gradient')===0?img:'url("'+img+'")');p.style.setProperty('--bgx',(col*50)+'%');p.style.setProperty('--bgy',(row*100)+'%');stage.insertBefore(p,stage.firstChild);var tx=(source.left+source.width/2)-(sr.left+col*cw+cw/2),ty=(source.top+source.height/2)-(sr.top+row*ch+ch/2);p.animate([{opacity:.08,transform:'translate('+tx+'px,'+ty+'px) scale(.42)'},{opacity:1,transform:'translate(0,0) scale(1)'}],{duration:650+i*52,fill:'forwards',easing:'cubic-bezier(.2,.76,.2,1)'})}}cards.forEach(function(c){var u=url(c.dataset.dore,900);if(u)c.style.backgroundImage='url("'+u+'")';if(hoverMode)c.addEventListener('mouseenter',function(){clearTimeout(timer);timer=setTimeout(function(){activate(c)},55)});c.addEventListener('click',function(e){if(!hoverMode){e.preventDefault();activate(c)}})});document.getElementById('clear').onclick=function(e){e.stopPropagation();fusion.classList.remove('focused');clearPieces();reading.innerHTML='';cards.forEach(function(x){x.classList.remove('selected')})}})();</script></body></html>'''
+    badge='<div class="badge">DORÉ DESIGN · P1 · EXACT UPSTREAM BASELINE</div>' if edit else ''
+    return '''<!doctype html>
+<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>P1 · Exact Codrops Baseline</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;background:#eee;color:#111;font-family:Arial,sans-serif}.badge{position:fixed;z-index:9999;top:8px;left:8px;padding:6px 8px;background:rgba(255,255,255,.9);border:1px solid #111;font:9px ui-monospace,monospace}.stage{width:100vw;height:100svh;overflow:hidden}.stage iframe{display:block;width:100%;height:100%;border:0;background:#eee}
+</style></head><body>'''+badge+'''<main class="stage"><iframe src="'''+UPSTREAM_DEMO+'''" title="Codrops Grid To Full Preview — exact upstream motion baseline" allow="fullscreen"></iframe></main></body></html>'''
