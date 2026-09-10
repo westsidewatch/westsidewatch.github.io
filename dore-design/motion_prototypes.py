@@ -1,68 +1,139 @@
-"""Doré Design P1 — Living Water Reading Core motion lab.
+"""Doré Design P1 — source-faithful Codrops geometry specimen.
 
-Focus motion adapts the MIT-licensed Codrops grid-to-preview interaction by
+Focus interaction ports the mature MIT-licensed Codrops grid-to-preview geometry by
 Gwen Bogaert: https://github.com/gwen-bo/codrops-grid-to-preview
+The Living Water flowing-current adapter is intentionally suspended in this repair.
 """
 
 PAGE_ID='motion-p1-living-current'
 
+
 def _page():
-    return {'id':PAGE_ID,'name':'Motion · P1 Reading Core','canvas':{'w':1440,'h':960},'nodes':[],'design_experiment':{'schema':'dore.design-experiment.v1','track':'motion-language','prototype':'P1','status':'prototype','source':'codrops-grid-to-preview-mit-adaptation','principles':['full-stage-flow-at-rest','hover-is-primary-on-desktop','codrops-gsap-timeline','background-field-reorganises','one-coherent-focus-image','no-preallocated-empty-half','reading-current-provisional','click-reserved-for-deeper-layer','gate-one-papyrus-ground'],'acceptance':['custom-piece-fly-in-removed','background-field-visibly-reorganises','motion-scale-is-large-and-readable','selected-image-forms-one-coherent-preview','hover-restarts-cleanly','reverse-is-clean','reading-current-left-provisional','click-transition-unchanged']}}
+    return {
+        'id': PAGE_ID,
+        'name': 'Motion · P1 Reading Core',
+        'canvas': {'w': 1440, 'h': 960},
+        'nodes': [],
+        'design_experiment': {
+            'schema': 'dore.design-experiment.v1',
+            'track': 'motion-language',
+            'prototype': 'P1',
+            'status': 'prototype',
+            'source': 'codrops-grid-to-preview-mit-source-faithful-geometry',
+            'principles': [
+                'source-geometry-4x2-first',
+                'two-registered-preview-halves',
+                'hover-100ms',
+                'gsap-power2-inout',
+                'clip-path-cross',
+                'reverse-on-mouseleave',
+                'no-horizontal-drift-inside-focus-specimen',
+                'gate-one-papyrus-ground',
+                'flow-adapter-deferred'
+            ],
+            'acceptance': [
+                'source-geometry-4x2-exact',
+                'two-preview-overlays',
+                'overlay-grid-registration-exact',
+                'gutter-5vw-semantics',
+                'hover-delay-100ms',
+                'resize-arm-width-source-math',
+                'resize-scale-source-math',
+                'four-source-cards-move-inward-as-field',
+                'clip-path-cross-source-faithful',
+                'reverse-clean',
+                'custom-fly-in-absent',
+                'horizontal-drift-not-mixed-into-focus-geometry'
+            ]
+        }
+    }
+
 
 def install_workspace(base):
-    original=base.workspace
+    original = base.workspace
     def workspace():
-        w=original()
-        for p in w.get('pages',[]):
-            if p.get('id')==PAGE_ID:p.update(_page());return base.save(w)
-        w['pages'].append(_page());return base.save(w)
-    base.workspace=workspace
+        w = original()
+        for p in w.get('pages', []):
+            if p.get('id') == PAGE_ID:
+                p.update(_page())
+                return base.save(w)
+        w['pages'].append(_page())
+        return base.save(w)
+    base.workspace = workspace
+
 
 def install_editor(html):
-    html=html.replace("'multiwrite-cover'])","'multiwrite-cover','motion-p1-living-current'])")
-    return html.replace('DORÉ DESIGN 1.9 · PROMOTION PIPELINE','DORÉ DESIGN 2.0 · DESIGN LAB')
+    html = html.replace("'multiwrite-cover'])", "'multiwrite-cover','motion-p1-living-current'])")
+    return html.replace('DORÉ DESIGN 1.9 · PROMOTION PIPELINE', 'DORÉ DESIGN 2.0 · DESIGN LAB')
 
-def _card(kind,title,dore,weight,preview,index):
-    safe=preview.replace('&','&amp;').replace('"','&quot;').replace('<','&lt;').replace('>','&gt;')
-    return '<button class="flow-card w%s" data-index="%s" data-kind="%s" data-title="%s" data-dore="%s" data-preview="%s"><span>%s</span><strong>%s</strong></button>'%(weight,index,kind,title,dore,safe,kind,title)
 
-def _streams():
-    rows=[
-      [('SCRIPTURE','起初，光進入黑暗。',21,2,'起初，光進入黑暗。光照進來，內容開始被看見。'),('JOURNAL','守望',39,1,'守望，是在流動中辨認方向。'),('PRAYER','儆醒',46,1,'儆醒，是在變化中仍然認出重要之事。'),('FEATURE','一座光明的城',75,2,'一座光明的城，在觀看與閱讀之間逐漸顯明。'),('ONE','查經',93,1,'經文、背景、串珠與歷史彼此流入。')],
-      [('DAYLIGHT CAFE','共享',115,2,'共享讓不同人的看見彼此經過。'),('STUDY','同行',122,1,'同行讓閱讀不再是孤立事件。'),('DAWN LIBRARY','黎明書局',127,3,'書、文章與影像在同一個視覺場中交換位置。'),('STORY','看見',164,1,'看見，是一個持續發生的過程。')],
-      [('VIDEO','影像',170,1,'影像與文字在同一個節奏裡交替浮現。'),('JOURNAL','見證人',186,2,'人物、片段、文字與圖像共同形成觀看。'),('DIALOGUE','對話',192,1,'對話本身就是流動。'),('PRAYER','你們要禱告',198,2,'禱告的內容緩慢經過，讓人定睛閱讀。')],
-      [('HYMN','頌讚',216,1,'頌讚有自己的節奏。'),('MARANATHA','主啊，我願你來。',224,3,'等待並不是空白，內容仍然前行。'),('CHURCH','Living Water',237,1,'Living Water 讓閱讀路徑始終保持流動。'),('SCRIPTURE','等候黎明',75,2,'在黑暗中保持方向，直到黎明。')]
+def _cards():
+    items = [
+        ('SCRIPTURE','起初，光進入黑暗。',21,'起初，光進入黑暗。光照進來，內容開始被看見。'),
+        ('JOURNAL','守望',39,'守望，是在流動中辨認方向。'),
+        ('PRAYER','儆醒',46,'儆醒，是在變化中仍然認出重要之事。'),
+        ('FEATURE','一座光明的城',75,'一座光明的城，在觀看與閱讀之間逐漸顯明。'),
+        ('ONE','查經',93,'經文、背景、串珠與歷史彼此流入。'),
+        ('DAYLIGHT CAFE','共享',115,'共享讓不同人的看見彼此經過。'),
+        ('STUDY','同行',122,'同行讓閱讀不再是孤立事件。'),
+        ('DAWN LIBRARY','黎明書局',127,'書、文章與影像在同一個視覺場中交換位置。')
     ]
-    out=[];idx=0
-    for i,row in enumerate(rows):
-        seq=''
-        for x in row: seq+=_card(*(x+(idx,)));idx+=1
-        out.append('<div class="current c%s"><div class="current-loop">%s</div><div class="current-loop" aria-hidden="true">%s</div></div>'%(i+1,seq,seq))
+    out=[]
+    for i,(kind,title,dore,preview) in enumerate(items):
+        safe=preview.replace('&','&amp;').replace('"','&quot;').replace('<','&lt;').replace('>','&gt;')
+        out.append('<button class="product" data-index="%d" data-kind="%s" data-title="%s" data-dore="%s" data-preview="%s"><span>%s</span><strong>%s</strong></button>'%(i,kind,title,dore,safe,kind,title))
     return ''.join(out)
+
 
 def render_p1(edit=False):
     badge='<div class="badge">DORÉ DESIGN · MOTION LAB · P1</div>' if edit else ''
-    streams=_streams()
+    cards=_cards()
     return '''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Living Water Reading Core</title><style>
-*{box-sizing:border-box}html,body{margin:0;background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center;background-attachment:fixed;color:#252525;font-family:"Cormorant Garamond","Noto Serif TC",serif}.badge{position:fixed;z-index:99;top:10px;left:10px;background:rgba(239,228,185,.84);border:1px solid rgba(37,37,37,.42);padding:7px 9px;font:9px ui-monospace,monospace}.intro{padding:48px 5vw 24px;border-bottom:1px solid rgba(37,37,37,.28)}.ey,.id{font:10px ui-monospace,monospace;letter-spacing:.15em;color:#8e6817}.intro h1{font-size:clamp(38px,5vw,72px);font-weight:400;margin:.15em 0}.intro p{max-width:980px;color:#4e4738;line-height:1.5}.lab{display:grid;gap:30px;padding:30px 3vw 70px}.exp{border:1px solid rgba(37,37,37,.42);background:rgba(239,228,185,.34);overflow:hidden}.head{display:flex;gap:16px;align-items:baseline;padding:12px 14px;border-bottom:1px solid rgba(37,37,37,.24);background:rgba(239,228,185,.48)}.head h2{font-size:22px;font-weight:400;margin:0}.note{margin-left:auto;color:#6f654f;font:10px ui-monospace,monospace}.codrops-stage{height:min(74vh,720px);min-height:600px;background:#eee}.codrops-stage iframe{width:100%;height:100%;border:0}.sourcebar,.fusion-note{padding:10px 14px;color:#645c49;font:10px ui-monospace,monospace;background:rgba(239,228,185,.42)}.fusion{height:720px;position:relative;overflow:hidden;background-image:linear-gradient(rgba(206,189,116,.58),rgba(206,189,116,.58)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center}.flow-field{position:absolute;inset:0;overflow:hidden}.current{position:absolute;left:-10vw;display:flex;gap:14px;width:max-content;min-width:220vw;will-change:transform,opacity;transition:none}.current-loop{display:flex;gap:14px;flex:0 0 auto;padding-right:14px}.c1{top:4%;animation:drift1 44s linear infinite}.c2{top:28%;animation:drift2 57s linear infinite}.c3{top:52%;animation:drift3 49s linear infinite}.c4{top:76%;animation:drift4 64s linear infinite}.flow-card{height:145px;width:232px;flex:0 0 auto;border:1px solid rgba(142,104,23,.36);background:#24221b center/cover no-repeat;color:#f3eddd;text-align:left;padding:13px;cursor:pointer;position:relative;overflow:hidden;box-shadow:0 10px 26px rgba(70,53,19,.14);will-change:transform,opacity}.flow-card.w2{width:476px}.flow-card.w3{width:720px}.flow-card:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,7,.82),rgba(9,9,7,.04) 70%)}.flow-card span,.flow-card strong{position:relative;z-index:1;display:block}.flow-card span{font:8px ui-monospace,monospace;color:#e3cf82;letter-spacing:.12em}.flow-card strong{font-size:22px;font-weight:400;margin-top:8px}.flow-card.w2 strong{font-size:29px}.flow-card.w3 strong{font-size:34px}.focus-stage{position:absolute;z-index:20;top:5%;width:47.5%;height:90%;opacity:0;pointer-events:none;transform-origin:center center;will-change:transform,opacity}.focus-stage.--left{left:2.5%}.focus-stage.--right{right:2.5%}.focus-image{position:absolute;inset:0;background:center/cover no-repeat;clip-path:polygon(45% 0,55% 0,55% 45%,100% 45%,100% 55%,55% 55%,55% 100%,45% 100%,45% 55%,0 55%,0 45%,45% 45%);will-change:clip-path}.focus-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.01),rgba(0,0,0,.08) 48%,rgba(0,0,0,.62))}.focus-copy{position:absolute;z-index:5;left:5%;right:5%;bottom:7%;overflow:hidden;color:#f4efdf}.focus-kicker{font:9px ui-monospace,monospace;letter-spacing:.16em;color:#e3cf82}.focus-title{font-size:clamp(34px,4.6vw,68px);line-height:.94;font-weight:400;margin:.10em 0 .28em;text-shadow:0 2px 20px #000}.reading-viewport{overflow:hidden;height:104px;padding-top:13px}.reading-current{display:flex;width:max-content;gap:42px;animation:readX 24s linear infinite}.reading-item{width:330px;flex:0 0 auto;font-size:16px;line-height:1.52;text-shadow:0 2px 15px #000}.focus-stage:hover .reading-current{animation-duration:38s}@keyframes readX{from{transform:translateX(0)}to{transform:translateX(-50%)}}@keyframes drift1{from{transform:translateX(0)}to{transform:translateX(-28vw)}}@keyframes drift2{from{transform:translateX(-22vw)}to{transform:translateX(4vw)}}@keyframes drift3{from{transform:translateX(6vw)}to{transform:translateX(-24vw)}}@keyframes drift4{from{transform:translateX(-18vw)}to{transform:translateX(8vw)}}@media(max-width:760px){.fusion{height:680px}.flow-card{height:92px;width:148px}.flow-card.w2{width:306px}.flow-card.w3{width:464px}.focus-stage{left:4%!important;right:4%!important;width:auto;height:82%;top:9%}.current{min-width:260vw}.focus-title{font-size:38px}.reading-item{width:260px;font-size:14px}}@media(prefers-reduced-motion:reduce){.current,.reading-current{animation:none!important}}
-</style></head><body>'''+badge+'''<header class="intro"><div class="ey">MOTION LAB · P1 · READING CORE</div><h1>Living Water × Focus Assembly</h1><p>D 保留 Codrops 原作。E 改用其成熟 GSAP interaction semantics：眼前正在流動的內容場整體讓位、聚合，形成一張完整主題圖；不再使用自寫碎片亂飛。</p></header><main class="lab"><section class="exp"><div class="head"><span class="id">D</span><h2>Codrops · Original Reference</h2><span class="note">Gwen Bogaert · GSAP + clip-path · MIT</span></div><div class="codrops-stage"><iframe src="https://tympanus.net/Tutorials/GridToFullPreview/" title="Codrops Grid To Full Preview"></iframe></div><div class="sourcebar">成熟原作保留，用作動態基準。</div></section><section class="exp"><div class="head"><span class="id">E</span><h2>Living Water × Codrops Focus Engine</h2><span class="note">flow → reorganise → focus → read</span></div><div class="fusion" id="fusion"><div class="flow-field">'''+streams+'''</div><div class="focus-stage --left" id="focusLeft"><div class="focus-image"></div><div class="focus-copy"><div class="focus-kicker"></div><h3 class="focus-title"></h3><div class="reading-viewport"><div class="reading-current"></div></div></div></div><div class="focus-stage --right" id="focusRight"><div class="focus-image"></div><div class="focus-copy"><div class="focus-kicker"></div><h3 class="focus-title"></h3><div class="reading-viewport"><div class="reading-current"></div></div></div></div></div><div class="fusion-note">Hover 只負責定睛；Click 暫不處理，保留給第二層閱讀轉場。內容閱讀流暫時保留，待真實內容接入後再設計。</div></section></main><script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script><script src="/one/one-dore-cover-registry.js"></script><script src="/one/one-dore-assets-241.js"></script><script>
-/* Interaction semantics adapted from Gwen Bogaert's MIT-licensed Codrops
-   grid-to-preview: product-grid.js + product-preview.js. */
+*{box-sizing:border-box}html,body{margin:0;background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center;background-attachment:fixed;color:#252525;font-family:"Cormorant Garamond","Noto Serif TC",serif}.badge{position:fixed;z-index:99;top:10px;left:10px;background:rgba(239,228,185,.84);border:1px solid rgba(37,37,37,.42);padding:7px 9px;font:9px ui-monospace,monospace}.intro{padding:48px 5vw 24px;border-bottom:1px solid rgba(37,37,37,.28)}.ey,.id{font:10px ui-monospace,monospace;letter-spacing:.15em;color:#8e6817}.intro h1{font-size:clamp(38px,5vw,72px);font-weight:400;margin:.15em 0}.intro p{max-width:980px;color:#4e4738;line-height:1.5}.lab{display:grid;gap:30px;padding:30px 3vw 70px}.exp{border:1px solid rgba(37,37,37,.42);background:rgba(239,228,185,.34);overflow:hidden}.head{display:flex;gap:16px;align-items:baseline;padding:12px 14px;border-bottom:1px solid rgba(37,37,37,.24);background:rgba(239,228,185,.48)}.head h2{font-size:22px;font-weight:400;margin:0}.note{margin-left:auto;color:#6f654f;font:10px ui-monospace,monospace}.codrops-stage{height:min(74vh,720px);min-height:600px;background:#eee}.codrops-stage iframe{width:100%;height:100%;border:0}.sourcebar,.fusion-note{padding:10px 14px;color:#645c49;font:10px ui-monospace,monospace;background:rgba(239,228,185,.42)}
+.fusion{height:720px;position:relative;overflow:hidden;background-image:linear-gradient(rgba(206,189,116,.58),rgba(206,189,116,.58)),url("/api/dore/assets/site-file?code=SITE-BACKGROUND");background-size:cover;background-position:center;padding:5vw}.grid{position:relative;width:100%;height:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:5vw}.product{position:relative;overflow:hidden;border:1px solid rgba(142,104,23,.34);background:#24221b center/cover no-repeat;color:#f3eddd;text-align:left;padding:14px;cursor:pointer;box-shadow:0 10px 26px rgba(70,53,19,.14);will-change:transform,opacity}.product:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(9,9,7,.84),rgba(9,9,7,.04) 70%)}.product span,.product strong{position:relative;z-index:1;display:block}.product span{font:8px ui-monospace,monospace;color:#e3cf82;letter-spacing:.12em}.product strong{font-size:clamp(18px,2vw,30px);font-weight:400;margin-top:8px}.preview{position:absolute;z-index:20;top:5vw;height:calc(100% - 10vw);width:calc((100% - 15vw)/2 + 5vw);opacity:0;pointer-events:none;transform-origin:center center;will-change:transform,opacity}.preview.--left{left:5vw}.preview.--right{right:5vw}.masked-preview{position:absolute;inset:0;overflow:hidden;background:#161510;clip-path:polygon(45% 0%,55% 0%,55% 45%,100% 45%,100% 55%,55% 55%,55% 100%,45% 100%,45% 55%,0% 55%,0% 45%,45% 45%);will-change:clip-path}.preview-image{position:absolute;inset:0;background:center/cover no-repeat}.preview-image:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.08) 48%,rgba(0,0,0,.62))}.preview-copy{position:absolute;z-index:4;left:6%;right:6%;bottom:7%;color:#f4efdf;overflow:hidden}.preview-kicker{font:9px ui-monospace,monospace;letter-spacing:.16em;color:#e3cf82}.preview-title{font-size:clamp(32px,4.2vw,62px);line-height:.95;font-weight:400;margin:.1em 0 .28em;text-shadow:0 2px 20px #000}.reading-viewport{overflow:hidden;height:96px;padding-top:12px}.reading-current{display:flex;width:max-content;gap:42px;animation:readX 24s linear infinite}.reading-item{width:310px;flex:0 0 auto;font-size:15px;line-height:1.5;text-shadow:0 2px 15px #000}@keyframes readX{from{transform:translateX(0)}to{transform:translateX(-50%)}}@media(max-width:760px){.fusion{height:650px;padding:18px}.grid{gap:18px;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr))}.preview{left:18px!important;right:18px!important;top:18px;width:auto;height:calc(100% - 36px)}.note{display:none}.preview-title{font-size:38px}.reading-item{width:250px;font-size:14px}}@media(prefers-reduced-motion:reduce){.reading-current{animation:none!important}}
+</style></head><body>'''+badge+'''<header class="intro"><div class="ey">MOTION LAB · P1 · SOURCE GEOMETRY</div><h1>Living Water × Codrops Geometry</h1><p>E 暫時停止四條水平水流，只驗證 Codrops 原版所依賴的固定 4×2 幾何、左右 preview 精確對位、100ms hover、GSAP timeline、clip-path cross 和 reverse。這一層跑穩後再接回 Living Water 的流。</p></header><main class="lab"><section class="exp"><div class="head"><span class="id">D</span><h2>Codrops · Original Reference</h2><span class="note">Gwen Bogaert · GSAP + clip-path · MIT</span></div><div class="codrops-stage"><iframe src="https://tympanus.net/Tutorials/GridToFullPreview/" title="Codrops Grid To Full Preview"></iframe></div><div class="sourcebar">成熟原作保留，用作動態基準。</div></section><section class="exp"><div class="head"><span class="id">E</span><h2>Living Water × Source-Faithful 4×2 Focus Geometry</h2><span class="note">fixed geometry first · flow adapter later</span></div><div class="fusion" id="fusion"><div class="grid" id="grid">'''+cards+'''</div><div class="preview --left" id="previewLeft"><div class="masked-preview"><div class="preview-image"></div></div><div class="preview-copy"><div class="preview-kicker"></div><h3 class="preview-title"></h3><div class="reading-viewport"><div class="reading-current"></div></div></div></div><div class="preview --right" id="previewRight"><div class="masked-preview"><div class="preview-image"></div></div><div class="preview-copy"><div class="preview-kicker"></div><h3 class="preview-title"></h3><div class="reading-viewport"><div class="reading-current"></div></div></div></div></div><div class="fusion-note">這一版只驗證成熟原版動效幾何。Click 仍保留給之後第二層閱讀；內容流仍是暫時形態。</div></section></main><script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script><script src="/one/one-dore-cover-registry.js"></script><script src="/one/one-dore-assets-241.js"></script><script>
+/* Source-faithful geometry and timeline semantics adapted from the MIT-licensed
+   Codrops grid-to-preview by Gwen Bogaert: product-grid.js + product-preview.js. */
 (function(){
- var gsap=window.gsap;if(!gsap)return;var fusion=document.getElementById('fusion'),R=window.ONE_DORE_COVER_REGISTRY||{},commons='https://commons.wikimedia.org/wiki/Special:Redirect/file/',cards=[].slice.call(document.querySelectorAll('.flow-card:not([aria-hidden="true"] .flow-card)')),allCards=[].slice.call(document.querySelectorAll('.flow-card')),hoverMode=matchMedia('(hover:hover) and (pointer:fine)').matches,active=null,delay=null,tl=null;
- function fileFor(id){if(R.files)return R.files[id]||R.files[String(id)];var x=R[id]||R[String(id)];return x&&(x.filename||x.file||x.name)||x}function url(id,w){var n=fileFor(id);return n?commons+encodeURIComponent(n)+'?width='+(w||1400):''}function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
- function readHTML(c){var peers=cards.filter(function(x){return x!==c&&x.dataset.kind===c.dataset.kind}).slice(0,2),arr=[c].concat(peers);if(arr.length<3)arr=arr.concat(cards.filter(function(x){return arr.indexOf(x)<0}).slice(0,3-arr.length));var one=arr.map(function(x){return '<div class="reading-item"><b>'+esc(x.dataset.title)+'</b><br>'+esc(x.dataset.preview)+'</div>'}).join('');return one+one}
- function sideFor(c){var r=c.getBoundingClientRect();return (r.left+r.width/2)<innerWidth/2?document.getElementById('focusRight'):document.getElementById('focusLeft')}
- function reset(kill){if(delay){clearTimeout(delay);delay=null}if(tl){kill?tl.kill():tl.reverse();tl=null}active=null}
- function focus(c){if(!c)return;reset(true);active=c;var stage=sideFor(c),other=stage.id==='focusLeft'?document.getElementById('focusRight'):document.getElementById('focusLeft'),img=stage.querySelector('.focus-image'),copy=stage.querySelector('.focus-copy');other.style.opacity=0;img.style.backgroundImage='url("'+url(c.dataset.dore,1600)+'")';stage.querySelector('.focus-kicker').textContent=c.dataset.kind;stage.querySelector('.focus-title').textContent=c.dataset.title;stage.querySelector('.reading-current').innerHTML=readHTML(c);var sr=c.getBoundingClientRect(),fr=fusion.getBoundingClientRect(),cx=sr.left+sr.width/2-fr.left,cy=sr.top+sr.height/2-fr.top;
-   var affected=allCards.filter(function(x){return x!==c}),toRight=stage.id==='focusRight';
-   tl=gsap.timeline({defaults:{ease:'power2.inOut',duration:.72}}).addLabel('preview',0).addLabel('products',0)
-    .set(stage,{pointerEvents:'auto'},0).fromTo(stage,{opacity:0,scaleX:.82,scaleY:.82},{opacity:1,scaleX:1,scaleY:1,transformOrigin:'center center'},'preview')
-    .fromTo(img,{clipPath:'polygon(45% 0,55% 0,55% 45%,100% 45%,100% 55%,55% 55%,55% 100%,45% 100%,45% 55%,0 55%,0 45%,45% 45%)'},{clipPath:'polygon(50% 0,50% 0,50% 50%,100% 50%,100% 50%,50% 50%,50% 100%,50% 100%,50% 50%,0 50%,0 50%,50% 50%)'},'preview')
-    .to(affected,{opacity:.13,x:function(i,x){var r=x.getBoundingClientRect();var center=r.left+r.width/2;return toRight?(center>fr.width*.5?-42:-18):(center<fr.width*.5?42:18)},y:function(i,x){var r=x.getBoundingClientRect();return (r.top+r.height/2)<cy?18:-18},stagger:{amount:.08}},'products')
-    .to(c,{opacity:0,scale:.92},'products').fromTo(copy,{opacity:0,y:18},{opacity:1,y:0,duration:.42},.34);
+ var gsap=window.gsap;if(!gsap)return;
+ var products=[].slice.call(document.querySelectorAll('.product')),R=window.ONE_DORE_COVER_REGISTRY||{},commons='https://commons.wikimedia.org/wiki/Special:Redirect/file/',hoverDelay=null,activeProduct=null;
+ function fileFor(id){if(R.files)return R.files[id]||R.files[String(id)];var x=R[id]||R[String(id)];return x&&(x.filename||x.file||x.name)||x}
+ function url(id,w){var n=fileFor(id);return n?commons+encodeURIComponent(n)+'?width='+(w||1400):''}
+ function esc(s){var d=document.createElement('div');d.textContent=s||'';return d.innerHTML}
+ products.forEach(function(p){var u=url(p.dataset.dore,1000);if(u)p.style.backgroundImage='url("'+u+'")'});
+ function readingHTML(product){var peers=products.filter(function(x){return x!==product&&x.dataset.kind===product.dataset.kind}).slice(0,2),arr=[product].concat(peers);if(arr.length<3)arr=arr.concat(products.filter(function(x){return arr.indexOf(x)<0}).slice(0,3-arr.length));var one=arr.map(function(x){return '<div class="reading-item"><b>'+esc(x.dataset.title)+'</b><br>'+esc(x.dataset.preview)+'</div>'}).join('');return one+one}
+ function Controller(container,controlled){
+   this.container=container;this.products=controlled;this.masked=container.querySelector('.masked-preview');this.image=container.querySelector('.preview-image');this.kicker=container.querySelector('.preview-kicker');this.title=container.querySelector('.preview-title');this.reading=container.querySelector('.reading-current');this.timeline=null;this.armWidth={x:10,y:10};this.scaleFactor={x:1,y:1};this.onResize();
  }
- function leave(){if(delay){clearTimeout(delay);delay=null}if(!active)return;if(tl){var old=tl;tl.eventCallback('onReverseComplete',function(){gsap.set(allCards,{clearProps:'opacity,transform'});document.querySelectorAll('.focus-stage').forEach(function(s){gsap.set(s,{opacity:0,pointerEvents:'none',clearProps:'transform'});});old.kill();});tl.reverse()}active=null}
- allCards.forEach(function(c){var u=url(c.dataset.dore,900);if(u)c.style.backgroundImage='url("'+u+'")'});cards.forEach(function(c){if(hoverMode){c.addEventListener('mouseenter',function(){if(delay)clearTimeout(delay);delay=setTimeout(function(){focus(c);delay=null},100)});c.addEventListener('mouseleave',leave)}else c.addEventListener('click',function(e){e.preventDefault();focus(c)})});
- window.addEventListener('resize',function(){if(active)focus(active)});
-})();</script></body></html>'''
+ Controller.prototype.buildTimeline=function(){
+   var self=this,x=this.armWidth.x,y=this.armWidth.y;
+   this.timeline=gsap.timeline({paused:true,defaults:{ease:'power2.inOut'}})
+     .addLabel('preview',0).addLabel('products',0)
+     .to(this.container,{opacity:1},'preview')
+     .to(this.container,{scaleX:this.scaleFactor.x,scaleY:this.scaleFactor.y,transformOrigin:'center center'},'preview')
+     .to(this.products,{opacity:0,x:function(i){return i%2===0?'2.5vw':'-2.5vw'},y:function(i){return i<2?'2.5vw':'-2.5vw'}},'products')
+     .fromTo(this.masked,{clipPath:'polygon('+(50-x/2)+'% 0%,'+(50+x/2)+'% 0%,'+(50+x/2)+'% '+(50-y/2)+'%,100% '+(50-y/2)+'%,100% '+(50+y/2)+'%,'+(50+x/2)+'% '+(50+y/2)+'%,'+(50+x/2)+'% 100%,'+(50-x/2)+'% 100%,'+(50-x/2)+'% '+(50+y/2)+'%,0% '+(50+y/2)+'%,0% '+(50-y/2)+'%,'+(50-x/2)+'% '+(50-y/2)+'%)'},{clipPath:'polygon(50% 0%,50% 0%,50% 50%,100% 50%,100% 50%,50% 50%,50% 100%,50% 100%,50% 50%,0% 50%,0% 50%,50% 50%)'},'preview');
+ };
+ Controller.prototype.onResize=function(){
+   var rect=this.container.getBoundingClientRect(),vw=window.innerWidth/100,armWidthPx=5*vw;
+   this.armWidth={x:(armWidthPx/rect.width)*100,y:(armWidthPx/rect.height)*100};
+   var widthInVw=rect.width/vw,heightInVw=rect.height/vw,shrinkVw=5;
+   this.scaleFactor={x:(widthInVw-shrinkVw)/widthInVw,y:(heightInVw-shrinkVw)/heightInVw};
+   if(this.timeline)this.timeline.kill();this.buildTimeline();
+ };
+ Controller.prototype.setProduct=function(product){
+   if(product){
+     this.kicker.textContent=product.dataset.kind;this.title.textContent=product.dataset.title;this.reading.innerHTML=readingHTML(product);this.image.style.backgroundImage='url("'+url(product.dataset.dore,1600)+'")';
+     this.timeline.play(0);
+   }else{this.timeline.reverse()}
+ };
+ var leftHalf=products.filter(function(_,i){return i%4===0||i%4===1}),rightHalf=products.filter(function(_,i){return i%4===2||i%4===3});
+ var previewForLeftProduct=new Controller(document.getElementById('previewRight'),rightHalf);
+ var previewForRightProduct=new Controller(document.getElementById('previewLeft'),leftHalf);
+ function getPreview(product){var i=Number(product.dataset.index);return (i%4===0||i%4===1)?previewForLeftProduct:previewForRightProduct}
+ function enter(product){if(hoverDelay){clearTimeout(hoverDelay);hoverDelay=null}hoverDelay=setTimeout(function(){activeProduct=product;getPreview(product).setProduct(product);hoverDelay=null},100)}
+ function leave(){if(hoverDelay){clearTimeout(hoverDelay);hoverDelay=null}if(activeProduct){getPreview(activeProduct).setProduct(null);activeProduct=null}}
+ products.forEach(function(product){product.addEventListener('mouseenter',function(){enter(product)});product.addEventListener('mouseleave',leave)});
+ window.addEventListener('resize',function(){previewForLeftProduct.onResize();previewForRightProduct.onResize()});
+})();
+</script></body></html>'''
