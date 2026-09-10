@@ -31,12 +31,8 @@ jobs:
       - name: Fetch canonical Doré originals
         run: |
           mkdir -p .handoff011019/input .handoff011019/output
-          curl -L --fail --retry 3 \
-            'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' \
-            -o .handoff011019/input/dore-011.jpg
-          curl -L --fail --retry 3 \
-            'https://upload.wikimedia.org/wikipedia/commons/c/c6/019.The_Meeting_of_Isaac_and_Rebekah.jpg' \
-            -o .handoff011019/input/dore-019.jpg
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' -o .handoff011019/input/dore-011.jpg
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/c/c6/019.The_Meeting_of_Isaac_and_Rebekah.jpg' -o .handoff011019/input/dore-019.jpg
 
       - name: Recover both Doré fields and export native OBJ handoff
         env:
@@ -46,27 +42,17 @@ jobs:
           from pathlib import Path
           import json, numpy as np, torch
           from depth_anything_3.api import DepthAnything3
-
-          root=Path('.handoff011019')
-          out=root/'output'
+          root=Path('.handoff011019'); out=root/'output'
           model=DepthAnything3.from_pretrained('depth-anything/DA3-SMALL').to(device=torch.device('cpu'))
           items=[('011',root/'input/dore-011.jpg'),('019',root/'input/dore-019.jpg')]
-          meta={'experiment':'DORE-TWO-ANCHOR-HANDOFF-011-019','anchors':[],'rule':'ROAD FIRST: one continuous viewing camera, two canonical projector fields, no character animation, no generative bridge, no fidelity polishing.'}
+          meta={'experiment':'DORE-TWO-ANCHOR-HANDOFF-011-019','anchors':[],'rule':'ROAD FIRST: one continuous viewing camera, two canonical fields, no character animation, no generative bridge, no fidelity polishing.'}
           for dore_id,src in items:
               pred=model.inference([str(src)])
-              depth=np.asarray(pred.depth[0],dtype=np.float32)
-              K=np.asarray(pred.intrinsics[0],dtype=np.float32)
-              h,w=depth.shape
-              stride=6
-              d=depth[::stride,::stride]
-              hh,ww=d.shape
-              yy,xx=np.mgrid[0:hh,0:ww].astype(np.float32)
-              px=xx*stride; py=yy*stride; z=d
-              x=(px-K[0,2])*z/K[0,0]
-              y=(py-K[1,2])*z/K[1,1]
-              pts=np.stack([x,-y,-z],axis=-1).astype(np.float32)
-              # Normalize median depth so both reconstructed fields can share a predictable stage scale.
-              med=float(np.median(z[z>0]))
+              depth=np.asarray(pred.depth[0],dtype=np.float32); K=np.asarray(pred.intrinsics[0],dtype=np.float32)
+              h,w=depth.shape; stride=6; z=depth[::stride,::stride]; hh,ww=z.shape
+              yy,xx=np.mgrid[0:hh,0:ww].astype(np.float32); px=xx*stride; py=yy*stride
+              x=(px-K[0,2])*z/K[0,0]; y=(py-K[1,2])*z/K[1,1]
+              pts=np.stack([x,-y,-z],axis=-1).astype(np.float32); med=float(np.median(z[z>0]))
               if med>0: pts/=med
               obj=out/f'dore-{dore_id}.obj'
               with obj.open('w',encoding='utf-8') as f:
@@ -77,10 +63,8 @@ jobs:
                   for j in range(hh-1):
                       for i in range(ww-1):
                           a=j*ww+i+1; b=a+1; c=(j+1)*ww+i+1; d2=c+1
-                          f.write(f'f {a}/{a} {c}/{c} {b}/{b}\n')
-                          f.write(f'f {b}/{b} {c}/{c} {d2}/{d2}\n')
-              np.save(out/f'intrinsics-{dore_id}.npy',K)
-              meta['anchors'].append({'dore_id':dore_id,'source':src.name,'depth_shape':[h,w],'mesh_grid':[hh,ww],'median_depth_normalized':True})
+                          f.write(f'f {a}/{a} {c}/{c} {b}/{b}\n'); f.write(f'f {b}/{b} {c}/{c} {d2}/{d2}\n')
+              meta['anchors'].append({'dore_id':dore_id,'source':src.name,'depth_shape':[h,w],'mesh_grid':[hh,ww]})
           (out/'metadata.json').write_text(json.dumps(meta,indent=2),encoding='utf-8')
           PY
 
@@ -89,86 +73,45 @@ jobs:
           cat > .handoff011019/build.py <<'PY'
           import bpy, os, json, math
           from mathutils import Vector
-
-          base=os.path.abspath('.handoff011019')
-          out=os.path.join(base,'output')
+          base=os.path.abspath('.handoff011019'); out=os.path.join(base,'output')
           bpy.ops.wm.read_factory_settings(use_empty=True)
-
+          scene=bpy.context.scene
+          if scene.world is None:
+              scene.world=bpy.data.worlds.new('DORE_FILM_WORLD')
+          scene.world.color=(0,0,0)
           def import_obj(path):
-              if hasattr(bpy.ops.wm,'obj_import'):
-                  bpy.ops.wm.obj_import(filepath=path)
-              else:
-                  bpy.ops.import_scene.obj(filepath=path)
+              if hasattr(bpy.ops.wm,'obj_import'): bpy.ops.wm.obj_import(filepath=path)
+              else: bpy.ops.import_scene.obj(filepath=path)
               return bpy.context.selected_objects[0]
-
           def make_stage(dore_id,img_name,location,scale=(4.4,4.4,4.4)):
-              obj=import_obj(os.path.join(out,f'dore-{dore_id}.obj'))
-              obj.name=f'DORE_{dore_id}_STAGE'
-              obj.location=location; obj.scale=scale
-              img=bpy.data.images.load(os.path.join(base,'input',img_name))
-              img.colorspace_settings.name='sRGB'
-              mat=bpy.data.materials.new(f'DORE_{dore_id}_ORIGINAL')
-              mat.use_nodes=True
+              obj=import_obj(os.path.join(out,f'dore-{dore_id}.obj')); obj.name=f'DORE_{dore_id}_STAGE'; obj.location=location; obj.scale=scale
+              img=bpy.data.images.load(os.path.join(base,'input',img_name)); img.colorspace_settings.name='sRGB'
+              mat=bpy.data.materials.new(f'DORE_{dore_id}_ORIGINAL'); mat.use_nodes=True
               nodes=mat.node_tree.nodes; links=mat.node_tree.links
               for n in list(nodes): nodes.remove(n)
               tex=nodes.new('ShaderNodeTexImage'); tex.image=img; tex.interpolation='Linear'
               emit=nodes.new('ShaderNodeEmission'); output=nodes.new('ShaderNodeOutputMaterial')
-              links.new(tex.outputs['Color'],emit.inputs['Color']); links.new(emit.outputs['Emission'],output.inputs['Surface'])
-              obj.data.materials.append(mat)
+              links.new(tex.outputs['Color'],emit.inputs['Color']); links.new(emit.outputs['Emission'],output.inputs['Surface']); obj.data.materials.append(mat)
               return obj
-
-          a=make_stage('011','dore-011.jpg',(0,0,-4.0))
-          b=make_stage('019','dore-019.jpg',(7.0,0,-10.0))
-          b.rotation_euler[1]=math.radians(-18)
-
-          # Neutral bridge geometry only proves that one camera can stay alive between independent Doré fields.
+          a=make_stage('011','dore-011.jpg',(0,0,-4.0)); b=make_stage('019','dore-019.jpg',(7.0,0,-10.0)); b.rotation_euler[1]=math.radians(-18)
           bpy.ops.mesh.primitive_plane_add(size=30, location=(3.5,2.6,-9.0), rotation=(math.radians(90),0,0))
           bridge=bpy.context.object; bridge.name='BRIDGE_WORLD_PROXY'
-          mat=bpy.data.materials.new('BRIDGE_NEUTRAL'); mat.use_nodes=True
-          bsdf=mat.node_tree.nodes.get('Principled BSDF')
+          mat=bpy.data.materials.new('BRIDGE_NEUTRAL'); mat.use_nodes=True; bsdf=mat.node_tree.nodes.get('Principled BSDF')
           if bsdf: bsdf.inputs['Base Color'].default_value=(0.025,0.025,0.025,1); bsdf.inputs['Roughness'].default_value=1.0
           bridge.data.materials.append(mat)
-
-          cam_data=bpy.data.cameras.new('ONE_CONTINUOUS_CAMERA')
-          cam=bpy.data.objects.new('ONE_CONTINUOUS_CAMERA',cam_data)
-          bpy.context.collection.objects.link(cam); bpy.context.scene.camera=cam
+          cam_data=bpy.data.cameras.new('ONE_CONTINUOUS_CAMERA'); cam=bpy.data.objects.new('ONE_CONTINUOUS_CAMERA',cam_data); bpy.context.collection.objects.link(cam); scene.camera=cam
           cam_data.sensor_fit='HORIZONTAL'; cam_data.sensor_width=36; cam_data.lens=48; cam_data.clip_start=.02; cam_data.clip_end=100
-
-          # The camera never cuts or restarts. It leaves 011, travels through bridge space, and arrives at 019.
-          keys=[
-            (1,  (0.0,0.0,0.0),   (0.0,0.0,-4.0)),
-            (36, (0.6,-0.1,-1.4),  (0.4,0.0,-5.0)),
-            (72, (2.8,-0.1,-4.2),  (4.2,0.0,-8.5)),
-            (108,(5.2,0.0,-6.8),   (6.6,0.0,-10.0)),
-            (144,(7.0,0.0,-7.4),   (7.0,0.0,-10.0)),
-          ]
-          def point_at(obj,target):
-              direction=Vector(target)-obj.location
-              obj.rotation_euler=direction.to_track_quat('-Z','Y').to_euler()
+          keys=[(1,(0.,0.,0.),(0.,0.,-4.)),(36,(0.6,-0.1,-1.4),(0.4,0.,-5.)),(72,(2.8,-0.1,-4.2),(4.2,0.,-8.5)),(108,(5.2,0.,-6.8),(6.6,0.,-10.)),(144,(7.,0.,-7.4),(7.,0.,-10.))]
+          def point_at(obj,target): obj.rotation_euler=(Vector(target)-obj.location).to_track_quat('-Z','Y').to_euler()
           for f,loc,target in keys:
-              cam.location=loc; point_at(cam,target)
-              cam.keyframe_insert(data_path='location',frame=f)
-              cam.keyframe_insert(data_path='rotation_euler',frame=f)
+              cam.location=loc; point_at(cam,target); cam.keyframe_insert(data_path='location',frame=f); cam.keyframe_insert(data_path='rotation_euler',frame=f)
           if cam.animation_data and cam.animation_data.action:
               for fc in cam.animation_data.action.fcurves:
                   for kp in fc.keyframe_points: kp.interpolation='BEZIER'
-
-          scene=bpy.context.scene
-          scene.render.engine='BLENDER_EEVEE'
-          scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100
-          scene.render.image_settings.file_format='PNG'
-          scene.world.color=(0,0,0)
-          scene.view_settings.view_transform='Standard'
-          scene.frame_start=1; scene.frame_end=144; scene.render.fps=24
-          scene.render.filepath=os.path.join(out,'frame-')
-          bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'two-anchor-handoff.blend'))
-          bpy.ops.render.render(animation=True)
-
-          meta=json.load(open(os.path.join(out,'metadata.json')))
-          meta['frames']=144
-          meta['camera_keyframes']=[{'frame':f,'location':list(loc),'look_target':list(target)} for f,loc,target in keys]
-          meta['acceptance_question']='Can one uninterrupted viewing camera leave Doré 011 world-space and arrive in Doré 019 world-space without reverting to a slideshow or camera reset?'
-          json.dump(meta,open(os.path.join(out,'metadata.json'),'w'),indent=2)
+          scene.render.engine='BLENDER_EEVEE'; scene.render.resolution_x=960; scene.render.resolution_y=720; scene.render.resolution_percentage=100
+          scene.render.image_settings.file_format='PNG'; scene.view_settings.view_transform='Standard'; scene.frame_start=1; scene.frame_end=144; scene.render.fps=24; scene.render.filepath=os.path.join(out,'frame-')
+          bpy.ops.wm.save_as_mainfile(filepath=os.path.join(out,'two-anchor-handoff.blend')); bpy.ops.render.render(animation=True)
+          meta=json.load(open(os.path.join(out,'metadata.json'))); meta['frames']=144; meta['camera_keyframes']=[{'frame':f,'location':list(loc),'look_target':list(target)} for f,loc,target in keys]; meta['acceptance_question']='Can one uninterrupted viewing camera leave Doré 011 world-space and arrive in Doré 019 world-space without reverting to a slideshow or camera reset?'; json.dump(meta,open(os.path.join(out,'metadata.json'),'w'),indent=2)
           PY
           blender -b --python .handoff011019/build.py
 
@@ -178,12 +121,9 @@ jobs:
           python - <<'PY'
           from PIL import Image,ImageDraw
           from pathlib import Path
-          p=Path('.handoff011019/output'); nums=[1,36,72,108,144]
-          ims=[Image.open(p/f'frame-{n:04d}.png').convert('RGB') for n in nums]
-          w,h=ims[0].size
+          p=Path('.handoff011019/output'); nums=[1,36,72,108,144]; ims=[Image.open(p/f'frame-{n:04d}.png').convert('RGB') for n in nums]; w,h=ims[0].size
           sheet=Image.new('RGB',(w*5,h+34),'black'); d=ImageDraw.Draw(sheet)
-          for i,(n,im) in enumerate(zip(nums,ims)):
-              sheet.paste(im,(i*w,34)); d.text((i*w+10,10),f'frame {n}',fill='white')
+          for i,(n,im) in enumerate(zip(nums,ims)): sheet.paste(im,(i*w,34)); d.text((i*w+10,10),f'frame {n}',fill='white')
           sheet.save(p/'contact-sheet.png')
           PY
           test -s .handoff011019/output/two-anchor-handoff-road-test.mp4
