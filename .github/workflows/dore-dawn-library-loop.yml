@@ -2,7 +2,6 @@ name: DORÉ Dawn Library Continuous Loop
 on:
   workflow_dispatch:
   schedule:
-    # Bootstrap phase: English and Chinese discovery both run daily.
     - cron: '23 9 * * *'
   push:
     paths:
@@ -10,6 +9,7 @@ on:
       - 'scripts/run_dawn_library_discovery.py'
       - 'scripts/run_dawn_library_chinese_discovery.py'
       - 'scripts/run_dawn_library_relevance.py'
+      - 'scripts/run_dawn_library_chinese_relevance.py'
       - 'scripts/run_dawn_library_loop.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 permissions:
@@ -28,6 +28,8 @@ jobs:
         run: python scripts/run_dawn_library_chinese_discovery.py
       - name: Gate English candidates by Biblical World relevance
         run: python scripts/run_dawn_library_relevance.py
+      - name: Gate Chinese candidates by Biblical World relevance
+        run: python scripts/run_dawn_library_chinese_relevance.py
       - name: Produce 黎明書局 measurable outputs
         run: python scripts/run_dawn_library_loop.py
       - name: Validate bilingual discovery relevance and collection outputs
@@ -38,15 +40,21 @@ jobs:
           d=json.loads(Path('reports/DAWN-LIBRARY-DISCOVERY.json').read_text())
           z=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json').read_text())
           g=json.loads(Path('reports/DAWN-LIBRARY-RELEVANCE.json').read_text())
+          zg=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           candidates=json.loads(Path('static/dawn-library/biblical-world/discovery-candidates.json').read_text())
           chinese=json.loads(Path('static/dawn-library/biblical-world/chinese-candidates.json').read_text())
           relevance=json.loads(Path('static/dawn-library/biblical-world/relevance-results.json').read_text())
+          zrel=json.loads(Path('static/dawn-library/biblical-world/chinese-relevance-results.json').read_text())
           assert d['candidateQueue'] == len(candidates['items'])
           assert z['candidateQueue'] == len(chinese['items'])
           assert z['candidateQueue'] >= z['goldenSeedsResolved']
           assert all(item.get('contentDownloaded') is False for item in chinese['items'])
           assert all(item.get('language') in {'zh','zh-Hant','zh-Hans'} for item in chinese['items'])
+          assert zg['total'] == len(zrel['items']) == len(chinese['items'])
+          assert sum(zg['results'].values()) == zg['total']
+          assert all(item.get('stage') in {'qualified','deferred','rejected'} for item in zrel['items'])
+          assert all(item.get('contentDownloaded') is False for item in zrel['items'])
           assert g['total'] == len(relevance['items']) == len(candidates['items'])
           assert sum(g['results'].values()) == g['total']
           assert all(item.get('contentDownloaded') is False for item in candidates['items'])
@@ -56,10 +64,9 @@ jobs:
           assert all(not any(n in item.get('title','').lower() for n in noise) or item['stage']=='rejected' for item in relevance['items'])
           assert r['results']['books']['published'] >= 7
           assert r['results']['books']['verified'] >= 6
-          assert 'growthToday' in r['results']
-          assert 'cadence' in r['results']
+          assert 'growthToday' in r['results'] and 'cadence' in r['results']
           assert len(r['results']['collections']) >= 5
-          print(json.dumps({'englishDiscovery':d,'chineseDiscovery':z,'englishRelevance':g,'library':r['results']},ensure_ascii=False,indent=2))
+          print(json.dumps({'englishDiscovery':d,'chineseDiscovery':z,'englishRelevance':g,'chineseRelevance':zg,'library':r['results']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -68,6 +75,7 @@ jobs:
             reports/DAWN-LIBRARY-DISCOVERY.json
             reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json
             reports/DAWN-LIBRARY-RELEVANCE.json
+            reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json
             reports/DAWN-LIBRARY-LOOP.json
             reports/DAWN-LIBRARY-GROWTH.json
             static/dawn-library/collections.json
@@ -76,17 +84,19 @@ jobs:
             static/dawn-library/biblical-world/discovery-candidates.json
             static/dawn-library/biblical-world/chinese-candidates.json
             static/dawn-library/biblical-world/relevance-results.json
+            static/dawn-library/biblical-world/chinese-relevance-results.json
       - name: Persist loop results
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add reports/DAWN-LIBRARY-DISCOVERY.json reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json reports/DAWN-LIBRARY-RELEVANCE.json reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json \
+          git add reports/DAWN-LIBRARY-DISCOVERY.json reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json reports/DAWN-LIBRARY-RELEVANCE.json reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json reports/DAWN-LIBRARY-LOOP.json reports/DAWN-LIBRARY-GROWTH.json \
             static/dawn-library/collections.json \
             static/dawn-library/biblical-world/discovery-state.json \
             static/dawn-library/biblical-world/discovery-candidates.json \
             static/dawn-library/biblical-world/chinese-candidates.json \
-            static/dawn-library/biblical-world/relevance-results.json
+            static/dawn-library/biblical-world/relevance-results.json \
+            static/dawn-library/biblical-world/chinese-relevance-results.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): persist bilingual discovery relevance and growth [skip ci]'
             for attempt in 1 2 3 4; do
