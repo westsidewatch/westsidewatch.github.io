@@ -1,0 +1,22 @@
+{
+  "schema": "dawn.library.chinese-rights-policy.v1",
+  "collection": "biblical-world-books",
+  "provider": "中文維基文庫",
+  "policy": "page-provenance-required",
+  "autoVerify": {
+    "allowedOnlyWhen": [
+      "candidate is relevance-qualified",
+      "candidate is a work or edition root page, not a slash subpage",
+      "source page explicitly declares the work public domain",
+      "edition identity is recoverable from source metadata",
+      "source provenance is retained"
+    ],
+    "never": [
+      "infer public-domain status from provider alone",
+      "promote a chapter or book-of-Bible subpage as an independent library book",
+      "download full text during verification"
+    ]
+  },
+  "jurisdictionModel": "source-declaration-with-jurisdiction-note",
+  "contentPolicy": "index-only"
+}
