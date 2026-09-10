@@ -5,17 +5,24 @@ import codrops_site_8x5
 
 _LIVING_CURRENT_STYLE = r'''
 <style id="living-water-8x5-current">
-@keyframes lw-current-a{from{translate:0 0}to{translate:-2.8vw 0}}
-@keyframes lw-current-b{from{translate:-2.2vw 0}to{translate:.4vw 0}}
-@keyframes lw-current-c{from{translate:.6vw 0}to{translate:-2.4vw 0}}
-@keyframes lw-current-d{from{translate:-1.8vw 0}to{translate:.8vw 0}}
-.products__grid .product{will-change:translate,transform,opacity}
-.products__grid .product:nth-child(1),.products__grid .product:nth-child(5){animation:lw-current-a 44s linear infinite alternate}
-.products__grid .product:nth-child(2),.products__grid .product:nth-child(6){animation:lw-current-b 57s linear infinite alternate;animation-delay:-17s}
-.products__grid .product:nth-child(3),.products__grid .product:nth-child(7){animation:lw-current-c 49s linear infinite alternate;animation-delay:-31s}
-.products__grid .product:nth-child(4),.products__grid .product:nth-child(8){animation:lw-current-d 64s linear infinite alternate;animation-delay:-43s}
-.products.living-current-focus .product{animation-play-state:paused}
-@media(prefers-reduced-motion:reduce){.products__grid .product{animation:none!important}}
+@keyframes lw-current-a{from{transform:translateX(0)}to{transform:translateX(-12vw)}}
+@keyframes lw-current-b{from{transform:translateX(-9vw)}to{transform:translateX(4vw)}}
+@keyframes lw-current-c{from{transform:translateX(2vw)}to{transform:translateX(-10vw)}}
+@keyframes lw-current-d{from{transform:translateX(-6vw)}to{transform:translateX(6vw)}}
+.products__grid.living-current-field{display:block;position:relative;overflow:hidden;min-height:calc(100vh - 204px)}
+.living-current-band{position:absolute;left:-6vw;right:auto;display:flex;align-items:center;gap:3vw;width:max-content;will-change:transform}
+.living-current-band .product{flex:0 0 auto;width:clamp(280px,34vw,520px);margin:0;will-change:transform,opacity}
+.living-current-band:nth-child(1){top:2%;animation:lw-current-a 42s linear infinite alternate}
+.living-current-band:nth-child(2){top:27%;animation:lw-current-b 55s linear infinite alternate;animation-delay:-17s}
+.living-current-band:nth-child(3){top:52%;animation:lw-current-c 47s linear infinite alternate;animation-delay:-31s}
+.living-current-band:nth-child(4){top:77%;animation:lw-current-d 62s linear infinite alternate;animation-delay:-43s}
+.products.living-current-focus .living-current-band{animation-play-state:paused}
+@media(max-width:900px){
+ .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
+ .living-current-band{display:contents;animation:none!important}
+ .living-current-band .product{width:auto}
+}
+@media(prefers-reduced-motion:reduce){.living-current-band{animation:none!important}}
 </style>
 '''
 
@@ -23,21 +30,45 @@ _LIVING_CURRENT_SCRIPT = r'''
 <script id="living-water-8x5-current-runtime">
 (()=>{
   const stage=document.querySelector('.products');
-  if(!stage||stage.dataset.livingCurrentBound==='true')return;
+  const grid=stage?.querySelector('.products__grid');
+  if(!stage||!grid||stage.dataset.livingCurrentBound==='true')return;
   stage.dataset.livingCurrentBound='true';
+
+  const cards=[...grid.querySelectorAll(':scope > .product')];
+  if(cards.length){
+    grid.classList.add('living-current-field');
+    const perBand=Math.max(1,Math.ceil(cards.length/4));
+    for(let i=0;i<4;i++){
+      const slice=cards.slice(i*perBand,(i+1)*perBand);
+      if(!slice.length)continue;
+      const band=document.createElement('div');
+      band.className='living-current-band';
+      band.dataset.current=String(i+1);
+      grid.appendChild(band);
+      slice.forEach(card=>band.appendChild(card));
+    }
+  }
+
   let resumeTimer=0;
-  const cards=[...stage.querySelectorAll('.product')];
   const hold=()=>{clearTimeout(resumeTimer);stage.classList.add('living-current-focus')};
-  const release=()=>{clearTimeout(resumeTimer);resumeTimer=setTimeout(()=>{if(!stage.querySelector('.product:hover'))stage.classList.remove('living-current-focus')},560)};
-  cards.forEach(card=>{card.addEventListener('mouseenter',hold);card.addEventListener('mouseleave',release)});
-  document.documentElement.dataset.livingCurrent='ready';
+  const release=()=>{
+    clearTimeout(resumeTimer);
+    resumeTimer=setTimeout(()=>{
+      if(!stage.querySelector('.product:hover'))stage.classList.remove('living-current-focus');
+    },560);
+  };
+  stage.querySelectorAll('.product').forEach(card=>{
+    card.addEventListener('mouseenter',hold);
+    card.addEventListener('mouseleave',release);
+  });
+  document.documentElement.dataset.livingCurrent='four-band-ready';
 })();
 </script>
 '''
 
 
 def _install_living_current(html):
-    """Layer the old Living Water current over the accepted Codrops focus motion."""
+    """Layer four whole-row Living Water currents over the accepted Codrops focus motion."""
     if 'id="living-water-8x5-current"' in html:
         return html
     html = html.replace('</head>', _LIVING_CURRENT_STYLE + '</head>', 1)
@@ -59,7 +90,7 @@ def install(current):
     ]
     current.multipage_wysiwyg.SUPPORTED.update(page_ids)
 
-    # Add the new renderer without disturbing the accepted 8:5 focus engine.
+    # Add the current field without disturbing the accepted 8:5 focus engine.
     previous_render = current.multipage_wysiwyg.render_canvas
     def render_canvas(page_id='homepage', edit=False):
         if page_id == codrops_site_8x5.PAGE_ID:
