@@ -12,7 +12,7 @@ _LIVING_CURRENT_STYLE = r'''
 .living-current-band .product{flex:1 1 0;min-width:0;margin:0;will-change:transform,opacity}
 .living-current-band:nth-child(1){top:4%;animation:lw-current-a 28s linear infinite alternate}
 .living-current-band:nth-child(2){top:52%;animation:lw-current-b 34s linear infinite alternate;animation-delay:-11s}
-.products.living-current-focus .living-current-band{animation-play-state:paused}
+.products.living-current-focus .living-current-band{animation-play-state:running}
 @media(max-width:900px){
  .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
  .living-current-band{display:contents;animation:none!important}
