@@ -1,6 +1,6 @@
 {
-  "schema": "dawn.library.storefront.v1",
-  "generatedAt": "2026-09-10T21:09:15.108069+00:00",
+  "schema": "dawn.library.storefront.v2",
+  "generatedAt": "2026-09-10T21:15:05.138636+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -12,7 +12,7 @@
       "source": "Standard Ebooks",
       "items": [
         {
-          "id": "standard-short-fiction",
+          "id": "standard-ebooks-short-fiction",
           "title": "Short Fiction",
           "author": "Thomas Mann",
           "language": "en",
@@ -34,7 +34,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-art-of-illustration",
+          "id": "standard-ebooks-the-art-of-illustration",
           "title": "The Art of Illustration",
           "author": "C. H. Spurgeon",
           "language": "en",
@@ -56,7 +56,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-within-and-without",
+          "id": "standard-ebooks-within-and-without",
           "title": "Within and Without",
           "author": "George MacDonald",
           "language": "en",
@@ -78,7 +78,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-final-count",
+          "id": "standard-ebooks-the-final-count",
           "title": "The Final Count",
           "author": "H. C. McNeile",
           "language": "en",
@@ -100,7 +100,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-a-book-lover-s-holidays-in-the-open",
+          "id": "standard-ebooks-a-book-lover-s-holidays-in-the-open",
           "title": "A Book-Lover’s Holidays in the Open",
           "author": "Theodore Roosevelt",
           "language": "en",
@@ -122,7 +122,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-brigadier-gerard-stories",
+          "id": "standard-ebooks-brigadier-gerard-stories",
           "title": "Brigadier Gerard Stories",
           "author": "Arthur Conan Doyle",
           "language": "en",
@@ -144,7 +144,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-trap",
+          "id": "standard-ebooks-the-trap",
           "title": "The Trap",
           "author": "Dorothy M. Richardson",
           "language": "en",
@@ -166,7 +166,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-malleus-maleficarum",
+          "id": "standard-ebooks-malleus-maleficarum",
           "title": "Malleus Maleficarum",
           "author": "Heinrich Kramer",
           "language": "en",
@@ -188,7 +188,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-fall-of-robespierre",
+          "id": "standard-ebooks-the-fall-of-robespierre",
           "title": "The Fall of Robespierre",
           "author": "Samuel Taylor Coleridge, Robert Southey",
           "language": "en",
@@ -210,7 +210,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-wheels-of-chance",
+          "id": "standard-ebooks-the-wheels-of-chance",
           "title": "The Wheels of Chance",
           "author": "H. G. Wells",
           "language": "en",
@@ -232,7 +232,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-mummy",
+          "id": "standard-ebooks-the-mummy",
           "title": "The Mummy!",
           "author": "Jane C. Loudon",
           "language": "en",
@@ -254,7 +254,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-place-called-dagon",
+          "id": "standard-ebooks-the-place-called-dagon",
           "title": "The Place Called Dagon",
           "author": "Herbert Gorman",
           "language": "en",
@@ -276,7 +276,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-hand-and-ring",
+          "id": "standard-ebooks-hand-and-ring",
           "title": "Hand and Ring",
           "author": "Anna Katharine Green",
           "language": "en",
@@ -298,7 +298,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-the-lost-stradivarius",
+          "id": "standard-ebooks-the-lost-stradivarius",
           "title": "The Lost Stradivarius",
           "author": "John Meade Falkner",
           "language": "en",
@@ -320,7 +320,7 @@
           "contentDownloaded": false
         },
         {
-          "id": "standard-racundra-s-first-cruise",
+          "id": "standard-ebooks-racundra-s-first-cruise",
           "title": "Racundra’s First Cruise",
           "author": "Arthur Ransome",
           "language": "en",
@@ -339,6 +339,1338 @@
             "declaredBy": "Standard Ebooks"
           },
           "quality": "curated-edition",
+          "contentDownloaded": false
+        }
+      ]
+    },
+    {
+      "id": "doab-theology-or-biblical",
+      "title": "開放學術 · 神學與宗教",
+      "kind": "academic-shelf",
+      "source": "DOAB",
+      "items": [
+        {
+          "id": "doab-20-500-12854-95839",
+          "title": "The Future of New Testament Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20230105_9783036550114_68",
+            "isbn": null,
+            "handle": "20.500.12854/95839"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/95839",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-157616",
+          "title": "Skeppingsorg",
+          "author": "de Wit, Martin P",
+          "language": "Afrikaans",
+          "identifiers": {
+            "doi": "ONIX_20250320_9781990982118_11",
+            "isbn": null,
+            "handle": "20.500.12854/157616"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/157616",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-78886",
+          "title": "Biblical Texts in Digitalization",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": null,
+            "isbn": null,
+            "handle": "20.500.12854/78886"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/78886",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-132806",
+          "title": "Covenant: A Vital Element of Reformed Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20240111_9789004503328_16",
+            "isbn": null,
+            "handle": "20.500.12854/132806"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/132806",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-134898",
+          "title": "The biblical concept of the ‘Davidic Covenant’ in 2 Samuel and Ezekiel and its implications for African leadership",
+          "author": "Budha, Victor Lonu",
+          "language": "English",
+          "identifiers": {
+            "doi": "OCN: 1424920257",
+            "isbn": null,
+            "handle": "20.500.12854/134898"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/134898",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-32228",
+          "title": "Reformed theology today",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "640131",
+            "isbn": null,
+            "handle": "20.500.12854/32228"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/32228",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-80748",
+          "title": "Biblical Theology of Life in the New Testament",
+          "author": "Viljoen, Francois P.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20220408_9781776341788_10",
+            "isbn": null,
+            "handle": "20.500.12854/80748"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/80748",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-169682",
+          "title": "Theology of Work",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20251201T131047_9781040258859_56",
+            "isbn": null,
+            "handle": "20.500.12854/169682"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/169682",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71730",
+          "title": "Jesucristo nos llama",
+          "author": "Arenas Molina, Enrique",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585798341_15",
+            "isbn": null,
+            "handle": "20.500.12854/71730"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71730",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71718",
+          "title": "55 preguntas sobre san Agustín",
+          "author": "Eguiarte Bendímez, Enrique A.",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498372_3",
+            "isbn": null,
+            "handle": "20.500.12854/71718"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71718",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71719",
+          "title": "Andrés de San Nicolás",
+          "author": "Uriel Patiño Franco, José",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585639577_4",
+            "isbn": null,
+            "handle": "20.500.12854/71719"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71719",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71731",
+          "title": "La Gratia en los Sermones ad Populum de San Agustín durante la controversia pelagiana",
+          "author": "Dupont, Anthony",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789589981382_16",
+            "isbn": null,
+            "handle": "20.500.12854/71731"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71731",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71732",
+          "title": "La incomprehensibilidad de Dios",
+          "author": "van Geest, Paul",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789589981351_17",
+            "isbn": null,
+            "handle": "20.500.12854/71732"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71732",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71744",
+          "title": "\"On the Way to Truth and Peace\" (ep. 33, 6): Augustine's Anti-Donatist Readings of John 14, 27a",
+          "author": "Grabau, Joseph",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_7",
+            "isbn": null,
+            "handle": "20.500.12854/71744"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71744",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-37833",
+          "title": "Biblical Terror",
+          "author": "Cataldo, Jeremiah W.",
+          "language": "English",
+          "identifiers": {
+            "doi": "1004297",
+            "isbn": null,
+            "handle": "20.500.12854/37833"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/37833",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-132159",
+          "title": "Biblical Theology of prayer in the New Testament",
+          "author": "Mulder, Michael C",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20231221_9781779952776_6",
+            "isbn": null,
+            "handle": "20.500.12854/132159"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/132159",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-26675",
+          "title": "Reformed theology today",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "640132",
+            "isbn": null,
+            "handle": "20.500.12854/26675"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/26675",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-172085",
+          "title": "Bruk av Bibelen i fellesskap",
+          "author": "Aadland, Ingunn",
+          "language": "Norwegian Nynorsk",
+          "identifiers": {
+            "doi": "https://library.oapen.org/handle/20.500.12657/109965",
+            "isbn": null,
+            "handle": "20.500.12854/172085"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/172085",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71737",
+          "title": "Profesores agustinianos",
+          "author": "Echazarreta Sarabia, Lucilo",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498525_22",
+            "isbn": null,
+            "handle": "20.500.12854/71737"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71737",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71748",
+          "title": "Ipse Enim est Pax Nostra: Ephesians 2:14 in the Preaching of St. Augustine",
+          "author": "Yates, Jonathan P.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_11",
+            "isbn": null,
+            "handle": "20.500.12854/71748"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71748",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71756",
+          "title": "Practicing Peace, Preaching Psalms: The Centrality of the Enarrationes in Psalmos to Augustine’s Developing Theological Understanding of Peace",
+          "author": "Grove, Kevin G.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_19",
+            "isbn": null,
+            "handle": "20.500.12854/71756"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71756",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-168893",
+          "title": "A Prophet to the Nations",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20251118T124429_9783666573644_22",
+            "isbn": null,
+            "handle": "20.500.12854/168893"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/168893",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-29246",
+          "title": "Contextual Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20201221_9781000217261_4",
+            "isbn": null,
+            "handle": "20.500.12854/29246"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/29246",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        }
+      ]
+    },
+    {
+      "id": "doab-archaeology-and-religion",
+      "title": "開放學術 · 聖經世界與考古",
+      "kind": "academic-shelf",
+      "source": "DOAB",
+      "items": [
+        {
+          "id": "doab-20-500-12854-69066",
+          "title": "Archaeology and Ancient Israelite Religion",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210501_9783039368082_812",
+            "isbn": null,
+            "handle": "20.500.12854/69066"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/69066",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-138953",
+          "title": "Empires and Gods",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20240625_9783111342009_38",
+            "isbn": null,
+            "handle": "20.500.12854/138953"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/138953",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74653",
+          "title": "Der Kaiser und sein Gott",
+          "author": "Girardet, Klaus M.",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110227895_38",
+            "isbn": null,
+            "handle": "20.500.12854/74653"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74653",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71331",
+          "title": "Religiousness in the Late Middle Ages",
+          "author": "Bylina, Stanislaw",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210715_9783653068702_7",
+            "isbn": null,
+            "handle": "20.500.12854/71331"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71331",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-80605",
+          "title": "Aber die Zeit fürchtet die Pyramiden",
+          "author": "Gertzen, Thomas L.",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20220405_9783110760200_15",
+            "isbn": null,
+            "handle": "20.500.12854/80605"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/80605",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-152033",
+          "title": "Chapter 18 Derivative and Associative Popular Frazerism",
+          "author": "Testa, Alessandro",
+          "language": "English",
+          "identifiers": {
+            "doi": "https://library.oapen.org/handle/20.500.12657/98082",
+            "isbn": null,
+            "handle": "20.500.12854/152033"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/152033",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-151952",
+          "title": "A Century of James Frazer’s The Golden Bough",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "https://library.oapen.org/handle/20.500.12657/98081",
+            "isbn": null,
+            "handle": "20.500.12854/151952"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/151952",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-31262",
+          "title": "Myth, Materiality, and Lived Religion",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "1005096",
+            "isbn": null,
+            "handle": "20.500.12854/31262"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/31262",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-177930",
+          "title": "The Transmission of the Book of the Dead in New Kingdom Tombs at Saqqara",
+          "author": "Twiston Davies, H.P.R.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20260621T103019_9781350350601_120",
+            "isbn": null,
+            "handle": "20.500.12854/177930"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/177930",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-27630",
+          "title": "Lived Religion in the Ancient Mediterranean World",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20200728_9783110557596_27",
+            "isbn": null,
+            "handle": "20.500.12854/27630"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/27630",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74663",
+          "title": "Das Christentum im frühen Europa",
+          "author": "",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110643503_108",
+            "isbn": null,
+            "handle": "20.500.12854/74663"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74663",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74713",
+          "title": "Peoples of the Apocalypse",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110473315_45",
+            "isbn": null,
+            "handle": "20.500.12854/74713"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74713",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-77237",
+          "title": "Early Thirteenth-Century English Franciscan Thought",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20220111_9783110684834_83",
+            "isbn": null,
+            "handle": "20.500.12854/77237"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/77237",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74620",
+          "title": "Römische Erinnerungsräume",
+          "author": "Diefenbach, Steffen",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110204261_88",
+            "isbn": null,
+            "handle": "20.500.12854/74620"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74620",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-112322",
+          "title": "Archaeology of Mind in the Hebrew Bible / Archäologie alttestamentlichen Denkens",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20230706_9783110742428_3",
+            "isbn": null,
+            "handle": "20.500.12854/112322"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/112322",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-177339",
+          "title": "The Zoroastrian World",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20260415T184307_9781040473764_23",
+            "isbn": null,
+            "handle": "20.500.12854/177339"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/177339",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-90840",
+          "title": "Sacred Heritage",
+          "author": "Gilchrist, Roberta",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20220809_9781108678087_38",
+            "isbn": null,
+            "handle": "20.500.12854/90840"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/90840",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-30598",
+          "title": "Hindu Pluralism: Religion and the Public Sphere in Early Modern South India",
+          "author": "Fisher, Elaine",
+          "language": "English",
+          "identifiers": {
+            "doi": "625333",
+            "isbn": null,
+            "handle": "20.500.12854/30598"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/30598",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-80610",
+          "title": "Time for the Ancients",
+          "author": "Singer, P. N.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20220405_9783110752397_11",
+            "isbn": null,
+            "handle": "20.500.12854/80610"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/80610",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74823",
+          "title": "Das spätantike Rom und die stadtrömische Senatsaristokratie (395–455 n. Chr.)",
+          "author": "Wagner, Hendrik",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211209_9783110727630_40",
+            "isbn": null,
+            "handle": "20.500.12854/74823"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74823",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-145011",
+          "title": "Religion et alimentation en Égypte et Orient anciens",
+          "author": "",
+          "language": "French",
+          "identifiers": {
+            "doi": "ONIX_20240916_9782724709155_218",
+            "isbn": null,
+            "handle": "20.500.12854/145011"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/145011",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74615",
+          "title": "Jenseits der Grenzen",
+          "author": "",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110216585_80",
+            "isbn": null,
+            "handle": "20.500.12854/74615"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74615",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-30158",
+          "title": "Essays in Anarchism and Religion",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "1001617",
+            "isbn": null,
+            "handle": "20.500.12854/30158"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/30158",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-74644",
+          "title": "Gottes Haus",
+          "author": "Czock, Miriam",
+          "language": "German",
+          "identifiers": {
+            "doi": "ONIX_20211207_9783110294750_28",
+            "isbn": null,
+            "handle": "20.500.12854/74644"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/74644",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
           "contentDownloaded": false
         }
       ]
@@ -366,6 +1698,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -385,6 +1718,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -404,6 +1738,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -423,6 +1758,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -442,6 +1778,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -461,6 +1798,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -480,6 +1818,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -499,6 +1838,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -518,6 +1858,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -537,6 +1878,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -556,6 +1898,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -575,6 +1918,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -594,6 +1938,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -613,6 +1958,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -632,6 +1978,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -651,6 +1998,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -670,6 +2018,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -689,6 +2038,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -708,6 +2058,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -727,6 +2078,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -746,6 +2098,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -765,6 +2118,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -784,6 +2138,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -803,6 +2158,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -822,6 +2178,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
@@ -849,6 +2206,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -868,6 +2226,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -887,6 +2246,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -906,6 +2266,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -925,6 +2286,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -944,6 +2306,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -963,6 +2326,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -982,6 +2346,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1001,6 +2366,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1020,6 +2386,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
@@ -1047,6 +2414,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1066,6 +2434,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
@@ -1093,6 +2462,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1112,6 +2482,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1131,6 +2502,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1150,6 +2522,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1169,6 +2542,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1188,6 +2562,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1207,6 +2582,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1226,6 +2602,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1245,6 +2622,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1264,6 +2642,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1283,6 +2662,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1302,6 +2682,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1321,6 +2702,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1340,6 +2722,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1359,6 +2742,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1378,6 +2762,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1397,6 +2782,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1416,6 +2802,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1435,6 +2822,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1454,6 +2842,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1473,6 +2862,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1492,6 +2882,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1511,6 +2902,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1530,6 +2922,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1549,6 +2942,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
@@ -1576,6 +2970,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1595,6 +2990,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1614,6 +3010,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1633,6 +3030,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1652,6 +3050,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1671,6 +3070,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1690,6 +3090,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1709,6 +3110,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1728,6 +3130,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1747,6 +3150,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1766,6 +3170,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1785,6 +3190,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1804,6 +3210,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1823,6 +3230,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1842,6 +3250,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1861,6 +3270,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1880,6 +3290,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1899,6 +3310,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1918,6 +3330,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1937,6 +3350,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1956,6 +3370,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1975,6 +3390,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -1994,6 +3410,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2013,6 +3430,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2032,6 +3450,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
@@ -2059,6 +3478,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2078,6 +3498,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2097,6 +3518,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2116,6 +3538,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2135,6 +3558,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2154,6 +3578,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2173,6 +3598,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2192,6 +3618,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2211,6 +3638,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2230,6 +3658,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2249,6 +3678,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2268,6 +3698,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2287,6 +3718,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2306,6 +3738,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2325,6 +3758,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2344,6 +3778,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2363,6 +3798,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2382,6 +3818,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2401,6 +3838,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2420,6 +3858,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2439,6 +3878,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2458,6 +3898,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2477,6 +3918,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2496,6 +3938,7 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         },
         {
@@ -2515,15 +3958,27 @@
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
+          "quality": "source-edition",
           "contentDownloaded": false
         }
       ]
     }
   ],
   "metrics": {
-    "shelves": 7,
-    "mappedBooks": 127,
-    "sourceCovers": 15
+    "shelves": 9,
+    "mappedBooks": 174,
+    "sourceCovers": 15,
+    "directPublications": 15,
+    "providers": {
+      "Standard Ebooks": 15,
+      "DOAB": 47,
+      "Project Gutenberg": 112
+    }
   },
-  "errors": []
+  "errors": [
+    {
+      "source": "Wikisource",
+      "error": "HTTPError: HTTP Error 404: Not Found"
+    }
+  ]
 }

@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-10T21:09:15.044841+00:00",
+  "generatedAt": "2026-09-10T21:15:05.101049+00:00",
   "results": {
     "books": {
-      "published": 29,
-      "verified": 28,
+      "published": 31,
+      "verified": 30,
       "pending": 1,
       "relations": 17,
       "providers": [
@@ -13,12 +13,12 @@
       ]
     },
     "catalogDeltaToday": {
-      "books": 25,
-      "verifiedBooks": 25,
+      "books": 27,
+      "verifiedBooks": 27,
       "relations": 9
     },
     "autonomousGrowthToday": {
-      "books": 19,
+      "books": 21,
       "titles": [
         "The Life of Flavius Josephus",
         "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
@@ -38,21 +38,24 @@
         "Reina Valera New Testament of the Bible 1602, Book of Matthew",
         "Reina Valera New Testament of the Bible 1865",
         "A Brief Bible History: A Survey of the Old and New Testaments",
-        "Outline Studies in the Old Testament for Bible Teachers"
+        "Outline Studies in the Old Testament for Bible Teachers",
+        "Hebrew Heroes: A Tale Founded on Jewish History",
+        "Bible history and brief outline of church history"
       ]
     },
     "pipelineThisRun": {
-      "englishDiscoveredThisRun": 50,
+      "englishDiscoveredThisRun": 49,
       "chineseDiscoveredThisRun": 0,
-      "englishPromotedThisRun": 1,
+      "englishPromotedThisRun": 2,
       "englishPromotedTitles": [
-        "Outline Studies in the Old Testament for Bible Teachers"
+        "Hebrew Heroes: A Tale Founded on Jewish History",
+        "Bible history and brief outline of church history"
       ]
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 9.5,
-      "density": 28
+      "recentAutonomousGrowthPerDay": 10.5,
+      "density": 30
     },
     "collections": [
       {
