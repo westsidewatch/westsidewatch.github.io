@@ -1,0 +1,33 @@
+name: DORÉ FILM Camera Spine Parity
+
+on:
+  push:
+    paths:
+      - 'docs/dore/film/camera-spine-experiment-01.json'
+      - 'docs/dore/film/tools/camera-spine-timeline.js'
+      - 'docs/dore/film/tools/camera-spine-parity-check.py'
+      - 'docs/dore/film/tools/import-camera-spine.py'
+      - 'static/dore/film/camera-motion-lab-01.html'
+      - '.github/workflows/dore-film-camera-spine-parity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Camera Spine timing/data parity gate
+        run: python3 docs/dore/film/tools/camera-spine-parity-check.py
+      - name: Verify public lab carries authored timing semantics
+        run: |
+          grep -q "buildCameraTimeline" static/dore/film/camera-motion-lab-01.html
+          grep -q "sampleCameraTimeline" static/dore/film/camera-motion-lab-01.html
+          grep -q "AUTHORED SPEED + DWELL" static/dore/film/camera-motion-lab-01.html
+      - name: Verify Blender importer reads same source fields
+        run: |
+          grep -q 'camera-spine-experiment-01.json' docs/dore/film/tools/import-camera-spine.py
+          grep -q 'speed' docs/dore/film/tools/import-camera-spine.py
+          grep -q 'dwell' docs/dore/film/tools/import-camera-spine.py
