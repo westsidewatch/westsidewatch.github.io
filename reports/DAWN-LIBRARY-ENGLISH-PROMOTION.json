@@ -1,50 +1,43 @@
 {
-  "schema": "dawn.library.english-promotion.report.v1",
-  "generatedAt": "2026-09-10T20:27:53.194512+00:00",
-  "promoted": 10,
+  "schema": "dawn.library.english-promotion.report.v2",
+  "generatedAt": "2026-09-10T20:29:23.980775+00:00",
+  "promoted": 4,
   "items": [
     {
-      "id": "gutenberg-2846",
-      "title": "The Life of Flavius Josephus"
+      "id": "gutenberg-1609",
+      "title": "The Bible, Douay-Rheims, Old Testament — Part 1"
     },
     {
-      "id": "gutenberg-2847",
-      "title": "An Extract out of Josephus's Discourse to The Greeks Concerning Hades"
+      "id": "gutenberg-52708",
+      "title": "A Confession of St. Augustine"
     },
     {
-      "id": "gutenberg-9793",
-      "title": "Josephus"
+      "id": "gutenberg-52853",
+      "title": "Sketches of St. Augustine\r\nWith a view of its history and advantages as a resort for invalids"
     },
+    {
+      "id": "gutenberg-54804",
+      "title": "The unwritten history of old St. Augustine"
+    }
+  ],
+  "removedFalsePositives": [
     {
       "id": "gutenberg-29434",
       "title": "The Project Gutenberg Works of Flavius Josephus: An Index"
     },
     {
-      "id": "gutenberg-40341",
-      "title": "King Alfred's Old English Version of St. Augustine's Soliloquies\nTurned into Modern English"
-    },
-    {
-      "id": "gutenberg-41140",
-      "title": "Bible Atlas: A Manual of Biblical Geography and History"
-    },
-    {
-      "id": "gutenberg-52917",
-      "title": "A Bible History of Baptism"
-    },
-    {
       "id": "gutenberg-59484",
       "title": "St. Augustine, Florida's Colonial Capital"
-    },
-    {
-      "id": "gutenberg-64837",
-      "title": "Selections From Josephus"
-    },
-    {
-      "id": "gutenberg-77585",
-      "title": "Confessions of St. Augustine"
     }
   ],
-  "catalogTotal": 20,
+  "rejectedByQualityGate": [
+    {
+      "sourceId": "53608",
+      "title": "The History of Saint Augustine, Florida",
+      "reason": "quality-gate"
+    }
+  ],
+  "catalogTotal": 22,
   "origin": "autonomous-discovery",
   "contentDownloaded": false
 }
