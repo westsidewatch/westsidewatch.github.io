@@ -41,12 +41,12 @@
       "id": "wikisource-ws-export-zh",
       "label": "Wikisource WS Export",
       "languages": ["zh-Hant", "zh-Hans", "zh"],
-      "role": "export-ready-publication-source",
-      "catalog": "https://ws-export.wmcloud.org/opds/zh/Ready_for_export.xml",
-      "catalogFormat": "OPDS",
-      "metadataStrategy": "ready-for-export-publication-feed",
-      "contentPolicy": "Use WS Export EPUB acquisition links on demand; do not store full EPUBs in the catalog.",
-      "rightsPolicy": "Preserve Wikisource page/source licensing and attribution provenance."
+      "role": "on-demand-publication-export",
+      "catalog": "https://ws-export.wmcloud.org/",
+      "catalogFormat": "On-demand EPUB/PDF export service",
+      "metadataStrategy": "verified-wikisource-edition-to-export-url",
+      "contentPolicy": "Generate WS Export EPUB links from already verified Chinese Wikisource editions; do not bulk-store exported EPUBs.",
+      "rightsPolicy": "Preserve the verified Chinese Wikisource page rights and attribution provenance used to create each export URL."
     },
     {
       "id": "doab",
