@@ -1,0 +1,72 @@
+{
+  "schema": "dore-film-canvas-placement/v0.1",
+  "id": "DF-CANVAS-EXP-01",
+  "title": "Patriarchs — First Canonical Canvas Encounter",
+  "status": "ENGINEERING_EXPERIMENT",
+  "canonical": false,
+  "cameraSpine": "DF-CAM-EXP-01",
+  "cameraSource": "docs/dore/film/camera-spine-experiment-01.json",
+  "assetPolicy": {
+    "origin": "DORE_ORIGINAL_LIBRARY",
+    "master": "ONE-DORE-241-MASTER-MAPPING",
+    "registry": "static/one/one-dore-cover-registry.js",
+    "files": "static/one/one-dore-assets-241.js",
+    "preserveFullComposition": true,
+    "allowGeneratedReplacement": false
+  },
+  "viewport": {"aspect": 1.7777777778, "sensorWidthMm": 36},
+  "anchors": [
+    {
+      "anchorId": "A001",
+      "doreId": 11,
+      "title": "Abraham Journeying into the Land of Canaan",
+      "file": "011.Abraham Goes to the Land of Canaan.jpg",
+      "frameNode": "P001",
+      "distance": 9.0,
+      "frameFill": 0.82,
+      "role": "departure-world",
+      "canonicalFrameMoment": true
+    },
+    {
+      "anchorId": "A002",
+      "doreId": 19,
+      "title": "The Meeting of Isaac and Rebekah",
+      "file": "019.The Meeting of Isaac and Rebekah.jpg",
+      "frameNode": "P008",
+      "distance": 9.0,
+      "frameFill": 0.82,
+      "role": "generation-arrival",
+      "canonicalFrameMoment": true
+    },
+    {
+      "anchorId": "A003",
+      "doreId": 21,
+      "title": "Jacob's Dream",
+      "file": "021.Jacob's Dream.jpg",
+      "frameNode": "P020",
+      "distance": 9.0,
+      "frameFill": 0.82,
+      "role": "vertical-attention",
+      "canonicalFrameMoment": true
+    }
+  ],
+  "rules": {
+    "cameraFirst": true,
+    "oneCamera": true,
+    "conventionalCuts": 0,
+    "goldenLightEnabled": false,
+    "lifeAnimationEnabled": false,
+    "scriptureEnabled": false,
+    "nvsEnabled": false,
+    "full3DEnabled": false,
+    "note": "The camera path remains primary. Each original is inverse-placed so the authored camera encounters a full canonical Doré composition at its assigned frame node."
+  },
+  "acceptance": {
+    "exactCanonicalIdsOnly": true,
+    "fullCompositionVisibleAtFrameMoment": true,
+    "originalAspectPreserved": true,
+    "cameraApproachesAndLeavesCanvas": true,
+    "noSlideshowCut": true,
+    "next": "Director review of whether canonical canvases feel discovered by one camera rather than presented as slides."
+  }
+}
