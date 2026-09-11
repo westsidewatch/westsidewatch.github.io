@@ -11,6 +11,11 @@ _pure_workspace=current.visual.base.workspace
 design_motion_registry.install(current)
 current.visual.base.workspace()
 current.visual.base.workspace=_pure_workspace
+# ThreadingHTTPServer may process multiple editor mutations at once. Install the
+# single-writer guard only after startup migrations are complete so runtime POSTs
+# reload the latest workspace under one lock and cannot lose each other's edits.
+import runtime_serialization
+runtime_serialization.install(current.visual.base)
 import candidate01_visual_graph_experiment
 candidate01_visual_graph_experiment.install(current)
 import design2_phase4_http,design2_phase5_http,design2_phase6_http,design2_phase7_http
