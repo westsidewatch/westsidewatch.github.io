@@ -92,8 +92,6 @@ _CANDIDATE_FOCUS_HOST_STYLE = r'''
 <style id="candidate-01-focus-screen-host">
 .candidate-focus-screen{position:relative;min-height:100svh;height:100svh;overflow:hidden;background:#eee8da;color:#252525}
 .candidate-focus-screen iframe{display:block;width:100%;height:100%;border:0;background:#eee8da}
-.candidate-third-alive-screen{position:relative;min-height:100svh;height:100svh;overflow:hidden;background:#171817}
-.candidate-third-alive-screen iframe{display:block;width:100%;height:100%;border:0;background:#171817}
 </style>
 '''
 
@@ -129,30 +127,17 @@ def _candidate_focus_screen(screen_no):
     )
 
 
-def _candidate_third_alive_screen(current):
-    """Reuse the standalone Third Alive renderer unchanged inside Candidate 01."""
-    four_w_html = current.living_water_third_alive_lab.render(edit=False)
-    srcdoc = html_lib.escape(four_w_html, quote=True)
-    return (
-        '<section class="candidate-third-alive-screen" data-current="4w" '
-        'data-layer="navigation" data-screen="4">'
-        '<iframe title="Living Water Third Alive 4W" loading="eager" srcdoc="' + srcdoc + '"></iframe>'
-        '</section>'
-    )
-
-
 def _install_candidate_focus(current, html):
-    """Candidate 01 order: home, focus one, focus two, Third Alive 4W, then fixed worlds."""
-    if 'data-screen="4"' in html:
+    """Candidate 01 order: home, focus one, focus two, then fixed worlds."""
+    if 'data-screen="3"' in html:
         return html
     html = html.replace('</head>', _CANDIDATE_FOCUS_HOST_STYLE + '</head>', 1)
     anchor = '</section><section class="world dark">'
     focus_one = _candidate_focus_screen(2)
     focus_two = _candidate_focus_screen(3)
-    four_w = _candidate_third_alive_screen(current)
     return html.replace(
         anchor,
-        '</section>' + focus_one + focus_two + four_w + '<section class="world dark">',
+        '</section>' + focus_one + focus_two + '<section class="world dark">',
         1,
     )
 
@@ -173,8 +158,7 @@ def install(current):
     ]
     current.multipage_wysiwyg.SUPPORTED.update(page_ids)
 
-    # Keep the locked motion pages and standalone Third Alive page intact;
-    # Candidate 01 reuses those exact renderers as embedded viewports.
+    # Keep standalone Third Alive intact; Candidate 01 only reuses the two locked focus viewports.
     previous_render = current.multipage_wysiwyg.render_canvas
     def render_canvas(page_id='homepage', edit=False):
         if page_id == codrops_site_8x5.PAGE_ID:
