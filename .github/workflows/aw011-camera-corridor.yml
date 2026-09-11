@@ -106,15 +106,18 @@ jobs:
           data = json.loads(p.read_text())
           assert data['status'] == 'TRAVERSAL_READY', data['status']
           assert data['preflight']['evidence']['selected_anchor_ids'] == ['A001-telea-inferred']
+          assert data['preflight']['evidence']['unresolved_pose_ids'] == []
           assert data['traversal']['exact_source_relock'] is True
           for frame in data['frames']['frames']:
-              assert frame['known_pixels_preserved'] is True
+              assert frame['status'] == 'FRAME_ACCEPTED'
               assert frame['known_channel_delta_count'] == 0
           print(json.dumps({
               'status': data['status'],
               'selected_anchor_ids': data['preflight']['evidence']['selected_anchor_ids'],
+              'unresolved_pose_ids': data['preflight']['evidence']['unresolved_pose_ids'],
               'exact_source_relock': data['traversal']['exact_source_relock'],
               'travel_frames': data['frames']['pose_count'],
+              'known_channel_delta_counts': [f['known_channel_delta_count'] for f in data['frames']['frames']],
           }, indent=2))
           PY
 
