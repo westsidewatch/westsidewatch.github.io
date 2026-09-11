@@ -1,0 +1,74 @@
+{
+  "schema": "dawn.visual-graph.v1",
+  "updated": "2026-09-10",
+  "principle": "Visual resources are first-class Dawn Library resources. Authority and provenance remain separate from presentation surfaces.",
+  "visual_works": [
+    {
+      "id": "visual-dore-gen22-testing-abraham",
+      "type": "engraving",
+      "canonical_title": "The Testing of Abraham's Faith",
+      "creator": {
+        "name": "Gustave Doré",
+        "role": "artist"
+      },
+      "date": "1866",
+      "series": "Doré's English Bible",
+      "illustrated_work": "Bible",
+      "scripture_refs": [
+        {
+          "book": "Genesis",
+          "chapter": 22,
+          "verse_start": 2,
+          "verse_end": 19,
+          "canonical": "Genesis 22:2–19"
+        }
+      ],
+      "depicts": [
+        "Abraham",
+        "Isaac",
+        "The testing of Abraham's faith"
+      ],
+      "authority_class": "B",
+      "generated": false,
+      "representations": [
+        {
+          "id": "repr-commons-016-testing-abraham",
+          "provider": "Wikimedia Commons",
+          "provider_type": "digital-surrogate",
+          "source_page": "https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg",
+          "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/016.The_Testing_of_Abraham%27s_Faith.jpg?width=1600",
+          "width": 2303,
+          "height": 2904,
+          "rights": {
+            "work_status": "public-domain",
+            "digital_file_status": "public-domain-faithful-reproduction",
+            "branded_derivative_allowed": true,
+            "training_canon_allowed": true,
+            "evidence_url": "https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg"
+          },
+          "provenance": {
+            "source_work": "Doré's English Bible",
+            "source_date": "1866",
+            "source_note": "Faithful digital surrogate of a public-domain two-dimensional work."
+          }
+        }
+      ],
+      "regions": [],
+      "surface_presets": [
+        {
+          "id": "card-8x5",
+          "aspect_ratio": "8:5",
+          "fit": "cover",
+          "focal_point": "50% 42%",
+          "motion": "near-still"
+        },
+        {
+          "id": "deep-view",
+          "aspect_ratio": "native",
+          "fit": "contain",
+          "motion": "none"
+        }
+      ]
+    }
+  ]
+}
