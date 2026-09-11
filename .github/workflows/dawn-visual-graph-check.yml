@@ -12,14 +12,7 @@ on:
       - 'layouts/**'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/css/dawn-visual.css'
-      - 'scripts/dore/visual-fuzzy-retrieval.mjs'
-      - 'scripts/dore/visual-fuzzy-retrieval-selftest.mjs'
-      - 'scripts/dore/visual-editorial-director-adapter.mjs'
-      - 'scripts/dore/visual-editorial-director-runtime.mjs'
-      - 'scripts/dore/visual-editorial-director-runtime-selftest.mjs'
-      - 'scripts/dore/dawn-editorial-context.mjs'
-      - 'scripts/dore/dawn-editorial-context-selftest.mjs'
-      - 'scripts/dore/build-dawn-visual-editorial-feed.mjs'
+      - 'scripts/dore/**'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
 
@@ -73,6 +66,8 @@ jobs:
         run: node scripts/dore/visual-editorial-director-runtime-selftest.mjs
       - name: Phase 2 live Dawn editorial context self-test
         run: node scripts/dore/dawn-editorial-context-selftest.mjs
+      - name: Phase 2 Dawn surface orchestration self-test
+        run: node scripts/dore/dawn-surface-orchestrator-selftest.mjs
       - name: Build Dawn Library editorial feed
         run: |
           node scripts/dore/build-dawn-visual-editorial-feed.mjs
