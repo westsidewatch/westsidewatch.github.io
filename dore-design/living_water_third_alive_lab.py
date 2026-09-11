@@ -30,10 +30,15 @@ def install_workspace(base):
 
 
 def install_editor(html):
-    anchor="'living-water-second-layer-lab'])"
-    replacement="'living-water-second-layer-lab','living-water-third-alive-lab'])"
-    if PAGE_ID in html:return html
-    return html.replace(anchor,replacement,1) if anchor in html else html
+    """Register Third Alive directly in the editor's supported Set.
+
+    Do not depend on the order or presence of other Living Water labs.
+    """
+    if f"supported.add('{PAGE_ID}')" in html:
+        return html
+    marker="const qs=new URLSearchParams(location.search);"
+    injection=f"supported.add('{PAGE_ID}');"+marker
+    return html.replace(marker,injection,1) if marker in html else html
 
 
 def _card(movement,index,span):
