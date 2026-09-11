@@ -1,0 +1,24 @@
+{
+  "schema": "dawn.visual-editorial-feed.v1",
+  "source": "dore.visual-editorial-director.v1",
+  "graph": "dawn.visual-graph.v1",
+  "selections": [
+    {
+      "id": "dawn-library-featured",
+      "label": "Editorial Focus",
+      "schema": "dore.visual-editorial-director.v1",
+      "source": "dawn.visual-graph.v1",
+      "graphBound": true,
+      "candidates": [
+        {
+          "visualWorkId": "visual-princeton-galilee-storm-1591",
+          "score": 0.506667,
+          "authorityClass": "A",
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
+        }
+      ]
+    }
+  ]
+}
