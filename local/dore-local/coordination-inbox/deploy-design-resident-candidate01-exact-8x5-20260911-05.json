@@ -1,0 +1,21 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"deploy-design-resident-candidate01-exact-8x5-20260911-05",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "subject":"Deploy Candidate 01 exact horizontal 8:5 geometry",
+  "body":"Deploy Candidate 01 branch SHA e35f94173f5ba0a784954b3bcdf92e8a49fbadd9 to the local Doré Design resident. This supersedes all earlier Candidate 01 resident deployment requests. Required visible behavior: source cards are horizontal 8:5; each two-column by two-row group resolves to a horizontal 8:5 preview; the preview overlay must be measured from the actual card rectangles and match the group bounds exactly; preserve the original Codrops hover/reverse mechanism; do not restore living-current, mosaic, assemble/release, 4W overlay, or alternate preview geometry.",
+  "related_goal":"candidate01-exact-horizontal-8x5",
+  "priority":"critical",
+  "requires_reply":true,
+  "commands":[
+    {"argv":["git","fetch","origin","+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["bash","-lc","test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"e35f94173f5ba0a784954b3bcdf92e8a49fbadd9\""],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["git","worktree","remove","--force","/Users/chenjingyu/.dore/design-pr642"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":60},
+    {"argv":["git","worktree","add","--force","--detach","/Users/chenjingyu/.dore/design-pr642","e35f94173f5ba0a784954b3bcdf92e8a49fbadd9"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","-m","py_compile","dore-design/codrops_site_8x5.py","dore-design/candidate01_visual_graph_experiment.py"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":30},
+    {"argv":["bash","-lc","export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-pr642; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":180},
+    {"argv":["bash","-lc","HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01'); printf '%s' \"$HTML\" | grep -q 'candidate01-exact-grid-preview-geometry' && ! printf '%s' \"$HTML\" | grep -q 'dore-mosaic-layer' && ! printf '%s' \"$HTML\" | grep -q 'candidate-01-living-editorial-runtime'"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":60}
+  ]
+}
