@@ -36,10 +36,19 @@
           "provider": "Wikimedia Commons",
           "provider_type": "digital-surrogate",
           "source_page": "https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg",
-          "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/016.The_Testing_of_Abraham%27s_Faith.jpg?width=1600",
+          "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/016.The_Testing_of_Abraham%27s_Faith.jpg?width=2303",
           "width": 2303,
           "height": 2904,
+          "delivery": {
+            "mode": "single-image",
+            "iiif_image_service": null,
+            "iiif_manifest": "/iiif/visual-dore-gen22-testing-abraham/manifest.json",
+            "deep_zoom": true,
+            "deep_zoom_engine": "OpenSeadragon",
+            "fallback": "single-image"
+          },
           "rights": {
+            "policy": "public-domain",
             "work_status": "public-domain",
             "digital_file_status": "public-domain-faithful-reproduction",
             "branded_derivative_allowed": true,
