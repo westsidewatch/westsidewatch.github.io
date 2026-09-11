@@ -5,6 +5,9 @@ from pathlib import Path
 from http.server import ThreadingHTTPServer
 from urllib.parse import urlparse,parse_qs
 import app_visual as visual
+# Runtime/product pages are migrations, not read-time workspace behavior. Keep the
+# canonical pure reader so one explicit mutation remains exactly one revision.
+_pure_workspace=visual.base.workspace
 import multiwrite_integration;multiwrite_integration.install_workspace(visual.base)
 import motion_prototypes;motion_prototypes.install_workspace(visual.base)
 import living_water_candidate;living_water_candidate.install_workspace(visual.base)
@@ -15,6 +18,9 @@ import living_water_second_layer_lab;living_water_second_layer_lab.install_works
 import living_water_third_alive_lab;living_water_third_alive_lab.install_workspace(visual.base)
 import design2_layer_ops;design2_layer_ops.install(visual.base)
 import design2_multiwrite_cover;design2_multiwrite_cover.ensure(visual.base)
+# The ensure() call above traverses every registered wrapper once and persists
+# all missing runtime pages. From here onward GET/workspace is side-effect free.
+visual.base.workspace=_pure_workspace
 import design2_cover_render,design2_cover_interaction,design2_cover_manifest,design2_cover_acceptance,design2_closeout_acceptance
 import multipage_wysiwyg,journal_wysiwyg,multiwrite_wysiwyg,promotion_pipeline,homepage_candidates,template_library
 import design2_ui,design2_snap_guides,design2_layers_ui,design2_canvas_state,design2_arrange_ui,design2_cover_asset_ui,design2_typography_ui
