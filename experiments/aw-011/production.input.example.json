@@ -1,0 +1,16 @@
+{
+  "aw_id": "AW-011",
+  "source": {
+    "asset": "assets/dore-011.png",
+    "canonical_pose_id": "P000"
+  },
+  "camera": {
+    "spine_file": "camera-spine.json"
+  },
+  "scaffold": {
+    "provider": "one2scene-class"
+  },
+  "anchors": {
+    "candidate_coverage_file": "evidence.json"
+  }
+}
