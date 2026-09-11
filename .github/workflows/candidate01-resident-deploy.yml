@@ -9,16 +9,25 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: candidate01-resident-deploy
+  cancel-in-progress: true
+
 jobs:
   deploy:
     runs-on: [self-hosted, macOS, dore]
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+      - name: Verify local Doré repo
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          test -d "$ROOT/.git"
+          cd "$ROOT"
+          git remote get-url origin
       - name: Fetch exact Candidate 01 branch
         run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          cd "$ROOT"
           git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
           test "$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)" = "e35f94173f5ba0a784954b3bcdf92e8a49fbadd9"
       - name: Build exact detached Design worktree
@@ -26,7 +35,6 @@ jobs:
           ROOT="$HOME/westsidewatch.github.io"
           WT="$HOME/.dore/design-pr642"
           cd "$ROOT"
-          git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
           git worktree remove --force "$WT" 2>/dev/null || true
           rm -rf "$WT"
           git worktree add --force --detach "$WT" e35f94173f5ba0a784954b3bcdf92e8a49fbadd9
