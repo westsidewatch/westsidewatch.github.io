@@ -1,0 +1,64 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "deploy-design-resident-candidate01-hover-collapse-fix-20260911-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Deploy Candidate 01 hover-collapse repair to Design resident",
+  "body": "Repoint only the local Doré Design resident from the previous Candidate 01 SHA to 714db84bd89d1477e0b36a6c4111bdb6128246e0. Preserve Candidate 01 Visual Director and 4W runtime. Validate Python syntax and the visible motion close-path hook before restarting the resident. Do not alter the public homepage.",
+  "related_goal": "dore-design-candidate01-visible-motion-repair",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git", "fetch", "origin", "+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash", "-lc", "test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"714db84bd89d1477e0b36a6c4111bdb6128246e0\""],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["python3", "-m", "py_compile", "dore-design/codrops_site_8x5.py"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["git", "worktree", "remove", "--force", "/Users/chenjingyu/.dore/design-pr642"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": ["git", "worktree", "add", "--force", "--detach", "/Users/chenjingyu/.dore/design-pr642", "714db84bd89d1477e0b36a6c4111bdb6128246e0"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3", "-m", "py_compile", "dore-design/codrops_site_8x5.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 30
+    },
+    {
+      "argv": ["python3", "dore-design/candidate01_living_editorial_acceptance.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash", "-lc", "export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-pr642; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 180
+    },
+    {
+      "argv": ["bash", "-lc", "curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q 'candidate-01-living-editorial-runtime' && curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q 'dore.visual-editorial-director.v1' && curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q 'leaveOutsideActive'"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    },
+    {
+      "argv": ["bash", "-lc", "python3 - <<'PY'\nimport json,urllib.request\nbase='http://127.0.0.1:4310'\nh=json.load(urllib.request.urlopen(base+'/api/health'))\nhtml=urllib.request.urlopen(base+'/editor-canvas?page=living-water-candidate-01').read().decode()\nprint(json.dumps({'ok':True,'deployed_sha':'714db84bd89d1477e0b36a6c4111bdb6128246e0','health':h,'visual_director':'dore.visual-editorial-director.v1' in html,'runtime':'candidate-01-living-editorial-runtime' in html,'hover_collapse_guard':'leaveOutsideActive' in html},ensure_ascii=False))\nPY"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    }
+  ]
+}
