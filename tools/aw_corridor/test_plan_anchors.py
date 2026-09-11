@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 
-import importlib.util
 import json
 import unittest
 from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-SPEC = importlib.util.spec_from_file_location("plan_anchors", HERE / "plan_anchors.py")
-MODULE = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(MODULE)
+import plan_anchors as MODULE
 
 
 class AnchorPlannerTests(unittest.TestCase):
     def test_prefers_true_marginal_coverage_and_stops_without_redundant_anchor(self):
-        fixture = Path(__file__).resolve().parents[2] / "experiments" / "aw-011" / "evidence.fixture.json"
+        fixture = (
+            Path(__file__).resolve().parents[2]
+            / "experiments"
+            / "aw-011"
+            / "evidence.fixture.json"
+        )
         data = json.loads(fixture.read_text(encoding="utf-8"))
         poses, candidates, threshold = MODULE.parse_problem(data)
         report = MODULE.plan(poses, candidates, threshold)
