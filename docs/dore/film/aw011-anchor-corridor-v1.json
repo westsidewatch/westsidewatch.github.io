@@ -1,0 +1,87 @@
+{
+  "schema": "dore-film-anchor-corridor/v0.1",
+  "id": "AW011-CORRIDOR-01",
+  "status": "PRODUCTION_INPUT",
+  "target_acceptance": ["AW-5", "AW-6"],
+  "authority_anchor": {
+    "dore_id": 11,
+    "title": "Abraham Journeying into the Land of Canaan",
+    "canonical_filename": "011.Abraham Goes to the Land of Canaan.jpg",
+    "source_dimensions": [2617, 2074],
+    "origin": "DORE_ORIGINAL_LIBRARY",
+    "asset_policy": "CANONICAL_241_EXACT_ONLY",
+    "authority_rule": "Canonical source pixels are immutable and win at the canonical camera."
+  },
+  "camera_convention": {
+    "space": "OpenCV camera-to-world",
+    "axes": "+X right, +Y down, +Z forward",
+    "intrinsics": "normalized by image width/height",
+    "anchor_resolution": [512, 512]
+  },
+  "intrinsics": [
+    [1.35, 0.0, 0.5],
+    [0.0, 1.35, 0.5],
+    [0.0, 0.0, 1.0]
+  ],
+  "anchors": [
+    {
+      "id": "A0",
+      "role": "AUTHORITY_CANONICAL",
+      "required": true,
+      "eye": [0.0, 0.0, 0.0],
+      "yaw_deg": 0.0,
+      "pitch_deg": 0.0,
+      "generation_allowed": false
+    },
+    {
+      "id": "A1",
+      "role": "OFF_AXIS_OBSERVATION",
+      "required": true,
+      "eye": [0.10, 0.0, 0.16],
+      "yaw_deg": -4.0,
+      "pitch_deg": 0.0,
+      "generation_allowed": true
+    },
+    {
+      "id": "A2",
+      "role": "OFF_AXIS_OBSERVATION",
+      "required": true,
+      "eye": [0.22, -0.015, 0.34],
+      "yaw_deg": -8.0,
+      "pitch_deg": 1.0,
+      "generation_allowed": true
+    }
+  ],
+  "camera_path": [
+    {"t": 0.0, "anchor": "A0", "intent": "canonical hold"},
+    {"t": 0.25, "anchor": "A1", "intent": "enter depicted space"},
+    {"t": 0.50, "anchor": "A2", "intent": "deepest off-axis reveal"},
+    {"t": 0.75, "anchor": "A1", "intent": "return through known world"},
+    {"t": 1.0, "anchor": "A0", "intent": "canonical re-lock"}
+  ],
+  "anchor_provider_contract": {
+    "preferred_first_adapter": "GenWarp-class",
+    "input": ["authority_rgb", "authority_depth", "source_camera", "target_camera"],
+    "output": ["synthesized", "warped", "mask_raw", "correspondence"],
+    "mask_normalization_rule": "Do not trust provider naming. Derive visible/unseen semantics from actual warp coverage and record the normalized unseen mask explicitly.",
+    "provenance": ["A_CANONICAL", "B_REPROJECTED", "C_RECONSTRUCTED", "D_INFERRED_UNSEEN"]
+  },
+  "scaffold_contract": {
+    "context_image": "[1,V,3,H,W]",
+    "context_intrinsics": "[1,V,3,3]",
+    "context_extrinsics": "[1,V,4,4]",
+    "output": ["means", "covariances", "harmonics", "opacities"],
+    "provider_policy": "replaceable sparse-view Gaussian scaffold provider"
+  },
+  "acceptance": {
+    "must": [
+      "A0 is pixel-authoritative and never regenerated",
+      "camera materially leaves canonical view",
+      "no literal image-plane edge becomes visible",
+      "foreground/background separation survives A1/A2",
+      "unseen content is generated only where source/accepted anchors cannot project",
+      "return to A0 restores the canonical original rather than a model approximation"
+    ],
+    "not_required_yet": ["Light", "Scripture", "character animation", "011-to-019 handoff", "algorithm distillation"]
+  }
+}
