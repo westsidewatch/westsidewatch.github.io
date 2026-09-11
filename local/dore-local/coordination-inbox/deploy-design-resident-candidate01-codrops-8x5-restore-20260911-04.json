@@ -1,0 +1,21 @@
+{
+  "schema":"dore.mail.v1",
+  "message_id":"deploy-design-resident-candidate01-codrops-8x5-restore-20260911-04",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "subject":"Deploy Candidate 01 original Codrops 8:5 focus restore",
+  "body":"Deploy Candidate 01 branch SHA 503da7702f2637d5eb2165441e9b760d53b21fd5 to the local Doré Design resident. This supersedes all Candidate 01 mosaic/four-crop deployment requests. Required visible behavior: preserve the verified GridToFullPreview interaction from dore-design/codrops_site_8x5.py exactly; only the card orientation/proportion is horizontal 8:5. Hover remains 100ms; selected card triggers the original preview reveal/cross-mask motion; leaving reverses the same motion. Do not install living-current drift, dore-mosaic-layer, dore-mosaic-piece, assemble/release state machines, or extra hover-reader behavior. products__preview must remain visible on desktop. Do not alter public homepage.",
+  "related_goal":"dore-design-candidate01-codrops-8x5-restore",
+  "priority":"critical",
+  "requires_reply":true,
+  "commands":[
+    {"argv":["git","fetch","origin","+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["bash","-lc","test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"503da7702f2637d5eb2165441e9b760d53b21fd5\""],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":30},
+    {"argv":["git","worktree","remove","--force","/Users/chenjingyu/.dore/design-pr642"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":60},
+    {"argv":["git","worktree","add","--force","--detach","/Users/chenjingyu/.dore/design-pr642","503da7702f2637d5eb2165441e9b760d53b21fd5"],"cwd":"/Users/chenjingyu/westsidewatch.github.io","timeout":120},
+    {"argv":["python3","-m","py_compile","dore-design/codrops_site_8x5.py","dore-design/design_motion_registry.py","dore-design/candidate01_visual_graph_experiment.py"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":30},
+    {"argv":["bash","-lc","export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-pr642; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":180},
+    {"argv":["bash","-lc","HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01'); printf '%s' \"$HTML\" | grep -q 'candidate-01-codrops-8x5-embed' && printf '%s' \"$HTML\" | grep -q 'GridToFullPreview 8:5' && ! printf '%s' \"$HTML\" | grep -q 'dore-mosaic-layer' && ! printf '%s' \"$HTML\" | grep -q 'candidate-01-living-editorial-runtime'"],"cwd":"/Users/chenjingyu/.dore/design-pr642","timeout":60}
+  ]
+}
