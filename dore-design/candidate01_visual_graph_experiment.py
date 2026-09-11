@@ -22,8 +22,6 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
     const minY=Math.min(...cr.map(r=>r.top));
     const maxY=Math.max(...cr.map(r=>r.bottom));
 
-    // The preview layer is the exact outer rectangle of the 4x2 card tracks,
-    // not the tall .products viewport. This is the Codrops overlay invariant.
     layer.style.inset='auto';
     layer.style.left=`${minX-rr.left}px`;
     layer.style.top=`${minY-rr.top}px`;
@@ -31,8 +29,6 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
     layer.style.height=`${maxY-minY}px`;
     layer.style.minHeight='0';
 
-    // Each preview overlays exactly one 2-column x 2-row group.
-    // With every source card at 8:5, that group is also 8:5.
     const groupW=cr[1].right-cr[0].left;
     const groupH=maxY-minY;
     [left,right].forEach(p=>{
@@ -49,11 +45,10 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
     document.documentElement.dataset.candidate01Geometry=
       `${Math.round(groupW)}x${Math.round(groupH)}`;
   };
+  window.__candidate01SyncGeometry=sync;
 
   const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{
     sync();
-    // Let the original Codrops engine recalculate its scale factors
-    // against the corrected overlay rectangle.
     window.dispatchEvent(new Event('resize'));
   }));
 
@@ -63,10 +58,74 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 })();
 </script>'''
 
+LIVING_CURRENT_STYLE = r'''<style id="candidate01-living-current-return">
+/* Keep the four source cards visually present under the Codrops preview mask.
+   Web Animations may request opacity:0; this visibility lock prevents the blank-hole regression. */
+.products__grid .product{opacity:1!important}
+.products__grid .product{translate:0 0;will-change:translate,transform,opacity}
+@media(prefers-reduced-motion:reduce){.products__grid .product{translate:0 0!important}}
+</style>'''
+
+LIVING_CURRENT_SCRIPT = r'''<script id="candidate01-living-current-runtime">
+(()=>{
+  const cards=[...document.querySelectorAll('.products__grid .product')];
+  if(cards.length<8||document.documentElement.dataset.candidate01CurrentBound==='true')return;
+  document.documentElement.dataset.candidate01CurrentBound='true';
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const rows=[cards.slice(0,4),cards.slice(4,8)];
+  const state=[
+    {offset:0,velocity:0,cruise:7,direction:1,limit:28},
+    {offset:0,velocity:0,cruise:5.5,direction:-1,limit:22}
+  ];
+  let last=performance.now(),arrested=false,resumeAt=0;
+
+  const render=()=>rows.forEach((row,i)=>row.forEach(card=>card.style.translate=`${state[i].offset.toFixed(3)}px 0`));
+  const zero=()=>{state.forEach(s=>{s.offset=0;s.velocity=0});render();window.__candidate01SyncGeometry?.()};
+  const arrest=()=>{arrested=true;resumeAt=0};
+  const release=()=>{resumeAt=performance.now()+560};
+
+  document.addEventListener('mouseover',e=>{
+    if(e.target.closest?.('.product'))arrest();
+  },true);
+  document.addEventListener('mouseout',e=>{
+    const from=e.target.closest?.('.product');
+    const to=e.relatedTarget?.closest?.('.product');
+    if(from&&!to)release();
+  },true);
+  window.addEventListener('blur',()=>{arrested=true;zero()});
+
+  const tick=now=>{
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    if(!reduced){
+      if(resumeAt&&now>=resumeAt){arrested=false;resumeAt=0}
+      state.forEach(s=>{
+        if(arrested){
+          s.velocity*=Math.max(0,1-dt*18);
+          s.offset+=(0-s.offset)*Math.min(1,dt*28);
+          if(Math.abs(s.offset)<.08){s.offset=0;s.velocity=0}
+        }else{
+          const target=s.cruise*s.direction;
+          const delta=target-s.velocity;
+          s.velocity+=Math.sign(delta)*Math.min(Math.abs(delta),8*dt);
+          s.offset+=s.velocity*dt;
+          if(Math.abs(s.offset)>=s.limit){s.offset=Math.sign(s.offset)*s.limit;s.direction*=-1}
+        }
+      });
+      render();
+      if(arrested&&state.every(s=>Math.abs(s.offset)<.1))window.__candidate01SyncGeometry?.();
+    }
+    requestAnimationFrame(tick);
+  };
+  render();requestAnimationFrame(tick);
+  document.documentElement.dataset.livingCurrent='horizontal-two-row';
+})();
+</script>'''
+
 
 def focus_screen(screen_no, labels):
     doc = codrops_site_8x5.render(edit=False)
-    doc = doc.replace('</body>', GEOMETRY_LOCK + '</body>', 1)
+    doc = doc.replace('</head>', LIVING_CURRENT_STYLE + '</head>', 1)
+    doc = doc.replace('</body>', GEOMETRY_LOCK + LIVING_CURRENT_SCRIPT + '</body>', 1)
     srcdoc = html_lib.escape(doc, quote=True)
     return (
         '<section class="candidate-focus-screen" data-current="focus" data-layer="first" '
