@@ -85,10 +85,15 @@ jobs:
               map_ids.add(profile['id'])
               assert profile['scale_denominator'] > 0, f"invalid map scale: {profile['id']}"
               assert profile['source']['rights_policy'] in policies, f"unknown map rights policy: {profile['id']}"
+              survey = profile.get('survey_geometry_provenance', {})
+              assert survey.get('authority_status') == 'historical-survey-method-verified', f"map requires authoritative survey-method provenance: {profile['id']}"
+              assert survey.get('use_as_gcp') is False, f"historical survey description cannot silently become raster GCPs: {profile['id']}"
+              assert profile.get('coverage_evidence', {}).get('authority_status') == 'historical-text-verified', f"map requires authoritative coverage evidence: {profile['id']}"
               geo = profile['georeference']
               overlay = next((p for p in profile['surface_presets'] if p['id'] == 'map-overlay'), None)
               assert overlay, f"map-overlay preset required: {profile['id']}"
               assert overlay.get('requires_verified_georeference') is True, f"overlay must be fail-closed: {profile['id']}"
+              assert geo.get('candidate_control_point_policy'), f"map requires explicit GCP admission policy: {profile['id']}"
               if geo['verified']:
                   assert geo.get('annotation_url'), f"verified map requires annotation_url: {profile['id']}"
                   assert len(geo.get('control_points', [])) >= 3 or geo.get('annotation_url'), f"verified map requires georeference evidence: {profile['id']}"
