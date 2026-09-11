@@ -1,0 +1,4 @@
+#!/usr/bin/env node
+import { normalizeVisualGraph, rankVisualWorks } from './visual-fuzzy-retrieval.mjs';
+export const visualEditorialDirectorContract=Object.freeze({schema:'dore.visual-editorial-director.v1',source:'dawn.visual-graph.v1',output:'ranked-eligible-visualworks'});
+export function selectEditorialVisuals(input,graph){const works=normalizeVisualGraph(graph);return{schema:visualEditorialDirectorContract.schema,w:input.w||input.wContext||null,targetSurface:input.surfacePreset||input.aspectRatio||null,candidates:rankVisualWorks({text:input.text||input.content||'',wContext:input.w||input.wContext||'',scriptureRefs:input.scriptureRefs||[],visual:input.visual||[],aspectRatio:input.aspectRatio,surfacePreset:input.surfacePreset,operation:input.operation||'display',authorityMinimum:input.authorityMinimum||'C',limit:input.limit||8},works)}}
