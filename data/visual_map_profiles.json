@@ -1,0 +1,52 @@
+{
+  "schema": "dawn.visual-map-profiles.v1",
+  "updated": "2026-09-10T23:26:00-04:00",
+  "principle": "Historical-place evidence and cartographic georeference are distinct. Map overlay activates only from verified control points or a verified Georeference Annotation.",
+  "profiles": [
+    {
+      "id": "map-profile-pef-sheet-xvii-1880",
+      "visual_work_id": "visual-pef-western-palestine-sheet-xvii-1880",
+      "title": "Sheet XVII. Palestine Exploration Map",
+      "creators": ["C. R. Conder", "H. H. Kitchener"],
+      "publisher": "Committee of the Palestine Exploration Fund",
+      "survey_period": "1872–1877",
+      "publication_year": 1880,
+      "scale_denominator": 63360,
+      "source": {
+        "provider": "Wikimedia Commons / National Library of Israel surrogate",
+        "source_page": "https://commons.wikimedia.org/wiki/File:Survey_of_Western_Palestine_1880.17.jpg",
+        "image_url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Survey_of_Western_Palestine_1880.17.jpg?width=3840",
+        "width": 7571,
+        "height": 6614,
+        "rights_policy": "public-domain",
+        "rights_evidence": "https://commons.wikimedia.org/wiki/File:Survey_of_Western_Palestine_1880.17.jpg"
+      },
+      "place_evidence": [
+        {
+          "place_id": "place-beit-shemesh",
+          "historical_label": "Ain Shems",
+          "modern_label": "Tel Beit Shemesh",
+          "evidence_type": "source-derived-crop",
+          "evidence_url": "https://commons.wikimedia.org/wiki/File:Ain_Shems_(today_known_as_Tel_Beit_Shemesh)_in_the_Survey_of_Western_Palestine_1880.17_(cropped).jpg",
+          "provenance": "authority-derived",
+          "note": "The Commons derivative explicitly identifies Ain Shems / Tel Beit Shemesh as a detail extracted from Sheet XVII. This proves map-place occurrence, not pixel-to-geographic control coordinates."
+        }
+      ],
+      "georeference": {
+        "status": "awaiting-verified-control-points",
+        "verified": false,
+        "control_points": [],
+        "annotation_url": null,
+        "annotation_standard": "Allmaps Georeference Annotation",
+        "activation_policy": "verified-only",
+        "engine": "Allmaps",
+        "reason": "Public source pages confirm the map identity, scale and place occurrence, but do not expose a verified pixel↔longitude/latitude control-point set."
+      },
+      "surface_presets": [
+        {"id":"card-8x5","mode":"image","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 50%"},
+        {"id":"deep-view","mode":"image","aspect_ratio":"native","fit":"contain"},
+        {"id":"map-overlay","mode":"georeferenced-map","engine":"Allmaps","requires_verified_georeference":true}
+      ]
+    }
+  ]
+}
