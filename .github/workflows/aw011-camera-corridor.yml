@@ -82,3 +82,21 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: aw-011-v5-world-cache, path: build/v5-world-cache/}
+
+  v7-residual-ldi:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: |
+          mkdir -p experiments/aw-011/assets
+          curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
+      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
+      - run: |
+          mkdir -p build/v7-residual-ldi
+          python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/v7-residual-ldi/depth.png --report build/v7-residual-ldi/depth-report.json
+      - run: python tools/aw_corridor/experiment_residual_ldi.py --source experiments/aw-011/assets/dore-011.jpg --depth build/v7-residual-ldi/depth.png --spine experiments/aw-011/camera-spine.json --output build/v7-residual-ldi/traversal.mp4 --report build/v7-residual-ldi/traversal-report.json --width 960 --fps 24 --segment-frames 24 --layers 4
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: aw-011-v7-residual-ldi, path: build/v7-residual-ldi/}
