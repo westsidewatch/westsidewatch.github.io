@@ -1,0 +1,69 @@
+{
+  "schema": "dawn.visual-rights.v1",
+  "principle": "Technical embeddability is not permission. Resolve rights before choosing a presentation surface.",
+  "policies": {
+    "public-domain": {
+      "label": "Public Domain",
+      "allow_inline": true,
+      "allow_remote_deep_zoom": true,
+      "allow_cached_derivative": true,
+      "allow_branded_crop": true,
+      "allow_training_canon": true,
+      "attribution_required": false
+    },
+    "cc0": {
+      "label": "CC0",
+      "allow_inline": true,
+      "allow_remote_deep_zoom": true,
+      "allow_cached_derivative": true,
+      "allow_branded_crop": true,
+      "allow_training_canon": true,
+      "attribution_required": false
+    },
+    "cc-by": {
+      "label": "CC BY",
+      "allow_inline": true,
+      "allow_remote_deep_zoom": true,
+      "allow_cached_derivative": true,
+      "allow_branded_crop": true,
+      "allow_training_canon": false,
+      "attribution_required": true
+    },
+    "cc-by-sa": {
+      "label": "CC BY-SA",
+      "allow_inline": true,
+      "allow_remote_deep_zoom": true,
+      "allow_cached_derivative": true,
+      "allow_branded_crop": false,
+      "allow_training_canon": false,
+      "attribution_required": true
+    },
+    "noncommercial": {
+      "label": "Non-commercial restricted",
+      "allow_inline": true,
+      "allow_remote_deep_zoom": true,
+      "allow_cached_derivative": false,
+      "allow_branded_crop": false,
+      "allow_training_canon": false,
+      "attribution_required": true
+    },
+    "restricted": {
+      "label": "Restricted",
+      "allow_inline": false,
+      "allow_remote_deep_zoom": false,
+      "allow_cached_derivative": false,
+      "allow_branded_crop": false,
+      "allow_training_canon": false,
+      "attribution_required": true
+    },
+    "unknown": {
+      "label": "Rights unknown",
+      "allow_inline": false,
+      "allow_remote_deep_zoom": false,
+      "allow_cached_derivative": false,
+      "allow_branded_crop": false,
+      "allow_training_canon": false,
+      "attribution_required": true
+    }
+  }
+}
