@@ -1,124 +1,14 @@
 #!/usr/bin/env node
-/**
- * Dawn Library Phase 2 / Cut 01
- * Lightweight multi-dimensional Visual Fuzzy Search.
- *
- * Guardrails:
- * - Doré Search modality, not a parallel search product.
- * - authority first, inference second.
- * - rights fail closed for branded/design/generation consumers.
- * - generated assets never enter authority/training retrieval.
- */
-
-const DEFAULT_WEIGHTS = Object.freeze({
-  semantic: 0.28,
-  visual: 0.16,
-  composition: 0.14,
-  scripture: 0.18,
-  authority: 0.16,
-  surface: 0.08,
-});
-
-const AUTHORITY_SCORE = Object.freeze({ A: 1, B: 0.86, C: 0.72, D: 0.18 });
-const SAFE_RIGHTS = new Set(['public-domain', 'pd', 'cc0', 'cc-by', 'cc-by-sa']);
-
-function arr(value) {
-  return Array.isArray(value) ? value : value == null ? [] : [value];
-}
-function norm(value) {
-  return String(value ?? '').normalize('NFKC').trim().toLowerCase();
-}
-function tokens(value) {
-  return new Set(norm(value).split(/[\s,.;:!?，。；：！？/|()[\]{}<>「」『』]+/u).filter(Boolean));
-}
-function jaccard(a, b) {
-  if (!a.size || !b.size) return 0;
-  let hit = 0;
-  for (const x of a) if (b.has(x)) hit += 1;
-  return hit / (a.size + b.size - hit);
-}
-function textOf(work) {
-  return [work.canonicalTitle, work.title, work.creator, work.medium, work.series,
-    ...arr(work.depicts), ...arr(work.persons), ...arr(work.places), ...arr(work.events),
-    ...arr(work.iconography), ...arr(work.tags)].filter(Boolean).join(' ');
-}
-function scriptureScore(query, work) {
-  const wanted = new Set(arr(query.scriptureRefs).map(norm));
-  const refs = new Set(arr(work.scriptureRefs).map(norm));
-  if (!wanted.size) return 0;
-  return jaccard(wanted, refs);
-}
-function compositionScore(query, work) {
-  const wanted = tokens(arr(query.composition).join(' '));
-  const have = tokens([work.composition, work.visualLanguage, work.light, work.negativeSpace,
-    ...arr(work.visualRoles)].filter(Boolean).join(' '));
-  return jaccard(wanted, have);
-}
-function visualScore(query, work) {
-  const wanted = tokens(arr(query.visual).join(' '));
-  const have = tokens([work.medium, work.period, work.visualLanguage, ...arr(work.iconography),
-    ...arr(work.depicts)].filter(Boolean).join(' '));
-  return jaccard(wanted, have);
-}
-function surfaceScore(query, work) {
-  if (!query.aspectRatio && !query.surfacePreset) return 0;
-  const ratios = new Set(arr(work.aspectRatios).map(norm));
-  const presets = new Set(arr(work.surfacePresets).map(norm));
-  let score = 0;
-  if (query.aspectRatio && ratios.has(norm(query.aspectRatio))) score += 0.5;
-  if (query.surfacePreset && presets.has(norm(query.surfacePreset))) score += 0.5;
-  return score;
-}
-function rightsAllowed(work, consumer) {
-  if (!consumer || consumer === 'research' || consumer === 'search') return true;
-  const rights = norm(work.rightsStatus || work.rights?.status);
-  return SAFE_RIGHTS.has(rights);
-}
-function authorityAllowed(work) {
-  if (work.generated === true || work.trainingCanon === false && norm(work.provenance) === 'generated') return false;
-  return ['a', 'b', 'c'].includes(norm(work.authorityClass));
-}
-
-export function rankVisualWorks(query, works, options = {}) {
-  const weights = { ...DEFAULT_WEIGHTS, ...(options.weights || {}) };
-  const qTokens = tokens([query.text, ...arr(query.semantic)].filter(Boolean).join(' '));
-  const consumer = options.consumer || query.consumer || 'search';
-  const limit = Number(options.limit || query.limit || 12);
-
-  return works
-    .filter((work) => authorityAllowed(work))
-    .filter((work) => rightsAllowed(work, consumer))
-    .map((work) => {
-      const dimensions = {
-        semantic: jaccard(qTokens, tokens(textOf(work))),
-        visual: visualScore(query, work),
-        composition: compositionScore(query, work),
-        scripture: scriptureScore(query, work),
-        authority: AUTHORITY_SCORE[String(work.authorityClass || '').toUpperCase()] || 0,
-        surface: surfaceScore(query, work),
-      };
-      const score = Object.entries(dimensions).reduce((sum, [key, value]) => sum + value * (weights[key] || 0), 0);
-      return {
-        id: work.id,
-        visualWorkId: work.visualWorkId || work.id,
-        score: Number(score.toFixed(6)),
-        dimensions,
-        authorityClass: work.authorityClass,
-        rightsStatus: work.rightsStatus || work.rights?.status || 'unknown',
-        provenance: work.provenance || 'authority',
-        machineConfidence: work.machineConfidence ?? null,
-      };
-    })
-    .filter((row) => row.score > 0)
-    .sort((a, b) => b.score - a.score || String(a.id).localeCompare(String(b.id)))
-    .slice(0, limit);
-}
-
-export const visualFuzzyContract = Object.freeze({
-  schema: 'dore.visual-fuzzy-search.v1',
-  modality: 'dore-search',
-  dimensions: Object.keys(DEFAULT_WEIGHTS),
-  authorityClasses: ['A', 'B', 'C'],
-  generatedReentry: false,
-  rightsGate: 'fail-closed-for-branded-design-generation',
-});
+const WEIGHTS={semantic:.32,scripture:.24,authority:.18,surface:.14,visual:.12};
+const arr=v=>Array.isArray(v)?v:v==null?[]:[v];
+const norm=v=>String(v??'').normalize('NFKC').trim().toLowerCase();
+const tok=v=>new Set(norm(v).split(/\s+/).filter(Boolean));
+const jac=(a,b)=>{if(!a.size||!b.size)return 0;let n=0;for(const x of a)if(b.has(x))n++;return n/(a.size+b.size-n)};
+const ref=r=>typeof r==='string'?r:r?.canonical||[r?.book,r?.chapter].filter(Boolean).join(' ');
+export function normalizeVisualWork(raw){const presets=arr(raw.surface_presets);return{id:raw.id,canonicalTitle:raw.canonical_title,creator:raw.creator?.name||raw.creator,medium:raw.medium||raw.type,depicts:arr(raw.depicts),persons:arr(raw.persons),places:arr(raw.places),events:arr(raw.events),scriptureRefs:arr(raw.scripture_refs).map(ref).filter(Boolean),authorityClass:raw.authority_class,generated:raw.generated===true,representations:arr(raw.representations),surfacePresetObjects:presets,surfacePresets:presets.map(p=>p.id),aspectRatios:presets.map(p=>p.aspect_ratio).filter(Boolean)}}
+export function normalizeVisualGraph(graph){return arr(graph?.visual_works).map(normalizeVisualWork)}
+function allowedRep(r,op){const x=r.rights||{};if(op==='search'||op==='research'||op==='display')return true;if(op==='design'||op==='branded'||op==='generation')return x.branded_derivative_allowed===true;if(op==='training'||op==='reference')return x.training_canon_allowed===true;return false}
+function authorityOK(w,min='C'){if(w.generated)return false;const rank={A:3,B:2,C:1,D:0};return(rank[w.authorityClass]??-1)>=(rank[min]??1)}
+function text(w){return[w.canonicalTitle,w.creator,w.medium,...w.depicts,...w.persons,...w.places,...w.events].filter(Boolean).join(' ')}
+export function rankVisualWorks(query,works,options={}){const op=options.operation||query.operation||'search',q=tok([query.text,query.wContext].filter(Boolean).join(' ')),wantedRefs=new Set(arr(query.scriptureRefs).map(norm));return works.filter(w=>authorityOK(w,query.authorityMinimum||'C')).map(w=>({w,reps:w.representations.filter(r=>allowedRep(r,op))})).filter(x=>x.reps.length).map(({w,reps})=>{const refs=new Set(w.scriptureRefs.map(norm));const surface=(!query.aspectRatio||w.aspectRatios.map(norm).includes(norm(query.aspectRatio)))&&(!query.surfacePreset||w.surfacePresets.map(norm).includes(norm(query.surfacePreset)))?1:0;const d={semantic:jac(q,tok(text(w))),scripture:wantedRefs.size?jac(wantedRefs,refs):0,authority:{A:1,B:.86,C:.72}[w.authorityClass]||0,surface,visual:jac(tok(arr(query.visual).join(' ')),tok([w.medium,...w.depicts].join(' ')))};const score=Object.entries(d).reduce((s,[k,v])=>s+v*(WEIGHTS[k]||0),0);return{id:w.id,visualWorkId:w.id,score:Number(score.toFixed(6)),dimensions:d,authorityClass:w.authorityClass,operation:op,representationIds:reps.map(r=>r.id),eligibleRepresentations:reps.map(r=>({id:r.id,provider:r.provider,rights:r.rights})),surfacePresetIds:w.surfacePresetObjects.filter(p=>(!query.aspectRatio||norm(p.aspect_ratio)===norm(query.aspectRatio))&&(!query.surfacePreset||norm(p.id)===norm(query.surfacePreset))).map(p=>p.id)}}).filter(x=>x.score>0).sort((a,b)=>b.score-a.score||a.id.localeCompare(b.id)).slice(0,query.limit||12)}
+export const visualFuzzyContract=Object.freeze({schema:'dore.visual-fuzzy-search.v1',modality:'dore-search',authorityClasses:['A','B','C'],generatedReentry:false,rightsGate:'operation-aware-fail-closed'});
