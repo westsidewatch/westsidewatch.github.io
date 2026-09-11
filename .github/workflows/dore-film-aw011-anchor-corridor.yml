@@ -1,0 +1,44 @@
+name: DORÉ Film AW011 Anchor Corridor
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'docs/dore/film/aw011-anchor-corridor-v1.json'
+      - 'docs/dore/film/tools/aw011-anchor-package.py'
+      - '.github/workflows/dore-film-aw011-anchor-corridor.yml'
+
+jobs:
+  compile-anchor-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile Camera Spine corridor into provider package
+        run: |
+          mkdir -p .aw011
+          python docs/dore/film/tools/aw011-anchor-package.py \
+            docs/dore/film/aw011-anchor-corridor-v1.json \
+            -o .aw011/anchor-package.json
+      - name: Validate authority, enter-return path and provider jobs
+        run: |
+          python - <<'PY'
+          import json
+          p=json.load(open('.aw011/anchor-package.json'))
+          assert p['authority_anchor']['dore_id'] == 11
+          assert [a['id'] for a in p['anchors']] == ['A0','A1','A2']
+          assert [j['target_anchor'] for j in p['anchor_generation_jobs']] == ['A1','A2']
+          path=[x['anchor'] for x in p['camera_path']]
+          assert path == ['A0','A1','A2','A1','A0'], path
+          a0=p['anchors'][0]['c2w']
+          assert a0 == [[1.0,0.0,0.0,0.0],[0.0,1.0,0.0,0.0],[0.0,0.0,1.0,0.0],[0.0,0.0,0.0,1.0]], a0
+          assert 'generation owns absence only' in p['hard_rule']
+          print('AW011 corridor package: PASS')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dore-film-aw011-anchor-package
+          path: .aw011/anchor-package.json
+          retention-days: 14
