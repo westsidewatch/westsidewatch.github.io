@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
 """AW-011 production runner.
 
-This is the first executable handoff from research into production. It validates
-the canonical Doré source + fixed Camera Spine + baseline evidence problem, runs
-the minimum-evidence planner, and writes a deterministic build manifest.
-
-It intentionally does not invent missing visual evidence or hide missing inputs.
-A build can be READY_FOR_SCAFFOLD, NEEDS_ANCHOR_EVIDENCE, or BLOCKED_INPUT.
+Validates the canonical Doré source + fixed Camera Spine, converts real warp masks
+into planner evidence when supplied, runs the minimum-evidence planner, and writes
+a deterministic build manifest. Missing real inputs are never invented.
 """
 
 from __future__ import annotations
@@ -17,6 +14,7 @@ import json
 from pathlib import Path
 from typing import Any, Mapping
 
+from mask_evidence import build_problem
 from plan_anchors import parse_problem, plan
 
 
@@ -48,10 +46,14 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
-def validate_camera_spine(data: Mapping[str, Any], canonical_pose_id: str) -> list[Mapping[str, Any]]:
+def validate_camera_spine(
+    data: Mapping[str, Any], canonical_pose_id: str
+) -> list[Mapping[str, Any]]:
     poses = data.get("poses")
     if not isinstance(poses, list) or len(poses) < 3:
-        raise InputError("camera spine must contain at least departure, travel, and return poses")
+        raise InputError(
+            "camera spine must contain at least departure, travel, and return poses"
+        )
     for index, pose in enumerate(poses):
         if not isinstance(pose, dict) or not str(pose.get("id", "")).strip():
             raise InputError(f"camera pose #{index} must be an object with id")
@@ -63,6 +65,42 @@ def validate_camera_spine(data: Mapping[str, Any], canonical_pose_id: str) -> li
     if len(set(ids[1:-1])) != len(ids[1:-1]):
         raise InputError("non-canonical camera pose ids must be unique")
     return poses
+
+
+def _load_evidence(
+    root: Path,
+    anchors: Mapping[str, Any],
+    out_dir: Path,
+) -> tuple[Mapping[str, Any], Path, str]:
+    direct_value = anchors.get("candidate_coverage_file")
+    mask_value = anchors.get("mask_manifest_file")
+
+    if bool(direct_value) == bool(mask_value):
+        raise InputError(
+            "anchors must provide exactly one of candidate_coverage_file or mask_manifest_file"
+        )
+
+    if mask_value:
+        mask_manifest_path = _resolve(
+            root, mask_value, field="anchors.mask_manifest_file"
+        )
+        if not mask_manifest_path.is_file():
+            raise InputError(f"missing mask manifest: {mask_manifest_path}")
+        evidence_data = build_problem(mask_manifest_path)
+        out_dir.mkdir(parents=True, exist_ok=True)
+        evidence_path = out_dir / "evidence.from-masks.json"
+        evidence_path.write_text(
+            json.dumps(evidence_data, indent=2, sort_keys=True) + "\n",
+            encoding="utf-8",
+        )
+        return evidence_data, evidence_path, "warp_masks"
+
+    evidence_path = _resolve(
+        root,
+        direct_value,
+        field="anchors.candidate_coverage_file",
+    )
+    return _load_json(evidence_path), evidence_path, "planner_json"
 
 
 def build(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
@@ -90,21 +128,33 @@ def build(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
     anchors = manifest.get("anchors")
     if not isinstance(anchors, dict):
         raise InputError("anchors must be an object")
-    evidence_path = _resolve(
-        root,
-        anchors.get("candidate_coverage_file"),
-        field="anchors.candidate_coverage_file",
+    evidence_data, evidence_path, evidence_source = _load_evidence(
+        root, anchors, out_dir
     )
-    evidence_data = _load_json(evidence_path)
     parsed_poses, candidates, threshold = parse_problem(evidence_data)
 
-    camera_ids = [str(p["id"]) for p in poses]
-    evidence_pose_ids = [p.id for p in parsed_poses]
-    travel_ids = [pid for pid in camera_ids[1:-1] if pid != canonical_pose_id]
-    missing_evidence = [pid for pid in travel_ids if pid not in evidence_pose_ids]
+    camera_ids = [str(pose["id"]) for pose in poses]
+    evidence_pose_ids = [pose.id for pose in parsed_poses]
+    travel_ids = [
+        pose_id
+        for pose_id in camera_ids[1:-1]
+        if pose_id != canonical_pose_id
+    ]
+    missing_evidence = [
+        pose_id for pose_id in travel_ids if pose_id not in evidence_pose_ids
+    ]
+    extra_evidence = [
+        pose_id for pose_id in evidence_pose_ids if pose_id not in travel_ids
+    ]
     if missing_evidence:
         raise InputError(
-            "evidence problem does not cover camera poses: " + ", ".join(missing_evidence)
+            "evidence problem does not cover camera poses: "
+            + ", ".join(missing_evidence)
+        )
+    if extra_evidence:
+        raise InputError(
+            "evidence problem contains poses outside Camera Spine: "
+            + ", ".join(extra_evidence)
         )
 
     report = plan(parsed_poses, candidates, threshold)
@@ -119,7 +169,7 @@ def build(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
 
     build_report = {
         "aw_id": "AW-011",
-        "stage": "production-preflight-v1",
+        "stage": "production-preflight-v2",
         "source": {
             "path": str(source_path),
             "sha256": _sha256(source_path),
@@ -133,7 +183,9 @@ def build(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
             "returns_to_source": camera_ids[-1] == canonical_pose_id,
         },
         "evidence": {
+            "source": evidence_source,
             "problem_path": str(evidence_path),
+            "pose_count": len(parsed_poses),
             "candidate_count": len(candidates),
             "selected_anchor_ids": report["selected_anchor_ids"],
             "corridor_passes_planner": report["corridor_passes"],
@@ -148,7 +200,11 @@ def build(manifest_path: Path, out_dir: Path) -> dict[str, Any]:
             "poses/<pose-id>/known-mask.png",
             "poses/<pose-id>/unseen-mask.png",
         ],
-        "status": "READY_FOR_SCAFFOLD" if report["corridor_passes"] else "NEEDS_ANCHOR_EVIDENCE",
+        "status": (
+            "READY_FOR_SCAFFOLD"
+            if report["corridor_passes"]
+            else "NEEDS_ANCHOR_EVIDENCE"
+        ),
     }
 
     (out_dir / "build-manifest.json").write_text(
@@ -165,8 +221,12 @@ def main() -> int:
 
     try:
         report = build(args.manifest, args.out_dir)
-    except (InputError, ValueError, json.JSONDecodeError) as exc:
-        print(json.dumps({"aw_id": "AW-011", "status": "BLOCKED_INPUT", "error": str(exc)}))
+    except (InputError, OSError, ValueError, json.JSONDecodeError) as exc:
+        print(
+            json.dumps(
+                {"aw_id": "AW-011", "status": "BLOCKED_INPUT", "error": str(exc)}
+            )
+        )
         return 2
 
     print(json.dumps(report, indent=2, sort_keys=True))
