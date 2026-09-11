@@ -39,11 +39,18 @@ assert "setPhase('assemble')" in script
 assert "setPhase('focus')" in script
 assert "setPhase('release')" in script
 assert "mosaic.master.animate([{opacity:0},{opacity:1}]" in script
-assert "mosaic.master.animate([{opacity:1},{opacity:0}]" in script
+assert "mosaic.master.animate([{opacity:+getComputedStyle(mosaic.master).opacity||1},{opacity:0}]" in script
 assert "cards.forEach(c=>c.style.visibility='')" in script
 assert '@keyframes lw-current-' not in style
 assert 'animation:lw-current-' not in style
 assert 'requestAnimationFrame(tick)' in script
+# Visual blank space is not a safe hover zone after assembly. Once the mosaic
+# exists, only the actual 8:5 master window keeps focus alive.
+assert 'const pointerPolicy=e=>' in script
+assert "if(phase==='assemble'||phase==='focus')" in script
+assert 'const onWindow=pointInRect(x,y,mosaic?.target,0);if(!onWindow)release()' in script
+assert 'pointOnOriginalCard' not in script
+assert '!onWindow&&!onSource' not in script
 # The old independent Codrops preview is hidden in Candidate focus screens so a
 # second window cannot appear from nowhere on top of the mosaic.
 assert '.products__preview{display:none!important}' in motion._CANDIDATE_FOCUS_EMBED_STYLE
@@ -56,8 +63,11 @@ for screen,no in ((screen2,2),(screen3,3)):
     assert '4W Living Editorial River' in screen
     assert '<iframe' in screen
     assert 'dore-mosaic-piece' in screen
-    assert 'mosaic-assemble' in screen
+    # Runtime state is composed dynamically by setPhase(); do not require a
+    # stale literal such as "mosaic-assemble" in the rendered HTML.
+    assert "document.documentElement.dataset.livingCurrent='mosaic-'+v" in screen
+    assert "setPhase('assemble')" in screen
 
 assert 'world-surface' not in candidate.STYLE
 assert 'data-second-layer-world' not in screen2+screen3
-print('DORE_CANDIDATE01_REVERSIBLE_MOSAIC_FOCUS_PASS')
+print('DORE_CANDIDATE01_BLANK_SPACE_RELEASE_PASS')
