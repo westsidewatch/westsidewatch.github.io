@@ -1,0 +1,92 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "deploy-design-resident-pr642-candidate01-4w-20260911-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Deploy PR 642 Candidate 01 4W runtime to Design resident only",
+  "body": "Run the exact PR #642 head in an isolated macOS worktree and repoint only the local Doré Design resident. Do not merge PR #642, do not alter or publish the homepage, and do not implement Second Layer worlds.",
+  "related_goal": "dore-design-candidate01-visibility-pr642",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "fetch",
+        "origin",
+        "+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"1988ed5b6734c0098eaa58ea522cb309f3e965c2\""
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": [
+        "git",
+        "worktree",
+        "remove",
+        "--force",
+        "/Users/chenjingyu/.dore/design-pr642"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "git",
+        "worktree",
+        "add",
+        "--force",
+        "--detach",
+        "/Users/chenjingyu/.dore/design-pr642",
+        "1988ed5b6734c0098eaa58ea522cb309f3e965c2"
+      ],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "python3",
+        "dore-design/candidate01_living_editorial_acceptance.py"
+      ],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 120
+    },
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-pr642; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"
+      ],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 180
+    },
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q 'candidate-01-living-editorial-runtime' && curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q '4W Living Editorial River' && curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' | grep -q 'dore.visual-editorial-director.v1'"
+      ],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    },
+    {
+      "argv": [
+        "bash",
+        "-lc",
+        "python3 - <<'PY'\nimport json,urllib.request\nbase='http://127.0.0.1:4310'\nh=json.load(urllib.request.urlopen(base+'/api/health'))\nc=json.load(urllib.request.urlopen(base+'/api/design-candidates/living-water-01'))\nhtml=urllib.request.urlopen(base+'/editor-canvas?page=living-water-candidate-01').read().decode()\nprint(json.dumps({'ok':True,'deployed_sha':'1988ed5b6734c0098eaa58ea522cb309f3e965c2','health':h,'candidate':c,'visual_director':'dore.visual-editorial-director.v1' in html,'living_editorial_river':'4W Living Editorial River' in html,'runtime':'candidate-01-living-editorial-runtime' in html},ensure_ascii=False))\nPY"
+      ],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    }
+  ]
+}
