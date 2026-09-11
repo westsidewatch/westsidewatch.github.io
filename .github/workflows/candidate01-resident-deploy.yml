@@ -1,0 +1,56 @@
+name: Candidate 01 Resident Deploy
+
+on:
+  push:
+    paths:
+      - '.github/workflows/candidate01-resident-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fetch exact Candidate 01 branch
+        run: |
+          git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
+          test "$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)" = "e35f94173f5ba0a784954b3bcdf92e8a49fbadd9"
+      - name: Build exact detached Design worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/design-pr642"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force --detach "$WT" e35f94173f5ba0a784954b3bcdf92e8a49fbadd9
+          cd "$WT"
+          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/candidate01_visual_graph_experiment.py
+      - name: Install into local Design resident
+        run: |
+          WT="$HOME/.dore/design-pr642"
+          cd "$WT"
+          export DORE_REPO_ROOT="$WT"
+          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
+          bash dore-design/install-macos.sh
+      - name: Verify running localhost resident
+        run: |
+          for i in $(seq 1 30); do
+            HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' 2>/dev/null || true)
+            if printf '%s' "$HTML" | grep -q 'candidate01-exact-grid-preview-geometry'; then
+              printf '%s' "$HTML" | grep -q 'GridToFullPreview 8:5'
+              ! printf '%s' "$HTML" | grep -q 'dore-mosaic-layer'
+              ! printf '%s' "$HTML" | grep -q 'candidate-01-living-editorial-runtime'
+              echo 'CANDIDATE01_LOCAL_RESIDENT_PASS sha=e35f94173f5ba0a784954b3bcdf92e8a49fbadd9 marker=candidate01-exact-grid-preview-geometry'
+              exit 0
+            fi
+            sleep 2
+          done
+          echo 'CANDIDATE01_LOCAL_RESIDENT_FAIL marker_missing' >&2
+          exit 1
