@@ -1,0 +1,35 @@
+name: AW-011 Camera Corridor
+
+on:
+  push:
+    branches:
+      - feat/aw-011-camera-corridor
+    paths:
+      - "tools/aw_corridor/**"
+      - "experiments/aw-011/**"
+      - ".github/workflows/aw011-camera-corridor.yml"
+  pull_request:
+    paths:
+      - "tools/aw_corridor/**"
+      - "experiments/aw-011/**"
+      - ".github/workflows/aw011-camera-corridor.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  contract-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run AW-011 contract tests
+        working-directory: tools/aw_corridor
+        run: python -m unittest discover -v -p "test_*.py"
