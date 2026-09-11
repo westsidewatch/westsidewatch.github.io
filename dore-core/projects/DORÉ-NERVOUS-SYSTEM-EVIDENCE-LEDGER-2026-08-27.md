@@ -80,3 +80,19 @@ Persist the test output and have one real non-destructive Sweep or Conversation 
 - first operational completion: `UNKNOWN_NEEDS_EVIDENCE`;
 - no revisit/supersede/retire action justified;
 - no P01 mutation performed by this reconciliation.
+
+## Sweep 01 update — common substrate implemented foundation (2026-09-11)
+
+Checkpoint 52 supersedes one bounded part of the earlier evidence snapshot. The repository now contains a real machine-readable shared substrate at `dore-core/runtime/common-substrate.v1.json` and an executable acceptance program at `dore-core/runtime/common_substrate_acceptance.py`.
+
+The substrate establishes a concrete shared foundation for one SQLite canonical artifact truth, immutable revisions, typed links, provenance edges, rebuildable retrieval projections, protected human-artifact mutation gates, and explicit product boundaries for ONE, Multiwrite, Search, Dawn Library and Doré Local. The acceptance program is designed to exercise WAL-backed storage, protected USER authority, revision advance and stale-revision refusal, immutable history, provenance, typed links, retrieval/projection rebuild and the Scripture Workspace facade without a parallel writable JSON note truth.
+
+This evidence means the earlier statement that no dedicated machine-readable shared primitive existed is now historically superseded. The bounded classification is now:
+
+- common substrate specification + implementation: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`;
+- current executable PASS: `UNKNOWN_NEEDS_EVIDENCE` until a fresh run result is durably persisted;
+- full Nervous System: remains `ACTIVE_PARALLEL`.
+
+The substrate does **not** prove the full six-foundation Nervous System contract. A0–A4 live-product enforcement, common cost/rights/evaluation/observability registries, and a full detect → diagnose → repair/escalate → verify loop remain open.
+
+The smallest next proof is therefore no longer “implement the first machine-readable shared primitive.” It is: execute and persist `dore.common-substrate-acceptance.v2`; if PASS, prove one real cross-product consumer plus the still-open A3/A4 authority boundary. No P01 state or action is changed by this reconciliation.
