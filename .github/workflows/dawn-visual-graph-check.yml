@@ -8,6 +8,7 @@ on:
       - 'content/visual/**'
       - 'layouts/visual/**'
       - 'layouts/partials/visual-resource-card.html'
+      - 'layouts/partials/visual-surface.html'
       - 'layouts/website/dawn-library.html'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/css/dawn-visual.css'
@@ -44,6 +45,12 @@ jobs:
 
               if work.get('generated'):
                   assert work.get('authority_class') == 'D', 'generated work cannot enter A/B/C authority canon'
+
+              region_ids = {r.get('id') for r in work.get('regions', [])}
+              for preset in work.get('surface_presets', []):
+                  focal_region_id = preset.get('focal_region_id')
+                  if focal_region_id:
+                      assert focal_region_id in region_ids, f"unknown focal region {focal_region_id} in {work['id']}"
 
               for rep in work['representations']:
                   assert rep.get('image_url'), f"missing image URL: {rep.get('id')}"
