@@ -1,6 +1,6 @@
 {
   "schema": "dawn.visual-map-profiles.v1",
-  "updated": "2026-09-10T23:26:00-04:00",
+  "updated": "2026-09-10T23:33:00-04:00",
   "principle": "Historical-place evidence and cartographic georeference are distinct. Map overlay activates only from verified control points or a verified Georeference Annotation.",
   "profiles": [
     {
@@ -21,6 +21,19 @@
         "rights_policy": "public-domain",
         "rights_evidence": "https://commons.wikimedia.org/wiki/File:Survey_of_Western_Palestine_1880.17.jpg"
       },
+      "survey_geometry_provenance": {
+        "source": "Survey of Western Palestine memoirs, vol. I",
+        "method": "Sheet margins laid down on Sir Henry James's projection from a central meridian and perpendicular; trigonometrical points and sheet corners fixed by coordinate distances and checked by primary-triangle side lengths.",
+        "authority_status": "historical-survey-method-verified",
+        "use_as_gcp": false,
+        "note": "This is authoritative evidence that the printed sheet was constructed on a surveyed coordinate framework. It is not sufficient by itself to infer raster pixel coordinates or WGS84 control points."
+      },
+      "coverage_evidence": {
+        "source": "Survey of Western Palestine memoirs, vol. III, Sheet XVII section A",
+        "area_square_miles": 371.7,
+        "description": "Country round Jerusalem; includes the watershed hills, hills west of Wady Beit Hanina, the Arkub and the Shephelah.",
+        "authority_status": "historical-text-verified"
+      },
       "place_evidence": [
         {
           "place_id": "place-beit-shemesh",
@@ -30,17 +43,27 @@
           "evidence_url": "https://commons.wikimedia.org/wiki/File:Ain_Shems_(today_known_as_Tel_Beit_Shemesh)_in_the_Survey_of_Western_Palestine_1880.17_(cropped).jpg",
           "provenance": "authority-derived",
           "note": "The Commons derivative explicitly identifies Ain Shems / Tel Beit Shemesh as a detail extracted from Sheet XVII. This proves map-place occurrence, not pixel-to-geographic control coordinates."
+        },
+        {
+          "place_id": "place-jerusalem",
+          "historical_label": "Jerusalem",
+          "modern_label": "Jerusalem",
+          "evidence_type": "archival-sheet-description",
+          "evidence_url": "https://www.archives.openjerusalem.org/index.php/sheet-xvii%3Bmods",
+          "provenance": "authority-derived",
+          "note": "OpenJerusalem's archival description states that Sheet XVII shows Jerusalem and its surroundings. This is coverage evidence, not a raster control point."
         }
       ],
       "georeference": {
-        "status": "awaiting-verified-control-points",
+        "status": "awaiting-verified-raster-control-points",
         "verified": false,
         "control_points": [],
         "annotation_url": null,
         "annotation_standard": "Allmaps Georeference Annotation",
         "activation_policy": "verified-only",
         "engine": "Allmaps",
-        "reason": "Public source pages confirm the map identity, scale and place occurrence, but do not expose a verified pixel↔longitude/latitude control-point set."
+        "candidate_control_point_policy": "A point may enter control_points only after both its raster pixel coordinate and geographic coordinate are independently traceable to source evidence or a reviewed georeferencing operation.",
+        "reason": "The historical memoir now verifies the survey's coordinate-framework construction, and archival records verify Jerusalem coverage, but no reviewed raster pixel↔geographic point set or standards-compliant Georeference Annotation has yet been located."
       },
       "surface_presets": [
         {"id":"card-8x5","mode":"image","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 50%"},
