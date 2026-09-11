@@ -1,4 +1,5 @@
 """Runtime registry for Living Water motion/design experiment pages."""
+import html as html_lib
 import re
 import codrops_site_8x5
 
@@ -87,6 +88,23 @@ _LIVING_CURRENT_SCRIPT = r'''
 </script>
 '''
 
+_CANDIDATE_FOCUS_HOST_STYLE = r'''
+<style id="candidate-01-focus-screen-host">
+.candidate-focus-screen{position:relative;min-height:100svh;height:100svh;overflow:hidden;background:#eee8da;color:#252525}
+.candidate-focus-screen iframe{display:block;width:100%;height:100%;border:0;background:#eee8da}
+</style>
+'''
+
+_CANDIDATE_FOCUS_EMBED_STYLE = r'''
+<style id="candidate-01-focus-screen-embed">
+html,body{height:100%;overflow:hidden!important}
+.frame,.cats,.dore-badge{display:none!important}
+.products{height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
+.products__grid.living-current-field{height:100%;min-height:100%!important}
+.products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
+</style>
+'''
+
 
 def _install_living_current(html):
     """Layer two full-width Living Water currents over the accepted Codrops focus motion."""
@@ -94,6 +112,32 @@ def _install_living_current(html):
         return html
     html = html.replace('</head>', _LIVING_CURRENT_STYLE + '</head>', 1)
     return html.replace('</body>', _LIVING_CURRENT_SCRIPT + '</body>', 1)
+
+
+def _candidate_focus_screen():
+    """Reuse the locked focus runtime as Candidate 01's second first-layer viewport."""
+    motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
+    motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
+    srcdoc = html_lib.escape(motion_html, quote=True)
+    return (
+        '<section class="candidate-focus-screen" data-current="focus" '
+        'data-layer="first" data-screen="2">'
+        '<iframe title="Living Water focus current" loading="eager" srcdoc="' + srcdoc + '"></iframe>'
+        '</section>'
+    )
+
+
+def _install_candidate_focus(html):
+    """Keep Candidate 01 screen one intact and insert locked focus motion as screen two."""
+    if 'class="candidate-focus-screen"' in html:
+        return html
+    html = html.replace('</head>', _CANDIDATE_FOCUS_HOST_STYLE + '</head>', 1)
+    anchor = '</section><section class="world dark">'
+    return html.replace(
+        anchor,
+        '</section>' + _candidate_focus_screen() + '<section class="world dark">',
+        1,
+    )
 
 
 def install(current):
@@ -111,11 +155,13 @@ def install(current):
     ]
     current.multipage_wysiwyg.SUPPORTED.update(page_ids)
 
-    # Add the current field without disturbing the accepted 8:5 focus engine.
+    # Keep the locked motion page intact and reuse it inside Candidate 01 screen two.
     previous_render = current.multipage_wysiwyg.render_canvas
     def render_canvas(page_id='homepage', edit=False):
         if page_id == codrops_site_8x5.PAGE_ID:
             return _install_living_current(codrops_site_8x5.render(edit=edit))
+        if page_id == current.living_water_candidate.PAGE_ID:
+            return _install_candidate_focus(current.living_water_candidate.render(edit=edit))
         return previous_render(page_id, edit=edit)
     current.multipage_wysiwyg.render_canvas = render_canvas
 
