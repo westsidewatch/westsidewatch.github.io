@@ -49,23 +49,39 @@ Extended the same experiment from a two-anchor road test to a three-anchor Camer
 
 This strengthens the architectural hypothesis that the virtual-stage method is intended to generalize beyond a single pair, but it is still implementation evidence only. The reviewed commit-workflow lookup returned no associated run for this commit, so three-anchor rendered acceptance remains unverified.
 
+### Commit `5de0d4ee4569fdf8907a79343e6b4c61946b9b8a`
+
+Introduced `.github/workflows/dore-film-experimental-film-01.yml`, advancing the same three-anchor idea into an explicitly editioned 24-second silent film fragment rather than a short camera-spine probe. The workflow:
+
+- keeps the canonical `011 → 019 → 021` anchor sequence;
+- uses one Blender world and one camera with `camera_resets: 0`;
+- extends the path to 576 frames / 24 seconds at 24 fps, with deliberately slower attention near anchors and faster travel through bridge space;
+- varies lens length during the shot rather than resetting the camera;
+- keeps bridge geometry deliberately minimal so the experiment judges cinematic continuity rather than set polish;
+- renders PNG frames, a 3×3 director review sheet, a `.blend` scene, metadata and an H.264 MP4 artifact;
+- explicitly records `generation: false`, `sound: false`, and `acceptance: judge as cinema, not capability demo`.
+
+This is a meaningful product-history transition: Doré Film is no longer only testing whether one camera can technically traverse multiple anchors; it is beginning to test duration, attention rhythm, lens language and edition-level cinematic judgment. However the reviewed commit-workflow lookup returned no associated workflow run for this commit. Therefore the film itself, its review sheet and its visual quality remain unverified.
+
 ## Current evidence boundary
 
-No workflow run is currently associated with the reviewed corrected/two-anchor or three-anchor commits in the available run lookup. Therefore:
+No workflow run is currently associated with the reviewed corrected/two-anchor, three-anchor Camera Spine, or Experimental Film 01 commits in the available run lookup. Therefore:
 
 - implementation existence: **VERIFIED**;
 - corrected workflow definition: **VERIFIED**;
 - three-anchor Camera Spine implementation: **VERIFIED**;
+- Experimental Film 01 workflow/edition definition: **VERIFIED**;
 - rendered visual acceptance: **UNKNOWN_NEEDS_EVIDENCE**;
 - one-camera continuity quality: **UNKNOWN_NEEDS_EVIDENCE**;
 - preservation of canonical Doré source appearance in the rendered output: **UNKNOWN_NEEDS_EVIDENCE**;
+- cinematic pacing/lens-language quality over 24 seconds: **UNKNOWN_NEEDS_EVIDENCE**;
 - reusable film-language capability beyond these bounded tests: **UNKNOWN_NEEDS_EVIDENCE**.
 
 A commit or workflow file must not be promoted to `VERIFIED_COMPLETE` without rendered evidence.
 
 ## Classification
 
-`DORÉ-FILM / virtual-stage continuity experiment`: **ACTIVE_PARALLEL / EXPERIMENTAL_IMPLEMENTATION**.
+`DORÉ-FILM / virtual-stage continuity + Experimental Film 01`: **ACTIVE_PARALLEL / EXPERIMENTAL_IMPLEMENTATION**.
 
 This is not a completed product and not a replacement for the active P01 subtitle critical path.
 
@@ -76,22 +92,26 @@ This is not a completed product and not a replacement for the active P01 subtitl
 3. A useful Doré film grammar should distinguish continuous world-space movement from slideshow/crossfade behavior.
 4. Rendered artifacts, not workflow definitions, are the required evidence unit for visual-film acceptance.
 5. A repeatable film-language claim needs multi-anchor evidence; moving from 011→019 to 011→019→021 is the correct architectural stress direction, but only a rendered run can establish that the camera-spine abstraction actually works visually.
+6. Experimental Film 01 adds a second evidence axis beyond continuity: cinematic time. Attention dwell, travel speed and lens changes are now part of the intended grammar, but must be judged from the actual rendered film rather than inferred from keyframes.
+7. Edition metadata that explicitly distinguishes `generation: false` from generated imagery is useful provenance and should remain in future film experiments.
 
 ## Debt / revisit trigger
 
-Revisit when a corrected workflow run produces inspectable MP4/contact-sheet artifacts. The next evaluation must judge:
+Revisit when a current workflow run produces inspectable MP4/review-sheet artifacts. The next evaluation must judge:
 
 - opening recognizability of 011;
 - spatial departure rather than flat image motion;
 - bridge continuity;
 - arrival recognizability of 019;
-- third-anchor recognizability of 021 for the three-anchor spine;
+- third-anchor recognizability of 021;
 - no cut/camera reset;
 - absence of UV/aspect distortion;
+- whether 24-second pacing and lens movement feel intentional rather than mechanically interpolated;
+- whether the longer edition remains visually coherent without sound;
 - whether the result is actually usable as a repeatable visual-production method rather than a one-off road test.
 
 ## Smallest next proof
 
-Run one current three-anchor Camera Spine workflow and persist the resulting MP4/contact sheet plus pass/fail judgment against its own acceptance contract. If it passes, then compare the bounded result to the earlier two-anchor acceptance criteria before claiming reusable film grammar.
+Run the current Experimental Film 01 workflow once and persist the MP4, director-review sheet and explicit pass/fail judgment against the criteria above. If that bounded film passes, then compare it against the shorter Camera Spine experiment before claiming a reusable Doré film grammar.
 
-No human/environment blocker is established by this ledger; absence of a reviewed run is missing evidence, not a blocker.
+No new human/environment blocker is established by this ledger; absence of a reviewed run is missing evidence, not a blocker.
