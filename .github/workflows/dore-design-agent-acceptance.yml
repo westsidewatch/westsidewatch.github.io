@@ -24,6 +24,10 @@ jobs:
           python3 -m py_compile dore-design/app_workspace.py dore-design/app_product.py dore-design/app_visual.py dore-design/app_visual_v2.py dore-design/multiwrite_integration.py dore-design/multiwrite_wysiwyg.py dore-design/multipage_wysiwyg.py dore-design/template_library.py dore-design/template_library_selftest.py dore-design/workspace_cli.py dore-design/workspace_selftest.py dore-design/local_acceptance.py dore-design/upgrade_living_fortress_v2.py dore-design/deploy_visual_current.py
           python3 dore-design/workspace_selftest.py
           python3 dore-design/template_library_selftest.py
+      - name: Candidate 01 4W Living Editorial River
+        run: |
+          python3 -m py_compile dore-design/candidate01_visual_graph_experiment.py dore-design/candidate01_living_editorial_acceptance.py
+          python3 dore-design/candidate01_living_editorial_acceptance.py
       - name: Workspace machine control surface
         env:
           DORE_DESIGN_DATA: ${{ runner.temp }}/dore-design-workspace
