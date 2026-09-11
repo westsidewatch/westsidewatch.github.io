@@ -6,20 +6,23 @@ import codrops_site_8x5
 
 _LIVING_CURRENT_STYLE = r'''
 <style id="living-water-8x5-current">
-@keyframes lw-current-a{from{transform:translateX(0)}to{transform:translateX(-12vw)}}
-@keyframes lw-current-b{from{transform:translateX(-9vw)}to{transform:translateX(4vw)}}
 .products__grid.living-current-field{display:block;position:relative;overflow:hidden;min-height:calc(100vh - 204px)}
-.living-current-band{position:absolute;left:-12vw;display:flex;align-items:center;gap:3vw;width:124vw;will-change:transform}
-.living-current-band .product{flex:1 1 0;min-width:0;margin:0;will-change:transform,opacity}
-.living-current-band:nth-child(1){top:4%;animation:lw-current-a 28s linear infinite alternate}
-.living-current-band:nth-child(2){top:52%;animation:lw-current-b 34s linear infinite alternate;animation-delay:-11s}
-.products.living-current-focus .living-current-band{animation-play-state:running}
+.living-current-band{position:absolute;left:0;display:flex;align-items:center;gap:clamp(12px,1.45vw,28px);width:100%;will-change:transform;transform:translate3d(0,0,0)}
+.living-current-band .product{flex:1 1 0;min-width:0;margin:0;aspect-ratio:8/5;will-change:transform,opacity}
+.living-current-band:nth-child(1){top:4%}
+.living-current-band:nth-child(2){top:52%}
+.products[data-motion-phase="drift"] .living-current-band{cursor:default}
+.products[data-motion-phase="intent"] .living-current-band,
+.products[data-motion-phase="arrest"] .living-current-band,
+.products[data-motion-phase="locked"] .living-current-band,
+.products[data-motion-phase="focus"] .living-current-band,
+.products[data-motion-phase="release"] .living-current-band{cursor:default}
 @media(max-width:900px){
  .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
- .living-current-band{display:contents;animation:none!important}
+ .living-current-band{display:contents;transform:none!important}
  .living-current-band .product{width:auto}
 }
-@media(prefers-reduced-motion:reduce){.living-current-band{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.living-current-band{transform:none!important}}
 </style>
 '''
 
@@ -46,44 +49,151 @@ _LIVING_CURRENT_SCRIPT = r'''
     }
   }
 
-  let resumeTimer=0;
+  const bands=[...grid.querySelectorAll('.living-current-band')];
+  if(!bands.length)return;
+
+  const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const motion=bands.map((band,index)=>({
+    band,index,offset:0,velocity:0,
+    cruise:index===0?7.0:-5.5,
+    target:0,
+    limit:index===0?28:22,
+    direction:index===0?1:-1
+  }));
+
+  let phase='settled';
   let focusedCard=null;
-  let forceLeave=false;
-  const hold=card=>{
-    clearTimeout(resumeTimer);
-    focusedCard=card;
-    stage.classList.add('living-current-focus');
+  let lockRect=null;
+  let settleUntil=performance.now()+900;
+  let releaseTimer=0;
+  let focusIssued=false;
+  let last=performance.now();
+
+  const setPhase=value=>{
+    phase=value;
+    stage.dataset.motionPhase=value;
+    document.documentElement.dataset.livingCurrent='phase-lock-'+value;
   };
-  const release=()=>{
-    clearTimeout(resumeTimer);
-    resumeTimer=setTimeout(()=>{
-      if(!stage.matches(':hover'))stage.classList.remove('living-current-focus');
-    },560);
+  setPhase('settled');
+
+  const render=()=>motion.forEach(m=>{
+    m.band.style.transform=`translate3d(${m.offset.toFixed(3)}px,0,0)`;
+  });
+
+  const beginDrift=()=>{
+    if(reduced){setPhase('settled');return}
+    focusedCard=null;lockRect=null;focusIssued=false;
+    motion.forEach(m=>{m.target=m.cruise*m.direction});
+    setPhase('drift');
   };
 
-  stage.querySelectorAll('.product').forEach(card=>{
-    card.addEventListener('mouseenter',()=>hold(card));
+  const requestFocus=card=>{
+    clearTimeout(releaseTimer);
+    if(focusedCard===card && ['intent','arrest','locked','focus'].includes(phase))return;
+    focusedCard=card;
+    lockRect=card.getBoundingClientRect();
+    focusIssued=false;
+    motion.forEach(m=>{m.target=0});
+    setPhase('intent');
+    requestAnimationFrame(()=>{if(focusedCard===card)setPhase('arrest')});
+  };
+
+  const replayEnter=card=>{
+    if(!card||focusIssued)return;
+    focusIssued=true;
+    lockRect=card.getBoundingClientRect();
+    setPhase('locked');
+    const ev=new MouseEvent('mouseenter',{bubbles:false,cancelable:true,view:window});
+    Object.defineProperty(ev,'dorePhaseReplay',{value:true});
+    card.dispatchEvent(ev);
+    setPhase('focus');
+  };
+
+  const replayLeave=card=>{
+    if(!card)return;
+    const ev=new MouseEvent('mouseleave',{bubbles:false,cancelable:true,view:window});
+    Object.defineProperty(ev,'dorePhaseReplay',{value:true});
+    card.dispatchEvent(ev);
+  };
+
+  const requestRelease=()=>{
+    if(!focusedCard && !['intent','arrest','locked','focus'].includes(phase))return;
+    const card=focusedCard;
+    clearTimeout(releaseTimer);
+    setPhase('release');
+    if(card)replayLeave(card);
+    focusedCard=null;lockRect=null;focusIssued=false;
+    motion.forEach(m=>{m.target=0});
+    releaseTimer=setTimeout(()=>{
+      motion.forEach(m=>{m.offset=0;m.velocity=0;m.target=0});
+      render();
+      settleUntil=performance.now()+180;
+      setPhase('settled');
+      setTimeout(()=>{if(phase==='settled')beginDrift()},180);
+    },620);
+  };
+
+  cards.forEach(card=>{
+    card.addEventListener('mouseenter',event=>{
+      if(event.dorePhaseReplay)return;
+      event.stopImmediatePropagation();
+      requestFocus(card);
+    },true);
     card.addEventListener('mouseleave',event=>{
-      if(!forceLeave && stage.matches(':hover')){
-        event.stopImmediatePropagation();
-        return;
-      }
-      if(focusedCard===card)focusedCard=null;
-      release();
+      if(event.dorePhaseReplay)return;
+      event.stopImmediatePropagation();
+      if(focusedCard===card || ['intent','arrest','locked','focus'].includes(phase))requestRelease();
     },true);
   });
 
-  stage.addEventListener('mouseleave',()=>{
-    if(!focusedCard)return release();
-    const card=focusedCard;
-    forceLeave=true;
-    card.dispatchEvent(new MouseEvent('mouseleave',{bubbles:false}));
-    forceLeave=false;
-    focusedCard=null;
-    release();
-  },true);
+  const outsideLockedRect=event=>{
+    if(!focusedCard||!lockRect||!['locked','focus'].includes(phase))return;
+    const x=event.clientX,y=event.clientY;
+    if(x<lockRect.left||x>lockRect.right||y<lockRect.top||y>lockRect.bottom)requestRelease();
+  };
+  document.addEventListener('pointermove',outsideLockedRect,{passive:true});
+  document.documentElement.addEventListener('mouseleave',requestRelease,true);
+  window.addEventListener('blur',requestRelease);
 
-  document.documentElement.dataset.livingCurrent='two-full-width-bands-focus-latched';
+  const tick=now=>{
+    const dt=Math.min(.05,(now-last)/1000);last=now;
+    if(!reduced){
+      if(phase==='settled' && now>=settleUntil)beginDrift();
+      motion.forEach(m=>{
+        const accel=(phase==='arrest'||phase==='intent'||phase==='release')?30:8;
+        const delta=m.target-m.velocity;
+        const step=Math.sign(delta)*Math.min(Math.abs(delta),accel*dt);
+        m.velocity+=step;
+        if(phase==='drift'){
+          m.offset+=m.velocity*dt;
+          if(Math.abs(m.offset)>=m.limit){
+            m.offset=Math.sign(m.offset)*m.limit;
+            m.direction*=-1;
+            m.target=m.cruise*m.direction;
+          }
+        } else if(['intent','arrest'].includes(phase)){
+          m.offset+=m.velocity*dt;
+          const pull=Math.min(1,dt*8.5);
+          m.offset+=(0-m.offset)*pull;
+        } else if(['locked','focus','release','settled'].includes(phase)){
+          const pull=Math.min(1,dt*10);
+          m.offset+=(0-m.offset)*pull;
+        }
+      });
+      if(phase==='arrest'){
+        const still=motion.every(m=>Math.abs(m.velocity)<.18 && Math.abs(m.offset)<.65);
+        if(still){
+          motion.forEach(m=>{m.velocity=0;m.offset=0;m.target=0});
+          render();
+          replayEnter(focusedCard);
+        }
+      }
+      render();
+    }
+    requestAnimationFrame(tick);
+  };
+  render();
+  requestAnimationFrame(tick);
 })();
 </script>
 '''
@@ -113,7 +223,7 @@ html,body{height:100%;overflow:hidden!important}
 
 
 def _install_living_current(html):
-    """Layer two full-width Living Water currents over the accepted Codrops focus motion."""
+    """Layer two phase-locked Living Water currents over the accepted Codrops focus motion."""
     if 'id="living-water-8x5-current"' in html:
         return html
     html = html.replace('</head>', _LIVING_CURRENT_STYLE + '</head>', 1)
@@ -127,7 +237,7 @@ def _movement_labels_script(labels):
 
 
 def _candidate_focus_screen(screen_no, labels):
-    """Reuse the locked focus runtime unchanged and label its two existing currents."""
+    """Reuse the locked focus runtime and label its two existing currents."""
     motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
     motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
     motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + '</body>', 1)
