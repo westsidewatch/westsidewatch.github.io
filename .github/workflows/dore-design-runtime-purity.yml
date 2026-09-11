@@ -14,8 +14,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Syntax
-        run: python3 -m py_compile dore-design/runtime_purity_acceptance.py dore-design/app_design2.py dore-design/app_visual_v2.py
-      - name: Resident read purity
+        run: python3 -m py_compile dore-design/runtime_purity_acceptance.py dore-design/runtime_concurrency_acceptance.py dore-design/runtime_serialization.py dore-design/app_design2.py dore-design/app_visual_v2.py
+      - name: Resident read purity and concurrent write safety
         shell: bash
         run: |
           set -euo pipefail
@@ -34,9 +34,14 @@ jobs:
             exit 1
           fi
           if ! python3 dore-design/runtime_purity_acceptance.py; then
-            echo '--- resident log ---'
+            echo '--- purity failure resident log ---'
             cat /tmp/dore-design-runtime-purity.log
             exit 1
           fi
-      - name: Purity gate
-        run: echo DORE_DESIGN_RUNTIME_PURITY_GATE_PASS
+          if ! python3 dore-design/runtime_concurrency_acceptance.py; then
+            echo '--- concurrency failure resident log ---'
+            cat /tmp/dore-design-runtime-purity.log
+            exit 1
+          fi
+      - name: Purity and serialization gate
+        run: echo DORE_DESIGN_RUNTIME_PURITY_AND_SERIALIZATION_GATE_PASS
