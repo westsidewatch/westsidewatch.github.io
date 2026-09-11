@@ -37,16 +37,29 @@ Corrected the first implementation's source-preservation weaknesses by replacing
 
 This correction is meaningful evidence of visual-production iteration rather than proof of final quality.
 
+### Commit `316cda12142279a14a8c7a734929382a80f3eb47`
+
+Extended the same experiment from a two-anchor road test to a three-anchor Camera Spine (`011 → 019 → 021`) in one uninterrupted 210-frame camera path. The workflow:
+
+- fetches three canonical Doré anchors;
+- builds three explicitly UV-mapped shallow walls in one Blender world;
+- uses one camera with `camera_resets: 0`;
+- states that bridge polish is secondary to recognizable encounter with all three anchors;
+- emits MP4, contact-sheet, `.blend` and metadata evidence when the workflow actually runs.
+
+This strengthens the architectural hypothesis that the virtual-stage method is intended to generalize beyond a single pair, but it is still implementation evidence only. The reviewed commit-workflow lookup returned no associated run for this commit, so three-anchor rendered acceptance remains unverified.
+
 ## Current evidence boundary
 
-No workflow run is currently associated with the corrected commit in the reviewed GitHub run lookup. Therefore:
+No workflow run is currently associated with the reviewed corrected/two-anchor or three-anchor commits in the available run lookup. Therefore:
 
 - implementation existence: **VERIFIED**;
 - corrected workflow definition: **VERIFIED**;
+- three-anchor Camera Spine implementation: **VERIFIED**;
 - rendered visual acceptance: **UNKNOWN_NEEDS_EVIDENCE**;
 - one-camera continuity quality: **UNKNOWN_NEEDS_EVIDENCE**;
 - preservation of canonical Doré source appearance in the rendered output: **UNKNOWN_NEEDS_EVIDENCE**;
-- reusable film-language capability beyond this 011→019 test: **UNKNOWN_NEEDS_EVIDENCE**.
+- reusable film-language capability beyond these bounded tests: **UNKNOWN_NEEDS_EVIDENCE**.
 
 A commit or workflow file must not be promoted to `VERIFIED_COMPLETE` without rendered evidence.
 
@@ -62,6 +75,7 @@ This is not a completed product and not a replacement for the active P01 subtitl
 2. UV mapping/orientation is not an implementation detail; it directly governs whether the film treatment preserves the source rather than visibly corrupting it.
 3. A useful Doré film grammar should distinguish continuous world-space movement from slideshow/crossfade behavior.
 4. Rendered artifacts, not workflow definitions, are the required evidence unit for visual-film acceptance.
+5. A repeatable film-language claim needs multi-anchor evidence; moving from 011→019 to 011→019→021 is the correct architectural stress direction, but only a rendered run can establish that the camera-spine abstraction actually works visually.
 
 ## Debt / revisit trigger
 
@@ -71,12 +85,13 @@ Revisit when a corrected workflow run produces inspectable MP4/contact-sheet art
 - spatial departure rather than flat image motion;
 - bridge continuity;
 - arrival recognizability of 019;
+- third-anchor recognizability of 021 for the three-anchor spine;
 - no cut/camera reset;
 - absence of UV/aspect distortion;
 - whether the result is actually usable as a repeatable visual-production method rather than a one-off road test.
 
 ## Smallest next proof
 
-Run the corrected workflow once and persist the resulting MP4/contact sheet plus pass/fail judgment against its own acceptance contract.
+Run one current three-anchor Camera Spine workflow and persist the resulting MP4/contact sheet plus pass/fail judgment against its own acceptance contract. If it passes, then compare the bounded result to the earlier two-anchor acceptance criteria before claiming reusable film grammar.
 
 No human/environment blocker is established by this ledger; absence of a reviewed run is missing evidence, not a blocker.
