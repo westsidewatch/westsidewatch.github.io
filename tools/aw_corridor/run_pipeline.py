@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 """Continuous AW-011 production pipeline entrypoint.
 
-Runs production preflight, optional scaffold ingestion, then optional unseen-only
-frame admission. The runner stops at the first missing/invalid boundary and never
-fabricates production artifacts.
+Runs production preflight, optional scaffold ingestion, unseen-only frame admission,
+and exact-source traversal relock. The runner stops at the first missing/invalid
+boundary and never fabricates production artifacts.
 """
 from __future__ import annotations
 
@@ -15,6 +15,7 @@ from typing import Any, Mapping
 from frame_gate import FrameGateError, RasterError, compose
 from run_aw011 import InputError, build
 from scaffold_gate import MaskError, ScaffoldError, validate
+from traversal_gate import TraversalError, assemble
 
 
 def _load_json(path: Path) -> Mapping[str, Any]:
@@ -104,10 +105,11 @@ def run(
     preflight = build(production_manifest, out_dir)
     result = {
         "aw_id": "AW-011",
-        "stage": "camera-corridor-pipeline-v2",
+        "stage": "camera-corridor-pipeline-v3",
         "preflight": preflight,
         "scaffold": None,
         "frames": None,
+        "traversal": None,
     }
 
     if preflight["status"] != "READY_FOR_SCAFFOLD":
@@ -125,7 +127,9 @@ def run(
 
     frame_report = _admit_frames(scaffold_manifest, render_manifest, out_dir)
     result["frames"] = frame_report
-    result["status"] = "FRAMES_ACCEPTED"
+    traversal_report = assemble(preflight, frame_report, out_dir)
+    result["traversal"] = traversal_report
+    result["status"] = "TRAVERSAL_READY"
     return result
 
 
@@ -150,6 +154,7 @@ def main() -> int:
         MaskError,
         FrameGateError,
         RasterError,
+        TraversalError,
         OSError,
         ValueError,
         json.JSONDecodeError,
@@ -165,7 +170,7 @@ def main() -> int:
     return 0 if report["status"] in (
         "AWAITING_SCAFFOLD",
         "SCAFFOLD_ACCEPTED",
-        "FRAMES_ACCEPTED",
+        "TRAVERSAL_READY",
     ) else 3
 
 
