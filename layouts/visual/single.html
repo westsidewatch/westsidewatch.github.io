@@ -4,6 +4,11 @@
   {{ $visual := index $matches 0 }}
   {{ $representation := index $visual.representations 0 }}
   {{ $rightsPolicy := index site.Data.visual_rights.policies $representation.rights.policy }}
+  {{ $manifest := $representation.delivery.iiif_manifest }}
+  {{ $manifestHref := $manifest }}
+  {{ if and $manifest (not (or (hasPrefix $manifest "http://") (hasPrefix $manifest "https://"))) }}
+    {{ $manifestHref = $manifest | relURL }}
+  {{ end }}
 
   <link rel="stylesheet" href="{{ "/css/dawn-visual.css" | relURL }}">
 
@@ -21,7 +26,7 @@
       </div>
       <div class="article__title-block">
         <h1>{{ .Title }}</h1>
-        <p class="article__subtitle">{{ $visual.creator.name }} · {{ $visual.date }} · {{ $visual.series }}</p>
+        <p class="article__subtitle">{{ $visual.creator.name }} · {{ $visual.date }}{{ with $visual.series }} · {{ . }}{{ end }}</p>
       </div>
     </header>
 
@@ -33,9 +38,26 @@
           data-visual-work="{{ $visual.id }}"
           data-image-url="{{ $representation.image_url }}"
           data-iiif-service="{{ with $representation.delivery.iiif_image_service }}{{ . }}{{ end }}"
-          data-iiif-manifest="{{ with $representation.delivery.iiif_manifest }}{{ . | relURL }}{{ end }}"
+          data-iiif-manifest="{{ with $manifestHref }}{{ . }}{{ end }}"
           data-viewer-state="pending"
-        ></div>
+        >
+          {{ range $visual.regions }}
+            {{ if .xywh }}
+              <span
+                class="dawn-visual-region-source"
+                data-visual-region
+                data-region-id="{{ .id }}"
+                data-region-x="{{ index .xywh 0 }}"
+                data-region-y="{{ index .xywh 1 }}"
+                data-region-w="{{ index .xywh 2 }}"
+                data-region-h="{{ index .xywh 3 }}"
+                data-region-label="{{ delimit .depicts ", " }}"
+                data-region-provenance="{{ .provenance.source }}"
+                hidden
+              ></span>
+            {{ end }}
+          {{ end }}
+        </div>
         <noscript>
           <img class="dawn-visual-viewer__fallback" src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}">
         </noscript>
@@ -59,20 +81,28 @@
 
         <dl class="visual-metadata dawn-visual-rights">
           <div><dt>Artist</dt><dd>{{ $visual.creator.name }}</dd></div>
-          <div><dt>Scripture</dt><dd>{{ (index $visual.scripture_refs 0).canonical }}</dd></div>
+          <div><dt>Scripture</dt><dd>{{ delimit (apply $visual.scripture_refs "index" "." "canonical") " · " }}</dd></div>
           <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
           <div><dt>Rights</dt><dd>{{ $rightsPolicy.label }}</dd></div>
           <div><dt>Provider</dt><dd>{{ $representation.provider }}</dd></div>
           <div><dt>Delivery</dt><dd>{{ $representation.delivery.mode }}</dd></div>
           <div><dt>Deep zoom</dt><dd>{{ if $representation.delivery.deep_zoom }}Enabled{{ else }}Unavailable{{ end }}</dd></div>
+          <div><dt>Regions</dt><dd>{{ len $visual.regions }}</dd></div>
           <div><dt>Cached derivative</dt><dd>{{ if $rightsPolicy.allow_cached_derivative }}Allowed{{ else }}Blocked{{ end }}</dd></div>
           <div><dt>Brand crop</dt><dd>{{ if $rightsPolicy.allow_branded_crop }}Allowed{{ else }}Blocked{{ end }}</dd></div>
           <div><dt>Training canon</dt><dd>{{ if and $rightsPolicy.allow_training_canon (ne $visual.authority_class "D") (not $visual.generated) }}Eligible{{ else }}Blocked{{ end }}</dd></div>
         </dl>
 
-        {{ with $representation.delivery.iiif_manifest }}
-          <p><a href="{{ . | relURL }}">IIIF Presentation manifest</a></p>
+        {{ if gt (len $visual.regions) 0 }}
+          <h2>Visual Regions</h2>
+          <ul class="dawn-visual-region-list">
+            {{ range $visual.regions }}
+              <li><strong>{{ delimit .depicts ", " }}</strong> · {{ .visual_role }} · {{ .provenance.source }}</li>
+            {{ end }}
+          </ul>
         {{ end }}
+
+        {{ with $manifestHref }}<p><a href="{{ . }}" target="_blank" rel="noopener noreferrer">IIIF Presentation manifest ↗</a></p>{{ end }}
         <p><a class="dawn-visual-source-link" href="{{ $representation.source_page }}" target="_blank" rel="noopener noreferrer">查看原始館藏與權利證據 ↗</a></p>
       </div>
     </section>
