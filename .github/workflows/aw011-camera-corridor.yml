@@ -17,6 +17,7 @@ jobs:
         with: {python-version: "3.12"}
       - working-directory: tools/aw_corridor
         run: python -m unittest discover -v -p "test_*.py"
+
   world-scaffold:
     runs-on: ubuntu-latest
     steps:
@@ -32,6 +33,7 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: aw-011-world-scaffold, path: build/aw-011-world/}
+
   v5-depth-bakeoff:
     runs-on: ubuntu-latest
     strategy:
@@ -41,30 +43,42 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - name: Fetch Doré 011
-        run: |
+      - run: |
           mkdir -p experiments/aw-011/assets
           curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
-      - name: Install common runtime
-        run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5"
-      - name: Install Depth Pro and checkpoint
-        if: matrix.provider == 'depth-pro'
+      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5"
+      - if: matrix.provider == 'depth-pro'
         run: |
           python -m pip install --disable-pip-version-check 'git+https://github.com/apple/ml-depth-pro.git'
           mkdir -p checkpoints
           curl --fail --location --retry 3 https://ml-site.cdn-apple.com/models/depth-pro/depth_pro.pt -o checkpoints/depth_pro.pt
-      - name: Install MoGe
-        if: matrix.provider == 'moge'
+      - if: matrix.provider == 'moge'
         run: python -m pip install --disable-pip-version-check 'git+https://github.com/microsoft/MoGe.git'
-      - name: Build provider geometry
-        run: |
+      - run: |
           mkdir -p build/v5-${{ matrix.provider }}
           python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider ${{ matrix.provider }} --output build/v5-${{ matrix.provider }}/depth.png --report build/v5-${{ matrix.provider }}/depth-report.json
-      - name: Render identical Camera Spine
-        run: python tools/aw_corridor/experiment_depth_traversal.py --source experiments/aw-011/assets/dore-011.jpg --depth build/v5-${{ matrix.provider }}/depth.png --spine experiments/aw-011/camera-spine.json --output build/v5-${{ matrix.provider }}/traversal.mp4 --report build/v5-${{ matrix.provider }}/traversal-report.json --width 960 --fps 24 --segment-frames 24
+      - run: python tools/aw_corridor/experiment_depth_traversal.py --source experiments/aw-011/assets/dore-011.jpg --depth build/v5-${{ matrix.provider }}/depth.png --spine experiments/aw-011/camera-spine.json --output build/v5-${{ matrix.provider }}/traversal.mp4 --report build/v5-${{ matrix.provider }}/traversal-report.json --width 960 --fps 24 --segment-frames 24
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: aw-011-v5-${{ matrix.provider }}
           path: build/v5-${{ matrix.provider }}/
           if-no-files-found: warn
+
+  v5-world-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: |
+          mkdir -p experiments/aw-011/assets
+          curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
+      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
+      - run: |
+          mkdir -p build/v5-world-cache
+          python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/v5-world-cache/depth.png --report build/v5-world-cache/depth-report.json
+      - run: python tools/aw_corridor/experiment_world_cache.py --source experiments/aw-011/assets/dore-011.jpg --depth build/v5-world-cache/depth.png --spine experiments/aw-011/camera-spine.json --output build/v5-world-cache/traversal.mp4 --report build/v5-world-cache/traversal-report.json --width 960 --fps 24 --segment-frames 24
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: aw-011-v5-world-cache, path: build/v5-world-cache/}
