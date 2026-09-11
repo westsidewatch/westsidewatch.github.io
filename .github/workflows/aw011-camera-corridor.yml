@@ -95,8 +95,8 @@ jobs:
         run: |
           mkdir -p experiments/aw-011/assets
           curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" --output experiments/aw-011/assets/dore-011.jpg
-      - name: Install Depth Anything scaffold provider
-        run: python -m pip install --disable-pip-version-check "transformers>=4.45,<5" torch torchvision pillow numpy
+      - name: Install world scaffold and traversal providers
+        run: python -m pip install --disable-pip-version-check "transformers>=4.45,<5" torch torchvision pillow numpy opencv-python-headless
       - name: Build real non-planar depth scaffold
         run: |
           python tools/aw_corridor/experiment_depth_scaffold.py \
@@ -115,6 +115,34 @@ jobs:
           assert d['q95_q05_spread'] >= 0.10
           assert d['standard_deviation'] >= 0.03
           assert Path('build/aw-011-world/depth.png').stat().st_size > 10000
+          print(json.dumps(d,indent=2))
+          PY
+      - name: Render depth-aware Camera Spine traversal
+        run: |
+          python tools/aw_corridor/experiment_depth_traversal.py \
+            --source experiments/aw-011/assets/dore-011.jpg \
+            --depth build/aw-011-world/depth.png \
+            --spine experiments/aw-011/camera-spine.json \
+            --output build/aw-011-world/aw-011-depth-traversal.mp4 \
+            --report build/aw-011-world/geometric-traversal-report.json \
+            --width 960 \
+            --fps 24 \
+            --segment-frames 24
+          cat build/aw-011-world/geometric-traversal-report.json
+      - name: Assert geometric traversal gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('build/aw-011-world/geometric-traversal-report.json').read_text())
+          assert d['status']=='GEOMETRIC_TRAVERSAL_ACCEPTED', d
+          assert d['gate'] is True
+          assert d['max_depth_band_shift_span_px'] >= 3.0
+          assert d['max_depth_band_shift_variance'] >= 1.0
+          assert d['max_map_x_displacement_std_px'] >= 2.0
+          assert d['max_unseen_fraction'] > 0.001
+          assert d['exact_final_source_relock'] is True
+          assert Path('build/aw-011-world/aw-011-depth-traversal.mp4').stat().st_size > 10000
           print(json.dumps(d,indent=2))
           PY
       - name: Upload AW-011 world scaffold evidence
