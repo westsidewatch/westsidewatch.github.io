@@ -17,19 +17,25 @@
           "visualWorkId": "visual-initiale-lev1-god-speaking-moses",
           "score": 0.32,
           "authorityClass": "A",
-          "surfacePresetIds": ["card-8x5"]
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
         },
         {
           "visualWorkId": "visual-princeton-galilee-storm-1591",
           "score": 0.32,
           "authorityClass": "A",
-          "surfacePresetIds": ["card-8x5"]
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
         },
         {
           "visualWorkId": "visual-dore-gen22-testing-abraham",
           "score": 0.2948,
           "authorityClass": "B",
-          "surfacePresetIds": ["card-8x5"]
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
         }
       ],
       "surfaceOrchestration": {
@@ -43,7 +49,9 @@
             "surfacePreset": "card-8x5",
             "editorialWeight": 2,
             "motion": "near-still",
-            "visualWorkIds": ["visual-initiale-lev1-god-speaking-moses"]
+            "visualWorkIds": [
+              "visual-initiale-lev1-god-speaking-moses"
+            ]
           },
           {
             "id": "dawn-river",
@@ -51,7 +59,10 @@
             "surfacePreset": "card-8x5",
             "editorialWeight": 1,
             "motion": "slow-flow",
-            "visualWorkIds": ["visual-princeton-galilee-storm-1591", "visual-dore-gen22-testing-abraham"]
+            "visualWorkIds": [
+              "visual-princeton-galilee-storm-1591",
+              "visual-dore-gen22-testing-abraham"
+            ]
           },
           {
             "id": "dawn-focus",
