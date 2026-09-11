@@ -34,7 +34,7 @@ jobs:
         working-directory: tools/aw_corridor
         run: python -m unittest discover -v -p "test_*.py"
 
-  experiment-source-preflight:
+  real-experiment:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,6 +44,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Install experimental image provider
+        run: python -m pip install --disable-pip-version-check opencv-python-headless
 
       - name: Fetch Doré 011 experiment source
         run: |
@@ -55,7 +58,7 @@ jobs:
           file experiments/aw-011/assets/dore-011.jpg
           sha256sum experiments/aw-011/assets/dore-011.jpg
 
-      - name: Generate first real planar warp masks from Camera Spine
+      - name: Measure planar Camera Corridor unseen debt
         run: |
           python tools/aw_corridor/experiment_warp.py \
             --source experiments/aw-011/assets/dore-011.jpg \
@@ -63,7 +66,18 @@ jobs:
             --out-root experiments/aw-011 \
             --manifest-out experiments/aw-011/mask.input.ci.json
 
-      - name: Bind real source and generated warp evidence
+      - name: Synthesize first D_INFERRED_UNSEEN anchor and scaffold
+        run: |
+          python tools/aw_corridor/experiment_anchor.py \
+            --source experiments/aw-011/assets/dore-011.jpg \
+            --spine experiments/aw-011/camera-spine.json \
+            --work-root experiments/aw-011 \
+            --mask-manifest experiments/aw-011/mask.input.ci.json \
+            --scaffold-out experiments/aw-011/scaffold.input.ci.json \
+            --render-out experiments/aw-011/render.input.ci.json \
+            --anchor-manifest-out experiments/aw-011/mask.with-anchor.ci.json
+
+      - name: Bind real source and inferred anchor evidence
         run: |
           python - <<'PY'
           import json
@@ -71,52 +85,59 @@ jobs:
           src = Path('experiments/aw-011/production.input.example.json')
           data = json.loads(src.read_text())
           data['source']['asset'] = 'assets/dore-011.jpg'
-          data['anchors'] = {'mask_manifest_file': 'mask.input.ci.json'}
+          data['anchors'] = {'mask_manifest_file': 'mask.with-anchor.ci.json'}
           Path('experiments/aw-011/production.input.ci.json').write_text(json.dumps(data, indent=2) + '\n')
           PY
 
-      - name: Run real AW-011 production preflight
+      - name: Run real AW-011 end-to-end pipeline
         run: |
-          set +e
-          python tools/aw_corridor/run_aw011.py \
+          python tools/aw_corridor/run_pipeline.py \
             experiments/aw-011/production.input.ci.json \
+            --scaffold-manifest experiments/aw-011/scaffold.input.ci.json \
+            --render-manifest experiments/aw-011/render.input.ci.json \
             --out-dir build/aw-011-real
-          code=$?
-          set -e
-          # exit 0 = corridor already covered; exit 3 = real unseen evidence debt found.
-          # Both are valid outcomes for this first experiment. Input/runtime errors remain failures.
-          if [ "$code" -ne 0 ] && [ "$code" -ne 3 ]; then
-            exit "$code"
-          fi
+
+      - name: Assert first real traversal
+        run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('build/aw-011-real/build-manifest.json')
+          p = Path('build/aw-011-real/pipeline-report.json')
           data = json.loads(p.read_text())
-          if data['status'] not in {'READY_FOR_SCAFFOLD', 'NEEDS_ANCHOR_EVIDENCE'}:
-              raise SystemExit(f"unexpected status: {data['status']}")
+          assert data['status'] == 'TRAVERSAL_READY', data['status']
+          assert data['preflight']['evidence']['selected_anchor_ids'] == ['A001-telea-inferred']
+          assert data['traversal']['exact_source_relock'] is True
+          for frame in data['frames']['frames']:
+              assert frame['known_pixels_preserved'] is True
+              assert frame['known_channel_delta_count'] == 0
           print(json.dumps({
               'status': data['status'],
-              'source_sha256': data['source']['sha256'],
-              'ordered_pose_ids': data['camera']['ordered_pose_ids'],
-              'unresolved_pose_ids': data['evidence']['unresolved_pose_ids'],
+              'selected_anchor_ids': data['preflight']['evidence']['selected_anchor_ids'],
+              'exact_source_relock': data['traversal']['exact_source_relock'],
+              'travel_frames': data['frames']['pose_count'],
           }, indent=2))
           PY
 
-      - name: Show real preflight evidence
+      - name: Show real pipeline evidence
         if: always()
         run: |
-          find build/aw-011-real -maxdepth 2 -type f -print || true
+          find build/aw-011-real -maxdepth 3 -type f -print || true
           cat build/aw-011-real/build-manifest.json || true
           cat build/aw-011-real/anchor-plan.json || true
+          cat build/aw-011-real/pipeline-report.json || true
 
-      - name: Upload AW-011 real experiment evidence
+      - name: Upload AW-011 real traversal
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: aw-011-real-preflight
+          name: aw-011-real-traversal
           path: |
             build/aw-011-real/
             experiments/aw-011/mask.input.ci.json
-            experiments/aw-011/poses/*/*-mask.png
+            experiments/aw-011/mask.with-anchor.ci.json
+            experiments/aw-011/scaffold.input.ci.json
+            experiments/aw-011/render.input.ci.json
+            experiments/aw-011/poses/**/*.png
+            experiments/aw-011/generated/*.png
+            experiments/aw-011/anchors/**/*.png
           if-no-files-found: warn
