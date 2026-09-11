@@ -5,12 +5,14 @@ on:
     paths:
       - 'data/visual_graph.json'
       - 'data/visual_rights.json'
+      - 'data/visual_map_profiles.json'
       - 'content/visual/**'
       - 'layouts/index.html'
       - 'layouts/visual/**'
       - 'layouts/partials/home-visual-bridge.html'
       - 'layouts/partials/visual-resource-card.html'
       - 'layouts/partials/visual-surface.html'
+      - 'layouts/partials/visual-map-surface.html'
       - 'layouts/website/dawn-library.html'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/css/dawn-visual.css'
@@ -31,12 +33,14 @@ jobs:
 
           graph = json.loads(Path('data/visual_graph.json').read_text())
           rights = json.loads(Path('data/visual_rights.json').read_text())
+          maps = json.loads(Path('data/visual_map_profiles.json').read_text())
           policies = rights['policies']
 
           ids = set()
           slugs = set()
           native_iiif = 0
           authority_crops = 0
+          fixture_types = set()
 
           for work in graph['visual_works']:
               assert work['id'] not in ids, f"duplicate VisualWork id: {work['id']}"
@@ -48,6 +52,14 @@ jobs:
 
               if work.get('generated'):
                   assert work.get('authority_class') == 'D', 'generated work cannot enter A/B/C authority canon'
+
+              if work.get('type') == 'engraving' and work.get('creator', {}).get('name') == 'Gustave Doré':
+                  fixture_types.add('dore-biblical-engraving')
+              if work.get('type') in {'manuscript-illumination','painting','mosaic','fresco'}:
+                  fixture_types.add('religious-art-or-manuscript')
+              if work.get('validation', {}).get('acceptance_fixture') == 'chinese-christian-historical-photograph':
+                  assert work.get('type') == 'historical-photograph', 'Chinese-Christian fixture must be a historical photograph'
+                  fixture_types.add('chinese-christian-historical-photograph')
 
               region_ids = {r.get('id') for r in work.get('regions', [])}
               for preset in work.get('surface_presets', []):
@@ -73,8 +85,43 @@ jobs:
                   if source == 'authority' and region.get('region_scope') == 'source-cropped-manuscript-decoration':
                       authority_crops += 1
 
-          assert native_iiif >= 2, 'phase 1 now requires at least two native IIIF Image Service fixtures'
+          assert native_iiif >= 2, 'phase 1 requires at least two native IIIF Image Service fixtures'
           assert authority_crops >= 1, 'requires at least one authority-defined fine-grained manuscript decoration crop'
+
+          map_ids = set()
+          for profile in maps['profiles']:
+              assert profile['id'] not in map_ids, f"duplicate map profile id: {profile['id']}"
+              map_ids.add(profile['id'])
+              assert profile['scale_denominator'] > 0, f"invalid map scale: {profile['id']}"
+              assert profile['source']['rights_policy'] in policies, f"unknown map rights policy: {profile['id']}"
+              survey = profile.get('survey_geometry_provenance', {})
+              assert survey.get('authority_status') == 'historical-survey-method-verified', f"map requires authoritative survey-method provenance: {profile['id']}"
+              assert survey.get('use_as_gcp') is False, f"historical survey description cannot silently become raster GCPs: {profile['id']}"
+              assert profile.get('coverage_evidence', {}).get('authority_status') == 'historical-text-verified', f"map requires authoritative coverage evidence: {profile['id']}"
+              geo = profile['georeference']
+              overlay = next((p for p in profile['surface_presets'] if p['id'] == 'map-overlay'), None)
+              assert overlay, f"map-overlay preset required: {profile['id']}"
+              assert overlay.get('requires_verified_georeference') is True, f"overlay must be fail-closed: {profile['id']}"
+              assert geo.get('candidate_control_point_policy'), f"map requires explicit GCP admission policy: {profile['id']}"
+              if geo['verified']:
+                  assert geo.get('annotation_url'), f"verified map requires annotation_url: {profile['id']}"
+              else:
+                  assert not geo.get('annotation_url'), f"unverified map cannot expose Allmaps annotation: {profile['id']}"
+          if map_ids:
+              fixture_types.add('historical-palestine-map')
+
+          required_fixtures = {
+              'dore-biblical-engraving',
+              'religious-art-or-manuscript',
+              'historical-palestine-map',
+              'chinese-christian-historical-photograph',
+          }
+          missing = required_fixtures - fixture_types
+          assert not missing, f"Phase 1 acceptance fixtures missing: {sorted(missing)}"
+
+          map_partial = Path('layouts/partials/visual-map-surface.html').read_text()
+          assert 'and $geo.verified $geo.annotation_url' in map_partial, 'map surface must require verified georeference and annotation'
+          assert 'data-dawn-allmaps-map' in map_partial, 'verified map path must expose Allmaps mount point'
 
           home = Path('layouts/index.html').read_text()
           bridge = Path('layouts/partials/home-visual-bridge.html').read_text()
@@ -82,7 +129,7 @@ jobs:
           assert 'visual-surface.html' in bridge, 'homepage bridge must use the shared VisualSurface partial'
           assert 'visual-princeton-galilee-storm-1591' in bridge, 'homepage proof must resolve a stable VisualWork id'
 
-          print(f"validated {len(ids)} VisualWork records; native IIIF fixtures: {native_iiif}; authority crops: {authority_crops}")
+          print(f"validated {len(ids)} VisualWork records; {len(map_ids)} map profiles; four-fixture Phase 1 acceptance complete; native IIIF fixtures: {native_iiif}; authority crops: {authority_crops}")
           PY
 
       - name: Check viewer JavaScript syntax
