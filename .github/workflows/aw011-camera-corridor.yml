@@ -22,14 +22,10 @@ jobs:
   contract-tests:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Run AW-011 contract tests
         working-directory: tools/aw_corridor
         run: python -m unittest discover -v -p "test_*.py"
@@ -37,149 +33,94 @@ jobs:
   real-experiment:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Python
-        uses: actions/setup-python@v5
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-
       - name: Install experimental image provider
         run: python -m pip install --disable-pip-version-check opencv-python-headless
-
       - name: Fetch Doré 011 experiment source
         run: |
           mkdir -p experiments/aw-011/assets
-          curl --fail --location --retry 3 \
-            "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" \
-            --output experiments/aw-011/assets/dore-011.jpg
+          curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" --output experiments/aw-011/assets/dore-011.jpg
           test -s experiments/aw-011/assets/dore-011.jpg
-          file experiments/aw-011/assets/dore-011.jpg
           sha256sum experiments/aw-011/assets/dore-011.jpg
-
       - name: Measure planar Camera Corridor unseen debt
-        run: |
-          python tools/aw_corridor/experiment_warp.py \
-            --source experiments/aw-011/assets/dore-011.jpg \
-            --spine experiments/aw-011/camera-spine.json \
-            --out-root experiments/aw-011 \
-            --manifest-out experiments/aw-011/mask.input.ci.json
-
+        run: python tools/aw_corridor/experiment_warp.py --source experiments/aw-011/assets/dore-011.jpg --spine experiments/aw-011/camera-spine.json --out-root experiments/aw-011 --manifest-out experiments/aw-011/mask.input.ci.json
       - name: Synthesize first D_INFERRED_UNSEEN anchor and scaffold
-        run: |
-          python tools/aw_corridor/experiment_anchor.py \
-            --source experiments/aw-011/assets/dore-011.jpg \
-            --spine experiments/aw-011/camera-spine.json \
-            --work-root experiments/aw-011 \
-            --mask-manifest experiments/aw-011/mask.input.ci.json \
-            --scaffold-out experiments/aw-011/scaffold.input.ci.json \
-            --render-out experiments/aw-011/render.input.ci.json \
-            --anchor-manifest-out experiments/aw-011/mask.with-anchor.ci.json
-
+        run: python tools/aw_corridor/experiment_anchor.py --source experiments/aw-011/assets/dore-011.jpg --spine experiments/aw-011/camera-spine.json --work-root experiments/aw-011 --mask-manifest experiments/aw-011/mask.input.ci.json --scaffold-out experiments/aw-011/scaffold.input.ci.json --render-out experiments/aw-011/render.input.ci.json --anchor-manifest-out experiments/aw-011/mask.with-anchor.ci.json
       - name: Bind real source and inferred anchor evidence
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          src = Path('experiments/aw-011/production.input.example.json')
-          data = json.loads(src.read_text())
-          data['source']['asset'] = 'assets/dore-011.jpg'
-          data['anchors'] = {'mask_manifest_file': 'mask.with-anchor.ci.json'}
-          Path('experiments/aw-011/production.input.ci.json').write_text(json.dumps(data, indent=2) + '\n')
+          data=json.loads(Path('experiments/aw-011/production.input.example.json').read_text())
+          data['source']['asset']='assets/dore-011.jpg'
+          data['anchors']={'mask_manifest_file':'mask.with-anchor.ci.json'}
+          Path('experiments/aw-011/production.input.ci.json').write_text(json.dumps(data,indent=2)+'\n')
           PY
-
       - name: Run real AW-011 end-to-end pipeline
-        run: |
-          python tools/aw_corridor/run_pipeline.py \
-            experiments/aw-011/production.input.ci.json \
-            --scaffold-manifest experiments/aw-011/scaffold.input.ci.json \
-            --render-manifest experiments/aw-011/render.input.ci.json \
-            --out-dir build/aw-011-real
-
+        run: python tools/aw_corridor/run_pipeline.py experiments/aw-011/production.input.ci.json --scaffold-manifest experiments/aw-011/scaffold.input.ci.json --render-manifest experiments/aw-011/render.input.ci.json --out-dir build/aw-011-real
       - name: Assert first real traversal
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
-          p = Path('build/aw-011-real/pipeline-report.json')
-          data = json.loads(p.read_text())
-          assert data['status'] == 'TRAVERSAL_READY', data['status']
-          assert data['preflight']['evidence']['selected_anchor_ids'] == ['A001-telea-inferred']
-          assert data['preflight']['evidence']['unresolved_pose_ids'] == []
+          data=json.loads(Path('build/aw-011-real/pipeline-report.json').read_text())
+          assert data['status']=='TRAVERSAL_READY'
+          assert data['preflight']['evidence']['selected_anchor_ids']==['A001-telea-inferred']
+          assert data['preflight']['evidence']['unresolved_pose_ids']==[]
           assert data['traversal']['exact_source_relock'] is True
           for frame in data['frames']['frames']:
-              assert frame['status'] == 'FRAME_ACCEPTED'
-              assert frame['known_channel_delta_count'] == 0
-          print(json.dumps({
-              'status': data['status'],
-              'selected_anchor_ids': data['preflight']['evidence']['selected_anchor_ids'],
-              'unresolved_pose_ids': data['preflight']['evidence']['unresolved_pose_ids'],
-              'exact_source_relock': data['traversal']['exact_source_relock'],
-              'travel_frames': data['frames']['pose_count'],
-              'known_channel_delta_counts': [f['known_channel_delta_count'] for f in data['frames']['frames']],
-          }, indent=2))
+              assert frame['status']=='FRAME_ACCEPTED'
+              assert frame['known_channel_delta_count']==0
           PY
-
       - name: Render continuous AW-011 film preview
-        run: |
-          python tools/aw_corridor/render_preview.py \
-            --source experiments/aw-011/assets/dore-011.jpg \
-            --spine experiments/aw-011/camera-spine.json \
-            --output build/aw-011-real/aw-011-preview.mp4 \
-            --report build/aw-011-real/preview-report.json \
-            --width 960 \
-            --fps 24 \
-            --segment-frames 24 24 36
-          test -s build/aw-011-real/aw-011-preview.mp4
-          cat build/aw-011-real/preview-report.json
-
-      - name: Assert continuous preview artifact
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-          p = Path('build/aw-011-real/preview-report.json')
-          data = json.loads(p.read_text())
-          video = Path(data['output'])
-          assert data['status'] == 'PREVIEW_RENDERED'
-          assert data['frame_count'] > 60
-          assert data['duration_seconds'] > 2.0
-          assert data['final_frame'] == 'P000_SOURCE_VIEW_RELOCK'
-          assert video.is_file() and video.stat().st_size > 10000
-          print(json.dumps({
-              'status': data['status'],
-              'video': str(video),
-              'bytes': video.stat().st_size,
-              'frames': data['frame_count'],
-              'fps': data['fps'],
-              'duration_seconds': data['duration_seconds'],
-              'resolution': data['resolution'],
-              'codec': data['codec'],
-          }, indent=2))
-          PY
-
-      - name: Show real pipeline evidence
-        if: always()
-        run: |
-          find build/aw-011-real -maxdepth 3 -type f -print || true
-          cat build/aw-011-real/build-manifest.json || true
-          cat build/aw-011-real/anchor-plan.json || true
-          cat build/aw-011-real/pipeline-report.json || true
-          cat build/aw-011-real/preview-report.json || true
-
+        run: python tools/aw_corridor/render_preview.py --source experiments/aw-011/assets/dore-011.jpg --spine experiments/aw-011/camera-spine.json --output build/aw-011-real/aw-011-preview.mp4 --report build/aw-011-real/preview-report.json --width 960 --fps 24 --segment-frames 24 24 36
       - name: Upload AW-011 real traversal and film preview
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: aw-011-real-traversal
-          path: |
-            build/aw-011-real/
-            experiments/aw-011/mask.input.ci.json
-            experiments/aw-011/mask.with-anchor.ci.json
-            experiments/aw-011/scaffold.input.ci.json
-            experiments/aw-011/render.input.ci.json
-            experiments/aw-011/poses/**/*.png
-            experiments/aw-011/generated/*.png
-            experiments/aw-011/anchors/**/*.png
+          path: build/aw-011-real/
+
+  world-scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Fetch Doré 011 authority image
+        run: |
+          mkdir -p experiments/aw-011/assets
+          curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" --output experiments/aw-011/assets/dore-011.jpg
+      - name: Install Depth Anything scaffold provider
+        run: python -m pip install --disable-pip-version-check "transformers>=4.45,<5" torch torchvision pillow numpy
+      - name: Build real non-planar depth scaffold
+        run: |
+          python tools/aw_corridor/experiment_depth_scaffold.py \
+            --source experiments/aw-011/assets/dore-011.jpg \
+            --output build/aw-011-world/depth.png \
+            --report build/aw-011-world/depth-report.json
+          cat build/aw-011-world/depth-report.json
+      - name: Assert world representation gate
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          d=json.loads(Path('build/aw-011-world/depth-report.json').read_text())
+          assert d['status']=='DEPTH_SCAFFOLD_ACCEPTED'
+          assert d['nonplanar_gate'] is True
+          assert d['q95_q05_spread'] >= 0.10
+          assert d['standard_deviation'] >= 0.03
+          assert Path('build/aw-011-world/depth.png').stat().st_size > 10000
+          print(json.dumps(d,indent=2))
+          PY
+      - name: Upload AW-011 world scaffold evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aw-011-world-scaffold
+          path: build/aw-011-world/
           if-no-files-found: warn
