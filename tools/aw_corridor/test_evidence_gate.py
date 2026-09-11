@@ -1,19 +1,12 @@
 #!/usr/bin/env python3
 
-import importlib.util
 import unittest
-from pathlib import Path
 
-HERE = Path(__file__).resolve().parent
-SPEC = importlib.util.spec_from_file_location("evidence_gate", HERE / "evidence_gate.py")
-MODULE = importlib.util.module_from_spec(SPEC)
-assert SPEC.loader is not None
-SPEC.loader.exec_module(MODULE)
+import evidence_gate as MODULE
 
 
 class EvidenceGateTests(unittest.TestCase):
     def test_generated_pixels_can_enter_only_unseen_positions(self):
-        # Four RGB pixels. Pixels 1 and 3 are unseen.
         known = bytes([
             10, 11, 12,
             20, 21, 22,
