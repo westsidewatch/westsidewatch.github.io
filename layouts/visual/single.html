@@ -81,7 +81,7 @@
 
         <dl class="visual-metadata dawn-visual-rights">
           <div><dt>Artist</dt><dd>{{ $visual.creator.name }}</dd></div>
-          <div><dt>Scripture</dt><dd>{{ delimit (apply $visual.scripture_refs "index" "." "canonical") " · " }}</dd></div>
+          <div><dt>Scripture</dt><dd>{{ range $i, $ref := $visual.scripture_refs }}{{ if $i }} · {{ end }}{{ $ref.canonical }}{{ end }}</dd></div>
           <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
           <div><dt>Rights</dt><dd>{{ $rightsPolicy.label }}</dd></div>
           <div><dt>Provider</dt><dd>{{ $representation.provider }}</dd></div>
