@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Syntax
         run: python3 -m py_compile dore-design/runtime_purity_acceptance.py dore-design/runtime_concurrency_acceptance.py dore-design/runtime_serialization.py dore-design/app_design2.py dore-design/app_visual_v2.py
-      - name: Resident read purity and concurrent write safety
+      - name: Resident read purity concurrent writes and restart idempotence
         shell: bash
         run: |
           set -euo pipefail
@@ -43,5 +43,15 @@ jobs:
             cat /tmp/dore-design-runtime-purity.log
             exit 1
           fi
-      - name: Purity and serialization gate
-        run: echo DORE_DESIGN_RUNTIME_PURITY_AND_SERIALIZATION_GATE_PASS
+          before_restart=$(curl -fsS http://127.0.0.1:4321/api/workspace | python3 -c 'import json,sys; print(json.load(sys.stdin)["revision"])')
+          kill $pid
+          wait $pid 2>/dev/null || true
+          python3 dore-design/app_design2.py >/tmp/dore-design-runtime-restart.log 2>&1 &
+          pid=$!
+          sleep 1
+          after_restart=$(curl -fsS http://127.0.0.1:4321/api/workspace | python3 -c 'import json,sys; print(json.load(sys.stdin)["revision"])')
+          test "$after_restart" = "$before_restart" || { echo "restart revision drift: $before_restart -> $after_restart"; cat /tmp/dore-design-runtime-restart.log; exit 1; }
+          curl -fsS http://127.0.0.1:4321/api/health >/dev/null
+          curl -fsS 'http://127.0.0.1:4321/editor-canvas?page=living-water-candidate-01' >/dev/null
+      - name: Purity serialization and restart gate
+        run: echo DORE_DESIGN_RUNTIME_PURITY_SERIALIZATION_RESTART_GATE_PASS
