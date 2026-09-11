@@ -15,6 +15,7 @@ for name in (
     "frame_gate",
     "run_aw011",
     "scaffold_gate",
+    "traversal_gate",
     "run_pipeline",
 ):
     if name in sys.modules:
@@ -97,7 +98,7 @@ class PipelineTests(unittest.TestCase):
             self.assertEqual(report["status"], "SCAFFOLD_ACCEPTED")
             self.assertEqual(report["scaffold"]["pose_count"], 1)
 
-    def test_accepts_generated_frame_only_through_unseen_gate(self):
+    def test_accepts_generated_frame_and_exactly_relocks_source(self):
         with tempfile.TemporaryDirectory() as tmp:
             root = Path(tmp)
             production, source = self.fixture(root)
@@ -112,11 +113,14 @@ class PipelineTests(unittest.TestCase):
             }), encoding="utf-8")
             out_dir = root / "out"
             report = MODULE.run(production, out_dir, scaffold, render)
-            self.assertEqual(report["status"], "FRAMES_ACCEPTED")
+            self.assertEqual(report["status"], "TRAVERSAL_READY")
             _, _, _, pixels = PNG.read_png(out_dir / "frames" / "P001.png")
             self.assertEqual(pixels, bytes([
                 10,11,12, 20,21,22, 130,131,132, 140,141,142
             ]))
+            return_path = Path(report["traversal"]["sequence"][-1]["path"])
+            self.assertEqual(return_path.read_bytes(), source.read_bytes())
+            self.assertTrue(report["traversal"]["exact_source_relock"])
 
 
 if __name__ == "__main__":
