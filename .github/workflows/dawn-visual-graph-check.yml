@@ -6,7 +6,9 @@ on:
       - 'data/visual_graph.json'
       - 'data/visual_rights.json'
       - 'content/visual/**'
+      - 'layouts/index.html'
       - 'layouts/visual/**'
+      - 'layouts/partials/home-visual-bridge.html'
       - 'layouts/partials/visual-resource-card.html'
       - 'layouts/partials/visual-surface.html'
       - 'layouts/website/dawn-library.html'
@@ -34,6 +36,7 @@ jobs:
           ids = set()
           slugs = set()
           native_iiif = 0
+          authority_crops = 0
 
           for work in graph['visual_works']:
               assert work['id'] not in ids, f"duplicate VisualWork id: {work['id']}"
@@ -65,10 +68,21 @@ jobs:
                   xywh = region.get('xywh')
                   if xywh is not None:
                       assert len(xywh) == 4 and xywh[2] > 0 and xywh[3] > 0, f"invalid region {region.get('id')}"
-                  assert region.get('provenance', {}).get('source') in {'authority','human','machine'}, f"invalid region provenance {region.get('id')}"
+                  source = region.get('provenance', {}).get('source')
+                  assert source in {'authority','human','machine'}, f"invalid region provenance {region.get('id')}"
+                  if source == 'authority' and region.get('region_scope') == 'source-cropped-manuscript-decoration':
+                      authority_crops += 1
 
-          assert native_iiif >= 1, 'phase 1 requires at least one native IIIF Image Service fixture'
-          print(f"validated {len(ids)} VisualWork records; native IIIF fixtures: {native_iiif}")
+          assert native_iiif >= 2, 'phase 1 now requires at least two native IIIF Image Service fixtures'
+          assert authority_crops >= 1, 'requires at least one authority-defined fine-grained manuscript decoration crop'
+
+          home = Path('layouts/index.html').read_text()
+          bridge = Path('layouts/partials/home-visual-bridge.html').read_text()
+          assert 'home-visual-bridge.html' in home, 'homepage must consume the Visual Graph bridge'
+          assert 'visual-surface.html' in bridge, 'homepage bridge must use the shared VisualSurface partial'
+          assert 'visual-princeton-galilee-storm-1591' in bridge, 'homepage proof must resolve a stable VisualWork id'
+
+          print(f"validated {len(ids)} VisualWork records; native IIIF fixtures: {native_iiif}; authority crops: {authority_crops}")
           PY
 
       - name: Check viewer JavaScript syntax
