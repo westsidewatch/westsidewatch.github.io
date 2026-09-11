@@ -1,0 +1,21 @@
+{
+  "aw_id": "AW-011",
+  "canonical_source_sha256": "<copied from build/aw-011/build-manifest.json>",
+  "provider": "one2scene-class",
+  "poses": [
+    {
+      "id": "P001",
+      "known": "poses/P001/known.png",
+      "known_mask": "poses/P001/known-mask.png",
+      "unseen_mask": "poses/P001/unseen-mask.png",
+      "depth": "poses/P001/depth.bin",
+      "confidence": "poses/P001/confidence.bin"
+    },
+    {
+      "id": "P002",
+      "known": "poses/P002/known.png",
+      "known_mask": "poses/P002/known-mask.png",
+      "unseen_mask": "poses/P002/unseen-mask.png"
+    }
+  ]
+}
