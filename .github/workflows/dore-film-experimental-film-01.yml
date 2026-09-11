@@ -1,0 +1,71 @@
+name: DORÉ FILM Experimental Film 01
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/dore-film-experimental-film-01.yml']
+jobs:
+  shoot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          sudo apt-get update -qq && sudo apt-get install -y blender ffmpeg libegl1 libgl1 libglx-mesa0
+          python -m pip install --quiet pillow
+      - name: Fetch canonical Doré plates
+        run: |
+          mkdir -p .film01/input .film01/output
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/e/e5/011.Abraham_Goes_to_the_Land_of_Canaan.jpg' -o .film01/input/011.jpg
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/c/c6/019.The_Meeting_of_Isaac_and_Rebekah.jpg' -o .film01/input/019.jpg
+          curl -L --fail --retry 3 'https://upload.wikimedia.org/wikipedia/commons/1/14/021.Jacob%27s_Dream.jpg' -o .film01/input/021.jpg
+      - name: Shoot 24-second film fragment
+        env: {LIBGL_ALWAYS_SOFTWARE: '1', MESA_LOADER_DRIVER_OVERRIDE: llvmpipe}
+        run: |
+          cat > .film01/shoot.py <<'PY'
+          import bpy,os,math,json
+          from mathutils import Vector
+          B=os.path.abspath('.film01'); O=os.path.join(B,'output'); bpy.ops.wm.read_factory_settings(use_empty=True); s=bpy.context.scene
+          s.world=bpy.data.worlds.new('SILENT_WORLD'); s.world.color=(.008,.008,.008)
+          def plate(id,fn,center,w,ry=0,curve=.055):
+            img=bpy.data.images.load(os.path.join(B,'input',fn)); ar=img.size[0]/img.size[1]; h=w/ar; C,R=40,30; vs=[];uv=[];fs=[]
+            for j in range(R+1):
+              v=j/R;y=(v-.5)*h
+              for i in range(C+1):
+                u=i/C;x=(u-.5)*w;z=-curve*(x/(w/2))**2;vs.append((x,y,z));uv.append((u,v))
+            for j in range(R):
+              for i in range(C): a=j*(C+1)+i;fs.append((a,a+1,a+C+2,a+C+1))
+            me=bpy.data.meshes.new(id);me.from_pydata(vs,[],fs);me.update();lay=me.uv_layers.new(name='UVMap')
+            for p in me.polygons:
+              for li,vi in zip(p.loop_indices,p.vertices):lay.data[li].uv=uv[vi]
+            ob=bpy.data.objects.new('DORÉ_'+id,me);bpy.context.collection.objects.link(ob);ob.location=center;ob.rotation_euler[1]=ry
+            m=bpy.data.materials.new('MAT_'+id);m.use_nodes=True;n=m.node_tree.nodes;l=m.node_tree.links
+            for q in list(n):n.remove(q)
+            t=n.new('ShaderNodeTexImage');t.image=img;t.extension='CLIP';e=n.new('ShaderNodeEmission');o=n.new('ShaderNodeOutputMaterial');l.new(t.outputs['Color'],e.inputs['Color']);l.new(e.outputs['Emission'],o.inputs['Surface']);me.materials.append(m)
+          plate('011','011.jpg',(0,0,-5.3),5.9,0);plate('019','019.jpg',(6.9,0,-10.9),5.25,math.radians(-8));plate('021','021.jpg',(12.7,.15,-16.2),5.15,math.radians(-6))
+          # Minimal bridge geometry: enough world to carry the eye; deliberately not a polished set.
+          bpy.ops.mesh.primitive_plane_add(size=38,location=(6,-2.7,-9.5));g=bpy.context.object;gm=bpy.data.materials.new('EARTH');gm.use_nodes=True;bs=gm.node_tree.nodes.get('Principled BSDF');bs.inputs['Base Color'].default_value=(.022,.022,.022,1);bs.inputs['Roughness'].default_value=1;g.data.materials.append(gm)
+          cd=bpy.data.cameras.new('ONE_CAMERA');c=bpy.data.objects.new('ONE_CAMERA',cd);bpy.context.collection.objects.link(c);s.camera=c;cd.sensor_fit='HORIZONTAL';cd.sensor_width=36;cd.lens=50;cd.clip_start=.02;cd.clip_end=100
+          # 24 seconds @24fps. Slow attention at anchors, faster travel through history.
+          K=[(1,(0,.02,.15),(0,0,-5.3),52),(72,(.18,0,-.65),(.1,0,-5.5),58),(150,(1.45,-.08,-2.8),(2.8,0,-7.2),46),(235,(4.8,0,-6.4),(6.7,0,-10.6),42),(300,(6.9,0,-7.65),(6.9,0,-10.9),55),(365,(7.3,-.03,-8.4),(8.7,0,-12.1),48),(450,(10.4,0,-11.8),(12.2,.1,-15.4),44),(520,(12.7,.1,-13.1),(12.7,.15,-16.2),58),(576,(12.8,.1,-13.5),(12.7,.15,-16.2),62)]
+          for f,loc,t,lens in K:
+            c.location=loc;cd.lens=lens;c.rotation_euler=(Vector(t)-c.location).to_track_quat('-Z','Y').to_euler();c.keyframe_insert('location',frame=f);c.keyframe_insert('rotation_euler',frame=f);cd.keyframe_insert('lens',frame=f)
+          for ac in [c.animation_data.action,cd.animation_data.action]:
+            for fc in ac.fcurves:
+              for kp in fc.keyframe_points:kp.interpolation='BEZIER'
+          s.render.engine='BLENDER_EEVEE';s.render.resolution_x=960;s.render.resolution_y=540;s.render.resolution_percentage=100;s.render.image_settings.file_format='PNG';s.view_settings.view_transform='Standard';s.frame_start=1;s.frame_end=576;s.render.fps=24;s.render.filepath=os.path.join(O,'frame-')
+          bpy.ops.wm.save_as_mainfile(filepath=os.path.join(O,'experimental-film-01.blend'));bpy.ops.render.render(animation=True)
+          json.dump({'title':'DORÉ FILM — Experimental Film 01','duration_seconds':24,'fps':24,'sound':False,'camera_resets':0,'anchors':['011','019','021'],'generation':False,'edition':'first silent film fragment','acceptance':'judge as cinema, not capability demo'},open(os.path.join(O,'metadata.json'),'w'),indent=2)
+          PY
+          blender -b --python .film01/shoot.py
+      - name: Make silent film and review sheet
+        run: |
+          ffmpeg -y -framerate 24 -i '.film01/output/frame-%04d.png' -c:v libx264 -crf 18 -pix_fmt yuv420p -movflags +faststart .film01/output/Dore-Experimental-Film-01.mp4
+          python - <<'PY'
+          from PIL import Image,ImageDraw
+          from pathlib import Path
+          p=Path('.film01/output');ns=[1,72,150,235,300,365,450,520,576];ims=[Image.open(p/f'frame-{n:04d}.png').convert('RGB') for n in ns];w,h=ims[0].size;s=Image.new('RGB',(w*3,h*3+72),'black');d=ImageDraw.Draw(s)
+          for i,(n,im) in enumerate(zip(ns,ims)):x=i%3*w;y=i//3*(h+24)+24;s.paste(im,(x,y));d.text((x+8,y-18),f'{n/24:.1f}s',fill='white')
+          s.save(p/'director-review-sheet.jpg',quality=90)
+          PY
+      - uses: actions/upload-artifact@v4
+        with: {name: dore-experimental-film-01, path: .film01/output/, retention-days: 14, if-no-files-found: error}
