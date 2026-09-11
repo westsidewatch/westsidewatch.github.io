@@ -102,8 +102,12 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
-.lw-movement-label{position:absolute;z-index:8;left:25vw;top:.65rem;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;color:#CEBD74;white-space:nowrap;pointer-events:none;text-shadow:0 1px 10px rgba(37,37,37,.12)}
-@media(max-width:900px){.lw-movement-label{position:relative;left:auto;top:auto;display:block;grid-column:1/-1;margin:.35rem 0 -.2rem;font-size:12px}}
+.lw-movement-label{position:absolute;z-index:20;left:0;right:0;height:2.35rem;display:flex;align-items:center;padding:0 1.2vw;background:#fff;color:#CEBD74;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;white-space:nowrap;pointer-events:none;box-sizing:border-box}
+.lw-movement-label.label-a{top:.35%}
+.lw-movement-label.label-b{top:48.35%}
+@media(max-width:900px){
+ .lw-movement-label{position:relative;left:auto;right:auto;top:auto!important;height:auto;min-height:2.2rem;grid-column:1/-1;padding:.45rem .7rem;margin:.15rem 0;background:#fff;font-size:12px}
+}
 </style>
 '''
 
@@ -117,9 +121,9 @@ def _install_living_current(html):
 
 
 def _movement_labels_script(labels):
-    """Attach pale-gold movement names to the two existing current bands only."""
+    """Place pale-gold 4W names on separate white bands above the two existing currents."""
     first, second = labels
-    return f'''\n<script id="candidate-01-4w-labels">\n(()=>{{\n  const labels={html_lib.escape(repr([first, second]), quote=False)};\n  const attach=()=>{{\n    const bands=[...document.querySelectorAll('.living-current-band')];\n    if(bands.length<2)return false;\n    bands.slice(0,2).forEach((band,i)=>{{\n      if(band.querySelector(':scope > .lw-movement-label'))return;\n      const label=document.createElement('span');\n      label.className='lw-movement-label';\n      label.textContent=labels[i];\n      band.prepend(label);\n    }});\n    return true;\n  }};\n  if(!attach()){{\n    const observer=new MutationObserver(()=>{{if(attach())observer.disconnect();}});\n    observer.observe(document.documentElement,{{childList:true,subtree:true}});\n  }}\n}})();\n</script>\n'''
+    return f'''\n<script id="candidate-01-4w-labels">\n(()=>{{\n  const labels={html_lib.escape(repr([first, second]), quote=False)};\n  const attach=()=>{{\n    const grid=document.querySelector('.products__grid.living-current-field');\n    const bands=[...document.querySelectorAll('.living-current-band')];\n    if(!grid||bands.length<2)return false;\n    if(grid.querySelector(':scope > .lw-movement-label'))return true;\n    labels.forEach((text,i)=>{{\n      const label=document.createElement('div');\n      label.className='lw-movement-label '+(i===0?'label-a':'label-b');\n      label.textContent=text;\n      grid.appendChild(label);\n    }});\n    return true;\n  }};\n  if(!attach()){{\n    const observer=new MutationObserver(()=>{{if(attach())observer.disconnect();}});\n    observer.observe(document.documentElement,{{childList:true,subtree:true}});\n  }}\n}})();\n</script>\n'''
 
 
 def _candidate_focus_screen(screen_no, labels):
