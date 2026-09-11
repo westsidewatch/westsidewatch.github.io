@@ -102,6 +102,8 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
+.lw-movement-label{position:absolute;z-index:8;left:1.2vw;top:.65rem;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;color:#CEBD74;white-space:nowrap;pointer-events:none;text-shadow:0 1px 10px rgba(37,37,37,.12)}
+@media(max-width:900px){.lw-movement-label{position:relative;left:auto;top:auto;display:block;grid-column:1/-1;margin:.35rem 0 -.2rem;font-size:12px}}
 </style>
 '''
 
@@ -114,10 +116,17 @@ def _install_living_current(html):
     return html.replace('</body>', _LIVING_CURRENT_SCRIPT + '</body>', 1)
 
 
-def _candidate_focus_screen(screen_no):
-    """Reuse the locked focus runtime unchanged as one first-layer Candidate 01 viewport."""
+def _movement_labels_script(labels):
+    """Attach pale-gold movement names to the two existing current bands only."""
+    first, second = labels
+    return f'''\n<script id="candidate-01-4w-labels">\n(()=>{{\n  const labels={html_lib.escape(repr([first, second]), quote=False)};\n  const attach=()=>{{\n    const bands=[...document.querySelectorAll('.living-current-band')];\n    if(bands.length<2)return false;\n    bands.slice(0,2).forEach((band,i)=>{{\n      if(band.querySelector(':scope > .lw-movement-label'))return;\n      const label=document.createElement('span');\n      label.className='lw-movement-label';\n      label.textContent=labels[i];\n      band.prepend(label);\n    }});\n    return true;\n  }};\n  if(!attach()){{\n    const observer=new MutationObserver(()=>{{if(attach())observer.disconnect();}});\n    observer.observe(document.documentElement,{{childList:true,subtree:true}});\n  }}\n}})();\n</script>\n'''
+
+
+def _candidate_focus_screen(screen_no, labels):
+    """Reuse the locked focus runtime unchanged and label its two existing currents."""
     motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
     motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
+    motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + '</body>', 1)
     srcdoc = html_lib.escape(motion_html, quote=True)
     return (
         '<section class="candidate-focus-screen" data-current="focus" '
@@ -128,13 +137,13 @@ def _candidate_focus_screen(screen_no):
 
 
 def _install_candidate_focus(current, html):
-    """Candidate 01 order: home, focus one, focus two, then fixed worlds."""
+    """Candidate 01: home, two 4W-labelled focus screens, then fixed worlds."""
     if 'data-screen="3"' in html:
         return html
     html = html.replace('</head>', _CANDIDATE_FOCUS_HOST_STYLE + '</head>', 1)
     anchor = '</section><section class="world dark">'
-    focus_one = _candidate_focus_screen(2)
-    focus_two = _candidate_focus_screen(3)
+    focus_one = _candidate_focus_screen(2, ('第一樂章 WATCH', '第二樂章 WITNESS'))
+    focus_two = _candidate_focus_screen(3, ('第三樂章 WALK', '第四樂章 WORSHIP'))
     return html.replace(
         anchor,
         '</section>' + focus_one + focus_two + '<section class="world dark">',
