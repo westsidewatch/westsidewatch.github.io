@@ -63,25 +63,39 @@ Introduced `.github/workflows/dore-film-experimental-film-01.yml`, advancing the
 
 This is a meaningful product-history transition: Doré Film is no longer only testing whether one camera can technically traverse multiple anchors; it is beginning to test duration, attention rhythm, lens language and edition-level cinematic judgment. However the reviewed commit-workflow lookup returned no associated workflow run for this commit. Therefore the film itself, its review sheet and its visual quality remain unverified.
 
+### 2026-09-11 — Anchored World / AW011 corridor implementation
+
+A later bounded Film branch advances the experiment from hand-authored anchor placement toward an explicit provider-facing Anchored World package around canonical Doré plate 011:
+
+- commit `782adb48ec503ab5ae31d222e4b0199195c4e6fb` defines the AW011 camera-conditioned anchor corridor;
+- commit `42b4758d30c1d8ea63f2cdb59452fe1bcdb84d31` adds the AW011 anchor-package compiler;
+- commit `5b3621aa12e22f9c76010c14e30e2aa767f9959e` adds `.github/workflows/dore-film-aw011-anchor-corridor.yml` and validation assertions.
+
+The persisted workflow compiles a provider package whose authority anchor is Doré ID 11, uses three corridor anchors `A0/A1/A2`, emits generation jobs only for `A1/A2`, preserves `A0` as identity camera-to-world authority, and requires the enter/return path `A0 → A1 → A2 → A1 → A0`. Its hard rule explicitly states that generation owns absence only. This is important architectural evidence: generated world extension is subordinate to the canonical anchor rather than silently replacing the original image authority.
+
+Connected evidence remains bounded. The reviewed commit has no commit statuses and no associated pull-request workflow runs in the available lookup. Therefore the compiler/workflow contract is **IMPLEMENTED**, but an executed anchor package, provider generation result, camera-conditioned world coherence and returned-to-authority visual acceptance remain **UNKNOWN_NEEDS_EVIDENCE**.
+
 ## Current evidence boundary
 
-No workflow run is currently associated with the reviewed corrected/two-anchor, three-anchor Camera Spine, or Experimental Film 01 commits in the available run lookup. Therefore:
+No reviewed workflow run establishes rendered acceptance for the corrected/two-anchor, three-anchor Camera Spine, Experimental Film 01, or AW011 Anchored World corridor. Therefore:
 
 - implementation existence: **VERIFIED**;
 - corrected workflow definition: **VERIFIED**;
 - three-anchor Camera Spine implementation: **VERIFIED**;
 - Experimental Film 01 workflow/edition definition: **VERIFIED**;
+- AW011 authority/corridor/compiler/workflow contract: **VERIFIED_IMPLEMENTED**;
+- AW011 executed provider package + generated anchor evidence: **UNKNOWN_NEEDS_EVIDENCE**;
 - rendered visual acceptance: **UNKNOWN_NEEDS_EVIDENCE**;
 - one-camera continuity quality: **UNKNOWN_NEEDS_EVIDENCE**;
 - preservation of canonical Doré source appearance in the rendered output: **UNKNOWN_NEEDS_EVIDENCE**;
 - cinematic pacing/lens-language quality over 24 seconds: **UNKNOWN_NEEDS_EVIDENCE**;
 - reusable film-language capability beyond these bounded tests: **UNKNOWN_NEEDS_EVIDENCE**.
 
-A commit or workflow file must not be promoted to `VERIFIED_COMPLETE` without rendered evidence.
+A commit or workflow file must not be promoted to `VERIFIED_COMPLETE` without executed/rendered evidence.
 
 ## Classification
 
-`DORÉ-FILM / virtual-stage continuity + Experimental Film 01`: **ACTIVE_PARALLEL / EXPERIMENTAL_IMPLEMENTATION**.
+`DORÉ-FILM / virtual-stage continuity + Experimental Film 01 + AW011 Anchored World`: **ACTIVE_PARALLEL / EXPERIMENTAL_IMPLEMENTATION**.
 
 This is not a completed product and not a replacement for the active P01 subtitle critical path.
 
@@ -94,10 +108,11 @@ This is not a completed product and not a replacement for the active P01 subtitl
 5. A repeatable film-language claim needs multi-anchor evidence; moving from 011→019 to 011→019→021 is the correct architectural stress direction, but only a rendered run can establish that the camera-spine abstraction actually works visually.
 6. Experimental Film 01 adds a second evidence axis beyond continuity: cinematic time. Attention dwell, travel speed and lens changes are now part of the intended grammar, but must be judged from the actual rendered film rather than inferred from keyframes.
 7. Edition metadata that explicitly distinguishes `generation: false` from generated imagery is useful provenance and should remain in future film experiments.
+8. AW011 sharpens the authority boundary: the canonical anchor remains authoritative while generated material is permitted only to fill absence around it; an enter-and-return camera path is part of the contract rather than an incidental animation choice.
 
 ## Debt / revisit trigger
 
-Revisit when a current workflow run produces inspectable MP4/review-sheet artifacts. The next evaluation must judge:
+Revisit when a current workflow run produces inspectable MP4/review-sheet or AW011 provider-package/render artifacts. The next evaluation must judge:
 
 - opening recognizability of 011;
 - spatial departure rather than flat image motion;
@@ -108,10 +123,11 @@ Revisit when a current workflow run produces inspectable MP4/review-sheet artifa
 - absence of UV/aspect distortion;
 - whether 24-second pacing and lens movement feel intentional rather than mechanically interpolated;
 - whether the longer edition remains visually coherent without sound;
+- whether AW011 generated anchors preserve the canonical authority boundary and return cleanly to `A0`;
 - whether the result is actually usable as a repeatable visual-production method rather than a one-off road test.
 
 ## Smallest next proof
 
-Run the current Experimental Film 01 workflow once and persist the MP4, director-review sheet and explicit pass/fail judgment against the criteria above. If that bounded film passes, then compare it against the shorter Camera Spine experiment before claiming a reusable Doré film grammar.
+Run one current Film proof with persisted artifacts. For the existing edition path, persist the Experimental Film 01 MP4, director-review sheet and explicit pass/fail judgment. For the newer AW011 path, persist the compiled anchor package plus provider/render output and an explicit authority/enter-return visual judgment. Neither implementation branch should be called reusable Film capability before at least one such executed proof passes.
 
 No new human/environment blocker is established by this ledger; absence of a reviewed run is missing evidence, not a blocker.
