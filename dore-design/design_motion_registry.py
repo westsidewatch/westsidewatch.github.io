@@ -102,7 +102,7 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
-.lw-movement-label{position:absolute;z-index:8;left:1.2vw;top:.65rem;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;color:#CEBD74;white-space:nowrap;pointer-events:none;text-shadow:0 1px 10px rgba(37,37,37,.12)}
+.lw-movement-label{position:absolute;z-index:8;left:25vw;top:.65rem;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;color:#CEBD74;white-space:nowrap;pointer-events:none;text-shadow:0 1px 10px rgba(37,37,37,.12)}
 @media(max-width:900px){.lw-movement-label{position:relative;left:auto;top:auto;display:block;grid-column:1/-1;margin:.35rem 0 -.2rem;font-size:12px}}
 </style>
 '''
