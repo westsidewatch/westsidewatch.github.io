@@ -5,6 +5,8 @@ from http.server import ThreadingHTTPServer
 import app_visual_v2 as current
 import design_motion_registry
 design_motion_registry.install(current)
+import candidate01_visual_graph_experiment
+candidate01_visual_graph_experiment.install(current)
 import design2_phase4_http,design2_phase5_http,design2_phase6_http,design2_phase7_http
 design2_phase4_http.install(current.H,current.visual.base,current.ROOT)
 design2_phase5_http.install(current.H,current.visual.base,current.ROOT)
