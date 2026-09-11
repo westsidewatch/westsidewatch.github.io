@@ -95,11 +95,14 @@
 
         {{ if gt (len $visual.regions) 0 }}
           <h2>Visual Regions</h2>
-          <ul class="dawn-visual-region-list">
+          <div class="dawn-visual-region-list" data-region-controls>
             {{ range $visual.regions }}
-              <li><strong>{{ delimit .depicts ", " }}</strong> · {{ .visual_role }} · {{ .provenance.source }}</li>
+              <button type="button" data-region-target="{{ .id }}">
+                <strong>{{ delimit .depicts ", " }}</strong>
+                <span>{{ .visual_role }} · {{ .provenance.source }}</span>
+              </button>
             {{ end }}
-          </ul>
+          </div>
         {{ end }}
 
         {{ with $manifestHref }}<p><a href="{{ . }}" target="_blank" rel="noopener noreferrer">IIIF Presentation manifest ↗</a></p>{{ end }}
