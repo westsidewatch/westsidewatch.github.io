@@ -1,6 +1,6 @@
 {
   "schema": "dawn.visual-graph.v1",
-  "updated": "2026-09-10T22:43:00-04:00",
+  "updated": "2026-09-10T22:46:00-04:00",
   "principle": "Visual resources are first-class Dawn Library resources. Authority and provenance remain separate from presentation surfaces.",
   "visual_works": [
     {
@@ -30,7 +30,7 @@
       }],
       "regions": [],
       "surface_presets": [
-        {"id":"card-8x5","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 42%","motion":"near-still"},
+        {"id":"card-8x5","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 42%","motion":"near-still","importance":2},
         {"id":"deep-view","aspect_ratio":"native","fit":"contain","motion":"none"}
       ]
     },
@@ -94,14 +94,15 @@
         "confidence": 1.0
       }],
       "surface_presets": [
-        {"id":"card-8x5","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 50%","motion":"near-still"},
+        {"id":"card-8x5","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 50%","focal_region_id":"region-princeton-galilee-scene","motion":"near-still","importance":2},
         {"id":"deep-view","aspect_ratio":"native","fit":"contain","motion":"none"},
-        {"id":"annotated","aspect_ratio":"native","fit":"contain","motion":"none"}
+        {"id":"annotated","aspect_ratio":"native","fit":"contain","motion":"none","region_source":"VisualRegion"}
       ],
       "validation": {
         "native_iiif_manifest_verified": true,
         "native_iiif_image_service_level": "3/level2",
-        "viewer_contract": "same OpenSeadragon adapter as Commons fallback fixture"
+        "viewer_contract": "same OpenSeadragon adapter as Commons fallback fixture",
+        "surface_contract": "card-8x5 consumes SurfacePreset; annotated view consumes VisualRegion"
       }
     }
   ]
