@@ -1,0 +1,69 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://westsidewatch.github.io/iiif/visual-dore-gen22-testing-abraham/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": ["The Testing of Abraham's Faith"],
+    "zh-Hant": ["亞伯拉罕的信心受試驗"]
+  },
+  "metadata": [
+    {
+      "label": {"en": ["Artist"]},
+      "value": {"en": ["Gustave Doré"]}
+    },
+    {
+      "label": {"en": ["Date"]},
+      "value": {"none": ["1866"]}
+    },
+    {
+      "label": {"en": ["Scripture"]},
+      "value": {"en": ["Genesis 22:2–19"]}
+    },
+    {
+      "label": {"en": ["Rights"]},
+      "value": {"en": ["Public Domain"]}
+    }
+  ],
+  "rights": "https://creativecommons.org/publicdomain/mark/1.0/",
+  "requiredStatement": {
+    "label": {"en": ["Source"]},
+    "value": {"en": ["Wikimedia Commons; source evidence retained by Dawn Library"]}
+  },
+  "homepage": [
+    {
+      "id": "https://commons.wikimedia.org/wiki/File:016.The_Testing_of_Abraham%27s_Faith.jpg",
+      "type": "Text",
+      "label": {"en": ["Source record"]},
+      "format": "text/html"
+    }
+  ],
+  "items": [
+    {
+      "id": "https://westsidewatch.github.io/iiif/visual-dore-gen22-testing-abraham/canvas/1",
+      "type": "Canvas",
+      "height": 2904,
+      "width": 2303,
+      "items": [
+        {
+          "id": "https://westsidewatch.github.io/iiif/visual-dore-gen22-testing-abraham/page/1",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://westsidewatch.github.io/iiif/visual-dore-gen22-testing-abraham/annotation/painting",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://commons.wikimedia.org/wiki/Special:Redirect/file/016.The_Testing_of_Abraham%27s_Faith.jpg?width=2303",
+                "type": "Image",
+                "format": "image/jpeg",
+                "height": 2904,
+                "width": 2303
+              },
+              "target": "https://westsidewatch.github.io/iiif/visual-dore-gen22-testing-abraham/canvas/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
