@@ -121,6 +121,44 @@ jobs:
           }, indent=2))
           PY
 
+      - name: Render continuous AW-011 film preview
+        run: |
+          python tools/aw_corridor/render_preview.py \
+            --source experiments/aw-011/assets/dore-011.jpg \
+            --spine experiments/aw-011/camera-spine.json \
+            --output build/aw-011-real/aw-011-preview.mp4 \
+            --report build/aw-011-real/preview-report.json \
+            --width 960 \
+            --fps 24 \
+            --segment-frames 24 24 36
+          test -s build/aw-011-real/aw-011-preview.mp4
+          cat build/aw-011-real/preview-report.json
+
+      - name: Assert continuous preview artifact
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('build/aw-011-real/preview-report.json')
+          data = json.loads(p.read_text())
+          video = Path(data['output'])
+          assert data['status'] == 'PREVIEW_RENDERED'
+          assert data['frame_count'] > 60
+          assert data['duration_seconds'] > 2.0
+          assert data['final_frame'] == 'P000_SOURCE_VIEW_RELOCK'
+          assert video.is_file() and video.stat().st_size > 10000
+          print(json.dumps({
+              'status': data['status'],
+              'video': str(video),
+              'bytes': video.stat().st_size,
+              'frames': data['frame_count'],
+              'fps': data['fps'],
+              'duration_seconds': data['duration_seconds'],
+              'resolution': data['resolution'],
+              'codec': data['codec'],
+          }, indent=2))
+          PY
+
       - name: Show real pipeline evidence
         if: always()
         run: |
@@ -128,8 +166,9 @@ jobs:
           cat build/aw-011-real/build-manifest.json || true
           cat build/aw-011-real/anchor-plan.json || true
           cat build/aw-011-real/pipeline-report.json || true
+          cat build/aw-011-real/preview-report.json || true
 
-      - name: Upload AW-011 real traversal
+      - name: Upload AW-011 real traversal and film preview
         if: always()
         uses: actions/upload-artifact@v4
         with:
