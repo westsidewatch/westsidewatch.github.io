@@ -46,18 +46,43 @@ _LIVING_CURRENT_SCRIPT = r'''
   }
 
   let resumeTimer=0;
-  const hold=()=>{clearTimeout(resumeTimer);stage.classList.add('living-current-focus')};
+  let focusedCard=null;
+  let forceLeave=false;
+  const hold=card=>{
+    clearTimeout(resumeTimer);
+    focusedCard=card;
+    stage.classList.add('living-current-focus');
+  };
   const release=()=>{
     clearTimeout(resumeTimer);
     resumeTimer=setTimeout(()=>{
-      if(!stage.querySelector('.product:hover'))stage.classList.remove('living-current-focus');
+      if(!stage.matches(':hover'))stage.classList.remove('living-current-focus');
     },560);
   };
+
   stage.querySelectorAll('.product').forEach(card=>{
-    card.addEventListener('mouseenter',hold);
-    card.addEventListener('mouseleave',release);
+    card.addEventListener('mouseenter',()=>hold(card));
+    card.addEventListener('mouseleave',event=>{
+      if(!forceLeave && stage.matches(':hover')){
+        event.stopImmediatePropagation();
+        return;
+      }
+      if(focusedCard===card)focusedCard=null;
+      release();
+    },true);
   });
-  document.documentElement.dataset.livingCurrent='two-full-width-bands-ready';
+
+  stage.addEventListener('mouseleave',()=>{
+    if(!focusedCard)return release();
+    const card=focusedCard;
+    forceLeave=true;
+    card.dispatchEvent(new MouseEvent('mouseleave',{bubbles:false}));
+    forceLeave=false;
+    focusedCard=null;
+    release();
+  },true);
+
+  document.documentElement.dataset.livingCurrent='two-full-width-bands-focus-latched';
 })();
 </script>
 '''
