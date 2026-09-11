@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-10T22:36:50.604829+00:00",
+  "generatedAt": "2026-09-11T13:39:01.004653+00:00",
   "results": {
     "books": {
-      "published": 31,
-      "verified": 30,
+      "published": 34,
+      "verified": 33,
       "pending": 1,
       "relations": 17,
       "providers": [
@@ -13,35 +13,13 @@
       ]
     },
     "catalogDeltaToday": {
-      "books": 27,
-      "verifiedBooks": 27,
-      "relations": 9
+      "books": 3,
+      "verifiedBooks": 3,
+      "relations": 0
     },
     "autonomousGrowthToday": {
-      "books": 21,
-      "titles": [
-        "The Life of Flavius Josephus",
-        "An Extract out of Josephus's Discourse to The Greeks Concerning Hades",
-        "Josephus",
-        "King Alfred's Old English Version of St. Augustine's Soliloquies\nTurned into Modern English",
-        "Bible Atlas: A Manual of Biblical Geography and History",
-        "A Bible History of Baptism",
-        "Selections From Josephus",
-        "Confessions of St. Augustine",
-        "The Bible, Douay-Rheims, Old Testament — Part 1",
-        "A Confession of St. Augustine",
-        "The Bible, Douay-Rheims, Old Testament — Part 2",
-        "Reina Valera New Testament of the Bible 1862",
-        "The Christian Church in These Islands before the Coming of Augustine\nThree Lectures Delivered at St. Paul's in January 1894",
-        "Fresh light from the ancient monuments : $b A sketch of the most striking confirmations of the Bible, from recent discoveries in Egypt, Palestine, Assyria, Babylonia, Asia Minor",
-        "Hymns of the Early Church\r\nbeing translations from the poetry of the Latin church, arranged in the order of the Christian year",
-        "Reina Valera New Testament of the Bible 1602, Book of Matthew",
-        "Reina Valera New Testament of the Bible 1865",
-        "A Brief Bible History: A Survey of the Old and New Testaments",
-        "Outline Studies in the Old Testament for Bible Teachers",
-        "Hebrew Heroes: A Tale Founded on Jewish History",
-        "Bible history and brief outline of church history"
-      ]
+      "books": 0,
+      "titles": []
     },
     "pipelineThisRun": {
       "englishDiscoveredThisRun": 0,
@@ -51,8 +29,8 @@
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 10.5,
-      "density": 30
+      "recentAutonomousGrowthPerDay": 7.0,
+      "density": 33
     },
     "collections": [
       {

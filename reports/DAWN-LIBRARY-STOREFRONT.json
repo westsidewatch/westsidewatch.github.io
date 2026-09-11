@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-10T22:36:50.656359+00:00",
+  "generatedAt": "2026-09-11T13:39:01.086946+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -11,7 +11,7 @@
     {
       "id": "wikisource-zh-verified-export",
       "title": "中文典籍 · 維基文庫 EPUB",
-      "books": 3,
+      "books": 6,
       "source": "Wikisource"
     },
     {
@@ -75,22 +75,22 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 217,
-  "sourceCovers": 99,
-  "directPublications": 18,
+  "mappedBooks": 220,
+  "sourceCovers": 129,
+  "directPublications": 21,
   "providers": {
     "Standard Ebooks": 15,
-    "Wikisource": 3,
+    "Wikisource": 6,
     "DOAB": 47,
     "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
     "queriedThisRun": 60,
-    "resolved": 33,
-    "coversAdded": 1,
-    "internetArchiveLinks": 11,
-    "cacheEntries": 60
+    "resolved": 77,
+    "coversAdded": 31,
+    "internetArchiveLinks": 27,
+    "cacheEntries": 120
   },
   "errors": [],
   "contentDownloaded": false
