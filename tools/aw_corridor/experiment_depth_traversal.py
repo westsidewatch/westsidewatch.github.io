@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Render a depth-aware AW-011 traversal from the accepted monocular scaffold.
+"""Render the depth-aware AW-011 Camera Corridor traversal.
 
-This extends the already-passing Camera Corridor rather than changing its goal.
-V2 fixes the visual failure found in human review of V1: backward remapping could
-make displaced Doré structures read like a transparent moving layer. V2 projects
-canonical source pixels forward into the new camera pose, resolves competing
-surfaces with a z-buffer, and synthesizes only destination pixels with no visible
-source evidence.
+V3 preserves the cumulative architecture and fixes the second human-review failure.
+V1 read as a transparent moving layer. V2 fixed visibility with a z-buffer, but a
+single-pixel forward splat left raster gaps; large Telea fills made moving regions
+read as a blurred layer. V3 first rasterizes crisp source-RGB surface footprints
+through the same z-buffer. Only residual destination pixels with no visible source
+coverage are classified as unseen and sent to the temporary filler.
 """
 from __future__ import annotations
 
@@ -49,6 +49,68 @@ def prepare(source_path: Path, depth_path: Path, width: int) -> tuple[np.ndarray
     return src, dn
 
 
+def rasterize_crisp_surface(
+    source: np.ndarray,
+    depth: np.ndarray,
+    dst_x_f: np.ndarray,
+    dst_y_f: np.ndarray,
+    radius: int,
+) -> tuple[np.ndarray, np.ndarray, float]:
+    """Forward-rasterize canonical RGB with a small opaque footprint and z-buffer.
+
+    No alpha blending and no RGB averaging are allowed. Every covered destination
+    pixel is copied from exactly one canonical Doré source pixel selected by depth.
+    The footprint only closes sampling gaps created by forward projection; it does
+    not invent RGB evidence.
+    """
+    h, w = depth.shape
+    src_flat = source.reshape(-1, 3)
+    depth_flat = depth.reshape(-1)
+    x0 = np.rint(dst_x_f).astype(np.int32).reshape(-1)
+    y0 = np.rint(dst_y_f).astype(np.int32).reshape(-1)
+
+    zbuf = np.full(h * w, -1.0, dtype=np.float32)
+    owner = np.full(h * w, -1, dtype=np.int64)
+    projected_attempts = 0
+
+    # Nearer samples win. Iterating offsets keeps the surface opaque while avoiding
+    # the huge sparse-hole field that forced V2 to blur with large inpainting areas.
+    for oy in range(-radius, radius + 1):
+        for ox in range(-radius, radius + 1):
+            dx = x0 + ox
+            dy = y0 + oy
+            valid = (dx >= 0) & (dx < w) & (dy >= 0) & (dy < h)
+            src_ids = np.flatnonzero(valid)
+            if src_ids.size == 0:
+                continue
+            dst_ids = dy[src_ids].astype(np.int64) * w + dx[src_ids].astype(np.int64)
+            z = depth_flat[src_ids]
+            projected_attempts += int(src_ids.size)
+
+            # Sort far-to-near so the last write at a destination is the nearest.
+            order = np.lexsort((z, dst_ids))
+            d_sorted = dst_ids[order]
+            s_sorted = src_ids[order]
+            z_sorted = z[order]
+            last = np.r_[d_sorted[1:] != d_sorted[:-1], True]
+            d = d_sorted[last]
+            s = s_sorted[last]
+            zz = z_sorted[last]
+            take = zz >= zbuf[d]
+            d = d[take]
+            s = s[take]
+            zz = zz[take]
+            zbuf[d] = zz
+            owner[d] = s
+
+    known_flat = owner >= 0
+    projected = np.zeros((h * w, 3), dtype=np.uint8)
+    projected[known_flat] = src_flat[owner[known_flat]]
+    known = known_flat.reshape(h, w).astype(np.uint8) * 255
+    collision_fraction = float(max(0, projected_attempts - int(np.count_nonzero(known_flat))) / max(1, projected_attempts))
+    return projected.reshape(h, w, 3), known, collision_fraction
+
+
 def forward_project_zbuffer(
     source: np.ndarray,
     depth: np.ndarray,
@@ -56,13 +118,8 @@ def forward_project_zbuffer(
     cam_y: float,
     cam_z: float,
     pixels_per_unit: float,
+    splat_radius: int,
 ) -> tuple[np.ndarray, np.ndarray, dict]:
-    """Project canonical Doré RGB once, then resolve visibility in destination space.
-
-    Depth is geometry evidence only. RGB always comes from canonical source pixels.
-    A destination pixel receives at most one visible source surface: the nearest
-    (largest normalized depth in the current experimental convention) wins.
-    """
     h, w = depth.shape
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
 
@@ -76,62 +133,32 @@ def forward_project_zbuffer(
     shift_y = (base_y * near_y).astype(np.float32)
     cx = np.float32((w - 1) * 0.5)
     cy = np.float32((h - 1) * 0.5)
-
-    # Forward projection: canonical pixel -> camera-space destination.
     dst_x_f = (cx + (xx - cx) * forward_gain + shift_x).astype(np.float32)
     dst_y_f = (cy + (yy - cy) * forward_gain + shift_y).astype(np.float32)
-    dst_x = np.rint(dst_x_f).astype(np.int32)
-    dst_y = np.rint(dst_y_f).astype(np.int32)
 
-    in_bounds = (dst_x >= 0) & (dst_x < w) & (dst_y >= 0) & (dst_y < h)
-    src_flat = source.reshape(-1, 3)
-    depth_flat = depth.reshape(-1)
-    in_flat = in_bounds.reshape(-1)
-    dx_flat = dst_x.reshape(-1)
-    dy_flat = dst_y.reshape(-1)
-
-    src_ids = np.flatnonzero(in_flat)
-    dst_ids = dy_flat[src_ids].astype(np.int64) * w + dx_flat[src_ids].astype(np.int64)
-    src_depth = depth_flat[src_ids]
-
-    # Z-buffer in destination space. np.maximum.at makes visibility deterministic
-    # and avoids retaining the old source position beneath a displaced foreground.
-    zbuf = np.full(h * w, -1.0, dtype=np.float32)
-    np.maximum.at(zbuf, dst_ids, src_depth)
-    winner = src_depth >= (zbuf[dst_ids] - np.float32(1e-6))
-    winner_src = src_ids[winner]
-    winner_dst = dst_ids[winner]
-
-    # If equal-depth pixels collide, deterministic later assignment is harmless:
-    # they represent the same local depth surface, not two alpha-composited layers.
-    projected = np.zeros((h * w, 3), dtype=np.uint8)
-    projected[winner_dst] = src_flat[winner_src]
-    projected = projected.reshape(h, w, 3)
-
-    known = (zbuf.reshape(h, w) >= 0.0).astype(np.uint8) * 255
+    projected, known, collision_fraction = rasterize_crisp_surface(
+        source, depth, dst_x_f, dst_y_f, splat_radius
+    )
     unseen = cv2.bitwise_not(known)
 
-    # Only genuinely unobserved destination pixels are synthesized. Telea remains
-    # a temporary corridor filler, not world geometry and not source evidence.
+    # Fill only residual no-evidence pixels. Known RGB is never blurred or blended.
+    unseen_fraction = float(np.count_nonzero(unseen) / unseen.size)
     if np.count_nonzero(unseen):
-        filled = cv2.inpaint(projected, unseen, 3.0, cv2.INPAINT_TELEA)
-        out = np.where(known[..., None] > 0, projected, filled)
+        filled = cv2.inpaint(projected, unseen, 2.0, cv2.INPAINT_TELEA)
+        out = projected.copy()
+        out[unseen > 0] = filled[unseen > 0]
     else:
         out = projected
 
     q1, q2 = np.quantile(depth, [1 / 3, 2 / 3])
     bands = [depth <= q1, (depth > q1) & (depth <= q2), depth > q2]
     band_shift = [float(np.mean(np.abs(shift_x[m]))) if np.any(m) else 0.0 for m in bands]
-
-    in_count = int(src_ids.size)
-    unique_visible = int(np.count_nonzero(known))
-    collision_count = max(0, in_count - unique_visible)
     metrics = {
         "camera": [float(cam_x), float(cam_y), float(cam_z)],
-        "known_fraction": float(unique_visible / known.size),
-        "unseen_fraction": float(np.count_nonzero(unseen) / unseen.size),
-        "source_projected_in_bounds_fraction": float(in_count / depth.size),
-        "zbuffer_collision_fraction": float(collision_count / max(1, in_count)),
+        "known_fraction": float(np.count_nonzero(known) / known.size),
+        "unseen_fraction": unseen_fraction,
+        "zbuffer_collision_fraction": collision_fraction,
+        "splat_radius_px": int(splat_radius),
         "depth_band_mean_abs_x_shift_px": band_shift,
         "depth_band_shift_span_px": float(max(band_shift) - min(band_shift)),
         "depth_band_shift_variance": float(np.var(band_shift)),
@@ -152,6 +179,7 @@ def main() -> int:
     ap.add_argument("--fps", type=int, default=24)
     ap.add_argument("--segment-frames", type=int, default=24)
     ap.add_argument("--pixels-per-unit", type=float, default=520.0)
+    ap.add_argument("--splat-radius", type=int, default=1)
     args = ap.parse_args()
 
     source, depth = prepare(args.source, args.depth, args.width)
@@ -173,7 +201,8 @@ def main() -> int:
             s = smoothstep(t)
             p = pa * (1.0 - s) + pb * s
             frame, _, m = forward_project_zbuffer(
-                source, depth, float(p[0]), float(p[1]), float(p[2]), args.pixels_per_unit
+                source, depth, float(p[0]), float(p[1]), float(p[2]),
+                args.pixels_per_unit, args.splat_radius
             )
             writer.write(frame)
             m["segment"] = si
@@ -181,7 +210,6 @@ def main() -> int:
             all_metrics.append(m)
             frame_count += 1
 
-    # Canonical authority is never reconstructed at relock: it is the source.
     writer.write(source)
     writer.release()
     frame_count += 1
@@ -193,9 +221,6 @@ def main() -> int:
     max_proj_std = max((m["projected_x_displacement_std_px"] for m in travel), default=0.0)
     max_collision = max((m["zbuffer_collision_fraction"] for m in travel), default=0.0)
 
-    # Geometric gate remains cumulative: depth-dependent motion + actual visibility
-    # events + disocclusion + exact authority relock. Human visual review is a
-    # separate mandatory gate and can still reject this quantitative PASS.
     passed = (
         max_span >= 3.0
         and max_var >= 1.0
@@ -205,11 +230,12 @@ def main() -> int:
     )
     report = {
         "status": "GEOMETRIC_TRAVERSAL_ACCEPTED" if passed else "GEOMETRIC_TRAVERSAL_TOO_PLANAR",
-        "mode": "depth_aware_camera_corridor_v2_zbuffer",
+        "mode": "depth_aware_camera_corridor_v3_crisp_surface_splat",
         "source_authority": "canonical_dore_011_rgb_forward_projected_once",
-        "visibility_model": "forward_projection_zbuffer_no_alpha_layering",
+        "visibility_model": "opaque_forward_surface_splat_zbuffer_no_alpha_no_rgb_average",
         "depth_role": "geometry_evidence_only",
-        "unseen_fill_role": "temporary_non_evidence_fill_only",
+        "unseen_fill_role": "residual_no_evidence_pixels_only",
+        "splat_radius_px": args.splat_radius,
         "resolution": [w, h],
         "fps": args.fps,
         "frame_count": frame_count,
