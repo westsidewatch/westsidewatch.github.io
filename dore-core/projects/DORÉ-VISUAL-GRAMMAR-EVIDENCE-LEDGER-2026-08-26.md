@@ -147,6 +147,26 @@ Reconciliation judgment:
 
 Durable source correction commit: `3f2bcdef2bde6fc4258f681db5133f2e339a910d`.
 
+## Sweep batch 34 — full Westside website-asset-suite objective clarified (2026-09-11)
+
+Bounded product-history evidence reconciled:
+
+- the current `DORÉ-VISUAL-DESIGNER-01-LIGHT.md` gate;
+- the already durable VIS-GRAMMAR distinction between historical Doré works and freshly drawn website grammar;
+- current Westside visual-direction decisions that the target is **one coherent suite of Doré-drawn website materials derived from the new Westside visual principles**, not a collection of Doré original-work crops.
+
+Current governing interpretation:
+
+1. The destination is a complete **Doré Website Asset Suite** authored specifically for Westside Watch. It should include, at minimum, reusable families for `LIGHT`, `STAR / Bethlehem Star`, `WATER`, `SKY / CLOUD`, `STONE / WALL`, `CITY / CITY-EDGE`, restrained `PAPER / MATERIAL`, and supporting `DIVIDER / EDGE / SECTION MARK` assets. The suite is visual infrastructure, not editorial content.
+2. Doré should draw these assets from the **current Westside visual constitution**: Living Paper and papyrus/material behavior; Ink Black used for form rather than blanket fields; Midnight Blue reserved for true night; First Light Gold restricted to important names, stars and actually illuminated edges; directional light, air, atmosphere, scale and structured darkness; bilingual editorial restraint; and forms that remain useful when cropped, scaled, animated or transferred to print.
+3. Historical Doré originals are a different content class. They may appear as **curated exhibition cards inside the scrolling reader flow**, carrying appropriate Scripture/context/provenance/rights. They must not be treated as the default source texture or interface decoration.
+4. The suite-level goal does not supersede the existing training order. `LIGHT-01` remains the required first proof. The correct execution sequence remains: `accepted LIGHT-01 → retain transferable rules → proceed family-by-family → test suite coherence → prove against real Westside content → only then consider Brand V1 propagation`.
+5. Visual comparisons are meaningful only when they compare **real production content and structure** against the same content enhanced by accepted purpose-built assets. Placeholder labels, motif words, empty boxes or generic rays do not constitute useful A/B evidence.
+6. No completion claim follows from this clarification. No reviewed evidence yet proves a human-accepted `LIGHT-01`, a coherent multi-family suite, or real-product/print propagation. `VIS-GRAMMAR` therefore remains `ACTIVE_PARALLEL / BUILDING`; `DORE-EXHIBITION` remains `READY`; `BRAND-V1` remains gated.
+7. No P01 subtitle state, blocker, ordering or runtime action was modified.
+
+Smallest next proof remains one rendered, critiqued, revised, human-accepted `LIGHT-01` asset that works as a transparent reusable element on both Living Paper and true Midnight Blue. Only after that proof should the rest of the suite be drawn.
+
 ## P01 isolation
 
 This visual evidence batch does not alter, resume, pause or replace the subtitle P01 critical path. All visual work remains parallel and subordinate to that priority.
