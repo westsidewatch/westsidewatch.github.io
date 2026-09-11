@@ -13,6 +13,8 @@ on:
       - 'scripts/dore/visual-fuzzy-retrieval.mjs'
       - 'scripts/dore/visual-fuzzy-retrieval-selftest.mjs'
       - 'scripts/dore/visual-editorial-director-adapter.mjs'
+      - 'scripts/dore/visual-editorial-director-runtime.mjs'
+      - 'scripts/dore/visual-editorial-director-runtime-selftest.mjs'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
 
@@ -62,6 +64,8 @@ jobs:
           PY
       - name: Phase 2 retrieval self-test
         run: node scripts/dore/visual-fuzzy-retrieval-selftest.mjs
+      - name: Phase 2 graph-bound Editorial Director self-test
+        run: node scripts/dore/visual-editorial-director-runtime-selftest.mjs
       - name: Check viewer JavaScript syntax
         run: node --check static/js/dawn-visual-viewer.js
       - name: Install Hugo
