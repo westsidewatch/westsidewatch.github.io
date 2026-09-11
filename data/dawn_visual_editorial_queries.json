@@ -1,0 +1,19 @@
+{
+  "schema": "dawn.visual-editorial-requests.v1",
+  "selections": [
+    {
+      "id": "dawn-library-featured",
+      "label": "Editorial Focus",
+      "input": {
+        "content": "Sea of Galilee storm",
+        "w": "WATCH",
+        "scriptureRefs": ["Mark 4:35–41"],
+        "aspectRatio": "8:5",
+        "surfacePreset": "card-8x5",
+        "operation": "display",
+        "authorityMinimum": "C",
+        "limit": 1
+      }
+    }
+  ]
+}
