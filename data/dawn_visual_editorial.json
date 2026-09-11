@@ -1,19 +1,37 @@
 {
-  "schema": "dawn.visual-editorial-feed.v1",
+  "schema": "dawn.visual-editorial-feed.v2",
   "source": "dore.visual-editorial-director.v1",
+  "context": "dawn.library-live-content.v1",
   "graph": "dawn.visual-graph.v1",
   "selections": [
     {
       "id": "dawn-library-featured",
-      "label": "Editorial Focus",
+      "label": "從經文開始",
+      "contextSource": "resources.weekly_theme+morning_stars",
       "schema": "dore.visual-editorial-director.v1",
       "source": "dawn.visual-graph.v1",
       "graphBound": true,
       "candidates": [
         {
-          "visualWorkId": "visual-princeton-galilee-storm-1591",
-          "score": 0.506667,
+          "visualWorkId": "visual-initiale-lev1-god-speaking-moses",
+          "score": 0.32,
           "authorityClass": "A",
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
+        },
+        {
+          "visualWorkId": "visual-princeton-galilee-storm-1591",
+          "score": 0.32,
+          "authorityClass": "A",
+          "surfacePresetIds": [
+            "card-8x5"
+          ]
+        },
+        {
+          "visualWorkId": "visual-dore-gen22-testing-abraham",
+          "score": 0.2948,
+          "authorityClass": "B",
           "surfacePresetIds": [
             "card-8x5"
           ]
