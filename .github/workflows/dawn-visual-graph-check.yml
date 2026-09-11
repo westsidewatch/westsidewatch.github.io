@@ -5,12 +5,14 @@ on:
     paths:
       - 'data/visual_graph.json'
       - 'data/visual_rights.json'
+      - 'data/visual_map_profiles.json'
       - 'content/visual/**'
       - 'layouts/index.html'
       - 'layouts/visual/**'
       - 'layouts/partials/home-visual-bridge.html'
       - 'layouts/partials/visual-resource-card.html'
       - 'layouts/partials/visual-surface.html'
+      - 'layouts/partials/visual-map-surface.html'
       - 'layouts/website/dawn-library.html'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/css/dawn-visual.css'
@@ -31,6 +33,7 @@ jobs:
 
           graph = json.loads(Path('data/visual_graph.json').read_text())
           rights = json.loads(Path('data/visual_rights.json').read_text())
+          maps = json.loads(Path('data/visual_map_profiles.json').read_text())
           policies = rights['policies']
 
           ids = set()
@@ -76,13 +79,33 @@ jobs:
           assert native_iiif >= 2, 'phase 1 now requires at least two native IIIF Image Service fixtures'
           assert authority_crops >= 1, 'requires at least one authority-defined fine-grained manuscript decoration crop'
 
+          map_ids = set()
+          for profile in maps['profiles']:
+              assert profile['id'] not in map_ids, f"duplicate map profile id: {profile['id']}"
+              map_ids.add(profile['id'])
+              assert profile['scale_denominator'] > 0, f"invalid map scale: {profile['id']}"
+              assert profile['source']['rights_policy'] in policies, f"unknown map rights policy: {profile['id']}"
+              geo = profile['georeference']
+              overlay = next((p for p in profile['surface_presets'] if p['id'] == 'map-overlay'), None)
+              assert overlay, f"map-overlay preset required: {profile['id']}"
+              assert overlay.get('requires_verified_georeference') is True, f"overlay must be fail-closed: {profile['id']}"
+              if geo['verified']:
+                  assert geo.get('annotation_url'), f"verified map requires annotation_url: {profile['id']}"
+                  assert len(geo.get('control_points', [])) >= 3 or geo.get('annotation_url'), f"verified map requires georeference evidence: {profile['id']}"
+              else:
+                  assert not geo.get('annotation_url'), f"unverified map cannot expose Allmaps annotation: {profile['id']}"
+
+          map_partial = Path('layouts/partials/visual-map-surface.html').read_text()
+          assert 'and $geo.verified $geo.annotation_url' in map_partial, 'map surface must require verified georeference and annotation'
+          assert 'data-dawn-allmaps-map' in map_partial, 'verified map path must expose Allmaps mount point'
+
           home = Path('layouts/index.html').read_text()
           bridge = Path('layouts/partials/home-visual-bridge.html').read_text()
           assert 'home-visual-bridge.html' in home, 'homepage must consume the Visual Graph bridge'
           assert 'visual-surface.html' in bridge, 'homepage bridge must use the shared VisualSurface partial'
           assert 'visual-princeton-galilee-storm-1591' in bridge, 'homepage proof must resolve a stable VisualWork id'
 
-          print(f"validated {len(ids)} VisualWork records; native IIIF fixtures: {native_iiif}; authority crops: {authority_crops}")
+          print(f"validated {len(ids)} VisualWork records; {len(map_ids)} map profiles; native IIIF fixtures: {native_iiif}; authority crops: {authority_crops}")
           PY
 
       - name: Check viewer JavaScript syntax
