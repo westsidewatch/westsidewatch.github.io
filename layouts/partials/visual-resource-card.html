@@ -1,8 +1,11 @@
 {{ $visual := . }}
 {{ $representation := index $visual.representations 0 }}
+{{ $cardPresets := where $visual.surface_presets "id" "card-8x5" }}
+{{ $card := index $cardPresets 0 }}
+{{ $focal := $card.focal_point | default "50% 50%" }}
 <a class="resource-card index-card--portrait visual-resource-card" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}">
-  <figure class="visual-resource-card__image" style="aspect-ratio:8/5;overflow:hidden;margin:0;">
-    <img src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;object-position:50% 50%;display:block;">
+  <figure class="visual-resource-card__image" data-surface-preset="card-8x5" style="aspect-ratio:8/5;overflow:hidden;margin:0;">
+    <img src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:{{ $card.fit | default "cover" }};object-position:{{ $focal }};display:block;">
   </figure>
   <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>VISUAL GRAPH</small></p>
   <div class="resource-card__identity">
@@ -11,10 +14,11 @@
     <em>{{ $visual.creator.name }} · {{ $visual.date }}</em>
   </div>
   <div class="resource-card__details">
-    <p>原作、經文、來源與權利保持同一身份；點擊後在黎明書局內查看。</p>
+    <p>原作、經文、來源與權利保持同一身份；卡片裁切由同一 VisualWork 的 SurfacePreset 決定。</p>
     <dl>
       <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
       <div><dt>Rights</dt><dd>{{ $representation.rights.work_status }}</dd></div>
+      <div><dt>Surface</dt><dd>{{ $card.id }}</dd></div>
     </dl>
     <strong>Open in Dawn Library <i aria-hidden="true">→</i></strong>
   </div>
