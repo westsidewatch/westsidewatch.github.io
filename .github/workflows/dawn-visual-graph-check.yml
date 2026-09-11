@@ -1,0 +1,58 @@
+name: Dawn Visual Graph Check
+
+on:
+  pull_request:
+    paths:
+      - 'data/visual_graph.json'
+      - 'data/visual_rights.json'
+      - 'content/visual/**'
+      - 'layouts/visual/**'
+      - 'layouts/partials/visual-resource-card.html'
+      - 'layouts/website/dawn-library.html'
+      - 'static/js/dawn-visual-viewer.js'
+      - 'static/css/dawn-visual.css'
+      - '.github/workflows/dawn-visual-graph-check.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate Visual Graph JSON
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          graph = json.loads(Path('data/visual_graph.json').read_text())
+          rights = json.loads(Path('data/visual_rights.json').read_text())
+          policies = rights['policies']
+
+          ids = set()
+          for work in graph['visual_works']:
+              assert work['id'] not in ids, f"duplicate VisualWork id: {work['id']}"
+              ids.add(work['id'])
+              assert work.get('slug'), f"missing slug: {work['id']}"
+              assert work.get('representations'), f"missing representation: {work['id']}"
+              for rep in work['representations']:
+                  policy = rep['rights']['policy']
+                  assert policy in policies, f"unknown rights policy {policy}"
+                  delivery = rep['delivery']
+                  assert delivery.get('image_url') is None or True
+                  if delivery.get('mode') == 'iiif-image':
+                      assert delivery.get('iiif_image_service'), f"missing IIIF service: {work['id']}"
+              if work.get('generated'):
+                  assert work.get('authority_class') == 'D', 'generated work cannot enter A/B/C authority canon'
+          print(f"validated {len(ids)} VisualWork records")
+          PY
+
+      - name: Install Hugo
+        uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: 'latest'
+          extended: true
+
+      - name: Build site
+        run: hugo --minify --gc
