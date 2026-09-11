@@ -1,0 +1,54 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "deploy-design-resident-uniform-rhythm-20260911-02",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Deploy Candidate 01 uniform 8:5 motion rhythm",
+  "body": "Repoint only the local Doré Design resident to Candidate 01 head b9de8f61575bfdd50c0ff996565b8f1a7f385078. Preserve Candidate 01, Visual Director, 4W labels, and the pointer-leave collapse fix. Do not merge and do not touch the public homepage. Verify that editorial weight and shape no longer alter card geometry: all four visible cards in each current remain equal 8:5 blocks, including contemplated/hover state.",
+  "related_goal": "candidate01-uniform-8x5-motion-rhythm",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git","fetch","origin","+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash","-lc","test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"b9de8f61575bfdd50c0ff996565b8f1a7f385078\""],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["git","worktree","remove","--force","/Users/chenjingyu/.dore/design-pr642"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": ["git","worktree","add","--force","--detach","/Users/chenjingyu/.dore/design-pr642","b9de8f61575bfdd50c0ff996565b8f1a7f385078"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3","-m","py_compile","dore-design/candidate01_visual_graph_experiment.py","dore-design/codrops_site_8x5.py","dore-design/design_motion_registry.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    },
+    {
+      "argv": ["python3","dore-design/candidate01_living_editorial_acceptance.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash","-lc","export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-pr642; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 180
+    },
+    {
+      "argv": ["bash","-lc","html=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01'); printf '%s' \"$html\" | grep -q 'candidate-01-living-editorial-runtime'; printf '%s' \"$html\" | grep -q 'flex-grow:1!important'; printf '%s' \"$html\" | grep -q 'aspect-ratio:8/5!important'; printf '%s' \"$html\" | grep -q 'leaveOutsideActive'; ! printf '%s' \"$html\" | grep -q 'flex-grow:2.35!important'; ! printf '%s' \"$html\" | grep -q 'aspect-ratio:5/8!important'"],
+      "cwd": "/Users/chenjingyu/.dore/design-pr642",
+      "timeout": 60
+    }
+  ]
+}
