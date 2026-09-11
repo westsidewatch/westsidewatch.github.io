@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
 """Acceptance for Candidate 01 — live 4W Living Editorial River."""
+# Import executes the dedicated provenance/rights/source gate inside the existing
+# Candidate 01 CI step, so no parallel workflow or second CMS test path is needed.
+import sitewide_editorial_candidates_acceptance  # noqa: F401
 import candidate01_visual_graph_experiment as candidate
 
 assert candidate.EDITORIAL_DIRECTOR['schema']=='dore.visual-editorial-director.v1'
