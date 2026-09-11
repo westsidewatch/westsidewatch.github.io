@@ -2,20 +2,39 @@
 {{ $representation := index $visual.representations 0 }}
 {{ $cardPresets := where $visual.surface_presets "id" "card-8x5" }}
 {{ $card := index $cardPresets 0 }}
-<a class="resource-card index-card--portrait visual-resource-card" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}">
+{{ $directorSelected := false }}
+{{ $directorScore := 0 }}
+{{ with site.Data.dawn_visual_editorial }}
+  {{ range .selections }}
+    {{ if eq .id "dawn-library-featured" }}
+      {{ range .candidates }}
+        {{ if eq .visualWorkId $visual.id }}
+          {{ $directorSelected = true }}
+          {{ $directorScore = .score }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+<a class="resource-card index-card--portrait visual-resource-card{{ if $directorSelected }} visual-resource-card--director-selected{{ end }}" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}"{{ if $directorSelected }} data-editorial-director="dore.visual-editorial-director.v1" data-editorial-score="{{ $directorScore }}"{{ end }}>
   {{ partial "visual-surface.html" (dict "visual" $visual "preset" "card-8x5") }}
-  <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>VISUAL GRAPH</small></p>
+  <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>{{ if $directorSelected }}EDITORIAL DIRECTOR{{ else }}VISUAL GRAPH{{ end }}</small></p>
   <div class="resource-card__identity">
     <span>{{ (index $visual.scripture_refs 0).canonical }}</span>
     <h3>{{ $visual.canonical_title }}</h3>
     <em>{{ $visual.creator.name }} · {{ $visual.date }}</em>
   </div>
   <div class="resource-card__details">
-    <p>原作、經文、來源與權利保持同一身份；卡片裁切由同一 VisualWork 的 SurfacePreset 決定。</p>
+    {{ if $directorSelected }}
+      <p>由 Doré Editorial Director 從 Visual Graph 依經文、語義、權威與 8:5 Surface 適配自動選出。</p>
+    {{ else }}
+      <p>原作、經文、來源與權利保持同一身份；卡片裁切由同一 VisualWork 的 SurfacePreset 決定。</p>
+    {{ end }}
     <dl>
       <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
       <div><dt>Rights</dt><dd>{{ $representation.rights.work_status }}</dd></div>
       <div><dt>Surface</dt><dd>{{ $card.id }}</dd></div>
+      {{ if $directorSelected }}<div><dt>Director</dt><dd>{{ printf "%.3f" $directorScore }}</dd></div>{{ end }}
     </dl>
     <strong>Open in Dawn Library <i aria-hidden="true">→</i></strong>
   </div>
