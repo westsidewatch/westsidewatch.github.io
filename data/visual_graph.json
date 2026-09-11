@@ -1,6 +1,6 @@
 {
   "schema": "dawn.visual-graph.v1",
-  "updated": "2026-09-10T23:11:00-04:00",
+  "updated": "2026-09-10T23:41:00-04:00",
   "principle": "Visual resources are first-class Dawn Library resources. Authority and provenance remain separate from presentation surfaces.",
   "visual_works": [
     {
@@ -57,6 +57,26 @@
       "regions": [{"id":"region-initiale-lev1-historiated-u","region_scope":"source-cropped-manuscript-decoration","depicts":["God","Moses","speech relationship","pointing gesture","cloud","scroll","historiated initial U"],"scripture_refs":["Leviticus 1"],"visual_role":"manuscript-decoration","focal_weight":1,"provenance":{"source":"authority","evidence":"Initiale record 49691 identifies the subject, Leviticus context, God, Moses, pointing gesture, cloud, scroll and relation by speech; the IIIF service is the catalogue's decoration image rather than an inferred subregion."},"confidence":1.0}],
       "surface_presets": [{"id":"card-8x5","aspect_ratio":"8:5","fit":"contain","focal_point":"50% 50%","focal_region_id":"region-initiale-lev1-historiated-u","motion":"none","importance":1},{"id":"deep-view","aspect_ratio":"native","fit":"contain","motion":"none"},{"id":"annotated","aspect_ratio":"native","fit":"contain","motion":"none","region_source":"VisualRegion"}],
       "validation": {"native_iiif_image_service_verified":true,"authority_region_granularity":"manuscript decoration crop","fine_grained_semantics_source":"Initiale authority metadata","invented_person_boxes":false}
+    },
+    {
+      "id": "visual-china-christian-ministry-wang-lieh-guang-1920s",
+      "slug": "chinese-christian-ministry-wang-lieh-guang-1920s",
+      "type": "historical-photograph",
+      "canonical_title": "Child reading, while Pastor Wang Lieh-guang and missionaries look on",
+      "creator": {"name":"Unknown photographer","role":"photographer"},
+      "date": "1920s",
+      "series": "Chinese Christian Ministry",
+      "illustrated_work": null,
+      "scripture_refs": [],
+      "depicts": ["child reading","Pastor Wang Lieh-guang","missionaries","Chinese Christian ministry","Christian education"],
+      "persons": ["Pastor Wang Lieh-guang"],
+      "events": ["Christian ministry and education in China"],
+      "authority_class": "C",
+      "generated": false,
+      "representations": [{"id":"repr-commons-chinese-christian-ministry-wang-lieh-guang","provider":"Wikimedia Commons","provider_type":"digital-surrogate","source_page":"https://commons.wikimedia.org/wiki/File:Child_reading,_while_Pastor_Wang_Lieh-guang_and_missionaries_look_on.jpg","image_url":"https://commons.wikimedia.org/wiki/Special:Redirect/file/Child_reading,_while_Pastor_Wang_Lieh-guang_and_missionaries_look_on.jpg?width=1024","width":1024,"height":618,"delivery":{"mode":"single-image","iiif_image_service":null,"iiif_manifest":null,"deep_zoom":false,"deep_zoom_engine":null,"fallback":"single-image"},"rights":{"policy":"public-domain","work_status":"public-domain","digital_file_status":"commons-public-domain","branded_derivative_allowed":true,"training_canon_allowed":false,"evidence_url":"https://commons.wikimedia.org/wiki/File:Child_reading,_while_Pastor_Wang_Lieh-guang_and_missionaries_look_on.jpg"},"provenance":{"source_work":"Chinese Christian Ministry","source_date":"1920s","source_note":"Wikimedia Commons record identifies the scene as a child reading while Pastor Wang Lieh-guang and missionaries look on; the Commons upload cites the University of Toronto/Victoria University Chinese Christian Ministry exhibition as source."}}],
+      "regions": [],
+      "surface_presets": [{"id":"card-8x5","aspect_ratio":"8:5","fit":"cover","focal_point":"50% 50%","motion":"near-still","importance":1},{"id":"deep-view","aspect_ratio":"native","fit":"contain","motion":"none"}],
+      "validation": {"acceptance_fixture":"chinese-christian-historical-photograph","historical_context_source":"Chinese Christian Ministry / Wikimedia Commons","invented_person_boxes":false}
     }
   ]
 }
