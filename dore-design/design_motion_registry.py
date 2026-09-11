@@ -102,20 +102,8 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
-.lw-movement-label{position:absolute;z-index:40;left:1.1vw;color:#cebd74;font:500 clamp(11px,1vw,15px)/1.2 "Cormorant Garamond","Noto Serif TC",serif;letter-spacing:.08em;pointer-events:none;text-shadow:0 1px 14px rgba(238,232,218,.82)}
-.lw-movement-label strong{font-weight:500}.lw-movement-label--1{top:1.2%}.lw-movement-label--2{top:49.2%}
-@media(max-width:900px){.lw-movement-label{left:2vw}.lw-movement-label--1{top:1%}.lw-movement-label--2{top:49%}}
 </style>
 '''
-
-# Four currents = Journal's four underlying W movements.  Keep this as a
-# content-selection layer, not a new navigation level.
-_JOURNAL_MOVEMENT_LABELS = (
-    ('第一樂章', 'Watch'),
-    ('第二樂章', 'W II'),
-    ('第三樂章', 'W III'),
-    ('第四樂章', 'W IV'),
-)
 
 
 def _install_living_current(html):
@@ -126,32 +114,10 @@ def _install_living_current(html):
     return html.replace('</body>', _LIVING_CURRENT_SCRIPT + '</body>', 1)
 
 
-def _movement_labels_script(labels):
-    first_no, first_w = labels[0]
-    second_no, second_w = labels[1]
-    first = html_lib.escape(f'{first_no} · {first_w}')
-    second = html_lib.escape(f'{second_no} · {second_w}')
-    return f'''<script id="candidate-01-movement-labels-runtime">
-(()=>{{
- const stage=document.querySelector('.products');
- if(!stage||stage.dataset.movementLabelsBound==='true')return;
- stage.dataset.movementLabelsBound='true';
- const labels=[{first!r},{second!r}];
- labels.forEach((text,i)=>{{
-   const el=document.createElement('div');
-   el.className='lw-movement-label lw-movement-label--'+(i+1);
-   el.innerHTML='<strong>'+text+'</strong>';
-   stage.appendChild(el);
- }});
-}})();
-</script>'''
-
-
-def _candidate_focus_screen(screen_no, labels):
-    """Reuse the locked focus runtime as one first-layer Candidate 01 viewport."""
+def _candidate_focus_screen(screen_no):
+    """Reuse the locked focus runtime unchanged as one first-layer Candidate 01 viewport."""
     motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
     motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
-    motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + '</body>', 1)
     srcdoc = html_lib.escape(motion_html, quote=True)
     return (
         '<section class="candidate-focus-screen" data-current="focus" '
@@ -167,8 +133,8 @@ def _install_candidate_focus(html):
         return html
     html = html.replace('</head>', _CANDIDATE_FOCUS_HOST_STYLE + '</head>', 1)
     anchor = '</section><section class="world dark">'
-    focus_one = _candidate_focus_screen(2, _JOURNAL_MOVEMENT_LABELS[:2])
-    focus_two = _candidate_focus_screen(3, _JOURNAL_MOVEMENT_LABELS[2:])
+    focus_one = _candidate_focus_screen(2)
+    focus_two = _candidate_focus_screen(3)
     return html.replace(
         anchor,
         '</section>' + focus_one + focus_two + '<section class="world dark">',
