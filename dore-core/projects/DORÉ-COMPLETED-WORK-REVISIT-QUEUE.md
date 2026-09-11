@@ -131,3 +131,28 @@ Raise priority if church schedule/contact/Zoom information changes; a canonical 
 Keep stable editorial/brand content local to the page, but source time-sensitive ministry facts from one canonical, explicitly verified operational-data source shared with Church surfaces where practical. Verify freshness and fallback behavior without disturbing the proven asset-code delivery path.
 
 **Current disposition:** keep production stable; watch for a governance trigger; do not interrupt P01.
+
+## RQ-006 — Dawn Library Chinese `聖經世界` relevance / curation gate
+
+**Source completed milestone:** first bounded implemented Chinese discovery → relevance → rights/edition-resolution → promotion path, including verified Chinese resolver output and verified-catalog storefront export.
+
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE` for the first lexical relevance-gate milestone; live `DAWN-LIBRARY` remains `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`.
+
+**Current priority:** HIGH / TRIGGERED, subordinate to P01.
+
+**Why the revisit trigger has fired**
+The 2026-09-11 autonomous bookstore run proves the Chinese path can now produce verified/published items, but it also exposes a concrete semantic false-positive class. `static/dawn-library/biblical-world/chinese-relevance-results.json` qualifies modern Israel/Palestine political texts using only `strong:以色列` and `strong:巴勒斯坦`; at least two of those texts (`巴勒斯坦、阿拉伯人民反击以色列侵略` and `巴勒斯坦游击队不断袭击以色列侵略军`) crossed the resolver/promotion boundary into the Chinese Wikisource storefront shelf. This is not a rights failure: it is a collection-relevance/curation failure.
+
+**What remains valid from the completed milestone**
+The staged architecture remains sound: discovery, relevance, rights verification, curation and publication/export should be distinct. Chinese rights verification and the WS Export boundary are real improvements. The failure is specifically that the current `聖經世界` relevance signal treats ambiguous modern geopolitical terms as unconditional strong positives.
+
+**Revisit trigger**
+Already fired. Repair becomes dependency-safe work when it can proceed without displacing P01 or another higher-priority critical path.
+
+**Desired future evaluation**
+Add explicit Chinese negative fixtures for modern state/diplomatic/war/news/political documents containing `以色列` / `巴勒斯坦`; preserve positive recall for Bible editions, biblical geography and genuinely relevant ancient/history resources; re-run discovery → relevance → resolver → promotion; audit the already promoted Chinese set and remove/reclassify semantic false positives from `聖經世界`. Rights-clean items may remain in the broader Dawn Library only when an editorially justified collection exists.
+
+**Completion condition**
+A bounded regression proves true-positive retention and false-positive rejection, followed by a persisted promotion report showing no known modern-political lexical false positives crossing into `聖經世界`.
+
+**Current disposition:** trigger systemic Chinese collection-relevance repair; do not treat first verified Chinese promotion as bilingual maturity; preserve P01 ordering.
