@@ -15,7 +15,6 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from PIL import Image
 
 
 def smoothstep(t: float) -> float:
@@ -43,11 +42,9 @@ def prepare(source_path: Path, depth_path: Path, width: int) -> tuple[np.ndarray
         depth = cv2.resize(depth, (width, h), interpolation=cv2.INTER_CUBIC)
     elif depth.shape[:2] != src.shape[:2]:
         depth = cv2.resize(depth, (src.shape[1], src.shape[0]), interpolation=cv2.INTER_CUBIC)
-    d = depth.astype(np.float32) / 255.0
-    # Robust normalization keeps the test tied to the model's actual scaffold
-    # while avoiding a few extreme pixels controlling the camera response.
+    d = depth.astype(np.float32) / np.float32(255.0)
     lo, hi = np.quantile(d, [0.05, 0.95])
-    dn = np.clip((d - lo) / max(1e-6, hi - lo), 0.0, 1.0)
+    dn = np.clip((d - lo) / max(1e-6, hi - lo), 0.0, 1.0).astype(np.float32)
     return src, dn
 
 
@@ -56,22 +53,18 @@ def render_depth_view(source: np.ndarray, depth: np.ndarray, cam_x: float, cam_y
     h, w = depth.shape
     yy, xx = np.mgrid[0:h, 0:w].astype(np.float32)
 
-    # Preserve a shared global component from the original planar experiment,
-    # then add depth-dependent motion. This extends the existing corridor rather
-    # than replacing it with a different camera model.
-    base_x = cam_x * pixels_per_unit
-    base_y = cam_y * pixels_per_unit
-    near_weight = 0.35 + 1.30 * depth
-    forward_gain = 1.0 + max(-0.35, min(0.35, -cam_z * 0.9))
+    base_x = np.float32(cam_x * pixels_per_unit)
+    base_y = np.float32(cam_y * pixels_per_unit)
+    near_weight = np.float32(0.35) + np.float32(1.30) * depth
+    forward_gain = np.float32(1.0 + max(-0.35, min(0.35, -cam_z * 0.9)))
 
-    shift_x = base_x * near_weight
-    shift_y = base_y * (0.45 + 0.90 * depth)
+    shift_x = (base_x * near_weight).astype(np.float32)
+    shift_y = (base_y * (np.float32(0.45) + np.float32(0.90) * depth)).astype(np.float32)
 
-    # Backward sample map for a depth-displaced image. Spatial variation in the
-    # map is what separates this from the previous whole-plane translation.
-    cx, cy = (w - 1) * 0.5, (h - 1) * 0.5
-    map_x = cx + (xx - cx) / forward_gain - shift_x
-    map_y = cy + (yy - cy) / forward_gain - shift_y
+    cx = np.float32((w - 1) * 0.5)
+    cy = np.float32((h - 1) * 0.5)
+    map_x = (cx + (xx - cx) / forward_gain - shift_x).astype(np.float32)
+    map_y = (cy + (yy - cy) / forward_gain - shift_y).astype(np.float32)
 
     known = ((map_x >= 0) & (map_x <= w - 1) & (map_y >= 0) & (map_y <= h - 1)).astype(np.uint8) * 255
     warped = cv2.remap(source, map_x, map_y, cv2.INTER_LINEAR, borderMode=cv2.BORDER_CONSTANT, borderValue=(0, 0, 0))
@@ -136,7 +129,6 @@ def main() -> int:
             all_metrics.append(m)
             frame_count += 1
 
-    # Exact visual relock: never synthesize/warp the final canonical frame.
     writer.write(source)
     writer.release()
     frame_count += 1
@@ -147,8 +139,6 @@ def main() -> int:
     max_unseen = max((m["unseen_fraction"] for m in travel), default=0.0)
     max_map_std = max((m["map_x_std"] for m in travel), default=0.0)
 
-    # Gate: the camera must create depth-dependent motion, not merely whole-plane
-    # translation, and must expose some geometry debt for the corridor to solve.
     passed = max_span >= 3.0 and max_var >= 1.0 and max_map_std >= 2.0 and max_unseen > 0.001
     report = {
         "status": "GEOMETRIC_TRAVERSAL_ACCEPTED" if passed else "GEOMETRIC_TRAVERSAL_TOO_PLANAR",
