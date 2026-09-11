@@ -1,0 +1,15 @@
+{{ $matches := where site.Data.visual_graph.visual_works "id" "visual-princeton-galilee-storm-1591" }}
+{{ if gt (len $matches) 0 }}
+  {{ $visual := index $matches 0 }}
+  <section class="home-visual-bridge" aria-labelledby="home-visual-bridge-title" data-visual-consumer="main-homepage">
+    <div class="home-visual-bridge__meta">
+      <p class="section-label">Dawn Library · Visual Graph</p>
+      <h2 id="home-visual-bridge-title">同一件作品，從黎明書局流向主站</h2>
+      <p>這裡不保存第二份圖片資料；主站直接調用黎明書局同一個 VisualWork 與 SurfacePreset。</p>
+    </div>
+    <a class="home-visual-bridge__surface" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局查看 {{ $visual.canonical_title }}">
+      {{ partial "visual-surface.html" (dict "visual" $visual "preset" "card-8x5") }}
+      <span>{{ $visual.canonical_title }} · {{ (index $visual.scripture_refs 0).canonical }}</span>
+    </a>
+  </section>
+{{ end }}

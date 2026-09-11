@@ -1,0 +1,118 @@
+{{ define "main" }}
+  {{ $visualId := .Params.visual_id }}
+  {{ $matches := where site.Data.visual_graph.visual_works "id" $visualId }}
+  {{ $visual := index $matches 0 }}
+  {{ $representation := index $visual.representations 0 }}
+  {{ $rightsPolicy := index site.Data.visual_rights.policies $representation.rights.policy }}
+  {{ $manifest := $representation.delivery.iiif_manifest }}
+  {{ $manifestHref := $manifest }}
+  {{ if and $manifest (not (or (hasPrefix $manifest "http://") (hasPrefix $manifest "https://"))) }}
+    {{ $manifestHref = $manifest | relURL }}
+  {{ end }}
+
+  <link rel="stylesheet" href="{{ "/css/dawn-visual.css" | relURL }}">
+
+  <article class="article dawn-visual-detail">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span>
+      <a href="{{ "/website/dawn-library/" | relURL }}">黎明書局</a><span aria-hidden="true">/</span>
+      <span aria-current="page">{{ .Title }}</span>
+    </nav>
+
+    <header class="article__header">
+      <div class="article__identity">
+        <p class="kicker">DAWN LIBRARY · VISUAL WORK</p>
+        <span aria-hidden="true">✦</span>
+      </div>
+      <div class="article__title-block">
+        <h1>{{ .Title }}</h1>
+        <p class="article__subtitle">{{ $visual.creator.name }} · {{ $visual.date }}{{ with $visual.series }} · {{ . }}{{ end }}</p>
+      </div>
+    </header>
+
+    {{ if $rightsPolicy.allow_inline }}
+      <section class="dawn-visual-viewer-shell" aria-label="Deep zoom viewer">
+        <div
+          class="dawn-visual-viewer"
+          data-dawn-deep-zoom
+          data-visual-work="{{ $visual.id }}"
+          data-image-url="{{ $representation.image_url }}"
+          data-iiif-service="{{ with $representation.delivery.iiif_image_service }}{{ . }}{{ end }}"
+          data-iiif-manifest="{{ with $manifestHref }}{{ . }}{{ end }}"
+          data-viewer-state="pending"
+        >
+          {{ range $visual.regions }}
+            {{ if .xywh }}
+              <span
+                class="dawn-visual-region-source"
+                data-visual-region
+                data-region-id="{{ .id }}"
+                data-region-x="{{ index .xywh 0 }}"
+                data-region-y="{{ index .xywh 1 }}"
+                data-region-w="{{ index .xywh 2 }}"
+                data-region-h="{{ index .xywh 3 }}"
+                data-region-label="{{ delimit .depicts ", " }}"
+                data-region-provenance="{{ .provenance.source }}"
+                hidden
+              ></span>
+            {{ end }}
+          {{ end }}
+        </div>
+        <noscript>
+          <img class="dawn-visual-viewer__fallback" src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}">
+        </noscript>
+      </section>
+    {{ else }}
+      <section class="dawn-visual-restricted" aria-label="Restricted visual resource">
+        <p>此資源目前只保留館藏資料與來源證據；Rights Resolver 不允許在黎明書局內直接重製。</p>
+      </section>
+    {{ end }}
+
+    <section class="article-body article-body--editorial">
+      <aside class="article-rail" aria-label="Visual identity">
+        <span>VISUAL WORK</span>
+        <strong>{{ $visual.id }}</strong>
+      </aside>
+      <div class="prose">
+        <h2>作品脈絡</h2>
+        <p>這件作品在黎明書局內以 VisualWork 身份存在，而不是一個外部圖片網址。展示前先由 Rights Resolver 決定可否內嵌、深度瀏覽、建立衍生圖或進入品牌表面。</p>
+
+        <p class="dawn-visual-rights-status">{{ $rightsPolicy.label }} · {{ if $rightsPolicy.allow_inline }}Inline allowed{{ else }}Metadata only{{ end }}</p>
+
+        <dl class="visual-metadata dawn-visual-rights">
+          <div><dt>Artist</dt><dd>{{ $visual.creator.name }}</dd></div>
+          <div><dt>Scripture</dt><dd>{{ range $i, $ref := $visual.scripture_refs }}{{ if $i }} · {{ end }}{{ $ref.canonical }}{{ end }}</dd></div>
+          <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
+          <div><dt>Rights</dt><dd>{{ $rightsPolicy.label }}</dd></div>
+          <div><dt>Provider</dt><dd>{{ $representation.provider }}</dd></div>
+          <div><dt>Delivery</dt><dd>{{ $representation.delivery.mode }}</dd></div>
+          <div><dt>Deep zoom</dt><dd>{{ if $representation.delivery.deep_zoom }}Enabled{{ else }}Unavailable{{ end }}</dd></div>
+          <div><dt>Regions</dt><dd>{{ len $visual.regions }}</dd></div>
+          <div><dt>Cached derivative</dt><dd>{{ if $rightsPolicy.allow_cached_derivative }}Allowed{{ else }}Blocked{{ end }}</dd></div>
+          <div><dt>Brand crop</dt><dd>{{ if $rightsPolicy.allow_branded_crop }}Allowed{{ else }}Blocked{{ end }}</dd></div>
+          <div><dt>Training canon</dt><dd>{{ if and $rightsPolicy.allow_training_canon (ne $visual.authority_class "D") (not $visual.generated) }}Eligible{{ else }}Blocked{{ end }}</dd></div>
+        </dl>
+
+        {{ if gt (len $visual.regions) 0 }}
+          <h2>Visual Regions</h2>
+          <div class="dawn-visual-region-list" data-region-controls>
+            {{ range $visual.regions }}
+              <button type="button" data-region-target="{{ .id }}">
+                <strong>{{ delimit .depicts ", " }}</strong>
+                <span>{{ .visual_role }} · {{ .provenance.source }}</span>
+              </button>
+            {{ end }}
+          </div>
+        {{ end }}
+
+        {{ with $manifestHref }}<p><a href="{{ . }}" target="_blank" rel="noopener noreferrer">IIIF Presentation manifest ↗</a></p>{{ end }}
+        <p><a class="dawn-visual-source-link" href="{{ $representation.source_page }}" target="_blank" rel="noopener noreferrer">查看原始館藏與權利證據 ↗</a></p>
+      </div>
+    </section>
+  </article>
+
+  {{ if $rightsPolicy.allow_inline }}
+    <script src="https://cdn.jsdelivr.net/npm/openseadragon@6.1.0/build/openseadragon/openseadragon.min.js" defer></script>
+    <script src="{{ "/js/dawn-visual-viewer.js" | relURL }}" defer></script>
+  {{ end }}
+{{ end }}

@@ -1,0 +1,22 @@
+{{ $profile := .profile }}
+{{ $geo := $profile.georeference }}
+<section
+  class="dawn-map-surface"
+  data-map-profile="{{ $profile.id }}"
+  data-visual-work="{{ $profile.visual_work_id }}"
+  data-georeference-status="{{ $geo.status }}"
+  data-georeference-verified="{{ $geo.verified }}"
+  {{ with $geo.annotation_url }}data-allmaps-annotation="{{ . }}"{{ end }}
+>
+  {{ if and $geo.verified $geo.annotation_url }}
+    <div class="dawn-map-surface__overlay" data-dawn-allmaps-map aria-label="Georeferenced historical map"></div>
+  {{ else }}
+    <figure class="dawn-map-surface__fallback">
+      <img src="{{ $profile.source.image_url }}" alt="{{ $profile.title }}" loading="lazy" decoding="async">
+      <figcaption>
+        <strong>{{ $profile.title }}</strong>
+        <span>Georeference pending verification · overlay disabled</span>
+      </figcaption>
+    </figure>
+  {{ end }}
+</section>

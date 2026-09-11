@@ -1,5 +1,6 @@
 {{ define "main" }}
   {{ $library := hugo.Data.resources }}
+  {{ $visuals := site.Data.visual_graph.visual_works }}
   <article class="article dawn-library dawn-library--public">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span>
@@ -24,6 +25,7 @@
       <p class="library-hero__description">從經文、書籍與珍貴作品中，找到今天可以開始的一條閱讀道路。</p>
       <nav class="library-hero__browse" aria-label="Browse Dawn Library">
         <a href="#morning-stars">今日晨星</a>
+        <a href="#visual-collection">視覺館藏</a>
         <a href="#bible-study">經文學習</a>
         <a href="#reading-rooms">閱覽室</a>
         <a href="#book-shelves">書架</a>
@@ -51,6 +53,19 @@
       <div class="resource-card-grid resource-card-grid--stars">
         {{ range where $library.resources "morning_star" true }}
           {{ partial "resource-card.html" . }}
+        {{ end }}
+      </div>
+    </section>
+
+    <section class="library-catalogue library-visual-collection" id="visual-collection" aria-labelledby="visual-collection-title">
+      <header>
+        <p class="kicker">Visual Collection · 視覺館藏</p>
+        <h2 id="visual-collection-title">作品不只是圖片，而是可閱讀的知識入口</h2>
+        <p>原作、經文、人物、地點、來源與權利留在同一條關係鏈；普通閱讀留在黎明書局內完成。</p>
+      </header>
+      <div class="resource-card-grid">
+        {{ range $visuals }}
+          {{ partial "visual-resource-card.html" . }}
         {{ end }}
       </div>
     </section>
