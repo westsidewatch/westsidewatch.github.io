@@ -31,22 +31,41 @@ jobs:
           policies = rights['policies']
 
           ids = set()
+          slugs = set()
+          native_iiif = 0
+
           for work in graph['visual_works']:
               assert work['id'] not in ids, f"duplicate VisualWork id: {work['id']}"
               ids.add(work['id'])
-              assert work.get('slug'), f"missing slug: {work['id']}"
+              slug = work.get('slug')
+              assert slug and slug not in slugs, f"missing/duplicate slug: {work['id']}"
+              slugs.add(slug)
               assert work.get('representations'), f"missing representation: {work['id']}"
+
+              if work.get('generated'):
+                  assert work.get('authority_class') == 'D', 'generated work cannot enter A/B/C authority canon'
+
               for rep in work['representations']:
+                  assert rep.get('image_url'), f"missing image URL: {rep.get('id')}"
                   policy = rep['rights']['policy']
                   assert policy in policies, f"unknown rights policy {policy}"
                   delivery = rep['delivery']
-                  assert delivery.get('image_url') is None or True
                   if delivery.get('mode') == 'iiif-image':
                       assert delivery.get('iiif_image_service'), f"missing IIIF service: {work['id']}"
-              if work.get('generated'):
-                  assert work.get('authority_class') == 'D', 'generated work cannot enter A/B/C authority canon'
-          print(f"validated {len(ids)} VisualWork records")
+                      native_iiif += 1
+
+              for region in work.get('regions', []):
+                  xywh = region.get('xywh')
+                  if xywh is not None:
+                      assert len(xywh) == 4 and xywh[2] > 0 and xywh[3] > 0, f"invalid region {region.get('id')}"
+                  assert region.get('provenance', {}).get('source') in {'authority','human','machine'}, f"invalid region provenance {region.get('id')}"
+
+          assert native_iiif >= 1, 'phase 1 requires at least one native IIIF Image Service fixture'
+          print(f"validated {len(ids)} VisualWork records; native IIIF fixtures: {native_iiif}")
           PY
+
+      - name: Check viewer JavaScript syntax
+        run: node --check static/js/dawn-visual-viewer.js
 
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
