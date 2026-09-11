@@ -1,0 +1,31 @@
+{{ $visual := .visual }}
+{{ $presetId := .preset | default "card-8x5" }}
+{{ $representation := index $visual.representations 0 }}
+{{ $rightsPolicy := index site.Data.visual_rights.policies $representation.rights.policy }}
+{{ $presets := where $visual.surface_presets "id" $presetId }}
+{{ if gt (len $presets) 0 }}
+  {{ $preset := index $presets 0 }}
+  {{ if $rightsPolicy.allow_inline }}
+    <figure
+      class="visual-surface visual-surface--{{ $presetId }}"
+      data-visual-work="{{ $visual.id }}"
+      data-surface-preset="{{ $presetId }}"
+      {{ with $preset.focal_region_id }}data-focal-region="{{ . }}"{{ end }}
+      {{ with $preset.motion }}data-motion="{{ . }}"{{ end }}
+      {{ with $preset.importance }}data-importance="{{ . }}"{{ end }}
+      style="aspect-ratio:{{ replace ($preset.aspect_ratio | default "8:5") ":" "/" }};overflow:hidden;margin:0;"
+    >
+      <img
+        src="{{ $representation.image_url }}"
+        alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}"
+        loading="lazy"
+        decoding="async"
+        style="width:100%;height:100%;object-fit:{{ $preset.fit | default "cover" }};object-position:{{ $preset.focal_point | default "50% 50%" }};display:block;"
+      >
+    </figure>
+  {{ else }}
+    <div class="visual-surface visual-surface--restricted" data-visual-work="{{ $visual.id }}" data-surface-preset="{{ $presetId }}">
+      <span>Visual metadata only</span>
+    </div>
+  {{ end }}
+{{ end }}
