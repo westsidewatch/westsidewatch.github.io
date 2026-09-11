@@ -1,0 +1,44 @@
+{
+  "aw_id": "AW-011",
+  "source": {
+    "asset": null,
+    "canonical_pose_id": "P000",
+    "authority": "hard_source_lock"
+  },
+  "camera": {
+    "spine_file": null,
+    "ordered_pose_ids": ["P000"],
+    "return_pose_id": "P000"
+  },
+  "corridor": {
+    "sample_step": null,
+    "frustum_margin": null,
+    "pose_weights": {}
+  },
+  "scaffold": {
+    "provider": "one2scene-class",
+    "replaceable": true
+  },
+  "warp": {
+    "contract": {
+      "known_rgb": "known.png",
+      "known_mask": "known-mask.png",
+      "unseen_mask": "unseen-mask.png",
+      "depth": null,
+      "confidence": null
+    }
+  },
+  "anchors": {
+    "candidate_coverage_file": null,
+    "selection": "greedy_marginal_unseen_coverage",
+    "fixed_count": false
+  },
+  "fill": {
+    "write_scope": "unseen_only"
+  },
+  "acceptance": {
+    "max_residual_unseen_fraction": 0.01,
+    "known_pixel_max_delta": 0,
+    "require_exact_source_relock": true
+  }
+}
