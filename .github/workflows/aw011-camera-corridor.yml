@@ -33,3 +33,48 @@ jobs:
       - name: Run AW-011 contract tests
         working-directory: tools/aw_corridor
         run: python -m unittest discover -v -p "test_*.py"
+
+  experiment-source-preflight:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch Doré 011 experiment source
+        run: |
+          mkdir -p experiments/aw-011/assets
+          curl --fail --location --retry 3 \
+            "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" \
+            --output experiments/aw-011/assets/dore-011.jpg
+          test -s experiments/aw-011/assets/dore-011.jpg
+          file experiments/aw-011/assets/dore-011.jpg
+          sha256sum experiments/aw-011/assets/dore-011.jpg
+
+      - name: Bind experiment source to production manifest
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          src = Path('experiments/aw-011/production.input.example.json')
+          data = json.loads(src.read_text())
+          data['source']['asset'] = 'assets/dore-011.jpg'
+          Path('experiments/aw-011/production.input.ci.json').write_text(json.dumps(data, indent=2) + '\n')
+          PY
+
+      - name: Run real AW-011 production preflight
+        run: |
+          python tools/aw_corridor/run_aw011.py \
+            experiments/aw-011/production.input.ci.json \
+            --out-dir build/aw-011-real
+
+      - name: Show real preflight evidence
+        if: always()
+        run: |
+          find build/aw-011-real -maxdepth 2 -type f -print || true
+          cat build/aw-011-real/build-manifest.json || true
+          cat build/aw-011-real/anchor-plan.json || true
