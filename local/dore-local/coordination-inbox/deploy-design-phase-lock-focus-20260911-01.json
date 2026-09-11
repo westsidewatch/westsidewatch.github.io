@@ -1,0 +1,59 @@
+{
+  "schema": "dore.mail.v1",
+  "message_id": "deploy-design-phase-lock-focus-20260911-01",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Deploy mature phase-locked focus motion to Design resident",
+  "body": "Deploy exact Candidate 01 branch head 6d48dcded9fd377cfe0fef38d5f070d06e0bfe9a to the local Doré Design resident. Preserve Visual Editorial Director and 4W. This cut replaces competing CSS current animation with a single phase-arbitrated motion loop: settled -> drift -> intent -> arrest -> locked -> focus -> release -> settled -> drift. It also makes the arbitration layer explicitly replay mouseleave into the existing Codrops close path so expanded preview cannot remain latched. Do not merge to public homepage.",
+  "related_goal": "dore-design-mature-focus-motion-phase-lock",
+  "priority": "critical",
+  "requires_reply": true,
+  "commands": [
+    {
+      "argv": ["git","fetch","origin","+refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash","-lc","test \"$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)\" = \"6d48dcded9fd377cfe0fef38d5f070d06e0bfe9a\""],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 30
+    },
+    {
+      "argv": ["git","worktree","remove","--force","/Users/chenjingyu/.dore/design-phase-lock"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 60
+    },
+    {
+      "argv": ["git","worktree","add","--force","--detach","/Users/chenjingyu/.dore/design-phase-lock","6d48dcded9fd377cfe0fef38d5f070d06e0bfe9a"],
+      "cwd": "/Users/chenjingyu/westsidewatch.github.io",
+      "timeout": 120
+    },
+    {
+      "argv": ["python3","-m","py_compile","dore-design/design_motion_registry.py","dore-design/codrops_site_8x5.py","dore-design/candidate01_visual_graph_experiment.py","dore-design/candidate01_living_editorial_acceptance.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-phase-lock",
+      "timeout": 60
+    },
+    {
+      "argv": ["python3","dore-design/candidate01_living_editorial_acceptance.py"],
+      "cwd": "/Users/chenjingyu/.dore/design-phase-lock",
+      "timeout": 120
+    },
+    {
+      "argv": ["bash","-lc","export DORE_REPO_ROOT=/Users/chenjingyu/.dore/design-phase-lock; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh"],
+      "cwd": "/Users/chenjingyu/.dore/design-phase-lock",
+      "timeout": 180
+    },
+    {
+      "argv": ["bash","-lc","HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01'); printf '%s' \"$HTML\" | grep -q 'candidate-01-living-editorial-runtime' && printf '%s' \"$HTML\" | grep -q 'phase-lock-' && printf '%s' \"$HTML\" | grep -q 'replayLeave' && printf '%s' \"$HTML\" | grep -q 'data-motion-phase' && ! printf '%s' \"$HTML\" | grep -q '@keyframes lw-current-a'"],
+      "cwd": "/Users/chenjingyu/.dore/design-phase-lock",
+      "timeout": 60
+    },
+    {
+      "argv": ["bash","-lc","python3 - <<'PY'\nimport json,urllib.request\nbase='http://127.0.0.1:4310'\nh=json.load(urllib.request.urlopen(base+'/api/health'))\nhtml=urllib.request.urlopen(base+'/editor-canvas?page=living-water-candidate-01').read().decode()\nchecks={\n 'phase_lock':'phase-lock-' in html,\n 'replay_leave':'replayLeave' in html,\n 'raf':'requestAnimationFrame(tick)' in html,\n 'no_css_current_keyframes':'@keyframes lw-current-a' not in html,\n 'visual_director':'dore.visual-editorial-director.v1' in html,\n 'uniform_8x5':'aspect-ratio:8/5!important' in html,\n}\nprint(json.dumps({'ok':all(checks.values()),'deployed_sha':'6d48dcded9fd377cfe0fef38d5f070d06e0bfe9a','health':h,'checks':checks},ensure_ascii=False))\nassert all(checks.values())\nPY"],
+      "cwd": "/Users/chenjingyu/.dore/design-phase-lock",
+      "timeout": 60
+    }
+  ]
+}
