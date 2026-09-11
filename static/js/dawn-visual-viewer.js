@@ -6,6 +6,7 @@
     const imageUrl = root.dataset.imageUrl;
     const iiifService = root.dataset.iiifService;
     const manifestUrl = root.dataset.iiifManifest;
+    const regionNodes = Array.from(root.querySelectorAll('[data-visual-region]'));
 
     let tileSources;
     let mode;
@@ -41,14 +42,43 @@
 
     viewer.addHandler('open', () => {
       root.dataset.viewerState = 'ready';
+
+      regionNodes.forEach((node) => {
+        const x = Number(node.dataset.regionX);
+        const y = Number(node.dataset.regionY);
+        const width = Number(node.dataset.regionW);
+        const height = Number(node.dataset.regionH);
+        if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return;
+
+        const overlay = document.createElement('button');
+        overlay.type = 'button';
+        overlay.className = 'dawn-visual-region-overlay';
+        overlay.dataset.regionId = node.dataset.regionId || '';
+        overlay.dataset.provenance = node.dataset.regionProvenance || '';
+        overlay.setAttribute('aria-label', node.dataset.regionLabel || 'Visual region');
+        overlay.title = node.dataset.regionLabel || '';
+
+        viewer.addOverlay({
+          element: overlay,
+          location: viewer.viewport.imageToViewportRectangle(x, y, width, height)
+        });
+
+        overlay.addEventListener('click', () => {
+          viewer.viewport.fitBounds(
+            viewer.viewport.imageToViewportRectangle(x, y, width, height),
+            true
+          );
+        });
+      });
     });
 
     viewer.addHandler('open-failed', () => {
       root.dataset.viewerState = 'failed';
+      if (imageUrl && mode === 'iiif-image') {
+        root.dataset.viewerFallback = 'single-image-available';
+      }
     });
 
-    if (manifestUrl) {
-      root.dataset.iiifManifestAvailable = 'true';
-    }
+    if (manifestUrl) root.dataset.iiifManifestAvailable = 'true';
   });
 })();
