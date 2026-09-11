@@ -7,6 +7,7 @@
     const iiifService = root.dataset.iiifService;
     const manifestUrl = root.dataset.iiifManifest;
     const regionNodes = Array.from(root.querySelectorAll('[data-visual-region]'));
+    const regionMap = new Map();
 
     let tileSources;
     let mode;
@@ -40,6 +41,19 @@
     root.dataset.viewerMode = mode;
     root.dataset.viewerState = 'loading';
 
+    const focusRegion = (regionId) => {
+      const region = regionMap.get(regionId);
+      if (!region) return;
+      viewer.viewport.fitBounds(region.bounds, true);
+      root.dataset.activeRegion = regionId;
+      document.querySelectorAll(`[data-region-target="${CSS.escape(regionId)}"]`).forEach((button) => {
+        button.setAttribute('aria-pressed', 'true');
+      });
+      document.querySelectorAll('[data-region-target]').forEach((button) => {
+        if (button.dataset.regionTarget !== regionId) button.setAttribute('aria-pressed', 'false');
+      });
+    };
+
     viewer.addHandler('open', () => {
       root.dataset.viewerState = 'ready';
 
@@ -50,33 +64,35 @@
         const height = Number(node.dataset.regionH);
         if (![x, y, width, height].every(Number.isFinite) || width <= 0 || height <= 0) return;
 
+        const regionId = node.dataset.regionId || '';
+        const bounds = viewer.viewport.imageToViewportRectangle(x, y, width, height);
         const overlay = document.createElement('button');
         overlay.type = 'button';
         overlay.className = 'dawn-visual-region-overlay';
-        overlay.dataset.regionId = node.dataset.regionId || '';
+        overlay.dataset.regionId = regionId;
         overlay.dataset.provenance = node.dataset.regionProvenance || '';
         overlay.setAttribute('aria-label', node.dataset.regionLabel || 'Visual region');
         overlay.title = node.dataset.regionLabel || '';
 
-        viewer.addOverlay({
-          element: overlay,
-          location: viewer.viewport.imageToViewportRectangle(x, y, width, height)
-        });
-
-        overlay.addEventListener('click', () => {
-          viewer.viewport.fitBounds(
-            viewer.viewport.imageToViewportRectangle(x, y, width, height),
-            true
-          );
-        });
+        regionMap.set(regionId, { bounds, overlay });
+        viewer.addOverlay({ element: overlay, location: bounds });
+        overlay.addEventListener('click', () => focusRegion(regionId));
       });
+
+      document.querySelectorAll('[data-region-target]').forEach((button) => {
+        button.setAttribute('aria-pressed', 'false');
+        button.addEventListener('click', () => focusRegion(button.dataset.regionTarget));
+      });
+    });
+
+    viewer.addHandler('home', () => {
+      delete root.dataset.activeRegion;
+      document.querySelectorAll('[data-region-target]').forEach((button) => button.setAttribute('aria-pressed', 'false'));
     });
 
     viewer.addHandler('open-failed', () => {
       root.dataset.viewerState = 'failed';
-      if (imageUrl && mode === 'iiif-image') {
-        root.dataset.viewerFallback = 'single-image-available';
-      }
+      if (imageUrl && mode === 'iiif-image') root.dataset.viewerFallback = 'single-image-available';
     });
 
     if (manifestUrl) root.dataset.iiifManifestAvailable = 'true';
