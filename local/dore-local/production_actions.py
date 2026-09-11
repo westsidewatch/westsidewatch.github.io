@@ -24,15 +24,51 @@ def _sync(repo):
  if fetch["returncode"]:return {"ok":False,"status":"failed","step":"fetch","result":fetch}
  ff=_run(["git","merge","--ff-only","origin/main"],repo)
  if ff["returncode"]:return {"ok":False,"status":"failed","step":"fast_forward","result":ff}
+def _rollout_repo(args):
+ args=args or {};base=_repo();ref=str(args.get("ref") or "main");expected=str(args.get("expected_sha") or args.get("expected_head") or "")
+ if not ref or ref.startswith("-") or ".." in ref or any(c not in "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._/-" for c in ref):
+  return None,{"ok":False,"status":"failed","step":"validate_ref","error":{"code":"invalid_ref","message":ref}}
+ if expected and (len(expected)!=40 or any(c not in "0123456789abcdefABCDEF" for c in expected)):
+  return None,{"ok":False,"status":"failed","step":"validate_sha","error":{"code":"invalid_expected_sha","message":expected}}
+ if ref=="main":
+  err=_sync(base)
+  if err:return None,err
+  actual=_run(["git","rev-parse","HEAD"],base)["stdout"].strip()
+  if expected and actual!=expected:return None,{"ok":False,"status":"failed","step":"verify_head","expected_sha":expected,"actual_sha":actual}
+  return base,None
+ if not (base/".git").exists():return None,{"ok":False,"status":"failed","error":{"code":"worktree_missing","message":str(base)}}
+ fetch=_run(["git","fetch","origin",f"+refs/heads/{ref}:refs/remotes/origin/{ref}"],base)
+ if fetch["returncode"]:return None,{"ok":False,"status":"failed","step":"fetch_ref","result":fetch}
+ actual=_run(["git","rev-parse",f"refs/remotes/origin/{ref}"],base)["stdout"].strip()
+ if not expected:return None,{"ok":False,"status":"failed","step":"verify_head","error":{"code":"expected_sha_required_for_non_main_ref","message":ref},"actual_sha":actual}
+ if actual!=expected:return None,{"ok":False,"status":"failed","step":"verify_head","expected_sha":expected,"actual_sha":actual}
+ target=Path.home()/"Library"/"Application Support"/"Dore"/"rollouts"/f"design-{expected[:12]}"
+ target.parent.mkdir(parents=True,exist_ok=True)
+ if target.exists():
+  remove=_run(["git","worktree","remove","--force",str(target)],base,timeout=60)
+  if remove["returncode"]:return None,{"ok":False,"status":"failed","step":"remove_old_worktree","result":remove}
+ add=_run(["git","worktree","add","--force","--detach",str(target),expected],base,timeout=120)
+ if add["returncode"]:return None,{"ok":False,"status":"failed","step":"add_worktree","result":add}
+ return target,None
 def design_production_rollout(args=None):
- repo=_repo();err=_sync(repo)
+ args=args or {};repo,err=_rollout_repo(args)
  if err:return err
- install=_run(["bash",str(repo/"dore-design"/"install-macos.sh")],repo,env={"DORE_SKIP_CONTROL_PLANE_REFRESH":"1"})
- if install["returncode"]:return {"ok":False,"status":"failed","step":"install","result":install}
+ expected=str(args.get("expected_sha") or args.get("expected_head") or "");head=_run(["git","rev-parse","HEAD"],repo)["stdout"].strip()
+ if expected and head!=expected:return {"ok":False,"status":"failed","step":"verify_install_source","expected_sha":expected,"actual_sha":head}
+ install=_run(["bash",str(repo/"dore-design"/"install-macos.sh")],repo,env={"DORE_REPO_ROOT":str(repo),"DORE_SKIP_CONTROL_PLANE_REFRESH":"1"},timeout=300)
+ if install["returncode"]:return {"ok":False,"status":"failed","step":"install","result":install,"head":head}
  health=_health()
  try:specimen=_json("http://127.0.0.1:4310/api/design2/specimen")
  except Exception as exc:specimen={"ok":False,"error":str(exc)}
- ok=bool(health.get("ok") and health.get("resident_entrypoint")=="app_design2.py" and health.get("immutable_publication") is True and specimen.get("ok"));return {"ok":ok,"status":"completed" if ok else "failed","capability":"design.production.rollout","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"specimen":specimen,"install_tail":install["stdout"][-2000:]}
+ page=str(args.get("page_id") or "");markers=[str(x) for x in (args.get("verify_markers") or [])];marker_state={}
+ if page and markers:
+  try:
+   with request.urlopen(f"http://127.0.0.1:4310/editor-canvas?page={page}",timeout=10) as r:html=r.read().decode("utf-8")
+   marker_state={m:m in html for m in markers}
+  except Exception as exc:marker_state={"__fetch_error__":str(exc)}
+ markers_ok=not markers or (len(marker_state)==len(markers) and all(marker_state.values()))
+ ok=bool(head==expected if expected else True) and bool(health.get("ok") and health.get("resident_entrypoint")=="app_design2.py" and health.get("immutable_publication") is True and specimen.get("ok") and markers_ok)
+ return {"ok":ok,"status":"completed" if ok else "failed","capability":"design.production.rollout","repo":str(repo),"head":head,"expected_sha":expected or None,"health":health,"specimen":specimen,"markers":marker_state,"install_tail":install["stdout"][-2000:]}
 def search_local_repair(args=None):
  repo=_repo();err=_sync(repo)
  if err:return err
