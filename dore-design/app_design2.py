@@ -4,12 +4,15 @@ import os
 from http.server import ThreadingHTTPServer
 import app_visual_v2 as current
 import design_motion_registry
-# The Codrops 8:5 page is a startup migration. design_motion_registry installs a
-# workspace wrapper whose legacy installer saves on every read; traverse it once
-# to persist the runtime page, then restore the side-effect-free reader.
+# The Codrops 8:5 page is a startup migration. Register the renderer every time,
+# but persist the page only when it is actually missing. A resident restart must
+# not manufacture a new workspace revision.
 _pure_workspace=current.visual.base.workspace
+_existing_ids={p.get('id') for p in _pure_workspace().get('pages',[])}
+_codrops_id=design_motion_registry.codrops_site_8x5.PAGE_ID
 design_motion_registry.install(current)
-current.visual.base.workspace()
+if _codrops_id not in _existing_ids:
+    current.visual.base.workspace()
 current.visual.base.workspace=_pure_workspace
 # ThreadingHTTPServer may process multiple editor mutations at once. Install the
 # single-writer guard only after startup migrations are complete so runtime POSTs
