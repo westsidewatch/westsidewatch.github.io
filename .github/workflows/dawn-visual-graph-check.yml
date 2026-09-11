@@ -6,6 +6,8 @@ on:
       - 'data/visual_graph.json'
       - 'data/visual_rights.json'
       - 'data/visual_map_profiles.json'
+      - 'data/dawn_visual_editorial_queries.json'
+      - 'data/dawn_visual_editorial.json'
       - 'content/visual/**'
       - 'layouts/**'
       - 'static/js/dawn-visual-viewer.js'
@@ -15,6 +17,7 @@ on:
       - 'scripts/dore/visual-editorial-director-adapter.mjs'
       - 'scripts/dore/visual-editorial-director-runtime.mjs'
       - 'scripts/dore/visual-editorial-director-runtime-selftest.mjs'
+      - 'scripts/dore/build-dawn-visual-editorial-feed.mjs'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
 
@@ -66,6 +69,10 @@ jobs:
         run: node scripts/dore/visual-fuzzy-retrieval-selftest.mjs
       - name: Phase 2 graph-bound Editorial Director self-test
         run: node scripts/dore/visual-editorial-director-runtime-selftest.mjs
+      - name: Build Dawn Library editorial feed
+        run: |
+          node scripts/dore/build-dawn-visual-editorial-feed.mjs
+          git diff --exit-code -- data/dawn_visual_editorial.json
       - name: Check viewer JavaScript syntax
         run: node --check static/js/dawn-visual-viewer.js
       - name: Install Hugo
