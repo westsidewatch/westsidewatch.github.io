@@ -1,7 +1,8 @@
 {
-  "schema": "dawn.visual-editorial-feed.v2",
+  "schema": "dawn.visual-editorial-feed.v3",
   "source": "dore.visual-editorial-director.v1",
   "context": "dawn.library-live-content.v1",
+  "surfaceEngine": "dore.visual-surface-orchestrator.v1",
   "graph": "dawn.visual-graph.v1",
   "selections": [
     {
@@ -36,7 +37,43 @@
             "card-8x5"
           ]
         }
-      ]
+      ],
+      "surfaceOrchestration": {
+        "schema": "dore.visual-surface-orchestrator.v1",
+        "source": "dore.visual-editorial-director.v1",
+        "selectionId": "dawn-library-featured",
+        "surfaces": [
+          {
+            "id": "dawn-hero",
+            "role": "primary",
+            "surfacePreset": "card-8x5",
+            "editorialWeight": 2,
+            "motion": "near-still",
+            "visualWorkIds": [
+              "visual-initiale-lev1-god-speaking-moses"
+            ]
+          },
+          {
+            "id": "dawn-river",
+            "role": "secondary",
+            "surfacePreset": "card-8x5",
+            "editorialWeight": 1,
+            "motion": "slow-flow",
+            "visualWorkIds": [
+              "visual-princeton-galilee-storm-1591",
+              "visual-dore-gen22-testing-abraham"
+            ]
+          },
+          {
+            "id": "dawn-focus",
+            "role": "reading-focus",
+            "surfacePreset": "card-8x5",
+            "editorialWeight": 1,
+            "motion": "focus",
+            "visualWorkIds": []
+          }
+        ]
+      }
     }
   ]
 }
