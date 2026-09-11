@@ -1,0 +1,26 @@
+{
+  "max_residual_unseen_fraction": 0.01,
+  "poses": [
+    {
+      "id": "P001",
+      "weight": 1.0,
+      "unseen_mask": "poses/P001/unseen-mask.png"
+    },
+    {
+      "id": "P002",
+      "weight": 1.0,
+      "unseen_mask": "poses/P002/unseen-mask.png"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "A001",
+      "coverage_masks": {
+        "P001": "anchors/A001/P001-coverage.png",
+        "P002": "anchors/A001/P002-coverage.png"
+      },
+      "redundancy_penalty": 0.0,
+      "weak_overlap_penalty": 0.0
+    }
+  ]
+}
