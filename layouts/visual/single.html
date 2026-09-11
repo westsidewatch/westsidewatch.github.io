@@ -3,6 +3,9 @@
   {{ $matches := where site.Data.visual_graph.visual_works "id" $visualId }}
   {{ $visual := index $matches 0 }}
   {{ $representation := index $visual.representations 0 }}
+  {{ $rightsPolicy := index site.Data.visual_rights.policies $representation.rights.policy }}
+
+  <link rel="stylesheet" href="{{ "/css/dawn-visual.css" | relURL }}">
 
   <article class="article dawn-visual-detail">
     <nav class="breadcrumb" aria-label="Breadcrumb">
@@ -22,13 +25,26 @@
       </div>
     </header>
 
-    <figure class="dawn-visual-surface" data-visual-work="{{ $visual.id }}" data-surface="deep-view">
-      <img src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}" loading="eager" decoding="async">
-      <figcaption>
-        <strong>{{ $visual.canonical_title }}</strong>
-        <span>{{ (index $visual.scripture_refs 0).canonical }}</span>
-      </figcaption>
-    </figure>
+    {{ if $rightsPolicy.allow_inline }}
+      <section class="dawn-visual-viewer-shell" aria-label="Deep zoom viewer">
+        <div
+          class="dawn-visual-viewer"
+          data-dawn-deep-zoom
+          data-visual-work="{{ $visual.id }}"
+          data-image-url="{{ $representation.image_url }}"
+          data-iiif-service="{{ with $representation.delivery.iiif_image_service }}{{ . }}{{ end }}"
+          data-iiif-manifest="{{ with $representation.delivery.iiif_manifest }}{{ . | relURL }}{{ end }}"
+          data-viewer-state="pending"
+        ></div>
+        <noscript>
+          <img class="dawn-visual-viewer__fallback" src="{{ $representation.image_url }}" alt="{{ $visual.canonical_title }} — {{ $visual.creator.name }}">
+        </noscript>
+      </section>
+    {{ else }}
+      <section class="dawn-visual-restricted" aria-label="Restricted visual resource">
+        <p>此資源目前只保留館藏資料與來源證據；Rights Resolver 不允許在黎明書局內直接重製。</p>
+      </section>
+    {{ end }}
 
     <section class="article-body article-body--editorial">
       <aside class="article-rail" aria-label="Visual identity">
@@ -37,16 +53,33 @@
       </aside>
       <div class="prose">
         <h2>作品脈絡</h2>
-        <p>這件作品在黎明書局內以 VisualWork 身份存在，而不是一個外部圖片網址。它可以與經文、人物、事件、版本、來源和網站 Surface 建立關係。</p>
-        <dl class="visual-metadata">
+        <p>這件作品在黎明書局內以 VisualWork 身份存在，而不是一個外部圖片網址。展示前先由 Rights Resolver 決定可否內嵌、深度瀏覽、建立衍生圖或進入品牌表面。</p>
+
+        <p class="dawn-visual-rights-status">{{ $rightsPolicy.label }} · {{ if $rightsPolicy.allow_inline }}Inline allowed{{ else }}Metadata only{{ end }}</p>
+
+        <dl class="visual-metadata dawn-visual-rights">
           <div><dt>Artist</dt><dd>{{ $visual.creator.name }}</dd></div>
           <div><dt>Scripture</dt><dd>{{ (index $visual.scripture_refs 0).canonical }}</dd></div>
           <div><dt>Authority</dt><dd>Class {{ $visual.authority_class }}</dd></div>
-          <div><dt>Rights</dt><dd>{{ $representation.rights.work_status }}</dd></div>
+          <div><dt>Rights</dt><dd>{{ $rightsPolicy.label }}</dd></div>
           <div><dt>Provider</dt><dd>{{ $representation.provider }}</dd></div>
+          <div><dt>Delivery</dt><dd>{{ $representation.delivery.mode }}</dd></div>
+          <div><dt>Deep zoom</dt><dd>{{ if $representation.delivery.deep_zoom }}Enabled{{ else }}Unavailable{{ end }}</dd></div>
+          <div><dt>Cached derivative</dt><dd>{{ if $rightsPolicy.allow_cached_derivative }}Allowed{{ else }}Blocked{{ end }}</dd></div>
+          <div><dt>Brand crop</dt><dd>{{ if $rightsPolicy.allow_branded_crop }}Allowed{{ else }}Blocked{{ end }}</dd></div>
+          <div><dt>Training canon</dt><dd>{{ if and $rightsPolicy.allow_training_canon (ne $visual.authority_class "D") (not $visual.generated) }}Eligible{{ else }}Blocked{{ end }}</dd></div>
         </dl>
-        <p><a href="{{ $representation.source_page }}" target="_blank" rel="noopener noreferrer">查看原始館藏與權利證據 ↗</a></p>
+
+        {{ with $representation.delivery.iiif_manifest }}
+          <p><a href="{{ . | relURL }}">IIIF Presentation manifest</a></p>
+        {{ end }}
+        <p><a class="dawn-visual-source-link" href="{{ $representation.source_page }}" target="_blank" rel="noopener noreferrer">查看原始館藏與權利證據 ↗</a></p>
       </div>
     </section>
   </article>
+
+  {{ if $rightsPolicy.allow_inline }}
+    <script src="https://cdn.jsdelivr.net/npm/openseadragon@6.1.0/build/openseadragon/openseadragon.min.js" defer></script>
+    <script src="{{ "/js/dawn-visual-viewer.js" | relURL }}" defer></script>
+  {{ end }}
 {{ end }}
