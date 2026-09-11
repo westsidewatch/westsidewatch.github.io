@@ -4,6 +4,7 @@
 # Candidate 01 CI step, so no parallel workflow or second CMS test path is needed.
 import sitewide_editorial_candidates_acceptance  # noqa: F401
 import candidate01_visual_graph_experiment as candidate
+import design_motion_registry as motion
 
 assert candidate.EDITORIAL_DIRECTOR['schema']=='dore.visual-editorial-director.v1'
 assert candidate.EDITORIAL_DIRECTOR['source_issue']==643
@@ -38,6 +39,29 @@ assert 'editorialHasVisual' in runtime
 assert 'img&&hasVisual' in runtime
 assert 'data-editorial-has-visual="false"' in candidate.STYLE
 
+# Geometry is deliberately uniform: editorial weight may select/order content,
+# but it must not distort the four-card 8:5 focus baseline.
+assert 'flex-grow:1.65' not in candidate.STYLE
+assert 'flex-grow:2.35' not in candidate.STYLE
+assert 'flex-grow:3.4' not in candidate.STYLE
+assert 'aspect-ratio:5/8' not in candidate.STYLE
+assert 'aspect-ratio:8/5' in candidate.STYLE
+
+# Motion arbitration owns transport; Codrops owns focus. No CSS infinite current
+# may compete for card/band transforms during focus.
+assert '@keyframes lw-current-' not in motion._LIVING_CURRENT_STYLE
+assert 'animation:lw-current-' not in motion._LIVING_CURRENT_STYLE
+assert 'requestAnimationFrame(tick)' in motion._LIVING_CURRENT_SCRIPT
+assert "setPhase('arrest')" in motion._LIVING_CURRENT_SCRIPT
+assert "setPhase('locked')" in motion._LIVING_CURRENT_SCRIPT
+assert "setPhase('focus')" in motion._LIVING_CURRENT_SCRIPT
+assert "setPhase('release')" in motion._LIVING_CURRENT_SCRIPT
+assert 'replayEnter' in motion._LIVING_CURRENT_SCRIPT
+assert 'replayLeave' in motion._LIVING_CURRENT_SCRIPT
+assert 'dorePhaseReplay' in motion._LIVING_CURRENT_SCRIPT
+assert "m.offset=0;m.velocity=0;m.target=0" in motion._LIVING_CURRENT_SCRIPT
+assert "setTimeout(()=>{if(phase==='settled')beginDrift()},180)" in motion._LIVING_CURRENT_SCRIPT
+
 screen2=candidate.focus_screen(2,('第一樂章 WATCH','第二樂章 WITNESS'))
 screen3=candidate.focus_screen(3,('第三樂章 WALK','第四樂章 WORSHIP'))
 for screen,no in ((screen2,2),(screen3,3)):
@@ -45,6 +69,8 @@ for screen,no in ((screen2,2),(screen3,3)):
     assert 'data-editorial-director="dore.visual-editorial-director.v1"' in screen
     assert '4W Living Editorial River' in screen
     assert '<iframe' in screen
+    assert 'living-water-8x5-current-runtime' in screen
+    assert 'phase-lock-' in screen
 
 # Second layer is deliberately still an interface only in this cut.
 assert 'world-surface' not in candidate.STYLE
