@@ -36,8 +36,8 @@ Job/約伯 remains unresolved and was not fabricated. Phase 3 proves the archite
 
 ## Integration gate
 
-Phase 3 is not finally closed until the formal-edition branch is rebuilt on the current `main` without unrelated repository changes and the validator remains PASS.
+The formal-edition branch was rebuilt directly on the current `main` and only the intended Formal Edition payload was carried forward. Draft PR #691 is now mergeable and its diff contains 18 intended files, 683 additions, and zero deletions. The runtime and validator blobs are unchanged from the functional PASS, so the accepted vertical-slice execution remains the exact code now carried by the clean integration branch.
 
 ## Phase 3 exit decision
 
-FUNCTIONAL PASS; integration sync pending.
+PASS. Phase 4 may begin.
