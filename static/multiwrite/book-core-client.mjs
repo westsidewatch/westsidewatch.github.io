@@ -1,5 +1,5 @@
-const DORE_LOCAL_CAPABILITY_URL = 'http://127.0.0.1:8788/capability';
 const SEMANTIC_TIMEOUT_MS = 20000;
+const BOOK_INTELLIGENCE_CAPABILITY = 'publishing.book-intelligence';
 
 function clean(value = '') {
   return typeof value === 'string' ? value.trim() : '';
@@ -25,30 +25,33 @@ function degradedSemantic(reason = 'core-unavailable') {
   };
 }
 
-export async function requestCoreBookIntelligence({ source = {}, sections = [] } = {}) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), SEMANTIC_TIMEOUT_MS);
-  try {
-    const response = await fetch(DORE_LOCAL_CAPABILITY_URL, {
-      method: 'POST',
-      cache: 'no-store',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({
-        capability: 'publishing.book-intelligence',
+export function requestCoreBookIntelligence({ source = {}, sections = [] } = {}) {
+  return new Promise(resolve => {
+    const requestId = `book-intelligence-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    let settled = false;
+    const finish = value => {
+      if (settled) return;
+      settled = true;
+      clearTimeout(timer);
+      window.removeEventListener('dore:book-intelligence-result', handleResult);
+      resolve(value);
+    };
+    const handleResult = event => {
+      const detail = event.detail || {};
+      if (detail.request_id !== requestId) return;
+      const payload = detail.payload || {};
+      finish(payload.ok && payload.report ? payload.report : degradedSemantic('core-invalid-response'));
+    };
+    const timer = setTimeout(() => finish(degradedSemantic('core-timeout')), SEMANTIC_TIMEOUT_MS);
+    window.addEventListener('dore:book-intelligence-result', handleResult);
+    window.dispatchEvent(new CustomEvent('dore:book-intelligence', {
+      detail: {
+        capability: BOOK_INTELLIGENCE_CAPABILITY,
+        request_id: requestId,
         args: { source, sections }
-      }),
-      signal: controller.signal
-    });
-    if (!response.ok) return degradedSemantic(`core-http-${response.status}`);
-    const payload = await response.json();
-    if (!payload?.ok || !payload?.report) return degradedSemantic(payload?.error || 'core-invalid-response');
-    return payload.report;
-  } catch (error) {
-    const reason = error?.name === 'AbortError' ? 'core-timeout' : 'core-unavailable';
-    return degradedSemantic(reason);
-  } finally {
-    clearTimeout(timer);
-  }
+      }
+    }));
+  });
 }
 
 export function mergeBookIntelligence(deterministic = {}, semantic = {}) {
@@ -63,7 +66,6 @@ export function mergeBookIntelligence(deterministic = {}, semantic = {}) {
     intent: {
       ...localIntent,
       category: clean(localIntent.category) || clean(semantic.category) || 'longform',
-      // Author thesis is canonical. Core inference is diagnostic only and never replaces it.
       thesis: clean(localIntent.thesis),
       audience: clean(localIntent.audience) || clean(semantic.audience),
       readingMode: clean(localIntent.readingMode) || clean(semantic.readingMode) || 'continuous',
@@ -93,4 +95,4 @@ export function mergeBookIntelligence(deterministic = {}, semantic = {}) {
   };
 }
 
-export { DORE_LOCAL_CAPABILITY_URL, SEMANTIC_TIMEOUT_MS };
+export { SEMANTIC_TIMEOUT_MS };
