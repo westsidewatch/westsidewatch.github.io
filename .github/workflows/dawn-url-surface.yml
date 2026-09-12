@@ -126,18 +126,23 @@ jobs:
           python-version: '3.12'
       - name: Run Dawn Zotero adapter contract tests
         run: python -m unittest tests.test_dawn_zotero_reconciliation -v
+      - name: Enable ARM64 emulation for official Zotero image
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: arm64
       - name: Start official Zotero translation-server
         run: |
-          docker pull zotero/translation-server
-          docker run -d --rm --name dawn-zotero -p 1969:1969 zotero/translation-server
+          docker pull --platform linux/arm64/v8 zotero/translation-server
+          docker run -d --rm --platform linux/arm64/v8 --name dawn-zotero -p 1969:1969 zotero/translation-server
       - name: Wait for Zotero server socket
         run: |
-          for i in $(seq 1 40); do
+          for i in $(seq 1 60); do
             if curl --max-time 2 --connect-timeout 2 -sS -o /dev/null http://127.0.0.1:1969/; then
               exit 0
             fi
             sleep 2
           done
+          docker ps -a || true
           docker logs dawn-zotero || true
           exit 1
       - name: Prove real ISBN reconciliation through Zotero translators
