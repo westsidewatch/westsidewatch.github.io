@@ -10,6 +10,7 @@ from legacy_memory import ensure_schema as ensure_legacy_schema, import_items as
 from self_memory import ensure_schema as ensure_self_schema, upsert_self, add_learning, status as self_status, context as self_context
 from learning_planner import plan as learning_plan, validate_gate
 from autonomous_learner import status as autonomous_learning_status
+from browser_capability_transport import call_browser_capability
 ROOT=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore'))
 DB=ROOT/'data'/'dore.sqlite3'; HOST=os.environ.get('DORE_LOCAL_HOST','127.0.0.1'); PORT=int(os.environ.get('DORE_LOCAL_PORT','8788'))
 MODEL=os.environ.get('DORE_LOCAL_MODEL','gemma4:e4b'); OLLAMA=os.environ.get('OLLAMA_BASE_URL','http://127.0.0.1:11434')
@@ -170,6 +171,10 @@ class H(BaseHTTPRequestHandler):
  def do_POST(self):
   try: n=int(self.headers.get('Content-Length','0')); b=json.loads(self.rfile.read(n) or b'{}')
   except: return self.sendj({'ok':False,'error':'invalid_json'},400)
+  if self.path=='/capability':
+   origin=self.headers.get('Origin','')
+   if origin and origin not in ALLOWED_ORIGINS: return self.sendj({'ok':False,'error':'origin_not_allowed'},403)
+   result,status=call_browser_capability(b); return self.sendj(result,status)
   if self.path=='/design/evidence':
    cid=str(b.get('conversation_id') or uuid.uuid4()); project=str(b.get('project_id') or 'dore-global'); text=str(b.get('content','')).strip(); state=str(b.get('truth_state') or 'observation'); scope=str(b.get('scope') or classify_scope(text))
    if not text:return self.sendj({'ok':False,'error':'empty_content'},400)

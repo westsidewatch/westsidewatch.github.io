@@ -1,0 +1,58 @@
+name: PR662 Book Intelligence Resident E2E
+
+on:
+  push:
+    paths:
+      - '.github/workflows/pr662-book-intelligence-resident-e2e.yml'
+      - 'local/dore-local/pr662_book_intelligence_resident_e2e.sh'
+      - 'local/dore-local/book_intelligence_capability.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/dore_local.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-companion-extension/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr662-book-intelligence-resident-e2e
+  cancel-in-progress: true
+
+jobs:
+  resident-e2e:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact PR head
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Ensure Firefox and web-ext prerequisites
+        shell: bash
+        run: |
+          set -euo pipefail
+          FIREFOX=''
+          for C in '/Applications/Firefox.app/Contents/MacOS/firefox' "$HOME/Applications/Firefox.app/Contents/MacOS/firefox"; do
+            if test -x "$C"; then FIREFOX="$C"; break; fi
+          done
+          BREW="$(command -v brew 2>/dev/null || true)"
+          if test -z "$BREW" -a -x /opt/homebrew/bin/brew; then BREW=/opt/homebrew/bin/brew; fi
+          if test -z "$BREW" -a -x /usr/local/bin/brew; then BREW=/usr/local/bin/brew; fi
+          brew_install() {
+            test -n "$BREW" || { echo 'E2E_FAIL homebrew_missing' >&2; exit 1; }
+            if test "$BREW" = '/opt/homebrew/bin/brew'; then arch -arm64 "$BREW" install "$@"; else "$BREW" install "$@"; fi
+          }
+          if test -z "$FIREFOX"; then
+            mkdir -p "$HOME/Applications"
+            brew_install --cask --appdir="$HOME/Applications" firefox
+            FIREFOX="$HOME/Applications/Firefox.app/Contents/MacOS/firefox"
+          fi
+          test -x "$FIREFOX" || { echo 'E2E_FAIL firefox_install_missing' >&2; exit 1; }
+          echo "FIREFOX=$FIREFOX" >> "$GITHUB_ENV"
+          if ! command -v npx >/dev/null 2>&1; then brew_install node; fi
+
+      - name: Strict Firefox Companion native model manuscript E2E
+        shell: bash
+        run: bash local/dore-local/pr662_book_intelligence_resident_e2e.sh
