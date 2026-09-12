@@ -1,0 +1,37 @@
+{{- $visualWorkId := .visualWorkId -}}
+{{- $feed := .feed -}}
+{{- $selectionId := default "dawn-library-featured" .selectionId -}}
+{{- $selected := false -}}
+{{- $score := 0 -}}
+{{- $role := "" -}}
+{{- $weight := 1 -}}
+{{- $motion := "" -}}
+{{- $surface := "" -}}
+{{- $preset := "" -}}
+{{- with $feed -}}
+  {{- range .selections -}}
+    {{- if eq .id $selectionId -}}
+      {{- range .candidates -}}
+        {{- if eq .visualWorkId $visualWorkId -}}
+          {{- $selected = true -}}
+          {{- $score = .score -}}
+        {{- end -}}
+      {{- end -}}
+      {{- with .surfaceOrchestration -}}
+        {{- range .surfaces -}}
+          {{- $candidateSurface := . -}}
+          {{- range .visualWorkIds -}}
+            {{- if eq . $visualWorkId -}}
+              {{- $role = $candidateSurface.role -}}
+              {{- $weight = $candidateSurface.editorialWeight -}}
+              {{- $motion = $candidateSurface.motion -}}
+              {{- $surface = $candidateSurface.id -}}
+              {{- $preset = $candidateSurface.surfacePreset -}}
+            {{- end -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- return (dict "selected" $selected "score" $score "role" $role "weight" $weight "motion" $motion "surface" $surface "preset" $preset "schema" "dore.visual-surface-consumer.v1") -}}

@@ -14,3 +14,11 @@
   const load=(src)=>new Promise((resolve,reject)=>{if([...document.scripts].some(s=>s.src.includes(src))){resolve();return}const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=reject;document.body.append(script)});
   load('/dore/dore-multiwrite-bible-study.js?v=20260909-bi3').then(()=>load('/one/one-bi3-embedded.js?v=20260909-bi3')).catch(error=>console.warn('[DORÉ BI-3 ONE loader]',error));
 })();
+(()=>{
+  const src='/js/dore-visual-surface-consumer.js?v=20260911-cut07';
+  const attach=()=>window.DoreVisualSurfaceConsumer?.attachOne(document);
+  if(window.DoreVisualSurfaceConsumer){attach();return}
+  const existing=[...document.scripts].find(script=>script.src.includes('/js/dore-visual-surface-consumer.js'));
+  if(existing){existing.addEventListener('load',attach,{once:true});return}
+  const script=document.createElement('script');script.src=src;script.onload=attach;script.onerror=()=>console.warn('[DORÉ Surface Consumer] ONE bridge failed');document.body.append(script);
+})();
