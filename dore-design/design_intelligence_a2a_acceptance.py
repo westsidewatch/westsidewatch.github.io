@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic acceptance for Design -> Core/A2A -> critic -> taste write-back."""
+"""Deterministic acceptance for Design -> Core/A2A -> blind critic -> taste write-back."""
 from __future__ import annotations
 
 import json
@@ -15,6 +15,7 @@ def main() -> int:
         os.environ['DORE_UI_TASTE_DB'] = str(root / 'taste.sqlite3')
         os.environ['DORE_DESIGN_A2A_FIXTURE'] = '1'
         os.environ['DORE_DESIGN_A2A_TIMEOUT'] = '60'
+        os.environ.pop('DORE_DESIGN_A2A_FIXTURE_DISAGREE', None)
 
         # Imports happen after env setup so the A2A execution plane uses the temp home.
         import importlib
@@ -43,33 +44,65 @@ def main() -> int:
         assert out['production_promoted'] is False
         assert out['provider'] == 'deterministic-ci-fixture'
         assert [v['id'] for v in out['variants']] == ['A', 'B']
-        assert out['winner'] == 'B'
+        assert out['judge_count'] == 2 and out['blind_order_reversal'] is True
+        assert out['consensus'] is True and out['winner'] == 'B'
+        assert out['critic']['order_bias_check'] == 'pass'
         assert out['critic']['usability_floor_passed'] is True
+        assert out['memory_admitted'] is True
         assert out['writeback']['comparison_id'] > 0
 
         proof = a2a_execution_plane.status(out['task_id'])
         assert proof['completion_evidence'] is True
         task = proof['task']
         assert task['status'] == 'PASS'
-        assert task['artifact']['type'] == 'dore.design-intelligence-exploration.v1'
+        assert task['artifact']['type'] == 'dore.design-intelligence-exploration.v2'
         assert task['verification']['independent_critic'] is True
+        assert task['verification']['blind_order_reversal'] is True
+        assert task['verification']['judge_count'] == 2
+        assert task['verification']['consensus'] is True
+        assert task['verification']['memory_admission'] is True
 
-        after = design_intelligence_runtime.route_task({**payload, 'candidates': ['A', 'B']})
-        assert int((after.get('preference_pack') or {}).get('comparison_count') or 0) >= 1 or out['writeback']['comparison_id'] > 0
+        # A disagreement is still a valid exploration artifact, but it must not
+        # contaminate durable taste memory.
+        os.environ['DORE_DESIGN_A2A_FIXTURE_DISAGREE'] = '1'
+        disagreement_payload = {
+            **payload,
+            'surface_id': 'fresh-disagreement-surface',
+            'surface_family': 'fresh-disagreement-family',
+            'task_context': 'test order-bias resistance on an unseen surface',
+            'content_context': 'blind-disagreement-control',
+        }
+        disagree = design_intelligence_a2a.explore(disagreement_payload)
+        assert disagree['ok'] and disagree['a2a_status'] == 'PASS'
+        assert disagree['judge_count'] == 2
+        assert disagree['consensus'] is False
+        assert disagree['winner'] is None
+        assert disagree['memory_admitted'] is False
+        assert disagree['writeback'] is None
+        assert disagree['writeback_block_reason'] == 'judge_disagreement'
+        assert disagree['requires_more_evidence'] is True
+        dproof = a2a_execution_plane.status(disagree['task_id'])
+        assert dproof['completion_evidence'] is True
+        assert dproof['task']['verification']['consensus'] is False
+        assert dproof['task']['verification']['memory_admission'] is False
 
         print(json.dumps({
             'ok': True,
-            'policy': 'dore-design-core-a2a-acceptance-v1',
+            'policy': 'dore-design-blind-consensus-acceptance-v1',
             'checks': {
                 'explore_creates_durable_a2a_task': True,
                 'two_variants_generated': True,
-                'independent_critic_selects_winner': True,
-                'winner_writes_back_to_taste_memory': True,
+                'two_blind_judges_run': True,
+                'presentation_order_reversed': True,
+                'consensus_winner_writes_back': True,
+                'judge_disagreement_blocks_memory': True,
+                'disagreement_preserves_exploration_artifact': True,
                 'completion_requires_verified_artifact': True,
                 'design_process_has_no_model_client': True,
                 'production_promotion_blocked': True,
             },
-            'task_id': out['task_id'],
+            'consensus_task_id': out['task_id'],
+            'disagreement_task_id': disagree['task_id'],
             'winner': out['winner'],
         }, ensure_ascii=False, sort_keys=True))
     return 0
