@@ -2,12 +2,14 @@
 """Acceptance harness for the Doré Reflex v0 engineering spike."""
 from __future__ import annotations
 
+import base64
 from io import BytesIO
 from pathlib import Path
 import tempfile
 from zipfile import ZIP_DEFLATED, ZipFile
 
-from reflex_contracts import REFLEX_EVENT_KINDS, SourceDescriptor
+from reflex_capability import CAPABILITY_ID, RESULT_SCHEMA, execute as execute_reflex
+from reflex_contracts import REFLEX_EVENT_KINDS, ReflexSession, SourceDescriptor
 from reflex_projections import project
 from reflex_router import ReflexRouter
 
@@ -140,6 +142,47 @@ def _exercise(router: ReflexRouter, source: SourceDescriptor, payload: bytes, ad
     return result
 
 
+def _runtime_request(source: SourceDescriptor, payload: bytes, intent: str) -> dict:
+    return {
+        "intent": intent,
+        "source": {
+            "mime": source.mime,
+            "name": source.name,
+            "canonicalId": source.canonical_id,
+            "sourcePointer": source.source_pointer,
+        },
+        "payloadBase64": base64.b64encode(payload).decode("ascii"),
+    }
+
+
+def _runtime_three(source: SourceDescriptor, payload: bytes, adapter: str) -> dict[str, dict]:
+    out: dict[str, dict] = {}
+    for intent in ("text.search", "publishing.structure", "design.structure"):
+        result = execute_reflex(_runtime_request(source, payload, intent))
+        assert result["ok"] is True
+        assert result["status"] == "completed"
+        assert result["capability"] == CAPABILITY_ID
+        assert result["schema"] == RESULT_SCHEMA
+        assert result["adapter"] == adapter
+        assert result["source"]["canonicalId"] == source.canonical_id
+        assert result["source"]["sourcePointer"] == source.source_pointer
+        assert "events" not in result and "session" not in result
+        assert result["projection"]["schema"].startswith("dore.reflex.")
+        out[intent] = result
+    assert len({item["projection"]["schema"] for item in out.values()}) == 3
+    return out
+
+
+class TrackingRouter(ReflexRouter):
+    def __init__(self) -> None:
+        super().__init__()
+        self.last_session: ReflexSession | None = None
+
+    def open(self, source: SourceDescriptor, payload: bytes) -> ReflexSession:
+        self.last_session = super().open(source, payload)
+        return self.last_session
+
+
 def main() -> None:
     router = ReflexRouter()
     source = SourceDescriptor(
@@ -156,6 +199,10 @@ def main() -> None:
         assert "heading" in markdown["kinds"]
         assert "Job and His Friends" in markdown["joined"]
         assert markdown["design"]["signals"]["headingCount"] == 1
+        markdown_runtime = _runtime_three(source, SAMPLE, "text")
+        assert "Job and His Friends" in "\n".join(
+            chunk["text"] for chunk in markdown_runtime["text.search"]["projection"]["chunks"]
+        )
 
         docx_source = SourceDescriptor(
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -163,9 +210,12 @@ def main() -> None:
             canonical_id="work:test-job-friends-docx",
             source_pointer="fixture://job-friends.docx",
         )
-        docx = _exercise(router, docx_source, _docx_fixture(), "markitdown")
+        docx_payload = _docx_fixture()
+        docx = _exercise(router, docx_source, docx_payload, "markitdown")
         assert "Job and His Friends" in docx["joined"]
         assert "Bildad judges from visible outcome." in docx["joined"]
+        docx_runtime = _runtime_three(docx_source, docx_payload, "markitdown")
+        assert docx_runtime["publishing.structure"]["projection"]["source"]["canonicalId"] == docx_source.canonical_id
 
         xlsx_source = SourceDescriptor(
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -173,7 +223,8 @@ def main() -> None:
             canonical_id="work:test-job-friends-xlsx",
             source_pointer="fixture://job-friends.xlsx",
         )
-        xlsx = _exercise(router, xlsx_source, _xlsx_fixture(), "markitdown")
+        xlsx_payload = _xlsx_fixture()
+        xlsx = _exercise(router, xlsx_source, xlsx_payload, "markitdown")
         assert "table.start" in xlsx["kinds"]
         assert xlsx["kinds"].count("table.row") == 4
         assert "table.end" in xlsx["kinds"]
@@ -191,6 +242,35 @@ def main() -> None:
         ]
         assert len(table_blocks) == 1
         assert table_blocks[0]["rows"][3]["cells"] == ["Zophar", "assumed certainty"]
+        xlsx_runtime = _runtime_three(xlsx_source, xlsx_payload, "markitdown")
+        assert xlsx_runtime["design.structure"]["projection"]["signals"]["hasStructuredTable"] is True
+
+        tracking = TrackingRouter()
+
+        def fail_projection(_session: ReflexSession, _intent: str) -> dict:
+            raise RuntimeError("forced projection failure")
+
+        try:
+            execute_reflex(
+                _runtime_request(source, SAMPLE, "text.search"),
+                router=tracking,
+                projector=fail_projection,
+            )
+            raise AssertionError("forced projection failure must escape")
+        except RuntimeError as exc:
+            assert str(exc) == "forced projection failure"
+        assert tracking.last_session is not None
+        assert tracking.last_session.closed is True
+        assert tracking.last_session.events == []
+
+        bad_intent = execute_reflex(_runtime_request(source, SAMPLE, "not.a.real.intent"))
+        assert bad_intent["ok"] is False
+        assert bad_intent["error"]["code"] == "unsupported_intent"
+        bad_payload = _runtime_request(source, SAMPLE, "text.search")
+        bad_payload["payloadBase64"] = "%%%not-base64%%%"
+        invalid_payload = execute_reflex(bad_payload)
+        assert invalid_payload["ok"] is False
+        assert invalid_payload["error"]["code"] == "invalid_args"
 
         after = sorted(Path(tmp).rglob("*"))
         assert before == after, "Reflex v0 must not persist a second substrate"
@@ -200,7 +280,7 @@ def main() -> None:
     assert any(event.kind == "unsupported" for event in binary.iter_events())
     binary.close()
 
-    print("PASS: Doré Reflex v0 unified semantic contract across Markdown + DOCX + XLSX")
+    print("PASS: Doré Reflex v0 live runtime capability across Markdown + DOCX + XLSX")
 
 
 if __name__ == "__main__":
