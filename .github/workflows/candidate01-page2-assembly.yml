@@ -1,0 +1,22 @@
+name: Candidate 01 Page 2 Assembly
+
+on:
+  push:
+    branches:
+      - dore/candidate01-visual-graph-experiment
+    paths:
+      - 'dore-design/candidate01_visual_graph_experiment.py'
+      - 'dore-design/candidate01_page2_assembly_acceptance.py'
+      - '.github/workflows/candidate01-page2-assembly.yml'
+  workflow_dispatch:
+
+jobs:
+  assembly:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@v4
+      - name: Page 2 precision assembly contract
+        run: |
+          python3 -m py_compile dore-design/candidate01_visual_graph_experiment.py dore-design/candidate01_page2_assembly_acceptance.py
+          python3 dore-design/candidate01_page2_assembly_acceptance.py
