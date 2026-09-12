@@ -2,8 +2,10 @@
 """Guarded self-update for the local DORÉ resident.
 
 This is deliberately not a general shell bridge. It updates only this repository,
-only its main branch, only from origin/main, and only by fast-forward. Design
-production rollout is intentionally outside routine maintenance.
+only its main branch, only from origin/main, and only by fast-forward. When a
+bounded Design rollout request is present in the repository, the same guarded
+maintenance cycle may also install that exact ref/SHA through
+production_actions.design_production_rollout().
 """
 from __future__ import annotations
 import json, os, subprocess, urllib.request
@@ -14,6 +16,7 @@ ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2
 EXPECTED_REPO='westsidewatch.github.io'
 EXPECTED_BRANCH='main'
 HEALTH=os.environ.get('DORE_DESIGN_HEALTH','http://127.0.0.1:4310/api/health')
+ROLLOUT_REQUEST=ROOT/'local/dore-local/design-rollout-request.json'
 
 def run(argv,timeout=180):
  cp=subprocess.run(argv,cwd=ROOT,text=True,capture_output=True,timeout=timeout)
@@ -41,6 +44,22 @@ def restart_design():
   results.append({'label':label,'returncode':cp.returncode,'stderr':(cp.stderr or '')[-1000:]})
  return results
 
+def bounded_design_rollout():
+ if not ROLLOUT_REQUEST.exists():return {'requested':False,'ok':True}
+ try:req=json.loads(ROLLOUT_REQUEST.read_text(encoding='utf-8'))
+ except Exception as e:return {'requested':True,'ok':False,'error':'rollout_request_invalid:'+type(e).__name__+': '+str(e)}
+ if req.get('schema')!='dore.design-rollout-request.v1' or req.get('enabled') is not True:
+  return {'requested':True,'ok':False,'error':'rollout_request_not_enabled_or_wrong_schema'}
+ from production_actions import design_production_rollout
+ args={
+  'ref':str(req.get('ref') or ''),
+  'expected_sha':str(req.get('expected_sha') or ''),
+  'page_id':str(req.get('page_id') or ''),
+  'verify_markers':[str(x) for x in (req.get('verify_markers') or [])],
+ }
+ result=design_production_rollout(args)
+ return {'requested':True,'request_id':req.get('request_id'),'args':args,'ok':bool(result.get('ok')),'result':result}
+
 def main():
  before=run(['git','rev-parse','HEAD'])
  branch=run(['git','branch','--show-current'])
@@ -66,10 +85,11 @@ def main():
   cp=subprocess.run(['python3','-m','py_compile',str(p)],cwd=ROOT,text=True,capture_output=True,timeout=30)
   checks.append({'script':script,'ok':cp.returncode==0,'stderr':(cp.stderr or '')[-1000:]})
  if not all(x['ok'] for x in checks):raise RuntimeError('maintenance_verification_failed:'+json.dumps(checks))
- restarts=restart_design()
+ rollout=bounded_design_rollout()
+ restarts=[] if rollout.get('requested') else restart_design()
  post=health()
- ok=bool(post.get('ok',False))
- result={'ok':ok,'operation':'maintenance.update','repository':'westsidewatch/westsidewatch.github.io','branch':'main','before_sha':before,'target_sha':target,'after_sha':after,'updated':before!=after,'verification':checks,'restart':restarts,'health':post,'completed_at':datetime.now(timezone.utc).isoformat()}
+ ok=bool(post.get('ok',False) and rollout.get('ok',True))
+ result={'ok':ok,'operation':'maintenance.update','repository':'westsidewatch/westsidewatch.github.io','branch':'main','before_sha':before,'target_sha':target,'after_sha':after,'updated':before!=after,'verification':checks,'design_rollout':rollout,'restart':restarts,'health':post,'completed_at':datetime.now(timezone.utc).isoformat()}
  print(json.dumps(result,ensure_ascii=False))
  return 0 if result['ok'] else 2
 if __name__=='__main__':raise SystemExit(main())
