@@ -34,7 +34,7 @@ class SurfaceMountRegistry:
         "iiif-visual-surface": CapabilityMount("iiif-visual-surface", "integration-proven", "on-demand", "iiif", "static/js/dawn-visual-viewer.js", "data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif"),
         "pdfjs": CapabilityMount("pdfjs", "integration-proven", "on-demand", "pdf", "static/js/dawn-pdf-surface.js", "data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf"),
         "book-reader": CapabilityMount("book-reader", "fixture-found", "on-demand", "internet-archive-scan", "static/js/dawn-bookreader-surface.js", "data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader"),
-        "zotero-translate": CapabilityMount("zotero-translate", "fixture-found", "on-demand", "bibliographic-reconciliation", None, "data/dawn-capability-acceptance-corpus.json#openlibrary-work-edition-identity"),
+        "zotero-translate": CapabilityMount("zotero-translate", "integration-proven", "on-demand", "bibliographic-reconciliation", "dore_core/capabilities/zotero_reconciliation.py", "reports/DAWN-ZOTERO-TRANSLATION.json"),
         "oembed-opengraph": CapabilityMount("oembed-opengraph", "reserved", "on-demand", "web-preview"),
         "readability": CapabilityMount("readability", "fixture-found", "fallback-only", "article-reader", None, "data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source"),
         "video-surface": CapabilityMount("video-surface", "fixture-found", "on-demand", "bible-film-video", None, "data/dawn-capability-acceptance-corpus.json#jesus-film-full-feature"),
