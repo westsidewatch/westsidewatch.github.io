@@ -1,0 +1,128 @@
+name: Dawn Step 7 Canonical Substrate
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/build_dawn_canonical_substrate.py'
+      - 'scripts/build_dawn_10k_work_queue.py'
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'static/dawn-library/storefront.json'
+      - 'static/dawn-library/biblical-world/catalog.json'
+      - 'tests/test_dawn_canonical_substrate.py'
+      - '.github/workflows/dawn-step7-canonical-substrate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_dawn_canonical_substrate.py'
+      - 'scripts/build_dawn_10k_work_queue.py'
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'static/dawn-library/storefront.json'
+      - 'static/dawn-library/biblical-world/catalog.json'
+      - 'tests/test_dawn_canonical_substrate.py'
+      - '.github/workflows/dawn-step7-canonical-substrate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  canonical-substrate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    env:
+      PYTHONPATH: .
+      DAWN_TARGET_WORKS: '10500'
+      DAWN_CHINESE_TARGET: '2000'
+      DAWN_OL_PAGE_SIZE: '100'
+      DAWN_OL_MAX_PAGES_PER_QUERY: '30'
+      DAWN_OL_DELAY_SECONDS: '0.20'
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Verify canonical substrate contract
+        run: python -m unittest tests.test_dawn_canonical_substrate -v
+
+      - name: Rebuild Step 6 reconciliation input
+        run: |
+          python scripts/discover_dawn_10k_openlibrary_works.py
+          python scripts/build_dawn_10k_work_queue.py
+
+      - name: Compile Dawn canonical runtime substrate
+        run: python scripts/build_dawn_canonical_substrate.py
+
+      - name: Enforce Step 7 hard gates
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          queue = json.loads(Path('data/dawn-10k-work-queue.json').read_text())
+          index = json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          dawn = json.loads(Path('static/dawn-library/surfaces/dawn-storefront.json').read_text())
+          multi = json.loads(Path('static/dawn-library/surfaces/multiwrite-biblical-world.json').read_text())
+
+          assert queue['deduplicatedWorks'] >= 11467, queue['deduplicatedWorks']
+          assert queue['authorityBackedWorks'] >= 10538, queue['authorityBackedWorks']
+          assert index['identityAuthority'] == 'Dawn'
+          assert index['runtimePolicy']['surfaceOwnsIdentity'] is False
+          assert index['runtimePolicy']['openLibraryRuntime'] is False
+          assert index['runtimePolicy']['wikisource'] == 'forbidden'
+          assert index['step6Baseline']['deduplicatedWorks'] == queue['deduplicatedWorks']
+          assert index['step6Baseline']['authorityBackedWorks'] == queue['authorityBackedWorks']
+          assert index['workCount'] >= queue['deduplicatedWorks']
+          assert index['authorityBackedWorks'] >= queue['authorityBackedWorks']
+
+          runtime = json.dumps({'works': index['works'], 'dawn': dawn, 'multiwrite': multi}, ensure_ascii=False).lower()
+          assert 'openlibrary.org' not in runtime
+          assert 'wikisource' not in runtime
+          assert 'zh.wikisource.org' not in runtime
+
+          work_ids = set(index['works'])
+          for shelf in dawn.get('shelves', []):
+              for ref in shelf.get('items', []):
+                  assert set(ref) == {'workId'}
+                  assert ref['workId'] in work_ids
+          for ref in multi.get('items', []):
+              assert set(ref) <= {'workId', 'relations'}
+              assert ref['workId'] in work_ids
+
+          print({
+              'step6Baseline': index['step6Baseline'],
+              'canonicalWorks': index['workCount'],
+              'authorityBackedWorks': index['authorityBackedWorks'],
+              'dawnSurfaceRefs': sum(len(s.get('items', [])) for s in dawn.get('shelves', [])),
+              'multiwriteSurfaceRefs': len(multi.get('items', [])),
+          })
+          PY
+
+      - name: Preserve canonical substrate evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-step7-canonical-substrate
+          path: |
+            static/dawn-library/canonical-index.json
+            static/dawn-library/surfaces/dawn-storefront.json
+            static/dawn-library/surfaces/multiwrite-biblical-world.json
+
+      - name: Persist canonical runtime substrate on main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config user.name 'Dawn Canonical CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/dawn-library/canonical-index.json \
+                  static/dawn-library/surfaces/dawn-storefront.json \
+                  static/dawn-library/surfaces/multiwrite-biblical-world.json
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m 'chore(dawn): persist Step 7 canonical substrate [skip ci]'
+          for attempt in 1 2 3 4; do
+            if git push; then exit 0; fi
+            git pull --rebase origin main
+          done
+          exit 1
