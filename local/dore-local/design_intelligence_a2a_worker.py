@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""Core/A2A worker for executable Doré Design exploration candidates."""
+"""Core/A2A worker for executable, raster-grounded Doré Design exploration."""
 from __future__ import annotations
 
+import base64
 import json
 import os
 import sys
@@ -14,6 +15,7 @@ DESIGN_ROOT = REPO_ROOT / 'dore-design'
 if str(DESIGN_ROOT) not in sys.path:
     sys.path.insert(0, str(DESIGN_ROOT))
 import design_intelligence_sandbox as sandbox
+import design_intelligence_raster as raster
 
 HOME = Path(os.environ.get('DORE_LOCAL_HOME', Path.home() / '.dore')).expanduser()
 ROOT = HOME / 'design-intelligence-a2a'
@@ -43,6 +45,20 @@ def _first_node(snapshot):
     return nodes[0]
 
 
+def _rasterize_candidates(payload: dict, candidates: list[dict]) -> list[dict]:
+    task_id = str(payload.get('task_id') or '').strip()
+    if not task_id:
+        raise ValueError('raster_task_id_required')
+    out = []
+    for candidate in candidates:
+        item = dict(candidate)
+        item['raster'] = raster.rasterize_candidate(item, root=ROOT, task_id=task_id)
+        out.append(item)
+    if len(out) != 2 or out[0]['raster']['sha256'] == out[1]['raster']['sha256']:
+        raise RuntimeError('candidate_rasters_must_be_distinct')
+    return out
+
+
 def _fixture(payload: dict) -> dict:
     node = _first_node(payload['base_snapshot'])
     nid = str(node.get('id'))
@@ -52,11 +68,11 @@ def _fixture(payload: dict) -> dict:
         {'id':'A','direction':'preserve-current-gravity','patch':{'schema':'dore.design.candidate-patch.v1','ops':[{'op':'move','node_id':nid,'x':x,'y':y+4}]}},
         {'id':'B','direction':'clarify-focal-gravity','patch':{'schema':'dore.design.candidate-patch.v1','ops':[{'op':'move','node_id':nid,'x':x,'y':max(0,y-12)},{'op':'font_size','node_id':nid,'size':min(320,max(6,size+4))}]}},
     ]
-    candidates = [sandbox.materialize(payload['base_snapshot'], v['patch'], v['id']) for v in variants]
+    candidates = _rasterize_candidates(payload, [sandbox.materialize(payload['base_snapshot'], v['patch'], v['id']) for v in variants])
     disagree = os.environ.get('DORE_DESIGN_A2A_DISAGREE_FIXTURE') == '1'
     votes = [
-        {'presentation':'forward','winner':'B','winner_reason':'B has clearer focal geometry.','loser_reason':'A changes the composition too little.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.88},
-        {'presentation':'reversed','winner':'A' if disagree else 'B','winner_reason':'Reversed-order check.','loser_reason':'Reversed-order check loser.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.84},
+        {'presentation':'forward','winner':'B','winner_reason':'B has clearer focal geometry.','loser_reason':'A changes the composition too little.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.88,'pixel_evidence_used':True},
+        {'presentation':'reversed','winner':'A' if disagree else 'B','winner_reason':'Reversed-order check.','loser_reason':'Reversed-order check loser.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.84,'pixel_evidence_used':True},
     ]
     consensus = votes[0]['winner'] == votes[1]['winner']
     winner = votes[0]['winner'] if consensus else None
@@ -67,8 +83,16 @@ def _fixture(payload: dict) -> dict:
         'brand_fit':'pass','usability_floor_passed':True,
         'confidence': min(v['confidence'] for v in votes) if consensus else 0.0,
         'failure_domains': [] if consensus else ['judge-disagreement'],
+        'evidence_mode':'real-browser-png-fixture-verified',
     }
     return {'variants':variants,'candidates':candidates,'critic':critic,'provider':'deterministic-ci-fixture','model':'fixture'}
+
+
+def _image_b64(candidate: dict) -> str:
+    path = Path((candidate.get('raster') or {}).get('path') or '')
+    if not path.exists():
+        raise FileNotFoundError('candidate_raster_missing:' + str(path))
+    return base64.b64encode(path.read_bytes()).decode('ascii')
 
 
 def _judge(ollama, payload, candidates, presentation):
@@ -76,17 +100,19 @@ def _judge(ollama, payload, candidates, presentation):
     aliases = {'X': ordered[0]['candidate_id'], 'Y': ordered[1]['candidate_id']}
     compact=[]
     for alias,c in zip(('X','Y'),ordered):
-        compact.append({'alias':alias,'patch':c['patch'],'render_sha256':c['render_sha256'],'geometry':c['geometry']})
+        r = c['raster']
+        compact.append({'alias':alias,'patch':c['patch'],'render_sha256':c['render_sha256'],'geometry':c['geometry'],'raster':{'sha256':r['sha256'],'width':r['width'],'height':r['height'],'byte_size':r['byte_size'],'real_browser_render':r['real_browser_render']}})
     system=(
-      'You are an independent Doré design critic. Judge only the two anonymized executable sandbox candidates. '
-      'Use actual patch and rendered geometry evidence, brand constraints, usability floor, and task context. '
-      'Return JSON only: winner (X or Y), winner_reason, loser_reason, brand_fit, usability_floor_passed, confidence, failure_domains.'
+      'You are an independent Doré visual critic. Judge the two anonymized executable sandbox candidates using the supplied real browser PNG images as primary visual evidence. '
+      'Image 1 is candidate X and Image 2 is candidate Y. Geometry and patch metadata are secondary evidence. Respect brand constraints and usability floor. '
+      'Return JSON only: winner (X or Y), winner_reason, loser_reason, brand_fit, usability_floor_passed, confidence, failure_domains. Do not infer identity from ordering.'
     )
     user=json.dumps({'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'candidates':compact},ensure_ascii=False)
-    raw=_json_object(ollama([{'role':'system','content':system},{'role':'user','content':user}]))
+    message={'role':'user','content':user,'images':[_image_b64(ordered[0]),_image_b64(ordered[1])]}
+    raw=_json_object(ollama([{'role':'system','content':system},message]))
     if raw.get('winner') not in {'X','Y'}: raise ValueError('critic_winner_required')
     canonical=aliases[raw['winner']]
-    out={**raw,'winner':canonical,'presentation':presentation,'confidence':max(0.0,min(1.0,float(raw.get('confidence',0.5)))),'usability_floor_passed':bool(raw.get('usability_floor_passed'))}
+    out={**raw,'winner':canonical,'presentation':presentation,'confidence':max(0.0,min(1.0,float(raw.get('confidence',0.5)))),'usability_floor_passed':bool(raw.get('usability_floor_passed')),'pixel_evidence_used':True}
     if not str(out.get('winner_reason') or '').strip() or not str(out.get('loser_reason') or '').strip(): raise ValueError('critic_reasons_required')
     return out
 
@@ -104,9 +130,7 @@ def _model(payload: dict) -> dict:
     generated=_json_object(ollama([{'role':'system','content':system},{'role':'user','content':user}]))
     variants=generated.get('variants') or []
     if not isinstance(variants,list) or len(variants)!=2 or [str(v.get('id')) for v in variants]!=['A','B']: raise ValueError('exactly_A_B_variants_required')
-    candidates=[]
-    for v in variants:
-        candidates.append(sandbox.materialize(base,v.get('patch'),v['id']))
+    candidates=_rasterize_candidates(payload, [sandbox.materialize(base,v.get('patch'),v['id']) for v in variants])
     votes=[_judge(ollama,payload,candidates,'forward'),_judge(ollama,payload,candidates,'reversed')]
     consensus=votes[0]['winner']==votes[1]['winner']
     usability=all(v.get('usability_floor_passed') for v in votes)
@@ -117,7 +141,7 @@ def _model(payload: dict) -> dict:
       'winner_reason':votes[0]['winner_reason'] if consensus else '','loser_reason':votes[0]['loser_reason'] if consensus else '',
       'brand_fit':'pass' if brand else 'fail','usability_floor_passed':usability,
       'confidence':min(v['confidence'] for v in votes) if consensus else 0.0,
-      'failure_domains':[] if consensus else ['judge-disagreement'],
+      'failure_domains':[] if consensus else ['judge-disagreement'],'evidence_mode':'real-browser-png+vision',
     }
     return {'variants':variants,'candidates':candidates,'critic':critic,'provider':'dore-local','model':os.environ.get('DORE_MODEL') or os.environ.get('OLLAMA_MODEL') or 'local-default'}
 
@@ -134,17 +158,19 @@ def execute(task_id: str) -> dict:
     try:
         result=_fixture(payload) if os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1' else _model(payload)
         artifact={
-          'type':'dore.design-intelligence-exploration.v3','task_id':task_id,'surface_id':payload.get('surface_id'),
+          'type':'dore.design-intelligence-exploration.v4','task_id':task_id,'surface_id':payload.get('surface_id'),
           'variants':result['variants'],'candidates':result['candidates'],'critic':result['critic'],'provider':result['provider'],'model':result['model'],
-          'canonical_workspace_mutated':False,'evidence_kind':'executable-sandbox-render+geometry',
+          'canonical_workspace_mutated':False,'evidence_kind':'real-browser-png+executable-sandbox+geometry',
         }
         recorded=plane.record_artifact(task_id,artifact,consumer=owner)
         if not recorded.get('ok'): raise RuntimeError('a2a_artifact_failed:'+str(recorded.get('code')))
         critic=result['critic']; candidates=result['candidates']
+        raster_ok=all((c.get('raster') or {}).get('real_browser_render') and (c.get('raster') or {}).get('sha256') and (c.get('raster') or {}).get('byte_size',0)>100 for c in candidates)
+        distinct=len({(c.get('raster') or {}).get('sha256') for c in candidates})==2
         verification={
-          'ok':len(candidates)==2 and all(c.get('render_sha256') and c.get('geometry') for c in candidates) and len(critic.get('votes') or [])==2,
-          'method':'dore.design-intelligence-a2a-worker.v3','blind_order_reversal':True,'judge_count':2,
-          'executable_candidate_artifacts':True,'canonical_workspace_mutated':False,
+          'ok':len(candidates)==2 and all(c.get('render_sha256') and c.get('geometry') for c in candidates) and raster_ok and distinct and len(critic.get('votes') or [])==2,
+          'method':'dore.design-intelligence-a2a-worker.v4','blind_order_reversal':True,'judge_count':2,
+          'executable_candidate_artifacts':True,'real_browser_raster_evidence':raster_ok,'distinct_candidate_rasters':distinct,'canonical_workspace_mutated':False,
         }
         verified=plane.verify(task_id,verification,consumer=owner)
         if not verified.get('ok'): raise RuntimeError('a2a_verification_failed')
