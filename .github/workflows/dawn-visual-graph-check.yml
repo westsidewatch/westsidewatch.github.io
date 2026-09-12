@@ -51,6 +51,7 @@ jobs:
           node scripts/dore/global-design-nourishment-selftest.mjs
           node scripts/dore/global-design-round2-selftest.mjs
           node scripts/dore/design-judgment-selftest.mjs
+          node scripts/dore/surface-context-ablation.mjs
       - name: Checkout authority corpus
         uses: actions/checkout@v4
         with:
@@ -75,6 +76,7 @@ jobs:
           node --check scripts/dore/content-boundary-selftest.mjs
           node --check scripts/dore/global-design-round2-corpus-run.mjs
           node --check scripts/dore/design-judgment-selftest.mjs
+          node --check scripts/dore/surface-context-ablation.mjs
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
