@@ -1,0 +1,16 @@
+import { chromium } from 'playwright';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({headless:true});
+const page=await browser.newPage();
+await page.goto('http://127.0.0.1:8000/static/multiwrite/');
+const result=await page.evaluate(async()=>{const {buildPublicationArtifacts}=await import('/static/multiwrite/book-artifact-build.mjs');const {materializePublicationArtifacts}=await import('/static/multiwrite/book-artifact-materializer.mjs');const coverSvg='<svg xmlns="http://www.w3.org/2000/svg" width="600" height="900"><rect width="100%" height="100%" fill="#eee8da"/><text x="60" y="160" font-size="52">Dore Test</text></svg>';const cover={id:'cover-test',data_url:'data:image/svg+xml;base64,'+btoa(coverSvg),mime_type:'image/svg+xml'};const bookModel={id:'artifact-e2e',workId:'work-e2e',editionId:'edition-e2e',publicationMetadata:{title:'Doré Artifact E2E',language:['en']},sections:[{id:'c1',title:'Chapter One',text:'A real publication artifact test.'}],design:{cover},artifacts:{},validation:{gates:[]}};const bookBuild={qaResult:{}};const set=buildPublicationArtifacts({bookModel,bookBuild,requireCover:true});const mat=await materializePublicationArtifacts(set);const head=async(blob,n)=>Array.from(new Uint8Array(await blob.slice(0,n).arrayBuffer()));return{status:mat.status,acceptance:mat.acceptance,epubHead:await head(mat.files.epub.blob,2),pdfHead:String.fromCharCode(...await head(mat.files.pdf.blob,5)),sizes:{epub:mat.files.epub.blob.size,pdf:mat.files.pdf.blob.size,web:mat.files.web.blob.size},cover:Boolean(mat.files.cover)}});
+await browser.close();
+assert.equal(result.status,'accepted');
+assert.deepEqual(result.epubHead,[80,75]);
+assert.equal(result.pdfHead,'%PDF-');
+assert.equal(result.acceptance.cover,true);
+assert.ok(result.sizes.epub>200);
+assert.ok(result.sizes.pdf>1000);
+assert.ok(result.sizes.web>100);
+assert.equal(result.cover,true);
+console.log(JSON.stringify({ok:true,...result}));
