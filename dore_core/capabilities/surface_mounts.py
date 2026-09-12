@@ -29,9 +29,9 @@ class CapabilityMount:
 class SurfaceMountRegistry:
     """Truth table for presentation equipment actually attached to Dawn.
 
-    A route name is never treated as proof of an installed capability.  Each
+    A route name is never treated as proof of an installed capability. Each
     adapter advances only through real evidence: reserved -> fixture-found ->
-    integration-proven -> mounted.  Only mounted equipment is executable.
+    integration-proven -> mounted. Only mounted equipment is executable.
     """
 
     _mounts = {
@@ -45,10 +45,11 @@ class SurfaceMountRegistry:
         ),
         "iiif-visual-surface": CapabilityMount(
             adapter="iiif-visual-surface",
-            state="fixture-found",
+            state="integration-proven",
             load="on-demand",
             scope="iiif",
-            evidence="data/dawn-capability-acceptance-corpus.json#loc-uta-evangeliary-iiif-source",
+            implementation="static/js/dawn-visual-viewer.js",
+            evidence="data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif",
         ),
         "pdfjs": CapabilityMount(
             adapter="pdfjs",
