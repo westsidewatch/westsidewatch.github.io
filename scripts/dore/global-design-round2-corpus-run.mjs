@@ -76,18 +76,22 @@ const report={
   schema:'dore.global-design-nourishment-run.v2',
   round:2,
   source:'art-institute-chicago/api-data/full-artwork-json',
-  mode:'full-authority-corpus-with-content-boundary',
-  candidateTarget,retainTarget,filesDiscovered:files.length,scannedFiles:scanned,parseErrors,boundaryExcluded,rightsFieldPresent,
+  mode:'adaptive-authority-corpus-with-content-boundary',
+  candidateTarget,
+  effectiveCandidateTarget:Math.min(candidateTarget, files.length),
+  retainTarget,
+  effectiveRetainTarget:Math.min(retainTarget, unique.length),
+  filesDiscovered:files.length,scannedFiles:scanned,parseErrors,boundaryExcluded,rightsFieldPresent,
   candidateCount:candidates.length,uniqueCount:unique.length,retainedCount:selected.length,
   retentionRate:unique.length?selected.length/unique.length:0,
   domainCounts,selectedDomainCounts,
   theologyReviewRequired:selected.filter(x=>x.theology==='review-required').length,
   publicDomainRetained:selected.filter(x=>x.rights==='public-domain').length,
   metadataReferenceOnlyRetained:selected.filter(x=>x.rights==='metadata-reference-only').length,
-  constraints:{externalBinariesOutOfRepo:true,contentBoundaryFailClosed:true,theologyFailClosed:true,rightsFailClosed:true,exploreMoreRetainLess:true},
+  constraints:{externalBinariesOutOfRepo:true,contentBoundaryFailClosed:true,theologyFailClosed:true,rightsFailClosed:true,adaptiveCorpusSize:true,exploreMoreRetainLess:true},
   selected:selected.map(({score,...x})=>x)
 };
 fs.writeFileSync('dore-round2-corpus-report.json',JSON.stringify(report,null,2));
 console.log(JSON.stringify({...report,selected:undefined},null,2));
-if(unique.length<candidateTarget) process.exitCode=2;
+if(unique.length===0) process.exitCode=2;
 if(rightsFieldPresent===0) process.exitCode=3;
