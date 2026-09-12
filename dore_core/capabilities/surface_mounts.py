@@ -4,7 +4,13 @@ from dataclasses import asdict, dataclass
 from typing import Literal
 
 
-MountState = Literal["mounted", "dormant", "unavailable"]
+MountState = Literal[
+    "reserved",
+    "fixture-found",
+    "integration-proven",
+    "mounted",
+    "unavailable",
+]
 
 
 @dataclass(frozen=True)
@@ -14,6 +20,7 @@ class CapabilityMount:
     load: str
     scope: str
     implementation: str | None = None
+    evidence: str | None = None
 
     def as_dict(self) -> dict:
         return asdict(self)
@@ -22,9 +29,9 @@ class CapabilityMount:
 class SurfaceMountRegistry:
     """Truth table for presentation equipment actually attached to Dawn.
 
-    Routing may name a useful adapter before that adapter is installed.  This
-    registry prevents a route suggestion from being mistaken for an executable
-    capability.  It contains no discovery, relevance, or admission policy.
+    A route name is never treated as proof of an installed capability.  Each
+    adapter advances only through real evidence: reserved -> fixture-found ->
+    integration-proven -> mounted.  Only mounted equipment is executable.
     """
 
     _mounts = {
@@ -34,42 +41,61 @@ class SurfaceMountRegistry:
             load="lazy",
             scope="project-gutenberg",
             implementation="static/dawn-library/dawn-web-surface.js",
+            evidence="data/dawn-capability-acceptance-corpus.json#gutenberg-josephus-antiquities",
         ),
         "iiif-visual-surface": CapabilityMount(
             adapter="iiif-visual-surface",
-            state="dormant",
+            state="fixture-found",
             load="on-demand",
             scope="iiif",
+            evidence="data/dawn-capability-acceptance-corpus.json#loc-uta-evangeliary-iiif-source",
         ),
         "pdfjs": CapabilityMount(
             adapter="pdfjs",
-            state="dormant",
+            state="fixture-found",
             load="on-demand",
             scope="pdf",
+            evidence="data/dawn-capability-acceptance-corpus.json#ccel-augustine-confessions-pdf",
         ),
         "book-reader": CapabilityMount(
             adapter="book-reader",
-            state="dormant",
+            state="reserved",
             load="on-demand",
-            scope="epub-mobi",
+            scope="scanned-book",
         ),
         "zotero-translate": CapabilityMount(
             adapter="zotero-translate",
-            state="dormant",
+            state="fixture-found",
             load="on-demand",
             scope="bibliographic-reconciliation",
+            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-work-edition-identity",
         ),
         "oembed-opengraph": CapabilityMount(
             adapter="oembed-opengraph",
-            state="dormant",
+            state="reserved",
             load="on-demand",
             scope="web-preview",
         ),
         "readability": CapabilityMount(
             adapter="readability",
-            state="dormant",
+            state="fixture-found",
             load="fallback-only",
             scope="article-reader",
+            evidence="data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source",
+        ),
+        "video-surface": CapabilityMount(
+            adapter="video-surface",
+            state="fixture-found",
+            load="on-demand",
+            scope="bible-film-video",
+            evidence="data/dawn-capability-acceptance-corpus.json#jesus-film-full-feature",
+        ),
+        "cover-resolve": CapabilityMount(
+            adapter="cover-resolve",
+            state="fixture-found",
+            load="on-demand",
+            scope="book-cover",
+            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-cover-augustine-fixture",
         ),
     }
 
