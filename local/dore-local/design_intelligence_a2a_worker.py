@@ -39,9 +39,15 @@ def _json_object(text: str) -> dict:
     return obj
 
 
-def _first_node(snapshot):
+def _fixture_node(snapshot):
     nodes = ((snapshot.get('page') or {}).get('nodes') or [])
     if not nodes: raise ValueError('sandbox_surface_has_no_nodes')
+    for node in nodes:
+        if not isinstance(node, dict):
+            continue
+        visible = ' '.join(str(node.get(k) or '').strip() for k in ('text','title','eyebrow','body')).strip()
+        if visible and node.get('type') in {'text','block'}:
+            return node
     return nodes[0]
 
 
@@ -60,7 +66,7 @@ def _rasterize_candidates(payload: dict, candidates: list[dict]) -> list[dict]:
 
 
 def _fixture(payload: dict) -> dict:
-    node = _first_node(payload['base_snapshot'])
+    node = _fixture_node(payload['base_snapshot'])
     nid = str(node.get('id'))
     x = float(node.get('x', 0) or 0); y = float(node.get('y', 0) or 0)
     size = float(node.get('size', 24) or 24)
