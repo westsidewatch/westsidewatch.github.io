@@ -1,0 +1,11 @@
+const INDEX_URL='/dawn-library/canonical-index.json';
+const SURFACE_ROOT='/dawn-library/surfaces/';
+let indexPromise=null;
+const forbidden=/wikisource|openlibrary\.org/i;
+
+async function json(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${url} ${r.status}`);return r.json();}
+export async function canonicalIndex(){if(!indexPromise)indexPromise=json(INDEX_URL).then(index=>{if(index?.identityAuthority!=='Dawn')throw new Error('Dawn canonical identity authority missing');if(index?.runtimePolicy?.surfaceOwnsIdentity!==false||index?.runtimePolicy?.openLibraryRuntime!==false||index?.runtimePolicy?.wikisource!=='forbidden')throw new Error('Dawn canonical runtime policy mismatch');const serialized=JSON.stringify(index.works||{});if(forbidden.test(serialized))throw new Error('forbidden external runtime dependency in canonical index');return index;});return indexPromise;}
+export async function canonicalSurface(name){const [index,surface]=await Promise.all([canonicalIndex(),json(`${SURFACE_ROOT}${name}.json`)]);if(surface?.schema!=='dawn.library.surface.v1')throw new Error('Dawn surface schema mismatch');const works=index.works||{};const resolve=ref=>{if(!ref?.workId||!works[ref.workId])throw new Error(`unresolved canonical Work ID: ${ref?.workId||'missing'}`);return {ref,work:works[ref.workId]};};if(Array.isArray(surface.shelves))return {...surface,shelves:surface.shelves.map(s=>({...s,items:(s.items||[]).map(resolve)}))};return {...surface,items:(surface.items||[]).map(resolve)};}
+export function canonicalCover(work={}){const pointer=work?.cover?.pointer||'';return pointer.startsWith('dawn://cover/')?null:null;}
+export function canonicalReadHref(work={}){const pointer=work?.readingPointer||'';if(!pointer||forbidden.test(pointer)||/^https?:\/\//i.test(pointer))return null;return pointer.startsWith('/')?pointer:null;}
+export function canonicalBook(pair={}){const work=pair.work||{},ref=pair.ref||{};return {id:work.workId,workId:work.workId,work:{title:work.title||'未命名',author:(work.authors||[]).join(', '),language:(work.languages||[])[0]||'',identifiers:work.authorityIds||{}},edition:work.edition||{},cover:work.cover||null,readingPointer:work.readingPointer||null,relations:ref.relations||[],canonical:true};}
