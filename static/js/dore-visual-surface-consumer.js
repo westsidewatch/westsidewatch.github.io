@@ -9,8 +9,19 @@
     products: 'shared',
   });
 
+  const STYLE_HREF = '/css/visual-surface-engine.css?v=20260911-cut09';
   const roleClass = role => role ? `dore-surface--role-${role}` : '';
   const motionClass = motion => motion ? `dore-surface--motion-${motion}` : '';
+
+  function ensurePresentationLayer(root = document) {
+    const head = root.head || document.head;
+    if (!head || head.querySelector('link[data-dore-surface-style]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = STYLE_HREF;
+    link.dataset.doreSurfaceStyle = CONTRACT.schema;
+    head.append(link);
+  }
 
   function clearClasses(element) {
     [...element.classList].forEach(name => {
@@ -20,6 +31,7 @@
 
   function apply(element, assignment = {}) {
     if (!element) return null;
+    ensurePresentationLayer(element.ownerDocument || document);
     const role = String(assignment.role || element.dataset.editorialRole || '').trim();
     const motion = String(assignment.motion || element.dataset.editorialMotion || '').trim();
     const surface = String(assignment.surface || element.dataset.editorialSurface || '').trim();
@@ -43,6 +55,7 @@
   }
 
   function consume(root = document) {
+    ensurePresentationLayer(root);
     root.querySelectorAll('[data-editorial-role]').forEach(element => apply(element));
   }
 
@@ -63,7 +76,7 @@
     return true;
   }
 
-  window.DoreVisualSurfaceConsumer = Object.freeze({ CONTRACT, apply, consume, attachOne });
+  window.DoreVisualSurfaceConsumer = Object.freeze({ CONTRACT, apply, consume, attachOne, ensurePresentationLayer });
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', () => consume(), { once: true });
   else consume();
 })();
