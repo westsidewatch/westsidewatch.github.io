@@ -1,0 +1,52 @@
+name: Dawn Readability
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/run_dawn_readability_probe.mjs'
+      - 'tests/test_dawn_readability_surface.py'
+      - 'static/dawn-library/surfaces/readability.html'
+      - 'static/js/dawn-readability-surface.js'
+      - 'data/dawn-capability-acceptance-corpus.json'
+      - '.github/workflows/dawn-readability.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  readability-integration-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Dawn Readability surface contract
+        run: python -m unittest tests.test_dawn_readability_surface -v
+      - name: Install Mozilla Readability acceptance dependencies
+        run: npm install --no-save --ignore-scripts @mozilla/readability jsdom
+      - name: Parse real BibleProject article with Mozilla Readability
+        run: node scripts/run_dawn_readability_probe.mjs
+      - name: Verify generated payload remains external and lightweight
+        run: |
+          node - <<'NODE'
+          const fs = require('fs');
+          const p = JSON.parse(fs.readFileSync('reports/DAWN-READABILITY.json', 'utf8'));
+          if (p.engine !== '@mozilla/readability') throw new Error('wrong engine');
+          if (p.external !== true || p.ownership !== 'external') throw new Error('ownership regression');
+          if (!p.sourceUrl.includes('bibleproject.com/articles/')) throw new Error('wrong source');
+          if (p.textLength < 1500) throw new Error('article extraction too short');
+          if ((p.excerpt || '').length > 180) throw new Error('preview payload too large');
+          NODE
+      - name: Preserve Readability evidence and generated preview payload
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-readability-evidence
+          path: |
+            reports/DAWN-READABILITY.json
+            static/dawn-library/readability/acceptance.json
