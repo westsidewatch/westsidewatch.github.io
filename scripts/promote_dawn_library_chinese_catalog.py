@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from dawn_resource_exclusions import excluded
 import hashlib,json,re,unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
@@ -13,10 +14,11 @@ def stable_id(title,url):
 
 def valid(x):
     r=x.get('rights',{})
-    return x.get('stage')=='verified' and '/' not in x.get('title','') and r.get('status')=='public-domain' and r.get('provenanceRequired') is True
+    return not excluded(x) and x.get('stage')=='verified' and '/' not in x.get('title','') and r.get('status')=='public-domain' and r.get('provenanceRequired') is True
 
 resolver=json.loads(RES.read_text())
 catalog=json.loads(CAT.read_text())
+catalog['items']=[x for x in catalog['items'] if not excluded(x)]
 # Repair IDs created by the first promoter version while preserving all existing non-Chinese IDs.
 for item in catalog.get('items',[]):
     if item.get('work',{}).get('language')=='zh':

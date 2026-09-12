@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from dawn_resource_exclusions import excluded
 import json,re,urllib.parse,urllib.request,xml.etree.ElementTree as ET
 from datetime import datetime,timezone
 from html import unescape
@@ -204,7 +205,7 @@ seen=set();deduped=[]
 for shelf in shelves:
     items=[]
     for item in shelf['items']:
-        if item['id'] in seen:continue
+        if excluded(item) or item['id'] in seen:continue
         seen.add(item['id']);items.append(item)
     shelf['items']=items
     if items:deduped.append(shelf)

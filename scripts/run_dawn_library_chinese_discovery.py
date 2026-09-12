@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from dawn_resource_exclusions import excluded
 import json,urllib.parse,urllib.request
 from datetime import datetime,timezone
 from pathlib import Path
@@ -14,7 +15,7 @@ def api(params):
     req=urllib.request.Request(API+'?'+urllib.parse.urlencode(params),headers={'User-Agent':'Dore-Dawn-Library/1.0 (+https://westsidewatch.github.io)'})
     with urllib.request.urlopen(req,timeout=25) as r:return json.loads(r.read())
 def add(title,pageid,origin,relations=None,priority='discovered'):
-    if not pageid:return False
+    if not pageid or excluded(title):return False
     items[str(pageid)]={'sourceId':str(pageid),'provider':'中文維基文庫','language':'zh','title':title,'canonicalTitle':title,'sourceUrl':'https://zh.wikisource.org/wiki/'+urllib.parse.quote(title.replace(' ','_')),'matchedBy':origin,'suggestedRelations':relations or [],'priority':priority,'stage':'discovered','discoveredAt':now,'rights':{'status':'unverified','declaredBy':'中文維基文庫','provenanceRequired':True},'contentDownloaded':False}
     return True
 errors=[]; golden_resolved=0
