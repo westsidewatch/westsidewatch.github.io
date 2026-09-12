@@ -16,69 +16,186 @@ concurrency:
 jobs:
   resident-e2e:
     runs-on: [self-hosted, macOS, dore]
-    timeout-minutes: 8
+    timeout-minutes: 15
     steps:
       - name: Checkout exact PR head
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Bounded resident inventory
+      - name: Ensure Firefox and web-ext prerequisites
         shell: bash
         run: |
-          set -u
+          set -euo pipefail
+          FIREFOX=''
+          for C in '/Applications/Firefox.app/Contents/MacOS/firefox' "$HOME/Applications/Firefox.app/Contents/MacOS/firefox"; do
+            if test -x "$C"; then FIREFOX="$C"; break; fi
+          done
+          if test -z "$FIREFOX"; then
+            BREW="$(command -v brew 2>/dev/null || true)"
+            if test -z "$BREW" -a -x /opt/homebrew/bin/brew; then BREW=/opt/homebrew/bin/brew; fi
+            if test -z "$BREW" -a -x /usr/local/bin/brew; then BREW=/usr/local/bin/brew; fi
+            test -n "$BREW" || { echo 'E2E_FAIL homebrew_missing_for_firefox_install' >&2; exit 1; }
+            mkdir -p "$HOME/Applications"
+            "$BREW" install --cask --appdir="$HOME/Applications" firefox
+            FIREFOX="$HOME/Applications/Firefox.app/Contents/MacOS/firefox"
+          fi
+          test -x "$FIREFOX" || { echo 'E2E_FAIL firefox_install_missing' >&2; exit 1; }
+          "$FIREFOX" --version
+          echo "FIREFOX=$FIREFOX" >> "$GITHUB_ENV"
+
+          if ! command -v npx >/dev/null 2>&1; then
+            BREW="$(command -v brew 2>/dev/null || true)"
+            test -n "$BREW" || { echo 'E2E_FAIL npx_and_brew_missing' >&2; exit 1; }
+            "$BREW" install node
+          fi
+          npx --yes web-ext@8.10.0 --version
+
+      - name: Strict Firefox Companion native model manuscript E2E
+        shell: bash
+        run: |
+          set -euo pipefail
+          TMP="$(mktemp -d "${RUNNER_TEMP:-/tmp}/pr662-e2e.XXXXXX")"
+          APP_ROOT="$HOME/Library/Application Support/DoreA2A"
+          NATIVE_MANIFEST="$HOME/Library/Application Support/Mozilla/NativeMessagingHosts/ca.dore.companion.json"
+          NATIVE_LAUNCHER="$APP_ROOT/dore-native-host"
+          EXT="$TMP/extension"
+          RESULT="$TMP/result.json"
+          MODEL_TRACE="$TMP/model-trace.json"
+          WEBEXT_LOG="$TMP/web-ext.log"
+          BACKUP="$TMP/dore-native-host.backup"
+          CAP_PID=''; PROXY_PID=''; WEBEXT_PID=''
+
+          cleanup() {
+            set +e
+            test -n "$WEBEXT_PID" && kill "$WEBEXT_PID" 2>/dev/null || true
+            test -n "$CAP_PID" && kill "$CAP_PID" 2>/dev/null || true
+            test -n "$PROXY_PID" && kill "$PROXY_PID" 2>/dev/null || true
+            if test -f "$BACKUP"; then cp "$BACKUP" "$NATIVE_LAUNCHER"; chmod 755 "$NATIVE_LAUNCHER"; fi
+            rm -rf "$TMP"
+          }
+          trap cleanup EXIT
+
           echo "E2E_SHA=$(git rev-parse HEAD)"
           echo "E2E_HOST=$(hostname)"
-          sw_vers
+          test -f "$NATIVE_MANIFEST" || { echo 'E2E_FAIL native_manifest_missing' >&2; exit 1; }
+          python3 -c 'import json,sys; m=json.load(open(sys.argv[1])); assert m["name"]=="ca.dore.companion"; assert m["allowed_extensions"]==["dore-companion@westsidewatch.ca"]; print("E2E_NATIVE_MANIFEST=PASS")' "$NATIVE_MANIFEST"
+          test -x "$NATIVE_LAUNCHER" || { echo 'E2E_FAIL native_launcher_missing' >&2; exit 1; }
+          cp "$NATIVE_LAUNCHER" "$BACKUP"
 
-          echo '--- Firefox candidates ---'
-          for APP in '/Applications/Firefox.app' '/Applications/Firefox Developer Edition.app' '/Applications/Firefox Nightly.app' "$HOME/Applications/Firefox.app"; do
-            test -d "$APP" && echo "FOUND_APP=$APP"
-          done
-          command -v mdfind >/dev/null && mdfind "kMDItemCFBundleIdentifier == 'org.mozilla.firefox'" | head -n 20 || true
+          curl -fsS http://127.0.0.1:11434/api/tags > "$TMP/tags.json"
+          python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); names={m.get("name") for m in d.get("models",[])}; assert "gemma4:e4b" in names, names; print("E2E_MODEL_PRESENT=gemma4:e4b")' "$TMP/tags.json"
 
-          echo '--- Firefox profile ---'
-          FFROOT="$HOME/Library/Application Support/Firefox"
-          if test -d "$FFROOT"; then
-            ls -la "$FFROOT" || true
-            test -f "$FFROOT/profiles.ini" && { echo '--- profiles.ini ---'; cat "$FFROOT/profiles.ini"; }
-            for P in "$FFROOT"/Profiles/*; do
-              test -d "$P" || continue
-              echo "PROFILE=$P"
-              if test -f "$P/extensions.json"; then
-                python3 -c 'import json,sys; d=json.load(open(sys.argv[1],encoding="utf-8")); [print("ACTIVE_EXTENSION",a.get("id"),a.get("path"),a.get("type")) for a in d.get("addons",[]) if a.get("active")]' "$P/extensions.json"
-              fi
-            done
-          else
-            echo 'NO_FIREFOX_PROFILE_ROOT'
-          fi
+          cat > "$TMP/ollama_proxy.py" <<'PY'
+          import json,sys,urllib.request
+          from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
+          trace=sys.argv[1]
+          class H(BaseHTTPRequestHandler):
+              def do_POST(self):
+                  n=int(self.headers.get('Content-Length','0')); raw=self.rfile.read(n)
+                  body=json.loads(raw.decode('utf-8')); open(trace,'w',encoding='utf-8').write(json.dumps({'path':self.path,'model':body.get('model')},ensure_ascii=False))
+                  req=urllib.request.Request('http://127.0.0.1:11434'+self.path,data=raw,headers={'Content-Type':'application/json'},method='POST')
+                  with urllib.request.urlopen(req,timeout=360) as r: out=r.read(); code=r.status
+                  self.send_response(code); self.send_header('Content-Type','application/json'); self.send_header('Content-Length',str(len(out))); self.end_headers(); self.wfile.write(out)
+              def log_message(self,*args): pass
+          ThreadingHTTPServer(('127.0.0.1',11435),H).serve_forever()
+          PY
+          python3 "$TMP/ollama_proxy.py" "$MODEL_TRACE" >"$TMP/proxy.log" 2>&1 & PROXY_PID=$!
 
-          echo '--- Native Messaging manifests ---'
-          for D in "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts" '/Library/Application Support/Mozilla/NativeMessagingHosts'; do
-            echo "NATIVE_DIR=$D"
-            if test -d "$D"; then
-              ls -la "$D"
-              for M in "$D"/*.json; do
-                test -f "$M" || continue
-                echo "MANIFEST=$M"
-                python3 -c 'import json,sys; d=json.load(open(sys.argv[1],encoding="utf-8")); print({k:d.get(k) for k in ("name","description","path","type","allowed_extensions","allowed_origins")})' "$M"
-              done
+          cat > "$TMP/capture.py" <<'PY'
+          import sys
+          from http.server import ThreadingHTTPServer,BaseHTTPRequestHandler
+          out=sys.argv[1]
+          class H(BaseHTTPRequestHandler):
+              def do_POST(self):
+                  n=int(self.headers.get('Content-Length','0')); raw=self.rfile.read(n); open(out,'wb').write(raw)
+                  self.send_response(200); self.send_header('Access-Control-Allow-Origin','*'); self.end_headers(); self.wfile.write(b'ok')
+              def do_OPTIONS(self):
+                  self.send_response(204); self.send_header('Access-Control-Allow-Origin','*'); self.send_header('Access-Control-Allow-Methods','POST, OPTIONS'); self.send_header('Access-Control-Allow-Headers','Content-Type'); self.end_headers()
+              def log_message(self,*args): pass
+          ThreadingHTTPServer(('127.0.0.1',8765),H).serve_forever()
+          PY
+          python3 "$TMP/capture.py" "$RESULT" >"$TMP/capture.log" 2>&1 & CAP_PID=$!
+
+          cat > "$NATIVE_LAUNCHER" <<EOF
+          #!/bin/bash
+          set -euo pipefail
+          export DORE_REPO_ROOT="$GITHUB_WORKSPACE"
+          export DORE_LOCAL_MODEL="gemma4:e4b"
+          export OLLAMA_BASE_URL="http://127.0.0.1:11435"
+          exec "$(command -v python3)" "$GITHUB_WORKSPACE/local/dore-local/native_host.py"
+          EOF
+          chmod 755 "$NATIVE_LAUNCHER"
+
+          mkdir -p "$EXT"
+          ditto "$GITHUB_WORKSPACE/local/dore-companion-extension" "$EXT"
+          python3 - "$EXT/native_transport.js" <<'PY'
+          import sys
+          p=sys.argv[1]; s=open(p,encoding='utf-8').read(); old='return sendVia4312(payload);'; assert old in s; s=s.replace(old,'throw nativeError;'); open(p,'w',encoding='utf-8').write(s); print('E2E_FALLBACK_DISABLED=PASS')
+          PY
+
+          python3 - "$GITHUB_WORKSPACE/static/multiwrite/books/kingdom-language" "$EXT/e2e_probe.js" "$EXT/manifest.json" <<'PY'
+          import json,sys,hashlib
+          from pathlib import Path
+          root=Path(sys.argv[1]); probe=Path(sys.argv[2]); mp=Path(sys.argv[3])
+          source=json.loads((root/'manifest.json').read_text(encoding='utf-8'))
+          sections=[]
+          for i,item in enumerate(source.get('structure') or []):
+              if item.get('file'):
+                  text=(root/item['file']).read_text(encoding='utf-8')
+              else:
+                  text='\n\n'.join((root/f).read_text(encoding='utf-8') for f in (item.get('files') or []))
+              sections.append({'id':item.get('id') or f'section-{i+1}','index':i,'role':item.get('role') or 'chapter','title':item.get('title') or '','text':text})
+          args={'source':source,'sections':sections}
+          raw=json.dumps(args,ensure_ascii=False,separators=(',',':'))
+          print('E2E_MANUSCRIPT_TITLE='+source.get('title',''))
+          print('E2E_MANUSCRIPT_SECTIONS='+str(len(sections)))
+          print('E2E_MANUSCRIPT_PAYLOAD_SHA256='+hashlib.sha256(raw.encode()).hexdigest())
+          js='const E2E_ARGS='+raw+';\n(async()=>{let payload;try{payload=await browser.runtime.sendMessage({type:"dore.site-capability",capability:"publishing.book-intelligence",args:E2E_ARGS,caller_product:"multiwrite"});}catch(e){payload={ok:false,error:String(e&&e.message||e)}};await fetch("http://127.0.0.1:8765/result",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});})();\n'
+          probe.write_text(js,encoding='utf-8')
+          m=json.loads(mp.read_text(encoding='utf-8'))
+          m.setdefault('permissions',[]).append('http://127.0.0.1:8765/*')
+          m['background']['scripts'].append('e2e_probe.js')
+          mp.write_text(json.dumps(m,ensure_ascii=False,indent=2),encoding='utf-8')
+          PY
+
+          export MOZ_HEADLESS=1
+          npx --yes web-ext@8.10.0 run --source-dir "$EXT" --firefox "$FIREFOX" --no-reload >"$WEBEXT_LOG" 2>&1 & WEBEXT_PID=$!
+
+          for i in $(seq 1 180); do
+            test -s "$RESULT" && break
+            if ! kill -0 "$WEBEXT_PID" 2>/dev/null; then
+              echo 'E2E_FAIL firefox_webext_exited_before_result' >&2
+              cat "$WEBEXT_LOG" >&2 || true
+              exit 1
             fi
+            sleep 2
           done
+          test -s "$RESULT" || { echo 'E2E_FAIL no_companion_result' >&2; cat "$WEBEXT_LOG" >&2 || true; exit 1; }
+          test -s "$MODEL_TRACE" || { echo 'E2E_FAIL no_ollama_model_trace' >&2; cat "$TMP/proxy.log" >&2 || true; exit 1; }
 
-          echo '--- Ollama ---'
-          OLLAMA=''
-          for O in "$(command -v ollama 2>/dev/null || true)" /opt/homebrew/bin/ollama /usr/local/bin/ollama; do
-            test -n "$O" -a -x "$O" && { OLLAMA="$O"; break; }
-          done
-          if test -n "$OLLAMA"; then
-            echo "OLLAMA=$OLLAMA"
-            "$OLLAMA" list || true
-          else
-            echo 'NO_OLLAMA_BINARY'
-          fi
-
-          echo '--- Checked-out repo candidates ---'
-          git ls-files | grep -Ei '(firefox|companion|native.?messag|extension|webext|manifest|book.?intelligence|book.?compile|manuscript|e2e|acceptance)' | head -n 300 || true
-          git grep -Il -E 'connectNative|sendNativeMessage|NativeMessaging|allowed_extensions|gemma4:e4b|publishing\.book-intelligence|publishing\.book-compile' -- ':!*.min.js' | head -n 300 || true
-          echo 'E2E_INVENTORY_COMPLETE'
+          python3 - "$MODEL_TRACE" "$RESULT" <<'PY'
+          import json,sys
+          trace=json.load(open(sys.argv[1],encoding='utf-8')); assert trace.get('path')=='/api/chat', trace; assert trace.get('model')=='gemma4:e4b', trace
+          outer=json.load(open(sys.argv[2],encoding='utf-8'))
+          assert outer.get('ok') is True, outer
+          assert outer.get('stage')=='site-capability', outer
+          result=outer.get('result') or {}
+          assert result.get('ok') is True, result
+          assert result.get('status')=='completed', result
+          assert result.get('capability')=='publishing.book-intelligence', result
+          report=result.get('report') or {}
+          assert report.get('schema')=='dore.book-intelligence-report.v2', report
+          runtime=report.get('runtime') or {}
+          assert runtime.get('semantic') is True and runtime.get('degraded') is False, runtime
+          authority=report.get('authority') or {}
+          assert authority.get('mayRewriteThesis') is False, authority
+          print('E2E_FIREFOX_COMPANION=PASS')
+          print('E2E_NATIVE_MESSAGING=PASS')
+          print('E2E_MODEL_BACKED=gemma4:e4b')
+          print('E2E_REAL_MANUSCRIPT=PASS')
+          print('E2E_SEMANTIC_DEGRADED=false')
+          print('E2E_REPORT_CATEGORY='+str(report.get('category') or ''))
+          print('E2E_REPORT_CONFIDENCE='+str(report.get('confidence')))
+          print('PR662_RESIDENT_E2E=PASS')
+          PY
