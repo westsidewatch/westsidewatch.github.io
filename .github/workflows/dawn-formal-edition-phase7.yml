@@ -22,7 +22,7 @@ env:
 
 jobs:
   brand-integration-gate:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
