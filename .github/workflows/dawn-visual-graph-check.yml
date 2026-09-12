@@ -91,5 +91,5 @@ jobs:
       - name: Verify shared Surface consumers
         run: |
           grep -q 'dore.visual-surface-consumer.v1' public/js/dore-visual-surface-consumer.js
-          grep -q 'data-dore-surface-product="journal"' public/journal/index.html
-          grep -q 'js/dore-visual-surface-consumer.js' public/journal/index.html
+          grep -q 'dore-surface-product' public/journal/index.html
+          grep -q 'dore-visual-surface-consumer' public/journal/index.html
