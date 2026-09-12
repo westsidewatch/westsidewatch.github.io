@@ -118,17 +118,30 @@ jobs:
       - name: Persist canonical runtime substrate on main
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
+          set -euo pipefail
           git config user.name 'Dawn Canonical CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add static/dawn-library/canonical-index.json \
-                  static/dawn-library/surfaces/dawn-storefront.json \
-                  static/dawn-library/surfaces/multiwrite-biblical-world.json
-          if git diff --cached --quiet; then
-            exit 0
-          fi
-          git commit -m 'chore(dawn): persist Step 7 canonical substrate [skip ci]'
+
+          persist_dir="$(mktemp -d)"
+          cp static/dawn-library/canonical-index.json "$persist_dir/canonical-index.json"
+          cp static/dawn-library/surfaces/dawn-storefront.json "$persist_dir/dawn-storefront.json"
+          cp static/dawn-library/surfaces/multiwrite-biblical-world.json "$persist_dir/multiwrite-biblical-world.json"
+
           for attempt in 1 2 3 4; do
-            if git push; then exit 0; fi
-            git pull --rebase origin main
+            git fetch origin main
+            git reset --hard origin/main
+            cp "$persist_dir/canonical-index.json" static/dawn-library/canonical-index.json
+            cp "$persist_dir/dawn-storefront.json" static/dawn-library/surfaces/dawn-storefront.json
+            cp "$persist_dir/multiwrite-biblical-world.json" static/dawn-library/surfaces/multiwrite-biblical-world.json
+            git add static/dawn-library/canonical-index.json \
+                    static/dawn-library/surfaces/dawn-storefront.json \
+                    static/dawn-library/surfaces/multiwrite-biblical-world.json
+            if git diff --cached --quiet; then
+              exit 0
+            fi
+            git commit -m 'chore(dawn): persist Step 7 canonical substrate [skip ci]'
+            if git push origin HEAD:main; then
+              exit 0
+            fi
           done
           exit 1
