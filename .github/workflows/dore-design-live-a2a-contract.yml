@@ -1,0 +1,29 @@
+name: Doré Design Real Model A2A Contract
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-design/design_live_acceptance_contract.py'
+      - 'local/dore-local/design_live_acceptance_action.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-local/github_issue_bridge.py'
+      - '.github/workflows/dore-design-live-a2a-contract.yml'
+  workflow_dispatch:
+
+jobs:
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax
+        run: |
+          python -m py_compile local/dore-local/design_live_acceptance_action.py
+          python -m py_compile dore-design/design_live_acceptance_contract.py
+          python -m py_compile local/dore-local/native_host.py
+          python -m py_compile local/dore-local/github_issue_bridge.py
+      - name: Live acceptance wiring contract
+        run: python dore-design/design_live_acceptance_contract.py
