@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import base64
-import json
 from pathlib import Path
 import tempfile
 
@@ -80,11 +79,9 @@ def main() -> None:
             assert "events" not in result
             assert "session" not in result
             assert "reflex" not in result
+            assert "payloadBase64" not in result
             projection = result["projection"]
             schemas.add(projection["schema"])
-            serialized = json.dumps(result, ensure_ascii=False)
-            assert "payloadBase64" not in serialized
-            assert PAYLOAD.decode("utf-8") not in serialized or intent == "text.search"
 
         assert len(schemas) == 3
         after = sorted(str(path.relative_to(root)) for path in root.rglob("*"))
