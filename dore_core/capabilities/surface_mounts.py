@@ -27,81 +27,18 @@ class CapabilityMount:
 
 
 class SurfaceMountRegistry:
-    """Truth table for presentation equipment actually attached to Dawn.
-
-    A route name is never treated as proof of an installed capability. Each
-    adapter advances only through real evidence: reserved -> fixture-found ->
-    integration-proven -> mounted. Only mounted equipment is executable.
-    """
+    """Truth table for presentation equipment actually attached to Dawn."""
 
     _mounts = {
-        "bibliographic-page": CapabilityMount(
-            adapter="bibliographic-page",
-            state="mounted",
-            load="lazy",
-            scope="project-gutenberg",
-            implementation="static/dawn-library/dawn-web-surface.js",
-            evidence="data/dawn-capability-acceptance-corpus.json#gutenberg-josephus-antiquities",
-        ),
-        "iiif-visual-surface": CapabilityMount(
-            adapter="iiif-visual-surface",
-            state="integration-proven",
-            load="on-demand",
-            scope="iiif",
-            implementation="static/js/dawn-visual-viewer.js",
-            evidence="data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif",
-        ),
-        "pdfjs": CapabilityMount(
-            adapter="pdfjs",
-            state="integration-proven",
-            load="on-demand",
-            scope="pdf",
-            implementation="static/js/dawn-pdf-surface.js",
-            evidence="data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf",
-        ),
-        "book-reader": CapabilityMount(
-            adapter="book-reader",
-            state="fixture-found",
-            load="on-demand",
-            scope="internet-archive-scan",
-            implementation="static/js/dawn-bookreader-surface.js",
-            evidence="data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader",
-        ),
-        "zotero-translate": CapabilityMount(
-            adapter="zotero-translate",
-            state="fixture-found",
-            load="on-demand",
-            scope="bibliographic-reconciliation",
-            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-work-edition-identity",
-        ),
-        "oembed-opengraph": CapabilityMount(
-            adapter="oembed-opengraph",
-            state="reserved",
-            load="on-demand",
-            scope="web-preview",
-        ),
-        "readability": CapabilityMount(
-            adapter="readability",
-            state="fixture-found",
-            load="fallback-only",
-            scope="article-reader",
-            evidence="data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source",
-        ),
-        "video-surface": CapabilityMount(
-            adapter="video-surface",
-            state="fixture-found",
-            load="on-demand",
-            scope="bible-film-video",
-            evidence="data/dawn-capability-acceptance-corpus.json#jesus-film-full-feature",
-        ),
-        "cover-resolve": CapabilityMount(
-            adapter="cover-resolve",
-            state="fixture-found",
-            load="on-demand",
-            scope="book-cover",
-            implementation="dore_core/capabilities/cover_resolver.py",
-            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-josephus-1900-cover",
-        ),
+        "bibliographic-page": CapabilityMount("bibliographic-page", "mounted", "lazy", "project-gutenberg", "static/dawn-library/dawn-web-surface.js", "data/dawn-capability-acceptance-corpus.json#gutenberg-josephus-antiquities"),
+        "iiif-visual-surface": CapabilityMount("iiif-visual-surface", "integration-proven", "on-demand", "iiif", "static/js/dawn-visual-viewer.js", "data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif"),
+        "pdfjs": CapabilityMount("pdfjs", "integration-proven", "on-demand", "pdf", "static/js/dawn-pdf-surface.js", "data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf"),
+        "book-reader": CapabilityMount("book-reader", "fixture-found", "on-demand", "internet-archive-scan", "static/js/dawn-bookreader-surface.js", "data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader"),
+        "zotero-translate": CapabilityMount("zotero-translate", "fixture-found", "on-demand", "bibliographic-reconciliation", None, "data/dawn-capability-acceptance-corpus.json#openlibrary-work-edition-identity"),
+        "oembed-opengraph": CapabilityMount("oembed-opengraph", "reserved", "on-demand", "web-preview"),
+        "readability": CapabilityMount("readability", "fixture-found", "fallback-only", "article-reader", None, "data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source"),
+        "video-surface": CapabilityMount("video-surface", "fixture-found", "on-demand", "bible-film-video", None, "data/dawn-capability-acceptance-corpus.json#jesus-film-full-feature"),
+        "cover-resolve": CapabilityMount("cover-resolve", "integration-proven", "on-demand", "book-cover", "dore_core/capabilities/cover_resolver.py", "data/dawn-capability-acceptance-corpus.json#openlibrary-josephus-1900-cover"),
     }
 
     def get(self, adapter: str | None) -> CapabilityMount | None:
