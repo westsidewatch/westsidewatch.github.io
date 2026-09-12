@@ -1,0 +1,48 @@
+{
+  "schema": "dore.book-publishing-capability.v1",
+  "owner": "dore-core",
+  "capability": "publishing.book-compile",
+  "consumer": "multiwrite",
+  "purpose": "Compile a Multiwrite manuscript into a governed Doré BookModel, EditorialReport and BookBuild before publication artifacts are emitted.",
+  "input": {
+    "required": ["source", "sections"],
+    "optional": ["bookIntent", "designDirection", "sourceRevision"]
+  },
+  "pipeline": [
+    "book-intent",
+    "book-model",
+    "editorial-gate",
+    "theology-gate",
+    "design-direction",
+    "publication-build",
+    "publishing-qa",
+    "book-build"
+  ],
+  "outputs": ["BookIntent", "BookModel", "EditorialReport", "BookBuild"],
+  "artifact_targets": ["web", "epub", "pdf"],
+  "policy": {
+    "max_auto_repair_attempts": 3,
+    "editorial_action_classes": ["AUTO_FIX", "SUGGESTED_COMPLETION", "AUTHORIAL_DECISION_REQUIRED"],
+    "human_authority_for": ["substantive-authorial-change", "rights-uncertain-publication", "irreversible-public-action"],
+    "silent_editorial_actions": ["mechanical-repair"],
+    "generated_completion_must_remain_proposed": true,
+    "forbidden": [
+      "unapproved-substantive-rewrite",
+      "artifact-first-canonical-state",
+      "provider-specific-product-contract",
+      "internalProvenance-in-publicationMetadata"
+    ]
+  },
+  "editorial_gate": {
+    "report_schema": "dore.editorial-report.v1",
+    "blocked_when": "hard structural or metadata errors prevent a valid book build",
+    "review_required_when": "authorial judgment is required but a working artifact may still be exported",
+    "ready_when": "no hard blocker or unresolved authorial-decision issue is detected"
+  },
+  "publication_boundary": {
+    "public": "publicationMetadata",
+    "private": "internalProvenance",
+    "rule": "Public artifact projections must be allowlisted; never spread BookModel wholesale into publication metadata or manifests."
+  },
+  "status": "editorial-gate-v1"
+}

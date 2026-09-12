@@ -2,6 +2,7 @@ from __future__ import annotations
 import json, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]; EXT=ROOT/'local'/'dore-companion-extension'; LOCAL=ROOT/'local'/'dore-local'
+# Book Intelligence is an explicitly declared site capability, not an open-ended bridge.
 
 class CompanionNativeContractTest(unittest.TestCase):
  def test_native_manifest_contract_matches_native_host(self):
@@ -22,10 +23,12 @@ class CompanionNativeContractTest(unittest.TestCase):
   s=(EXT/'content_script.js').read_text();self.assertIn('function conversationId()',s);self.assertIn('conversation_id:conversationId()',s);self.assertIn('DORÉ_LOCAL_RESULT',s);self.assertIn('TERMINAL_HOLD_MS=30000',s);self.assertIn('new WeakSet()',s)
  def test_assistant_directive_allowlist_is_bounded(self):
   s=(EXT/'background.js').read_text();self.assertIn('ASSISTANT_DIRECTIVE_ALLOWLIST',s);self.assertIn('"knowledge.substrates.install"',s);self.assertIn('"system.self-maintain"',s);self.assertNotIn('capability.startsWith("knowledge.")',s);self.assertNotIn('capability.startsWith("system.")',s)
- def test_site_capability_bridge_is_bounded_to_fuzzy_search(self):
+ def test_site_capability_bridge_is_bounded_to_declared_site_capabilities(self):
   bg=(EXT/'background.js').read_text();bridge=(EXT/'site_bridge.js').read_text()
-  self.assertIn('SITE_CAPABILITY_ALLOWLIST=new Set(["context.fuzzy-search"])',bg);self.assertIn('message.type==="dore.site-capability"',bg);self.assertIn('caller_product:',bg)
-  self.assertIn("const SITE_CAPABILITY='context.fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search-result'",bridge);self.assertIn("limit:5",bridge)
+  self.assertIn('SITE_CAPABILITY_ALLOWLIST=new Set(["context.fuzzy-search","publishing.book-intelligence"])',bg);self.assertIn('message.type==="dore.site-capability"',bg);self.assertIn('caller_product:',bg)
+  self.assertIn("const FUZZY_CAPABILITY='context.fuzzy-search'",bridge);self.assertIn("const BOOK_CAPABILITY='publishing.book-intelligence'",bridge)
+  self.assertIn("'dore:context-fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search-result'",bridge);self.assertIn("limit:5",bridge)
+  self.assertIn("'dore:book-intelligence'",bridge);self.assertIn("'dore:book-intelligence-result'",bridge);self.assertIn("await send(BOOK_CAPABILITY,args,'multiwrite')",bridge)
   for forbidden in ('QMD','Concord','SWORD','OpenAI'):
    self.assertNotIn(forbidden,bridge)
  def test_installer_free_runtime(self):
