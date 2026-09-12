@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """Live-probe Dawn external pointers without mutating library state.
 
-The large discovery corpus measures routing resilience.  The small capability
+The large discovery corpus measures routing resilience. The small capability
 acceptance corpus proves that every named hook is tied to a real-world resource
-before it can advance toward mounted status.
+before it can advance toward mounted status. Transient network errors receive
+one bounded retry; persistent HTTP/content mismatches remain visible failures.
 """
 from __future__ import annotations
 
 import json
 import socket
 import ssl
+import time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -24,6 +26,8 @@ OUT = ROOT / 'reports/DAWN-URL-SURFACE-LIVE.json'
 TIMEOUT = 10
 MAX_WORKERS = 12
 MAX_READ = 131072
+MAX_ATTEMPTS = 2
+RETRY_STATUSES = {'timeout', 'network-error', 'tls-error', 'error'}
 USER_AGENT = 'DawnLibrarySurfaceProbe/1.0 (+https://westsidewatch.github.io/)'
 RENDERABLE_TYPES = (
     'text/html', 'application/xhtml+xml', 'application/pdf', 'application/epub+zip',
@@ -48,7 +52,7 @@ def classify_error(exc: Exception) -> str:
     return 'error'
 
 
-def probe(item: dict) -> dict:
+def probe_once(item: dict) -> dict:
     url = (item.get('sourceUrl') or item.get('url') or '').strip()
     base = {
         'sourceId': item.get('sourceId') or item.get('id'),
@@ -65,7 +69,7 @@ def probe(item: dict) -> dict:
         method='GET',
         headers={
             'User-Agent': USER_AGENT,
-            'Accept': 'text/html,application/xhtml+xml,application/pdf,application/json,image/*;q=0.8,*/*;q=0.5',
+            'Accept': 'text/html,application/xhtml+xml,application/pdf,application/json,application/ld+json,image/*;q=0.8,*/*;q=0.5',
             'Range': f'bytes=0-{MAX_READ - 1}',
         },
     )
@@ -108,6 +112,18 @@ def probe(item: dict) -> dict:
         }
 
 
+def probe(item: dict) -> dict:
+    last = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        last = probe_once(item)
+        last['attempts'] = attempt
+        if last.get('status') not in RETRY_STATUSES:
+            return last
+        if attempt < MAX_ATTEMPTS:
+            time.sleep(0.25 * attempt)
+    return last or {'status': 'error', 'attempts': 0}
+
+
 def probe_many(items: list[dict]) -> list[dict]:
     results = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
@@ -144,6 +160,7 @@ def main() -> int:
             'timeoutSeconds': TIMEOUT,
             'maxWorkers': MAX_WORKERS,
             'maxBytesPerPointer': MAX_READ,
+            'maxAttempts': MAX_ATTEMPTS,
             'mutation': False,
         },
         'results': {
@@ -151,12 +168,14 @@ def main() -> int:
             'liveOrFallback': live,
             'liveCoverage': round(live / total, 4) if total else 0,
             'frameRestricted': sum(1 for r in results if r.get('frameRestricted')),
+            'retried': sum(1 for r in results if r.get('attempts', 1) > 1),
         },
         'capabilityAcceptance': {
             'source': str(ACCEPTANCE_CORPUS.relative_to(ROOT)),
             'total': len(fixture_results),
             'counts': dict(fixture_counts),
             'mountedFailures': len(mounted_failures),
+            'retried': sum(1 for r in fixture_results if r.get('attempts', 1) > 1),
             'items': fixture_results,
         },
         'acceptance': {
@@ -176,6 +195,7 @@ def main() -> int:
             'total': report['capabilityAcceptance']['total'],
             'counts': report['capabilityAcceptance']['counts'],
             'mountedFailures': report['capabilityAcceptance']['mountedFailures'],
+            'retried': report['capabilityAcceptance']['retried'],
         },
     }, ensure_ascii=False, indent=2))
 
