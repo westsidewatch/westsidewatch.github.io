@@ -80,6 +80,7 @@ def probe_once(item: dict) -> dict:
             content_type = (response.headers.get('Content-Type') or '').split(';', 1)[0].strip().lower()
             xfo = response.headers.get('X-Frame-Options')
             csp = response.headers.get('Content-Security-Policy')
+            acao = response.headers.get('Access-Control-Allow-Origin')
             sample = response.read(MAX_READ)
             renderable = any(content_type.startswith(t) for t in RENDERABLE_TYPES)
             expected = (item.get('expectContentType') or '').lower()
@@ -103,6 +104,8 @@ def probe_once(item: dict) -> dict:
                 'frameRestricted': bool(xfo or (csp and 'frame-ancestors' in csp.lower())),
                 'xFrameOptions': xfo,
                 'hasFrameAncestorsCsp': bool(csp and 'frame-ancestors' in csp.lower()),
+                'accessControlAllowOrigin': acao,
+                'browserCrossOriginReadable': bool(acao == '*' or (acao and 'westsidewatch.github.io' in acao)),
             }
     except Exception as exc:
         return {
