@@ -1,0 +1,31 @@
+name: DORE Reflex v0
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/reflex_*.py'
+      - '.github/workflows/dore-reflex-v0.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/reflex_*.py'
+      - '.github/workflows/dore-reflex-v0.yml'
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Reflex syntax
+        run: python -m py_compile local/dore-local/reflex_contracts.py local/dore-local/reflex_router.py local/dore-local/reflex_projections.py local/dore-local/reflex_acceptance.py
+      - name: Reflex acceptance
+        run: python local/dore-local/reflex_acceptance.py
+      - name: No persisted Reflex substrate
+        run: |
+          if find . -type f \( -name '*.reflex' -o -name 'reflex-*.json' -o -name 'reflex_*.json' \) -print | grep -q .; then
+            echo 'Reflex persistence artifact detected'
+            exit 1
+          fi
+          echo 'PASS: no persisted Reflex substrate artifacts'
