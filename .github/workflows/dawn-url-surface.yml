@@ -6,13 +6,17 @@ on:
       - 'dore_core/capabilities/url_surface.py'
       - 'dore_core/capabilities/surface_mounts.py'
       - 'data/dawn-capability-acceptance-corpus.json'
+      - 'data/visual_graph.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'tests/test_dawn_url_surface.py'
+      - 'tests/test_dawn_iiif_integration.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
+      - 'layouts/visual/single.html'
       - 'layouts/website/dawn-library.html'
+      - 'static/js/dawn-visual-viewer.js'
       - 'static/js/dawn-web-surface.js'
       - 'static/css/dawn-web-surface.css'
       - 'static/dawn-library/biblical-world/catalog.json'
@@ -39,6 +43,8 @@ jobs:
           node-version: '22'
       - name: Run URL surface unit, mount truth and 900+ corpus tests
         run: python -m unittest tests.test_dawn_url_surface -v
+      - name: Prove real Princeton IIIF resource reaches Dawn VisualSurface contract
+        run: python -m unittest tests.test_dawn_iiif_integration -v
       - name: Verify mounted public Web Surface contract
         run: node --test tests/dawn-web-surface-contract.test.mjs
       - name: Emit deterministic routing benchmark
