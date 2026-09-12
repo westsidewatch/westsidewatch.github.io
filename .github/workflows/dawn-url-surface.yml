@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'dore_core/capabilities/url_surface.py'
+      - 'dore_core/capabilities/surface_mounts.py'
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
@@ -34,7 +35,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run URL surface unit and 900+ corpus tests
+      - name: Run URL surface unit, mount truth and 900+ corpus tests
         run: python -m unittest tests.test_dawn_url_surface -v
       - name: Verify mounted public Web Surface contract
         run: node --test tests/dawn-web-surface-contract.test.mjs
