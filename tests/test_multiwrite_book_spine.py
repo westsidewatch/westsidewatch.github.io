@@ -34,7 +34,7 @@ def test_internal_provenance_is_excluded_from_public_projection():
 
 
 def test_existing_make_book_export_is_preflighted_by_book_spine():
-    assert 'book-compile-bridge.mjs' in BOOK_HTML
+    assert 'book-compile-bridge.mjs?v=20260912-editorial1' in BOOK_HTML
     assert "document.querySelectorAll('[data-export]')" in BRIDGE
     assert 'await compileCurrentBook()' in BRIDGE
     assert 'return await original.call(button, event)' in BRIDGE
