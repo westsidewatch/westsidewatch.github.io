@@ -1,5 +1,5 @@
 {{ $orientation := .orientation | default "portrait" }}
-<a class="index-card index-card--{{ $orientation }}" href="{{ .href }}"{{ with .ariaLabel }} aria-label="{{ . }}"{{ end }}>
+<a class="index-card index-card--{{ $orientation }}" href="{{ .href }}"{{ with .ariaLabel }} aria-label="{{ . }}"{{ end }}{{ with .surfaceProduct }} data-dore-surface-product="{{ . }}"{{ end }}{{ with .editorialRole }} data-editorial-role="{{ . }}"{{ end }}{{ with .editorialWeight }} data-editorial-weight="{{ . }}"{{ end }}{{ with .editorialMotion }} data-editorial-motion="{{ . }}"{{ end }}{{ with .editorialSurface }} data-editorial-surface="{{ . }}"{{ end }}{{ with .surfacePreset }} data-surface-preset="{{ . }}"{{ end }}>
   <span class="index-card__folio">{{ .number }} <i aria-hidden="true">/</i> {{ .section }}</span>
   <span class="index-card__body">
     <strong>{{ .title }}</strong>
