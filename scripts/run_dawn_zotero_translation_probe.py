@@ -9,7 +9,8 @@ from dore_core.capabilities.zotero_reconciliation import ZoteroTranslationAdapte
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'reports/DAWN-ZOTERO-TRANSLATION.json'
-ISBN = '0385472579'
+# Saint Augustine, Confessions, Oxford World's Classics, Henry Chadwick.
+ISBN = '0192833723'
 
 
 def main() -> int:
@@ -44,9 +45,11 @@ def main() -> int:
     if not report['success']:
         return 1
     identity = report['identity'] or {}
-    if 'augustine' not in ' '.join(identity.get('creators') or []).lower():
+    creators = ' '.join(identity.get('creators') or []).lower()
+    title = str(identity.get('title') or '').lower()
+    if 'augustine' not in creators:
         return 1
-    if 'confession' not in str(identity.get('title') or '').lower():
+    if 'confession' not in title:
         return 1
     return 0
 
