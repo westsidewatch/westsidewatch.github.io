@@ -1,0 +1,18 @@
+{
+  "schema":"dore.mail.v2",
+  "message_id":"chatgpt-c01-p2-snaplock-verify-0607",
+  "sender":"chatgpt",
+  "recipient":"dore",
+  "kind":"local_exec",
+  "subject":"Verify Candidate 01 Page 2 snap lock",
+  "priority":"critical",
+  "related_goal":"dore-design-candidate01-page2-motion",
+  "requires_reply":true,
+  "body":"Verify be44165551d2a997ea6989eb180ff787d25ea68b. PASS only if Python compiles and Page 2 contains 0.82/0.94/1 precision keyframes while preserving the right-side bbox fix.",
+  "commands":[
+    {"argv":["git","fetch","origin","dore/candidate01-visual-graph-experiment"],"cwd":".","timeout":120},
+    {"argv":["git","checkout","dore/candidate01-visual-graph-experiment"],"cwd":".","timeout":120},
+    {"argv":["python3","-m","py_compile","dore-design/candidate01_visual_graph_experiment.py"],"cwd":".","timeout":120},
+    {"argv":["git","show","--oneline","be44165551d2a997ea6989eb180ff787d25ea68b"],"cwd":".","timeout":120}
+  ]
+}
