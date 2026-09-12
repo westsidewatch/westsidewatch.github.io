@@ -4,15 +4,20 @@ from __future__ import annotations
 import copy,json,os,sys
 from pathlib import Path
 HERE=Path(__file__).resolve().parent
-REPO_ROOT=Path(os.environ.get('DORE_REPO_ROOT') or HERE.parents[1]).resolve()
-DESIGN_ROOT=REPO_ROOT/'dore-design'
+REPO_ROOT=Path(os.environ.get('DORE_REPO_ROOT') or HERE.parents[1]).resolve();DESIGN_ROOT=REPO_ROOT/'dore-design'
 if str(DESIGN_ROOT) not in sys.path:sys.path.insert(0,str(DESIGN_ROOT))
 if str(HERE) not in sys.path:sys.path.insert(0,str(HERE))
 import design_intelligence_a2a_worker_v5 as legacy
 import design_rejection_enforcement as enforcement
 PATCH_SCHEMA='dore.design.candidate-patch.v1';MAX_SCHEMA_RETRIES=3
-def _guardrails(payload):
- return [g for g in ((payload.get('preference_pack') or {}).get('rejection_guardrails') or []) if isinstance(g,dict) and g.get('failure_domain')]
+OP_SCHEMA={'oneOf':[
+ {'type':'object','additionalProperties':False,'required':['op','node_id','x','y'],'properties':{'op':{'const':'move'},'node_id':{'type':'string'},'x':{'type':'number'},'y':{'type':'number'}}},
+ {'type':'object','additionalProperties':False,'required':['op','node_id','w','h'],'properties':{'op':{'const':'resize'},'node_id':{'type':'string'},'w':{'type':'number','exclusiveMinimum':0},'h':{'type':'number','exclusiveMinimum':0}}},
+ {'type':'object','additionalProperties':False,'required':['op','node_id','size'],'properties':{'op':{'const':'font_size'},'node_id':{'type':'string'},'size':{'type':'number','minimum':6,'maximum':320}}},
+ {'type':'object','additionalProperties':False,'required':['op','node_id','value'],'properties':{'op':{'const':'text_align'},'node_id':{'type':'string'},'value':{'enum':['left','center','right']}}}
+]}
+GENERATION_SCHEMA={'type':'object','additionalProperties':False,'required':['variants'],'properties':{'variants':{'type':'array','minItems':2,'maxItems':2,'items':{'type':'object','additionalProperties':False,'required':['id','direction','patch','risk_domains'],'properties':{'id':{'enum':['A','B']},'direction':{'type':'string'},'patch':{'type':'object','additionalProperties':False,'required':['schema','ops'],'properties':{'schema':{'const':PATCH_SCHEMA},'ops':{'type':'array','minItems':1,'maxItems':24,'items':OP_SCHEMA}}},'risk_domains':{'type':'array','items':{'type':'string'}}}}}}}
+def _guardrails(payload):return [g for g in ((payload.get('preference_pack') or {}).get('rejection_guardrails') or []) if isinstance(g,dict) and g.get('failure_domain')]
 def _canonical_patch(value):
  if not isinstance(value,dict):raise ValueError('candidate_patch_object_required')
  patch=copy.deepcopy(value);schema=str(patch.get('schema') or '').strip()
@@ -27,15 +32,15 @@ def _validate_variants(generated):
  for v in variants:
   patch=_canonical_patch(v.get('patch'));vv=dict(v);vv['patch']=patch;vv['risk_domains']=[str(x) for x in (v.get('risk_domains') or [])];normalized.append(vv)
  return normalized
-def _generate(ollama,payload,base,nodes,attempt):
+def _generate(ollama,payload,base,nodes,attempt,structured_json=None):
  guardrails=_guardrails(payload)
- system=('You are Doré Design Core. Generate exactly two materially different, brand-faithful executable patches. Return JSON only with variants [A,B]. Each variant must contain id, direction, patch, and risk_domains. risk_domains must truthfully list any known failure-domain risk the proposal may reproduce. patch MUST be an object exactly shaped as {"schema":"dore.design.candidate-patch.v1","ops":[...]}. Every op MUST use one of these exact names only: move, resize, font_size, text_align. move requires node_id,x,y. resize requires node_id,w,h. font_size requires node_id,size. text_align requires node_id,value where value is left, center, or right. Never invent another operation. The rejection guardrails are bounded negative precedent: do not repeat them. Do not choose a winner.')
- base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes}
- last_error=''
+ system=('You are Doré Design Core. Generate exactly two materially different, brand-faithful executable patches. Return JSON only with variants [A,B]. Each variant must contain id, direction, patch, and risk_domains. risk_domains must truthfully list any known failure-domain risk the proposal may reproduce. Every patch operation must obey the supplied executable patch schema. The rejection guardrails are bounded negative precedent: do not repeat them. Do not choose a winner.')
+ base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes,'patch_schema':PATCH_SCHEMA,'allowed_ops':['move','resize','font_size','text_align']};last_error=''
  for schema_try in range(1,MAX_SCHEMA_RETRIES+1):
   request=dict(base_user);request['schema_attempt']=schema_try
-  if last_error:request['previous_output_rejected']=last_error;request['correction']='Return a fresh A/B pair using only the exact allowed patch DSL. Do not reuse the invalid operation.'
-  generated=legacy._json_object(ollama([{'role':'system','content':system},{'role':'user','content':json.dumps(request,ensure_ascii=False)}]))
+  if last_error:request['previous_output_rejected']=last_error;request['correction']='Return a fresh A/B pair using only the exact executable patch schema.'
+  messages=[{'role':'system','content':system},{'role':'user','content':json.dumps(request,ensure_ascii=False)}]
+  raw=structured_json(messages,GENERATION_SCHEMA) if structured_json else ollama(messages);generated=legacy._json_object(raw)
   try:
    variants=_validate_variants(generated);candidates=[]
    for v in variants:
