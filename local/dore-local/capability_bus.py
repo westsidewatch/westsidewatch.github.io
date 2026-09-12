@@ -39,7 +39,6 @@ def _load_sibling(name: str):
 
 REGISTRY = _load_sibling("capability_registry")
 BOOK_INTELLIGENCE = _load_sibling("book_intelligence_capability")
-REFLEX = _load_sibling("reflex_capability")
 
 NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
     "image.generate": {
@@ -205,6 +204,24 @@ def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
     return BOOK_INTELLIGENCE.execute(args, infer)
 
 
+def _reflex_project(args: dict[str, Any]) -> dict[str, Any]:
+    """Load Reflex only when requested, keeping unrelated Core paths lightweight."""
+    import sys
+
+    local_path = str(HERE)
+    inserted = local_path not in sys.path
+    if inserted:
+        sys.path.insert(0, local_path)
+    try:
+        return _load_sibling("reflex_capability").execute(args)
+    finally:
+        if inserted:
+            try:
+                sys.path.remove(local_path)
+            except ValueError:
+                pass
+
+
 def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
     explicit = str(args.get("host") or "").strip().lower()
     if explicit:
@@ -334,7 +351,7 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
         if capability == "image.generate":
             return _image_generate(args, caller_product)
         if capability == "reflex.project":
-            result = REFLEX.execute(args)
+            result = _reflex_project(args)
         elif capability == "publishing.book-intelligence":
             result = _book_intelligence(args)
         elif capability == "bible.query-plan":
