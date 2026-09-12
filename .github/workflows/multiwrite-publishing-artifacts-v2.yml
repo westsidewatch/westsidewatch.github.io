@@ -1,0 +1,42 @@
+name: Multiwrite Publishing Artifacts v2
+
+on:
+  push:
+    paths:
+      - 'static/multiwrite/book-artifact-*.mjs'
+      - 'static/multiwrite/book-cover-client.mjs'
+      - 'static/multiwrite/book-publishing-autopilot.mjs'
+      - 'static/multiwrite/book-compile-bridge.mjs'
+      - 'local/dore-companion-extension/**'
+      - 'tests/multiwrite-publishing-artifacts-browser-e2e.mjs'
+      - '.github/workflows/multiwrite-publishing-artifacts-v2.yml'
+  pull_request:
+    paths:
+      - 'static/multiwrite/book-artifact-*.mjs'
+      - 'static/multiwrite/book-cover-client.mjs'
+      - 'static/multiwrite/book-publishing-autopilot.mjs'
+      - 'static/multiwrite/book-compile-bridge.mjs'
+      - 'local/dore-companion-extension/**'
+      - 'tests/multiwrite-publishing-artifacts-browser-e2e.mjs'
+      - '.github/workflows/multiwrite-publishing-artifacts-v2.yml'
+
+jobs:
+  artifact-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install browser harness
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Start static product surface
+        run: |
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/multiwrite-http.log 2>&1 &
+          echo $! >/tmp/multiwrite-http.pid
+          for i in {1..30}; do curl -fsS http://127.0.0.1:8000/static/multiwrite/ >/dev/null && break; sleep 1; done
+      - name: Materialize and verify EPUB PDF Web
+        run: node tests/multiwrite-publishing-artifacts-browser-e2e.mjs
