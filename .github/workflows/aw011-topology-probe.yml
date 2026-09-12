@@ -30,9 +30,12 @@ jobs:
           mkdir -p experiments/aw-011/assets build/topology-probe build/aw011-provider
           curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
           curl --fail --location --retry 3 "https://raw.githubusercontent.com/vt-vl-lab/3d-photo-inpainting/master/networks.py" -o build/aw011-provider/networks.py
-          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/edge-model.pth" -o build/aw011-provider/edge-model.pth
-          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/depth-model.pth" -o build/aw011-provider/depth-model.pth
-          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/color-model.pth" -o build/aw011-provider/color-model.pth
+          curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/edge-model.pth?download=true" -o build/aw011-provider/edge-model.pth
+          curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/depth-model.pth?download=true" -o build/aw011-provider/depth-model.pth
+          curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/color-model.pth?download=true" -o build/aw011-provider/color-model.pth
+          test "$(stat -c%s build/aw011-provider/edge-model.pth)" -gt 40000000
+          test "$(stat -c%s build/aw011-provider/depth-model.pth)" -gt 180000000
+          test "$(stat -c%s build/aw011-provider/color-model.pth)" -gt 180000000
       - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision matplotlib "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
       - run: python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
       - name: Run learned edge-depth-color hidden completion probe
