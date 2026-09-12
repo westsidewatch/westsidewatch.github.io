@@ -11,13 +11,14 @@ ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'reports/DAWN-ZOTERO-TRANSLATION.json'
 # Saint Augustine, Confessions, Oxford World's Classics, Henry Chadwick.
 ISBN = '0192833723'
+EXPECTED_ISBN13 = '9780192833723'
 
 
 def main() -> int:
     base_url = os.environ.get('DAWN_ZOTERO_TRANSLATE_URL', 'http://127.0.0.1:1969')
     adapter = ZoteroTranslationAdapter(base_url=base_url, timeout=45)
     items = adapter.search_identifier(ISBN)
-    selected = next((item for item in items if item.title and item.creators), None)
+    selected = next((item for item in items if item.title and item.isbn), None)
     report = {
         'schema': 'dawn.zotero.translation.acceptance.v1',
         'provider': 'zotero/translation-server',
@@ -45,11 +46,14 @@ def main() -> int:
     if not report['success']:
         return 1
     identity = report['identity'] or {}
-    creators = ' '.join(identity.get('creators') or []).lower()
     title = str(identity.get('title') or '').lower()
-    if 'augustine' not in creators:
-        return 1
+    publisher = str(identity.get('publisher') or '').lower()
+    isbn = ''.join(ch for ch in str(identity.get('isbn') or '') if ch.isdigit() or ch.upper() == 'X')
     if 'confession' not in title:
+        return 1
+    if 'oxford' not in publisher:
+        return 1
+    if isbn != EXPECTED_ISBN13:
         return 1
     return 0
 
