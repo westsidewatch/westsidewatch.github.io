@@ -1,4 +1,5 @@
-import { buildBookIntent, buildBookModel, buildBookBuild, publicationProjection } from './book-model.mjs';
+import { buildBookModel, buildBookBuild, publicationProjection } from './book-model.mjs';
+import { analyzeBookIntelligence, bookIntentFromIntelligence } from './book-intelligence.mjs';
 import { analyzeBookForPublication, applyMechanicalEditorialFixes } from './book-editor.mjs';
 
 const DB_NAME = 'multiwrite-v1';
@@ -94,7 +95,8 @@ export async function compileCurrentBook() {
   if (!structure.length) throw new Error('這本書還沒有可成書的章節。');
 
   const sections = await collectSections(structure, local);
-  const intent = buildBookIntent(source);
+  const intelligenceReport = analyzeBookIntelligence({ source, sections });
+  const intent = bookIntentFromIntelligence(intelligenceReport);
   let bookModel = buildBookModel({
     source: { ...source, id: source.id || bookId },
     sections,
@@ -103,6 +105,7 @@ export async function compileCurrentBook() {
       sourceSurface: 'multiwrite',
       sourceBookId: bookId,
       sourceKind: local ? 'indexeddb' : 'static-manifest',
+      intelligenceSchema: intelligenceReport.schema,
       compiledAt: new Date().toISOString()
     }
   });
@@ -112,6 +115,12 @@ export async function compileCurrentBook() {
   bookModel = mechanical.bookModel;
   bookModel.validation = {
     ...bookModel.validation,
+    intelligence: {
+      schema: intelligenceReport.schema,
+      chapterCount: intelligenceReport.structure.chapterCount,
+      scriptureDensity: intelligenceReport.intent.scriptureDensity,
+      thesisSource: intelligenceReport.authority.thesisSource
+    },
     editorial: {
       schema: editorialReport.schema,
       readiness: editorialReport.readiness,
@@ -126,21 +135,23 @@ export async function compileCurrentBook() {
   });
   bookBuild.qaResult = {
     ...bookBuild.qaResult,
+    bookIntelligence: 'pass',
     editorialReadiness: editorialReport.readiness,
     editorialIssueCount: editorialReport.counts.issues,
     authorialDecisionCount: editorialReport.counts.authorialDecisions
   };
 
-  window.__doreBookCompile = { bookModel, bookBuild, editorialReport };
+  window.__doreBookCompile = { bookModel, bookBuild, intelligenceReport, editorialReport };
   window.dispatchEvent(new CustomEvent('multiwrite:book-model-ready', {
     detail: {
       publication: publicationProjection(bookModel),
       build: bookBuild,
+      intelligence: intelligenceReport,
       editorial: editorialReport
     }
   }));
 
-  return { bookModel, bookBuild, editorialReport };
+  return { bookModel, bookBuild, intelligenceReport, editorialReport };
 }
 
 function setState(message) {
@@ -156,15 +167,16 @@ function wrapExistingExportHandlers() {
     button.dataset.bookSpine = '1';
     button.onclick = async event => {
       try {
-        setState('建立 Book Model…');
-        const { editorialReport } = await compileCurrentBook();
+        setState('理解整部作品…');
+        const { intelligenceReport, editorialReport } = await compileCurrentBook();
         if (editorialReport.readiness === 'blocked') {
           setState(`成書暫停：編輯檢查有 ${editorialReport.counts.issues} 項問題`);
           return undefined;
         }
+        const understood = intelligenceReport.structure.chapterCount;
         setState(editorialReport.readiness === 'review-required'
-          ? `編輯檢查完成 · ${editorialReport.counts.authorialDecisions} 項需作者決定`
-          : 'Book Model 與編輯檢查已完成');
+          ? `已理解 ${understood} 章 · ${editorialReport.counts.authorialDecisions} 項需作者決定`
+          : `已理解 ${understood} 章 · 成書前置檢查完成`);
         return await original.call(button, event);
       } catch (error) {
         setState(`成書前置檢查失敗：${error.message}`);
