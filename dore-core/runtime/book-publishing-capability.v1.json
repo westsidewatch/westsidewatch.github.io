@@ -1,0 +1,40 @@
+{
+  "schema": "dore.book-publishing-capability.v1",
+  "owner": "dore-core",
+  "capability": "publishing.book-compile",
+  "consumer": "multiwrite",
+  "purpose": "Compile a Multiwrite manuscript into a governed Doré BookModel and BookBuild before any publication artifact is emitted.",
+  "input": {
+    "required": ["source", "sections"],
+    "optional": ["bookIntent", "editorialReport", "designDirection", "sourceRevision"]
+  },
+  "pipeline": [
+    "book-intent",
+    "book-model",
+    "editorial-gate",
+    "theology-gate",
+    "design-direction",
+    "publication-build",
+    "publishing-qa",
+    "book-build"
+  ],
+  "outputs": ["BookIntent", "BookModel", "BookBuild"],
+  "artifact_targets": ["web", "epub", "pdf"],
+  "policy": {
+    "max_auto_repair_attempts": 3,
+    "human_authority_for": ["doctrinal-change", "rights-uncertain-publication", "irreversible-public-action"],
+    "silent_editorial_actions": ["mechanical-repair"],
+    "forbidden": [
+      "silent-doctrinal-rewrite",
+      "artifact-first-canonical-state",
+      "provider-specific-product-contract",
+      "internalProvenance-in-publicationMetadata"
+    ]
+  },
+  "publication_boundary": {
+    "public": "publicationMetadata",
+    "private": "internalProvenance",
+    "rule": "Public artifact projections must be allowlisted; never spread BookModel wholesale into publication metadata or manifests."
+  },
+  "status": "spine-v1"
+}
