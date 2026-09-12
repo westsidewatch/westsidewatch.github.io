@@ -3,12 +3,12 @@
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
-PROTOCOL="dore.a2a/1";SERVICE="dore-a2a-native";HOST_NAME="ca.dore.companion";LEGACY_CAPABILITY="design2.stage2.acceptance";MAX_MESSAGE_BYTES=1024*1024;CARRIER_ID_KEY="__dore_transport_id"
+PROTOCOL="dore.a2a/1";SERVICE="dore-a2a-native";HOST_NAME="ca.dore.companion";LEGACY_CAPABILITY="design2.stage2.acceptance";MAX_MESSAGE_BYTES=64*1024*1024;CARRIER_ID_KEY="__dore_transport_id"
 ROOT=Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2]).expanduser().resolve()
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");TRAINING=_load("theology_training_action");BUS=_load("capability_bus")
+ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");TRAINING=_load("theology_training_action");DAWN=_load("dawn_publication_action");BUS=_load("capability_bus")
 def _read_exact(stream,size):
  b=b""
  while len(b)<size:
@@ -32,22 +32,17 @@ def _with_id(req,res):
  return res
 def health_payload():
  production=[x["id"] for x in BUS.discover(PRODUCTION) if x.get("callable")]
- maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()))
- theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()))
- training=sorted(getattr(TRAINING,"CAPABILITIES",set()))
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology+training))}
+ maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()));theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()));training=sorted(getattr(TRAINING,"CAPABILITIES",set()));dawn=sorted(getattr(DAWN,"CAPABILITIES",set()))
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology+training+dawn))}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "")
- if cap in getattr(MAINTENANCE,"CAPABILITIES",set()):
-  return _with_id(payload,MAINTENANCE.execute(cap,payload.get("args") or {}))
- if cap in getattr(THEOLOGY,"CAPABILITIES",set()):
-  return _with_id(payload,THEOLOGY.execute(cap,payload.get("args") or {}))
- if cap in getattr(TRAINING,"CAPABILITIES",set()):
-  return _with_id(payload,TRAINING.execute(cap,payload.get("args") or {}))
+ if cap in getattr(MAINTENANCE,"CAPABILITIES",set()):return _with_id(payload,MAINTENANCE.execute(cap,payload.get("args") or {}))
+ if cap in getattr(THEOLOGY,"CAPABILITIES",set()):return _with_id(payload,THEOLOGY.execute(cap,payload.get("args") or {}))
+ if cap in getattr(TRAINING,"CAPABILITIES",set()):return _with_id(payload,TRAINING.execute(cap,payload.get("args") or {}))
+ if cap in getattr(DAWN,"CAPABILITIES",set()):return _with_id(payload,DAWN.execute(cap,payload.get("args") or {}))
  descriptor=BUS.resolve(cap,PRODUCTION) if cap else None
- if descriptor and descriptor.get("callable"):
-  return _with_id(payload,BUS.call(cap,payload.get("args") or {},PRODUCTION,caller_product=payload.get("caller_product")))
+ if descriptor and descriptor.get("callable"):return _with_id(payload,BUS.call(cap,payload.get("args") or {},PRODUCTION,caller_product=payload.get("caller_product")))
  try:typed=ADAPTER.handle_companion_payload(payload)
  except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}})
  if typed is not None:return _with_id(payload,typed)
