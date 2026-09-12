@@ -14,23 +14,26 @@ try {
     fetch('../../surfaces/multiwrite-biblical-world.json').then(r => r.json()),
     fetch('../contexts/second-temple.v1.json').then(r => r.json())
   ]);
+  if (canonical.schema !== 'dawn.library.canonical-index.v1' || canonical.identityAuthority !== 'Dawn') throw new Error('canonical authority');
+  const canonicalIds = new Set(Object.keys(canonical.works || {}));
   const catalog = buildCatalog({ canonical, surface });
-  if (catalog.length < 10000) throw new Error(`catalog ${catalog.length}`);
-  if (!catalog.every(row => row.workId?.startsWith('dawn:'))) throw new Error('non-canonical work id');
+  if (catalog.length !== canonical.workCount || catalog.length < 10000) throw new Error(`catalog ${catalog.length}/${canonical.workCount}`);
+  if (!catalog.every(row => canonicalIds.has(row.workId))) throw new Error('non-canonical work id');
+  if (!catalog.some(row => row.workId.startsWith('dawn:')) || !catalog.some(row => !row.workId.startsWith('dawn:'))) throw new Error('mixed canonical ids');
 
   let context = structuredClone(fallback);
   const first = discoverCatalogWindow({ catalog, context, windowSize: 72 });
-  if (first.items.length !== 72 || !first.nextCursor || first.total < 10000) throw new Error('first window');
+  if (first.items.length !== 72 || !first.nextCursor || first.total !== canonical.workCount) throw new Error('first window');
   context = updateDiscoveryContext(context, { cursor: first.nextCursor });
   const second = discoverCatalogWindow({ catalog, context, windowSize: 72 });
-  if (second.offset !== 72 || second.items.length !== 72) throw new Error('second window');
+  if (second.offset !== 72 || second.items.length !== 72 || second.items.some(row => !canonicalIds.has(row.workId))) throw new Error('second window');
 
   const focusId = first.items[0].workId;
   context = focusContext(context, focusId);
   context = toggleCompareWork(context, focusId);
   context = toggleCompareWork(context, first.items[1].workId);
   const compared = compareSelection({ catalog, context });
-  if (compared.length !== 2 || compared.some(row => !row.workId.startsWith('dawn:'))) throw new Error('compare');
+  if (compared.length !== 2 || compared.some(row => !canonicalIds.has(row.workId))) throw new Error('compare');
 
   const restored = restoreContext(serializeContext(context));
   if (restored.focusedWork !== focusId || restored.facets.compareWorks.length !== 2) throw new Error('context restore');
