@@ -20,4 +20,7 @@ const rights={}; for(const item of x.items) rights[item.rights]=(rights[item.rig
 for(const [k,v] of Object.entries(x.curriculum.rights_counts)) if(rights[k]!==v) throw new Error(`rights count ${k}`);
 const review=x.items.filter(i=>i.theology==='review-required').length;
 if(review!==x.curriculum.theology_review_required) throw new Error('theology review count');
-console.log(JSON.stringify({status:'PASS',items:x.items.length,sources:Object.keys(counts).length,domains:new Set(x.items.map(i=>i.domain)).size,rights,theologyReviewRequired:review,excluded:x.excluded.length}));
+const domains=new Set(x.items.map(i=>i.domain));
+if(Object.keys(counts).length<3) throw new Error('source diversity');
+if(domains.size<12) throw new Error('domain diversity');
+console.log(JSON.stringify({status:'PASS',items:x.items.length,sources:Object.keys(counts).length,domains:domains.size,rights,theologyReviewRequired:review,excluded:x.excluded.length}));
