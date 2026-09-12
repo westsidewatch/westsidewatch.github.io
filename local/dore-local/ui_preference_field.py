@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
-import json
 import math
 import sqlite3
 from collections import defaultdict
@@ -9,6 +8,7 @@ from dataclasses import dataclass
 from typing import Iterable
 
 from ui_taste_memory import ensure_schema
+from ui_rejection_guardrails import bounded_rejection_guardrails
 
 
 @dataclass(frozen=True)
@@ -59,11 +59,6 @@ def fit_pairwise_strengths(
     learning_rate: float = 0.08,
     l2: float = 0.02,
 ) -> dict:
-    """Fit a tiny Bradley-Terry-like field over context-near pairwise evidence.
-
-    This is deliberately dependency-free. The canonical evidence remains the ledger;
-    returned strengths are a disposable derived view.
-    """
     rows = _rows(conn, context)
     names = sorted({r['candidate_a'] for r in rows} | {r['candidate_b'] for r in rows})
     beta = {name: 0.0 for name in names}
@@ -185,7 +180,6 @@ def next_comparison_candidates(
     candidates: Iterable[str] | None = None,
     limit: int = 5,
 ) -> list[dict]:
-    """Return high-information pairs: close, under-observed, or contradiction-prone."""
     field = fit_pairwise_strengths(conn, context=context)
     ranking = field['ranking']
     allowed = set(candidates or [r['candidate'] for r in ranking])
@@ -215,7 +209,6 @@ def bounded_preference_pack(
     context: PreferenceContext,
     max_claims: int = 3,
 ) -> dict:
-    """Compress design history into a very small runtime hint pack."""
     field = fit_pairwise_strengths(conn, context=context)
     ranking = field['ranking']
     claims = []
@@ -234,10 +227,17 @@ def bounded_preference_pack(
         warning = 'context contains contradictory preference evidence; do not promote a global rule'
     elif not claims:
         warning = 'insufficient stable precedent; explore rather than imitate history'
+    negative = bounded_rejection_guardrails(
+        conn,
+        surface_family=context.surface_family,
+        limit=3,
+    )
     return {
-        'policy': 'bounded-preference-pack-v1',
+        'policy': 'bounded-preference-pack-v2',
         'context': context.__dict__,
         'claims': claims,
+        'rejection_guardrails': negative['guardrails'],
+        'negative_precedent_policy': negative['policy'],
         'uncertainty_warning': warning,
         'comparison_count': field['comparison_count'],
         'authority': 'advisory-not-canonical',
