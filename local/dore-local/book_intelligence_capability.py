@@ -55,7 +55,9 @@ def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
     payload = _prompt_payload(args)
     system = (
         "You are Doré Core Book Intelligence. Analyze the supplied book as an editor, not as a replacement author. "
-        "Return JSON only. Preserve any declared thesis as author authority. Do not rewrite doctrine or substantive authorial claims. "
+        "Return exactly one JSON object and nothing else: the first output character must be { and the final output character must be }. "
+        "Do not use markdown fences, commentary, prefixes, suffixes, or prose outside the JSON object. "
+        "Preserve any declared thesis as author authority. Do not rewrite doctrine or substantive authorial claims. "
         "Infer category, audience, reading mode, chapter roles, argument relations, structural gaps and visual tone hints. "
         "Use only the supplied manuscript evidence."
     )
@@ -77,13 +79,50 @@ def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
+def _extract_json_object(text: str) -> str:
+    """Return the first balanced top-level JSON object from a model response.
+
+    Local models occasionally wrap otherwise valid JSON in a short preface or a
+    markdown fence. Admission remains strict JSON: this only removes transport-level
+    decoration and never repairs or invents fields.
+    """
+    start = text.find("{")
+    if start < 0:
+        raise ValueError("semantic report did not contain a JSON object")
+    depth = 0
+    in_string = False
+    escaped = False
+    for index in range(start, len(text)):
+        char = text[index]
+        if in_string:
+            if escaped:
+                escaped = False
+            elif char == "\\":
+                escaped = True
+            elif char == '"':
+                in_string = False
+            continue
+        if char == '"':
+            in_string = True
+        elif char == "{":
+            depth += 1
+        elif char == "}":
+            depth -= 1
+            if depth == 0:
+                return text[start:index + 1]
+    raise ValueError("semantic report contained an unterminated JSON object")
+
+
 def _parse(raw: str) -> dict[str, Any]:
     text = _text(raw)
     if text.startswith("```"):
         text = text.strip("`")
         if text.lower().startswith("json"):
             text = text[4:].lstrip()
-    value = json.loads(text)
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError:
+        value = json.loads(_extract_json_object(text))
     if not isinstance(value, dict):
         raise ValueError("semantic report must be a JSON object")
     return value
