@@ -17,6 +17,21 @@ except ImportError:  # Optional capability: Reflex must remain lightweight witho
     StreamInfo = None  # type: ignore[assignment]
 
 
+_TABLE_SEPARATOR = re.compile(r"^\s*\|?(?:\s*:?-{3,}:?\s*\|)+\s*:?-{3,}:?\s*\|?\s*$")
+
+
+def _markdown_cells(line: str) -> list[str] | None:
+    stripped = line.strip()
+    if "|" not in stripped:
+        return None
+    if stripped.startswith("|"):
+        stripped = stripped[1:]
+    if stripped.endswith("|"):
+        stripped = stripped[:-1]
+    cells = [cell.strip() for cell in stripped.split("|")]
+    return cells if len(cells) >= 2 else None
+
+
 class TextAdapter:
     name = "text"
 
@@ -35,19 +50,47 @@ class TextAdapter:
             text = re.sub(r"<script\b[^>]*>.*?</script>", "", text, flags=re.I | re.S)
             text = re.sub(r"<style\b[^>]*>.*?</style>", "", text, flags=re.I | re.S)
             text = unescape(re.sub(r"<[^>]+>", "\n", text))
+
         yield ReflexEvent("document.start", meta={"mime": source.mime})
+        lines = text.splitlines(keepends=True)
         offset = 0
-        for raw in text.splitlines(keepends=True):
+        index = 0
+        while index < len(lines):
+            raw = lines[index]
             line = raw.strip()
             start, end = offset, offset + len(raw)
             offset = end
             if not line:
+                index += 1
                 continue
+
+            next_line = lines[index + 1].strip() if index + 1 < len(lines) else ""
+            header_cells = _markdown_cells(line)
+            if header_cells and _TABLE_SEPARATOR.match(next_line):
+                yield ReflexEvent("table.start", span=(start, end))
+                yield ReflexEvent("table.row", text=" | ".join(header_cells), span=(start, end), meta={"cells": header_cells, "header": True})
+                separator_raw = lines[index + 1]
+                offset += len(separator_raw)
+                index += 2
+                while index < len(lines):
+                    row_raw = lines[index]
+                    row_line = row_raw.strip()
+                    row_start, row_end = offset, offset + len(row_raw)
+                    row_cells = _markdown_cells(row_line)
+                    if not row_line or row_cells is None:
+                        break
+                    yield ReflexEvent("table.row", text=" | ".join(row_cells), span=(row_start, row_end), meta={"cells": row_cells, "header": False})
+                    offset = row_end
+                    index += 1
+                yield ReflexEvent("table.end")
+                continue
+
             heading = re.match(r"^(#{1,6})\s+(.+)$", line)
             if heading:
                 yield ReflexEvent("heading", heading.group(2).strip(), level=len(heading.group(1)), span=(start, end))
             else:
                 yield ReflexEvent("paragraph", line, span=(start, end))
+            index += 1
         yield ReflexEvent("document.end")
 
 
