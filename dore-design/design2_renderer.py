@@ -26,8 +26,8 @@ def render_snapshot(snapshot, edit=False):
         raise ValueError('invalid_snapshot_schema')
     page=snapshot.get('page') or {}
     canvas=page.get('canvas') or {}
-    width=_css_num(canvas.get('width', page.get('width', 1440)))
-    height=_css_num(canvas.get('height', page.get('height', 900)))
+    width=_css_num(canvas.get('width', canvas.get('w', page.get('width', 1440))))
+    height=_css_num(canvas.get('height', canvas.get('h', page.get('height', 900))))
     nodes=[]
     for node in page.get('nodes') or []:
         nid=escape(str(node.get('id','')), quote=True)
