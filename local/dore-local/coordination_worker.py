@@ -6,6 +6,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from coordination_mailbox import send_to_chatgpt,flush_outbox,receive_from_chatgpt
 from a2a_delivery_plane import DELIVERY as DELIVERY_ROOT,durable_messages,sync as sync_delivery
+import a2a_execution_plane as execution_plane
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
@@ -15,7 +16,7 @@ from peer_collaboration import respond as peer_respond
 HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser();ROOT=Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).expanduser().resolve();STATE=HOME/'coordination'/'worker-state.json';LOCK=HOME/'coordination'/'worker.lock';REPO_INBOX=ROOT/'local/dore-local/coordination-inbox';MAX_PER_RUN=max(1,int(os.environ.get('DORE_COORDINATION_MAX_PER_RUN','20')));MAX_ATTEMPTS=max(1,int(os.environ.get('DORE_COORDINATION_MAX_ATTEMPTS','3')))
 ALLOWED_LOCAL_EXE={'python3','python','git','node','npm','npx','launchctl','ps','pgrep','pkill','cat','ls','pwd','test','mkdir','touch','cp','mv','chmod','bash'};PRIORITY={'critical':0,'high':1,'normal':2,'low':3}
 class TaskResultError(RuntimeError):
- def __init__(self,result):self.result=result if isinstance(result,dict) else {'ok':False,'error':str(result)};super().__init__(str(self.result.get('cause') or self.result.get('error') or 'task_failed'))
+ def __init__(self,result):self.result=result if isinstance(result,dict) else {'ok':False,'error':str(result)};super().__init__(str(self.result.get('cause') or self.result.get('error') or self.result.get('code') or 'task_failed'))
 def now():return datetime.now(timezone.utc).isoformat()
 def load_state():
  try:return json.loads(STATE.read_text()) if STATE.exists() else {}
@@ -93,12 +94,75 @@ def dispatch(msg):
   result=call_tool('export_shape',{'shapeId':'page','format':'png','mode':'shape'});return {'ok':bool(result.get('ok')),'penpot':result}
  raise RuntimeError('unsupported_kind:'+str(kind))
 def evidence_for(msg):
- base=['coordination-hardening-v1','product-invariant-monitor','autonomous-capability-loop','resident-goal-queue','research-bridge-executable']
+ base=['coordination-hardening-v1','product-invariant-monitor','autonomous-capability-loop','resident-goal-queue','research-bridge-executable','a2a-execution-plane-v1']
  if msg.get('kind')=='local_exec':base+=['dore-local-exec','local-self-repair']
  if msg.get('kind')=='maintenance.update':base+=['guarded-maintenance-update','fast-forward-only','dirty-worktree-refusal']
  return base
+
+def _artifact_from_result(msg,result):
+ if not isinstance(result,dict):return None
+ explicit=result.get('artifact')
+ if isinstance(explicit,dict) and explicit:return {'type':'declared_artifact','kind':msg.get('kind'),'value':explicit}
+ artifacts=result.get('artifacts')
+ if isinstance(artifacts,list) and artifacts:return {'type':'declared_artifacts','kind':msg.get('kind'),'values':artifacts}
+ kind=msg.get('kind')
+ rows=result.get('results')
+ if kind=='local_exec' and isinstance(rows,list) and rows:
+  return {'type':'local_exec_receipt','kind':kind,'message_id':msg.get('message_id'),'commands':[{'index':r.get('index'),'argv':r.get('argv'),'cwd':r.get('cwd'),'returncode':r.get('returncode')} for r in rows]}
+ if 'returncode' in result:
+  return {'type':'process_receipt','kind':kind,'message_id':msg.get('message_id'),'returncode':result.get('returncode')}
+ if kind=='complete_recall' and 'recall' in result:return {'type':'response_receipt','kind':kind,'message_id':msg.get('message_id'),'field':'recall'}
+ if kind=='peer_research_result' and result.get('receipt') is not None:return {'type':'peer_receipt','kind':kind,'message_id':msg.get('message_id'),'research_id':result.get('research_id')}
+ if isinstance(result.get('penpot'),dict):return {'type':'penpot_receipt','kind':kind,'message_id':msg.get('message_id'),'penpot_ok':bool(result['penpot'].get('ok'))}
+ return None
+
+def _verification_for(result,artifact):
+ ok=isinstance(result,dict) and bool(result.get('ok',True)) and isinstance(artifact,dict) and bool(artifact)
+ atype=(artifact or {}).get('type')
+ if atype=='local_exec_receipt':ok=ok and bool(artifact.get('commands')) and all(r.get('returncode')==0 for r in artifact.get('commands') or [])
+ elif atype=='process_receipt':ok=ok and artifact.get('returncode')==0
+ elif atype=='penpot_receipt':ok=ok and bool(artifact.get('penpot_ok'))
+ return {'ok':bool(ok),'method':'coordination_worker.execution_gate.v1','artifact_type':atype,'result_ok':bool(isinstance(result,dict) and result.get('ok',True))}
+
+def execute_with_plane(msg,dispatcher=None,consumer=None):
+ """Execute one delivered message through the durable evidence gate.
+
+ A handler success is only provisional. PASS is emitted by the execution plane
+ after an artifact receipt exists and the worker verifier accepts it.
+ """
+ dispatcher=dispatcher or dispatch;mid=str(msg.get('message_id') or '')
+ if not mid:raise TaskResultError({'ok':False,'code':'EXECUTION_TASK_ID_REQUIRED','error':'message_id_required'})
+ owner=consumer or execution_plane.worker_id();task=execution_plane.register(msg)
+ if task.get('status')=='PASS':
+  proof=execution_plane.status(mid)
+  if proof.get('completion_evidence'):return {'ok':True,'replayed':True,'execution_plane':proof}
+ claimed=execution_plane.claim(mid,owner)
+ if not claimed.get('ok'):raise TaskResultError({'ok':False,'code':claimed.get('code'),'error':'execution_claim_failed','execution_plane':claimed})
+ running=execution_plane.transition(mid,'RUNNING',consumer=owner)
+ if not running.get('ok'):raise TaskResultError({'ok':False,'code':running.get('code'),'error':'execution_start_failed','execution_plane':running})
+ result=dispatcher(msg);normalized=result if isinstance(result,dict) else {'ok':True,'result':result};ok=bool(normalized.get('ok',True))
+ if not ok:raise TaskResultError(normalized)
+ artifact=_artifact_from_result(msg,normalized)
+ if not artifact:raise TaskResultError({'ok':False,'code':'EXECUTION_ARTIFACT_REQUIRED','error':'handler_success_without_artifact','handler_result':normalized})
+ recorded=execution_plane.record_artifact(mid,artifact,consumer=owner)
+ if not recorded.get('ok'):raise TaskResultError({'ok':False,'code':recorded.get('code'),'error':'execution_artifact_record_failed','execution_plane':recorded})
+ verification=_verification_for(normalized,artifact);verified=execution_plane.verify(mid,verification,consumer=owner)
+ if not verified.get('ok'):raise TaskResultError({'ok':False,'code':'EXECUTION_VERIFICATION_FAILED','error':'artifact_verification_failed','verification':verification})
+ completed=execution_plane.complete(mid,normalized,consumer=owner)
+ if not completed.get('ok'):raise TaskResultError({'ok':False,'code':completed.get('code'),'error':'execution_completion_gate_failed','execution_plane':completed})
+ return {**normalized,'execution_plane':{'task_id':mid,'status':'PASS','completion_evidence':True,'artifact':completed['task'].get('artifact'),'verification':completed['task'].get('verification')}}
+
+def _mark_execution_fail(mid,result):
+ t=execution_plane.read(mid)
+ if not t or t.get('status') in execution_plane.TERMINAL:return t
+ owner=execution_plane.worker_id();claimed=execution_plane.claim(mid,owner)
+ if claimed.get('ok'):execution_plane.transition(mid,'FAIL',consumer=owner,result=result)
+ return execution_plane.read(mid)
+
 def _finish_pass(state,done,msg,result,attempt,evidence):
- mid=msg['message_id'];done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result);reply(msg,result,evidence,'PASS',attempt,True)
+ mid=msg['message_id'];proof=execution_plane.status(mid)
+ if not proof.get('completion_evidence'):raise TaskResultError({'ok':False,'code':'EXECUTION_PASS_WITHOUT_EVIDENCE','error':'legacy_pass_blocked','execution_plane':proof})
+ done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);state.pop('last_error',None);state['last_success_message_id']=mid;state['last_result']=result;set_task(state,mid,'PASS',attempt=attempt,completed_at=now(),result=result,execution_plane=proof);reply(msg,result,evidence,'PASS',attempt,True)
 def handoff_research(state,done,msg,attempt,learning,failure_result):
  mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);row=enqueue(mid,goal,priority=str(msg.get('priority') or 'normal').lower(),source='coordination_worker',metadata={'execution_kind':'coordination_message','message':msg,'project_loop':'A2A <-> coordination real work','requires_reply':bool(msg.get('requires_reply',True))});handoff={'ok':False,'state':'RESEARCH_QUEUED','learning':learning,'goal_queue':{'goal_id':row.get('goal_id'),'status':row.get('status')},'original_failure':failure_result,'parent_goal_preserved':True,'handoff_to_resident_runtime':True};done.add(mid);state['repo_inbox_processed']=sorted(done);state.setdefault('research_handoffs',{})[mid]={'at':now(),'goal':goal,'status':'RESEARCH_QUEUED'};state.get('attempts',{}).pop(mid,None);state.pop('active_message_id',None);set_task(state,mid,'RESEARCH_QUEUED',attempt=attempt,terminal=False,result=handoff);reply(msg,handoff,evidence_for(msg)+['research-required','goal-queue-handoff'],'LEARNING',attempt,False);return handoff
 def main():
@@ -109,23 +173,18 @@ def main():
  for msg in queue[:MAX_PER_RUN]:
   mid=msg['message_id'];goal=str(msg.get('related_goal') or mid);attempt=(state.get('attempts') or {}).get(mid,0)+1;state.setdefault('attempts',{})[mid]=attempt;state['active_goal']=goal;state['active_message_id']=mid;set_task(state,mid,'RECEIVED',attempt=attempt,goal=goal,kind=msg.get('kind'));set_task(state,mid,'RUNNING',attempt=attempt,started_at=now())
   try:
-   result=dispatch(msg);ok=not isinstance(result,dict) or result.get('ok',True)
-   if ok:_finish_pass(state,done,msg,result,attempt,evidence_for(msg));continue
-   raise TaskResultError(result)
+   result=execute_with_plane(msg);_finish_pass(state,done,msg,result,attempt,evidence_for(msg));continue
   except Exception as e:
    err=type(e).__name__+': '+str(e);failure_result=e.result if isinstance(e,TaskResultError) else {'ok':False,'error':err};failure_result={**failure_result,'error':err,'parent_goal_preserved':True};learning=attempt_learning_recovery(msg,failure_result);failure_result['learning']=learning
    if learning.get('retry_parent'):
     set_task(state,mid,'LEARNING',attempt=attempt,learning=learning)
     try:
-     resumed=dispatch(msg);resumed_ok=not isinstance(resumed,dict) or resumed.get('ok',True)
-     if resumed_ok:
-      resumed={**(resumed if isinstance(resumed,dict) else {'ok':True,'result':resumed}),'autonomous_recovery':learning,'resumed_parent_goal':True};_finish_pass(state,done,msg,resumed,attempt,evidence_for(msg)+['learning-skill:'+str(learning.get('selected_skill')),'parent-goal-resumed']);continue
-     failure_result={'ok':False,'error':'parent_retry_after_learning_failed','result':resumed,'learning':learning,'parent_goal_preserved':True}
+     resumed=execute_with_plane(msg);resumed={**resumed,'autonomous_recovery':learning,'resumed_parent_goal':True};_finish_pass(state,done,msg,resumed,attempt,evidence_for(msg)+['learning-skill:'+str(learning.get('selected_skill')),'parent-goal-resumed']);continue
     except Exception as x:failure_result={'ok':False,'error':type(x).__name__+': '+str(x),'learning':learning,'parent_goal_preserved':True}
    if learning.get('state')=='RESEARCH_REQUIRED':handoff_research(state,done,msg,attempt,learning,failure_result);continue
    failures+=1;terminal=attempt>=MAX_ATTEMPTS;failure_result['recovery_required']=terminal;state['last_error']={'message_id':mid,'attempt':attempt,'error':failure_result.get('error','task_failed')[:1000]};state['last_result']=failure_result;status='FAIL' if terminal else 'RETRYING';set_task(state,mid,status,attempt=attempt,terminal=terminal,error=failure_result.get('error','task_failed')[:1000],completed_at=now() if terminal else None,result=failure_result)
    if terminal:
-    done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':failure_result.get('error','task_failed')[:1000],'result':failure_result};state.pop('active_message_id',None)
+    _mark_execution_fail(mid,failure_result);done.add(mid);state['repo_inbox_processed']=sorted(done);state.get('attempts',{}).pop(mid,None);state.setdefault('terminal_failures',{})[mid]={'failed_at':now(),'attempts':attempt,'kind':msg.get('kind'),'error':failure_result.get('error','task_failed')[:1000],'result':failure_result};state.pop('active_message_id',None)
    reply(msg,failure_result,evidence_for(msg)+['coordination-worker-error'],'FAIL' if terminal else 'RETRYING',attempt,terminal)
  state['queue_depth']=max(0,len(queue)-min(len(queue),MAX_PER_RUN));state['checked_at']=now();save(state);return 1 if failures else 0
 if __name__=='__main__':raise SystemExit(main())
