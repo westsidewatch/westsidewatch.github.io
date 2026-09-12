@@ -72,8 +72,10 @@ class UrlSurfaceResolver:
             return SurfaceRoute("visual", "iiif-visual-surface", 1.0)
         if path.endswith(".pdf"):
             return SurfaceRoute("document", "pdfjs", 1.0)
-        if path.endswith((".epub", ".mobi")):
+        if host.endswith("archive.org") and (path.startswith("/details/") or path.startswith("/embed/") or path.startswith("/stream/")):
             return SurfaceRoute("book", "book-reader", 1.0)
+        if path.endswith((".epub", ".mobi")):
+            return SurfaceRoute("book", "book-reader", 0.9)
 
         if host.endswith("gutenberg.org") and "/ebooks/" in path:
             return SurfaceRoute("book", "bibliographic-page", 1.0)
