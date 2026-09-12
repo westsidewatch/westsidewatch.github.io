@@ -1,22 +1,10 @@
 #!/usr/bin/env python3
 """AW-011 topology falsification v3.
 
-The v2 run exposed a confounder: a fixed 31 px edge-association radius attached
-only ~41% of demanded support to occlusion topology, so the rendered black holes
-mostly measured *unassigned demand*, not whether topology fixed the original
-surface failure.
-
-V3 removes that confounder without changing the hypothesis:
-- derive the occlusion-association radius from the actual Camera Spine lateral
-  parallax budget;
-- assign internal hidden support to that edge topology;
-- keep a persistent global/background foundation only for the remaining support
-  (especially canvas-boundary disocclusion), so border exposure does not masquerade
-  as an internal topology failure;
-- preserve the same MoGe depth, geometric support and inverse projection.
-
-This remains a topology-only test. Telea is still diagnostic colour completion;
-no learned hidden colour/depth synthesis is introduced.
+Camera-conditioned edge-topology test with persistent boundary foundation.
+The occlusion-association radius is derived from the actual Camera Spine.
+Large radii are evaluated with a distance transform rather than a giant
+morphological kernel so the experiment remains computationally tractable.
 """
 from __future__ import annotations
 
@@ -29,7 +17,6 @@ import numpy as np
 
 from experiment_depth_traversal import prepare, load_pose_points, smoothstep
 from experiment_depth_banded_world_cache import collect_depth_conditioned_support
-from experiment_edge_aware_hidden_surface import occlusion_topology
 from experiment_edge_aware_hidden_surface_v2 import build_surface, boundary_discontinuity
 from experiment_world_cache import raster_layer, build_hidden_layer
 
@@ -43,9 +30,81 @@ def camera_lateral_budget(poses, ppu: float) -> tuple[float, int]:
         p = np.asarray(pose['position'], np.float32)
         d = p - p0
         shift = max(shift, float(np.hypot(d[0], d[1]) * ppu))
-    # Small safety margin covers raster discretization and the support dilation.
-    radius = max(31, int(np.ceil(shift + 12.0)))
-    return shift, radius
+    return shift, max(31, int(np.ceil(shift + 12.0)))
+
+
+def fast_occlusion_topology(dep: np.ndarray, support: np.ndarray, edge_q: float,
+                            edge_floor: float, min_jump: float, zone_radius: int):
+    gx = cv2.Sobel(dep, cv2.CV_32F, 1, 0, ksize=3)
+    gy = cv2.Sobel(dep, cv2.CV_32F, 0, 1, ksize=3)
+    grad = cv2.magnitude(gx, gy)
+    nz = grad[grad > 0]
+    qthr = float(np.quantile(nz, edge_q)) if nz.size else 0.0
+    threshold = max(edge_floor, qthr)
+
+    k9 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))
+    local_min = cv2.erode(dep, k9)
+    local_max = cv2.dilate(dep, k9)
+    jump = local_max - local_min
+    edge = ((grad >= threshold) & (jump >= min_jump)).astype(np.uint8) * 255
+
+    # Exact Euclidean association to the nearest edge avoids O(r^2) dilation.
+    # distanceTransform measures distance to zero pixels, hence edge pixels are 0.
+    inv_edge = np.where(edge > 0, 0, 255).astype(np.uint8)
+    dist = cv2.distanceTransform(inv_edge, cv2.DIST_L2, 5)
+    zone = (dist <= float(zone_radius)).astype(np.uint8) * 255
+    relevant = cv2.bitwise_and(zone, support)
+
+    span = np.maximum(jump, 1e-6)
+    rel = (dep - local_min) / span
+    background = ((zone > 0) & (rel <= .35)).astype(np.uint8) * 255
+    foreground = ((zone > 0) & (rel >= .65)).astype(np.uint8) * 255
+
+    # Component identity belongs to the actual edge graph, not the dilated zone.
+    # Expand each component through the zone by nearest-edge assignment only where
+    # needed by support. For this falsification build_surface only needs labels at
+    # relevant support locations, so nearest connected edge ID is sufficient.
+    ncomp, edge_labels = cv2.connectedComponents((edge > 0).astype(np.uint8), 8)
+    labels = np.zeros_like(edge_labels)
+    if ncomp > 1 and np.any(relevant):
+        # Propagate edge IDs cheaply by iterative nearest-neighbour label dilation;
+        # only support pixels are consumed downstream. 3x3 dilation converges in
+        # zone_radius iterations and is substantially cheaper than a 281x281 kernel.
+        labels = edge_labels.astype(np.int32)
+        frontier = labels.copy()
+        target = (zone > 0) & (labels == 0)
+        kernel = np.ones((3, 3), np.uint8)
+        for _ in range(int(zone_radius)):
+            if not np.any(target & (relevant > 0)):
+                break
+            new_labels = labels.copy()
+            # Propagate one component at a time only across still-unlabelled zone.
+            # Component count is small for AW-011; this preserves edge identity.
+            for cid in range(1, ncomp):
+                m = (labels == cid).astype(np.uint8)
+                if not np.any(m):
+                    continue
+                grown = cv2.dilate(m, kernel) > 0
+                take = grown & (zone > 0) & (new_labels == 0)
+                new_labels[take] = cid
+            if np.array_equal(new_labels, labels):
+                break
+            labels = new_labels
+            target = (zone > 0) & (labels == 0)
+
+    return {
+        'edge': edge,
+        'zone': zone,
+        'relevant_support': relevant,
+        'background': background,
+        'foreground': foreground,
+        'labels': labels,
+        'component_count': int(max(0, ncomp - 1)),
+        'local_min': local_min,
+        'local_max': local_max,
+        'jump': jump,
+        'threshold': threshold,
+    }
 
 
 def raster_support(mask, depth, p, ppu, sever_threshold=None):
@@ -60,25 +119,18 @@ def render(src, dep, topo_rgb, topo_depth, topo_mask,
     h, w = dep.shape
     frame = np.zeros_like(src)
     occupied = np.zeros((h, w), np.uint8)
-    topo_take_count = 0
-    foundation_take_count = 0
 
-    # Persistent foundation is admitted only where topology did not own support.
     bimg, bknown = raster_layer(base_rgb, base_depth, p, ppu, 6, None)
     bvis = raster_support(foundation_mask, base_depth, p, ppu, None)
     btake = (bknown > 0) & bvis
     frame[btake] = bimg[btake]
     occupied[btake] = 255
-    foundation_take_count = int(np.count_nonzero(btake))
 
-    # Edge-aware hidden surface then replaces the coarse foundation wherever
-    # support is tied to an explicit foreground/background occlusion relation.
     himg, hknown = raster_layer(topo_rgb, topo_depth, p, ppu, 6, sever_threshold)
     hvis = raster_support(topo_mask, topo_depth, p, ppu, sever_threshold)
     htake = (hknown > 0) & hvis
     frame[htake] = himg[htake]
     occupied[htake] = 255
-    topo_take_count = int(np.count_nonzero(htake))
 
     front, front_known = raster_layer(src, dep, p, ppu, 6, .10)
     ft = front_known > 0
@@ -88,8 +140,8 @@ def render(src, dep, topo_rgb, topo_depth, topo_mask,
     frame[residual] = 0
     unseen = float(np.count_nonzero(front_known == 0) / front_known.size)
     res = float(np.count_nonzero(residual) / front_known.size)
-    return (frame, unseen, max(0.0, unseen - res), res,
-            front_known, occupied, topo_take_count, foundation_take_count)
+    return (frame, unseen, max(0.0, unseen - res), res, front_known, occupied,
+            int(np.count_nonzero(htake)), int(np.count_nonzero(btake)))
 
 
 def main():
@@ -117,14 +169,13 @@ def main():
 
     support, zmap, used, mapped, inv_err = collect_depth_conditioned_support(
         dep, poses, a.ppu, a.samples, a.behind)
-    topo = occlusion_topology(dep, support, a.edge_q, .025, a.min_jump, zone_radius)
+    topo = fast_occlusion_topology(dep, support, a.edge_q, .025, a.min_jump, zone_radius)
     topo_rgb, topo_depth, topo_mask, unresolved, summaries = build_surface(
         src, dep, support, zmap, topo)
 
     base_rgb, base_depth, _ = build_hidden_layer(src, dep)
     foundation_mask = cv2.dilate(
-        unresolved,
-        cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
+        unresolved, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7)))
 
     for path, image in ((a.support_map, support), (a.edge_map, topo['edge']),
                         (a.background_map, topo['background']),
@@ -140,8 +191,7 @@ def main():
         raise RuntimeError('video writer failed')
 
     unseen, coverage, residual, bmean, b95 = [], [], [], [], []
-    topo_contrib = 0
-    foundation_contrib = 0
+    topo_contrib = foundation_contrib = 0
     worst = {'fraction': -1.0, 'frame': -1, 'pose': None}
     fn = 0
     for i in range(len(poses) - 1):
@@ -154,8 +204,7 @@ def main():
                 writer.write(src); fn += 1; continue
             frame, u, c, r, fk, occ, tc, bc = render(
                 src, dep, topo_rgb, topo_depth, topo_mask,
-                base_rgb, base_depth, foundation_mask,
-                p, a.ppu, a.sever_threshold)
+                base_rgb, base_depth, foundation_mask, p, a.ppu, a.sever_threshold)
             bm, bp = boundary_discontinuity(frame, fk, occ)
             writer.write(frame)
             unseen.append(u); coverage.append(c); residual.append(r); bmean.append(bm); b95.append(bp)
