@@ -61,9 +61,11 @@ class SurfaceMountRegistry:
         ),
         "book-reader": CapabilityMount(
             adapter="book-reader",
-            state="reserved",
+            state="fixture-found",
             load="on-demand",
-            scope="scanned-book",
+            scope="internet-archive-scan",
+            implementation="static/js/dawn-bookreader-surface.js",
+            evidence="data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader",
         ),
         "zotero-translate": CapabilityMount(
             adapter="zotero-translate",
@@ -97,7 +99,8 @@ class SurfaceMountRegistry:
             state="fixture-found",
             load="on-demand",
             scope="book-cover",
-            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-cover-augustine-fixture",
+            implementation="dore_core/capabilities/cover_resolver.py",
+            evidence="data/dawn-capability-acceptance-corpus.json#openlibrary-josephus-1900-cover",
         ),
     }
 
