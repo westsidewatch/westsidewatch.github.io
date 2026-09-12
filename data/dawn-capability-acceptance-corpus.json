@@ -19,12 +19,13 @@
       "url":"https://covers.openlibrary.org/b/olid/OL24645724M-M.jpg?default=false","expectContentType":"image/"
     },
     {
-      "id":"internetarchive-josephus-1900-bookreader","capability":"book-reader","stage":"fixture-found","language":"en","kind":"scanned-book","title":"Complete works of Josephus; Antiquities of the Jews, The wars of the Jews, Against Apion, etc. etc","author":"Flavius Josephus",
+      "id":"internetarchive-josephus-1900-bookreader","capability":"book-reader","stage":"integration-proven","language":"en","kind":"scanned-book","title":"Complete works of Josephus; Antiquities of the Jews, The wars of the Jews, Against Apion, etc. etc","author":"Flavius Josephus",
       "edition":{"openLibraryEditionId":"OL24645724M","publishDate":"1900","publisher":"Bigelow, Brown","internetArchiveId":"completeworksofj19002jose"},
       "url":"https://archive.org/embed/completeworksofj19002jose","expectContentType":"text/html"
     },
     {"id":"openlibrary-work-edition-identity","capability":"zotero-translate","stage":"fixture-found","language":"en","kind":"bibliographic-identity","title":"Open Library edition identity fixture","author":"Open Library","url":"https://openlibrary.org/books/OL7353617M.json","expectContentType":"application/json"},
     {"id":"jesus-film-full-feature","capability":"video-surface","stage":"fixture-found","language":"en","kind":"bible-film","title":"JESUS","author":"Jesus Film Project","url":"https://www.jesusfilm.org/watch/jesus.html","expectContentType":"text/html"},
+    {"id":"jesus-film-official-youtube","capability":"video-surface","stage":"integration-proven","language":"en","kind":"bible-film-video","title":"JESUS - Full Movie (Official HD)","author":"Jesus Film Project","url":"https://www.youtube.com/watch?v=or22I3KOerA","expectContentType":"text/html"},
     {"id":"bibleproject-chinese-video-library","capability":"video-surface","stage":"fixture-found","language":"zh-Hans","kind":"bible-video-library","title":"BibleProject 中文视频","author":"BibleProject","url":"https://bibleproject.com/zh-hans/","expectContentType":"text/html"},
     {"id":"bibleproject-chinese-article-source","capability":"readability","stage":"fixture-found","language":"zh-Hans","kind":"article-source","title":"BibleProject 中文资源页","author":"BibleProject","url":"https://bibleproject.com/zh-hans/","expectContentType":"text/html"}
   ]
