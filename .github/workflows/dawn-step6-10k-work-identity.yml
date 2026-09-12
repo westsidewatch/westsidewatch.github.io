@@ -1,0 +1,69 @@
+name: Dawn Step 6 10K Work Identity
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'scripts/build_dawn_10k_work_queue.py'
+      - 'tests/test_dawn_10k_work_identity.py'
+      - '.github/workflows/dawn-step6-10k-work-identity.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  work-identity-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: .
+      DAWN_TARGET_WORKS: '10500'
+      DAWN_CHINESE_TARGET: '2000'
+      DAWN_OL_PAGE_SIZE: '100'
+      DAWN_OL_MAX_PAGES_PER_QUERY: '30'
+      DAWN_OL_DELAY_SECONDS: '0.20'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify Work identity compaction contract
+        run: python -m unittest tests.test_dawn_10k_work_identity -v
+      - name: Discover 10K Work-level identities from Open Library
+        run: python scripts/discover_dawn_10k_openlibrary_works.py
+      - name: Build authority-backed Dawn Work queue
+        run: python scripts/build_dawn_10k_work_queue.py
+      - name: Enforce 10K Work identity and admission boundaries
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          discovery=json.loads(Path('data/dawn-10k-openlibrary-works.json').read_text())
+          queue=json.loads(Path('data/dawn-10k-work-queue.json').read_text())
+          assert discovery['workLevel'] is True
+          assert discovery['runtimeBackend'] is False
+          assert discovery['contentDownloaded'] is False
+          assert discovery['metrics']['works'] >= 10000
+          assert discovery['metrics']['chineseMatchedWorksAdded'] > 0
+          assert discovery['metrics']['englishMatchedWorksAdded'] > 0
+          assert queue['schema'] == 'dawn.library.10k-work-queue.v2'
+          assert queue['deduplicatedWorks'] >= 10000
+          assert queue['authorityBackedWorks'] >= 9000
+          assert queue['admission'].startswith('none')
+          assert all(i.get('queueId') and i.get('status') for i in queue['items'])
+          assert not any('wikisource' in str(i).lower() for i in queue['items'])
+          print({
+            'works': discovery['metrics']['works'],
+            'authorityBackedWorks': queue['authorityBackedWorks'],
+            'deduplicatedWorks': queue['deduplicatedWorks'],
+            'languages': queue['languageSignals'],
+          })
+          PY
+      - name: Preserve 10K Work identity artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-10k-work-identity
+          path: |
+            data/dawn-10k-openlibrary-works.json
+            data/dawn-10k-work-queue.json
