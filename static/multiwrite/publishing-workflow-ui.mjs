@@ -2,7 +2,7 @@ import {compileCurrentBook} from './book-compile-bridge.mjs';
 import {createPublishingWorkflow,workflowFromCompile} from './publishing-workflow.mjs';
 
 let root=null;
-function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
+function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]))}
 function stepMarkup(step){return `<li class="publish-step is-${step.status}" data-step="${esc(step.id)}"><span class="publish-step-mark"></span><span>${esc(step.label)}</span><small>${step.status==='complete'?'完成':step.status==='active'?'進行中':step.status==='blocked'?'需處理':step.status==='locked'?'等待前置':'待開始'}</small></li>`}
 function panelMarkup(workflow=createPublishingWorkflow()){
  const s=workflow.summary||{};
@@ -13,8 +13,7 @@ function render(workflow){if(!root)return;const next=document.createElement('div
 function close(){root?.remove();root=null}
 function bind(){root.querySelector('.publishing-close').onclick=close;root.querySelector('[data-publishing-close]').onclick=close;root.addEventListener('click',e=>{if(e.target===root)close()});root.querySelector('[data-publishing-start]').onclick=async()=>{const button=root.querySelector('[data-publishing-start]');button.disabled=true;button.textContent='理解整部作品…';try{const compiled=await compileCurrentBook();render(workflowFromCompile(compiled))}catch(error){root.querySelector('.publishing-status').textContent=`成書檢查失敗：${error.message}`;button.disabled=false;button.textContent='重試'}}}
 export function openPublishingWorkflow(){if(root)return;document.querySelector('#bookMenu')?.classList.remove('open');document.querySelector('#makeBook')?.setAttribute('aria-expanded','false');const holder=document.createElement('div');holder.innerHTML=panelMarkup();root=holder.firstElementChild;document.body.appendChild(root);bind()}
-// #674: the primary 成書 action owns the publishing workflow. The legacy export
-// menu remains available only as downstream artifact machinery, never as the
-// primary meaning of 成書.
-document.addEventListener('click',event=>{const button=event.target.closest?.('#makeBook');if(!button)return;event.preventDefault();event.stopImmediatePropagation();openPublishingWorkflow()},true);
+// The legacy 成書 menu remains the live user-facing entry point until the
+// publishing workflow owns the complete path through artifact output. Do not
+// intercept #makeBook here: export.js must retain DOCX/PDF/MD/TXT/JSON output.
 window.addEventListener('multiwrite:open-publishing-workflow',openPublishingWorkflow);
