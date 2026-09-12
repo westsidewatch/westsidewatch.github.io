@@ -7,24 +7,32 @@ const surface = JSON.parse(await fs.readFile(new URL('../static/dawn-library/sur
 const canonical = JSON.parse(await fs.readFile(new URL('../static/dawn-library/canonical-index.json', import.meta.url), 'utf8'));
 const initialContext = JSON.parse(await fs.readFile(new URL('../static/dawn-library/formal-edition/contexts/second-temple.v1.json', import.meta.url), 'utf8'));
 const catalog = buildCatalog({ surface, canonical });
+const canonicalIds = new Set(Object.keys(canonical.works || {}));
 
-assert.ok(catalog.length >= 10000, `Phase 4 requires the real 10k+ canonical catalog; got ${catalog.length}`);
-assert.ok(catalog.every(item => item.workId.startsWith('dawn:')), 'Every discovery row must retain canonical dawn:* identity');
+assert.equal(canonical.schema, 'dawn.library.canonical-index.v1');
+assert.equal(canonical.identityAuthority, 'Dawn');
+assert.ok(canonical.workCount >= 10000, `Canonical index baseline is below 10k: ${canonical.workCount}`);
+assert.equal(catalog.length, canonical.workCount, `Phase 4 must expose every canonical Work; catalog=${catalog.length}, canonical=${canonical.workCount}`);
+assert.equal(canonicalIds.size, canonical.workCount);
+assert.ok(catalog.every(item => canonicalIds.has(item.workId)), 'Every discovery row must be a Work ID owned by the Dawn canonical index');
+assert.ok(catalog.some(item => item.workId.startsWith('dawn:')), 'Fallback dawn:* IDs must remain supported');
+assert.ok(catalog.some(item => !item.workId.startsWith('dawn:')), 'Authority-backed canonical IDs must remain supported without rewriting');
 
 let context = structuredClone(initialContext);
 const firstWindow = discoverCatalogWindow({ catalog, context, windowSize: 72 });
 assert.equal(firstWindow.items.length, 72, 'Large catalog projection must cap the rendered window');
-assert.ok(firstWindow.total >= 10000);
+assert.equal(firstWindow.total, canonical.workCount);
 assert.ok(firstWindow.nextCursor, '10k+ catalog must expose a next cursor');
 context = updateDiscoveryContext(context, { cursor: firstWindow.nextCursor });
 const secondWindow = discoverCatalogWindow({ catalog, context, windowSize: 72 });
 assert.equal(secondWindow.offset, 72);
 assert.equal(secondWindow.items.length, 72);
-assert.ok(secondWindow.items.every(item => item.workId.startsWith('dawn:')));
+assert.ok(secondWindow.items.every(item => canonicalIds.has(item.workId)));
 
 context = updateDiscoveryContext(context, { cursor: null, query: 'second temple', discoveryDistance: 0.85 });
 const fuzzy = discoverCatalog({ catalog, context, limit: 72 });
 assert.ok(fuzzy.length > 0, 'Fuzzy search must produce results against the full canonical catalog');
+assert.ok(fuzzy.every(item => canonicalIds.has(item.workId)));
 
 context = updateDiscoveryContext(context, { query: '', facets: { relation: '第二聖殿' } });
 const filtered = discoverCatalog({ catalog, context, limit: 72 });
@@ -46,7 +54,9 @@ assert.equal(restored.ordering, 'title');
 console.log(JSON.stringify({
   phase: 4,
   status: 'PASS',
-  catalogSize: catalog.length,
+  canonicalWorkCount: canonical.workCount,
+  authorityBackedWorks: canonical.authorityBackedWorks,
+  fallbackDawnIds: catalog.filter(item => item.workId.startsWith('dawn:')).length,
   renderWindow: firstWindow.items.length,
   secondWindowOffset: secondWindow.offset,
   fuzzyResults: fuzzy.length,
