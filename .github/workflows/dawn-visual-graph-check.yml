@@ -14,7 +14,10 @@ on:
       - 'static/js/dore-visual-surface-consumer.js'
       - 'static/one/one-surface-runtime.js'
       - 'static/one/one-baptism-motion.js'
+      - 'static/multiwrite/dawn-library.js'
+      - 'static/multiwrite/folio-surface-runtime.js'
       - 'static/css/dawn-visual.css'
+      - 'static/css/visual-surface-engine.css'
       - 'scripts/dore/**'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
@@ -81,6 +84,8 @@ jobs:
           node --check static/js/dore-visual-surface-consumer.js
           node --check static/one/one-surface-runtime.js
           node --check static/one/one-baptism-motion.js
+          node --check static/multiwrite/dawn-library.js
+          node --check static/multiwrite/folio-surface-runtime.js
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
@@ -92,4 +97,8 @@ jobs:
         run: |
           grep -q 'dore.visual-surface-consumer.v1' public/js/dore-visual-surface-consumer.js
           grep -q 'dore-surface-product' public/journal/index.html
-          grep -q 'dore-visual-surface-consumer' public/journal/index.html
+          grep -q 'editorial-role=secondary' public/journal/index.html
+          grep -q 'editorial-role=reading-focus' public/journal/index.html
+          grep -q 'visual-surface-engine.css' public/js/dore-visual-surface-consumer.js
+          grep -q 'folio-surface-runtime' public/multiwrite/dawn-library.js
+          grep -q "product:'folio'" public/multiwrite/folio-surface-runtime.js

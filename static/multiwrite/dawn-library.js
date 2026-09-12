@@ -1,3 +1,4 @@
+import './folio-surface-runtime.js';
 import {dawnBookEntry,canImportToPersonal,createPersonalReferenceFromDawn} from './library-model.mjs';
 import {resolveCover} from './cover-resolver.mjs';
 const CATALOG_URL='/dawn-library/biblical-world/catalog.json',DB_NAME='multiwrite-v1',DB_VERSION=3,BOOK_STORE='books';let catalogItems=[];

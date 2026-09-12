@@ -35,9 +35,9 @@
     </a>
 
     <nav class="journal-quicklinks" aria-label="Journal visual index">
-      {{ partial "index-card.html" (dict "href" ("/#contents" | relURL) "number" "01" "section" "VOL.00" "title" "Contents" "subtitle" "目錄" "description" "Four movements · Twelve columns · Three watches" "orientation" "portrait" "action" "Browse") }}
-      {{ partial "index-card.html" (dict "href" ("/#vol-00-proclamation" | relURL) "number" "02" "section" "VOL.00" "title" "Opening" "subtitle" "卷首序曲" "description" "The founding proclamation of a watchful city" "orientation" "portrait" "action" "Enter") }}
-      {{ partial "index-card.html" (dict "href" ("/#movement-watch" | relURL) "number" "03" "section" "VOL.00" "title" "Read Vol.00" "subtitle" "開始閱讀" "description" "Begin with Watch and continue toward the Great Light" "orientation" "portrait" "action" "Read") }}
+      {{ partial "index-card.html" (dict "href" ("/#contents" | relURL) "number" "01" "section" "VOL.00" "title" "Contents" "subtitle" "目錄" "description" "Four movements · Twelve columns · Three watches" "orientation" "portrait" "action" "Browse" "surfaceProduct" "journal" "editorialRole" "secondary" "editorialWeight" 1 "editorialMotion" "slow-flow" "editorialSurface" "journal-contents" "surfacePreset" "card-8x5") }}
+      {{ partial "index-card.html" (dict "href" ("/#vol-00-proclamation" | relURL) "number" "02" "section" "VOL.00" "title" "Opening" "subtitle" "卷首序曲" "description" "The founding proclamation of a watchful city" "orientation" "portrait" "action" "Enter" "surfaceProduct" "journal" "editorialRole" "reading-focus" "editorialWeight" 1 "editorialMotion" "focus" "editorialSurface" "journal-opening" "surfacePreset" "card-8x5") }}
+      {{ partial "index-card.html" (dict "href" ("/#movement-watch" | relURL) "number" "03" "section" "VOL.00" "title" "Read Vol.00" "subtitle" "開始閱讀" "description" "Begin with Watch and continue toward the Great Light" "orientation" "portrait" "action" "Read" "surfaceProduct" "journal" "editorialRole" "secondary" "editorialWeight" 1 "editorialMotion" "slow-flow" "editorialSurface" "journal-read" "surfacePreset" "card-8x5") }}
     </nav>
   </section>
 {{ end }}
