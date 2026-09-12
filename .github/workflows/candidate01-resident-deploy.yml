@@ -1,0 +1,76 @@
+name: Candidate 01 Resident Deploy
+
+on:
+  push:
+    branches:
+      - dore/candidate01-visual-graph-experiment
+    paths:
+      - 'dore-design/**'
+      - '.github/workflows/candidate01-resident-deploy.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: candidate01-resident-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 20
+    steps:
+      - name: Verify local Doré repo
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          test -d "$ROOT/.git"
+          cd "$ROOT"
+          git remote get-url origin
+      - name: Resolve current Candidate 01 head
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
+          CANDIDATE_SHA="$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)"
+          test -n "$CANDIDATE_SHA"
+          echo "CANDIDATE_SHA=$CANDIDATE_SHA" >> "$GITHUB_ENV"
+          echo "candidate=$CANDIDATE_SHA"
+      - name: Build detached Candidate 01 Design worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/design-candidate01"
+          cd "$ROOT"
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force --detach "$WT" "$CANDIDATE_SHA"
+          cd "$WT"
+          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py
+      - name: Install into local Candidate 01 Design resident
+        run: |
+          WT="$HOME/.dore/design-candidate01"
+          cd "$WT"
+          export DORE_REPO_ROOT="$WT"
+          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
+          bash dore-design/install-macos.sh
+      - name: Verify running localhost Candidate 01 resident
+        run: |
+          for i in $(seq 1 30); do
+            HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' 2>/dev/null || true)
+            if printf '%s' "$HTML" | grep -q 'candidate01-exact-grid-preview-geometry'; then
+              printf '%s' "$HTML" | grep -q 'candidate01-living-current-runtime'
+              printf '%s' "$HTML" | grep -q 'candidate01-page2-assembly-runtime'
+              printf '%s' "$HTML" | grep -q 'centered-mirror-'
+              printf '%s' "$HTML" | grep -q 'candidate01-four-w-runtime'
+              printf '%s' "$HTML" | grep -q 'WATCH'
+              printf '%s' "$HTML" | grep -q 'WITNESS'
+              printf '%s' "$HTML" | grep -q 'WALK'
+              printf '%s' "$HTML" | grep -q 'WORSHIP'
+              ! printf '%s' "$HTML" | grep -q 'dore-mosaic-layer'
+              echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered,four-w"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "CANDIDATE01_LOCAL_RESIDENT_FAIL sha=$CANDIDATE_SHA marker_missing" >&2
+          exit 1
