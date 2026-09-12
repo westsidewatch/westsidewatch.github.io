@@ -1,0 +1,100 @@
+{
+  "schema": "dawn.capability.acceptance.corpus.v1",
+  "purpose": "Real external resources used to prove Dawn capability hooks before they may be marked mounted.",
+  "rules": {
+    "realResourceRequired": true,
+    "routeNameIsNotMountProof": true,
+    "publicAdmissionIsSeparate": true,
+    "forbidWikisource": true
+  },
+  "fixtures": [
+    {
+      "id": "gutenberg-josephus-antiquities",
+      "capability": "bibliographic-page",
+      "stage": "mounted",
+      "language": "en",
+      "kind": "book-html",
+      "title": "The Antiquities of the Jews",
+      "author": "Flavius Josephus",
+      "url": "https://www.gutenberg.org/ebooks/2848",
+      "expectContentType": "text/html"
+    },
+    {
+      "id": "loc-uta-evangeliary-iiif-source",
+      "capability": "iiif-visual-surface",
+      "stage": "fixture-found",
+      "language": "la",
+      "kind": "iiif-source",
+      "title": "Four Gospels: The Evangeliary of Uta",
+      "author": "Bavarian State Library / Library of Congress",
+      "url": "https://www.loc.gov/resource/gdcwdl.wdl_13479/?sp=27",
+      "expectContentType": "text/html"
+    },
+    {
+      "id": "ccel-augustine-confessions-pdf",
+      "capability": "pdfjs",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "book-pdf",
+      "title": "Confessions and Enchiridion",
+      "author": "Augustine of Hippo",
+      "url": "https://www.ccel.org/ccel/augustine/confessions.pdf",
+      "expectContentType": "application/pdf"
+    },
+    {
+      "id": "openlibrary-cover-augustine-fixture",
+      "capability": "cover-resolve",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "cover",
+      "title": "Open Library cover resolution fixture",
+      "author": "Open Library",
+      "url": "https://covers.openlibrary.org/b/isbn/0385472579-M.jpg?default=false",
+      "expectContentType": "image/"
+    },
+    {
+      "id": "openlibrary-work-edition-identity",
+      "capability": "zotero-translate",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "bibliographic-identity",
+      "title": "Open Library Work and Edition API fixture",
+      "author": "Open Library",
+      "url": "https://openlibrary.org/isbn/9780140328721.json",
+      "expectContentType": "application/json"
+    },
+    {
+      "id": "jesus-film-full-feature",
+      "capability": "video-surface",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "bible-film",
+      "title": "JESUS",
+      "author": "Jesus Film Project",
+      "url": "https://www.jesusfilm.org/watch/jesus.html",
+      "expectContentType": "text/html"
+    },
+    {
+      "id": "bibleproject-chinese-video-library",
+      "capability": "video-surface",
+      "stage": "fixture-found",
+      "language": "zh-Hans",
+      "kind": "bible-video-library",
+      "title": "BibleProject 中文视频",
+      "author": "BibleProject",
+      "url": "https://bibleproject.com/zh-hans/",
+      "expectContentType": "text/html"
+    },
+    {
+      "id": "bibleproject-chinese-article-source",
+      "capability": "readability",
+      "stage": "fixture-found",
+      "language": "zh-Hans",
+      "kind": "article-source",
+      "title": "BibleProject 中文资源页",
+      "author": "BibleProject",
+      "url": "https://bibleproject.com/zh-hans/",
+      "expectContentType": "text/html"
+    }
+  ]
+}
