@@ -8,7 +8,7 @@ ROOT=Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
 def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");TRAINING=_load("theology_training_action");DAWN=_load("dawn_publication_action");BUS=_load("capability_bus")
+ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");TRAINING=_load("theology_training_action");DAWN=_load("dawn_publication_action");DESIGNLIVE=_load("design_live_acceptance_action");BUS=_load("capability_bus")
 def _read_exact(stream,size):
  b=b""
  while len(b)<size:
@@ -32,8 +32,8 @@ def _with_id(req,res):
  return res
 def health_payload():
  production=[x["id"] for x in BUS.discover(PRODUCTION) if x.get("callable")]
- maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()));theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()));training=sorted(getattr(TRAINING,"CAPABILITIES",set()));dawn=sorted(getattr(DAWN,"CAPABILITIES",set()))
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology+training+dawn))}
+ maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()));theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()));training=sorted(getattr(TRAINING,"CAPABILITIES",set()));dawn=sorted(getattr(DAWN,"CAPABILITIES",set()));designlive=sorted(getattr(DESIGNLIVE,"CAPABILITIES",set()))
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology+training+dawn+designlive))}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "")
@@ -41,6 +41,7 @@ def route_payload(payload):
  if cap in getattr(THEOLOGY,"CAPABILITIES",set()):return _with_id(payload,THEOLOGY.execute(cap,payload.get("args") or {}))
  if cap in getattr(TRAINING,"CAPABILITIES",set()):return _with_id(payload,TRAINING.execute(cap,payload.get("args") or {}))
  if cap in getattr(DAWN,"CAPABILITIES",set()):return _with_id(payload,DAWN.execute(cap,payload.get("args") or {}))
+ if cap in getattr(DESIGNLIVE,"CAPABILITIES",set()):return _with_id(payload,DESIGNLIVE.execute(cap,payload.get("args") or {}))
  descriptor=BUS.resolve(cap,PRODUCTION) if cap else None
  if descriptor and descriptor.get("callable"):return _with_id(payload,BUS.call(cap,payload.get("args") or {},PRODUCTION,caller_product=payload.get("caller_product")))
  try:typed=ADAPTER.handle_companion_payload(payload)
