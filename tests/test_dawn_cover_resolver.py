@@ -18,6 +18,7 @@ class DawnCoverResolverTests(unittest.TestCase):
         fixture = next(item for item in data['fixtures'] if item['id'] == 'openlibrary-josephus-1900-cover')
         candidate = CoverResolver().resolve({'olid': fixture['edition']['openLibraryEditionId']})
         self.assertIsNotNone(candidate)
+        self.assertEqual(fixture['stage'], 'integration-proven')
         self.assertEqual(candidate.identifier_type, 'olid')
         self.assertEqual(candidate.identifier, 'OL24645724M')
         self.assertEqual(candidate.url, fixture['url'])
@@ -42,9 +43,11 @@ class DawnCoverResolverTests(unittest.TestCase):
         self.assertIn('image.src = sourceUrl.href', js)
         self.assertIn("root.dataset.viewerState = 'ready'", js)
 
-    def test_registry_does_not_promote_cover_before_live_evidence(self):
+    def test_registry_records_integration_without_claiming_mount(self):
         mount = SurfaceMountRegistry().get('cover-resolve')
-        self.assertEqual(mount.state, 'fixture-found')
+        self.assertEqual(mount.state, 'integration-proven')
+        self.assertEqual(mount.implementation, 'dore_core/capabilities/cover_resolver.py')
+        self.assertIn('openlibrary-josephus-1900-cover', mount.evidence)
         self.assertFalse(SurfaceMountRegistry().executable('cover-resolve'))
 
 
