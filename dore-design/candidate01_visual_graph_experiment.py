@@ -97,6 +97,14 @@ LIVING_CURRENT_STYLE = r'''<style id="candidate01-living-current-return">
 @media(prefers-reduced-motion:reduce){.products__grid .product{translate:0 0!important}}
 </style>'''
 
+FOUR_W_STYLE = r'''<style id="candidate01-four-w-style">
+.products__grid{position:relative}
+.candidate01-w-label{position:absolute;z-index:40;left:0;right:0;height:2.35rem;display:flex;align-items:center;padding:0 1.2vw;background:transparent;color:#CEBD74;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;white-space:nowrap;pointer-events:none;box-sizing:border-box}
+.candidate01-w-label.label-a{top:.35%}
+.candidate01-w-label.label-b{top:48.35%}
+@media(max-width:900px){.candidate01-w-label{font-size:12px;padding:0 .7rem}}
+</style>'''
+
 LIVING_CURRENT_SCRIPT = r'''<script id="candidate01-living-current-runtime">
 (()=>{
   const cards=[...document.querySelectorAll('.products__grid .product')];
@@ -153,6 +161,25 @@ LIVING_CURRENT_SCRIPT = r'''<script id="candidate01-living-current-runtime">
 </script>'''
 
 
+def _four_w_script(labels):
+    first, second = labels
+    labels_js = repr([first, second])
+    return f'''<script id="candidate01-four-w-runtime">
+(()=>{{
+  const grid=document.querySelector('.products__grid');
+  if(!grid||grid.dataset.candidate01FourW==='true')return;
+  grid.dataset.candidate01FourW='true';
+  const labels={labels_js};
+  labels.forEach((text,i)=>{{
+    const el=document.createElement('div');
+    el.className='candidate01-w-label '+(i===0?'label-a':'label-b');
+    el.textContent=text;
+    grid.appendChild(el);
+  }});
+}})();
+</script>'''
+
+
 def _page2_motion_source(doc: str) -> str:
     """Patch only Candidate 01 screen 2 back to the four-pane Codrops assembly contract."""
     replacements = (
@@ -184,8 +211,8 @@ def focus_screen(screen_no, labels):
     doc = codrops_site_8x5.render(edit=False)
     if screen_no == 2:
         doc = _page2_motion_source(doc)
-    doc = doc.replace('</head>', LIVING_CURRENT_STYLE + '</head>', 1)
-    tail = GEOMETRY_LOCK + (PAGE2_ASSEMBLY_FIX if screen_no == 2 else '') + LIVING_CURRENT_SCRIPT
+    doc = doc.replace('</head>', LIVING_CURRENT_STYLE + FOUR_W_STYLE + '</head>', 1)
+    tail = GEOMETRY_LOCK + (PAGE2_ASSEMBLY_FIX if screen_no == 2 else '') + LIVING_CURRENT_SCRIPT + _four_w_script(labels)
     doc = doc.replace('</body>', tail + '</body>', 1)
     srcdoc = html_lib.escape(doc, quote=True)
     return (
