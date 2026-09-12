@@ -23,6 +23,16 @@ jobs:
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+      - name: Audit source architecture before build
+        run: |
+          test -f hugo.toml
+          test -f content/dawn-library/_index.md
+          test -f layouts/dawn-library/list.html
+          test -f static/dawn-library/canonical-index.json
+          grep -q 'dawn-library/' layouts/partials/header.html
+          grep -q 'dawn-library/formal-edition/phase4/' layouts/dawn-library/list.html
+          test "$(find static -type f -name canonical-index.json | wc -l | tr -d ' ')" = "1"
+          test "$(find . -maxdepth 2 -type f -name hugo.toml | wc -l | tr -d ' ')" = "1"
       - name: Install Hugo
         run: |
           sudo apt-get update -qq
