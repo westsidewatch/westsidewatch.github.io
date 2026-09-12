@@ -76,6 +76,48 @@ def _tensor(torch, array, device, channels=False):
     return t.unsqueeze(0).unsqueeze(0)
 
 
+def _load_three_stage_models(torch, networks_path, edge_checkpoint, depth_checkpoint, color_checkpoint, device):
+    mod = _load_networks(networks_path)
+    edge_model = mod.Inpaint_Edge_Net(init_weights=True)
+    depth_model = mod.Inpaint_Depth_Net()
+    color_model = mod.Inpaint_Color_Net()
+    map_location = torch.device(device)
+    edge_model.load_state_dict(torch.load(edge_checkpoint, map_location=map_location, weights_only=True))
+    depth_model.load_state_dict(torch.load(depth_checkpoint, map_location=map_location, weights_only=True), strict=True)
+    color_model.load_state_dict(torch.load(color_checkpoint, map_location=map_location, weights_only=True))
+    edge_model.to(device).eval(); depth_model.to(device).eval(); color_model.to(device).eval()
+    return edge_model, depth_model, color_model
+
+
+def _three_stage_infer(torch, edge_model, depth_model, color_model, rgb, depth, hole, known_edge, device, edge_threshold=.002):
+    context = 1.0 - hole
+    input_rgb = rgb * context[..., None]
+    safe_depth = np.clip(depth.astype(np.float32), 1e-6, 1.0)
+    log_safe = np.log(safe_depth)
+    mean_log = float(np.mean(log_safe[context > .5])) if np.any(context > .5) else 0.0
+    zero_mean_depth = (log_safe - mean_log) * context
+    disp = (1.0 / safe_depth) * context
+    dmax = float(disp.max())
+    if dmax > 0: disp /= dmax
+
+    t_mask = _tensor(torch, hole, device)
+    t_context = _tensor(torch, context, device)
+    t_rgb = _tensor(torch, input_rgb, device, channels=True)
+    t_disp = _tensor(torch, disp, device)
+    t_edge = _tensor(torch, known_edge * context, device)
+    t_zero = _tensor(torch, zero_mean_depth, device)
+    with torch.inference_mode():
+        edge_raw = edge_model.forward_3P(t_mask, t_context, t_rgb, t_disp, t_edge, unit_length=128, cuda=device)
+        learned_edge = (edge_raw > edge_threshold).float() * t_mask + t_edge
+        depth_raw = depth_model.forward_3P(t_mask, t_context, t_zero, learned_edge, unit_length=128, cuda=device)
+        color_raw = color_model.forward_3P(t_mask, t_context, t_rgb, learned_edge, unit_length=128, cuda=device)
+
+    predicted_depth = np.exp(depth_raw.squeeze().cpu().numpy() + mean_log).astype(np.float32)
+    predicted_rgb = np.clip(color_raw.squeeze(0).permute(1, 2, 0).cpu().numpy(), 0.0, 1.0)
+    edge_np = (learned_edge.squeeze().cpu().numpy() > .5).astype(np.uint8) * 255
+    return predicted_rgb, predicted_depth, edge_np
+
+
 def learned_three_stage_complete(
     src,
     dep,
@@ -102,49 +144,14 @@ def learned_three_stage_complete(
     if not np.any(mask):
         return HiddenSurfaceResult(base.rgb, base.depth, base.mask, base.edge, 'three-stage-empty')
 
-    mod = _load_networks(networks_path)
-    edge_model = mod.Inpaint_Edge_Net(init_weights=True)
-    depth_model = mod.Inpaint_Depth_Net()
-    color_model = mod.Inpaint_Color_Net()
-
-    map_location = torch.device(device)
-    edge_model.load_state_dict(torch.load(edge_checkpoint, map_location=map_location, weights_only=True))
-    depth_model.load_state_dict(torch.load(depth_checkpoint, map_location=map_location, weights_only=True), strict=True)
-    color_model.load_state_dict(torch.load(color_checkpoint, map_location=map_location, weights_only=True))
-    edge_model.to(device).eval(); depth_model.to(device).eval(); color_model.to(device).eval()
-
-    hole = mask.astype(np.float32)
-    context = 1.0 - hole
+    edge_model, depth_model, color_model = _load_three_stage_models(
+        torch, networks_path, edge_checkpoint, depth_checkpoint, color_checkpoint, device
+    )
     rgb = src.astype(np.float32) / 255.0
-    input_rgb = rgb * context[..., None]
-
-    # Match the original inference convention without adopting its mesh system.
-    safe_depth = np.clip(dep.astype(np.float32), 1e-6, 1.0)
-    log_depth = np.log(safe_depth) * context
-    mean_log = float(np.mean(np.log(safe_depth[context > .5]))) if np.any(context > .5) else 0.0
-    zero_mean_depth = (log_depth - mean_log) * context
-    disp = (1.0 / safe_depth) * context
-    dmax = float(disp.max())
-    if dmax > 0: disp /= dmax
-
-    known_edge = (topo['edge'].astype(np.float32) / 255.0) * context
-    t_mask = _tensor(torch, hole, device)
-    t_context = _tensor(torch, context, device)
-    t_rgb = _tensor(torch, input_rgb, device, channels=True)
-    t_disp = _tensor(torch, disp, device)
-    t_edge = _tensor(torch, known_edge, device)
-    t_zero = _tensor(torch, zero_mean_depth, device)
-
-    with torch.inference_mode():
-        edge_raw = edge_model.forward_3P(t_mask, t_context, t_rgb, t_disp, t_edge, unit_length=128, cuda=device)
-        learned_edge = (edge_raw > edge_threshold).float() * t_mask + t_edge
-        depth_raw = depth_model.forward_3P(t_mask, t_context, t_zero, learned_edge, unit_length=128, cuda=device)
-        color_raw = color_model.forward_3P(t_mask, t_context, t_rgb, learned_edge, unit_length=128, cuda=device)
-
-    predicted_depth = np.exp(depth_raw.squeeze().cpu().numpy() + mean_log).astype(np.float32)
-    predicted_rgb = color_raw.squeeze(0).permute(1, 2, 0).cpu().numpy()
-    predicted_rgb = np.clip(predicted_rgb, 0.0, 1.0)
-    edge_np = (learned_edge.squeeze().cpu().numpy() > .5).astype(np.uint8) * 255
+    known_edge = topo['edge'].astype(np.float32) / 255.0
+    predicted_rgb, predicted_depth, edge_np = _three_stage_infer(
+        torch, edge_model, depth_model, color_model, rgb, dep, mask.astype(np.float32), known_edge, device, edge_threshold
+    )
 
     # Geometry remains authoritative: learned content may fill a hidden surface,
     # but cannot move it in front of the local occluder/background constraint.
@@ -163,3 +170,78 @@ def learned_three_stage_complete(
     out_rgb[~mask] = src[~mask]
     out_depth[~mask] = dep[~mask]
     return HiddenSurfaceResult(out_rgb, out_depth, base.mask, edge_np, '3d-photo-edge-depth-color')
+
+
+def learned_three_stage_extend_canvas(
+    src,
+    dep,
+    pad,
+    networks_path: Path,
+    edge_checkpoint: Path,
+    depth_checkpoint: Path,
+    color_checkpoint: Path,
+    device='cpu',
+    behind_margin=.025,
+    edge_threshold=.002,
+    seam_pixels=8,
+):
+    """Create one persistent learned world outside the original image rectangle.
+
+    The center rectangle is immutable source authority. Only the padded border is
+    unknown/model-owned. This is world completion, not per-frame synthesis.
+    """
+    import torch
+
+    h, w = dep.shape
+    ph, pw = h + 2 * pad, w + 2 * pad
+    hole = np.ones((ph, pw), np.float32)
+    hole[pad:pad+h, pad:pad+w] = 0.0
+
+    # The model sees the real artwork only in the canonical center. RGB outside
+    # starts empty; replicated depth is geometry context, never accepted as art.
+    rgb = np.zeros((ph, pw, 3), np.float32)
+    rgb[pad:pad+h, pad:pad+w] = src.astype(np.float32) / 255.0
+    depth_ref = cv2.copyMakeBorder(dep.astype(np.float32), pad, pad, pad, pad, cv2.BORDER_REPLICATE)
+
+    gray = cv2.cvtColor(src, cv2.COLOR_BGR2GRAY)
+    source_edge = cv2.Canny(gray, 60, 140).astype(np.float32) / 255.0
+    known_edge = np.zeros((ph, pw), np.float32)
+    known_edge[pad:pad+h, pad:pad+w] = source_edge
+
+    edge_model, depth_model, color_model = _load_three_stage_models(
+        torch, networks_path, edge_checkpoint, depth_checkpoint, color_checkpoint, device
+    )
+    predicted_rgb, predicted_depth, edge_np = _three_stage_infer(
+        torch, edge_model, depth_model, color_model, rgb, depth_ref, hole, known_edge, device, edge_threshold
+    )
+
+    model_u8 = np.uint8(np.round(predicted_rgb * 255.0))
+    out_rgb = model_u8.copy()
+    out_rgb[pad:pad+h, pad:pad+w] = src
+
+    # Keep the learned border behind the nearest canonical boundary geometry.
+    target_back = np.clip(depth_ref - behind_margin, 0.0, 1.0)
+    candidate_depth = np.minimum(np.clip(predicted_depth, 0.0, 1.0), target_back)
+    finite = np.isfinite(candidate_depth) & (candidate_depth > 0)
+    out_depth = target_back.copy()
+    border = hole > .5
+    out_depth[border & finite] = candidate_depth[border & finite]
+    out_depth[pad:pad+h, pad:pad+w] = dep
+
+    # Narrow seam admission: the model remains primary. A small alpha ramp at
+    # the four source boundaries suppresses a hard chromatic cut without turning
+    # the border back into a reflected/stretched world.
+    seam_pixels = max(0, int(seam_pixels))
+    if seam_pixels:
+        nearest = cv2.copyMakeBorder(src, pad, pad, pad, pad, cv2.BORDER_REPLICATE)
+        yy, xx = np.indices((ph, pw))
+        dx = np.maximum(np.maximum(pad - xx, xx - (pad + w - 1)), 0)
+        dy = np.maximum(np.maximum(pad - yy, yy - (pad + h - 1)), 0)
+        dist = np.maximum(dx, dy).astype(np.float32)
+        band = border & (dist <= seam_pixels)
+        alpha = np.clip(dist / float(seam_pixels), 0.0, 1.0)[..., None]
+        blended = np.uint8(np.round(nearest.astype(np.float32) * (1.0 - alpha) + out_rgb.astype(np.float32) * alpha))
+        out_rgb[band] = blended[band]
+
+    mask = (border.astype(np.uint8) * 255)
+    return HiddenSurfaceResult(out_rgb, out_depth.astype(np.float32), mask, edge_np, '3d-photo-learned-extended-world')
