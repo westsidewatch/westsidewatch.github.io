@@ -100,7 +100,7 @@ def surface_item_work_id(item: dict, by_signature: dict[str, str]) -> str:
     sig = signature(title, author)
     if sig in by_signature:
         return by_signature[sig]
-    seed = str(item.get('id') or sig or json.dumps(item, ensure_ascii=False, sort_keys=True))
+    seed = sig if sig != '::' else str(item.get('id') or json.dumps(item, ensure_ascii=False, sort_keys=True))
     return stable_dawn_work_id(seed)
 
 
