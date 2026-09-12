@@ -32,12 +32,13 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
 
-        self.assertFalse(registry.executable('iiif-visual-surface'))
-        self.assertEqual(registry.state('iiif-visual-surface'), 'integration-proven')
-        self.assertIsNotNone(registry.get('iiif-visual-surface').implementation)
-        self.assertIsNotNone(registry.get('iiif-visual-surface').evidence)
+        for adapter in ('iiif-visual-surface', 'pdfjs'):
+            self.assertFalse(registry.executable(adapter))
+            self.assertEqual(registry.state(adapter), 'integration-proven')
+            self.assertIsNotNone(registry.get(adapter).implementation)
+            self.assertIsNotNone(registry.get(adapter).evidence)
 
-        for adapter in ('pdfjs', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
+        for adapter in ('zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'fixture-found')
             self.assertIsNotNone(registry.get(adapter).evidence)
@@ -85,7 +86,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
 
         pdf = resolver.plan('https://example.org/book.pdf')
         self.assertFalse(pdf.executable)
-        self.assertEqual(pdf.mount_state, 'fixture-found')
+        self.assertEqual(pdf.mount_state, 'integration-proven')
         self.assertEqual(pdf.adapter, 'pdfjs')
 
     def test_real_discovery_corpus_routes_without_mutation(self):
