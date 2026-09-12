@@ -58,6 +58,40 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 })();
 </script>'''
 
+PAGE2_ASSEMBLY_FIX = r'''<style id="candidate01-page2-assembly-lock">
+/* Page 2 only: keep the final four-pane window below the old high-biased lock.
+   Both preview halves inherit one master rectangle so their internal seam stays exact. */
+html[data-candidate01-page="2"] .products__preview{--candidate01-assembly-y:clamp(30px,4.6vh,52px)}
+html[data-candidate01-page="2"] .product-preview{backface-visibility:hidden;transform-origin:50% 50%;}
+html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50%;}
+</style>
+<script id="candidate01-page2-assembly-runtime">
+(()=>{
+  document.documentElement.dataset.candidate01Page='2';
+  const baseSync=window.__candidate01SyncGeometry;
+  if(!baseSync)return;
+  const lock=()=>{
+    baseSync();
+    const layer=document.querySelector('.products__preview');
+    const left=document.querySelector('.product-preview.--left');
+    const right=document.querySelector('.product-preview.--right');
+    if(!layer||!left||!right)return;
+    const dy=Math.max(30,Math.min(52,innerHeight*.046));
+    const top=parseFloat(layer.style.top)||0;
+    layer.style.top=`${top+dy}px`;
+    /* One final master rectangle: no independent vertical drift at the lock point. */
+    left.style.top='0px'; right.style.top='0px';
+    left.style.bottom='auto'; right.style.bottom='auto';
+    left.style.transform='translate3d(0,0,0)';
+    right.style.transform='translate3d(0,0,0)';
+    document.documentElement.dataset.candidate01AssemblyLock=`down-${Math.round(dy)}px`;
+  };
+  window.__candidate01SyncGeometry=lock;
+  requestAnimationFrame(()=>requestAnimationFrame(lock));
+  window.addEventListener('resize',lock,{passive:true});
+})();
+</script>'''
+
 LIVING_CURRENT_STYLE = r'''<style id="candidate01-living-current-return">
 /* Keep the four source cards visually present under the Codrops preview mask.
    Web Animations may request opacity:0; this visibility lock prevents the blank-hole regression. */
@@ -125,7 +159,8 @@ LIVING_CURRENT_SCRIPT = r'''<script id="candidate01-living-current-runtime">
 def focus_screen(screen_no, labels):
     doc = codrops_site_8x5.render(edit=False)
     doc = doc.replace('</head>', LIVING_CURRENT_STYLE + '</head>', 1)
-    doc = doc.replace('</body>', GEOMETRY_LOCK + LIVING_CURRENT_SCRIPT + '</body>', 1)
+    tail = GEOMETRY_LOCK + (PAGE2_ASSEMBLY_FIX if screen_no == 2 else '') + LIVING_CURRENT_SCRIPT
+    doc = doc.replace('</body>', tail + '</body>', 1)
     srcdoc = html_lib.escape(doc, quote=True)
     return (
         '<section class="candidate-focus-screen" data-current="focus" data-layer="first" '
