@@ -132,8 +132,8 @@ jobs:
           docker run -d --rm --name dawn-zotero -p 1969:1969 zotero/translation-server
       - name: Wait for real Zotero translator readiness
         run: |
-          for i in $(seq 1 30); do
-            if curl -fsS -X POST -H 'Content-Type: text/plain' --data '0385472579' http://127.0.0.1:1969/search >/tmp/zotero-ready.json; then
+          for i in $(seq 1 20); do
+            if curl --max-time 15 --connect-timeout 5 -fsS -X POST -H 'Content-Type: text/plain' --data '0385472579' http://127.0.0.1:1969/search >/tmp/zotero-ready.json; then
               test -s /tmp/zotero-ready.json && exit 0
             fi
             sleep 3
