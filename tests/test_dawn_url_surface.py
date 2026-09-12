@@ -27,14 +27,14 @@ class DawnUrlSurfaceTests(unittest.TestCase):
 
     def test_mount_registry_truth(self):
         registry = SurfaceMountRegistry()
-        mounted = ('bibliographic-page', 'pdfjs', 'book-reader', 'video-surface')
+        mounted = ('bibliographic-page', 'iiif-visual-surface', 'pdfjs', 'book-reader', 'video-surface')
         for adapter in mounted:
             self.assertEqual(registry.state(adapter), 'mounted')
             self.assertTrue(registry.executable(adapter))
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
 
-        proven = ('iiif-visual-surface', 'cover-resolve', 'zotero-translate', 'readability')
+        proven = ('cover-resolve', 'zotero-translate', 'readability')
         for adapter in proven:
             self.assertEqual(registry.state(adapter), 'integration-proven')
             self.assertFalse(registry.executable(adapter))
