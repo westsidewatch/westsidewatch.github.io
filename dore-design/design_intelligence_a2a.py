@@ -3,8 +3,8 @@
 
 This module owns no model client. It persists the bounded design request,
 registers a durable A2A execution task, launches the local Core worker as a
-separate process, verifies PASS evidence, then writes the observed critic winner
-back through the canonical Phase 8 taste-memory API.
+separate process, verifies PASS evidence, then admits only bias-resistant
+comparison outcomes into the canonical taste-memory API.
 """
 from __future__ import annotations
 
@@ -71,7 +71,7 @@ def explore(payload: dict) -> dict:
 
     task_id = 'design-explore-' + uuid.uuid4().hex
     request = {
-        'schema': 'dore.design-intelligence-a2a-request.v1',
+        'schema': 'dore.design-intelligence-a2a-request.v2',
         'task_id': task_id,
         'surface_id': payload.get('surface_id'),
         'surface_family': payload.get('surface_family'),
@@ -82,6 +82,7 @@ def explore(payload: dict) -> dict:
         'constraints': payload.get('constraints') or [],
         'preference_pack': routed.get('preference_pack') or {},
         'inference_boundary': 'core-a2a-only',
+        'judge_policy': 'blind-order-reversal-consensus-v1',
     }
     request_path = _write_request(task_id, request)
     task = plane.register({
@@ -103,27 +104,39 @@ def explore(payload: dict) -> dict:
     by_id = {str(v.get('id')): v for v in variants if isinstance(v, dict)}
     if set(by_id) != {'A', 'B'}:
         raise RuntimeError('design_a2a_exact_variants_missing')
-    winner = str(critic.get('winner') or '')
-    if winner not in by_id:
-        raise RuntimeError('design_a2a_winner_missing')
+    votes = critic.get('votes') or []
+    if len(votes) != 2 or any(v.get('winner') not in {'A', 'B'} for v in votes):
+        raise RuntimeError('design_a2a_blind_votes_missing')
 
-    observed = intelligence.record_observed_comparison({
-        **payload,
-        'candidate_a': 'A',
-        'candidate_b': 'B',
-        'winner': winner,
-        'winner_reason': str(critic.get('winner_reason') or ''),
-        'loser_reason': str(critic.get('loser_reason') or ''),
-        'brand_fit': critic.get('brand_fit'),
-        'usability_floor_passed': bool(critic.get('usability_floor_passed')),
-        'confidence': float(critic.get('confidence', 0.5)),
-        'evidence_refs': [
-            'a2a-task:' + task_id,
-            'a2a-artifact:' + str(artifact.get('sha256') or 'recorded'),
-            'visual-critic:' + winner,
-        ],
-        'scope': payload.get('scope') or 'local',
-    })
+    consensus = bool(critic.get('consensus'))
+    memory_admission = bool(critic.get('memory_admission'))
+    winner = str(critic.get('winner') or '') if consensus else ''
+    observed = None
+    route_after = None
+    if consensus and memory_admission:
+        if winner not in by_id:
+            raise RuntimeError('design_a2a_consensus_winner_missing')
+        observed = intelligence.record_observed_comparison({
+            **payload,
+            'candidate_a': 'A',
+            'candidate_b': 'B',
+            'winner': winner,
+            'winner_reason': str(critic.get('winner_reason') or ''),
+            'loser_reason': str(critic.get('loser_reason') or ''),
+            'brand_fit': critic.get('brand_fit'),
+            'usability_floor_passed': bool(critic.get('usability_floor_passed')),
+            'confidence': float(critic.get('confidence', 0.5)),
+            'evidence_refs': [
+                'a2a-task:' + task_id,
+                'a2a-artifact:' + str(artifact.get('sha256') or 'recorded'),
+                'blind-judge:2',
+                'order-bias-check:pass',
+                'visual-critic:' + winner,
+            ],
+            'scope': payload.get('scope') or 'local',
+        })
+        route_after = observed.get('updated')
+
     return {
         'ok': True,
         'decision': 'explore',
@@ -135,10 +148,16 @@ def explore(payload: dict) -> dict:
         'model': artifact.get('model') or worker_result.get('model'),
         'variants': variants,
         'critic': critic,
-        'winner': winner,
+        'judge_count': len(votes),
+        'blind_order_reversal': True,
+        'consensus': consensus,
+        'winner': winner or None,
+        'memory_admitted': bool(observed),
         'writeback': observed,
+        'writeback_block_reason': None if observed else ('judge_disagreement' if not consensus else 'usability_or_brand_floor_failed'),
+        'requires_more_evidence': not bool(observed),
         'route_before': routed,
-        'route_after': observed.get('updated'),
+        'route_after': route_after,
         'production_promoted': False,
         'inference_boundary': 'core-a2a-only',
     }
@@ -148,11 +167,14 @@ def health() -> dict:
     worker = LOCAL_DORE / 'design_intelligence_a2a_worker.py'
     return {
         'ok': worker.exists(),
-        'phase': 9,
-        'policy': 'dore-design-core-a2a-loop-v1',
+        'phase': 10,
+        'policy': 'dore-design-blind-consensus-loop-v1',
         'worker_available': worker.exists(),
         'inference_boundary': 'core-a2a-only',
         'design_process_has_model_client': False,
+        'blind_order_reversal': True,
+        'minimum_judges': 2,
+        'taste_writeback_requires_consensus': True,
         'fixture_mode': os.environ.get('DORE_DESIGN_A2A_FIXTURE') == '1',
         'production_promotion': False,
     }
