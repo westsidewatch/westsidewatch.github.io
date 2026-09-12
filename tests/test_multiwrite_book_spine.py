@@ -13,8 +13,9 @@ def test_book_compile_is_a_core_discoverable_capability():
     entry = next(item for item in REGISTRY['capabilities'] if item['id'] == 'publishing.book-compile')
     assert entry['service'] == 'publishing'
     assert entry['consumers'] == ['multiwrite']
-    assert entry['produces'] == ['BookIntent', 'BookModel', 'BookBuild']
+    assert entry['produces'] == ['BookIntent', 'BookModel', 'EditorialReport', 'BookBuild']
     assert CAPABILITY['owner'] == 'dore-core'
+    assert CAPABILITY['outputs'] == ['BookIntent', 'BookModel', 'EditorialReport', 'BookBuild']
 
 
 def test_book_model_is_canonical_before_artifacts():
@@ -49,3 +50,9 @@ def test_book_spine_preserves_current_multiwrite_storage_contract():
 def test_auto_repair_policy_is_bounded():
     assert CAPABILITY['policy']['max_auto_repair_attempts'] == 3
     assert "maxAutoRepairAttempts: 3" in BOOK_MODEL
+
+
+def test_editorial_gate_is_before_theology_and_build():
+    assert CAPABILITY['pipeline'].index('editorial-gate') < CAPABILITY['pipeline'].index('theology-gate')
+    assert CAPABILITY['pipeline'].index('editorial-gate') < CAPABILITY['pipeline'].index('publication-build')
+    assert CAPABILITY['editorial_gate']['report_schema'] == 'dore.editorial-report.v1'
