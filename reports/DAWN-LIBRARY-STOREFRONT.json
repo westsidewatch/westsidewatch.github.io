@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-12T07:49:10.645811+00:00",
+  "generatedAt": "2026-09-12T11:00:13.645267+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -19,18 +19,6 @@
       "title": "開放學術 · 聖經世界與考古",
       "books": 24,
       "source": "DOAB"
-    },
-    {
-      "id": "internet-archive-原版古籍-聖經歷史與地理",
-      "title": "原版古籍 · 聖經歷史與地理",
-      "books": 20,
-      "source": "Internet Archive"
-    },
-    {
-      "id": "internet-archive-原版古籍-教會歷史",
-      "title": "原版古籍 · 教會歷史",
-      "books": 20,
-      "source": "Internet Archive"
     },
     {
       "id": "gutenberg-bible-christianity",
@@ -69,26 +57,33 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 214,
-  "sourceCovers": 159,
+  "mappedBooks": 174,
+  "sourceCovers": 119,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
-    "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
-    "queriedThisRun": 60,
+    "queriedThisRun": 1,
     "resolved": 118,
     "coversAdded": 61,
     "internetArchiveLinks": 48,
-    "cacheEntries": 178
+    "cacheEntries": 179
   },
   "errors": [
     {
       "source": "Wikisource",
       "error": "empty-shelf"
+    },
+    {
+      "source": "Internet Archive Bible history",
+      "error": "URLError: <urlopen error [Errno 111] Connection refused>"
+    },
+    {
+      "source": "Internet Archive church history",
+      "error": "HTTPError: HTTP Error 502: Bad Gateway"
     }
   ],
   "contentDownloaded": false
