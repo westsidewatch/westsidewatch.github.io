@@ -1,51 +1,30 @@
-# DORÉ WESTSIDE CONTEXT PROJECTION — EVIDENCE LEDGER
+# DORÉ WESTSIDE CONTEXT PROJECTION — SUPERSEDED DUPLICATE / CORRECTION RECORD
 
 Date: 2026-09-11
-Status: ACTIVE / BOUNDED FOUNDATION EVIDENCE
+Status: `SUPERSEDED_DUPLICATE / CORRECTION_RECORD`
 Sweep: `DORÉ-MEMORY-CONSOLIDATION-SWEEP-01`
+Canonical ledger: `dore-core/projects/DORÉ-WESTSIDE-CONTEXT-ADAPTER-EVIDENCE-LEDGER-2026-09-08.md`
+Canonical reconciliation: `dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-72-2026-09-11.md`
 
-## Scope
+## Correction
 
-This ledger reconciles the repository's minimal Westside Context projection: the read-only compiler/retriever that derives a local SQLite/FTS5 context index from canonical Westside architecture Markdown without changing the public site or replacing Doré Knowledge/Memory.
+This file was created from an incomplete evidence pass that correctly identified the implemented read-only SQLite/FTS5 Context projection but did not first reconcile the already-existing canonical Context evidence ledger and earlier Sweep history.
 
-## Evidence reviewed
+The governing interpretation is the 2026-09-08 canonical ledger:
 
-- `dore-core/context/README.md`
-- `dore_core/context/compiler.py`
-- `dore_core/context/packet.py`
-- `tests/benchmark_westside_context.py`
+- the minimal Westside Context adapter milestone is `COMPLETED_REVISIT_CANDIDATE / MAINTENANCE`, not merely an unclassified implemented foundation;
+- executable evidence exists beyond the benchmark harness alone, including focused compiler/hierarchy/provenance tests, capability-boundary tests, merged PR #409, merged PR #412, CJK natural-question regression and hierarchy-boundary repair;
+- stronger current/universal retrieval acceptance still remains evidence-gated because a fresh persisted current-head benchmark/acceptance record is still desirable;
+- no heavier vector/graph/third-party memory architecture is justified absent measured retrieval need.
 
-## What is implemented
+## Why retained
 
-1. Canonical Markdown remains source of truth. The projection records source path and SHA-256 and never writes back to the architecture source.
-2. The implementation is dependency-light: Python stdlib + SQLite/FTS5, with a CJK substring fallback for the known `unicode61` segmentation limitation.
-3. Compiled nodes preserve heading level, parent relation, source order, complete section content, source path and source hash.
-4. The canonical site architecture receives one bounded structural adaptation: top-level descriptive bullets may be promoted to derived child nodes while indented evidence remains inside the parent block.
-5. Retrieval can return both direct nodes and provenance-bearing `ContextPacket` values containing canonical ancestor chains.
-6. The serialized packet boundary is explicit and read-only data, not an instruction or mutation capability.
-7. A real benchmark script exists with 12 retrieval cases plus 3 ancestor-chain context cases against `docs/MASTER_SITE_ARCHITECTURE.md`.
+Retain this file only as provenance showing the corrected false-negative discovery path. It must not be used as a competing operational ledger or as evidence that the Context milestone is only `CORE/CONTINUOUS / IMPLEMENTED_FOUNDATION`.
 
-## Evidence boundary
+## Generalized sweep lesson
 
-The repository proves a real implemented local context-projection capability and a concrete benchmark contract. This bounded sweep did not find a persisted benchmark-run artifact proving the current repository head passes all 12 retrieval and 3 context-chain cases. The existence of the benchmark script must therefore not be promoted into a current `VERIFIED_COMPLETE` quality claim.
-
-The architecture also intentionally rejects premature vector/database expansion: a vector database or third-party memory framework is not justified until measured retrieval gaps require one. This is a durable lightweight-system principle consistent with `能力越大、負擔越小`.
-
-## Current classification
-
-- Westside Context projection implementation: `CORE/CONTINUOUS / IMPLEMENTED_FOUNDATION`
-- current benchmark acceptance: `UNKNOWN_NEEDS_EVIDENCE`
-- public-site architecture impact: none; `docs/MASTER_SITE_ARCHITECTURE.md` remains canonical
-- replacement of Doré Knowledge/Memory: explicitly out of scope
-
-## Smallest useful next evidence
-
-Execute `tests/benchmark_westside_context.py` against the current canonical `docs/MASTER_SITE_ARCHITECTURE.md`, persist the source SHA, 12/12 retrieval result and 3/3 ancestor-chain result, and keep that result as a regression artifact. If any case fails, repair the smallest retrieval/compiler issue first rather than adding a heavier retrieval stack by default.
-
-## Revisit trigger
-
-Revisit the architecture only if representative real queries expose a retrieval/context gap that cannot be solved by the present SQLite/FTS5 + bounded CJK fallback model, or if canonical architecture structure changes make the derived-node rules brittle.
+Before declaring evidence missing, inspect repository-level tests, canonical prior Sweep checkpoints, existing evidence ledgers, commit/PR history and similarly named source families. A bounded directory search is not sufficient proof of non-existence.
 
 ## P01 isolation
 
-No P01 subtitle state, ordering, blocker, deployment or audio/transcription dependency was modified by this reconciliation.
+No P01 subtitle state, ordering, blocker, deployment or audio/transcription dependency was modified by this correction.
