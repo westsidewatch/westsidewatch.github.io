@@ -1,0 +1,78 @@
+{
+  "schema": "dore.global-design-curriculum.v1",
+  "round": 2,
+  "derivedFrom": "round1-capability-gap",
+  "principle": "more-capability-less-burden",
+  "goal": "increase cross-domain transfer rather than corpus size",
+  "priorityCapabilities": [
+    "editorial-hierarchy",
+    "typography",
+    "negative-space",
+    "image-text-relationship",
+    "sequence",
+    "spatial-thinking",
+    "responsive-translation",
+    "cross-domain-transfer"
+  ],
+  "curriculum": [
+    {
+      "domain": "editorial-typography",
+      "priority": 1,
+      "sourceClasses": ["museum-authority", "library-authority", "curated-design-archive"],
+      "learn": ["grid", "hierarchy", "type-scale", "rhythm", "negative-space", "image-text-relationship"],
+      "targetTransfer": ["journal", "dore-folio", "web"]
+    },
+    {
+      "domain": "architecture-interior-furniture",
+      "priority": 2,
+      "sourceClasses": ["architecture-authority", "museum-authority", "open-survey"],
+      "learn": ["threshold", "axis", "circulation", "human-scale", "light", "modularity", "spatial-hierarchy"],
+      "targetTransfer": ["church", "homepage", "one", "responsive-layout"],
+      "researchLine": "光之教會"
+    },
+    {
+      "domain": "photography-illustration",
+      "priority": 3,
+      "sourceClasses": ["museum-authority", "library-authority", "open-collection"],
+      "learn": ["focal-light", "crop-safety", "direction", "negative-space", "visual-weight"],
+      "targetTransfer": ["visual-fuzzy-search", "editorial-director", "design-cover"]
+    },
+    {
+      "domain": "web-interaction-motion",
+      "priority": 4,
+      "sourceClasses": ["curated-web-history", "contemporary-reference"],
+      "learn": ["responsive-translation", "motion-rhythm", "focus-transition", "interaction-hierarchy"],
+      "rightsMode": "reference-analysis-only-by-default",
+      "targetTransfer": ["shared-surface-engine", "homepage", "church"]
+    },
+    {
+      "domain": "christian-screen",
+      "priority": 5,
+      "scope": ["film", "series", "miniseries", "short-form", "documentary"],
+      "generalFilmExplorationLocked": true,
+      "learn": ["shot-sequence", "establishing-medium-close", "light", "blocking", "visual-narrative"],
+      "theologyMode": "fail-closed",
+      "targetTransfer": ["storybook", "editorial-sequence", "dawn-screen-library"]
+    }
+  ],
+  "admission": {
+    "provenanceRequired": true,
+    "rightsRequired": true,
+    "theologyFailClosed": true,
+    "religiousMaterialOutsideBoundary": "design-only-semantic-isolation",
+    "generatedAuthorityPromotion": false
+  },
+  "selection": {
+    "preferDiversityOverVolume": true,
+    "semanticDedup": true,
+    "crossDomainCoverageRequired": true,
+    "stopResourceClassWhenCapabilityDeltaIsZero": true
+  },
+  "exitGate": {
+    "requiresCapabilityDelta": true,
+    "requiresCrossDomainTransferDelta": true,
+    "requiresTheologyBoundaryPass": true,
+    "requiresEfficiencyNonRegression": true,
+    "nextRoundDerivedFromRemainingGaps": true
+  }
+}

@@ -79,6 +79,24 @@ jobs:
         run: node scripts/dore/storybook-art-direction-loop-selftest.mjs
       - name: Global Design Nourishment Round 1 gate
         run: node scripts/dore/global-design-nourishment-selftest.mjs
+      - name: Global Design Nourishment Round 2 curriculum gate
+        run: node scripts/dore/global-design-round2-selftest.mjs
+      - name: Checkout AIC authority corpus
+        uses: actions/checkout@v4
+        with:
+          repository: art-institute-of-chicago/api-data
+          path: aic-api-data
+          fetch-depth: 1
+      - name: Global Design Nourishment Round 2 corpus run
+        env:
+          DORE_CANDIDATE_TARGET: '100000'
+          DORE_RETAIN_TARGET: '3000'
+        run: node scripts/dore/global-design-round2-corpus-run.mjs aic-api-data/getting-started/allArtworks.jsonl
+      - name: Upload Round 2 corpus evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-round2-corpus-report
+          path: dore-round2-corpus-report.json
       - name: Build Dawn Library editorial feed
         run: |
           node scripts/dore/build-dawn-visual-editorial-feed.mjs
@@ -94,6 +112,8 @@ jobs:
           node --check scripts/dore/storybook-art-direction-loop.mjs
           node --check scripts/dore/global-design-nourishment-contract.mjs
           node --check scripts/dore/global-design-nourishment-selftest.mjs
+          node --check scripts/dore/global-design-round2-selftest.mjs
+          node --check scripts/dore/global-design-round2-corpus-run.mjs
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
