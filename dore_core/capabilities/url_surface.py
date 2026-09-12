@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass
 from urllib.parse import urlparse
 
 
@@ -10,6 +10,22 @@ class SurfaceRoute:
     adapter: str | None
     confidence: float
     fallback: str | None = None
+
+
+@dataclass(frozen=True)
+class SurfacePayload:
+    """Minimal provider-neutral payload consumed by Dawn presentation layers."""
+
+    source_url: str
+    surface: str
+    adapter: str | None
+    fallback: str | None
+    confidence: float
+    external: bool = True
+    ownership: str = "external"
+
+    def as_dict(self) -> dict:
+        return asdict(self)
 
 
 class UrlSurfaceResolver:
@@ -42,3 +58,14 @@ class UrlSurfaceResolver:
             return SurfaceRoute("bibliographic", "zotero-translate", 0.85)
 
         return SurfaceRoute("web", "oembed-opengraph", 0.75, fallback="readability")
+
+    def payload(self, url: str) -> SurfacePayload:
+        value = (url or "").strip()
+        route = self.resolve(value)
+        return SurfacePayload(
+            source_url=value,
+            surface=route.surface,
+            adapter=route.adapter,
+            fallback=route.fallback,
+            confidence=route.confidence,
+        )
