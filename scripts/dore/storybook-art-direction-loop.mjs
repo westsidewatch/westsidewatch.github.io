@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { rankCandidatesForSurfaceContext, visualSurfaceContextContract } from './visual-surface-context.mjs';
+import { rankCandidatesForSurface, visualSurfaceContextContract } from './visual-surface-context.mjs';
 
 const arr = value => Array.isArray(value) ? value : value == null ? [] : [value];
 
@@ -13,12 +13,13 @@ export const storybookArtDirectionContract = Object.freeze({
   learnsFrom: ['page-sequence', 'content-role', 'visual-sequence', 'text-density', 'surface-role', 'crop-suitability'],
 });
 
+const density = value => value === 'high' ? .8 : value === 'low' ? .25 : Number.isFinite(Number(value)) ? Number(value) : .5;
 const normalizePage = (page = {}, index = 0, pages = []) => ({
   pageIndex: Number(page.pageIndex || index + 1),
   pageCount: Number(page.pageCount || pages.length || 1),
   contentRole: page.contentRole || 'editorial',
   nextContentRole: page.nextContentRole || pages[index + 1]?.contentRole || null,
-  textDensity: page.textDensity || 'medium',
+  textDensity: density(page.textDensity),
   preferredPreset: page.preferredPreset || 'card-8x5',
   needsNegativeSpace: page.needsNegativeSpace === true,
 });
@@ -34,21 +35,22 @@ export function directStorybookSequence({ pages = [], candidates = [] } = {}) {
       previousVisualWorkIds: [...usedIds],
       previousVisualTypes: [...usedTypes],
     };
-    const ranked = rankCandidatesForSurfaceContext(candidates, context);
-    const selected = ranked[0] || null;
+    const ranked = rankCandidatesForSurface(candidates, context);
+    const selectedEntry = ranked[0] || null;
+    const selected = selectedEntry?.candidate || null;
     if (selected) {
       usedIds.push(selected.visualWorkId);
       if (selected.type) usedTypes.push(selected.type);
     }
     decisions.push({
       pageIndex: context.pageIndex,
-      context,
+      context: selectedEntry?.context || context,
       selectedVisualWorkId: selected?.visualWorkId || null,
       selectedType: selected?.type || null,
-      editorialScore: selected?.score ?? null,
-      contextualScore: selected?.contextualScore ?? selected?.score ?? null,
-      adjustment: selected?.surfaceContextAdjustment ?? 0,
-      rationale: selected?.surfaceContextReasons || [],
+      editorialScore: selectedEntry?.editorialBase ?? null,
+      contextualScore: selectedEntry?.contextualScore ?? null,
+      adjustment: selectedEntry?.contextAdjustment ?? 0,
+      adjustments: selectedEntry?.adjustments || {},
     });
   });
 
@@ -71,7 +73,7 @@ export function critiqueStorybookSequence(sequence = {}) {
     if (previous?.selectedType && previous.selectedType === decision.selectedType) {
       findings.push({ pageIndex: decision.pageIndex, severity: 'medium', code: 'type-repeat', message: 'Adjacent pages repeat the same visual language.' });
     }
-    if (decision.context?.textDensity === 'high' && decision.context?.needsNegativeSpace && !decision.rationale?.includes('crop-focal-ready')) {
+    if (decision.context?.textDensity >= .55 && decision.context?.needsNegativeSpace && Number(decision.adjustments?.cropSuitability || 0) <= 0) {
       findings.push({ pageIndex: decision.pageIndex, severity: 'medium', code: 'text-fit-risk', message: 'Dense text requests negative space without strong crop/focal evidence.' });
     }
   });
@@ -85,8 +87,5 @@ export function critiqueStorybookSequence(sequence = {}) {
 
 export function runStorybookArtDirectionLoop(input = {}) {
   const sequence = directStorybookSequence(input);
-  return {
-    ...sequence,
-    critique: critiqueStorybookSequence(sequence),
-  };
+  return { ...sequence, critique: critiqueStorybookSequence(sequence) };
 }
