@@ -9,6 +9,7 @@ on:
       - "tools/aw_corridor/diagnose_visibility_demand.py"
       - "tools/aw_corridor/experiment_geometric_support.py"
       - "tools/aw_corridor/diagnose_geometric_support.py"
+      - "tools/aw_corridor/experiment_depth_banded_world_cache.py"
       - "tools/aw_corridor/experiment_predictive_local_ldi.py"
       - "tools/aw_corridor/experiment_depth_bakeoff.py"
       - "tools/aw_corridor/experiment_depth_traversal.py"
@@ -33,8 +34,8 @@ jobs:
       - run: |
           mkdir -p build/path-world-demand
           python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/path-world-demand/depth.png --report build/path-world-demand/depth-report.json
-      - name: Run geometric world-space support mapping
-        run: python tools/aw_corridor/experiment_geometric_support.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --output build/path-world-demand/traversal.mp4 --report build/path-world-demand/traversal-report.json --demand-map build/path-world-demand/world-demand-map.png --width 960 --fps 24 --segment-frames 24 --local-layers 3 --samples 8
+      - name: Run depth-banded persistent world cache
+        run: python tools/aw_corridor/experiment_depth_banded_world_cache.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --output build/path-world-demand/traversal.mp4 --report build/path-world-demand/traversal-report.json --support-map build/path-world-demand/world-support-map.png --width 960 --fps 24 --segment-frames 24 --samples 8 --bands 4 --behind 0.08
       - name: Diagnose geometric support failure provenance
         if: always()
         run: python tools/aw_corridor/diagnose_geometric_support.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --report build/path-world-demand/provenance-report.json --outdir build/path-world-demand/provenance --width 960 --local-layers 3 --samples 12
