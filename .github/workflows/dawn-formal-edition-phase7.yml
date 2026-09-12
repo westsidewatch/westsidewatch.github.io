@@ -37,9 +37,15 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y hugo
-          hugo version
+          hugo version | tee /tmp/dawn-phase7-hugo-version.txt
       - name: Build existing Westside Watch site
-        run: hugo --minify --destination /tmp/dawn-formal-public
+        shell: bash
+        run: |
+          set +e
+          hugo --minify --destination /tmp/dawn-formal-public > /tmp/dawn-phase7-hugo.log 2>&1
+          STATUS=$?
+          cat /tmp/dawn-phase7-hugo.log
+          exit $STATUS
       - name: Enforce single-site brand integration
         run: |
           test -f /tmp/dawn-formal-public/index.html
@@ -83,6 +89,18 @@ jobs:
           grep -q 'canonical Works' /tmp/dawn-phase7-surface.html
           grep -q 'id="personal-open"' /tmp/dawn-phase7-surface.html
           test "$(grep -o 'class="work-token"' /tmp/dawn-phase7-surface.html | wc -l)" -le 72
+      - name: Preserve Phase 7 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-formal-edition-phase7-diagnostics
+          if-no-files-found: ignore
+          path: |
+            /tmp/dawn-phase7-hugo-version.txt
+            /tmp/dawn-phase7-hugo.log
+            /tmp/dawn-phase7-http.log
+            /tmp/dawn-phase7-brand.html
+            /tmp/dawn-phase7-surface.html
       - name: Stop built-site server
         if: always()
         run: |
