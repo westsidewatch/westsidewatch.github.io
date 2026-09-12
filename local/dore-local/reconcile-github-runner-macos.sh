@@ -42,11 +42,14 @@ if [[ -z "$NAME" ]]; then
 fi
 
 REMOTE_JSON="$($GH api "repos/$REPO_SLUG/actions/runners?per_page=100" 2>/dev/null || true)"
-REMOTE_PRESENT="$(python3 - "$NAME" <<'PY' <<<"$REMOTE_JSON"
-import json,sys
+REMOTE_PRESENT="$(REMOTE_JSON="$REMOTE_JSON" python3 - "$NAME" <<'PY'
+import json, os, sys
 name=sys.argv[1]
+raw=os.environ.get('REMOTE_JSON','')
+if not raw:
+    print('unknown'); raise SystemExit
 try:
-    data=json.load(sys.stdin)
+    data=json.loads(raw)
 except Exception:
     print('unknown'); raise SystemExit
 for runner in data.get('runners',[]):
