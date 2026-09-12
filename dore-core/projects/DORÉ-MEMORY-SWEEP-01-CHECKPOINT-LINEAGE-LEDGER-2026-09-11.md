@@ -35,12 +35,13 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 87 — complete `dore-core/benchmarks/` family reconciliation; Researcher Graduation remains `READY / SPECIFICATION`, while existing bounded Researcher/reflex completions stay closed and global graduation remains `UNKNOWN_NEEDS_EVIDENCE`.
 - Checkpoint 88 — Multiwrite / 成書 publication workflow Phase 1; eight-stage workflow/state ownership and author-authority gates are real, but end-to-end publication remains open. The old primary interpretation `成書 = DOCX/PDF export` is `SUPERSEDED`.
 - Checkpoint 89 — Multiwrite publishing follow-on; headless autopilot plus formal EPUB3/PDF/Web artifact construction are implemented, while merged-main artifact-run/readback, one real-manuscript end-to-end proof and downstream Dawn Library publication remain open.
+- Checkpoint 90 — early Cloudflare R2 asset/service history reconciliation; Priority-A migration/delivery/cleanup and the five-asset Priority-B site-media cutover are bounded `VERIFIED_COMPLETE / COMPONENT` milestones. The old “runtime delivery pending” and “Priority B deferred” inventory statements are `SUPERSEDED` as current-state guidance. The bounded `dore.query.v1` service contract also remains a defensible historical component completion because its current endpoint implementation is still present.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 89. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 89 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 90. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 90 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 89 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 90 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -64,6 +65,9 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - Multiwrite Book Intelligence: `VERIFIED_COMPLETE / COMPONENT`; broader 成書 stays `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`.
 - Multiwrite 成書 Phase 1/headless artifact path: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; end-to-end publication and Library ingest/readback remain evidence-gated.
 - Researcher Graduation benchmark: `READY / SPECIFICATION`, not a completed benchmark run.
+- Priority-A R2 migration/delivery/cleanup: `VERIFIED_COMPLETE / COMPONENT`; old delivery-pending prose is superseded current-state history.
+- Priority-B five-asset site-media cutover: `VERIFIED_COMPLETE / COMPONENT`; old deferred-state prose is superseded current-state history.
+- `dore.query.v1` service-contract milestone: `VERIFIED_COMPLETE / COMPONENT`; broader Doré service/execution architecture remains continuous and evolving.
 
 ## Latest liveness evidence
 
