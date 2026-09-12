@@ -7,6 +7,7 @@ on:
       - ".github/workflows/aw011-topology-probe.yml"
       - "tools/aw_corridor/experiment_joint_hidden_completion_v5.py"
       - "tools/aw_corridor/experiment_joint_hidden_completion_v6.py"
+      - "tools/aw_corridor/experiment_joint_hidden_completion_v7.py"
   workflow_dispatch:
 
 concurrency:
@@ -29,8 +30,8 @@ jobs:
       - run: |
           mkdir -p build/topology-probe
           python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
-      - name: Run boundary-separated joint completion probe
-        run: python tools/aw_corridor/experiment_joint_hidden_completion_v6.py --source experiments/aw-011/assets/dore-011.jpg --depth build/topology-probe/depth.png --spine experiments/aw-011/camera-spine.json --output build/topology-probe/traversal.mp4 --report build/topology-probe/traversal-report.json --support-map build/topology-probe/world-support-map.png --internal-map build/topology-probe/internal-support-map.png --boundary-map build/topology-probe/boundary-support-map.png --hidden-depth-map build/topology-probe/hidden-depth-map.png --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --border-fraction 0.10
+      - name: Run extended-canvas joint completion probe
+        run: python tools/aw_corridor/experiment_joint_hidden_completion_v7.py --source experiments/aw-011/assets/dore-011.jpg --depth build/topology-probe/depth.png --spine experiments/aw-011/camera-spine.json --output build/topology-probe/traversal.mp4 --report build/topology-probe/traversal-report.json --support-map build/topology-probe/world-support-map.png --edge-map build/topology-probe/occlusion-edge-map.png --hidden-depth-map build/topology-probe/hidden-depth-map.png --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055
       - uses: actions/upload-artifact@v4
         if: always()
         with:
