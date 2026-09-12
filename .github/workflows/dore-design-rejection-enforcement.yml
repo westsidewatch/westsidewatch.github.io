@@ -1,0 +1,25 @@
+name: Doré Design Rejection Enforcement
+on:
+  push:
+    paths:
+      - 'dore-design/design_rejection_enforcement.py'
+      - 'dore-design/design_rejection_enforcement_acceptance.py'
+      - 'local/dore-local/design_intelligence_a2a_worker.py'
+      - 'local/dore-local/design_intelligence_a2a_worker_v5.py'
+      - 'local/dore-local/design_intelligence_a2a_worker_v6.py'
+      - '.github/workflows/dore-design-rejection-enforcement.yml'
+  workflow_dispatch:
+jobs:
+  rejection-enforcement:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax
+        run: python -m py_compile dore-design/design_rejection_enforcement.py local/dore-local/design_intelligence_a2a_worker.py local/dore-local/design_intelligence_a2a_worker_v5.py local/dore-local/design_intelligence_a2a_worker_v6.py
+      - name: Rejection enforcement acceptance
+        env:
+          PYTHONPATH: ${{ github.workspace }}/dore-design:${{ github.workspace }}/local/dore-local
+        run: python dore-design/design_rejection_enforcement_acceptance.py
