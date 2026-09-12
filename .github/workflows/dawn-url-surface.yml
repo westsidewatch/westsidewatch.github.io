@@ -8,6 +8,7 @@ on:
       - 'dore_core/capabilities/cover_resolver.py'
       - 'dore_core/capabilities/archive_bookreader.py'
       - 'dore_core/capabilities/zotero_reconciliation.py'
+      - 'dore_core/capabilities/video_surface.py'
       - 'data/dawn-capability-acceptance-corpus.json'
       - 'data/visual_graph.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
@@ -21,6 +22,7 @@ on:
       - 'tests/test_dawn_cover_resolver.py'
       - 'tests/test_dawn_bookreader.py'
       - 'tests/test_dawn_zotero_reconciliation.py'
+      - 'tests/test_dawn_video_surface.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
       - 'layouts/visual/single.html'
       - 'layouts/website/dawn-library.html'
@@ -28,11 +30,13 @@ on:
       - 'static/js/dawn-pdf-surface.js'
       - 'static/js/dawn-cover-surface.js'
       - 'static/js/dawn-bookreader-surface.js'
+      - 'static/js/dawn-video-surface.js'
       - 'static/js/dawn-web-surface.js'
       - 'static/css/dawn-web-surface.css'
       - 'static/dawn-library/surfaces/pdf.html'
       - 'static/dawn-library/surfaces/cover.html'
       - 'static/dawn-library/surfaces/bookreader.html'
+      - 'static/dawn-library/surfaces/video.html'
       - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - '.github/workflows/dawn-url-surface.yml'
@@ -65,6 +69,8 @@ jobs:
         run: python -m unittest tests.test_dawn_cover_resolver -v
       - name: Prove Internet Archive BookReader against real 1900 Josephus scan
         run: python -m unittest tests.test_dawn_bookreader -v
+      - name: Prove official Bible film reaches Dawn video Surface contract
+        run: python -m unittest tests.test_dawn_video_surface -v
       - name: Verify mounted public Web Surface contract
         run: node --test tests/dawn-web-surface-contract.test.mjs
       - name: Emit deterministic routing benchmark
