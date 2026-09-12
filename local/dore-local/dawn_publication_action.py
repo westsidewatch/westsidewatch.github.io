@@ -14,7 +14,7 @@ def _safe_name(value):
  return re.sub(r"[^A-Za-z0-9._-]+","-",name)[:160]
 def _validate(admission,assets):
  if not isinstance(admission,dict) or admission.get("schema")!="dore.dawn-publication-admission.v1":raise ValueError("invalid Dawn admission schema")
- raw=json.dumps(admission,ensure_ascii=False).lower()
+ runtime={"work":admission.get("work"),"edition":admission.get("edition"),"surface":admission.get("surface")};raw=json.dumps(runtime,ensure_ascii=False).lower()
  if any(token in raw for token in FORBIDDEN):raise ValueError("forbidden runtime dependency")
  work=admission.get("work") or {};edition=admission.get("edition") or {};surface=admission.get("surface") or {};policy=admission.get("policy") or {}
  work_id=str(work.get("workId") or "");edition_id=str(edition.get("editionId") or "")
@@ -74,13 +74,11 @@ def publish(args=None):
    if commit["returncode"]:return {"ok":False,"status":"failed","step":"commit","result":commit}
    head=_run(["git","rev-parse","HEAD"],worktree)["stdout"].strip();push=_run(["git","push","origin","HEAD:main"],worktree,180)
    if push["returncode"]==0:return {"ok":True,"status":"completed","capability":"dawn.library.publish","idempotent":False,"commit":head,**evidence}
-  except Exception as exc:
-   return {"ok":False,"status":"failed","step":"publish","error":{"code":"publication_failed","message":str(exc)}}
+  except Exception as exc:return {"ok":False,"status":"failed","step":"publish","error":{"code":"publication_failed","message":str(exc)}}
   finally:
    if worktree.exists():_run(["git","worktree","remove","--force",str(worktree)],base,60)
    shutil.rmtree(temp,ignore_errors=True)
  return {"ok":False,"status":"failed","step":"push","error":{"code":"concurrent_main_updates","message":"publication push did not converge"}}
-
 def execute(capability,args=None):
  if capability!="dawn.library.publish":return {"ok":False,"status":"failed","error":{"code":"unsupported_capability","message":capability}}
  return publish(args)

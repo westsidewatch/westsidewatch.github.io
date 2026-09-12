@@ -68,17 +68,17 @@ def apply_publications(works:dict[str,dict],dawn_surface:dict,admissions:list[di
   shelf={'id':'dore-publications','title':'多寫 · 正式出版','kind':'canonical-publications','items':[]};dawn_surface.setdefault('shelves',[]).insert(0,shelf)
  existing={r.get('workId') for r in shelf.get('items',[])}
  for admission in admissions:
-  serialized=json.dumps(admission,ensure_ascii=False).casefold()
+  runtime={'work':admission.get('work'),'edition':admission.get('edition'),'surface':admission.get('surface')};serialized=json.dumps(runtime,ensure_ascii=False).casefold()
   if any(t in serialized for t in FORBIDDEN_RUNTIME_TOKENS):raise ValueError('forbidden publication runtime dependency')
   work=admission.get('work') or {};edition=admission.get('edition') or {};policy=admission.get('policy') or {};surface=admission.get('surface') or {};work_id=str(work.get('workId') or '')
   if not work_id or edition.get('workId')!=work_id or (surface.get('ref') or {}).get('workId')!=work_id:raise ValueError('publication identity mismatch')
   if policy.get('surfaceOwnsIdentity') is not False or policy.get('wikisource')!='forbidden':raise ValueError('publication policy mismatch')
   artifacts=edition.get('artifacts') or {}
   for kind in ('cover','web','epub','pdf'):
-   pointer=local_runtime_pointer(artifacts.get(kind))
-   if not pointer:raise ValueError(f'invalid publication {kind} pointer: {work_id}')
-   path=ROOT/pointer.lstrip('/')
-   if not path.is_file():raise ValueError(f'missing publication artifact: {pointer}')
+   ptr=local_runtime_pointer(artifacts.get(kind))
+   if not ptr:raise ValueError(f'invalid publication {kind} pointer: {work_id}')
+   path=ROOT/ptr.lstrip('/')
+   if not path.is_file():raise ValueError(f'missing publication artifact: {ptr}')
   canonical=works.get(work_id) or {'workId':work_id,'authorityIds':{},'firstPublishYear':None,'authorityBacked':False}
   canonical.update({'title':str(work.get('title') or canonical.get('title') or '').strip(),'authors':list(dict.fromkeys(work.get('authors') or canonical.get('authors') or [])),'languages':list(dict.fromkeys(work.get('languages') or canonical.get('languages') or [])),'edition':edition,'editions':[edition],'cover':{'pointer':f'dawn://cover/{work_id}','mode':'published-artifact'},'readingPointer':artifacts.get('web'),'publicationOrigin':'multiwrite'})
   works[work_id]=canonical
