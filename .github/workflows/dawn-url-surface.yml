@@ -1,0 +1,35 @@
+name: Dawn URL Surface
+
+on:
+  pull_request:
+    paths:
+      - 'dore_core/capabilities/url_surface.py'
+      - 'scripts/run_dawn_url_surface_benchmark.py'
+      - 'tests/test_dawn_url_surface.py'
+      - 'static/dawn-library/biblical-world/discovery-candidates.json'
+      - '.github/workflows/dawn-url-surface.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  corpus-routing-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run URL surface unit and 900+ corpus tests
+        run: python -m unittest tests.test_dawn_url_surface -v
+      - name: Emit deterministic routing benchmark
+        run: python scripts/run_dawn_url_surface_benchmark.py
+      - name: Preserve report artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-url-surface-benchmark
+          path: reports/DAWN-URL-SURFACE-BENCHMARK.json
