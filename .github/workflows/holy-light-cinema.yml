@@ -1,0 +1,11 @@
+name: Holy Light Cinema
+on:
+  pull_request:
+    paths:
+      - 'cinema/**'
+jobs:
+  scaffold:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: test -f cinema/index.html && test -f cinema/cinema.css && test -f cinema/cinema.js && test -f cinema/data/video-resource.v0.json
