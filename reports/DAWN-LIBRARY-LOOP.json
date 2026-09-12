@@ -1,36 +1,36 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-12T04:51:09.917896+00:00",
+  "generatedAt": "2026-09-11T13:39:01.004653+00:00",
   "results": {
     "books": {
-      "published": 9,
-      "verified": 9,
-      "pending": 0,
-      "relations": 13,
+      "published": 34,
+      "verified": 33,
+      "pending": 1,
+      "relations": 17,
       "providers": [
         "Project Gutenberg",
         "中文維基文庫"
       ]
     },
     "catalogDeltaToday": {
-      "books": -25,
-      "verifiedBooks": -24,
-      "relations": -4
+      "books": 3,
+      "verifiedBooks": 3,
+      "relations": 0
     },
     "autonomousGrowthToday": {
       "books": 0,
       "titles": []
     },
     "pipelineThisRun": {
-      "englishDiscoveredThisRun": 8,
+      "englishDiscoveredThisRun": 0,
       "chineseDiscoveredThisRun": 0,
       "englishPromotedThisRun": 0,
       "englishPromotedTitles": []
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 5.25,
-      "density": 9
+      "recentAutonomousGrowthPerDay": 7.0,
+      "density": 33
     },
     "collections": [
       {
@@ -65,6 +65,12 @@
       }
     ]
   },
-  "pendingBooks": [],
+  "pendingBooks": [
+    {
+      "id": "eusebius-church-history",
+      "title": "The Church History of Eusebius",
+      "reason": "missing verified public source"
+    }
+  ],
   "invariant": "Seed promotion is not autonomous growth. Autonomous growth requires loop discovery provenance plus verified rights and catalog promotion."
 }

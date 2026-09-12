@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-from resource_selection import book_allowed, book_decision, excluded
+from dawn_resource_exclusions import excluded
 import hashlib,json,re,unicodedata
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-RES=ROOT/'dore-core/review/resource-selection/chinese-resolver-results.json'
+RES=ROOT/'static/dawn-library/biblical-world/chinese-resolver-results.json'
 CAT=ROOT/'static/dawn-library/biblical-world/catalog.json'
 
 def stable_id(title,url):
@@ -18,7 +18,6 @@ def valid(x):
 
 resolver=json.loads(RES.read_text())
 catalog=json.loads(CAT.read_text())
-catalog['items']=[i for i in catalog.get('items',[]) if book_allowed(i)]
 catalog['items']=[x for x in catalog['items'] if not excluded(x)]
 # Repair IDs created by the first promoter version while preserving all existing non-Chinese IDs.
 for item in catalog.get('items',[]):
@@ -36,9 +35,6 @@ for x in resolver.get('items',[]):
     ident=stable_id(title,url)
     if ident in existing_ids: continue
     item={'id':ident,'work':{'title':title,'language':'zh'},'edition':{'label':x.get('edition',{}).get('canonicalTitle',title),'publicDomain':True},'rights':{'status':'public-domain','declaredBy':'中文維基文庫','provenanceRequired':True},'relations':['聖經世界','中文公版'],'cover':{'mode':'one-fallback','title':title,'author':''},'sources':[{'provider':'中文維基文庫','kind':'remote-public','url':url,'format':'html','downloadOnCatalog':False}]}
-
-    if not book_allowed(item):continue
-    item['admission']=book_decision(item)
     catalog['items'].append(item); existing_urls.add(url); existing_ids.add(ident); added.append(title)
 ids=[i.get('id') for i in catalog['items']]
 assert all(ids) and len(ids)==len(set(ids)), 'catalog IDs must be non-empty and unique'

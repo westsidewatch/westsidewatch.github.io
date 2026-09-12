@@ -1,7 +1,0 @@
-{{ $allowed := true }}
-{{ $policy := site.Data.resource_selection_policy }}
-{{ $text := lower (printf "%s %s %s %s" (.name | default "") (.name_en | default "") (.title | default "") (.description | default "")) }}
-{{ if or (.controversial | default false) (in (slice "rejected" "controversial" "excluded") (.contentReview | default "")) }}{{ $allowed = false }}{{ end }}
-{{ range $policy.excludedPatterns }}{{ if findRE . $text }}{{ $allowed = false }}{{ end }}{{ end }}
-{{ range (.topics | default slice) }}{{ if in $policy.excludedTopics . }}{{ $allowed = false }}{{ end }}{{ end }}
-{{ return $allowed }}
