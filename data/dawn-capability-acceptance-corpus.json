@@ -42,6 +42,17 @@
       "expectContentType": "application/pdf"
     },
     {
+      "id": "wikimedia-augustine-confessions-pdf",
+      "capability": "pdfjs",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "book-pdf",
+      "title": "The confessions of S. Augustine",
+      "author": "Augustine of Hippo; translated by E. B. Pusey",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/5/55/The_confessions_of_S._Augustine%2C_books_I-X_%28IA_confessionsofsau00augurich%29.pdf",
+      "expectContentType": "application/pdf"
+    },
+    {
       "id": "openlibrary-cover-augustine-fixture",
       "capability": "cover-resolve",
       "stage": "fixture-found",
