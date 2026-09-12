@@ -20,15 +20,15 @@
       "expectContentType": "text/html"
     },
     {
-      "id": "loc-uta-evangeliary-iiif-source",
+      "id": "princeton-storm-sea-galilee-iiif",
       "capability": "iiif-visual-surface",
       "stage": "fixture-found",
-      "language": "la",
-      "kind": "iiif-source",
-      "title": "Four Gospels: The Evangeliary of Uta",
-      "author": "Bavarian State Library / Library of Congress",
-      "url": "https://www.loc.gov/resource/gdcwdl.wdl_13479/?sp=27",
-      "expectContentType": "text/html"
+      "language": "und",
+      "kind": "iiif-manifest",
+      "title": "The Storm on the Sea of Galilee",
+      "author": "Princeton University Art Museum",
+      "url": "https://figgy.princeton.edu/concern/ephemera/1078a9b4-a0d4-4594-8cd2-8f375254831b/manifest",
+      "expectContentType": "application/"
     },
     {
       "id": "ccel-augustine-confessions-pdf",
@@ -38,7 +38,7 @@
       "kind": "book-pdf",
       "title": "Confessions and Enchiridion",
       "author": "Augustine of Hippo",
-      "url": "https://www.ccel.org/ccel/augustine/confessions.pdf",
+      "url": "https://www.ccel.org/ccel/a/augustine/confessions/cache/confessions.pdf",
       "expectContentType": "application/pdf"
     },
     {
@@ -58,9 +58,9 @@
       "stage": "fixture-found",
       "language": "en",
       "kind": "bibliographic-identity",
-      "title": "Open Library Work and Edition API fixture",
+      "title": "Open Library edition identity fixture",
       "author": "Open Library",
-      "url": "https://openlibrary.org/isbn/9780140328721.json",
+      "url": "https://openlibrary.org/books/OL7353617M.json",
       "expectContentType": "application/json"
     },
     {
