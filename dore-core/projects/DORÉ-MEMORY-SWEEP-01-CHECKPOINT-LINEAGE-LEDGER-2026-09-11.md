@@ -29,12 +29,18 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 81 — complete `dore-core/reflex/` family reconciliation; Reflex Consolidation 1.0 is a defensible `VERIFIED_COMPLETE / COMPONENT` milestone, while the ongoing reflex layer remains `CORE/CONTINUOUS` and exact word-level translation alignment remains evidence-gated.
 - Checkpoint 82 — durable A2A execution lifecycle; lease/state/artifact/verification gating is a `VERIFIED_COMPLETE / COMPONENT` milestone, but real authorized production execution and mutation-origin authentication remain open under the broader `NERVOUS-SYSTEM` / `ME-016` boundary.
 - Checkpoint 83 — Dawn pointer-to-URL-surface + mount-truth reconciliation; URL-surface routing and `SurfaceMountRegistry` are `VERIFIED_COMPLETE / COMPONENT`, while heterogeneous multi-adapter reading remains `ACTIVE_PARALLEL / UNKNOWN_NEEDS_EVIDENCE`; routed capability is explicitly not equivalent to mounted/executable capability.
+- Checkpoint 84 — lineage bookkeeping reconciliation through Checkpoint 83; no product-state change.
+- Checkpoint 85 — model-backed Multiwrite Book Intelligence crossed the real local A2A execution plane; `VERIFIED_COMPLETE / COMPONENT`, while the larger 成書 spine remains evidence-gated.
+- Checkpoint 86 — fresh sensory-memory heartbeat/dedupe runtime evidence; bounded live component proof only, not generic autonomous-memory completion.
+- Checkpoint 87 — complete `dore-core/benchmarks/` family reconciliation; Researcher Graduation remains `READY / SPECIFICATION`, while existing bounded Researcher/reflex completions stay closed and global graduation remains `UNKNOWN_NEEDS_EVIDENCE`.
+- Checkpoint 88 — Multiwrite / 成書 publication workflow Phase 1; eight-stage workflow/state ownership and author-authority gates are real, but end-to-end publication remains open. The old primary interpretation `成書 = DOCX/PDF export` is `SUPERSEDED`.
+- Checkpoint 89 — Multiwrite publishing follow-on; headless autopilot plus formal EPUB3/PDF/Web artifact construction are implemented, while merged-main artifact-run/readback, one real-manuscript end-to-end proof and downstream Dawn Library publication remain open.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 83. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 83 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 89. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 89 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 83 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 89 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -55,12 +61,13 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - Reflex Consolidation 1.0: `VERIFIED_COMPLETE / COMPONENT`; reflex learning layer remains `CORE/CONTINUOUS`.
 - A2A durable execution lifecycle: `VERIFIED_COMPLETE / COMPONENT`; authorized production execution remains unproved.
 - Dawn URL-surface resolver + mount-truth registry: `VERIFIED_COMPLETE / COMPONENT`; dormant adapters are not executable capability evidence.
+- Multiwrite Book Intelligence: `VERIFIED_COMPLETE / COMPONENT`; broader 成書 stays `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`.
+- Multiwrite 成書 Phase 1/headless artifact path: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; end-to-end publication and Library ingest/readback remain evidence-gated.
+- Researcher Graduation benchmark: `READY / SPECIFICATION`, not a completed benchmark run.
 
-## Latest liveness evidence after Checkpoint 83
+## Latest liveness evidence
 
-Commit `f5b6e35f0840b72c8712d83e6bd94645c47e0201` refreshed `dore-core/memory/actions-probe-diagnostic.json` with `ok: true`, run `34686583765`, source SHA `3179cb056f7bcf4cd7ffb04a30bfebc4ee8ebbcd`, at `2026-09-12T09:43:27Z`.
-
-This is repeated Actions liveness evidence only. It does not create a new project completion token, does not alter the Checkpoint 71 classification, and does not warrant a new operational workstream.
+Commit `92113c7ec8e1c03b7d1713db8067de83e94637cf` and Actions probe run `34695645542` extend sensory/runtime liveness evidence after the older probe snapshot. This remains operational/component evidence only and does not create a global completion token.
 
 ## P01 isolation
 
