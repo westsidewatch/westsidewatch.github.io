@@ -16,6 +16,8 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         resolver = UrlSurfaceResolver()
         self.assertEqual(resolver.resolve('https://example.org/iiif/manifest.json').adapter, 'iiif-visual-surface')
         self.assertEqual(resolver.resolve('https://example.org/book.pdf').adapter, 'pdfjs')
+        self.assertEqual(resolver.resolve('https://archive.org/details/completeworksofj19002jose').adapter, 'book-reader')
+        self.assertEqual(resolver.resolve('https://archive.org/embed/completeworksofj19002jose').adapter, 'book-reader')
         self.assertEqual(resolver.resolve('https://www.gutenberg.org/ebooks/20').adapter, 'bibliographic-page')
         self.assertEqual(resolver.resolve('https://openlibrary.org/works/OL1W').adapter, 'zotero-translate')
         self.assertEqual(resolver.resolve('https://example.org/article').fallback, 'readability')
@@ -38,15 +40,13 @@ class DawnUrlSurfaceTests(unittest.TestCase):
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
 
-        for adapter in ('zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
+        for adapter in ('book-reader', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'fixture-found')
             self.assertIsNotNone(registry.get(adapter).evidence)
 
-        for adapter in ('book-reader', 'oembed-opengraph'):
-            self.assertFalse(registry.executable(adapter))
-            self.assertEqual(registry.state(adapter), 'reserved')
-
+        self.assertFalse(registry.executable('oembed-opengraph'))
+        self.assertEqual(registry.state('oembed-opengraph'), 'reserved')
         self.assertEqual(registry.state('unknown-adapter'), 'unavailable')
 
     def test_real_acceptance_corpus_has_required_domains_and_no_wikisource(self):
@@ -60,6 +60,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
             'bibliographic-page',
             'iiif-visual-surface',
             'pdfjs',
+            'book-reader',
             'zotero-translate',
             'readability',
             'video-surface',
@@ -88,6 +89,11 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertFalse(pdf.executable)
         self.assertEqual(pdf.mount_state, 'integration-proven')
         self.assertEqual(pdf.adapter, 'pdfjs')
+
+        scan = resolver.plan('https://archive.org/details/completeworksofj19002jose')
+        self.assertFalse(scan.executable)
+        self.assertEqual(scan.mount_state, 'fixture-found')
+        self.assertEqual(scan.adapter, 'book-reader')
 
     def test_real_discovery_corpus_routes_without_mutation(self):
         before = CANDIDATES.read_bytes()
