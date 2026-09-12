@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+"""Acceptance for Candidate 01 — 4W data contract + original Codrops 8:5 focus motion."""
+import sitewide_editorial_candidates_acceptance  # noqa: F401
+import candidate01_visual_graph_experiment as candidate
+import codrops_site_8x5
+
+assert candidate.EDITORIAL_DIRECTOR['schema']=='dore.visual-editorial-director.v1'
+assert candidate.EDITORIAL_DIRECTOR['source_issue']==643
+assert candidate.EDITORIAL_DIRECTOR['selection']=='sitewide-highlight'
+assert candidate.EDITORIAL_DIRECTOR['classification']=='4w-fuzzy-affinity'
+assert candidate.EDITORIAL_DIRECTOR['world_interface']=='dore.world-surface/1'
+assert tuple(candidate.ROWS)==('WATCH','WITNESS','WALK','WORSHIP')
+assert all(len(items)==4 for items in candidate.ROWS.values())
+items=[item for row in candidate.ROWS.values() for item in row]
+assert len(items)==16 and len({item['id'] for item in items})==16
+assert all(item['provenance'].get('path') for item in items)
+
+runtime=candidate.script(('WATCH','WITNESS'))
+assert 'dore-world-enter' in runtime
+assert 'aspect-ratio:5/8' not in candidate.STYLE
+assert 'aspect-ratio:8/5' in candidate.STYLE
+
+# Candidate 01 must use the verified Codrops-derived 8:5 interaction directly.
+source=codrops_site_8x5.render(edit=False)
+assert 'products__preview' in source
+assert 'masked-preview' in source
+assert 'clip-path:polygon' in source
+assert 'setTimeout(()=>show(p),100)' in source
+assert 'reverse' in source
+assert 'aspect-ratio:8/5' in source
+
+screen2=candidate.focus_screen(2,('第一樂章 WATCH','第二樂章 WITNESS'))
+screen3=candidate.focus_screen(3,('第三樂章 WALK','第四樂章 WORSHIP'))
+for screen,no in ((screen2,2),(screen3,3)):
+    assert f'data-screen="{no}"' in screen
+    assert 'data-editorial-director="dore.visual-editorial-director.v1"' in screen
+    assert '4W Living Editorial River' in screen
+    assert '<iframe' in screen
+    assert 'products__preview' in screen
+    assert 'masked-preview' in screen
+    assert 'aspect-ratio:8/5' in screen
+    assert 'dore-mosaic-piece' not in screen
+    assert 'livingCurrent' not in screen
+
+assert 'world-surface' not in candidate.STYLE
+assert 'data-second-layer-world' not in screen2+screen3
+print('DORE_CANDIDATE01_CODROPS_8X5_PASS')

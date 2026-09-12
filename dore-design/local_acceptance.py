@@ -24,7 +24,8 @@ pg=next(p for p in w['pages'] if p['id']==pid)
 if any(n['id']==probe for n in pg.get('nodes',[])):
  w=j('/api/workspace',{'op':'delete_node','page_id':pid,'id':probe})
 r0=w['revision']
-w=j('/api/workspace',{'op':'add_text','page_id':pid,'id':probe,'text':'DORÉ LOCAL ACCEPTANCE'});assert w['revision']==r0+1
+w=j('/api/workspace',{'op':'add_text','page_id':pid,'id':probe,'text':'DORÉ LOCAL ACCEPTANCE'})
+assert w['revision']==r0+1,{'error':'unexpected_revision_delta','before':r0,'after':w.get('revision'),'delta':w.get('revision',r0)-r0,'page_id':pid}
 pg=next(p for p in w['pages'] if p['id']==pid);assert any(n['id']==probe for n in pg['nodes'])
 w=j('/api/workspace',{'op':'set_node','page_id':pid,'id':probe,'patch':{'x':96,'y':760,'w':700,'size':22,'text':'DORÉ LOCAL ACCEPTANCE — EDITED'}})
 _,ctype,svg=req('/api/export.svg?page='+urllib.parse.quote(pid));assert ctype=='image/svg+xml' and b'DOR' in svg and b'EDITED' in svg
