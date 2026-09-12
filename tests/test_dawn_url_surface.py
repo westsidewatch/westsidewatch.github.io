@@ -34,13 +34,13 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
 
-        for adapter in ('iiif-visual-surface', 'pdfjs'):
+        for adapter in ('iiif-visual-surface', 'pdfjs', 'cover-resolve'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'integration-proven')
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
 
-        for adapter in ('book-reader', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
+        for adapter in ('book-reader', 'zotero-translate', 'readability', 'video-surface'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'fixture-found')
             self.assertIsNotNone(registry.get(adapter).evidence)
@@ -56,16 +56,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         ids = [item['id'] for item in fixtures]
         self.assertEqual(len(ids), len(set(ids)))
         self.assertTrue(any(item['language'].startswith('zh') for item in fixtures))
-        required = {
-            'bibliographic-page',
-            'iiif-visual-surface',
-            'pdfjs',
-            'book-reader',
-            'zotero-translate',
-            'readability',
-            'video-surface',
-            'cover-resolve',
-        }
+        required = {'bibliographic-page','iiif-visual-surface','pdfjs','book-reader','zotero-translate','readability','video-surface','cover-resolve'}
         self.assertTrue(required.issubset({item['capability'] for item in fixtures}))
         for item in fixtures:
             url = item['url'].lower()
