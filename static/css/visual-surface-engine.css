@@ -1,0 +1,58 @@
+/* Doré shared Visual Surface presentation layer.
+ * Graph owns identity + relationships.
+ * Surface Engine owns presentation + motion.
+ * Consumers provide only declarative role / weight / motion / surface metadata.
+ */
+[data-dore-surface-consumer]{
+  --dore-surface-weight:1;
+  --dore-surface-shift:0px;
+  transform-origin:center center;
+}
+
+[data-dore-surface-consumer][data-editorial-motion="near-still"]{
+  animation:doreSurfaceNearStill 24s ease-in-out infinite alternate;
+}
+[data-dore-surface-consumer][data-editorial-motion="slow-flow"]{
+  animation:doreSurfaceSlowFlow 18s ease-in-out infinite alternate;
+}
+[data-dore-surface-consumer][data-editorial-motion="focus"]{
+  animation:doreSurfaceFocus 12s ease-in-out infinite alternate;
+}
+
+@keyframes doreSurfaceNearStill{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(0,-1px,0)}
+}
+@keyframes doreSurfaceSlowFlow{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(0,-4px,0)}
+}
+@keyframes doreSurfaceFocus{
+  from{transform:translate3d(0,0,0) scale(1)}
+  to{transform:translate3d(0,-2px,0) scale(1.002)}
+}
+
+/* Journal: weight is now real layout input, not metadata only. */
+.section-journal .issue-door[data-dore-surface-product="journal"][data-editorial-weight="2"]{
+  width:min(96%,calc(84rem + (var(--dore-surface-weight) * 4rem)));
+}
+.section-journal .journal-quicklinks > [data-dore-surface-product="journal"][data-editorial-role="secondary"]{
+  min-height:calc(15rem + (var(--dore-surface-weight) * 1rem));
+}
+.section-journal .journal-quicklinks > [data-dore-surface-product="journal"][data-editorial-role="reading-focus"]{
+  min-height:calc(16rem + (var(--dore-surface-weight) * 1.25rem));
+}
+
+/* Doré Folio: first shared Surface consumer is the writing-home hero. */
+[data-dore-surface-product="folio"][data-editorial-role="primary"][data-editorial-weight="2"]{
+  min-height:calc(clamp(760px,62vw,1280px) + 2rem);
+}
+
+@media(max-width:820px){
+  .section-journal .issue-door[data-dore-surface-product="journal"][data-editorial-weight="2"]{width:100%}
+  [data-dore-surface-product="folio"][data-editorial-role="primary"][data-editorial-weight="2"]{min-height:760px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  [data-dore-surface-consumer]{animation:none!important;transition:none!important}
+}
