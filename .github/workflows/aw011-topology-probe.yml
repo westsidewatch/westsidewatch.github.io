@@ -10,6 +10,7 @@ on:
       - "tools/aw_corridor/experiment_joint_hidden_completion_v7.py"
       - "tools/aw_corridor/experiment_learned_hidden_completion_v8.py"
       - "tools/aw_corridor/experiment_learned_hidden_completion_v9.py"
+      - "tools/aw_corridor/experiment_static_cinema_v10.py"
       - "tools/aw_corridor/hidden_surface_provider.py"
   workflow_dispatch:
 
@@ -39,9 +40,9 @@ jobs:
           test "$(stat -c%s build/aw011-provider/color-model.pth)" -gt 180000000
       - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision matplotlib "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
       - run: python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
-      - name: Run learned canonical-world V9 probe
+      - name: Run static-cinema V10 probe
         run: >-
-          python tools/aw_corridor/experiment_learned_hidden_completion_v9.py
+          python tools/aw_corridor/experiment_static_cinema_v10.py
           --source experiments/aw-011/assets/dore-011.jpg
           --depth build/topology-probe/depth.png
           --spine experiments/aw-011/camera-spine.json
@@ -49,14 +50,13 @@ jobs:
           --report build/topology-probe/traversal-report.json
           --support-map build/topology-probe/world-support-map.png
           --edge-map build/topology-probe/learned-edge-map.png
-          --extended-edge-map build/topology-probe/extended-edge-map.png
           --hidden-depth-map build/topology-probe/hidden-depth-map.png
-          --extended-world-preview build/topology-probe/extended-world-preview.png
+          --viewfinder-preview build/topology-probe/viewfinder-preview.png
           --networks build/aw011-provider/networks.py
           --edge-checkpoint build/aw011-provider/edge-model.pth
           --depth-checkpoint build/aw011-provider/depth-model.pth
           --color-checkpoint build/aw011-provider/color-model.pth
-          --device cpu --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --seam-pixels 8
+          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45
       - uses: actions/upload-artifact@v4
         if: always()
         with:
