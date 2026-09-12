@@ -14,11 +14,7 @@ def _text(value: Any) -> str:
 
 
 def _semantic_window(value: Any, budget: int = SECTION_BUDGET) -> str:
-    """Keep a real manuscript section within a stable local-model context budget.
-
-    Preserve both the opening and closing argument of long sections rather than
-    silently dropping later material. Short sections remain untouched.
-    """
+    """Keep a real manuscript section within a stable local-model context budget."""
     text = str(value or "")
     if len(text) <= budget:
         return text
@@ -68,17 +64,8 @@ def _prompt_payload(args: dict[str, Any]) -> dict[str, Any]:
     }
 
 
-def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
-    payload = _prompt_payload(args)
-    system = (
-        "You are Doré Core Book Intelligence. Analyze the supplied book as an editor, not as a replacement author. "
-        "Return exactly one JSON object and nothing else: the first output character must be { and the final output character must be }. "
-        "Do not use markdown fences, commentary, prefixes, suffixes, or prose outside the JSON object. "
-        "Preserve any declared thesis as author authority. Do not rewrite doctrine or substantive authorial claims. "
-        "Infer category, audience, reading mode, chapter roles, argument relations, structural gaps and visual tone hints. "
-        "Use only the supplied manuscript evidence."
-    )
-    requested = {
+def _response_shape() -> dict[str, Any]:
+    return {
         "schema": SCHEMA,
         "category": "string",
         "inferredThesis": "string",
@@ -92,7 +79,42 @@ def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
         "visualToneHints": [],
         "evidence": [],
     }
-    user = "Analyze this manuscript. Required response shape: " + json.dumps(requested, ensure_ascii=False) + "\nBOOK:\n" + json.dumps(payload, ensure_ascii=False)
+
+
+def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
+    payload = _prompt_payload(args)
+    system = (
+        "You are Doré Core Book Intelligence. Analyze the supplied book as an editor, not as a replacement author. "
+        "Return exactly one JSON object and nothing else: the first output character must be { and the final output character must be }. "
+        "Do not use markdown fences, commentary, prefixes, suffixes, or prose outside the JSON object. "
+        "Preserve any declared thesis as author authority. Do not rewrite doctrine or substantive authorial claims. "
+        "Infer category, audience, reading mode, chapter roles, argument relations, structural gaps and visual tone hints. "
+        "Use only the supplied manuscript evidence."
+    )
+    user = "Analyze this manuscript. Required response shape: " + json.dumps(_response_shape(), ensure_ascii=False) + "\nBOOK:\n" + json.dumps(payload, ensure_ascii=False)
+    return [{"role": "system", "content": system}, {"role": "user", "content": user}]
+
+
+def _admission_messages(args: dict[str, Any], analysis: str) -> list[dict[str, str]]:
+    """Convert model semantic analysis into the strict public report contract.
+
+    This is intentionally provider-neutral. It reuses the injected inference seam and
+    treats the first-pass model analysis as evidence; it does not repair or invent
+    authorial content locally.
+    """
+    declared = _declared_intent(args)
+    system = (
+        "You are the structured admission stage for Doré Core Book Intelligence. "
+        "Return exactly one valid JSON object and no prose or markdown. "
+        "Use the supplied semantic analysis as evidence. Preserve the author's declared thesis as authority. "
+        "Do not introduce claims that are absent from the analysis."
+    )
+    user = (
+        "Required response shape: " + json.dumps(_response_shape(), ensure_ascii=False)
+        + "\nAUTHOR DECLARED INTENT:\n" + json.dumps(declared, ensure_ascii=False)
+        + "\nSEMANTIC ANALYSIS TO STRUCTURE:\n" + analysis[:12000]
+        + "\nReturn the JSON object now."
+    )
     return [{"role": "system", "content": system}, {"role": "user", "content": user}]
 
 
@@ -178,7 +200,11 @@ def execute(args: dict[str, Any] | None, infer: Callable[[list[dict[str, str]]],
     if infer is None:
         return {"ok": True, "status": "completed", "capability": "publishing.book-intelligence", "report": _safe_report(args, {}, degraded=True, reason="inference_unavailable")}
     try:
-        value = _parse(infer(_messages(args)))
+        raw = infer(_messages(args))
+        try:
+            value = _parse(raw)
+        except Exception:
+            value = _parse(infer(_admission_messages(args, raw)))
         report = _safe_report(args, value)
     except Exception:
         report = _safe_report(args, {}, degraded=True, reason="semantic_inference_failed")
