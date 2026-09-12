@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic acceptance for executable Design -> Core/A2A exploration."""
+"""Deterministic acceptance for raster-grounded Design -> Core/A2A exploration."""
 from __future__ import annotations
 
 import json
@@ -18,6 +18,14 @@ def base_snapshot():
     }
 
 
+def assert_raster(candidate):
+    r=candidate.get('raster') or {}; canvas=(candidate.get('geometry') or {}).get('canvas') or {}
+    assert r.get('schema')=='dore.design.raster-evidence.v1',r
+    assert r.get('real_browser_render') is True and r.get('sha256') and int(r.get('byte_size') or 0)>100,r
+    assert Path(r['path']).exists(),r
+    assert r['width']==int(round(float(canvas['w']))) and r['height']==int(round(float(canvas['h']))),(r,canvas)
+
+
 def main():
     with tempfile.TemporaryDirectory() as td:
         root=Path(td)
@@ -25,7 +33,7 @@ def main():
         os.environ['DORE_DESIGN_DATA']=str(root/'design')
         os.environ['DORE_UI_TASTE_DB']=str(root/'taste.sqlite3')
         os.environ['DORE_DESIGN_A2A_FIXTURE']='1'
-        os.environ['DORE_DESIGN_A2A_TIMEOUT']='60'
+        os.environ['DORE_DESIGN_A2A_TIMEOUT']='90'
         os.environ.pop('DORE_DESIGN_A2A_DISAGREE_FIXTURE',None)
 
         import importlib
@@ -46,21 +54,25 @@ def main():
         assert out['ok'] and out['decision']=='explore' and out['a2a_status']=='PASS' and out['completion_evidence'] is True
         assert out['inference_boundary']=='core-a2a-only' and out['production_promoted'] is False
         assert out['provider']=='deterministic-ci-fixture' and [v['id'] for v in out['variants']]==['A','B']
-        assert len(out['candidates'])==2 and out['candidate_evidence']=='executable-sandbox-render+geometry'
+        assert len(out['candidates'])==2 and out['candidate_evidence']=='real-browser-png+executable-sandbox-render+geometry'
         assert out['canonical_workspace_mutated'] is False
         assert all(c['schema']=='dore.design.sandbox-candidate.v1' for c in out['candidates'])
         assert all(c['render_sha256'] and c['rendered_html'].startswith('<!doctype html>') for c in out['candidates'])
         assert all(c['geometry']['node_count']==2 and c['canonical_workspace_mutated'] is False for c in out['candidates'])
+        for c in out['candidates']: assert_raster(c)
         assert out['candidates'][0]['render_sha256'] != out['candidates'][1]['render_sha256']
+        assert out['candidates'][0]['raster']['sha256'] != out['candidates'][1]['raster']['sha256']
         assert out['judge_count']==2 and out['blind_order_reversal'] is True and out['consensus'] is True and out['winner']=='B'
         assert out['critic']['usability_floor_passed'] is True and out['memory_admitted'] is True and out['writeback']['comparison_id']>0
 
         proof=a2a_execution_plane.status(out['task_id']); assert proof['completion_evidence'] is True
         task=proof['task']; assert task['status']=='PASS'
-        assert task['artifact']['type']=='dore.design-intelligence-exploration.v3'
-        assert task['artifact']['evidence_kind']=='executable-sandbox-render+geometry'
+        assert task['artifact']['type']=='dore.design-intelligence-exploration.v4'
+        assert task['artifact']['evidence_kind']=='real-browser-png+executable-sandbox+geometry'
         assert task['artifact']['canonical_workspace_mutated'] is False
         assert task['verification']['executable_candidate_artifacts'] is True
+        assert task['verification']['real_browser_raster_evidence'] is True
+        assert task['verification']['distinct_candidate_rasters'] is True
         assert task['verification']['canonical_workspace_mutated'] is False
         assert task['verification']['blind_order_reversal'] is True and task['verification']['judge_count']==2
 
@@ -71,14 +83,17 @@ def main():
         assert disagree['consensus'] is False and disagree['winner'] is None
         assert disagree['memory_admitted'] is False and disagree['writeback'] is None
         assert disagree['writeback_block_reason']=='judge_disagreement' and disagree['requires_more_evidence'] is True
-        assert len(disagree['candidates'])==2 and all(c['render_sha256'] for c in disagree['candidates'])
+        assert len(disagree['candidates'])==2
+        for c in disagree['candidates']: assert_raster(c)
         dproof=a2a_execution_plane.status(disagree['task_id']); assert dproof['completion_evidence'] is True
+        assert dproof['task']['verification']['real_browser_raster_evidence'] is True
 
-        print(json.dumps({'ok':True,'policy':'dore-design-executable-sandbox-acceptance-v1','checks':{
+        print(json.dumps({'ok':True,'policy':'dore-design-pixel-grounded-acceptance-v1','checks':{
             'variants_are_executable_patches':True,'sandbox_candidates_render':True,'geometry_evidence_exists':True,
-            'candidate_renders_are_distinct':True,'canonical_workspace_is_immutable':True,'two_blind_judges_run':True,
+            'real_browser_png_A':True,'real_browser_png_B':True,'raster_dimensions_match_canvas':True,
+            'candidate_pixels_are_distinct':True,'canonical_workspace_is_immutable':True,'two_blind_judges_run':True,
             'presentation_order_reversed':True,'consensus_winner_writes_back':True,'judge_disagreement_blocks_memory':True,
-            'disagreement_preserves_candidate_artifacts':True,'completion_requires_verified_artifact':True,
+            'pixel_evidence_precedes_taste_writeback':True,'completion_requires_verified_artifact':True,
             'design_process_has_no_model_client':True,'production_promotion_blocked':True,
         },'consensus_task_id':out['task_id'],'disagreement_task_id':disagree['task_id'],'winner':out['winner']},ensure_ascii=False,sort_keys=True))
     return 0
