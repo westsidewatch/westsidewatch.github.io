@@ -58,6 +58,7 @@ jobs:
           exit $STATUS
       - name: Enforce single-site brand integration
         run: |
+          set -x
           test -f /tmp/dawn-formal-public/index.html
           test -f /tmp/dawn-formal-public/dawn-library/index.html
           grep -q 'Westside Watch' /tmp/dawn-formal-public/index.html
