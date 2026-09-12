@@ -19,6 +19,12 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertEqual(resolver.resolve('https://example.org/article').fallback, 'readability')
         self.assertIsNone(resolver.resolve('not-a-url').adapter)
 
+    def test_payload_never_claims_external_content_ownership(self):
+        payload = UrlSurfaceResolver().payload('https://www.gutenberg.org/ebooks/20')
+        self.assertTrue(payload.external)
+        self.assertEqual(payload.ownership, 'external')
+        self.assertEqual(payload.source_url, 'https://www.gutenberg.org/ebooks/20')
+
     def test_real_discovery_corpus_routes_without_mutation(self):
         before = CANDIDATES.read_bytes()
         data = json.loads(before)
@@ -28,8 +34,11 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         resolver = UrlSurfaceResolver()
         resolved = 0
         for item in items:
-            route = resolver.resolve(item.get('sourceUrl', ''))
-            if route.adapter is not None:
+            payload = resolver.payload(item.get('sourceUrl', ''))
+            self.assertTrue(payload.external)
+            self.assertEqual(payload.ownership, 'external')
+            self.assertEqual(payload.source_url, item.get('sourceUrl', '').strip())
+            if payload.adapter is not None:
                 resolved += 1
 
         coverage = resolved / len(items)
