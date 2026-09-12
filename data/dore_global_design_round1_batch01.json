@@ -1,0 +1,92 @@
+{
+  "schema": "dore.global-design-nourishment-batch.v1",
+  "batchId": "round1-batch01",
+  "mode": "real-authority-source-ingestion",
+  "authorityReviewedAt": "2026-09-11",
+  "items": [
+    {
+      "id": "aic-armchair-104673",
+      "domain": ["furniture", "industrial-design"],
+      "title": "Armchair",
+      "creator": "William Gray Purcell; George Feick Jr.; George Grant Elmslie",
+      "date": "1911-12",
+      "source": "Art Institute of Chicago",
+      "sourceUrl": "https://www.artic.edu/artworks/104673/armchair",
+      "provenance": "museum-authority-record",
+      "rights": "reviewed-metadata-only",
+      "theologyStatus": "not-applicable",
+      "designSignals": ["proportion", "material", "joinery", "prairie-school", "object-structure"],
+      "expectedDecision": "design-only"
+    },
+    {
+      "id": "aic-chair-seat-179663",
+      "domain": ["furniture", "textile", "pattern"],
+      "title": "Fragment of a Chair Seat",
+      "creator": "Thomas Wardle",
+      "date": "1878-1898",
+      "source": "Art Institute of Chicago",
+      "sourceUrl": "https://www.artic.edu/artworks/179663/fragment-of-a-chair-seat",
+      "provenance": "museum-authority-record",
+      "rights": "CC0-public-domain-designation",
+      "theologyStatus": "not-applicable",
+      "designSignals": ["pattern", "surface", "material", "repeat", "textile-composition"],
+      "expectedDecision": "design-only"
+    },
+    {
+      "id": "loc-trinity-episcopal-95861005",
+      "domain": ["architecture", "church-architecture"],
+      "title": "Architectural drawing for Trinity Episcopal Church, Washington, D.C.",
+      "source": "Library of Congress Prints and Photographs",
+      "sourceUrl": "https://www.loc.gov/pictures/item/95861005/",
+      "provenance": "library-authority-record",
+      "rights": "reviewed-record-access",
+      "theologyStatus": "uncertain",
+      "designSignals": ["church-elevation", "facade", "proportion", "historic-church-design"],
+      "churchArchitectureLine": "光之教會",
+      "expectedDecision": "theology-review-required"
+    },
+    {
+      "id": "loc-unity-temple-il0318",
+      "domain": ["architecture", "church-architecture", "interior"],
+      "title": "Unity Temple, Oak Park, Illinois",
+      "creator": "Frank Lloyd Wright",
+      "date": "1907",
+      "source": "Library of Congress HABS",
+      "sourceUrl": "https://www.loc.gov/pictures/item/il0318/",
+      "provenance": "government-architecture-survey",
+      "rights": "reviewed-habs-record",
+      "theologyStatus": "outside-boundary",
+      "designSignals": ["worship-room", "human-scale", "reinforced-concrete", "light", "spatial-hierarchy", "auxiliary-space"],
+      "churchArchitectureLine": "光之教會",
+      "expectedDecision": "design-only",
+      "religiousSemanticIsolation": true
+    },
+    {
+      "id": "loc-church-advocate-pa3865",
+      "domain": ["architecture", "church-architecture", "interior", "furniture"],
+      "title": "Church of the Advocate, Philadelphia",
+      "source": "Library of Congress HABS",
+      "sourceUrl": "https://www.loc.gov/pictures/item/pa3865/",
+      "provenance": "government-architecture-survey",
+      "rights": "reviewed-habs-record",
+      "theologyStatus": "uncertain",
+      "designSignals": ["gothic-revival", "sanctuary", "ornament", "furniture", "material", "social-mission"],
+      "churchArchitectureLine": "光之教會",
+      "expectedDecision": "theology-review-required"
+    },
+    {
+      "id": "loc-brick-church-99472448",
+      "domain": ["photography", "architecture", "church-architecture"],
+      "title": "Exterior view of brick church",
+      "date": "1899-1900",
+      "source": "Library of Congress Prints and Photographs",
+      "sourceUrl": "https://www.loc.gov/pictures/item/99472448/",
+      "provenance": "library-authority-record",
+      "rights": "no-known-restrictions-on-publication",
+      "theologyStatus": "uncertain",
+      "designSignals": ["architectural-photography", "brick", "facade", "historic-context"],
+      "churchArchitectureLine": "光之教會",
+      "expectedDecision": "theology-review-required"
+    }
+  ]
+}
