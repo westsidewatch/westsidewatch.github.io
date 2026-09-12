@@ -8,6 +8,11 @@ on:
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
       - 'tests/test_dawn_url_surface.py'
+      - 'tests/dawn-web-surface-contract.test.mjs'
+      - 'layouts/website/dawn-library.html'
+      - 'static/js/dawn-web-surface.js'
+      - 'static/css/dawn-web-surface.css'
+      - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - '.github/workflows/dawn-url-surface.yml'
   workflow_dispatch:
@@ -26,8 +31,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Run URL surface unit and 900+ corpus tests
         run: python -m unittest tests.test_dawn_url_surface -v
+      - name: Verify mounted public Web Surface contract
+        run: node --test tests/dawn-web-surface-contract.test.mjs
       - name: Emit deterministic routing benchmark
         run: python scripts/run_dawn_url_surface_benchmark.py
       - name: Materialize provider-neutral surface index
