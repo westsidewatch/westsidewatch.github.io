@@ -81,6 +81,23 @@
       "expectContentType": "image/"
     },
     {
+      "id": "internetarchive-josephus-1900-bookreader",
+      "capability": "book-reader",
+      "stage": "fixture-found",
+      "language": "en",
+      "kind": "scanned-book",
+      "title": "Complete works of Josephus; Antiquities of the Jews, The wars of the Jews, Against Apion, etc. etc",
+      "author": "Flavius Josephus",
+      "edition": {
+        "openLibraryEditionId": "OL24645724M",
+        "publishDate": "1900",
+        "publisher": "Bigelow, Brown",
+        "internetArchiveId": "completeworksofj19002jose"
+      },
+      "url": "https://archive.org/embed/completeworksofj19002jose",
+      "expectContentType": "text/html"
+    },
+    {
       "id": "openlibrary-work-edition-identity",
       "capability": "zotero-translate",
       "stage": "fixture-found",
