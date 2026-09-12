@@ -16,47 +16,86 @@ concurrency:
 jobs:
   resident-e2e:
     runs-on: [self-hosted, macOS, dore]
-    timeout-minutes: 20
+    timeout-minutes: 8
     steps:
       - name: Checkout exact PR head
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 1
 
-      - name: Inventory resident browser native and model environment
+      - name: Bounded resident inventory
         shell: bash
         run: |
           set -u
           echo "E2E_SHA=$(git rev-parse HEAD)"
           echo "E2E_HOST=$(hostname)"
           sw_vers
-          echo '--- browser applications ---'
-          find /Applications "$HOME/Applications" -maxdepth 2 -type d \( -iname '*Firefox*.app' -o -iname '*Waterfox*.app' -o -iname '*LibreWolf*.app' \) -print 2>/dev/null || true
-          echo '--- Firefox-related home paths ---'
-          find "$HOME/Library/Application Support" -maxdepth 4 \( -iname '*Firefox*' -o -iname '*Mozilla*' -o -iname '*NativeMessagingHosts*' \) -print 2>/dev/null | head -n 160 || true
-          echo '--- native manifests ---'
-          for D in "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts" "/Library/Application Support/Mozilla/NativeMessagingHosts"; do
+
+          echo '--- Firefox candidates ---'
+          for APP in \
+            '/Applications/Firefox.app' \
+            '/Applications/Firefox Developer Edition.app' \
+            '/Applications/Firefox Nightly.app' \
+            "$HOME/Applications/Firefox.app"; do
+            test -d "$APP" && echo "FOUND_APP=$APP"
+          done
+          command -v mdfind >/dev/null && mdfind "kMDItemCFBundleIdentifier == 'org.mozilla.firefox'" | head -n 20 || true
+
+          echo '--- Firefox profile ---'
+          FFROOT="$HOME/Library/Application Support/Firefox"
+          if test -d "$FFROOT"; then
+            ls -la "$FFROOT" || true
+            test -f "$FFROOT/profiles.ini" && { echo '--- profiles.ini ---'; cat "$FFROOT/profiles.ini"; }
+            for P in "$FFROOT"/Profiles/*; do
+              test -d "$P" || continue
+              echo "PROFILE=$P"
+              test -f "$P/extensions.json" && python3 - "$P/extensions.json" <<'PY'
+import json,sys
+p=sys.argv[1]
+d=json.load(open(p,encoding='utf-8'))
+for a in d.get('addons',[]):
+    if a.get('active'):
+        print('ACTIVE_EXTENSION', a.get('id'), a.get('path'), a.get('type'))
+PY
+            done
+          else
+            echo 'NO_FIREFOX_PROFILE_ROOT'
+          fi
+
+          echo '--- Native Messaging manifests ---'
+          for D in \
+            "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts" \
+            '/Library/Application Support/Mozilla/NativeMessagingHosts'; do
+            echo "NATIVE_DIR=$D"
             if test -d "$D"; then
-              echo "DIR=$D"
-              find "$D" -maxdepth 1 -type f -name '*.json' -print -exec sh -c 'echo --- $1; cat "$1"' _ {} \;
+              ls -la "$D"
+              for M in "$D"/*.json; do
+                test -f "$M" || continue
+                echo "MANIFEST=$M"
+                python3 - "$M" <<'PY'
+import json,sys
+p=sys.argv[1]
+d=json.load(open(p,encoding='utf-8'))
+print({k:d.get(k) for k in ('name','description','path','type','allowed_extensions','allowed_origins')})
+PY
+              done
             fi
           done
-          echo '--- resident repo browser/native references ---'
-          ROOT="$HOME/westsidewatch.github.io"
-          if test -d "$ROOT/.git"; then
-            cd "$ROOT"
-            git status --short || true
-            find . -maxdepth 8 -type f | grep -Ei 'firefox|companion|native.?messag|extension|webext|manifest' | head -n 200 || true
-            grep -RIlE 'connectNative|sendNativeMessage|NativeMessaging|native messaging|allowed_extensions' . --exclude-dir=.git --exclude='*.min.js' 2>/dev/null | head -n 200 || true
-          fi
-          echo '--- ollama ---'
-          (command -v ollama || true)
-          (/opt/homebrew/bin/ollama list 2>/dev/null || /usr/local/bin/ollama list 2>/dev/null || ollama list 2>/dev/null || true)
-          echo '--- repo manuscript/book acceptance candidates ---'
-          cd "$GITHUB_WORKSPACE"
-          find . -maxdepth 8 -type f \( -iname '*book*intelligence*' -o -iname '*book*compile*' -o -iname '*manuscript*' -o -iname '*e2e*' -o -iname '*acceptance*' \) -print | head -n 250 || true
-          grep -RIlE 'publishing.book-intelligence|publishing.book-compile|gemma4:e4b' . --exclude-dir=.git --exclude='*.min.js' 2>/dev/null | head -n 250 || true
 
-      - name: Stop until inventory is interpreted
-        run: |
+          echo '--- Ollama ---'
+          OLLAMA=''
+          for O in "$(command -v ollama 2>/dev/null || true)" /opt/homebrew/bin/ollama /usr/local/bin/ollama; do
+            test -n "$O" -a -x "$O" && { OLLAMA="$O"; break; }
+          done
+          if test -n "$OLLAMA"; then
+            echo "OLLAMA=$OLLAMA"
+            "$OLLAMA" list || true
+          else
+            echo 'NO_OLLAMA_BINARY'
+          fi
+
+          echo '--- Checked-out repo candidates ---'
+          git ls-files | grep -Ei '(firefox|companion|native.?messag|extension|webext|manifest|book.?intelligence|book.?compile|manuscript|e2e|acceptance)' | head -n 300 || true
+          git grep -Il -E 'connectNative|sendNativeMessage|NativeMessaging|allowed_extensions|gemma4:e4b|publishing\.book-intelligence|publishing\.book-compile' -- ':!*.min.js' | head -n 300 || true
+
           echo 'E2E_INVENTORY_COMPLETE'
