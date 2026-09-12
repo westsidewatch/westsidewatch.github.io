@@ -5,6 +5,7 @@ on:
     paths:
       - 'dore_core/capabilities/url_surface.py'
       - 'scripts/run_dawn_url_surface_benchmark.py'
+      - 'scripts/build_dawn_surface_index.py'
       - 'tests/test_dawn_url_surface.py'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - '.github/workflows/dawn-url-surface.yml'
@@ -28,8 +29,25 @@ jobs:
         run: python -m unittest tests.test_dawn_url_surface -v
       - name: Emit deterministic routing benchmark
         run: python scripts/run_dawn_url_surface_benchmark.py
-      - name: Preserve report artifact
+      - name: Materialize provider-neutral surface index
+        run: python scripts/build_dawn_surface_index.py
+      - name: Verify surface index stays pointer-only and covers corpus
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('static/dawn-library/biblical-world/surface-index.json')
+          d=json.loads(p.read_text())
+          assert d['count'] >= 900
+          assert all(i.get('external') is True for i in d['items'])
+          assert all(i.get('ownership') == 'external' for i in d['items'])
+          assert all(i.get('source_url') for i in d['items'])
+          print({'count': d['count'], 'schema': d['schema']})
+          PY
+      - name: Preserve benchmark and generated surface index
         uses: actions/upload-artifact@v4
         with:
           name: dawn-url-surface-benchmark
-          path: reports/DAWN-URL-SURFACE-BENCHMARK.json
+          path: |
+            reports/DAWN-URL-SURFACE-BENCHMARK.json
+            static/dawn-library/biblical-world/surface-index.json
