@@ -1,18 +1,12 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-11T13:39:01.086946+00:00",
+  "generatedAt": "2026-09-12T07:49:10.645811+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
       "title": "精品書架 · Standard Ebooks",
       "books": 15,
       "source": "Standard Ebooks"
-    },
-    {
-      "id": "wikisource-zh-verified-export",
-      "title": "中文典籍 · 維基文庫 EPUB",
-      "books": 6,
-      "source": "Wikisource"
     },
     {
       "id": "doab-theology-or-biblical",
@@ -75,23 +69,27 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 220,
-  "sourceCovers": 129,
-  "directPublications": 21,
+  "mappedBooks": 214,
+  "sourceCovers": 159,
+  "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
-    "Wikisource": 6,
     "DOAB": 47,
     "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
     "queriedThisRun": 60,
-    "resolved": 77,
-    "coversAdded": 31,
-    "internetArchiveLinks": 27,
-    "cacheEntries": 120
+    "resolved": 118,
+    "coversAdded": 61,
+    "internetArchiveLinks": 48,
+    "cacheEntries": 178
   },
-  "errors": [],
+  "errors": [
+    {
+      "source": "Wikisource",
+      "error": "empty-shelf"
+    }
+  ],
   "contentDownloaded": false
 }
