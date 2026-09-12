@@ -9,6 +9,7 @@ on:
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
+      - 'scripts/build_dawn_10k_work_queue.py'
       - 'tests/test_dawn_url_surface.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
       - 'layouts/website/dawn-library.html'
@@ -25,7 +26,7 @@ permissions:
 jobs:
   corpus-routing-gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 10
     env:
       PYTHONPATH: .
     steps:
@@ -57,13 +58,31 @@ jobs:
           assert all(i.get('source_url') for i in d['items'])
           print({'count': d['count'], 'schema': d['schema']})
           PY
+      - name: Build resumable 10K Work queue
+        run: python scripts/build_dawn_10k_work_queue.py
+      - name: Verify 10K queue checkpoint and admission isolation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/dawn-10k-work-queue.json')
+          d=json.loads(p.read_text())
+          assert d['targetWorks'] == 10000
+          assert d['sourceCandidates'] >= 900
+          assert d['deduplicatedWorks'] > 0
+          assert d['deduplicatedWorks'] <= d['sourceCandidates']
+          assert d['admission'].startswith('none')
+          assert all(i.get('queueId') and i.get('status') for i in d['items'])
+          print({'sourceCandidates': d['sourceCandidates'], 'deduplicatedWorks': d['deduplicatedWorks'], 'targetWorks': d['targetWorks']})
+          PY
       - name: Probe 900+ real external pointers and capability fixtures
         run: python scripts/run_dawn_url_surface_live_probe.py
-      - name: Preserve benchmark artifacts and generated surface index
+      - name: Preserve benchmark, live evidence, Work queue and surface index
         uses: actions/upload-artifact@v4
         with:
           name: dawn-url-surface-benchmarks
           path: |
             reports/DAWN-URL-SURFACE-BENCHMARK.json
             reports/DAWN-URL-SURFACE-LIVE.json
+            data/dawn-10k-work-queue.json
             static/dawn-library/biblical-world/surface-index.json
