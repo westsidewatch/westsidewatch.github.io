@@ -27,17 +27,20 @@ class DawnUrlSurfaceTests(unittest.TestCase):
 
     def test_mount_registry_truth(self):
         registry = SurfaceMountRegistry()
-        self.assertTrue(registry.executable('bibliographic-page'))
-        self.assertEqual(registry.state('bibliographic-page'), 'mounted')
-        proven = (
-            'iiif-visual-surface', 'pdfjs', 'cover-resolve', 'zotero-translate',
-            'book-reader', 'video-surface', 'readability',
-        )
+        mounted = ('bibliographic-page', 'pdfjs', 'book-reader', 'video-surface')
+        for adapter in mounted:
+            self.assertEqual(registry.state(adapter), 'mounted')
+            self.assertTrue(registry.executable(adapter))
+            self.assertIsNotNone(registry.get(adapter).implementation)
+            self.assertIsNotNone(registry.get(adapter).evidence)
+
+        proven = ('iiif-visual-surface', 'cover-resolve', 'zotero-translate', 'readability')
         for adapter in proven:
             self.assertEqual(registry.state(adapter), 'integration-proven')
             self.assertFalse(registry.executable(adapter))
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
+
         self.assertEqual(registry.state('oembed-opengraph'), 'reserved')
         self.assertEqual(registry.state('unknown-adapter'), 'unavailable')
 

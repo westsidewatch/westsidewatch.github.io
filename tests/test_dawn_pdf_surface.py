@@ -4,7 +4,6 @@ from pathlib import Path
 
 from dore_core.capabilities.surface_mounts import SurfaceMountRegistry
 
-
 ROOT = Path(__file__).resolve().parents[1]
 ACCEPTANCE = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 SURFACE = ROOT / 'static/dawn-library/surfaces/pdf.html'
@@ -42,12 +41,13 @@ class DawnPdfSurfaceTests(unittest.TestCase):
         self.assertIn("sourceUrl.protocol !== 'https:'", js)
         self.assertIn("root.dataset.viewerState = 'ready'", js)
 
-    def test_registry_records_real_pdfjs_implementation_without_claiming_mount(self):
-        mount = SurfaceMountRegistry().get('pdfjs')
-        self.assertEqual(mount.state, 'integration-proven')
+    def test_registry_records_real_pdfjs_as_mounted(self):
+        registry = SurfaceMountRegistry()
+        mount = registry.get('pdfjs')
+        self.assertEqual(mount.state, 'mounted')
         self.assertEqual(mount.implementation, 'static/js/dawn-pdf-surface.js')
         self.assertIn('wikimedia-augustine-confessions-pdf', mount.evidence)
-        self.assertFalse(SurfaceMountRegistry().executable('pdfjs'))
+        self.assertTrue(registry.executable('pdfjs'))
 
     def test_pdf_surface_keeps_external_ownership_and_escape_hatch(self):
         html = SURFACE.read_text()
