@@ -1,0 +1,31 @@
+name: Dawn Formal Edition Phase 6
+
+on:
+  push:
+    branches:
+      - 'dore/dawn-library-formal-edition'
+    paths:
+      - 'scripts/dawn-formal-edition-phase6.mjs'
+      - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/surfaces/multiwrite-biblical-world.json'
+      - 'static/dawn-library/formal-edition/contexts/**'
+      - 'static/dawn-library/formal-edition/contracts/personal-state.v1.schema.json'
+      - 'static/dawn-library/formal-edition/runtime/personal-state.mjs'
+      - 'static/dawn-library/formal-edition/runtime/relation-context.mjs'
+      - '.github/workflows/dawn-formal-edition-phase6.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  personal-dawn-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Personal Dawn over real canonical substrate
+        run: node scripts/dawn-formal-edition-phase6.mjs
