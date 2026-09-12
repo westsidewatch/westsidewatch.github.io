@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'dore-design/**'
+      - 'local/dore-local/ui_taste_memory.py'
+      - 'local/dore-local/ui_preference_field.py'
       - '.github/workflows/dore-design-agent-acceptance.yml'
   workflow_dispatch:
 
@@ -80,7 +82,7 @@ jobs:
           print('DORE_MULTIWRITE_INTEGRATION_PASS')
           PY
       - name: Design 2.0 syntax
-        run: python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py dore-design/design2_phase7_http.py dore-design/design2_final_acceptance.py
+        run: python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py dore-design/design2_phase7_http.py dore-design/design2_final_acceptance.py dore-design/design_intelligence_runtime.py dore-design/design2_phase8_http.py dore-design/design_intelligence_acceptance.py local/dore-local/ui_taste_memory.py local/dore-local/ui_preference_field.py
       - name: Phase 7 production health contract
         shell: bash
         run: |
@@ -96,6 +98,35 @@ jobs:
           sleep 1
           curl -fsS http://127.0.0.1:4311/api/design2/production-health >/tmp/dd2-health.json
           python3 -c "import json; h=json.load(open('/tmp/dd2-health.json')); assert h['version']=='2.0-production' and h['phase']==7 and 'acceptance' in h"
+      - name: Phase 8 design intelligence regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONPATH="$PWD/dore-design:$PWD/local/dore-local"
+          python3 dore-design/design_intelligence_acceptance.py | tee /tmp/dd2-intelligence-acceptance.json
+          grep -q '"ok": true' /tmp/dd2-intelligence-acceptance.json
+          export DORE_DESIGN_DATA="${{ runner.temp }}/dd2-phase8"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/dd2-phase8-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/dd2-phase8-recommendations.json"
+          export DORE_UI_TASTE_DB="${{ runner.temp }}/dd2-phase8-taste.sqlite3"
+          export DORE_DESIGN_PORT=4315
+          python3 dore-design/workspace_cli.py get >/dev/null
+          python3 dore-design/upgrade_living_fortress_v2.py >/dev/null
+          python3 dore-design/app_design2.py >/tmp/dd2-phase8.log 2>&1 & pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          sleep 1
+          curl -fsS http://127.0.0.1:4315/api/design2/intelligence/health >/tmp/dd2-intelligence-health.json
+          python3 - <<'PY'
+          import json, urllib.request
+          base='http://127.0.0.1:4315'
+          h=json.load(open('/tmp/dd2-intelligence-health.json'))
+          assert h['ok'] and h['phase']==8 and h['model_inference_connected'] is False
+          payload={'surface_id':'fresh','surface_family':'fresh-family','task_context':'fresh test','primary_axis':'composition','candidates':['A','B']}
+          req=urllib.request.Request(base+'/api/design2/intelligence/route',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
+          routed=json.load(urllib.request.urlopen(req))
+          assert routed['decision']=='explore' and routed['variant_generation_required'] is True
+          print('DORE_DESIGN_INTELLIGENCE_HTTP_PASS')
+          PY
       - name: Phase 4 immutable publication regression
         shell: bash
         run: |
