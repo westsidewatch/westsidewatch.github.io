@@ -1,0 +1,12 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-maintenance-design-rollout-candidate01-20260912",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "maintenance.update",
+  "subject": "Refresh Design 2.0 from bounded rollout request",
+  "priority": "critical",
+  "related_goal": "dore-design-candidate01-page2-motion",
+  "requires_reply": true,
+  "body": "Run the guarded maintenance update. The repository contains an enabled dore.design-rollout-request.v1; PASS only if that exact Candidate 01 SHA is installed and the Design runtime health and page markers verify."
+}
