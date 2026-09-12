@@ -36,12 +36,14 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 88 — Multiwrite / 成書 publication workflow Phase 1; eight-stage workflow/state ownership and author-authority gates are real, but end-to-end publication remains open. The old primary interpretation `成書 = DOCX/PDF export` is `SUPERSEDED`.
 - Checkpoint 89 — Multiwrite publishing follow-on; headless autopilot plus formal EPUB3/PDF/Web artifact construction are implemented, while merged-main artifact-run/readback, one real-manuscript end-to-end proof and downstream Dawn Library publication remain open.
 - Checkpoint 90 — early Cloudflare R2 asset/service history reconciliation; Priority-A migration/delivery/cleanup and the five-asset Priority-B site-media cutover are bounded `VERIFIED_COMPLETE / COMPONENT` milestones. The old “runtime delivery pending” and “Priority B deferred” inventory statements are `SUPERSEDED` as current-state guidance. The bounded `dore.query.v1` service contract also remains a defensible historical component completion because its current endpoint implementation is still present.
+- Checkpoint 91 — Conversation → shared Core substrate convergence is `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; stable message projection, idempotent backfill and acceptance wiring are real, but persisted merged-main acceptance plus representative real-history proof remain open.
+- Checkpoint 92 — Journal + Liming Library media-placement audit is a bounded `VERIFIED_COMPLETE / COMPONENT` zero-migration milestone. The correct result was to keep structured editorial/resource source data in Git and avoid migration-for-migration's-sake; the old generic structured data-runtime follow-on must pass a duplication check before being treated as current work.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 90. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 90 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 92. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 92 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 90 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 92 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -68,6 +70,8 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - Priority-A R2 migration/delivery/cleanup: `VERIFIED_COMPLETE / COMPONENT`; old delivery-pending prose is superseded current-state history.
 - Priority-B five-asset site-media cutover: `VERIFIED_COMPLETE / COMPONENT`; old deferred-state prose is superseded current-state history.
 - `dore.query.v1` service-contract milestone: `VERIFIED_COMPLETE / COMPONENT`; broader Doré service/execution architecture remains continuous and evolving.
+- Conversation shared-substrate projection: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; persisted acceptance execution and representative real-history proof remain open.
+- Journal + Liming zero-migration placement audit: `VERIFIED_COMPLETE / COMPONENT`; classification-before-migration is retained as reusable storage doctrine.
 
 ## Latest liveness evidence
 
