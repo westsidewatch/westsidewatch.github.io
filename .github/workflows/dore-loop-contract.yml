@@ -27,3 +27,7 @@ jobs:
           python-version: '3.12'
       - name: Verify every engineered loop component
         run: python3 local/dore-local/loop_contract_acceptance.py
+      - name: Verify A2A execution plane lifecycle
+        run: python3 local/dore-local/a2a_execution_plane_acceptance.py
+      - name: Verify coordination worker evidence gate
+        run: python3 local/dore-local/coordination_worker_execution_acceptance.py
