@@ -4,10 +4,18 @@ on:
   push:
     paths:
       - 'local/dore-local/reflex_*.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/capability_registry.py'
+      - 'local/dore-local/capability_registry_acceptance.py'
+      - 'dore-core/runtime/capability-registry.v1.json'
       - '.github/workflows/dore-reflex-v0.yml'
   pull_request:
     paths:
       - 'local/dore-local/reflex_*.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/capability_registry.py'
+      - 'local/dore-local/capability_registry_acceptance.py'
+      - 'dore-core/runtime/capability-registry.v1.json'
       - '.github/workflows/dore-reflex-v0.yml'
 
 jobs:
@@ -21,9 +29,13 @@ jobs:
       - name: Install narrow Reflex adapter dependencies
         run: python -m pip install 'markitdown[docx,xlsx]>=0.1.3,<0.2.0'
       - name: Reflex syntax
-        run: python -m py_compile local/dore-local/reflex_contracts.py local/dore-local/reflex_router.py local/dore-local/reflex_projections.py local/dore-local/reflex_capability.py local/dore-local/reflex_acceptance.py
-      - name: Reflex acceptance
+        run: python -m py_compile local/dore-local/reflex_contracts.py local/dore-local/reflex_router.py local/dore-local/reflex_projections.py local/dore-local/reflex_capability.py local/dore-local/reflex_acceptance.py local/dore-local/reflex_bus_e2e.py local/dore-local/capability_bus.py local/dore-local/capability_registry.py local/dore-local/capability_registry_acceptance.py
+      - name: Reflex adapter/runtime acceptance
         run: python local/dore-local/reflex_acceptance.py
+      - name: Canonical capability registry acceptance
+        run: PYTHONPATH=.:local/dore-local python local/dore-local/capability_registry_acceptance.py
+      - name: Reflex canonical capability bus E2E
+        run: PYTHONPATH=.:local/dore-local python local/dore-local/reflex_bus_e2e.py
       - name: No persisted Reflex substrate
         run: |
           if find . -type f \( -name '*.reflex' -o -name 'reflex-*.json' -o -name 'reflex_*.json' \) -print | grep -q .; then
