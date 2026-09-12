@@ -28,7 +28,7 @@ class SurfaceMountRegistry:
 
     _mounts = {
         "bibliographic-page": CapabilityMount("bibliographic-page", "mounted", "lazy", "project-gutenberg", "static/dawn-library/dawn-web-surface.js", "data/dawn-capability-acceptance-corpus.json#gutenberg-josephus-antiquities"),
-        "iiif-visual-surface": CapabilityMount("iiif-visual-surface", "integration-proven", "on-demand", "iiif", "static/js/dawn-visual-viewer.js", "data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif"),
+        "iiif-visual-surface": CapabilityMount("iiif-visual-surface", "mounted", "on-demand", "iiif", "static/js/dawn-visual-viewer.js", "data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif"),
         "pdfjs": CapabilityMount("pdfjs", "mounted", "on-demand", "pdf", "static/js/dawn-pdf-surface.js", "data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf"),
         "book-reader": CapabilityMount("book-reader", "mounted", "on-demand", "internet-archive-scan", "static/js/dawn-bookreader-surface.js", "data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader"),
         "zotero-translate": CapabilityMount("zotero-translate", "integration-proven", "on-demand", "bibliographic-reconciliation", "dore_core/capabilities/zotero_reconciliation.py", "reports/DAWN-ZOTERO-TRANSLATION.json"),
