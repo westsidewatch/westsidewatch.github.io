@@ -1,14 +1,45 @@
 #!/usr/bin/env python3
-"""DORÉ local routing host: on-demand, zero-cloud local control plane."""
+"""DORÉ local routing host: on-demand, zero-cloud local control plane.
+
+Capability families are loaded lazily. A broken optional Core package must not
+make unrelated local A2A capabilities unavailable.
+"""
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
 PROTOCOL="dore.a2a/1";SERVICE="dore-a2a-native";HOST_NAME="ca.dore.companion";LEGACY_CAPABILITY="design2.stage2.acceptance";MAX_MESSAGE_BYTES=64*1024*1024;CARRIER_ID_KEY="__dore_transport_id"
 ROOT=Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2]).expanduser().resolve()
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
+_CACHE={};_LOAD_ERRORS={}
 def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
-ADAPTER=_load("a2a_adapter");PRODUCTION=_load("production_actions");MAINTENANCE=_load("self_maintenance_action");THEOLOGY=_load("theology_acceptance_action");TRAINING=_load("theology_training_action");DAWN=_load("dawn_publication_action");DESIGNLIVE=_load("design_live_acceptance_action");BUS=_load("capability_bus")
+def _module(name):
+ if name in _CACHE:return _CACHE[name]
+ try:m=_load(name);_CACHE[name]=m;return m
+ except Exception as exc:_LOAD_ERRORS[name]=f"{type(exc).__name__}:{exc}";return None
+def _capabilities(name):
+ m=_module(name);return set(getattr(m,"CAPABILITIES",set())) if m else set()
+def _execute(name,cap,args):
+ m=_module(name)
+ if not m:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"capability_module_unavailable","message":_LOAD_ERRORS.get(name,name)}}
+ return m.execute(cap,args)
+def _bus_pair():
+ bus=_module("capability_bus");production=_module("production_actions")
+ return bus,production
+def discover_production(include_planned=False):
+ bus,production=_bus_pair()
+ if not bus or not production:return []
+ try:return bus.discover(production,include_planned=include_planned)
+ except Exception:return []
+def resolve_production(capability):
+ bus,production=_bus_pair()
+ if not bus or not production:return None
+ try:return bus.resolve(capability,production)
+ except Exception:return None
+def call_production(capability,args,caller_product=None):
+ bus,production=_bus_pair()
+ if not bus or not production:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"production_bus_unavailable","message":_LOAD_ERRORS.get("capability_bus") or _LOAD_ERRORS.get("production_actions") or "production bus unavailable"}}
+ return bus.call(capability,args,production,caller_product=caller_product)
 def _read_exact(stream,size):
  b=b""
  while len(b)<size:
@@ -31,22 +62,25 @@ def _with_id(req,res):
  if req.get(CARRIER_ID_KEY):res=dict(res);res[CARRIER_ID_KEY]=req[CARRIER_ID_KEY]
  return res
 def health_payload():
- production=[x["id"] for x in BUS.discover(PRODUCTION) if x.get("callable")]
- maintenance=sorted(getattr(MAINTENANCE,"CAPABILITIES",set()));theology=sorted(getattr(THEOLOGY,"CAPABILITIES",set()));training=sorted(getattr(TRAINING,"CAPABILITIES",set()));dawn=sorted(getattr(DAWN,"CAPABILITIES",set()));designlive=sorted(getattr(DESIGNLIVE,"CAPABILITIES",set()))
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+maintenance+theology+training+dawn+designlive))}
+ direct=[]
+ for name in ("self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
+  direct.extend(sorted(_capabilities(name)))
+ production=[x["id"] for x in discover_production() if x.get("callable")]
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"degraded_modules":dict(_LOAD_ERRORS)}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
- cap=str(payload.get("capability") or "")
- if cap in getattr(MAINTENANCE,"CAPABILITIES",set()):return _with_id(payload,MAINTENANCE.execute(cap,payload.get("args") or {}))
- if cap in getattr(THEOLOGY,"CAPABILITIES",set()):return _with_id(payload,THEOLOGY.execute(cap,payload.get("args") or {}))
- if cap in getattr(TRAINING,"CAPABILITIES",set()):return _with_id(payload,TRAINING.execute(cap,payload.get("args") or {}))
- if cap in getattr(DAWN,"CAPABILITIES",set()):return _with_id(payload,DAWN.execute(cap,payload.get("args") or {}))
- if cap in getattr(DESIGNLIVE,"CAPABILITIES",set()):return _with_id(payload,DESIGNLIVE.execute(cap,payload.get("args") or {}))
- descriptor=BUS.resolve(cap,PRODUCTION) if cap else None
- if descriptor and descriptor.get("callable"):return _with_id(payload,BUS.call(cap,payload.get("args") or {},PRODUCTION,caller_product=payload.get("caller_product")))
- try:typed=ADAPTER.handle_companion_payload(payload)
- except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}})
- if typed is not None:return _with_id(payload,typed)
+ cap=str(payload.get("capability") or "");args=payload.get("args") or {}
+ direct=(("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
+ for entry in direct:
+  name=entry[0]
+  if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
+ descriptor=resolve_production(cap) if cap else None
+ if descriptor and descriptor.get("callable"):return _with_id(payload,call_production(cap,args,payload.get("caller_product")))
+ adapter=_module("a2a_adapter")
+ if adapter:
+  try:typed=adapter.handle_companion_payload(payload)
+  except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}})
+  if typed is not None:return _with_id(payload,typed)
  cmd=str(payload.get("command") or payload.get("text") or "").strip().lower()
  if cap==LEGACY_CAPABILITY or cmd in {"/dore stage2","dore stage2"}:return _with_id(payload,{"ok":True,"service":SERVICE,"protocol":PROTOCOL,"capability":LEGACY_CAPABILITY,"available":True,"status":"PASS","diagnostic":True,"transport":"local-routing-host"})
  return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"unsupported_payload","message":"unsupported local routing payload"}})
