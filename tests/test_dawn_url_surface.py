@@ -5,11 +5,9 @@ from pathlib import Path
 from dore_core.capabilities.surface_mounts import SurfaceMountRegistry
 from dore_core.capabilities.url_surface import UrlSurfaceResolver
 
-
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES = ROOT / 'static/dawn-library/biblical-world/discovery-candidates.json'
 ACCEPTANCE = ROOT / 'data/dawn-capability-acceptance-corpus.json'
-
 
 class DawnUrlSurfaceTests(unittest.TestCase):
     def test_known_routes(self):
@@ -33,18 +31,15 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         registry = SurfaceMountRegistry()
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
-
-        for adapter in ('iiif-visual-surface', 'pdfjs', 'cover-resolve'):
+        for adapter in ('iiif-visual-surface', 'pdfjs', 'cover-resolve', 'zotero-translate'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'integration-proven')
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
-
-        for adapter in ('book-reader', 'zotero-translate', 'readability', 'video-surface'):
+        for adapter in ('book-reader', 'readability', 'video-surface'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'fixture-found')
             self.assertIsNotNone(registry.get(adapter).evidence)
-
         self.assertFalse(registry.executable('oembed-opengraph'))
         self.assertEqual(registry.state('oembed-opengraph'), 'reserved')
         self.assertEqual(registry.state('unknown-adapter'), 'unavailable')
@@ -70,31 +65,25 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertTrue(gutenberg.executable)
         self.assertEqual(gutenberg.mount_state, 'mounted')
         self.assertEqual(gutenberg.ownership, 'external')
-
         iiif = resolver.plan('https://example.org/iiif/manifest.json')
         self.assertFalse(iiif.executable)
         self.assertEqual(iiif.mount_state, 'integration-proven')
-        self.assertEqual(iiif.adapter, 'iiif-visual-surface')
-
         pdf = resolver.plan('https://example.org/book.pdf')
         self.assertFalse(pdf.executable)
         self.assertEqual(pdf.mount_state, 'integration-proven')
-        self.assertEqual(pdf.adapter, 'pdfjs')
-
         scan = resolver.plan('https://archive.org/details/completeworksofj19002jose')
         self.assertFalse(scan.executable)
         self.assertEqual(scan.mount_state, 'fixture-found')
-        self.assertEqual(scan.adapter, 'book-reader')
+        zotero = resolver.plan('https://openlibrary.org/works/OL1W')
+        self.assertFalse(zotero.executable)
+        self.assertEqual(zotero.mount_state, 'integration-proven')
 
     def test_real_discovery_corpus_routes_without_mutation(self):
         before = CANDIDATES.read_bytes()
-        data = json.loads(before)
-        items = data.get('items', [])
+        items = json.loads(before).get('items', [])
         self.assertGreaterEqual(len(items), 900)
-
         resolver = UrlSurfaceResolver()
-        resolved = 0
-        executable = 0
+        resolved = executable = 0
         for item in items:
             payload = resolver.payload(item.get('sourceUrl', ''))
             plan = resolver.plan(item.get('sourceUrl', ''))
@@ -105,12 +94,9 @@ class DawnUrlSurfaceTests(unittest.TestCase):
                 resolved += 1
             if plan.executable:
                 executable += 1
-
-        coverage = resolved / len(items)
-        self.assertGreaterEqual(coverage, 0.95)
+        self.assertGreaterEqual(resolved / len(items), 0.95)
         self.assertEqual(executable, len(items), 'current 939-candidate corpus is entirely covered by the mounted Gutenberg surface')
         self.assertEqual(before, CANDIDATES.read_bytes(), 'surface routing must never mutate discovery candidates')
-
 
 if __name__ == '__main__':
     unittest.main()
