@@ -59,7 +59,7 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 </script>'''
 
 PAGE2_ASSEMBLY_FIX = r'''<style id="candidate01-page2-assembly-lock">
-/* Page 2: preserve the accepted left geometry; lock only the right preview to its real four-card source rectangle. */
+/* Page 2: right preview uses the exact same geometry contract as the accepted left preview. */
 html[data-candidate01-page="2"] .product-preview{backface-visibility:hidden;transform-origin:50% 50%;}
 html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50%;}
 </style>
@@ -70,29 +70,8 @@ html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50
   if(!baseSync)return;
   const lock=()=>{
     baseSync();
-    const layer=document.querySelector('.products__preview');
-    const cards=[...document.querySelectorAll('.products__grid .product')];
     const right=document.querySelector('.product-preview.--right');
-    if(!layer||cards.length<8||!right)return;
-    const lr=layer.getBoundingClientRect();
-    const rc=[cards[2],cards[3],cards[6],cards[7]].map(el=>el.getBoundingClientRect());
-    const minX=Math.min(...rc.map(r=>r.left));
-    const maxX=Math.max(...rc.map(r=>r.right));
-    const minY=Math.min(...rc.map(r=>r.top));
-    const maxY=Math.max(...rc.map(r=>r.bottom));
-    const x=minX-lr.left;
-    const y=minY-lr.top;
-    const w=maxX-minX;
-    const h=maxY-minY;
-
-    right.style.left=`${x}px`;
-    right.style.right='auto';
-    right.style.top=`${y}px`;
-    right.style.bottom='auto';
-    right.style.width=`${w}px`;
-    right.style.height=`${h}px`;
-    right.style.transform='none';
-
+    if(!right)return;
     const images=right.querySelector('.product-preview__images');
     const mask=right.querySelector('.masked-preview');
     [images,mask].filter(Boolean).forEach(el=>{
@@ -100,9 +79,9 @@ html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50
       el.style.width='100%';
       el.style.height='100%';
     });
-
+    const r=right.getBoundingClientRect();
     document.documentElement.dataset.candidate01AssemblyLock=
-      `right-${Math.round(x)}-${Math.round(y)}-${Math.round(w)}x${Math.round(h)}`;
+      `mirror-left-${Math.round(r.width)}x${Math.round(r.height)}`;
   };
   window.__candidate01SyncGeometry=lock;
   requestAnimationFrame(()=>requestAnimationFrame(lock));
