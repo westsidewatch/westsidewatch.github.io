@@ -12,6 +12,8 @@ on:
       - 'static/dawn-library/formal-edition/contracts/personal-state.v1.schema.json'
       - 'static/dawn-library/formal-edition/runtime/personal-state.mjs'
       - 'static/dawn-library/formal-edition/runtime/relation-context.mjs'
+      - 'static/dawn-library/formal-edition/phase4/**'
+      - 'static/dawn-library/formal-edition/phase6/**'
       - '.github/workflows/dawn-formal-edition-phase6.yml'
   workflow_dispatch:
 
@@ -29,3 +31,39 @@ jobs:
           node-version: '22'
       - name: Validate Personal Dawn over real canonical substrate
         run: node scripts/dawn-formal-edition-phase6.mjs
+      - name: Start local formal-edition server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/dawn-phase6-http.log 2>&1 &
+          echo $! > /tmp/dawn-phase6-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/static/dawn-library/formal-edition/phase6/acceptance.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dawn-phase6-http.log
+          exit 1
+      - name: Browser Personal Dawn persistence acceptance
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
+            http://127.0.0.1:4173/static/dawn-library/formal-edition/phase6/acceptance.html \
+            > /tmp/dawn-phase6-acceptance.html
+          cat /tmp/dawn-phase6-acceptance.html
+          grep -q 'PHASE6_BROWSER_PASS' /tmp/dawn-phase6-acceptance.html
+          grep -q 'data-status="PASS"' /tmp/dawn-phase6-acceptance.html
+      - name: Formal UI Personal Dawn boot smoke
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
+            http://127.0.0.1:4173/static/dawn-library/formal-edition/phase4/index.html \
+            > /tmp/dawn-phase6-ui.html
+          grep -q 'id="card-bookmark"' /tmp/dawn-phase6-ui.html
+          grep -q 'id="save-view"' /tmp/dawn-phase6-ui.html
+          grep -q 'id="trail-toggle"' /tmp/dawn-phase6-ui.html
+          grep -q 'id="personal-dialog"' /tmp/dawn-phase6-ui.html
+          grep -q 'canonical Works' /tmp/dawn-phase6-ui.html
+          test "$(grep -o 'class="work-token"' /tmp/dawn-phase6-ui.html | wc -l)" -le 72
+      - name: Stop local server
+        if: always()
+        run: |
+          test ! -f /tmp/dawn-phase6-http.pid || kill "$(cat /tmp/dawn-phase6-http.pid)" || true
