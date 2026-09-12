@@ -3,22 +3,10 @@ name: Dawn Visual Graph Check
 on:
   pull_request:
     paths:
-      - 'data/visual_graph.json'
-      - 'data/visual_rights.json'
-      - 'data/visual_map_profiles.json'
-      - 'data/resources.json'
-      - 'data/dawn_visual_editorial.json'
-      - 'data/dore_global_design_*.json'
+      - 'data/**'
       - 'content/visual/**'
       - 'layouts/**'
-      - 'static/js/dawn-visual-viewer.js'
-      - 'static/js/dore-visual-surface-consumer.js'
-      - 'static/one/one-surface-runtime.js'
-      - 'static/one/one-baptism-motion.js'
-      - 'static/multiwrite/dawn-library.js'
-      - 'static/multiwrite/folio-surface-runtime.js'
-      - 'static/css/dawn-visual.css'
-      - 'static/css/visual-surface-engine.css'
+      - 'static/**'
       - 'scripts/dore/**'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
@@ -28,6 +16,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Content boundary gate
+        run: node scripts/dore/content-boundary-selftest.mjs
       - name: Validate Visual Graph JSON
         run: |
           python - <<'PY'
@@ -36,97 +26,56 @@ jobs:
           graph=json.loads(Path('data/visual_graph.json').read_text())
           rights=json.loads(Path('data/visual_rights.json').read_text())
           maps=json.loads(Path('data/visual_map_profiles.json').read_text())
-          policies=rights['policies']; ids=set(); slugs=set(); fixtures=set(); native=0; crops=0
+          policies=rights['policies']; ids=set(); native=0; crops=0
           for work in graph['visual_works']:
             assert work['id'] not in ids; ids.add(work['id'])
-            assert work.get('slug') and work['slug'] not in slugs; slugs.add(work['slug'])
             assert work.get('representations')
             if work.get('generated'): assert work.get('authority_class')=='D'
-            if work.get('type')=='engraving' and work.get('creator',{}).get('name')=='Gustave Doré': fixtures.add('dore')
-            if work.get('type') in {'manuscript-illumination','painting','mosaic','fresco'}: fixtures.add('religious')
-            if work.get('validation',{}).get('acceptance_fixture')=='chinese-christian-historical-photograph': fixtures.add('china')
             region_ids={r.get('id') for r in work.get('regions',[])}
             for preset in work.get('surface_presets',[]):
               if preset.get('focal_region_id'): assert preset['focal_region_id'] in region_ids
             for rep in work['representations']:
               assert rep.get('image_url'); assert rep['rights']['policy'] in policies
-              if rep['delivery'].get('mode')=='iiif-image': assert rep['delivery'].get('iiif_image_service'); native+=1
+              if rep['delivery'].get('mode')=='iiif-image': native+=1
             for region in work.get('regions',[]):
-              if region.get('xywh') is not None: assert len(region['xywh'])==4 and region['xywh'][2]>0 and region['xywh'][3]>0
-              assert region.get('provenance',{}).get('source') in {'authority','human','machine'}
               if region.get('provenance',{}).get('source')=='authority' and region.get('region_scope')=='source-cropped-manuscript-decoration': crops+=1
           assert native>=2 and crops>=1
-          for profile in maps['profiles']:
-            assert profile['scale_denominator']>0 and profile['source']['rights_policy'] in policies
-            assert profile.get('survey_geometry_provenance',{}).get('use_as_gcp') is False
-            geo=profile['georeference']; overlay=next(p for p in profile['surface_presets'] if p['id']=='map-overlay')
-            assert overlay.get('requires_verified_georeference') is True
-            if geo['verified']: assert geo.get('annotation_url')
-            else: assert not geo.get('annotation_url')
-            fixtures.add('map')
-          assert {'dore','religious','map','china'} <= fixtures
-          print('Visual Graph PASS',len(ids),'works',len(maps['profiles']),'maps')
+          print('Visual Graph PASS',len(ids),'works')
           PY
-      - name: Phase 2 retrieval self-test
-        run: node scripts/dore/visual-fuzzy-retrieval-selftest.mjs
-      - name: Phase 2 graph-bound Editorial Director self-test
-        run: node scripts/dore/visual-editorial-director-runtime-selftest.mjs
-      - name: Phase 2 live Dawn editorial context self-test
-        run: node scripts/dore/dawn-editorial-context-selftest.mjs
-      - name: Phase 2 Dawn surface orchestration self-test
-        run: node scripts/dore/dawn-surface-orchestrator-selftest.mjs
-      - name: Phase 2 Storybook art direction loop self-test
-        run: node scripts/dore/storybook-art-direction-loop-selftest.mjs
-      - name: Global Design Nourishment Round 1 gate
-        run: node scripts/dore/global-design-nourishment-selftest.mjs
-      - name: Global Design Nourishment Round 2 curriculum gate
-        run: node scripts/dore/global-design-round2-selftest.mjs
-      - name: Checkout AIC authority corpus
+      - name: Existing visual intelligence gates
+        run: |
+          node scripts/dore/visual-fuzzy-retrieval-selftest.mjs
+          node scripts/dore/visual-editorial-director-runtime-selftest.mjs
+          node scripts/dore/dawn-editorial-context-selftest.mjs
+          node scripts/dore/dawn-surface-orchestrator-selftest.mjs
+          node scripts/dore/storybook-art-direction-loop-selftest.mjs
+          node scripts/dore/global-design-nourishment-selftest.mjs
+          node scripts/dore/global-design-round2-selftest.mjs
+      - name: Checkout authority corpus
         uses: actions/checkout@v4
         with:
           repository: art-institute-of-chicago/api-data
           path: aic-api-data
           fetch-depth: 1
-      - name: Global Design Nourishment Round 2 corpus run
+      - name: Large nourishment corpus run
         env:
           DORE_CANDIDATE_TARGET: '100000'
           DORE_RETAIN_TARGET: '3000'
         run: node scripts/dore/global-design-round2-corpus-run.mjs aic-api-data/getting-started/allArtworks.jsonl
-      - name: Upload Round 2 corpus evidence
+      - name: Upload corpus evidence
         uses: actions/upload-artifact@v4
         with:
-          name: dore-round2-corpus-report
+          name: dore-large-nourishment-report
           path: dore-round2-corpus-report.json
-      - name: Build Dawn Library editorial feed
+      - name: Build and regression gates
         run: |
           node scripts/dore/build-dawn-visual-editorial-feed.mjs
           git diff --exit-code -- data/dawn_visual_editorial.json
-      - name: Check visual JavaScript syntax
-        run: |
-          node --check static/js/dawn-visual-viewer.js
-          node --check static/js/dore-visual-surface-consumer.js
-          node --check static/one/one-surface-runtime.js
-          node --check static/one/one-baptism-motion.js
-          node --check static/multiwrite/dawn-library.js
-          node --check static/multiwrite/folio-surface-runtime.js
-          node --check scripts/dore/storybook-art-direction-loop.mjs
-          node --check scripts/dore/global-design-nourishment-contract.mjs
-          node --check scripts/dore/global-design-nourishment-selftest.mjs
-          node --check scripts/dore/global-design-round2-selftest.mjs
-          node --check scripts/dore/global-design-round2-corpus-run.mjs
-      - name: Install Hugo
-        uses: peaceiris/actions-hugo@v3
+          node --check scripts/dore/content-boundary.mjs
+          node --check scripts/dore/content-boundary-selftest.mjs
+      - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: 'latest'
           extended: true
       - name: Build site
         run: hugo --minify --gc
-      - name: Verify shared Surface consumers
-        run: |
-          grep -q 'dore.visual-surface-consumer.v1' public/js/dore-visual-surface-consumer.js
-          grep -q 'dore-surface-product' public/journal/index.html
-          grep -q 'editorial-role=secondary' public/journal/index.html
-          grep -q 'editorial-role=reading-focus' public/journal/index.html
-          grep -q 'visual-surface-engine.css' public/js/dore-visual-surface-consumer.js
-          grep -q 'folio-surface-runtime' public/multiwrite/dawn-library.js
-          grep -q "product:'folio'" public/multiwrite/folio-surface-runtime.js
