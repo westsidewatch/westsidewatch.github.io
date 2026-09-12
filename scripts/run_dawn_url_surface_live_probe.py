@@ -3,8 +3,9 @@
 
 The large discovery corpus measures routing resilience. The small capability
 acceptance corpus proves that every named hook is tied to a real-world resource
-before it can advance toward mounted status. Transient network errors receive
-one bounded retry; persistent HTTP/content mismatches remain visible failures.
+before it can advance toward mounted status. Transient network and upstream
+HTTP errors receive bounded retries; persistent blocking/content mismatches
+remain visible failures.
 """
 from __future__ import annotations
 
@@ -24,10 +25,10 @@ ACCEPTANCE_CORPUS = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 OUT = ROOT / 'reports/DAWN-URL-SURFACE-LIVE.json'
 
 TIMEOUT = 10
-MAX_WORKERS = 12
+MAX_WORKERS = 8
 MAX_READ = 131072
-MAX_ATTEMPTS = 2
-RETRY_STATUSES = {'timeout', 'network-error', 'tls-error', 'error'}
+MAX_ATTEMPTS = 3
+RETRY_STATUSES = {'timeout', 'network-error', 'tls-error', 'error', 'http-error'}
 USER_AGENT = 'DawnLibrarySurfaceProbe/1.0 (+https://westsidewatch.github.io/)'
 RENDERABLE_TYPES = (
     'text/html', 'application/xhtml+xml', 'application/pdf', 'application/epub+zip',
@@ -123,7 +124,7 @@ def probe(item: dict) -> dict:
         if last.get('status') not in RETRY_STATUSES:
             return last
         if attempt < MAX_ATTEMPTS:
-            time.sleep(0.25 * attempt)
+            time.sleep(0.5 * attempt)
     return last or {'status': 'error', 'attempts': 0}
 
 
