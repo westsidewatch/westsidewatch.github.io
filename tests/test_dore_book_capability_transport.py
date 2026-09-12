@@ -1,5 +1,6 @@
 from pathlib import Path
 
+# Contract: Multiwrite semantic Book Intelligence must stay on the Companion/Core boundary.
 ROOT = Path(__file__).resolve().parents[1]
 CLIENT = (ROOT / 'static/multiwrite/book-core-client.mjs').read_text()
 SITE = (ROOT / 'local/dore-companion-extension/site_bridge.js').read_text()
