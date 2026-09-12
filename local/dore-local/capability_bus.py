@@ -39,6 +39,7 @@ def _load_sibling(name: str):
 
 REGISTRY = _load_sibling("capability_registry")
 BOOK_INTELLIGENCE = _load_sibling("book_intelligence_capability")
+REFLEX = _load_sibling("reflex_capability")
 
 NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
     "image.generate": {
@@ -87,6 +88,19 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "provider": "longmemory-local",
         "load": "deferred",
         "authority": False,
+    },
+    "reflex.project": {
+        "id": "reflex.project",
+        "type": "translation",
+        "service": "reflex",
+        "status": "existing",
+        "execution": "core-adapter",
+        "provider": "dore-core",
+        "load": "on-demand",
+        "result": "reflex-projection",
+        "authority": False,
+        "identity_source": False,
+        "persistence": "request-scoped-none",
     },
     "publishing.book-intelligence": {
         "id": "publishing.book-intelligence",
@@ -319,7 +333,9 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
     try:
         if capability == "image.generate":
             return _image_generate(args, caller_product)
-        if capability == "publishing.book-intelligence":
+        if capability == "reflex.project":
+            result = REFLEX.execute(args)
+        elif capability == "publishing.book-intelligence":
             result = _book_intelligence(args)
         elif capability == "bible.query-plan":
             result = _bible_query_plan(args)
