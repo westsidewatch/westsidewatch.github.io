@@ -31,7 +31,7 @@ with tempfile.TemporaryDirectory(prefix='dore-a2a-exec-') as td:
 
  # Verification failure is terminal FAIL.
  msg2={**msg,'message_id':'acceptance-task-verify-fail'}
- ep.register(msg2);ep.claim(msg2,'worker-A',60);ep.transition(msg2['message_id'],'RUNNING',consumer='worker-A');ep.record_artifact(msg2['message_id'],{'type':'acceptance'},consumer='worker-A')
+ ep.register(msg2);ep.claim(msg2['message_id'],'worker-A',60);ep.transition(msg2['message_id'],'RUNNING',consumer='worker-A');ep.record_artifact(msg2['message_id'],{'type':'acceptance'},consumer='worker-A')
  bad=ep.verify(msg2['message_id'],{'ok':False,'reason':'negative-case'},consumer='worker-A');assert not bad['ok'] and bad['task']['status']=='FAIL'
  assert ep.status(msg2['message_id'])['completion_evidence'] is False
 
