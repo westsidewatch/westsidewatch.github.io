@@ -42,8 +42,8 @@ jobs:
       - run: |
           mkdir -p build/path-world-demand
           python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/path-world-demand/depth.png --report build/path-world-demand/depth-report.json
-      - name: Run nearest-edge camera-conditioned topology plus foundation
-        run: python tools/aw_corridor/experiment_edge_aware_hidden_surface_v4.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --output build/path-world-demand/traversal.mp4 --report build/path-world-demand/traversal-report.json --support-map build/path-world-demand/world-support-map.png --edge-map build/path-world-demand/occlusion-edge-map.png --background-map build/path-world-demand/background-side-map.png --foundation-map build/path-world-demand/foundation-support-map.png --width 960 --fps 24 --segment-frames 12 --samples 8 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --sever-threshold 0.065
+      - name: Run fast nearest-edge topology falsification
+        run: python tools/aw_corridor/experiment_edge_aware_hidden_surface_v4.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --output build/path-world-demand/traversal.mp4 --report build/path-world-demand/traversal-report.json --support-map build/path-world-demand/world-support-map.png --edge-map build/path-world-demand/occlusion-edge-map.png --background-map build/path-world-demand/background-side-map.png --foundation-map build/path-world-demand/foundation-support-map.png --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --sever-threshold 0.065
       - uses: actions/upload-artifact@v4
         if: always()
         with:
