@@ -1,0 +1,79 @@
+name: Dawn Formal Edition Phase 7
+
+on:
+  push:
+    branches:
+      - 'dore/dawn-library-formal-edition'
+    paths:
+      - 'content/dawn-library/**'
+      - 'layouts/dawn-library/**'
+      - 'layouts/partials/header.html'
+      - 'layouts/_default/baseof.html'
+      - 'hugo.toml'
+      - 'static/dawn-library/**'
+      - '.github/workflows/dawn-formal-edition-phase7.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  brand-integration-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Hugo
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y hugo
+          hugo version
+      - name: Build existing Westside Watch site
+        run: hugo --minify --destination /tmp/dawn-formal-public
+      - name: Enforce single-site brand integration
+        run: |
+          test -f /tmp/dawn-formal-public/index.html
+          test -f /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q 'Westside Watch' /tmp/dawn-formal-public/index.html
+          grep -q 'Watch for the Dawn' /tmp/dawn-formal-public/index.html
+          grep -q '黎明書局' /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q '/dawn-library/formal-edition/phase4/' /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q '>Library<' /tmp/dawn-formal-public/index.html
+          grep -q 'href="/dawn-library/"' /tmp/dawn-formal-public/dawn-library/index.html
+          test -f /tmp/dawn-formal-public/dawn-library/canonical-index.json
+          test -f /tmp/dawn-formal-public/dawn-library/formal-edition/phase4/index.html
+          COUNT="$(find /tmp/dawn-formal-public -type f -name canonical-index.json | wc -l | tr -d ' ')"
+          test "$COUNT" = "1"
+      - name: Start built-site server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory /tmp/dawn-formal-public > /tmp/dawn-phase7-http.log 2>&1 &
+          echo $! > /tmp/dawn-phase7-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/dawn-library/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dawn-phase7-http.log
+          exit 1
+      - name: Browser brand route acceptance
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=8000 --dump-dom \
+            http://127.0.0.1:4173/dawn-library/ > /tmp/dawn-phase7-brand.html
+          grep -q 'Westside Watch' /tmp/dawn-phase7-brand.html
+          grep -q '黎明書局' /tmp/dawn-phase7-brand.html
+          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-phase7-brand.html
+          grep -q 'aria-current="page">Library</a>' /tmp/dawn-phase7-brand.html
+      - name: Browser formal Surface acceptance
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
+            http://127.0.0.1:4173/dawn-library/formal-edition/phase4/ > /tmp/dawn-phase7-surface.html
+          grep -q 'canonical Works' /tmp/dawn-phase7-surface.html
+          grep -q 'id="personal-open"' /tmp/dawn-phase7-surface.html
+          test "$(grep -o 'class="work-token"' /tmp/dawn-phase7-surface.html | wc -l)" -le 72
+      - name: Stop built-site server
+        if: always()
+        run: |
+          test ! -f /tmp/dawn-phase7-http.pid || kill "$(cat /tmp/dawn-phase7-http.pid)" || true
