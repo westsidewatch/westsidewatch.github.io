@@ -8,6 +8,7 @@ on:
       - 'data/visual_map_profiles.json'
       - 'data/resources.json'
       - 'data/dawn_visual_editorial.json'
+      - 'data/dore_global_design_*.json'
       - 'content/visual/**'
       - 'layouts/**'
       - 'static/js/dawn-visual-viewer.js'
@@ -76,6 +77,8 @@ jobs:
         run: node scripts/dore/dawn-surface-orchestrator-selftest.mjs
       - name: Phase 2 Storybook art direction loop self-test
         run: node scripts/dore/storybook-art-direction-loop-selftest.mjs
+      - name: Global Design Nourishment Round 1 gate
+        run: node scripts/dore/global-design-nourishment-selftest.mjs
       - name: Build Dawn Library editorial feed
         run: |
           node scripts/dore/build-dawn-visual-editorial-feed.mjs
@@ -89,6 +92,8 @@ jobs:
           node --check static/multiwrite/dawn-library.js
           node --check static/multiwrite/folio-surface-runtime.js
           node --check scripts/dore/storybook-art-direction-loop.mjs
+          node --check scripts/dore/global-design-nourishment-contract.mjs
+          node --check scripts/dore/global-design-nourishment-selftest.mjs
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
