@@ -1,0 +1,1 @@
+(() => { const root=document.querySelector('.cinema'); if(!root)return; root.dataset.surface='holy-light-cinema'; root.dataset.core='dore'; root.dataset.phase='1'; document.documentElement.classList.add('cinema-ready'); })();
