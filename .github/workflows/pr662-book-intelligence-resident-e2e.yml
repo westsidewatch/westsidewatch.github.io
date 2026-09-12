@@ -31,24 +31,23 @@ jobs:
           for C in '/Applications/Firefox.app/Contents/MacOS/firefox' "$HOME/Applications/Firefox.app/Contents/MacOS/firefox"; do
             if test -x "$C"; then FIREFOX="$C"; break; fi
           done
+          BREW="$(command -v brew 2>/dev/null || true)"
+          if test -z "$BREW" -a -x /opt/homebrew/bin/brew; then BREW=/opt/homebrew/bin/brew; fi
+          if test -z "$BREW" -a -x /usr/local/bin/brew; then BREW=/usr/local/bin/brew; fi
+          brew_install() {
+            test -n "$BREW" || { echo 'E2E_FAIL homebrew_missing' >&2; exit 1; }
+            if test "$BREW" = '/opt/homebrew/bin/brew'; then arch -arm64 "$BREW" install "$@"; else "$BREW" install "$@"; fi
+          }
           if test -z "$FIREFOX"; then
-            BREW="$(command -v brew 2>/dev/null || true)"
-            if test -z "$BREW" -a -x /opt/homebrew/bin/brew; then BREW=/opt/homebrew/bin/brew; fi
-            if test -z "$BREW" -a -x /usr/local/bin/brew; then BREW=/usr/local/bin/brew; fi
-            test -n "$BREW" || { echo 'E2E_FAIL homebrew_missing_for_firefox_install' >&2; exit 1; }
             mkdir -p "$HOME/Applications"
-            "$BREW" install --cask --appdir="$HOME/Applications" firefox
+            brew_install --cask --appdir="$HOME/Applications" firefox
             FIREFOX="$HOME/Applications/Firefox.app/Contents/MacOS/firefox"
           fi
           test -x "$FIREFOX" || { echo 'E2E_FAIL firefox_install_missing' >&2; exit 1; }
           "$FIREFOX" --version
           echo "FIREFOX=$FIREFOX" >> "$GITHUB_ENV"
 
-          if ! command -v npx >/dev/null 2>&1; then
-            BREW="$(command -v brew 2>/dev/null || true)"
-            test -n "$BREW" || { echo 'E2E_FAIL npx_and_brew_missing' >&2; exit 1; }
-            "$BREW" install node
-          fi
+          if ! command -v npx >/dev/null 2>&1; then brew_install node; fi
           npx --yes web-ext@8.10.0 --version
 
       - name: Strict Firefox Companion native model manuscript E2E
