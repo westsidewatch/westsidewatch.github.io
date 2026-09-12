@@ -12,6 +12,7 @@ on:
       - "tools/aw_corridor/experiment_learned_hidden_completion_v9.py"
       - "tools/aw_corridor/experiment_static_cinema_v10.py"
       - "tools/aw_corridor/experiment_static_cinema_v11.py"
+      - "tools/aw_corridor/camera_router_observer.py"
       - "tools/aw_corridor/hidden_surface_provider.py"
   workflow_dispatch:
 
@@ -59,6 +60,14 @@ jobs:
           --depth-checkpoint build/aw011-provider/depth-model.pth
           --color-checkpoint build/aw011-provider/color-model.pth
           --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3
+      - name: Record Camera Router shadow telemetry
+        if: always()
+        run: >-
+          python tools/aw_corridor/camera_router_observer.py
+          --spine experiments/aw-011/camera-spine.json
+          --render-report build/topology-probe/traversal-report.json
+          --camera-state build/topology-probe/camera-state.jsonl
+          --routing-advisory build/topology-probe/routing-advisory.json
       - uses: actions/upload-artifact@v4
         if: always()
         with:
