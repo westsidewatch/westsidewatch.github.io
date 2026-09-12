@@ -1,0 +1,27 @@
+{
+  "schema": "dore.mail.v2",
+  "message_id": "chatgpt-candidate01-page2-right-geometry-verify-20260912-0556",
+  "sender": "chatgpt",
+  "recipient": "dore",
+  "kind": "local_exec",
+  "subject": "Verify Candidate 01 Page 2 right geometry",
+  "priority": "critical",
+  "related_goal": "dore-design-candidate01-page2-motion",
+  "requires_reply": true,
+  "body": "Verify commit 8ef02b0e327cbaabb13a8153b2409c81f1e637cf through the A2A Execution Plane. PASS only if the branch contains the exact right-side bbox fix, left-side Page 2 geometry is untouched by PAGE2_ASSEMBLY_FIX, Python compiles, and the target commit is present.",
+  "commands": [
+    {"argv":["git","fetch","origin","dore/candidate01-visual-graph-experiment"],"cwd":".","timeout":120},
+    {"argv":["git","checkout","dore/candidate01-visual-graph-experiment"],"cwd":".","timeout":120},
+    {"argv":["git","merge-base","--is-ancestor","8ef02b0e327cbaabb13a8153b2409c81f1e637cf","HEAD"],"cwd":".","timeout":120},
+    {"argv":["python3","-m","py_compile","dore-design/candidate01_visual_graph_experiment.py"],"cwd":".","timeout":120},
+    {"argv":["python3","-c","from pathlib import Path; s=Path('dore-design/candidate01_visual_graph_experiment.py').read_text(); b=s[s.index(\"PAGE2_ASSEMBLY_FIX = r'''\"):s.index(\"\\n\\nLIVING_CURRENT_STYLE = r'''\")]; assert '[cards[2],cards[3],cards[6],cards[7]]' in b; assert 'const halfW=masterW/2' not in b; assert '[left,right].forEach' not in b; assert 'left.style.left' not in b; assert 'right.style.width=`${w}px`' in b; assert 'right.style.height=`${h}px`' in b; print('CANDIDATE01_PAGE2_RIGHT_GEOMETRY_PASS')"],"cwd":".","timeout":120},
+    {"argv":["git","show","--stat","--oneline","8ef02b0e327cbaabb13a8153b2409c81f1e637cf"],"cwd":".","timeout":120}
+  ],
+  "acceptance": {
+    "target_commit": "8ef02b0e327cbaabb13a8153b2409c81f1e637cf",
+    "right_source_cards": [2,3,6,7],
+    "left_page2_geometry_untouched": true,
+    "python_compile": true,
+    "completion_requires_execution_plane_evidence": true
+  }
+}
