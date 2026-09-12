@@ -74,6 +74,8 @@ jobs:
         run: node scripts/dore/dawn-editorial-context-selftest.mjs
       - name: Phase 2 Dawn surface orchestration self-test
         run: node scripts/dore/dawn-surface-orchestrator-selftest.mjs
+      - name: Phase 2 Storybook art direction loop self-test
+        run: node scripts/dore/storybook-art-direction-loop-selftest.mjs
       - name: Build Dawn Library editorial feed
         run: |
           node scripts/dore/build-dawn-visual-editorial-feed.mjs
@@ -86,6 +88,7 @@ jobs:
           node --check static/one/one-baptism-motion.js
           node --check static/multiwrite/dawn-library.js
           node --check static/multiwrite/folio-surface-runtime.js
+          node --check scripts/dore/storybook-art-direction-loop.mjs
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
         with:
