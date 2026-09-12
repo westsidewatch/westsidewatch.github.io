@@ -52,18 +52,19 @@ class TextAdapter:
 
 
 class MarkItDownAdapter:
-    """Thin optional adapter: binary Office input -> transient Markdown -> Reflex events.
+    """Thin optional adapter: Office input -> transient Markdown -> Reflex events.
 
-    The conversion is performed from BytesIO. No input file or converted Markdown is
+    Conversion is performed from BytesIO. No input file or converted Markdown is
     persisted, and MarkItDown remains an adapter rather than a Doré Core dependency.
-    v0 intentionally admits DOCX only; more formats must earn admission separately.
+    Each admitted format must pass its own acceptance before joining the adapter.
     """
 
     name = "markitdown"
     _MIMES = {
         "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     }
-    _EXTENSIONS = {".docx"}
+    _EXTENSIONS = {".docx", ".xlsx"}
 
     def score(self, source: SourceDescriptor) -> int:
         if MarkItDown is None or StreamInfo is None:
@@ -76,14 +77,14 @@ class MarkItDownAdapter:
     def parse(self, source: SourceDescriptor, payload: bytes) -> Iterable[ReflexEvent]:
         if MarkItDown is None or StreamInfo is None:
             raise RuntimeError("markitdown adapter selected without optional dependency")
-        extension = os.path.splitext(source.name)[1].lower() or ".docx"
+        extension = os.path.splitext(source.name)[1].lower()
         converter = MarkItDown(enable_plugins=False)
         result = converter.convert_stream(
             io.BytesIO(payload),
             stream_info=StreamInfo(
                 mimetype=source.mime or None,
                 filename=source.name or None,
-                extension=extension,
+                extension=extension or None,
             ),
         )
         markdown = result.markdown.encode("utf-8")
