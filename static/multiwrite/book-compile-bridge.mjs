@@ -1,4 +1,5 @@
 import { buildBookIntent, buildBookModel, buildBookBuild, publicationProjection } from './book-model.mjs';
+import { analyzeBookForPublication, applyMechanicalEditorialFixes } from './book-editor.mjs';
 
 const DB_NAME = 'multiwrite-v1';
 const DB_VERSION = 3;
@@ -94,7 +95,7 @@ export async function compileCurrentBook() {
 
   const sections = await collectSections(structure, local);
   const intent = buildBookIntent(source);
-  const bookModel = buildBookModel({
+  let bookModel = buildBookModel({
     source: { ...source, id: source.id || bookId },
     sections,
     intent,
@@ -105,21 +106,41 @@ export async function compileCurrentBook() {
       compiledAt: new Date().toISOString()
     }
   });
+
+  const editorialReport = analyzeBookForPublication(bookModel);
+  const mechanical = applyMechanicalEditorialFixes(bookModel, editorialReport);
+  bookModel = mechanical.bookModel;
+  bookModel.validation = {
+    ...bookModel.validation,
+    editorial: {
+      schema: editorialReport.schema,
+      readiness: editorialReport.readiness,
+      counts: editorialReport.counts
+    }
+  };
+
   const bookBuild = buildBookBuild({
     bookModel,
     sourceFolioId: bookId,
     sourceRevision: source.updatedAt || source.revision || ''
   });
+  bookBuild.qaResult = {
+    ...bookBuild.qaResult,
+    editorialReadiness: editorialReport.readiness,
+    editorialIssueCount: editorialReport.counts.issues,
+    authorialDecisionCount: editorialReport.counts.authorialDecisions
+  };
 
-  window.__doreBookCompile = { bookModel, bookBuild };
+  window.__doreBookCompile = { bookModel, bookBuild, editorialReport };
   window.dispatchEvent(new CustomEvent('multiwrite:book-model-ready', {
     detail: {
       publication: publicationProjection(bookModel),
-      build: bookBuild
+      build: bookBuild,
+      editorial: editorialReport
     }
   }));
 
-  return { bookModel, bookBuild };
+  return { bookModel, bookBuild, editorialReport };
 }
 
 function setState(message) {
@@ -136,8 +157,14 @@ function wrapExistingExportHandlers() {
     button.onclick = async event => {
       try {
         setState('建立 Book Model…');
-        await compileCurrentBook();
-        setState('Book Model 已建立');
+        const { editorialReport } = await compileCurrentBook();
+        if (editorialReport.readiness === 'blocked') {
+          setState(`成書暫停：編輯檢查有 ${editorialReport.counts.issues} 項問題`);
+          return undefined;
+        }
+        setState(editorialReport.readiness === 'review-required'
+          ? `編輯檢查完成 · ${editorialReport.counts.authorialDecisions} 項需作者決定`
+          : 'Book Model 與編輯檢查已完成');
         return await original.call(button, event);
       } catch (error) {
         setState(`成書前置檢查失敗：${error.message}`);
