@@ -1,5 +1,6 @@
 import { buildBookModel, buildBookBuild, publicationProjection } from './book-model.mjs';
 import { analyzeBookIntelligence, bookIntentFromIntelligence } from './book-intelligence.mjs';
+import { requestCoreBookIntelligence, mergeBookIntelligence } from './book-core-client.mjs';
 import { analyzeBookForPublication, applyMechanicalEditorialFixes } from './book-editor.mjs';
 
 const DB_NAME = 'multiwrite-v1';
@@ -95,7 +96,9 @@ export async function compileCurrentBook() {
   if (!structure.length) throw new Error('這本書還沒有可成書的章節。');
 
   const sections = await collectSections(structure, local);
-  const intelligenceReport = analyzeBookIntelligence({ source, sections });
+  const deterministicIntelligence = analyzeBookIntelligence({ source, sections });
+  const semanticIntelligence = await requestCoreBookIntelligence({ source, sections });
+  const intelligenceReport = mergeBookIntelligence(deterministicIntelligence, semanticIntelligence);
   const intent = bookIntentFromIntelligence(intelligenceReport);
   let bookModel = buildBookModel({
     source: { ...source, id: source.id || bookId },
@@ -106,6 +109,9 @@ export async function compileCurrentBook() {
       sourceBookId: bookId,
       sourceKind: local ? 'indexeddb' : 'static-manifest',
       intelligenceSchema: intelligenceReport.schema,
+      deterministicIntelligenceSchema: deterministicIntelligence.schema,
+      semanticIntelligenceSchema: semanticIntelligence.schema,
+      semanticIntelligenceDegraded: semanticIntelligence.runtime?.degraded !== false,
       compiledAt: new Date().toISOString()
     }
   });
@@ -119,7 +125,10 @@ export async function compileCurrentBook() {
       schema: intelligenceReport.schema,
       chapterCount: intelligenceReport.structure.chapterCount,
       scriptureDensity: intelligenceReport.intent.scriptureDensity,
-      thesisSource: intelligenceReport.authority.thesisSource
+      thesisSource: intelligenceReport.authority.thesisSource,
+      semantic: intelligenceReport.semantic?.runtime?.semantic === true,
+      semanticDegraded: intelligenceReport.semantic?.runtime?.degraded !== false,
+      thesisRelationship: intelligenceReport.semantic?.thesisRelationship || 'unknown'
     },
     editorial: {
       schema: editorialReport.schema,
@@ -136,12 +145,20 @@ export async function compileCurrentBook() {
   bookBuild.qaResult = {
     ...bookBuild.qaResult,
     bookIntelligence: 'pass',
+    semanticBookIntelligence: intelligenceReport.semantic?.runtime?.degraded ? 'degraded' : 'pass',
     editorialReadiness: editorialReport.readiness,
     editorialIssueCount: editorialReport.counts.issues,
     authorialDecisionCount: editorialReport.counts.authorialDecisions
   };
 
-  window.__doreBookCompile = { bookModel, bookBuild, intelligenceReport, editorialReport };
+  window.__doreBookCompile = {
+    bookModel,
+    bookBuild,
+    intelligenceReport,
+    deterministicIntelligence,
+    semanticIntelligence,
+    editorialReport
+  };
   window.dispatchEvent(new CustomEvent('multiwrite:book-model-ready', {
     detail: {
       publication: publicationProjection(bookModel),
@@ -174,9 +191,10 @@ function wrapExistingExportHandlers() {
           return undefined;
         }
         const understood = intelligenceReport.structure.chapterCount;
+        const semanticSuffix = intelligenceReport.semantic?.runtime?.degraded ? ' · 語義理解已安全降級' : '';
         setState(editorialReport.readiness === 'review-required'
-          ? `已理解 ${understood} 章 · ${editorialReport.counts.authorialDecisions} 項需作者決定`
-          : `已理解 ${understood} 章 · 成書前置檢查完成`);
+          ? `已理解 ${understood} 章 · ${editorialReport.counts.authorialDecisions} 項需作者決定${semanticSuffix}`
+          : `已理解 ${understood} 章 · 成書前置檢查完成${semanticSuffix}`);
         return await original.call(button, event);
       } catch (error) {
         setState(`成書前置檢查失敗：${error.message}`);
