@@ -5,6 +5,7 @@ on:
     paths:
       - 'dore_core/capabilities/url_surface.py'
       - 'scripts/run_dawn_url_surface_benchmark.py'
+      - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
       - 'tests/test_dawn_url_surface.py'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
@@ -17,7 +18,7 @@ permissions:
 jobs:
   corpus-routing-gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 5
+    timeout-minutes: 8
     env:
       PYTHONPATH: .
     steps:
@@ -44,10 +45,13 @@ jobs:
           assert all(i.get('source_url') for i in d['items'])
           print({'count': d['count'], 'schema': d['schema']})
           PY
-      - name: Preserve benchmark and generated surface index
+      - name: Probe 900+ real external pointers
+        run: python scripts/run_dawn_url_surface_live_probe.py
+      - name: Preserve benchmark artifacts and generated surface index
         uses: actions/upload-artifact@v4
         with:
-          name: dawn-url-surface-benchmark
+          name: dawn-url-surface-benchmarks
           path: |
             reports/DAWN-URL-SURFACE-BENCHMARK.json
+            reports/DAWN-URL-SURFACE-LIVE.json
             static/dawn-library/biblical-world/surface-index.json
