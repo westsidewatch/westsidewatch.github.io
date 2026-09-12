@@ -41,10 +41,10 @@ class DawnBookReaderTests(unittest.TestCase):
         self.assertIn("root.dataset.externalSource = 'true'", js)
         self.assertIn("root.dataset.viewerState = 'ready'", js)
 
-    def test_registry_records_fixture_without_claiming_mount(self):
+    def test_registry_records_real_end_to_end_integration_without_claiming_mount(self):
         registry = SurfaceMountRegistry()
         mount = registry.get('book-reader')
-        self.assertEqual(mount.state, 'fixture-found')
+        self.assertEqual(mount.state, 'integration-proven')
         self.assertEqual(mount.implementation, 'static/js/dawn-bookreader-surface.js')
         self.assertIn('internetarchive-josephus-1900-bookreader', mount.evidence)
         self.assertFalse(registry.executable('book-reader'))
