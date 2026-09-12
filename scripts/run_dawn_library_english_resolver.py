@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
+from resource_selection import book_decision
 import json,re,urllib.request,xml.etree.ElementTree as ET
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-REL=ROOT/'static/dawn-library/biblical-world/relevance-results.json'
-OUT=ROOT/'static/dawn-library/biblical-world/english-resolver-results.json'
+REL=ROOT/'dore-core/review/resource-selection/relevance-results.json'
+OUT=ROOT/'dore-core/review/resource-selection/english-resolver-results.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-ENGLISH-RESOLVER.json'
 UA='Dore-Dawn-Library/1.0 (metadata and rights resolver; no bulk text)'
 now=datetime.now(timezone.utc).isoformat()
@@ -44,6 +45,7 @@ for x in json.loads(REL.read_text()).get('items',[]):
             result['reason']='rdf-rights-not-explicit-public-domain';counts['needs-review']+=1
     except Exception as e:
         result['reason']='resolver-error';result['error']=f'{type(e).__name__}: {e}';counts['needs-review']+=1
+    result['bookAdmission']=book_decision(result)
     items.append(result)
 OUT.write_text(json.dumps({'schema':'dawn.library.english-resolver-results.v1','generatedAt':now,'items':items},ensure_ascii=False,indent=2)+'\n')
 REPORT.parent.mkdir(parents=True,exist_ok=True)

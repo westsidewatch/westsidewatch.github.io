@@ -6,6 +6,7 @@
     "description": "先讀經文，再以版本比較、原文工具、歷史背景與解經材料幫助理解；工具服務經文，而不取代經文。"
   },
   "system": {
+    "selectionPolicy": {"ref": "docs/resource-selection-policy.md", "scope": "site-and-all-products", "version": "2026-09-12", "controversialResources": "exclude", "bookQualification": "reviewed-complete-work-with-edition-evidence", "unknown": "hold-not-publish"},
     "source": "Resource Master",
     "vision": "收集珍貴資源，建立真理結構，引導學習道路，並為 Westside Watch 的閱讀、查經、教學、教會與出版提供同一個可持續調用的基礎。",
     "principles": ["經文在中心", "工具服務經文", "資源服務學習", "設計服務使命"],

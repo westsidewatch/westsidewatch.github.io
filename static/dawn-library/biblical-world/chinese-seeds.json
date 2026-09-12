@@ -1,14 +1,59 @@
 {
   "schema": "dawn.library.chinese-seeds.v1",
   "collection": "biblical-world-books",
-  "language": ["zh-Hant", "zh-Hans", "zh"],
+  "language": [
+    "zh-Hant",
+    "zh-Hans",
+    "zh"
+  ],
   "source": "zh-wikisource",
   "seeds": [
-    {"title":"聖經 (和合本)","kind":"bible-edition","relations":["聖經版本","中文聖經"],"priority":"golden"},
-    {"title":"聖經 (文理和合)","kind":"bible-edition","relations":["聖經版本","中文聖經","早期中文基督教文獻"],"priority":"golden"},
-    {"title":"新約全書 (淺文理和合)","kind":"bible-edition","relations":["聖經版本","中文聖經","早期中文基督教文獻"],"priority":"golden"},
-    {"title":"聖經 (施約瑟淺文理譯本)","kind":"bible-edition","relations":["聖經版本","中文聖經","早期中文基督教文獻"],"priority":"golden"}
+    {
+      "title": "聖經 (和合本)",
+      "kind": "bible-edition",
+      "relations": [
+        "聖經版本",
+        "中文聖經"
+      ],
+      "priority": "golden"
+    },
+    {
+      "title": "聖經 (文理和合)",
+      "kind": "bible-edition",
+      "relations": [
+        "聖經版本",
+        "中文聖經",
+        "早期中文基督教文獻"
+      ],
+      "priority": "golden"
+    },
+    {
+      "title": "新約全書 (淺文理和合)",
+      "kind": "bible-edition",
+      "relations": [
+        "聖經版本",
+        "中文聖經",
+        "早期中文基督教文獻"
+      ],
+      "priority": "golden"
+    },
+    {
+      "title": "聖經 (施約瑟淺文理譯本)",
+      "kind": "bible-edition",
+      "relations": [
+        "聖經版本",
+        "中文聖經",
+        "早期中文基督教文獻"
+      ],
+      "priority": "golden"
+    }
   ],
-  "searchQueries": ["聖經", "舊約", "新約", "耶路撒冷", "猶太", "以色列", "基督教", "教會", "使徒", "福音", "希伯來", "巴勒斯坦"],
-  "invariant": "Seeds and search hits are metadata candidates only. No full text is bulk-copied into 黎明書局."
+  "searchQueries": [
+    "聖經 和合本",
+    "新約全書",
+    "基督教 教會史",
+    "聖經 註釋",
+    "基督徒 靈修"
+  ],
+  "invariant": "Discovery is a non-public review queue. A root page, public-domain notice or EPUB endpoint is never book qualification."
 }

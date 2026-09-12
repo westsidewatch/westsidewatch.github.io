@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
+from resource_selection import excluded
 import json,re
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CAND=ROOT/'static/dawn-library/biblical-world/discovery-candidates.json'
+CAND=ROOT/'dore-core/review/resource-selection/discovery-candidates.json'
 POLICY=ROOT/'static/dawn-library/biblical-world/relevance-policy.json'
-OUT=ROOT/'static/dawn-library/biblical-world/relevance-results.json'
+OUT=ROOT/'dore-core/review/resource-selection/relevance-results.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-RELEVANCE.json'
 now=datetime.now(timezone.utc).isoformat()
 data=json.loads(CAND.read_text()); p=json.loads(POLICY.read_text())
@@ -14,6 +15,7 @@ def has(text,term):
     return re.search(r'(?<![a-z0-9])'+re.escape(term.lower())+r'(?![a-z0-9])',text.lower()) is not None
 
 def score(item):
+    if excluded(item):return -10000,'rejected',['global-content-boundary']
     title=item.get('title',''); author=item.get('author',''); query=item.get('matchedQuery','')
     combined=f'{title} {author}'
     points=0; reasons=[]

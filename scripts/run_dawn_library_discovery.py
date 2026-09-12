@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from resource_selection import excluded
 import json
 import re
 import urllib.parse
@@ -12,7 +13,7 @@ SOURCES=ROOT/'static/dawn-library/sources.json'
 QUERIES=ROOT/'static/dawn-library/biblical-world/discovery-queries.json'
 CATALOG=ROOT/'static/dawn-library/biblical-world/catalog.json'
 STATE=ROOT/'static/dawn-library/biblical-world/discovery-state.json'
-CANDIDATES=ROOT/'static/dawn-library/biblical-world/discovery-candidates.json'
+CANDIDATES=ROOT/'dore-core/review/resource-selection/discovery-candidates.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-DISCOVERY.json'
 NS={'atom':'http://www.w3.org/2005/Atom'}
 UA='Dore-Dawn-Library/1.1 (+https://westsidewatch.github.io; metadata-only)'
@@ -32,7 +33,7 @@ for b in catalog.get('items',[]):
         m=re.search(r'/ebooks/(\d+)',s.get('url',''))
         if m: existing_ids.add(m.group(1))
 # Promoted books leave the candidate queue; this prevents a dead queue from masking real growth.
-candidate_by_id={str(x['sourceId']):x for x in previous.get('items',[]) if x.get('sourceId') and str(x['sourceId']) not in existing_ids}
+candidate_by_id={str(x['sourceId']):x for x in previous.get('items',[]) if not excluded(x) and x.get('sourceId') and str(x['sourceId']) not in existing_ids}
 cursor_state=state.setdefault('sourceCursors',{}).setdefault('project-gutenberg',{'mode':'opds'})
 query_cursors=cursor_state.setdefault('queryCursors',{})
 run_discovered=0;errors=[];pages_checked=0
@@ -57,7 +58,7 @@ def absorb(root,spec):
                 if mm: m=mm;break
         if not m: continue
         gid=m.group(1)
-        if gid in existing_ids or gid in candidate_by_id: continue
+        if excluded({'title':title,'author':author}) or gid in existing_ids or gid in candidate_by_id: continue
         candidate_by_id[gid]={'sourceId':gid,'provider':'Project Gutenberg','title':title,'author':author,'sourceUrl':f'https://www.gutenberg.org/ebooks/{gid}','matchedQuery':q,'suggestedRelations':spec.get('relations',[]),'stage':'discovered','discoveredAt':now,'rights':{'status':'unverified','jurisdiction':'USA','declaredBy':'Project Gutenberg'},'contentDownloaded':False}
         run_discovered+=1
 

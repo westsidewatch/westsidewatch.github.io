@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
+from resource_selection import excluded
 import json,unicodedata
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-CAND=ROOT/'static/dawn-library/biblical-world/chinese-candidates.json'
+CAND=ROOT/'dore-core/review/resource-selection/chinese-candidates.json'
 POL=ROOT/'static/dawn-library/biblical-world/chinese-relevance-policy.json'
-OUT=ROOT/'static/dawn-library/biblical-world/chinese-relevance-results.json'
+OUT=ROOT/'dore-core/review/resource-selection/chinese-relevance-results.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json'
 now=datetime.now(timezone.utc).isoformat()
 candidates=json.loads(CAND.read_text())['items']; policy=json.loads(POL.read_text())
 def norm(s): return unicodedata.normalize('NFKC',s or '').casefold().replace(' ','')
 def score(item):
+    if excluded(item):return -10000,'rejected',['global-content-boundary']
     title=norm(item.get('title')); reasons=[]; value=0
     if str(item.get('matchedBy','')).startswith('seed:') or item.get('priority')=='golden': value+=policy['signals']['goldenSeed']; reasons.append('golden-seed')
     for term in policy['strongTerms']:

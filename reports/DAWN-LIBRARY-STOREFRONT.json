@@ -1,97 +1,17 @@
 {
-  "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-12T04:36:41.721895+00:00",
-  "shelves": [
-    {
-      "id": "standard-ebooks-new",
-      "title": "精品書架 · Standard Ebooks",
-      "books": 15,
-      "source": "Standard Ebooks"
-    },
-    {
-      "id": "wikisource-zh-verified-export",
-      "title": "中文典籍 · 維基文庫 EPUB",
-      "books": 4,
-      "source": "Wikisource"
-    },
-    {
-      "id": "doab-theology-or-biblical",
-      "title": "開放學術 · 神學與宗教",
-      "books": 23,
-      "source": "DOAB"
-    },
-    {
-      "id": "doab-archaeology-and-religion",
-      "title": "開放學術 · 聖經世界與考古",
-      "books": 24,
-      "source": "DOAB"
-    },
-    {
-      "id": "internet-archive-原版古籍-聖經歷史與地理",
-      "title": "原版古籍 · 聖經歷史與地理",
-      "books": 20,
-      "source": "Internet Archive"
-    },
-    {
-      "id": "internet-archive-原版古籍-教會歷史",
-      "title": "原版古籍 · 教會歷史",
-      "books": 20,
-      "source": "Internet Archive"
-    },
-    {
-      "id": "gutenberg-bible-christianity",
-      "title": "聖經與基督教",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-early-church-fathers",
-      "title": "早期教會與教父",
-      "books": 10,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-jewish-history-josephus",
-      "title": "猶太與第二聖殿世界",
-      "books": 2,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-ancient-history-archaeology",
-      "title": "古代世界與考古",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-philosophy-classics",
-      "title": "哲學與思想",
-      "books": 25,
-      "source": "Project Gutenberg"
-    },
-    {
-      "id": "gutenberg-biography-memoir",
-      "title": "傳記與回憶",
-      "books": 25,
-      "source": "Project Gutenberg"
-    }
-  ],
-  "mappedBooks": 218,
-  "sourceCovers": 159,
-  "directPublications": 19,
+  "schema": "dawn.library.storefront.report.v5",
+  "generatedAt": "2026-09-12T04:50:21.369843+00:00",
+  "shelves": 2,
+  "mappedBooks": 9,
+  "sourceCovers": 0,
+  "directPublications": 4,
   "providers": {
-    "Standard Ebooks": 15,
-    "Wikisource": 4,
-    "DOAB": 47,
-    "Internet Archive": 40,
-    "Project Gutenberg": 112
+    "Project Gutenberg": 5,
+    "中文維基文庫": 4
   },
   "identity": {
-    "queriedThisRun": 60,
-    "resolved": 120,
-    "coversAdded": 61,
-    "internetArchiveLinks": 47,
-    "cacheEntries": 178
+    "resolved": 0
   },
-  "errors": [],
-  "contentDownloaded": false
+  "contentDownloaded": false,
+  "admission": "reviewed-complete-books-only"
 }

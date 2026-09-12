@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 from __future__ import annotations
+import sys
 import hashlib, json, os, sqlite3, urllib.parse, urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT=Path(os.environ.get('DORE_REPO_ROOT',Path.home()/'westsidewatch.github.io')).expanduser()
+sys.path.insert(0,str(ROOT/'scripts'))
+from resource_selection import excluded
 DORE=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()
 DB=DORE/'data'/'dore.sqlite3'; STATE=DORE/'data'/'resource-discovery-state.json'; LOG=DORE/'logs'/'resource-discovery.jsonl'
 API='https://api.github.com'
@@ -41,6 +44,8 @@ def ensure_schema(c):
  cols={r[1] for r in c.execute('PRAGMA table_info(dore_resource_candidates)')}
  if 'cost_verdict' not in cols:c.execute("ALTER TABLE dore_resource_candidates ADD COLUMN cost_verdict TEXT NOT NULL DEFAULT 'COST_UNKNOWN'")
  if 'free_only_eligible' not in cols:c.execute('ALTER TABLE dore_resource_candidates ADD COLUMN free_only_eligible INTEGER NOT NULL DEFAULT 0')
+ if 'content_verdict' not in cols:c.execute("ALTER TABLE dore_resource_candidates ADD COLUMN content_verdict TEXT NOT NULL DEFAULT 'REVIEW_REQUIRED'")
+ if 'content_eligible' not in cols:c.execute('ALTER TABLE dore_resource_candidates ADD COLUMN content_eligible INTEGER NOT NULL DEFAULT 0')
  c.commit()
 def headers():
  h={'Accept':'application/vnd.github+json','User-Agent':'Dore-Resource-Discovery/1.1'}
@@ -54,10 +59,10 @@ def rid(url):return 'resource_'+hashlib.sha256(url.encode()).hexdigest()[:20]
 def run_id():return 'resource-run_'+hashlib.sha256((now()+str(os.getpid())).encode()).hexdigest()[:20]
 def upsert(c,family,item):
  url=str(item.get('html_url') or '')
- if not url:return False
+ if not url or excluded({'title':item.get('full_name') or item.get('name'),'description':item.get('description'),'topics':item.get('topics')}):return False
  existed=c.execute('SELECT 1 FROM dore_resource_candidates WHERE canonical_url=?',(url,)).fetchone() is not None
  lic=item.get('license') or {}
- evidence={'github_id':item.get('id'),'full_name':item.get('full_name'),'default_branch':item.get('default_branch'),'fork':item.get('fork'),'open_issues_count':item.get('open_issues_count'),'topics':item.get('topics') or [],'language':item.get('language'),'homepage':item.get('homepage'),'cost_policy':'Discovery does not imply free-to-run. Candidate remains blocked until intended execution path is verified free-only.'}
+ evidence={'github_id':item.get('id'),'full_name':item.get('full_name'),'default_branch':item.get('default_branch'),'fork':item.get('fork'),'open_issues_count':item.get('open_issues_count'),'topics':item.get('topics') or [],'language':item.get('language'),'homepage':item.get('homepage'),'selection_policy':'docs/resource-selection-policy.md; content_eligible=0 until reviewed; no product adoption from discovery', 'cost_policy':'Discovery does not imply free-to-run. Candidate remains blocked until intended execution path is verified free-only.'}
  c.execute('''INSERT INTO dore_resource_candidates(id,canonical_url,name,source,capability_family,description,discovered_at,last_seen_at,source_updated_at,stars,license_spdx,archived,status,evidence_json,cost_verdict,free_only_eligible)
  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ON CONFLICT(canonical_url) DO UPDATE SET name=excluded.name,capability_family=excluded.capability_family,description=excluded.description,last_seen_at=excluded.last_seen_at,source_updated_at=excluded.source_updated_at,stars=excluded.stars,license_spdx=excluded.license_spdx,archived=excluded.archived,evidence_json=excluded.evidence_json''',
  (rid(url),url,str(item.get('full_name') or item.get('name') or url),'github',family,item.get('description'),now(),now(),item.get('updated_at'),int(item.get('stargazers_count') or 0),lic.get('spdx_id'),1 if item.get('archived') else 0,'candidate',json.dumps(evidence,ensure_ascii=False),COST_UNKNOWN,0))

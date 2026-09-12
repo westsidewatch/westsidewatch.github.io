@@ -1,0 +1,71 @@
+{
+  "schema": "dore.resource-selection.v1",
+  "version": "2026-09-12",
+  "scope": "site-and-all-products",
+  "defaultForUnreviewedBooks": "hold",
+  "minimumBookCount": 0,
+  "excludedTopics": [
+    "modern-politics",
+    "political-propaganda",
+    "nationalism",
+    "modern-national-conflict",
+    "modern-war-advocacy",
+    "geopolitical-position-taking"
+  ],
+  "excludedPatterns": [
+    "反[击擊].*以色列侵略",
+    "游[击擊][队隊].*[袭襲][击擊]",
+    "政治[宣传傳]{2}",
+    "政治宣[传傳]",
+    "反[动動]派",
+    "民族主[义義]",
+    "\\bpolitical propaganda\\b",
+    "\\bwar advocacy\\b",
+    "\\bparty manifesto\\b"
+  ],
+  "nonBookPatterns": [
+    "\\bnewspaper\\b",
+    "\\byearbook\\b",
+    "\\bpress release\\b",
+    "\\bnews report\\b",
+    "\\bnewspaper article\\b",
+    "^an extract\\b",
+    "\\bpostcard\\b",
+    "新闻|新聞|社[论論]|声明|聲明|宣言|公[报報]|通[讯訊]|演[说說]稿|[传傳]单|年[鉴鑑]"
+  ],
+  "nonBookKinds": [
+    "article",
+    "news",
+    "newspaper",
+    "statement",
+    "press-release",
+    "speech",
+    "pamphlet",
+    "propaganda",
+    "postcard",
+    "excerpt",
+    "search-result",
+    "webpage",
+    "tool",
+    "dataset",
+    "image"
+  ],
+  "acceptedBookKinds": [
+    "book",
+    "bible-edition",
+    "scholarly-monograph",
+    "edited-book",
+    "reference-book"
+  ],
+  "withdrawnIds": [
+    "zh-wikisource-b4099fc5e7d8",
+    "zh-wikisource-6837d67baf5e"
+  ],
+  "rules": [
+    "Controversial resources are excluded regardless of format, rights, provider or product.",
+    "Rights verification, relevance scores, root pages and EPUB export are not book evidence.",
+    "Each public book requires a reviewed work identity, creator or translation identity, edition/source evidence, complete-work status and scope review.",
+    "Uncertain content/type stays in a non-public review queue; no quantity target overrides admission.",
+    "Source topics mentioning ancient Israel/Palestine, biblical warfare or church history alone are not exclusion signals; assess primary purpose and period."
+  ]
+}

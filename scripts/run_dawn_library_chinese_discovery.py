@@ -5,7 +5,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 SEEDS=ROOT/'static/dawn-library/biblical-world/chinese-seeds.json'
-OUT=ROOT/'static/dawn-library/biblical-world/chinese-candidates.json'
+OUT=ROOT/'dore-core/review/resource-selection/chinese-candidates.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json'
 API='https://zh.wikisource.org/w/api.php'
 now=datetime.now(timezone.utc).isoformat(); cfg=json.loads(SEEDS.read_text())
