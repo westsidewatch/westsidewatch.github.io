@@ -53,10 +53,11 @@ class SurfaceMountRegistry:
         ),
         "pdfjs": CapabilityMount(
             adapter="pdfjs",
-            state="fixture-found",
+            state="integration-proven",
             load="on-demand",
             scope="pdf",
-            evidence="data/dawn-capability-acceptance-corpus.json#ccel-augustine-confessions-pdf",
+            implementation="static/js/dawn-pdf-surface.js",
+            evidence="data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf",
         ),
         "book-reader": CapabilityMount(
             adapter="book-reader",
