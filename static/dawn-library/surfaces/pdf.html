@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dawn PDF Surface</title>
+  <style>
+    :root{color-scheme:dark;background:#151513;color:#eee8d8;font-family:system-ui,sans-serif}body{margin:0}header{position:sticky;top:0;z-index:2;display:flex;gap:.6rem;align-items:center;padding:.65rem .8rem;background:#1d1d1a;border-bottom:1px solid #4b4636}button,a{color:#eee8d8;background:#292821;border:1px solid #6b6144;padding:.42rem .62rem;text-decoration:none}button:disabled{opacity:.45}#status{margin-left:auto;font-size:.82rem;color:#cdbd82}main{display:grid;place-items:start center;min-height:calc(100vh - 52px);padding:1rem;background:#22211e}canvas{max-width:100%;height:auto;box-shadow:0 12px 40px #0008;background:white}
+  </style>
+</head>
+<body data-dawn-pdf-surface>
+  <header aria-label="PDF controls">
+    <button type="button" data-pdf-prev aria-label="Previous page">←</button>
+    <span><span data-pdf-page>–</span> / <span data-pdf-pages>–</span></span>
+    <button type="button" data-pdf-next aria-label="Next page">→</button>
+    <button type="button" data-pdf-zoom-out aria-label="Zoom out">−</button>
+    <button type="button" data-pdf-zoom-in aria-label="Zoom in">＋</button>
+    <a data-pdf-source target="_blank" rel="noopener noreferrer">原始 PDF ↗</a>
+    <span id="status" data-pdf-status>正在準備 PDF.js…</span>
+  </header>
+  <main><canvas data-pdf-canvas aria-label="PDF page"></canvas></main>
+  <script type="module" src="/js/dawn-pdf-surface.js"></script>
+</body>
+</html>

@@ -5,14 +5,31 @@ on:
     paths:
       - 'dore_core/capabilities/url_surface.py'
       - 'dore_core/capabilities/surface_mounts.py'
+      - 'dore_core/capabilities/cover_resolver.py'
+      - 'dore_core/capabilities/archive_bookreader.py'
+      - 'data/dawn-capability-acceptance-corpus.json'
+      - 'data/visual_graph.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
+      - 'scripts/build_dawn_10k_work_queue.py'
       - 'tests/test_dawn_url_surface.py'
+      - 'tests/test_dawn_iiif_integration.py'
+      - 'tests/test_dawn_pdf_surface.py'
+      - 'tests/test_dawn_cover_resolver.py'
+      - 'tests/test_dawn_bookreader.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
+      - 'layouts/visual/single.html'
       - 'layouts/website/dawn-library.html'
+      - 'static/js/dawn-visual-viewer.js'
+      - 'static/js/dawn-pdf-surface.js'
+      - 'static/js/dawn-cover-surface.js'
+      - 'static/js/dawn-bookreader-surface.js'
       - 'static/js/dawn-web-surface.js'
       - 'static/css/dawn-web-surface.css'
+      - 'static/dawn-library/surfaces/pdf.html'
+      - 'static/dawn-library/surfaces/cover.html'
+      - 'static/dawn-library/surfaces/bookreader.html'
       - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - '.github/workflows/dawn-url-surface.yml'
@@ -24,7 +41,7 @@ permissions:
 jobs:
   corpus-routing-gate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 8
+    timeout-minutes: 10
     env:
       PYTHONPATH: .
     steps:
@@ -37,6 +54,14 @@ jobs:
           node-version: '22'
       - name: Run URL surface unit, mount truth and 900+ corpus tests
         run: python -m unittest tests.test_dawn_url_surface -v
+      - name: Prove real Princeton IIIF resource reaches Dawn VisualSurface contract
+        run: python -m unittest tests.test_dawn_iiif_integration -v
+      - name: Verify Dawn PDF.js surface against real browser-readable Augustine fixture
+        run: python -m unittest tests.test_dawn_pdf_surface -v
+      - name: Prove edition-aware Cover Resolver and external cover Surface contract
+        run: python -m unittest tests.test_dawn_cover_resolver -v
+      - name: Prove Internet Archive BookReader against real 1900 Josephus scan
+        run: python -m unittest tests.test_dawn_bookreader -v
       - name: Verify mounted public Web Surface contract
         run: node --test tests/dawn-web-surface-contract.test.mjs
       - name: Emit deterministic routing benchmark
@@ -56,13 +81,31 @@ jobs:
           assert all(i.get('source_url') for i in d['items'])
           print({'count': d['count'], 'schema': d['schema']})
           PY
-      - name: Probe 900+ real external pointers
+      - name: Build resumable 10K Work queue
+        run: python scripts/build_dawn_10k_work_queue.py
+      - name: Verify 10K queue checkpoint and admission isolation
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('data/dawn-10k-work-queue.json')
+          d=json.loads(p.read_text())
+          assert d['targetWorks'] == 10000
+          assert d['sourceCandidates'] >= 900
+          assert d['deduplicatedWorks'] > 0
+          assert d['deduplicatedWorks'] <= d['sourceCandidates']
+          assert d['admission'].startswith('none')
+          assert all(i.get('queueId') and i.get('status') for i in d['items'])
+          print({'sourceCandidates': d['sourceCandidates'], 'deduplicatedWorks': d['deduplicatedWorks'], 'targetWorks': d['targetWorks']})
+          PY
+      - name: Probe 900+ real external pointers and capability fixtures
         run: python scripts/run_dawn_url_surface_live_probe.py
-      - name: Preserve benchmark artifacts and generated surface index
+      - name: Preserve benchmark, live evidence, Work queue and surface index
         uses: actions/upload-artifact@v4
         with:
           name: dawn-url-surface-benchmarks
           path: |
             reports/DAWN-URL-SURFACE-BENCHMARK.json
             reports/DAWN-URL-SURFACE-LIVE.json
+            data/dawn-10k-work-queue.json
             static/dawn-library/biblical-world/surface-index.json

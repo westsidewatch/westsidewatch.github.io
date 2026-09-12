@@ -4,7 +4,13 @@ from dataclasses import asdict, dataclass
 from typing import Literal
 
 
-MountState = Literal["mounted", "dormant", "unavailable"]
+MountState = Literal[
+    "reserved",
+    "fixture-found",
+    "integration-proven",
+    "mounted",
+    "unavailable",
+]
 
 
 @dataclass(frozen=True)
@@ -14,63 +20,25 @@ class CapabilityMount:
     load: str
     scope: str
     implementation: str | None = None
+    evidence: str | None = None
 
     def as_dict(self) -> dict:
         return asdict(self)
 
 
 class SurfaceMountRegistry:
-    """Truth table for presentation equipment actually attached to Dawn.
-
-    Routing may name a useful adapter before that adapter is installed.  This
-    registry prevents a route suggestion from being mistaken for an executable
-    capability.  It contains no discovery, relevance, or admission policy.
-    """
+    """Truth table for presentation equipment actually attached to Dawn."""
 
     _mounts = {
-        "bibliographic-page": CapabilityMount(
-            adapter="bibliographic-page",
-            state="mounted",
-            load="lazy",
-            scope="project-gutenberg",
-            implementation="static/dawn-library/dawn-web-surface.js",
-        ),
-        "iiif-visual-surface": CapabilityMount(
-            adapter="iiif-visual-surface",
-            state="dormant",
-            load="on-demand",
-            scope="iiif",
-        ),
-        "pdfjs": CapabilityMount(
-            adapter="pdfjs",
-            state="dormant",
-            load="on-demand",
-            scope="pdf",
-        ),
-        "book-reader": CapabilityMount(
-            adapter="book-reader",
-            state="dormant",
-            load="on-demand",
-            scope="epub-mobi",
-        ),
-        "zotero-translate": CapabilityMount(
-            adapter="zotero-translate",
-            state="dormant",
-            load="on-demand",
-            scope="bibliographic-reconciliation",
-        ),
-        "oembed-opengraph": CapabilityMount(
-            adapter="oembed-opengraph",
-            state="dormant",
-            load="on-demand",
-            scope="web-preview",
-        ),
-        "readability": CapabilityMount(
-            adapter="readability",
-            state="dormant",
-            load="fallback-only",
-            scope="article-reader",
-        ),
+        "bibliographic-page": CapabilityMount("bibliographic-page", "mounted", "lazy", "project-gutenberg", "static/dawn-library/dawn-web-surface.js", "data/dawn-capability-acceptance-corpus.json#gutenberg-josephus-antiquities"),
+        "iiif-visual-surface": CapabilityMount("iiif-visual-surface", "integration-proven", "on-demand", "iiif", "static/js/dawn-visual-viewer.js", "data/dawn-capability-acceptance-corpus.json#princeton-storm-sea-galilee-iiif"),
+        "pdfjs": CapabilityMount("pdfjs", "integration-proven", "on-demand", "pdf", "static/js/dawn-pdf-surface.js", "data/dawn-capability-acceptance-corpus.json#wikimedia-augustine-confessions-pdf"),
+        "book-reader": CapabilityMount("book-reader", "fixture-found", "on-demand", "internet-archive-scan", "static/js/dawn-bookreader-surface.js", "data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader"),
+        "zotero-translate": CapabilityMount("zotero-translate", "fixture-found", "on-demand", "bibliographic-reconciliation", None, "data/dawn-capability-acceptance-corpus.json#openlibrary-work-edition-identity"),
+        "oembed-opengraph": CapabilityMount("oembed-opengraph", "reserved", "on-demand", "web-preview"),
+        "readability": CapabilityMount("readability", "fixture-found", "fallback-only", "article-reader", None, "data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source"),
+        "video-surface": CapabilityMount("video-surface", "fixture-found", "on-demand", "bible-film-video", None, "data/dawn-capability-acceptance-corpus.json#jesus-film-full-feature"),
+        "cover-resolve": CapabilityMount("cover-resolve", "integration-proven", "on-demand", "book-cover", "dore_core/capabilities/cover_resolver.py", "data/dawn-capability-acceptance-corpus.json#openlibrary-josephus-1900-cover"),
     }
 
     def get(self, adapter: str | None) -> CapabilityMount | None:

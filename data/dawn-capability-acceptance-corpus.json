@@ -1,0 +1,31 @@
+{
+  "schema": "dawn.capability.acceptance.corpus.v1",
+  "purpose": "Real external resources used to prove Dawn capability hooks before they may be marked mounted.",
+  "rules": {
+    "realResourceRequired": true,
+    "routeNameIsNotMountProof": true,
+    "publicAdmissionIsSeparate": true,
+    "forbidWikisource": true
+  },
+  "fixtures": [
+    {"id":"gutenberg-josephus-antiquities","capability":"bibliographic-page","stage":"mounted","language":"en","kind":"book-html","title":"The Antiquities of the Jews","author":"Flavius Josephus","url":"https://www.gutenberg.org/ebooks/2848","expectContentType":"text/html"},
+    {"id":"princeton-storm-sea-galilee-iiif","capability":"iiif-visual-surface","stage":"integration-proven","language":"und","kind":"iiif-manifest","title":"The Storm on the Sea of Galilee","author":"Princeton University Art Museum","url":"https://data.artmuseum.princeton.edu/iiif/objects/56244","expectContentType":"application/"},
+    {"id":"ccel-augustine-confessions-pdf","capability":"pdfjs","stage":"fixture-found","language":"en","kind":"book-pdf","title":"Confessions and Enchiridion","author":"Augustine of Hippo","url":"https://www.ccel.org/ccel/a/augustine/confessions/cache/confessions.pdf","expectContentType":"application/pdf"},
+    {"id":"wikimedia-augustine-confessions-pdf","capability":"pdfjs","stage":"integration-proven","language":"en","kind":"book-pdf","title":"The confessions of S. Augustine","author":"Augustine of Hippo; translated by E. B. Pusey","url":"https://upload.wikimedia.org/wikipedia/commons/5/55/The_confessions_of_S._Augustine%2C_books_I-X_%28IA_confessionsofsau00augurich%29.pdf","expectContentType":"application/pdf"},
+    {"id":"openlibrary-cover-augustine-fixture","capability":"cover-resolve","stage":"fixture-found","language":"en","kind":"cover","title":"Open Library cover resolution fixture","author":"Open Library","url":"https://covers.openlibrary.org/b/isbn/0385472579-M.jpg?default=false","expectContentType":"image/"},
+    {
+      "id":"openlibrary-josephus-1900-cover","capability":"cover-resolve","stage":"integration-proven","language":"en","kind":"edition-cover","title":"Complete works of Josephus; Antiquities of the Jews, The wars of the Jews, Against Apion, etc. etc","author":"Flavius Josephus",
+      "edition":{"openLibraryEditionId":"OL24645724M","publishDate":"1900","publisher":"Bigelow, Brown","internetArchiveId":"completeworksofj19002jose"},
+      "url":"https://covers.openlibrary.org/b/olid/OL24645724M-M.jpg?default=false","expectContentType":"image/"
+    },
+    {
+      "id":"internetarchive-josephus-1900-bookreader","capability":"book-reader","stage":"fixture-found","language":"en","kind":"scanned-book","title":"Complete works of Josephus; Antiquities of the Jews, The wars of the Jews, Against Apion, etc. etc","author":"Flavius Josephus",
+      "edition":{"openLibraryEditionId":"OL24645724M","publishDate":"1900","publisher":"Bigelow, Brown","internetArchiveId":"completeworksofj19002jose"},
+      "url":"https://archive.org/embed/completeworksofj19002jose","expectContentType":"text/html"
+    },
+    {"id":"openlibrary-work-edition-identity","capability":"zotero-translate","stage":"fixture-found","language":"en","kind":"bibliographic-identity","title":"Open Library edition identity fixture","author":"Open Library","url":"https://openlibrary.org/books/OL7353617M.json","expectContentType":"application/json"},
+    {"id":"jesus-film-full-feature","capability":"video-surface","stage":"fixture-found","language":"en","kind":"bible-film","title":"JESUS","author":"Jesus Film Project","url":"https://www.jesusfilm.org/watch/jesus.html","expectContentType":"text/html"},
+    {"id":"bibleproject-chinese-video-library","capability":"video-surface","stage":"fixture-found","language":"zh-Hans","kind":"bible-video-library","title":"BibleProject 中文视频","author":"BibleProject","url":"https://bibleproject.com/zh-hans/","expectContentType":"text/html"},
+    {"id":"bibleproject-chinese-article-source","capability":"readability","stage":"fixture-found","language":"zh-Hans","kind":"article-source","title":"BibleProject 中文资源页","author":"BibleProject","url":"https://bibleproject.com/zh-hans/","expectContentType":"text/html"}
+  ]
+}

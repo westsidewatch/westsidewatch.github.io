@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""Live-probe Dawn discovery pointers without mutating library state.
+"""Live-probe Dawn external pointers without mutating library state.
 
-This probe is intentionally shallow: it verifies that external pointers can be
-resolved into a renderable response envelope. It does not ingest or persist
-remote content, and it does not affect relevance/admission.
+The large discovery corpus measures routing resilience. The small capability
+acceptance corpus proves that every named hook is tied to a real-world resource
+before it can advance toward mounted status. Transient network and upstream
+HTTP errors receive bounded retries; persistent blocking/content mismatches
+remain visible failures.
 """
 from __future__ import annotations
 
 import json
 import socket
 import ssl
+import time
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -18,11 +21,14 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES = ROOT / 'static/dawn-library/biblical-world/discovery-candidates.json'
+ACCEPTANCE_CORPUS = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 OUT = ROOT / 'reports/DAWN-URL-SURFACE-LIVE.json'
 
 TIMEOUT = 10
-MAX_WORKERS = 12
+MAX_WORKERS = 8
 MAX_READ = 131072
+MAX_ATTEMPTS = 3
+RETRY_STATUSES = {'timeout', 'network-error', 'tls-error', 'error', 'http-error'}
 USER_AGENT = 'DawnLibrarySurfaceProbe/1.0 (+https://westsidewatch.github.io/)'
 RENDERABLE_TYPES = (
     'text/html', 'application/xhtml+xml', 'application/pdf', 'application/epub+zip',
@@ -47,11 +53,13 @@ def classify_error(exc: Exception) -> str:
     return 'error'
 
 
-def probe(item: dict) -> dict:
-    url = (item.get('sourceUrl') or '').strip()
+def probe_once(item: dict) -> dict:
+    url = (item.get('sourceUrl') or item.get('url') or '').strip()
     base = {
-        'sourceId': item.get('sourceId'),
+        'sourceId': item.get('sourceId') or item.get('id'),
         'provider': item.get('provider'),
+        'capability': item.get('capability'),
+        'stage': item.get('stage'),
         'sourceUrl': url,
     }
     if not url.startswith(('http://', 'https://')):
@@ -62,7 +70,7 @@ def probe(item: dict) -> dict:
         method='GET',
         headers={
             'User-Agent': USER_AGENT,
-            'Accept': 'text/html,application/xhtml+xml,application/pdf,application/json,image/*;q=0.8,*/*;q=0.5',
+            'Accept': 'text/html,application/xhtml+xml,application/pdf,application/json,application/ld+json,image/*;q=0.8,*/*;q=0.5',
             'Range': f'bytes=0-{MAX_READ - 1}',
         },
     )
@@ -73,12 +81,17 @@ def probe(item: dict) -> dict:
             content_type = (response.headers.get('Content-Type') or '').split(';', 1)[0].strip().lower()
             xfo = response.headers.get('X-Frame-Options')
             csp = response.headers.get('Content-Security-Policy')
+            acao = response.headers.get('Access-Control-Allow-Origin')
             sample = response.read(MAX_READ)
             renderable = any(content_type.startswith(t) for t in RENDERABLE_TYPES)
-            if 200 <= status_code < 400 and renderable:
+            expected = (item.get('expectContentType') or '').lower()
+            expected_ok = not expected or content_type.startswith(expected)
+            if 200 <= status_code < 400 and renderable and expected_ok:
                 status = 'success'
-            elif 200 <= status_code < 400:
+            elif 200 <= status_code < 400 and expected_ok:
                 status = 'fallback'
+            elif 200 <= status_code < 400:
+                status = 'content-type-mismatch'
             else:
                 status = 'http-error'
             return {
@@ -87,10 +100,13 @@ def probe(item: dict) -> dict:
                 'httpStatus': status_code,
                 'finalUrl': final_url,
                 'contentType': content_type,
+                'expectedContentType': expected or None,
                 'bytesSampled': len(sample),
                 'frameRestricted': bool(xfo or (csp and 'frame-ancestors' in csp.lower())),
                 'xFrameOptions': xfo,
                 'hasFrameAncestorsCsp': bool(csp and 'frame-ancestors' in csp.lower()),
+                'accessControlAllowOrigin': acao,
+                'browserCrossOriginReadable': bool(acao == '*' or (acao and 'westsidewatch.github.io' in acao)),
             }
     except Exception as exc:
         return {
@@ -100,27 +116,55 @@ def probe(item: dict) -> dict:
         }
 
 
-def main() -> int:
-    data = json.loads(CANDIDATES.read_text())
-    items = data.get('items', [])
+def probe(item: dict) -> dict:
+    last = None
+    for attempt in range(1, MAX_ATTEMPTS + 1):
+        last = probe_once(item)
+        last['attempts'] = attempt
+        if last.get('status') not in RETRY_STATUSES:
+            return last
+        if attempt < MAX_ATTEMPTS:
+            time.sleep(0.5 * attempt)
+    return last or {'status': 'error', 'attempts': 0}
+
+
+def probe_many(items: list[dict]) -> list[dict]:
     results = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         futures = [pool.submit(probe, item) for item in items]
         for future in as_completed(futures):
             results.append(future.result())
-
     results.sort(key=lambda x: str(x.get('sourceId') or ''))
+    return results
+
+
+def main() -> int:
+    data = json.loads(CANDIDATES.read_text())
+    items = data.get('items', [])
+    results = probe_many(items)
+
     counts = Counter(r['status'] for r in results)
     total = len(results)
     live = counts['success'] + counts['fallback']
+
+    acceptance_data = json.loads(ACCEPTANCE_CORPUS.read_text())
+    fixtures = acceptance_data.get('fixtures', [])
+    fixture_results = probe_many(fixtures)
+    fixture_counts = Counter(r['status'] for r in fixture_results)
+    mounted_failures = [
+        result for result in fixture_results
+        if result.get('stage') == 'mounted' and result.get('status') not in ('success', 'fallback')
+    ]
+
     report = {
-        'schema': 'dawn.url-surface.live.v1',
-        'purpose': 'Measure whether real Dawn external pointers can produce a renderable response envelope.',
+        'schema': 'dawn.url-surface.live.v2',
+        'purpose': 'Measure real external pointers and retain live evidence for every capability hook.',
         'corpus': {'total': total, 'source': str(CANDIDATES.relative_to(ROOT))},
         'settings': {
             'timeoutSeconds': TIMEOUT,
             'maxWorkers': MAX_WORKERS,
             'maxBytesPerPointer': MAX_READ,
+            'maxAttempts': MAX_ATTEMPTS,
             'mutation': False,
         },
         'results': {
@@ -128,20 +172,40 @@ def main() -> int:
             'liveOrFallback': live,
             'liveCoverage': round(live / total, 4) if total else 0,
             'frameRestricted': sum(1 for r in results if r.get('frameRestricted')),
+            'retried': sum(1 for r in results if r.get('attempts', 1) > 1),
+        },
+        'capabilityAcceptance': {
+            'source': str(ACCEPTANCE_CORPUS.relative_to(ROOT)),
+            'total': len(fixture_results),
+            'counts': dict(fixture_counts),
+            'mountedFailures': len(mounted_failures),
+            'retried': sum(1 for r in fixture_results if r.get('attempts', 1) > 1),
+            'items': fixture_results,
         },
         'acceptance': {
             'minimumCorpus': 900,
             'minimumLiveCoverage': 0.90,
-            'blockedIsNotAdmissionFailure': True,
+            'mountedFixtureMustBeLive': True,
+            'fixtureFoundMayRecordBlockedOrNetworkFailure': True,
             'mustNotMutateCandidates': True,
         },
         'items': results,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-    print(json.dumps(report['results'], ensure_ascii=False, indent=2))
+    print(json.dumps({
+        'discovery': report['results'],
+        'capabilityAcceptance': {
+            'total': report['capabilityAcceptance']['total'],
+            'counts': report['capabilityAcceptance']['counts'],
+            'mountedFailures': report['capabilityAcceptance']['mountedFailures'],
+            'retried': report['capabilityAcceptance']['retried'],
+        },
+    }, ensure_ascii=False, indent=2))
 
-    return 0 if total >= 900 and report['results']['liveCoverage'] >= 0.90 else 1
+    discovery_ok = total >= 900 and report['results']['liveCoverage'] >= 0.90
+    mounts_ok = not mounted_failures
+    return 0 if discovery_ok and mounts_ok else 1
 
 
 if __name__ == '__main__':

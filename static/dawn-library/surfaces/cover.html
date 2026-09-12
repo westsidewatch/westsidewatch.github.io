@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dawn Cover Surface</title>
+  <style>
+    :root{color-scheme:dark;background:#171714;color:#eee8d8;font-family:system-ui,sans-serif}body{margin:0;min-height:100vh;display:grid;place-items:center}.shell{max-width:480px;width:min(88vw,480px);padding:1rem}.cover{display:block;width:100%;height:auto;background:#25231d;box-shadow:0 18px 55px #0009}.meta{display:flex;justify-content:space-between;gap:1rem;align-items:center;margin-top:.8rem;font-size:.82rem;color:#cdbd82}.meta a{color:inherit}
+  </style>
+</head>
+<body data-dawn-cover-surface>
+  <main class="shell">
+    <img class="cover" data-cover-image alt="Book cover" referrerpolicy="no-referrer">
+    <div class="meta"><span data-cover-status>正在解析封面…</span><a data-cover-source target="_blank" rel="noopener noreferrer">原始封面 ↗</a></div>
+  </main>
+  <script type="module" src="/js/dawn-cover-surface.js"></script>
+</body>
+</html>
