@@ -12,5 +12,9 @@ function panelMarkup(workflow=createPublishingWorkflow()){
 function render(workflow){if(!root)return;const next=document.createElement('div');next.innerHTML=panelMarkup(workflow);const replacement=next.firstElementChild;root.replaceWith(replacement);root=replacement;bind()}
 function close(){root?.remove();root=null}
 function bind(){root.querySelector('.publishing-close').onclick=close;root.querySelector('[data-publishing-close]').onclick=close;root.addEventListener('click',e=>{if(e.target===root)close()});root.querySelector('[data-publishing-start]').onclick=async()=>{const button=root.querySelector('[data-publishing-start]');button.disabled=true;button.textContent='理解整部作品…';try{const compiled=await compileCurrentBook();render(workflowFromCompile(compiled))}catch(error){root.querySelector('.publishing-status').textContent=`成書檢查失敗：${error.message}`;button.disabled=false;button.textContent='重試'}}}
-export function openPublishingWorkflow(){if(root)return;const holder=document.createElement('div');holder.innerHTML=panelMarkup();root=holder.firstElementChild;document.body.appendChild(root);bind()}
+export function openPublishingWorkflow(){if(root)return;document.querySelector('#bookMenu')?.classList.remove('open');document.querySelector('#makeBook')?.setAttribute('aria-expanded','false');const holder=document.createElement('div');holder.innerHTML=panelMarkup();root=holder.firstElementChild;document.body.appendChild(root);bind()}
+// #674: the primary 成書 action owns the publishing workflow. The legacy export
+// menu remains available only as downstream artifact machinery, never as the
+// primary meaning of 成書.
+document.addEventListener('click',event=>{const button=event.target.closest?.('#makeBook');if(!button)return;event.preventDefault();event.stopImmediatePropagation();openPublishingWorkflow()},true);
 window.addEventListener('multiwrite:open-publishing-workflow',openPublishingWorkflow);
