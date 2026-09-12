@@ -163,13 +163,30 @@ def _image_generate(args: dict[str, Any], caller_product: str | None = None) -> 
 def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
     """Invoke semantic publishing intelligence through the local Doré inference seam.
 
-    The publishing adapter stays provider-neutral. Loading the local runtime happens
-    inside the injected callback so an unavailable inference runtime is converted by
-    the adapter into a safe degraded report instead of failing the bookmaking path.
+    The publishing adapter stays provider-neutral. The Core/provider seam requests
+    structured JSON from the local runtime so report admission is an inference
+    contract rather than a prompt convention. Other Doré conversations continue to
+    use the ordinary unstructured runtime path.
     """
     def infer(messages: list[dict[str, str]]) -> str:
         runtime = _load_sibling("dore_local")
-        return runtime.ollama(messages)
+        base_url = str(getattr(runtime, "OLLAMA_BASE_URL", os.environ.get("OLLAMA_BASE_URL") or "http://127.0.0.1:11434")).rstrip("/")
+        model = str(getattr(runtime, "MODEL", os.environ.get("DORE_LOCAL_MODEL") or "gemma4:e4b"))
+        response = _post_json(
+            f"{base_url}/api/chat",
+            {
+                "model": model,
+                "messages": messages,
+                "stream": False,
+                "think": False,
+                "format": "json",
+            },
+        )
+        message = response.get("message") if isinstance(response, dict) else None
+        content = message.get("content") if isinstance(message, dict) else None
+        if not isinstance(content, str):
+            raise RuntimeError("structured Book Intelligence inference returned no message content")
+        return content
 
     return BOOK_INTELLIGENCE.execute(args, infer)
 
