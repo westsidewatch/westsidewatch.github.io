@@ -13,6 +13,7 @@ on:
       - "tools/aw_corridor/experiment_static_cinema_v10.py"
       - "tools/aw_corridor/experiment_static_cinema_v11.py"
       - "tools/aw_corridor/camera_router_observer.py"
+      - "tools/aw_corridor/trajectory_reserved_corridor.py"
       - "tools/aw_corridor/hidden_surface_provider.py"
   workflow_dispatch:
 
@@ -68,6 +69,20 @@ jobs:
           --render-report build/topology-probe/traversal-report.json
           --camera-state build/topology-probe/camera-state.jsonl
           --routing-advisory build/topology-probe/routing-advisory.json
+      - name: Probe trajectory-reserved armed 3D corridor
+        if: always()
+        run: >-
+          python tools/aw_corridor/trajectory_reserved_corridor.py
+          --source experiments/aw-011/assets/dore-011.jpg
+          --depth build/topology-probe/depth.png
+          --spine experiments/aw-011/camera-spine.json
+          --render-report build/topology-probe/traversal-report.json
+          --state build/topology-probe/corridor-state.jsonl
+          --report build/topology-probe/corridor-report.json
+          --mask build/topology-probe/corridor-capability-envelope.png
+          --preview build/topology-probe/corridor-preview.png
+          --capability-trials build/topology-probe/capability-trials.jsonl
+          --segment-frames 12 --ppu 520
       - uses: actions/upload-artifact@v4
         if: always()
         with:
