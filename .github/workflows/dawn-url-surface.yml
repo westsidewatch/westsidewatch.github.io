@@ -7,10 +7,12 @@ on:
       - 'dore_core/capabilities/surface_mounts.py'
       - 'dore_core/capabilities/cover_resolver.py'
       - 'dore_core/capabilities/archive_bookreader.py'
+      - 'dore_core/capabilities/zotero_reconciliation.py'
       - 'data/dawn-capability-acceptance-corpus.json'
       - 'data/visual_graph.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
+      - 'scripts/run_dawn_zotero_translation_probe.py'
       - 'scripts/build_dawn_surface_index.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'tests/test_dawn_url_surface.py'
@@ -18,6 +20,7 @@ on:
       - 'tests/test_dawn_pdf_surface.py'
       - 'tests/test_dawn_cover_resolver.py'
       - 'tests/test_dawn_bookreader.py'
+      - 'tests/test_dawn_zotero_reconciliation.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
       - 'layouts/visual/single.html'
       - 'layouts/website/dawn-library.html'
@@ -109,3 +112,41 @@ jobs:
             reports/DAWN-URL-SURFACE-LIVE.json
             data/dawn-10k-work-queue.json
             static/dawn-library/biblical-world/surface-index.json
+
+  zotero-reconciliation-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    env:
+      PYTHONPATH: .
+      DAWN_ZOTERO_TRANSLATE_URL: http://127.0.0.1:1969
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run Dawn Zotero adapter contract tests
+        run: python -m unittest tests.test_dawn_zotero_reconciliation -v
+      - name: Start official Zotero translation-server
+        run: |
+          docker pull zotero/translation-server
+          docker run -d --rm --name dawn-zotero -p 1969:1969 zotero/translation-server
+      - name: Wait for real Zotero translator readiness
+        run: |
+          for i in $(seq 1 30); do
+            if curl -fsS -X POST -H 'Content-Type: text/plain' --data '0385472579' http://127.0.0.1:1969/search >/tmp/zotero-ready.json; then
+              test -s /tmp/zotero-ready.json && exit 0
+            fi
+            sleep 3
+          done
+          docker logs dawn-zotero || true
+          exit 1
+      - name: Prove real ISBN reconciliation through Zotero translators
+        run: python scripts/run_dawn_zotero_translation_probe.py
+      - name: Preserve Zotero reconciliation evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-zotero-reconciliation
+          path: reports/DAWN-ZOTERO-TRANSLATION.json
+      - name: Stop Zotero translation-server
+        if: always()
+        run: docker kill dawn-zotero || true
