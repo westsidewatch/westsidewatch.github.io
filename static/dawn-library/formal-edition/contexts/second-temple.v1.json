@@ -1,0 +1,13 @@
+{
+  "schema":"dawn.collection-context.v1",
+  "anchors":["concept:second-temple"],
+  "query":"",
+  "semanticIntent":"browse works connected to the Second Temple world without losing canonical identity",
+  "relations":["concerns","useful-for"],
+  "facets":{"relationConcept":"concept:second-temple"},
+  "ordering":"relation-weight-desc",
+  "discoveryDistance":0.35,
+  "cursor":null,
+  "origin":"dawn:formal-edition:phase-2",
+  "focusedWork":null
+}
