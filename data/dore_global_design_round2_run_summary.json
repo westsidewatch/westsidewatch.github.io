@@ -1,0 +1,48 @@
+{
+  "schema": "dore.global-design-nourishment-run-summary.v1",
+  "round": 2,
+  "source": "art-institute-chicago/api-data",
+  "mode": "streaming-authority-corpus",
+  "run": {
+    "scannedLines": 100000,
+    "parseErrors": 0,
+    "candidateCount": 100000,
+    "uniqueCount": 100000,
+    "retainedCount": 3000,
+    "retentionRate": 0.03,
+    "theologyReviewRequired": 152,
+    "publicDomainRetained": 0
+  },
+  "domainCounts": {
+    "visual-design": 93037,
+    "architecture-interior-furniture": 4148,
+    "editorial-typography": 1670,
+    "industrial-design": 72,
+    "photography-illustration": 1503,
+    "painting": 183
+  },
+  "selectedDomainCounts": {
+    "architecture-interior-furniture": 795,
+    "editorial-typography": 843,
+    "industrial-design": 72,
+    "painting": 183,
+    "photography-illustration": 766,
+    "visual-design": 686
+  },
+  "evidence": {
+    "workflowRun": 34672995789,
+    "artifact": 10291711380,
+    "headSha": "90cc8a3cb748a0e817da34b0b0837a35ea97cd7d"
+  },
+  "interpretation": {
+    "exploreMoreRetainLess": true,
+    "externalBinariesOutOfRepo": true,
+    "theologyFailClosed": true,
+    "rightsGap": "AIC JSONL dump used by this run does not expose a usable public-domain flag for retained records; rights remain metadata-reference-only until item-level enrichment.",
+    "nextPressure": [
+      "enrich retained records with item-level rights/provenance",
+      "reduce generic visual-design bucket through stronger feature extraction",
+      "measure capability delta on judgment/action/transfer rather than corpus volume"
+    ]
+  }
+}
