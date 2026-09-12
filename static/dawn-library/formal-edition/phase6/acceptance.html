@@ -1,0 +1,13 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>Dawn Phase 6 Browser Acceptance</title></head><body><main id="result" data-status="RUNNING">PHASE6_BROWSER_RUNNING</main><script type="module">
+import { focusContext } from '../runtime/relation-context.mjs';
+import { createPersonalState, validatePersonalState, saveBookmark, saveView, saveTrail, exportPersonalState, importPersonalState, createLocalPersonalStore } from '../runtime/personal-state.mjs';
+const out=document.querySelector('#result');
+try{
+ const [canonical,contextSeed]=await Promise.all([fetch('../../canonical-index.json').then(r=>r.json()),fetch('../contexts/second-temple.v1.json').then(r=>r.json())]);
+ const ids=Object.keys(canonical.works||{});const canonicalIds=new Set(ids);const fallback=ids.find(id=>id.startsWith('dawn:'));const authority=ids.find(id=>!id.startsWith('dawn:'));
+ if(!fallback||!authority||ids.length<10000)throw new Error('canonical identity set');
+ localStorage.removeItem('dawn.phase6.acceptance');const store=createLocalPersonalStore(localStorage,'dawn.phase6.acceptance');let state=createPersonalState();const focused=focusContext(structuredClone(contextSeed),fallback);
+ state=saveBookmark(state,{workId:fallback,context:focused,projection:'card',label:'fallback'});state=saveBookmark(state,{workId:authority,context:contextSeed,projection:'shelf',label:'authority'});state=saveView(state,{id:'view:test',context:contextSeed,projection:'spectrum',label:'test view'});state=saveTrail(state,{id:'trail:test',label:'test trail',steps:[{workId:fallback,context:focused,projection:'card'},{workId:authority,context:contextSeed,projection:'spectrum'}]});validatePersonalState(state,canonicalIds);store.save(state);const reloaded=store.load();validatePersonalState(reloaded,canonicalIds);if(reloaded.bookmarks.length!==2||reloaded.views.length!==1||reloaded.trails[0].steps.length!==2)throw new Error('local persistence');const imported=importPersonalState(exportPersonalState(reloaded),canonicalIds);if(imported.bookmarks[1].workId!==authority)throw new Error('export import');
+ out.dataset.status='PASS';out.dataset.catalog=String(ids.length);out.textContent=`PHASE6_BROWSER_PASS catalog=${ids.length} bookmarks=${reloaded.bookmarks.length} views=${reloaded.views.length} trailSteps=${reloaded.trails[0].steps.length}`;localStorage.removeItem('dawn.phase6.acceptance');
+}catch(error){out.dataset.status='FAIL';out.textContent=`PHASE6_BROWSER_FAIL ${error?.message||error}`;document.title='FAIL — Dawn Phase 6 Browser Acceptance'}
+</script></body></html>
