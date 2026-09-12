@@ -32,7 +32,12 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
 
-        for adapter in ('iiif-visual-surface', 'pdfjs', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
+        self.assertFalse(registry.executable('iiif-visual-surface'))
+        self.assertEqual(registry.state('iiif-visual-surface'), 'integration-proven')
+        self.assertIsNotNone(registry.get('iiif-visual-surface').implementation)
+        self.assertIsNotNone(registry.get('iiif-visual-surface').evidence)
+
+        for adapter in ('pdfjs', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'fixture-found')
             self.assertIsNotNone(registry.get(adapter).evidence)
@@ -72,6 +77,11 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertTrue(gutenberg.executable)
         self.assertEqual(gutenberg.mount_state, 'mounted')
         self.assertEqual(gutenberg.ownership, 'external')
+
+        iiif = resolver.plan('https://example.org/iiif/manifest.json')
+        self.assertFalse(iiif.executable)
+        self.assertEqual(iiif.mount_state, 'integration-proven')
+        self.assertEqual(iiif.adapter, 'iiif-visual-surface')
 
         pdf = resolver.plan('https://example.org/book.pdf')
         self.assertFalse(pdf.executable)
