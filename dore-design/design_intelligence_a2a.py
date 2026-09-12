@@ -167,7 +167,8 @@ def health() -> dict:
     worker = LOCAL_DORE / 'design_intelligence_a2a_worker.py'
     return {
         'ok': worker.exists(),
-        'phase': 10,
+        'phase': 9,
+        'capability_phase': 10,
         'policy': 'dore-design-blind-consensus-loop-v1',
         'worker_available': worker.exists(),
         'inference_boundary': 'core-a2a-only',
