@@ -16,8 +16,25 @@ const fixtures = [
 for (const [item, expected] of fixtures) assert.equal(classifyNourishmentItem(item).decision, expected);
 
 const batch = JSON.parse(await readFile('data/dore_global_design_round1_batch01.json', 'utf8'));
+const registry = JSON.parse(await readFile('data/dore_global_design_round1_sources.json', 'utf8'));
 assert.equal(batch.schema, 'dore.global-design-nourishment-batch.v1');
+assert.equal(registry.schema, 'dore.global-design-source-registry.v1');
 assert.ok(batch.items.length > 0);
+assert.ok(registry.candidateScaleTarget.min >= 10000);
+assert.ok(registry.candidateScaleTarget.preferred >= registry.candidateScaleTarget.min);
+assert.ok(registry.sources.length >= 8);
+assert.equal(registry.selection.keepExternalBinariesOutOfRepoByDefault, true);
+assert.equal(registry.success.stopSourceClassWhenCapabilityDeltaFlat, true);
+
+const sourceIds = new Set();
+let plannedSelectionBudget = 0;
+for (const source of registry.sources) {
+  assert.ok(source.id && !sourceIds.has(source.id)); sourceIds.add(source.id);
+  assert.ok(source.class && source.domains?.length && source.rightsMode);
+  assert.ok(source.selectionBudget > 0);
+  plannedSelectionBudget += source.selectionBudget;
+}
+assert.ok(plannedSelectionBudget >= 10000);
 
 const ids = new Set();
 const domains = new Set();
@@ -51,6 +68,7 @@ console.log(JSON.stringify({
   contract: globalDesignNourishmentContract.schema,
   batchId: batch.batchId,
   itemCount: batch.items.length,
+  sourceRegistry: { sources: registry.sources.length, candidateMinimum: registry.candidateScaleTarget.min, candidatePreferred: registry.candidateScaleTarget.preferred, plannedSelectionBudget },
   uniqueDomains: domains.size,
   uniqueDesignSignals: signals.size,
   decisions,
