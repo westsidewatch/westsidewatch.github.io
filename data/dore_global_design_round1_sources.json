@@ -1,0 +1,32 @@
+{
+  "schema": "dore.global-design-source-registry.v1",
+  "round": "round1",
+  "strategy": "broad-authority-diversity-sampling",
+  "candidateScaleTarget": {"min": 10000, "preferred": 100000},
+  "retentionPrinciple": "explore-more-retain-less",
+  "sources": [
+    {"id":"smithsonian-open-access","class":"authority","domains":["painting","illustration","photography","architecture","furniture","industrial-design"],"rightsMode":"item-level-open-access","selectionBudget":1800},
+    {"id":"met-open-access","class":"authority","domains":["painting","illustration","photography","furniture","typography","decorative-art"],"rightsMode":"item-level-public-domain","selectionBudget":1800},
+    {"id":"library-of-congress","class":"authority","domains":["photography","architecture","editorial","illustration","typography"],"rightsMode":"item-level-rights-review","selectionBudget":1800},
+    {"id":"art-institute-chicago","class":"authority","domains":["painting","photography","furniture","industrial-design","textile"],"rightsMode":"item-level-open-access","selectionBudget":1200},
+    {"id":"cooper-hewitt","class":"authority","domains":["furniture","industrial-design","typography","editorial"],"rightsMode":"metadata-open-image-separate","selectionBudget":1200},
+    {"id":"rijksmuseum","class":"authority","domains":["painting","illustration","photography","decorative-art"],"rightsMode":"item-level-rights-review","selectionBudget":1200},
+    {"id":"va-collections","class":"authority","domains":["furniture","textile","typography","editorial","photography"],"rightsMode":"item-level-rights-review","selectionBudget":1000},
+    {"id":"letterform-archive","class":"curated","domains":["typography","editorial"],"rightsMode":"reference-analysis-only-unless-cleared","selectionBudget":500},
+    {"id":"web-design-museum","class":"curated","domains":["web","interaction"],"rightsMode":"reference-analysis-only","selectionBudget":400},
+    {"id":"siteinspire","class":"contemporary-reference","domains":["web","interaction","motion"],"rightsMode":"reference-analysis-only","selectionBudget":300}
+  ],
+  "selection": {
+    "deduplicate": true,
+    "clusterForDiversity": true,
+    "preferCrossDomainTransfer": true,
+    "theologySemanticIsolation": true,
+    "keepExternalBinariesOutOfRepoByDefault": true,
+    "retain": ["authority-metadata","rights-decision","theology-decision","design-signals","embedding-reference","graph-relations"]
+  },
+  "success": {
+    "measureLearningYield": true,
+    "stopSourceClassWhenCapabilityDeltaFlat": true,
+    "nextRoundFromCapabilityGap": true
+  }
+}
