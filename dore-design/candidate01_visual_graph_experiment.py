@@ -59,9 +59,7 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 </script>'''
 
 PAGE2_ASSEMBLY_FIX = r'''<style id="candidate01-page2-assembly-lock">
-/* Page 2 only: keep the final four-pane window below the old high-biased lock.
-   Both preview halves inherit one master rectangle so their internal seam stays exact. */
-html[data-candidate01-page="2"] .products__preview{--candidate01-assembly-y:clamp(30px,4.6vh,52px)}
+/* Page 2: four source panes close their real grid gutters into one exact master rectangle. */
 html[data-candidate01-page="2"] .product-preview{backface-visibility:hidden;transform-origin:50% 50%;}
 html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50%;}
 </style>
@@ -72,19 +70,44 @@ html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50
   if(!baseSync)return;
   const lock=()=>{
     baseSync();
+    const root=document.querySelector('.products');
     const layer=document.querySelector('.products__preview');
+    const cards=[...document.querySelectorAll('.products__grid .product')];
     const left=document.querySelector('.product-preview.--left');
     const right=document.querySelector('.product-preview.--right');
-    if(!layer||!left||!right)return;
-    const dy=Math.max(30,Math.min(52,innerHeight*.046));
-    const top=parseFloat(layer.style.top)||0;
-    layer.style.top=`${top+dy}px`;
-    /* One final master rectangle: no independent vertical drift at the lock point. */
-    left.style.top='0px'; right.style.top='0px';
-    left.style.bottom='auto'; right.style.bottom='auto';
-    left.style.transform='translate3d(0,0,0)';
-    right.style.transform='translate3d(0,0,0)';
-    document.documentElement.dataset.candidate01AssemblyLock=`down-${Math.round(dy)}px`;
+    if(!root||!layer||cards.length<8||!left||!right)return;
+    const rr=root.getBoundingClientRect();
+    const cr=cards.map(el=>el.getBoundingClientRect());
+    const colGap=Math.max(0,cr[1].left-cr[0].right);
+    const rowGap=Math.max(0,cr[4].top-cr[0].bottom);
+    const minX=Math.min(...cr.map(r=>r.left));
+    const maxX=Math.max(...cr.map(r=>r.right));
+    const minY=Math.min(...cr.map(r=>r.top));
+    const maxY=Math.max(...cr.map(r=>r.bottom));
+    const masterLeft=minX-rr.left+colGap/2;
+    const masterTop=minY-rr.top+rowGap/2;
+    const masterW=maxX-minX-colGap;
+    const masterH=maxY-minY-rowGap;
+    const halfW=masterW/2;
+
+    layer.style.inset='auto';
+    layer.style.left=`${masterLeft}px`;
+    layer.style.top=`${masterTop}px`;
+    layer.style.width=`${masterW}px`;
+    layer.style.height=`${masterH}px`;
+    layer.style.minHeight='0';
+    [left,right].forEach(p=>{
+      p.style.width=`${halfW}px`;
+      p.style.height=`${masterH}px`;
+      p.style.top='0px';
+      p.style.bottom='auto';
+      p.style.transform='none';
+    });
+    left.style.left='0px'; left.style.right='auto';
+    right.style.left=`${halfW}px`; right.style.right='auto';
+
+    document.documentElement.dataset.candidate01AssemblyLock=
+      `master-${Math.round(masterW)}x${Math.round(masterH)}-gap-${Math.round(colGap)}x${Math.round(rowGap)}`;
   };
   window.__candidate01SyncGeometry=lock;
   requestAnimationFrame(()=>requestAnimationFrame(lock));
@@ -156,8 +179,37 @@ LIVING_CURRENT_SCRIPT = r'''<script id="candidate01-living-current-runtime">
 </script>'''
 
 
+def _page2_motion_source(doc: str) -> str:
+    """Patch only Candidate 01 screen 2 back to the four-pane Codrops assembly contract."""
+    replacements = (
+        (
+            "function side(p){return [p]}",
+            "function side(p){let c=(+p.dataset.index)%4,wantRight=c<2;return products.filter(x=>wantRight?((+x.dataset.index)%4)>=2:((+x.dataset.index)%4)<2)}",
+        ),
+        (
+            "{opacity:0,transform:'translateY(-50%) scale(.94)'},{opacity:1,transform:'translateY(-50%) scale(1)'}",
+            "{opacity:0,transform:'translate3d(0,0,0) scale(.94)',offset:0},{opacity:1,transform:'translate3d(0,1.25px,0) scale(.998)',offset:.82},{opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}",
+        ),
+        (
+            "{opacity:1,transform:'translateY(-50%) scale(1)'},{opacity:0,transform:'translateY(-50%) scale(.94)'}",
+            "{opacity:1,transform:'translate3d(0,0,0) scale(1)'},{opacity:0,transform:'translate3d(0,0,0) scale(.94)'}",
+        ),
+        (
+            "{opacity:1,transform:'translate(0,0)'},{opacity:0,transform:`translate(${dx}vw,${dy}vw)`}",
+            "{opacity:1,transform:'translate3d(0,0,0)',offset:0},{opacity:.06,transform:`translate3d(${dx*0.965}vw,${dy*0.965}vw,0)`,offset:.82},{opacity:0,transform:`translate3d(${dx}vw,${dy}vw,0)`,offset:1}",
+        ),
+    )
+    for old, new in replacements:
+        if old not in doc:
+            raise RuntimeError(f"Candidate 01 Page 2 motion seam changed: {old[:60]}")
+        doc = doc.replace(old, new)
+    return doc
+
+
 def focus_screen(screen_no, labels):
     doc = codrops_site_8x5.render(edit=False)
+    if screen_no == 2:
+        doc = _page2_motion_source(doc)
     doc = doc.replace('</head>', LIVING_CURRENT_STYLE + '</head>', 1)
     tail = GEOMETRY_LOCK + (PAGE2_ASSEMBLY_FIX if screen_no == 2 else '') + LIVING_CURRENT_SCRIPT
     doc = doc.replace('</body>', tail + '</body>', 1)
