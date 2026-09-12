@@ -24,7 +24,11 @@ for (const request of requests) {
       surfacePresetIds: candidate.surfacePresetIds,
     })),
   };
-  selection.surfaceOrchestration = orchestrateDawnSurfaces(selection);
+  const orchestrationSelection = {
+    ...selection,
+    candidates: result.candidates,
+  };
+  selection.surfaceOrchestration = orchestrateDawnSurfaces(orchestrationSelection, request.surfaceContext || null);
   selections.push(selection);
 }
 
