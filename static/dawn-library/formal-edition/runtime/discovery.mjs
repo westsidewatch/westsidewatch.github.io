@@ -29,7 +29,7 @@ function recordSearchText(record) {
   return [record.workId, record.title, record.author, ...(record.relations || []), ...(record.tags || [])].filter(Boolean).join(' ');
 }
 
-function canonicalWorks(canonical) {
+export function canonicalWorks(canonical) {
   if (!canonical) return [];
   const candidates = [canonical.works, canonical.items, canonical.canonicalWorks, canonical.catalog, canonical.index];
   for (const candidate of candidates) {
@@ -39,29 +39,28 @@ function canonicalWorks(canonical) {
     }
   }
   if (Array.isArray(canonical)) return canonical;
-  if (typeof canonical === 'object' && Object.keys(canonical).some(key => key.startsWith('dawn:'))) {
-    return Object.entries(canonical).map(([key, value]) => ({ ...(value || {}), workId: value?.workId || value?.id || key }));
-  }
   return [];
 }
 
 export function buildCatalog({ surface, canonical = null }) {
-  const surfaceById = new Map((surface?.items || []).filter(item => item?.workId?.startsWith('dawn:')).map(item => [item.workId, item]));
-  const canonicalRows = canonicalWorks(canonical).filter(item => (item?.workId || item?.id || '').startsWith('dawn:'));
+  const surfaceById = new Map((surface?.items || []).filter(item => item?.workId).map(item => [String(item.workId), item]));
+  const canonicalRows = canonicalWorks(canonical).filter(item => String(item?.workId || item?.id || '').trim());
   const sourceRows = canonicalRows.length ? canonicalRows : [...surfaceById.values()];
 
   return sourceRows.map(source => {
-    const workId = source.workId || source.id;
+    const workId = String(source.workId || source.id);
     const overlay = surfaceById.get(workId) || {};
     const metadata = source.metadata || {};
+    const authors = source.authors || metadata.authors || [];
     return {
       workId,
       title: source.title || source.name || metadata.title || '',
-      author: source.author || source.creator || metadata.author || metadata.creator || '',
+      author: source.author || source.creator || metadata.author || metadata.creator || (Array.isArray(authors) ? authors.join(', ') : String(authors || '')),
       relations: [...new Set([...(overlay.relations || []), ...(source.relations || [])])],
       tags: source.tags || metadata.tags || [],
-      chronology: source.chronology || source.year || metadata.year || null,
-      readingDepth: source.readingDepth || metadata.readingDepth || null
+      chronology: source.chronology || source.firstPublishYear || source.year || metadata.year || null,
+      readingDepth: source.readingDepth || metadata.readingDepth || null,
+      authorityBacked: Boolean(source.authorityBacked)
     };
   });
 }
@@ -139,9 +138,10 @@ export function facetOptions(catalog, key = 'relation') {
 }
 
 export function toggleCompareWork(context, workId, max = 4) {
-  if (!workId?.startsWith('dawn:')) throw new Error('Compare requires a canonical dawn:* Work ID');
+  const id = String(workId || '').trim();
+  if (!id) throw new Error('Compare requires a canonical Work ID');
   const current = [...((context.facets || {}).compareWorks || [])];
-  const next = current.includes(workId) ? current.filter(id => id !== workId) : [...current, workId].slice(-max);
+  const next = current.includes(id) ? current.filter(value => value !== id) : [...current, id].slice(-max);
   return updateDiscoveryContext(context, {
     facets: { compareWorks: next },
     semanticIntent: next.length > 1 ? 'compare' : context.semanticIntent || ''
