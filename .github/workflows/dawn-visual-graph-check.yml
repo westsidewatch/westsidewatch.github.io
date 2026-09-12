@@ -12,6 +12,7 @@ on:
       - 'layouts/**'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/js/dore-visual-surface-consumer.js'
+      - 'static/one/one-surface-runtime.js'
       - 'static/one/one-baptism-motion.js'
       - 'static/css/dawn-visual.css'
       - 'scripts/dore/**'
@@ -78,6 +79,7 @@ jobs:
         run: |
           node --check static/js/dawn-visual-viewer.js
           node --check static/js/dore-visual-surface-consumer.js
+          node --check static/one/one-surface-runtime.js
           node --check static/one/one-baptism-motion.js
       - name: Install Hugo
         uses: peaceiris/actions-hugo@v3
@@ -86,3 +88,8 @@ jobs:
           extended: true
       - name: Build site
         run: hugo --minify --gc
+      - name: Verify shared Surface consumers
+        run: |
+          grep -q 'dore.visual-surface-consumer.v1' public/js/dore-visual-surface-consumer.js
+          grep -q 'data-dore-surface-product="journal"' public/journal/index.html
+          grep -q 'js/dore-visual-surface-consumer.js' public/journal/index.html
