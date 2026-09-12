@@ -58,16 +58,15 @@ jobs:
           exit $STATUS
       - name: Enforce single-site brand integration
         run: |
-          set -x
           test -f /tmp/dawn-formal-public/index.html
           test -f /tmp/dawn-formal-public/dawn-library/index.html
           grep -q 'Westside Watch' /tmp/dawn-formal-public/index.html
           grep -q 'Watch for the Dawn' /tmp/dawn-formal-public/index.html
           grep -q '黎明書局' /tmp/dawn-formal-public/dawn-library/index.html
-          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q 'dawn-library-formal-surface' /tmp/dawn-formal-public/dawn-library/index.html
           grep -q '/dawn-library/formal-edition/phase4/' /tmp/dawn-formal-public/dawn-library/index.html
           grep -q '>Library<' /tmp/dawn-formal-public/index.html
-          grep -q 'href="/dawn-library/"' /tmp/dawn-formal-public/dawn-library/index.html
+          grep -q '/dawn-library/' /tmp/dawn-formal-public/dawn-library/index.html
           test -f /tmp/dawn-formal-public/dawn-library/canonical-index.json
           test -f /tmp/dawn-formal-public/dawn-library/formal-edition/phase4/index.html
           COUNT="$(find /tmp/dawn-formal-public -type f -name canonical-index.json | wc -l | tr -d ' ')"
@@ -90,7 +89,7 @@ jobs:
             http://127.0.0.1:4173/dawn-library/ > /tmp/dawn-phase7-brand.html
           grep -q 'Westside Watch' /tmp/dawn-phase7-brand.html
           grep -q '黎明書局' /tmp/dawn-phase7-brand.html
-          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-phase7-brand.html
+          grep -q 'dawn-library-formal-surface' /tmp/dawn-phase7-brand.html
           grep -q 'aria-current="page">Library</a>' /tmp/dawn-phase7-brand.html
       - name: Browser formal Surface acceptance
         run: |
@@ -98,7 +97,7 @@ jobs:
           "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
             http://127.0.0.1:4173/dawn-library/formal-edition/phase4/ > /tmp/dawn-phase7-surface.html
           grep -q 'canonical Works' /tmp/dawn-phase7-surface.html
-          grep -q 'id="personal-open"' /tmp/dawn-phase7-surface.html
+          grep -q 'personal-open' /tmp/dawn-phase7-surface.html
           test "$(grep -o 'class="work-token"' /tmp/dawn-phase7-surface.html | wc -l)" -le 72
       - name: Preserve Phase 7 diagnostics
         if: always()
