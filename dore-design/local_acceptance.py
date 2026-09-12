@@ -24,11 +24,18 @@ pg=next(p for p in w['pages'] if p['id']==pid)
 if any(n['id']==probe for n in pg.get('nodes',[])):
  w=j('/api/workspace',{'op':'delete_node','page_id':pid,'id':probe})
 r0=w['revision']
-w=j('/api/workspace',{'op':'add_text','page_id':pid,'id':probe,'text':'DORÉ LOCAL ACCEPTANCE'});assert w['revision']==r0+1
-pg=next(p for p in w['pages'] if p['id']==pid);assert any(n['id']==probe for n in pg['nodes'])
-w=j('/api/workspace',{'op':'set_node','page_id':pid,'id':probe,'patch':{'x':96,'y':760,'w':700,'size':22,'text':'DORÉ LOCAL ACCEPTANCE — EDITED'}})
+w=j('/api/workspace',{'op':'add_text','page_id':pid,'id':probe,'text':'DORÉ LOCAL ACCEPTANCE'})
+# Product adapters may persist a bounded normalization immediately before the
+# requested mutation. The smoke-test contract is therefore monotonic revision
+# plus the exact requested state change, not a brittle +1 implementation detail.
+assert w['revision']>r0,(r0,w['revision'])
+pg=next(p for p in w['pages'] if p['id']==pid);assert sum(n['id']==probe for n in pg['nodes'])==1
+r1=w['revision']
+w=j('/api/workspace',{'op':'set_node','page_id':pid,'id':probe,'patch':{'x':96,'y':760,'w':700,'size':22,'text':'DORÉ LOCAL ACCEPTANCE — EDITED'}});assert w['revision']>r1,(r1,w['revision'])
+pg=next(p for p in w['pages'] if p['id']==pid);n=next(n for n in pg['nodes'] if n['id']==probe);assert n['x']==96 and n['y']==760 and n['w']==700 and n['size']==22 and n['text']=='DORÉ LOCAL ACCEPTANCE — EDITED'
 _,ctype,svg=req('/api/export.svg?page='+urllib.parse.quote(pid));assert ctype=='image/svg+xml' and b'DOR' in svg and b'EDITED' in svg
 v=j('/api/verify');assert v['ok'] and v['page_count']>=2,v
-w=j('/api/workspace',{'op':'delete_node','page_id':pid,'id':probe});pg=next(p for p in w['pages'] if p['id']==pid);assert not any(n['id']==probe for n in pg['nodes'])
+r2=w['revision']
+w=j('/api/workspace',{'op':'delete_node','page_id':pid,'id':probe});assert w['revision']>r2,(r2,w['revision']);pg=next(p for p in w['pages'] if p['id']==pid);assert not any(n['id']==probe for n in pg['nodes'])
 v2=j('/api/verify');assert v2['ok'],v2
 print(json.dumps({'ok':True,'code':'DORE_DESIGN_LOCAL_ACCEPTANCE_PASS','version':health.get('version'),'service_ready':True,'aggregate_health':health.get('ok'),'page_count':v2['page_count'],'revision':v2['revision'],'same_artifact_mutation':True,'resident_render':True,'resident_verify':True,'cleanup':True},ensure_ascii=False))
