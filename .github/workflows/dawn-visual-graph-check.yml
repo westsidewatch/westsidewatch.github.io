@@ -89,8 +89,8 @@ jobs:
           fetch-depth: 1
       - name: Global Design Nourishment Round 2 corpus run
         env:
-          DORE_CANDIDATE_TARGET: '10000'
-          DORE_RETAIN_TARGET: '1000'
+          DORE_CANDIDATE_TARGET: '100000'
+          DORE_RETAIN_TARGET: '3000'
         run: node scripts/dore/global-design-round2-corpus-run.mjs aic-api-data/getting-started/allArtworks.jsonl
       - name: Upload Round 2 corpus evidence
         uses: actions/upload-artifact@v4
