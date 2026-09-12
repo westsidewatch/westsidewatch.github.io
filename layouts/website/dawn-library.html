@@ -1,6 +1,7 @@
 {{ define "main" }}
   {{ $library := hugo.Data.resources }}
   {{ $visuals := site.Data.visual_graph.visual_works }}
+  <link rel="stylesheet" href="{{ "/css/dawn-web-surface.css" | relURL }}">
   <article class="article dawn-library dawn-library--public">
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span>
@@ -29,6 +30,7 @@
         <a href="#bible-study">經文學習</a>
         <a href="#reading-rooms">閱覽室</a>
         <a href="#book-shelves">書架</a>
+        <a href="#biblical-world">聖經世界</a>
         <a href="#selected-resources">全部資源</a>
       </nav>
     </header>
@@ -146,6 +148,16 @@
       </aside>
     </section>
 
+    <section class="dawn-web-collection" id="biblical-world" aria-labelledby="biblical-world-title" data-dawn-biblical-world>
+      <header>
+        <p class="kicker">Biblical World · 聖經世界</p>
+        <h2 id="biblical-world-title">資料在全網，閱讀留在黎明</h2>
+        <p>黎明書局只保存書籍身份、關係與可靠來源座標；正文由原館藏持有。已驗證的 Project Gutenberg 公版館藏可直接在這裡閱讀。</p>
+        <p class="dawn-web-collection__status" data-dawn-biblical-world-status aria-live="polite">正在連接外部館藏…</p>
+      </header>
+      <div class="dawn-web-grid" data-dawn-biblical-world-list></div>
+    </section>
+
     <section class="library-spectrum" aria-labelledby="spectrum-title">
       <header>
         <p class="kicker">Choose Your Depth · 選擇深度</p>
@@ -176,4 +188,17 @@
       <p>經文在中心。<br>讓每一項資源，成為今天可以開始的道路。</p>
     </footer>
   </article>
+
+  <dialog class="dawn-web-surface" data-dawn-web-surface-dialog aria-labelledby="dawn-web-surface-title">
+    <div class="dawn-web-surface__bar">
+      <div class="dawn-web-surface__identity">
+        <strong id="dawn-web-surface-title" data-dawn-web-surface-title>External resource</strong>
+        <small data-dawn-web-surface-source>External source</small>
+      </div>
+      <a href="#" target="_blank" rel="noopener noreferrer" data-dawn-web-surface-open>在原網站打開 ↗</a>
+      <button type="button" class="dawn-web-surface__close" data-dawn-web-surface-close aria-label="關閉閱讀器">×</button>
+    </div>
+    <iframe data-dawn-web-surface-frame loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+  </dialog>
+  <script src="{{ "/js/dawn-web-surface.js" | relURL }}" defer></script>
 {{ end }}

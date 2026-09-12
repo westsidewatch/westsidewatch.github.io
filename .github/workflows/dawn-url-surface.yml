@@ -1,0 +1,67 @@
+name: Dawn URL Surface
+
+on:
+  pull_request:
+    paths:
+      - 'dore_core/capabilities/url_surface.py'
+      - 'scripts/run_dawn_url_surface_benchmark.py'
+      - 'scripts/run_dawn_url_surface_live_probe.py'
+      - 'scripts/build_dawn_surface_index.py'
+      - 'tests/test_dawn_url_surface.py'
+      - 'tests/dawn-web-surface-contract.test.mjs'
+      - 'layouts/website/dawn-library.html'
+      - 'static/js/dawn-web-surface.js'
+      - 'static/css/dawn-web-surface.css'
+      - 'static/dawn-library/biblical-world/catalog.json'
+      - 'static/dawn-library/biblical-world/discovery-candidates.json'
+      - '.github/workflows/dawn-url-surface.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  corpus-routing-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 8
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run URL surface unit and 900+ corpus tests
+        run: python -m unittest tests.test_dawn_url_surface -v
+      - name: Verify mounted public Web Surface contract
+        run: node --test tests/dawn-web-surface-contract.test.mjs
+      - name: Emit deterministic routing benchmark
+        run: python scripts/run_dawn_url_surface_benchmark.py
+      - name: Materialize provider-neutral surface index
+        run: python scripts/build_dawn_surface_index.py
+      - name: Verify surface index stays pointer-only and covers corpus
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('static/dawn-library/biblical-world/surface-index.json')
+          d=json.loads(p.read_text())
+          assert d['count'] >= 900
+          assert all(i.get('external') is True for i in d['items'])
+          assert all(i.get('ownership') == 'external' for i in d['items'])
+          assert all(i.get('source_url') for i in d['items'])
+          print({'count': d['count'], 'schema': d['schema']})
+          PY
+      - name: Probe 900+ real external pointers
+        run: python scripts/run_dawn_url_surface_live_probe.py
+      - name: Preserve benchmark artifacts and generated surface index
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-url-surface-benchmarks
+          path: |
+            reports/DAWN-URL-SURFACE-BENCHMARK.json
+            reports/DAWN-URL-SURFACE-LIVE.json
+            static/dawn-library/biblical-world/surface-index.json
