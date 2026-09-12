@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Live-probe Dawn discovery pointers without mutating library state.
+"""Live-probe Dawn external pointers without mutating library state.
 
-This probe is intentionally shallow: it verifies that external pointers can be
-resolved into a renderable response envelope. It does not ingest or persist
-remote content, and it does not affect relevance/admission.
+The large discovery corpus measures routing resilience.  The small capability
+acceptance corpus proves that every named hook is tied to a real-world resource
+before it can advance toward mounted status.
 """
 from __future__ import annotations
 
@@ -18,6 +18,7 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES = ROOT / 'static/dawn-library/biblical-world/discovery-candidates.json'
+ACCEPTANCE_CORPUS = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 OUT = ROOT / 'reports/DAWN-URL-SURFACE-LIVE.json'
 
 TIMEOUT = 10
@@ -48,10 +49,12 @@ def classify_error(exc: Exception) -> str:
 
 
 def probe(item: dict) -> dict:
-    url = (item.get('sourceUrl') or '').strip()
+    url = (item.get('sourceUrl') or item.get('url') or '').strip()
     base = {
-        'sourceId': item.get('sourceId'),
+        'sourceId': item.get('sourceId') or item.get('id'),
         'provider': item.get('provider'),
+        'capability': item.get('capability'),
+        'stage': item.get('stage'),
         'sourceUrl': url,
     }
     if not url.startswith(('http://', 'https://')):
@@ -75,10 +78,14 @@ def probe(item: dict) -> dict:
             csp = response.headers.get('Content-Security-Policy')
             sample = response.read(MAX_READ)
             renderable = any(content_type.startswith(t) for t in RENDERABLE_TYPES)
-            if 200 <= status_code < 400 and renderable:
+            expected = (item.get('expectContentType') or '').lower()
+            expected_ok = not expected or content_type.startswith(expected)
+            if 200 <= status_code < 400 and renderable and expected_ok:
                 status = 'success'
-            elif 200 <= status_code < 400:
+            elif 200 <= status_code < 400 and expected_ok:
                 status = 'fallback'
+            elif 200 <= status_code < 400:
+                status = 'content-type-mismatch'
             else:
                 status = 'http-error'
             return {
@@ -87,6 +94,7 @@ def probe(item: dict) -> dict:
                 'httpStatus': status_code,
                 'finalUrl': final_url,
                 'contentType': content_type,
+                'expectedContentType': expected or None,
                 'bytesSampled': len(sample),
                 'frameRestricted': bool(xfo or (csp and 'frame-ancestors' in csp.lower())),
                 'xFrameOptions': xfo,
@@ -100,22 +108,37 @@ def probe(item: dict) -> dict:
         }
 
 
-def main() -> int:
-    data = json.loads(CANDIDATES.read_text())
-    items = data.get('items', [])
+def probe_many(items: list[dict]) -> list[dict]:
     results = []
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         futures = [pool.submit(probe, item) for item in items]
         for future in as_completed(futures):
             results.append(future.result())
-
     results.sort(key=lambda x: str(x.get('sourceId') or ''))
+    return results
+
+
+def main() -> int:
+    data = json.loads(CANDIDATES.read_text())
+    items = data.get('items', [])
+    results = probe_many(items)
+
     counts = Counter(r['status'] for r in results)
     total = len(results)
     live = counts['success'] + counts['fallback']
+
+    acceptance_data = json.loads(ACCEPTANCE_CORPUS.read_text())
+    fixtures = acceptance_data.get('fixtures', [])
+    fixture_results = probe_many(fixtures)
+    fixture_counts = Counter(r['status'] for r in fixture_results)
+    mounted_failures = [
+        result for result in fixture_results
+        if result.get('stage') == 'mounted' and result.get('status') not in ('success', 'fallback')
+    ]
+
     report = {
-        'schema': 'dawn.url-surface.live.v1',
-        'purpose': 'Measure whether real Dawn external pointers can produce a renderable response envelope.',
+        'schema': 'dawn.url-surface.live.v2',
+        'purpose': 'Measure real external pointers and retain live evidence for every capability hook.',
         'corpus': {'total': total, 'source': str(CANDIDATES.relative_to(ROOT))},
         'settings': {
             'timeoutSeconds': TIMEOUT,
@@ -129,19 +152,36 @@ def main() -> int:
             'liveCoverage': round(live / total, 4) if total else 0,
             'frameRestricted': sum(1 for r in results if r.get('frameRestricted')),
         },
+        'capabilityAcceptance': {
+            'source': str(ACCEPTANCE_CORPUS.relative_to(ROOT)),
+            'total': len(fixture_results),
+            'counts': dict(fixture_counts),
+            'mountedFailures': len(mounted_failures),
+            'items': fixture_results,
+        },
         'acceptance': {
             'minimumCorpus': 900,
             'minimumLiveCoverage': 0.90,
-            'blockedIsNotAdmissionFailure': True,
+            'mountedFixtureMustBeLive': True,
+            'fixtureFoundMayRecordBlockedOrNetworkFailure': True,
             'mustNotMutateCandidates': True,
         },
         'items': results,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
-    print(json.dumps(report['results'], ensure_ascii=False, indent=2))
+    print(json.dumps({
+        'discovery': report['results'],
+        'capabilityAcceptance': {
+            'total': report['capabilityAcceptance']['total'],
+            'counts': report['capabilityAcceptance']['counts'],
+            'mountedFailures': report['capabilityAcceptance']['mountedFailures'],
+        },
+    }, ensure_ascii=False, indent=2))
 
-    return 0 if total >= 900 and report['results']['liveCoverage'] >= 0.90 else 1
+    discovery_ok = total >= 900 and report['results']['liveCoverage'] >= 0.90
+    mounts_ok = not mounted_failures
+    return 0 if discovery_ok and mounts_ok else 1
 
 
 if __name__ == '__main__':
