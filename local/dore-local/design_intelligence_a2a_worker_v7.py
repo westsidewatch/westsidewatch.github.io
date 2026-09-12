@@ -52,12 +52,13 @@ def _repair_blocked(ollama,payload,candidates,enforcement_result):
 
 def _model(payload):
     ollama=local_inference.ollama
+    structured=local_inference.ollama_json
     base=payload['base_snapshot'];nodes=legacy.sandbox.geometry_evidence(base);guardrails=v6._guardrails(payload)
-    variants,candidates=v6._generate(ollama,payload,base,nodes,0);enforcement_result=enforcement.enforce(candidates,guardrails);repair_trace=[];repaired=False
+    variants,candidates=v6._generate(ollama,payload,base,nodes,0,structured_json=structured);enforcement_result=enforcement.enforce(candidates,guardrails);repair_trace=[];repaired=False
     if not enforcement_result.get('all_admitted'): candidates,enforcement_result,repair_trace,repaired=_repair_blocked(ollama,payload,candidates,enforcement_result)
     regeneration_count=0
     while not enforcement_result.get('all_admitted') and regeneration_count<enforcement.MAX_REGENERATIONS:
-        regeneration_count+=1;variants,candidates=v6._generate(ollama,payload,base,nodes,regeneration_count);enforcement_result=enforcement.enforce(candidates,guardrails)
+        regeneration_count+=1;variants,candidates=v6._generate(ollama,payload,base,nodes,regeneration_count,structured_json=structured);enforcement_result=enforcement.enforce(candidates,guardrails)
         if not enforcement_result.get('all_admitted'):
             candidates,enforcement_result,extra,was_repaired=_repair_blocked(ollama,payload,candidates,enforcement_result);repair_trace.extend(extra);repaired=repaired or was_repaired
     if not enforcement_result.get('all_admitted'): raise RuntimeError('repair_and_regeneration_exhausted')
