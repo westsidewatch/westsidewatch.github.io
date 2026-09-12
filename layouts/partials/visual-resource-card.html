@@ -4,6 +4,10 @@
 {{ $card := index $cardPresets 0 }}
 {{ $directorSelected := false }}
 {{ $directorScore := 0 }}
+{{ $editorialRole := "" }}
+{{ $editorialWeight := 1 }}
+{{ $editorialMotion := "" }}
+{{ $editorialSurface := "" }}
 {{ with site.Data.dawn_visual_editorial }}
   {{ range .selections }}
     {{ if eq .id "dawn-library-featured" }}
@@ -13,19 +17,36 @@
           {{ $directorScore = .score }}
         {{ end }}
       {{ end }}
+      {{ with .surfaceOrchestration }}
+        {{ range .surfaces }}
+          {{ $surface := . }}
+          {{ range .visualWorkIds }}
+            {{ if eq . $visual.id }}
+              {{ $editorialRole = $surface.role }}
+              {{ $editorialWeight = $surface.editorialWeight }}
+              {{ $editorialMotion = $surface.motion }}
+              {{ $editorialSurface = $surface.id }}
+            {{ end }}
+          {{ end }}
+        {{ end }}
+      {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}
-<a class="resource-card index-card--portrait visual-resource-card{{ if $directorSelected }} visual-resource-card--director-selected{{ end }}" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}"{{ if $directorSelected }} data-editorial-director="dore.visual-editorial-director.v1" data-editorial-score="{{ $directorScore }}"{{ end }}>
+{{ $roleClass := "" }}
+{{ if $editorialRole }}{{ $roleClass = printf " visual-resource-card--%s" $editorialRole }}{{ end }}
+<a class="resource-card index-card--portrait visual-resource-card{{ if $directorSelected }} visual-resource-card--director-selected{{ end }}{{ $roleClass }}" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}"{{ if $directorSelected }} data-editorial-director="dore.visual-editorial-director.v1" data-editorial-score="{{ $directorScore }}"{{ end }}{{ if $editorialRole }} data-editorial-role="{{ $editorialRole }}" data-editorial-weight="{{ $editorialWeight }}" data-editorial-motion="{{ $editorialMotion }}" data-editorial-surface="{{ $editorialSurface }}"{{ end }}>
   {{ partial "visual-surface.html" (dict "visual" $visual "preset" "card-8x5") }}
-  <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>{{ if $directorSelected }}EDITORIAL DIRECTOR{{ else }}VISUAL GRAPH{{ end }}</small></p>
+  <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>{{ if $editorialRole }}{{ upper $editorialRole }}{{ else if $directorSelected }}EDITORIAL DIRECTOR{{ else }}VISUAL GRAPH{{ end }}</small></p>
   <div class="resource-card__identity">
-    <span>{{ (index $visual.scripture_refs 0).canonical }}</span>
+    {{ with $visual.scripture_refs }}{{ with index . 0 }}<span>{{ .canonical }}</span>{{ end }}{{ end }}
     <h3>{{ $visual.canonical_title }}</h3>
     <em>{{ $visual.creator.name }} · {{ $visual.date }}</em>
   </div>
   <div class="resource-card__details">
-    {{ if $directorSelected }}
+    {{ if $editorialRole }}
+      <p>由 Doré Editorial Director 選出，並由 Surface Engine 以 {{ $editorialRole }} 角色、權重 {{ $editorialWeight }} 與 {{ $editorialMotion }} 節奏呈現。</p>
+    {{ else if $directorSelected }}
       <p>由 Doré Editorial Director 從 Visual Graph 依經文、語義、權威與 8:5 Surface 適配自動選出。</p>
     {{ else }}
       <p>原作、經文、來源與權利保持同一身份；卡片裁切由同一 VisualWork 的 SurfacePreset 決定。</p>
@@ -35,6 +56,7 @@
       <div><dt>Rights</dt><dd>{{ $representation.rights.work_status }}</dd></div>
       <div><dt>Surface</dt><dd>{{ $card.id }}</dd></div>
       {{ if $directorSelected }}<div><dt>Director</dt><dd>{{ printf "%.3f" $directorScore }}</dd></div>{{ end }}
+      {{ if $editorialRole }}<div><dt>Role</dt><dd>{{ $editorialRole }} · {{ $editorialWeight }}×</dd></div>{{ end }}
     </dl>
     <strong>Open in Dawn Library <i aria-hidden="true">→</i></strong>
   </div>
