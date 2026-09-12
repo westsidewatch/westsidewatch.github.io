@@ -22,6 +22,7 @@ def main():
     with tempfile.TemporaryDirectory() as td:
         root=Path(td)
         os.environ['DORE_LOCAL_HOME']=str(root/'home')
+        os.environ['DORE_DESIGN_DATA']=str(root/'design')
         os.environ['DORE_UI_TASTE_DB']=str(root/'taste.sqlite3')
         os.environ['DORE_DESIGN_A2A_FIXTURE']='1'
         os.environ['DORE_DESIGN_A2A_TIMEOUT']='60'
