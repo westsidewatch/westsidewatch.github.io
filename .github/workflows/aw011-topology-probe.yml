@@ -14,6 +14,7 @@ on:
       - "tools/aw_corridor/experiment_static_cinema_v11.py"
       - "tools/aw_corridor/experiment_static_cinema_v12.py"
       - "tools/aw_corridor/experiment_static_cinema_v13.py"
+      - "tools/aw_corridor/experiment_static_cinema_v14.py"
       - "tools/aw_corridor/camera_router_observer.py"
       - "tools/aw_corridor/trajectory_reserved_corridor.py"
       - "tools/aw_corridor/hidden_surface_provider.py"
@@ -106,6 +107,20 @@ jobs:
           --spine experiments/aw-011/camera-spine.json
           --output build/topology-probe/traversal-v13.mp4
           --report build/topology-probe/traversal-v13-report.json
+          --networks build/aw011-provider/networks.py
+          --edge-checkpoint build/aw011-provider/edge-model.pth
+          --depth-checkpoint build/aw011-provider/depth-model.pth
+          --color-checkpoint build/aw011-provider/color-model.pth
+          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3 --deviation-threshold 1.25 --warp-max-component-pixels 256
+      - name: Run V14 dual-blade engraving-aware corridor
+        run: >-
+          python tools/aw_corridor/experiment_static_cinema_v14.py
+          --source experiments/aw-011/assets/dore-011.jpg
+          --depth build/topology-probe/depth.png
+          --spine experiments/aw-011/camera-spine.json
+          --output build/topology-probe/traversal-v14.mp4
+          --report build/topology-probe/traversal-v14-report.json
+          --diagnostic-dir build/topology-probe/v14-diagnostics
           --networks build/aw011-provider/networks.py
           --edge-checkpoint build/aw011-provider/edge-model.pth
           --depth-checkpoint build/aw011-provider/depth-model.pth
