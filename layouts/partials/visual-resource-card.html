@@ -2,40 +2,17 @@
 {{ $representation := index $visual.representations 0 }}
 {{ $cardPresets := where $visual.surface_presets "id" "card-8x5" }}
 {{ $card := index $cardPresets 0 }}
-{{ $directorSelected := false }}
-{{ $directorScore := 0 }}
-{{ $editorialRole := "" }}
-{{ $editorialWeight := 1 }}
-{{ $editorialMotion := "" }}
-{{ $editorialSurface := "" }}
-{{ with site.Data.dawn_visual_editorial }}
-  {{ range .selections }}
-    {{ if eq .id "dawn-library-featured" }}
-      {{ range .candidates }}
-        {{ if eq .visualWorkId $visual.id }}
-          {{ $directorSelected = true }}
-          {{ $directorScore = .score }}
-        {{ end }}
-      {{ end }}
-      {{ with .surfaceOrchestration }}
-        {{ range .surfaces }}
-          {{ $surface := . }}
-          {{ range .visualWorkIds }}
-            {{ if eq . $visual.id }}
-              {{ $editorialRole = $surface.role }}
-              {{ $editorialWeight = $surface.editorialWeight }}
-              {{ $editorialMotion = $surface.motion }}
-              {{ $editorialSurface = $surface.id }}
-            {{ end }}
-          {{ end }}
-        {{ end }}
-      {{ end }}
-    {{ end }}
-  {{ end }}
-{{ end }}
+{{ $assignment := partial "visual-surface-assignment.html" (dict "visualWorkId" $visual.id "feed" site.Data.dawn_visual_editorial "selectionId" "dawn-library-featured") }}
+{{ $directorSelected := $assignment.selected }}
+{{ $directorScore := $assignment.score }}
+{{ $editorialRole := $assignment.role }}
+{{ $editorialWeight := $assignment.weight }}
+{{ $editorialMotion := $assignment.motion }}
+{{ $editorialSurface := $assignment.surface }}
+{{ $surfacePreset := default "card-8x5" $assignment.preset }}
 {{ $roleClass := "" }}
 {{ if $editorialRole }}{{ $roleClass = printf " visual-resource-card--%s" $editorialRole }}{{ end }}
-<a class="resource-card index-card--portrait visual-resource-card{{ if $directorSelected }} visual-resource-card--director-selected{{ end }}{{ $roleClass }}" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}"{{ if $directorSelected }} data-editorial-director="dore.visual-editorial-director.v1" data-editorial-score="{{ $directorScore }}"{{ end }}{{ if $editorialRole }} data-editorial-role="{{ $editorialRole }}" data-editorial-weight="{{ $editorialWeight }}" data-editorial-motion="{{ $editorialMotion }}" data-editorial-surface="{{ $editorialSurface }}"{{ end }}>
+<a class="resource-card index-card--portrait visual-resource-card{{ if $directorSelected }} visual-resource-card--director-selected{{ end }}{{ $roleClass }}" href="{{ printf "/visual/%s/" $visual.slug | relURL }}" aria-label="在黎明書局中查看 {{ $visual.canonical_title }}"{{ if $directorSelected }} data-editorial-director="dore.visual-editorial-director.v1" data-editorial-score="{{ $directorScore }}"{{ end }}{{ if $editorialRole }} data-editorial-role="{{ $editorialRole }}" data-editorial-weight="{{ $editorialWeight }}" data-editorial-motion="{{ $editorialMotion }}" data-editorial-surface="{{ $editorialSurface }}" data-surface-preset="{{ $surfacePreset }}" data-dore-surface="{{ $assignment.schema }}"{{ end }}>
   {{ partial "visual-surface.html" (dict "visual" $visual "preset" "card-8x5") }}
   <p class="resource-card__folio"><span>{{ upper $visual.type }}</span><small>{{ if $editorialRole }}{{ upper $editorialRole }}{{ else if $directorSelected }}EDITORIAL DIRECTOR{{ else }}VISUAL GRAPH{{ end }}</small></p>
   <div class="resource-card__identity">
