@@ -1,0 +1,111 @@
+name: Dawn Formal Edition Phase 8 Preflight
+
+# Preparation only. Keep manual until Phase 7 Brand Integration is formally PASS.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+env:
+  HUGO_VERSION: 0.164.0
+
+jobs:
+  production-preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Re-run Phase 4 canonical UI gate
+        run: node scripts/dawn-formal-edition-phase4.mjs
+
+      - name: Re-run Phase 5 Editorial World gate
+        run: node scripts/dawn-formal-edition-phase5.mjs
+
+      - name: Re-run Phase 6 Personal Dawn gate
+        run: node scripts/dawn-formal-edition-phase6.mjs
+
+      - name: Enforce canonical and runtime boundaries
+        run: |
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          import path from 'node:path';
+          const canonical = JSON.parse(fs.readFileSync('static/dawn-library/canonical-index.json','utf8'));
+          if (canonical.schema !== 'dawn.library.canonical-index.v1') throw new Error('canonical schema mismatch');
+          if (canonical.workCount < 10000) throw new Error(`canonical catalog regressed: ${canonical.workCount}`);
+          if (Object.keys(canonical.works || {}).length !== canonical.workCount) throw new Error('canonical workCount mismatch');
+          const roots = [
+            'static/dawn-library/formal-edition/runtime',
+            'static/dawn-library/formal-edition/editorial',
+            'static/dawn-library/surfaces'
+          ];
+          const forbidden = ['zh.wikisource.org','wikisource.org','openlibrary.org'];
+          const files=[];
+          const walk=p=>{for(const entry of fs.readdirSync(p,{withFileTypes:true})){const q=path.join(p,entry.name);entry.isDirectory()?walk(q):files.push(q)}};
+          for(const root of roots) if(fs.existsSync(root)) walk(root);
+          for(const file of files){const text=fs.readFileSync(file,'utf8').toLowerCase();for(const token of forbidden)if(text.includes(token))throw new Error(`forbidden runtime source ${token} in ${file}`)}
+          console.log(JSON.stringify({canonicalWorks:canonical.workCount, authorityBackedWorks:canonical.authorityBackedWorks, runtimeFilesChecked:files.length, forbiddenRuntimeSources:false}));
+          NODE
+          test "$(find static -type f -name canonical-index.json | wc -l | tr -d ' ')" = "1"
+
+      - name: Install production Hugo CLI
+        run: |
+          wget -q -O "${RUNNER_TEMP}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${RUNNER_TEMP}/hugo.deb"
+          hugo version
+
+      - name: Production-equivalent Hugo build
+        env:
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
+        run: hugo --minify --baseURL "https://westsidewatch.github.io/" --destination /tmp/dawn-phase8-public
+
+      - name: Static production invariants
+        run: |
+          test -f /tmp/dawn-phase8-public/index.html
+          test -f /tmp/dawn-phase8-public/dawn-library/index.html
+          test -f /tmp/dawn-phase8-public/dawn-library/canonical-index.json
+          test -f /tmp/dawn-phase8-public/dawn-library/formal-edition/phase4/index.html
+          grep -q 'Westside Watch' /tmp/dawn-phase8-public/index.html
+          grep -q 'Watch for the Dawn' /tmp/dawn-phase8-public/index.html
+          grep -q '黎明書局' /tmp/dawn-phase8-public/dawn-library/index.html
+          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-phase8-public/dawn-library/index.html
+          test "$(find /tmp/dawn-phase8-public -type f -name canonical-index.json | wc -l | tr -d ' ')" = "1"
+
+      - name: Start production-equivalent site
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 --directory /tmp/dawn-phase8-public > /tmp/dawn-phase8-http.log 2>&1 &
+          echo $! > /tmp/dawn-phase8-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/dawn-library/ >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dawn-phase8-http.log
+          exit 1
+
+      - name: Browser production acceptance
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=15000 --dump-dom \
+            http://127.0.0.1:4173/dawn-library/ > /tmp/dawn-phase8-brand.html
+          grep -q 'Westside Watch' /tmp/dawn-phase8-brand.html
+          grep -q '黎明書局' /tmp/dawn-phase8-brand.html
+          grep -q 'aria-current="page">Library</a>' /tmp/dawn-phase8-brand.html
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=15000 --dump-dom \
+            http://127.0.0.1:4173/dawn-library/formal-edition/phase4/ > /tmp/dawn-phase8-surface.html
+          grep -q 'canonical Works' /tmp/dawn-phase8-surface.html
+          grep -q 'id="personal-open"' /tmp/dawn-phase8-surface.html
+          grep -q 'data-motion="flow"' /tmp/dawn-phase8-surface.html
+          test "$(grep -o 'class="work-token"' /tmp/dawn-phase8-surface.html | wc -l)" -le 72
+
+      - name: Stop server
+        if: always()
+        run: test ! -f /tmp/dawn-phase8-http.pid || kill "$(cat /tmp/dawn-phase8-http.pid)" || true
