@@ -1,4 +1,5 @@
 const DEFAULT_LIMIT = 80;
+const DISCOVERY_FACETS = new Set(['relation', 'author', 'chronology', 'readingDepth', 'tags']);
 
 export function normalizeText(value = '') {
   return String(value).normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}:]+/gu, ' ').trim();
@@ -63,7 +64,7 @@ export function updateDiscoveryContext(context, patch = {}) {
 
 function passesFacets(record, facets = {}) {
   for (const [key, selected] of Object.entries(facets)) {
-    if (key === 'compareWorks') continue;
+    if (key === 'compareWorks' || !DISCOVERY_FACETS.has(key)) continue;
     if (selected == null || selected === '' || (Array.isArray(selected) && !selected.length)) continue;
     const values = Array.isArray(selected) ? selected : [selected];
     const recordValue = key === 'relation' ? record.relations : record[key];
