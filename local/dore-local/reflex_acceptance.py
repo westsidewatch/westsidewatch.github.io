@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Acceptance harness for the first Doré Reflex engineering spike."""
+"""Acceptance harness for the Doré Reflex v0 engineering spike."""
 from __future__ import annotations
 
 from io import BytesIO
@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 from zipfile import ZIP_DEFLATED, ZipFile
 
-from reflex_contracts import SourceDescriptor
+from reflex_contracts import REFLEX_EVENT_KINDS, SourceDescriptor
 from reflex_projections import project
 from reflex_router import ReflexRouter
 
@@ -16,7 +16,6 @@ SAMPLE = b"""# Job and His Friends\n\nEliphaz speaks from received wisdom.\nBild
 
 
 def _docx_fixture() -> bytes:
-    """Build a real minimal DOCX entirely in memory for adapter acceptance."""
     buffer = BytesIO()
     with ZipFile(buffer, "w", ZIP_DEFLATED) as archive:
         archive.writestr(
@@ -52,7 +51,6 @@ def _docx_fixture() -> bytes:
 
 
 def _xlsx_fixture() -> bytes:
-    """Build a real one-sheet XLSX entirely in memory for heterogeneous acceptance."""
     buffer = BytesIO()
     with ZipFile(buffer, "w", ZIP_DEFLATED) as archive:
         archive.writestr(
@@ -113,9 +111,12 @@ def _xlsx_fixture() -> bytes:
     return buffer.getvalue()
 
 
-def _assert_three_projections(router: ReflexRouter, source: SourceDescriptor, payload: bytes, adapter: str) -> str:
+def _exercise(router: ReflexRouter, source: SourceDescriptor, payload: bytes, adapter: str) -> dict:
     session = router.open(source, payload)
     assert session.adapter == adapter
+    kinds = [event.kind for event in session.iter_events()]
+    assert set(kinds) <= REFLEX_EVENT_KINDS
+
     search = project(session, "text.search")
     publishing = project(session, "publishing.structure")
     design = project(session, "design.structure")
@@ -123,11 +124,20 @@ def _assert_three_projections(router: ReflexRouter, source: SourceDescriptor, pa
     assert search["chunks"][0]["provenance"]["canonicalId"] == source.canonical_id
     assert publishing["source"]["canonicalId"] == source.canonical_id
     assert design["authority"]["layoutDecision"] is False
+    assert design["authority"]["brandDecision"] is False
     joined = "\n".join(chunk["text"] for chunk in search["chunks"])
+
+    result = {
+        "joined": joined,
+        "kinds": kinds,
+        "search": search,
+        "publishing": publishing,
+        "design": design,
+    }
     session.close()
     assert session.closed is True
     assert session.events == []
-    return joined
+    return result
 
 
 def main() -> None:
@@ -141,22 +151,11 @@ def main() -> None:
 
     with tempfile.TemporaryDirectory() as tmp:
         before = sorted(Path(tmp).rglob("*"))
-        session = router.open(source, SAMPLE)
-        assert session.adapter == "text"
 
-        search = project(session, "text.search")
-        publishing = project(session, "publishing.structure")
-        design = project(session, "design.structure")
-
-        assert len(search["chunks"]) == 4
-        assert search["chunks"][0]["provenance"]["canonicalId"] == source.canonical_id
-        assert publishing["sections"][1]["title"] == "Job and His Friends"
-        assert design["signals"]["headingCount"] == 1
-        assert design["authority"]["layoutDecision"] is False
-
-        session.close()
-        assert session.closed is True
-        assert session.events == []
+        markdown = _exercise(router, source, SAMPLE, "text")
+        assert "heading" in markdown["kinds"]
+        assert "Job and His Friends" in markdown["joined"]
+        assert markdown["design"]["signals"]["headingCount"] == 1
 
         docx_source = SourceDescriptor(
             mime="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
@@ -164,9 +163,9 @@ def main() -> None:
             canonical_id="work:test-job-friends-docx",
             source_pointer="fixture://job-friends.docx",
         )
-        docx_joined = _assert_three_projections(router, docx_source, _docx_fixture(), "markitdown")
-        assert "Job and His Friends" in docx_joined
-        assert "Bildad judges from visible outcome." in docx_joined
+        docx = _exercise(router, docx_source, _docx_fixture(), "markitdown")
+        assert "Job and His Friends" in docx["joined"]
+        assert "Bildad judges from visible outcome." in docx["joined"]
 
         xlsx_source = SourceDescriptor(
             mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
@@ -174,10 +173,24 @@ def main() -> None:
             canonical_id="work:test-job-friends-xlsx",
             source_pointer="fixture://job-friends.xlsx",
         )
-        xlsx_joined = _assert_three_projections(router, xlsx_source, _xlsx_fixture(), "markitdown")
-        assert "Eliphaz" in xlsx_joined and "received wisdom" in xlsx_joined
-        assert "Bildad" in xlsx_joined and "visible outcome" in xlsx_joined
-        assert "Zophar" in xlsx_joined and "assumed certainty" in xlsx_joined
+        xlsx = _exercise(router, xlsx_source, _xlsx_fixture(), "markitdown")
+        assert "table.start" in xlsx["kinds"]
+        assert xlsx["kinds"].count("table.row") == 4
+        assert "table.end" in xlsx["kinds"]
+        table_chunks = [chunk for chunk in xlsx["search"]["chunks"] if chunk["kind"] == "table.row"]
+        assert table_chunks[0]["cells"] == ["Friend", "Lens"]
+        assert table_chunks[0]["header"] is True
+        assert table_chunks[2]["cells"] == ["Bildad", "visible outcome"]
+        assert xlsx["design"]["signals"]["hasStructuredTable"] is True
+        assert xlsx["design"]["signals"]["tableRowCount"] == 4
+        table_blocks = [
+            block
+            for section in xlsx["publishing"]["sections"]
+            for block in section["blocks"]
+            if block["type"] == "table"
+        ]
+        assert len(table_blocks) == 1
+        assert table_blocks[0]["rows"][3]["cells"] == ["Zophar", "assumed certainty"]
 
         after = sorted(Path(tmp).rglob("*"))
         assert before == after, "Reflex v0 must not persist a second substrate"
@@ -187,7 +200,7 @@ def main() -> None:
     assert any(event.kind == "unsupported" for event in binary.iter_events())
     binary.close()
 
-    print("PASS: Doré Reflex v0 Markdown + DOCX + XLSX one-source/multi-projection acceptance")
+    print("PASS: Doré Reflex v0 unified semantic contract across Markdown + DOCX + XLSX")
 
 
 if __name__ == "__main__":
