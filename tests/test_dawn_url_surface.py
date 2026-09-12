@@ -8,6 +8,7 @@ from dore_core.capabilities.url_surface import UrlSurfaceResolver
 
 ROOT = Path(__file__).resolve().parents[1]
 CANDIDATES = ROOT / 'static/dawn-library/biblical-world/discovery-candidates.json'
+ACCEPTANCE = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 
 
 class DawnUrlSurfaceTests(unittest.TestCase):
@@ -26,14 +27,44 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertEqual(payload.ownership, 'external')
         self.assertEqual(payload.source_url, 'https://www.gutenberg.org/ebooks/20')
 
-    def test_mount_registry_does_not_confuse_routes_with_installed_equipment(self):
+    def test_mount_registry_does_not_confuse_evidence_with_execution(self):
         registry = SurfaceMountRegistry()
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
-        for adapter in ('iiif-visual-surface', 'pdfjs', 'book-reader', 'zotero-translate', 'oembed-opengraph', 'readability'):
+
+        for adapter in ('iiif-visual-surface', 'pdfjs', 'zotero-translate', 'readability', 'video-surface', 'cover-resolve'):
             self.assertFalse(registry.executable(adapter))
-            self.assertEqual(registry.state(adapter), 'dormant')
+            self.assertEqual(registry.state(adapter), 'fixture-found')
+            self.assertIsNotNone(registry.get(adapter).evidence)
+
+        for adapter in ('book-reader', 'oembed-opengraph'):
+            self.assertFalse(registry.executable(adapter))
+            self.assertEqual(registry.state(adapter), 'reserved')
+
         self.assertEqual(registry.state('unknown-adapter'), 'unavailable')
+
+    def test_real_acceptance_corpus_has_required_domains_and_no_wikisource(self):
+        data = json.loads(ACCEPTANCE.read_text())
+        self.assertEqual(data['schema'], 'dawn.capability.acceptance.corpus.v1')
+        fixtures = data['fixtures']
+        ids = [item['id'] for item in fixtures]
+        self.assertEqual(len(ids), len(set(ids)))
+        self.assertTrue(any(item['language'].startswith('zh') for item in fixtures))
+        required = {
+            'bibliographic-page',
+            'iiif-visual-surface',
+            'pdfjs',
+            'zotero-translate',
+            'readability',
+            'video-surface',
+            'cover-resolve',
+        }
+        self.assertTrue(required.issubset({item['capability'] for item in fixtures}))
+        for item in fixtures:
+            url = item['url'].lower()
+            self.assertTrue(url.startswith('https://'))
+            self.assertNotIn('wikisource', url)
+            self.assertIn(item['stage'], {'reserved', 'fixture-found', 'integration-proven', 'mounted'})
 
     def test_surface_plan_exposes_execution_truth(self):
         resolver = UrlSurfaceResolver()
@@ -44,7 +75,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
 
         pdf = resolver.plan('https://example.org/book.pdf')
         self.assertFalse(pdf.executable)
-        self.assertEqual(pdf.mount_state, 'dormant')
+        self.assertEqual(pdf.mount_state, 'fixture-found')
         self.assertEqual(pdf.adapter, 'pdfjs')
 
     def test_real_discovery_corpus_routes_without_mutation(self):
