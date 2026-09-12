@@ -19,7 +19,7 @@ jobs:
         run: |
           for i in $(seq 1 20); do
             HTML=$(curl -fsS http://127.0.0.1:4173/cinema/ 2>/dev/null || true)
-            if printf '%s' "$HTML" | grep -q 'Holy Light Cinema'; then
+            if printf '%s' "$HTML" | grep -q 'HOLY LIGHT CINEMA'; then
               printf '%s' "$HTML" | grep -q 'cinema.css'
               printf '%s' "$HTML" | grep -q 'cinema.js'
               curl -fsS http://127.0.0.1:4173/cinema/data/video-resource.v0.json | grep -q 'holy-light.video-resource.v0'
@@ -28,4 +28,5 @@ jobs:
             fi
             sleep 1
           done
+          cat /tmp/cinema-preview.log || true
           exit 1
