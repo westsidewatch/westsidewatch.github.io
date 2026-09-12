@@ -5,6 +5,7 @@ on:
     paths:
       - 'dore_core/capabilities/url_surface.py'
       - 'dore_core/capabilities/surface_mounts.py'
+      - 'data/dawn-capability-acceptance-corpus.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
       - 'scripts/run_dawn_url_surface_live_probe.py'
       - 'scripts/build_dawn_surface_index.py'
@@ -56,7 +57,7 @@ jobs:
           assert all(i.get('source_url') for i in d['items'])
           print({'count': d['count'], 'schema': d['schema']})
           PY
-      - name: Probe 900+ real external pointers
+      - name: Probe 900+ real external pointers and capability fixtures
         run: python scripts/run_dawn_url_surface_live_probe.py
       - name: Preserve benchmark artifacts and generated surface index
         uses: actions/upload-artifact@v4
