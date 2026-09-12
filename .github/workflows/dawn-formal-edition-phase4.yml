@@ -27,7 +27,9 @@ jobs:
         with:
           node-version: '22'
       - name: Full canonical runtime audit
-        run: node scripts/dawn-formal-edition-phase4.mjs
+        run: |
+          set -o pipefail
+          node scripts/dawn-formal-edition-phase4.mjs 2>&1 | tee /tmp/dawn-phase4-runtime.log
       - name: Start local formal-edition server
         run: |
           python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/dawn-phase4-http.log 2>&1 &
@@ -57,6 +59,17 @@ jobs:
           grep -q 'canonical Works' /tmp/dawn-phase4-ui.html
           grep -q 'data-motion="flow"' /tmp/dawn-phase4-ui.html
           test "$(grep -o 'class="work-token"' /tmp/dawn-phase4-ui.html | wc -l)" -le 72
+      - name: Preserve Phase 4 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-formal-edition-phase4-diagnostics
+          path: |
+            /tmp/dawn-phase4-runtime.log
+            /tmp/dawn-phase4-http.log
+            /tmp/dawn-phase4-acceptance.html
+            /tmp/dawn-phase4-ui.html
+          if-no-files-found: ignore
       - name: Stop local server
         if: always()
         run: |
