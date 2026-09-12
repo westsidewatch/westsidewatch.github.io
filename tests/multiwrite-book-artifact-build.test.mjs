@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+globalThis.window={dispatchEvent(){}};
+globalThis.CustomEvent=class{constructor(type,init){this.type=type;this.detail=init?.detail}};
+const {buildPublicationArtifacts}=await import('../static/multiwrite/book-artifact-build.mjs');
+const bookModel={id:'sample',workId:'sample',editionId:'',publicationMetadata:{title:'Sample',language:['en']},sections:[{id:'c1',title:'One',text:'Body'}],design:{},artifacts:{}};
+const bookBuild={qaResult:{}};
+const result=buildPublicationArtifacts({bookModel,bookBuild});
+assert.equal(result.qa.status,'pass');
+assert.ok(result.web.content.includes('Sample'));
+assert.ok(bookBuild.epubArtifactId);
+assert.ok(bookBuild.pdfArtifactId);
+console.log('artifact build PASS');
