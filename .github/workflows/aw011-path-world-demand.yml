@@ -1,0 +1,38 @@
+name: AW-011 Path World Demand
+
+on:
+  push:
+    branches: [feat/aw-011-camera-corridor]
+    paths:
+      - "tools/aw_corridor/experiment_path_world_demand.py"
+      - "tools/aw_corridor/experiment_predictive_local_ldi.py"
+      - "tools/aw_corridor/experiment_depth_bakeoff.py"
+      - "tools/aw_corridor/experiment_depth_traversal.py"
+      - "tools/aw_corridor/experiment_world_cache.py"
+      - "experiments/aw-011/camera-spine.json"
+      - ".github/workflows/aw011-path-world-demand.yml"
+  workflow_dispatch:
+
+permissions: {contents: read}
+
+jobs:
+  path-world-demand:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: |
+          mkdir -p experiments/aw-011/assets
+          curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
+      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
+      - run: |
+          mkdir -p build/path-world-demand
+          python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/path-world-demand/depth.png --report build/path-world-demand/depth-report.json
+      - run: python tools/aw_corridor/experiment_path_world_demand.py --source experiments/aw-011/assets/dore-011.jpg --depth build/path-world-demand/depth.png --spine experiments/aw-011/camera-spine.json --output build/path-world-demand/traversal.mp4 --report build/path-world-demand/traversal-report.json --demand-map build/path-world-demand/world-demand-map.png --width 960 --fps 24 --segment-frames 24 --local-layers 3
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: aw-011-path-world-demand
+          path: build/path-world-demand/
+          if-no-files-found: warn
