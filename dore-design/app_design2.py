@@ -2,6 +2,7 @@
 """DORÉ DESIGN 2.0 production resident entrypoint."""
 import os
 from http.server import ThreadingHTTPServer
+from urllib.parse import urlparse
 import app_visual_v2 as current
 import design_motion_registry
 
@@ -41,4 +42,22 @@ design2_phase4_http.install(current.H,current.visual.base,current.ROOT)
 design2_phase5_http.install(current.H,current.visual.base,current.ROOT)
 design2_phase6_http.install(current.H,current.visual.base)
 design2_phase7_http.install(current.H,current.visual.base)
+
+_BaseHandler = current.H
+class _RuntimeIdentityHandler(_BaseHandler):
+    def do_GET(self):
+        if urlparse(self.path).path == '/api/runtime/identity':
+            identity = dict(current.DORE_RUNTIME_IDENTITY)
+            workspace = current.visual.base.workspace()
+            identity['workspace_id'] = workspace.get('id')
+            identity['workspace_revision'] = workspace.get('revision')
+            identity['ok'] = (
+                identity.get('service') == 'dore-design'
+                and identity.get('version') == '2.0'
+                and identity.get('entrypoint') == 'dore-design/app_design2.py'
+            )
+            return self.out(200 if identity['ok'] else 503, identity)
+        return super().do_GET()
+current.H = _RuntimeIdentityHandler
+
 if __name__=='__main__':ThreadingHTTPServer(('127.0.0.1',current.DORE_RUNTIME_IDENTITY['port']),current.H).serve_forever()
