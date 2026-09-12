@@ -1,6 +1,6 @@
 # DORÉ MEMORY SWEEP 01 — CHECKPOINT LINEAGE RECONCILIATION LEDGER
 
-Date: 2026-09-11
+Date: 2026-09-12
 Status: ACTIVE / CANONICAL SUPPORTING LEDGER
 Parent: `DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md`
 Canonical register: `DORÉ-MASTER-WORK-REGISTER.md`
@@ -23,12 +23,18 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 75 — Dawn Cuts 04–05; live-content editorial context supersedes the hand-authored query manifest as governing runtime input; multi-surface orchestration is implemented but production readback remains unverified.
 - Checkpoint 76 — top-level architecture metadata reconciliation; old immediate-order sections remain superseded as queue authority, and the R2 architecture file has durable filename/title version-label drift that does not invalidate its substantive architecture.
 - Checkpoint 77 — Living Retrieval lexical/BM25-first planner plus provider-neutral result contract is `VERIFIED_COMPLETE / COMPONENT`; overall Search remains `MAINTENANCE + DISCOVERY` and cognition/product completion remains evidence-gated.
+- Checkpoint 78 — Dawn visual/editorial follow-on reconciliation; bounded implemented capability is preserved without converting component proof into production acceptance.
+- Checkpoint 79 — Dawn Phase 2 Cuts 08–11; shared multi-product Visual Surface foundation, context-aware surface ranking/orchestration and bounded Storybook sequence/critique pass are real; production visual acceptance and purpose-built Doré asset proof remain open.
+- Checkpoint 80 — sensory-memory / Product→Brain closed-loop reconciliation; capture/dedupe/claim/reconciliation are real, but the Mary-specific consolidation fixture does not prove a generic autonomous research→brain-node loop. Generic closed-loop learning remains `UNKNOWN_NEEDS_EVIDENCE`.
+- Checkpoint 81 — complete `dore-core/reflex/` family reconciliation; Reflex Consolidation 1.0 is a defensible `VERIFIED_COMPLETE / COMPONENT` milestone, while the ongoing reflex layer remains `CORE/CONTINUOUS` and exact word-level translation alignment remains evidence-gated.
+- Checkpoint 82 — durable A2A execution lifecycle; lease/state/artifact/verification gating is a `VERIFIED_COMPLETE / COMPONENT` milestone, but real authorized production execution and mutation-origin authentication remain open under the broader `NERVOUS-SYSTEM` / `ME-016` boundary.
+- Checkpoint 83 — Dawn pointer-to-URL-surface + mount-truth reconciliation; URL-surface routing and `SurfaceMountRegistry` are `VERIFIED_COMPLETE / COMPONENT`, while heterogeneous multi-adapter reading remains `ACTIVE_PARALLEL / UNKNOWN_NEEDS_EVIDENCE`; routed capability is explicitly not equivalent to mounted/executable capability.
 
 ## Canonical reconciliation finding
 
-The `MEM-SWEEP-01` row in `DORÉ-MASTER-WORK-REGISTER.md` still summarizes the frontier through Checkpoint 70. That row is therefore stale as a **progress summary**, even though its `ACTIVE_PARALLEL` status and governing next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 83. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 83 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing project evidence and not a new product/runtime blocker. The canonical register should summarize Checkpoints 71–77 so the operational front door points to the actual durable frontier.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 83 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -41,11 +47,20 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - Sweep 01 overall: `ACTIVE_PARALLEL`.
 - Checkpoint 71 Actions liveness: maintenance evidence only.
 - Westside Context adapter: `COMPLETED_REVISIT_CANDIDATE / MAINTENANCE`; duplicate 2026-09-11 Context projection ledger is superseded/correction provenance only.
-- Sensory heartbeat path: `RUNTIME ACTIVE` liveness/regression evidence only.
+- Sensory heartbeat path: `RUNTIME ACTIVE` liveness/regression evidence only; generic Product→Brain closed-loop autonomy remains `UNKNOWN_NEEDS_EVIDENCE`.
 - Dawn visual editorial/runtime orchestration: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`.
 - R2 architecture: retained architecture guidance with version-metadata drift; no rename during Sweep.
 - Living Retrieval lexical-first + normalized result contract: `VERIFIED_COMPLETE / COMPONENT` retained as Search infrastructure.
 - Overall Search: unchanged `MAINTENANCE + DISCOVERY`.
+- Reflex Consolidation 1.0: `VERIFIED_COMPLETE / COMPONENT`; reflex learning layer remains `CORE/CONTINUOUS`.
+- A2A durable execution lifecycle: `VERIFIED_COMPLETE / COMPONENT`; authorized production execution remains unproved.
+- Dawn URL-surface resolver + mount-truth registry: `VERIFIED_COMPLETE / COMPONENT`; dormant adapters are not executable capability evidence.
+
+## Latest liveness evidence after Checkpoint 83
+
+Commit `f5b6e35f0840b72c8712d83e6bd94645c47e0201` refreshed `dore-core/memory/actions-probe-diagnostic.json` with `ok: true`, run `34686583765`, source SHA `3179cb056f7bcf4cd7ffb04a30bfebc4ee8ebbcd`, at `2026-09-12T09:43:27Z`.
+
+This is repeated Actions liveness evidence only. It does not create a new project completion token, does not alter the Checkpoint 71 classification, and does not warrant a new operational workstream.
 
 ## P01 isolation
 
