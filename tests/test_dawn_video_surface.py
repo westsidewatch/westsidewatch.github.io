@@ -38,13 +38,13 @@ class DawnVideoSurfaceTests(unittest.TestCase):
         self.assertIn('https://www.youtube-nocookie.com/embed/${id}', js)
         self.assertIn("root.dataset.viewerState = 'ready'", js)
 
-    def test_registry_records_integration_without_public_mount(self):
+    def test_registry_records_video_surface_as_mounted(self):
         registry = SurfaceMountRegistry()
         mount = registry.get('video-surface')
-        self.assertEqual(mount.state, 'integration-proven')
+        self.assertEqual(mount.state, 'mounted')
         self.assertEqual(mount.implementation, 'static/js/dawn-video-surface.js')
         self.assertIn('jesus-film-official-youtube', mount.evidence)
-        self.assertFalse(registry.executable('video-surface'))
+        self.assertTrue(registry.executable('video-surface'))
 
 
 if __name__ == '__main__':
