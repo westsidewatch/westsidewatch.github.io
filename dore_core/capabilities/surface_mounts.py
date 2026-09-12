@@ -33,7 +33,7 @@ class SurfaceMountRegistry:
         "book-reader": CapabilityMount("book-reader", "integration-proven", "on-demand", "internet-archive-scan", "static/js/dawn-bookreader-surface.js", "data/dawn-capability-acceptance-corpus.json#internetarchive-josephus-1900-bookreader"),
         "zotero-translate": CapabilityMount("zotero-translate", "integration-proven", "on-demand", "bibliographic-reconciliation", "dore_core/capabilities/zotero_reconciliation.py", "reports/DAWN-ZOTERO-TRANSLATION.json"),
         "oembed-opengraph": CapabilityMount("oembed-opengraph", "reserved", "on-demand", "web-preview"),
-        "readability": CapabilityMount("readability", "fixture-found", "fallback-only", "article-reader", None, "data/dawn-capability-acceptance-corpus.json#bibleproject-chinese-article-source"),
+        "readability": CapabilityMount("readability", "integration-proven", "fallback-only", "article-reader", "static/js/dawn-readability-surface.js", "reports/DAWN-READABILITY.json"),
         "video-surface": CapabilityMount("video-surface", "integration-proven", "on-demand", "bible-film-video", "static/js/dawn-video-surface.js", "data/dawn-capability-acceptance-corpus.json#jesus-film-official-youtube"),
         "cover-resolve": CapabilityMount("cover-resolve", "integration-proven", "on-demand", "book-cover", "dore_core/capabilities/cover_resolver.py", "data/dawn-capability-acceptance-corpus.json#openlibrary-josephus-1900-cover"),
     }
