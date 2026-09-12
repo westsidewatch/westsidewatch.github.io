@@ -88,6 +88,19 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "load": "deferred",
         "authority": False,
     },
+    "reflex.project": {
+        "id": "reflex.project",
+        "type": "translation",
+        "service": "reflex",
+        "status": "existing",
+        "execution": "core-adapter",
+        "provider": "dore-core",
+        "load": "on-demand",
+        "result": "reflex-projection",
+        "authority": False,
+        "identity_source": False,
+        "persistence": "request-scoped-none",
+    },
     "publishing.book-intelligence": {
         "id": "publishing.book-intelligence",
         "type": "reasoning",
@@ -189,6 +202,24 @@ def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
         return content
 
     return BOOK_INTELLIGENCE.execute(args, infer)
+
+
+def _reflex_project(args: dict[str, Any]) -> dict[str, Any]:
+    """Load Reflex only when requested, keeping unrelated Core paths lightweight."""
+    import sys
+
+    local_path = str(HERE)
+    inserted = local_path not in sys.path
+    if inserted:
+        sys.path.insert(0, local_path)
+    try:
+        return _load_sibling("reflex_capability").execute(args)
+    finally:
+        if inserted:
+            try:
+                sys.path.remove(local_path)
+            except ValueError:
+                pass
 
 
 def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
@@ -319,7 +350,9 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
     try:
         if capability == "image.generate":
             return _image_generate(args, caller_product)
-        if capability == "publishing.book-intelligence":
+        if capability == "reflex.project":
+            result = _reflex_project(args)
+        elif capability == "publishing.book-intelligence":
             result = _book_intelligence(args)
         elif capability == "bible.query-plan":
             result = _bible_query_plan(args)

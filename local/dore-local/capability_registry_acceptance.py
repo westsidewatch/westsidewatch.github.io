@@ -30,4 +30,10 @@ assert heritage['entrypoint']=='local/dore-local/heritage_image_search.py'
 assert heritage['production_approval'] is False
 assert heritage['cost']=='free-only' and heritage['paid_fallback'] is False
 assert heritage['credentials']=='none' and heritage['daily_request_limit']>0
+reflex=get('reflex.project')
+assert reflex and reflex['status']=='existing' and reflex['execution']=='core-adapter'
+assert reflex['entrypoint']=='local/dore-local/reflex_capability.py'
+assert reflex['authority'] is False and reflex['identity_source'] is False
+assert reflex['persistence']=='request-scoped-none' and reflex['network'] is False
+assert set(reflex['produces'])=={'SearchProjection','PublishingProjection','DesignProjection'}
 print('DORE_CAPABILITY_REGISTRY_ACCEPTANCE=PASS')
