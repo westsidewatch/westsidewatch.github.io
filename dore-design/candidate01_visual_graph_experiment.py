@@ -59,7 +59,7 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 </script>'''
 
 PAGE2_ASSEMBLY_FIX = r'''<style id="candidate01-page2-assembly-lock">
-/* Page 2: four source panes close their real grid gutters into one exact master rectangle. */
+/* Page 2: preserve the accepted left geometry; lock only the right preview to its real four-card source rectangle. */
 html[data-candidate01-page="2"] .product-preview{backface-visibility:hidden;transform-origin:50% 50%;}
 html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50%;}
 </style>
@@ -70,44 +70,39 @@ html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50
   if(!baseSync)return;
   const lock=()=>{
     baseSync();
-    const root=document.querySelector('.products');
     const layer=document.querySelector('.products__preview');
     const cards=[...document.querySelectorAll('.products__grid .product')];
-    const left=document.querySelector('.product-preview.--left');
     const right=document.querySelector('.product-preview.--right');
-    if(!root||!layer||cards.length<8||!left||!right)return;
-    const rr=root.getBoundingClientRect();
-    const cr=cards.map(el=>el.getBoundingClientRect());
-    const colGap=Math.max(0,cr[1].left-cr[0].right);
-    const rowGap=Math.max(0,cr[4].top-cr[0].bottom);
-    const minX=Math.min(...cr.map(r=>r.left));
-    const maxX=Math.max(...cr.map(r=>r.right));
-    const minY=Math.min(...cr.map(r=>r.top));
-    const maxY=Math.max(...cr.map(r=>r.bottom));
-    const masterLeft=minX-rr.left+colGap/2;
-    const masterTop=minY-rr.top+rowGap/2;
-    const masterW=maxX-minX-colGap;
-    const masterH=maxY-minY-rowGap;
-    const halfW=masterW/2;
+    if(!layer||cards.length<8||!right)return;
+    const lr=layer.getBoundingClientRect();
+    const rc=[cards[2],cards[3],cards[6],cards[7]].map(el=>el.getBoundingClientRect());
+    const minX=Math.min(...rc.map(r=>r.left));
+    const maxX=Math.max(...rc.map(r=>r.right));
+    const minY=Math.min(...rc.map(r=>r.top));
+    const maxY=Math.max(...rc.map(r=>r.bottom));
+    const x=minX-lr.left;
+    const y=minY-lr.top;
+    const w=maxX-minX;
+    const h=maxY-minY;
 
-    layer.style.inset='auto';
-    layer.style.left=`${masterLeft}px`;
-    layer.style.top=`${masterTop}px`;
-    layer.style.width=`${masterW}px`;
-    layer.style.height=`${masterH}px`;
-    layer.style.minHeight='0';
-    [left,right].forEach(p=>{
-      p.style.width=`${halfW}px`;
-      p.style.height=`${masterH}px`;
-      p.style.top='0px';
-      p.style.bottom='auto';
-      p.style.transform='none';
+    right.style.left=`${x}px`;
+    right.style.right='auto';
+    right.style.top=`${y}px`;
+    right.style.bottom='auto';
+    right.style.width=`${w}px`;
+    right.style.height=`${h}px`;
+    right.style.transform='none';
+
+    const images=right.querySelector('.product-preview__images');
+    const mask=right.querySelector('.masked-preview');
+    [images,mask].filter(Boolean).forEach(el=>{
+      el.style.inset='0';
+      el.style.width='100%';
+      el.style.height='100%';
     });
-    left.style.left='0px'; left.style.right='auto';
-    right.style.left=`${halfW}px`; right.style.right='auto';
 
     document.documentElement.dataset.candidate01AssemblyLock=
-      `master-${Math.round(masterW)}x${Math.round(masterH)}-gap-${Math.round(colGap)}x${Math.round(rowGap)}`;
+      `right-${Math.round(x)}-${Math.round(y)}-${Math.round(w)}x${Math.round(h)}`;
   };
   window.__candidate01SyncGeometry=lock;
   requestAnimationFrame(()=>requestAnimationFrame(lock));
