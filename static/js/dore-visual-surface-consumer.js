@@ -6,6 +6,7 @@
     source: 'dore.visual-surface-orchestrator.v1',
     graphOwns: 'identity+relationships',
     surfaceOwns: 'presentation+motion',
+    products: 'shared',
   });
 
   const roleClass = role => role ? `dore-surface--role-${role}` : '';
@@ -23,6 +24,7 @@
     const motion = String(assignment.motion || element.dataset.editorialMotion || '').trim();
     const surface = String(assignment.surface || element.dataset.editorialSurface || '').trim();
     const preset = String(assignment.preset || element.dataset.surfacePreset || 'card-8x5').trim();
+    const product = String(assignment.product || element.dataset.doreSurfaceProduct || '').trim();
     const weight = Number(assignment.weight || element.dataset.editorialWeight || 1) || 1;
 
     clearClasses(element);
@@ -30,13 +32,14 @@
     if (motion) element.classList.add(motionClass(motion));
     element.dataset.doreSurfaceConsumer = CONTRACT.schema;
     element.dataset.doreSurfaceSource = CONTRACT.source;
+    if (product) element.dataset.doreSurfaceProduct = product;
     if (role) element.dataset.editorialRole = role;
     element.dataset.editorialWeight = String(weight);
     if (motion) element.dataset.editorialMotion = motion;
     if (surface) element.dataset.editorialSurface = surface;
     if (preset) element.dataset.surfacePreset = preset;
     element.style.setProperty('--dore-surface-weight', String(weight));
-    return { role, weight, motion, surface, preset };
+    return { product, role, weight, motion, surface, preset };
   }
 
   function consume(root = document) {
@@ -48,6 +51,7 @@
     const art = root.querySelector('#chapter-cover-art');
     if (!now || !art) return false;
     const sync = () => apply(now, {
+      product: 'one',
       role: 'primary',
       weight: 2,
       motion: art.hidden ? 'near-still' : 'focus',
