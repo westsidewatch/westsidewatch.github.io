@@ -8,6 +8,8 @@ on:
       - "tools/aw_corridor/experiment_joint_hidden_completion_v5.py"
       - "tools/aw_corridor/experiment_joint_hidden_completion_v6.py"
       - "tools/aw_corridor/experiment_joint_hidden_completion_v7.py"
+      - "tools/aw_corridor/experiment_learned_hidden_completion_v8.py"
+      - "tools/aw_corridor/hidden_surface_provider.py"
   workflow_dispatch:
 
 concurrency:
@@ -23,15 +25,33 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: {python-version: "3.12"}
-      - run: |
-          mkdir -p experiments/aw-011/assets
+      - name: Fetch Doré source and isolated learned provider assets
+        run: |
+          mkdir -p experiments/aw-011/assets build/topology-probe build/aw011-provider
           curl --fail --location --retry 3 "https://commons.wikimedia.org/wiki/Special:Redirect/file/011.Abraham_Goes_to_the_Land_of_Canaan.jpg" -o experiments/aw-011/assets/dore-011.jpg
-      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
-      - run: |
-          mkdir -p build/topology-probe
-          python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
-      - name: Run extended-canvas joint completion probe
-        run: python tools/aw_corridor/experiment_joint_hidden_completion_v7.py --source experiments/aw-011/assets/dore-011.jpg --depth build/topology-probe/depth.png --spine experiments/aw-011/camera-spine.json --output build/topology-probe/traversal.mp4 --report build/topology-probe/traversal-report.json --support-map build/topology-probe/world-support-map.png --edge-map build/topology-probe/occlusion-edge-map.png --hidden-depth-map build/topology-probe/hidden-depth-map.png --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055
+          curl --fail --location --retry 3 "https://raw.githubusercontent.com/vt-vl-lab/3d-photo-inpainting/master/networks.py" -o build/aw011-provider/networks.py
+          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/edge-model.pth" -o build/aw011-provider/edge-model.pth
+          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/depth-model.pth" -o build/aw011-provider/depth-model.pth
+          curl --fail --location --retry 3 "https://filebox.ece.vt.edu/~jbhuang/project/3DPhoto/model/color-model.pth" -o build/aw011-provider/color-model.pth
+      - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision matplotlib "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
+      - run: python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
+      - name: Run learned edge-depth-color hidden completion probe
+        run: >-
+          python tools/aw_corridor/experiment_learned_hidden_completion_v8.py
+          --source experiments/aw-011/assets/dore-011.jpg
+          --depth build/topology-probe/depth.png
+          --spine experiments/aw-011/camera-spine.json
+          --output build/topology-probe/traversal.mp4
+          --report build/topology-probe/traversal-report.json
+          --support-map build/topology-probe/world-support-map.png
+          --edge-map build/topology-probe/learned-edge-map.png
+          --hidden-depth-map build/topology-probe/hidden-depth-map.png
+          --provider three-stage
+          --networks build/aw011-provider/networks.py
+          --edge-checkpoint build/aw011-provider/edge-model.pth
+          --depth-checkpoint build/aw011-provider/depth-model.pth
+          --color-checkpoint build/aw011-provider/color-model.pth
+          --device cpu --width 480 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055
       - uses: actions/upload-artifact@v4
         if: always()
         with:
