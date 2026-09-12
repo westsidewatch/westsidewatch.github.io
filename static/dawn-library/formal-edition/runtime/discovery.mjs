@@ -1,4 +1,4 @@
-const DEFAULT_LIMIT = 80;
+const DEFAULT_LIMIT = 72;
 const DISCOVERY_FACETS = new Set(['relation', 'author', 'chronology', 'readingDepth', 'tags']);
 
 export function normalizeText(value = '') {
@@ -29,19 +29,39 @@ function recordSearchText(record) {
   return [record.workId, record.title, record.author, ...(record.relations || []), ...(record.tags || [])].filter(Boolean).join(' ');
 }
 
+function canonicalWorks(canonical) {
+  if (!canonical) return [];
+  const candidates = [canonical.works, canonical.items, canonical.canonicalWorks, canonical.catalog, canonical.index];
+  for (const candidate of candidates) {
+    if (Array.isArray(candidate)) return candidate;
+    if (candidate && typeof candidate === 'object') {
+      return Object.entries(candidate).map(([key, value]) => ({ ...(value || {}), workId: value?.workId || value?.id || key }));
+    }
+  }
+  if (Array.isArray(canonical)) return canonical;
+  if (typeof canonical === 'object' && Object.keys(canonical).some(key => key.startsWith('dawn:'))) {
+    return Object.entries(canonical).map(([key, value]) => ({ ...(value || {}), workId: value?.workId || value?.id || key }));
+  }
+  return [];
+}
+
 export function buildCatalog({ surface, canonical = null }) {
-  const works = canonical?.works || canonical?.items || canonical?.canonicalWorks || [];
-  const byId = new Map(Array.isArray(works) ? works.map(work => [work.workId || work.id, work]) : Object.entries(works));
-  return (surface?.items || []).filter(item => item?.workId?.startsWith('dawn:')).map(item => {
-    const source = byId.get(item.workId) || {};
+  const surfaceById = new Map((surface?.items || []).filter(item => item?.workId?.startsWith('dawn:')).map(item => [item.workId, item]));
+  const canonicalRows = canonicalWorks(canonical).filter(item => (item?.workId || item?.id || '').startsWith('dawn:'));
+  const sourceRows = canonicalRows.length ? canonicalRows : [...surfaceById.values()];
+
+  return sourceRows.map(source => {
+    const workId = source.workId || source.id;
+    const overlay = surfaceById.get(workId) || {};
+    const metadata = source.metadata || {};
     return {
-      workId: item.workId,
-      title: source.title || source.name || '',
-      author: source.author || source.creator || '',
-      relations: [...new Set(item.relations || [])],
-      tags: source.tags || [],
-      chronology: source.chronology || source.year || null,
-      readingDepth: source.readingDepth || null
+      workId,
+      title: source.title || source.name || metadata.title || '',
+      author: source.author || source.creator || metadata.author || metadata.creator || '',
+      relations: [...new Set([...(overlay.relations || []), ...(source.relations || [])])],
+      tags: source.tags || metadata.tags || [],
+      chronology: source.chronology || source.year || metadata.year || null,
+      readingDepth: source.readingDepth || metadata.readingDepth || null
     };
   });
 }
@@ -57,8 +77,8 @@ export function updateDiscoveryContext(context, patch = {}) {
     ...(Object.hasOwn(patch, 'semanticIntent') ? { semanticIntent: patch.semanticIntent } : {}),
     ...(Object.hasOwn(patch, 'ordering') ? { ordering: patch.ordering } : {}),
     ...(Object.hasOwn(patch, 'discoveryDistance') ? { discoveryDistance: patch.discoveryDistance } : {}),
-    facets,
-    cursor: null
+    ...(Object.hasOwn(patch, 'cursor') ? { cursor: patch.cursor } : { cursor: null }),
+    facets
   };
 }
 
@@ -74,19 +94,39 @@ function passesFacets(record, facets = {}) {
   return true;
 }
 
-export function discoverCatalog({ catalog, context, limit = DEFAULT_LIMIT }) {
+function rankedRows({ catalog, context }) {
   const query = context.query || '';
   const threshold = Math.max(0.08, 0.56 - (context.discoveryDistance || 0) * 0.38);
-  let rows = catalog.filter(record => passesFacets(record, context.facets));
-  rows = rows.map(record => ({ ...record, score: fuzzyScore(query, recordSearchText(record)) }))
+  const rows = catalog.filter(record => passesFacets(record, context.facets))
+    .map(record => ({ ...record, score: fuzzyScore(query, recordSearchText(record)) }))
     .filter(record => !query || record.score >= threshold);
 
   const ordering = context.ordering || 'relevance';
   if (ordering === 'title') rows.sort((a, b) => (a.title || a.workId).localeCompare(b.title || b.workId));
   else if (ordering === 'author') rows.sort((a, b) => (a.author || '').localeCompare(b.author || '') || a.workId.localeCompare(b.workId));
   else rows.sort((a, b) => b.score - a.score || a.workId.localeCompare(b.workId));
+  return rows;
+}
 
-  return rows.slice(0, Math.max(1, limit));
+export function discoverCatalog({ catalog, context, limit = DEFAULT_LIMIT }) {
+  return rankedRows({ catalog, context }).slice(0, Math.max(1, limit));
+}
+
+export function discoverCatalogWindow({ catalog, context, windowSize = DEFAULT_LIMIT }) {
+  const rows = rankedRows({ catalog, context });
+  const size = Math.max(1, windowSize);
+  const requestedOffset = Number(context.cursor?.offset || 0);
+  const maxOffset = Math.max(0, Math.floor(Math.max(0, rows.length - 1) / size) * size);
+  const offset = Math.min(Math.max(0, requestedOffset), maxOffset);
+  const items = rows.slice(offset, offset + size);
+  return {
+    total: rows.length,
+    offset,
+    windowSize: size,
+    items,
+    previousCursor: offset > 0 ? { offset: Math.max(0, offset - size) } : null,
+    nextCursor: offset + size < rows.length ? { offset: offset + size } : null
+  };
 }
 
 export function facetOptions(catalog, key = 'relation') {
