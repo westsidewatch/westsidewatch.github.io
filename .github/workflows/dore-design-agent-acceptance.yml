@@ -6,6 +6,8 @@ on:
       - 'dore-design/**'
       - 'local/dore-local/ui_taste_memory.py'
       - 'local/dore-local/ui_preference_field.py'
+      - 'local/dore-local/design_intelligence_a2a_worker.py'
+      - 'local/dore-local/a2a_execution_plane.py'
       - '.github/workflows/dore-design-agent-acceptance.yml'
   workflow_dispatch:
 
@@ -82,7 +84,7 @@ jobs:
           print('DORE_MULTIWRITE_INTEGRATION_PASS')
           PY
       - name: Design 2.0 syntax
-        run: python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py dore-design/design2_phase7_http.py dore-design/design2_final_acceptance.py dore-design/design_intelligence_runtime.py dore-design/design2_phase8_http.py dore-design/design_intelligence_acceptance.py local/dore-local/ui_taste_memory.py local/dore-local/ui_preference_field.py
+        run: python3 -m py_compile dore-design/app_design2.py dore-design/design2_snapshot.py dore-design/design2_renderer.py dore-design/design2_validation.py dore-design/design2_staging.py dore-design/design2_publication.py dore-design/design2_phase4_http.py dore-design/design2_http_acceptance.py dore-design/design2_recommendations.py dore-design/design2_phase5_http.py dore-design/design2_phase5_acceptance.py dore-design/design2_phase6.py dore-design/design2_phase6_http.py dore-design/design2_phase6_acceptance.py dore-design/design2_phase7_http.py dore-design/design2_final_acceptance.py dore-design/design_intelligence_runtime.py dore-design/design2_phase8_http.py dore-design/design_intelligence_acceptance.py dore-design/design_intelligence_a2a.py dore-design/design2_phase9_http.py dore-design/design_intelligence_a2a_acceptance.py local/dore-local/ui_taste_memory.py local/dore-local/ui_preference_field.py local/dore-local/a2a_execution_plane.py local/dore-local/design_intelligence_a2a_worker.py
       - name: Phase 7 production health contract
         shell: bash
         run: |
@@ -126,6 +128,38 @@ jobs:
           routed=json.load(urllib.request.urlopen(req))
           assert routed['decision']=='explore' and routed['variant_generation_required'] is True
           print('DORE_DESIGN_INTELLIGENCE_HTTP_PASS')
+          PY
+      - name: Phase 9 Core A2A design loop
+        shell: bash
+        run: |
+          set -euo pipefail
+          export PYTHONPATH="$PWD/dore-design:$PWD/local/dore-local"
+          python3 dore-design/design_intelligence_a2a_acceptance.py | tee /tmp/dd2-phase9.json
+          grep -q '"ok": true' /tmp/dd2-phase9.json
+          export DORE_LOCAL_HOME="${{ runner.temp }}/dd2-phase9-home"
+          export DORE_UI_TASTE_DB="${{ runner.temp }}/dd2-phase9-http-taste.sqlite3"
+          export DORE_DESIGN_A2A_FIXTURE=1
+          export DORE_DESIGN_DATA="${{ runner.temp }}/dd2-phase9"
+          export DORE_DESIGN_PUBLICATION_REGISTRY="${{ runner.temp }}/dd2-phase9-publication.json"
+          export DORE_DESIGN_RECOMMENDATION_LOG="${{ runner.temp }}/dd2-phase9-recommendations.json"
+          export DORE_DESIGN_PORT=4316
+          python3 dore-design/workspace_cli.py get >/dev/null
+          python3 dore-design/upgrade_living_fortress_v2.py >/dev/null
+          python3 dore-design/app_design2.py >/tmp/dd2-phase9-http.log 2>&1 & pid=$!
+          trap 'kill $pid 2>/dev/null || true' EXIT
+          sleep 1
+          curl -fsS http://127.0.0.1:4316/api/design2/intelligence/a2a-health >/tmp/dd2-phase9-health.json
+          python3 - <<'PY'
+          import json, urllib.request
+          base='http://127.0.0.1:4316'
+          h=json.load(open('/tmp/dd2-phase9-health.json'))
+          assert h['ok'] and h['phase']==9 and h['design_process_has_model_client'] is False
+          payload={'surface_id':'phase9-http','surface_family':'living-water','task_context':'compare hierarchy','primary_axis':'visual-hierarchy','viewport_context':'desktop','content_context':'candidate','constraints':['no production promotion'],'candidates':['seed-A','seed-B']}
+          req=urllib.request.Request(base+'/api/design2/intelligence/explore',data=json.dumps(payload).encode(),headers={'Content-Type':'application/json'},method='POST')
+          out=json.load(urllib.request.urlopen(req))
+          assert out['ok'] and out['a2a_status']=='PASS' and out['winner'] in ('A','B')
+          assert out['production_promoted'] is False and out['inference_boundary']=='core-a2a-only'
+          print('DORE_DESIGN_PHASE9_HTTP_PASS')
           PY
       - name: Phase 4 immutable publication regression
         shell: bash
