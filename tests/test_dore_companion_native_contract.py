@@ -2,6 +2,7 @@ from __future__ import annotations
 import json, unittest
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]; EXT=ROOT/'local'/'dore-companion-extension'; LOCAL=ROOT/'local'/'dore-local'
+# Book Intelligence is an explicitly declared site capability, not an open-ended bridge.
 
 class CompanionNativeContractTest(unittest.TestCase):
  def test_native_manifest_contract_matches_native_host(self):
