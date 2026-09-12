@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministic acceptance for Doré Design intelligence runtime v1."""
+"""Deterministic acceptance for Doré Design intelligence runtime."""
 from __future__ import annotations
 
 import json
@@ -54,7 +54,6 @@ def payload():
 def check():
     results = {}
 
-    # 1. Stable, repeated, context-matched preference must exploit.
     with memory_db() as conn:
         for i in range(4):
             comparison(conn, surface_id=f'candidate-{i}', winner='A')
@@ -63,15 +62,14 @@ def check():
         assert routed['pair_prediction']['prediction'] == 'A', routed
         results['stable_preference_exploits'] = True
 
-    # 2. No precedent must explore, never invent a preference.
     with memory_db() as conn:
         routed = runtime.route_task(payload(), conn=conn)
         assert routed['decision'] == 'explore', routed
         assert routed['preference_pack']['claims'] == [], routed
+        assert routed['preference_pack']['rejection_guardrails'] == [], routed
         assert routed['variant_generation_required'] is True, routed
         results['sparse_evidence_explores'] = True
 
-    # 3. Contradictory evidence must explore rather than average into false certainty.
     with memory_db() as conn:
         comparison(conn, surface_id='a1', winner='A')
         comparison(conn, surface_id='a2', winner='A')
@@ -82,7 +80,6 @@ def check():
         assert routed['preference_pack']['uncertainty_warning'], routed
         results['contradiction_explores'] = True
 
-    # 4. Observed winner writes through to ledger and immediately changes the field.
     with memory_db() as conn:
         comparison(conn, surface_id='seed-1', winner='A', confidence=0.7)
         comparison(conn, surface_id='seed-2', winner='A', confidence=0.7)
@@ -112,7 +109,6 @@ def check():
         assert after['probability_a'] < before['probability_a'], (before, after)
         results['writeback_updates_field_immediately'] = True
 
-    # 5. Context mismatch must not leak local preference into an unrelated family.
     with memory_db() as conn:
         for i in range(4):
             comparison(conn, surface_id=f'local-{i}', winner='A', family='living-water')
@@ -121,9 +117,50 @@ def check():
         routed = runtime.route_task(other, conn=conn)
         assert routed['decision'] == 'explore', routed
         assert routed['preference_pack']['comparison_count'] == 0, routed
+        assert routed['preference_pack']['rejection_guardrails'] == [], routed
         results['context_mismatch_does_not_leak'] = True
 
-    return {'ok': all(results.values()), 'policy': 'design-intelligence-acceptance-v1', 'checks': results}
+    # Rejection memory must become bounded negative precedent for the next generation.
+    with memory_db() as conn:
+        rid = taste.record_rejection(
+            conn,
+            surface_id='living-water-rejected-a',
+            surface_family='living-water',
+            direction='preserve-current-gravity',
+            reason='The rejected direction keeps focal scale too flat.',
+            failure_domain='scale-hierarchy',
+            scope='surface-family',
+            evidence_refs=['browser-raster:A:fixture', 'failure-domain-judge-consensus:2'],
+            confidence=0.88,
+        )
+        taste.record_rejection(
+            conn,
+            surface_id='weak-evidence',
+            surface_family='living-water',
+            direction='weak-direction',
+            reason='Low-confidence evidence must not guide generation.',
+            failure_domain='alignment-drift',
+            scope='surface-family',
+            evidence_refs=['weak:fixture'],
+            confidence=0.40,
+        )
+        routed = runtime.route_task(payload(), conn=conn)
+        guardrails = routed['preference_pack']['rejection_guardrails']
+        assert routed['preference_pack']['policy'] == 'bounded-preference-pack-v2', routed
+        assert routed['preference_pack']['negative_precedent_policy'] == 'bounded-rejection-guardrails-v1', routed
+        assert len(guardrails) == 1, routed
+        assert guardrails[0]['failure_domain'] == 'scale-hierarchy', routed
+        assert guardrails[0]['source_rejection_id'] == rid, routed
+        assert guardrails[0]['confidence'] >= 0.65, routed
+        assert len(guardrails) <= 3, routed
+
+        other = payload()
+        other['surface_family'] = 'dawn-library'
+        isolated = runtime.route_task(other, conn=conn)
+        assert isolated['preference_pack']['rejection_guardrails'] == [], isolated
+        results['rejection_memory_guides_next_generation_context'] = True
+
+    return {'ok': all(results.values()), 'policy': 'design-intelligence-acceptance-v2', 'checks': results}
 
 
 if __name__ == '__main__':

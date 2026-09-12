@@ -1,0 +1,30 @@
+name: Doré Design Repair Loop
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'dore-design/design_repair_loop.py'
+      - 'dore-design/design_repair_loop_acceptance.py'
+      - 'local/dore-local/design_intelligence_a2a_worker.py'
+      - 'local/dore-local/design_intelligence_a2a_worker_v7.py'
+      - '.github/workflows/dore-design-repair-loop.yml'
+  workflow_dispatch:
+
+jobs:
+  repair-loop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax
+        run: |
+          python -m py_compile dore-design/design_repair_loop.py
+          python -m py_compile dore-design/design_repair_loop_acceptance.py
+          python -m py_compile local/dore-local/design_intelligence_a2a_worker_v7.py
+      - name: Minimal repair acceptance
+        env:
+          PYTHONPATH: dore-design:local/dore-local
+        run: python dore-design/design_repair_loop_acceptance.py
