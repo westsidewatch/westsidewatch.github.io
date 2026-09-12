@@ -3,13 +3,13 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Dawn Library — Phase 4 UI System</title>
+  <title>Dawn Library — Formal Edition</title>
   <link rel="stylesheet" href="./phase4.css">
 </head>
 <body>
   <main class="shell">
     <header class="masthead">
-      <div><p class="eyebrow">Dawn Library · Formal Edition · Phase 4</p><h1>同一個 CollectionContext，從找書到比較</h1></div>
+      <div><p class="eyebrow">Dawn Library · Formal Edition</p><h1>同一個 CollectionContext，從找書到個人閱讀路徑</h1></div>
       <nav class="projection-nav" aria-label="Projection"><button data-kind="flow" aria-pressed="true">FLOW</button><button data-kind="shelf">SHELF</button><button data-kind="spectrum">SPECTRUM</button></nav>
     </header>
     <section class="discovery-bar" aria-label="Discovery controls">
@@ -22,10 +22,14 @@
       <span id="result-count"></span><span id="context-focus"></span>
       <span class="window-nav"><button id="window-prev" type="button">←</button><span id="window-range"></span><button id="window-next" type="button">→</button></span>
       <button id="compare-open" type="button" disabled>Compare <b id="compare-count">0</b></button>
+      <button id="save-view" type="button">Save View</button>
+      <button id="trail-toggle" type="button" aria-pressed="false">Start Trail</button>
+      <button id="personal-open" type="button">Personal <b id="personal-count">0</b></button>
     </section>
     <section id="surface" class="surface surface-flow" data-kind="flow" aria-label="Library projection"></section>
-    <aside id="card" class="card" hidden><button id="card-close" class="icon-button" type="button" aria-label="Close card">×</button><p class="eyebrow">Library Card</p><h2 id="card-title"></h2><p id="card-author"></p><code id="card-id"></code><p id="card-relations"></p><div class="card-actions"><button id="card-compare" type="button">Add to compare</button><button id="card-spectrum" type="button">EXPAND → SPECTRUM</button></div></aside>
+    <aside id="card" class="card" hidden><button id="card-close" class="icon-button" type="button" aria-label="Close card">×</button><p class="eyebrow">Library Card</p><h2 id="card-title"></h2><p id="card-author"></p><code id="card-id"></code><p id="card-relations"></p><div class="card-actions"><button id="card-bookmark" type="button">Bookmark</button><button id="card-compare" type="button">Add to compare</button><button id="card-spectrum" type="button">EXPAND → SPECTRUM</button></div></aside>
     <dialog id="compare-dialog"><form method="dialog" class="compare-head"><div><p class="eyebrow">Reading table</p><h2>Compare canonical Works</h2></div><button class="icon-button" aria-label="Close compare">×</button></form><div id="compare-grid" class="compare-grid"></div></dialog>
+    <dialog id="personal-dialog"><form method="dialog" class="compare-head"><div><p class="eyebrow">Personal Dawn · local</p><h2>Bookmark · View · Trail</h2></div><button class="icon-button" aria-label="Close Personal Dawn">×</button></form><div id="personal-grid" class="compare-grid"></div></dialog>
     <details class="context-debug"><summary>CollectionContext</summary><pre id="state-token"></pre></details>
   </main>
   <script type="module" src="./phase4.js"></script>
