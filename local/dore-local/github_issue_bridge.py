@@ -11,6 +11,7 @@ PROTOCOL="dore.a2a/1"; TITLE_PREFIX="[DORÉ A2A]"; CAP_RE=re.compile(r"^[A-Za-z0
 LONG_CAPABILITIES={"design.production.rollout","search.local.repair","wake.runtime.install"}
 CAPABILITY_TIMEOUTS={
 "context.fuzzy-search":45.0,"image.local.repair":3900.0,"theology.live.acceptance":900.0,
+"design.intelligence.live.acceptance":1500.0,
 "theology.training.prepare":2100.0,"theology.training.prefetch_model":3600.0,
 "theology.training.stage32":60.0,"theology.training.micro32":7200.0,"theology.training.eval32":3600.0,
 "theology.training.stage64":60.0,"theology.training.micro64":7200.0,"theology.training.eval64":3600.0,
