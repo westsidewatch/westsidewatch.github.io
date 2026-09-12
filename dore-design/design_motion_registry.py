@@ -156,8 +156,10 @@ def _install_candidate_focus(current, html):
 
 
 def install(current):
-    # Register the new 8:5 Codrops adaptation as a real workspace page.
-    codrops_site_8x5.install_workspace(current.visual.base)
+    # app_visual_v2 already registers the motion prototype workspace page.
+    # Do not call codrops_site_8x5.install_workspace here: that legacy installer
+    # rewrites and saves the page on every workspace read, invalidating revision
+    # tokens between GET /api/workspace and subsequent candidate creation.
 
     page_ids = [
         current.motion_prototypes.PAGE_ID,
