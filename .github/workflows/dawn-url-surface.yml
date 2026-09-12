@@ -5,6 +5,7 @@ on:
     paths:
       - 'dore_core/capabilities/url_surface.py'
       - 'dore_core/capabilities/surface_mounts.py'
+      - 'dore_core/capabilities/cover_resolver.py'
       - 'data/dawn-capability-acceptance-corpus.json'
       - 'data/visual_graph.json'
       - 'scripts/run_dawn_url_surface_benchmark.py'
@@ -14,14 +15,17 @@ on:
       - 'tests/test_dawn_url_surface.py'
       - 'tests/test_dawn_iiif_integration.py'
       - 'tests/test_dawn_pdf_surface.py'
+      - 'tests/test_dawn_cover_resolver.py'
       - 'tests/dawn-web-surface-contract.test.mjs'
       - 'layouts/visual/single.html'
       - 'layouts/website/dawn-library.html'
       - 'static/js/dawn-visual-viewer.js'
       - 'static/js/dawn-pdf-surface.js'
+      - 'static/js/dawn-cover-surface.js'
       - 'static/js/dawn-web-surface.js'
       - 'static/css/dawn-web-surface.css'
       - 'static/dawn-library/surfaces/pdf.html'
+      - 'static/dawn-library/surfaces/cover.html'
       - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - '.github/workflows/dawn-url-surface.yml'
@@ -48,8 +52,10 @@ jobs:
         run: python -m unittest tests.test_dawn_url_surface -v
       - name: Prove real Princeton IIIF resource reaches Dawn VisualSurface contract
         run: python -m unittest tests.test_dawn_iiif_integration -v
-      - name: Verify Dawn PDF.js surface against real CCEL fixture contract
+      - name: Verify Dawn PDF.js surface against real browser-readable Augustine fixture
         run: python -m unittest tests.test_dawn_pdf_surface -v
+      - name: Prove edition-aware Cover Resolver and external cover Surface contract
+        run: python -m unittest tests.test_dawn_cover_resolver -v
       - name: Verify mounted public Web Surface contract
         run: node --test tests/dawn-web-surface-contract.test.mjs
       - name: Emit deterministic routing benchmark
