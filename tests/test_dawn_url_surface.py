@@ -31,15 +31,14 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         registry = SurfaceMountRegistry()
         self.assertTrue(registry.executable('bibliographic-page'))
         self.assertEqual(registry.state('bibliographic-page'), 'mounted')
-        for adapter in ('iiif-visual-surface', 'pdfjs', 'cover-resolve', 'zotero-translate'):
+        for adapter in ('iiif-visual-surface', 'pdfjs', 'cover-resolve', 'zotero-translate', 'book-reader', 'video-surface'):
             self.assertFalse(registry.executable(adapter))
             self.assertEqual(registry.state(adapter), 'integration-proven')
             self.assertIsNotNone(registry.get(adapter).implementation)
             self.assertIsNotNone(registry.get(adapter).evidence)
-        for adapter in ('book-reader', 'readability', 'video-surface'):
-            self.assertFalse(registry.executable(adapter))
-            self.assertEqual(registry.state(adapter), 'fixture-found')
-            self.assertIsNotNone(registry.get(adapter).evidence)
+        self.assertFalse(registry.executable('readability'))
+        self.assertEqual(registry.state('readability'), 'fixture-found')
+        self.assertIsNotNone(registry.get('readability').evidence)
         self.assertFalse(registry.executable('oembed-opengraph'))
         self.assertEqual(registry.state('oembed-opengraph'), 'reserved')
         self.assertEqual(registry.state('unknown-adapter'), 'unavailable')
@@ -73,7 +72,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
         self.assertEqual(pdf.mount_state, 'integration-proven')
         scan = resolver.plan('https://archive.org/details/completeworksofj19002jose')
         self.assertFalse(scan.executable)
-        self.assertEqual(scan.mount_state, 'fixture-found')
+        self.assertEqual(scan.mount_state, 'integration-proven')
         zotero = resolver.plan('https://openlibrary.org/works/OL1W')
         self.assertFalse(zotero.executable)
         self.assertEqual(zotero.mount_state, 'integration-proven')
