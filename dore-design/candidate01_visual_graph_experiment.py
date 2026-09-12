@@ -34,8 +34,8 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
     [left,right].forEach(p=>{
       p.style.width=`${groupW}px`;
       p.style.height=`${groupH}px`;
-      p.style.top='0';
-      p.style.transform='none';
+      p.style.top='50%';
+      p.style.transform='translateY(-50%)';
     });
     left.style.left='0';
     left.style.right='auto';
@@ -59,7 +59,7 @@ GEOMETRY_LOCK = r'''<script id="candidate01-exact-grid-preview-geometry">
 </script>'''
 
 PAGE2_ASSEMBLY_FIX = r'''<style id="candidate01-page2-assembly-lock">
-/* Page 2: right preview uses the exact same geometry contract as the accepted left preview. */
+/* Page 2: preserve exact four-card geometry while keeping the original vertically centered preview axis. */
 html[data-candidate01-page="2"] .product-preview{backface-visibility:hidden;transform-origin:50% 50%;}
 html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50%;}
 </style>
@@ -81,7 +81,7 @@ html[data-candidate01-page="2"] .product-preview__images{transform-origin:50% 50
     });
     const r=right.getBoundingClientRect();
     document.documentElement.dataset.candidate01AssemblyLock=
-      `mirror-left-${Math.round(r.width)}x${Math.round(r.height)}`;
+      `centered-mirror-${Math.round(r.width)}x${Math.round(r.height)}`;
   };
   window.__candidate01SyncGeometry=lock;
   requestAnimationFrame(()=>requestAnimationFrame(lock));
@@ -162,11 +162,11 @@ def _page2_motion_source(doc: str) -> str:
         ),
         (
             "{opacity:0,transform:'translateY(-50%) scale(.94)'},{opacity:1,transform:'translateY(-50%) scale(1)'}",
-            "{opacity:0,transform:'translate3d(0,0,0) scale(.94)',offset:0},{opacity:1,transform:'translate3d(0,1.25px,0) scale(.996)',offset:.82,easing:'cubic-bezier(.16,1,.3,1)'},{opacity:1,transform:'translate3d(0,.30px,0) scale(.9994)',offset:.94,easing:'cubic-bezier(.2,.8,.2,1)'},{opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}",
+            "{opacity:0,transform:'translateY(-50%) scale(.94)',offset:0},{opacity:1,transform:'translateY(-50%) scale(.996)',offset:.82,easing:'cubic-bezier(.16,1,.3,1)'},{opacity:1,transform:'translateY(-50%) scale(.9994)',offset:.94,easing:'cubic-bezier(.2,.8,.2,1)'},{opacity:1,transform:'translateY(-50%) scale(1)',offset:1}",
         ),
         (
             "{opacity:1,transform:'translateY(-50%) scale(1)'},{opacity:0,transform:'translateY(-50%) scale(.94)'}",
-            "{opacity:1,transform:'translate3d(0,0,0) scale(1)'},{opacity:0,transform:'translate3d(0,0,0) scale(.94)'}",
+            "{opacity:1,transform:'translateY(-50%) scale(1)'},{opacity:0,transform:'translateY(-50%) scale(.94)'}",
         ),
         (
             "{opacity:1,transform:'translate(0,0)'},{opacity:0,transform:`translate(${dx}vw,${dy}vw)`}",
