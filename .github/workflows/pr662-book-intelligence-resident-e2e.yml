@@ -32,11 +32,7 @@ jobs:
           sw_vers
 
           echo '--- Firefox candidates ---'
-          for APP in \
-            '/Applications/Firefox.app' \
-            '/Applications/Firefox Developer Edition.app' \
-            '/Applications/Firefox Nightly.app' \
-            "$HOME/Applications/Firefox.app"; do
+          for APP in '/Applications/Firefox.app' '/Applications/Firefox Developer Edition.app' '/Applications/Firefox Nightly.app' "$HOME/Applications/Firefox.app"; do
             test -d "$APP" && echo "FOUND_APP=$APP"
           done
           command -v mdfind >/dev/null && mdfind "kMDItemCFBundleIdentifier == 'org.mozilla.firefox'" | head -n 20 || true
@@ -49,35 +45,23 @@ jobs:
             for P in "$FFROOT"/Profiles/*; do
               test -d "$P" || continue
               echo "PROFILE=$P"
-              test -f "$P/extensions.json" && python3 - "$P/extensions.json" <<'PY'
-import json,sys
-p=sys.argv[1]
-d=json.load(open(p,encoding='utf-8'))
-for a in d.get('addons',[]):
-    if a.get('active'):
-        print('ACTIVE_EXTENSION', a.get('id'), a.get('path'), a.get('type'))
-PY
+              if test -f "$P/extensions.json"; then
+                python3 -c 'import json,sys; d=json.load(open(sys.argv[1],encoding="utf-8")); [print("ACTIVE_EXTENSION",a.get("id"),a.get("path"),a.get("type")) for a in d.get("addons",[]) if a.get("active")]' "$P/extensions.json"
+              fi
             done
           else
             echo 'NO_FIREFOX_PROFILE_ROOT'
           fi
 
           echo '--- Native Messaging manifests ---'
-          for D in \
-            "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts" \
-            '/Library/Application Support/Mozilla/NativeMessagingHosts'; do
+          for D in "$HOME/Library/Application Support/Mozilla/NativeMessagingHosts" '/Library/Application Support/Mozilla/NativeMessagingHosts'; do
             echo "NATIVE_DIR=$D"
             if test -d "$D"; then
               ls -la "$D"
               for M in "$D"/*.json; do
                 test -f "$M" || continue
                 echo "MANIFEST=$M"
-                python3 - "$M" <<'PY'
-import json,sys
-p=sys.argv[1]
-d=json.load(open(p,encoding='utf-8'))
-print({k:d.get(k) for k in ('name','description','path','type','allowed_extensions','allowed_origins')})
-PY
+                python3 -c 'import json,sys; d=json.load(open(sys.argv[1],encoding="utf-8")); print({k:d.get(k) for k in ("name","description","path","type","allowed_extensions","allowed_origins")})' "$M"
               done
             fi
           done
@@ -97,5 +81,4 @@ PY
           echo '--- Checked-out repo candidates ---'
           git ls-files | grep -Ei '(firefox|companion|native.?messag|extension|webext|manifest|book.?intelligence|book.?compile|manuscript|e2e|acceptance)' | head -n 300 || true
           git grep -Il -E 'connectNative|sendNativeMessage|NativeMessaging|allowed_extensions|gemma4:e4b|publishing\.book-intelligence|publishing\.book-compile' -- ':!*.min.js' | head -n 300 || true
-
           echo 'E2E_INVENTORY_COMPLETE'
