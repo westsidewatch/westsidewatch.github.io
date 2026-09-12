@@ -6,10 +6,27 @@ import json
 from typing import Any, Callable
 
 SCHEMA = "dore.book-intelligence-report.v2"
+SECTION_BUDGET = 3200
 
 
 def _text(value: Any) -> str:
     return value.strip() if isinstance(value, str) else ""
+
+
+def _semantic_window(value: Any, budget: int = SECTION_BUDGET) -> str:
+    """Keep a real manuscript section within a stable local-model context budget.
+
+    Preserve both the opening and closing argument of long sections rather than
+    silently dropping later material. Short sections remain untouched.
+    """
+    text = str(value or "")
+    if len(text) <= budget:
+        return text
+    marker = "\n\n[… middle omitted by Book Intelligence context budget …]\n\n"
+    usable = max(2, budget - len(marker))
+    head = usable * 3 // 5
+    tail = usable - head
+    return text[:head] + marker + text[-tail:]
 
 
 def _sections(value: Any) -> list[dict[str, Any]]:
@@ -23,7 +40,7 @@ def _sections(value: Any) -> list[dict[str, Any]]:
             "index": index,
             "role": _text(item.get("role")) or "chapter",
             "title": _text(item.get("title")),
-            "text": str(item.get("text") or "")[:12000],
+            "text": _semantic_window(item.get("text")),
         })
     return out
 
@@ -80,12 +97,7 @@ def _messages(args: dict[str, Any]) -> list[dict[str, str]]:
 
 
 def _extract_json_object(text: str) -> str:
-    """Return the first balanced top-level JSON object from a model response.
-
-    Local models occasionally wrap otherwise valid JSON in a short preface or a
-    markdown fence. Admission remains strict JSON: this only removes transport-level
-    decoration and never repairs or invents fields.
-    """
+    """Return the first balanced top-level JSON object from a model response."""
     start = text.find("{")
     if start < 0:
         raise ValueError("semantic report did not contain a JSON object")
