@@ -38,6 +38,7 @@ def _load_sibling(name: str):
 
 
 REGISTRY = _load_sibling("capability_registry")
+BOOK_INTELLIGENCE = _load_sibling("book_intelligence_capability")
 
 NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
     "image.generate": {
@@ -86,6 +87,19 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "provider": "longmemory-local",
         "load": "deferred",
         "authority": False,
+    },
+    "publishing.book-intelligence": {
+        "id": "publishing.book-intelligence",
+        "type": "reasoning",
+        "service": "publishing",
+        "status": "existing",
+        "execution": "core-adapter",
+        "provider": "dore-core",
+        "load": "on-demand",
+        "result": "book-intelligence-report",
+        "identity": "dore",
+        "provider_neutral": True,
+        "author_thesis_authority": True,
     },
 }
 
@@ -144,6 +158,20 @@ def _image_generate(args: dict[str, Any], caller_product: str | None = None) -> 
             "transport": "core-adapter",
         }
     return result
+
+
+def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
+    """Invoke semantic publishing intelligence through the local Doré inference seam.
+
+    The publishing adapter stays provider-neutral. Loading the local runtime happens
+    inside the injected callback so an unavailable inference runtime is converted by
+    the adapter into a safe degraded report instead of failing the bookmaking path.
+    """
+    def infer(messages: list[dict[str, str]]) -> str:
+        runtime = _load_sibling("dore_local")
+        return runtime.ollama(messages)
+
+    return BOOK_INTELLIGENCE.execute(args, infer)
 
 
 def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
@@ -274,7 +302,9 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
     try:
         if capability == "image.generate":
             return _image_generate(args, caller_product)
-        if capability == "bible.query-plan":
+        if capability == "publishing.book-intelligence":
+            result = _book_intelligence(args)
+        elif capability == "bible.query-plan":
             result = _bible_query_plan(args)
         elif capability == "context.fuzzy-search":
             result = _fuzzy_search(args, caller_product)
