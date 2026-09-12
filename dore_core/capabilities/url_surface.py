@@ -3,6 +3,8 @@ from __future__ import annotations
 from dataclasses import asdict, dataclass
 from urllib.parse import urlparse
 
+from dore_core.capabilities.surface_mounts import SurfaceMountRegistry
+
 
 @dataclass(frozen=True)
 class SurfaceRoute:
@@ -28,12 +30,33 @@ class SurfacePayload:
         return asdict(self)
 
 
+@dataclass(frozen=True)
+class SurfacePlan:
+    """Resolved route plus the truth about whether its equipment is mounted."""
+
+    source_url: str
+    surface: str
+    adapter: str | None
+    fallback: str | None
+    confidence: float
+    mount_state: str
+    executable: bool
+    external: bool = True
+    ownership: str = "external"
+
+    def as_dict(self) -> dict:
+        return asdict(self)
+
+
 class UrlSurfaceResolver:
     """Small deterministic pointer -> surface router.
 
     This resolver never decides relevance or admission. It only selects a
     presentation capability for an already-discovered external pointer.
     """
+
+    def __init__(self, mounts: SurfaceMountRegistry | None = None) -> None:
+        self.mounts = mounts or SurfaceMountRegistry()
 
     def resolve(self, url: str) -> SurfaceRoute:
         value = (url or "").strip()
@@ -68,4 +91,17 @@ class UrlSurfaceResolver:
             adapter=route.adapter,
             fallback=route.fallback,
             confidence=route.confidence,
+        )
+
+    def plan(self, url: str) -> SurfacePlan:
+        value = (url or "").strip()
+        route = self.resolve(value)
+        return SurfacePlan(
+            source_url=value,
+            surface=route.surface,
+            adapter=route.adapter,
+            fallback=route.fallback,
+            confidence=route.confidence,
+            mount_state=self.mounts.state(route.adapter),
+            executable=self.mounts.executable(route.adapter),
         )
