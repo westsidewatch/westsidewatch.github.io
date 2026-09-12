@@ -1,0 +1,28 @@
+name: Dawn Step 5 Runtime Mounts
+
+on:
+  pull_request:
+    paths:
+      - 'dore_core/capabilities/surface_mounts.py'
+      - 'tests/test_dawn_step5_runtime_mounts.py'
+      - '.github/workflows/dawn-step5-runtime-mounts.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  production-mount-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify only production-ready surfaces are mounted
+        run: python -m unittest tests.test_dawn_step5_runtime_mounts -v
+      - name: Re-run core URL surface truth tests
+        run: python -m unittest tests.test_dawn_url_surface -v

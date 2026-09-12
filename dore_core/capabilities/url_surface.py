@@ -68,6 +68,8 @@ class UrlSurfaceResolver:
         if not (parsed.scheme in {"http", "https"} and host):
             return SurfaceRoute("unresolved", None, 0.0)
 
+        if host in {"youtube.com", "www.youtube.com", "m.youtube.com", "youtu.be"}:
+            return SurfaceRoute("video", "video-surface", 1.0)
         if "iiif" in lowered or path.endswith("/manifest") or path.endswith("/manifest.json"):
             return SurfaceRoute("visual", "iiif-visual-surface", 1.0)
         if path.endswith(".pdf"):

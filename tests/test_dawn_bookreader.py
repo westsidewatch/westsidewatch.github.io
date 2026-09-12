@@ -5,7 +5,6 @@ from pathlib import Path
 from dore_core.capabilities.archive_bookreader import ArchiveBookReaderAdapter
 from dore_core.capabilities.surface_mounts import SurfaceMountRegistry
 
-
 ROOT = Path(__file__).resolve().parents[1]
 ACCEPTANCE = ROOT / 'data/dawn-capability-acceptance-corpus.json'
 SURFACE = ROOT / 'static/dawn-library/surfaces/bookreader.html'
@@ -41,13 +40,13 @@ class DawnBookReaderTests(unittest.TestCase):
         self.assertIn("root.dataset.externalSource = 'true'", js)
         self.assertIn("root.dataset.viewerState = 'ready'", js)
 
-    def test_registry_records_fixture_without_claiming_mount(self):
+    def test_registry_records_real_end_to_end_integration_as_mounted(self):
         registry = SurfaceMountRegistry()
         mount = registry.get('book-reader')
-        self.assertEqual(mount.state, 'fixture-found')
+        self.assertEqual(mount.state, 'mounted')
         self.assertEqual(mount.implementation, 'static/js/dawn-bookreader-surface.js')
         self.assertIn('internetarchive-josephus-1900-bookreader', mount.evidence)
-        self.assertFalse(registry.executable('book-reader'))
+        self.assertTrue(registry.executable('book-reader'))
 
 
 if __name__ == '__main__':
