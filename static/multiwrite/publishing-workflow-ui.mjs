@@ -2,7 +2,7 @@ import {compileCurrentBook} from './book-compile-bridge.mjs';
 import {createPublishingWorkflow,workflowFromCompile} from './publishing-workflow.mjs';
 
 let root=null;
-function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]))}
+function esc(v=''){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]))}
 function stepMarkup(step){return `<li class="publish-step is-${step.status}" data-step="${esc(step.id)}"><span class="publish-step-mark"></span><span>${esc(step.label)}</span><small>${step.status==='complete'?'完成':step.status==='active'?'進行中':step.status==='blocked'?'需處理':step.status==='locked'?'等待前置':'待開始'}</small></li>`}
 function panelMarkup(workflow=createPublishingWorkflow()){
  const s=workflow.summary||{};
