@@ -1,0 +1,49 @@
+name: Dawn Publishing Seal
+on:
+  pull_request:
+    paths:
+      - 'static/multiwrite/dawn-publication-bridge.mjs'
+      - 'static/multiwrite/publication-output.mjs'
+      - 'local/dore-local/dawn_publication_action.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-companion-extension/background.js'
+      - 'local/dore-companion-extension/site_bridge.js'
+      - 'scripts/build_dawn_canonical_substrate.py'
+      - 'tests/dawn-publication-bridge.test.mjs'
+      - 'tests/test_dawn_publication_seal.py'
+      - '.github/workflows/dawn-publishing-seal.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'static/multiwrite/dawn-publication-bridge.mjs'
+      - 'static/multiwrite/publication-output.mjs'
+      - 'local/dore-local/dawn_publication_action.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-companion-extension/background.js'
+      - 'local/dore-companion-extension/site_bridge.js'
+      - 'scripts/build_dawn_canonical_substrate.py'
+      - 'tests/dawn-publication-bridge.test.mjs'
+      - 'tests/test_dawn_publication_seal.py'
+      - '.github/workflows/dawn-publishing-seal.yml'
+jobs:
+  seal:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Dawn publication admission and canonical idempotency
+        run: python -m unittest tests.test_dawn_publication_seal tests.test_dawn_canonical_substrate -v
+      - name: Browser publication bridge contract
+        run: node tests/dawn-publication-bridge.test.mjs
+      - name: Product transport is wired end to end
+        run: |
+          grep -q "dawn.library.publish" local/dore-companion-extension/background.js
+          grep -q "dore:dawn-publish" local/dore-companion-extension/site_bridge.js
+          grep -q "dawn_publication_action" local/dore-local/native_host.py
+          grep -q "publishMaterializedToDawn" static/multiwrite/publication-output.mjs
