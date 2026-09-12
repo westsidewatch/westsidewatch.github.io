@@ -29,7 +29,11 @@ def demand_map(dep, poses, ppu=520.0, edge_q=.90):
         deriv=gx*ux+gy*uy
         edge=(strong & (deriv>max(.008,thr*.18))).astype(np.uint8)*255
         if not np.any(edge): continue
-        band=int(np.clip(np.ceil(planar*.24)+3,4,48))
+        # Predict only the directional disocclusion corridor actually requested by
+        # this camera displacement. V8 over-bought world with an isotropic halo;
+        # the first path-conditioned run proved the direction but landed at 30.41%.
+        # Tighten the swept-band prior slightly rather than adding hidden layers.
+        band=int(np.clip(np.ceil(planar*.23)+2,4,46))
         for s in np.linspace(0.0,float(band),max(3,band//3+1)):
             out=cv2.bitwise_or(out,shift(edge,int(round(ux*s)),int(round(uy*s))))
         used+=1
