@@ -1,4 +1,3 @@
-import {bookAllowed} from '../resources/resource-selection.mjs';
 export const LIBRARY_ORIGIN=Object.freeze({PERSONAL:'personal',DAWN:'dawn'});
 
 function makePersonalId(catalogId='book'){
@@ -32,10 +31,9 @@ export function dawnBookEntry(catalogBook={}){
 
 export function canDeleteEntry(entry){return entry?.origin===LIBRARY_ORIGIN.PERSONAL&&entry.ownership==='user-local';}
 export function canEditEntry(entry){return entry?.origin===LIBRARY_ORIGIN.PERSONAL&&entry.editable===true;}
-export function canImportToPersonal(entry){return entry?.origin===LIBRARY_ORIGIN.DAWN&&bookAllowed(entry.book);}
+export function canImportToPersonal(entry){return entry?.origin===LIBRARY_ORIGIN.DAWN;}
 
 export function createPersonalReferenceFromDawn(catalogBook={}){
-  if(!bookAllowed(catalogBook))throw new Error('此資源未通過書籍與內容審核，無法加入館藏');
   if(!catalogBook?.id)throw new Error('黎明書局條目缺少 catalog id');
   const now=new Date().toISOString();
   const work=catalogBook.work||{},edition=catalogBook.edition||{},sources=Array.isArray(catalogBook.sources)?catalogBook.sources:[];
@@ -85,6 +83,6 @@ export function createPersonalReferenceFromDawn(catalogBook={}){
 export function libraryLayers({personal=[],dawn=[]}={}){
   return {
     personal:personal.map(personalBookEntry),
-    dawn:dawn.filter(bookAllowed).map(dawnBookEntry)
+    dawn:dawn.map(dawnBookEntry)
   };
 }

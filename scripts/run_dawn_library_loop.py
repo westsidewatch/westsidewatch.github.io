@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-from resource_selection import book_allowed
 import json
 from datetime import datetime, timezone
 from pathlib import Path
@@ -17,7 +16,7 @@ def load(path,default=None):
     try:return json.loads(path.read_text())
     except Exception:return {} if default is None else default
 
-catalog=json.loads(CATALOG.read_text());registry=json.loads(COLLECTIONS.read_text());items=[i for i in catalog.get('items',[]) if book_allowed(i)]
+catalog=json.loads(CATALOG.read_text());registry=json.loads(COLLECTIONS.read_text());items=catalog.get('items',[])
 verified=[b for b in items if b.get('edition',{}).get('publicDomain') is True and b.get('sources')]
 pending=[b for b in items if b not in verified]
 relations=sorted({r for b in items for r in b.get('relations',[])})

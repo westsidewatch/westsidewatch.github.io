@@ -1,20 +1,20 @@
 {
   "schema": "dawn.library.collections.v1",
-  "generatedAt": "2026-09-12T04:51:09.917896+00:00",
+  "generatedAt": "2026-09-12T07:49:10.588279+00:00",
   "collections": [
     {
       "id": "biblical-world-books",
       "title": "聖經世界 · 書籍",
       "kind": "books",
       "status": "active",
-      "published": 9,
-      "verified": 9,
-      "pending": 0,
+      "published": 28,
+      "verified": 27,
+      "pending": 1,
       "output": "/dawn-library/biblical-world/catalog.json",
       "cadence": {
         "recommended": "daily",
         "recentAutonomousGrowthPerDay": 5.25,
-        "density": 9
+        "density": 27
       }
     },
     {

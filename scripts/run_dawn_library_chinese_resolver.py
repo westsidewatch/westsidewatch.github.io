@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-from resource_selection import book_decision
 import json,re,urllib.parse,urllib.request
 from datetime import datetime,timezone
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-REL=ROOT/'dore-core/review/resource-selection/chinese-relevance-results.json'
-OUT=ROOT/'dore-core/review/resource-selection/chinese-resolver-results.json'
+REL=ROOT/'static/dawn-library/biblical-world/chinese-relevance-results.json'
+OUT=ROOT/'static/dawn-library/biblical-world/chinese-resolver-results.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-CHINESE-RESOLVER.json'
 API='https://zh.wikisource.org/w/api.php'
 UA='Dore-Dawn-Library/1.0 (metadata and rights resolver; no bulk text)'
@@ -44,7 +43,6 @@ for x in json.loads(REL.read_text())['items']:
             result['reason']='rights-or-edition-needs-review'; counts['needs-review']+=1
     except Exception as e:
         result['reason']='resolver-error'; result['error']=str(e); counts['needs-review']+=1
-    result['bookAdmission']=book_decision(result)
     items.append(result)
 OUT.write_text(json.dumps({'schema':'dawn.library.chinese-resolver-results.v1','generatedAt':now,'items':items},ensure_ascii=False,indent=2)+'\n')
 REPORT.parent.mkdir(parents=True,exist_ok=True)
