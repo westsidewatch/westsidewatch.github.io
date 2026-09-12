@@ -183,7 +183,7 @@ def _page2_motion_source(doc: str) -> str:
         ),
         (
             "{opacity:0,transform:'translateY(-50%) scale(.94)'},{opacity:1,transform:'translateY(-50%) scale(1)'}",
-            "{opacity:0,transform:'translate3d(0,0,0) scale(.94)',offset:0},{opacity:1,transform:'translate3d(0,1.25px,0) scale(.998)',offset:.82},{opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}",
+            "{opacity:0,transform:'translate3d(0,0,0) scale(.94)',offset:0},{opacity:1,transform:'translate3d(0,1.25px,0) scale(.996)',offset:.82,easing:'cubic-bezier(.16,1,.3,1)'},{opacity:1,transform:'translate3d(0,.30px,0) scale(.9994)',offset:.94,easing:'cubic-bezier(.2,.8,.2,1)'},{opacity:1,transform:'translate3d(0,0,0) scale(1)',offset:1}",
         ),
         (
             "{opacity:1,transform:'translateY(-50%) scale(1)'},{opacity:0,transform:'translateY(-50%) scale(.94)'}",
@@ -191,7 +191,7 @@ def _page2_motion_source(doc: str) -> str:
         ),
         (
             "{opacity:1,transform:'translate(0,0)'},{opacity:0,transform:`translate(${dx}vw,${dy}vw)`}",
-            "{opacity:1,transform:'translate3d(0,0,0)',offset:0},{opacity:.06,transform:`translate3d(${dx*0.965}vw,${dy*0.965}vw,0)`,offset:.82},{opacity:0,transform:`translate3d(${dx}vw,${dy}vw,0)`,offset:1}",
+            "{opacity:1,transform:'translate3d(0,0,0)',offset:0},{opacity:.06,transform:`translate3d(${dx*0.965}vw,${dy*0.965}vw,0)`,offset:.82,easing:'cubic-bezier(.16,1,.3,1)'},{opacity:.012,transform:`translate3d(${dx*0.994}vw,${dy*0.994}vw,0)`,offset:.94,easing:'cubic-bezier(.2,.8,.2,1)'},{opacity:0,transform:`translate3d(${dx}vw,${dy}vw,0)`,offset:1}",
         ),
     )
     for old, new in replacements:
