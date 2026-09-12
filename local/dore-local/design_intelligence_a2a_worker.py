@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Core/A2A worker for Doré Design exploration.
-
-The Design resident never imports a model provider. It writes a durable request,
-registers an A2A execution task, then starts this worker as a separate local
-process. Real inference reuses Doré's established local model path.
-
-Phase 10 hardens taste formation: one model preference is not design memory.
-Each A/B pair is judged twice under blinded aliases with reversed presentation
-order. Only canonical-candidate consensus may become a preference winner.
-"""
+"""Core/A2A worker for executable Doré Design exploration candidates."""
 from __future__ import annotations
 
 import json
@@ -17,6 +8,12 @@ import sys
 from pathlib import Path
 
 import a2a_execution_plane as plane
+
+REPO_ROOT = Path(os.environ.get('DORE_REPO_ROOT') or Path(__file__).resolve().parents[2]).resolve()
+DESIGN_ROOT = REPO_ROOT / 'dore-design'
+if str(DESIGN_ROOT) not in sys.path:
+    sys.path.insert(0, str(DESIGN_ROOT))
+import design_intelligence_sandbox as sandbox
 
 HOME = Path(os.environ.get('DORE_LOCAL_HOME', Path.home() / '.dore')).expanduser()
 ROOT = HOME / 'design-intelligence-a2a'
@@ -30,213 +27,138 @@ def _request_path(task_id: str) -> Path:
 def _json_object(text: str) -> dict:
     raw = str(text or '').strip()
     if raw.startswith('```'):
-        lines = raw.splitlines()
-        if lines and lines[0].startswith('```'):
-            lines = lines[1:]
-        if lines and lines[-1].strip() == '```':
-            lines = lines[:-1]
+        lines = raw.splitlines()[1:]
+        if lines and lines[-1].strip() == '```': lines = lines[:-1]
         raw = '\n'.join(lines).strip()
     start, end = raw.find('{'), raw.rfind('}')
-    if start < 0 or end < start:
-        raise ValueError('model_json_object_missing')
+    if start < 0 or end < start: raise ValueError('model_json_object_missing')
     obj = json.loads(raw[start:end + 1])
-    if not isinstance(obj, dict):
-        raise ValueError('model_json_object_required')
+    if not isinstance(obj, dict): raise ValueError('model_json_object_required')
     return obj
 
 
-def _normalize_vote(raw: dict, alias_to_candidate: dict[str, str], round_name: str) -> dict:
-    alias = str(raw.get('winner') or '').strip()
-    if alias not in alias_to_candidate:
-        raise ValueError('critic_blind_winner_required')
-    winner = alias_to_candidate[alias]
-    winner_reason = str(raw.get('winner_reason') or '').strip()
-    loser_reason = str(raw.get('loser_reason') or '').strip()
-    if not winner_reason or not loser_reason:
-        raise ValueError('critic_reasons_required')
-    return {
-        'round': round_name,
-        'blind_winner': alias,
-        'winner': winner,
-        'winner_reason': winner_reason,
-        'loser_reason': loser_reason,
-        'brand_fit': str(raw.get('brand_fit') or '').strip() or 'unknown',
-        'usability_floor_passed': bool(raw.get('usability_floor_passed')),
-        'confidence': max(0.0, min(1.0, float(raw.get('confidence', 0.5)))),
-        'failure_domains': [str(x) for x in (raw.get('failure_domains') or [])],
-    }
-
-
-def _aggregate_votes(votes: list[dict]) -> dict:
-    if len(votes) != 2:
-        raise ValueError('exactly_two_blind_votes_required')
-    consensus = votes[0]['winner'] == votes[1]['winner']
-    winner = votes[0]['winner'] if consensus else None
-    confidence = sum(float(v.get('confidence', 0.5)) for v in votes) / 2.0
-    usability = all(bool(v.get('usability_floor_passed')) for v in votes)
-    brand_fit = 'pass' if all(v.get('brand_fit') == 'pass' for v in votes) else 'mixed'
-    domains = sorted({d for v in votes for d in (v.get('failure_domains') or [])})
-    return {
-        'consensus': consensus,
-        'winner': winner,
-        'winner_reason': votes[0]['winner_reason'] if consensus else 'Blind judges disagreed; no canonical preference may be written.',
-        'loser_reason': votes[0]['loser_reason'] if consensus else 'No loser is admitted without blind-order consensus.',
-        'brand_fit': brand_fit,
-        'usability_floor_passed': usability,
-        'confidence': confidence if consensus else min(confidence, 0.49),
-        'failure_domains': domains,
-        'votes': votes,
-        'order_bias_check': 'pass' if consensus else 'fail',
-        'memory_admission': bool(consensus and usability),
-    }
+def _first_node(snapshot):
+    nodes = ((snapshot.get('page') or {}).get('nodes') or [])
+    if not nodes: raise ValueError('sandbox_surface_has_no_nodes')
+    return nodes[0]
 
 
 def _fixture(payload: dict) -> dict:
-    axis = str(payload.get('primary_axis') or 'composition')
-    context = str(payload.get('task_context') or 'design task')
+    node = _first_node(payload['base_snapshot'])
+    nid = str(node.get('id'))
+    x = float(node.get('x', 0) or 0); y = float(node.get('y', 0) or 0)
+    size = float(node.get('size', 24) or 24)
     variants = [
-        {'id': 'A', 'direction': f'preserve-{axis}-hierarchy', 'changes': ['reduce competing emphasis', 'retain brand geometry'], 'rationale': f'Conservative response to {context}.'},
-        {'id': 'B', 'direction': f'clarify-{axis}-rhythm', 'changes': ['increase focal contrast', 'simplify secondary motion'], 'rationale': f'Clearer response to {context}.'},
+        {'id':'A','direction':'preserve-current-gravity','patch':{'schema':'dore.design.candidate-patch.v1','ops':[{'op':'move','node_id':nid,'x':x,'y':y+4}]}},
+        {'id':'B','direction':'clarify-focal-gravity','patch':{'schema':'dore.design.candidate-patch.v1','ops':[{'op':'move','node_id':nid,'x':x,'y':max(0,y-12)},{'op':'font_size','node_id':nid,'size':min(320,max(6,size+4))}]}},
     ]
-    vote1 = {
-        'round': 'blind-1', 'blind_winner': 'Y', 'winner': 'B',
-        'winner_reason': 'The stronger focal hierarchy resolves ambiguity without weakening brand geometry.',
-        'loser_reason': 'The alternative preserves ambiguity in the focal structure.',
-        'brand_fit': 'pass', 'usability_floor_passed': True, 'confidence': 0.87,
-        'failure_domains': [],
+    candidates = [sandbox.materialize(payload['base_snapshot'], v['patch'], v['id']) for v in variants]
+    disagree = os.environ.get('DORE_DESIGN_A2A_DISAGREE_FIXTURE') == '1'
+    votes = [
+        {'presentation':'forward','winner':'B','winner_reason':'B has clearer focal geometry.','loser_reason':'A changes the composition too little.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.88},
+        {'presentation':'reversed','winner':'A' if disagree else 'B','winner_reason':'Reversed-order check.','loser_reason':'Reversed-order check loser.','brand_fit':'pass','usability_floor_passed':True,'confidence':0.84},
+    ]
+    consensus = votes[0]['winner'] == votes[1]['winner']
+    winner = votes[0]['winner'] if consensus else None
+    critic = {
+        'winner': winner,'consensus':consensus,'memory_admission':bool(consensus),'votes':votes,
+        'winner_reason': votes[0]['winner_reason'] if consensus else '',
+        'loser_reason': votes[0]['loser_reason'] if consensus else '',
+        'brand_fit':'pass','usability_floor_passed':True,
+        'confidence': min(v['confidence'] for v in votes) if consensus else 0.0,
+        'failure_domains': [] if consensus else ['judge-disagreement'],
     }
-    disagree = os.environ.get('DORE_DESIGN_A2A_FIXTURE_DISAGREE') == '1'
-    vote2 = {
-        'round': 'blind-2', 'blind_winner': 'Y' if disagree else 'X', 'winner': 'A' if disagree else 'B',
-        'winner_reason': 'Second blind-order judgment.',
-        'loser_reason': 'Second blind-order comparison loser.',
-        'brand_fit': 'pass', 'usability_floor_passed': True, 'confidence': 0.85,
-        'failure_domains': [],
-    }
-    critic = _aggregate_votes([vote1, vote2])
-    return {'variants': variants, 'critic': critic, 'provider': 'deterministic-ci-fixture', 'model': 'fixture'}
+    return {'variants':variants,'candidates':candidates,'critic':critic,'provider':'deterministic-ci-fixture','model':'fixture'}
 
 
-def _blind_vote(ollama, *, variants: list[dict], context: dict, mapping: dict[str, str], round_name: str) -> dict:
-    by_id = {str(v.get('id')): v for v in variants}
-    alias_variants = [
-        {'id': alias, 'direction': by_id[candidate].get('direction'), 'changes': by_id[candidate].get('changes'), 'rationale': by_id[candidate].get('rationale')}
-        for alias, candidate in mapping.items()
-    ]
-    system = (
-        'You are an independent Doré visual critic. Candidate identities are intentionally blinded. '
-        'Compare X and Y against the supplied context, brand constraints, accessibility/usability floor, '
-        'and bounded taste evidence. Do not infer the original labels and do not reward novelty by itself. '
-        'Return JSON only with winner (X or Y), winner_reason, loser_reason, brand_fit, '
-        'usability_floor_passed (boolean), confidence (0..1), failure_domains (array).'
+def _judge(ollama, payload, candidates, presentation):
+    ordered = candidates if presentation == 'forward' else list(reversed(candidates))
+    aliases = {'X': ordered[0]['candidate_id'], 'Y': ordered[1]['candidate_id']}
+    compact=[]
+    for alias,c in zip(('X','Y'),ordered):
+        compact.append({'alias':alias,'patch':c['patch'],'render_sha256':c['render_sha256'],'geometry':c['geometry']})
+    system=(
+      'You are an independent Doré design critic. Judge only the two anonymized executable sandbox candidates. '
+      'Use actual patch and rendered geometry evidence, brand constraints, usability floor, and task context. '
+      'Return JSON only: winner (X or Y), winner_reason, loser_reason, brand_fit, usability_floor_passed, confidence, failure_domains.'
     )
-    raw = _json_object(ollama([
-        {'role': 'system', 'content': system},
-        {'role': 'user', 'content': json.dumps({'context': context, 'variants': alias_variants}, ensure_ascii=False)},
-    ]))
-    return _normalize_vote(raw, mapping, round_name)
+    user=json.dumps({'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'candidates':compact},ensure_ascii=False)
+    raw=_json_object(ollama([{'role':'system','content':system},{'role':'user','content':user}]))
+    if raw.get('winner') not in {'X','Y'}: raise ValueError('critic_winner_required')
+    canonical=aliases[raw['winner']]
+    out={**raw,'winner':canonical,'presentation':presentation,'confidence':max(0.0,min(1.0,float(raw.get('confidence',0.5)))),'usability_floor_passed':bool(raw.get('usability_floor_passed'))}
+    if not str(out.get('winner_reason') or '').strip() or not str(out.get('loser_reason') or '').strip(): raise ValueError('critic_reasons_required')
+    return out
 
 
 def _model(payload: dict) -> dict:
-    # Reuse Doré's established local inference path; do not introduce a second provider.
     from dore_local import ollama
-
-    taste = payload.get('preference_pack') or {}
-    system = (
-        'You are Doré Design Core. Generate exactly two materially different but brand-faithful '
-        'UI directions. Return JSON only with key variants, an array of two objects. Each object '
-        'must contain id (A or B), direction, changes (array), rationale. Do not choose a winner.'
+    base = payload['base_snapshot']
+    nodes = sandbox.geometry_evidence(base)
+    system=(
+      'You are Doré Design Core. Generate exactly two materially different, brand-faithful executable patches against the supplied node geometry. '
+      'Return JSON only with variants [A,B]. Each variant must contain id, direction, and patch. patch schema is dore.design.candidate-patch.v1 and ops may only be '
+      'move(node_id,x,y), resize(node_id,w,h), font_size(node_id,size), text_align(node_id,value). Do not choose a winner.'
     )
-    context = {
-        'task_context': payload.get('task_context'),
-        'surface_id': payload.get('surface_id'),
-        'surface_family': payload.get('surface_family'),
-        'primary_axis': payload.get('primary_axis'),
-        'viewport_context': payload.get('viewport_context'),
-        'content_context': payload.get('content_context'),
-        'bounded_taste': taste,
-        'constraints': payload.get('constraints') or [],
+    user=json.dumps({'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'surface_geometry':nodes},ensure_ascii=False)
+    generated=_json_object(ollama([{'role':'system','content':system},{'role':'user','content':user}]))
+    variants=generated.get('variants') or []
+    if not isinstance(variants,list) or len(variants)!=2 or [str(v.get('id')) for v in variants]!=['A','B']: raise ValueError('exactly_A_B_variants_required')
+    candidates=[]
+    for v in variants:
+        candidates.append(sandbox.materialize(base,v.get('patch'),v['id']))
+    votes=[_judge(ollama,payload,candidates,'forward'),_judge(ollama,payload,candidates,'reversed')]
+    consensus=votes[0]['winner']==votes[1]['winner']
+    usability=all(v.get('usability_floor_passed') for v in votes)
+    brand=all(str(v.get('brand_fit','')).lower() not in {'fail','false','reject'} for v in votes)
+    winner=votes[0]['winner'] if consensus else None
+    critic={
+      'winner':winner,'consensus':consensus,'memory_admission':bool(consensus and usability and brand),'votes':votes,
+      'winner_reason':votes[0]['winner_reason'] if consensus else '','loser_reason':votes[0]['loser_reason'] if consensus else '',
+      'brand_fit':'pass' if brand else 'fail','usability_floor_passed':usability,
+      'confidence':min(v['confidence'] for v in votes) if consensus else 0.0,
+      'failure_domains':[] if consensus else ['judge-disagreement'],
     }
-    generated = _json_object(ollama([
-        {'role': 'system', 'content': system},
-        {'role': 'user', 'content': json.dumps(context, ensure_ascii=False)},
-    ]))
-    variants = generated.get('variants') or []
-    if not isinstance(variants, list) or len(variants) != 2:
-        raise ValueError('exactly_two_variants_required')
-    ids = [str(x.get('id') or '') for x in variants if isinstance(x, dict)]
-    if ids != ['A', 'B']:
-        raise ValueError('variant_ids_must_be_A_B')
-
-    # Round 1 shows A as X and B as Y. Round 2 reverses that order and alias mapping.
-    vote1 = _blind_vote(ollama, variants=variants, context=context, mapping={'X': 'A', 'Y': 'B'}, round_name='blind-1')
-    vote2 = _blind_vote(ollama, variants=variants, context=context, mapping={'X': 'B', 'Y': 'A'}, round_name='blind-2')
-    critic = _aggregate_votes([vote1, vote2])
-    return {
-        'variants': variants,
-        'critic': critic,
-        'provider': 'dore-local',
-        'model': os.environ.get('DORE_MODEL') or os.environ.get('OLLAMA_MODEL') or 'local-default',
-    }
+    return {'variants':variants,'candidates':candidates,'critic':critic,'provider':'dore-local','model':os.environ.get('DORE_MODEL') or os.environ.get('OLLAMA_MODEL') or 'local-default'}
 
 
 def execute(task_id: str) -> dict:
-    request_path = _request_path(task_id)
-    if not request_path.exists():
-        raise FileNotFoundError('design_intelligence_request_missing:' + task_id)
-    payload = json.loads(request_path.read_text(encoding='utf-8'))
-    owner = plane.worker_id()
-    claimed = plane.claim(task_id, owner)
-    if not claimed.get('ok'):
-        raise RuntimeError('a2a_claim_failed:' + str(claimed.get('code')))
-    started = plane.transition(task_id, 'RUNNING', consumer=owner)
-    if not started.get('ok'):
-        raise RuntimeError('a2a_start_failed:' + str(started.get('code')))
+    path=_request_path(task_id)
+    if not path.exists(): raise FileNotFoundError('design_intelligence_request_missing:'+task_id)
+    payload=json.loads(path.read_text(encoding='utf-8'))
+    sandbox.geometry_evidence(payload.get('base_snapshot') or {})
+    owner=plane.worker_id(); claimed=plane.claim(task_id,owner)
+    if not claimed.get('ok'): raise RuntimeError('a2a_claim_failed:'+str(claimed.get('code')))
+    started=plane.transition(task_id,'RUNNING',consumer=owner)
+    if not started.get('ok'): raise RuntimeError('a2a_start_failed:'+str(started.get('code')))
     try:
-        result = _fixture(payload) if os.environ.get('DORE_DESIGN_A2A_FIXTURE') == '1' else _model(payload)
-        artifact = {
-            'type': 'dore.design-intelligence-exploration.v2',
-            'task_id': task_id,
-            'surface_id': payload.get('surface_id'),
-            'variants': result['variants'],
-            'critic': result['critic'],
-            'provider': result['provider'],
-            'model': result['model'],
+        result=_fixture(payload) if os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1' else _model(payload)
+        artifact={
+          'type':'dore.design-intelligence-exploration.v3','task_id':task_id,'surface_id':payload.get('surface_id'),
+          'variants':result['variants'],'candidates':result['candidates'],'critic':result['critic'],'provider':result['provider'],'model':result['model'],
+          'canonical_workspace_mutated':False,'evidence_kind':'executable-sandbox-render+geometry',
         }
-        recorded = plane.record_artifact(task_id, artifact, consumer=owner)
-        if not recorded.get('ok'):
-            raise RuntimeError('a2a_artifact_failed:' + str(recorded.get('code')))
-        critic = result['critic']
-        votes = critic.get('votes') or []
-        verification = {
-            'ok': len(result['variants']) == 2 and len(votes) == 2 and all(v.get('winner') in {'A', 'B'} for v in votes),
-            'method': 'dore.design-intelligence-a2a-worker.v2',
-            'independent_critic': True,
-            'blind_order_reversal': True,
-            'variant_count': len(result['variants']),
-            'judge_count': len(votes),
-            'consensus': bool(critic.get('consensus')),
-            'memory_admission': bool(critic.get('memory_admission')),
+        recorded=plane.record_artifact(task_id,artifact,consumer=owner)
+        if not recorded.get('ok'): raise RuntimeError('a2a_artifact_failed:'+str(recorded.get('code')))
+        critic=result['critic']; candidates=result['candidates']
+        verification={
+          'ok':len(candidates)==2 and all(c.get('render_sha256') and c.get('geometry') for c in candidates) and len(critic.get('votes') or [])==2,
+          'method':'dore.design-intelligence-a2a-worker.v3','blind_order_reversal':True,'judge_count':2,
+          'executable_candidate_artifacts':True,'canonical_workspace_mutated':False,
         }
-        verified = plane.verify(task_id, verification, consumer=owner)
-        if not verified.get('ok'):
-            raise RuntimeError('a2a_verification_failed')
-        completed = plane.complete(task_id, {'ok': True, **result}, consumer=owner)
-        if not completed.get('ok'):
-            raise RuntimeError('a2a_complete_failed:' + str(completed.get('code')))
-        return {'ok': True, 'task_id': task_id, 'status': 'PASS', **result}
+        verified=plane.verify(task_id,verification,consumer=owner)
+        if not verified.get('ok'): raise RuntimeError('a2a_verification_failed')
+        completed=plane.complete(task_id,{'ok':True,**result},consumer=owner)
+        if not completed.get('ok'): raise RuntimeError('a2a_complete_failed:'+str(completed.get('code')))
+        return {'ok':True,'task_id':task_id,'status':'PASS',**result}
     except Exception as exc:
-        plane.transition(task_id, 'FAIL', consumer=owner, result={'ok': False, 'error': type(exc).__name__ + ': ' + str(exc)})
+        try: plane.transition(task_id,'FAIL',consumer=owner,result={'ok':False,'error':type(exc).__name__+': '+str(exc)})
+        except Exception: pass
         raise
 
 
-def main() -> int:
-    if len(sys.argv) != 2:
-        raise SystemExit('usage: design_intelligence_a2a_worker.py <task-id>')
-    result = execute(sys.argv[1])
-    print(json.dumps(result, ensure_ascii=False))
-    return 0
+def main():
+    if len(sys.argv)!=2: raise SystemExit('usage: design_intelligence_a2a_worker.py <task-id>')
+    print(json.dumps(execute(sys.argv[1]),ensure_ascii=False)); return 0
 
-
-if __name__ == '__main__':
-    raise SystemExit(main())
+if __name__=='__main__': raise SystemExit(main())
