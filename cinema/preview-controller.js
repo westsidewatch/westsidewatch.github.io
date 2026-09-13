@@ -18,9 +18,27 @@
 
   function sourceFor(item){return (item.providerSources||[])[0]||{};}
 
+  function selectPosterMoment(declared){
+    const selection=declared.posterSelection;
+    const candidates=Array.isArray(selection?.candidates)?selection.candidates.filter(candidate=>candidate?.posterUrl):[];
+    if(!candidates.length)return null;
+    const weights=selection.weights||{};
+    const score=candidate=>Object.entries(weights).reduce((sum,[key,weight])=>sum+(Number(candidate.signals?.[key]||0)*Number(weight||0)),0);
+    return candidates.reduce((best,candidate)=>{
+      if(!best)return candidate;
+      const candidateScore=score(candidate);
+      const bestScore=score(best);
+      if(candidateScore>bestScore)return candidate;
+      if(candidateScore===bestScore&&String(candidate.momentId).localeCompare(String(best.momentId))<0)return candidate;
+      return best;
+    },null);
+  }
+
   function previewSpec(item){
     const source=sourceFor(item);
     const declared=source.preview||{};
+    const selectedMoment=selectPosterMoment(declared);
+    if(selectedMoment?.posterUrl)return {...declared,posterUrl:selectedMoment.posterUrl,selectedMoment,provider:source.provider,source};
     if(declared.posterUrl)return {...declared,provider:source.provider,source};
     if(source.provider==='youtube'){
       const id=youtubeId(source);
@@ -123,6 +141,11 @@
     const spec=previewSpec(item);
     if(!spec?.posterUrl)return;
     poster.dataset.previewReady='true';
+    if(spec.selectedMoment?.momentId){
+      poster.dataset.posterMomentId=spec.selectedMoment.momentId;
+      poster.dataset.posterMomentSource=spec.selectedMoment.sourceRole||'official-source';
+      document.documentElement.dataset.cinemaPosterMoment=spec.selectedMoment.momentId;
+    }
     poster.style.backgroundImage=`linear-gradient(180deg,rgba(8,8,7,.04),rgba(8,8,7,.20)),url("${spec.posterUrl}")`;
     poster.style.backgroundSize='cover';
     poster.style.backgroundPosition='center';
