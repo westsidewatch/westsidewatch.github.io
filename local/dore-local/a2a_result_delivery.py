@@ -45,10 +45,12 @@ def record(receipt):
  if not isinstance(receipt,dict) or receipt.get('schema')!=SCHEMA:raise ValueError('invalid_execution_receipt')
  mid=str(receipt.get('source_message_id') or '');digest=str(receipt.get('receipt_sha256') or '')
  if not mid or not digest:raise ValueError('execution_receipt_identity_required')
+ key=(mid,int(receipt.get('attempt') or 0),str(receipt.get('task_status') or ''))
  for old in _read():
-  if old.get('source_message_id')!=mid:continue
+  oldkey=(str(old.get('source_message_id') or ''),int(old.get('attempt') or 0),str(old.get('task_status') or ''))
+  if oldkey!=key:continue
   if old.get('receipt_sha256')==digest:return {'ok':True,'code':'EXECUTION_RECEIPT_REPLAY','receipt':old}
-  raise ValueError('execution_receipt_identity_conflict:'+mid)
+  raise ValueError('execution_receipt_identity_conflict:'+mid+':'+str(key[1])+':'+key[2])
  RECEIPTS.parent.mkdir(parents=True,exist_ok=True)
  with RECEIPTS.open('a',encoding='utf-8') as f:f.write(json.dumps(receipt,ensure_ascii=False,sort_keys=True)+'\n')
  return {'ok':True,'code':'EXECUTION_RECEIPT_RECORDED','receipt':receipt}
