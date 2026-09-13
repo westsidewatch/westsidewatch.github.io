@@ -46,6 +46,14 @@ jobs:
           mapfile -t IDS < <(git diff --name-only HEAD^ HEAD -- coordination-inbox local/dore-local/coordination-inbox \
             | sed -n -E 's#^(coordination-inbox|local/dore-local/coordination-inbox)/(.+)\.json$#\2#p' \
             | sort -u)
+          if [ "${#IDS[@]}" -eq 0 ]; then
+            COMMIT="$(git rev-parse origin/main)"
+            python - "$COMMIT" <<'PY'
+          import json,sys
+          print(json.dumps({'ok':True,'code':'CANONICAL_COORDINATION_REF_VISIBLE','source_ref':'origin/main','source_commit':sys.argv[1],'accepted_count':0},ensure_ascii=False))
+          PY
+            exit 0
+          fi
           ARGS=()
           for id in "${IDS[@]}"; do ARGS+=(--message-id "$id"); done
           python local/dore-local/a2a_delivery_plane.py --no-fetch --ref origin/main "${ARGS[@]}" >/tmp/dore-a2a-delivery.json
