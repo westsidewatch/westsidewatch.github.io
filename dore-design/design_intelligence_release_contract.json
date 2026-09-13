@@ -1,0 +1,41 @@
+{
+  "schema": "dore.design-intelligence.release-contract.v1",
+  "capability": "design.intelligence",
+  "release": "1.0.0",
+  "status": "graduated",
+  "capability_phase": 16,
+  "runtime": {
+    "entrypoint": "local/dore-local/design_intelligence_a2a_worker.py",
+    "active_worker": "design_intelligence_a2a_worker_v11",
+    "inference_boundary": "core-a2a-only",
+    "real_model_acceptance": "gemma4:e4b",
+    "real_browser_raster_required": true,
+    "blind_judges": 2,
+    "blind_order_reversal": true
+  },
+  "learning": {
+    "policy": "dore-ui-capability-learning-v4",
+    "gate_versions": ["ui-v1.json", "ui-v2.json", "ui-v3.json", "ui-v4.json"],
+    "gate_count": 25,
+    "bounded_preference_memory": true,
+    "rejection_memory": true,
+    "anti_recurrence_enforcement": true,
+    "bounded_repair_loop": true
+  },
+  "authority": {
+    "pixel_evidence_primary": true,
+    "model_self_report_is_visual_evidence": false,
+    "canonical_workspace_mutation_allowed": false,
+    "production_promotion_default": false,
+    "raw_memory_remains_canonical": true
+  },
+  "graduation_evidence": {
+    "real_model_a2a_run": 34728015412,
+    "ui_learning_graduation_run": 34728864400
+  },
+  "freeze": {
+    "contract_change_requires_regression": true,
+    "production_promotion_requires_explicit_action": true,
+    "candidate_auto_promotion_forbidden": true
+  }
+}
