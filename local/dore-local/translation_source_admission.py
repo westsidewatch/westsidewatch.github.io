@@ -4,6 +4,7 @@ from __future__ import annotations
 from urllib.request import Request, urlopen
 
 SOURCE_SENTINEL = "Love your enemies, do good to those who hate you"
+PROVIDER_PROBE_URL = "https://api.arclight.org/videoPlayerUrl?refId=1_529-jf-0-0&playerStyle=default&player=bc.vanilla5"
 
 
 def probe_provider(url: str, timeout: int = 30) -> dict:
@@ -30,7 +31,7 @@ def admit_jesus_source(item: dict) -> dict:
         raise RuntimeError("JESUS transcript evidence mode is not admitted")
     if reference.get("role") != "evaluation-only":
         raise RuntimeError("provider Chinese subtitle reference must remain evaluation-only")
-    probe = probe_provider(str(item.get("providerProbeUrl") or ""))
+    probe = probe_provider(str(item.get("providerProbeUrl") or PROVIDER_PROBE_URL))
     return {
         "ok": True,
         "schema": "dore.translation-source-admission.v0",
@@ -41,6 +42,7 @@ def admit_jesus_source(item: dict) -> dict:
         "targetLanguage": item["targetLanguage"],
         "sourceAuthority": True,
         "sourceTranscriptEvidence": transcript["evidenceMode"],
+        "sourceTranscriptObserved": True,
         "sourceSentinel": sentinel,
         "referenceTranslationPointer": reference["page"],
         "referenceRole": reference["role"],
@@ -50,3 +52,25 @@ def admit_jesus_source(item: dict) -> dict:
         "nextGate": "admit-real-provider-caption-timings-or-run-alignment",
         "mediaRehost": False,
     }
+
+
+def admit_jesus_sermon_on_mount(source_page: str, reference_page: str) -> dict:
+    item = {
+        "canonicalId": "cinema:video:jesus-film:jesus",
+        "sourcePointer": "https://www.jesusfilm.org/watch/jesus.html",
+        "sourceLanguage": "en",
+        "targetLanguage": "zh-Hant",
+        "providerProbeUrl": PROVIDER_PROBE_URL,
+        "transcript": {
+            "page": source_page,
+            "evidenceMode": "official-page-verified-snapshot",
+            "evidenceSentinel": SOURCE_SENTINEL,
+            "timingStatus": "not-admitted",
+            "subtitleReady": False,
+        },
+        "referenceTranslation": {
+            "page": reference_page,
+            "role": "evaluation-only",
+        },
+    }
+    return admit_jesus_source(item)
