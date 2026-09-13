@@ -1,0 +1,29 @@
+{{ define "main" }}
+<section class="dawn-library-brand" aria-labelledby="dawn-library-title">
+  <header class="dawn-library-brand__header">
+    <p class="section-label">Westside Watch · Dawn Library</p>
+    <h1 id="dawn-library-title" lang="zh-Hant">黎明書局</h1>
+    <p class="dawn-library-brand__dek">Theology · Scripture · Inner Life</p>
+    <p lang="zh-Hant">在同一座主站之內，從館藏、關係與編輯世界進入閱讀；身份、封面與閱讀指標仍由 Dawn canonical substrate 統一管理。</p>
+  </header>
+  <div class="dawn-library-brand__frame-wrap">
+    <iframe
+      id="dawn-library-formal-surface"
+      class="dawn-library-brand__frame"
+      src="{{ "dawn-library/formal-edition/phase4/" | relURL }}"
+      title="黎明書局正式版館藏"
+      loading="eager"
+    ></iframe>
+  </div>
+</section>
+<style>
+  .dawn-library-brand{width:min(1500px,96vw);margin:0 auto;padding:clamp(2rem,5vw,5rem) 0 4rem;color:#252525}
+  .dawn-library-brand__header{max-width:880px;margin:0 auto clamp(1.5rem,3vw,2.75rem);text-align:center;padding:0 1rem}
+  .dawn-library-brand__header h1{margin:.15em 0;font-family:'Noto Serif TC',serif;font-size:clamp(2.6rem,7vw,6.2rem);font-weight:500;letter-spacing:.08em}
+  .dawn-library-brand__dek{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2vw,1.5rem);letter-spacing:.16em;text-transform:uppercase;color:#8c6818}
+  .dawn-library-brand__header>p:last-child{font-family:'Noto Serif TC',serif;line-height:1.9;color:#59534a}
+  .dawn-library-brand__frame-wrap{border-top:1px solid rgba(206,189,116,.8);background:#f4efe5;box-shadow:0 24px 70px rgba(37,37,37,.08)}
+  .dawn-library-brand__frame{display:block;width:100%;height:min(1200px,82vh);min-height:760px;border:0;background:#f4efe5}
+  @media(max-width:700px){.dawn-library-brand{width:100%;padding-top:1.5rem}.dawn-library-brand__frame{min-height:720px;height:84vh}}
+</style>
+{{ end }}
