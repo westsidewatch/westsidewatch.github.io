@@ -8,6 +8,7 @@ from coordination_mailbox import send_to_chatgpt,flush_outbox,receive_from_chatg
 from a2a_delivery_plane import DELIVERY as DELIVERY_ROOT,durable_messages,sync as sync_delivery
 import a2a_execution_plane as execution_plane
 import a2a_failure_policy as failure_policy
+import a2a_result_delivery as result_delivery
 from complete_recall import complete_recall
 from penpot_coordination_executor import execute_readonly
 from penpot_agent import run_task,call_tool
@@ -47,7 +48,7 @@ def product_monitor():
  try:return run_script('product_monitor.py',30)
  except Exception as e:return {'ok':False,'product_monitor':'UNKNOWN','error':type(e).__name__+': '+str(e)}
 def reply(msg,result,evidence,status,attempt,terminal=False):
- mid=str(msg.get('message_id') or 'unknown');monitor=product_monitor();payload={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'transport':'PASS','execution':'PASS' if result.get('ok') else 'FAIL','product_monitor':monitor,'result':result};return send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(payload,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+mid],thread_id=msg.get('thread_id'),message_id='result-'+mid,metadata={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'product_monitor':monitor.get('product_monitor')})
+ mid=str(msg.get('message_id') or 'unknown');monitor=product_monitor();proof=execution_plane.status(mid);receipt=result_delivery.build(mid,status,result,proof,attempt=attempt,terminal=terminal,evidence_refs=evidence+['source-message:'+mid]);result_delivery.record(receipt);payload={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'transport':'PENDING','execution':receipt['execution_state'],'completion_evidence':receipt['completion_evidence'],'canonical_execution_receipt':receipt,'product_monitor':monitor,'result':result};return send_to_chatgpt('Doré execution: '+str(msg.get('subject') or '')[:100],json.dumps(payload,ensure_ascii=False),requires_reply=False,priority='high',related_goal=str(msg.get('related_goal') or 'dore-coordination'),evidence_refs=evidence+['source-message:'+mid,'execution-receipt:'+receipt['receipt_sha256']],thread_id=msg.get('thread_id'),message_id=receipt['result_message_id'],metadata={'source_message_id':mid,'task_status':status,'attempt':attempt,'terminal':terminal,'execution_receipt_sha256':receipt['receipt_sha256'],'completion_evidence':receipt['completion_evidence'],'product_monitor':monitor.get('product_monitor')})
 def _safe_cwd(raw):
  p=Path(raw or ROOT).expanduser().resolve();roots=(ROOT.resolve(),HOME.resolve(),Path.home().resolve())
  if not any(p==r or r in p.parents for r in roots):raise RuntimeError('local_exec_cwd_outside_allowed_roots:'+str(p))
