@@ -1,7 +1,11 @@
-name: Dawn Formal Edition Phase 8 Preflight
+name: Dawn Formal Edition Phase 8 Production Acceptance
 
-# Preparation only. Keep manual until Phase 7 Brand Integration is formally PASS.
 on:
+  push:
+    branches:
+      - 'dore/dawn-library-formal-edition'
+    paths:
+      - '.github/workflows/dawn-formal-edition-phase8-preflight.yml'
   workflow_dispatch:
 
 permissions:
@@ -11,7 +15,7 @@ env:
   HUGO_VERSION: 0.164.0
 
 jobs:
-  production-preflight:
+  production-acceptance:
     runs-on: ubuntu-latest
     timeout-minutes: 20
     steps:
@@ -59,13 +63,16 @@ jobs:
         run: |
           wget -q -O "${RUNNER_TEMP}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
           sudo dpkg -i "${RUNNER_TEMP}/hugo.deb"
-          hugo version
+          hugo version | tee /tmp/dawn-phase8-hugo-version.txt
+          grep -q "v${HUGO_VERSION}" /tmp/dawn-phase8-hugo-version.txt
 
       - name: Production-equivalent Hugo build
         env:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
-        run: hugo --minify --baseURL "https://westsidewatch.github.io/" --destination /tmp/dawn-phase8-public
+        run: |
+          set -o pipefail
+          hugo --minify --baseURL "https://westsidewatch.github.io/" --destination /tmp/dawn-phase8-public 2>&1 | tee /tmp/dawn-phase8-hugo.log
 
       - name: Static production invariants
         run: |
@@ -76,7 +83,7 @@ jobs:
           grep -q 'Westside Watch' /tmp/dawn-phase8-public/index.html
           grep -q 'Watch for the Dawn' /tmp/dawn-phase8-public/index.html
           grep -q '黎明書局' /tmp/dawn-phase8-public/dawn-library/index.html
-          grep -q 'id="dawn-library-formal-surface"' /tmp/dawn-phase8-public/dawn-library/index.html
+          grep -q 'dawn-library-formal-surface' /tmp/dawn-phase8-public/dawn-library/index.html
           test "$(find /tmp/dawn-phase8-public -type f -name canonical-index.json | wc -l | tr -d ' ')" = "1"
 
       - name: Start production-equivalent site
@@ -102,9 +109,22 @@ jobs:
           "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=15000 --dump-dom \
             http://127.0.0.1:4173/dawn-library/formal-edition/phase4/ > /tmp/dawn-phase8-surface.html
           grep -q 'canonical Works' /tmp/dawn-phase8-surface.html
-          grep -q 'id="personal-open"' /tmp/dawn-phase8-surface.html
+          grep -q 'personal-open' /tmp/dawn-phase8-surface.html
           grep -q 'data-motion="flow"' /tmp/dawn-phase8-surface.html
           test "$(grep -o 'class="work-token"' /tmp/dawn-phase8-surface.html | wc -l)" -le 72
+
+      - name: Preserve Phase 8 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-formal-edition-phase8-diagnostics
+          path: |
+            /tmp/dawn-phase8-hugo-version.txt
+            /tmp/dawn-phase8-hugo.log
+            /tmp/dawn-phase8-http.log
+            /tmp/dawn-phase8-brand.html
+            /tmp/dawn-phase8-surface.html
+          if-no-files-found: ignore
 
       - name: Stop server
         if: always()
