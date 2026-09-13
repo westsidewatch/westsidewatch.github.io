@@ -46,12 +46,15 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 98 — historical Journal/Liming storage authority is reconciled against the current Dawn catalog/storefront family. The 2026-08-24 zero-migration placement audit remains `VERIFIED_COMPLETE / COMPONENT`, but `data/resources.json` as a universal current Liming/Dawn master is `SUPERSEDED`; it remains retained as versioned resource-school/editorial source while current Dawn catalog/storefront identity lives in the distinct `static/dawn-library/` substrate. No migration is implied by this supersession.
 - Checkpoint 99 — Cloudflare connection + Asset Registry history is reconciled: the first production D1/R2 disposable round trip remains `VERIFIED_COMPLETE / COMPONENT`, Asset Registry schema v1 is a real architecture foundation, the old monolithic “next phase” checklist is `SUPERSEDED` by later granular milestones, and current ecosystem-wide registry coverage remains `UNKNOWN_NEEDS_EVIDENCE` rather than inferred from schema/endpoint presence.
 - Checkpoint 100 — local Git coordination rescue is a bounded `VERIFIED_COMPLETE / COMPONENT` milestone. Real divergence testing proves backup preservation and non-destructive reconciliation; the resident daemon retains topology-first/fail-closed safety. Arbitrary dirty/conflict resolution and broader production authority are explicitly not claimed. The continuing sync path remains `MAINTENANCE / CORE SUPPORT` under RUNTIME/STEWARDSHIP.
+- Checkpoint 101 — bounded wake-runtime primitive is `VERIFIED_COMPLETE / COMPONENT`: SQLite/WAL durable queueing, idempotency, leases, bounded retries, verifier-gated atomic promotion, backup preservation and stale-lease recovery are real. Broader RUNTIME stays `ACTIVE`, and production execution authority remains separate.
+- Checkpoint 102 — current `dore-core/benchmarks/` family is fully accounted for. `RESEARCHER-GRADUATION.md` is a `VERIFIED_COMPLETE / SPECIFICATION COMPONENT`, not graduation evidence; real dataset/threshold/graduation proof remains evidence-gated.
+- Checkpoint 103 — Holy Light Cinema is reconciled as `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; the Jiang Xiuqin canonical collection/provider-policy acceptance is a bounded `VERIFIED_COMPLETE / COMPONENT`. Whole-product production readback/provider resilience/moment-search acceptance remain open, and the Product Registry omission is concrete coverage drift.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 100. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 100 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 103. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 103 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 100 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 103 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -83,11 +86,14 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - First production D1/R2 round trip: `VERIFIED_COMPLETE / COMPONENT`; not a fresh production-health token.
 - 2026-08-24 one-shot Cloudflare redeploy/migration trigger files: `RETIRED / HISTORICAL CONTROL ARTIFACT`.
 - Doré Constitution 0.3: `CORE/CONTINUOUS / GOVERNING_DOCTRINE`; constitutional revision remains event-triggered rather than a closeable project milestone.
-- Product Registry architecture foundation: `VERIFIED_COMPLETE / COMPONENT`; its live coverage is `MAINTENANCE / COMPLETED_REVISIT_CANDIDATE`, and exhaustive parity with canonical workstreams remains `UNKNOWN_NEEDS_EVIDENCE` until a scoped coverage contract exists.
+- Product Registry architecture foundation: `VERIFIED_COMPLETE / COMPONENT`; its live coverage is `MAINTENANCE / COMPLETED_REVISIT_CANDIDATE`, and exhaustive parity with canonical workstreams remains `UNKNOWN_NEEDS_EVIDENCE` until a scoped coverage contract exists. Cinema is now a concrete current omission supporting that drift finding.
 - Conversation Runtime Internal Alpha: `VERIFIED_COMPLETE / COMPONENT / INTERNAL_ONLY`; public Conversation remains `PARKED`, and scoped Conversation Memory v1 remains separately active/evidence-gated.
 - `data/resources.json` universal current Dawn/Liming master claim: `SUPERSEDED`; retained as resource-school/editorial source while Dawn catalog/storefront authority is represented by the later `static/dawn-library/` family.
 - Asset Registry schema v1: `VERIFIED_COMPLETE / ARCHITECTURE FOUNDATION`; whole-ecosystem coverage/parity remains `UNKNOWN_NEEDS_EVIDENCE`.
 - Coordination rescue divergence-preservation: `VERIFIED_COMPLETE / COMPONENT`; resident coordination sync remains `MAINTENANCE / CORE SUPPORT`, and dirty/arbitrary conflict self-resolution is not claimed.
+- Wake runtime primitive: `VERIFIED_COMPLETE / COMPONENT`; broader RUNTIME remains active and production authority must remain explicit.
+- Researcher Graduation benchmark specification: `VERIFIED_COMPLETE / SPECIFICATION COMPONENT`; real graduation remains evidence-gated.
+- Holy Light Cinema: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; Jiang collection/provider-policy acceptance is `VERIFIED_COMPLETE / COMPONENT`; whole-product completion remains unearned.
 
 ## Latest liveness evidence
 
