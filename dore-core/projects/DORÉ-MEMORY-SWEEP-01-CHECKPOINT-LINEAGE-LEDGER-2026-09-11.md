@@ -49,12 +49,16 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 101 — bounded wake-runtime primitive is `VERIFIED_COMPLETE / COMPONENT`: SQLite/WAL durable queueing, idempotency, leases, bounded retries, verifier-gated atomic promotion, backup preservation and stale-lease recovery are real. Broader RUNTIME stays `ACTIVE`, and production execution authority remains separate.
 - Checkpoint 102 — current `dore-core/benchmarks/` family is fully accounted for. `RESEARCHER-GRADUATION.md` is a `VERIFIED_COMPLETE / SPECIFICATION COMPONENT`, not graduation evidence; real dataset/threshold/graduation proof remains evidence-gated.
 - Checkpoint 103 — Holy Light Cinema is reconciled as `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; the Jiang Xiuqin canonical collection/provider-policy acceptance is a bounded `VERIFIED_COMPLETE / COMPONENT`. Whole-product production readback/provider resilience/moment-search acceptance remain open, and the Product Registry omission is concrete coverage drift.
+- Checkpoint 104 — complete current `dore-core/architecture/` family reconciliation. The family is coherent around one persistent Doré + bounded products + temporary capability-growth projects + replaceable runtimes/providers. Capability Embodiment and Operating Nervous System remain broader evidence-gated work; shared Scripture Workspace / ONE × Multiwrite Bible Notes has crossed from pre-implementation architecture into `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`, with cross-product artifact/retrieval proof still open.
+- Checkpoint 105 — complete current `dore-core/evidence/` family reconciliation. Penpot Remote MCP persistent-write bridge remains `VERIFIED_COMPLETE / COMPONENT`; wake-runtime local launchd activation is `VERIFIED_COMPLETE / DEPLOYMENT COMPONENT`, explicitly superseding an earlier failed activation and false-positive acceptance artifact. Neither proves whole visual grammar or whole runtime completion.
+- Checkpoint 106 — Universal Source Probe v0 is `VERIFIED_COMPLETE / COMPONENT`; A2A Reliability Atlas v1 is `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`. The key architecture correction is that reliability primitives largely existed already; the central debt was split authority and non-compulsory routing. Duplicate capability identity and route-local completion truth are `SUPERSEDED / COMPATIBILITY-ONLY` directions.
+- Checkpoint 107 — current Evolution research/equipment-acquisition contracts are reconciled. `多雷探索` is a Core invocation alias, not a separate architecture; the Open Research Micro-Loop is an `ACTIVE / IMPLEMENTED METHOD` with autonomous end-to-end use still evidence-gated; the September 5 autonomous-evolution “last layer” is a bounded `VERIFIED_COMPLETE / RESEARCH DECISION`, and later wake-runtime + launchd evidence proves part of that design is real. Whole automatic gap→Explore→admission→resume→blind-transfer behavior remains `UNKNOWN_NEEDS_EVIDENCE`.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 103. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 103 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 107. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 107 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 103 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 107 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -92,8 +96,13 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - Asset Registry schema v1: `VERIFIED_COMPLETE / ARCHITECTURE FOUNDATION`; whole-ecosystem coverage/parity remains `UNKNOWN_NEEDS_EVIDENCE`.
 - Coordination rescue divergence-preservation: `VERIFIED_COMPLETE / COMPONENT`; resident coordination sync remains `MAINTENANCE / CORE SUPPORT`, and dirty/arbitrary conflict self-resolution is not claimed.
 - Wake runtime primitive: `VERIFIED_COMPLETE / COMPONENT`; broader RUNTIME remains active and production authority must remain explicit.
+- Wake local launchd activation: `VERIFIED_COMPLETE / DEPLOYMENT COMPONENT`; dated host proof, not current production-health or universal scheduler evidence.
 - Researcher Graduation benchmark specification: `VERIFIED_COMPLETE / SPECIFICATION COMPONENT`; real graduation remains evidence-gated.
 - Holy Light Cinema: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; Jiang collection/provider-policy acceptance is `VERIFIED_COMPLETE / COMPONENT`; whole-product completion remains unearned.
+- Shared Scripture Workspace / ONE × Multiwrite Bible Notes: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; cross-product same-artifact and shared-retrieval proof remain open.
+- Universal Source Probe v0: `VERIFIED_COMPLETE / COMPONENT`; broader heterogeneous-source operation remains continuous/evidence-gated.
+- A2A Reliability Atlas v1: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; universal compulsory-path reliability still needs real workload proof.
+- Evolution autonomous-last-layer architecture decision: `VERIFIED_COMPLETE / RESEARCH DECISION`; Open Research Micro-Loop is an `ACTIVE / IMPLEMENTED METHOD`, and whole automatic capability-acquisition/admission/blind-transfer behavior remains `UNKNOWN_NEEDS_EVIDENCE`.
 
 ## Latest liveness evidence
 
