@@ -17,10 +17,10 @@ Original source text remains authority. Translation is a derived projection and 
 
 ## v0 language lanes
 
-1. English video -> authoritative English transcript -> Traditional Chinese translation -> English/Chinese bilingual timed subtitle.
-2. Chinese video -> authoritative Chinese transcript -> English translation -> Chinese/English bilingual timed subtitle.
+1. English video -> authoritative English transcript/caption -> Traditional Chinese translation -> English/Chinese bilingual timed subtitle.
+2. Chinese video -> authoritative Chinese transcript/caption -> English translation -> Chinese/English bilingual timed subtitle.
 
-Both lanes emit the same provider-neutral bilingual subtitle artifact contract.
+Both lanes emit the same provider-neutral `dore.bilingual-subtitle.v0` artifact contract.
 
 ## Capability chain
 
@@ -47,25 +47,42 @@ Canonical resource: `cinema:video:jesus-film:jesus`.
 
 Source: Jesus Film Project official JESUS resource. Chapter 12, `Sermon on the Mount`, is the first bounded translation training field.
 
-### Source admission result
+### Source admission
 
-PASS at the source-admission layer:
+PASS:
 
 - canonical JESUS identity and source pointer are preserved;
-- official English transcript page is recorded as source authority evidence;
-- an official-page verified transcript sentinel is recorded without copying the full provider transcript into the repository;
-- the provider Traditional Chinese subtitle surface is recorded only as an evaluation/reference projection and cannot overwrite source authority;
-- no film/audio/subtitle media is rehosted;
-- GitHub CI live-probes the official Jesus Film Project Arclight playback endpoint to verify provider liveness.
+- official English transcript remains source authority;
+- official Traditional Chinese captions are evaluation/reference only and cannot overwrite source authority;
+- no film/audio/caption media is persisted or rehosted;
+- CI live-probes the official Arclight playback source.
 
-The provider transcript webpage returns HTTP 403 to GitHub Actions direct fetches. This is treated as a provider access boundary, not as missing source evidence. CI therefore separates two facts: transcript evidence is an official-page verified snapshot; runtime liveness is verified independently against the official Arclight embed endpoint.
+### Real timing admission
 
-### Timing gate
+PASS.
 
-`timingStatus: not-admitted`
-`subtitleReady: false`
+The official Arclight player exposes provider WebVTT caption tracks. CI resolves the live player and fetches the English and Traditional Chinese tracks using provider-compatible request context. English WebVTT is the timing/source authority; Traditional Chinese WebVTT remains evaluation-only.
 
-No cue timestamp has been invented. The next EN -> ZH gate is to admit a real provider caption timing track or run an authorized alignment adapter over accessible source audio/captions. Only then can the first real timed bilingual subtitle artifact be declared PASS.
+First verified source timing windows from Luke 6:27:
+
+- `34:21.110 -> 34:22.860`
+- `34:24.210 -> 34:27.010`
+
+No timestamp is fabricated. The bilingual artifact is generated transiently during acceptance, not stored as a copied third-party caption file.
+
+### Core routing
+
+PASS.
+
+`translation.project` is now a callable Doré Capability Bus route, not registry-only. CI dispatches it through the shared Core bus with `caller_product=cinema`, verifies `dore-core` ownership, provider-neutral routing, source authority, translation non-authority, and immutable timing.
+
+CI evidence now includes:
+
+- `DORE_TRANSLATOR_JESUS_REAL_TIMED_ARTIFACT=PASS`
+- `DORE_TRANSLATOR_JESUS_REAL_CUES=2`
+- `DORE_TRANSLATION_CAPABILITY_BUS_E2E=PASS`
+- `DORE_TRANSLATOR_JESUS_SOURCE_ADMISSION=PASS`
+- `DORE_TRANSLATOR_JESUS_TIMING_GATE=REAL_PROVIDER_WEBVTT_PASS`
 
 ## First real ZH -> EN acceptance
 
@@ -81,6 +98,8 @@ Cinema is the real-world validation surface; Habakkuk is the production subtitle
 
 v0 is not complete until both real language lanes demonstrate source text preservation, real timing preservation, schema-valid bilingual artifact, explicit Scripture/terminology/memory provenance, Cinema consumption, Habakkuk consumption, and reusable verified correction evidence without creating a second AI, Scripture authority, media identity or translation database.
 
+The JESUS EN -> ZH source/timing/Core-routing slice is now PASS. The real ZH -> EN lane and Habakkuk artifact-consumer acceptance remain subsequent gates.
+
 ## Explicit non-goals
 
 No bulk catalog translation, silent training on third-party media, per-correction auto-fine-tuning, generated replacement of source captions, provider lock-in, media rehosting, or fabricated transcript/timestamps.
@@ -91,7 +110,6 @@ The existing `westsidewatch/Westside-Stories` application is the legacy subtitle
 
 ## Next engineering gate
 
-1. Make `translation.project` callable through the canonical Capability Bus, not registry-only.
-2. Resolve/admit real JESUS caption timings or an authorized alignment path.
-3. Generate the first real JESUS EN -> ZH timed bilingual artifact.
-4. Then execute the authorized ZH -> EN lane.
+1. Execute the first real authorized ZH -> EN source lane under the same artifact contract.
+2. Connect accepted bilingual artifacts to Habakkuk as a consumer without retranslation.
+3. Begin verified terminology/memory acceptance from real subtitle corrections.
