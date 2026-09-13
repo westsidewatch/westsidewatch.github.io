@@ -32,8 +32,9 @@
           {{ $cardSection = "LIVING WATER" }}
         {{ end }}
         {{ range .Pages.ByWeight }}
+          {{ $entryHref := .Params.entry_url | default .RelPermalink }}
           {{ partial "index-card.html" (dict
-            "href" .RelPermalink
+            "href" $entryHref
             "number" (printf "%02d" .Weight)
             "section" $cardSection
             "title" .Title
@@ -51,7 +52,8 @@
     </header>
     <div class="portal-grid">
       {{ range .Pages.ByWeight }}
-        <a class="portal-card" href="{{ .RelPermalink }}">
+        {{ $entryHref := .Params.entry_url | default .RelPermalink }}
+        <a class="portal-card" href="{{ $entryHref }}">
           <span class="portal-card__number">{{ printf "%02d" .Weight }}</span>
           <strong>{{ .Title }}</strong>
           {{ with .Params.subtitle }}<span class="portal-card__subtitle">{{ . }}</span>{{ end }}
