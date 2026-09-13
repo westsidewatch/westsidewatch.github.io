@@ -4,6 +4,7 @@ const BOOK_CAPABILITY='publishing.book-intelligence';
 const IMAGE_CAPABILITY='image.generate';
 const DAWN_CAPABILITY='dawn.library.publish';
 const SOURCE_PROBE_CAPABILITY='source.probe';
+document.documentElement.dataset.doreSiteBridge='companion-2.0.1';
 function safeDetail(value){if(typeof cloneInto==='function')return cloneInto(value,window);return value}
 function emit(name,requestId,payload){window.dispatchEvent(new CustomEvent(name,{detail:safeDetail({request_id:requestId,payload})}))}
 async function send(capability,args,callerProduct){const reply=await browser.runtime.sendMessage({type:'dore.site-capability',capability,args,caller_product:callerProduct});return reply&&reply.result?reply.result:{ok:false,status:'failed',error:{code:'bridge_failed',message:String(reply&&reply.error||'site capability bridge failed')}}}
