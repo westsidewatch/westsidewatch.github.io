@@ -22,10 +22,17 @@ index=(ROOT/'cinema/index.html').read_text()
 adapter=(ROOT/'cinema/provider-adapters.js').read_text()
 script=(ROOT/'cinema/cinema.js').read_text()
 style=(ROOT/'cinema/inline-player.css').read_text()
+play_control=(ROOT/'cinema/play-control.js').read_text()
 assert 'provider-adapters.js' in index and index.index('provider-adapters.js') < index.index('cinema.js')
+assert 'play-control.js' in index and index.index('cinema.js') < index.index('play-control.js')
 assert 'HolyLightProviders' in adapter and 'iframe' in adapter
 assert 'mountInlinePlayer' in script and "dataset.cinemaPlayback='inline'" in script
 assert '.living-poster.is-playing' in style
+assert "const selector='.living-poster__play-mark'" in play_control
+assert "setAttribute('role','button')" in play_control
+assert "setAttribute('tabindex','0')" in play_control
+assert "querySelector('[data-action=\"watch\"]')" in play_control
+assert "event.key==='Enter'||event.key===' '" in play_control
 
 if os.getenv('CINEMA_PROVIDER_PROBE')=='1':
     request=urllib.request.Request(source['embedUrl'],headers={'User-Agent':'Mozilla/5.0 HolyLightCinemaAcceptance/1.0'})
