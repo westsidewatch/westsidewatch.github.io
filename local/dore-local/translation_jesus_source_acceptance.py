@@ -12,8 +12,6 @@ assert manifest["schema"] == "dore.translation-source.v0"
 assert item["canonicalId"] == "cinema:video:jesus-film:jesus"
 assert item["sourceAuthority"] is True
 assert item["mediaRehost"] is False
-assert item["transcript"]["timingStatus"] == "not-admitted"
-assert item["transcript"]["subtitleReady"] is False
 assert item["referenceTranslation"]["role"] == "evaluation-only"
 
 result = admit_jesus_sermon_on_mount(
@@ -26,9 +24,13 @@ assert result["sourcePointer"] == item["sourcePointer"]
 assert result["sourceTranscriptObserved"] is True
 assert result["sourceAuthority"] is True
 assert result["referenceRole"] == "evaluation-only"
-assert result["timingStatus"] == "not-admitted"
-assert result["subtitleReady"] is False
 assert result["mediaRehost"] is False
 
+# These imports execute the real timed JESUS WebVTT acceptance and the
+# canonical Capability Bus dispatch acceptance. They remain separate modules
+# so each contract is reusable outside this provider-source gate.
+import translation_jesus_timed_acceptance  # noqa: E402,F401
+import translation_bus_e2e  # noqa: E402,F401
+
 print("DORE_TRANSLATOR_JESUS_SOURCE_ADMISSION=PASS")
-print("DORE_TRANSLATOR_JESUS_TIMING_GATE=PENDING_REAL_TIMINGS")
+print("DORE_TRANSLATOR_JESUS_TIMING_GATE=REAL_PROVIDER_WEBVTT_PASS")
