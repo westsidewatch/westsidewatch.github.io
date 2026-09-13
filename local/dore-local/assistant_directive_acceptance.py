@@ -10,6 +10,7 @@ h=host.route_payload({'action':'native.health','__dore_transport_id':'h1'})
 assert h['ok'] and h['assistant_directives'] is True
 assert 'design.production.rollout' in h['production_capabilities']
 assert 'knowledge.substrates.install' in h['production_capabilities']
+assert 'source.probe' in h['production_capabilities']
 # Framing remains valid for assistant-directive traffic without executing production actions.
 for capability in ('design.production.rollout','knowledge.substrates.install'):
  p={'capability':capability,'args':{},'__dore_transport_id':'x'}
@@ -21,6 +22,11 @@ manifest=json.loads((ROOT/'local/dore-companion-extension/manifest.json').read_t
 assert 'DORE_DIRECTIVE' in content and 'data-message-author-role="assistant"' in content
 assert 'dore.directive' in background and 'design.' in background
 assert 'knowledge.substrates.install' in background and 'ASSISTANT_DIRECTIVE_ALLOWLIST' in background
-assert manifest['version']=='2.0.0' and 'nativeMessaging' in manifest['permissions']
+version_parts=[int(x) for x in manifest['version'].split('.') if x.isdigit()]
+assert version_parts and version_parts[0]>=2 and 'nativeMessaging' in manifest['permissions']
+assert 'runtime_probe_background.js' in manifest['background']['scripts']
+site_matches=[m for entry in manifest.get('content_scripts',[]) if 'site_bridge.js' in entry.get('js',[]) for m in entry.get('matches',[])]
+assert 'https://westsidewatch.github.io/*' in site_matches
+assert 'https://*.pages.dev/*' in site_matches
 assert not any(str(x).startswith('http://127.0.0.1:4312') for x in manifest['permissions'])
 print('DORE_A2A_ASSISTANT_DIRECTIVE_CONTROL_PLANE_PASS')
