@@ -18,7 +18,13 @@
         "official":true,
         "embed":true,
         "access":"embedded-playback",
-        "embedPermissionUrl":"https://www.jesusfilm.org/about/faq/"
+        "embedPermissionUrl":"https://www.jesusfilm.org/about/faq/",
+        "preview":{
+          "posterUrl":"https://image.mux.com/Dl8dRUL01MKAdzv7XtfvvUj1jVYq029z2TS9TGeH8Xj00o/thumbnail.webp?time=2&width=1280",
+          "posterSource":"jesus-film-project-watch-page",
+          "hoverPreview":false,
+          "mode":"official-poster"
+        }
       }],
       "rights": {"rehost": false,"policy": "official-provider-embed"},
       "provenance": {"verified": true,"verifiedAt": "2026-09-13","embedPolicyVerified": true}
@@ -33,7 +39,21 @@
       "topics": ["馬太福音", "四福音", "聖經導論"],
       "momentCapability": "source-title",
       "sourcePointer": "https://www.youtube.com/watch?v=F2KMYwBRngU",
-      "providerSources": [{"provider":"youtube","channel":"David Pawson - Official","url":"https://www.youtube.com/watch?v=F2KMYwBRngU","embedUrl":"https://www.youtube.com/embed/F2KMYwBRngU","official":true,"embed":true,"access":"embedded-playback"}],
+      "providerSources": [{
+        "provider":"youtube",
+        "channel":"David Pawson - Official",
+        "url":"https://www.youtube.com/watch?v=F2KMYwBRngU",
+        "embedUrl":"https://www.youtube.com/embed/F2KMYwBRngU",
+        "official":true,
+        "embed":true,
+        "access":"embedded-playback",
+        "preview":{
+          "posterUrl":"https://i.ytimg.com/vi/F2KMYwBRngU/hqdefault.jpg",
+          "hoverPreview":true,
+          "mode":"muted-hover",
+          "previewStartSeconds":0
+        }
+      }],
       "rights": {"rehost": false,"policy": "provider-embed"},
       "provenance": {"verified": true,"verifiedAt": "2026-09-12"}
     },
@@ -47,7 +67,21 @@
       "topics": ["等候神", "內在生活", "醫治"],
       "momentCapability": "source-title",
       "sourcePointer": "https://www.youtube.com/watch?v=kMUngZq5jss",
-      "providerSources": [{"provider":"youtube","channel":"GOOD TV 特會精選","url":"https://www.youtube.com/watch?v=kMUngZq5jss","embedUrl":"https://www.youtube.com/embed/kMUngZq5jss","official":true,"embed":true,"access":"embedded-playback"}],
+      "providerSources": [{
+        "provider":"youtube",
+        "channel":"GOOD TV 特會精選",
+        "url":"https://www.youtube.com/watch?v=kMUngZq5jss",
+        "embedUrl":"https://www.youtube.com/embed/kMUngZq5jss",
+        "official":true,
+        "embed":true,
+        "access":"embedded-playback",
+        "preview":{
+          "posterUrl":"https://i.ytimg.com/vi/kMUngZq5jss/hqdefault.jpg",
+          "hoverPreview":true,
+          "mode":"muted-hover",
+          "previewStartSeconds":0
+        }
+      }],
       "rights": {"rehost": false,"policy": "provider-embed"},
       "provenance": {"verified": true,"verifiedAt": "2026-09-12"}
     },
@@ -61,7 +95,7 @@
       "durationSeconds": 3185,
       "topics": ["聖靈", "能力", "見證"],
       "sourcePointer": "https://www.goodtv.tv/watch?episode=81076&series=196524&type=2",
-      "providerSources": [{"provider":"goodtv-first-party","url":"https://www.goodtv.tv/watch?episode=81076&series=196524&type=2","official":true,"embed":false,"access":"official-source-handoff"}],
+      "providerSources": [{"provider":"goodtv-first-party","url":"https://www.goodtv.tv/watch?episode=81076&series=196524&type=2","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"handoff-only"}}],
       "rights": {"rehost": false,"policy": "official-source-only"},
       "provenance": {"verified": true,"verifiedAt": "2026-09-12"}
     }
