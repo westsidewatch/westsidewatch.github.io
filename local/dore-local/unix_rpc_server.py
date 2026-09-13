@@ -28,7 +28,7 @@ def dispatch(request):
  method=request.get("method");params=request.get("params") or {}
  if not isinstance(params,dict):return _jsonrpc_error(request_id,-32602,"params must be an object")
  if method in {"dore.health","health"}:
-  health=native_host.health_payload();result={"ok":True,"service":SERVICE,"protocol":PROTOCOL,"transport":"unix-domain-socket","lifecycle":"launchd-socket-activation","socket":"~/.dore/run/dore.sock","browser_required":False,"paid_runtime":False,"production_capabilities":health.get("production_capabilities",[]),"normalization_boundary":health.get("normalization_boundary"),"degraded_modules":health.get("degraded_modules",{})}
+  health=native_host.health_payload();result={"ok":True,"service":SERVICE,"protocol":PROTOCOL,"transport":"unix-domain-socket","lifecycle":"launchd-socket-activation","socket":"~/.dore/run/dore.sock","browser_required":False,"paid_runtime":False,"production_capabilities":health.get("production_capabilities",[]),"normalization_boundary":health.get("normalization_boundary"),"runtime_generation":health.get("runtime_generation"),"restart_required":health.get("restart_required",False),"degraded_modules":health.get("degraded_modules",{})}
  elif method in {"capability.list","dore.capabilities"}:result={"ok":True,"owner":"dore-core","capabilities":native_host.discover_production(include_planned=bool(params.get("include_planned")))}
  elif method in {"capability.resolve","dore.resolve"}:
   capability=str(params.get("capability") or "")
