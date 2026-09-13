@@ -1,0 +1,26 @@
+name: Holy Light Cinema Jiang Xiuqin Collection
+
+on:
+  push:
+    paths:
+      - 'cinema/data/video-resource.v0.json'
+      - 'local/dore-local/cinema_jiang_xiuqin_collection_acceptance.py'
+      - '.github/workflows/holy-light-cinema-jiang-xiuqin.yml'
+  pull_request:
+    paths:
+      - 'cinema/data/video-resource.v0.json'
+      - 'local/dore-local/cinema_jiang_xiuqin_collection_acceptance.py'
+      - '.github/workflows/holy-light-cinema-jiang-xiuqin.yml'
+
+jobs:
+  collection:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax
+        run: python -m py_compile local/dore-local/cinema_jiang_xiuqin_collection_acceptance.py
+      - name: Verify canonical collection and official provider policy
+        run: python local/dore-local/cinema_jiang_xiuqin_collection_acceptance.py
