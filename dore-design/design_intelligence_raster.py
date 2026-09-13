@@ -19,6 +19,23 @@ BROWSERS = (
     'google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser',
 )
 
+MAC_BROWSER_PATHS = (
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
+    '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+)
+
+
+def _mac_browser_paths() -> tuple[str, ...]:
+    home = Path.home()
+    return MAC_BROWSER_PATHS + (
+        str(home / 'Applications/Google Chrome.app/Contents/MacOS/Google Chrome'),
+        str(home / 'Applications/Chromium.app/Contents/MacOS/Chromium'),
+        str(home / 'Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary'),
+        str(home / 'Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'),
+    )
+
 
 def browser_binary() -> str:
     override = os.environ.get('DORE_DESIGN_BROWSER')
@@ -31,6 +48,10 @@ def browser_binary() -> str:
         p = shutil.which(name)
         if p:
             return p
+    for candidate in _mac_browser_paths():
+        path = Path(candidate)
+        if path.is_file() and os.access(path, os.X_OK):
+            return str(path)
     raise RuntimeError('real_browser_required_for_raster_evidence')
 
 
