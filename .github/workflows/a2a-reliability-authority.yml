@@ -1,0 +1,52 @@
+name: A2A Reliability Authority
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'local/dore-local/capability_bindings.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/a2a_capability_authority_acceptance.py'
+      - 'local/dore-local/a2a_ingress.py'
+      - 'local/dore-local/a2a_ingress_acceptance.py'
+      - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/a2a_executor.py'
+      - 'local/dore-local/a2a_execution_plane.py'
+      - 'local/dore-local/a2a_durable_execution_acceptance.py'
+      - 'local/dore-local/a2a_generation.py'
+      - 'local/dore-local/a2a_generation_acceptance.py'
+      - 'local/dore-local/a2a_recovery_acceptance.py'
+      - 'local/dore-local/a2a_failure_policy.py'
+      - 'local/dore-local/a2a_failure_taxonomy_acceptance.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-local/unix_rpc_server.py'
+      - '.github/workflows/a2a-reliability-authority.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authority-gate:
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Canonical capability authority acceptance
+        run: python local/dore-local/a2a_capability_authority_acceptance.py
+      - name: Public dore.call normalization acceptance
+        run: python local/dore-local/a2a_ingress_acceptance.py
+      - name: Compulsory durable execution acceptance
+        run: python local/dore-local/a2a_durable_execution_acceptance.py
+      - name: Runtime generation identity acceptance
+        run: python local/dore-local/a2a_generation_acceptance.py
+      - name: Lease heartbeat and crash recovery acceptance
+        run: python local/dore-local/a2a_recovery_acceptance.py
+      - name: Failure taxonomy and poison isolation acceptance
+        run: python local/dore-local/a2a_failure_taxonomy_acceptance.py
+      - name: Preserve existing substrate bus contract
+        run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
