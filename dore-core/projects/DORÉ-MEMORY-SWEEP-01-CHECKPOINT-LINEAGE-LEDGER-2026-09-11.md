@@ -38,12 +38,15 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 90 — early Cloudflare R2 asset/service history reconciliation; Priority-A migration/delivery/cleanup and the five-asset Priority-B site-media cutover are bounded `VERIFIED_COMPLETE / COMPONENT` milestones. The old “runtime delivery pending” and “Priority B deferred” inventory statements are `SUPERSEDED` as current-state guidance. The bounded `dore.query.v1` service contract also remains a defensible historical component completion because its current endpoint implementation is still present.
 - Checkpoint 91 — Conversation → shared Core substrate convergence is `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; stable message projection, idempotent backfill and acceptance wiring are real, but persisted merged-main acceptance plus representative real-history proof remain open.
 - Checkpoint 92 — Journal + Liming Library media-placement audit is a bounded `VERIFIED_COMPLETE / COMPONENT` zero-migration milestone. The correct result was to keep structured editorial/resource source data in Git and avoid migration-for-migration's-sake; the old generic structured data-runtime follow-on must pass a duplication check before being treated as current work.
+- Checkpoint 93 — the first production D1 + R2 disposable round trip is retained as `VERIFIED_COMPLETE / COMPONENT`; the old “production Asset Registry is next” wording is `SUPERSEDED` current-state guidance rather than live backlog.
+- Checkpoint 94 — one-shot Cloudflare redeploy/migration trigger artifacts are `RETIRED / HISTORICAL CONTROL ARTIFACT`; the migration workflow remains a bounded maintenance/history mechanism and must not be treated as a generic current migration engine without a fresh contract review.
+- Checkpoint 95 — the complete current `dore-core/constitution/` family is reconciled as `CORE/CONTINUOUS / GOVERNING_DOCTRINE`. No principle is superseded/retired, no new human decision is required, and the current `dore-core/memory/` inventory adds no new workstream beyond previously reconciled sensory-memory evidence.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 92. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 92 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 95. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 95 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 92 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 95 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -72,6 +75,9 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - `dore.query.v1` service-contract milestone: `VERIFIED_COMPLETE / COMPONENT`; broader Doré service/execution architecture remains continuous and evolving.
 - Conversation shared-substrate projection: `ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`; persisted acceptance execution and representative real-history proof remain open.
 - Journal + Liming zero-migration placement audit: `VERIFIED_COMPLETE / COMPONENT`; classification-before-migration is retained as reusable storage doctrine.
+- First production D1/R2 round trip: `VERIFIED_COMPLETE / COMPONENT`; not a fresh production-health token.
+- 2026-08-24 one-shot Cloudflare redeploy/migration trigger files: `RETIRED / HISTORICAL CONTROL ARTIFACT`.
+- Doré Constitution 0.3: `CORE/CONTINUOUS / GOVERNING_DOCTRINE`; constitutional revision remains event-triggered rather than a closeable project milestone.
 
 ## Latest liveness evidence
 
