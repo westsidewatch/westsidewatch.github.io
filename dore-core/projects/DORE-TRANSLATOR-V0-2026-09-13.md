@@ -85,7 +85,9 @@ Habakkuk burns this artifact; it does not own a competing translation engine.
 
 ### EN -> ZH
 
-Use the existing Holy Light Cinema canonical David Pawson Matthew resource. Produce a timed bilingual artifact from verified English source material. Validate at least one biblical/theological terminology decision and preserve canonical video identity.
+Use the existing Holy Light Cinema canonical resource `cinema:video:jesus-film:jesus` from Jesus Film Project as the first English acceptance source. Prefer the official source transcript/caption material already exposed by the provider; do not fabricate transcript text or timing. Produce a timed bilingual artifact from verified English source material, preserve the canonical JESUS video identity and source pointer, and validate at least one Scripture/terminology decision with explicit provenance.
+
+JESUS is intentionally the first training field because the resource is already canonical in Cinema, has an official full transcript and chapter structure, and gives Doré repeated Bible-world language rather than generic translation text. Translation must remain a projection over the official source and must not copy or rehost the film.
 
 ### ZH -> EN
 
@@ -119,4 +121,4 @@ The existing `westsidewatch/Westside-Stories` application is the legacy subtitle
 
 ## Next engineering gate
 
-Implement the provider-neutral `translation.project` Core contract and bilingual subtitle artifact acceptance first. Then connect one real Pawson EN->ZH sample and one authorized ZH->EN sample. Only after those two lanes pass should Cinema surface controls or Habakkuk burn-in UI be expanded.
+Implement the provider-neutral `translation.project` Core contract and bilingual subtitle artifact acceptance first. Then connect the canonical JESUS resource for the real EN->ZH lane and one authorized ZH->EN sample. Only after those two lanes pass should Cinema surface controls or Habakkuk burn-in UI be expanded.
