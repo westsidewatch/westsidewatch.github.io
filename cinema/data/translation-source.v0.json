@@ -1,0 +1,34 @@
+{
+  "schema": "dore.translation-source.v0",
+  "items": [
+    {
+      "canonicalId": "cinema:video:jesus-film:jesus",
+      "sourcePointer": "https://www.jesusfilm.org/watch/jesus.html",
+      "sourceLanguage": "en",
+      "targetLanguage": "zh-Hant",
+      "provider": "jesus-film-project",
+      "sourceAuthority": true,
+      "mediaRehost": false,
+      "transcript": {
+        "status": "provider-authoritative",
+        "page": "https://www.jesusfilm.org/watch/jesus.html/sermon-on-the-mount-2/english.html",
+        "chapter": "Sermon on the Mount",
+        "chapterIndex": 12,
+        "timingStatus": "not-admitted",
+        "subtitleReady": false
+      },
+      "referenceTranslation": {
+        "role": "evaluation-only",
+        "language": "zh-Hant",
+        "page": "https://www.jesusfilm.org/watch/jesus.html/sermon-on-the-mount-2.html?subtitles=chinese-traditional",
+        "authority": "provider-reference",
+        "mayOverwriteSource": false
+      },
+      "provenance": {
+        "verifiedAt": "2026-09-13",
+        "verifiedBy": "provider-network-probe",
+        "rightsPolicy": "official-source-no-rehost"
+      }
+    }
+  ]
+}
