@@ -4,6 +4,7 @@ on:
     paths:
       - 'local/dore-local/source_probe_capability.py'
       - 'local/dore-local/source_probe_acceptance.py'
+      - 'local/dore-local/runtime_source_probe.js'
       - 'dore-core/runtime/capability-registry.v1.json'
       - '.github/workflows/dore-universal-source-probe-v0.yml'
 jobs:
@@ -14,11 +15,16 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
       - name: Syntax
-        run: python -m py_compile local/dore-local/source_probe_capability.py local/dore-local/source_probe_acceptance.py
-      - name: Standard-first provider-neutral acceptance
+        run: |
+          python -m py_compile local/dore-local/source_probe_capability.py local/dore-local/source_probe_acceptance.py
+          node --check local/dore-local/runtime_source_probe.js
+      - name: Standard-first and runtime provider-neutral acceptance
         run: python local/dore-local/source_probe_acceptance.py
-      - name: Real GOOD TV first-party probe
+      - name: Real GOOD TV first-party static boundary probe
         run: python local/dore-local/source_probe_acceptance.py
         env:
           DORE_SOURCE_PROBE_LIVE: '1'
