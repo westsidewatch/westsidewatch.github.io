@@ -34,7 +34,6 @@ def _best_source_patch(img: np.ndarray, wound: np.ndarray, search_radius: int = 
         if dx==0 and dy==0: continue
         sy0,sy1=y0+dy,y1+dy; sx0,sx1=x0+dx,x1+dx
         if sy0<0 or sx0<0 or sy1>img.shape[0] or sx1>img.shape[1]: continue
-        # Donor must be known/intact: reject overlap with the wound.
         donor_w=wound[sy0:sy1,sx0:sx1]
         if np.any(donor_w): continue
         cand=img[sy0:sy1,sx0:sx1]
@@ -58,8 +57,6 @@ def third_blade(prewarp: np.ndarray, wound: np.ndarray):
     candidate,meta=_best_source_patch(prewarp,wound)
     before=v15.strict_engraving_metrics(prewarp,wound)
     after=v15.strict_engraving_metrics(candidate,wound)
-    # Admission/rollback: third blade is accepted only when the strict fidelity
-    # vector improves; otherwise preserve the previous blade result.
     b=before['edge_density_ratio']+before['variance_ratio']+before['orientation_similarity']+before['line_crossing_score']
     a=after['edge_density_ratio']+after['variance_ratio']+after['orientation_similarity']+after['line_crossing_score']
     accepted=bool(after['fidelity_pass'] or a>b+0.10)
@@ -75,22 +72,21 @@ def _report_path(argv):
 
 
 def main():
-    # Keep V15 strict gate; replace the V14 second-blade repair callback with a
-    # composite blade2->gate->blade3 function, preserving the existing renderer.
     base.engraving_metrics=v15.strict_engraving_metrics
     original=base.engraving_structure_repair
     events=[]
-    def composite(img,wound):
-        blade2=original(img,wound)
+    # V14's callback contract is (prewarp, warp, wound). Preserve it exactly.
+    def composite(prewarp, warp, wound):
+        blade2=original(prewarp,warp,wound)
         b2_img=blade2[0] if isinstance(blade2,tuple) else blade2
         b2_meta=blade2[1] if isinstance(blade2,tuple) else {}
         gate=v15.strict_engraving_metrics(b2_img,wound)
         if gate['fidelity_pass']:
             events.append({'blade2':b2_meta,'blade2_gate':gate,'blade3':None})
-            return b2_img,b2_meta
+            return b2_img
         b3_img,b3_meta=third_blade(b2_img,wound)
         events.append({'blade2':b2_meta,'blade2_gate':gate,'blade3':b3_meta})
-        return b3_img, {'blade2':b2_meta,'blade3':b3_meta}
+        return b3_img
     base.engraving_structure_repair=composite
     report=_report_path(sys.argv[1:])
     rc=base.main()
