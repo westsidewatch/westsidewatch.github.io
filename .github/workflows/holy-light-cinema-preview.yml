@@ -1,0 +1,32 @@
+name: Holy Light Cinema Preview
+on:
+  pull_request:
+    paths:
+      - 'cinema/**'
+      - '.github/workflows/holy-light-cinema-preview.yml'
+permissions:
+  contents: read
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Start Cinema preview
+        run: |
+          python3 -m http.server 4173 --directory . >/tmp/cinema-preview.log 2>&1 &
+          echo $! > /tmp/cinema-preview.pid
+      - name: Verify deployed route
+        run: |
+          for i in $(seq 1 20); do
+            HTML=$(curl -fsS http://127.0.0.1:4173/cinema/ 2>/dev/null || true)
+            if printf '%s' "$HTML" | grep -q 'HOLY LIGHT CINEMA'; then
+              printf '%s' "$HTML" | grep -q 'cinema.css'
+              printf '%s' "$HTML" | grep -q 'cinema.js'
+              curl -fsS http://127.0.0.1:4173/cinema/data/video-resource.v0.json | grep -q 'holy-light.video-resource.v0'
+              echo 'HOLY_LIGHT_CINEMA_PREVIEW_PASS route=/cinema/'
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/cinema-preview.log || true
+          exit 1
