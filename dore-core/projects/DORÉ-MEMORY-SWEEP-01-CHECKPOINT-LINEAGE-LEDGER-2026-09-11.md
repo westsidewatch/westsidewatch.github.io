@@ -42,12 +42,13 @@ The following standalone checkpoints are present on `main` and were reviewed as 
 - Checkpoint 94 — one-shot Cloudflare redeploy/migration trigger artifacts are `RETIRED / HISTORICAL CONTROL ARTIFACT`; the migration workflow remains a bounded maintenance/history mechanism and must not be treated as a generic current migration engine without a fresh contract review.
 - Checkpoint 95 — the complete current `dore-core/constitution/` family is reconciled as `CORE/CONTINUOUS / GOVERNING_DOCTRINE`. No principle is superseded/retired, no new human decision is required, and the current `dore-core/memory/` inventory adds no new workstream beyond previously reconciled sensory-memory evidence.
 - Checkpoint 96 — `dore-core/runtime/product-registry.v1.json` is reconciled as a real machine-readable one-Doré/many-products architecture foundation. The architecture component is bounded `VERIFIED_COMPLETE / COMPONENT`, but current registry coverage is `MAINTENANCE / COMPLETED_REVISIT_CANDIDATE`: several canonical workstreams/surfaces now exist outside its explicit product list, and no persisted parity contract against the Master Work Register was found. Exhaustive product-registry coverage remains `UNKNOWN_NEEDS_EVIDENCE`.
+- Checkpoint 97 — Conversation Runtime Internal Alpha is explicitly re-accounted at the current frontier as `VERIFIED_COMPLETE / COMPONENT / INTERNAL_ONLY`. Its five readiness gates, real P01 rehearsal, speculative/transient rejection, fresh-session replay and authority boundary are already durable in the Alpha contract/verification and `CW-004`; no duplicate work item or status change is warranted. Public Conversation remains separately `PARKED`, while Conversation Memory v1 remains active under its own evidence gates.
 
 ## Canonical reconciliation finding
 
-The durable Sweep frontier is now Checkpoint 96. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 96 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
+The durable Sweep frontier is now Checkpoint 97. Any Master Register `MEM-SWEEP-01` summary stopping before Checkpoint 97 is stale as a **progress summary**, even when its `ACTIVE_PARALLEL` status and next-action semantics remain correct.
 
-This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 96 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
+This is bookkeeping drift, not missing product evidence and not a new runtime blocker. The operational front door should summarize the frontier through Checkpoint 97 and retain the bounded classifications above rather than collapsing component milestones into whole-workstream completion.
 
 ## Parent-file interpretation
 
@@ -80,6 +81,7 @@ Do not duplicate all later checkpoint prose back into the parent file merely for
 - 2026-08-24 one-shot Cloudflare redeploy/migration trigger files: `RETIRED / HISTORICAL CONTROL ARTIFACT`.
 - Doré Constitution 0.3: `CORE/CONTINUOUS / GOVERNING_DOCTRINE`; constitutional revision remains event-triggered rather than a closeable project milestone.
 - Product Registry architecture foundation: `VERIFIED_COMPLETE / COMPONENT`; its live coverage is `MAINTENANCE / COMPLETED_REVISIT_CANDIDATE`, and exhaustive parity with canonical workstreams remains `UNKNOWN_NEEDS_EVIDENCE` until a scoped coverage contract exists.
+- Conversation Runtime Internal Alpha: `VERIFIED_COMPLETE / COMPONENT / INTERNAL_ONLY`; public Conversation remains `PARKED`, and scoped Conversation Memory v1 remains separately active/evidence-gated.
 
 ## Latest liveness evidence
 
