@@ -2,8 +2,8 @@
 """Real-browser raster evidence for Doré Design sandbox candidates.
 
 No synthetic fallback is allowed: a candidate raster is valid only when an
-installed Chrome/Chromium-family browser renders the canonical candidate HTML
-into a PNG. PNG dimensions are verified from the IHDR chunk using stdlib only.
+installed supported browser renders the canonical candidate HTML into a PNG.
+PNG dimensions are verified from the IHDR chunk using stdlib only.
 """
 from __future__ import annotations
 
@@ -16,7 +16,7 @@ import tempfile
 from pathlib import Path
 
 BROWSERS = (
-    'google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser',
+    'google-chrome', 'google-chrome-stable', 'chromium', 'chromium-browser', 'firefox',
 )
 
 MAC_BROWSER_PATHS = (
@@ -24,6 +24,7 @@ MAC_BROWSER_PATHS = (
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
     '/Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary',
     '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge',
+    '/Applications/Firefox.app/Contents/MacOS/firefox',
 )
 
 
@@ -34,6 +35,7 @@ def _mac_browser_paths() -> tuple[str, ...]:
         str(home / 'Applications/Chromium.app/Contents/MacOS/Chromium'),
         str(home / 'Applications/Google Chrome Canary.app/Contents/MacOS/Google Chrome Canary'),
         str(home / 'Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'),
+        str(home / 'Applications/Firefox.app/Contents/MacOS/firefox'),
     )
 
 
@@ -53,6 +55,30 @@ def browser_binary() -> str:
         if path.is_file() and os.access(path, os.X_OK):
             return str(path)
     raise RuntimeError('real_browser_required_for_raster_evidence')
+
+
+def _browser_command(browser: str, *, output: Path, width: int, height: int, uri: str) -> list[str]:
+    name = Path(browser).name.lower()
+    if 'firefox' in name:
+        return [
+            browser,
+            '--headless',
+            '--window-size', f'{width},{height}',
+            '--screenshot', str(output.resolve()),
+            uri,
+        ]
+    return [
+        browser,
+        '--headless=new',
+        '--disable-gpu',
+        '--hide-scrollbars',
+        '--no-sandbox',
+        '--disable-dev-shm-usage',
+        '--force-device-scale-factor=1',
+        f'--window-size={width},{height}',
+        f'--screenshot={output.resolve()}',
+        uri,
+    ]
 
 
 def png_dimensions(path: Path) -> tuple[int, int]:
@@ -76,18 +102,7 @@ def rasterize_html(html: str, *, output: Path, width: int, height: int) -> dict:
     with tempfile.TemporaryDirectory(prefix='dore-raster-') as td:
         src = Path(td) / 'candidate.html'
         src.write_text(html, encoding='utf-8')
-        cmd = [
-            browser,
-            '--headless=new',
-            '--disable-gpu',
-            '--hide-scrollbars',
-            '--no-sandbox',
-            '--disable-dev-shm-usage',
-            '--force-device-scale-factor=1',
-            f'--window-size={width},{height}',
-            f'--screenshot={output.resolve()}',
-            src.resolve().as_uri(),
-        ]
+        cmd = _browser_command(browser, output=output, width=width, height=height, uri=src.resolve().as_uri())
         cp = subprocess.run(cmd, text=True, capture_output=True, timeout=90)
         if cp.returncode != 0 or not output.exists():
             raise RuntimeError('browser_raster_failed:' + (cp.stderr or cp.stdout or '')[-2000:])
