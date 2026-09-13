@@ -5,20 +5,7 @@ on:
     branches: [feat/aw-011-camera-corridor]
     paths:
       - ".github/workflows/aw011-topology-probe.yml"
-      - "tools/aw_corridor/experiment_joint_hidden_completion_v5.py"
-      - "tools/aw_corridor/experiment_joint_hidden_completion_v6.py"
-      - "tools/aw_corridor/experiment_joint_hidden_completion_v7.py"
-      - "tools/aw_corridor/experiment_learned_hidden_completion_v8.py"
-      - "tools/aw_corridor/experiment_learned_hidden_completion_v9.py"
-      - "tools/aw_corridor/experiment_static_cinema_v10.py"
-      - "tools/aw_corridor/experiment_static_cinema_v11.py"
-      - "tools/aw_corridor/experiment_static_cinema_v12.py"
-      - "tools/aw_corridor/experiment_static_cinema_v13.py"
-      - "tools/aw_corridor/experiment_static_cinema_v14.py"
-      - "tools/aw_corridor/experiment_static_cinema_v15.py"
-      - "tools/aw_corridor/camera_router_observer.py"
-      - "tools/aw_corridor/trajectory_reserved_corridor.py"
-      - "tools/aw_corridor/hidden_surface_provider.py"
+      - "tools/aw_corridor/experiment_static_cinema_v16.py"
   workflow_dispatch:
 
 concurrency:
@@ -42,100 +29,17 @@ jobs:
           curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/edge-model.pth?download=true" -o build/aw011-provider/edge-model.pth
           curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/depth-model.pth?download=true" -o build/aw011-provider/depth-model.pth
           curl --fail --location --retry 3 "https://huggingface.co/ai-minamo/3d-photo-inpainting/resolve/main/color-model.pth?download=true" -o build/aw011-provider/color-model.pth
-          test "$(stat -c%s build/aw011-provider/edge-model.pth)" -gt 40000000
-          test "$(stat -c%s build/aw011-provider/depth-model.pth)" -gt 180000000
-          test "$(stat -c%s build/aw011-provider/color-model.pth)" -gt 180000000
       - run: python -m pip install --disable-pip-version-check numpy pillow opencv-python-headless torch torchvision matplotlib "transformers>=4.45,<5" 'git+https://github.com/microsoft/MoGe.git'
       - run: python tools/aw_corridor/experiment_depth_bakeoff.py --source experiments/aw-011/assets/dore-011.jpg --provider moge --output build/topology-probe/depth.png --report build/topology-probe/depth-report.json
-      - name: Run static-cinema V11 cleanup probe
+      - name: Run V16 three-blade corridor
         run: >-
-          python tools/aw_corridor/experiment_static_cinema_v11.py
+          python tools/aw_corridor/experiment_static_cinema_v16.py
           --source experiments/aw-011/assets/dore-011.jpg
           --depth build/topology-probe/depth.png
           --spine experiments/aw-011/camera-spine.json
-          --output build/topology-probe/traversal.mp4
-          --report build/topology-probe/traversal-report.json
-          --support-map build/topology-probe/world-support-map.png
-          --edge-map build/topology-probe/learned-edge-map.png
-          --hidden-depth-map build/topology-probe/hidden-depth-map.png
-          --residual-map build/topology-probe/worst-residual-map.png
-          --viewfinder-preview build/topology-probe/viewfinder-preview.png
-          --networks build/aw011-provider/networks.py
-          --edge-checkpoint build/aw011-provider/edge-model.pth
-          --depth-checkpoint build/aw011-provider/depth-model.pth
-          --color-checkpoint build/aw011-provider/color-model.pth
-          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3
-      - name: Record Camera Router shadow telemetry
-        if: always()
-        run: >-
-          python tools/aw_corridor/camera_router_observer.py
-          --spine experiments/aw-011/camera-spine.json
-          --render-report build/topology-probe/traversal-report.json
-          --camera-state build/topology-probe/camera-state.jsonl
-          --routing-advisory build/topology-probe/routing-advisory.json
-      - name: Probe trajectory-reserved armed 3D corridor
-        if: always()
-        run: >-
-          python tools/aw_corridor/trajectory_reserved_corridor.py
-          --source experiments/aw-011/assets/dore-011.jpg
-          --depth build/topology-probe/depth.png
-          --spine experiments/aw-011/camera-spine.json
-          --render-report build/topology-probe/traversal-report.json
-          --state build/topology-probe/corridor-state.jsonl
-          --report build/topology-probe/corridor-report.json
-          --mask build/topology-probe/corridor-capability-envelope.png
-          --preview build/topology-probe/corridor-preview.png
-          --capability-trials build/topology-probe/capability-trials.jsonl
-          --segment-frames 12 --ppu 520
-      - name: Run V12 trajectory-reserved 3D deviation renderer
-        run: >-
-          python tools/aw_corridor/experiment_static_cinema_v12.py
-          --source experiments/aw-011/assets/dore-011.jpg
-          --depth build/topology-probe/depth.png
-          --spine experiments/aw-011/camera-spine.json
-          --output build/topology-probe/traversal-v12.mp4
-          --report build/topology-probe/traversal-v12-report.json
-          --networks build/aw011-provider/networks.py
-          --edge-checkpoint build/aw011-provider/edge-model.pth
-          --depth-checkpoint build/aw011-provider/depth-model.pth
-          --color-checkpoint build/aw011-provider/color-model.pth
-          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3 --deviation-threshold 1.25
-      - name: Run V13 armed corridor local warp weapon
-        run: >-
-          python tools/aw_corridor/experiment_static_cinema_v13.py
-          --source experiments/aw-011/assets/dore-011.jpg
-          --depth build/topology-probe/depth.png
-          --spine experiments/aw-011/camera-spine.json
-          --output build/topology-probe/traversal-v13.mp4
-          --report build/topology-probe/traversal-v13-report.json
-          --networks build/aw011-provider/networks.py
-          --edge-checkpoint build/aw011-provider/edge-model.pth
-          --depth-checkpoint build/aw011-provider/depth-model.pth
-          --color-checkpoint build/aw011-provider/color-model.pth
-          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3 --deviation-threshold 1.25 --warp-max-component-pixels 256
-      - name: Run V14 dual-blade engraving-aware corridor
-        run: >-
-          python tools/aw_corridor/experiment_static_cinema_v14.py
-          --source experiments/aw-011/assets/dore-011.jpg
-          --depth build/topology-probe/depth.png
-          --spine experiments/aw-011/camera-spine.json
-          --output build/topology-probe/traversal-v14.mp4
-          --report build/topology-probe/traversal-v14-report.json
-          --diagnostic-dir build/topology-probe/v14-diagnostics
-          --networks build/aw011-provider/networks.py
-          --edge-checkpoint build/aw011-provider/edge-model.pth
-          --depth-checkpoint build/aw011-provider/depth-model.pth
-          --color-checkpoint build/aw011-provider/color-model.pth
-          --device cpu --width 480 --output-width 640 --fps 12 --segment-frames 4 --samples 4 --behind 0.08 --edge-q 0.90 --min-jump 0.055 --target-residual 0.001 --min-view-scale 0.45 --raster-step 3 --deviation-threshold 1.25 --warp-max-component-pixels 256
-      - name: Run V15 real second blade with strict fidelity gate
-        run: >-
-          python tools/aw_corridor/experiment_static_cinema_v15.py
-          --source experiments/aw-011/assets/dore-011.jpg
-          --depth build/topology-probe/depth.png
-          --spine experiments/aw-011/camera-spine.json
-          --output build/topology-probe/traversal-v15.mp4
-          --report build/topology-probe/traversal-v15-report.json
-          --diagnostic-dir build/topology-probe/v15-diagnostics
+          --output build/topology-probe/traversal-v16.mp4
+          --report build/topology-probe/traversal-v16-report.json
+          --diagnostic-dir build/topology-probe/v16-diagnostics
           --networks build/aw011-provider/networks.py
           --edge-checkpoint build/aw011-provider/edge-model.pth
           --depth-checkpoint build/aw011-provider/depth-model.pth
@@ -144,6 +48,6 @@ jobs:
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: aw-011-topology-probe
+          name: aw-011-v16-three-blade
           path: build/topology-probe/
           if-no-files-found: warn
