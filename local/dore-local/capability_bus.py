@@ -101,6 +101,21 @@ NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
         "identity_source": False,
         "persistence": "request-scoped-none",
     },
+    "translation.project": {
+        "id": "translation.project",
+        "type": "translation",
+        "service": "translator",
+        "status": "existing",
+        "execution": "core-adapter",
+        "provider": "dore-core",
+        "load": "on-demand",
+        "result": "bilingual-subtitle-artifact",
+        "authority": False,
+        "source_authority": True,
+        "translation_authority": False,
+        "provider_neutral": True,
+        "persistence": "artifact-only-no-media",
+    },
     "publishing.book-intelligence": {
         "id": "publishing.book-intelligence",
         "type": "reasoning",
@@ -174,13 +189,7 @@ def _image_generate(args: dict[str, Any], caller_product: str | None = None) -> 
 
 
 def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
-    """Invoke semantic publishing intelligence through the local Doré inference seam.
-
-    The publishing adapter stays provider-neutral. The Core/provider seam requests
-    structured JSON from the local runtime so report admission is an inference
-    contract rather than a prompt convention. Other Doré conversations continue to
-    use the ordinary unstructured runtime path.
-    """
+    """Invoke semantic publishing intelligence through the local Doré inference seam."""
     def infer(messages: list[dict[str, str]]) -> str:
         runtime = _load_sibling("dore_local")
         base_url = str(getattr(runtime, "OLLAMA_BASE_URL", os.environ.get("OLLAMA_BASE_URL") or "http://127.0.0.1:11434")).rstrip("/")
@@ -200,26 +209,31 @@ def _book_intelligence(args: dict[str, Any]) -> dict[str, Any]:
         if not isinstance(content, str):
             raise RuntimeError("structured Book Intelligence inference returned no message content")
         return content
-
     return BOOK_INTELLIGENCE.execute(args, infer)
 
 
-def _reflex_project(args: dict[str, Any]) -> dict[str, Any]:
-    """Load Reflex only when requested, keeping unrelated Core paths lightweight."""
+def _load_local_capability(module_name: str, args: dict[str, Any]) -> dict[str, Any]:
     import sys
-
     local_path = str(HERE)
     inserted = local_path not in sys.path
     if inserted:
         sys.path.insert(0, local_path)
     try:
-        return _load_sibling("reflex_capability").execute(args)
+        return _load_sibling(module_name).execute(args)
     finally:
         if inserted:
             try:
                 sys.path.remove(local_path)
             except ValueError:
                 pass
+
+
+def _reflex_project(args: dict[str, Any]) -> dict[str, Any]:
+    return _load_local_capability("reflex_capability", args)
+
+
+def _translation_project(args: dict[str, Any]) -> dict[str, Any]:
+    return _load_local_capability("translation_capability", args)
 
 
 def _search_host(args: dict[str, Any], caller_product: str | None) -> str:
@@ -238,11 +252,7 @@ def _bible_query_plan(args: dict[str, Any]) -> dict[str, Any]:
     query = str(args.get("query") or args.get("text") or "").strip()
     if not query:
         return {"ok": False, "status": "failed", "error": {"code": "invalid_args", "message": "query or text is required"}}
-    plan = plan_bible_query(
-        query,
-        explicit_search=bool(args.get("explicit_search", False)),
-        deep=bool(args.get("deep", False)),
-    )
+    plan = plan_bible_query(query, explicit_search=bool(args.get("explicit_search", False)), deep=bool(args.get("deep", False)))
     return {
         "ok": True,
         "status": "completed",
@@ -260,12 +270,7 @@ def _fuzzy_search(args: dict[str, Any], caller_product: str | None = None) -> di
     if not qmd_available():
         return {"ok": False, "status": "not_ready", "capability": "context.fuzzy-search", "authority": False, "error": {"code": "substrate_unavailable", "message": "local retrieval substrate is not installed on this runtime"}}
 
-    bible_plan = plan_bible_query(
-        query,
-        explicit_search=bool(args.get("explicit_search", False)),
-        deep=bool(args.get("deep", False)),
-    )
-
+    bible_plan = plan_bible_query(query, explicit_search=bool(args.get("explicit_search", False)), deep=bool(args.get("deep", False)))
     requested_collection = str(args.get("collection") or os.environ.get("DORE_QMD_COLLECTION") or "").strip()
     if not requested_collection or requested_collection == PRODUCTION_COLLECTION:
         qmd_config = production_config(collection=PRODUCTION_COLLECTION)
@@ -352,6 +357,8 @@ def call(capability: str, args: dict[str, Any], production, *, caller_product: s
             return _image_generate(args, caller_product)
         if capability == "reflex.project":
             result = _reflex_project(args)
+        elif capability == "translation.project":
+            result = _translation_project(args)
         elif capability == "publishing.book-intelligence":
             result = _book_intelligence(args)
         elif capability == "bible.query-plan":
