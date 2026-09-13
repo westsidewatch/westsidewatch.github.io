@@ -36,13 +36,18 @@ def read(task_id):
 def register(message,delivery=None):
  task_id=str(message.get('message_id') or '')
  if not task_id:raise ValueError('task_id_required')
- existing=read(task_id)
- if existing:return existing
  d=delivery or message.get('_delivery') or {}
+ digest=d.get('content_sha256') or _digest({k:v for k,v in message.items() if k!='_delivery'})
+ existing=read(task_id)
+ if existing:
+  if str(existing.get('content_sha256') or '')!=str(digest):
+   _append({'at':now(),'task_id':task_id,'status':'REJECTED_IDENTITY_CONFLICT','accepted_sha256':existing.get('content_sha256'),'replay_sha256':digest})
+   raise ValueError('execution_task_identity_conflict:'+task_id)
+  return existing
  t={
   'schema':'dore.a2a-task.v1','execution_plane':VERSION,'task_id':task_id,
   'message_id':task_id,'kind':message.get('kind'),'related_goal':message.get('related_goal'),
-  'content_sha256':d.get('content_sha256') or _digest({k:v for k,v in message.items() if k!='_delivery'}),
+  'content_sha256':digest,
   'source_commit':d.get('source_commit'),'source_ref':d.get('source_ref'),
   'status':'ACCEPTED','submitted_at':d.get('accepted_at') or now(),'accepted_at':now(),
   'lease':None,'artifact':None,'verification':None,'result':None,
