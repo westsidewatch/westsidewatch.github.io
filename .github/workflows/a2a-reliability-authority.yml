@@ -15,6 +15,7 @@ on:
       - 'local/dore-local/a2a_durable_execution_acceptance.py'
       - 'local/dore-local/a2a_generation.py'
       - 'local/dore-local/a2a_generation_acceptance.py'
+      - 'local/dore-local/a2a_recovery_acceptance.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/a2a-reliability-authority.yml'
@@ -41,5 +42,7 @@ jobs:
         run: python local/dore-local/a2a_durable_execution_acceptance.py
       - name: Runtime generation identity acceptance
         run: python local/dore-local/a2a_generation_acceptance.py
+      - name: Lease heartbeat and crash recovery acceptance
+        run: python local/dore-local/a2a_recovery_acceptance.py
       - name: Preserve existing substrate bus contract
         run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
