@@ -40,7 +40,15 @@ Status: **RESEARCH / EDITORIAL / FILM CANON**
 
 `Evidence level`
 
+`Primary biblical evidence`
+
 `Historical interpretation / source trail`
+
+`Scholarly / theological bibliography`
+
+`Counter-reading / dispute status`
+
+`Editorial claim ceiling`
 
 `Theological caution`
 
@@ -69,6 +77,42 @@ Status: **RESEARCH / EDITORIAL / FILM CANON**
 5. **E — Symbolic / Devotional Reading**：如字母、形狀、象徵性拆解等，可作神學藝術閱讀，但不得宣稱為歷史語源學或文本原義證明。
 
 此分級不是用來刪除 E，而是讓讀者知道每一種閱讀「以什麼方式成立」。
+
+## 神學研究與出版的證據規則
+
+Vol.01 中所有宣稱某處為「十字架的影子」的正文，必須具備接近神學論文的可追溯性。**創作者的直覺可以提出研究問題，但不能自己成為證據。**
+
+每一個 Shadow 在進入正式稿件前，至少完成以下證據鏈：
+
+**OT Text → Literary / Historical Context → Canonical Relation → NT Fulfilment / Echo（若有）→ History of Interpretation → Modern Scholarship / Theology → Evidence Grade → Editorial Claim**
+
+研究來源按用途分層：
+
+- **Primary**：舊約原文與可靠文本、相關新約經文、必要時 LXX／文本異文。
+- **Historical**：早期教父、古代基督教作者、宗教改革及重要歷史注釋傳統；引用時保留作者、作品、段落／卷章資訊。
+- **Scholarly**：學術專著、同行評審論文、重要學術註釋、聖經神學與 typology / intertextuality 研究。
+- **Reference / Discovery**：索引、詞典、資料庫、講章、網站與二手整理可用來發現線索，但不能在可取得更高級來源時充當唯一證據。
+
+正式稿件必須能追溯到具體來源，不得使用「有人認為」「傳統認為」「希伯來文其實是……」等無法查核的寫法。直接引用、轉述與本刊自己的綜合判斷必須能被區分。
+
+### Claim Ceiling / 主張上限
+
+每一筆 Shadow 的文字強度不得超過其證據強度：
+
+- **A** 可以明確寫「新約將……指向／對應基督」。
+- **B–C** 可以在正典與救贖歷史證據支持下寫「形成基督論預表／模式」。
+- **D** 必須標明這是具體歷史神學傳統中的閱讀，不能冒充經文本身的明示。
+- **E** 必須明確寫成「象徵性／靈修性／藝術性神學閱讀」，不得宣稱為希伯來語詞源、原文字義或作者原意，除非另有真正語言學證據。
+
+如果學界或教會傳統存在重要分歧，正文或註釋應標出爭議，而不是為了敘事漂亮把爭議刪掉。
+
+### Citation-ready from Day One
+
+Shadow Map 從研究第一天就保存 bibliography 與 source trail，不在雜誌排版前才回頭補腳註。每個正式條目應能直接生成：
+
+**正文短稿 + 邊註／腳註 + Bibliography + Evidence Grade + Further Reading**
+
+因此完整 Shadow Map 同時也是 Vol.01 神學稿件的研究底稿。
 
 ## 電影「關鍵」的兩條選片軸
 
