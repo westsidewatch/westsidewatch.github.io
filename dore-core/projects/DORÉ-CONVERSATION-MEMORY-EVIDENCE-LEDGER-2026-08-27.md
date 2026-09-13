@@ -1,6 +1,6 @@
 # DORÉ CONVERSATION MEMORY EVIDENCE LEDGER — 2026-08-27
 
-Status: SWEEP-01 / BOUNDED EVIDENCE / RECONCILED 2026-08-31
+Status: SWEEP-01 / BOUNDED EVIDENCE / RECONCILED 2026-09-13
 Related work: `CONV-MEM-V1`, `CONVERSATION`, `MEM-SWEEP-01`
 
 ## Evidence reviewed
@@ -81,3 +81,17 @@ This is not a completion promotion. The correction is an evidence reconciliation
 ## Smallest useful next proof
 
 Without displacing P01, preserve the M1–M7 fixtures as regression gates and execute the next bounded stage against representative imported history: M8 full-history backfill → readback/semantic recall from a fresh conversation → scope/tenant-negative fixtures → failure/rollback injection → persisted cost/latency evidence. Also update the static memory-layer contract so its R2/Vectorize dependency assertions match current code. Only then reconsider whether `CONV-MEM-V1` can move from `ACTIVE_PARALLEL / IMPLEMENTING` toward a verified production milestone.
+
+## Sweep-01 reconciliation — Checkpoint 108 (2026-09-13)
+
+A fresh bounded source read found a stronger scope-identity defect than the earlier generic `project_id → unscoped` warning:
+
+1. `ingestMessage(...)` deduplicates with `WHERE conversation_id=?1 AND content_sha256=?2 AND role=?3` and does **not** include `project_id`. If the same `conversation_id` is reused under another project, identical-role/content can be treated as a duplicate across projects.
+2. The duplicate-return path reports `project_id: projectId` from the incoming request instead of the stored row's project id, so a cross-project collision can return metadata that appears to belong to the new project even when the retained message belongs to the earlier project.
+3. `dore_conversations.id` is the conversation primary key, and the current upsert updates `project_id` on conflict. Reusing a conversation id under a different project can therefore reassign the conversation record's project identity while historical message rows keep their original project ids.
+4. GET allows conversation-only retrieval (`WHERE conversation_id=?1`) without a project predicate. Combined with conversation-id reuse, this means the implementation cannot yet claim project isolation from conversation identity alone.
+5. The static `memory-layer-contract.mjs` asserts presence of conversation-only retrieval and conversation-local dedupe, but has no negative fixture proving that a conversation id cannot cross project boundaries. Its current PASS is therefore narrower than the intended anti-cross-talk contract.
+
+**Disposition:** keep `CONV-MEM-V1` as `ACTIVE_PARALLEL / IMPLEMENTING`; do not promote production readiness. This is an engineering/evidence defect, not a human/environment blocker and does not affect P01 ordering.
+
+**Required future correction/proof:** make project identity part of message dedupe and conversation identity invariants (or enforce globally unique conversation ids with a verified immutable project binding), return stored identity on dedupe, reject project reassignment, and add a negative acceptance fixture that attempts same-conversation-id cross-project ingestion/retrieval and proves no contamination or metadata misattribution.
