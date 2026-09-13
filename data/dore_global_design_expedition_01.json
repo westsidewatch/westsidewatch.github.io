@@ -1,0 +1,67 @@
+{
+  "schema": "dore.global-design-expedition.v1",
+  "expedition": 1,
+  "purpose": "cross-source design nourishment corpus",
+  "policy": {
+    "dispute_sensitive": "exclude",
+    "rights": "public-domain-or-metadata-reference-only",
+    "theology": "religious material is review-required and design-only until separately admitted",
+    "semantic_isolation": true
+  },
+  "sources": [
+    {"id":"art-institute-chicago","kind":"authority","license_note":"API metadata CC0 except description CC BY 4.0; item image use follows item public-domain flag"},
+    {"id":"metropolitan-museum-of-art","kind":"authority","license_note":"Open Access dataset CC0; item images only when explicitly Public Domain/Open Access"},
+    {"id":"cooper-hewitt","kind":"authority","license_note":"metadata/reference ingestion; image reuse not assumed"}
+  ],
+  "items": [
+    {"id":"aic-23372","source":"art-institute-chicago","title":"Game of Cupids","domain":"illustration-print","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/23372"},
+    {"id":"aic-28702","source":"art-institute-chicago","title":"Christ Washing the Feet of the Apostles","domain":"illustration-print","rights":"public-domain","theology":"review-required","boundary":"pass-design-only","source_url":"https://api.artic.edu/api/v1/artworks/28702"},
+    {"id":"aic-23604","source":"art-institute-chicago","title":"Ornamental Panel: Victoria Augusta","domain":"ornament-graphic","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/23604"},
+    {"id":"aic-51504","source":"art-institute-chicago","title":"Juno, Ceres, and Psyche","domain":"illustration-print","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/51504"},
+    {"id":"aic-86269","source":"art-institute-chicago","title":"The Cumaean Sibyl","domain":"illustration-print","rights":"public-domain","theology":"review-required","boundary":"pass-design-only","source_url":"https://api.artic.edu/api/v1/artworks/86269"},
+    {"id":"aic-3714","source":"art-institute-chicago","title":"The Adoration of the Magi","domain":"illustration-print","rights":"public-domain","theology":"review-required","boundary":"pass-design-only","source_url":"https://api.artic.edu/api/v1/artworks/3714"},
+    {"id":"aic-3742","source":"art-institute-chicago","title":"The Resurrection, from The Passion","domain":"illustration-print","rights":"public-domain","theology":"review-required","boundary":"pass-design-only","source_url":"https://api.artic.edu/api/v1/artworks/3742"},
+    {"id":"aic-224439","source":"art-institute-chicago","title":"Ornamental Design for Knife Handle with Water, from The Four Elements","domain":"ornament-industrial-design","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/224439"},
+    {"id":"aic-224445","source":"art-institute-chicago","title":"Ornamental Design for Knife Handle with Water, from the Four Elements","domain":"ornament-industrial-design","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/224445"},
+    {"id":"aic-43704","source":"art-institute-chicago","title":"E7: English Drawing Room of the Early Georgian Period, 1730s","domain":"architecture-interior-furniture","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://api.artic.edu/api/v1/artworks/43704"},
+    {"id":"met-44623","source":"metropolitan-museum-of-art","title":"Snow on the Sumida River","domain":"illustration-print","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/44623"},
+    {"id":"met-255018","source":"metropolitan-museum-of-art","title":"Terracotta sheep or bull","domain":"object-design-sculpture","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/255018"},
+    {"id":"met-901856","source":"metropolitan-museum-of-art","title":"Robe (Kosode) with Floral Roundels","domain":"textile-pattern","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/901856"},
+    {"id":"met-139","source":"metropolitan-museum-of-art","title":"Argand Lamp","domain":"industrial-design","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/139"},
+    {"id":"met-634361","source":"metropolitan-museum-of-art","title":"Corner chair","domain":"furniture","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/634361"},
+    {"id":"met-254176","source":"metropolitan-museum-of-art","title":"Terracotta kylix (drinking cup)","domain":"object-design-ceramics","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/254176"},
+    {"id":"met-724742","source":"metropolitan-museum-of-art","title":"Vessel with Linear Designs in Iron Glaze (Tetsusenbyo tsubo)","domain":"object-design-ceramics","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/724742"},
+    {"id":"met-1978","source":"metropolitan-museum-of-art","title":"Chandelier","domain":"industrial-design-interior","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/1978"},
+    {"id":"met-53984","source":"metropolitan-museum-of-art","title":"Flower Vase and Lacquer Box","domain":"illustration-print","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/53984"},
+    {"id":"met-247916","source":"metropolitan-museum-of-art","title":"Terracotta pyxis (box)","domain":"object-design-ceramics","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/247916"},
+    {"id":"met-5719","source":"metropolitan-museum-of-art","title":"Pitcher","domain":"object-design-glass","rights":"public-domain","theology":"not-applicable","boundary":"pass","source_url":"https://www.metmuseum.org/art/collection/search/5719"},
+    {"id":"ch-135726747","source":"cooper-hewitt","title":"Dirt Sample, 2006","domain":"material-study","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726747/"},
+    {"id":"ch-135726733","source":"cooper-hewitt","title":"Concept Art, Ornament Valley, Cars, 2006","domain":"film-concept-art","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726733/"},
+    {"id":"ch-135726743","source":"cooper-hewitt","title":"Concept Art, Ornament Valley Texture and Color, Cars, 2006","domain":"film-concept-art-color","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726743/"},
+    {"id":"ch-135726751","source":"cooper-hewitt","title":"Dirt Sample, 2006","domain":"material-study","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726751/"},
+    {"id":"ch-135726729","source":"cooper-hewitt","title":"Concept Art, Cadillac Range with Radiator Butte, Cars, 2006","domain":"film-concept-art-composition","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726729/"},
+    {"id":"ch-135726731","source":"cooper-hewitt","title":"Concept Art, Ornament Valley, Cars, 2006","domain":"film-concept-art","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726731/"},
+    {"id":"ch-135726737","source":"cooper-hewitt","title":"Concept Art, Ornament Valley Texture and Color, Cars, 2006","domain":"film-concept-art-color","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726737/"},
+    {"id":"ch-135726761","source":"cooper-hewitt","title":"Map, Texas, 2006","domain":"cartographic-graphic","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726761/"},
+    {"id":"ch-135726735","source":"cooper-hewitt","title":"Photograph, Hood Ornament, Cars, 2006","domain":"photography-object-study","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/135726735/"},
+    {"id":"ch-35520789","source":"cooper-hewitt","title":"Drawing, Two Designs for Tables, June 15, 1981","domain":"furniture-drawing","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/35520789/"},
+    {"id":"ch-35520763","source":"cooper-hewitt","title":"Drawing, Drawing for Tree D3, 2011","domain":"furniture-architecture-drawing","rights":"metadata-reference-only","theology":"not-applicable","boundary":"pass","source_url":"https://collection.cooperhewitt.org/objects/35520763/"}
+  ],
+  "excluded": [
+    {"source":"art-institute-chicago","id":"26562","title":"The Death of Lucretia","reason":"content-sensitivity-not-needed-for-current-curriculum"},
+    {"source":"art-institute-chicago","id":"224437","title":"Knife Handle (Lucretia)","reason":"content-sensitivity-not-needed-for-current-curriculum"},
+    {"source":"cooper-hewitt","id":"135726763","title":"Magnet, Route 66, 2006","reason":"low-learning-yield"}
+  ],
+  "curriculum": {
+    "selected_count": 32,
+    "source_counts": {"art-institute-chicago":10,"metropolitan-museum-of-art":11,"cooper-hewitt":11},
+    "rights_counts": {"public-domain":18,"metadata-reference-only":14},
+    "theology_review_required":4,
+    "domains": ["illustration-print","ornament-graphic","ornament-industrial-design","architecture-interior-furniture","textile-pattern","industrial-design","furniture","object-design-ceramics","object-design-glass","material-study","film-concept-art","film-concept-art-color","film-concept-art-composition","cartographic-graphic","photography-object-study","furniture-drawing","furniture-architecture-drawing"]
+  },
+  "result": {
+    "status": "complete-first-cross-source-expedition",
+    "learning_yield": "32 retained / 35 considered",
+    "next_gap": ["typography/editorial","web/motion","church-architecture","photography","historical-visual-systems"]
+  }
+}
