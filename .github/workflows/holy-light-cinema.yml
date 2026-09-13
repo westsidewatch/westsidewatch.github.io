@@ -5,11 +5,13 @@ on:
       - 'cinema/**'
       - 'local/dore-local/video_reflex.py'
       - 'local/dore-local/video_reflex_acceptance.py'
+      - 'local/dore-local/cinema_video_moment_acceptance.py'
       - '.github/workflows/holy-light-cinema.yml'
 jobs:
   scaffold:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: test -f cinema/index.html && test -f cinema/cinema.css && test -f cinema/cinema.js && test -f cinema/data/video-resource.v0.json
+      - run: test -f cinema/index.html && test -f cinema/cinema.css && test -f cinema/cinema.js && test -f cinema/data/video-resource.v0.json && test -f cinema/data/video-moment.v0.json
       - run: python3 local/dore-local/video_reflex_acceptance.py
+      - run: python3 local/dore-local/cinema_video_moment_acceptance.py
