@@ -11,9 +11,17 @@
       "durationSeconds": 7680,
       "topics": ["耶穌生平", "路加福音", "福音"],
       "sourcePointer": "https://www.jesusfilm.org/watch/jesus.html",
-      "providerSources": [{"provider":"jesus-film-project","url":"https://www.jesusfilm.org/watch/jesus.html","official":true,"embed":false,"access":"official-source-handoff"}],
-      "rights": {"rehost": false,"policy": "official-source-only"},
-      "provenance": {"verified": true,"verifiedAt": "2026-09-12"}
+      "providerSources": [{
+        "provider":"jesus-film-project-arclight",
+        "url":"https://www.jesusfilm.org/watch/jesus.html",
+        "embedUrl":"https://api.arclight.org/videoPlayerUrl?refId=1_529-jf-0-0&playerStyle=default&player=bc.vanilla5",
+        "official":true,
+        "embed":true,
+        "access":"embedded-playback",
+        "embedPermissionUrl":"https://www.jesusfilm.org/about/faq/"
+      }],
+      "rights": {"rehost": false,"policy": "official-provider-embed"},
+      "provenance": {"verified": true,"verifiedAt": "2026-09-13","embedPolicyVerified": true}
     },
     {
       "canonicalId": "cinema:video:david-pawson:unlocking-matthew-1",
