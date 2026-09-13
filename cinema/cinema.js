@@ -22,31 +22,60 @@ function seconds(ms){return Math.max(0,Math.floor((ms||0)/1000));}
 function timecode(ms){const total=seconds(ms);const h=Math.floor(total/3600);const m=Math.floor((total%3600)/60);const s=total%60;return h?`${h}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`:`${m}:${String(s).padStart(2,'0')}`;}
 
 function playbackTarget(item,startMs=0){
-  const source=sourceFor(item);const start=seconds(startMs);
-  if(source.embed&&source.embedUrl){const url=new URL(source.embedUrl,window.location.href);if(start>0)url.searchParams.set('start',String(start));url.searchParams.set('autoplay','1');return{kind:'embed',url:url.toString()};}
-  if(source.url){const url=new URL(source.url,window.location.href);if(start>0&&source.provider==='youtube')url.searchParams.set('t',`${start}s`);return{kind:'handoff',url:url.toString()};}
-  return null;
+  return window.HolyLightProviders?.resolve(item,seconds(startMs))||null;
 }
 
 function openAt(item,startMs=0){
+  if(item.canonicalId===JESUS_ID){
+    const inline=document.querySelector('.living-poster__media');
+    const shell=document.querySelector('.living-poster');
+    if(inline&&shell){mountInlinePlayer(shell,inline,item,startMs);return;}
+  }
   const target=playbackTarget(item,startMs);if(!target)return;
   if(target.kind==='embed'){
-    stage.replaceChildren();const frame=document.createElement('iframe');frame.src=target.url;frame.title=item.title;frame.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';frame.allowFullscreen=true;stage.appendChild(frame);dialog.showModal();
+    stage.replaceChildren();
+    window.HolyLightProviders.mount(stage,item,seconds(startMs));
+    dialog.showModal();
   }else window.open(target.url,'_blank','noopener,noreferrer');
+}
+
+function mountInlinePlayer(shell,target,item,startMs=0){
+  const mounted=window.HolyLightProviders?.mount(target,item,seconds(startMs));
+  if(!mounted){
+    const fallback=playbackTarget(item,startMs);
+    if(fallback?.kind==='handoff')window.open(fallback.url,'_blank','noopener,noreferrer');
+    return;
+  }
+  shell.dataset.state='playing';
+  shell.classList.add('is-playing');
+  const close=shell.querySelector('[data-action="close-player"]');
+  close.hidden=false;
+  document.documentElement.dataset.cinemaPlayback='inline';
+}
+
+function closeInlinePlayer(shell){
+  const target=shell.querySelector('.living-poster__media');
+  target?.replaceChildren();
+  shell.classList.remove('is-playing');
+  shell.dataset.state='focus';
+  const close=shell.querySelector('[data-action="close-player"]');
+  if(close)close.hidden=true;
+  delete document.documentElement.dataset.cinemaPlayback;
 }
 
 function renderLivingPoster(item){
   if(!feature||!item)return;
   const shell=document.createElement('article');shell.className='living-poster';shell.dataset.state='settle';shell.dataset.canonicalId=item.canonicalId;
-  shell.innerHTML=`<div class="living-poster__visual" aria-hidden="true"><span class="living-poster__halo"></span><span class="living-poster__cross"></span><span class="living-poster__grain"></span></div><div class="living-poster__copy"><p class="living-poster__kicker">FEATURE FILM · CANONICAL RESOURCE</p><h4>JESUS</h4><p class="living-poster__creator">Jesus Film Project</p><p class="living-poster__line">從降生到復活，按《路加福音》進入耶穌的一生。</p><div class="living-poster__facts"><span>128 MIN</span><span>61 CHAPTERS</span><span>FHD</span><span>OFFICIAL SOURCE</span></div><div class="living-poster__actions"><button type="button" data-action="expand">展開時間</button><button type="button" data-action="watch">觀看官方影片</button></div></div><div class="living-poster__timeline" hidden><p>TIME AS CONTENT · 章節預覽</p><ol></ol><small>此實驗只投影官方來源已公開的章節結構；不複製、不重新託管影片。</small></div>`;
+  shell.innerHTML=`<div class="living-poster__visual"><div class="living-poster__poster" aria-hidden="true"><span class="living-poster__halo"></span><span class="living-poster__cross"></span><span class="living-poster__grain"></span><span class="living-poster__play-mark">PLAY</span></div><div class="living-poster__media" aria-label="JESUS official embedded player"></div><button class="living-poster__close" type="button" data-action="close-player" hidden aria-label="收起影片">收起影片</button></div><div class="living-poster__copy"><p class="living-poster__kicker">FEATURE FILM · CANONICAL RESOURCE</p><h4>JESUS</h4><p class="living-poster__creator">Jesus Film Project</p><p class="living-poster__line">從降生到復活，按《路加福音》進入耶穌的一生。</p><div class="living-poster__facts"><span>128 MIN</span><span>61 CHAPTERS</span><span>FHD</span><span>OFFICIAL EMBED</span></div><div class="living-poster__actions"><button type="button" data-action="watch">在此播放</button><button type="button" data-action="expand">展開時間</button></div></div><div class="living-poster__timeline" hidden><p>TIME AS CONTENT · 章節預覽</p><ol></ol><small>影片由 Jesus Film Project 官方來源內嵌；本站不複製、不重新託管媒體。</small></div>`;
   const list=shell.querySelector('ol');
   JESUS_CHAPTERS.forEach((label,index)=>{const li=document.createElement('li');li.innerHTML=`<span>${String(index+1).padStart(2,'0')}</span><strong>${label}</strong>`;list.appendChild(li);});
   let focusTimer;
-  const focus=()=>{clearTimeout(focusTimer);focusTimer=setTimeout(()=>{if(shell.dataset.state!=='expand')shell.dataset.state='focus';},320);};
-  const settle=()=>{clearTimeout(focusTimer);if(shell.dataset.state!=='expand')shell.dataset.state='settle';};
+  const focus=()=>{clearTimeout(focusTimer);focusTimer=setTimeout(()=>{if(!shell.classList.contains('is-playing')&&shell.dataset.state!=='expand')shell.dataset.state='focus';},320);};
+  const settle=()=>{clearTimeout(focusTimer);if(!shell.classList.contains('is-playing')&&shell.dataset.state!=='expand')shell.dataset.state='settle';};
   shell.addEventListener('pointerenter',focus);shell.addEventListener('pointerleave',settle);shell.addEventListener('focusin',focus);shell.addEventListener('focusout',event=>{if(!shell.contains(event.relatedTarget))settle();});
-  shell.querySelector('[data-action="expand"]').addEventListener('click',event=>{const expanded=shell.dataset.state==='expand';shell.dataset.state=expanded?'focus':'expand';shell.querySelector('.living-poster__timeline').hidden=expanded;event.currentTarget.textContent=expanded?'展開時間':'收起時間';});
-  shell.querySelector('[data-action="watch"]').addEventListener('click',()=>openAt(item,0));
+  shell.querySelector('[data-action="watch"]').addEventListener('click',()=>mountInlinePlayer(shell,shell.querySelector('.living-poster__media'),item,0));
+  shell.querySelector('[data-action="close-player"]').addEventListener('click',()=>closeInlinePlayer(shell));
+  shell.querySelector('[data-action="expand"]').addEventListener('click',event=>{const timeline=shell.querySelector('.living-poster__timeline');const expanded=!timeline.hidden;timeline.hidden=expanded;if(!shell.classList.contains('is-playing'))shell.dataset.state=expanded?'focus':'expand';event.currentTarget.textContent=expanded?'展開時間':'收起時間';});
   feature.replaceChildren(shell);
 }
 
@@ -87,7 +116,7 @@ async function loadCinema(){
     if(momentPayload.schema!=='holy-light.video-moment.v0'||!Array.isArray(momentPayload.items))throw new Error('Invalid Cinema moment schema');
     resources=resourcePayload.items;moments=momentPayload.items;resourceById=new Map(resources.map(item=>[item.canonicalId,item]));
     renderLivingPoster(resourceById.get(JESUS_ID));library.replaceChildren(...resources.map(renderCard));
-    document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaMoments=String(moments.length);document.documentElement.dataset.cinemaUiExperiment='adaptive-living-poster-v1';
+    document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaMoments=String(moments.length);document.documentElement.dataset.cinemaUiExperiment='inline-living-cinema-v1';
   }catch(error){library.innerHTML='<p class="resource-card">館藏資料暫時無法載入。</p>';if(feature)feature.innerHTML='<p class="resource-card">實驗資源暫時無法載入。</p>';document.documentElement.dataset.cinemaError='resource-load';}
 }
 
