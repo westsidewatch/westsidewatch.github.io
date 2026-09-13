@@ -8,26 +8,46 @@ P01 impact: NONE
 
 - `dore-core/cloudflare/ASSET-MIGRATION-INVENTORY-2026-08-24.md`;
 - `dore-core/cloudflare/DORE-SERVICE-LAYER-MILESTONE-2026-08-24.md`;
+- `dore-core/cloudflare/R2-DELIVERY-MILESTONE-2026-08-24.md`;
+- `dore-core/cloudflare/R2-PRIORITY-B-SITE-MEDIA-MILESTONE-2026-08-24.md`;
+- `dore-core/cloudflare/receipts/R2-DELIVERY-MILESTONE-PASS.json`;
+- `dore-core/cloudflare/receipts/R2-PRIORITY-B-SITE-MEDIA-PASS.json`;
 - current `functions/api/dore/query.js`;
-- current canonical Master Register interpretations for `ONE`, `WSS`, `EVOLUTION`, `REFLEX`, and P01.
+- current canonical Master Register interpretations for `ONE`, `JOIN`, `WSS`, `EVOLUTION`, `REFLEX`, and P01.
 
 ## Reconciled findings
 
-### 1. Priority-A media migration was a real historical milestone, but its runtime-state instructions are superseded
+### 1. Priority-A media migration was a real historical milestone, but its pre-cutover runtime-state instructions are superseded
 
 The 2026-08-24 media inventory documents a legitimate first governed migration milestone: seven Priority-A ONE assets were written to R2, registered in D1, registry-search verified, three obsolete Matthew 3 motion revisions were removed, and the rollback-copy policy correctly prevented premature deletion before runtime delivery existed.
 
-That historical completion remains valid. However, the memo's then-current runtime state—GitHub rollback binaries retained because no R2-backed public delivery path existed—is no longer governing truth. The canonical Master Register now records the later bounded ONE cutover as verified: the seven assets are delivered through asset-code/D1/R2 with hash verification, active references were cut over, and rollback binaries were removed only after post-cutover verification.
+That historical completion remains valid. However, the memo's then-current runtime state—GitHub rollback binaries retained because no R2-backed public delivery path existed—is no longer governing truth. The later `R2-DELIVERY-MILESTONE-PASS.json` receipt proves the bounded private-R2 cutover: seven registered assets, seven named SHA-256 identities, `one_page_http_pass: true`, and no requirement for public R2 access. The milestone memo records active-reference cutover and deletion of seven rollback binaries only after post-cutover verification.
 
 **Current classification:**
 
 - 2026-08-24 Priority-A migration milestone: `VERIFIED_COMPLETE` historical precursor;
 - its old "R2 written but runtime still on repository paths / keep rollback copies" operational state: `SUPERSEDED`;
+- Priority-A ONE private-R2 delivery/runtime cutover: bounded `VERIFIED_COMPLETE`;
 - current ONE delivery/runtime state: governed by the later verified private-R2 cutover in the Master Register.
 
 This prevents an old migration memo from reopening already-completed delivery work or reintroducing GitHub/R2 dual-master behavior.
 
-### 2. `dore.query.v1` still exists, but the 2026-08-24 architectural claim must be bounded
+### 2. Priority-B shared site media is independently verified and preserves the placement boundary
+
+The adjacent Priority-B milestone migrated exactly five large raster/site-media assets—`SITE-BACKGROUND`, `SITE-DAMASCUS-GATE`, `SITE-JERUSALEM-WALL`, `SITE-TEMPLE-STONE-LIGHT`, and `SITE-WECHAT-QR`—to private R2 behind registry-driven delivery. Its production receipt independently records `status: PASS`, `asset_count: 5`, `runtime_cutover: registry-private-r2`, `github_binaries_removed: 5`, and `r2_delivery_verified: 5`.
+
+This is a separate bounded `VERIFIED_COMPLETE` milestone from Priority A. It also preserves a useful architecture boundary: large independently addressable site media may live in R2, while code/UI/version-coupled identity assets such as the Morning Star and masthead SVG family remain GitHub-owned. The canonical Doré 241 source library remained untouched.
+
+The current Master Register already reflects the durable consequence in `JOIN`: its background and WeChat QR are actively delivered through the verified Priority-B private-R2 site-media cutover. Therefore no new JOIN status promotion is warranted; this batch strengthens the historical proof behind the existing maintenance state.
+
+**Current classification:**
+
+- Priority-B site-media migration + cutover: bounded `VERIFIED_COMPLETE`;
+- temporary migration trigger/probe workflows removed after PASS: `RETIRED` execution scaffolding, not missing production functionality;
+- blanket policy "all visual assets belong in R2": `SUPERSEDED / REJECTED` by the explicit placement boundary;
+- current JOIN site-media delivery: retain `MAINTENANCE` with the verified R2 cutover as regression history.
+
+### 3. `dore.query.v1` still exists, but the 2026-08-24 architectural claim must be bounded
 
 `functions/api/dore/query.js` still implements the `dore.query.v1` compatibility contract with status, asset, brain, and scripture routing. The endpoint therefore must not be marked retired or imaginary.
 
@@ -44,12 +64,22 @@ The current `query.js` also remains intentionally shallow in one important respe
 
 No endpoint removal is justified from this evidence alone.
 
+## Historical sequence now reconciled
+
+The bounded Cloudflare media history should be read in this order rather than as competing instructions:
+
+`Priority-A inventory/migration → Priority-A private-R2 runtime cutover → Priority-B shared site-media cutover → Journal/Liming placement audit → later product/runtime evolution`
+
+The first two migration generations establish the durable placement rule; later product work may add new media without reviving obsolete rollback or temporary workflow instructions.
+
 ## Durable lessons
 
 1. Migration completion and runtime cutover are distinct milestones; do not keep old rollback-state instructions active after cutover is independently verified.
 2. A compatibility facade can remain useful after its original architecture narrative is superseded.
 3. Historical `COMPLETE / PASS` documents must be interpreted at the exact milestone boundary they proved; they do not freeze later architecture.
 4. When newer shared execution systems emerge, older product-neutral routing layers should be evaluated for compatibility value versus duplicated intelligence rather than automatically deleted.
+5. R2 placement is role-based, not aesthetic-category-based: independently addressable large media belongs behind governed object delivery; code/UI/version-coupled identity assets may correctly remain in GitHub.
+6. Temporary migration/probe workflows can be retired after durable production receipts exist; their absence should not be mistaken for missing runtime capability.
 
 ## Revisit trigger
 
@@ -60,7 +90,7 @@ Reopen the `dore.query.v1` compatibility boundary only when one of these becomes
 - a product needs the facade to expose a capability already standardized elsewhere;
 - maintaining the facade creates measurable operational or correctness debt.
 
-Until then, keep it stable and bounded rather than rewriting it for architectural neatness.
+Reopen the R2 placement/cutover history only if a live product shows broken asset-code resolution, hash mismatch, competing masters, rights/provenance loss, or a new asset class whose update/access pattern does not fit the established GitHub/D1/R2 role boundary.
 
 ## P01 boundary
 
