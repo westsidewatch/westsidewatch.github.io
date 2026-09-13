@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Doré <-> A2A compatibility adapter v0.5.
+"""Doré <-> A2A compatibility adapter v0.6.
 
-The adapter now has two typed lanes behind the same ``dore.a2a/1`` seam:
-- canonical Doré capabilities, whose identity comes only from the Core registry;
-- the older Design control-plane lane for resident visual capabilities.
-
-Public ``capability + args`` requests are normalized before reaching this module.
+Canonical capabilities now enter one durable execution plane after normalization.
+The older typed Design control-plane lane remains available as a compatibility lane
+until it is consolidated separately.
 """
 from __future__ import annotations
 import importlib.util,json,os,uuid
@@ -69,7 +67,7 @@ def canonical_capability(capability_id):
  return registry.get(str(capability_id),include_planned=True)
 
 def handle_universal_envelope(envelope):
- """Execute one canonical capability only after a full typed ingress envelope exists."""
+ """Execute one canonical capability through durable execution truth."""
  if not isinstance(envelope,dict) or envelope.get('protocol')!='dore.a2a/1':raise ValueError('unsupported_protocol')
  if envelope.get('action','dispatch')!='dispatch':return None
  request_id=_required_text(envelope,'request_id');conversation_id=_required_text(envelope,'conversation_id');session_id=_required_text(envelope,'session_id');consumer_id=_required_text(envelope,'consumer_id');capability_id=_required_text(envelope,'capability_id')
@@ -78,12 +76,16 @@ def handle_universal_envelope(envelope):
  descriptor=canonical_capability(capability_id)
  if descriptor is None:return None
  bindings=_load_sibling('capability_bindings');binding=bindings.get(capability_id)
+ route={'ingress':'normalized','identity_authority':'dore-core/runtime/capability-registry.v1.json','binding_authority':'capability_bindings','execution_authority':'a2a_execution_plane'}
  if binding is None:
-  return {'protocol':'dore.a2a/1','request_id':request_id,'conversation_id':conversation_id,'session_id':session_id,'consumer_id':consumer_id,'capability_id':capability_id,'status':'failed','error':{'code':'capability_not_callable','message':'canonical capability has no execution binding'},'core_route':{'ingress':'normalized','identity_authority':'dore-core/runtime/capability-registry.v1.json','binding_authority':'capability_bindings'}}
- bus=_load_sibling('capability_bus');production=_load_sibling('production_actions')
- result=bus.call(capability_id,payload,production,caller_product=consumer_id)
- succeeded=bool(isinstance(result,dict) and result.get('ok') is True and str(result.get('status') or '').lower() not in {'failed','error'})
- return {'protocol':'dore.a2a/1','request_id':request_id,'conversation_id':conversation_id,'session_id':session_id,'consumer_id':consumer_id,'capability_id':capability_id,'status':'succeeded' if succeeded else 'failed','result':result,'core_route':{'ingress':'normalized','identity_authority':'dore-core/runtime/capability-registry.v1.json','binding_authority':'capability_bindings','execution_binding':binding.get('kind')}}
+  return {'protocol':'dore.a2a/1','request_id':request_id,'conversation_id':conversation_id,'session_id':session_id,'consumer_id':consumer_id,'capability_id':capability_id,'status':'failed','error':{'code':'capability_not_callable','message':'canonical capability has no execution binding'},'core_route':route}
+ route['execution_binding']=binding.get('kind')
+ bus=_load_sibling('capability_bus');production=_load_sibling('production_actions');executor=_load_sibling('a2a_executor');plane=_load_sibling('a2a_execution_plane')
+ execution=executor.execute(envelope,descriptor,binding,lambda:bus.call(capability_id,payload,production,caller_product=consumer_id),plane=plane)
+ succeeded=bool(execution.get('ok') and execution.get('completion_evidence') and execution.get('execution_status')=='PASS')
+ out={'protocol':'dore.a2a/1','request_id':request_id,'conversation_id':conversation_id,'session_id':session_id,'consumer_id':consumer_id,'capability_id':capability_id,'status':'succeeded' if succeeded else 'failed','execution':execution,'result':execution.get('result'),'core_route':route}
+ if execution.get('error'):out['error']=execution['error']
+ return out
 
 def handle_companion_payload(payload):
  if not isinstance(payload,dict) or payload.get('protocol')!='dore.a2a/1':return None
