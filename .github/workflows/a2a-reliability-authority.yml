@@ -19,6 +19,7 @@ on:
       - 'local/dore-local/a2a_failure_policy.py'
       - 'local/dore-local/a2a_failure_taxonomy_acceptance.py'
       - 'local/dore-local/a2a_consumer_recovery_acceptance.py'
+      - 'local/dore-local/coordination_worker.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/a2a-reliability-authority.yml'
