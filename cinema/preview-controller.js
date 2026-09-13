@@ -1,6 +1,7 @@
 (()=>{
   const HOVER_DELAY=420;
   const HOVER_EXIT_DELAY=120;
+  const RUNTIME_PROBE_TIMEOUT=26000;
   const previewTimers=new WeakMap();
   const exitTimers=new WeakMap();
 
@@ -43,13 +44,7 @@
     if(source.provider==='youtube'){
       const id=youtubeId(source);
       if(!id)return null;
-      return {
-        provider:'youtube',
-        source,
-        posterUrl:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
-        hoverPreview:true,
-        previewStartSeconds:0
-      };
+      return {provider:'youtube',source,posterUrl:`https://i.ytimg.com/vi/${id}/hqdefault.jpg`,hoverPreview:true,previewStartSeconds:0};
     }
     return null;
   }
@@ -80,10 +75,7 @@
   function stopPreview(surface){
     clearTimeout(previewTimers.get(surface));
     clearTimeout(exitTimers.get(surface));
-    exitTimers.set(surface,setTimeout(()=>{
-      surface.querySelector('iframe')?.remove();
-      surface.classList.remove('is-previewing');
-    },HOVER_EXIT_DELAY));
+    exitTimers.set(surface,setTimeout(()=>{surface.querySelector('iframe')?.remove();surface.classList.remove('is-previewing');},HOVER_EXIT_DELAY));
   }
 
   function startPreview(surface,spec){
@@ -99,39 +91,61 @@
     },HOVER_DELAY));
   }
 
-  function activateSurface(surface){
-    const card=surface.closest('.resource-card');
-    const action=card?.querySelector('.resource-action');
-    if(action)action.click();
+  function activateSurface(surface){const action=surface.closest('.resource-card')?.querySelector('.resource-action');if(action)action.click();}
+
+  function installPreview(item,spec){
+    if(!spec?.posterUrl)return false;
+    const card=document.querySelector(`.resource-card[data-canonical-id="${CSS.escape(item.canonicalId)}"]`);
+    if(!card||card.querySelector('.resource-preview'))return false;
+    const surface=document.createElement('div');
+    surface.className='resource-preview';
+    surface.tabIndex=0;
+    surface.setAttribute('role','button');
+    surface.setAttribute('aria-label',`播放 ${item.title}`);
+    const image=document.createElement('img');
+    image.src=spec.posterUrl;
+    image.alt='';
+    image.loading='lazy';
+    image.referrerPolicy='no-referrer';
+    surface.appendChild(image);
+    surface.addEventListener('pointerenter',()=>startPreview(surface,spec));
+    surface.addEventListener('pointerleave',()=>stopPreview(surface));
+    surface.addEventListener('focus',()=>startPreview(surface,spec));
+    surface.addEventListener('blur',()=>stopPreview(surface));
+    surface.addEventListener('click',()=>activateSurface(surface));
+    surface.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();activateSurface(surface);}});
+    card.prepend(surface);
+    return true;
   }
 
-  function installResourcePreviews(resources){
+  function runtimePoster(item){
+    const url=String(item.sourcePointer||sourceFor(item).url||'').trim();
+    if(!url)return Promise.resolve(null);
+    const requestId=`cinema-source-probe-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    return new Promise(resolve=>{
+      let settled=false;
+      const finish=value=>{if(settled)return;settled=true;clearTimeout(timer);window.removeEventListener('dore:runtime-source-probe-result',onResult);resolve(value);};
+      const onResult=event=>{
+        const detail=event.detail||{};
+        if(detail.request_id!==requestId)return;
+        const payload=detail.payload||{};
+        const poster=Array.isArray(payload.capabilities?.poster)?payload.capabilities.poster.find(entry=>entry?.url):null;
+        if(poster?.url){document.documentElement.dataset.cinemaRuntimeSourceProbe='poster';finish({posterUrl:poster.url,hoverPreview:false,provider:'runtime-source-probe',source:sourceFor(item)});}
+        else finish(null);
+      };
+      const timer=setTimeout(()=>finish(null),RUNTIME_PROBE_TIMEOUT);
+      window.addEventListener('dore:runtime-source-probe-result',onResult);
+      window.dispatchEvent(new CustomEvent('dore:runtime-source-probe',{detail:{request_id:requestId,url,caller_product:'cinema'}}));
+    });
+  }
+
+  async function installResourcePreviews(resources){
     for(const item of resources){
       if(item.canonicalId==='cinema:video:jesus-film:jesus')continue;
-      const card=document.querySelector(`.resource-card[data-canonical-id="${CSS.escape(item.canonicalId)}"]`);
-      if(!card||card.querySelector('.resource-preview'))continue;
-      const spec=previewSpec(item);
-      if(!spec?.posterUrl)continue;
-      const surface=document.createElement('div');
-      surface.className='resource-preview';
-      surface.tabIndex=0;
-      surface.setAttribute('role','button');
-      surface.setAttribute('aria-label',`播放 ${item.title}`);
-      const image=document.createElement('img');
-      image.src=spec.posterUrl;
-      image.alt='';
-      image.loading='lazy';
-      image.referrerPolicy='no-referrer';
-      surface.appendChild(image);
-      surface.addEventListener('pointerenter',()=>startPreview(surface,spec));
-      surface.addEventListener('pointerleave',()=>stopPreview(surface));
-      surface.addEventListener('focus',()=>startPreview(surface,spec));
-      surface.addEventListener('blur',()=>stopPreview(surface));
-      surface.addEventListener('click',()=>activateSurface(surface));
-      surface.addEventListener('keydown',event=>{
-        if(event.key==='Enter'||event.key===' '){event.preventDefault();activateSurface(surface);}
-      });
-      card.prepend(surface);
+      const declared=previewSpec(item);
+      if(installPreview(item,declared))continue;
+      const runtime=await runtimePoster(item);
+      if(runtime)installPreview(item,runtime);
     }
   }
 
@@ -155,12 +169,7 @@
     poster.removeAttribute('aria-hidden');
     poster.querySelector('.living-poster__play-mark')?.remove();
     poster.addEventListener('click',()=>poster.closest('.living-poster')?.querySelector('[data-action="watch"]')?.click());
-    poster.addEventListener('keydown',event=>{
-      if(event.key==='Enter'||event.key===' '){
-        event.preventDefault();
-        poster.closest('.living-poster')?.querySelector('[data-action="watch"]')?.click();
-      }
-    });
+    poster.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();poster.closest('.living-poster')?.querySelector('[data-action="watch"]')?.click();}});
   }
 
   async function install(){
@@ -175,8 +184,7 @@
         const ready=document.querySelector('.living-poster')&&document.querySelector('.resource-card');
         if(ready){
           if(jesus)installJesusPoster(jesus);
-          installResourcePreviews(resources);
-          document.documentElement.dataset.cinemaPreviewLayer='v1';
+          installResourcePreviews(resources).then(()=>{document.documentElement.dataset.cinemaPreviewLayer='v2-runtime-source-probe';});
           return;
         }
         if(tries++<80)requestAnimationFrame(waitForCards);
