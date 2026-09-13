@@ -35,12 +35,47 @@ assert result["capabilities"]["caption"][0]["language"] == "zh-Hant"
 assert result["capabilities"]["manifest"][0]["manifest"] == "hls"
 assert result["rights"]["rehost"] is False
 
+runtime = PROBE.execute({
+    "url": "https://unknown-player.example/watch/42",
+    "runtimeSnapshot": {
+        "collector": "dore.runtime-source-probe.v0",
+        "url": "https://unknown-player.example/watch/42",
+        "identity": {"title": "Runtime Teaching", "creator": "Example Church", "duration": 1842},
+        "videos": [{"poster": "/runtime-poster.jpg", "currentSrc": "https://media.example.invalid/master.m3u8"}],
+        "tracks": [{"kind": "subtitles", "srclang": "zh-Hant", "src": "/runtime.vtt"}],
+        "iframes": [{"src": "https://player.example.invalid/embed/42"}],
+        "resources": [
+            {"name": "https://media.example.invalid/master.m3u8", "initiatorType": "fetch"},
+            {"name": "https://media.example.invalid/runtime.vtt", "initiatorType": "fetch"},
+        ],
+    },
+})
+assert runtime["ok"] is True
+assert runtime["schema"] == "dore.source-probe.v0"
+assert runtime["status"] == "completed"
+assert runtime["capabilities"]["poster"][0]["source"] == "runtime-video-poster"
+assert runtime["capabilities"]["manifest"][0]["manifest"] == "hls"
+assert runtime["capabilities"]["caption"]
+assert runtime["capabilities"]["embed"]
+assert runtime["provenance"]["runtimeBrowserUsed"] is True
+assert runtime["rights"]["rehost"] is False
+assert runtime["sourceAuthority"] is True and runtime["probeAuthority"] is False
+
 blocked = PROBE.execute({"url": "https://zh.wikisource.org/wiki/Test", "html": "<html></html>"})
 assert blocked["status"] == "blocked"
+blocked_runtime = PROBE.execute({"url": "https://zh.wikisource.org/wiki/Test", "runtimeSnapshot": {"url": "https://zh.wikisource.org/wiki/Test", "videos": []}})
+assert blocked_runtime["status"] == "blocked"
 
 print("DORE_SOURCE_PROBE_STANDARD_FIRST=PASS")
 print("DORE_SOURCE_PROBE_PROVIDER_NEUTRAL=PASS")
 print("DORE_SOURCE_PROBE_WIKISOURCE_GATE=PASS")
+print("DORE_RUNTIME_PROBE_SCHEMA_PARITY=PASS")
+print("DORE_RUNTIME_PROBE_DOM_MEDIA=PASS")
+print("DORE_RUNTIME_PROBE_POSTER=PASS")
+print("DORE_RUNTIME_PROBE_SUBTITLE=PASS")
+print("DORE_RUNTIME_PROBE_MANIFEST=PASS")
+print("DORE_RUNTIME_PROBE_SOURCE_POLICY=PASS")
+print("DORE_RUNTIME_PROBE_PROVIDER_NEUTRAL=PASS")
 
 if os.environ.get("DORE_SOURCE_PROBE_LIVE") == "1":
     goodtv = PROBE.execute({
