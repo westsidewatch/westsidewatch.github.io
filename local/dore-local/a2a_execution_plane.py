@@ -53,8 +53,7 @@ def recoverability(task_id):
  if t.get('status') in TERMINAL:return {'ok':True,'state':'TERMINAL','task':t}
  lease=t.get('lease') or {}
  if _lease_live(lease):return {'ok':True,'state':'IN_FLIGHT','owner':lease.get('owner'),'expires_at':lease.get('expires_at'),'task':t}
- if lease:
-  return {'ok':True,'state':'RECLAIMABLE','reason':'lease_expired','resume_from':t.get('status'),'previous_owner':lease.get('owner'),'expired_at':lease.get('expires_at'),'task':t}
+ if lease:return {'ok':True,'state':'RECLAIMABLE','reason':'lease_expired','resume_from':t.get('status'),'previous_owner':lease.get('owner'),'expired_at':lease.get('expires_at'),'task':t}
  return {'ok':True,'state':'READY','resume_from':t.get('status'),'task':t}
 
 def claim(task_id,consumer=None,lease_seconds=DEFAULT_LEASE_SECONDS):
@@ -65,8 +64,8 @@ def claim(task_id,consumer=None,lease_seconds=DEFAULT_LEASE_SECONDS):
  if live and lease.get('owner')!=owner:return {'ok':False,'code':'TASK_LEASED','owner':lease.get('owner'),'expires_at':lease.get('expires_at'),'task':t}
  previous=t['status'];reclaimed=bool(lease and not live);expires=datetime.now(timezone.utc)+timedelta(seconds=max(30,int(lease_seconds)))
  recovery={'reason':'lease_expired','resume_from':previous,'previous_owner':lease.get('owner'),'reclaimed_at':now()} if reclaimed else None
- t['lease']={'owner':owner,'claimed_at':now(),'expires_at':expires.isoformat()};t['status']='CLAIMED';t['claimed_at']=now();t['recovery']=recovery;_atomic(_task_path(task_id),t)
- _append({'at':now(),'task_id':task_id,'from':previous,'to':'CLAIMED','owner':owner,'expires_at':t['lease']['expires_at'],'reclaimed':reclaimed,'resume_from':previous if reclaimed else None})
+ t['lease']={'owner':owner,'claimed_at':now(),'expires_at':expires.isoformat()};t['status']=previous if reclaimed and previous in {'ARTIFACT_PRODUCED','VERIFIED'} else 'CLAIMED';t['claimed_at']=now();t['recovery']=recovery;_atomic(_task_path(task_id),t)
+ _append({'at':now(),'task_id':task_id,'from':previous,'to':t['status'],'owner':owner,'expires_at':t['lease']['expires_at'],'reclaimed':reclaimed,'resume_from':previous if reclaimed else None})
  return {'ok':True,'code':'TASK_RECLAIMED' if reclaimed else 'TASK_CLAIMED','reclaimed':reclaimed,'resume_from':previous if reclaimed else None,'task':t}
 
 def heartbeat(task_id,consumer=None,lease_seconds=DEFAULT_LEASE_SECONDS):
