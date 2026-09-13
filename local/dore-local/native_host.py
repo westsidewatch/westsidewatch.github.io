@@ -63,14 +63,14 @@ def _with_id(req,res):
  return res
 def health_payload():
  direct=[]
- for name in ("self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
+ for name in ("source_probe_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
   direct.extend(sorted(_capabilities(name)))
  production=[x["id"] for x in discover_production() if x.get("callable")]
  return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"degraded_modules":dict(_LOAD_ERRORS)}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "");args=payload.get("args") or {}
- direct=(("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
+ direct=(("source_probe_action",), ("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
  for entry in direct:
   name=entry[0]
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
