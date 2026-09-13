@@ -7,15 +7,76 @@ from autonomous_learner import discover_evidence, evidence_pack, iterate_researc
 from learning_planner import plan, validate_gate
 from self_memory import add_learning, status as learning_status, transition_learning
 
+UI_GATE_FILES = ('ui-v1.json', 'ui-v2.json', 'ui-v3.json', 'ui-v4.json')
+UI_POLICY = 'dore-ui-capability-learning-v4'
+
 
 def now():
     return datetime.now(timezone.utc).isoformat()
 
 
+def _validate_ui_dependency_graph(gates):
+    by_id = {g['id']: g for g in gates}
+    if len(by_id) != len(gates):
+        seen = set()
+        duplicates = []
+        for gate in gates:
+            gate_id = gate['id']
+            if gate_id in seen and gate_id not in duplicates:
+                duplicates.append(gate_id)
+            seen.add(gate_id)
+        raise ValueError('duplicate UI learning gate id: ' + ','.join(duplicates))
+
+    missing = []
+    for gate in gates:
+        for dep in gate.get('requires') or []:
+            if dep not in by_id:
+                missing.append(f"{gate['id']}->{dep}")
+    if missing:
+        raise ValueError('missing UI learning gate dependency: ' + ','.join(missing))
+
+    state = {}
+    stack = []
+
+    def visit(gate_id):
+        marker = state.get(gate_id, 0)
+        if marker == 2:
+            return
+        if marker == 1:
+            try:
+                start = stack.index(gate_id)
+                cycle = stack[start:] + [gate_id]
+            except ValueError:
+                cycle = stack + [gate_id]
+            raise ValueError('cyclic UI learning gate dependency: ' + '->'.join(cycle))
+        state[gate_id] = 1
+        stack.append(gate_id)
+        for dep in by_id[gate_id].get('requires') or []:
+            visit(dep)
+        stack.pop()
+        state[gate_id] = 2
+
+    for gate_id in by_id:
+        visit(gate_id)
+    return gates
+
+
 def load_ui_gates(base: Path | None = None):
     base = base or Path(__file__).resolve().parent
-    payload = json.loads((base / 'learning-gates' / 'ui-v1.json').read_text(encoding='utf-8'))
-    return [validate_gate(g) for g in payload.get('gates') or []]
+    gate_dir = base / 'learning-gates'
+    gates = []
+    for filename in UI_GATE_FILES:
+        path = gate_dir / filename
+        if not path.is_file():
+            raise FileNotFoundError('required UI learning gate file missing: ' + filename)
+        payload = json.loads(path.read_text(encoding='utf-8'))
+        if payload.get('schema') != 'dore.learning-gates.v1':
+            raise ValueError('unsupported UI learning gate schema in ' + filename)
+        file_gates = payload.get('gates') or []
+        if not isinstance(file_gates, list) or not file_gates:
+            raise ValueError('UI learning gate file has no gates: ' + filename)
+        gates.extend(validate_gate(g) for g in file_gates)
+    return _validate_ui_dependency_graph(gates)
 
 
 def ensure_schema(conn: sqlite3.Connection):
@@ -140,7 +201,9 @@ def run_ui_cycle(conn, repo_root: Path, dore_root: Path, max_gates=3, model_call
         productive += 1
     return {
         'ok': True,
-        'policy': 'dore-ui-capability-learning-v1',
+        'policy': UI_POLICY,
+        'gate_versions': list(UI_GATE_FILES),
+        'gate_count': len(gates),
         'executed': executed,
         'planner': planner,
         'productive_runs': productive,
@@ -157,4 +220,4 @@ def status(conn):
             row['result'] = json.loads(row.pop('result_json'))
         except Exception:
             row['result'] = None
-    return {'ok': True, 'runs': rows}
+    return {'ok': True, 'policy': UI_POLICY, 'runs': rows}
