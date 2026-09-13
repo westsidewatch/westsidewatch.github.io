@@ -1,0 +1,33 @@
+name: Doré Design Intelligence Release Seal
+
+on:
+  push:
+    paths:
+      - 'dore-design/design_intelligence_release_contract.json'
+      - 'dore-design/design_intelligence_release_acceptance.py'
+      - 'dore-design/design_intelligence_a2a.py'
+      - 'local/dore-local/design_intelligence_a2a_worker.py'
+      - 'local/dore-local/design_intelligence_a2a_worker_v11.py'
+      - 'local/dore-local/ui_capability_learner.py'
+      - 'local/dore-local/learning-gates/ui-v*.json'
+      - '.github/workflows/dore-design-intelligence-release-seal.yml'
+  workflow_dispatch:
+
+jobs:
+  release-seal:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile frozen runtime contracts
+        run: |
+          python -m py_compile \
+            dore-design/design_intelligence_release_acceptance.py \
+            local/dore-local/ui_capability_learner.py \
+            local/dore-local/design_intelligence_a2a_worker.py
+      - name: Validate Design Intelligence release seal
+        run: python dore-design/design_intelligence_release_acceptance.py
