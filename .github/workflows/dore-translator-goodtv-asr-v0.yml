@@ -1,0 +1,24 @@
+name: DORE Translator GOODTV ASR v0
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/translation_goodtv_caption_probe.py'
+      - '.github/workflows/dore-translator-goodtv-asr-v0.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/translation_goodtv_caption_probe.py'
+      - '.github/workflows/dore-translator-goodtv-asr-v0.yml'
+
+jobs:
+  zero-caption-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax
+        run: python -m py_compile local/dore-local/translation_goodtv_caption_probe.py
+      - name: Verify GOOD TV YouTube has no provider captions
+        run: python local/dore-local/translation_goodtv_caption_probe.py
