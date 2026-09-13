@@ -6,9 +6,15 @@ TRACKS = {
     'zh-Hant': 'https://api-media-core.jesusfilm.org/1_jf-0-0/editions/ot/subtitles/1_jf-0-0_ot_21753.vtt',
 }
 TARGET = 'Love your enemies'
+HEADERS = {
+    'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/140.0 Safari/537.36',
+    'Accept':'text/vtt,text/plain,*/*',
+    'Referer':'https://api.arclight.org/',
+    'Origin':'https://api.arclight.org',
+}
 
 for lang, url in TRACKS.items():
-    req = Request(url, headers={'User-Agent':'Mozilla/5.0 Doré-Translator/0.1','Accept':'text/vtt,text/plain,*/*'})
+    req = Request(url, headers=HEADERS)
     with urlopen(req, timeout=30) as response:
         text = response.read().decode('utf-8', errors='replace')
     print(f'{lang}_STATUS={getattr(response, "status", 200)}')
