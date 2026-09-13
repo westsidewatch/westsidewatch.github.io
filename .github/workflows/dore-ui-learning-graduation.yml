@@ -1,0 +1,32 @@
+name: Doré UI Learning Graduation
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'local/dore-local/ui_capability_learner.py'
+      - 'local/dore-local/ui_capability_loader_acceptance.py'
+      - 'local/dore-local/learning-gates/ui-v*.json'
+      - '.github/workflows/dore-ui-learning-graduation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ui-learning-graduation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile UI learner
+        run: |
+          python -m py_compile local/dore-local/ui_capability_learner.py
+          python -m py_compile local/dore-local/ui_capability_loader_acceptance.py
+      - name: Validate UI v1-v4 learning graph
+        run: python local/dore-local/ui_capability_loader_acceptance.py
