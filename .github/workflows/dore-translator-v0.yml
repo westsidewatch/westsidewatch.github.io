@@ -1,0 +1,45 @@
+name: DORE Translator v0
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/translation_*.py'
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'dore-core/projects/DORE-TRANSLATOR-V0-2026-09-13.md'
+      - '.github/workflows/dore-translator-v0.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/translation_*.py'
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'dore-core/projects/DORE-TRANSLATOR-V0-2026-09-13.md'
+      - '.github/workflows/dore-translator-v0.yml'
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Translator syntax
+        run: python -m py_compile local/dore-local/translation_contracts.py local/dore-local/translation_capability.py local/dore-local/translation_project_acceptance.py
+      - name: Bidirectional bilingual artifact acceptance
+        run: PYTHONPATH=local/dore-local python local/dore-local/translation_project_acceptance.py
+      - name: Canonical registry translator contract
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          data=json.loads(Path('dore-core/runtime/capability-registry.v1.json').read_text())
+          item=next(x for x in data['capabilities'] if x['id']=='translation.project')
+          assert item['status']=='existing'
+          assert item['execution']=='core-adapter'
+          assert item['entrypoint']=='local/dore-local/translation_capability.py'
+          assert item['provider_neutral'] is True
+          assert item['source_authority'] is True
+          assert item['translation_authority'] is False
+          assert item['timing_policy']=='source-authoritative-immutable'
+          assert {'cinema','habakkuk'} <= set(item['consumers'])
+          print('DORE_TRANSLATOR_REGISTRY_ACCEPTANCE=PASS')
+          PY
