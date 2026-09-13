@@ -2,7 +2,9 @@
 """DORÉ local routing host: on-demand, zero-cloud local control plane.
 
 Capability families are loaded lazily. A broken optional Core package must not
-make unrelated local A2A capabilities unavailable.
+make unrelated local A2A capabilities unavailable. Normal canonical capabilities
+enter Core through the public normalization boundary; direct modules are retained
+only as explicit recovery/acceptance compatibility paths.
 """
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
@@ -66,7 +68,12 @@ def health_payload():
  for name in ("self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
   direct.extend(sorted(_capabilities(name)))
  production=[x["id"] for x in discover_production() if x.get("callable")]
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"degraded_modules":dict(_LOAD_ERRORS)}
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"normalization_boundary":"a2a_ingress.normalize_public_call","degraded_modules":dict(_LOAD_ERRORS)}
+def _adapter_dispatch(payload):
+ adapter=_module("a2a_adapter")
+ if not adapter:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_unavailable","message":_LOAD_ERRORS.get("a2a_adapter","adapter unavailable")}}
+ try:return adapter.handle_companion_payload(payload)
+ except Exception as exc:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}}
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "");args=payload.get("args") or {}
@@ -74,12 +81,19 @@ def route_payload(payload):
  for entry in direct:
   name=entry[0]
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
+ # Normal public capability calls must cross the normalization boundary before Core dispatch.
  descriptor=resolve_production(cap) if cap else None
- if descriptor and descriptor.get("callable"):return _with_id(payload,call_production(cap,args,payload.get("caller_product")))
- adapter=_module("a2a_adapter")
- if adapter:
-  try:typed=adapter.handle_companion_payload(payload)
-  except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_error","message":str(exc)}})
+ if descriptor and descriptor.get("callable"):
+  ingress=_module("a2a_ingress")
+  if not ingress:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"ingress_unavailable","message":_LOAD_ERRORS.get("a2a_ingress","ingress unavailable")}})
+  try:typed=ingress.normalize_public_call(payload)
+  except Exception as exc:return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"normalization_error","message":str(exc)}})
+  result=_adapter_dispatch(typed)
+  if result is not None:return _with_id(payload,result)
+  return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"core_route_unreachable","message":"normalized canonical capability was not accepted by Core adapter"}})
+ # Already-typed envelopes (including the older Design control-plane contract) remain accepted.
+ if payload.get("protocol")==PROTOCOL:
+  typed=_adapter_dispatch(payload)
   if typed is not None:return _with_id(payload,typed)
  cmd=str(payload.get("command") or payload.get("text") or "").strip().lower()
  if cap==LEGACY_CAPABILITY or cmd in {"/dore stage2","dore stage2"}:return _with_id(payload,{"ok":True,"service":SERVICE,"protocol":PROTOCOL,"capability":LEGACY_CAPABILITY,"available":True,"status":"PASS","diagnostic":True,"transport":"local-routing-host"})
