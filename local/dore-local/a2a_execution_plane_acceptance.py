@@ -3,6 +3,8 @@
 
 PASS proves delivery acceptance is not promoted to completion: a task must be
 claimed, run, produce an artifact, verify that artifact, and only then PASS.
+Replay safety is bound to message_id + canonical content hash; a hash conflict is
+rejected rather than silently treated as the same task.
 """
 from __future__ import annotations
 import json,os,tempfile
@@ -14,10 +16,17 @@ with tempfile.TemporaryDirectory(prefix='dore-a2a-exec-') as td:
  import a2a_execution_plane as ep
 
  msg={'schema':'dore.mail.v2','message_id':'acceptance-task-1','sender':'chatgpt','recipient':'dore','kind':'local_exec','body':'acceptance'}
- task=ep.register(msg,{'content_sha256':'a'*64,'source_commit':'b'*40,'source_ref':'main','accepted_at':ep.now()})
+ delivery={'content_sha256':'a'*64,'source_commit':'b'*40,'source_ref':'main','accepted_at':ep.now()}
+ task=ep.register(msg,delivery)
  assert task['status']=='ACCEPTED'
- # Re-register is replay-safe and does not advance or reset lifecycle.
- assert ep.register(msg)['status']=='ACCEPTED'
+ # Re-register with the same canonical identity is replay-safe and does not advance/reset lifecycle.
+ assert ep.register(msg,delivery)['status']=='ACCEPTED'
+ # Same task identity with different canonical content hash fails closed.
+ try:
+  ep.register(msg,{'content_sha256':'c'*64,'source_commit':'b'*40,'source_ref':'main','accepted_at':ep.now()})
+  raise AssertionError('identity conflict was not rejected')
+ except ValueError as exc:
+  assert 'execution_task_identity_conflict:' in str(exc)
 
  c1=ep.claim(msg['message_id'],'worker-A',60);assert c1['ok'] and c1['task']['status']=='CLAIMED'
  c2=ep.claim(msg['message_id'],'worker-B',60);assert not c2['ok'] and c2['code']=='TASK_LEASED'
@@ -41,4 +50,4 @@ with tempfile.TemporaryDirectory(prefix='dore-a2a-exec-') as td:
  p=ep._task_path(msg3['message_id']);t=json.loads(p.read_text());t['lease']['expires_at']=(datetime.now(timezone.utc)-timedelta(seconds=1)).isoformat();ep._atomic(p,t)
  reclaimed=ep.claim(msg3['message_id'],'worker-B',60);assert reclaimed['ok'] and reclaimed['task']['lease']['owner']=='worker-B'
 
- print(json.dumps({'ok':True,'code':'DORE_A2A_EXECUTION_PLANE_PASS','checks':['replay_safe','exclusive_live_lease','running_requires_lease','no_pass_without_artifact','no_pass_without_verification','verified_artifact_pass','verification_failure_terminal','expired_lease_reclaim']},sort_keys=True))
+ print(json.dumps({'ok':True,'code':'DORE_A2A_EXECUTION_PLANE_PASS','checks':['replay_safe_same_hash','identity_conflict_fail_closed','exclusive_live_lease','running_requires_lease','no_pass_without_artifact','no_pass_without_verification','verified_artifact_pass','verification_failure_terminal','expired_lease_reclaim']},sort_keys=True))
