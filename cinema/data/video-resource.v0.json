@@ -1,1 +1,121 @@
-{"schema":"holy-light.video-resource.v0","items":[],"reflexPersistent":false}
+{
+  "schema": "holy-light.video-resource.v0",
+  "reflexPersistent": false,
+  "items": [
+    {
+      "canonicalId": "cinema:video:jesus-film:jesus",
+      "kind": "film",
+      "title": "JESUS",
+      "creator": "Jesus Film Project",
+      "language": ["multi", "zh"],
+      "durationSeconds": 7680,
+      "topics": ["耶穌生平", "路加福音", "福音"],
+      "sourcePointer": "https://www.jesusfilm.org/watch/jesus.html",
+      "providerSources": [
+        {
+          "provider": "jesus-film-project",
+          "url": "https://www.jesusfilm.org/watch/jesus.html",
+          "official": true,
+          "embed": false,
+          "access": "official-source-handoff"
+        }
+      ],
+      "rights": {
+        "rehost": false,
+        "policy": "official-source-only"
+      },
+      "provenance": {
+        "verified": true,
+        "verifiedAt": "2026-09-12"
+      }
+    },
+    {
+      "canonicalId": "cinema:video:david-pawson:unlocking-matthew-1",
+      "kind": "teaching",
+      "title": "Unlocking the New Testament Part 1 - Matthew 1",
+      "creator": "David Pawson",
+      "series": "Unlocking the Bible",
+      "language": ["en"],
+      "topics": ["馬太福音", "四福音", "聖經導論"],
+      "momentCapability": "source-title",
+      "sourcePointer": "https://www.youtube.com/watch?v=F2KMYwBRngU",
+      "providerSources": [
+        {
+          "provider": "youtube",
+          "channel": "David Pawson - Official",
+          "url": "https://www.youtube.com/watch?v=F2KMYwBRngU",
+          "embedUrl": "https://www.youtube.com/embed/F2KMYwBRngU",
+          "official": true,
+          "embed": true,
+          "access": "embedded-playback"
+        }
+      ],
+      "rights": {
+        "rehost": false,
+        "policy": "provider-embed"
+      },
+      "provenance": {
+        "verified": true,
+        "verifiedAt": "2026-09-12"
+      }
+    },
+    {
+      "canonicalId": "cinema:video:goodtv:waiting-on-god-no-minute-wasted",
+      "kind": "sermon",
+      "title": "等候神沒有一分鐘是徒然的",
+      "creator": "江秀琴",
+      "series": "GOOD TV 特會精選",
+      "language": ["zh-Hant"],
+      "topics": ["等候神", "內在生活", "醫治"],
+      "momentCapability": "source-title",
+      "sourcePointer": "https://www.youtube.com/watch?v=kMUngZq5jss",
+      "providerSources": [
+        {
+          "provider": "youtube",
+          "channel": "GOOD TV 特會精選",
+          "url": "https://www.youtube.com/watch?v=kMUngZq5jss",
+          "embedUrl": "https://www.youtube.com/embed/kMUngZq5jss",
+          "official": true,
+          "embed": true,
+          "access": "embedded-playback"
+        }
+      ],
+      "rights": {
+        "rehost": false,
+        "policy": "provider-embed"
+      },
+      "provenance": {
+        "verified": true,
+        "verifiedAt": "2026-09-12"
+      }
+    },
+    {
+      "canonicalId": "cinema:video:goodtv:holy-spirit-power-workplace-testimony",
+      "kind": "sermon",
+      "title": "倚靠聖靈的能力、職場烈火見證",
+      "creator": "GOOD TV",
+      "series": "聖靈充滿後必得著能力",
+      "language": ["zh-Hant"],
+      "durationSeconds": 3185,
+      "topics": ["聖靈", "能力", "見證"],
+      "sourcePointer": "https://www.goodtv.tv/watch?episode=81076&series=196524&type=2",
+      "providerSources": [
+        {
+          "provider": "goodtv-first-party",
+          "url": "https://www.goodtv.tv/watch?episode=81076&series=196524&type=2",
+          "official": true,
+          "embed": false,
+          "access": "official-source-handoff"
+        }
+      ],
+      "rights": {
+        "rehost": false,
+        "policy": "official-source-only"
+      },
+      "provenance": {
+        "verified": true,
+        "verifiedAt": "2026-09-12"
+      }
+    }
+  ]
+}
