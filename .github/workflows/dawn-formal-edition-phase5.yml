@@ -1,0 +1,33 @@
+name: Dawn Formal Edition Phase 5
+
+on:
+  push:
+    branches:
+      - 'dore/dawn-library-formal-edition'
+    paths:
+      - 'scripts/dawn-formal-edition-phase5.mjs'
+      - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/surfaces/multiwrite-biblical-world.json'
+      - 'static/dawn-library/formal-edition/contexts/**'
+      - 'static/dawn-library/formal-edition/contracts/editorial-world.v1.schema.json'
+      - 'static/dawn-library/formal-edition/editorial/**'
+      - 'static/dawn-library/formal-edition/runtime/editorial.mjs'
+      - 'static/dawn-library/formal-edition/runtime/discovery.mjs'
+      - 'static/dawn-library/formal-edition/runtime/relation-context.mjs'
+      - '.github/workflows/dawn-formal-edition-phase5.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  editorial-world-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate Editorial World against real canonical substrate
+        run: node scripts/dawn-formal-edition-phase5.mjs

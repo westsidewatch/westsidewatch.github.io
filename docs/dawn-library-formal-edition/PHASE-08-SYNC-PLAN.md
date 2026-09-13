@@ -1,0 +1,1 @@
+Phase 8 synchronization target: merge latest `main` into `dore/dawn-library-formal-edition`, then run the final production acceptance matrix. No final PASS may be declared against a stale base.

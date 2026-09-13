@@ -1,0 +1,76 @@
+name: Dawn Formal Edition Phase 4
+
+on:
+  push:
+    branches:
+      - 'dore/dawn-library-formal-edition'
+    paths:
+      - 'scripts/dawn-formal-edition-phase4.mjs'
+      - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/surfaces/multiwrite-biblical-world.json'
+      - 'static/dawn-library/formal-edition/contexts/**'
+      - 'static/dawn-library/formal-edition/runtime/**'
+      - 'static/dawn-library/formal-edition/phase4/**'
+      - '.github/workflows/dawn-formal-edition-phase4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  phase4-gate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Full canonical runtime audit
+        run: |
+          set -o pipefail
+          node scripts/dawn-formal-edition-phase4.mjs 2>&1 | tee /tmp/dawn-phase4-runtime.log
+      - name: Start local formal-edition server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/dawn-phase4-http.log 2>&1 &
+          echo $! > /tmp/dawn-phase4-http.pid
+          for i in {1..30}; do
+            curl -fsS http://127.0.0.1:4173/static/dawn-library/formal-edition/phase4/acceptance.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dawn-phase4-http.log
+          exit 1
+      - name: Browser acceptance on real 10k+ catalog
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          test -n "$CHROME"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
+            http://127.0.0.1:4173/static/dawn-library/formal-edition/phase4/acceptance.html \
+            > /tmp/dawn-phase4-acceptance.html
+          cat /tmp/dawn-phase4-acceptance.html
+          grep -q 'PHASE4_BROWSER_PASS' /tmp/dawn-phase4-acceptance.html
+          grep -q 'data-status="PASS"' /tmp/dawn-phase4-acceptance.html
+      - name: Real UI boot smoke test
+        run: |
+          CHROME="$(command -v google-chrome || command -v google-chrome-stable || command -v chromium || command -v chromium-browser)"
+          "$CHROME" --headless --no-sandbox --disable-gpu --virtual-time-budget=12000 --dump-dom \
+            http://127.0.0.1:4173/static/dawn-library/formal-edition/phase4/index.html \
+            > /tmp/dawn-phase4-ui.html
+          grep -q 'canonical Works' /tmp/dawn-phase4-ui.html
+          grep -q 'data-motion="flow"' /tmp/dawn-phase4-ui.html
+          test "$(grep -o 'class="work-token"' /tmp/dawn-phase4-ui.html | wc -l)" -le 72
+      - name: Preserve Phase 4 diagnostics
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-formal-edition-phase4-diagnostics
+          path: |
+            /tmp/dawn-phase4-runtime.log
+            /tmp/dawn-phase4-http.log
+            /tmp/dawn-phase4-acceptance.html
+            /tmp/dawn-phase4-ui.html
+          if-no-files-found: ignore
+      - name: Stop local server
+        if: always()
+        run: |
+          test ! -f /tmp/dawn-phase4-http.pid || kill "$(cat /tmp/dawn-phase4-http.pid)" || true

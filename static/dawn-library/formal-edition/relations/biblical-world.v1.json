@@ -1,0 +1,20 @@
+{
+  "schema":"dawn.relation-overlay.v1",
+  "edges":[
+    {"from":"dawn:4ef73b08ef18424f1900","to":"concept:jewish-history","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:4ef73b08ef18424f1900"},
+    {"from":"dawn:4ef73b08ef18424f1900","to":"concept:second-temple","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:4ef73b08ef18424f1900"},
+    {"from":"dawn:157e63ed1adf50df2385","to":"concept:jewish-history","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:157e63ed1adf50df2385"},
+    {"from":"dawn:157e63ed1adf50df2385","to":"concept:second-temple","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:157e63ed1adf50df2385"},
+    {"from":"dawn:c27499c2be405628d9a9","to":"concept:early-church","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:c27499c2be405628d9a9"},
+    {"from":"dawn:c27499c2be405628d9a9","to":"concept:patristics","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:c27499c2be405628d9a9"},
+    {"from":"dawn:50a063e17cfb1f96550a","to":"concept:early-church","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:50a063e17cfb1f96550a"},
+    {"from":"dawn:50a063e17cfb1f96550a","to":"concept:patristics","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:50a063e17cfb1f96550a"},
+    {"from":"dawn:31fe2c84a38bcc616224","to":"concept:jewish-history","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:31fe2c84a38bcc616224"},
+    {"from":"dawn:31fe2c84a38bcc616224","to":"concept:second-temple","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:31fe2c84a38bcc616224"},
+    {"from":"dawn:fad9af59da08217d4770","to":"concept:historical-jesus","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:fad9af59da08217d4770"},
+    {"from":"dawn:fad9af59da08217d4770","to":"concept:new-testament-background","type":"useful-for","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:fad9af59da08217d4770"},
+    {"from":"dawn:3986f004e446d7a29158","to":"concept:church-history","type":"concerns","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:3986f004e446d7a29158"},
+    {"from":"dawn:3986f004e446d7a29158","to":"concept:early-church","type":"concerns","source":"editorial","confidence":1,"weight":0.9,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:3986f004e446d7a29158"},
+    {"from":"dawn:3e9e3a2f2157c50474a5","to":"concept:biblical-background","type":"useful-for","source":"editorial","confidence":1,"weight":1,"provenance":"static/dawn-library/surfaces/multiwrite-biblical-world.json#dawn:3e9e3a2f2157c50474a5"}
+  ]
+}

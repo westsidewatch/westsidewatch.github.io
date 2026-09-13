@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Dawn Formal Edition · Phase 3</title>
+  <link rel="stylesheet" href="./phase3.css" />
+</head>
+<body>
+  <main class="dawn-shell">
+    <header class="dawn-header">
+      <p class="eyebrow">Dawn Library · Formal Edition</p>
+      <h1>同一館藏，不同投影</h1>
+      <p class="lede">FLOW、SHELF、CARD、SPECTRUM 共用同一個 CollectionContext；切換只改變投影與動效，不改變 canonical Work 身份。</p>
+    </header>
+
+    <nav class="projection-nav" aria-label="Projection modes">
+      <button data-kind="flow" aria-pressed="true">FLOW</button>
+      <button data-kind="shelf">SHELF</button>
+      <button data-kind="spectrum">SPECTRUM</button>
+    </nav>
+
+    <section class="context-bar" aria-live="polite">
+      <span id="context-anchor"></span>
+      <span id="context-focus"></span>
+    </section>
+
+    <section id="surface" class="surface surface-flow" data-kind="flow"></section>
+
+    <aside id="card" class="work-card" hidden>
+      <button id="card-close" class="card-close" aria-label="Close">×</button>
+      <p class="eyebrow">Canonical Work</p>
+      <h2 id="card-title"></h2>
+      <p id="card-id" class="work-id"></p>
+      <p id="card-relation" class="relation-cue"></p>
+      <button id="card-spectrum" class="primary-action">展開到 SPECTRUM</button>
+    </aside>
+
+    <footer class="state-footer">
+      <span>Context</span>
+      <code id="state-token"></code>
+    </footer>
+  </main>
+  <script type="module" src="./phase3.js"></script>
+</body>
+</html>
