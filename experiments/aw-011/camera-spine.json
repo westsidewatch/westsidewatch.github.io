@@ -1,11 +1,15 @@
 {
   "aw_id": "AW-011",
   "mode": "experiment",
+  "trajectory_model": "three_16_9_vertical_windows_then_inward_push",
   "canonical_pose_id": "P000",
   "poses": [
-    {"id":"P000","position":[0.0,0.0,0.0],"look_target":[0.0,0.0,-1.0],"fov_degrees":50.0},
-    {"id":"P001","position":[0.12,0.03,-0.08],"look_target":[0.0,0.0,-1.0],"fov_degrees":48.0},
-    {"id":"P002","position":[0.24,0.06,-0.16],"look_target":[0.02,0.0,-1.0],"fov_degrees":46.0},
-    {"id":"P000","position":[0.0,0.0,0.0],"look_target":[0.0,0.0,-1.0],"fov_degrees":50.0}
+    {"id":"P000","position":[0.0,-0.30,0.0],"look_target":[0.0,-0.30,-1.0],"fov_degrees":50.0},
+    {"id":"P001","position":[0.0,-0.15,-0.025],"look_target":[0.0,-0.12,-1.0],"fov_degrees":49.0},
+    {"id":"P002","position":[0.0,0.0,-0.055],"look_target":[0.0,0.02,-1.0],"fov_degrees":48.0},
+    {"id":"P003","position":[0.0,0.12,-0.11],"look_target":[0.0,0.05,-1.0],"fov_degrees":46.5},
+    {"id":"P004","position":[0.0,0.18,-0.17],"look_target":[0.0,0.02,-1.0],"fov_degrees":45.0},
+    {"id":"P005","position":[0.0,0.08,-0.22],"look_target":[0.0,0.0,-1.0],"fov_degrees":43.5},
+    {"id":"P006","position":[0.0,0.0,-0.27],"look_target":[0.0,0.0,-1.0],"fov_degrees":42.0}
   ]
 }
