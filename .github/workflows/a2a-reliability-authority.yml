@@ -18,6 +18,7 @@ on:
       - 'local/dore-local/a2a_recovery_acceptance.py'
       - 'local/dore-local/a2a_failure_policy.py'
       - 'local/dore-local/a2a_failure_taxonomy_acceptance.py'
+      - 'local/dore-local/a2a_consumer_recovery_acceptance.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/a2a-reliability-authority.yml'
@@ -48,5 +49,7 @@ jobs:
         run: python local/dore-local/a2a_recovery_acceptance.py
       - name: Failure taxonomy and poison isolation acceptance
         run: python local/dore-local/a2a_failure_taxonomy_acceptance.py
+      - name: Consumer recovery vocabulary acceptance
+        run: python local/dore-local/a2a_consumer_recovery_acceptance.py
       - name: Preserve existing substrate bus contract
         run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
