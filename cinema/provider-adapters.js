@@ -1,3 +1,13 @@
+(()=>{
+  if(!document.querySelector('link[data-cinema-inline-player]')){
+    const style=document.createElement('link');
+    style.rel='stylesheet';
+    style.href='inline-player.css';
+    style.dataset.cinemaInlinePlayer='true';
+    document.head.appendChild(style);
+  }
+})();
+
 window.HolyLightProviders={
   resolve(item,startSeconds=0){
     const source=(item.providerSources||[])[0]||{};
