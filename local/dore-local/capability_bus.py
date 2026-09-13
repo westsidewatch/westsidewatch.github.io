@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Doré semantic capability bus.
 
-Products address Doré capabilities by semantic name. Runtime/provider addresses stay
-behind Core adapters so product surfaces do not grow point-to-point wiring.
+Capability identity and semantic descriptors come only from the canonical Core
+registry. This bus resolves execution through capability_bindings; it must not
+create or override capability identity.
 """
 from __future__ import annotations
 
@@ -38,98 +39,8 @@ def _load_sibling(name: str):
 
 
 REGISTRY = _load_sibling("capability_registry")
+BINDINGS = _load_sibling("capability_bindings")
 BOOK_INTELLIGENCE = _load_sibling("book_intelligence_capability")
-
-NATIVE_CAPABILITIES: dict[str, dict[str, Any]] = {
-    "image.generate": {
-        "id": "image.generate",
-        "type": "production",
-        "service": "visual",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "dore-image-local",
-        "load": "on-demand",
-        "result": "image-artifact",
-    },
-    "context.fuzzy-search": {
-        "id": "context.fuzzy-search",
-        "type": "context",
-        "service": "retrieval",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "dore-search",
-        "load": "deferred",
-        "authority": False,
-        "result": "dore-search-results",
-        "identity": "dore",
-        "execution_policy": "lowest-sufficient-capability",
-    },
-    "bible.query-plan": {
-        "id": "bible.query-plan",
-        "type": "context",
-        "service": "bible-routing",
-        "status": "existing",
-        "execution": "in-process",
-        "provider": "dore-core",
-        "load": "always-light",
-        "authority": False,
-        "result": "bible-query-plan",
-        "identity": "dore",
-        "execution_policy": "lowest-sufficient-capability",
-        "model_required": False,
-    },
-    "knowledge.recall": {
-        "id": "knowledge.recall",
-        "type": "knowledge",
-        "service": "memory",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "longmemory-local",
-        "load": "deferred",
-        "authority": False,
-    },
-    "reflex.project": {
-        "id": "reflex.project",
-        "type": "translation",
-        "service": "reflex",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "dore-core",
-        "load": "on-demand",
-        "result": "reflex-projection",
-        "authority": False,
-        "identity_source": False,
-        "persistence": "request-scoped-none",
-    },
-    "translation.project": {
-        "id": "translation.project",
-        "type": "translation",
-        "service": "translator",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "dore-core",
-        "load": "on-demand",
-        "result": "bilingual-subtitle-artifact",
-        "authority": False,
-        "source_authority": True,
-        "translation_authority": False,
-        "provider_neutral": True,
-        "persistence": "artifact-only-no-media",
-    },
-    "publishing.book-intelligence": {
-        "id": "publishing.book-intelligence",
-        "type": "reasoning",
-        "service": "publishing",
-        "status": "existing",
-        "execution": "core-adapter",
-        "provider": "dore-core",
-        "load": "on-demand",
-        "result": "book-intelligence-report",
-        "identity": "dore",
-        "provider_neutral": True,
-        "author_thesis_authority": True,
-    },
-}
 
 
 def _post_json(url: str, payload: dict[str, Any], headers: dict[str, str] | None = None, timeout: int = 1500) -> dict[str, Any]:
@@ -141,32 +52,25 @@ def _post_json(url: str, payload: dict[str, Any], headers: dict[str, str] | None
         return json.loads(response.read().decode("utf-8"))
 
 
-def discover(production, *, include_planned: bool = False) -> list[dict[str, Any]]:
-    by_id: dict[str, dict[str, Any]] = {}
+def discover(production=None, *, include_planned: bool = False) -> list[dict[str, Any]]:
+    """Discover only canonical identities; binding presence determines callability."""
+    out: list[dict[str, Any]] = []
     for item in REGISTRY.discover(include_planned=include_planned):
         descriptor = dict(item)
         descriptor["owner"] = "dore-core"
-        descriptor["callable"] = False
-        by_id[str(descriptor["id"])] = descriptor
-    for capability in sorted(production.CAPABILITIES):
-        by_id[capability] = {
-            "id": capability,
-            "type": "production",
-            "status": "existing",
-            "execution": "production-action",
-            "owner": "dore-core",
-            "callable": True,
-        }
-    for capability, item in NATIVE_CAPABILITIES.items():
-        descriptor = dict(item)
-        descriptor["owner"] = "dore-core"
-        descriptor["callable"] = True
-        by_id[capability] = descriptor
-    return [by_id[key] for key in sorted(by_id)]
+        descriptor["callable"] = BINDINGS.get(str(descriptor.get("id"))) is not None
+        out.append(descriptor)
+    return sorted(out, key=lambda item: str(item.get("id") or ""))
 
 
-def resolve(capability: str, production) -> dict[str, Any] | None:
-    return next((item for item in discover(production, include_planned=True) if item.get("id") == capability), None)
+def resolve(capability: str, production=None) -> dict[str, Any] | None:
+    item = REGISTRY.get(capability, include_planned=True)
+    if item is None:
+        return None
+    descriptor = dict(item)
+    descriptor["owner"] = "dore-core"
+    descriptor["callable"] = BINDINGS.get(capability) is not None
+    return descriptor
 
 
 def _image_generate(args: dict[str, Any], caller_product: str | None = None) -> dict[str, Any]:
@@ -348,32 +252,50 @@ def _knowledge_recall(args: dict[str, Any]) -> dict[str, Any]:
     return longmemory_recall(query, LongMemoryConfig(db=db, project=project), mode=mode)
 
 
+def _invoke_native(handler: str, args: dict[str, Any], caller_product: str | None) -> dict[str, Any]:
+    if handler == "image.generate":
+        return _image_generate(args, caller_product)
+    if handler == "reflex.project":
+        return _reflex_project(args)
+    if handler == "translation.project":
+        return _translation_project(args)
+    if handler == "publishing.book-intelligence":
+        return _book_intelligence(args)
+    if handler == "bible.query-plan":
+        return _bible_query_plan(args)
+    if handler == "context.fuzzy-search":
+        return _fuzzy_search(args, caller_product)
+    if handler == "knowledge.recall":
+        return _knowledge_recall(args)
+    raise RuntimeError("unknown_native_binding:" + handler)
+
+
 def call(capability: str, args: dict[str, Any], production, *, caller_product: str | None = None) -> dict[str, Any]:
-    descriptor = resolve(capability, production)
+    descriptor = resolve(capability)
     if descriptor is None:
         return {"ok": False, "status": "failed", "error": {"code": "capability_not_found", "message": capability}}
+    binding = BINDINGS.get(capability)
+    if binding is None:
+        return {"ok": False, "status": "failed", "capability": capability, "error": {"code": "capability_not_callable", "message": "canonical capability has no execution binding"}}
     try:
-        if capability == "image.generate":
-            return _image_generate(args, caller_product)
-        if capability == "reflex.project":
-            result = _reflex_project(args)
-        elif capability == "translation.project":
-            result = _translation_project(args)
-        elif capability == "publishing.book-intelligence":
-            result = _book_intelligence(args)
-        elif capability == "bible.query-plan":
-            result = _bible_query_plan(args)
-        elif capability == "context.fuzzy-search":
-            result = _fuzzy_search(args, caller_product)
-        elif capability == "knowledge.recall":
-            result = _knowledge_recall(args)
-        elif capability in production.CAPABILITIES:
+        kind = str(binding.get("kind") or "")
+        handler = str(binding.get("handler") or "")
+        if kind == "native":
+            result = _invoke_native(handler, args, caller_product)
+        elif kind == "production-action" and handler == "production_actions.execute":
             result = production.execute(capability, args)
         else:
-            return {"ok": False, "status": "failed", "capability": capability, "error": {"code": "capability_not_callable", "message": "registered for discovery but not yet connected to the Core execution path"}}
+            return {"ok": False, "status": "failed", "capability": capability, "error": {"code": "binding_not_executable", "message": f"{kind}:{handler}"}}
     except Exception as exc:
         return {"ok": False, "status": "failed", "capability": capability, "error": {"code": "provider_error", "message": str(exc)}}
     if isinstance(result, dict):
         result = dict(result)
-        result.setdefault("core_route", {"capability": capability, "caller_product": caller_product, "provider": descriptor.get("provider") or "production-actions", "transport": "core-adapter" if capability in NATIVE_CAPABILITIES else "in-process"})
+        result.setdefault("core_route", {
+            "capability": capability,
+            "caller_product": caller_product,
+            "provider": descriptor.get("provider") or descriptor.get("service") or "dore-core",
+            "transport": descriptor.get("execution") or binding.get("kind"),
+            "binding_kind": binding.get("kind"),
+            "identity_source": "dore-core/runtime/capability-registry.v1.json",
+        })
     return result
