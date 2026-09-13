@@ -10,6 +10,7 @@ from __future__ import annotations
 import json
 from html.parser import HTMLParser
 from typing import Any
+from urllib.error import HTTPError
 from urllib.parse import urljoin, urlparse
 from urllib.request import Request, urlopen
 
@@ -128,13 +129,39 @@ def _meta_map(parser: ProbeHTMLParser) -> dict[str, str]:
 
 def _fetch(url: str, timeout: int) -> tuple[str, str, str]:
     req = Request(url, headers={
-        "User-Agent": "Mozilla/5.0 (compatible; DoreSourceProbe/0.1; +https://westsidewatch.ca)",
+        "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/140 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml;q=0.9,*/*;q=0.8",
         "Accept-Language": "zh-TW,zh;q=0.9,en;q=0.7",
+        "Referer": f"https://{_host(url)}/",
     })
     with urlopen(req, timeout=timeout) as response:
         body = response.read(3_000_000).decode(response.headers.get_content_charset() or "utf-8", errors="replace")
         return response.geturl(), str(response.headers.get("Content-Type") or ""), body
+
+
+def _runtime_boundary(url: str, code: int | None, message: str) -> dict[str, Any]:
+    return {
+        "ok": True,
+        "status": "partial",
+        "schema": SCHEMA,
+        "profile": "media",
+        "sourcePointer": url,
+        "resolvedSourcePointer": url,
+        "sourceAuthority": True,
+        "probeAuthority": False,
+        "reflexPersistent": False,
+        "providerHint": _host(url),
+        "identity": {"title": None, "creator": None, "duration": None},
+        "capabilities": {"poster": [], "embed": [], "media": [], "manifest": [], "caption": [], "oembed": []},
+        "needs": ["runtime-browser-probe", "generic-media-extractor", "caption-or-asr-resolution"],
+        "provenance": {
+            "networkUsed": True,
+            "fetchBoundary": {"httpStatus": code, "message": message},
+            "layers": ["source-policy", "standard-metadata", "static-media", "generic-extractor-fallback", "runtime-browser-fallback", "provider-adapter-last"],
+            "confidence": 0.25,
+        },
+        "rights": {"rehost": False, "decision": "not-inferred-by-probe"},
+    }
 
 
 def execute(args: dict[str, Any]) -> dict[str, Any]:
@@ -154,8 +181,12 @@ def execute(args: dict[str, Any]) -> dict[str, Any]:
         try:
             final_url, content_type, html = _fetch(url, int(args.get("timeoutSeconds") or 20))
             network_used = True
-        except Exception as exc:
+        except HTTPError as exc:
+            if int(exc.code) in (401, 403, 405, 406, 429):
+                return _runtime_boundary(url, int(exc.code), str(exc))
             return {"ok": False, "status": "failed", "schema": SCHEMA, "sourcePointer": url, "error": {"code": "source_fetch_failed", "message": str(exc)}}
+        except Exception as exc:
+            return _runtime_boundary(url, None, str(exc))
 
     parser = ProbeHTMLParser()
     parser.feed(str(html or ""))
@@ -172,8 +203,7 @@ def execute(args: dict[str, Any]) -> dict[str, Any]:
         _add(poster, _abs(final_url, video.get("poster")), "html-video-poster", 0.95)
         _add(media, _abs(final_url, video.get("src")), "html-video-src", 0.95, mime=video.get("type"))
     for source in parser.sources:
-        src = _abs(final_url, source.get("src"))
-        _add(media, src, "html-source", 0.94, mime=source.get("type"))
+        _add(media, _abs(final_url, source.get("src")), "html-source", 0.94, mime=source.get("type"))
     for track in parser.tracks:
         kind = (track.get("kind") or "").lower()
         if kind in ("subtitles", "captions"):
@@ -221,7 +251,6 @@ def execute(args: dict[str, Any]) -> dict[str, Any]:
         elif lower.endswith(".mpd"):
             manifests.append({**item, "manifest": "dash"})
 
-    host = _host(final_url)
     needs: list[str] = []
     if not poster:
         needs.append("runtime-browser-probe")
@@ -241,16 +270,9 @@ def execute(args: dict[str, Any]) -> dict[str, Any]:
         "sourceAuthority": True,
         "probeAuthority": False,
         "reflexPersistent": False,
-        "providerHint": host,
+        "providerHint": _host(final_url),
         "identity": {"title": title or None, "creator": creator or None, "duration": duration},
-        "capabilities": {
-            "poster": poster,
-            "embed": embed,
-            "media": media,
-            "manifest": manifests,
-            "caption": captions,
-            "oembed": oembed,
-        },
+        "capabilities": {"poster": poster, "embed": embed, "media": media, "manifest": manifests, "caption": captions, "oembed": oembed},
         "needs": needs,
         "provenance": {
             "networkUsed": network_used,
