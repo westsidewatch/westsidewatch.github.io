@@ -1,0 +1,28 @@
+name: DORE Translator JESUS Source
+
+on:
+  push:
+    paths:
+      - 'local/dore-local/translation_source_admission.py'
+      - 'local/dore-local/translation_jesus_source_acceptance.py'
+      - 'cinema/data/translation-source.v0.json'
+      - '.github/workflows/dore-translator-jesus-source.yml'
+  pull_request:
+    paths:
+      - 'local/dore-local/translation_source_admission.py'
+      - 'local/dore-local/translation_jesus_source_acceptance.py'
+      - 'cinema/data/translation-source.v0.json'
+      - '.github/workflows/dore-translator-jesus-source.yml'
+
+jobs:
+  jesus-source:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Syntax
+        run: python -m py_compile local/dore-local/translation_source_admission.py local/dore-local/translation_jesus_source_acceptance.py
+      - name: Official provider source admission
+        run: PYTHONPATH=local/dore-local python local/dore-local/translation_jesus_source_acceptance.py

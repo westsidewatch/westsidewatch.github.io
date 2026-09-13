@@ -1,0 +1,38 @@
+{
+  "schema": "dore.translation-source.v0",
+  "items": [
+    {
+      "canonicalId": "cinema:video:jesus-film:jesus",
+      "sourcePointer": "https://www.jesusfilm.org/watch/jesus.html",
+      "sourceLanguage": "en",
+      "targetLanguage": "zh-Hant",
+      "provider": "jesus-film-project",
+      "providerProbeUrl": "https://api.arclight.org/videoPlayerUrl?refId=1_529-jf-0-0&playerStyle=default&player=bc.vanilla5",
+      "sourceAuthority": true,
+      "mediaRehost": false,
+      "transcript": {
+        "status": "provider-authoritative",
+        "page": "https://www.jesusfilm.org/watch/jesus.html/sermon-on-the-mount-2/english.html",
+        "chapter": "Sermon on the Mount",
+        "chapterIndex": 12,
+        "evidenceMode": "official-page-verified-snapshot",
+        "evidenceSentinel": "Love your enemies, do good to those who hate you",
+        "timingStatus": "not-admitted",
+        "subtitleReady": false
+      },
+      "referenceTranslation": {
+        "role": "evaluation-only",
+        "language": "zh-Hant",
+        "page": "https://www.jesusfilm.org/watch/jesus.html/sermon-on-the-mount-2.html?subtitles=chinese-traditional",
+        "authority": "provider-reference",
+        "mayOverwriteSource": false
+      },
+      "provenance": {
+        "verifiedAt": "2026-09-13",
+        "verifiedBy": "official-provider-page-review",
+        "providerLivenessProbe": "arclight-official-embed",
+        "rightsPolicy": "official-source-no-rehost"
+      }
+    }
+  ]
+}
