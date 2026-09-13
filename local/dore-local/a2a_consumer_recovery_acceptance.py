@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Acceptance for 1C/6 stage 2 consumer recovery unification."""
 from __future__ import annotations
-import importlib,os,tempfile,time
+import importlib,os,tempfile
 from pathlib import Path
 
 HERE=Path(__file__).resolve().parent
@@ -20,9 +20,9 @@ def envelope(request_id):
 
 
 def main():
- import a2a_executor
  with tempfile.TemporaryDirectory() as td:
   plane=fresh_plane(Path(td))
+  import a2a_executor
   safe_descriptor={'id':'context.fuzzy-search','retry_safe':True,'lease_seconds':30}
   safe_binding={'kind':'native','retry_safe':True,'lease_seconds':30,'heartbeat_interval_seconds':0.01}
 
@@ -31,13 +31,11 @@ def main():
   assert r['failure_state']=='RETRYABLE',r
   assert r['execution_status']=='UNKNOWN',r
   assert not r['completion_evidence'],r
-  st=plane.status(r['task_id'])
-  assert st['task']['status']=='RUNNING',st
+  st=plane.status(r['task_id']);assert st['task']['status']=='RUNNING',st
 
   side_descriptor={'id':'design.production.rollout','requires_verified_execution':True,'verification_contract':'external','retry_safe':False}
   side_binding={'kind':'production-action','retry_safe':False}
-  task_id=a2a_executor._task_id(envelope('side-effect'))
-  plane.register(a2a_executor._message(envelope('side-effect'),task_id))
+  task_id=a2a_executor._task_id(envelope('side-effect'));plane.register(a2a_executor._message(envelope('side-effect'),task_id))
   claimed=plane.claim(task_id,consumer='old-worker',lease_seconds=30);assert claimed['ok']
   running=plane.transition(task_id,'RUNNING',consumer='old-worker');assert running['ok']
   task=plane.read(task_id);task['lease']['expires_at']='2000-01-01T00:00:00+00:00';plane._atomic(plane._task_path(task_id),task)
@@ -45,14 +43,20 @@ def main():
   assert r2['failure_state']=='UNKNOWN',r2
   assert r2['error']['code']=='unsafe_replay_blocked',r2
 
-  terminal_descriptor={'id':'context.fuzzy-search','retry_safe':True}
-  terminal_binding={'kind':'native','retry_safe':True}
-  def denied():raise RuntimeError('not authorized')
-  # dict semantic failure exercises terminal policy deterministically.
-  r3=a2a_executor.execute(envelope('terminal'),terminal_descriptor,terminal_binding,lambda:{'ok':False,'code':'not_authorized'},plane=plane)
+  r3=a2a_executor.execute(envelope('terminal'),safe_descriptor,safe_binding,lambda:{'ok':False,'code':'not_authorized'},plane=plane)
   assert r3['failure_state']=='TERMINAL_FAIL',r3
   assert plane.status(r3['task_id'])['task']['status']=='FAIL'
 
- print({'ok':True,'code':'A2A_CONSUMER_RECOVERY_ACCEPTANCE_PASS','states':['RETRYABLE','UNKNOWN','TERMINAL_FAIL']})
+  worker=(HERE/'coordination_worker.py').read_text(encoding='utf-8')
+  required=['import a2a_failure_policy as failure_policy','def _canonical_failure(','def _finish_canonical_failure(','canonical-recovery:RETRYABLE','canonical-recovery:UNKNOWN','canonical-recovery:QUARANTINED','canonical-recovery:TERMINAL_FAIL']
+  missing=[x for x in required if x not in worker];assert not missing,missing
+
+  import a2a_failure_policy as policy
+  safe=policy.classify({'code':'timeout'},descriptor={'retry_safe':True},binding={'kind':'coordination-worker'},attempt=1,max_attempts=3);assert safe['state']=='RETRYABLE',safe
+  ambiguous=policy.classify({'code':'timeout'},descriptor={'retry_safe':False,'side_effecting':True},binding={'kind':'production-action'},attempt=1,max_attempts=3);assert ambiguous['state']=='UNKNOWN',ambiguous
+  poison=policy.classify({'code':'malformed_message'},descriptor={'retry_safe':True},binding={'kind':'coordination-worker'},attempt=1,max_attempts=3);assert poison['state']=='QUARANTINED',poison
+  research=policy.classify({'code':'timeout'},descriptor={'retry_safe':True},binding={'kind':'coordination-worker'},attempt=3,max_attempts=3);assert research['state']=='RESEARCH_REQUIRED',research
+
+ print({'ok':True,'code':'A2A_CONSUMER_RECOVERY_ACCEPTANCE_PASS','states':['RETRYABLE','UNKNOWN','QUARANTINED','RESEARCH_REQUIRED','TERMINAL_FAIL'],'consumers':['universal-executor','coordination-worker']})
 
 if __name__=='__main__':main()
