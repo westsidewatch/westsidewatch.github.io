@@ -1,0 +1,27 @@
+{
+  "schema": "holy-light.video-moment.v0",
+  "items": [
+    {
+      "momentId": "cinema:moment:goodtv:waiting-on-god:title",
+      "canonicalId": "cinema:video:goodtv:waiting-on-god-no-minute-wasted",
+      "sourcePointer": "https://www.youtube.com/watch?v=kMUngZq5jss",
+      "startMs": 0,
+      "endMs": null,
+      "label": "等候神沒有一分鐘是徒然的",
+      "keywords": ["等候神", "內在生活", "醫治"],
+      "provenance": {"type": "source-title", "provider": "youtube", "editorial": false},
+      "confidence": 1.0
+    },
+    {
+      "momentId": "cinema:moment:david-pawson:matthew-1:title",
+      "canonicalId": "cinema:video:david-pawson:unlocking-matthew-1",
+      "sourcePointer": "https://www.youtube.com/watch?v=F2KMYwBRngU",
+      "startMs": 0,
+      "endMs": null,
+      "label": "Unlocking Matthew 1",
+      "keywords": ["Matthew", "馬太福音", "四福音", "聖經導論"],
+      "provenance": {"type": "source-title", "provider": "youtube", "editorial": false},
+      "confidence": 1.0
+    }
+  ]
+}
