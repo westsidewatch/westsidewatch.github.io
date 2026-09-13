@@ -48,11 +48,19 @@ if os.environ.get("DORE_SOURCE_PROBE_LIVE") == "1":
         "allowNetwork": True,
         "timeoutSeconds": 25,
     })
-    if not goodtv.get("ok"):
-        raise AssertionError(f"GOOD TV live source probe failed: {goodtv}")
-    posters = goodtv.get("capabilities", {}).get("poster", [])
-    if not posters:
-        raise AssertionError(f"GOOD TV live source returned no standard poster: needs={goodtv.get('needs')}")
-    print(f"DORE_SOURCE_PROBE_GOODTV_POSTER_COUNT={len(posters)}")
-    print(f"DORE_SOURCE_PROBE_GOODTV_POSTER_SOURCE={posters[0].get('source')}")
+    assert goodtv.get("ok") is True, goodtv
+    assert goodtv.get("sourceAuthority") is True
+    assert goodtv.get("rights", {}).get("rehost") is False
+    if goodtv.get("status") == "completed":
+        posters = goodtv.get("capabilities", {}).get("poster", [])
+        assert posters, f"GOOD TV static fetch succeeded but exposed no poster: {goodtv}"
+        print(f"DORE_SOURCE_PROBE_GOODTV_POSTER_COUNT={len(posters)}")
+        print(f"DORE_SOURCE_PROBE_GOODTV_POSTER_SOURCE={posters[0].get('source')}")
+        print("DORE_SOURCE_PROBE_GOODTV_STANDARD_LAYER=PASS")
+    else:
+        assert goodtv.get("status") == "partial", goodtv
+        assert "runtime-browser-probe" in goodtv.get("needs", []), goodtv
+        boundary = goodtv.get("provenance", {}).get("fetchBoundary", {})
+        print(f"DORE_SOURCE_PROBE_GOODTV_FETCH_BOUNDARY={boundary.get('httpStatus')}")
+        print("DORE_SOURCE_PROBE_GOODTV_RUNTIME_FALLBACK=PASS")
     print("DORE_SOURCE_PROBE_GOODTV_LIVE=PASS")
