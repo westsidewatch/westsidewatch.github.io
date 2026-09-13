@@ -9,15 +9,17 @@ only as explicit recovery/acceptance compatibility paths.
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
+import a2a_generation
 PROTOCOL="dore.a2a/1";SERVICE="dore-a2a-native";HOST_NAME="ca.dore.companion";LEGACY_CAPABILITY="design2.stage2.acceptance";MAX_MESSAGE_BYTES=64*1024*1024;CARRIER_ID_KEY="__dore_transport_id"
 ROOT=Path(os.environ.get("DORE_REPO_ROOT") or Path(__file__).resolve().parents[2]).expanduser().resolve()
 if str(ROOT) not in sys.path:sys.path.insert(0,str(ROOT))
-_CACHE={};_LOAD_ERRORS={}
+_CACHE={};_CACHE_META={};_LOAD_ERRORS={}
 def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 def _module(name):
  if name in _CACHE:return _CACHE[name]
- try:m=_load(name);_CACHE[name]=m;return m
+ try:
+  m=_load(name);_CACHE[name]=m;_CACHE_META[name]=a2a_generation.module_generation(Path(__file__).with_name(name+".py"));return m
  except Exception as exc:_LOAD_ERRORS[name]=f"{type(exc).__name__}:{exc}";return None
 def _capabilities(name):
  m=_module(name);return set(getattr(m,"CAPABILITIES",set())) if m else set()
@@ -63,12 +65,14 @@ def write_message(stream,payload):
 def _with_id(req,res):
  if req.get(CARRIER_ID_KEY):res=dict(res);res[CARRIER_ID_KEY]=req[CARRIER_ID_KEY]
  return res
+def generation_payload():return a2a_generation.identity(loaded_modules=_CACHE_META,degraded_modules=_LOAD_ERRORS)
 def health_payload():
  direct=[]
  for name in ("self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
   direct.extend(sorted(_capabilities(name)))
  production=[x["id"] for x in discover_production() if x.get("callable")]
- return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"normalization_boundary":"a2a_ingress.normalize_public_call","degraded_modules":dict(_LOAD_ERRORS)}
+ generation=generation_payload()
+ return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"normalization_boundary":"a2a_ingress.normalize_public_call","runtime_generation":generation,"restart_required":generation.get("restart_required",False),"degraded_modules":dict(_LOAD_ERRORS)}
 def _adapter_dispatch(payload):
  adapter=_module("a2a_adapter")
  if not adapter:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"adapter_unavailable","message":_LOAD_ERRORS.get("a2a_adapter","adapter unavailable")}}
@@ -81,7 +85,6 @@ def route_payload(payload):
  for entry in direct:
   name=entry[0]
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
- # Normal public capability calls must cross the normalization boundary before Core dispatch.
  descriptor=resolve_production(cap) if cap else None
  if descriptor and descriptor.get("callable"):
   ingress=_module("a2a_ingress")
@@ -91,7 +94,6 @@ def route_payload(payload):
   result=_adapter_dispatch(typed)
   if result is not None:return _with_id(payload,result)
   return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"core_route_unreachable","message":"normalized canonical capability was not accepted by Core adapter"}})
- # Already-typed envelopes (including the older Design control-plane contract) remain accepted.
  if payload.get("protocol")==PROTOCOL:
   typed=_adapter_dispatch(payload)
   if typed is not None:return _with_id(payload,typed)
