@@ -7,6 +7,11 @@ on:
       - 'local/dore-local/capability_bindings.py'
       - 'local/dore-local/capability_bus.py'
       - 'local/dore-local/a2a_capability_authority_acceptance.py'
+      - 'local/dore-local/a2a_ingress.py'
+      - 'local/dore-local/a2a_ingress_acceptance.py'
+      - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/native_host.py'
+      - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/a2a-reliability-authority.yml'
   workflow_dispatch:
 
@@ -25,5 +30,7 @@ jobs:
           python-version: '3.12'
       - name: Canonical capability authority acceptance
         run: python local/dore-local/a2a_capability_authority_acceptance.py
+      - name: Public dore.call normalization acceptance
+        run: python local/dore-local/a2a_ingress_acceptance.py
       - name: Preserve existing substrate bus contract
         run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
