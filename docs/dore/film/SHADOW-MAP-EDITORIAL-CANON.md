@@ -52,6 +52,8 @@ Status: **RESEARCH / EDITORIAL / FILM CANON**
 
 `Magazine priority`
 
+`Recognition axis`
+
 `Film used?`
 
 `End-credit roll?`
@@ -68,6 +70,60 @@ Status: **RESEARCH / EDITORIAL / FILM CANON**
 
 此分級不是用來刪除 E，而是讓讀者知道每一種閱讀「以什麼方式成立」。
 
+## 電影「關鍵」的兩條選片軸
+
+影片中的「關鍵」至少有兩層，而且兩者同等重要：
+
+### 1. 著名的影子 / Canonical Recognition
+
+這些是教會與讀者較熟悉、辨識度高、神學承重大的節點，例如逾越節羔羊、以撒、銅蛇、約拿、受苦僕人等。
+
+它們讓影片建立共同語言，也讓整部作品不因追求新奇而失去正典重心。
+
+### 2. 被忽略的影子 / Archaeological Discovery
+
+這些是成立、值得辨認，卻很少被讀者立即看見的節點。它們可能藏在詞、制度、細節、人物行動、敘事結構、物件、地名、祭禮、文學回聲或歷史脈絡中。
+
+影片不只是在「重述已知」，也是一次挖掘。越是能讓讀者／觀眾在可靠證據下產生「原來這裡也有」的發現感，越能真正顯出「影子」的性質。
+
+因此 `Film priority` 不得只由知名度決定。正式選片時至少同時評估：
+
+`Canonical Weight × Neglectedness / Discovery Value × Evidence Strength × Narrative Necessity × Doré Availability × Visual Power × Camera Potential × Rhythm Position`
+
+其中 `Recognition axis` 至少可標記：
+
+- `FAMOUS`
+- `NEGLECTED`
+- `BRIDGE`（既熟悉，又能挖出常被忽略的更深一層）
+
+影片需要同時保有「著名」與「被忽略」兩條線。只有著名，作品會成為預表教材；只有冷門，作品會失去聖經正典的中心重量。
+
+## 特刊的考古學比喻
+
+Vol.01 的完整 Shadow Map 可以被理解為一次**聖經世界的考古發掘**。
+
+正片挑選最能承擔故事的遺址；特刊則把整個發掘現場打開：熟悉的、被忽略的、最後沒有進片的，都留下經文、證據、互文、歷史閱讀與製片判斷。
+
+因此創刊特刊不是「影片附錄」，而是更完整的發掘報告，也是作品本身。
+
+閱讀效果不以「新奇」為目標，但應追求一種在證據支持下不斷出現的：
+
+**「沒有想到，這裡也在指向祂。」**
+
+這種驚訝不是為了炫耀解經技巧，而是讓原本隱約的影子逐漸被光照亮。
+
+## 最終彰顯的是什麼
+
+《十字架的影子》不能停在「我們找到了多少巧妙預表」。如果影子真的被看見，它所彰顯的不是研究者的聰明，也不是 Doré 的技術，更不是影片本身。
+
+**影子所彰顯的是主耶穌基督；而在基督裡所彰顯的，是神的榮耀。**
+
+因此整個研究、雜誌與影片的終點可表述為：
+
+**從影子看見基督；在基督裡看見神的榮耀。**
+
+選片、排版、鏡頭與自寫文案都應受這一終點約束。如果一個「發現」最後只讓讀者覺得研究很巧，而沒有使視線更深地轉向基督，就不應因其新奇而獲得更高優先級。
+
 ## 與 Doré 原作的第二階段對比
 
 Shadow Map 完成後，才開始 **Shadow × Doré Crosswalk**。
@@ -76,7 +132,7 @@ Shadow Map 完成後，才開始 **Shadow × Doré Crosswalk**。
 
 `Theological Weight × Narrative Necessity × Doré Availability × Visual Power × Camera Potential × Rhythm Position`
 
-因此影片只會拍攝 Shadow Map 中最關鍵的一部分。
+因此影片只會拍攝 Shadow Map 中最關鍵的一部分；而「關鍵」必須同時考慮正典熟悉度與挖掘價值。
 
 ## Magazine：完整研究本身就是正式稿件
 
@@ -114,7 +170,7 @@ Shadow Map 完成後，才開始 **Shadow × Doré Crosswalk**。
 
 完整研究 → Vol.01 稿件
 
-關鍵選取 → 正片
+關鍵選取（著名 + 被忽略） → 正片
 
 未採用但成立的影子 → End Credit Scripture Roll
 
