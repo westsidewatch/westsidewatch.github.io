@@ -10,6 +10,9 @@ on:
       - 'local/dore-local/a2a_ingress.py'
       - 'local/dore-local/a2a_ingress_acceptance.py'
       - 'local/dore-local/a2a_adapter.py'
+      - 'local/dore-local/a2a_executor.py'
+      - 'local/dore-local/a2a_execution_plane.py'
+      - 'local/dore-local/a2a_durable_execution_acceptance.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/a2a-reliability-authority.yml'
@@ -32,5 +35,7 @@ jobs:
         run: python local/dore-local/a2a_capability_authority_acceptance.py
       - name: Public dore.call normalization acceptance
         run: python local/dore-local/a2a_ingress_acceptance.py
+      - name: Compulsory durable execution acceptance
+        run: python local/dore-local/a2a_durable_execution_acceptance.py
       - name: Preserve existing substrate bus contract
         run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
