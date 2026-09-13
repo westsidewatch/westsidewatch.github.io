@@ -156,3 +156,28 @@ Add explicit Chinese negative fixtures for modern state/diplomatic/war/news/poli
 A bounded regression proves true-positive retention and false-positive rejection, followed by a persisted promotion report showing no known modern-political lexical false positives crossing into `聖經世界`.
 
 **Current disposition:** trigger systemic Chinese collection-relevance repair; do not treat first verified Chinese promotion as bilingual maturity; preserve P01 ordering.
+
+## RQ-007 — Product Registry coverage / canonical relationship drift
+
+**Source completed milestone:** initial `dore.product-registry.v1` architecture foundation introduced by commit `d6a9744ffed0e045315c8e69680061b79214a1f9` and subsequently extended with the shared Scripture Workspace model.
+
+**Current classification:** `COMPLETED_REVISIT_CANDIDATE / MAINTENANCE` for registry coverage; the underlying one-Doré/many-products architecture foundation remains a bounded `VERIFIED_COMPLETE / COMPONENT`.
+
+**Current priority:** LOW / WATCHLIST, subordinate to P01.
+
+**Why it may deserve revisit**
+The registry successfully encodes the critical architecture rule that Doré Core owns identity, memory, knowledge, research, provenance, judgment, capability routing, permissions, learning and verification while products remain consumers/training environments. However, the canonical Master Work Register has expanded beyond the registry's explicit product list. Current durable workstreams/surfaces such as Westside Stories, Join, Conversation-memory evolution and Reflex are not all represented as machine-readable product/Core relationships. No persisted acceptance rule was found that defines which canonical workstream classes must appear in the Product Registry or checks coverage/parity automatically.
+
+**What remains valid from the completed milestone**
+The one-Doré/many-products principle, shared-Core promotion rule, ONE Canon Index boundary, protected StudyNote rule, Dawn-Library-not-a-second-brain rule, provider replaceability and human authority boundary remain strong and should not be reopened merely because the ecosystem grew.
+
+**Do not reopen now because**
+This is architecture bookkeeping/coverage debt rather than a live product failure. The Product Registry should not become a JSON duplicate of every project in the Master Work Register, and P01 remains higher priority.
+
+**Revisit trigger**
+Raise priority when a new durable product is added, a shared semantic layer is introduced, a product begins duplicating Core-owned identity/memory/retrieval/judgment, or a machine consumer needs authoritative product-to-capability topology that the current registry cannot answer.
+
+**Desired future evaluation**
+Define a scoped registry-coverage contract first: identify which Master Register classifications require Product Registry representation and which are intentionally project-only, learning-only or governance-only. Then add a small acceptance check comparing required canonical entities/relationships against `product-registry.v1.json`, including explicit exclusions, without turning the registry into a second operational roadmap.
+
+**Current disposition:** keep the architecture foundation closed; place registry coverage on low-priority maintenance/revisit watch; no P01 impact.
