@@ -1,0 +1,29 @@
+name: A2A Reliability Authority
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'local/dore-local/capability_bindings.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/a2a_capability_authority_acceptance.py'
+      - '.github/workflows/a2a-reliability-authority.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  authority-gate:
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Canonical capability authority acceptance
+        run: python local/dore-local/a2a_capability_authority_acceptance.py
+      - name: Preserve existing substrate bus contract
+        run: python -m unittest tests.test_dore_intelligence_substrate_bus -v
