@@ -1,6 +1,15 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+LOCAL = Path(__file__).resolve().parent
+for path in (str(ROOT), str(LOCAL)):
+    if path not in sys.path:
+        sys.path.insert(0, path)
+
 import capability_bus
 
 
