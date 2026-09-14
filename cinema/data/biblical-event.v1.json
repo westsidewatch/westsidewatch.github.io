@@ -1,0 +1,40 @@
+{
+  "schema": "dore.biblical-event.v1",
+  "authority": "biblical-event",
+  "identityPolicy": {
+    "canonicalIdAuthority": "this-dataset",
+    "labelsAreIdentity": false,
+    "aliasesAreIdentity": false,
+    "scriptureRangesAreEvidence": true
+  },
+  "items": [
+    {
+      "eventId": "bible:event:incarnation",
+      "canonicalKey": "incarnation",
+      "label": {"zh-Hant": "道成肉身", "en": "Incarnation"},
+      "aliases": ["incarnation"],
+      "scriptureRanges": ["Matt.1.1-2.23"]
+    },
+    {
+      "eventId": "bible:event:baptism-of-jesus",
+      "canonicalKey": "baptism-of-jesus",
+      "label": {"zh-Hant": "耶穌受洗", "en": "Baptism of Jesus"},
+      "aliases": ["baptism", "baptism-of-jesus"],
+      "scriptureRanges": ["Matt.3.1-4.25"]
+    },
+    {
+      "eventId": "bible:event:crucifixion",
+      "canonicalKey": "crucifixion",
+      "label": {"zh-Hant": "十字架", "en": "Crucifixion"},
+      "aliases": ["cross", "crucifixion"],
+      "scriptureRanges": ["Matt.27.32-28.20"]
+    },
+    {
+      "eventId": "bible:event:resurrection",
+      "canonicalKey": "resurrection",
+      "label": {"zh-Hant": "復活", "en": "Resurrection"},
+      "aliases": ["resurrection"],
+      "scriptureRanges": ["Matt.27.32-28.20"]
+    }
+  ]
+}
