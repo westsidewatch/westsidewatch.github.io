@@ -2,6 +2,7 @@
   const SCHEMA='dore.bible-media-graph.v0';
   const MOMENT_SCHEMA='dore.bible-media-moment.v1';
   const JOURNEY_MOMENT_SCHEMA='dore.bible-journey-moment.v0';
+  const MATCH_TYPES=new Set(['event','place','theme']);
   const URLS={resources:'data/video-resource.v0.json',moments:'data/video-moment.v0.json',coordinates:'data/bible-media-coordinate.v0.json',journeys:'data/bible-journey.v0.json',journeyMoments:'data/bible-journey-moment.v0.json'};
   const special=()=>window.ParadiseCinemaSpecialResources;
   const state={graph:null};
@@ -12,15 +13,21 @@
     return response.json();
   };
 
-  const scriptureBook=value=>String(value||'').trim().split(/[\s.:]/)[0].toLowerCase();
+  const normalize=value=>String(value||'').trim().toLowerCase();
+  const scriptureBook=value=>normalize(value).split(/[\s.:]/)[0];
   const stationMatchesWork=(station,work)=>{
     const c=work.coordinate?.coordinates||{};
     const textBooks=new Set((c.text||[]).filter(entry=>entry.type==='scripture').map(entry=>scriptureBook(entry.value)));
     const stationBooks=new Set((station.scripture||[]).map(scriptureBook));
     const textMatch=[...stationBooks].some(book=>textBooks.has(book));
-    const worldValues=new Set((c.world||[]).map(entry=>String(entry.value||'').toLowerCase()));
-    const worldMatch=(station.world||[]).some(value=>worldValues.has(String(value).toLowerCase()));
+    const worldValues=new Set((c.world||[]).map(entry=>normalize(entry.value)));
+    const worldMatch=(station.world||[]).some(value=>worldValues.has(normalize(value)));
     return textMatch||worldMatch;
+  };
+  const stationMatchesMoment=(station,moment)=>{
+    if(moment.kind!=='official-episode')return false;
+    const stationWorld=new Set((station.world||[]).map(normalize));
+    return (moment.anchors||[]).some(anchor=>MATCH_TYPES.has(anchor.type)&&stationWorld.has(normalize(anchor.value)));
   };
 
   const normalizeMoment=moment=>Object.freeze({
@@ -68,21 +75,26 @@
     });
     const byId=new Map(works.map(work=>[work.canonicalId,work]));
     const collections=Object.freeze([...(coordinatePayload.collections||[])]);
-    const projectionByStation=new Map();
+
+    const overrideByStation=new Map();
     for(const relation of journeyMomentPayload.items){
       const moment=momentById.get(relation.momentId);
-      if(!moment)throw new Error(`Journey Moment projection references unknown Moment: ${relation.momentId}`);
-      if(moment.kind!=='official-episode')throw new Error(`Journey exact projection requires official episode Moment: ${relation.momentId}`);
+      if(!moment)throw new Error(`Journey Moment override references unknown Moment: ${relation.momentId}`);
+      if(moment.kind!=='official-episode')throw new Error(`Journey exact override requires official episode Moment: ${relation.momentId}`);
       const key=`${relation.journeyId}:${relation.stationId}`;
-      const list=projectionByStation.get(key)||[];
+      const list=overrideByStation.get(key)||[];
       list.push(Object.freeze({...relation,moment}));
-      projectionByStation.set(key,list);
+      overrideByStation.set(key,list);
     }
+
     const journeys=Object.freeze(journeyPayload.journeys.map(journey=>Object.freeze({...journey,stations:Object.freeze([...journey.stations].sort((a,b)=>a.order-b.order).map(station=>{
       const relatedWorks=Object.freeze(works.filter(work=>stationMatchesWork(station,work)));
-      const exactMoments=Object.freeze([...(projectionByStation.get(`${journey.journeyId}:${station.stationId}`)||[])].map(item=>item.moment));
+      const derived=Object.freeze(moments.filter(moment=>stationMatchesMoment(station,moment)));
+      const override=overrideByStation.get(`${journey.journeyId}:${station.stationId}`)||[];
+      const exactMoments=Object.freeze(override.length?override.map(item=>item.moment):derived);
+      const exactSource=override.length?'editorial-override':(derived.length?'biblical-anchor':'none');
       const mediaState=exactMoments.length?'exact':(relatedWorks.length?'available':'unmapped');
-      return Object.freeze({...station,relatedWorks,exactMoments,mediaState});
+      return Object.freeze({...station,relatedWorks,exactMoments,exactSource,mediaState});
     }))})));
     const journeyById=new Map(journeys.map(journey=>[journey.journeyId,journey]));
 
@@ -101,14 +113,8 @@
     };
 
     return Object.freeze({
-      schema:SCHEMA,
-      momentSchema:MOMENT_SCHEMA,
-      journeyMomentSchema:JOURNEY_MOMENT_SCHEMA,
-      works:Object.freeze(works),
-      moments:Object.freeze(moments),
-      coordinates:Object.freeze(coordinates),
-      collections,
-      journeys,
+      schema:SCHEMA,momentSchema:MOMENT_SCHEMA,journeyMomentSchema:JOURNEY_MOMENT_SCHEMA,
+      works:Object.freeze(works),moments:Object.freeze(moments),coordinates:Object.freeze(coordinates),collections,journeys,
       get(canonicalId){return byId.get(canonicalId)||null;},
       moment(momentId){return momentById.get(momentId)||null;},
       coordinate(canonicalId){return coordinateById.get(canonicalId)||null;},
@@ -127,6 +133,7 @@
       state.graph=compile(...parts);
       document.documentElement.dataset.cinemaGraphSchema='v0';
       document.documentElement.dataset.cinemaMomentSchema='v1';
+      document.documentElement.dataset.cinemaJourneyDerivation='graph-biblical-anchor-v2';
       document.documentElement.dataset.cinemaGraphWorks=String(state.graph.works.length);
       document.documentElement.dataset.cinemaGraphMoments=String(state.graph.moments.length);
       document.documentElement.dataset.cinemaGraphJourneys=String(state.graph.journeys.length);
