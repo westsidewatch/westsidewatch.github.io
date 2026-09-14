@@ -8,11 +8,11 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/'static/dawn-library/storefront.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-STOREFRONT.json'
-BIBLICAL_CATALOG=ROOT/'static/dawn-library/biblical-world/catalog.json'
 IDENTITY_CACHE=ROOT/'static/dawn-library/identity-cache.json'
-UA='Dore-Dawn-Library/1.3 (+https://westsidewatch.github.io)'
+UA='Dore-Dawn-Library/1.4 (+https://westsidewatch.github.io)'
 ATOM='http://www.w3.org/2005/Atom';NS={'atom':ATOM}
 now=datetime.now(timezone.utc).isoformat()
+FORBIDDEN_SOURCE_TOKENS=('wikisource','wikisource.org','維基文庫','维基文库')
 
 def request(url,accept='*/*'):
     return urllib.request.Request(url,headers={'User-Agent':UA,'Accept':accept})
@@ -36,6 +36,10 @@ def page_cover(url):
     except Exception:pass
     return ''
 
+def source_is_clean(value):
+    text=json.dumps(value,ensure_ascii=False).casefold()
+    return not any(token in text for token in FORBIDDEN_SOURCE_TOKENS)
+
 def atom_items(root,provider,kind='remote-public',limit=30,rights='public-domain-us',resolve_page_cover=False):
     items=[]
     for e in root.findall('atom:entry',NS):
@@ -51,7 +55,8 @@ def atom_items(root,provider,kind='remote-public',limit=30,rights='public-domain
         if not title or not (href or download):continue
         if resolve_page_cover and href and not cover:cover=page_cover(href)
         sid=slug(title) or str(len(items)+1)
-        items.append({'id':f'{provider.lower().replace(" ","-")}-{sid}','title':title,'author':author,'language':'zh' if provider=='Wikisource' else 'en','source':{'provider':provider,'url':href or download,'downloadUrl':download or None,'kind':kind},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':rights,'declaredBy':provider},'quality':'curated-edition' if kind.endswith('premium') else 'source-edition','contentDownloaded':False})
+        item={'id':f'{provider.lower().replace(" ","-")}-{sid}','title':title,'author':author,'language':'en','source':{'provider':provider,'url':href or download,'downloadUrl':download or None,'kind':kind},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':rights,'declaredBy':provider},'quality':'curated-edition' if kind.endswith('premium') else 'source-edition','contentDownloaded':False}
+        if source_is_clean(item):items.append(item)
         if len(items)>=limit:break
     return items
 
@@ -71,24 +76,14 @@ def gutenberg_shelf(label,query,limit=36):
         for ln in links:
             rel=ln.attrib.get('rel','');typ=ln.attrib.get('type','');href=http_url(ln.attrib.get('href',''))
             if href and ('image' in rel or typ.startswith('image/')):cover=href;break
-        items.append({'id':f'gutenberg-{gid}','title':title,'author':author,'language':'en','source':{'provider':'Project Gutenberg','url':f'https://www.gutenberg.org/ebooks/{gid}','kind':'remote-public'},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':'public-domain-us','declaredBy':'Project Gutenberg'},'quality':'source-edition','contentDownloaded':False})
+        item={'id':f'gutenberg-{gid}','title':title,'author':author,'language':'en','source':{'provider':'Project Gutenberg','url':f'https://www.gutenberg.org/ebooks/{gid}','kind':'remote-public'},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':'public-domain-us','declaredBy':'Project Gutenberg'},'quality':'source-edition','contentDownloaded':False}
+        if source_is_clean(item):items.append(item)
         if len(items)>=limit:break
     return {'id':'gutenberg-'+slug(query),'title':label,'kind':'source-shelf','source':'Project Gutenberg','items':items}
 
 def standard_new_releases():
     root=fetch_xml('https://standardebooks.org/feeds/atom/new-releases')
     return {'id':'standard-ebooks-new','title':'精品書架 · Standard Ebooks','kind':'premium-shelf','source':'Standard Ebooks','items':atom_items(root,'Standard Ebooks','remote-public-premium',15,'public-domain-us',True)}
-
-def wikisource_export_shelf():
-    catalog=json.loads(BIBLICAL_CATALOG.read_text());items=[]
-    for book in catalog.get('items',[]):
-        work=book.get('work') or {};title=clean(work.get('title',''));lang=(work.get('language') or '').lower();sources=book.get('sources') or []
-        src=next((s for s in sources if s.get('provider')=='中文維基文庫' and s.get('url')),None);rights=book.get('rights') or {}
-        if not title or not src or not lang.startswith('zh') or rights.get('status')!='public-domain':continue
-        page=urllib.parse.unquote(src['url'].split('/wiki/',1)[-1]).replace('_',' ')
-        export='https://ws-export.wmcloud.org/?'+urllib.parse.urlencode({'format':'epub','lang':'zh','page':page})
-        items.append({'id':'wikisource-export-'+book['id'],'title':title,'author':clean(work.get('author','')),'language':'zh','source':{'provider':'Wikisource','url':src['url'],'downloadUrl':export,'kind':'remote-public-export','catalogId':book['id']},'cover':book.get('cover') or {'mode':'one-fallback'},'rights':{'status':'public-domain','declaredBy':'中文維基文庫','provenanceRequired':True},'quality':'verified-export-ready','contentDownloaded':False})
-    return {'id':'wikisource-zh-verified-export','title':'中文典籍 · 維基文庫 EPUB','kind':'source-shelf','source':'Wikisource','items':items[:30]}
 
 def metadata_map(raw):
     out={};rows=raw or []
@@ -139,7 +134,8 @@ def doab_shelf(label,query,limit=24):
             if not cover and (mime.startswith('image/') or re.search(r'cover.*\.(jpe?g|png|webp)$',name)):cover=link
         if not title or not page:continue
         stable=handle or doi or isbn or title;sid=slug(stable) or str(len(items)+1)
-        items.append({'id':'doab-'+sid,'title':title,'author':author,'language':language,'identifiers':{'doi':doi or None,'isbn':isbn or None,'handle':handle or None},'source':{'provider':'DOAB','url':page,'downloadUrl':download or None,'kind':'remote-open-access'},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':'open-access','license':license_url or rights_text or None,'declaredBy':'DOAB','provenanceRequired':True},'quality':'open-access-scholarly','contentDownloaded':False})
+        item={'id':'doab-'+sid,'title':title,'author':author,'language':language,'identifiers':{'doi':doi or None,'isbn':isbn or None,'handle':handle or None},'source':{'provider':'DOAB','url':page,'downloadUrl':download or None,'kind':'remote-open-access'},'cover':{'url':cover,'mode':'source'} if cover else {'mode':'one-fallback'},'rights':{'status':'open-access','license':license_url or rights_text or None,'declaredBy':'DOAB','provenanceRequired':True},'quality':'open-access-scholarly','contentDownloaded':False}
+        if source_is_clean(item):items.append(item)
         if len(items)>=limit:break
     return {'id':'doab-'+slug(query),'title':label,'kind':'academic-shelf','source':'DOAB','items':items}
 
@@ -151,7 +147,8 @@ def ia_shelf(label,query,limit=20):
         if not ident or not title:continue
         creator=row.get('creator','');author=clean(', '.join(creator) if isinstance(creator,list) else str(creator or ''))
         lang=row.get('language','en');language=clean(lang[0] if isinstance(lang,list) and lang else str(lang or 'en'))
-        items.append({'id':'internet-archive-'+ident,'title':title,'author':author,'language':language,'source':{'provider':'Internet Archive','url':f'https://archive.org/details/{urllib.parse.quote(ident)}','kind':'remote-scan','reader':'Internet Archive BookReader'},'cover':{'url':f'https://archive.org/services/img/{urllib.parse.quote(ident)}','mode':'source'},'rights':{'status':'source-rights-check','declaredBy':'Internet Archive','provenanceRequired':True},'quality':'original-scan','contentDownloaded':False})
+        item={'id':'internet-archive-'+ident,'title':title,'author':author,'language':language,'source':{'provider':'Internet Archive','url':f'https://archive.org/details/{urllib.parse.quote(ident)}','kind':'remote-scan','reader':'Internet Archive BookReader'},'cover':{'url':f'https://archive.org/services/img/{urllib.parse.quote(ident)}','mode':'source'},'rights':{'status':'source-rights-check','declaredBy':'Internet Archive','provenanceRequired':True},'quality':'original-scan','contentDownloaded':False}
+        if source_is_clean(item):items.append(item)
     return {'id':'internet-archive-'+slug(label),'title':label,'kind':'scan-shelf','source':'Internet Archive','items':items}
 
 def load_identity_cache():
@@ -192,7 +189,7 @@ def enrich_identities(shelves,limit=60):
 
 shelf_specs=[('聖經與基督教','bible christianity',40),('早期教會與教父','early church fathers',36),('猶太與第二聖殿世界','jewish history josephus',36),('古代世界與考古','ancient history archaeology',36),('哲學與思想','philosophy classics',36),('傳記與回憶','biography memoir',36)]
 shelves=[];errors=[]
-for source_name,fn in [('Standard Ebooks',standard_new_releases),('Wikisource',wikisource_export_shelf),('DOAB theology',lambda:doab_shelf('開放學術 · 神學與宗教','theology OR biblical',24)),('DOAB archaeology',lambda:doab_shelf('開放學術 · 聖經世界與考古','archaeology AND religion',24)),('Internet Archive Bible history',lambda:ia_shelf('原版古籍 · 聖經歷史與地理','title:(bible OR biblical) AND (subject:(history) OR subject:(geography))',20)),('Internet Archive church history',lambda:ia_shelf('原版古籍 · 教會歷史','title:(church history OR early church)',20))]:
+for source_name,fn in [('Standard Ebooks',standard_new_releases),('DOAB theology',lambda:doab_shelf('開放學術 · 神學與宗教','theology OR biblical',24)),('DOAB archaeology',lambda:doab_shelf('開放學術 · 聖經世界與考古','archaeology AND religion',24)),('Internet Archive Bible history',lambda:ia_shelf('原版古籍 · 聖經歷史與地理','title:(bible OR biblical) AND (subject:(history) OR subject:(geography))',20)),('Internet Archive church history',lambda:ia_shelf('原版古籍 · 教會歷史','title:(church history OR early church)',20))]:
     try:
         shelf=fn()
         if shelf.get('items'):shelves.append(shelf)
@@ -205,7 +202,7 @@ seen=set();deduped=[]
 for shelf in shelves:
     items=[]
     for item in shelf['items']:
-        if excluded(item) or item['id'] in seen:continue
+        if excluded(item) or not source_is_clean(item) or item['id'] in seen:continue
         seen.add(item['id']);items.append(item)
     shelf['items']=items
     if items:deduped.append(shelf)
@@ -215,8 +212,10 @@ total=sum(len(s['items']) for s in shelves);cover_count=sum(1 for s in shelves f
 for s in shelves:
     for i in s['items']:
         p=i.get('source',{}).get('provider','unknown');provider_counts[p]=provider_counts.get(p,0)+1
+if any(not source_is_clean(s) for s in shelves):raise RuntimeError('forbidden source residue in storefront shelves')
+if any(not source_is_clean(e) for e in errors):raise RuntimeError('forbidden source residue in storefront errors')
 store={'schema':'dawn.library.storefront.v3','generatedAt':now,'title':'黎明書局','storagePolicy':'index-only','principle':'映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。','shelves':shelves,'metrics':{'shelves':len(shelves),'mappedBooks':total,'sourceCovers':cover_count,'directPublications':download_count,'providers':provider_counts,'identity':identity_metrics},'errors':errors}
 OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps(store,ensure_ascii=False,indent=2)+'\n')
-report={'schema':'dawn.library.storefront.report.v4','generatedAt':now,'shelves':[{'id':s['id'],'title':s['title'],'books':len(s['items']),'source':s['source']} for s in shelves],'mappedBooks':total,'sourceCovers':cover_count,'directPublications':download_count,'providers':provider_counts,'identity':identity_metrics,'errors':errors,'contentDownloaded':False}
+report={'schema':'dawn.library.storefront.report.v4','generatedAt':now,'shelves':[{'id':s['id'],'title':s['title'],'books':len(s['items']),'source':s['source']} for s in shelves],'mappedBooks':total,'sourceCovers':cover_count,'directPublications':download_count,'providers':provider_counts,'identity':identity_metrics,'errors':errors,'contentDownloaded':False,'sourcePolicy':{'wikisource':'forbidden'}}
 REPORT.parent.mkdir(parents=True,exist_ok=True);REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
