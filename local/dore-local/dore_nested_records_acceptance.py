@@ -35,7 +35,7 @@ assert film_files == expected_film, f'film record drift: {sorted(film_files ^ ex
 
 film_index = (film_root / 'README.md').read_text()
 assert 'director-level visual review' in film_index
-assert 'not proof' in film_index
+assert 'never, by itself, proof' in film_index
 assert 'ACTIVE PRODUCTION HANDBOOK' in (film_root / 'DORÉ-FILM-PRODUCTION-HANDBOOK.md').read_text()
 assert 'VISUAL DIRECTOR REVIEW REQUIRED' in (film_root / 'CAMERA-SPINE-EXPERIMENT-01-ACCEPTANCE.md').read_text()
 
