@@ -12,6 +12,11 @@ function sourceNameCluster(entities,type=null){const sourceNames=new Set(entitie
 function entityMeta(raw){const direct=exactEntities(raw);if(!direct.length)return null;const people=sourceNameCluster(direct.filter(e=>e.t==='person'),'person');const places=sourceNameCluster(direct.filter(e=>e.t==='place'),'place');return{direct,people,places}}
 function renderEntityContext(raw,meta){const box=$('#results');if(!box||!meta)return;box.querySelector('.entity-context-card')?.remove();const card=document.createElement('article');card.className='result-card entity-context-card';const labels=[meta.people.length?`${meta.people.length} 個人物個體`:null,meta.places.length?`${meta.places.length} 個地點`:null].filter(Boolean).join(' · ');card.innerHTML=`<header><strong>${raw.replace(/[&<>"']/g,'')}</strong><span>BW-1 Entity identity</span></header><p>${labels||`${meta.direct.length} 個實體候選`}。下方仍保留完整經文搜尋結果；Entity 是附加的身份層，不取代 Scripture Search。</p><footer><span>STEPBible TIPNR entity context</span><span>經文結果由原 Scripture Search 提供</span></footer>`;box.prepend(card)}
 async function handler(event){const raw=String(event?.detail?.query||'').trim();if(!raw)return;const countMention=parseCount(raw);const maybeName=/^[\u3400-\u9fffA-Za-z\u0370-\u03ff\u1f00-\u1fff\u0590-\u05ff· .\-]{2,40}$/.test(raw);if(!countMention&&!maybeName)return;const d=await ensure();if(!d)return;const mention=countMention||raw;const direct=exactEntities(mention,countMention?'person':null);if(!direct.length)return;const meta=countMention?{direct,people:sourceNameCluster(direct,'person'),places:[]}:entityMeta(raw);renderEntityContext(mention,meta)}
-function init(){if(window.__doreEntityRuntimeBound)return;window.__doreEntityRuntimeBound=true;window.addEventListener('dore:search-query',handler,false)}
+function init(){
+  if(window.__doreEntityRuntimeBound)return;
+  window.__doreEntityRuntimeBound=true;
+  window.addEventListener('dore:search-query',handler,false);
+  import('/dore/dore-resource-search.mjs').then(()=>{document.documentElement.dataset.doreResourceSearchConsumer='mounted'}).catch(error=>console.warn('[DORÉ Resource Search mount]',error));
+}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init,{once:true});else init();
 })();
