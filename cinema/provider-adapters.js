@@ -27,6 +27,17 @@ window.HolyLightProviders={
     }
     return null;
   },
+  resolveMoment(item,moment){
+    if(!item||!moment)return null;
+    const exactPointer=moment.sourcePointer;
+    if(exactPointer&&exactPointer!==item.sourcePointer){
+      const source=(item.providerSources||[])[0]||{};
+      const hasOfficialEvidence=(moment.evidence||[]).some(entry=>String(entry.type||'').startsWith('official-')&&entry.sourcePointer===exactPointer);
+      if(!hasOfficialEvidence)return null;
+      return{kind:'handoff',provider:source.provider||'official-source',url:new URL(exactPointer,window.location.href).toString(),official:true,exact:true,momentId:moment.momentId};
+    }
+    return this.resolve(item,Math.max(0,Math.floor((moment.startMs||0)/1000)));
+  },
   mount(target,item,startSeconds=0){
     const resolved=this.resolve(item,startSeconds);
     if(!resolved||resolved.kind!=='embed')return null;
