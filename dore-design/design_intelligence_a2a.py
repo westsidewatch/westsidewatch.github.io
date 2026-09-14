@@ -14,6 +14,7 @@ import design_intelligence_runtime as intelligence
 import design2_snapshot
 import app_workspace
 import design_failure_domains as failure_domains
+import living_water_bloom
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LOCAL_DORE = REPO_ROOT / 'local' / 'dore-local'
@@ -49,9 +50,10 @@ def _base_snapshot(payload):
     return design2_snapshot.snapshot(workspace,page_id)
 
 def explore(payload):
+    payload=living_water_bloom.enrich(payload)
     routed=intelligence.route_task(payload)
     if routed.get('decision')!='explore':
-        return {'ok':True,'decision':'exploit','exploration_started':False,'route':routed,'reason':'stable_contextual_preference_available'}
+        return {'ok':True,'decision':'exploit','exploration_started':False,'route':routed,'reason':'stable_contextual_preference_available','experiment_contract_applied':living_water_bloom.applies(payload)}
     task_id='design-explore-'+uuid.uuid4().hex
     base_snapshot=_base_snapshot(payload)
     request={
@@ -59,6 +61,11 @@ def explore(payload):
       'surface_family':payload.get('surface_family'),'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),
       'viewport_context':payload.get('viewport_context'),'content_context':payload.get('content_context'),'constraints':payload.get('constraints') or [],
       'preference_pack':routed.get('preference_pack') or {},'base_snapshot':base_snapshot,
+      'experiment_id':payload.get('experiment_id'),'experiment_contract':payload.get('experiment_contract'),
+      'divergence_domains':payload.get('divergence_domains') or [],'known_failure_domains':payload.get('known_failure_domains') or [],
+      'historical_design_authority':payload.get('historical_design_authority'),
+      'production_promotion_allowed':payload.get('production_promotion_allowed'),
+      'canonical_workspace_mutation_allowed':payload.get('canonical_workspace_mutation_allowed'),
       'inference_boundary':'core-a2a-only','judge_policy':'blind-order-reversal-consensus-v1','candidate_policy':'immutable-executable-sandbox-v1',
       'evidence_policy':'real-browser-png-primary-v1','failure_domain_policy':'pixel-observable-consensus-v1',
     }
@@ -115,8 +122,10 @@ def explore(payload):
       'failure_domain_policy':'pixel-observable-consensus-v1','loser_failures':loser_failures,'rejection_memory':rejections,
       'memory_admitted':bool(observed),'writeback':observed,'writeback_block_reason':None if observed else ('judge_disagreement' if not consensus else 'usability_or_brand_floor_failed'),
       'requires_more_evidence':not bool(observed),'route_before':routed,'route_after':route_after,'production_promoted':False,'inference_boundary':'core-a2a-only',
+      'experiment_id':payload.get('experiment_id'),'experiment_contract_applied':living_water_bloom.applies(payload),
+      'divergence_domains':payload.get('divergence_domains') or [],'historical_design_authority':payload.get('historical_design_authority'),
     }
 
 def health():
     worker=LOCAL_DORE/'design_intelligence_a2a_worker.py'; raster=REPO_ROOT/'dore-design'/'design_intelligence_raster.py'
-    return {'ok':worker.exists() and raster.exists(),'phase':9,'capability_phase':13,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False}
+    return {'ok':worker.exists() and raster.exists(),'phase':9,'capability_phase':13,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False,'living_water_bloom_contract':living_water_bloom.CONTRACT_PATH.exists()}

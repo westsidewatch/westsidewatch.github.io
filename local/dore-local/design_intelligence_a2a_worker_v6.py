@@ -10,13 +10,16 @@ if str(HERE) not in sys.path:sys.path.insert(0,str(HERE))
 import design_intelligence_a2a_worker_v5 as legacy
 import design_rejection_enforcement as enforcement
 PATCH_SCHEMA='dore.design.candidate-patch.v1';MAX_SCHEMA_RETRIES=3
+STYLE_SCHEMA={'type':'object','additionalProperties':False,'properties':{'background':{'type':'string'},'color':{'type':'string'},'border':{'type':'string'},'border_radius':{'type':['string','number']},'opacity':{'type':['string','number']},'letter_spacing':{'type':['string','number']},'line_height':{'type':['string','number']},'font_weight':{'type':['string','number']},'font_family':{'type':'string'}}}
 OP_SCHEMA={'oneOf':[
  {'type':'object','additionalProperties':False,'required':['op','node_id','x','y'],'properties':{'op':{'const':'move'},'node_id':{'type':'string'},'x':{'type':'number'},'y':{'type':'number'}}},
  {'type':'object','additionalProperties':False,'required':['op','node_id','w','h'],'properties':{'op':{'const':'resize'},'node_id':{'type':'string'},'w':{'type':'number','exclusiveMinimum':0},'h':{'type':'number','exclusiveMinimum':0}}},
  {'type':'object','additionalProperties':False,'required':['op','node_id','size'],'properties':{'op':{'const':'font_size'},'node_id':{'type':'string'},'size':{'type':'number','minimum':6,'maximum':320}}},
- {'type':'object','additionalProperties':False,'required':['op','node_id','value'],'properties':{'op':{'const':'text_align'},'node_id':{'type':'string'},'value':{'enum':['left','center','right']}}}
+ {'type':'object','additionalProperties':False,'required':['op','node_id','value'],'properties':{'op':{'const':'text_align'},'node_id':{'type':'string'},'value':{'enum':['left','center','right']}}},
+ {'type':'object','additionalProperties':False,'required':['op','node_id','style'],'properties':{'op':{'const':'set_style'},'node_id':{'type':'string'},'style':STYLE_SCHEMA}},
+ {'type':'object','additionalProperties':False,'required':['op','node'],'properties':{'op':{'const':'add_node'},'node':{'type':'object','additionalProperties':False,'required':['id','type','x','y','w','h'],'properties':{'id':{'type':'string'},'type':{'enum':['text','panel','light','rule','portal']},'text':{'type':'string'},'x':{'type':'number'},'y':{'type':'number'},'w':{'type':'number','exclusiveMinimum':0},'h':{'type':'number','exclusiveMinimum':0},'size':{'type':'number','minimum':6,'maximum':320},'text_align':{'enum':['left','center','right']},'style':STYLE_SCHEMA}}}}
 ]}
-GENERATION_SCHEMA={'type':'object','additionalProperties':False,'required':['variants'],'properties':{'variants':{'type':'array','minItems':2,'maxItems':2,'items':{'type':'object','additionalProperties':False,'required':['id','direction','patch','risk_domains'],'properties':{'id':{'enum':['A','B']},'direction':{'type':'string'},'patch':{'type':'object','additionalProperties':False,'required':['schema','ops'],'properties':{'schema':{'const':PATCH_SCHEMA},'ops':{'type':'array','minItems':1,'maxItems':24,'items':OP_SCHEMA}}},'risk_domains':{'type':'array','items':{'type':'string'}}}}}}}
+GENERATION_SCHEMA={'type':'object','additionalProperties':False,'required':['variants'],'properties':{'variants':{'type':'array','minItems':2,'maxItems':2,'items':{'type':'object','additionalProperties':False,'required':['id','direction','patch','risk_domains'],'properties':{'id':{'enum':['A','B']},'direction':{'type':'string'},'patch':{'type':'object','additionalProperties':False,'required':['schema','ops'],'properties':{'schema':{'const':PATCH_SCHEMA},'ops':{'type':'array','minItems':1,'maxItems':48,'items':OP_SCHEMA}}},'risk_domains':{'type':'array','items':{'type':'string'}}}}}}}
 def _guardrails(payload):return [g for g in ((payload.get('preference_pack') or {}).get('rejection_guardrails') or []) if isinstance(g,dict) and g.get('failure_domain')]
 def _canonical_patch(value):
  if not isinstance(value,dict):raise ValueError('candidate_patch_object_required')
@@ -33,14 +36,16 @@ def _validate_variants(generated):
   patch=_canonical_patch(v.get('patch'));vv=dict(v);vv['patch']=patch;vv['risk_domains']=[str(x) for x in (v.get('risk_domains') or [])];normalized.append(vv)
  return normalized
 def _generate(ollama,payload,base,nodes,attempt,structured_json=None):
- guardrails=_guardrails(payload)
+ guardrails=_guardrails(payload);bloom=bool(payload.get('experiment_id')=='living-water-bloom')
  system=('You are Doré Design Core. Generate exactly two materially different, brand-faithful executable patches. Return JSON only with variants [A,B]. Each variant must contain id, direction, patch, and risk_domains. risk_domains must truthfully list any known failure-domain risk the proposal may reproduce. Every patch operation must obey the supplied executable patch schema. The rejection guardrails are bounded negative precedent: do not repeat them. Do not choose a winner.')
- base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes,'patch_schema':PATCH_SCHEMA,'allowed_ops':['move','resize','font_size','text_align']};last_error=''
+ allowed=['move','resize','font_size','text_align']
+ if bloom:
+  allowed+=['add_node','set_style'];system+=(' This is the Living Water bloom experiment. Church identity and authored content are authority; historical layouts are evidence only, never templates. Build two complete visual compositions, not typography rearrangements. You may create panels, light fields, rules, portals and non-authoritative decorative text nodes, and style nodes. Use the existing authored hero/body text unchanged as the semantic anchors. Maximize meaningful compositional distance between A and B. Do not invent ministries, people, doctrine, events, quotations, or claims. Aim for a quiet sacred threshold, relational warmth, living-water spatial flow, or radically minimal church presence without religious cliche.')
+ base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes,'patch_schema':PATCH_SCHEMA,'allowed_ops':allowed,'experiment_id':payload.get('experiment_id'),'experiment_contract':payload.get('experiment_contract'),'divergence_domains':payload.get('divergence_domains') or [],'known_failure_domains':payload.get('known_failure_domains') or [],'historical_design_authority':payload.get('historical_design_authority')};last_error=''
  for schema_try in range(1,MAX_SCHEMA_RETRIES+1):
   request=dict(base_user);request['schema_attempt']=schema_try
   if last_error:request['previous_output_rejected']=last_error;request['correction']='Return a fresh A/B pair using only the exact executable patch schema.'
-  messages=[{'role':'system','content':system},{'role':'user','content':json.dumps(request,ensure_ascii=False)}]
-  raw=structured_json(messages,GENERATION_SCHEMA) if structured_json else ollama(messages);generated=legacy._json_object(raw)
+  messages=[{'role':'system','content':system},{'role':'user','content':json.dumps(request,ensure_ascii=False)}];raw=structured_json(messages,GENERATION_SCHEMA) if structured_json else ollama(messages);generated=legacy._json_object(raw)
   try:
    variants=_validate_variants(generated);candidates=[]
    for v in variants:
