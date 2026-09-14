@@ -2,8 +2,9 @@
   'use strict';
 
   const CONTRACT=Object.freeze({
-    schema:'one.visual-surface-runtime.v1',
+    schema:'one.visual-surface-runtime.v2',
     consumer:'dore.visual-surface-consumer.v1',
+    resourceFabric:'dore.resource-fabric.surface-manifest.v0',
     product:'one',
   });
 
@@ -29,6 +30,21 @@
     document.body.append(script);
   });
 
-  loadConsumer().then(()=>attach()).catch(error=>console.warn('[ONE Surface Runtime]',error));
-  window.ONE_SURFACE_RUNTIME=Object.freeze({CONTRACT,attach});
+  const loadResourceFabric=async()=>{
+    const rf=await import('/js/resource-fabric-client.mjs');
+    const manifest=await rf.resourceManifest();
+    if(manifest?.identityAuthority!=='Dawn'||manifest?.canonicalMonolithRequired!==false)throw new Error('Resource Fabric boundary mismatch');
+    window.ONE_RESOURCE_FABRIC=Object.freeze({
+      manifest:rf.resourceManifest,
+      work:rf.resourceWork,
+      works:rf.resourceWorks,
+      search:rf.resourceSearch,
+      featured:rf.resourceFeatured,
+    });
+    document.documentElement.dataset.oneResourceFabric=`PASS:${manifest.workCount}`;
+    return window.ONE_RESOURCE_FABRIC;
+  };
+
+  Promise.all([loadConsumer(),loadResourceFabric()]).then(()=>attach()).catch(error=>console.warn('[ONE Surface Runtime]',error));
+  window.ONE_SURFACE_RUNTIME=Object.freeze({CONTRACT,attach,loadResourceFabric});
 })();
