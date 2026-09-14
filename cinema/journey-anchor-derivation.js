@@ -14,17 +14,15 @@
       momentId:moment.momentId,
       relation:'depicts',
       derived:true,
-      basis:Object.freeze({
-        kind:'biblical-anchor-derivation',
-        anchors:Object.freeze(anchors.map(anchor=>Object.freeze({type:anchor.type,value:anchor.value}))),
-        scripture
-      }),
+      basis:Object.freeze({kind:'biblical-anchor-derivation',anchors:Object.freeze(anchors.map(anchor=>Object.freeze({type:anchor.type,value:anchor.value}))),scripture}),
       moment
     });
   }
 
   function relationsForStation(graph,journey,station){
-    const overrides=(station.exactMoments||[]).map(moment=>Object.freeze({
+    const derived=graph.moments.map(moment=>relationFor(journey,station,moment)).filter(Boolean);
+    if(derived.length)return Object.freeze(derived);
+    return Object.freeze((station.exactMoments||[]).map(moment=>Object.freeze({
       journeyId:journey.journeyId,
       stationId:station.stationId,
       momentId:moment.momentId,
@@ -32,9 +30,7 @@
       derived:false,
       basis:Object.freeze({kind:'editorial-override'}),
       moment
-    }));
-    if(overrides.length)return Object.freeze(overrides);
-    return Object.freeze(graph.moments.map(moment=>relationFor(journey,station,moment)).filter(Boolean));
+    })));
   }
 
   window.ParadiseCinemaJourneyAnchors=Object.freeze({
