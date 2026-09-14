@@ -15,7 +15,7 @@ P01 impact: NONE
 
 ## Reconciliation findings
 
-1. The canonical-register bookkeeping drift identified at Checkpoint 117 is now repaired. `MEM-SWEEP-01` no longer stops at Checkpoint 107; it records the reconciled frontier through Checkpoint 117 and links the 107–116 frontier ledger.
+1. The canonical-register bookkeeping drift identified at Checkpoint 117 is now repaired. `MEM-SWEEP-01` no longer stops at Checkpoint 107; it now records the durable frontier through Checkpoint 118 and links the 107–116 frontier ledger plus Checkpoints 117–118.
 2. Paradise Cinema is now represented explicitly in the canonical active map as `CINEMA — ACTIVE_PARALLEL / IMPLEMENTED_FOUNDATION`. This closes the register-coverage gap without inflating the product into whole-product completion.
 3. The Cinema row preserves the bounded evidence boundary: source-authoritative exact Moment handoff, four core Gospel Journey projections and BiblicalAnchor-derived Journey relations are verified components; heterogeneous-provider reliability and production playback/readback remain open.
 4. The latest Actions probe diagnostic is fresh and successful (`ok: true`) for run `34851959414`, but it is a runtime-health/probe observation, not a new product capability or completion token. Classification: `MAINTENANCE / REGRESSION-FRESHNESS EVIDENCE`.
@@ -32,11 +32,12 @@ P01 impact: NONE
 
 ## Canonical-register effect
 
-Commit `79b0a8e739f9c77a75b2751db6646a0f924ff5e5` performed the bounded register repair:
+Two bounded register commits completed the repair:
 
-- advanced the `MEM-SWEEP-01` summary from the stale Checkpoint-107 frontier to the reconciled Checkpoint-117 frontier;
-- added explicit `CINEMA` coverage with the correct bounded status and next proof;
-- changed no P01 priority or state.
+- `79b0a8e739f9c77a75b2751db6646a0f924ff5e5` repaired the stale frontier summary and added explicit `CINEMA` coverage;
+- `36483d1b8d8495b34c4ef1b8dec6837043242b05` advanced the canonical `MEM-SWEEP-01` frontier through Checkpoint 118 and linked this checkpoint as evidence.
+
+No P01 priority or state changed.
 
 ## Smallest next sweep move
 
