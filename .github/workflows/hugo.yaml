@@ -36,6 +36,8 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Reconcile Dawn canonical cover assets
+        run: python scripts/build_dawn_cover_registry.py --minimum-resolved 1
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production

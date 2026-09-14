@@ -3,13 +3,15 @@ const shelvesHost = root.querySelector('[data-shelves]');
 const search = root.querySelector('[data-search]');
 const count = root.querySelector('[data-count]');
 
-const [storefront, surface, canonical] = await Promise.all([
+const [storefront, surface, canonical, coverRegistry] = await Promise.all([
   fetch('../storefront.json').then(r => r.json()),
   fetch('../surfaces/dawn-storefront.json').then(r => r.json()),
-  fetch('../canonical-index.json').then(r => r.json())
+  fetch('../canonical-index.json').then(r => r.json()),
+  fetch('../cover-registry.json').then(r => r.ok ? r.json() : ({ covers: {} })).catch(() => ({ covers: {} }))
 ]);
 
 const canonicalWorks = canonical?.works || {};
+const canonicalCovers = coverRegistry?.covers || {};
 const surfaceShelves = new Map((surface?.shelves || []).map(shelf => [shelf.id, shelf]));
 
 function canonicalRecord(workId) {
@@ -32,6 +34,7 @@ function mergeShelf(storeShelf) {
         author: work?.authors?.[0] || legacy.author || '',
         source: legacy.source || null,
         cover: legacy.cover || null,
+        canonicalCover: workId ? canonicalCovers[workId] || null : null,
         canonical: Boolean(work)
       };
     })
@@ -42,14 +45,9 @@ const shelves = (storefront?.shelves || []).map(mergeShelf);
 const total = shelves.reduce((n, shelf) => n + shelf.items.length, 0);
 
 function coverUrl(item) {
-  const url = item?.cover?.url;
-  if (!url || typeof url !== 'string') return '';
-  try {
-    const parsed = new URL(url);
-    return parsed.protocol === 'https:' ? parsed.href : '';
-  } catch {
-    return '';
-  }
+  const pointer = item?.canonicalCover?.pointer;
+  if (typeof pointer === 'string' && pointer.startsWith('/dawn-library/covers/')) return pointer;
+  return '';
 }
 
 function makeBook(item) {
@@ -68,7 +66,6 @@ function makeBook(item) {
     const img = document.createElement('img');
     img.alt = `${item.title} 封面`;
     img.loading = 'lazy';
-    img.referrerPolicy = 'no-referrer';
     img.src = url;
     img.addEventListener('load', () => fallback.remove(), { once: true });
     img.addEventListener('error', () => img.remove(), { once: true });
