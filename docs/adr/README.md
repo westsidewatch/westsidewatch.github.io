@@ -18,6 +18,7 @@ A superseded ADR remains in Git history and points to its successor. It is not s
 ## Index
 
 - `ADR-0001-two-index-authority-model.md` — accepted — Bible Index for content/world coordinates; System Atlas for engineering coordinates; GitHub canonical record is current-truth authority; Doré Memory recalls; A2A executes.
+- `ADR-0002-sharded-system-record-registry.md` — accepted — System Record Registry composes bounded shards behind one effective index, with incremental migration from the v0 monolith.
 
 ## Rule
 
