@@ -32,6 +32,7 @@ def _load_sibling(name:str):
 REGISTRY=_load_sibling("capability_registry")
 BINDINGS=_load_sibling("capability_bindings")
 BOOK_INTELLIGENCE=_load_sibling("book_intelligence_capability")
+WESTSIDE_WRITING=_load_sibling("westside_writing_capability")
 
 def _post_json(url:str,payload:dict[str,Any],headers:dict[str,str]|None=None,timeout:int=1500)->dict[str,Any]:
  raw=json.dumps(payload,ensure_ascii=False).encode("utf-8");merged={"Content-Type":"application/json","Accept":"application/json"};merged.update(headers or {})
@@ -56,13 +57,17 @@ def _image_generate(args:dict[str,Any],caller_product:str|None=None)->dict[str,A
  if isinstance(result,dict):result=dict(result);result["core_route"]={"capability":"image.generate","caller_product":caller_product,"provider":"dore-image-local","transport":"core-adapter"}
  return result
 
+def _local_structured_infer(messages:list[dict[str,str]],*,purpose:str)->str:
+ runtime=_load_sibling("dore_local");base_url=str(getattr(runtime,"OLLAMA_BASE_URL",os.environ.get("OLLAMA_BASE_URL") or "http://127.0.0.1:11434")).rstrip("/");model=str(getattr(runtime,"MODEL",os.environ.get("DORE_LOCAL_MODEL") or "gemma4:e4b"))
+ response=_post_json(f"{base_url}/api/chat",{"model":model,"messages":messages,"stream":False,"think":False,"format":"json"});message=response.get("message") if isinstance(response,dict) else None;content=message.get("content") if isinstance(message,dict) else None
+ if not isinstance(content,str):raise RuntimeError(f"structured {purpose} inference returned no message content")
+ return content
+
 def _book_intelligence(args:dict[str,Any])->dict[str,Any]:
- def infer(messages:list[dict[str,str]])->str:
-  runtime=_load_sibling("dore_local");base_url=str(getattr(runtime,"OLLAMA_BASE_URL",os.environ.get("OLLAMA_BASE_URL") or "http://127.0.0.1:11434")).rstrip("/");model=str(getattr(runtime,"MODEL",os.environ.get("DORE_LOCAL_MODEL") or "gemma4:e4b"))
-  response=_post_json(f"{base_url}/api/chat",{"model":model,"messages":messages,"stream":False,"think":False,"format":"json"});message=response.get("message") if isinstance(response,dict) else None;content=message.get("content") if isinstance(message,dict) else None
-  if not isinstance(content,str):raise RuntimeError("structured Book Intelligence inference returned no message content")
-  return content
- return BOOK_INTELLIGENCE.execute(args,infer)
+ return BOOK_INTELLIGENCE.execute(args,lambda messages:_local_structured_infer(messages,purpose="Book Intelligence"))
+
+def _westside_writing(args:dict[str,Any])->dict[str,Any]:
+ return WESTSIDE_WRITING.execute(args,lambda messages:_local_structured_infer(messages,purpose="Westside Writing"))
 
 def _load_local_capability(module_name:str,args:dict[str,Any])->dict[str,Any]:
  local_path=str(HERE);inserted=local_path not in sys.path
@@ -130,6 +135,7 @@ def _invoke_native(handler:str,args:dict[str,Any],caller_product:str|None)->dict
  if handler=="reflex.project":return _reflex_project(args)
  if handler=="translation.project":return _translation_project(args)
  if handler=="publishing.book-intelligence":return _book_intelligence(args)
+ if handler=="writing.westside-dimensional-journalism":return _westside_writing(args)
  if handler=="design.intelligence":return _design_intelligence(args)
  if handler=="bible.query-plan":return _bible_query_plan(args)
  if handler=="context.fuzzy-search":return _fuzzy_search(args,caller_product)
