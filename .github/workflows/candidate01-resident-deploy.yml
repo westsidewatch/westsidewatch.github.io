@@ -78,8 +78,8 @@ jobs:
             sleep 2
           done
           test "$FOUND" = 1
-          EDITOR=$(curl -fsS 'http://127.0.0.1:4310/editor?page=italian-editorial-atlas')
-          if grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"; then echo 'ATLAS_EDITOR_PAGE=PASS'; else echo 'ATLAS_EDITOR_PAGE=FAIL'; exit 21; fi
+          WORKSPACE=$(curl -fsS 'http://127.0.0.1:4310/api/workspace')
+          if grep -q '"id": "italian-editorial-atlas"' <<<"$WORKSPACE" && grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$WORKSPACE"; then echo 'ATLAS_PAGES_DATA=PASS'; else echo 'ATLAS_PAGES_DATA=FAIL'; exit 21; fi
           ATLAS=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=italian-editorial-atlas')
           if grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"; then echo 'ATLAS_CANVAS=PASS'; else echo 'ATLAS_CANVAS=FAIL'; exit 22; fi
           SURFACE=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-atlas.html')
