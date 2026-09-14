@@ -4,84 +4,30 @@
   "purpose": "Attach durable repository records to stable System Atlas identities without deleting provenance or creating a second memory system.",
   "states": ["canonical", "operational", "evidence", "historical", "superseded", "unreviewed"],
   "families": [
-    {
-      "id": "records:site-architecture",
-      "owner": "system:main-site",
-      "state": "canonical",
-      "patterns": ["docs/MASTER_SITE_ARCHITECTURE.md"]
-    },
-    {
-      "id": "records:system-atlas-governance",
-      "owner": "authority:system-atlas",
-      "state": "canonical",
-      "patterns": ["data/system-atlas.v0.json", "data/system-atlas.schema.json", "docs/CURRENT_MAINLINE.md", "docs/adr/*.md"]
-    },
-    {
-      "id": "records:master-work-register",
-      "owner": "register:master-work",
-      "state": "operational",
-      "patterns": ["dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md", "dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md"]
-    },
-    {
-      "id": "records:memory-sweep-checkpoints",
-      "owner": "register:master-work",
-      "state": "evidence",
-      "patterns": ["dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md"]
-    },
-    {
-      "id": "records:memory-evidence-ledgers",
-      "owner": "register:master-work",
-      "state": "evidence",
-      "patterns": ["dore-core/projects/*EVIDENCE-LEDGER*.md"]
-    },
-    {
-      "id": "records:memory-core-boundary",
-      "owner": "system:dore-memory",
-      "state": "canonical",
-      "patterns": ["docs/dore-memory-core-boundary.md"]
-    },
-    {
-      "id": "records:a2a-architecture",
-      "owner": "system:a2a",
-      "state": "canonical",
-      "patterns": ["docs/a2a-reliability-atlas-v1.md", "docs/a2a-reliability-1b-existing-primitives.md"]
-    },
-    {
-      "id": "records:dawn-library-canonical",
-      "owner": "system:dawn-library",
-      "state": "canonical",
-      "patterns": ["docs/dawn-library-display-system-memo.md", "docs/dawn-url-surface-contract.md", "docs/dawn-library-formal-edition/**/*.md"]
-    },
-    {
-      "id": "records:one-index",
-      "owner": "tool:one",
-      "state": "canonical",
-      "patterns": ["docs/one/README.md"]
-    },
-    {
-      "id": "records:one-gospel-harmony-final-audit",
-      "owner": "tool:one",
-      "state": "evidence",
-      "patterns": ["docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md"]
-    },
-    {
-      "id": "records:one-gospel-harmony-preliminary-audits",
-      "owner": "tool:one",
-      "state": "superseded",
-      "patterns": ["docs/one/GOSPEL-HARMONY-AUDIT-20260829.md", "docs/one/GOSPEL-HARMONY-CONSISTENCY-20260829.md"]
-    },
-    {
-      "id": "records:dore-docs",
-      "owner": "tool:dore-folio",
-      "state": "unreviewed",
-      "patterns": ["docs/dore/**/*.md"]
-    },
-    {
-      "id": "records:paradise-cinema-data",
-      "owner": "system:paradise-cinema",
-      "state": "operational",
-      "patterns": ["cinema/data/*.json"]
-    }
+    {"id":"records:site-architecture","owner":"system:main-site","state":"canonical","patterns":["docs/MASTER_SITE_ARCHITECTURE.md"]},
+    {"id":"records:system-atlas-governance","owner":"authority:system-atlas","state":"canonical","patterns":["data/system-atlas.v0.json","data/system-atlas.schema.json","docs/CURRENT_MAINLINE.md","docs/adr/*.md"]},
+    {"id":"records:master-work-register","owner":"register:master-work","state":"operational","patterns":["dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md","dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md"]},
+    {"id":"records:memory-sweep-checkpoints","owner":"register:master-work","state":"evidence","patterns":["dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md"]},
+    {"id":"records:memory-evidence-ledgers","owner":"register:master-work","state":"evidence","patterns":["dore-core/projects/*EVIDENCE-LEDGER*.md"]},
+    {"id":"records:memory-core-boundary","owner":"system:dore-memory","state":"canonical","patterns":["docs/dore-memory-core-boundary.md"]},
+    {"id":"records:a2a-architecture","owner":"system:a2a","state":"canonical","patterns":["docs/a2a-reliability-atlas-v1.md","docs/a2a-reliability-1b-existing-primitives.md"]},
+    {"id":"records:dawn-library-canonical","owner":"system:dawn-library","state":"canonical","patterns":["docs/dawn-library-display-system-memo.md","docs/dawn-url-surface-contract.md","docs/dawn-library-formal-edition/**/*.md"]},
+    {"id":"records:one-index","owner":"tool:one","state":"canonical","patterns":["docs/one/README.md"]},
+    {"id":"records:one-gospel-harmony-final-audit","owner":"tool:one","state":"evidence","patterns":["docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md"]},
+    {"id":"records:one-gospel-harmony-preliminary-audits","owner":"tool:one","state":"superseded","patterns":["docs/one/GOSPEL-HARMONY-AUDIT-20260829.md","docs/one/GOSPEL-HARMONY-CONSISTENCY-20260829.md"]},
+    {"id":"records:dore-index","owner":"register:master-work","state":"canonical","patterns":["docs/dore/README.md"]},
+    {"id":"records:dore-theological-boundary","owner":"register:master-work","state":"canonical","patterns":["docs/dore/DORE-THEOLOGICAL-BOUNDARY-2026-09-08.md"]},
+    {"id":"records:dore-bible-intelligence","owner":"tool:dore-folio","state":"evidence","patterns":["docs/dore/BI-1-IMPLEMENTATION-NOTES.md","docs/dore/DORE-BIBLE-INTELLIGENCE-ENGINEERING-BASELINE-2026-09-08.md"]},
+    {"id":"records:dore-theology-training","owner":"register:master-work","state":"evidence","patterns":["docs/dore/DORE-THEOLOGY-*.md"]},
+    {"id":"records:dore-exploration","owner":"register:master-work","state":"evidence","patterns":["docs/dore/DORE-EXPLORATION-*.md","docs/dore/DORE-LOCAL-AI-*.md"]},
+    {"id":"records:dore-long-scroll","owner":"register:master-work","state":"operational","patterns":["docs/dore/DORÉ-BIBLICAL-LONG-SCROLL-*.md"]},
+    {"id":"records:dore-design-working","owner":"register:master-work","state":"operational","patterns":["docs/dore/DESIGN-WORKING-MEMORY.md","docs/dore/visual-designer-01-light-composition-hypotheses.md"]},
+    {"id":"records:dore-learning-and-local-fabric","owner":"register:master-work","state":"operational","patterns":["docs/dore/LEARNING-CADENCE.md","docs/dore/LOCAL-INTELLIGENCE-FABRIC-COMPATIBILITY-MAP.md"]},
+    {"id":"records:dore-search-research","owner":"capability:dore-search","state":"evidence","patterns":["docs/dore/TEXTUAL-DIFFERENCE-RESEARCH-v0.1.md","docs/dore/WORK-TEST-001-ENGLISH-SEARCH.md"]},
+    {"id":"records:dore-journal-agent","owner":"system:journal","state":"operational","patterns":["docs/dore/JOURNAL-AGENT.md"]},
+    {"id":"records:dore-coordination-history","owner":"register:master-work","state":"historical","patterns":["docs/dore/THE-GATE.md","docs/dore/KNOCKING-HISTORY.md"]},
+    {"id":"records:dore-nested-review-queue","owner":"register:master-work","state":"unreviewed","patterns":["docs/dore/design/**/*.md","docs/dore/film/**/*.md","docs/dore/lessons/**/*.md"]},
+    {"id":"records:paradise-cinema-data","owner":"system:paradise-cinema","state":"operational","patterns":["cinema/data/*.json"]}
   ],
   "rules": [
     "A family assigns discoverability and reconciliation ownership; it does not rewrite the underlying record.",

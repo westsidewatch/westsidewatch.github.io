@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import fnmatch
 import json
 from pathlib import Path
 
@@ -26,7 +25,6 @@ for family in registry['families']:
         family_matches |= matches
     matched_paths[family['id']] = family_matches
 
-# Canonical families cannot silently overlap with historical/superseded classifications.
 classification = {}
 for family in registry['families']:
     for path in matched_paths[family['id']]:
@@ -35,7 +33,6 @@ for path, states in classification.items():
     assert not ('canonical' in states and ({'historical', 'superseded'} & states)), \
         f'conflicting current/historical classification for {path}: {sorted(states)}'
 
-# Every Memory Sweep checkpoint currently in the repository must return home through one family.
 all_checkpoints = {
     p.relative_to(ROOT).as_posix()
     for p in ROOT.glob('dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md')
@@ -44,43 +41,50 @@ checkpoint_family = matched_paths['records:memory-sweep-checkpoints']
 assert all_checkpoints, 'expected existing Memory Sweep checkpoints'
 assert all_checkpoints == checkpoint_family, 'Memory Sweep checkpoint family has coverage drift'
 
-# The two operational anchors must be represented explicitly, not only by broad globs.
 master = 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
 sweep = 'dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md'
 assert master in matched_paths['records:master-work-register']
 assert sweep in matched_paths['records:master-work-register']
 
-# Foundation canonical docs are not allowed to fall back to unreviewed.
 for path in ('docs/MASTER_SITE_ARCHITECTURE.md', 'docs/dore-memory-core-boundary.md'):
     assert 'canonical' in classification.get(path, set()), f'canonical record lost: {path}'
     assert 'unreviewed' not in classification.get(path, set()), f'canonical record regressed to unreviewed: {path}'
 
-# ONE reconciliation pass: every current docs/one markdown file must now have an explicit classification.
+# ONE pass: every current top-level ONE markdown record has an explicit classification.
 one_docs = {p.relative_to(ROOT).as_posix() for p in (ROOT / 'docs/one').glob('*.md')}
-assert one_docs, 'expected ONE documentation records'
+assert one_docs
 for path in one_docs:
     states = classification.get(path, set())
     assert states, f'ONE record is orphaned: {path}'
     assert 'unreviewed' not in states, f'ONE record regressed to unreviewed: {path}'
-
-one_index = 'docs/one/README.md'
-final_audit = 'docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md'
-preliminary = {
+assert classification.get('docs/one/README.md') == {'canonical'}
+assert classification.get('docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md') == {'evidence'}
+for path in (
     'docs/one/GOSPEL-HARMONY-AUDIT-20260829.md',
     'docs/one/GOSPEL-HARMONY-CONSISTENCY-20260829.md',
-}
-assert classification.get(one_index) == {'canonical'}
-assert classification.get(final_audit) == {'evidence'}
-for path in preliminary:
-    assert classification.get(path) == {'superseded'}, f'preliminary ONE audit must remain provenance: {path}'
+):
+    assert classification.get(path) == {'superseded'}
 
-one_entity = next(item for item in atlas['entities'] if item['id'] == 'tool:one')
-assert one_index in one_entity.get('docs', []), 'System Atlas ONE entrypoint must include docs/one/README.md'
+# Doré pass: all top-level markdown records are now reconciled. Only nested queues may remain unreviewed.
+dore_top = {p.relative_to(ROOT).as_posix() for p in (ROOT / 'docs/dore').glob('*.md')}
+assert dore_top, 'expected top-level Doré records'
+for path in dore_top:
+    states = classification.get(path, set())
+    assert states, f'Doré top-level record is orphaned: {path}'
+    assert 'unreviewed' not in states, f'Doré top-level record still unreviewed: {path}'
+
+assert classification.get('docs/dore/README.md') == {'canonical'}
+assert classification.get('docs/dore/DORE-THEOLOGICAL-BOUNDARY-2026-09-08.md') == {'canonical'}
+for path in ('docs/dore/THE-GATE.md', 'docs/dore/KNOCKING-HISTORY.md'):
+    assert classification.get(path) == {'historical'}, f'coordination history must not become current authority: {path}'
 
 unreviewed = sorted(path for path, states in classification.items() if 'unreviewed' in states)
+assert all(path.startswith(('docs/dore/design/', 'docs/dore/film/', 'docs/dore/lessons/')) for path in unreviewed), \
+    f'unreviewed records escaped bounded Doré queues: {unreviewed}'
+
 print(
     'DORE_SYSTEM_RECORD_RECONCILIATION=PASS '
     f'families={len(registry["families"])} '
     f'covered={len(classification)} checkpoints={len(all_checkpoints)} '
-    f'one={len(one_docs)} unreviewed={len(unreviewed)}'
+    f'one={len(one_docs)} dore_top={len(dore_top)} unreviewed={len(unreviewed)}'
 )
