@@ -1,0 +1,18 @@
+{
+  "schema": "dore.resource-fabric.delta-segment.v0",
+  "status": "experimental",
+  "baseImmutable": true,
+  "segmentImmutable": true,
+  "appendOnly": true,
+  "containsOnlyChangedWorks": true,
+  "identityAuthority": false,
+  "compactionPreservesCanonicalWorkIds": true,
+  "compactionRewritesSelectedSegmentsOnly": true,
+  "acceptance": {
+    "baseWorks": 1000000,
+    "deltaCases": [1, 100, 10000],
+    "deltaBuildReadsBase": false,
+    "updateCost": "O(delta)",
+    "maxTouchedFractionForLargestCase": 0.01
+  }
+}
