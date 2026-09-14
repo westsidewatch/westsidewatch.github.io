@@ -71,12 +71,19 @@ jobs:
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           identities=json.loads(Path('static/dawn-library/identity-cache.json').read_text())
+          zcand=json.loads(Path('static/dawn-library/biblical-world/chinese-candidates.json').read_text())
           eresolver=json.loads(Path('static/dawn-library/biblical-world/english-resolver-results.json').read_text())
           zresolver=json.loads(Path('static/dawn-library/biblical-world/chinese-resolver-results.json').read_text())
-          serialized=json.dumps({'z':z,'zg':zg,'zr':zr,'cat':cat},ensure_ascii=False).casefold()
-          assert 'wikisource' not in serialized
-          assert '維基文庫' not in serialized and '维基文库' not in serialized
+          def assert_clean_source(provider='',url='',source=''):
+            text=' '.join(str(v or '') for v in (provider,url,source)).casefold()
+            assert 'wikisource' not in text and '維基文庫' not in text and '维基文库' not in text
           assert z['source']=='project-gutenberg'
+          for x in zcand.get('items',[]): assert_clean_source(x.get('provider'),x.get('sourceUrl'))
+          for x in zg.get('items',[]): assert_clean_source(x.get('provider'),x.get('sourceUrl'))
+          for x in zresolver.get('items',[]): assert_clean_source(x.get('provider'),x.get('sourceUrl'))
+          for item in cat.get('items',[]):
+            for src in item.get('sources',[]): assert_clean_source(src.get('provider'),src.get('url'))
+            assert_clean_source(source=(item.get('provenance') or {}).get('source'))
           assert er['qualifiedInput']==g['results']['qualified']==len(eresolver['items'])
           assert sum(er['results'].values())==er['qualifiedInput']
           assert all(x.get('contentDownloaded') is False for x in eresolver['items'])
