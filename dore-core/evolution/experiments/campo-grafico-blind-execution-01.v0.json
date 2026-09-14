@@ -2,7 +2,7 @@
   "schema": "dore.editorial-intelligence-execution.v0",
   "experiment": "campo-grafico-prompt-compiler-blind-v0",
   "execution": "blind-01",
-  "status": "PROMPT_COMPILE_PASS_IMAGE_JUDGEMENT_PENDING",
+  "status": "IMAGE_AB_RUN_REJECTED_CONTAMINATED",
   "task": {
     "semantic_intent": "A city still in shadow watches for dawn: the gate is present as a threshold, ancient stone carries memory, and first light must feel promised rather than decorative.",
     "content_objects": ["ancient stone gate", "dark city mass", "first light at horizon"],
@@ -30,17 +30,30 @@
     "campo-grafico-1938-evidence.v0.json",
     "campo-grafico-1939-evidence.v0.json"
   ],
+  "visual_execution": {
+    "attempt": "A/B image generation",
+    "artifact": "/mnt/data/a_wide_editorial_comparison_poster_moodboard_style.png",
+    "artifact_scope": "session-only; not canonical",
+    "result": "REJECTED",
+    "reason": "The image executor generated control, compiled candidate and an aesthetic-score board inside one composed image. This leaks experiment labels and judgement into generation, so the two candidates are not independent and the displayed scores cannot count as Aesthetic Judge evidence.",
+    "learning": "Generation and evaluation must be isolated. Control and compiled candidates must be generated in separate calls with no access to each other's labels, prompt family, scores or judgement rubric. Judge receives only anonymized outputs after both candidates exist."
+  },
   "checks": {
     "semantic_intent_preserved": "PASS",
     "source_publication_name_absent_from_experimental_prompt": "PASS",
     "historical_motif_copy_not_required": "PASS",
     "negative_constraints_present": "PASS",
     "grammar_selection_traceable": "PASS",
-    "image_generation_comparison": "PENDING",
-    "aesthetic_judge": "PENDING",
+    "image_generation_comparison": "REJECTED_CONTAMINATED",
+    "aesthetic_judge": "NOT_RUN_ON_VALID_BLIND_PAIR",
     "cross-task_transfer": "PENDING",
     "negative_selection": "PENDING"
   },
-  "result": "The first blind run has crossed the research-to-executable-prompt boundary. This is not yet a design-capability pass because no visual candidate comparison has been admitted.",
+  "rejection_memory": [
+    "Never accept a comparison board generated in one pass as blind A/B evidence.",
+    "Never allow the generator to see candidate labels, evaluation scores or the aesthetic rubric before judging.",
+    "Never treat model-written self-scores inside an image as Aesthetic Judge evidence."
+  ],
+  "next_execution_contract": "Generate candidate A and candidate B independently, freeze both artifacts, strip prompt/source labels, then run Aesthetic Judge on anonymized pair X/Y. Record preference, reasons and provenance separately from historical evidence.",
   "admission": "NO_PROMOTION"
 }
