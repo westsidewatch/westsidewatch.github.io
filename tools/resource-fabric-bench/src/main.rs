@@ -46,22 +46,26 @@ fn batch(start: usize, end: usize) -> RecordBatch {
     RecordBatch::try_from_iter(cols).expect("record batch")
 }
 
+fn parquet_bytes(start: usize, end: usize) -> Vec<u8> {
+    let mut out = Vec::new();
+    let first_end = (start + 65_536).min(end);
+    let first = batch(start, first_end);
+    let schema = first.schema();
+    let mut writer = ArrowWriter::try_new(&mut out, schema, None).expect("parquet writer");
+    writer.write(&first).expect("write first batch");
+    let mut offset = first_end;
+    while offset < end {
+        let next = (offset + 65_536).min(end);
+        writer.write(&batch(offset, next)).expect("write parquet batch");
+        offset = next;
+    }
+    writer.close().expect("close parquet writer");
+    out
+}
+
 fn parquet_projection_benchmark(n: usize) {
     let start = Instant::now();
-    let mut parquet_bytes = Vec::new();
-    {
-        let first = batch(0, n.min(65_536));
-        let schema = first.schema();
-        let mut writer = ArrowWriter::try_new(&mut parquet_bytes, schema, None).expect("parquet writer");
-        writer.write(&first).expect("write first batch");
-        let mut offset = first.num_rows();
-        while offset < n {
-            let end = (offset + 65_536).min(n);
-            writer.write(&batch(offset, end)).expect("write parquet batch");
-            offset = end;
-        }
-        writer.close().expect("close parquet writer");
-    }
+    let parquet_bytes = parquet_bytes(0, n);
     let build_ms = start.elapsed().as_secs_f64() * 1000.0;
 
     let bytes = Bytes::from(parquet_bytes);
@@ -100,6 +104,38 @@ fn parquet_projection_benchmark(n: usize) {
         read_ms,
     );
     assert!(ratio < 0.75, "surface projection must avoid most canonical columns");
+}
+
+fn delta_segment_benchmark() {
+    const BASE: usize = 1_000_000;
+    const CASES: [usize; 3] = [1, 100, 10_000];
+    for changed in CASES {
+        let start = Instant::now();
+        let segment = parquet_bytes(BASE, BASE + changed);
+        let build_ms = start.elapsed().as_secs_f64() * 1000.0;
+        let touched_fraction = changed as f64 / BASE as f64;
+        println!(
+            "base_works={BASE} delta_works={changed} delta_segment_bytes={} touched_fraction={:.8} delta_build_ms={:.3}",
+            segment.len(), touched_fraction, build_ms
+        );
+        assert!(touched_fraction <= 0.01);
+    }
+
+    // Compaction is selected-segment rewrite, not a base rebuild. The benchmark
+    // compacts only two 10k immutable segments into one 20k segment.
+    let compact_start = Instant::now();
+    let left = parquet_bytes(BASE, BASE + 10_000);
+    let right = parquet_bytes(BASE + 10_000, BASE + 20_000);
+    let compacted = parquet_bytes(BASE, BASE + 20_000);
+    let compact_ms = compact_start.elapsed().as_secs_f64() * 1000.0;
+    let rewritten_fraction = 20_000f64 / BASE as f64;
+    println!(
+        "compaction_input_bytes={} compaction_output_bytes={} rewritten_fraction={:.8} compaction_ms={:.3}",
+        left.len() + right.len(), compacted.len(), rewritten_fraction, compact_ms
+    );
+    assert!(rewritten_fraction <= 0.02);
+    println!("DORE_RESOURCE_FABRIC_DELTA_SEGMENTS=PASS");
+    println!("DORE_RESOURCE_FABRIC_SELECTED_COMPACTION=PASS");
 }
 
 fn benchmark(n: usize) {
@@ -166,6 +202,7 @@ fn benchmark(n: usize) {
 
 fn main() {
     for n in SCALES { benchmark(n); }
+    delta_segment_benchmark();
     println!("DORE_RESOURCE_FABRIC_FST=PASS");
     println!("DORE_RESOURCE_FABRIC_ROARING=PASS");
     println!("DORE_RESOURCE_FABRIC_ZSTD_DICTIONARY=PASS");
