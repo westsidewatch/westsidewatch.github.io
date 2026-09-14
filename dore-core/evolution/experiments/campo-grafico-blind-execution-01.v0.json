@@ -1,0 +1,46 @@
+{
+  "schema": "dore.editorial-intelligence-execution.v0",
+  "experiment": "campo-grafico-prompt-compiler-blind-v0",
+  "execution": "blind-01",
+  "status": "PROMPT_COMPILE_PASS_IMAGE_JUDGEMENT_PENDING",
+  "task": {
+    "semantic_intent": "A city still in shadow watches for dawn: the gate is present as a threshold, ancient stone carries memory, and first light must feel promised rather than decorative.",
+    "content_objects": ["ancient stone gate", "dark city mass", "first light at horizon"],
+    "desired_use": "Westside editorial hero image",
+    "notes": "No text inside image. Silence and waiting matter more than spectacle."
+  },
+  "control_prompt": "Create a beautiful high-end modern Italian editorial magazine image for the supplied content.",
+  "compiler": {
+    "implementation": "dore-core/evolution/experiments/editorial_prompt_compiler_v0.py",
+    "selected_grammars": [
+      "hierarchy-before-decoration",
+      "content-medium-rewrites-grid",
+      "material-evidence-before-abstraction",
+      "coherence-without-sameness"
+    ],
+    "compiled_prompt": "Create an editorial image whose meaning is: A city still in shadow watches for dawn: the gate is present as a threshold, ancient stone carries memory, and first light must feel promised rather than decorative. Build one unmistakable visual hierarchy before any decorative treatment; let one dominant form carry the semantic center. Let the dominant image or object determine the spatial system; secondary elements adapt to the remaining field rather than forcing a preset grid. Preserve physical evidence—surface, edge, wear, scale, paper or stone—as meaningful structure; do not smooth it into generic polish. Allow heterogeneous elements to retain distinct visual identities while a precise spatial relation makes them read as one editorial argument. No nostalgic period cosplay, copied mastheads, logos, or recognizable historical page imitations. No generic luxury-editorial styling, decorative collage, arbitrary distressing, or texture without semantic reason. Do not use a style-name shortcut; composition must be justified by the content.",
+    "forbidden_style_shortcut_check": "PASS"
+  },
+  "provenance": [
+    "campo-grafico-1933-issue-ledger.v1.json",
+    "campo-grafico-1934-issue-ledger.v1.json",
+    "campo-grafico-1935-issue-ledger.v1.json",
+    "campo-grafico-1936-evidence.v0.json",
+    "campo-grafico-1937-evidence.v0.json",
+    "campo-grafico-1938-evidence.v0.json",
+    "campo-grafico-1939-evidence.v0.json"
+  ],
+  "checks": {
+    "semantic_intent_preserved": "PASS",
+    "source_publication_name_absent_from_experimental_prompt": "PASS",
+    "historical_motif_copy_not_required": "PASS",
+    "negative_constraints_present": "PASS",
+    "grammar_selection_traceable": "PASS",
+    "image_generation_comparison": "PENDING",
+    "aesthetic_judge": "PENDING",
+    "cross-task_transfer": "PENDING",
+    "negative_selection": "PENDING"
+  },
+  "result": "The first blind run has crossed the research-to-executable-prompt boundary. This is not yet a design-capability pass because no visual candidate comparison has been admitted.",
+  "admission": "NO_PROMOTION"
+}
