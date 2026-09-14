@@ -18,17 +18,18 @@ SIGNALS = {
     "visual": {"design", "visual", "image", "pixel", "raster", "typography", "layout"},
     "source": {"source", "media", "asset", "reference", "material"},
     "memory": {"memory", "recall", "rejection", "precedent", "history"},
-    "context": {"context", "identity", "brand", "relationship", "authority"},
+    "context": {"context", "identity", "brand", "relationship", "authority", "westside"},
     "publishing": {"book", "publishing", "edition", "epub", "pdf", "cover"},
 }
 
 # A beautiful visual task needs complementary roles, not one overloaded tool.
-# The roles are generic Core affordances; no product-specific weapon IDs are
-# prescribed here.
+# These are generic Core affordances.  Identity-context is deliberately narrower
+# than generic "type=context" so Bible routing cannot accidentally satisfy a
+# brand / product identity requirement.
 ROLE_RULES = {
     "visual-reasoning": lambda c, t: c.get("type") == "reasoning" and (c.get("service") == "design" or bool(t & SIGNALS["visual"])),
     "visual-materialization": lambda c, t: c.get("type") == "production" and (c.get("service") == "visual" or "image" in t),
-    "identity-context": lambda c, t: c.get("type") == "context" or ("context" in t and "identity" in t),
+    "identity-context": lambda c, t: c.get("service") == "westside" or bool(t & {"identity", "brand", "relationship"}),
     "experience-memory": lambda c, t: c.get("service") == "memory" or ("memory" in t and "recall" in t),
     "source-discovery": lambda c, t: c.get("type") == "discovery" or c.get("service") == "source-intelligence",
     "publishing-production": lambda c, t: c.get("service") == "publishing" and c.get("type") == "production",
