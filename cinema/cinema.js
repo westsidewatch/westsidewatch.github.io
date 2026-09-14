@@ -121,3 +121,4 @@ async function loadCinema(){
 }
 
 closeButton.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>stage.replaceChildren());dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});momentSearch.addEventListener('click',searchMoments);momentQuery.addEventListener('keydown',event=>{if(event.key==='Enter')searchMoments();});loadCinema();
+import('./coordinate-layer.js').catch(()=>{document.documentElement.dataset.cinemaCoordinateError='module';});
