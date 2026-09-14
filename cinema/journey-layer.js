@@ -13,6 +13,15 @@
     button.addEventListener('click',()=>document.querySelector(`.resource-card[data-canonical-id="${CSS.escape(work.canonicalId)}"]`)?.scrollIntoView({behavior:'smooth',block:'center'}));
     return button;
   };
+  const momentLink=(graph,moment)=>{
+    const link=document.createElement('a');
+    link.className='journey-resource journey-moment';
+    link.dataset.momentId=moment.momentId;
+    link.href=graph.deepLink(moment.momentId)||'#cinema-library';
+    link.textContent=moment.label;
+    link.setAttribute('aria-label',`精確影像：${moment.label}`);
+    return link;
+  };
 
   function render(graph){
     const journey=graph.journey(JOURNEY_ID);if(!journey)return;
@@ -26,7 +35,10 @@
       const title=document.createElement('strong');title.textContent=station.label;
       const scripture=document.createElement('span');scripture.className='journey-scripture';scripture.textContent=scriptureLabel(station);
       const media=document.createElement('div');media.className='journey-media';
-      if(station.relatedWorks.length){
+      if(station.exactMoments?.length){
+        const count=document.createElement('small');count.textContent=`精確影像 ${station.exactMoments.length}`;media.appendChild(count);
+        station.exactMoments.slice(0,4).forEach(moment=>media.appendChild(momentLink(graph,moment)));
+      }else if(station.relatedWorks.length){
         const count=document.createElement('small');count.textContent=`相關影像 ${station.relatedWorks.length}`;media.appendChild(count);
         station.relatedWorks.slice(0,4).forEach(work=>media.appendChild(resourceButton(work)));
       }else{
@@ -35,8 +47,9 @@
       copy.append(title,scripture,media);item.append(marker,copy);rail.appendChild(item);
     }
     host.replaceChildren(intro,rail);
-    document.documentElement.dataset.cinemaJourney='creation-to-new-creation-v0';
+    document.documentElement.dataset.cinemaJourney='creation-to-new-creation-v1';
     document.documentElement.dataset.cinemaJourneyStations=String(journey.stations.length);
+    document.documentElement.dataset.cinemaJourneyExact=String(journey.stations.reduce((sum,station)=>sum+(station.exactMoments?.length||0),0));
   }
 
   window.ParadiseCinemaGraph.ready.then(render).catch(()=>{document.documentElement.dataset.cinemaJourneyError='load';});
