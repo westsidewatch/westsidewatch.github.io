@@ -47,7 +47,7 @@ jobs:
           rm -rf "$WT"
           git worktree add --force --detach "$WT" "$CANDIDATE_SHA"
           cd "$WT"
-          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py dore-design/sitecustomize.py
+          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py dore-design/sitecustomize.py dore-design/italian_editorial_atlas_runtime.py dore-design/app_design2.py
           test -f static/dore-design/italian-editorial-atlas.html
           test -f static/dore-design/italian-editorial-grammars.v1.json
       - name: Install into local Candidate 01 Design resident
