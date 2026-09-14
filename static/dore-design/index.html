@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Doré Design</title>
+  <style>
+    :root{--bg:#f2efe7;--ink:#171717;--muted:#716c63;--line:#c9c2b6}
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
+    main{max-width:1180px;margin:auto;padding:32px 28px 72px}
+    .k{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+    h1{font:clamp(48px,8vw,104px)/.88 Georgia,serif;margin:10px 0 18px}
+    .lead{max-width:720px;line-height:1.6;color:var(--muted);margin-bottom:52px}
+    section{border-top:1px solid var(--ink);padding-top:18px}
+    h2{font:32px/1 Georgia,serif;margin:0 0 18px}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
+    a.card{display:block;min-height:260px;border:1px solid var(--line);padding:20px;color:inherit;text-decoration:none;position:relative;transition:transform .18s ease,border-color .18s ease}
+    a.card:hover{transform:translateY(-3px);border-color:var(--ink)}
+    .card .num{font-size:10px;letter-spacing:.14em;color:var(--muted)}
+    .card h3{font:38px/.95 Georgia,serif;margin:42px 0 12px;max-width:12ch}
+    .card p{font-size:13px;line-height:1.55;color:var(--muted);max-width:46ch}
+    .go{position:absolute;right:18px;bottom:16px;font-size:18px}
+  </style>
+</head>
+<body>
+<main>
+  <div class="k">Doré Design</div>
+  <h1>Design</h1>
+  <p class="lead">設計研究與生成表面。研究不只保存風格，而是把 evidence 壓縮成可組合、可驗證、可轉移的 editorial grammar。</p>
+
+  <section>
+    <div class="k">Research Surface</div>
+    <h2>Emergence / 浮現</h2>
+    <div class="grid">
+      <a class="card" href="./italian-editorial-atlas.html">
+        <div class="num">01 · EDITORIAL DNA</div>
+        <h3>Italian Editorial Atlas</h3>
+        <p>義大利雜誌研究圖譜。從刊物、時代與 grammar 生成可直接使用的 editorial prompt，並保留 issue evidence 與來源脈絡。</p>
+        <span class="go">↗</span>
+      </a>
+    </div>
+  </section>
+</main>
+</body>
+</html>
