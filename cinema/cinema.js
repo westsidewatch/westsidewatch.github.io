@@ -13,6 +13,7 @@ const momentResults=document.querySelector('#cinema-moment-results');
 let resources=[];
 let moments=[];
 let resourceById=new Map();
+let graphApi=null;
 
 const JESUS_ID='cinema:video:jesus-film:jesus';
 const JESUS_CHAPTERS=['The Beginning','Birth of Jesus','Childhood of Jesus','Baptism of Jesus by John','The Devil Tempts Jesus','Jesus Proclaims Fulfillment of the Scriptures'];
@@ -27,6 +28,14 @@ function openAt(item,startMs=0){
   const target=playbackTarget(item,startMs);if(!target)return;
   if(target.kind==='embed'){stage.replaceChildren();window.HolyLightProviders.mount(stage,item,seconds(startMs));dialog.showModal();}
   else window.open(target.url,'_blank','noopener,noreferrer');
+}
+function openMoment(moment,{replaceHistory=true}={}){
+  const item=resourceById.get(moment.workId);
+  if(!item)return false;
+  if(replaceHistory&&graphApi?.deepLink){const target=graphApi.deepLink(moment.momentId);if(target)history.replaceState({momentId:moment.momentId},'',target);}
+  openAt(item,moment.startMs);
+  document.documentElement.dataset.cinemaActiveMoment=moment.momentId;
+  return true;
 }
 function mountInlinePlayer(shell,target,item,startMs=0){
   const mounted=window.HolyLightProviders?.mount(target,item,seconds(startMs));
@@ -46,20 +55,41 @@ function renderLivingPoster(item){
   feature.replaceChildren(shell);
 }
 
-function renderMomentButton(moment,item){const button=document.createElement('button');button.className='moment-card';button.type='button';button.dataset.momentId=moment.momentId;const meta=document.createElement('span');meta.className='moment-time';meta.textContent=timecode(moment.startMs);const label=document.createElement('strong');label.textContent=moment.label;const src=document.createElement('span');src.className='moment-source';src.textContent=item?`${item.creator} · ${item.title}`:moment.canonicalId;button.append(meta,label,src);button.addEventListener('click',()=>item&&openAt(item,moment.startMs));return button;}
+function renderMomentButton(moment,item){
+  const button=document.createElement('button');button.className='moment-card';button.type='button';button.dataset.momentId=moment.momentId;
+  const meta=document.createElement('span');meta.className='moment-time';meta.textContent=timecode(moment.startMs);
+  const label=document.createElement('strong');label.textContent=moment.label;
+  const anchors=document.createElement('span');anchors.className='moment-source';anchors.textContent=(moment.anchors||[]).map(anchor=>anchor.label||anchor.value).join(' · ');
+  const src=document.createElement('span');src.className='moment-source';src.textContent=item?`${item.creator} · ${item.title}`:moment.workId;
+  button.append(meta,label,anchors,src);button.addEventListener('click',()=>openMoment(moment));return button;
+}
 function renderCard(item){
   const source=sourceFor(item);const card=document.createElement('article');card.className='resource-card';card.dataset.canonicalId=item.canonicalId;const meta=document.createElement('div');meta.className='resource-meta';meta.textContent=`${item.kind||'video'} · ${item.creator||''}`;const title=document.createElement('h4');title.textContent=item.title;const series=document.createElement('p');series.textContent=item.series||'';const topics=document.createElement('div');topics.className='resource-topics';topics.textContent=(item.topics||[]).join(' · ');const action=document.createElement('button');action.className='resource-action';action.type='button';action.textContent=source.embed&&source.embedUrl?'在影院播放':'前往官方來源';action.addEventListener('click',()=>openAt(item,0));card.append(meta,title,series,topics,action);
   if(item.moments?.length){const timeline=document.createElement('div');timeline.className='resource-timeline';const caption=document.createElement('div');caption.className='timeline-caption';caption.textContent='時間點';timeline.append(caption,...item.moments.map(moment=>renderMomentButton(moment,item)));card.appendChild(timeline);}return card;
 }
-function searchMoments(){const query=(momentQuery.value||'').trim().toLocaleLowerCase();if(!query){momentResults.replaceChildren();return;}const hits=moments.filter(moment=>{const item=resourceById.get(moment.canonicalId);const haystack=[moment.label,...(moment.keywords||[]),item?.title,item?.creator,...(item?.topics||[])].filter(Boolean).join(' ').toLocaleLowerCase();return haystack.includes(query);});if(!hits.length){const empty=document.createElement('p');empty.className='moment-empty';empty.textContent='暫未找到已建立的時間點。';momentResults.replaceChildren(empty);return;}momentResults.replaceChildren(...hits.map(moment=>renderMomentButton(moment,resourceById.get(moment.canonicalId))));}
+function searchMoments(){
+  const query=(momentQuery.value||'').trim().toLocaleLowerCase();if(!query){momentResults.replaceChildren();return;}
+  const hits=moments.filter(moment=>{const item=resourceById.get(moment.workId);const anchorTerms=(moment.anchors||[]).flatMap(anchor=>[anchor.type,anchor.value,anchor.label]);const haystack=[moment.label,moment.kind,...anchorTerms,item?.title,item?.creator,...(item?.topics||[])].filter(Boolean).join(' ').toLocaleLowerCase();return haystack.includes(query);});
+  if(!hits.length){const empty=document.createElement('p');empty.className='moment-empty';empty.textContent='暫未找到已建立的時間點。';momentResults.replaceChildren(empty);return;}
+  momentResults.replaceChildren(...hits.map(moment=>renderMomentButton(moment,resourceById.get(moment.workId))));
+}
+function restoreMomentFromUrl(){
+  const momentId=new URL(window.location.href).searchParams.get('moment');
+  if(!momentId||!graphApi?.moment)return;
+  const moment=graphApi.moment(momentId);if(!moment)return;
+  const item=resourceById.get(moment.workId);if(!item)return;
+  const card=document.querySelector(`[data-moment-id="${CSS.escape(momentId)}"]`);card?.scrollIntoView({block:'center'});
+  openMoment(moment,{replaceHistory:false});
+}
 
 async function loadCinema(){
   try{
     const graph=await window.ParadiseCinemaGraph?.ready;
     if(!graph||graph.schema!=='dore.bible-media-graph.v0')throw new Error('Cinema resource graph unavailable');
-    resources=[...graph.works];moments=[...graph.moments];resourceById=new Map(resources.map(item=>[item.canonicalId,item]));
+    graphApi=graph;resources=[...graph.works];moments=[...graph.moments];resourceById=new Map(resources.map(item=>[item.canonicalId,item]));
     renderLivingPoster(resourceById.get(JESUS_ID));library.replaceChildren(...resources.map(renderCard));
-    document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaMoments=String(moments.length);document.documentElement.dataset.cinemaUiExperiment='inline-living-cinema-v1';document.documentElement.dataset.cinemaResourceAuthority='dore.bible-media-graph.v0';
+    document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaMoments=String(moments.length);document.documentElement.dataset.cinemaUiExperiment='inline-living-cinema-v1';document.documentElement.dataset.cinemaResourceAuthority='dore.bible-media-graph.v0';document.documentElement.dataset.cinemaMomentAuthority=graph.momentSchema||'unknown';
+    restoreMomentFromUrl();
   }catch(error){library.innerHTML='<p class="resource-card">館藏資料暫時無法載入。</p>';if(feature)feature.innerHTML='<p class="resource-card">實驗資源暫時無法載入。</p>';document.documentElement.dataset.cinemaError='resource-load';}
 }
 
