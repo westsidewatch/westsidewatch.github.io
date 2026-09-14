@@ -8,7 +8,7 @@ class CompanionNativeContractTest(unittest.TestCase):
   m=json.loads((EXT/'manifest.native-messaging.json').read_text());self.assertIn('nativeMessaging',m['permissions']);self.assertEqual(m['browser_specific_settings']['gecko']['id'],'dore-companion@westsidewatch.ca');self.assertEqual(m['dore_native_messaging']['host'],'ca.dore.companion')
  def test_companion_manifest(self):
   m=json.loads((EXT/'manifest.json').read_text());self.assertEqual(m['version'],'2.0.1');self.assertNotIn('applications',m);self.assertIn('nativeMessaging',m['permissions'])
-  site=[x for x in m['content_scripts'] if 'site_bridge.js' in x.get('js',[])];self.assertEqual(len(site),1);self.assertEqual(site[0]['matches'],['https://westsidewatch.github.io/*'])
+  site=[x for x in m['content_scripts'] if 'site_bridge.js' in x.get('js',[])];self.assertEqual(len(site),1);self.assertEqual(site[0]['matches'],['https://westsidewatch.github.io/*','https://*.pages.dev/*'])
  def test_transport_native_first(self):
   s=(EXT/'native_transport.js').read_text();self.assertIn('browser.runtime.connectNative(DORE_NATIVE_HOST)',s);self.assertLess(s.index('sendViaNative(payload)'),s.index('sendVia4312(payload)'))
  def test_production_design_envelope(self):
