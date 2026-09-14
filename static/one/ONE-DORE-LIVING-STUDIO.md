@@ -131,6 +131,39 @@ Record:
 
 Failures are retained as learning, not silently discarded.
 
+### Every plate must advance Doré AI — mandatory
+
+Every generation cycle is a training cycle, not merely an image-delivery task. A cycle is incomplete if it produces an image but leaves Doré AI with no durable, reusable improvement.
+
+Before a plate may be called FINAL, the cycle must preserve all of the following:
+
+1. a visual-ancestry record naming the authenticated Doré works studied and the specific compositional, anatomical, value, line or spatial knowledge borrowed from each;
+2. a stated training objective identifying what Doré AI is intended to learn in this chapter;
+3. a comparison of generated revisions against the selected originals, including what remained generic, modern or recognizably AI-generated;
+4. retained failure evidence and a concrete explanation of what the next revision changed;
+5. at least one reusable observation written back into Living Studio memory, or an explicit statement that the experiment confirmed an existing rule without creating a new one;
+6. promotion into `ONE-DORE-VISUAL-GRAMMAR.md` only after the same principle proves stable across more than one task or corpus comparison.
+
+The required deliverable is therefore:
+
+`final plate + visual ancestry + revision/failure record + durable learning harvest + deployment proof`
+
+Missing any component means the production cycle is not complete. A visually attractive image is not evidence of learning.
+
+The failed workflow “generate a modern cinematic colour image, then convert it into monochrome engraving texture” is a permanent negative example. It changes surface treatment without learning Doré's Scripture selection, pictorial grammar or hand-built value structure and must not be used as a production method.
+
+### Durable memory, not conversation memory
+
+Doré AI must never claim that model weights or a chat session guarantee memory. Continuity is guaranteed operationally by repository-backed research memory.
+
+- useful source studies and transfer boundaries belong in the Learning Curve research record;
+- task-specific successes, failures and revisions belong in this Living Studio;
+- repeatedly validated minimum rules belong in the locked Visual Grammar;
+- production state and live proof belong in the temporary roadmap while it exists;
+- the mandatory reading order must be completed before every generation cycle, including after a new chat, model change or long interruption.
+
+Knowledge that exists only in a prompt, chat transcript or an uncommitted local note is not learned Studio memory.
+
 ### FINAL means persisted — mandatory
 When editorial review explicitly approves a generated plate as **FINAL**, approval must not remain only in conversation history. In the same production cycle, persist the actual image file and its identity:
 
