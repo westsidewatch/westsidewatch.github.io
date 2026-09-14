@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from dawn_resource_exclusions import excluded
-import json,re,urllib.parse,urllib.request,xml.etree.ElementTree as ET
+import json,re,unicodedata,urllib.parse,urllib.request,xml.etree.ElementTree as ET
 from datetime import datetime,timezone
 from pathlib import Path
 
@@ -16,6 +16,8 @@ DISPUTE_MARKERS=('政治','戰爭','战争','衝突','冲突','侵略','民族�
 CHINESE_CODES={'zh','zho','chi','chinese'}
 PAGES_PER_QUERY=2
 now=datetime.now(timezone.utc).isoformat()
+
+def norm(value): return unicodedata.normalize('NFKC',str(value or '')).casefold().replace(' ','')
 
 cfg=json.loads(SEEDS.read_text())
 sources=json.loads(SOURCES.read_text())
@@ -68,10 +70,13 @@ def absorb(root,query,relations,priority):
                 if mm: m=mm; break
         if not m or not title: continue
         gid=m.group(1)
+        # A golden seed remains golden only for an exact resolved title. Ordinary search
+        # hits never inherit seed authority or bypass the unchanged relevance threshold.
+        effective_priority=priority if priority=='golden' and norm(title)==norm(query) else 'discovered'
         candidate={
             'sourceId':gid,'provider':'Project Gutenberg','language':'zh','title':title,'author':author,
             'canonicalTitle':title,'sourceUrl':f'https://www.gutenberg.org/ebooks/{gid}',
-            'matchedBy':'gutenberg-search:'+query,'suggestedRelations':relations,'priority':priority,
+            'matchedBy':'gutenberg-search:'+query,'suggestedRelations':relations,'priority':effective_priority,
             'stage':'discovered','discoveredAt':now,
             'rights':{'status':'unverified','jurisdiction':'USA','declaredBy':'Project Gutenberg','provenanceRequired':True},
             'contentDownloaded':False,
@@ -108,7 +113,7 @@ report={
     'schema':'dawn.library.chinese-discovery.report.v2','generatedAt':now,'source':'project-gutenberg','language':'zh',
     'queries':len(seen),'pagesChecked':pages_checked,'newDiscovered':run_discovered,'candidateQueue':len(vals),'errors':errors,
     'sourcePolicy':{'wikisource':'forbidden','contentBoundary':'theology-bible-inner-life; no political/national/war dispute material'},
-    'invariant':'Metadata only; explicit Chinese-language metadata required; no bulk full-text ingestion.'
+    'invariant':'Metadata only; explicit Chinese-language metadata required; golden status requires exact seed-title resolution; no bulk full-text ingestion.'
 }
 REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
