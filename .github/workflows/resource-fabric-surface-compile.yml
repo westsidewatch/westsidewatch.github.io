@@ -10,7 +10,11 @@ on:
       - 'static/js/resource-fabric-client.mjs'
       - 'static/multiwrite/canonical-library.mjs'
       - 'static/one/one-surface-runtime.js'
+      - 'static/dore/dore-entity-search.js'
+      - 'static/dore/dore-resource-search.mjs'
+      - 'dore-design/design_intelligence_a2a.py'
       - 'dore-core/resource-fabric/**'
+      - 'local/dore-local/resource_fabric_reader.py'
       - 'local/dore-local/resource_fabric_surface_compile.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   push:
@@ -24,6 +28,10 @@ on:
       - 'static/js/resource-fabric-client.mjs'
       - 'static/multiwrite/canonical-library.mjs'
       - 'static/one/one-surface-runtime.js'
+      - 'static/dore/dore-entity-search.js'
+      - 'static/dore/dore-resource-search.mjs'
+      - 'dore-design/design_intelligence_a2a.py'
+      - 'local/dore-local/resource_fabric_reader.py'
       - 'local/dore-local/resource_fabric_surface_compile.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   workflow_dispatch:
@@ -52,12 +60,28 @@ jobs:
           grep -q 'DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS' resource-fabric-surface.log
           ! grep -q 'canonical-index.json' static/dawn-library/product/product.js
           ! grep -q 'canonical-index.json' static/multiwrite/canonical-library.mjs
+          ! grep -q 'canonical-index.json' static/dore/dore-resource-search.mjs
+          ! grep -q 'canonical-index.json' local/dore-local/resource_fabric_reader.py
           grep -q 'resource-fabric-client.mjs' static/multiwrite/canonical-library.mjs
           grep -q 'resource-fabric-client.mjs' static/one/one-surface-runtime.js
+          grep -q 'dore-resource-search.mjs' static/dore/dore-entity-search.js
+          grep -q 'resource-fabric-client.mjs' static/dore/dore-resource-search.mjs
+          grep -q 'resource_fabric_reader' dore-design/design_intelligence_a2a.py
           grep -q 'canonicalMonolithRequired' static/js/resource-fabric-client.mjs
+          PYTHONPATH=local/dore-local python - <<'PY'
+          import resource_fabric_reader as rf
+          manifest = rf.manifest()
+          assert manifest['workCount'] == 11699
+          work = rf.work('OL10010026W')
+          assert work and work['workId'] == 'OL10010026W'
+          assert work['identityAuthority'] == 'Dawn'
+          print('DORE_RESOURCE_FABRIC_PYTHON_READER=PASS')
+          PY
           echo 'DORE_RESOURCE_FABRIC_DAWN_CONSUMER=PASS'
           echo 'DORE_RESOURCE_FABRIC_MULTIWRITE_CONSUMER=PASS'
           echo 'DORE_RESOURCE_FABRIC_ONE_CONSUMER=PASS'
+          echo 'DORE_RESOURCE_FABRIC_SEARCH_CONSUMER=PASS'
+          echo 'DORE_RESOURCE_FABRIC_DESIGN_CONSUMER=PASS'
       - name: Persist compiled projections on push
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
