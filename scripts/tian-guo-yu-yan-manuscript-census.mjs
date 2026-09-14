@@ -21,14 +21,16 @@ if (!raw.trim()) {
 
 const normalizeNewlines = (text) => text.replace(/\r\n?/g, '\n');
 const normalized = normalizeNewlines(raw);
+const hasLeadingBom = normalized.startsWith('\uFEFF');
 
 const sha256 = crypto.createHash('sha256').update(raw, 'utf8').digest('hex');
 const hanMatches = normalized.match(/[\u3400-\u4DBF\u4E00-\u9FFF\uF900-\uFAFF]/gu) || [];
 const nonWhitespaceMatches = normalized.match(/\S/gu) || [];
 
-// Census prose without changing or rewriting the source. This strips common
-// Markdown control syntax only for the count; the canonical manuscript remains byte-preserved.
+// Census prose without changing or rewriting the source. UTF-8 BOM and common
+// Markdown controls are ignored only in the analytical view; canonical bytes stay untouched.
 const proseForCount = normalized
+  .replace(/^\uFEFF/, '')
   .replace(/^---\s*$/gm, '')
   .replace(/^#{1,6}\s+/gm, '')
   .replace(/^>\s?/gm, '')
@@ -42,7 +44,8 @@ const headings = [];
 let charOffset = 0;
 for (let i = 0; i < lines.length; i += 1) {
   const line = lines[i];
-  const match = line.match(/^(#{1,6})\s+(.+?)\s*$/);
+  const lineForHeadingMatch = i === 0 ? line.replace(/^\uFEFF/, '') : line;
+  const match = lineForHeadingMatch.match(/^(#{1,6})\s+(.+?)\s*$/);
   if (match) {
     headings.push({
       level: match[1].length,
@@ -78,6 +81,7 @@ const result = {
     byteLength: Buffer.byteLength(raw, 'utf8'),
     sha256,
     newlineNormalizationAppliedForAnalysisOnly: raw !== normalized,
+    leadingBomIgnoredForAnalysisOnly: hasLeadingBom,
     sourceBytesModified: false
   },
   exact: {
