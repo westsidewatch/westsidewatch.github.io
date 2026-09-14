@@ -1,4 +1,5 @@
 const ENVELOPE_SCHEMA = 'dore.source-capability-envelope.v1';
+const DISPATCH_SCHEMA = 'dore.source-dispatch.v1';
 const ADMISSION_SCHEMA = 'dore.multiwrite-source-capability-admission.v1';
 
 const BASE_OPERATION = {
@@ -20,6 +21,7 @@ function explicitPermission(admission, use) {
 function evaluateSourceUse(row = {}, index = 0) {
   const use = String(row.use || 'cite');
   const envelope = row.envelope || {};
+  const dispatch = envelope.dispatch || {};
   const sourceId = String(row.id || envelope.sourcePointer || `source-${index + 1}`);
   const operations = list(envelope.operations);
   const requiredOperation = BASE_OPERATION[use] || use;
@@ -27,20 +29,17 @@ function evaluateSourceUse(row = {}, index = 0) {
   if (envelope.schema !== ENVELOPE_SCHEMA || envelope.ok !== true) {
     return { sourceId, use, status: 'blocked', reason: 'invalid-capability-envelope' };
   }
+  if (dispatch.schema !== DISPATCH_SCHEMA || dispatch.ok !== true) {
+    return { sourceId, use, status: 'blocked', reason: 'source-dispatch-missing-or-invalid' };
+  }
   if (envelope.authority?.canonicalIdentityAuthority === true || envelope.authority?.envelopeAuthority === true) {
     return { sourceId, use, status: 'blocked', reason: 'source-authority-boundary-violated' };
   }
   if (envelope.editorialBoundary?.sourceContentMayBeRewrittenSilently !== false) {
     return { sourceId, use, status: 'blocked', reason: 'editorial-authority-unclear' };
   }
-  if (envelope.runtimeBoundary?.required === true) {
-    return {
-      sourceId,
-      use,
-      status: 'deferred',
-      reason: 'runtime-capability-required',
-      runtimeMode: envelope.runtimeBoundary?.mode || null
-    };
+  if (dispatch.requiresRuntime === true) {
+    return { sourceId, use, status: 'deferred', reason: 'runtime-capability-required', runtimeMode: dispatch.mode || null };
   }
   if (!operations.includes(requiredOperation)) {
     return { sourceId, use, status: 'blocked', reason: `operation-not-admitted:${requiredOperation}` };
@@ -56,10 +55,12 @@ function evaluateSourceUse(row = {}, index = 0) {
     sourceId,
     use,
     status: 'admitted',
-    access: envelope.access?.preferred || null,
+    access: dispatch.mode || null,
+    dispatchStatus: dispatch.status || null,
     provenance: {
       sourcePointer: envelope.sourcePointer || null,
-      probeSchema: envelope.provenance?.probeSchema || null
+      probeSchema: envelope.provenance?.probeSchema || null,
+      dispatchSchema: dispatch.schema
     }
   };
 }
@@ -76,6 +77,7 @@ export function admitSourceUses(sourceUses = []) {
     rows,
     policy: {
       envelopeAuthority: false,
+      sourceDispatcherRequired: true,
       publicArtifactPersistence: false,
       rightsClaimsAreNotAdmission: true,
       editorialCanonRequiredForTransform: true,
@@ -84,4 +86,4 @@ export function admitSourceUses(sourceUses = []) {
   };
 }
 
-export { ADMISSION_SCHEMA, ENVELOPE_SCHEMA };
+export { ADMISSION_SCHEMA, ENVELOPE_SCHEMA, DISPATCH_SCHEMA };
