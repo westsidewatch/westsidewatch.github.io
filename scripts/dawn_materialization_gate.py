@@ -11,14 +11,14 @@ def build(identity,caps):
     if caps.get('schema')!='dore.dawn-source-capability-map.v1': raise ValueError('invalid capability map')
     cclaims=caps.get('claims') or {}; admitted={}; rejected=[]
     for ref,row in (identity.get('claims') or {}).items():
-        cap=cclaims.get(ref) or {}; env=cap.get('capabilityEnvelope') or {}; access=env.get('access') or {}; boundary=env.get('runtimeBoundary') or {}
-        ok=(cap.get('canonicalWorkId')==row.get('canonicalWorkId') and cap.get('status')=='static-ready' and env.get('ok') is True and env.get('schema')=='dore.source-capability-envelope.v1' and access.get('preferred') in ('static-http','local-file') and boundary.get('required') is False)
+        cap=cclaims.get(ref) or {}; env=cap.get('capabilityEnvelope') or {}; dispatch=cap.get('dispatch') or env.get('dispatch') or {}
+        ok=(cap.get('canonicalWorkId')==row.get('canonicalWorkId') and cap.get('status')=='static-ready' and env.get('ok') is True and env.get('schema')=='dore.source-capability-envelope.v1' and dispatch.get('schema')=='dore.source-dispatch.v1' and dispatch.get('ok') is True and dispatch.get('materializationReady') is True and dispatch.get('requiresRuntime') is False)
         if ok:
-            item=dict(row); item['capabilityAdmissionStatus']='admitted-for-materialization'; admitted[ref]=item
+            item=dict(row); item['capabilityAdmissionStatus']='admitted-for-materialization'; item['sourceDispatchMode']=dispatch.get('mode'); admitted[ref]=item
         else:
-            rejected.append({'sourceRef':ref,'canonicalWorkId':row.get('canonicalWorkId'),'capabilityStatus':cap.get('status') or 'missing'})
+            rejected.append({'sourceRef':ref,'canonicalWorkId':row.get('canonicalWorkId'),'capabilityStatus':cap.get('status') or 'missing','dispatchStatus':dispatch.get('status') or 'missing'})
     out=dict(identity); out['claims']=dict(sorted(admitted.items())); out['claimCount']=len(admitted)
-    out['materializationAdmission']={'schema':'dore.dawn-materialization-admission.v1','sourceCapabilityEnvelopeRequired':True,'acceptedStatus':'static-ready','browserRuntimeMaterialization':False,'admittedCount':len(admitted),'rejectedCount':len(rejected),'rejected':rejected}
+    out['materializationAdmission']={'schema':'dore.dawn-materialization-admission.v1','sourceCapabilityEnvelopeRequired':True,'sourceDispatcherRequired':True,'acceptedStatus':'static-ready','browserRuntimeMaterialization':False,'admittedCount':len(admitted),'rejectedCount':len(rejected),'rejected':rejected}
     return out
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--identity-map',type=Path,default=IDENTITY); p.add_argument('--capability-map',type=Path,default=CAPS); p.add_argument('--out',type=Path,default=OUT); p.add_argument('--minimum-admitted',type=int,default=1); a=p.parse_args()
