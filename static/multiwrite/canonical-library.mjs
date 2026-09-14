@@ -1,14 +1,64 @@
-const INDEX_URL='/dawn-library/canonical-index.json';
-const COVER_REGISTRY_URL='/dawn-library/cover-registry.json';
+import { resourceManifest, resourceWorks } from '../js/resource-fabric-client.mjs';
+
 const SURFACE_ROOT='/dawn-library/surfaces/';
-let indexPromise=null;
-let coverRegistryPromise=null;
 const forbidden=/wikisource|openlibrary\.org/i;
 
 async function json(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${url} ${r.status}`);return r.json();}
-export async function canonicalIndex(){if(!indexPromise)indexPromise=json(INDEX_URL).then(index=>{if(index?.identityAuthority!=='Dawn')throw new Error('Dawn canonical identity authority missing');if(index?.runtimePolicy?.surfaceOwnsIdentity!==false||index?.runtimePolicy?.openLibraryRuntime!==false||index?.runtimePolicy?.wikisource!=='forbidden')throw new Error('Dawn canonical runtime policy mismatch');const serialized=JSON.stringify(index.works||{});if(forbidden.test(serialized))throw new Error('forbidden external runtime dependency in canonical index');return index;});return indexPromise;}
-export async function canonicalCoverRegistry(){if(!coverRegistryPromise)coverRegistryPromise=json(COVER_REGISTRY_URL).then(registry=>{if(registry?.schema!=='dawn.library.cover-registry.v1')throw new Error('Dawn cover registry schema mismatch');if(registry?.runtimePolicy?.browserExternalLookup!==false||registry?.runtimePolicy?.wikisource!=='forbidden')throw new Error('Dawn cover registry runtime policy mismatch');for(const row of Object.values(registry.covers||{})){const pointer=String(row?.pointer||'');if(!pointer.startsWith('/dawn-library/covers/')||forbidden.test(pointer)||/^https?:\/\//i.test(pointer))throw new Error('non-local canonical cover pointer');}return registry;});return coverRegistryPromise;}
-export async function canonicalSurface(name){const [index,surface]=await Promise.all([canonicalIndex(),json(`${SURFACE_ROOT}${name}.json`)]);if(surface?.schema!=='dawn.library.surface.v1')throw new Error('Dawn surface schema mismatch');const works=index.works||{};const resolve=ref=>{if(!ref?.workId||!works[ref.workId])throw new Error(`unresolved canonical Work ID: ${ref?.workId||'missing'}`);return {ref,work:works[ref.workId]};};if(Array.isArray(surface.shelves))return {...surface,shelves:surface.shelves.map(s=>({...s,items:(s.items||[]).map(resolve)}))};return {...surface,items:(surface.items||[]).map(resolve)};}
-export async function canonicalCover(work={}){const pointer=String(work?.cover?.pointer||'');const workId=String(work?.workId||'');if(!pointer.startsWith('dawn://cover/')||!workId)return null;const registry=await canonicalCoverRegistry();const row=registry?.covers?.[workId];const url=String(row?.pointer||'');if(!url||!url.startsWith('/dawn-library/covers/')||forbidden.test(url))return null;return {url,kind:'canonical-local',provider:row.provider||'Dawn',provenance:'Dawn canonical cover registry',contentType:row.contentType||null,sha256:row.sha256||null};}
-export function canonicalReadHref(work={}){const pointer=work?.readingPointer||'';if(!pointer||forbidden.test(pointer)||/^https?:\/\//i.test(pointer))return null;return pointer.startsWith('/')?pointer:null;}
-export function canonicalBook(pair={}){const work=pair.work||{},ref=pair.ref||{};return {id:work.workId,workId:work.workId,work:{title:work.title||'未命名',author:(work.authors||[]).join(', '),language:(work.languages||[])[0]||'',identifiers:work.authorityIds||{}},edition:work.edition||{},cover:work.cover||null,readingPointer:work.readingPointer||null,relations:ref.relations||[],canonical:true};}
+
+export async function canonicalIndex(){
+  const manifest=await resourceManifest();
+  if(manifest?.identityAuthority!=='Dawn'||manifest?.canonicalMonolithRequired!==false)throw new Error('Resource Fabric canonical boundary mismatch');
+  return {
+    schema:'dawn.library.canonical-index.resource-fabric.v1',
+    identityAuthority:'Dawn',
+    workCount:manifest.workCount,
+    authorityBackedWorks:manifest.authorityBackedWorks,
+    runtimePolicy:{surfaceOwnsIdentity:false,openLibraryRuntime:false,wikisource:'forbidden',canonicalMonolithRequired:false}
+  };
+}
+
+export async function canonicalCoverRegistry(){
+  return {schema:'dawn.library.cover-registry.resource-fabric.v1',runtimePolicy:{browserExternalLookup:false,wikisource:'forbidden'},covers:{}};
+}
+
+export async function canonicalSurface(name){
+  const [index,surface]=await Promise.all([canonicalIndex(),json(`${SURFACE_ROOT}${name}.json`)]);
+  if(surface?.schema!=='dawn.library.surface.v1')throw new Error('Dawn surface schema mismatch');
+  const refs=Array.isArray(surface.shelves)?surface.shelves.flatMap(s=>s.items||[]):(surface.items||[]);
+  const ids=refs.map(ref=>ref?.workId).filter(Boolean);
+  const works=await resourceWorks(ids);
+  const resolve=ref=>{
+    const work=works.get(ref?.workId);
+    if(!ref?.workId||!work)throw new Error(`unresolved Resource Fabric Work ID: ${ref?.workId||'missing'}`);
+    return {ref,work};
+  };
+  if(Array.isArray(surface.shelves))return {...surface,identityAuthority:index.identityAuthority,shelves:surface.shelves.map(s=>({...s,items:(s.items||[]).map(resolve)}))};
+  return {...surface,identityAuthority:index.identityAuthority,items:(surface.items||[]).map(resolve)};
+}
+
+export async function canonicalCover(work={}){
+  const url=String(work?.resourceCoverPointer||'');
+  if(!url||!url.startsWith('/dawn-library/covers/')||forbidden.test(url)||/^https?:\/\//i.test(url))return null;
+  return {url,kind:'canonical-local',provider:'Dawn',provenance:'Resource Fabric projection',contentType:null,sha256:null};
+}
+
+export function canonicalReadHref(work={}){
+  const pointer=work?.readingPointer||'';
+  if(!pointer||forbidden.test(pointer)||/^https?:\/\//i.test(pointer))return null;
+  return pointer.startsWith('/')?pointer:null;
+}
+
+export function canonicalBook(pair={}){
+  const work=pair.work||{},ref=pair.ref||{};
+  return {
+    id:work.workId,
+    workId:work.workId,
+    work:{title:work.title||'未命名',author:(work.authors||[]).join(', '),language:(work.languages||[])[0]||'',identifiers:work.authorityIds||{}},
+    edition:work.edition||{},
+    cover:work.cover||null,
+    readingPointer:work.readingPointer||null,
+    relations:ref.relations||[],
+    canonical:true,
+    resourceFabric:true
+  };
+}
