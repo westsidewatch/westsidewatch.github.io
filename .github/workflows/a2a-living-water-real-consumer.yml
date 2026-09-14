@@ -4,6 +4,8 @@ on:
   pull_request:
     paths:
       - 'dore-core/runtime/capability-registry.v1.json'
+      - 'dore-core/runtime/capability_arsenal.py'
+      - 'dore-core/runtime/capability_mount.py'
       - 'local/dore-local/capability_bindings.py'
       - 'local/dore-local/capability_bus.py'
       - 'local/dore-local/a2a_living_water_real_acceptance.py'
