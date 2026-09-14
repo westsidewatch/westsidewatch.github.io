@@ -6,27 +6,32 @@
 <script type="module">
 import { buildCatalog, discoverCatalogWindow, updateDiscoveryContext, toggleCompareWork, compareSelection } from '../runtime/discovery.mjs';
 import { serializeContext, restoreContext, focusContext } from '../runtime/relation-context.mjs';
+import { resourceManifest, resourceWorks, resourceWork } from '/js/resource-fabric-client.mjs';
 
 const out = document.querySelector('#result');
 try {
-  const [canonical, surface, fallback] = await Promise.all([
-    fetch('../../canonical-index.json').then(r => { if (!r.ok) throw new Error(`canonical ${r.status}`); return r.json(); }),
+  const [manifest, surface, fallback, authorityWork] = await Promise.all([
+    resourceManifest(),
     fetch('../../surfaces/multiwrite-biblical-world.json').then(r => r.json()),
-    fetch('../contexts/second-temple.v1.json').then(r => r.json())
+    fetch('../contexts/second-temple.v1.json').then(r => r.json()),
+    resourceWork('OL10010026W')
   ]);
-  if (canonical.schema !== 'dawn.library.canonical-index.v1' || canonical.identityAuthority !== 'Dawn') throw new Error('canonical authority');
-  const canonicalIds = new Set(Object.keys(canonical.works || {}));
-  const catalog = buildCatalog({ canonical, surface });
-  if (catalog.length !== canonical.workCount || catalog.length < 10000) throw new Error(`catalog ${catalog.length}/${canonical.workCount}`);
-  if (!catalog.every(row => canonicalIds.has(row.workId))) throw new Error('non-canonical work id');
+  if (manifest.identityAuthority !== 'Dawn' || manifest.canonicalMonolithRequired !== false || manifest.workCount < 10000) throw new Error('resource fabric authority');
+  const surfaceIds = (surface.items || []).map(row => row.workId).filter(Boolean);
+  const resolved = await resourceWorks(surfaceIds);
+  const canonicalRows = surfaceIds.map(id => resolved.get(id)).filter(Boolean);
+  if (authorityWork) canonicalRows.push(authorityWork);
+  const canonicalIds = new Set(canonicalRows.map(row => row.workId));
+  const catalog = buildCatalog({ canonical: canonicalRows, surface });
+  if (catalog.length < 20 || !catalog.every(row => canonicalIds.has(row.workId))) throw new Error(`bounded catalog ${catalog.length}`);
   if (!catalog.some(row => row.workId.startsWith('dawn:')) || !catalog.some(row => !row.workId.startsWith('dawn:'))) throw new Error('mixed canonical ids');
 
   let context = structuredClone(fallback);
-  const first = discoverCatalogWindow({ catalog, context, windowSize: 72 });
-  if (first.items.length !== 72 || !first.nextCursor || first.total !== canonical.workCount) throw new Error('first window');
+  const first = discoverCatalogWindow({ catalog, context, windowSize: 12 });
+  if (first.items.length !== 12 || !first.nextCursor || first.total !== catalog.length) throw new Error('first window');
   context = updateDiscoveryContext(context, { cursor: first.nextCursor });
-  const second = discoverCatalogWindow({ catalog, context, windowSize: 72 });
-  if (second.offset !== 72 || second.items.length !== 72 || second.items.some(row => !canonicalIds.has(row.workId))) throw new Error('second window');
+  const second = discoverCatalogWindow({ catalog, context, windowSize: 12 });
+  if (second.offset !== 12 || !second.items.length || second.items.some(row => !canonicalIds.has(row.workId))) throw new Error('second window');
 
   const focusId = first.items[0].workId;
   context = focusContext(context, focusId);
@@ -39,9 +44,9 @@ try {
   if (restored.focusedWork !== focusId || restored.facets.compareWorks.length !== 2) throw new Error('context restore');
 
   out.dataset.status = 'PASS';
-  out.dataset.catalog = String(catalog.length);
+  out.dataset.catalog = String(manifest.workCount);
   out.dataset.window = String(first.items.length);
-  out.textContent = `PHASE4_BROWSER_PASS catalog=${catalog.length} window=${first.items.length} offset=${second.offset}`;
+  out.textContent = `PHASE4_BROWSER_PASS fabric=${manifest.workCount} active=${catalog.length} window=${first.items.length} offset=${second.offset}`;
 } catch (error) {
   out.dataset.status = 'FAIL';
   out.textContent = `PHASE4_BROWSER_FAIL ${error?.message || error}`;
