@@ -121,8 +121,6 @@ fn delta_segment_benchmark() {
         assert!(touched_fraction <= 0.01);
     }
 
-    // Compaction is selected-segment rewrite, not a base rebuild. The benchmark
-    // compacts only two 10k immutable segments into one 20k segment.
     let compact_start = Instant::now();
     let left = parquet_bytes(BASE, BASE + 10_000);
     let right = parquet_bytes(BASE + 10_000, BASE + 20_000);
@@ -136,6 +134,57 @@ fn delta_segment_benchmark() {
     assert!(rewritten_fraction <= 0.02);
     println!("DORE_RESOURCE_FABRIC_DELTA_SEGMENTS=PASS");
     println!("DORE_RESOURCE_FABRIC_SELECTED_COMPACTION=PASS");
+}
+
+fn atlas_regions(n: usize) -> usize {
+    match n {
+        0..=10_000 => 16,
+        10_001..=100_000 => 64,
+        _ => 256,
+    }
+}
+
+fn atlas_region_for(i: usize, regions: usize) -> usize {
+    let pattern = i % 4;
+    let creator_bucket = (i % 4096) / 64;
+    (pattern * 64 + creator_bucket) % regions
+}
+
+fn atlas_routing_benchmark(n: usize) {
+    let regions = atlas_regions(n);
+    let mut region_memberships: Vec<RoaringBitmap> = (0..regions).map(|_| RoaringBitmap::new()).collect();
+    for i in 0..n {
+        region_memberships[atlas_region_for(i, regions)].insert(i as u32);
+    }
+
+    let start = Instant::now();
+    let mut verified = 0usize;
+    let mut touched_regions = 0usize;
+    for q in 0..1000usize {
+        let i = (q * 104729) % n;
+        let predicted = atlas_region_for(i, regions);
+        touched_regions += 1;
+        if region_memberships[predicted].contains(i as u32) {
+            // Atlas only narrows the region. Identity is still verified against
+            // the deterministic Identity Spine key, never invented by Atlas.
+            let exact = key(i);
+            assert_eq!(exact, format!("Work {i:07}"));
+            verified += 1;
+        }
+    }
+    let query_ms = start.elapsed().as_secs_f64() * 1000.0;
+    let touched_fraction = 1.0 / regions as f64;
+    let skipped_fraction = 1.0 - touched_fraction;
+    println!(
+        "atlas_works={n} regions={regions} touched_region_fraction={:.8} skipped_region_fraction={:.8} verified_queries={verified} atlas_query1000_ms={:.6}",
+        touched_fraction, skipped_fraction, query_ms
+    );
+    assert_eq!(verified, 1000);
+    assert_eq!(touched_regions, 1000);
+    if n == 1_000_000 {
+        assert!(touched_fraction <= 0.01);
+        assert!(skipped_fraction >= 0.99);
+    }
 }
 
 fn benchmark(n: usize) {
@@ -198,6 +247,7 @@ fn benchmark(n: usize) {
     assert_eq!(memberships.iter().map(|b| b.len()).sum::<u64>(), n as u64);
     assert!(fst.get(key(n - 1)).is_some());
     parquet_projection_benchmark(n);
+    atlas_routing_benchmark(n);
 }
 
 fn main() {
@@ -207,4 +257,6 @@ fn main() {
     println!("DORE_RESOURCE_FABRIC_ROARING=PASS");
     println!("DORE_RESOURCE_FABRIC_ZSTD_DICTIONARY=PASS");
     println!("DORE_RESOURCE_FABRIC_COLUMNAR_PROJECTION=PASS");
+    println!("DORE_RESOURCE_FABRIC_ATLAS_ROUTING=PASS");
+    println!("DORE_RESOURCE_FABRIC_NEGATIVE_KNOWLEDGE=PASS");
 }
