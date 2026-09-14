@@ -1,22 +1,30 @@
 {
   "schema": "dawn.library.chinese-rights-policy.v1",
   "collection": "biblical-world-books",
-  "provider": "中文維基文庫",
-  "policy": "page-provenance-required",
+  "providerPolicy": "approved-source-specific-rights-evidence",
+  "forbiddenProviders": [
+    "zh-wikisource",
+    "*.wikisource.org"
+  ],
+  "policy": "document-provenance-and-rights-required",
   "autoVerify": {
     "allowedOnlyWhen": [
       "candidate is relevance-qualified",
-      "candidate is a work or edition root page, not a slash subpage",
-      "source page explicitly declares the work public domain",
-      "edition identity is recoverable from source metadata",
-      "source provenance is retained"
+      "source URL resolves to an individual work or edition record",
+      "document-level rights or public-domain evidence is explicit for the intended jurisdiction and Dawn use",
+      "edition identity is recoverable from independent source metadata",
+      "source provenance is retained",
+      "source provider and every source authority marker are outside the permanent Wikisource denylist"
     ],
     "never": [
       "infer public-domain status from provider alone",
-      "promote a chapter or book-of-Bible subpage as an independent library book",
+      "admit any zh-wikisource or *.wikisource.org source, including stale or rewritten candidates",
+      "promote a chapter or fragment as an independent library book without work-level identity",
       "download full text during verification"
     ]
   },
-  "jurisdictionModel": "source-declaration-with-jurisdiction-note",
+  "promotionGate": "rightsStatus=verified && relevanceStatus=verified && authorityStatus=verified",
+  "automaticPromotion": false,
+  "jurisdictionModel": "document-evidence-with-jurisdiction-note",
   "contentPolicy": "index-only"
 }
