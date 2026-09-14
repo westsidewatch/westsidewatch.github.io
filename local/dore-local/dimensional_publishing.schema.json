@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "westside://dore/publishing/dimensional-writing/v1",
+  "title": "Westside Dimensional Publication Plan",
+  "type": "object",
+  "required": ["capability", "schema_version", "title", "manuscript", "deep_dive", "emergence", "sensory", "visual", "return_lines", "surfaces", "publication"],
+  "properties": {
+    "capability": {"const": "publishing.dimensional-writing"},
+    "schema_version": {"const": "1.0"},
+    "title": {"type": "string"},
+    "thesis": {"type": "string"},
+    "manuscript": {"type": "string"},
+    "deep_dive": {"type": "array", "items": {"type": "object"}},
+    "emergence": {"type": "array", "items": {"type": "object"}},
+    "sensory": {"type": "array", "items": {"type": "object"}},
+    "visual": {"type": "array", "items": {"type": "object"}},
+    "return_lines": {"type": "array", "items": {"type": "object"}},
+    "surfaces": {"type": "array", "items": {"enum": ["journal", "dawn", "one", "dore-folio", "book"]}},
+    "publication": {"type": "object"},
+    "degraded": {"type": "boolean"}
+  }
+}
