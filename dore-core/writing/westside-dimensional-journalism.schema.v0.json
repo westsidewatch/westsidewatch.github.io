@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dore.westside-dimensional-journalism.v0",
+  "title": "Westside Dimensional Journalism Evaluation v0",
+  "type": "object",
+  "required": ["capability", "authorThesisPreserved", "evidenceBoundary", "layers", "verdict"],
+  "properties": {
+    "capability": {"const": "writing.westside-dimensional-journalism"},
+    "authorThesisPreserved": {"type": "boolean"},
+    "evidenceBoundary": {"enum": ["pass", "review", "fail"]},
+    "layers": {
+      "type": "object",
+      "required": ["ground", "depth", "position", "movement", "altitude", "language", "prosody", "emergence", "truth"],
+      "properties": {
+        "ground": {"$ref": "#/$defs/assessment"},
+        "depth": {"$ref": "#/$defs/assessment"},
+        "position": {"$ref": "#/$defs/assessment"},
+        "movement": {"$ref": "#/$defs/assessment"},
+        "altitude": {"$ref": "#/$defs/assessment"},
+        "language": {"$ref": "#/$defs/assessment"},
+        "prosody": {"$ref": "#/$defs/assessment"},
+        "emergence": {"$ref": "#/$defs/assessment"},
+        "truth": {"$ref": "#/$defs/assessment"}
+      },
+      "additionalProperties": false
+    },
+    "languageSignals": {
+      "type": "object",
+      "properties": {
+        "administrativeConnectors": {"type": "array", "items": {"type": "string"}},
+        "unnecessaryAdverbs": {"type": "array", "items": {"type": "string"}},
+        "modifierCompression": {"type": "array", "items": {"type": "string"}},
+        "dimensionalAdjectives": {"type": "array", "items": {"type": "string"}},
+        "accumulativeRepetitions": {"type": "array", "items": {"type": "string"}},
+        "semanticPressurePoints": {"type": "array", "items": {"type": "string"}},
+        "motifs": {"type": "array", "items": {"type": "string"}},
+        "oneSentenceParagraphRisk": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "oreVeins": {"type": "array", "items": {"type": "string"}},
+    "editorialFlags": {"type": "array", "items": {"type": "string"}},
+    "verdict": {"enum": ["pass", "revise", "evidence-blocked"]}
+  },
+  "$defs": {
+    "assessment": {
+      "type": "object",
+      "required": ["status", "notes"],
+      "properties": {
+        "status": {"enum": ["pass", "review", "not-applicable", "fail"]},
+        "notes": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}
