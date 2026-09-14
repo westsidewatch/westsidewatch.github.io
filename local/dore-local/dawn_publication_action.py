@@ -43,6 +43,13 @@ def _fabric_work(repo,work_id):
  try:return json.loads(result["stdout"].strip().splitlines()[-1])
  except Exception as exc:raise RuntimeError("Resource Fabric verification returned invalid JSON") from exc
 
+def _append_fabric_delta(repo,work):
+ code="import json,sys;sys.path.insert(0,'local/dore-local');import resource_fabric_delta as d;print(json.dumps(d.append_work(json.loads(sys.argv[1])),ensure_ascii=False))"
+ result=_run(["python3","-c",code,json.dumps(work,ensure_ascii=False,separators=(',',':'))],repo,60)
+ if result["returncode"]:raise RuntimeError("Resource Fabric delta append failed: "+result["stderr"])
+ try:return json.loads(result["stdout"].strip().splitlines()[-1])
+ except Exception as exc:raise RuntimeError("Resource Fabric delta append returned invalid JSON") from exc
+
 def _apply(repo,admission,assets):
  work_id,edition_id,by_kind=_validate(admission,assets);key=hashlib.sha256(work_id.encode()).hexdigest()[:20];edition_key=hashlib.sha256(edition_id.encode()).hexdigest()[:16]
  rel_dir=Path("static/dawn-library/publications")/key/edition_key;target=repo/rel_dir;target.mkdir(parents=True,exist_ok=True);pointers={}
@@ -52,12 +59,14 @@ def _apply(repo,admission,assets):
  admission_dir=repo/"data/dawn-publication-admissions";admission_dir.mkdir(parents=True,exist_ok=True);record_path=admission_dir/f"{key}.json";record_path.write_text(json.dumps(record,ensure_ascii=False,separators=(",",":"))+"\n",encoding="utf-8")
  build=_run(["python3","scripts/build_dawn_canonical_substrate.py"],repo,240)
  if build["returncode"]:raise RuntimeError("canonical rebuild failed: "+build["stderr"])
- projection=_run(["python3","local/dore-local/resource_fabric_surface_compile.py"],repo,240)
- if projection["returncode"]:raise RuntimeError("Resource Fabric compile failed: "+projection["stderr"])
+ work=record.get("work") or {};edition=record.get("edition") or {};authority_ids=work.get("authorityIds") or {}
+ projection_work={"workId":work_id,"title":work.get("title"),"authors":work.get("authors") or [],"languages":work.get("languages") or [],"authorityIds":authority_ids,"edition":edition,"cover":{"pointer":pointers.get("cover")},"readingPointer":pointers.get("web"),"authorityBacked":bool(authority_ids.get("openLibraryWork"))}
+ delta=_append_fabric_delta(repo,projection_work)
+ if delta.get("touchedBaseShards")!=0:raise RuntimeError("Resource Fabric delta unexpectedly touched base shards")
  surface=json.loads((repo/"static/dawn-library/surfaces/dawn-storefront.json").read_text());canonical=_fabric_work(repo,work_id)
  refs=[r.get("workId") for s in surface.get("shelves",[]) if s.get("id")=="dore-publications" for r in s.get("items",[])]
  if not canonical or work_id not in refs:raise RuntimeError("publication did not enter Resource Fabric Dawn surface")
- return {"workId":work_id,"editionId":edition_id,"record":str(record_path.relative_to(repo)),"artifactDir":"/"+str(rel_dir.as_posix()),"canonical":canonical}
+ return {"workId":work_id,"editionId":edition_id,"record":str(record_path.relative_to(repo)),"artifactDir":"/"+str(rel_dir.as_posix()),"canonical":canonical,"resourceFabricDelta":delta}
 
 def publish(args=None):
  args=args or {};admission=args.get("admission") or {};assets=args.get("assets") or []
@@ -75,7 +84,7 @@ def publish(args=None):
    evidence=_apply(worktree,admission,assets)
    _run(["git","config","user.name","Doré Publisher"],worktree);_run(["git","config","user.email","westsidewatchca@gmail.com"],worktree)
    canonical_path="static/dawn-library/"+("canonical-"+"index.json")
-   paths=[evidence["record"],evidence["artifactDir"].lstrip("/"),canonical_path,"static/dawn-library/resource-fabric","static/dawn-library/surfaces/dawn-storefront.json","static/dawn-library/surfaces/multiwrite-biblical-world.json"]
+   paths=[evidence["record"],evidence["artifactDir"].lstrip("/"),canonical_path,"static/dawn-library/resource-fabric/manifest.json",evidence["resourceFabricDelta"]["path"],"static/dawn-library/surfaces/dawn-storefront.json","static/dawn-library/surfaces/multiwrite-biblical-world.json"]
    stage=_run(["git","add","--"]+paths,worktree)
    if stage["returncode"]:return {"ok":False,"status":"failed","step":"stage","result":stage}
    quiet=_run(["git","diff","--cached","--quiet"],worktree)
