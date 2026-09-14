@@ -1,0 +1,176 @@
+{
+  "schema": "dore.campo-grafico.issue-ledger.v1",
+  "publication": "Campo Grafico",
+  "year": 1935,
+  "year_label": "Year III",
+  "coverage": {
+    "numbered_issues": 12,
+    "physical_issue_objects": 11,
+    "combined_numbers": ["11-12"],
+    "status": "metadata-verified_issue-level-research_in-progress"
+  },
+  "training_goal": "Extract editorial judgement, layout, image, typography, material, sequence and emergence grammar without reducing Campo Grafico to a visual style preset.",
+  "issues": [
+    {
+      "number": "1",
+      "month": "January",
+      "pages": 24,
+      "cover": "Randolfo Asti",
+      "printer": "Tipografia Ettore Padoan",
+      "verified_features": ["subscription bulletin as out-of-text insert", "editorial 'Non programma'", "catalogue spread", "graphic-production advertising integrated into issue ecology"],
+      "editorial_problem": "How can a specialist magazine hold editorial argument, technical practice, commercial matter and inserted object inside one coherent reading field?",
+      "transferable_grammar": ["publication as working laboratory", "editorial and production matter may share one semantic field", "inserted administrative matter can become part of sequence"],
+      "temporal_translation": ["stable editorial field", "foreign object enters", "object persists", "reader returns to parent field"],
+      "confidence": "high-metadata / partial-visual"
+    },
+    {
+      "number": "2",
+      "month": "February",
+      "pages": 24,
+      "cover": "Carlo Dradi + Attilio Rossi",
+      "printer": "Tipografia Ettore Padoan",
+      "verified_features": ["CONCENTRA advertising/demonstration insert", "article 'La chiarezza in pubblicità'", "Bruno Munari: 'Logica elementare del rinnovamento'", "cobbler price list used within issue material"],
+      "editorial_problem": "How does clarity become an aesthetic principle without collapsing into sterility?",
+      "transferable_grammar": ["clarity as editorial ethics", "ordinary information design is valid aesthetic evidence", "renewal requires logic rather than novelty alone", "technical specimen can interrupt reading productively"],
+      "temporal_translation": ["information hierarchy becomes motion hierarchy", "demonstration object interrupts at full identity", "ordinary evidence is not visually beautified into sameness"],
+      "confidence": "high-metadata / strong-textual-evidence"
+    },
+    {
+      "number": "3",
+      "month": "March",
+      "pages": 24,
+      "cover": "Carlo Dradi + Attilio Rossi",
+      "printer": "S.A. Tipografia Aracne",
+      "verified_features": ["leadership transition after Attilio Rossi departure for Argentina", "issue printed later in June 1935", "dense field of foundry, ink, machinery and production advertisements"],
+      "editorial_problem": "How can editorial identity survive a change in people, timing and production conditions?",
+      "transferable_grammar": ["editorial continuity is not personnel sameness", "production delay is part of publication reality", "brand intelligence should live above a single designer"],
+      "temporal_translation": ["identity persists across state transition", "surface may change while editorial authority remains"],
+      "confidence": "high-metadata / visual-pass-pending"
+    },
+    {
+      "number": "4",
+      "month": "April",
+      "pages": 24,
+      "cover": "Battista Pallavera; photograph by Renner",
+      "printer": "S.A. Tipografia Aracne",
+      "verified_features": ["photographic cover", "CONCENTRA out-of-text demonstration insert", "article on state printing", "Monotype article", "fourth announcement of Campo Grafico experimental editions"],
+      "editorial_problem": "How can photography, typography, public-information printing and experimental editions coexist without one medium subordinating all others?",
+      "transferable_grammar": ["photography is an editorial constructor, not illustration after text", "public documents deserve design judgement", "technical system and experimental art may share one issue", "issue can host multiple local visual systems"],
+      "temporal_translation": ["switch medium without dissolving identity", "photographic state and typographic state can alternate", "insert arrives as material event"],
+      "confidence": "high-metadata / partial-visual"
+    },
+    {
+      "number": "5",
+      "month": "May",
+      "pages": 24,
+      "cover": "Luigi Veronesi",
+      "printer": "S.A. Tipografia Aracne",
+      "verified_features": ["La Fotoincisione Moderna advertising/demonstration insert", "cover by Luigi Veronesi"],
+      "editorial_problem": "How can image reproduction technology itself become visible editorial material?",
+      "transferable_grammar": ["reproduction method may become content", "image technology should not be hidden when it carries meaning", "technical specimen and abstract cover language may coexist"],
+      "temporal_translation": ["reveal process as layer", "show transformation without turning it into tutorial chrome"],
+      "confidence": "verified-core / deeper-visual-pass-pending"
+    },
+    {
+      "number": "6",
+      "month": "June",
+      "pages": 20,
+      "cover": "unsigned",
+      "printer": "Tipografia Enrico Grezzi",
+      "verified_features": ["glued CONCENTRA advertising/demonstration insert", "reduced 20-page issue"],
+      "editorial_problem": "What remains essential when the issue becomes materially smaller?",
+      "transferable_grammar": ["editorial force is not proportional to page count", "material intervention can carry weight in a reduced issue", "constraint should intensify hierarchy rather than imitate a fuller issue"],
+      "temporal_translation": ["reduced duration can increase event salience", "one inserted object may act as hinge"],
+      "confidence": "high-metadata / visual-pass-pending"
+    },
+    {
+      "number": "7",
+      "month": "July",
+      "pages": 20,
+      "cover": "Luigi Veronesi",
+      "printer": "Tipografia Enrico Grezzi",
+      "verified_features": ["cover by Luigi Veronesi", "continued reduced 20-page format"],
+      "editorial_problem": "How can a strong authorial cover coexist with a publication whose identity is larger than any one designer?",
+      "transferable_grammar": ["authorial surface does not replace publication identity", "recognition may come from editorial intelligence instead of template repetition"],
+      "temporal_translation": ["strong opening state followed by quieter interior cadence"],
+      "confidence": "high-metadata / visual-pass-pending"
+    },
+    {
+      "number": "8",
+      "month": "August",
+      "pages": 20,
+      "cover": "Luigi Minardi",
+      "printer": "Tipografia Enrico Ghezzi",
+      "verified_features": ["glued front/back CONCENTRA demonstration insert", "cover by Luigi Minardi"],
+      "editorial_problem": "How can a two-sided foreign object change reading rhythm without being absorbed into the page style?",
+      "transferable_grammar": ["foreign-local-grammar", "front/back object creates temporal reading", "insert can be an autonomous micro-world"],
+      "temporal_translation": ["front state", "turn/reveal", "back state", "return with memory of object intact"],
+      "confidence": "high-metadata / strong-material-evidence"
+    },
+    {
+      "number": "9",
+      "month": "September",
+      "pages": null,
+      "cover": "metadata verified on official archive; deeper extraction pending",
+      "printer": null,
+      "verified_features": ["official issue object confirmed", "production advertising continues through end matter"],
+      "editorial_problem": "Pending visual and textual pass.",
+      "transferable_grammar": [],
+      "temporal_translation": [],
+      "confidence": "metadata-verified / analysis-pending"
+    },
+    {
+      "number": "10",
+      "month": "October",
+      "pages": 20,
+      "cover": "archive header attributes cover to Luigi Veronesi; cover-page caption names Mario Perondi — conflict retained for review",
+      "printer": "Tipografia Federico Sacchetti",
+      "verified_features": ["commemorative issue for Edoardo Persico", "photographic advertising credited to Mario Crimella", "archive contains contradictory cover attribution that must not be silently normalized"],
+      "editorial_problem": "How should a commemorative issue alter tone, evidence density and sequence while remaining a living magazine rather than a memorial brochure?",
+      "transferable_grammar": ["occasion may legitimately rewrite issue rhythm", "commemoration needs documentary authority", "source conflicts must remain visible until resolved"],
+      "temporal_translation": ["slower cadence", "evidence persistence", "reduced decorative motion", "documentary reveal"],
+      "confidence": "high-metadata / attribution-conflict-flagged"
+    },
+    {
+      "number": "11-12",
+      "month": "November-December",
+      "pages": 20,
+      "cover": "Luigi Veronesi",
+      "printer": "Tipografia Federico Sacchetti",
+      "verified_features": ["first combined issue of 1935", "subscription bulletin as out-of-text object", "Olivetti advertisement conceived by Edoardo Persico", "glued CONCENTRA demonstration insert", "extended multi-spread feature on typography by Edoardo Persico"],
+      "editorial_problem": "What happens when two nominal publication periods collapse into one physical editorial object?",
+      "transferable_grammar": ["publication cadence is editorial, not mechanical", "combined issue should be redesigned as one whole rather than simulated as two issues", "long-form feature may control sequence", "commercial, technical and authored design evidence may interlock"],
+      "temporal_translation": ["longer sustained reading arc", "fewer but stronger transitions", "insert becomes hinge inside extended feature cadence"],
+      "confidence": "high-metadata / strong-structural-evidence"
+    }
+  ],
+  "year_level_findings": [
+    "1935 is the first year in this corpus where publication cadence itself becomes a design variable through the 11-12 combined issue.",
+    "The year repeatedly treats production artefacts and demonstration inserts as editorial objects rather than peripheral advertising.",
+    "Photography, typography, public printing, commercial graphics and ordinary information increasingly occupy the same critical field.",
+    "Editorial identity survives personnel change, printer change, delayed production, page-count reduction and combined numbering; therefore identity cannot be reduced to a fixed visual template.",
+    "Doré should learn issue architecture under constraint: fewer pages, changed cadence, foreign objects and special-purpose issues must each trigger a fresh composition rather than template compression."
+  ],
+  "dore_judge_rules": [
+    "CADENCE_IS_DESIGN: publication timing and combined numbering may legitimately change sequence grammar.",
+    "CONSTRAINT_GENERATES_HIERARCHY: fewer pages should intensify editorial choices instead of shrinking an existing layout.",
+    "FOREIGN_OBJECTS_KEEP_LOCAL_GRAMMAR: inserted specimens may preserve their own visual identity.",
+    "IDENTITY_ABOVE_SURFACE: a publication remains itself across designers, printers and issue-specific visual systems.",
+    "SOURCE_CONFLICTS_STAY_VISIBLE: contradictory archive metadata must be flagged, not silently harmonized.",
+    "TECHNIQUE_IS_CONTENT_WHEN_SEMANTIC: reproduction, ink, paper and type technologies may become editorial meaning when the subject warrants it."
+  ],
+  "sources": [
+    "https://www.campografico.org/",
+    "https://www.campografico.org/journal/1-1935",
+    "https://www.campografico.org/journal/2-1935",
+    "https://www.campografico.org/journal/3-1935",
+    "https://www.campografico.org/journal/4-1935",
+    "https://www.campografico.org/journal/5-1935",
+    "https://www.campografico.org/journal/6-1935",
+    "https://www.campografico.org/journal/7-1935",
+    "https://www.campografico.org/journal/8-1935",
+    "https://www.campografico.org/journal/9-1935",
+    "https://www.campografico.org/journal/10-1935",
+    "https://www.campografico.org/journal/11e12-1935"
+  ]
+}
