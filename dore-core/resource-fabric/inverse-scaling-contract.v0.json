@@ -1,0 +1,33 @@
+{
+  "schema": "dore.resource-fabric.inverse-scaling.v0",
+  "status": "experimental",
+  "scope": "site-wide-resource-substrate",
+  "principle": "corpus growth must improve structure and reduce marginal active cost",
+  "authority": false,
+  "storagePolicy": "identity-pointer-index-only",
+  "benchmarks": [10000, 100000, 1000000],
+  "baseline": "canonical-json",
+  "candidates": [
+    "columnar-projection",
+    "fst-lexicon",
+    "roaring-membership",
+    "zstd-trained-delta",
+    "immutable-delta-segments"
+  ],
+  "metrics": {
+    "bytesPerWork": "non-increasing",
+    "queryTouchedBytes": "non-increasing",
+    "coldLookupLatency": "sublinear-with-corpus",
+    "deltaUpdateCost": "proportional-to-delta",
+    "browserInitialPayload": "independent-of-total-corpus",
+    "fullRebuildFraction": "approaches-zero"
+  },
+  "boundaries": {
+    "canonicalIdentityRemainsAuthority": true,
+    "learnedAtlasMayRouteButNotInventIdentity": true,
+    "rawMediaPersistence": false,
+    "consumerSpecificCopies": false,
+    "runtimeProviderDependency": false,
+    "wikisourceForbidden": true
+  }
+}
