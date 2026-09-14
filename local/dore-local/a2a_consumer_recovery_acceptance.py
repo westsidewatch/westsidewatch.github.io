@@ -33,6 +33,27 @@ def main():
   assert not r['completion_evidence'],r
   st=plane.status(r['task_id']);assert st['task']['status']=='RUNNING',st
 
+  budget=[a2a_executor.execute(envelope('retry-budget'),safe_descriptor,safe_binding,transient,plane=plane) for _ in range(3)]
+  assert [x['failure']['attempt'] for x in budget]==[1,2,3],budget
+  assert budget[-1]['failure_state']=='RESEARCH_REQUIRED',budget[-1]
+  assert plane.status(budget[-1]['task_id'])['task']['status']=='RESEARCH_REQUIRED'
+
+  side_calls=[]
+  def uncertain_side_effect():side_calls.append(True);raise TimeoutError('side effect outcome unknown')
+  unknown_first=a2a_executor.execute(envelope('unknown-side-effect'),{'id':'design.production.rollout','requires_verified_execution':True,'verification_contract':'external','retry_safe':False}, {'kind':'production-action','retry_safe':False},uncertain_side_effect,plane=plane)
+  unknown_second=a2a_executor.execute(envelope('unknown-side-effect'),{'id':'design.production.rollout','requires_verified_execution':True,'verification_contract':'external','retry_safe':False}, {'kind':'production-action','retry_safe':False},uncertain_side_effect,plane=plane)
+  assert unknown_first['failure_state']=='UNKNOWN' and unknown_second['failure_state']=='UNKNOWN',(unknown_first,unknown_second)
+  assert len(side_calls)==1,side_calls
+
+  import capability_bus
+  original_native=capability_bus._invoke_native
+  try:
+   capability_bus._invoke_native=lambda *args,**kwargs:(_ for _ in ()).throw(TimeoutError('bus timeout'))
+   descriptor=capability_bus.resolve('design.intelligence');binding=capability_bus.BINDINGS.get('design.intelligence')
+   bus_timeout=a2a_executor.execute(envelope('bus-timeout'),descriptor,binding,lambda:capability_bus.call('design.intelligence',{},None),plane=plane)
+  finally:capability_bus._invoke_native=original_native
+  assert bus_timeout['failure_state']=='RETRYABLE',bus_timeout
+
   side_descriptor={'id':'design.production.rollout','requires_verified_execution':True,'verification_contract':'external','retry_safe':False}
   side_binding={'kind':'production-action','retry_safe':False}
   task_id=a2a_executor._task_id(envelope('side-effect'));plane.register(a2a_executor._message(envelope('side-effect'),task_id))

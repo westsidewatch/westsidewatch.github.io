@@ -15,6 +15,7 @@ HOME=Path(os.environ.get('DORE_LOCAL_HOME',Path.home()/'.dore')).expanduser()
 ROOT=HOME/'a2a-execution';TASKS=ROOT/'tasks';EVENTS=ROOT/'events.jsonl'
 DEFAULT_LEASE_SECONDS=max(30,int(os.environ.get('DORE_A2A_LEASE_SECONDS','300')))
 TERMINAL={'PASS','FAIL','REJECTED'}
+BLOCKED={'UNKNOWN','RESEARCH_REQUIRED'}
 ORDER=('SUBMITTED','ACCEPTED','CLAIMED','RUNNING','ARTIFACT_PRODUCED','VERIFIED','PASS')
 
 def now():return datetime.now(timezone.utc).isoformat()
@@ -39,7 +40,7 @@ def register(message,delivery=None):
   if str(existing.get('content_sha256') or '')!=str(digest):
    _append({'at':now(),'task_id':task_id,'status':'REJECTED_IDENTITY_CONFLICT','accepted_sha256':existing.get('content_sha256'),'replay_sha256':digest});raise ValueError('execution_task_identity_conflict:'+task_id)
   return existing
- t={'schema':'dore.a2a-task.v1','execution_plane':VERSION,'task_id':task_id,'message_id':task_id,'kind':message.get('kind'),'related_goal':message.get('related_goal'),'content_sha256':digest,'source_commit':d.get('source_commit'),'source_ref':d.get('source_ref'),'status':'ACCEPTED','submitted_at':d.get('accepted_at') or now(),'accepted_at':now(),'lease':None,'artifact':None,'verification':None,'result':None,'recovery':None}
+ t={'schema':'dore.a2a-task.v1','execution_plane':VERSION,'task_id':task_id,'message_id':task_id,'kind':message.get('kind'),'related_goal':message.get('related_goal'),'content_sha256':digest,'source_commit':d.get('source_commit'),'source_ref':d.get('source_ref'),'status':'ACCEPTED','submitted_at':d.get('accepted_at') or now(),'accepted_at':now(),'lease':None,'artifact':None,'verification':None,'result':None,'recovery':None,'provider_attempts':0,'failure':None}
  _atomic(_task_path(task_id),t);_append({'at':now(),'task_id':task_id,'from':'SUBMITTED','to':'ACCEPTED'});return t
 
 def _lease_live(lease):
@@ -51,6 +52,7 @@ def recoverability(task_id):
  t=read(task_id)
  if not t:return {'ok':False,'code':'TASK_NOT_FOUND','task_id':task_id}
  if t.get('status') in TERMINAL:return {'ok':True,'state':'TERMINAL','task':t}
+ if t.get('status') in BLOCKED:return {'ok':True,'state':'BLOCKED','failure':t.get('failure'),'task':t}
  lease=t.get('lease') or {}
  if _lease_live(lease):return {'ok':True,'state':'IN_FLIGHT','owner':lease.get('owner'),'expires_at':lease.get('expires_at'),'task':t}
  if lease:return {'ok':True,'state':'RECLAIMABLE','reason':'lease_expired','resume_from':t.get('status'),'previous_owner':lease.get('owner'),'expired_at':lease.get('expires_at'),'task':t}
@@ -60,6 +62,7 @@ def claim(task_id,consumer=None,lease_seconds=DEFAULT_LEASE_SECONDS):
  t=read(task_id)
  if not t:raise FileNotFoundError('execution_task_missing:'+str(task_id))
  if t['status'] in TERMINAL:return {'ok':False,'code':'TASK_TERMINAL','task':t}
+ if t['status'] in BLOCKED:return {'ok':False,'code':'TASK_BLOCKED','task':t}
  owner=consumer or worker_id();lease=t.get('lease');live=_lease_live(lease)
  if live and lease.get('owner')!=owner:return {'ok':False,'code':'TASK_LEASED','owner':lease.get('owner'),'expires_at':lease.get('expires_at'),'task':t}
  previous=t['status'];reclaimed=bool(lease and not live);expires=datetime.now(timezone.utc)+timedelta(seconds=max(30,int(lease_seconds)))
@@ -86,6 +89,21 @@ def transition(task_id,status,*,consumer=None,result=None):
  if status=='RUNNING':t['started_at']=t.get('started_at') or now()
  if status=='FAIL':t['failed_at']=now();t['result']=result;t['lease']=None
  _atomic(_task_path(task_id),t);_append({'at':now(),'task_id':task_id,'from':previous,'to':status,'owner':owner});return {'ok':True,'task':t}
+
+def begin_attempt(task_id,*,consumer=None):
+ t=read(task_id);owner=consumer or worker_id()
+ if not t:raise FileNotFoundError('execution_task_missing:'+str(task_id))
+ lease=t.get('lease') or {}
+ if lease.get('owner')!=owner or not _lease_live(lease) or t.get('status')!='RUNNING':return {'ok':False,'code':'RUNNING_LEASE_REQUIRED','task':t}
+ t['provider_attempts']=int(t.get('provider_attempts') or 0)+1;t['last_attempt_started_at']=now();_atomic(_task_path(task_id),t);_append({'at':now(),'task_id':task_id,'event':'PROVIDER_ATTEMPT','attempt':t['provider_attempts'],'owner':owner});return {'ok':True,'attempt':t['provider_attempts'],'task':t}
+
+def block(task_id,state,decision,*,consumer=None):
+ if state not in BLOCKED:raise ValueError('unsupported_block_state:'+str(state))
+ t=read(task_id);owner=consumer or worker_id()
+ if not t:raise FileNotFoundError('execution_task_missing:'+str(task_id))
+ lease=t.get('lease') or {}
+ if lease.get('owner')!=owner or not _lease_live(lease):return {'ok':False,'code':'LEASE_REQUIRED','task':t}
+ previous=t['status'];t['status']=state;t['failure']=dict(decision or {});t['blocked_at']=now();t['lease']=None;_atomic(_task_path(task_id),t);_append({'at':now(),'task_id':task_id,'from':previous,'to':state,'failure_state':state});return {'ok':True,'task':t}
 
 def record_artifact(task_id,artifact,*,consumer=None):
  t=read(task_id);owner=consumer or worker_id()

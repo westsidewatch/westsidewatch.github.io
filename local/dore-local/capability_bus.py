@@ -136,6 +136,12 @@ def _invoke_native(handler:str,args:dict[str,Any],caller_product:str|None)->dict
  if handler=="knowledge.recall":return _knowledge_recall(args)
  raise RuntimeError("unknown_native_binding:"+handler)
 
+def _provider_error_code(exc:Exception)->str:
+ if isinstance(exc,TimeoutError):return 'timeout'
+ if isinstance(exc,ConnectionResetError):return 'connection_reset'
+ if isinstance(exc,ConnectionRefusedError):return 'connection_refused'
+ return 'provider_error'
+
 def call(capability:str,args:dict[str,Any],production,*,caller_product:str|None=None)->dict[str,Any]:
  descriptor=resolve(capability)
  if descriptor is None:return {"ok":False,"status":"failed","error":{"code":"capability_not_found","message":capability}}
@@ -146,6 +152,6 @@ def call(capability:str,args:dict[str,Any],production,*,caller_product:str|None=
   if kind=="native":result=_invoke_native(handler,args,caller_product)
   elif kind=="production-action" and handler=="production_actions.execute":result=production.execute(capability,args)
   else:return {"ok":False,"status":"failed","capability":capability,"error":{"code":"binding_not_executable","message":f"{kind}:{handler}"}}
- except Exception as exc:return {"ok":False,"status":"failed","capability":capability,"error":{"code":"provider_error","message":str(exc)}}
+ except Exception as exc:return {"ok":False,"status":"failed","capability":capability,"error":{"code":_provider_error_code(exc),"provider_error_code":"provider_error","exception_type":type(exc).__name__,"message":str(exc)}}
  if isinstance(result,dict):result=dict(result);result.setdefault("core_route",{"capability":capability,"caller_product":caller_product,"provider":descriptor.get("provider") or descriptor.get("service") or "dore-core","transport":descriptor.get("execution") or binding.get("kind"),"binding_kind":binding.get("kind"),"identity_source":"dore-core/runtime/capability-registry.v1.json"})
  return result
