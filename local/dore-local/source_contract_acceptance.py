@@ -56,7 +56,7 @@ def main():
     assert d.get('requires')==['source.capability-envelope']
 
     cinema=CINEMA.read_text(); dawn=DAWN.read_text(); multi=MULTIWRITE.read_text()
-    assert 'initialDispatch.requiresRuntime' in cinema
+    assert 'dispatch.requiresRuntime' in cinema
     assert 'initialEnvelope.runtimeBoundary' not in cinema
     assert "needs.includes('runtime-browser-probe')" not in cinema
     assert "decision.get('materializationReady')" in dawn
