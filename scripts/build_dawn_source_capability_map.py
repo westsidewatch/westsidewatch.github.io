@@ -12,11 +12,19 @@ STOREFRONT = ROOT / 'static/dawn-library/storefront.json'
 IDENTITY_MAP = ROOT / '.dore-build/dawn-source-identity-map.json'
 OUT = ROOT / '.dore-build/dawn-source-capability-map.json'
 ENVELOPE_MODULE = ROOT / 'local/dore-local/source_capability_envelope.py'
-FORBIDDEN = ('wikisource.org',)
 
 
 def read_json(path: Path) -> dict:
     return json.loads(path.read_text(encoding='utf-8'))
+
+
+def contains_forbidden_wikisource(value: Any) -> bool:
+    if isinstance(value, dict):
+        return any(contains_forbidden_wikisource(item) for item in value.values())
+    if isinstance(value, (list, tuple, set)):
+        return any(contains_forbidden_wikisource(item) for item in value)
+    text = str(value or '').casefold()
+    return 'wikisource' in text or 'wikisource.org' in text or 'zh-wikisource' in text
 
 
 def load_envelope_module():
@@ -66,10 +74,10 @@ def build(storefront: dict, identity_map: dict) -> dict[str, Any]:
         item = items.get(ref) or {}; source = item.get('source') or {}
         pointer = str(identity.get('sourcePointer') or source.get('url') or source.get('downloadUrl') or '').strip()
         provider = str(identity.get('sourceAuthority') or source.get('provider') or 'source')
+        if contains_forbidden_wikisource({'identity': identity, 'source': source, 'provider': provider, 'pointer': pointer}):
+            rows[ref] = {'sourceRef': ref, 'canonicalWorkId': identity.get('canonicalWorkId'), 'status': 'blocked', 'reason': 'source-policy-deny'}; blocked += 1; continue
         if not pointer:
             rows[ref] = {'sourceRef': ref, 'canonicalWorkId': identity.get('canonicalWorkId'), 'status': 'unresolved', 'reason': 'source pointer missing'}; unresolved += 1; continue
-        if any(token in pointer.casefold() for token in FORBIDDEN):
-            rows[ref] = {'sourceRef': ref, 'canonicalWorkId': identity.get('canonicalWorkId'), 'status': 'blocked', 'reason': 'source-policy-deny'}; blocked += 1; continue
         projected = envelope.project(static_probe(pointer, provider), claims_for(pointer))
         decision = projected.get('dispatch') or {}
         if not projected.get('ok') or not decision.get('ok'):
