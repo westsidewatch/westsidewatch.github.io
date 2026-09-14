@@ -1,0 +1,2 @@
+#!/usr/bin/env python3
+print('A2A_FAILURE_INJECTION_ACCEPTANCE_PENDING')
