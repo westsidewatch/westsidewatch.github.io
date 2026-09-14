@@ -9,6 +9,7 @@ on:
       - 'local/dore-local/source_capability_envelope_acceptance.py'
       - 'local/dore-local/source_capability_action.py'
       - 'local/dore-local/source_dispatcher.py'
+      - 'local/dore-local/source_contract_acceptance.py'
       - 'local/dore-local/runtime_source_probe.js'
       - 'local/dore-companion-extension/runtime_probe_background.js'
       - 'local/dore-companion-extension/runtime_probe_executor.js'
@@ -18,6 +19,8 @@ on:
       - 'scripts/build_dawn_source_capability_map.py'
       - 'scripts/dawn_materialization_gate.py'
       - 'static/multiwrite/source-capability-admission.mjs'
+      - 'dore-core/runtime/source-capability-contract.v1.json'
+      - 'dore-core/runtime/capability-registry.v1.json'
       - '.github/workflows/dore-universal-source-probe-v0.yml'
 jobs:
   probe:
@@ -32,8 +35,8 @@ jobs:
           node-version: '22'
       - name: Syntax
         run: |
-          python -m py_compile local/dore-local/source_probe_capability.py local/dore-local/source_probe_acceptance.py local/dore-local/source_probe_action.py local/dore-local/source_capability_envelope.py local/dore-local/source_capability_envelope_acceptance.py local/dore-local/source_capability_action.py local/dore-local/source_dispatcher.py scripts/build_dawn_source_capability_map.py scripts/dawn_materialization_gate.py
-          python -c "import json; json.load(open('local/dore-companion-extension/manifest.json')); json.load(open('dore-core/runtime/capability-registry.v1.json'))"
+          python -m py_compile local/dore-local/source_probe_capability.py local/dore-local/source_probe_acceptance.py local/dore-local/source_probe_action.py local/dore-local/source_capability_envelope.py local/dore-local/source_capability_envelope_acceptance.py local/dore-local/source_capability_action.py local/dore-local/source_dispatcher.py local/dore-local/source_contract_acceptance.py scripts/build_dawn_source_capability_map.py scripts/dawn_materialization_gate.py
+          python -c "import json; json.load(open('local/dore-companion-extension/manifest.json')); json.load(open('dore-core/runtime/capability-registry.v1.json')); json.load(open('dore-core/runtime/source-capability-contract.v1.json'))"
           node --check local/dore-local/runtime_source_probe.js
           node --check local/dore-companion-extension/runtime_probe_background.js
           node --check local/dore-companion-extension/runtime_probe_executor.js
@@ -44,6 +47,8 @@ jobs:
         run: python local/dore-local/source_probe_acceptance.py
       - name: Universal Source Dispatcher acceptance
         run: python local/dore-local/source_capability_envelope_acceptance.py
+      - name: Frozen source contract conformance
+        run: python local/dore-local/source_contract_acceptance.py
       - name: Runtime to Cinema contract
         run: |
           python - <<'PY'
