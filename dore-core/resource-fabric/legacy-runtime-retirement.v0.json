@@ -1,0 +1,50 @@
+{
+  "schema": "dore.resource-fabric.legacy-runtime-retirement.v0",
+  "status": "enforced",
+  "scope": "site-wide-work-resource-runtime",
+  "singleWorkSubstrate": "resource-fabric",
+  "principle": "Work identity, pointers, relations, and resource discovery are consumed through Resource Fabric; legacy authority and reconciliation files may exist only outside runtime consumption.",
+  "runtimeForbidden": [
+    {
+      "path": "static/dawn-library/canonical-index.json",
+      "reason": "canonical authority/build interchange is not a browser or product runtime substrate"
+    },
+    {
+      "path": "static/dawn-library/identity-cache.json",
+      "reason": "reconciliation cache is not a Work catalog or product runtime substrate"
+    }
+  ],
+  "buildOnlyAllowed": [
+    "static/dawn-library/canonical-index.json",
+    "static/dawn-library/identity-cache.json"
+  ],
+  "specializedIndexes": [
+    {
+      "path": "static/dore/search-index.json",
+      "authority": "Scripture Search",
+      "purpose": "scripture-text-search-only",
+      "mayBecomeWorkSubstrate": false
+    },
+    {
+      "path": "static/dore/entity-index.json",
+      "authority": "Bible World entity layer",
+      "purpose": "scripture-entity-identity-only",
+      "mayBecomeWorkSubstrate": false
+    }
+  ],
+  "requiredSharedConsumers": [
+    "dawn",
+    "multiwrite",
+    "one",
+    "search",
+    "design"
+  ],
+  "boundaries": {
+    "canonicalIdentityAuthorityPreserved": true,
+    "consumerCatalogCopiesAllowed": false,
+    "runtimeCanonicalMonolithAllowed": false,
+    "runtimeIdentityCacheAsCatalogAllowed": false,
+    "specializedDomainIndexesAllowed": true,
+    "rawMediaPersistenceRequired": false
+  }
+}
