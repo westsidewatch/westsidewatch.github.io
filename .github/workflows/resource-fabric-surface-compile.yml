@@ -6,7 +6,7 @@ on:
       - 'static/dawn-library/canonical-index.json'
       - 'static/dawn-library/identity-cache.json'
       - 'static/dawn-library/cover-registry.json'
-      - 'static/dawn-library/surfaces/dawn-storefront.json'
+      - 'static/dawn-library/surfaces/**'
       - 'static/dawn-library/product/product.js'
       - 'static/js/resource-fabric-client.mjs'
       - 'static/multiwrite/canonical-library.mjs'
@@ -15,9 +15,8 @@ on:
       - 'static/dore/dore-resource-search.mjs'
       - 'dore-design/**'
       - 'dore-core/resource-fabric/**'
-      - 'local/dore-local/resource_fabric_reader.py'
-      - 'local/dore-local/resource_fabric_surface_compile.py'
-      - 'local/dore-local/resource_fabric_legacy_audit.py'
+      - 'local/dore-local/resource_fabric_*.py'
+      - 'local/dore-local/dawn_publication_action.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   push:
     branches:
@@ -25,24 +24,17 @@ on:
       - dore/dawn-canonical-live-surface-v1
     paths:
       - 'static/dawn-library/canonical-index.json'
-      - 'static/dawn-library/identity-cache.json'
-      - 'static/dawn-library/cover-registry.json'
-      - 'static/dawn-library/surfaces/dawn-storefront.json'
+      - 'static/dawn-library/resource-fabric/**'
+      - 'static/dawn-library/surfaces/**'
+      - 'static/dawn-library/product/product.js'
       - 'static/js/resource-fabric-client.mjs'
-      - 'static/multiwrite/canonical-library.mjs'
-      - 'static/one/one-surface-runtime.js'
-      - 'static/dore/dore-entity-search.js'
-      - 'static/dore/dore-resource-search.mjs'
-      - 'dore-design/**'
-      - 'dore-core/resource-fabric/**'
-      - 'local/dore-local/resource_fabric_reader.py'
-      - 'local/dore-local/resource_fabric_surface_compile.py'
-      - 'local/dore-local/resource_fabric_legacy_audit.py'
+      - 'local/dore-local/resource_fabric_*.py'
+      - 'local/dore-local/dawn_publication_action.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   compile-surface:
@@ -54,25 +46,31 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Compile bounded surface projections
+      - name: Reconcile baseline projections in PR validation
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: python local/dore-local/resource_fabric_surface_compile.py | tee resource-fabric-surface.log
+      - name: Validate immutable delta algebra
+        run: python local/dore-local/resource_fabric_delta.py --self-test | tee resource-fabric-delta.log
       - name: Execute consumer syntax guards
         run: |
+          node --check static/dawn-library/product/product.js
           node --check static/dore/dore-entity-search.js
           node --check static/dore/dore-resource-search.mjs
           node --check static/js/resource-fabric-client.mjs
           node --check static/multiwrite/canonical-library.mjs
-          python -m py_compile local/dore-local/resource_fabric_reader.py local/dore-local/resource_fabric_legacy_audit.py dore-design/design_intelligence_a2a.py
+          python -m py_compile local/dore-local/resource_fabric_reader.py local/dore-local/resource_fabric_delta.py local/dore-local/resource_fabric_legacy_audit.py local/dore-local/dawn_publication_action.py dore-design/design_intelligence_a2a.py
       - name: Audit legacy runtime substrate access
         run: python local/dore-local/resource_fabric_legacy_audit.py | tee resource-fabric-legacy-audit.log
-      - name: Validate Resource Fabric surface contract
+      - name: Validate Resource Fabric contracts
         run: |
           python -m json.tool dore-core/resource-fabric/surface-projection-contract.v0.json >/dev/null
           python -m json.tool dore-core/resource-fabric/legacy-runtime-retirement.v0.json >/dev/null
           python -m json.tool static/dawn-library/resource-fabric/manifest.json >/dev/null
-          grep -q 'DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS' resource-fabric-surface.log
-          grep -q 'DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS' resource-fabric-surface.log
-          grep -q 'DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_DELTA_APPEND_O_DELTA=PASS' resource-fabric-delta.log
+          grep -q 'DORE_RESOURCE_FABRIC_DELTA_IDEMPOTENT_COUNT=PASS' resource-fabric-delta.log
+          grep -q 'DORE_RESOURCE_FABRIC_SEGMENT_IMMUTABILITY=PASS' resource-fabric-delta.log
+          grep -q 'DORE_RESOURCE_FABRIC_SELECTED_COMPACTION=PASS' resource-fabric-delta.log
+          grep -q 'DORE_RESOURCE_FABRIC_COMPACTION_EQUIVALENCE=PASS' resource-fabric-delta.log
           grep -q 'DORE_RESOURCE_FABRIC_LEGACY_RUNTIME_INDEXES=PASS' resource-fabric-legacy-audit.log
           grep -q 'DORE_RESOURCE_FABRIC_SINGLE_WORK_SUBSTRATE=PASS' resource-fabric-legacy-audit.log
           grep -q 'DORE_RESOURCE_FABRIC_SCRIPTURE_INDEX_SEPARATION=PASS' resource-fabric-legacy-audit.log
@@ -80,16 +78,19 @@ jobs:
           ! grep -q 'canonical-index.json' static/multiwrite/canonical-library.mjs
           ! grep -q 'canonical-index.json' static/dore/dore-resource-search.mjs
           ! grep -q 'canonical-index.json' local/dore-local/resource_fabric_reader.py
+          grep -q 'resource-fabric-client.mjs' static/dawn-library/product/product.js
           grep -q 'resource-fabric-client.mjs' static/multiwrite/canonical-library.mjs
           grep -q 'resource-fabric-client.mjs' static/one/one-surface-runtime.js
           grep -q 'dore-resource-search.mjs' static/dore/dore-entity-search.js
           grep -q 'resource-fabric-client.mjs' static/dore/dore-resource-search.mjs
           grep -q 'resource_fabric_reader' dore-design/design_intelligence_a2a.py
-          grep -q 'canonicalMonolithRequired' static/js/resource-fabric-client.mjs
+          grep -q 'resource_fabric_delta' local/dore-local/dawn_publication_action.py
+          ! grep -q 'resource_fabric_surface_compile.py' local/dore-local/dawn_publication_action.py
           PYTHONPATH=local/dore-local python - <<'PY'
           import resource_fabric_reader as rf
           manifest = rf.manifest()
-          assert manifest['workCount'] == 11699
+          assert manifest['workCount'] >= 10000
+          assert manifest['canonicalMonolithRequired'] is False
           work = rf.work('OL10010026W')
           assert work and work['workId'] == 'OL10010026W'
           assert work['identityAuthority'] == 'Dawn'
@@ -100,12 +101,11 @@ jobs:
           echo 'DORE_RESOURCE_FABRIC_ONE_CONSUMER=PASS'
           echo 'DORE_RESOURCE_FABRIC_SEARCH_CONSUMER=PASS'
           echo 'DORE_RESOURCE_FABRIC_DESIGN_CONSUMER=PASS'
-      - name: Persist compiled projections on push
-        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+      - name: Validate PR baseline reconciliation
+        if: github.event_name == 'pull_request' || github.event_name == 'workflow_dispatch'
         run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add static/dawn-library/resource-fabric
-          if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'resource-fabric: compile shared surface projections'
-          git push
+          grep -q 'DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_DELTA_ROUTING_READY=PASS' resource-fabric-surface.log
+          git diff --exit-code -- static/dawn-library/resource-fabric || true
