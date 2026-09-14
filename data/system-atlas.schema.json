@@ -10,11 +10,13 @@
     "identityRule": {"type": "string", "minLength": 1},
     "governance": {
       "type": "object",
-      "required": ["schema", "adrIndex", "mainline"],
+      "required": ["schema", "adrIndex", "mainline", "workRegister", "memorySweep"],
       "properties": {
         "schema": {"type": "string"},
         "adrIndex": {"type": "string"},
-        "mainline": {"type": "string"}
+        "mainline": {"type": "string"},
+        "workRegister": {"type": "string"},
+        "memorySweep": {"type": "string"}
       },
       "additionalProperties": false
     },
@@ -26,7 +28,7 @@
         "required": ["id", "kind", "name"],
         "properties": {
           "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"},
-          "kind": {"type": "string", "enum": ["surface", "product", "tool", "capability", "subsystem", "authority"]},
+          "kind": {"type": "string", "enum": ["surface", "product", "tool", "capability", "subsystem", "register", "authority"]},
           "name": {"type": "string", "minLength": 1},
           "status": {"type": "string"},
           "roots": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
