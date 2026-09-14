@@ -7,6 +7,10 @@ on:
       - 'local/dore-local/capability_bindings.py'
       - 'local/dore-local/capability_bus.py'
       - 'local/dore-local/a2a_living_water_real_acceptance.py'
+      - 'dore-design/design_intelligence_raster.py'
+      - 'dore-design/design_intelligence_a2a.py'
+      - 'dore-design/living_water_bloom.py'
+      - 'dore-design/living_water_bloom_round1.v1.json'
       - '.github/workflows/a2a-living-water-real-consumer.yml'
   workflow_dispatch:
 
@@ -24,3 +28,10 @@ jobs:
       - uses: actions/checkout@v4
       - name: Living Water through Universal A2A Core
         run: python3 local/dore-local/a2a_living_water_real_acceptance.py
+      - name: Upload Living Water bloom evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: living-water-bloom-round1
+          path: .artifacts/living-water-bloom
+          if-no-files-found: error
+          retention-days: 30
