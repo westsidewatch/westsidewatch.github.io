@@ -1,0 +1,41 @@
+{
+  "schema": "dore.design-motion-arsenal.v0",
+  "authority": "dore-design",
+  "purpose": "Shared semantic motion weapons for every Doré-designed surface. Consumers declare intent; they do not own animation engines.",
+  "principles": [
+    "motion-must-have-visual-reason",
+    "stillness-is-a-first-class-choice",
+    "native-first",
+    "lowest-sufficient-engine",
+    "reduced-motion-is-mandatory",
+    "surface-does-not-own-engine",
+    "beauty-before-novelty"
+  ],
+  "enginePolicy": {
+    "defaultTier": "native",
+    "tiers": [
+      {"id":"native","weapons":["css-transitions","css-keyframes","web-animations-api","intersection-observer","view-transitions","scroll-driven-animations"],"runtimeDependency":false},
+      {"id":"lightweight-choreography","weapons":["motion","anime"],"runtimeDependency":"optional","admission":"native-insufficient"},
+      {"id":"timeline","weapons":["gsap"],"runtimeDependency":"optional","admission":"complex-sequencing-or-scroll-choreography"},
+      {"id":"visual-choreography","weapons":["theatre"],"runtimeDependency":"optional","admission":"authored-multi-object-choreography"},
+      {"id":"spatial","weapons":["three-webgl-shader"],"runtimeDependency":"optional","admission":"meaning-requires-spatial-or-material-rendering"}
+    ],
+    "heavyEngineDefault": false
+  },
+  "semantics": [
+    {"id":"stillness","meaning":"Deliberate non-motion; visual presence carries the state.","preferredTier":"native"},
+    {"id":"ceremonial-reveal","meaning":"A measured reveal that grants importance without spectacle.","preferredTier":"native"},
+    {"id":"threshold-opening","meaning":"A spatial transition from outside to inside; never requires a literal door.","preferredTier":"native"},
+    {"id":"architectural-assembly","meaning":"Separate parts resolve precisely into a larger constructed whole.","preferredTier":"native"},
+    {"id":"quiet-dissolve","meaning":"A restrained continuity transition with minimal visual interruption.","preferredTier":"native"},
+    {"id":"measured-drift","meaning":"Slow directional movement used only when it adds spatial depth or temporal presence.","preferredTier":"native"},
+    {"id":"editorial-cut","meaning":"A decisive state change derived from editorial sequencing rather than decorative transition.","preferredTier":"native"},
+    {"id":"weighted-convergence","meaning":"Elements with unequal visual weight converge into one intentional composition.","preferredTier":"native"},
+    {"id":"page-turn-continuity","meaning":"Continuity between editorial states while preserving identity of the departing and arriving fields.","preferredTier":"native"},
+    {"id":"kinetic-typography","meaning":"Type movement carries semantic or hierarchical meaning; never motion for its own sake.","preferredTier":"native"}
+  ],
+  "admission": {
+    "reject": ["generic-fade-everything","motion-dominance","decorative-parallax-without-meaning","scroll-hijack-by-default","engine-chosen-before-intent","reduced-motion-missing"],
+    "beautyGate": "motion-must-improve-composition-or-remain-still"
+  }
+}
