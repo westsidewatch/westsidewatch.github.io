@@ -19,6 +19,7 @@ REPO_ROOT = Path(__file__).resolve().parent.parent
 LOCAL_DORE = REPO_ROOT / 'local' / 'dore-local'
 if str(LOCAL_DORE) not in sys.path: sys.path.insert(0, str(LOCAL_DORE))
 import a2a_execution_plane as plane
+import resource_fabric_reader as resource_fabric
 
 
 def _home(): return Path(os.environ.get('DORE_LOCAL_HOME', Path.home() / '.dore')).expanduser()
@@ -48,12 +49,20 @@ def _base_snapshot(payload):
     page_id=requested if requested and any(p.get('id')==requested for p in pages) else str(pages[0].get('id'))
     return design2_snapshot.snapshot(workspace,page_id)
 
+def _resource_context(payload):
+    content=payload.get('content_context') if isinstance(payload.get('content_context'),dict) else {}
+    work_id=str(payload.get('resource_work_id') or content.get('workId') or content.get('work_id') or '').strip() or None
+    query=str(payload.get('resource_query') or content.get('resource_query') or '').strip() or None
+    if not work_id and not query:return None
+    return resource_fabric.context(work_id=work_id,query=query,limit=6)
+
 def explore(payload):
     routed=intelligence.route_task(payload)
     if routed.get('decision')!='explore':
         return {'ok':True,'decision':'exploit','exploration_started':False,'route':routed,'reason':'stable_contextual_preference_available'}
     task_id='design-explore-'+uuid.uuid4().hex
     base_snapshot=_base_snapshot(payload)
+    resource_context=_resource_context(payload)
     request={
       'schema':'dore.design-intelligence-a2a-request.v5','task_id':task_id,'surface_id':payload.get('surface_id'),
       'surface_family':payload.get('surface_family'),'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),
@@ -62,6 +71,9 @@ def explore(payload):
       'inference_boundary':'core-a2a-only','judge_policy':'blind-order-reversal-consensus-v1','candidate_policy':'immutable-executable-sandbox-v1',
       'evidence_policy':'real-browser-png-primary-v1','failure_domain_policy':'pixel-observable-consensus-v1',
     }
+    if resource_context is not None:
+        request['resource_context']=resource_context
+        request['resource_context_policy']='resource-fabric-projection-non-authoritative-v0'
     request_path=_write_request(task_id,request)
     task=plane.register({'message_id':task_id,'kind':'dore_design_intelligence_explore','related_goal':'dore-design-intelligence','body':{'request_path':str(request_path)}})
     if task.get('status')!='ACCEPTED': raise RuntimeError('design_a2a_task_not_accepted')
@@ -115,8 +127,12 @@ def explore(payload):
       'failure_domain_policy':'pixel-observable-consensus-v1','loser_failures':loser_failures,'rejection_memory':rejections,
       'memory_admitted':bool(observed),'writeback':observed,'writeback_block_reason':None if observed else ('judge_disagreement' if not consensus else 'usability_or_brand_floor_failed'),
       'requires_more_evidence':not bool(observed),'route_before':routed,'route_after':route_after,'production_promoted':False,'inference_boundary':'core-a2a-only',
+      'resource_context_used':resource_context is not None,
     }
 
 def health():
     worker=LOCAL_DORE/'design_intelligence_a2a_worker.py'; raster=REPO_ROOT/'dore-design'/'design_intelligence_raster.py'
-    return {'ok':worker.exists() and raster.exists(),'phase':9,'capability_phase':13,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False}
+    fabric_ok=False
+    try:fabric_ok=resource_fabric.manifest().get('canonicalMonolithRequired') is False
+    except Exception:fabric_ok=False
+    return {'ok':worker.exists() and raster.exists() and fabric_ok,'phase':9,'capability_phase':13,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'resource_fabric_available':fabric_ok,'resource_fabric_policy':'projection-only-no-identity-authority','inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False}
