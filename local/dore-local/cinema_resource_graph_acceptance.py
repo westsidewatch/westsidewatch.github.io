@@ -16,10 +16,10 @@ SPECIAL={'cinema:video:goodtv:holy-spirit-power-workplace-testimony'}
 raw={item['canonicalId']:item for item in resources['items']}
 admitted={key:value for key,value in raw.items() if key not in SPECIAL}
 coord_ids={item['canonicalId'] for item in coordinates['items'] if item['canonicalId'] not in SPECIAL}
-moment_ids={item['canonicalId'] for item in moments['items']}
+moment_ids={item['workId'] for item in moments['items']}
 
 assert resources['schema']=='holy-light.video-resource.v0'
-assert moments['schema']=='holy-light.video-moment.v0'
+assert moments['schema']=='dore.bible-media-moment.v1'
 assert coordinates['schema']=='dore.bible-media-coordinate.v0'
 assert journeys['schema']=='dore.bible-journey.v0'
 assert len(raw)==11 and len(admitted)==10
@@ -29,15 +29,21 @@ assert all(item['rights']['rehost'] is False for item in admitted.values())
 assert 'wikisource' not in json.dumps([resources,coordinates,moments,journeys]).lower()
 
 assert "SCHEMA='dore.bible-media-graph.v0'" in graph
+assert "MOMENT_SCHEMA='dore.bible-media-moment.v1'" in graph
 assert "graphType:'work'" in graph
 assert "canonical:Object.freeze({id:resource.canonicalId,kind:'work'})" in graph
 assert 'mediaCoordinate:Object.freeze' in graph
 assert 'queryCoordinate(type,value)' in graph
+assert 'queryMoments=' in graph
+assert 'momentsForAnchor(type,value)' in graph
+assert 'deepLink=momentId' in graph
 assert 'ParadiseCinemaSpecialResources' in graph
 assert 'Promise.all([fetchJson(URLS.resources),fetchJson(URLS.moments),fetchJson(URLS.coordinates),fetchJson(URLS.journeys)])' in graph
 assert 'resource-graph.js' in index
 assert "window.ParadiseCinemaGraph?.ready" in cinema
 assert "cinemaResourceAuthority='dore.bible-media-graph.v0'" in cinema
+assert "cinemaMomentAuthority=graph.momentSchema" in cinema
+assert 'restoreMomentFromUrl' in cinema
 assert "window.ParadiseCinemaGraph?.ready" in coord
 assert "cinemaCoordinateAuthority='dore.bible-media-graph.v0'" in coord
 assert "window.ParadiseCinemaGraph?.ready" in preview
