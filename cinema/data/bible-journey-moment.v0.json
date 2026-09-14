@@ -11,6 +11,39 @@
         "scripture": "Matt.1.1-2.23",
         "label": "耶穌降生與幼年敘事"
       }
+    },
+    {
+      "journeyId": "cinema:journey:creation-to-new-creation",
+      "stationId": "baptism",
+      "momentId": "cinema:moment:lumo-matthew:episode-02",
+      "relation": "depicts",
+      "basis": {
+        "kind": "biblical-event-alignment",
+        "scripture": "Matt.3.1-4.25",
+        "label": "耶穌受洗所在官方章節"
+      }
+    },
+    {
+      "journeyId": "cinema:journey:creation-to-new-creation",
+      "stationId": "cross",
+      "momentId": "cinema:moment:lumo-matthew:episode-24",
+      "relation": "depicts",
+      "basis": {
+        "kind": "biblical-event-alignment",
+        "scripture": "Matt.27.32-28.20",
+        "label": "十字架、受死與安葬所在官方章節"
+      }
+    },
+    {
+      "journeyId": "cinema:journey:creation-to-new-creation",
+      "stationId": "resurrection",
+      "momentId": "cinema:moment:lumo-matthew:episode-24",
+      "relation": "depicts",
+      "basis": {
+        "kind": "biblical-event-alignment",
+        "scripture": "Matt.27.32-28.20",
+        "label": "復活與大使命所在官方章節"
+      }
     }
   ]
 }

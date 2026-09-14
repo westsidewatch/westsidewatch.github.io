@@ -69,6 +69,66 @@
         {"type": "work-coordinate", "coordinateSource": "cinema/data/bible-media-coordinate.v0.json"}
       ],
       "confidence": 1.0
+    },
+    {
+      "momentId": "cinema:moment:lumo-matthew:episode-02",
+      "workId": "cinema:video:jesus-film:lumo-matthew",
+      "kind": "official-episode",
+      "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html",
+      "startMs": 0,
+      "endMs": 452000,
+      "label": "LUMO · Matthew 3:1–4:25",
+      "anchors": [
+        {"type": "scripture", "value": "Matt.3.1-4.25", "label": "馬太福音 3:1–4:25", "evidenceRef": "jfp-lumo-matthew-ep2"},
+        {"type": "person", "value": "jesus", "label": "耶穌", "evidenceRef": "jfp-lumo-matthew-ep2"},
+        {"type": "event", "value": "baptism-of-jesus", "label": "耶穌受洗", "evidenceRef": "jfp-lumo-matthew-ep2"},
+        {"type": "period", "value": "new-testament", "label": "新約時代"}
+      ],
+      "evidence": [
+        {
+          "id": "jfp-lumo-matthew-ep2",
+          "type": "official-episode-metadata",
+          "provider": "Jesus Film Project",
+          "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html",
+          "collectionPointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/english.html",
+          "scripture": "Matt.3.1-4.25",
+          "durationMs": 452000,
+          "observedAt": "2026-09-14"
+        },
+        {"type": "work-coordinate", "coordinateSource": "cinema/data/bible-media-coordinate.v0.json"}
+      ],
+      "confidence": 1.0
+    },
+    {
+      "momentId": "cinema:moment:lumo-matthew:episode-24",
+      "workId": "cinema:video:jesus-film:lumo-matthew",
+      "kind": "official-episode",
+      "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-27-32-28-20/english.html",
+      "startMs": 0,
+      "endMs": 578000,
+      "label": "LUMO · Matthew 27:32–28:20",
+      "anchors": [
+        {"type": "scripture", "value": "Matt.27.32-28.20", "label": "馬太福音 27:32–28:20", "evidenceRef": "jfp-lumo-matthew-ep24"},
+        {"type": "person", "value": "jesus", "label": "耶穌", "evidenceRef": "jfp-lumo-matthew-ep24"},
+        {"type": "event", "value": "crucifixion", "label": "十字架", "evidenceRef": "jfp-lumo-matthew-ep24"},
+        {"type": "event", "value": "resurrection", "label": "復活", "evidenceRef": "jfp-lumo-matthew-ep24"},
+        {"type": "event", "value": "great-commission", "label": "大使命", "evidenceRef": "jfp-lumo-matthew-ep24"},
+        {"type": "period", "value": "new-testament", "label": "新約時代"}
+      ],
+      "evidence": [
+        {
+          "id": "jfp-lumo-matthew-ep24",
+          "type": "official-episode-metadata",
+          "provider": "Jesus Film Project",
+          "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-27-32-28-20/english.html",
+          "collectionPointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/english.html",
+          "scripture": "Matt.27.32-28.20",
+          "durationMs": 578000,
+          "observedAt": "2026-09-14"
+        },
+        {"type": "work-coordinate", "coordinateSource": "cinema/data/bible-media-coordinate.v0.json"}
+      ],
+      "confidence": 1.0
     }
   ]
 }
