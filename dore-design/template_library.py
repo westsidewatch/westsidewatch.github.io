@@ -69,6 +69,7 @@ def register_runtime_pages(base,homepage_candidates,multipage_wysiwyg):
             'name':'Italian Editorial Atlas / 義大利編輯圖譜',
             'path':'/dore-design/italian-editorial-atlas.html',
             'kind':'design-research',
+            'canvas':{'w':1200,'h':930},
             'nodes':[],
         })
         w=base.save(w)
