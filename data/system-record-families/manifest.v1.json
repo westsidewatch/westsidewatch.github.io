@@ -1,0 +1,16 @@
+{
+  "schema": "dore.system-record-family-manifest.v1",
+  "authority": "github-main",
+  "states": ["canonical", "operational", "evidence", "historical", "superseded", "unreviewed"],
+  "shards": [
+    "data/system-record-families/core.v1.json",
+    "data/system-record-families/dore.v1.json",
+    "data/system-record-families/dore-nested.v1.json"
+  ],
+  "rules": [
+    "Family IDs are unique across shards.",
+    "Shard order does not change record state.",
+    "Canonical records cannot also be historical or superseded.",
+    "Add new families to the smallest relevant shard."
+  ]
+}
