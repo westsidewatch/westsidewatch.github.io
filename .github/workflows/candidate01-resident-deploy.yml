@@ -79,11 +79,11 @@ jobs:
           done
           test "$FOUND" = 1
           EDITOR=$(curl -fsS 'http://127.0.0.1:4310/editor?page=italian-editorial-atlas')
-          grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"
+          if grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"; then echo 'ATLAS_EDITOR_PAGE=PASS'; else echo 'ATLAS_EDITOR_PAGE=FAIL'; exit 21; fi
           ATLAS=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=italian-editorial-atlas')
-          grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"
+          if grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"; then echo 'ATLAS_CANVAS=PASS'; else echo 'ATLAS_CANVAS=FAIL'; exit 22; fi
           SURFACE=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-atlas.html')
-          grep -q 'Italian Editorial Atlas' <<<"$SURFACE"
+          if grep -q 'Italian Editorial Atlas' <<<"$SURFACE"; then echo 'ATLAS_SURFACE=PASS'; else echo 'ATLAS_SURFACE=FAIL'; exit 23; fi
           REGISTRY=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-grammars.v1.json')
-          grep -q 'dore.italian-editorial-grammars.v1' <<<"$REGISTRY"
+          if grep -q 'dore.italian-editorial-grammars.v1' <<<"$REGISTRY"; then echo 'ATLAS_REGISTRY=PASS'; else echo 'ATLAS_REGISTRY=FAIL'; exit 24; fi
           echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered,four-w,italian-atlas"
