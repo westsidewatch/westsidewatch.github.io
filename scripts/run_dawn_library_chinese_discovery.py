@@ -54,8 +54,24 @@ def forbidden_candidate(value):
     text=json.dumps(value,ensure_ascii=False).casefold()
     return excluded(value) or any(t in text for t in FORBIDDEN_SOURCE) or any(t in text for t in DISPUTE_MARKERS)
 
-def absorb(root,query,relations,priority):
+def candidate(gid,title,author='',matched_by='',relations=None,priority='discovered'):
+    return {
+        'sourceId':str(gid),'provider':'Project Gutenberg','language':'zh','title':title,'author':author,
+        'canonicalTitle':title,'sourceUrl':f'https://www.gutenberg.org/ebooks/{gid}',
+        'matchedBy':matched_by,'suggestedRelations':relations or [],'priority':priority,
+        'stage':'discovered','discoveredAt':now,
+        'rights':{'status':'unverified','jurisdiction':'USA','declaredBy':'Project Gutenberg','provenanceRequired':True},
+        'contentDownloaded':False,
+    }
+
+def add(value):
     global run_discovered
+    if forbidden_candidate(value): return False
+    gid=str(value.get('sourceId') or '')
+    if not gid.isdigit() or gid in items: return False
+    items[gid]=value; run_discovered+=1; return True
+
+def absorb(root,query,relations,priority):
     for entry in root.findall('atom:entry',NS):
         if not is_chinese(entry): continue
         eid=(entry.findtext('atom:id',default='',namespaces=NS) or '').strip()
@@ -69,21 +85,15 @@ def absorb(root,query,relations,priority):
                 mm=re.search(r'/ebooks/(\d+)',link.attrib.get('href',''))
                 if mm: m=mm; break
         if not m or not title: continue
-        gid=m.group(1)
-        # A golden seed remains golden only for an exact resolved title. Ordinary search
-        # hits never inherit seed authority or bypass the unchanged relevance threshold.
         effective_priority=priority if priority=='golden' and norm(title)==norm(query) else 'discovered'
-        candidate={
-            'sourceId':gid,'provider':'Project Gutenberg','language':'zh','title':title,'author':author,
-            'canonicalTitle':title,'sourceUrl':f'https://www.gutenberg.org/ebooks/{gid}',
-            'matchedBy':'gutenberg-search:'+query,'suggestedRelations':relations,'priority':effective_priority,
-            'stage':'discovered','discoveredAt':now,
-            'rights':{'status':'unverified','jurisdiction':'USA','declaredBy':'Project Gutenberg','provenanceRequired':True},
-            'contentDownloaded':False,
-        }
-        if forbidden_candidate(candidate): continue
-        if gid not in items:
-            items[gid]=candidate; run_discovered+=1
+        add(candidate(m.group(1),title,author,'gutenberg-search:'+query,relations,effective_priority))
+
+# Known Gutenberg IDs establish source identity only. They do not establish rights:
+# every candidate must still pass relevance and the independent RDF language/rights resolver.
+for seed in cfg.get('seeds',[]):
+    gid=str(seed.get('gutenbergId') or '').strip()
+    if gid:
+        add(candidate(gid,seed['title'],seed.get('author',''),'seed:gutenberg-id:'+gid,seed.get('relations',[]),seed.get('priority','golden')))
 
 queries=[]
 for seed in cfg.get('seeds',[]):
@@ -113,7 +123,7 @@ report={
     'schema':'dawn.library.chinese-discovery.report.v2','generatedAt':now,'source':'project-gutenberg','language':'zh',
     'queries':len(seen),'pagesChecked':pages_checked,'newDiscovered':run_discovered,'candidateQueue':len(vals),'errors':errors,
     'sourcePolicy':{'wikisource':'forbidden','contentBoundary':'theology-bible-inner-life; no political/national/war dispute material'},
-    'invariant':'Metadata only; explicit Chinese-language metadata required; golden status requires exact seed-title resolution; no bulk full-text ingestion.'
+    'invariant':'Metadata only; known Gutenberg IDs establish identity only; explicit Chinese-language metadata and explicit rights are independently required before promotion; no bulk full-text ingestion.'
 }
 REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
 print(json.dumps(report,ensure_ascii=False,indent=2))
