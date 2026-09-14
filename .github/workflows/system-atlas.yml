@@ -6,6 +6,7 @@ on:
       - 'data/system-atlas.v0.json'
       - 'data/system-atlas.schema.json'
       - 'data/system-record-families.v0.json'
+      - 'data/system-record-families/**'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
       - 'docs/one/**'
@@ -15,6 +16,8 @@ on:
       - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - 'local/dore-local/system_record_reconciliation_acceptance.py'
+      - 'local/dore-local/system_record_registry.py'
+      - 'local/dore-local/system_record_registry_acceptance.py'
       - 'local/dore-local/dore_nested_records_acceptance.py'
       - '.github/workflows/system-atlas.yml'
   push:
@@ -23,6 +26,7 @@ on:
       - 'data/system-atlas.v0.json'
       - 'data/system-atlas.schema.json'
       - 'data/system-record-families.v0.json'
+      - 'data/system-record-families/**'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
       - 'docs/one/**'
@@ -32,6 +36,8 @@ on:
       - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - 'local/dore-local/system_record_reconciliation_acceptance.py'
+      - 'local/dore-local/system_record_registry.py'
+      - 'local/dore-local/system_record_registry_acceptance.py'
       - 'local/dore-local/dore_nested_records_acceptance.py'
       - '.github/workflows/system-atlas.yml'
 
@@ -52,3 +58,5 @@ jobs:
         run: python3 local/dore-local/system_record_reconciliation_acceptance.py
       - name: Validate Doré nested records
         run: python3 local/dore-local/dore_nested_records_acceptance.py
+      - name: Validate sharded record registry
+        run: python3 local/dore-local/system_record_registry_acceptance.py
