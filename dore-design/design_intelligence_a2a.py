@@ -18,8 +18,12 @@ import living_water_bloom
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LOCAL_DORE = REPO_ROOT / 'local' / 'dore-local'
+CORE_RUNTIME = REPO_ROOT / 'dore-core' / 'runtime'
 if str(LOCAL_DORE) not in sys.path: sys.path.insert(0, str(LOCAL_DORE))
+if str(CORE_RUNTIME) not in sys.path: sys.path.insert(0, str(CORE_RUNTIME))
 import a2a_execution_plane as plane
+import capability_arsenal
+import capability_mount
 
 
 def _home(): return Path(os.environ.get('DORE_LOCAL_HOME', Path.home() / '.dore')).expanduser()
@@ -49,15 +53,38 @@ def _base_snapshot(payload):
     page_id=requested if requested and any(p.get('id')==requested for p in pages) else str(pages[0].get('id'))
     return design2_snapshot.snapshot(workspace,page_id)
 
+def _arsenal_inputs(mount):
+    outputs=mount.get('outputs') or {}
+    # Only outputs the current worker can actually consume are placed in its
+    # generation context. Image artifacts remain execution evidence until the
+    # raster pipeline has a real pixel/material ingestion path.
+    return {
+      'identity_context':outputs.get('westside.context'),
+      'experience_memory':outputs.get('knowledge.recall'),
+    }
+
 def explore(payload):
     payload=living_water_bloom.enrich(payload)
     routed=intelligence.route_task(payload)
     if routed.get('decision')!='explore':
         return {'ok':True,'decision':'exploit','exploration_started':False,'route':routed,'reason':'stable_contextual_preference_available','experiment_contract_applied':living_water_bloom.applies(payload)}
+
+    arsenal_plan=capability_arsenal.plan({**payload,'consumer':payload.get('surface_family') or 'design','beauty_first':living_water_bloom.applies(payload)})
+    arsenal_mount=capability_mount.execute_loadout(
+        arsenal_plan,
+        payload,
+        repo_root=REPO_ROOT,
+        current_capability='design.intelligence',
+        caller_product=str(payload.get('surface_family') or 'design'),
+    )
+    arsenal_inputs=_arsenal_inputs(arsenal_mount)
+    consumed_ids=[cid for cid,value in [('westside.context',arsenal_inputs.get('identity_context')),('knowledge.recall',arsenal_inputs.get('experience_memory'))] if value]
+    arsenal_mount=capability_mount.mark_consumed(arsenal_mount,consumed_ids,'design-intelligence-generation-context')
+
     task_id='design-explore-'+uuid.uuid4().hex
     base_snapshot=_base_snapshot(payload)
     request={
-      'schema':'dore.design-intelligence-a2a-request.v5','task_id':task_id,'surface_id':payload.get('surface_id'),
+      'schema':'dore.design-intelligence-a2a-request.v6','task_id':task_id,'surface_id':payload.get('surface_id'),
       'surface_family':payload.get('surface_family'),'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),
       'viewport_context':payload.get('viewport_context'),'content_context':payload.get('content_context'),'constraints':payload.get('constraints') or [],
       'preference_pack':routed.get('preference_pack') or {},'base_snapshot':base_snapshot,
@@ -66,6 +93,7 @@ def explore(payload):
       'historical_design_authority':payload.get('historical_design_authority'),
       'production_promotion_allowed':payload.get('production_promotion_allowed'),
       'canonical_workspace_mutation_allowed':payload.get('canonical_workspace_mutation_allowed'),
+      'arsenal_plan':arsenal_plan,'arsenal_mount':arsenal_mount,'arsenal_inputs':arsenal_inputs,
       'inference_boundary':'core-a2a-only','judge_policy':'blind-order-reversal-consensus-v1','candidate_policy':'immutable-executable-sandbox-v1',
       'evidence_policy':'real-browser-png-primary-v1','failure_domain_policy':'pixel-observable-consensus-v1',
     }
@@ -124,8 +152,9 @@ def explore(payload):
       'requires_more_evidence':not bool(observed),'route_before':routed,'route_after':route_after,'production_promoted':False,'inference_boundary':'core-a2a-only',
       'experiment_id':payload.get('experiment_id'),'experiment_contract_applied':living_water_bloom.applies(payload),
       'divergence_domains':payload.get('divergence_domains') or [],'historical_design_authority':payload.get('historical_design_authority'),
+      'arsenal':{'plan':arsenal_plan,'mount':arsenal_mount,'inputs_consumed_by_generation':consumed_ids},
     }
 
 def health():
     worker=LOCAL_DORE/'design_intelligence_a2a_worker.py'; raster=REPO_ROOT/'dore-design'/'design_intelligence_raster.py'
-    return {'ok':worker.exists() and raster.exists(),'phase':9,'capability_phase':13,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False,'living_water_bloom_contract':living_water_bloom.CONTRACT_PATH.exists()}
+    return {'ok':worker.exists() and raster.exists(),'phase':9,'capability_phase':14,'policy':'dore-design-pixel-rejection-memory-v1','worker_available':worker.exists(),'rasterizer_available':raster.exists(),'inference_boundary':'core-a2a-only','design_process_has_model_client':False,'blind_order_reversal':True,'minimum_judges':2,'taste_writeback_requires_consensus':True,'rejection_writeback_requires_consensus':True,'failure_domain_policy':'pixel-observable-consensus-v1','motion_failure_from_static_raster_allowed':False,'executable_candidate_sandbox':True,'real_browser_raster_required':True,'pixel_evidence_primary':True,'canonical_workspace_mutation_allowed':False,'fixture_mode':os.environ.get('DORE_DESIGN_A2A_FIXTURE')=='1','production_promotion':False,'living_water_bloom_contract':living_water_bloom.CONTRACT_PATH.exists(),'capability_arsenal_mount':True}
