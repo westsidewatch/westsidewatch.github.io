@@ -1,4 +1,4 @@
-name: Holy Light Cinema Preview
+name: Paradise Cinema Preview
 on:
   pull_request:
     paths:
@@ -19,11 +19,13 @@ jobs:
         run: |
           for i in $(seq 1 20); do
             HTML=$(curl -fsS http://127.0.0.1:4173/cinema/ 2>/dev/null || true)
-            if printf '%s' "$HTML" | grep -q 'HOLY LIGHT CINEMA'; then
+            if printf '%s' "$HTML" | grep -q '天堂電影院'; then
+              printf '%s' "$HTML" | grep -q 'PARADISE CINEMA'
               printf '%s' "$HTML" | grep -q 'cinema.css'
               printf '%s' "$HTML" | grep -q 'cinema.js'
               curl -fsS http://127.0.0.1:4173/cinema/data/video-resource.v0.json | grep -q 'holy-light.video-resource.v0'
-              echo 'HOLY_LIGHT_CINEMA_PREVIEW_PASS route=/cinema/'
+              curl -fsS http://127.0.0.1:4173/cinema/data/bible-media-coordinate.v0.json | grep -q 'dore.bible-media-coordinate.v0'
+              echo 'PARADISE_CINEMA_PREVIEW_PASS route=/cinema/'
               exit 0
             fi
             sleep 1

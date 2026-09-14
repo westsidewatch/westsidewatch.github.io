@@ -1,0 +1,82 @@
+{
+  "schema": "dore.bible-media-coordinate.v0",
+  "reflexPersistent": false,
+  "collections": [
+    {"id":"scripture-cinema","label":"聖經影像","description":"直接以聖經敘事、人物或事件為骨架的影像。"},
+    {"id":"sermon","label":"講道","description":"講道、信息與生命建造。"},
+    {"id":"bible-teaching","label":"聖經教導","description":"按經卷、主題或背景整理的教導。"},
+    {"id":"testimony","label":"見證","description":"信仰生命與聖靈工作的見證。"}
+  ],
+  "items": [
+    {
+      "canonicalId":"cinema:video:jesus-film:jesus",
+      "collection":"scripture-cinema",
+      "coordinates":{
+        "text":[{"type":"scripture","value":"Luke","label":"路加福音"}],
+        "world":[{"type":"person","value":"jesus","label":"耶穌"},{"type":"event","value":"life-of-jesus","label":"耶穌生平"},{"type":"period","value":"new-testament","label":"新約時代"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["depicts","scripture-aligned"]
+    },
+    {
+      "canonicalId":"cinema:video:david-pawson:unlocking-matthew-1",
+      "collection":"bible-teaching",
+      "coordinates":{
+        "text":[{"type":"scripture","value":"Matt","label":"馬太福音"}],
+        "world":[{"type":"theme","value":"gospel-introduction","label":"四福音導論"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["teaches","interprets"]
+    },
+    {
+      "canonicalId":"cinema:video:goodtv:waiting-on-god-no-minute-wasted",
+      "collection":"sermon",
+      "coordinates":{
+        "text":[],
+        "world":[{"type":"theme","value":"waiting-on-god","label":"等候神"},{"type":"theme","value":"inner-life","label":"內在生活"},{"type":"theme","value":"healing","label":"醫治"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["teaches"]
+    },
+    {
+      "canonicalId":"cinema:video:goodtv:jiang-xiuqin-enter-grace",
+      "collection":"sermon",
+      "coordinates":{
+        "text":[],
+        "world":[{"type":"theme","value":"grace","label":"恩寵"},{"type":"theme","value":"trust","label":"信靠"},{"type":"theme","value":"inner-life","label":"內在生活"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["teaches"]
+    },
+    {
+      "canonicalId":"cinema:video:goodtv:jiang-xiuqin-rise-and-shine",
+      "collection":"sermon",
+      "coordinates":{
+        "text":[{"type":"scripture","value":"Isa.60","label":"以賽亞書 60"}],
+        "world":[{"type":"theme","value":"revival","label":"復興"},{"type":"theme","value":"holy-spirit","label":"聖靈"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["teaches","scripture-aligned"]
+    },
+    {
+      "canonicalId":"cinema:video:goodtv:jiang-xiuqin-rest-in-god",
+      "collection":"sermon",
+      "coordinates":{
+        "text":[],
+        "world":[{"type":"theme","value":"waiting-on-god","label":"等候神"},{"type":"theme","value":"rest","label":"安息"},{"type":"theme","value":"draw-near-to-god","label":"親近神"},{"type":"theme","value":"inner-life","label":"內在生活"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["teaches"]
+    },
+    {
+      "canonicalId":"cinema:video:goodtv:holy-spirit-power-workplace-testimony",
+      "collection":"testimony",
+      "coordinates":{
+        "text":[],
+        "world":[{"type":"theme","value":"holy-spirit","label":"聖靈"},{"type":"theme","value":"power","label":"能力"},{"type":"theme","value":"testimony","label":"見證"}],
+        "media":{"kind":"work"}
+      },
+      "relations":["testifies"]
+    }
+  ]
+}
