@@ -3,6 +3,20 @@ name: DORE A2A GitHub Relay
 on:
   issues:
     types: [opened]
+  workflow_dispatch:
+    inputs:
+      request_id:
+        required: true
+        type: string
+      capability:
+        required: true
+        type: string
+      args_json:
+        required: false
+        default: '{}'
+        type: string
+  repository_dispatch:
+    types: [dore-a2a]
 
 permissions:
   contents: read
@@ -11,18 +25,18 @@ permissions:
 jobs:
   relay:
     if: >-
-      github.event.issue.user.login == github.repository_owner &&
-      startsWith(github.event.issue.title, '[DORÉ A2A]')
+      github.actor == github.repository_owner &&
+      (github.event_name != 'issues' || startsWith(github.event.issue.title, '[DORÉ A2A]'))
     runs-on: [self-hosted, macOS, dore]
-    timeout-minutes: 25
+    timeout-minutes: 125
     steps:
       - uses: actions/checkout@v4
-      - name: Refresh DORÉ Unix control plane from this checkout
-        run: bash local/dore-local/install-unix-a2a-macos.sh
-      - name: Execute DORÉ capability through local Unix socket
+      - name: Execute through resident Universal A2A Core
         env:
           GITHUB_TOKEN: ${{ github.token }}
-          DORE_ISSUE_TITLE: ${{ github.event.issue.title }}
-          DORE_ISSUE_BODY: ${{ github.event.issue.body }}
-          DORE_ISSUE_NUMBER: ${{ github.event.issue.number }}
-        run: python3 local/dore-local/github_issue_bridge.py
+          DORE_COMMAND_JSON: ${{ github.event_name == 'issues' && github.event.issue.body || github.event_name == 'repository_dispatch' && toJson(github.event.client_payload.command) || '' }}
+          DORE_REQUEST_ID: ${{ github.event_name == 'workflow_dispatch' && inputs.request_id || '' }}
+          DORE_CAPABILITY: ${{ github.event_name == 'workflow_dispatch' && inputs.capability || '' }}
+          DORE_ARGS_JSON: ${{ github.event_name == 'workflow_dispatch' && inputs.args_json || '{}' }}
+          DORE_REPLY_ISSUE_NUMBER: ${{ github.event_name == 'issues' && github.event.issue.number || '' }}
+        run: python3 local/dore-local/github_a2a_entry.py

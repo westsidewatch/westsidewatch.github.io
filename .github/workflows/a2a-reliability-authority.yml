@@ -18,8 +18,18 @@ on:
       - 'local/dore-local/a2a_recovery_acceptance.py'
       - 'local/dore-local/a2a_failure_policy.py'
       - 'local/dore-local/a2a_failure_taxonomy_acceptance.py'
+      - 'local/dore-local/a2a_consumer_recovery_acceptance.py'
+      - 'local/dore-local/a2a_result_delivery.py'
+      - 'local/dore-local/a2a_result_delivery_acceptance.py'
+      - 'local/dore-local/a2a_three_entrances_acceptance.py'
+      - 'local/dore-local/a2a_failure_injection_acceptance.py'
+      - 'local/dore-local/a2a_living_water_consumer_acceptance.py'
+      - 'local/dore-local/github_a2a_entry.py'
+      - 'local/dore-local/coordination_mailbox.py'
+      - 'local/dore-local/coordination_worker.py'
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/unix_rpc_server.py'
+      - '.github/workflows/dore-a2a-github-relay.yml'
       - '.github/workflows/a2a-reliability-authority.yml'
   workflow_dispatch:
 
@@ -48,5 +58,15 @@ jobs:
         run: python local/dore-local/a2a_recovery_acceptance.py
       - name: Failure taxonomy and poison isolation acceptance
         run: python local/dore-local/a2a_failure_taxonomy_acceptance.py
+      - name: Consumer recovery vocabulary acceptance
+        run: python local/dore-local/a2a_consumer_recovery_acceptance.py
+      - name: Canonical execution receipt and result delivery acceptance
+        run: python local/dore-local/a2a_result_delivery_acceptance.py
+      - name: Three GitHub entrances one core acceptance
+        run: python local/dore-local/a2a_three_entrances_acceptance.py
+      - name: Failure injection reliability acceptance
+        run: python local/dore-local/a2a_failure_injection_acceptance.py
+      - name: Living Water universal consumer acceptance
+        run: python local/dore-local/a2a_living_water_consumer_acceptance.py
       - name: Preserve existing substrate bus contract
         run: python -m unittest tests.test_dore_intelligence_substrate_bus -v

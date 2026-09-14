@@ -39,18 +39,29 @@ jobs:
       - name: Run offline transport contract
         working-directory: local/dore-local
         run: python test_coordination_transport.py
+      - name: Fetch canonical coordination source ref
+        run: git fetch --no-tags --depth=1 origin +refs/heads/main:refs/remotes/origin/main
       - name: Verify canonical A2A inbox visibility
         run: |
           mapfile -t IDS < <(git diff --name-only HEAD^ HEAD -- coordination-inbox local/dore-local/coordination-inbox \
             | sed -n -E 's#^(coordination-inbox|local/dore-local/coordination-inbox)/(.+)\.json$#\2#p' \
             | sort -u)
+          if [ "${#IDS[@]}" -eq 0 ]; then
+            COMMIT="$(git rev-parse origin/main)"
+            python - "$COMMIT" <<'PY'
+          import json,sys
+          print(json.dumps({'ok':True,'code':'CANONICAL_COORDINATION_REF_VISIBLE','source_ref':'origin/main','source_commit':sys.argv[1],'accepted_count':0},ensure_ascii=False))
+          PY
+            exit 0
+          fi
           ARGS=()
           for id in "${IDS[@]}"; do ARGS+=(--message-id "$id"); done
-          python local/dore-local/a2a_delivery_plane.py --no-fetch "${ARGS[@]}" >/tmp/dore-a2a-delivery.json
+          python local/dore-local/a2a_delivery_plane.py --no-fetch --ref origin/main "${ARGS[@]}" >/tmp/dore-a2a-delivery.json
           python - <<'PY'
           import json
           p=json.load(open('/tmp/dore-a2a-delivery.json'))
           assert p.get('ok'), p
           assert p.get('code') == 'A2A_DELIVERY_SYNC_PASS', p
-          print(json.dumps({'ok': True, 'code': 'CANONICAL_COORDINATION_INBOX_VISIBLE', 'source_commit': p.get('source_commit'), 'accepted_count': p.get('accepted_count')}, ensure_ascii=False))
+          assert p.get('source_ref') == 'origin/main', p
+          print(json.dumps({'ok': True, 'code': 'CANONICAL_COORDINATION_INBOX_VISIBLE', 'source_ref': p.get('source_ref'), 'source_commit': p.get('source_commit'), 'accepted_count': p.get('accepted_count')}, ensure_ascii=False))
           PY
