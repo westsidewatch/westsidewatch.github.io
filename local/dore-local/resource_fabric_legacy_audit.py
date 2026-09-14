@@ -50,6 +50,11 @@ def runtime_files() -> list[Path]:
         for path in static.rglob("*"):
             if path.is_file() and path.suffix.lower() in STATIC_RUNTIME_SUFFIXES:
                 out.append(path)
+    # Surface descriptors are runtime contracts too; stale catalog pointers here can
+    # silently resurrect a second Work substrate even if JavaScript stays clean.
+    surfaces = ROOT / "static/dawn-library/surfaces"
+    if surfaces.exists():
+        out.extend(path for path in surfaces.glob("*.json") if path.is_file())
     for base in PY_RUNTIME_ROOTS:
         if not base.exists():
             continue
