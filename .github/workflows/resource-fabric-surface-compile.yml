@@ -51,6 +51,13 @@ jobs:
           python-version: '3.12'
       - name: Compile bounded surface projections
         run: python local/dore-local/resource_fabric_surface_compile.py | tee resource-fabric-surface.log
+      - name: Execute consumer syntax guards
+        run: |
+          node --check static/dore/dore-entity-search.js
+          node --check static/dore/dore-resource-search.mjs
+          node --check static/js/resource-fabric-client.mjs
+          node --check static/multiwrite/canonical-library.mjs
+          python -m py_compile local/dore-local/resource_fabric_reader.py dore-design/design_intelligence_a2a.py
       - name: Validate Resource Fabric surface contract
         run: |
           python -m json.tool dore-core/resource-fabric/surface-projection-contract.v0.json >/dev/null
