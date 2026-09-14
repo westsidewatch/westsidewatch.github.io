@@ -61,6 +61,7 @@ def _install_atlas_renderer(multipage_wysiwyg):
 
 
 def register_runtime_pages(base,homepage_candidates,multipage_wysiwyg):
+    """Register persistent runtime pages before the editor renders its PAGES list."""
     w=base.workspace()
     if not any(p.get('id')==ITALIAN_ATLAS_PAGE_ID for p in w.get('pages',[])):
         w.setdefault('pages',[]).append({
