@@ -1,16 +1,17 @@
 {
-  "schema": "dore.system-record-family-manifest.v1",
-  "authority": "github-main",
-  "states": ["canonical", "operational", "evidence", "historical", "superseded", "unreviewed"],
-  "shards": [
-    "data/system-record-families/core.v1.json",
-    "data/system-record-families/dore.v1.json",
-    "data/system-record-families/dore-nested.v1.json"
-  ],
-  "rules": [
-    "Family IDs are unique across shards.",
-    "Shard order does not change record state.",
-    "Canonical records cannot also be historical or superseded.",
-    "Add new families to the smallest relevant shard."
+  "schema":"dore.system-record-family-manifest.v1",
+  "authority":"github-main",
+  "states":["canonical","operational","evidence","historical","superseded","unreviewed"],
+  "base":"data/system-record-families.v0.json",
+  "shards":["data/system-record-families/nested.v1.json"],
+  "mirrors":["data/system-record-families/core.v1.json"],
+  "resolution":"highest-priority-match",
+  "rules":[
+    "The base remains readable during migration.",
+    "A higher-priority shard resolves a path before a broader lower-priority family.",
+    "Mirror shards must exactly match families already present in the base and are migration checks only.",
+    "Family IDs are unique among active shards.",
+    "Canonical records cannot resolve as historical or superseded.",
+    "Add new classifications to the smallest relevant shard."
   ]
 }
