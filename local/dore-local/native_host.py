@@ -68,7 +68,7 @@ def _with_id(req,res):
 def generation_payload():return a2a_generation.identity(loaded_modules=_CACHE_META,degraded_modules=_LOAD_ERRORS)
 def health_payload():
  direct=[]
- for name in ("source_probe_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
+ for name in ("source_probe_action","source_capability_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
   direct.extend(sorted(_capabilities(name)))
  production=[x["id"] for x in discover_production() if x.get("callable")]
  generation=generation_payload()
@@ -81,7 +81,7 @@ def _adapter_dispatch(payload):
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "");args=payload.get("args") or {}
- direct=(("source_probe_action",), ("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
+ direct=(("source_probe_action",), ("source_capability_action",), ("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
  for entry in direct:
   name=entry[0]
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
