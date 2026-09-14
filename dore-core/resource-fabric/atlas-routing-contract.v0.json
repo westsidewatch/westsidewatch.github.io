@@ -1,0 +1,38 @@
+{
+  "schema": "dore.resource-fabric.atlas-routing.v0",
+  "status": "experimental",
+  "scope": "site-wide-resource-substrate",
+  "principle": "corpus growth must shrink the fraction of resource regions touched per query",
+  "authority": false,
+  "role": "routing-only",
+  "inputs": [
+    "corpus-derived repeated structure",
+    "resource membership statistics",
+    "source and access behavior",
+    "query history after aggregation"
+  ],
+  "outputs": [
+    "candidate regions",
+    "negative regions to skip",
+    "routing confidence"
+  ],
+  "boundaries": {
+    "mayInventWorkIdentity": false,
+    "mayRewriteCanonicalIdentity": false,
+    "mayInferRightsAuthority": false,
+    "mayOverrideEditorialAdmission": false,
+    "mustVerifyCandidatesAgainstIdentitySpine": true,
+    "rawExperiencePersistenceRequired": false,
+    "negativeKnowledgeIsRoutingHintOnly": true
+  },
+  "benchmark": {
+    "scales": [10000, 100000, 1000000],
+    "requiredTrend": "region-touch-fraction-decreasing",
+    "exactIdentityVerification": true,
+    "negativeKnowledge": "skip-unneeded-regions-before-resource-read",
+    "targetAtOneMillion": {
+      "maxTouchedRegionFraction": 0.01,
+      "minSkippedRegionFraction": 0.99
+    }
+  }
+}
