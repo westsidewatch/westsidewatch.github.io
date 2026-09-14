@@ -1,0 +1,63 @@
+{
+  "schema": "dore.book-source-authority.v1",
+  "projectId": "book.tian-guo-yu-yan",
+  "workId": "book.tian-guo-yu-yan",
+  "status": "source-located-awaiting-lossless-materialization",
+  "authority": {
+    "authorThesisAuthority": true,
+    "mayRewriteThesis": false,
+    "preserveOriginalOrder": true,
+    "preserveSectionBoundaries": true,
+    "noSilentTruncation": true,
+    "observedStructureMayNotBePromotedToFrozenToc": true
+  },
+  "canonicalSource": {
+    "title": "神很遠_神很近_54000.md",
+    "readerTitle": "神很遠，神很近｜天國語言極簡史",
+    "format": "markdown",
+    "language": "zh-Hant",
+    "sourceRole": "canonical-manuscript-source",
+    "sourceAuthority": "author-controlled",
+    "located": true,
+    "repositoryMaterialized": false,
+    "note": "The full manuscript has been located in the author's source library. It is distinct from the research-paper source and must be materialized losslessly before exact census can be admitted as canonical."
+  },
+  "supportingSource": {
+    "title": "天國語言極簡史｜論文.pdf",
+    "format": "pdf",
+    "sourceRole": "evidence-and-research-layer",
+    "mayOverrideCanonicalManuscript": false,
+    "mayOverrideAuthorThesis": false
+  },
+  "census": {
+    "status": "not-yet-canonical",
+    "sourceLabelApproxChineseCharacters": 54000,
+    "exactHanCharacters": null,
+    "exactNonWhitespaceCharacters": null,
+    "exactProseCharactersExcludingMarkdown": null,
+    "rule": "Never infer an exact manuscript count from the source filename. Exact census is emitted only from the losslessly materialized canonical markdown source."
+  },
+  "observedChapterGraph": {
+    "status": "observed-from-current-manuscript-not-frozen-toc",
+    "nodes": [
+      {"id":"preface","label":"序言","kind":"front-matter","spine":[]},
+      {"id":"ch01","label":"第一章　要有光","subtitle":"神說話的方式，和語言最初的樣子","kind":"chapter","spine":["創造中的話語","祝福與話語重量"]},
+      {"id":"ch02","label":"第二章　噢，那座塔","subtitle":"語言是怎麼壞掉的，以及為什麼這不是壞消息","kind":"chapter","spine":["人的驕傲與巴別"]},
+      {"id":"ch03","label":"第三章　幾千年的等候","subtitle":"語言消失之後，神沒有沉默","kind":"chapter","spine":["語言的失落與等候"]},
+      {"id":"ch03-supplement","label":"第三章補遺　沉默中說話的神","subtitle":"以利亞、約伯、以西結的故事","kind":"supplement","spine":["語言的失落與等候"]},
+      {"id":"ch04","label":"第四章　語言成了人","subtitle":"這是整個故事最不可思議的一個轉折","kind":"chapter","spine":["道成肉身"]},
+      {"id":"ch05","label":"第五章　語言回來了","subtitle":"五旬節那天究竟發生了什麼","kind":"chapter","spine":["五旬節","語言歸還"]},
+      {"id":"ch06","label":"第六章　沒有人聽出來","subtitle":"哥林多的問題，和你的問題","kind":"chapter","spine":["聖靈與新造","語言歸還"]},
+      {"id":"ch07","label":"第七章　方言就是基督的語言","subtitle":"一個讓人意外的連結","kind":"chapter","spine":["道成肉身","聖靈與新造","語言歸還"]},
+      {"id":"ch07-supplement","label":"第七章補遺　教會歷史裡的天國語言","subtitle":"從使徒教父到當代，那個語言沒有消失","kind":"supplement","spine":["語言歸還"]},
+      {"id":"ch08","label":"第八章　在你裡面造一個新的你","subtitle":"天國語言的終極目的","kind":"chapter","spine":["聖靈與新造","語言歸還"]},
+      {"id":"ch09","label":"第九章　那些問題","subtitle":"方言神學的爭議與誠實的回應","kind":"chapter","spine":["語言歸還"]},
+      {"id":"afterword","label":"後記","kind":"back-matter","spine":[]},
+      {"id":"appendix-roots","label":"附錄　原文字根一覽","kind":"appendix","spine":[]}
+    ],
+    "edges": [
+      ["preface","ch01"],["ch01","ch02"],["ch02","ch03"],["ch03","ch03-supplement"],["ch03-supplement","ch04"],["ch04","ch05"],["ch05","ch06"],["ch06","ch07"],["ch07","ch07-supplement"],["ch07-supplement","ch08"],["ch08","ch09"],["ch09","afterword"],["afterword","appendix-roots"]
+    ]
+  },
+  "nextAdmission": "lossless-repository-materialization + exact-census + section-offset-index"
+}
