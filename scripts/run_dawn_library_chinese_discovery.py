@@ -1,40 +1,114 @@
 #!/usr/bin/env python3
 from dawn_resource_exclusions import excluded
-import json,urllib.parse,urllib.request
+import json,re,urllib.parse,urllib.request,xml.etree.ElementTree as ET
 from datetime import datetime,timezone
 from pathlib import Path
+
 ROOT=Path(__file__).resolve().parents[1]
+SOURCES=ROOT/'static/dawn-library/sources.json'
 SEEDS=ROOT/'static/dawn-library/biblical-world/chinese-seeds.json'
 OUT=ROOT/'static/dawn-library/biblical-world/chinese-candidates.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-CHINESE-DISCOVERY.json'
-API='https://zh.wikisource.org/w/api.php'
-now=datetime.now(timezone.utc).isoformat(); cfg=json.loads(SEEDS.read_text())
-items={}
-def api(params):
-    params.update({'format':'json','formatversion':'2','utf8':'1'})
-    req=urllib.request.Request(API+'?'+urllib.parse.urlencode(params),headers={'User-Agent':'Dore-Dawn-Library/1.0 (+https://westsidewatch.github.io)'})
-    with urllib.request.urlopen(req,timeout=25) as r:return json.loads(r.read())
-def add(title,pageid,origin,relations=None,priority='discovered'):
-    if not pageid or excluded(title):return False
-    items[str(pageid)]={'sourceId':str(pageid),'provider':'中文維基文庫','language':'zh','title':title,'canonicalTitle':title,'sourceUrl':'https://zh.wikisource.org/wiki/'+urllib.parse.quote(title.replace(' ','_')),'matchedBy':origin,'suggestedRelations':relations or [],'priority':priority,'stage':'discovered','discoveredAt':now,'rights':{'status':'unverified','declaredBy':'中文維基文庫','provenanceRequired':True},'contentDownloaded':False}
-    return True
-errors=[]; golden_resolved=0
-for seed in cfg['seeds']:
-    resolved=False
-    try:
-        d=api({'action':'query','titles':seed['title'],'prop':'info'})
-        for p in d.get('query',{}).get('pages',[]):
-            if not p.get('missing') and add(p.get('title',seed['title']),p.get('pageid'),'seed:'+seed['title'],seed.get('relations'),seed.get('priority','golden')):
-                resolved=True
-        if resolved: golden_resolved+=1
-    except Exception as e:errors.append({'seed':seed['title'],'error':type(e).__name__})
-for q in cfg['searchQueries']:
-    try:
-        d=api({'action':'query','list':'search','srsearch':q,'srnamespace':'0','srlimit':'20'})
-        for p in d.get('query',{}).get('search',[]):add(p.get('title',''),p.get('pageid'),'search:'+q)
-    except Exception as e:errors.append({'query':q,'error':type(e).__name__})
+NS={'atom':'http://www.w3.org/2005/Atom'}
+UA='Dore-Dawn-Library/1.2 (+https://westsidewatch.github.io; Chinese metadata-only)'
+FORBIDDEN_SOURCE=('wikisource','wikisource.org','維基文庫','维基文库')
+DISPUTE_MARKERS=('政治','戰爭','战争','衝突','冲突','侵略','民族主義','民族主义')
+CHINESE_CODES={'zh','zho','chi','chinese'}
+PAGES_PER_QUERY=2
+now=datetime.now(timezone.utc).isoformat()
+
+cfg=json.loads(SEEDS.read_text())
+sources=json.loads(SOURCES.read_text())
+source=next(s for s in sources['sources'] if s['id']=='project-gutenberg')
+base=source['catalog']
+if any(token in json.dumps(source,ensure_ascii=False).casefold() for token in FORBIDDEN_SOURCE):
+    raise SystemExit('forbidden source configured for Chinese discovery')
+if 'zh' not in {str(x).casefold() for x in source.get('languages',[])}:
+    raise SystemExit('Project Gutenberg is not enabled for Chinese discovery')
+
+items={}; errors=[]; pages_checked=0; run_discovered=0
+
+def local(tag): return tag.rsplit('}',1)[-1].casefold()
+def next_url(root,current):
+    for link in root.findall('atom:link',NS):
+        if link.attrib.get('rel')=='next' and link.attrib.get('href'):
+            return urllib.parse.urljoin(current,link.attrib['href'])
+    return None
+
+def languages(entry):
+    vals=[]
+    for el in entry.iter():
+        if local(el.tag) in ('language','rfc4646'):
+            if el.text and el.text.strip(): vals.append(el.text.strip().casefold())
+            for value in el.attrib.values():
+                if value: vals.append(str(value).strip().casefold())
+    return set(vals)
+
+def is_chinese(entry):
+    vals=languages(entry)
+    return any(v in CHINESE_CODES or v.startswith('zh-') or 'chinese' in v for v in vals)
+
+def forbidden_candidate(value):
+    text=json.dumps(value,ensure_ascii=False).casefold()
+    return excluded(value) or any(t in text for t in FORBIDDEN_SOURCE) or any(t in text for t in DISPUTE_MARKERS)
+
+def absorb(root,query,relations,priority):
+    global run_discovered
+    for entry in root.findall('atom:entry',NS):
+        if not is_chinese(entry): continue
+        eid=(entry.findtext('atom:id',default='',namespaces=NS) or '').strip()
+        title=(entry.findtext('atom:title',default='',namespaces=NS) or '').strip()
+        author=''
+        ae=entry.find('atom:author/atom:name',NS)
+        if ae is not None and ae.text: author=ae.text.strip()
+        m=re.search(r'(\d+)(?:/)?$',eid)
+        if not m:
+            for link in entry.findall('atom:link',NS):
+                mm=re.search(r'/ebooks/(\d+)',link.attrib.get('href',''))
+                if mm: m=mm; break
+        if not m or not title: continue
+        gid=m.group(1)
+        candidate={
+            'sourceId':gid,'provider':'Project Gutenberg','language':'zh','title':title,'author':author,
+            'canonicalTitle':title,'sourceUrl':f'https://www.gutenberg.org/ebooks/{gid}',
+            'matchedBy':'gutenberg-search:'+query,'suggestedRelations':relations,'priority':priority,
+            'stage':'discovered','discoveredAt':now,
+            'rights':{'status':'unverified','jurisdiction':'USA','declaredBy':'Project Gutenberg','provenanceRequired':True},
+            'contentDownloaded':False,
+        }
+        if forbidden_candidate(candidate): continue
+        if gid not in items:
+            items[gid]=candidate; run_discovered+=1
+
+queries=[]
+for seed in cfg.get('seeds',[]):
+    queries.append((seed['title'],seed.get('relations',[]),seed.get('priority','golden')))
+for q in cfg.get('searchQueries',[]):
+    queries.append((q,[], 'discovered'))
+seen=set()
+for query,relations,priority in queries:
+    if query in seen: continue
+    seen.add(query)
+    url=base+'?'+urllib.parse.urlencode({'query':query})
+    for _ in range(PAGES_PER_QUERY):
+        req=urllib.request.Request(url,headers={'User-Agent':UA})
+        try:
+            with urllib.request.urlopen(req,timeout=25) as resp: root=ET.fromstring(resp.read())
+            pages_checked+=1; absorb(root,query,relations,priority)
+            nxt=next_url(root,url)
+            if not nxt: break
+            url=nxt
+        except Exception as exc:
+            errors.append({'query':query,'url':url,'error':type(exc).__name__}); break
+
 vals=sorted(items.values(),key=lambda x:int(x['sourceId']))
-OUT.write_text(json.dumps({'schema':'dawn.library.chinese-candidates.v1','generatedAt':now,'items':vals},ensure_ascii=False,indent=2)+'\n')
+OUT.write_text(json.dumps({'schema':'dawn.library.chinese-candidates.v2','generatedAt':now,'items':vals},ensure_ascii=False,indent=2)+'\n')
 REPORT.parent.mkdir(parents=True,exist_ok=True)
-report={'schema':'dawn.library.chinese-discovery.report.v1','generatedAt':now,'source':'zh-wikisource','language':'zh','goldenSeeds':len(cfg['seeds']),'goldenSeedsResolved':golden_resolved,'candidateQueue':len(vals),'errors':errors,'invariant':'Metadata only; no bulk full-text ingestion.'}
-REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n');print(json.dumps(report,ensure_ascii=False,indent=2))
+report={
+    'schema':'dawn.library.chinese-discovery.report.v2','generatedAt':now,'source':'project-gutenberg','language':'zh',
+    'queries':len(seen),'pagesChecked':pages_checked,'newDiscovered':run_discovered,'candidateQueue':len(vals),'errors':errors,
+    'sourcePolicy':{'wikisource':'forbidden','contentBoundary':'theology-bible-inner-life; no political/national/war dispute material'},
+    'invariant':'Metadata only; explicit Chinese-language metadata required; no bulk full-text ingestion.'
+}
+REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(report,ensure_ascii=False,indent=2))
