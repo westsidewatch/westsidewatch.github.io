@@ -1,18 +1,20 @@
 #!/usr/bin/env python3
-"""Dependency-free Resource Fabric inverse-scaling benchmark seed.
+"""Resource Fabric inverse-scaling benchmark.
 
-This is deliberately not the final storage engine. It freezes the workload and
-acceptance metrics before OSS adapters (Parquet/FST/Roaring/Zstd) are selected.
+The Python path is the dependency-free control. The same acceptance entrypoint
+also executes the Rust OSS benchmark (FST/Roaring/Zstd) when the crate exists,
+so CI cannot pass by measuring only a synthetic control model.
 """
 from __future__ import annotations
 
 import argparse
 import json
-import math
 import random
+import subprocess
 import time
 import zlib
 from dataclasses import dataclass
+from pathlib import Path
 
 SCALES = (10_000, 100_000, 1_000_000)
 PATTERNS = (
@@ -32,7 +34,6 @@ class Work:
 
 
 def make_work(i: int) -> Work:
-    # Deterministic synthetic corpus: repeated structure + unique delta.
     p = i % len(PATTERNS)
     return Work(i, f"Work {i:07d}", f"Creator {i % 4096:04d}", p, f"src:{i:07x}")
 
@@ -47,7 +48,6 @@ def json_record(w: Work) -> bytes:
 
 
 def delta_record(w: Work) -> bytes:
-    # Shared fields collapse into a pattern reference; only identity/delta remain.
     return f"{w.wid}|{w.pattern}|{w.title}|{w.creator}|{w.pointer}\n".encode()
 
 
@@ -55,7 +55,6 @@ def run_scale(n: int) -> dict:
     t0 = time.perf_counter()
     raw_bytes = 0
     delta_bytes = 0
-    # zlib is only a stdlib control. v1 adapters will benchmark Zstd dictionary.
     compressor = zlib.compressobj(level=6)
     compressed = 0
     membership = [0] * len(PATTERNS)
@@ -72,7 +71,6 @@ def run_scale(n: int) -> dict:
     compressed += len(compressor.flush())
     build_ms = (time.perf_counter() - t0) * 1000
 
-    # O(1) identity lookup model: query touches only the requested delta + atlas pattern.
     rng = random.Random(725)
     q0 = time.perf_counter()
     touched = 0
@@ -95,6 +93,27 @@ def run_scale(n: int) -> dict:
     }
 
 
+def run_oss_benchmark() -> bool:
+    manifest = Path("tools/resource-fabric-bench/Cargo.toml")
+    if not manifest.exists():
+        print("DORE_RESOURCE_FABRIC_OSS_BENCHMARK=MISSING")
+        return False
+    proc = subprocess.run(
+        ["cargo", "run", "--release", "--manifest-path", str(manifest)],
+        check=False, text=True, capture_output=True,
+    )
+    print(proc.stdout, end="")
+    if proc.stderr:
+        print(proc.stderr, end="")
+    required = (
+        "DORE_RESOURCE_FABRIC_FST=PASS",
+        "DORE_RESOURCE_FABRIC_ROARING=PASS",
+        "DORE_RESOURCE_FABRIC_ZSTD_DICTIONARY=PASS",
+        "works=1000000",
+    )
+    return proc.returncode == 0 and all(marker in proc.stdout for marker in required)
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--max", type=int, default=1_000_000)
@@ -105,11 +124,13 @@ def main() -> int:
     print(json.dumps({"schema":"dore.resource-fabric.benchmark.v0","rows":rows}, indent=2))
     if any(not r["sampleIntegrity"] for r in rows):
         return 2
-    # The active lookup footprint must remain bounded while corpus grows.
     if len(rows) > 1 and rows[-1]["queryTouchedBytesPerLookup"] > rows[0]["queryTouchedBytesPerLookup"] * 1.15:
         return 3
     print("DORE_RESOURCE_FABRIC_ACTIVE_FOOTPRINT_BOUNDED=PASS")
     print("DORE_RESOURCE_FABRIC_DELTA_MODEL=PASS")
+    if args.max >= 1_000_000 and not run_oss_benchmark():
+        return 4
+    print("DORE_RESOURCE_FABRIC_OSS_BENCHMARK=PASS")
     return 0
 
 if __name__ == "__main__":
