@@ -31,10 +31,23 @@ for rel in projection['items']:
     assert moment_by_id[rel['momentId']]['kind']=='official-episode'
     assert rel['basis']['kind']=='biblical-event-alignment'
 
-incarnation=[r for r in projection['items'] if r['stationId']=='incarnation']
-assert len(incarnation)==1
-assert incarnation[0]['momentId']=='cinema:moment:lumo-matthew:episode-01'
-assert incarnation[0]['basis']['scripture']=='Matt.1.1-2.23'
+expected={
+    'incarnation':('cinema:moment:lumo-matthew:episode-01','Matt.1.1-2.23'),
+    'baptism':('cinema:moment:lumo-matthew:episode-02','Matt.3.1-4.25'),
+    'cross':('cinema:moment:lumo-matthew:episode-24','Matt.27.32-28.20'),
+    'resurrection':('cinema:moment:lumo-matthew:episode-24','Matt.27.32-28.20'),
+}
+by_station={}
+for rel in projection['items']:
+    by_station.setdefault(rel['stationId'],[]).append(rel)
+for station_id,(moment_id,scripture) in expected.items():
+    assert len(by_station.get(station_id,[]))==1
+    rel=by_station[station_id][0]
+    assert rel['momentId']==moment_id
+    assert rel['basis']['scripture']==scripture
+
+assert set(expected) <= set(by_station)
+assert len(projection['items']) >= 4
 
 graph=(ROOT/'cinema/resource-graph.js').read_text()
 index=(ROOT/'cinema/index.html').read_text()
@@ -60,4 +73,4 @@ assert "cinemaJourney='creation-to-new-creation-v1'" in layer
 assert "終點已建立；影像座標尚待可靠來源。" in layer
 assert '不虛構' in layer
 assert 'journey-station[data-terminal="true"]' in style
-print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d exact=%d terminal=new-creation' % (len(stations),len(projection['items'])))
+print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d exact=%d core=%d terminal=new-creation' % (len(stations),len(projection['items']),len(expected)))
