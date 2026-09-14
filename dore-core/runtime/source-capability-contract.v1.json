@@ -1,0 +1,38 @@
+{
+  "schema": "dore.source-capability-contract.v1",
+  "owner": "dore-core",
+  "status": "frozen-v1",
+  "pipeline": ["source.probe","source.capability-envelope","source.dispatch","consumer-admission"],
+  "schemas": {"probe":"dore.source-probe.v0","envelope":"dore.source-capability-envelope.v1","dispatch":"dore.source-dispatch.v1"},
+  "boundaries": {
+    "providerNeutral": true,
+    "sourceAuthorityPreserved": true,
+    "canonicalIdentityAuthority": false,
+    "rightsAuthority": false,
+    "editorialAuthority": false,
+    "persistence": "request-scoped-none",
+    "dispatcherExecution": "pure-in-process",
+    "browserRuntimeOwnedByConsumer": false,
+    "productsMayReinterpretAccess": false
+  },
+  "dispatch": {
+    "ready": "status=ready",
+    "runtimeRequired": "status=runtime-required",
+    "unresolved": "status=unresolved",
+    "blocked": "status=blocked",
+    "stableErrorReasons": ["invalid-capability-envelope","runtime-required-without-runtime-route","no-access-route"]
+  },
+  "consumers": {
+    "cinema": "dispatch.requiresRuntime",
+    "dawn": "dispatch.materializationReady",
+    "multiwrite": "dispatch + rights/editorial admission"
+  },
+  "forbidden": [
+    "provider-specific routing in product surfaces",
+    "consumer access inference from probe needs",
+    "consumer access inference from envelope runtimeBoundary",
+    "source envelope becoming canonical identity authority",
+    "rights inference from technical capability",
+    "public persistence of internal admission provenance"
+  ]
+}
