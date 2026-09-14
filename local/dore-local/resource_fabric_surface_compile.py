@@ -103,6 +103,8 @@ def main() -> int:
         "identityAuthority":canonical.get("identityAuthority") or "Dawn",
         "canonicalMonolithRequired":False,
         "recordSchema":["workId","title","primaryAuthor","coverPointer","readingPointer","authorityBacked","authors","languages","authorityIds","edition"],
+        "delta":{"schema":"dore.resource-fabric.delta-routing.v0","segments":[],"retiredSegments":[],"workRoutes":{},"searchRoutes":{}},
+        "deltaWorkCount":0,
     })
 
     compiled = sum(len(x) for x in work_shards)
@@ -112,6 +114,7 @@ def main() -> int:
     print("DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS")
     print("DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS")
     print("DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS")
+    print("DORE_RESOURCE_FABRIC_DELTA_ROUTING_READY=PASS")
     return 0
 
 
