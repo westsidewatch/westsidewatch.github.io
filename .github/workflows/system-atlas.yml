@@ -15,6 +15,7 @@ on:
       - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - 'local/dore-local/system_record_reconciliation_acceptance.py'
+      - 'local/dore-local/dore_nested_records_acceptance.py'
       - '.github/workflows/system-atlas.yml'
   push:
     branches: [main]
@@ -31,6 +32,7 @@ on:
       - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - 'local/dore-local/system_record_reconciliation_acceptance.py'
+      - 'local/dore-local/dore_nested_records_acceptance.py'
       - '.github/workflows/system-atlas.yml'
 
 permissions:
@@ -48,3 +50,5 @@ jobs:
         run: python3 local/dore-local/system_atlas_acceptance.py
       - name: Validate record reconciliation
         run: python3 local/dore-local/system_record_reconciliation_acceptance.py
+      - name: Validate Doré nested records
+        run: python3 local/dore-local/dore_nested_records_acceptance.py
