@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""Bounded Python reader for the site-wide Resource Fabric projections.
-
-This reader is deliberately non-authoritative: it routes to compiled shards and returns
-canonical projections. It never invents Work IDs, rights, or source authority.
-"""
+"""Bounded Python reader for site-wide Resource Fabric projections."""
 from __future__ import annotations
 
 import json
@@ -38,19 +34,7 @@ def _decode(row: list) -> dict:
     values = list(row) + [None] * max(0, 10 - len(row))
     work_id, title, author, cover_pointer, reading_pointer, authority_backed, authors, languages, authority_ids, edition = values[:10]
     authors = authors if isinstance(authors, list) and authors else ([author] if author else [])
-    return {
-        "workId": work_id,
-        "title": title or "Untitled",
-        "authors": authors,
-        "languages": languages if isinstance(languages, list) else [],
-        "authorityIds": authority_ids if isinstance(authority_ids, dict) else {},
-        "edition": edition if isinstance(edition, dict) else {},
-        "coverPointer": cover_pointer,
-        "readingPointer": reading_pointer,
-        "authorityBacked": bool(authority_backed),
-        "identityAuthority": "Dawn",
-        "resourceFabricProjection": True,
-    }
+    return {"workId": work_id, "title": title or "Untitled", "authors": authors, "languages": languages if isinstance(languages, list) else [], "authorityIds": authority_ids if isinstance(authority_ids, dict) else {}, "edition": edition if isinstance(edition, dict) else {}, "coverPointer": cover_pointer, "readingPointer": reading_pointer, "authorityBacked": bool(authority_backed), "identityAuthority": "Dawn", "resourceFabricProjection": True}
 
 
 @lru_cache(maxsize=1)
@@ -62,6 +46,7 @@ def manifest() -> dict:
         raise RuntimeError("resource_fabric_monolith_boundary_violated")
     if data.get("identityAuthority") != "Dawn":
         raise RuntimeError("resource_fabric_identity_authority_mismatch")
+    data.setdefault("delta", {"workRoutes": {}, "searchRoutes": {}})
     return data
 
 
@@ -75,15 +60,38 @@ def _search_bucket(index: int) -> dict:
     return json.loads((_fabric() / f"search-{index:02x}.json").read_text(encoding="utf-8"))
 
 
+@lru_cache(maxsize=1024)
+def _segment(rel: str) -> dict:
+    return json.loads((_fabric() / rel).read_text(encoding="utf-8"))
+
+
+def _routes(kind: str, key: str) -> list[str]:
+    return list(((manifest().get("delta") or {}).get(kind) or {}).get(key) or [])
+
+
+def _row(work_id: str) -> list | None:
+    meta = manifest()
+    index = _fnv1a(work_id) % int(meta["workShardCount"])
+    key = f"{index:02x}"
+    for rel in reversed(_routes("workRoutes", key)):
+        for op in reversed(_segment(rel).get("operations") or []):
+            if op.get("workId") != work_id:
+                continue
+            if op.get("op") == "-Work":
+                return None
+            if op.get("op") == "+Work":
+                return op.get("record")
+    for row in _work_shard(index).get("rows") or []:
+        if row and row[0] == work_id:
+            return row
+    return None
+
+
 def work(work_id: str) -> dict | None:
     if not work_id:
         return None
-    meta = manifest()
-    index = _fnv1a(work_id) % int(meta["workShardCount"])
-    for row in _work_shard(index).get("rows") or []:
-        if row and row[0] == work_id:
-            return _decode(row)
-    return None
+    row = _row(work_id)
+    return _decode(row) if row else None
 
 
 def search(query: str, limit: int = 12) -> list[dict]:
@@ -97,12 +105,17 @@ def search(query: str, limit: int = 12) -> list[dict]:
     prefix = token[: min(4, len(token))]
     meta = manifest()
     index = _fnv1a(prefix) % int(meta["searchBucketCount"])
+    key = f"{index:02x}"
+    rows = list(_search_bucket(index).get("rows") or [])
+    for rel in _routes("searchRoutes", key):
+        rows.extend(_segment(rel).get("searchRows") or [])
     ids: list[str] = []
-    for row in _search_bucket(index).get("rows") or []:
-        if len(row) < 4 or row[0] != prefix:
+    seen: set[str] = set()
+    for row in reversed(rows):
+        if len(row) < 4 or row[0] != prefix or row[1] in seen:
             continue
         if q in f"{row[2]} {row[3]}".casefold():
-            ids.append(row[1])
+            seen.add(row[1]); ids.append(row[1])
             if len(ids) >= max(1, min(int(limit), 50)):
                 break
     return [resolved for wid in ids if (resolved := work(wid)) is not None]
@@ -114,6 +127,5 @@ def context(*, work_id: str | None = None, query: str | None = None, limit: int 
         if resolved:
             return {"schema": "dore.resource-fabric.context.v0", "mode": "work", "work": resolved}
     if query:
-        results = search(query, limit=limit)
-        return {"schema": "dore.resource-fabric.context.v0", "mode": "search", "query": query, "works": results}
+        return {"schema": "dore.resource-fabric.context.v0", "mode": "search", "query": query, "works": search(query, limit=limit)}
     return None
