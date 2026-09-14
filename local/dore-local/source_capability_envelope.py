@@ -7,6 +7,8 @@ never introduces provider-specific branches.
 """
 from __future__ import annotations
 
+import importlib.util
+from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
@@ -14,6 +16,16 @@ SCHEMA = "dore.source-capability-envelope.v1"
 PROBE_SCHEMA = "dore.source-probe.v0"
 BANNED_HOST_SUFFIXES = ("wikisource.org",)
 SAFE_DECLARED_ACCESS = {"static-http", "browser-runtime", "mcp", "api", "iiif", "manifest", "embed", "local-file"}
+HERE = Path(__file__).resolve().parent
+
+
+def _dispatcher():
+    spec = importlib.util.spec_from_file_location("dore_source_dispatcher", HERE / "source_dispatcher.py")
+    if spec is None or spec.loader is None:
+        raise RuntimeError("source dispatcher unavailable")
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
 
 
 def _host(url: str) -> str:
@@ -135,9 +147,6 @@ def project(probe: dict[str, Any], claims: dict[str, Any] | None = None) -> dict
     operations = _operations(probe, modes, media, claims)
     probe_rights = probe.get("rights") or {}
     declared_rights = claims.get("declaredRights") if isinstance(claims.get("declaredRights"), dict) else {}
-
-    # Rights claims are recorded as evidence; rehost remains false unless an
-    # explicit rights authority later admits such a grant outside this projector.
     rights = {
         "rehost": False,
         "decision": str(probe_rights.get("decision") or "not-inferred-by-envelope"),
@@ -146,7 +155,7 @@ def project(probe: dict[str, Any], claims: dict[str, Any] | None = None) -> dict
     }
 
     boundary_mode = "browser-runtime" if runtime_required else (preferred or "unresolved")
-    return {
+    result = {
         "ok": True,
         "status": "completed",
         "schema": SCHEMA,
@@ -180,6 +189,8 @@ def project(probe: dict[str, Any], claims: dict[str, Any] | None = None) -> dict
         },
         "persistence": "request-scoped-none",
     }
+    result["dispatch"] = _dispatcher().dispatch(result)
+    return result
 
 
 def execute(args: dict[str, Any]) -> dict[str, Any]:
