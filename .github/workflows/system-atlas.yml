@@ -7,6 +7,8 @@ on:
       - 'data/system-atlas.schema.json'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
+      - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
+      - 'dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - '.github/workflows/system-atlas.yml'
   push:
@@ -16,6 +18,8 @@ on:
       - 'data/system-atlas.schema.json'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
+      - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
+      - 'dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md'
       - 'local/dore-local/system_atlas_acceptance.py'
       - '.github/workflows/system-atlas.yml'
 
