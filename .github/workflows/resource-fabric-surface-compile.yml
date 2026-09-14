@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/identity-cache.json'
       - 'static/dawn-library/cover-registry.json'
       - 'static/dawn-library/surfaces/dawn-storefront.json'
       - 'static/dawn-library/product/product.js'
@@ -12,10 +13,11 @@ on:
       - 'static/one/one-surface-runtime.js'
       - 'static/dore/dore-entity-search.js'
       - 'static/dore/dore-resource-search.mjs'
-      - 'dore-design/design_intelligence_a2a.py'
+      - 'dore-design/**'
       - 'dore-core/resource-fabric/**'
       - 'local/dore-local/resource_fabric_reader.py'
       - 'local/dore-local/resource_fabric_surface_compile.py'
+      - 'local/dore-local/resource_fabric_legacy_audit.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   push:
     branches:
@@ -23,6 +25,7 @@ on:
       - dore/dawn-canonical-live-surface-v1
     paths:
       - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/identity-cache.json'
       - 'static/dawn-library/cover-registry.json'
       - 'static/dawn-library/surfaces/dawn-storefront.json'
       - 'static/js/resource-fabric-client.mjs'
@@ -30,9 +33,11 @@ on:
       - 'static/one/one-surface-runtime.js'
       - 'static/dore/dore-entity-search.js'
       - 'static/dore/dore-resource-search.mjs'
-      - 'dore-design/design_intelligence_a2a.py'
+      - 'dore-design/**'
+      - 'dore-core/resource-fabric/**'
       - 'local/dore-local/resource_fabric_reader.py'
       - 'local/dore-local/resource_fabric_surface_compile.py'
+      - 'local/dore-local/resource_fabric_legacy_audit.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
   workflow_dispatch:
 
@@ -57,14 +62,20 @@ jobs:
           node --check static/dore/dore-resource-search.mjs
           node --check static/js/resource-fabric-client.mjs
           node --check static/multiwrite/canonical-library.mjs
-          python -m py_compile local/dore-local/resource_fabric_reader.py dore-design/design_intelligence_a2a.py
+          python -m py_compile local/dore-local/resource_fabric_reader.py local/dore-local/resource_fabric_legacy_audit.py dore-design/design_intelligence_a2a.py
+      - name: Audit legacy runtime substrate access
+        run: python local/dore-local/resource_fabric_legacy_audit.py | tee resource-fabric-legacy-audit.log
       - name: Validate Resource Fabric surface contract
         run: |
           python -m json.tool dore-core/resource-fabric/surface-projection-contract.v0.json >/dev/null
+          python -m json.tool dore-core/resource-fabric/legacy-runtime-retirement.v0.json >/dev/null
           python -m json.tool static/dawn-library/resource-fabric/manifest.json >/dev/null
           grep -q 'DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS' resource-fabric-surface.log
           grep -q 'DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS' resource-fabric-surface.log
           grep -q 'DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_LEGACY_RUNTIME_INDEXES=PASS' resource-fabric-legacy-audit.log
+          grep -q 'DORE_RESOURCE_FABRIC_SINGLE_WORK_SUBSTRATE=PASS' resource-fabric-legacy-audit.log
+          grep -q 'DORE_RESOURCE_FABRIC_SCRIPTURE_INDEX_SEPARATION=PASS' resource-fabric-legacy-audit.log
           ! grep -q 'canonical-index.json' static/dawn-library/product/product.js
           ! grep -q 'canonical-index.json' static/multiwrite/canonical-library.mjs
           ! grep -q 'canonical-index.json' static/dore/dore-resource-search.mjs
