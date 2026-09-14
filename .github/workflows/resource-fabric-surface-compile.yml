@@ -1,0 +1,54 @@
+name: DORE Resource Fabric Surface Compile
+
+on:
+  pull_request:
+    paths:
+      - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/cover-registry.json'
+      - 'static/dawn-library/surfaces/dawn-storefront.json'
+      - 'static/dawn-library/product/product.js'
+      - 'dore-core/resource-fabric/**'
+      - 'local/dore-local/resource_fabric_surface_compile.py'
+      - '.github/workflows/resource-fabric-surface-compile.yml'
+  push:
+    branches:
+      - main
+      - dore/dawn-canonical-live-surface-v1
+    paths:
+      - 'static/dawn-library/canonical-index.json'
+      - 'static/dawn-library/cover-registry.json'
+      - 'static/dawn-library/surfaces/dawn-storefront.json'
+      - 'local/dore-local/resource_fabric_surface_compile.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  compile-surface:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref || github.ref_name }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile bounded surface projections
+        run: python local/dore-local/resource_fabric_surface_compile.py | tee resource-fabric-surface.log
+      - name: Validate Resource Fabric surface contract
+        run: |
+          python -m json.tool dore-core/resource-fabric/surface-projection-contract.v0.json >/dev/null
+          python -m json.tool static/dawn-library/resource-fabric/manifest.json >/dev/null
+          grep -q 'DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS' resource-fabric-surface.log
+          ! grep -q 'canonical-index.json' static/dawn-library/product/product.js
+      - name: Persist compiled projections on push
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add static/dawn-library/resource-fabric
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'resource-fabric: compile Dawn surface projections'
+          git push
