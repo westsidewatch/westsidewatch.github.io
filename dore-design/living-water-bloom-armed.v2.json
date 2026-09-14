@@ -1,0 +1,28 @@
+{
+  "schema":"dore.living-water-bloom-armed.v2",
+  "experiment":"living-water-bloom",
+  "consumer":"living-water",
+  "status":"candidate-generation-ready",
+  "production_promoted":false,
+  "winner":null,
+  "purpose":"Return the Design mainline to a real Living Water church surface and require Doré to work with learned/mounted/assimilated capabilities rather than naked-core blank-page generation.",
+  "authority":{"church_identity":"living-water","visual":"westside-canon","italian_editorial":"teacher-not-authority","motion":"semantic-subordinate","memory":"evidence-not-authority"},
+  "loadout":[
+    {"capability":"design.intelligence","role":"composition judgment"},
+    {"capability":"italian-editorial-intelligence","role":"learned editorial grammar","source":"static/dore-design/italian-editorial-grammars.v1.json"},
+    {"capability":"design.motion","role":"semantic motion","source":"dore-design/living-water-motion-profile.v0.json"},
+    {"capability":"design.composition","role":"intrinsic/editorial layout and exact geometry","admission":"from design arsenal ledger"},
+    {"capability":"design.typography","role":"editorial type relationships","admission":"from design arsenal ledger"},
+    {"capability":"design.image-art-direction","role":"crop/focal/bleed decisions","admission":"from design arsenal ledger"},
+    {"capability":"design.observation","role":"reference evidence without copying","admission":"from design arsenal ledger"}
+  ],
+  "candidate_domains":[
+    {"id":"sacred-threshold","must_test":["threshold without literal door","ceremonial negative space","measured primary reveal"],"editorial_sources":["campo-grafico: wrapper/uncover as temporal grammar","abitare: breathing spatial composition"],"forbidden":["door illustration as shortcut","generic church hero","empty white page without compositional reason"]},
+    {"id":"quiet-light","must_test":["sacred stillness","light as hierarchy","typography carries presence"],"editorial_sources":["casabella: deliberate negative space","domus: architectural hierarchy"],"forbidden":["minimalism as absence","generic white-black template","decorative glow"]},
+    {"id":"living-community","must_test":["human fellowship","warm relational pacing","image/text tension"],"editorial_sources":["abitare: human-scale pacing","campo-grafico: local visual object persistence"],"forbidden":["stock-church sentiment","water-wave cliche","magazine dominance over church identity"]},
+    {"id":"architectural-bloom","must_test":["precise multi-panel assembly","5:8 modular relationship","controlled break from grid"],"editorial_sources":["ottagono: system before deviation","domus: spatial construction"],"forbidden":["approximate seams","motion hiding bad geometry","animation for animation sake"]}
+  ],
+  "beauty_admission":{"beautiful_is_floor":true,"blankness_requires_reason":true,"motion_cannot_rescue_composition":true,"real_browser_raster_required":true,"material_divergence_required":true,"reject_palette_only_variants":true},
+  "memory_to_capability_loop":{"enabled":true,"success":"accepted decisions become evidence for reusable grammar","failure":"rejections record failure domain and must reduce repeated mistakes","promotion":"repeated evidence may be assimilated only through the Design Arsenal admission contract"},
+  "next_execution":"materialize divergent real browser candidates, raster them, run beauty/identity/motion admission, preserve rejection evidence; do not production-promote automatically"
+}
