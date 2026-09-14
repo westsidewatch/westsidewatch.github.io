@@ -2,8 +2,8 @@
 """Resource Fabric inverse-scaling benchmark.
 
 The Python path is the dependency-free control. The same acceptance entrypoint
-also executes the Rust OSS benchmark (FST/Roaring/Zstd) when the crate exists,
-so CI cannot pass by measuring only a synthetic control model.
+also executes the Rust OSS benchmark (FST/Roaring/Zstd/Arrow-Parquet) when the
+crate exists, so CI cannot pass by measuring only a synthetic control model.
 """
 from __future__ import annotations
 
@@ -109,7 +109,9 @@ def run_oss_benchmark() -> bool:
         "DORE_RESOURCE_FABRIC_FST=PASS",
         "DORE_RESOURCE_FABRIC_ROARING=PASS",
         "DORE_RESOURCE_FABRIC_ZSTD_DICTIONARY=PASS",
+        "DORE_RESOURCE_FABRIC_COLUMNAR_PROJECTION=PASS",
         "works=1000000",
+        "surface_projection_ratio=",
     )
     return proc.returncode == 0 and all(marker in proc.stdout for marker in required)
 
