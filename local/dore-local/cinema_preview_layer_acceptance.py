@@ -73,7 +73,9 @@ assert 'for(const item of unresolved)' in controller
 assert 'const runtime=await runtimePoster(item);' in controller
 assert 'for(const item of resources)' in controller
 assert 'bridge-unavailable' in controller
-assert 'v3-nonblocking-source-probe' in controller
+assert 'v4-resource-graph' in controller
+assert "window.ParadiseCinemaGraph?.ready" in controller
+assert "cinemaPreviewAuthority='dore.bible-media-graph.v0'" in controller
 assert '.resource-preview.is-previewing iframe' in style
 assert '.living-poster__poster[data-preview-ready="true"]' in style
 print('Holy Light Cinema preview layer acceptance: PASS')
