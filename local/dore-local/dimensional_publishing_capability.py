@@ -6,6 +6,10 @@ from __future__ import annotations
 from dataclasses import dataclass, asdict, field
 from typing import Any, Callable, Dict, List, Optional
 
+from dimensional_living_corpus import corpus_context
+from dimensional_writing_judge import judge_batch
+from dimensional_writing_loop import DimensionalWritingLoop
+
 CAPABILITY_ID = "publishing.dimensional-writing"
 SCHEMA_VERSION = "1.0"
 
@@ -23,6 +27,8 @@ class EditorialPlan:
     return_lines: List[Dict[str, Any]] = field(default_factory=list)
     surfaces: List[str] = field(default_factory=list)
     publication: Dict[str, Any] = field(default_factory=dict)
+    growth: Dict[str, Any] = field(default_factory=dict)
+    corpus: Dict[str, Any] = field(default_factory=dict)
     degraded: bool = False
 
 class DimensionalPublishingCapability:
@@ -32,11 +38,22 @@ class DimensionalPublishingCapability:
     manuscript and thesis remain authority; generated material may deepen but not silently
     replace them.
     """
-    def __init__(self, infer: Optional[Callable[[Dict[str, Any]], Dict[str, Any]]] = None):
+    def __init__(
+        self,
+        infer: Optional[Callable[[Dict[str, Any]], Dict[str, Any]]] = None,
+        research: Optional[Callable[[Dict[str, Any]], Dict[str, Any]]] = None,
+    ):
         self.infer = infer
+        self.research = research
 
     def compile(self, *, title: str, manuscript: str, thesis: str = "", context: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        context = context or {}
+        context = dict(context or {})
+        work_id = context.get("work_id")
+        corpus: Dict[str, Any] = {}
+        if work_id in {"westside:vol00", "westside:vol01"}:
+            corpus = corpus_context(work_id)
+            context = {**context, **corpus}
+
         request = {
             "title": title, "thesis": thesis, "manuscript": manuscript, "context": context,
             "movement": ["discover", "excavate", "expand", "make-perceptible", "wander", "plant-return-lines", "converge"],
@@ -53,6 +70,14 @@ class DimensionalPublishingCapability:
                 degraded = True
         else:
             degraded = True
+
+        growth = DimensionalWritingLoop(
+            infer=self.infer,
+            research=self.research,
+            judge=judge_batch,
+        ).run(title=title, manuscript=manuscript, thesis=thesis, context=context)
+        degraded = degraded or bool(growth.get("degraded"))
+
         return asdict(EditorialPlan(
             capability=CAPABILITY_ID, schema_version=SCHEMA_VERSION,
             title=title, thesis=thesis, manuscript=manuscript,
@@ -66,5 +91,9 @@ class DimensionalPublishingCapability:
                 "journal_feature": True, "book_ready_pipeline": True,
                 "research_collection": True, "image_prompt_discovery": True,
                 "contextual_emergence": True, "audio_optional": True, "map_optional": True,
-            }, degraded=degraded,
+                "growth_mode": "parallel-real-writing" if corpus else "single-work",
+            },
+            growth=growth,
+            corpus=corpus,
+            degraded=degraded,
         ))
