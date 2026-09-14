@@ -67,6 +67,7 @@ jobs:
           er=json.loads(Path('reports/DAWN-LIBRARY-ENGLISH-RESOLVER.json').read_text())
           zr=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-RESOLVER.json').read_text())
           ep=json.loads(Path('reports/DAWN-LIBRARY-ENGLISH-PROMOTION.json').read_text())
+          zp=json.loads(Path('reports/DAWN-LIBRARY-CHINESE-PROMOTION.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
@@ -93,6 +94,8 @@ jobs:
           assert all(x.get('contentDownloaded') is False for x in zresolver['items'])
           assert all(x.get('rights',{}).get('declaredBy')=='Project Gutenberg' for x in zresolver['items'] if x['stage']=='verified')
           assert all((x.get('edition') or {}).get('language')=='zh' for x in zresolver['items'] if x['stage']=='verified')
+          assert r['results']['pipelineThisRun']['chinesePromotedThisRun']==zp['promoted']
+          assert r['results']['pipelineThisRun']['englishPromotedThisRun']==ep['promoted']
           urls=[]
           for item in cat['items']:
             for src in item.get('sources',[]):
@@ -102,7 +105,6 @@ jobs:
           auto=[x for x in cat['items'] if x.get('provenance',{}).get('origin')=='autonomous-discovery']
           assert all(x.get('rights',{}).get('status')=='public-domain' for x in auto)
           assert r['results']['books']['published']==len(cat['items'])
-          assert r['results']['pipelineThisRun']['englishPromotedThisRun']==ep['promoted']
           assert store['storagePolicy']=='index-only'
           assert store['metrics']['mappedBooks']>=30
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
@@ -110,7 +112,7 @@ jobs:
           ia=[x for s in store['shelves'] for x in s['items'] if x.get('source',{}).get('provider')=='Internet Archive']
           assert all(x.get('rights',{}).get('status')=='source-rights-check' for x in ia)
           assert all(not x.get('source',{}).get('downloadUrl') for x in ia)
-          print(json.dumps({'chineseSource':z['source'],'chineseCandidates':z['candidateQueue'],'chineseQualified':zg['results']['qualified'],'chineseVerified':zr['results']['verified'],'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'storefrontMapped':store['metrics']['mappedBooks'],'identity':store['metrics'].get('identity',{}),'internetArchiveScans':len(ia),'storefrontShelves':[(s['title'],len(s['items'])) for s in store['shelves']]},ensure_ascii=False,indent=2))
+          print(json.dumps({'chineseSource':z['source'],'chineseCandidates':z['candidateQueue'],'chineseQualified':zg['results']['qualified'],'chineseVerified':zr['results']['verified'],'chinesePromoted':zp['promoted'],'catalogTotal':len(cat['items']),'autonomousCatalog':len(auto),'storefrontMapped':store['metrics']['mappedBooks'],'identity':store['metrics'].get('identity',{}),'internetArchiveScans':len(ia),'storefrontShelves':[(s['title'],len(s['items'])) for s in store['shelves']]},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -133,6 +135,7 @@ jobs:
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
+          current_ref="${GITHUB_REF_NAME}"
           add_outputs() {
             git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
           }
@@ -153,9 +156,9 @@ jobs:
           if git diff --cached --quiet; then exit 0; fi
           for attempt in 1 2 3 4; do
             git commit -m 'chore(dawn): persist autonomous bookstore growth [skip ci]'
-            if git push; then exit 0; fi
-            git fetch origin main
-            git reset --hard origin/main
+            if git push origin "HEAD:${current_ref}"; then exit 0; fi
+            git fetch origin "${current_ref}"
+            git reset --hard "origin/${current_ref}"
             regenerate
             add_outputs
             if git diff --cached --quiet; then exit 0; fi
