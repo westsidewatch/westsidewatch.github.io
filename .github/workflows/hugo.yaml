@@ -38,10 +38,14 @@ jobs:
         uses: actions/configure-pages@v5
       - name: Admit Dawn source identity claims
         run: python scripts/reconcile_dawn_source_identity.py
+      - name: Admit Dawn source capabilities
+        run: python scripts/build_dawn_source_capability_map.py
+      - name: Admit Dawn materialization sources
+        run: python scripts/dawn_materialization_gate.py --minimum-admitted 1
       - name: Reconcile Dawn canonical cover assets
         run: |
           python -m pip install --disable-pip-version-check --no-cache-dir "Pillow>=10,<12"
-          python scripts/build_dawn_cover_registry.py --minimum-resolved 1
+          python scripts/build_dawn_cover_registry.py --identity-map .dore-build/dawn-materialization-identity-map.json --minimum-resolved 1
           python scripts/validate_dawn_cover_registry.py
       - name: Build with Hugo
         env:
