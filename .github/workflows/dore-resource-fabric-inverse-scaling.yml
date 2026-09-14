@@ -1,0 +1,28 @@
+name: DORE Resource Fabric Inverse Scaling
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/resource-fabric/**'
+      - 'local/dore-local/resource_fabric_inverse_scaling.py'
+      - '.github/workflows/dore-resource-fabric-inverse-scaling.yml'
+  workflow_dispatch:
+
+jobs:
+  inverse-scaling:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate frozen benchmark contract
+        run: python -m json.tool dore-core/resource-fabric/inverse-scaling-contract.v0.json >/dev/null
+      - name: Run 10K to 1M deterministic corpus benchmark
+        run: python local/dore-local/resource_fabric_inverse_scaling.py --max 1000000 | tee resource-fabric-benchmark.json.log
+      - name: Contract guardrails
+        run: |
+          grep -q 'DORE_RESOURCE_FABRIC_ACTIVE_FOOTPRINT_BOUNDED=PASS' resource-fabric-benchmark.json.log
+          grep -q 'DORE_RESOURCE_FABRIC_DELTA_MODEL=PASS' resource-fabric-benchmark.json.log
+          ! grep -Rqi 'wikisource' dore-core/resource-fabric local/dore-local/resource_fabric_inverse_scaling.py || grep -q '"wikisourceForbidden": true' dore-core/resource-fabric/inverse-scaling-contract.v0.json
