@@ -4,13 +4,14 @@
   "language": ["zh-Hant", "zh-Hans", "zh"],
   "source": "project-gutenberg",
   "seeds": [
+    {"title":"灵历集光","author":"宋尚节","gutenbergId":"25716","kind":"practical-theology","relations":["中國教會","靈命","復興","見證"],"priority":"golden"},
     {"title":"聖經","kind":"bible-edition","relations":["聖經版本","中文聖經"],"priority":"golden"},
     {"title":"新約","kind":"bible-edition","relations":["聖經版本","中文聖經"],"priority":"golden"},
     {"title":"福音","kind":"christian-text","relations":["福音","中文基督教文獻"],"priority":"high"},
     {"title":"使徒","kind":"christian-text","relations":["使徒","初代教會"],"priority":"high"},
     {"title":"教會史","kind":"church-history","relations":["教會史","初代教會"],"priority":"high"}
   ],
-  "searchQueries": ["聖經", "舊約", "新約", "福音", "使徒", "基督", "基督教", "教會", "教父", "希伯來"],
+  "searchQueries": ["聖經", "舊約", "新約", "福音", "使徒", "基督", "基督教", "教會", "教父", "希伯來", "灵历集光"],
   "excludedDiscoveryThemes": ["現代政治", "民族爭議", "戰爭爭議"],
-  "invariant": "Seeds and search hits are metadata candidates only. Wikisource is forbidden. No full text is bulk-copied into 黎明書局."
+  "invariant": "Known Gutenberg IDs establish source identity only; every seed still requires relevance, explicit Chinese-language metadata, explicit rights verification, and promotion admission. Wikisource is forbidden. No full text is bulk-copied into 黎明書局."
 }
