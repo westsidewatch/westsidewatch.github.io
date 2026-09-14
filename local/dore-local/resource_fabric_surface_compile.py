@@ -66,6 +66,10 @@ def main() -> int:
             cover_pointer,
             work.get("readingPointer"),
             bool(work.get("authorityBacked")),
+            authors,
+            work.get("languages") or [],
+            work.get("authorityIds") or {},
+            work.get("edition") or {},
         ]
         projected[wid] = record
         work_shards[fnv1a(wid) % WORK_SHARDS].append(record)
@@ -98,6 +102,7 @@ def main() -> int:
         "featuredCount":len(featured),
         "identityAuthority":canonical.get("identityAuthority") or "Dawn",
         "canonicalMonolithRequired":False,
+        "recordSchema":["workId","title","primaryAuthor","coverPointer","readingPointer","authorityBacked","authors","languages","authorityIds","edition"],
     })
 
     compiled = sum(len(x) for x in work_shards)
@@ -106,6 +111,7 @@ def main() -> int:
     print(f"DORE_RESOURCE_FABRIC_SURFACE_WORKS={compiled}")
     print("DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS")
     print("DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS")
+    print("DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS")
     return 0
 
 
