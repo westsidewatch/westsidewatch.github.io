@@ -1,0 +1,79 @@
+{
+  "schema": "dore.explore-evidence.v0",
+  "episode": "italian-editorial-dna-v0",
+  "corpus": "Campo Grafico",
+  "year": 1938,
+  "year_label": "Year VI",
+  "admission_status": "EVIDENCE_ONLY_NOT_CAPABILITY_PASS",
+  "physical_issue_pattern": {
+    "numbered_issues": 12,
+    "observed_objects": ["1", "2", "3", "4", "5", "6", "7-8-9", "10-11-12"],
+    "note": "The year begins as monthly issues, then compresses the final six numbered issues into two multi-month physical objects; both combined objects use glued spines."
+  },
+  "verified_evidence": [
+    {
+      "issue": "1",
+      "pages": 24,
+      "evidence": ["Enrico Bona cover", "glued Lorilleux demonstrative insert by Dradi-Rossi", "editorial Fuori registro", "announcement of future issues containing distinct exceptional works"]
+    },
+    {
+      "issue": "5",
+      "pages": 28,
+      "evidence": ["Documentari di Campo Grafico fourth installment", "multiple real printed artifacts glued into the issue", "day list, advertising card, invoice, powder-box sample, birth announcement, price list, business cards and postcards retain their object identities"]
+    },
+    {
+      "issue": "7-8-9",
+      "pages": 40,
+      "binding": "glued spine",
+      "evidence": ["A concrete manifestation of modern Italian typography occupies multiple spreads", "Documentari sixth installment distributes real artifacts across separated page ranges", "Rassegna del brutto places rejection/critique inside the publication", "legal and jurisprudential discussion of typeface reproduction appears beside design practice"]
+    },
+    {
+      "issue": "10-11-12",
+      "pages": 32,
+      "binding": "glued spine",
+      "evidence": ["three numbered months consolidated into one physical publication object"]
+    }
+  ],
+  "transferable_grammars": [
+    {
+      "id": "cadence-can-yield-to-production-reality",
+      "rule": "Editorial identity can survive irregular cadence. Do not simulate regularity when production, depth or material requirements demand another rhythm."
+    },
+    {
+      "id": "issue-as-curated-evidence-container",
+      "rule": "A publication may carry original artifacts as evidence rather than converting every artifact into a normalized illustration."
+    },
+    {
+      "id": "critique-belongs-inside-the-design-system",
+      "rule": "Aesthetic intelligence includes explicit rejection and negative examples; learning what is ugly or editorially wrong is part of design judgement."
+    },
+    {
+      "id": "practice-theory-law-production-coexist",
+      "rule": "A mature editorial object can hold design practice, technical production, criticism and legal/institutional constraints without flattening them into one content type."
+    },
+    {
+      "id": "identity-survives-format-variation",
+      "rule": "Coherence should be tested across changes in page count, binding, contributor, artifact type and issue cadence; sameness of template is not the source of identity."
+    }
+  ],
+  "rejection_memory": [
+    "Do not learn glued inserts as a decorative motif.",
+    "Do not imitate 1938 typography, covers or period furniture as a style preset.",
+    "Do not infer that irregular publishing is inherently desirable; it is valid only when editorial or production reality justifies it.",
+    "Do not normalize every heterogeneous artifact into the house visual language."
+  ],
+  "year_level_finding": "By 1938 Campo Grafico shows that editorial coherence can persist while cadence, binding, page count, contributors and material objects vary. The stable layer is judgement and relation, not a fixed visual template.",
+  "dore_implication": "Italian Editorial DNA must become a relational aesthetic judge. Doré should preserve identity while allowing issue form to change, retain materially meaningful source objects, learn from rejection, and decide when constraints themselves belong in the editorial composition.",
+  "sources": [
+    "https://www.campografico.org/journal/1-1938",
+    "https://www.campografico.org/journal/2-1938",
+    "https://www.campografico.org/journal/3-1938",
+    "https://www.campografico.org/journal/4-1938",
+    "https://www.campografico.org/journal/5-1938",
+    "https://www.campografico.org/journal/6-1938",
+    "https://www.campografico.org/journal/7e8e9-1938",
+    "https://www.campografico.org/journal/10e11e12-1938",
+    "https://www.campografico.org/articles/campioni-di-campo-grafico"
+  ],
+  "next": "Research 1939 as the terminal Campo Grafico year and distinguish durable editorial intelligence from end-of-run production pressure. No Capability Registry/System Atlas promotion until blind-transfer acceptance passes."
+}
