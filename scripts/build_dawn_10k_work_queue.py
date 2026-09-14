@@ -5,11 +5,16 @@ import json
 import re
 import unicodedata
 from pathlib import Path
+from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
 GUTENBERG = ROOT / 'static/dawn-library/biblical-world/discovery-candidates.json'
 OPENLIBRARY = ROOT / 'data/dawn-10k-openlibrary-works.json'
 OUT = ROOT / 'data/dawn-10k-work-queue.json'
+
+WIKISOURCE_PROVIDER_TOKENS = ('wikisource', 'zh-wikisource')
+CHINESE_LANGUAGE_CODES = {'chi', 'zho', 'zh', 'zh-cn', 'zh-hans', 'zh-hant', 'zh-tw', 'zh-hk'}
+ENGLISH_LANGUAGE_CODES = {'eng', 'en'}
 
 
 def norm(text: str) -> str:
@@ -27,6 +32,53 @@ def add_unique(target: list, value) -> None:
         target.append(value)
 
 
+def is_wikisource_url(value: object) -> bool:
+    text = str(value or '').strip()
+    if not text:
+        return False
+    try:
+        host = (urlparse(text).hostname or '').casefold().rstrip('.')
+    except ValueError:
+        host = ''
+    return host == 'wikisource.org' or host.endswith('.wikisource.org')
+
+
+def contains_forbidden_wikisource(value: object) -> bool:
+    """Hard discovery gate. Historical reports cannot reintroduce Wikisource."""
+    if isinstance(value, dict):
+        for key, nested in value.items():
+            key_norm = str(key).casefold()
+            if key_norm in {'provider', 'providerid', 'source', 'sourceid', 'sourcekey'}:
+                text = str(nested or '').casefold()
+                if any(token in text for token in WIKISOURCE_PROVIDER_TOKENS):
+                    return True
+            if contains_forbidden_wikisource(nested):
+                return True
+        return False
+    if isinstance(value, (list, tuple, set)):
+        return any(contains_forbidden_wikisource(item) for item in value)
+    text = str(value or '').casefold()
+    return is_wikisource_url(value) or 'zh-wikisource' in text or 'wikisource.org' in text
+
+
+def normalized_languages(item: dict) -> set[str]:
+    values = list(item.get('languages') or [])
+    matched = item.get('matchedLanguage')
+    if matched:
+        values.append(matched)
+    return {str(value).casefold().replace('_', '-') for value in values if str(value).strip()}
+
+
+def language_priority(item: dict) -> int:
+    """Chinese is promoted first; this changes order only, never admission quality."""
+    languages = normalized_languages(item)
+    if languages & CHINESE_LANGUAGE_CODES or any(code.startswith('zh-') for code in languages):
+        return 0
+    if languages & ENGLISH_LANGUAGE_CODES:
+        return 2
+    return 1
+
+
 def main() -> int:
     gutenberg = json.loads(GUTENBERG.read_text()) if GUTENBERG.exists() else {'items': []}
     openlibrary = json.loads(OPENLIBRARY.read_text()) if OPENLIBRARY.exists() else {'items': []}
@@ -42,6 +94,8 @@ def main() -> int:
     # Authority-backed Work identities come first. Open Library search returns Work-level
     # records; editions and translations already grouped by that authority remain one Work.
     for work in openlibrary.get('items', []):
+        if contains_forbidden_wikisource(work):
+            continue
         work_id = str(work.get('workId') or '').strip()
         title = str(work.get('title') or '').strip()
         authors = [str(x).strip() for x in (work.get('authors') or []) if str(x).strip()]
@@ -72,9 +126,11 @@ def main() -> int:
         if sig != '::' and sig not in signature_to_key:
             signature_to_key[sig] = key
 
-    # Legacy Gutenberg discovery remains valuable as pointer evidence. Exact normalized
-    # title+author matches attach to an authority Work; unmatched records stay provisional.
+    # Legacy discovery remains pointer evidence only. Wikisource is rejected before any
+    # provider, URL, relation, or provisional identity can enter the reconciliation queue.
     for candidate in gutenberg.get('items', []):
+        if contains_forbidden_wikisource(candidate):
+            continue
         title = str(candidate.get('title') or '').strip()
         author = str(candidate.get('author') or '').strip()
         sig = signature(title, author)
@@ -88,7 +144,7 @@ def main() -> int:
                 'title': title,
                 'author': author,
                 'authors': [author] if author else [],
-                'languages': [],
+                'languages': list(dict.fromkeys(candidate.get('languages') or ([candidate.get('matchedLanguage')] if candidate.get('matchedLanguage') else []))),
                 'providers': [],
                 'pointers': [],
                 'relations': [],
@@ -115,11 +171,16 @@ def main() -> int:
             for field in ('notes',):
                 if field in old:
                     item[field] = old[field]
+        if contains_forbidden_wikisource(item):
+            continue
         items.append(item)
 
+    # Promotion order only. Rights/relevance/authority gates remain untouched.
+    items.sort(key=lambda item: (language_priority(item), str(item.get('queueId') or '')))
+
     authority_backed = sum(1 for item in items if item.get('authorityIds', {}).get('openLibraryWork'))
-    chinese = sum(1 for item in items if 'chi' in item.get('languages', []) or item.get('matchedLanguage') == 'chi')
-    english = sum(1 for item in items if 'eng' in item.get('languages', []) or item.get('matchedLanguage') == 'eng')
+    chinese = sum(1 for item in items if language_priority(item) == 0)
+    english = sum(1 for item in items if language_priority(item) == 2)
     report = {
         'schema': 'dawn.library.10k-work-queue.v2',
         'targetWorks': 10000,
@@ -128,6 +189,8 @@ def main() -> int:
         'deduplicatedWorks': len(items),
         'authorityBackedWorks': authority_backed,
         'languageSignals': {'chi': chinese, 'eng': english},
+        'promotionPolicy': 'Chinese-first ordering after unchanged source/rights/relevance/authority qualification; ordering never grants admission.',
+        'sourcePolicy': {'wikisource': 'forbidden-at-discovery-and-reconciliation'},
         'checkpointRule': 'Authority-backed Work IDs are checkpoint 1; prior provisional progress survives rebuilds without downgrading established identities.',
         'admission': 'none; this queue is technical reconciliation input only',
         'items': items,
