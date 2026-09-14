@@ -1,5 +1,30 @@
 {
   "schema": "dawn.library.chinese-relevance-results.v2",
-  "generatedAt": "2026-09-14T22:01:21.340954+00:00",
-  "items": []
+  "generatedAt": "2026-09-14T22:05:18.935703+00:00",
+  "items": [
+    {
+      "sourceId": "25716",
+      "provider": "Project Gutenberg",
+      "language": "zh",
+      "title": "灵历集光",
+      "author": "宋尚节",
+      "sourceUrl": "https://www.gutenberg.org/ebooks/25716",
+      "priority": "golden",
+      "stage": "qualified",
+      "relevance": {
+        "score": 8,
+        "reasons": [
+          "golden-seed"
+        ],
+        "evaluatedAt": "2026-09-14T22:05:18.935703+00:00"
+      },
+      "rights": {
+        "status": "unverified",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg",
+        "provenanceRequired": true
+      },
+      "contentDownloaded": false
+    }
+  ]
 }

@@ -1,37 +1,41 @@
 {
   "schema": "dawn.library.loop.report.v3",
-  "generatedAt": "2026-09-14T22:01:24.205314+00:00",
+  "generatedAt": "2026-09-14T22:05:23.650372+00:00",
   "results": {
     "books": {
-      "published": 28,
-      "verified": 27,
+      "published": 29,
+      "verified": 28,
       "pending": 1,
-      "relations": 15,
+      "relations": 17,
       "providers": [
         "Project Gutenberg"
       ]
     },
     "catalogDeltaToday": {
-      "books": 0,
-      "verifiedBooks": 0,
-      "relations": 0
+      "books": 1,
+      "verifiedBooks": 1,
+      "relations": 2
     },
     "autonomousGrowthToday": {
-      "books": 0,
-      "titles": []
+      "books": 1,
+      "titles": [
+        "灵历集光"
+      ]
     },
     "pipelineThisRun": {
-      "chineseDiscoveredThisRun": 0,
-      "chinesePromotedThisRun": 0,
-      "chinesePromotedTitles": [],
+      "chineseDiscoveredThisRun": 1,
+      "chinesePromotedThisRun": 1,
+      "chinesePromotedTitles": [
+        "灵历集光"
+      ],
       "englishDiscoveredThisRun": 0,
       "englishPromotedThisRun": 0,
       "englishPromotedTitles": []
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 3.5,
-      "density": 27
+      "recentAutonomousGrowthPerDay": 3.667,
+      "density": 28
     },
     "collections": [
       {

@@ -1,16 +1,16 @@
 {
   "schema": "dawn.library.chinese-discovery.report.v2",
-  "generatedAt": "2026-09-14T22:01:19.166373+00:00",
+  "generatedAt": "2026-09-14T22:05:16.278182+00:00",
   "source": "project-gutenberg",
   "language": "zh",
-  "queries": 11,
-  "pagesChecked": 11,
-  "newDiscovered": 0,
-  "candidateQueue": 0,
+  "queries": 12,
+  "pagesChecked": 12,
+  "newDiscovered": 1,
+  "candidateQueue": 1,
   "errors": [],
   "sourcePolicy": {
     "wikisource": "forbidden",
     "contentBoundary": "theology-bible-inner-life; no political/national/war dispute material"
   },
-  "invariant": "Metadata only; explicit Chinese-language metadata required; golden status requires exact seed-title resolution; no bulk full-text ingestion."
+  "invariant": "Metadata only; known Gutenberg IDs establish identity only; explicit Chinese-language metadata and explicit rights are independently required before promotion; no bulk full-text ingestion."
 }

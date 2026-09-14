@@ -1144,6 +1144,52 @@
         "verifiedAt": "2026-09-10T21:15:01.424796+00:00",
         "catalogedAt": "2026-09-10T21:15:05.061773+00:00"
       }
+    },
+    {
+      "id": "zh-gutenberg-ce7acdb5d3b3",
+      "work": {
+        "title": "灵历集光",
+        "language": "zh",
+        "author": "宋尚节"
+      },
+      "edition": {
+        "label": "灵历集光",
+        "gutenbergId": "25716",
+        "publicDomain": true
+      },
+      "rights": {
+        "status": "public-domain",
+        "jurisdiction": "USA",
+        "declaredBy": "Project Gutenberg",
+        "provenanceRequired": true,
+        "evidenceUrl": "https://www.gutenberg.org/cache/epub/25716/pg25716.rdf"
+      },
+      "relations": [
+        "聖經世界",
+        "中文公版"
+      ],
+      "cover": {
+        "mode": "one-fallback",
+        "title": "灵历集光",
+        "author": "宋尚节"
+      },
+      "sources": [
+        {
+          "provider": "Project Gutenberg",
+          "kind": "remote-public",
+          "url": "https://www.gutenberg.org/ebooks/25716",
+          "format": "html/epub/text",
+          "downloadOnCatalog": false
+        }
+      ],
+      "provenance": {
+        "origin": "autonomous-discovery",
+        "languageLane": "zh",
+        "source": "project-gutenberg",
+        "discoveredAt": null,
+        "verifiedAt": "2026-09-14T22:05:19.036150+00:00",
+        "catalogedAt": "2026-09-14T22:05:19.336135+00:00"
+      }
     }
   ]
 }
