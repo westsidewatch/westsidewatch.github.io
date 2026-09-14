@@ -37,6 +37,38 @@
         {"type": "work-coordinate", "coordinateSource": "cinema/data/bible-media-coordinate.v0.json"}
       ],
       "confidence": 1.0
+    },
+    {
+      "momentId": "cinema:moment:lumo-matthew:episode-01",
+      "workId": "cinema:video:jesus-film:lumo-matthew",
+      "kind": "official-episode",
+      "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-1-1-2-23.html",
+      "startMs": 0,
+      "endMs": 574000,
+      "label": "LUMO · Matthew 1:1–2:23",
+      "anchors": [
+        {"type": "scripture", "value": "Matt.1.1-2.23", "label": "馬太福音 1:1–2:23", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "person", "value": "jesus", "label": "耶穌", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "event", "value": "escape-to-egypt", "label": "逃往埃及", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "event", "value": "return-to-nazareth", "label": "返回拿撒勒", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "place", "value": "egypt", "label": "埃及", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "place", "value": "nazareth", "label": "拿撒勒", "evidenceRef": "jfp-lumo-matthew-ep1"},
+        {"type": "period", "value": "new-testament", "label": "新約時代"}
+      ],
+      "evidence": [
+        {
+          "id": "jfp-lumo-matthew-ep1",
+          "type": "official-episode-metadata",
+          "provider": "Jesus Film Project",
+          "sourcePointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-1-1-2-23.html",
+          "collectionPointer": "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/english.html",
+          "scripture": "Matt.1.1-2.23",
+          "durationMs": 574000,
+          "observedAt": "2026-09-14"
+        },
+        {"type": "work-coordinate", "coordinateSource": "cinema/data/bible-media-coordinate.v0.json"}
+      ],
+      "confidence": 1.0
     }
   ]
 }

@@ -20,12 +20,18 @@ for moment in moment_payload["items"]:
     work_id = moment["workId"]
     assert work_id in resources, f"orphan moment: {moment_id}"
     resource = resources[work_id]
-    assert moment["sourcePointer"] == resource["sourcePointer"], f"source drift: {moment_id}"
+    exact_source = moment["sourcePointer"] != resource["sourcePointer"]
+    if exact_source:
+        assert moment.get("kind") == "official-episode", f"unexpected source drift: {moment_id}"
+        assert any(
+            e.get("type") == "official-episode-metadata" and e.get("sourcePointer") == moment["sourcePointer"]
+            for e in moment.get("evidence", [])
+        ), f"exact source lacks official episode evidence: {moment_id}"
     assert isinstance(moment["startMs"], int) and moment["startMs"] >= 0
     if moment.get("endMs") is not None:
         assert isinstance(moment["endMs"], int) and moment["endMs"] > moment["startMs"]
     assert moment["label"].strip()
-    assert moment.get("kind") in {"source-title", "provider-chapter", "editorial", "transcript"}
+    assert moment.get("kind") in {"source-title", "official-episode", "provider-chapter", "editorial", "transcript"}
     assert moment.get("anchors"), f"anchors required: {moment_id}"
     assert moment.get("evidence"), f"evidence required: {moment_id}"
     assert any(e.get("sourcePointer") == moment["sourcePointer"] for e in moment["evidence"]), f"source evidence missing: {moment_id}"
@@ -36,4 +42,8 @@ assert waiting, "real query 等候神 must resolve to at least one canonical Vid
 assert waiting[0]["workId"] == "cinema:video:goodtv:waiting-on-god-no-minute-wasted"
 assert waiting[0]["startMs"] == 0
 
-print(f"CINEMA_VIDEO_MOMENT_ACCEPTANCE_PASS resources={len(resources)} moments={len(moment_payload['items'])}")
+exact = [m for m in moment_payload["items"] if m.get("kind") == "official-episode"]
+assert exact, "at least one official-episode Moment required"
+assert exact[0]["endMs"] == 574000
+
+print(f"CINEMA_VIDEO_MOMENT_ACCEPTANCE_PASS resources={len(resources)} moments={len(moment_payload['items'])} exact={len(exact)}")
