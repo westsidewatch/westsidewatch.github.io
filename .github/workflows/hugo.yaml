@@ -36,6 +36,8 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Admit Dawn source identity claims
+        run: python scripts/reconcile_dawn_source_identity.py
       - name: Reconcile Dawn canonical cover assets
         run: |
           python -m pip install --disable-pip-version-check --no-cache-dir "Pillow>=10,<12"

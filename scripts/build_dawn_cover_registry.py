@@ -14,14 +14,14 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 STOREFRONT = ROOT / 'static/dawn-library/storefront.json'
-SURFACE = ROOT / 'static/dawn-library/surfaces/dawn-storefront.json'
+IDENTITY_MAP = ROOT / '.dore-build/dawn-source-identity-map.json'
 REGISTRY = ROOT / 'static/dawn-library/cover-registry.json'
 COVER_DIR = ROOT / 'static/dawn-library/covers'
 FORBIDDEN = ('wikisource', 'zh.wikisource.org')
 MAX_SOURCE_BYTES = 24 * 1024 * 1024
 MAX_CANONICAL_BYTES = 8 * 1024 * 1024
 MAX_DIMENSION = (1600, 2400)
-UA = 'Dore-Dawn-Cover-Reconciliation/1.1 (+https://westsidewatch.github.io)'
+UA = 'Dore-Dawn-Cover-Reconciliation/1.2 (+https://westsidewatch.github.io)'
 
 
 def read_json(path: Path) -> dict:
@@ -42,13 +42,13 @@ def valid_source_url(value: object) -> str | None:
     return url
 
 
-def paired_candidates(storefront: dict, surface: dict):
-    surface_shelves = {s.get('id'): s for s in surface.get('shelves', [])}
+def paired_candidates(storefront: dict, identity_map: dict):
+    claims = identity_map.get('claims') or {}
     for store_shelf in storefront.get('shelves', []):
-        canonical_shelf = surface_shelves.get(store_shelf.get('id')) or {}
-        refs = canonical_shelf.get('items', [])
-        for idx, item in enumerate(store_shelf.get('items', [])):
-            work_id = (refs[idx] if idx < len(refs) else {}).get('workId') or item.get('workId')
+        for item in store_shelf.get('items', []):
+            source_ref = str(item.get('id') or '').strip()
+            claim = claims.get(source_ref) if source_ref else None
+            work_id = (claim or {}).get('canonicalWorkId')
             if not work_id:
                 continue
             cover = item.get('cover') or {}
@@ -57,12 +57,14 @@ def paired_candidates(storefront: dict, surface: dict):
                 continue
             work = item.get('work') or {}
             yield {
+                'sourceRef': source_ref,
                 'workId': work_id,
                 'title': str(item.get('title') or work.get('title') or '').strip(),
                 'author': str(item.get('author') or work.get('author') or '').strip(),
                 'sourceUrl': source_url,
                 'sourceMode': cover.get('mode') or 'source',
                 'provider': cover.get('provider') or (item.get('source') or {}).get('provider') or 'source',
+                'identityAdmissionStatus': (claim or {}).get('status'),
             }
 
 
@@ -77,9 +79,9 @@ def group_candidates(candidates: list[dict]) -> tuple[dict[str, list[dict]], lis
         if len(signatures) > 1:
             collisions.append({
                 'workId': work_id,
-                'reason': 'conflicting storefront identities share one canonical Work ID',
+                'reason': 'identity admission invariant violated: conflicting sources share one canonical Work ID',
                 'candidates': [
-                    {'title': r.get('title'), 'author': r.get('author'), 'provider': r.get('provider'), 'sourceUrl': r.get('sourceUrl')}
+                    {'sourceRef': r.get('sourceRef'), 'title': r.get('title'), 'author': r.get('author'), 'provider': r.get('provider'), 'sourceUrl': r.get('sourceUrl')}
                     for r in rows
                 ],
             })
@@ -145,8 +147,7 @@ def materialize(candidate: dict) -> dict:
     ext = extension_for(content_type, url)
     filename = f'{digest_full[:24]}{ext}'
     target = COVER_DIR / filename
-    if not target.exists():
-        target.write_bytes(data)
+    target.write_bytes(data)
     return {
         'pointer': f'/dawn-library/covers/{filename}',
         'sha256': digest_full,
@@ -154,14 +155,16 @@ def materialize(candidate: dict) -> dict:
         'contentType': content_type.split(';', 1)[0].strip(),
         'provider': candidate['provider'],
         'sourceMode': candidate['sourceMode'],
+        'sourceRef': candidate['sourceRef'],
         'sourceUrl': url,
         'normalized': normalized,
+        'identityAdmissionStatus': candidate.get('identityAdmissionStatus'),
     }
 
 
-def reconcile(storefront: dict, surface: dict, max_downloads: int | None = None) -> dict:
+def reconcile(storefront: dict, identity_map: dict, max_downloads: int | None = None) -> dict:
     COVER_DIR.mkdir(parents=True, exist_ok=True)
-    candidate_rows = list(paired_candidates(storefront, surface))
+    candidate_rows = list(paired_candidates(storefront, identity_map))
     if max_downloads is not None:
         candidate_rows = candidate_rows[:max_downloads]
     groups, collisions = group_candidates(candidate_rows)
@@ -180,7 +183,7 @@ def reconcile(storefront: dict, surface: dict, max_downloads: int | None = None)
                     rows[work_id]['alternateSources'] = [r['sourceUrl'] for r in candidates if r['sourceUrl'] != candidate['sourceUrl']]
                 break
             except Exception as exc:
-                errors.append({'sourceUrl': candidate['sourceUrl'], 'error': str(exc)[:240]})
+                errors.append({'sourceRef': candidate.get('sourceRef'), 'sourceUrl': candidate['sourceUrl'], 'error': str(exc)[:240]})
         if work_id not in rows:
             failures.append({'workId': work_id, 'attempts': errors})
 
@@ -195,6 +198,8 @@ def reconcile(storefront: dict, surface: dict, max_downloads: int | None = None)
             'browserExternalLookup': False,
             'canonicalPointerScheme': 'dawn://cover/<workId>',
             'assetScope': '/dawn-library/covers/',
+            'sourceIdentityAdmission': 'required',
+            'positionalPairing': False,
             'wikisource': 'forbidden',
         },
         'candidateRowCount': len(candidate_rows),
@@ -212,17 +217,22 @@ def reconcile(storefront: dict, surface: dict, max_downloads: int | None = None)
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument('--storefront', type=Path, default=STOREFRONT)
-    parser.add_argument('--surface', type=Path, default=SURFACE)
+    parser.add_argument('--identity-map', type=Path, default=IDENTITY_MAP)
     parser.add_argument('--registry', type=Path, default=REGISTRY)
     parser.add_argument('--max-downloads', type=int)
     parser.add_argument('--minimum-resolved', type=int, default=1)
     args = parser.parse_args()
 
-    payload = reconcile(read_json(args.storefront), read_json(args.surface), args.max_downloads)
+    identity_map = read_json(args.identity_map)
+    if identity_map.get('schema') != 'dore.source-identity-admission.v1':
+        raise SystemExit('Dawn source identity admission map missing or invalid')
+    payload = reconcile(read_json(args.storefront), identity_map, args.max_downloads)
     args.registry.parent.mkdir(parents=True, exist_ok=True)
     args.registry.write_text(json.dumps(payload, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
     keys = ('candidateRowCount', 'candidateCount', 'duplicateCandidateCount', 'resolvedCount', 'failedCount', 'identityCollisionCount')
     print(json.dumps({k: payload[k] for k in keys}, ensure_ascii=False))
+    if payload['identityCollisionCount']:
+        raise SystemExit('cover reconciliation saw identity collisions after admission gate')
     if payload['resolvedCount'] < args.minimum_resolved:
         raise SystemExit(f"cover reconciliation below minimum: {payload['resolvedCount']} < {args.minimum_resolved}")
     return 0
