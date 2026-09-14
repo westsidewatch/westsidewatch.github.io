@@ -1,0 +1,18 @@
+{
+  "schema": "one.biblical-event-consumer.v1",
+  "surfaceId": "tool:one",
+  "authority": "data/bible-index/biblical-event.v1.json",
+  "consumesSchema": "dore.biblical-event.v1",
+  "joinKey": "eventId",
+  "projectionPolicy": {
+    "duplicateCanonicalEventMetadata": false,
+    "mayGrantMediaExactness": false,
+    "cinemaLinkContract": "/cinema/?event={eventId}#cinema-library"
+  },
+  "eventRefs": [
+    "bible:event:incarnation",
+    "bible:event:baptism-of-jesus",
+    "bible:event:crucifixion",
+    "bible:event:resurrection"
+  ]
+}
