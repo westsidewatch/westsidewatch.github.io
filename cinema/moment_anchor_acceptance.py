@@ -50,13 +50,24 @@ for moment in moments["items"]:
     assert any(entry.get("sourcePointer") == moment["sourcePointer"] for entry in moment["evidence"]), f"{moment['momentId']}: evidence must preserve sourcePointer provenance"
 
 exact = [moment for moment in moments["items"] if moment["kind"] == "official-episode"]
-assert exact, "at least one exact official episode Moment is required"
-first = exact[0]
-assert first["momentId"] == "cinema:moment:lumo-matthew:episode-01"
-assert first["startMs"] == 0 and first["endMs"] == 574000
-assert any(a["type"] == "scripture" and a["value"] == "Matt.1.1-2.23" for a in first["anchors"])
-assert {a["type"] for a in first["anchors"]} >= {"scripture", "event", "person", "place", "period"}
-assert first["sourcePointer"].endswith("/lumo-matthew-1-1-2-23.html")
+exact_by_id = {moment["momentId"]: moment for moment in exact}
+assert len(exact) >= 3, "incarnation, baptism, and cross/resurrection exact episodes are required"
+
+expected = {
+    "cinema:moment:lumo-matthew:episode-01": (574000, "Matt.1.1-2.23", {"escape-to-egypt", "return-to-nazareth"}),
+    "cinema:moment:lumo-matthew:episode-02": (452000, "Matt.3.1-4.25", {"baptism-of-jesus"}),
+    "cinema:moment:lumo-matthew:episode-24": (578000, "Matt.27.32-28.20", {"crucifixion", "resurrection"}),
+}
+for moment_id, (duration, scripture, events) in expected.items():
+    moment = exact_by_id[moment_id]
+    assert moment["startMs"] == 0 and moment["endMs"] == duration
+    assert any(a["type"] == "scripture" and a["value"] == scripture for a in moment["anchors"])
+    actual_events = {a["value"] for a in moment["anchors"] if a["type"] == "event"}
+    assert events <= actual_events
+    evidence = next(e for e in moment["evidence"] if e.get("type") == "official-episode-metadata")
+    assert evidence["durationMs"] == duration
+    assert evidence["scripture"] == scripture
+    assert evidence["provider"] == "Jesus Film Project"
 
 assert "queryMoments" in graph
 assert "momentsForAnchor" in graph
