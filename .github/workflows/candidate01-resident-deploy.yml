@@ -4,6 +4,9 @@ on:
   push:
     paths:
       - '.github/workflows/candidate01-resident-deploy.yml'
+      - 'dore-design/**'
+      - 'static/dore-design/italian-editorial-atlas.html'
+      - 'static/dore-design/italian-editorial-grammars.v1.json'
   workflow_dispatch:
 
 permissions:
@@ -42,7 +45,9 @@ jobs:
           rm -rf "$WT"
           git worktree add --force --detach "$WT" "$CANDIDATE_SHA"
           cd "$WT"
-          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py
+          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py dore-design/italian_editorial_atlas_runtime.py dore-design/app_design2.py
+          test -f static/dore-design/italian-editorial-atlas.html
+          test -f static/dore-design/italian-editorial-grammars.v1.json
       - name: Install into local Candidate 01 Design resident
         run: |
           WT="$HOME/.dore/design-candidate01"
@@ -52,17 +57,31 @@ jobs:
           bash dore-design/install-macos.sh
       - name: Verify running localhost Candidate 01 resident
         run: |
+          FOUND=0
           for i in $(seq 1 30); do
             HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' 2>/dev/null || true)
-            if printf '%s' "$HTML" | grep -q 'candidate01-exact-grid-preview-geometry'; then
-              printf '%s' "$HTML" | grep -q 'candidate01-living-current-runtime'
-              printf '%s' "$HTML" | grep -q 'candidate01-page2-assembly-runtime'
-              printf '%s' "$HTML" | grep -q 'centered-mirror-'
-              ! printf '%s' "$HTML" | grep -q 'dore-mosaic-layer'
-              echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered"
-              exit 0
+            if grep -q 'candidate01-exact-grid-preview-geometry' <<<"$HTML"; then
+              grep -q 'candidate01-living-current-runtime' <<<"$HTML"
+              grep -q 'candidate01-page2-assembly-runtime' <<<"$HTML"
+              grep -q 'centered-mirror-' <<<"$HTML"
+              grep -q 'candidate01-four-w-runtime' <<<"$HTML"
+              grep -q 'WATCH' <<<"$HTML"
+              grep -q 'WITNESS' <<<"$HTML"
+              grep -q 'WALK' <<<"$HTML"
+              grep -q 'WORSHIP' <<<"$HTML"
+              ! grep -q 'dore-mosaic-layer' <<<"$HTML"
+              FOUND=1
+              break
             fi
             sleep 2
           done
-          echo "CANDIDATE01_LOCAL_RESIDENT_FAIL sha=$CANDIDATE_SHA marker_missing" >&2
-          exit 1
+          test "$FOUND" = 1
+          EDITOR=$(curl -fsS 'http://127.0.0.1:4310/editor?page=italian-editorial-atlas')
+          grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"
+          ATLAS=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=italian-editorial-atlas')
+          grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"
+          SURFACE=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-atlas.html')
+          grep -q 'Italian Editorial Atlas' <<<"$SURFACE"
+          REGISTRY=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-grammars.v1.json')
+          grep -q 'dore.italian-editorial-grammars.v1' <<<"$REGISTRY"
+          echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered,four-w,italian-atlas"
