@@ -33,17 +33,20 @@ We are temporarily leaving the product mainline to establish the engineering-ind
 - links from Memory and A2A back to canonical GitHub identities;
 - CI acceptance so cross-system engineering cannot silently bypass the catalog.
 
+The repository already contains `DORÉ-MASTER-WORK-REGISTER.md` and the active `DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md`. This detour does **not** start a second memory sweep. System Atlas supplies the stable engineering coordinates that the existing sweep was missing, so its scattered findings can be attached to canonical entities and brought home without erasing provenance.
+
 This detour is infrastructure, not a change of product direction.
 
 ## Return condition
 
-Return to the Paradise Cinema mainline once the System Atlas foundation is usable enough that a new AI/agent/session can reliably answer:
+Return to the Paradise Cinema mainline once the System Atlas foundation and its first reconciliation pass are usable enough that a new AI/agent/session can reliably answer:
 
 - What is the main site structure?
 - What products and capabilities exist?
 - Where is each canonical record?
 - Which branch/PR/decision is current versus historical?
 - What is the current product mainline?
+- What does the Master Work Register track versus what System Atlas identifies?
 - What does A2A execute, and what does Memory remember?
 
 The engineering index exists to prevent project knowledge from becoming another collection of disconnected documents.
