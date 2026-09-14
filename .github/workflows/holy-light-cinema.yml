@@ -18,8 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: test -f cinema/index.html && test -f cinema/cinema.css && test -f cinema/inline-player.css && test -f cinema/preview-layer.css && test -f cinema/journey-layer.css && test -f cinema/journey-anchor-derivation.js && test -f cinema/provider-adapters.js && test -f cinema/resource-graph.js && test -f cinema/journey-layer.js && test -f cinema/cinema.js && test -f cinema/preview-controller.js && test -f cinema/special-resource-policy.js && test -f cinema/goodtv/index.html && test -f cinema/data/video-resource.v0.json && test -f cinema/data/video-moment.v0.json && test -f cinema/data/bible-media-coordinate.v0.json && test -f cinema/data/bible-journey.v0.json
-      - run: node --check cinema/resource-graph.js && node --check cinema/journey-layer.js && node --check cinema/journey-anchor-derivation.js && node --check cinema/cinema.js && node --check cinema/coordinate-layer.js && node --check cinema/preview-controller.js
+      - run: test -f cinema/index.html && test -f cinema/cinema.css && test -f cinema/inline-player.css && test -f cinema/preview-layer.css && test -f cinema/journey-layer.css && test -f cinema/provider-adapters.js && test -f cinema/resource-graph.js && test -f cinema/journey-layer.js && test -f cinema/cinema.js && test -f cinema/preview-controller.js && test -f cinema/special-resource-policy.js && test -f cinema/goodtv/index.html && test -f cinema/data/video-resource.v0.json && test -f cinema/data/video-moment.v0.json && test -f cinema/data/bible-media-coordinate.v0.json && test -f cinema/data/bible-journey.v0.json && test -f cinema/data/bible-journey-moment.v0.json
+      - run: node --check cinema/resource-graph.js && node --check cinema/journey-layer.js && node --check cinema/cinema.js && node --check cinema/coordinate-layer.js && node --check cinema/preview-controller.js
       - run: python3 local/dore-local/video_reflex_acceptance.py
       - run: python3 local/dore-local/cinema_video_moment_acceptance.py
       - run: python3 local/dore-local/cinema_preview_layer_acceptance.py
