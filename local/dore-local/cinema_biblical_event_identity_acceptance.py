@@ -2,14 +2,16 @@
 import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-events=json.loads((ROOT/'cinema/data/biblical-event.v1.json').read_text())
+events=json.loads((ROOT/'data/bible-index/biblical-event.v1.json').read_text())
 journey=json.loads((ROOT/'cinema/data/bible-journey.v0.json').read_text())
 moments=json.loads((ROOT/'cinema/data/video-moment.v0.json').read_text())
 overrides=json.loads((ROOT/'cinema/data/bible-journey-moment.v0.json').read_text())
 graph=(ROOT/'cinema/resource-graph.js').read_text()
 assert events['schema']=='dore.biblical-event.v1'
-assert events['authority']=='biblical-event'
+assert events['authority']=='bible-index'
+assert events['identityPolicy']['consumerMayGrantMediaExactness'] is False
 assert overrides['items']==[]
+assert not (ROOT/'cinema/data/biblical-event.v1.json').exists()
 by_id={e['eventId']:e for e in events['items']}
 assert set(by_id)=={'bible:event:incarnation','bible:event:baptism-of-jesus','bible:event:crucifixion','bible:event:resurrection'}
 alias={a:e['eventId'] for e in events['items'] for a in [e['canonicalKey'],*e['aliases']]}
@@ -29,9 +31,10 @@ for station_id,(event_id,moment_id) in expected.items():
     assert moment_id in moment_by_event[event_id]
 assert expected['cross'][1]==expected['resurrection'][1]
 assert "EVENT_SCHEMA='dore.biblical-event.v1'" in graph
-assert "events:'data/biblical-event.v1.json'" in graph
+assert "events:'../data/bible-index/biblical-event.v1.json'" in graph
+assert "eventPayload.authority!=='bible-index'" in graph
 assert "exactSource=override.length?'editorial-override':(derived.length?'canonical-biblical-event':'none')" in graph
 assert 'resolveEvent' in graph and 'biblicalEvent' in graph
 assert "anchor.type==='event'" in graph
 assert "MATCH_TYPES" not in graph
-print('PARADISE_CINEMA_BIBLICAL_EVENT_IDENTITY=PASS events=4 core=4 overrides=0 shared_episode24=2')
+print('PARADISE_CINEMA_BIBLICAL_EVENT_IDENTITY=PASS events=4 authority=bible-index core=4 overrides=0 shared_episode24=2')
