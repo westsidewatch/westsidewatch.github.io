@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
 """Immutable sandbox for executable Doré Design candidate patches."""
 from __future__ import annotations
-import copy, hashlib, json
+import copy, hashlib, json, re
 import design2_renderer
 
 ALLOWED_OPS={'move','resize','font_size','text_align','add_node','set_style'}
 MAX_OPS=48
-SAFE_NODE_TYPES={'text','panel','light','rule','portal'}
+SAFE_NODE_TYPES={'text','panel','light','rule','portal','image'}
 SAFE_STYLE_KEYS={'background','color','border','border_radius','opacity','letter_spacing','line_height','font_weight','font_family'}
+_DANGEROUS_STYLE=re.compile(r'(?:url\s*\(|expression\s*\(|javascript\s*:|@import|data\s*:|file\s*:)',re.I)
 
 def _num(value,name):
     if not isinstance(value,(int,float)): raise ValueError('invalid_numeric_'+name)
@@ -27,13 +28,24 @@ def _safe_style(style):
     for k,v in style.items():
         if k not in SAFE_STYLE_KEYS: raise ValueError('candidate_style_not_allowed:'+str(k))
         if not isinstance(v,(str,int,float)): raise ValueError('candidate_style_value_invalid:'+str(k))
+        if isinstance(v,str) and _DANGEROUS_STYLE.search(v): raise ValueError('candidate_style_external_reference_forbidden:'+str(k))
         out[k]=v
     return out
 
-def validate_patch(patch):
+def _asset_map(allowed_assets):
+    if not allowed_assets:return {}
+    rows=allowed_assets.values() if isinstance(allowed_assets,dict) else allowed_assets
+    out={}
+    for row in rows:
+        if isinstance(row,dict) and row.get('trusted') is True and str(row.get('asset_ref') or ''):
+            out[str(row['asset_ref'])]=row
+    return out
+
+def validate_patch(patch,allowed_assets=None):
     if not isinstance(patch,dict) or patch.get('schema')!='dore.design.candidate-patch.v1': raise ValueError('invalid_candidate_patch_schema')
     ops=patch.get('ops')
     if not isinstance(ops,list) or not ops or len(ops)>MAX_OPS: raise ValueError('invalid_candidate_patch_ops')
+    assets=_asset_map(allowed_assets)
     for op in ops:
         if not isinstance(op,dict) or op.get('op') not in ALLOWED_OPS: raise ValueError('candidate_patch_op_not_allowed')
         kind=op['op']
@@ -44,6 +56,14 @@ def validate_patch(patch):
             for key in ('x','y','w','h'): _num(node.get(key),key)
             if float(node['w'])<=0 or float(node['h'])<=0: raise ValueError('candidate_patch_size_must_be_positive')
             if node.get('style') is not None: _safe_style(node['style'])
+            if node.get('type')=='image':
+                ref=str(node.get('asset_ref') or '')
+                if not ref or ref not in assets: raise ValueError('candidate_image_asset_ref_not_allowed')
+                if node.get('fit','cover') not in {'cover','contain','fill'}: raise ValueError('candidate_image_fit_invalid')
+                for key in ('crop_x','crop_y'):
+                    if node.get(key) is not None:
+                        value=_num(node.get(key),key)
+                        if not 0<=value<=100: raise ValueError('candidate_image_crop_out_of_range')
             continue
         if not str(op.get('node_id') or '').strip(): raise ValueError('candidate_patch_node_required')
         if kind=='move': _num(op.get('x'),'x');_num(op.get('y'),'y')
@@ -57,8 +77,8 @@ def validate_patch(patch):
         elif kind=='set_style': _safe_style(op.get('style'))
     return True
 
-def apply_patch(snapshot,patch):
-    validate_patch(patch);out=copy.deepcopy(snapshot);page=_page(out);nodes={str(n.get('id')):n for n in page.get('nodes') or [] if isinstance(n,dict)}
+def apply_patch(snapshot,patch,allowed_assets=None):
+    validate_patch(patch,allowed_assets);out=copy.deepcopy(snapshot);page=_page(out);nodes={str(n.get('id')):n for n in page.get('nodes') or [] if isinstance(n,dict)}
     for op in patch['ops']:
         kind=op['op']
         if kind=='add_node':
@@ -80,9 +100,9 @@ def geometry_evidence(snapshot):
     for node in page.get('nodes') or []:
         if not isinstance(node,dict): continue
         x=float(node.get('x',0) or 0);y=float(node.get('y',0) or 0);w=float(node.get('w',node.get('width',0)) or 0);h=float(node.get('h',node.get('height',0)) or 0)
-        rows.append({'id':str(node.get('id') or ''),'type':str(node.get('type') or 'node'),'x':x,'y':y,'w':w,'h':h,'center_x_ratio':round((x+w/2)/cw,6) if cw else 0,'center_y_ratio':round((y+h/2)/ch,6) if ch else 0,'font_size':node.get('size'),'text_align':node.get('text_align'),'inside_canvas':x>=0 and y>=0 and x+w<=cw and y+h<=ch})
+        rows.append({'id':str(node.get('id') or ''),'type':str(node.get('type') or 'node'),'x':x,'y':y,'w':w,'h':h,'center_x_ratio':round((x+w/2)/cw,6) if cw else 0,'center_y_ratio':round((y+h/2)/ch,6) if ch else 0,'font_size':node.get('size'),'text_align':node.get('text_align'),'asset_ref':node.get('asset_ref'),'inside_canvas':x>=0 and y>=0 and x+w<=cw and y+h<=ch})
     return {'canvas':{'w':cw,'h':ch},'node_count':len(rows),'nodes':rows,'all_inside_canvas':all(r['inside_canvas'] for r in rows)}
 
-def materialize(snapshot,patch,candidate_id):
-    candidate=apply_patch(snapshot,patch);html=design2_renderer.render_snapshot(candidate,edit=False);evidence=geometry_evidence(candidate)
-    return {'schema':'dore.design.sandbox-candidate.v1','candidate_id':str(candidate_id),'patch':copy.deepcopy(patch),'snapshot':candidate,'rendered_html':html,'render_sha256':hashlib.sha256(html.encode()).hexdigest(),'geometry':evidence,'canonical_workspace_mutated':False}
+def materialize(snapshot,patch,candidate_id,allowed_assets=None):
+    candidate=apply_patch(snapshot,patch,allowed_assets);assets=_asset_map(allowed_assets);html=design2_renderer.render_snapshot(candidate,edit=False,trusted_assets=assets);evidence=geometry_evidence(candidate);used=sorted({str(n.get('asset_ref')) for n in (_page(candidate).get('nodes') or []) if isinstance(n,dict) and n.get('type')=='image' and str(n.get('asset_ref') or '') in assets})
+    return {'schema':'dore.design.sandbox-candidate.v1','candidate_id':str(candidate_id),'patch':copy.deepcopy(patch),'snapshot':candidate,'rendered_html':html,'render_sha256':hashlib.sha256(html.encode()).hexdigest(),'geometry':evidence,'used_asset_refs':used,'asset_sha256':{ref:assets[ref].get('sha256') for ref in used},'canonical_workspace_mutated':False}
