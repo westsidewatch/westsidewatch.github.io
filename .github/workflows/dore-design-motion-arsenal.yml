@@ -1,0 +1,31 @@
+name: DORE Design Motion Arsenal
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/runtime/design-motion-capability.v0.json'
+      - 'dore-design/motion-arsenal.v0.json'
+      - 'dore-design/living-water-motion-profile.v0.json'
+      - 'dore-design/italian_editorial_motion_compiler.py'
+      - 'static/dore-design/dore-motion.js'
+      - 'static/dore-design/italian-editorial-grammars.v1.json'
+      - 'local/dore-local/design_motion_arsenal_acceptance.py'
+      - '.github/workflows/dore-design-motion-arsenal.yml'
+  workflow_dispatch:
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax
+        run: |
+          python3 -m py_compile dore-design/italian_editorial_motion_compiler.py
+          python3 -m py_compile local/dore-local/design_motion_arsenal_acceptance.py
+      - name: JavaScript syntax
+        run: node --check static/dore-design/dore-motion.js
+      - name: Motion arsenal acceptance
+        run: python3 local/dore-local/design_motion_arsenal_acceptance.py
