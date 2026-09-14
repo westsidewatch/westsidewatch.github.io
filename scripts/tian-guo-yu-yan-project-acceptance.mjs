@@ -3,6 +3,7 @@ import { buildBookIntent } from '../static/multiwrite/book-model.mjs';
 
 const project = JSON.parse(fs.readFileSync(new URL('../data/publishing/tian-guo-yu-yan.book-intent.v1.json', import.meta.url), 'utf8'));
 const manifest = JSON.parse(fs.readFileSync(new URL('../data/publishing/projects.manifest.v1.json', import.meta.url), 'utf8'));
+const sourceAuthority = JSON.parse(fs.readFileSync(new URL('../data/publishing/tian-guo-yu-yan.source-authority.v1.json', import.meta.url), 'utf8'));
 
 if (project.schema !== 'dore.book-project.v1') throw new Error('invalid project schema');
 if (project.id !== 'book.tian-guo-yu-yan') throw new Error('invalid project id');
@@ -21,12 +22,25 @@ if (intent.category !== 'narrative-theological-popular-nonfiction') throw new Er
 if (!intent.thesis || intent.thesis !== project.source.bookIntent.thesis) throw new Error('thesis authority drift');
 if (intent.readingMode !== 'continuous-narrative') throw new Error('narrative reading mode missing');
 
+if (sourceAuthority.schema !== 'dore.book-source-authority.v1') throw new Error('source authority map missing');
+if (sourceAuthority.projectId !== project.id) throw new Error('source authority project mismatch');
+if (sourceAuthority.canonicalSource?.sourceRole !== 'canonical-manuscript-source') throw new Error('canonical manuscript role missing');
+if (sourceAuthority.supportingSource?.sourceRole !== 'evidence-and-research-layer') throw new Error('research paper role boundary missing');
+if (sourceAuthority.supportingSource?.mayOverrideCanonicalManuscript !== false) throw new Error('research paper may override manuscript');
+if (sourceAuthority.supportingSource?.mayOverrideAuthorThesis !== false) throw new Error('research paper may override author thesis');
+if (sourceAuthority.census?.exactHanCharacters !== null) throw new Error('unverified exact census admitted');
+if (sourceAuthority.census?.sourceLabelApproxChineseCharacters !== 54000) throw new Error('source-label approximation missing');
+if (sourceAuthority.authority?.observedStructureMayNotBePromotedToFrozenToc !== true) throw new Error('observed chapter graph freeze boundary missing');
+if (!Array.isArray(sourceAuthority.observedChapterGraph?.nodes) || sourceAuthority.observedChapterGraph.nodes.length !== 14) throw new Error('observed chapter graph incomplete');
+
 console.log(JSON.stringify({
   schema: 'dore.book-project-admission-acceptance.v1',
   status: 'PASS',
   project: project.id,
   targetChineseCharacters: project.development.targetChineseCharacters,
   route: `${row.consumer}:${row.entryAction}`,
+  sourceStage: sourceAuthority.status,
+  observedChapterNodes: sourceAuthority.observedChapterGraph.nodes.length,
   checks: [
     'publishing-manifest-registration',
     'canonical-book-intent',
@@ -35,6 +49,9 @@ console.log(JSON.stringify({
     'westside-writing-capability',
     'book-compile-capability',
     'author-thesis-authority',
-    'no-silent-truncation'
+    'no-silent-truncation',
+    'canonical-manuscript-vs-research-source-boundary',
+    'no-false-exact-census',
+    'observed-chapter-graph-not-frozen-toc'
   ]
 }, null, 2));
