@@ -3,19 +3,31 @@ const shelvesHost = root.querySelector('[data-shelves]');
 const search = root.querySelector('[data-search]');
 const count = root.querySelector('[data-count]');
 
-const [storefront, surface, canonical, coverRegistry] = await Promise.all([
+const [storefront, surface, manifest, featured] = await Promise.all([
   fetch('../storefront.json').then(r => r.json()),
   fetch('../surfaces/dawn-storefront.json').then(r => r.json()),
-  fetch('../canonical-index.json').then(r => r.json()),
-  fetch('../cover-registry.json').then(r => r.ok ? r.json() : ({ covers: {} })).catch(() => ({ covers: {} }))
+  fetch('../resource-fabric/manifest.json').then(r => r.json()),
+  fetch('../resource-fabric/featured.json').then(r => r.json())
 ]);
 
-const canonicalWorks = canonical?.works || {};
-const canonicalCovers = coverRegistry?.covers || {};
 const surfaceShelves = new Map((surface?.shelves || []).map(shelf => [shelf.id, shelf]));
+const featuredWorks = new Map((featured?.rows || []).map(row => [row[0], row]));
+const searchBucketCache = new Map();
+
+function projectedRecord(row) {
+  if (!row) return null;
+  return {
+    workId: row[0],
+    title: row[1] || 'Untitled',
+    author: row[2] || '',
+    coverPointer: row[3] || null,
+    readingPointer: row[4] || null,
+    authorityBacked: Boolean(row[5])
+  };
+}
 
 function canonicalRecord(workId) {
-  return canonicalWorks[workId] || null;
+  return projectedRecord(featuredWorks.get(workId));
 }
 
 function mergeShelf(storeShelf) {
@@ -31,10 +43,9 @@ function mergeShelf(storeShelf) {
       return {
         workId,
         title: work?.title || legacy.title || 'Untitled',
-        author: work?.authors?.[0] || legacy.author || '',
-        source: legacy.source || null,
-        cover: legacy.cover || null,
-        canonicalCover: workId ? canonicalCovers[workId] || null : null,
+        author: work?.author || legacy.author || '',
+        source: legacy.source || pointerSource(work?.readingPointer),
+        coverPointer: work?.coverPointer || null,
         canonical: Boolean(work)
       };
     })
@@ -42,12 +53,18 @@ function mergeShelf(storeShelf) {
 }
 
 const shelves = (storefront?.shelves || []).map(mergeShelf);
-const total = shelves.reduce((n, shelf) => n + shelf.items.length, 0);
+const curatedTotal = shelves.reduce((n, shelf) => n + shelf.items.length, 0);
 
 function coverUrl(item) {
-  const pointer = item?.canonicalCover?.pointer;
+  const pointer = item?.coverPointer;
   if (typeof pointer === 'string' && pointer.startsWith('/dawn-library/covers/')) return pointer;
   return '';
+}
+
+function pointerSource(pointer) {
+  if (typeof pointer === 'string' && /^https?:\/\//.test(pointer)) return { url: pointer };
+  if (pointer && typeof pointer === 'object' && typeof pointer.url === 'string') return { url: pointer.url };
+  return null;
 }
 
 function makeBook(item) {
@@ -96,25 +113,83 @@ function makeBook(item) {
   return card;
 }
 
-function render(query = '') {
-  const q = query.trim().toLocaleLowerCase();
+function appendShelf(title, items) {
+  if (!items.length) return 0;
+  const section = document.createElement('section');
+  section.className = 'shelf';
+  const heading = document.createElement('h2');
+  heading.textContent = title;
+  const rail = document.createElement('div');
+  rail.className = 'rail';
+  items.forEach(item => rail.append(makeBook(item)));
+  section.append(heading, rail);
+  shelvesHost.append(section);
+  return items.length;
+}
+
+function renderCurated() {
   shelvesHost.replaceChildren();
   let visible = 0;
-  for (const shelf of shelves) {
-    const items = shelf.items.filter(item => !q || `${item.title} ${item.author}`.toLocaleLowerCase().includes(q));
-    if (!items.length) continue;
-    visible += items.length;
-    const section = document.createElement('section');
-    section.className = 'shelf';
-    const heading = document.createElement('h2');
-    heading.textContent = shelf.title;
-    const rail = document.createElement('div');
-    rail.className = 'rail';
-    items.forEach(item => rail.append(makeBook(item)));
-    section.append(heading, rail);
-    shelvesHost.append(section);
+  for (const shelf of shelves) visible += appendShelf(shelf.title, shelf.items);
+  count.textContent = `${manifest?.workCount || curatedTotal} resources`;
+}
+
+function normalize(text) {
+  return (text || '').toLocaleLowerCase().match(/[\p{L}\p{N}_]+/gu)?.join(' ') || '';
+}
+
+function tokenPrefix(token) {
+  return Array.from(token).slice(0, 4).join('');
+}
+
+function fnv1a(text) {
+  let h = 0x811c9dc5;
+  for (const b of new TextEncoder().encode(text)) {
+    h ^= b;
+    h = Math.imul(h, 0x01000193) >>> 0;
   }
-  count.textContent = q ? `${visible} / ${total}` : `${total} books`;
+  return h >>> 0;
+}
+
+async function searchFabric(query) {
+  const normalized = normalize(query);
+  if (!normalized) return [];
+  const tokens = normalized.split(' ').filter(Boolean);
+  const prefix = tokenPrefix(tokens[0]);
+  const bucket = fnv1a(prefix) % (manifest?.searchBucketCount || 64);
+  if (!searchBucketCache.has(bucket)) {
+    const id = bucket.toString(16).padStart(2, '0');
+    searchBucketCache.set(bucket, fetch(`../resource-fabric/search-${id}.json`).then(r => r.json()));
+  }
+  const payload = await searchBucketCache.get(bucket);
+  const seen = new Set();
+  const results = [];
+  for (const row of payload?.rows || []) {
+    if (row[0] !== prefix) continue;
+    const haystack = normalize(`${row[2]} ${row[3]}`);
+    if (!tokens.every(token => haystack.includes(token))) continue;
+    if (seen.has(row[1])) continue;
+    seen.add(row[1]);
+    results.push({
+      workId: row[1],
+      title: row[2] || 'Untitled',
+      author: row[3] || '',
+      source: null,
+      coverPointer: null,
+      canonical: true
+    });
+  }
+  return results;
+}
+
+let searchGeneration = 0;
+async function renderSearch(query) {
+  const generation = ++searchGeneration;
+  const results = await searchFabric(query);
+  if (generation !== searchGeneration) return;
+  shelvesHost.replaceChildren();
+  const visible = appendShelf('All canonical resources', results);
+  count.textContent = `${visible} / ${manifest?.workCount || 0}`;
   if (!visible) {
     const empty = document.createElement('p');
     empty.className = 'empty';
@@ -123,5 +198,16 @@ function render(query = '') {
   }
 }
 
-search.addEventListener('input', event => render(event.target.value));
-render();
+search.addEventListener('input', event => {
+  const q = event.target.value.trim();
+  if (!q) {
+    searchGeneration += 1;
+    renderCurated();
+    return;
+  }
+  renderSearch(q).catch(error => {
+    console.error('Resource Fabric search failed', error);
+  });
+});
+
+renderCurated();
