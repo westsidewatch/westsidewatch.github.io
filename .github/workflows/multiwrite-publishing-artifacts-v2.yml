@@ -7,6 +7,7 @@ on:
       - 'static/multiwrite/book-cover-client.mjs'
       - 'static/multiwrite/book-publishing-autopilot.mjs'
       - 'static/multiwrite/book-compile-bridge.mjs'
+      - 'static/multiwrite/source-capability-admission.mjs'
       - 'local/dore-companion-extension/**'
       - 'tests/multiwrite-publishing-artifacts-browser-e2e.mjs'
       - '.github/workflows/multiwrite-publishing-artifacts-v2.yml'
@@ -16,6 +17,7 @@ on:
       - 'static/multiwrite/book-cover-client.mjs'
       - 'static/multiwrite/book-publishing-autopilot.mjs'
       - 'static/multiwrite/book-compile-bridge.mjs'
+      - 'static/multiwrite/source-capability-admission.mjs'
       - 'local/dore-companion-extension/**'
       - 'tests/multiwrite-publishing-artifacts-browser-e2e.mjs'
       - '.github/workflows/multiwrite-publishing-artifacts-v2.yml'
@@ -38,5 +40,5 @@ jobs:
           python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/multiwrite-http.log 2>&1 &
           echo $! >/tmp/multiwrite-http.pid
           for i in {1..30}; do curl -fsS http://127.0.0.1:8000/static/multiwrite/ >/dev/null && break; sleep 1; done
-      - name: Materialize and verify EPUB PDF Web
+      - name: Materialize and verify EPUB PDF Web plus source capability admission
         run: node tests/multiwrite-publishing-artifacts-browser-e2e.mjs
