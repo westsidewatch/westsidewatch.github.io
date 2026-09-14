@@ -1,0 +1,35 @@
+name: Paradise Cinema Coordinate v0
+
+on:
+  pull_request:
+    paths:
+      - 'cinema/**'
+      - '.github/workflows/paradise-cinema-coordinate-v0.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'cinema/**'
+      - '.github/workflows/paradise-cinema-coordinate-v0.yml'
+
+jobs:
+  coordinate-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Parse Cinema data
+        run: |
+          python -m json.tool cinema/data/video-resource.v0.json >/dev/null
+          python -m json.tool cinema/data/video-moment.v0.json >/dev/null
+          python -m json.tool cinema/data/bible-media-coordinate.v0.json >/dev/null
+      - name: JavaScript syntax
+        run: |
+          node --check cinema/cinema.js
+          node --check cinema/coordinate-layer.js
+      - name: Coordinate acceptance
+        run: python cinema/coordinate_acceptance.py
