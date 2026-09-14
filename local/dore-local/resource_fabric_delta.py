@@ -16,8 +16,6 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 FABRIC = ROOT / "static/dawn-library/resource-fabric"
-MANIFEST = FABRIC / "manifest.json"
-SEGMENTS = FABRIC / "segments"
 TOKEN_RE = re.compile(r"[\w\u3400-\u9fff]+", re.UNICODE)
 
 
@@ -43,8 +41,7 @@ def dump(path: Path, payload: dict) -> None:
 
 
 def load_manifest(root: Path = FABRIC) -> dict:
-    path = root / "manifest.json"
-    data = json.loads(path.read_text(encoding="utf-8"))
+    data = json.loads((root / "manifest.json").read_text(encoding="utf-8"))
     if data.get("schema") != "dore.resource-fabric.surface-manifest.v0":
         raise RuntimeError("resource_fabric_manifest_schema_mismatch")
     data.setdefault("delta", {"schema": "dore.resource-fabric.delta-routing.v0", "segments": [], "retiredSegments": [], "workRoutes": {}, "searchRoutes": {}})
@@ -87,37 +84,6 @@ def route_append(routes: dict, key: str, rel: str) -> None:
     routes[key] = rows
 
 
-def append_record(record: list, root: Path = FABRIC) -> dict:
-    manifest = load_manifest(root)
-    work_shards = int(manifest["workShardCount"])
-    search_buckets = int(manifest["searchBucketCount"])
-    payload = segment_payload(record)
-    sid = segment_id(payload)
-    rel = f"segments/{sid}.json"
-    path = root / rel
-    before = path.read_bytes() if path.exists() else None
-    if not path.exists():
-        dump(path, payload)
-    if before is not None and path.read_bytes() != before:
-        raise RuntimeError("immutable_segment_mutated")
-    delta = manifest["delta"]
-    if sid not in delta["segments"]:
-        delta["segments"].append(sid)
-        manifest["workCount"] = int(manifest.get("workCount") or 0) + 1
-    wkey = f"{fnv1a(record[0]) % work_shards:02x}"
-    route_append(delta["workRoutes"], wkey, rel)
-    for row in payload["searchRows"]:
-        skey = f"{fnv1a(row[0]) % search_buckets:02x}"
-        route_append(delta["searchRoutes"], skey, rel)
-    manifest["deltaWorkCount"] = len(delta["segments"])
-    dump(root / "manifest.json", manifest)
-    return {"segmentId": sid, "path": rel, "workBucket": wkey, "searchRows": len(payload["searchRows"]), "touchedBaseShards": 0}
-
-
-def append_work(work: dict, root: Path = FABRIC) -> dict:
-    return append_record(record_from_work(work), root)
-
-
 def _read_segment(root: Path, rel: str) -> dict:
     return json.loads((root / rel).read_text(encoding="utf-8"))
 
@@ -136,6 +102,39 @@ def overlay_work(root: Path, manifest: dict, work_id: str) -> list | None:
                 return op.get("record")
     base = json.loads((root / f"work-{key}.json").read_text(encoding="utf-8"))
     return next((row for row in base.get("rows") or [] if row and row[0] == work_id), None)
+
+
+def append_record(record: list, root: Path = FABRIC) -> dict:
+    manifest = load_manifest(root)
+    existed = overlay_work(root, manifest, record[0]) is not None
+    work_shards = int(manifest["workShardCount"])
+    search_buckets = int(manifest["searchBucketCount"])
+    payload = segment_payload(record)
+    sid = segment_id(payload)
+    rel = f"segments/{sid}.json"
+    path = root / rel
+    before = path.read_bytes() if path.exists() else None
+    if not path.exists():
+        dump(path, payload)
+    if before is not None and path.read_bytes() != before:
+        raise RuntimeError("immutable_segment_mutated")
+    delta = manifest["delta"]
+    if sid not in delta["segments"]:
+        delta["segments"].append(sid)
+    if not existed:
+        manifest["workCount"] = int(manifest.get("workCount") or 0) + 1
+    wkey = f"{fnv1a(record[0]) % work_shards:02x}"
+    route_append(delta["workRoutes"], wkey, rel)
+    for row in payload["searchRows"]:
+        skey = f"{fnv1a(row[0]) % search_buckets:02x}"
+        route_append(delta["searchRoutes"], skey, rel)
+    manifest["deltaWorkCount"] = len({op.get("workId") for rel0 in delta["workRoutes"].values() for p in rel0 for op in (_read_segment(root, p).get("operations") or []) if op.get("op") == "+Work"})
+    dump(root / "manifest.json", manifest)
+    return {"segmentId": sid, "path": rel, "workBucket": wkey, "searchRows": len(payload["searchRows"]), "touchedBaseShards": 0, "newWork": not existed}
+
+
+def append_work(work: dict, root: Path = FABRIC) -> dict:
+    return append_record(record_from_work(work), root)
 
 
 def compact_work_bucket(bucket: str, root: Path = FABRIC) -> dict:
@@ -166,7 +165,6 @@ def compact_work_bucket(bucket: str, root: Path = FABRIC) -> dict:
             delta["retiredSegments"].append(old)
     if sid not in delta["segments"]:
         delta["segments"].append(sid)
-    # Rebuild only search routes touched by the selected segments.
     touched_search = set()
     for old in routes:
         for row in (_read_segment(root, old).get("searchRows") or []):
@@ -192,8 +190,13 @@ def self_test() -> None:
             work = {"workId": f"dawn:delta:{i}", "title": f"Delta Work {i}", "authors": ["Doré"], "authorityBacked": False}
             result = append_work(work, root)
             ids.append(work["workId"])
-            assert result["touchedBaseShards"] == 0
+            assert result["touchedBaseShards"] == 0 and result["newWork"] is True
+        # Updating an existing Work must not inflate workCount.
+        updated = {"workId": ids[0], "title": "Delta Work 0 revised", "authors": ["Doré"], "authorityBacked": False}
+        update_result = append_work(updated, root)
+        assert update_result["newWork"] is False
         manifest = load_manifest(root)
+        assert manifest["workCount"] == 3
         before = {wid: overlay_work(root, manifest, wid) for wid in ids}
         routes = manifest["delta"]["workRoutes"]["00"]
         hashes = {rel: hashlib.sha256((root / rel).read_bytes()).hexdigest() for rel in routes}
@@ -205,6 +208,7 @@ def self_test() -> None:
         assert all(hashes[rel] == hashlib.sha256((root / rel).read_bytes()).hexdigest() for rel in routes)
         assert compact["baseShardsRewritten"] == 0
     print("DORE_RESOURCE_FABRIC_DELTA_APPEND_O_DELTA=PASS")
+    print("DORE_RESOURCE_FABRIC_DELTA_IDEMPOTENT_COUNT=PASS")
     print("DORE_RESOURCE_FABRIC_SEGMENT_IMMUTABILITY=PASS")
     print("DORE_RESOURCE_FABRIC_SELECTED_COMPACTION=PASS")
     print("DORE_RESOURCE_FABRIC_COMPACTION_EQUIVALENCE=PASS")
