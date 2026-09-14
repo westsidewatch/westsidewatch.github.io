@@ -4,6 +4,17 @@ Westside Watch — A Bible study and community publication project.
 
 The official publication site is built with Hugo without a third-party theme. The existing `join/` invitation remains available as an independent page.
 
+## Canonical architecture entrypoints
+
+For current system structure and cross-project engineering context, start here:
+
+- `docs/MASTER_SITE_ARCHITECTURE.md` — canonical main-site structure.
+- `docs/dore-exploration-global-index-2026-09.md` — global indexing, Bible Index, engineering index, Doré Memory and A2A exploration record.
+- `docs/dore-memory-core-boundary.md` — Memory Core provider boundary.
+- `docs/a2a-reliability-atlas-v1.md` — A2A reliability map.
+
+The repository contains many project-specific records. These entrypoints are intended to prevent architectural context from being reconstructed from old branches, PR descriptions, or chat history.
+
 ## Local preview
 
 Install Hugo Extended, then run:
