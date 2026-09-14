@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dore.system-atlas.schema.v0",
+  "title": "Doré System Atlas v0",
+  "type": "object",
+  "required": ["schema", "authority", "identityRule", "governance", "entities"],
+  "properties": {
+    "schema": {"const": "dore.system-atlas.v0"},
+    "authority": {"const": "github-main"},
+    "identityRule": {"type": "string", "minLength": 1},
+    "governance": {
+      "type": "object",
+      "required": ["schema", "adrIndex", "mainline", "workRegister", "memorySweep"],
+      "properties": {
+        "schema": {"type": "string"},
+        "adrIndex": {"type": "string"},
+        "mainline": {"type": "string"},
+        "workRegister": {"type": "string"},
+        "memorySweep": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "entities": {
+      "type": "array",
+      "minItems": 10,
+      "items": {
+        "type": "object",
+        "required": ["id", "kind", "name"],
+        "properties": {
+          "id": {"type": "string", "pattern": "^[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"},
+          "kind": {"type": "string", "enum": ["surface", "product", "tool", "capability", "subsystem", "register", "authority"]},
+          "name": {"type": "string", "minLength": 1},
+          "status": {"type": "string"},
+          "roots": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "docs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "schemas": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+          "rule": {"type": "string"},
+          "relations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["type", "target"],
+              "properties": {
+                "type": {"type": "string", "minLength": 1},
+                "target": {"type": "string", "pattern": "^[a-z][a-z0-9-]*:[a-z0-9][a-z0-9-]*$"}
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
