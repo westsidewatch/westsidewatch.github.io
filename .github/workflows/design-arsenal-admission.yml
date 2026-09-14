@@ -1,0 +1,23 @@
+name: DORE Design Arsenal Admission
+
+on:
+  pull_request:
+    paths:
+      - 'dore-design/design_arsenal_assimilation.v0.json'
+      - 'dore-design/design_arsenal_admission.py'
+      - 'local/dore-local/design_arsenal_admission_acceptance.py'
+      - '.github/workflows/design-arsenal-admission.yml'
+  workflow_dispatch:
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Python syntax
+        run: python -m py_compile dore-design/design_arsenal_admission.py local/dore-local/design_arsenal_admission_acceptance.py
+      - name: Arsenal admission acceptance
+        run: python local/dore-local/design_arsenal_admission_acceptance.py
