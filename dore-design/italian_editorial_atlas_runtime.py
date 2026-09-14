@@ -15,6 +15,7 @@ def install(current):
             'name': PAGE_NAME,
             'path': '/dore-design/italian-editorial-atlas.html',
             'kind': 'design-research',
+            'canvas': {'w': 1200, 'h': 930},
             'nodes': [],
         })
         base.save(workspace)
