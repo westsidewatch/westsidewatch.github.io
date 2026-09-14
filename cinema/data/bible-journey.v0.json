@@ -1,6 +1,7 @@
 {
   "schema": "dore.bible-journey.v0",
   "reflexPersistent": false,
+  "exactMomentOverrides": [],
   "journeys": [
     {
       "journeyId": "cinema:journey:creation-to-new-creation",
@@ -13,10 +14,10 @@
         {"stationId":"abraham","order":3,"label":"應許之約","scripture":["Gen 12:1-3","Gen 15:1-21"],"world":["abraham","covenant"],"requiredMedia":false},
         {"stationId":"exodus","order":4,"label":"出埃及","scripture":["Exod 12:1-14:31"],"world":["exodus","red-sea"],"requiredMedia":false},
         {"stationId":"kingdom","order":5,"label":"國度與君王","scripture":["2 Sam 7:8-16"],"world":["david","kingdom"],"requiredMedia":false},
-        {"stationId":"incarnation","order":6,"label":"道成肉身","scripture":["Luke 1:26-2:20","John 1:1-18"],"world":["jesus","incarnation"],"requiredMedia":true},
-        {"stationId":"baptism","order":7,"label":"耶穌受洗","scripture":["Matt 3:13-17","Mark 1:9-11","Luke 3:21-22","John 1:29-34"],"world":["jesus","baptism-of-jesus","jordan-river"],"requiredMedia":true},
-        {"stationId":"cross","order":8,"label":"十字架","scripture":["Matt 27","Mark 15","Luke 23","John 19"],"world":["jesus","crucifixion"],"requiredMedia":true},
-        {"stationId":"resurrection","order":9,"label":"復活","scripture":["Matt 28","Mark 16","Luke 24","John 20"],"world":["jesus","resurrection"],"requiredMedia":true},
+        {"stationId":"incarnation","order":6,"label":"道成肉身","eventId":"bible:event:incarnation","scripture":["Luke 1:26-2:20","John 1:1-18"],"world":["jesus","incarnation"],"requiredMedia":true},
+        {"stationId":"baptism","order":7,"label":"耶穌受洗","eventId":"bible:event:baptism-of-jesus","scripture":["Matt 3:13-17","Mark 1:9-11","Luke 3:21-22","John 1:29-34"],"world":["jesus","baptism-of-jesus","jordan-river"],"requiredMedia":true},
+        {"stationId":"cross","order":8,"label":"十字架","eventId":"bible:event:crucifixion","scripture":["Matt 27","Mark 15","Luke 23","John 19"],"world":["jesus","crucifixion"],"requiredMedia":true},
+        {"stationId":"resurrection","order":9,"label":"復活","eventId":"bible:event:resurrection","scripture":["Matt 28","Mark 16","Luke 24","John 20"],"world":["jesus","resurrection"],"requiredMedia":true},
         {"stationId":"church","order":10,"label":"聖靈與教會","scripture":["Acts 2:1-47"],"world":["holy-spirit","church","pentecost"],"requiredMedia":false},
         {"stationId":"new-creation","order":11,"label":"新天新地","scripture":["Rev 21:1-22:5"],"world":["new-heavens-new-earth","new-jerusalem","new-creation"],"requiredMedia":false,"terminal":true}
       ]
