@@ -1,5 +1,12 @@
 const ROOT='/dawn-library/resource-fabric';
-const manifestPromise=fetch(`${ROOT}/manifest.json`,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error(`Resource Fabric manifest ${r.status}`);return r.json();});
+const manifestPromise=fetch(`${ROOT}/manifest.json`,{cache:'no-store'}).then(async r=>{
+  if(!r.ok)throw new Error(`Resource Fabric manifest ${r.status}`);
+  const manifest=await r.json();
+  if(manifest?.schema!=='dore.resource-fabric.surface-manifest.v0')throw new Error('Resource Fabric manifest schema mismatch');
+  if(manifest?.canonicalMonolithRequired!==false)throw new Error('Resource Fabric canonical monolith boundary violated');
+  if(manifest?.identityAuthority!=='Dawn')throw new Error('Resource Fabric identity authority mismatch');
+  return manifest;
+});
 const shardCache=new Map();
 const encoder=new TextEncoder();
 
