@@ -34,8 +34,11 @@ def _validate_variants(generated):
  return normalized
 def _generate(ollama,payload,base,nodes,attempt,structured_json=None):
  guardrails=_guardrails(payload)
+ bloom=bool(payload.get('experiment_id')=='living-water-bloom')
  system=('You are Doré Design Core. Generate exactly two materially different, brand-faithful executable patches. Return JSON only with variants [A,B]. Each variant must contain id, direction, patch, and risk_domains. risk_domains must truthfully list any known failure-domain risk the proposal may reproduce. Every patch operation must obey the supplied executable patch schema. The rejection guardrails are bounded negative precedent: do not repeat them. Do not choose a winner.')
- base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes,'patch_schema':PATCH_SCHEMA,'allowed_ops':['move','resize','font_size','text_align']};last_error=''
+ if bloom:
+  system+=(' This is the Living Water bloom experiment. Treat church identity and authored content as authority, but historical layouts as evidence only, never templates. Maximize meaningful compositional distance between A and B while remaining faithful to real church identity. Do not invent ministries, people, doctrine, events, or claims.')
+ base_user={'task_context':payload.get('task_context'),'primary_axis':payload.get('primary_axis'),'constraints':payload.get('constraints') or [],'bounded_taste':payload.get('preference_pack') or {},'rejection_guardrails':guardrails,'regeneration_attempt':attempt,'surface_geometry':nodes,'patch_schema':PATCH_SCHEMA,'allowed_ops':['move','resize','font_size','text_align'],'experiment_id':payload.get('experiment_id'),'experiment_contract':payload.get('experiment_contract'),'divergence_domains':payload.get('divergence_domains') or [],'known_failure_domains':payload.get('known_failure_domains') or [],'historical_design_authority':payload.get('historical_design_authority')};last_error=''
  for schema_try in range(1,MAX_SCHEMA_RETRIES+1):
   request=dict(base_user);request['schema_attempt']=schema_try
   if last_error:request['previous_output_rejected']=last_error;request['correction']='Return a fresh A/B pair using only the exact executable patch schema.'
