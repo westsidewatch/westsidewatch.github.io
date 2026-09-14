@@ -25,6 +25,11 @@ if (intent.readingMode !== 'continuous-narrative') throw new Error('narrative re
 if (sourceAuthority.schema !== 'dore.book-source-authority.v1') throw new Error('source authority map missing');
 if (sourceAuthority.projectId !== project.id) throw new Error('source authority project mismatch');
 if (sourceAuthority.canonicalSource?.sourceRole !== 'canonical-manuscript-source') throw new Error('canonical manuscript role missing');
+if (sourceAuthority.canonicalSource?.sourceIdentity?.provider !== 'chatgpt-file-library') throw new Error('canonical source provider not bound');
+if (sourceAuthority.canonicalSource?.sourceIdentity?.fileId !== 'file_00000000ee2c822fbba5855796ec34b2') throw new Error('canonical source identity drift');
+if (sourceAuthority.canonicalSource?.sourceIdentity?.identityStatus !== 'verified-single-source-object') throw new Error('canonical source identity not verified');
+if (sourceAuthority.canonicalSource?.ingestionBoundary?.rawBytesAvailableToRepositoryWriter !== false) throw new Error('raw-byte availability boundary drift');
+if (sourceAuthority.canonicalSource?.ingestionBoundary?.mayReconstructFromRetrievalSnippets !== false) throw new Error('snippet reconstruction must remain forbidden');
 if (sourceAuthority.supportingSource?.sourceRole !== 'evidence-and-research-layer') throw new Error('research paper role boundary missing');
 if (sourceAuthority.supportingSource?.mayOverrideCanonicalManuscript !== false) throw new Error('research paper may override manuscript');
 if (sourceAuthority.supportingSource?.mayOverrideAuthorThesis !== false) throw new Error('research paper may override author thesis');
@@ -32,6 +37,8 @@ if (sourceAuthority.census?.exactHanCharacters !== null) throw new Error('unveri
 if (sourceAuthority.census?.sourceLabelApproxChineseCharacters !== 54000) throw new Error('source-label approximation missing');
 if (sourceAuthority.authority?.observedStructureMayNotBePromotedToFrozenToc !== true) throw new Error('observed chapter graph freeze boundary missing');
 if (!Array.isArray(sourceAuthority.observedChapterGraph?.nodes) || sourceAuthority.observedChapterGraph.nodes.length !== 14) throw new Error('observed chapter graph incomplete');
+const ch07Supplement = sourceAuthority.observedChapterGraph.nodes.find(node => node.id === 'ch07-supplement');
+if (ch07Supplement?.subtitle !== '從使徒教父到當代') throw new Error('observed TOC drift or invented subtitle text');
 
 console.log(JSON.stringify({
   schema: 'dore.book-project-admission-acceptance.v1',
@@ -40,6 +47,7 @@ console.log(JSON.stringify({
   targetChineseCharacters: project.development.targetChineseCharacters,
   route: `${row.consumer}:${row.entryAction}`,
   sourceStage: sourceAuthority.status,
+  canonicalSourceFileId: sourceAuthority.canonicalSource.sourceIdentity.fileId,
   observedChapterNodes: sourceAuthority.observedChapterGraph.nodes.length,
   checks: [
     'publishing-manifest-registration',
@@ -50,8 +58,12 @@ console.log(JSON.stringify({
     'book-compile-capability',
     'author-thesis-authority',
     'no-silent-truncation',
+    'canonical-source-identity-bound',
+    'raw-byte-materialization-boundary',
+    'retrieval-snippet-reconstruction-forbidden',
     'canonical-manuscript-vs-research-source-boundary',
     'no-false-exact-census',
-    'observed-chapter-graph-not-frozen-toc'
+    'observed-chapter-graph-not-frozen-toc',
+    'observed-toc-text-exactness'
   ]
 }, null, 2));
