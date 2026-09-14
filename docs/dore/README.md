@@ -20,11 +20,15 @@ This directory contains records from several Doré capabilities and development 
 
 Bible Intelligence notes, theology training records, exploration records, long-scroll records, design working memory, learning cadence, local-intelligence compatibility records, search research, Work Test records, and Journal Agent records are evidence or operational material. They do not independently define whole-system architecture.
 
-`THE-GATE.md` and `KNOCKING-HISTORY.md` are historical coordination and provenance records. Temporary instructions preserved in them are not current execution authority.
+`THE-GATE.md` and `KNOCKING-HISTORY.md` are historical coordination and provenance records.
 
-## Pending deeper reconciliation
+## Nested indexes
 
-The nested `design/`, `film/`, and `lessons/` families remain review queues. Experiments, deployment notes, handbooks, and lesson records in those directories are not promoted to canonical status by location alone.
+- `design/README.md` — Design record entrypoint.
+- `film/README.md` — Doré Film production and experiment record boundary.
+- `lessons/README.md` — bounded lessons learned from real product work.
+
+Film and lessons now have explicit local record roles and CI drift checks. Design now has a local entrypoint while its older candidate records remain provenance.
 
 ## Future rule
 
