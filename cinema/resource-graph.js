@@ -1,7 +1,8 @@
 (()=>{
   const SCHEMA='dore.bible-media-graph.v0';
   const MOMENT_SCHEMA='dore.bible-media-moment.v1';
-  const URLS={resources:'data/video-resource.v0.json',moments:'data/video-moment.v0.json',coordinates:'data/bible-media-coordinate.v0.json',journeys:'data/bible-journey.v0.json'};
+  const JOURNEY_MOMENT_SCHEMA='dore.bible-journey-moment.v0';
+  const URLS={resources:'data/video-resource.v0.json',moments:'data/video-moment.v0.json',coordinates:'data/bible-media-coordinate.v0.json',journeys:'data/bible-journey.v0.json',journeyMoments:'data/bible-journey-moment.v0.json'};
   const special=()=>window.ParadiseCinemaSpecialResources;
   const state={graph:null};
 
@@ -30,11 +31,12 @@
     mediaCoordinate:Object.freeze({workId:moment.workId,startMs:moment.startMs,endMs:moment.endMs})
   });
 
-  function compile(resourcePayload,momentPayload,coordinatePayload,journeyPayload){
+  function compile(resourcePayload,momentPayload,coordinatePayload,journeyPayload,journeyMomentPayload){
     if(resourcePayload.schema!=='holy-light.video-resource.v0'||!Array.isArray(resourcePayload.items))throw new Error('Invalid Cinema resource schema');
     if(momentPayload.schema!==MOMENT_SCHEMA||!Array.isArray(momentPayload.items))throw new Error('Invalid Cinema moment schema');
     if(coordinatePayload.schema!=='dore.bible-media-coordinate.v0'||!Array.isArray(coordinatePayload.items))throw new Error('Invalid Cinema coordinate schema');
     if(journeyPayload.schema!=='dore.bible-journey.v0'||!Array.isArray(journeyPayload.journeys))throw new Error('Invalid Cinema journey schema');
+    if(journeyMomentPayload.schema!==JOURNEY_MOMENT_SCHEMA||!Array.isArray(journeyMomentPayload.items))throw new Error('Invalid Cinema journey Moment schema');
 
     const admitted=(special()?.filter(resourcePayload.items))||resourcePayload.items;
     const admittedIds=new Set(admitted.map(item=>item.canonicalId));
@@ -66,9 +68,21 @@
     });
     const byId=new Map(works.map(work=>[work.canonicalId,work]));
     const collections=Object.freeze([...(coordinatePayload.collections||[])]);
+    const projectionByStation=new Map();
+    for(const relation of journeyMomentPayload.items){
+      const moment=momentById.get(relation.momentId);
+      if(!moment)throw new Error(`Journey Moment projection references unknown Moment: ${relation.momentId}`);
+      if(moment.kind!=='official-episode')throw new Error(`Journey exact projection requires official episode Moment: ${relation.momentId}`);
+      const key=`${relation.journeyId}:${relation.stationId}`;
+      const list=projectionByStation.get(key)||[];
+      list.push(Object.freeze({...relation,moment}));
+      projectionByStation.set(key,list);
+    }
     const journeys=Object.freeze(journeyPayload.journeys.map(journey=>Object.freeze({...journey,stations:Object.freeze([...journey.stations].sort((a,b)=>a.order-b.order).map(station=>{
       const relatedWorks=Object.freeze(works.filter(work=>stationMatchesWork(station,work)));
-      return Object.freeze({...station,relatedWorks,mediaState:relatedWorks.length?'available':'unmapped'});
+      const exactMoments=Object.freeze([...(projectionByStation.get(`${journey.journeyId}:${station.stationId}`)||[])].map(item=>item.moment));
+      const mediaState=exactMoments.length?'exact':(relatedWorks.length?'available':'unmapped');
+      return Object.freeze({...station,relatedWorks,exactMoments,mediaState});
     }))})));
     const journeyById=new Map(journeys.map(journey=>[journey.journeyId,journey]));
 
@@ -89,6 +103,7 @@
     return Object.freeze({
       schema:SCHEMA,
       momentSchema:MOMENT_SCHEMA,
+      journeyMomentSchema:JOURNEY_MOMENT_SCHEMA,
       works:Object.freeze(works),
       moments:Object.freeze(moments),
       coordinates:Object.freeze(coordinates),
@@ -107,7 +122,7 @@
     });
   }
 
-  const ready=Promise.all([fetchJson(URLS.resources),fetchJson(URLS.moments),fetchJson(URLS.coordinates),fetchJson(URLS.journeys)])
+  const ready=Promise.all([fetchJson(URLS.resources),fetchJson(URLS.moments),fetchJson(URLS.coordinates),fetchJson(URLS.journeys),fetchJson(URLS.journeyMoments)])
     .then(parts=>{
       state.graph=compile(...parts);
       document.documentElement.dataset.cinemaGraphSchema='v0';
