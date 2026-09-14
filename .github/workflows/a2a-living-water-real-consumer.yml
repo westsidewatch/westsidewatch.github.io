@@ -1,0 +1,26 @@
+name: A2A Living Water Real Consumer
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'local/dore-local/capability_bindings.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/a2a_living_water_real_acceptance.py'
+      - '.github/workflows/a2a-living-water-real-consumer.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  living-water-real:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 60
+    env:
+      PYTHONPATH: .
+      DORE_REPO_ROOT: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Living Water through Universal A2A Core
+        run: python3 local/dore-local/a2a_living_water_real_acceptance.py
