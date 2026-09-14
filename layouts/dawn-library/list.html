@@ -4,14 +4,14 @@
     <p class="section-label">Westside Watch · Dawn Library</p>
     <h1 id="dawn-library-title" lang="zh-Hant">黎明書局</h1>
     <p class="dawn-library-brand__dek">Theology · Scripture · Inner Life</p>
-    <p lang="zh-Hant">在同一座主站之內，從館藏、關係與編輯世界進入閱讀；身份、封面與閱讀指標仍由 Dawn canonical substrate 統一管理。</p>
+    <p lang="zh-Hant">館藏身份仍由 Dawn canonical substrate 統一管理；封面與書架重新作為正式前台投射，不再把工程驗收介面暴露給讀者。</p>
   </header>
   <div class="dawn-library-brand__frame-wrap">
     <iframe
-      id="dawn-library-formal-surface"
+      id="dawn-library-product-surface"
       class="dawn-library-brand__frame"
-      src="{{ "dawn-library/formal-edition/phase4/" | relURL }}"
-      title="黎明書局正式版館藏"
+      src="{{ "dawn-library/product/" | relURL }}"
+      title="黎明書局館藏"
       loading="eager"
     ></iframe>
   </div>
@@ -23,7 +23,7 @@
   .dawn-library-brand__dek{font-family:'Cormorant Garamond',serif;font-size:clamp(1.1rem,2vw,1.5rem);letter-spacing:.16em;text-transform:uppercase;color:#8c6818}
   .dawn-library-brand__header>p:last-child{font-family:'Noto Serif TC',serif;line-height:1.9;color:#59534a}
   .dawn-library-brand__frame-wrap{border-top:1px solid rgba(206,189,116,.8);background:#f4efe5;box-shadow:0 24px 70px rgba(37,37,37,.08)}
-  .dawn-library-brand__frame{display:block;width:100%;height:min(1200px,82vh);min-height:760px;border:0;background:#f4efe5}
-  @media(max-width:700px){.dawn-library-brand{width:100%;padding-top:1.5rem}.dawn-library-brand__frame{min-height:720px;height:84vh}}
+  .dawn-library-brand__frame{display:block;width:100%;height:1200px;min-height:760px;border:0;background:#f4efe5}
+  @media(max-width:700px){.dawn-library-brand{width:100%;padding-top:1.5rem}.dawn-library-brand__frame{min-height:900px;height:1200px}}
 </style>
 {{ end }}
