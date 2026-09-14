@@ -13,11 +13,16 @@ from __future__ import annotations
 import hashlib
 import json
 import sqlite3
+import sys
 from pathlib import Path
 from typing import Any
 
-from dore_core.context.compiler import build_index
-from dore_core.context.retrieve import retrieve_westside_context
+# This module is imported both from repo-root Core entrypoints and directly from
+# dore-design resident processes. Ensure the canonical Python package root is
+# available without requiring every consumer to mutate PYTHONPATH first.
+REPO_ROOT = Path(__file__).resolve().parents[2]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
 
 
 def _digest(value: Any) -> str:
@@ -35,6 +40,11 @@ def _query(request: dict[str, Any]) -> str:
 
 
 def _westside_context(request: dict[str, Any], repo_root: Path) -> dict[str, Any]:
+    # Lazy imports keep generic Design residents import-safe and make the context
+    # dependency pay-for-play: it is loaded only when Arsenal actually mounts it.
+    from dore_core.context.compiler import build_index
+    from dore_core.context.retrieve import retrieve_westside_context
+
     source = repo_root / "docs" / "MASTER_SITE_ARCHITECTURE.md"
     if not source.exists():
         raise FileNotFoundError("westside_context_source_missing")
@@ -54,7 +64,7 @@ def _westside_context(request: dict[str, Any], repo_root: Path) -> dict[str, Any
 
 
 def _bus_call(capability_id: str, request: dict[str, Any], caller_product: str | None) -> dict[str, Any]:
-    # capability_bus is intentionally imported lazily.  On real Doré runtimes
+    # capability_bus is intentionally imported lazily. On real Doré runtimes
     # local/dore-local is already on sys.path; tests may inject an executor map.
     import capability_bus
 
@@ -88,8 +98,8 @@ def execute_loadout(
 ) -> dict[str, Any]:
     """Mount and execute the selected Arsenal loadout with auditable lifecycle.
 
-    `executors` is a narrow test/host injection surface.  Production execution
-    otherwise uses canonical local adapters.  Outputs are request-scoped only.
+    `executors` is a narrow test/host injection surface. Production execution
+    otherwise uses canonical local adapters. Outputs are request-scoped only.
     """
     executors = dict(executors or {})
     weapons = list(((plan.get("loadout") or {}).get("weapons") or []))
