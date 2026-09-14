@@ -31,23 +31,40 @@ for moment in moments["items"]:
     assert moment["evidence"], f"{moment['momentId']}: evidence required"
 
     work_coordinate = coordinate_by_work[moment["workId"]]["coordinates"]
-    permitted = {
+    inherited = {
         (entry["type"], entry["value"])
         for entry in [*work_coordinate.get("text", []), *work_coordinate.get("world", [])]
     }
+    evidence_by_id = {entry.get("id"): entry for entry in moment["evidence"] if entry.get("id")}
     for anchor in moment["anchors"]:
         assert anchor.get("type") in {"scripture", "event", "person", "place", "period", "theme"}
         assert anchor.get("value")
-        assert (anchor["type"], anchor["value"]) in permitted, (
-            f"{moment['momentId']}: anchor {anchor['type']}:{anchor['value']} "
-            "must be grounded by the current work coordinate"
-        )
+        if (anchor["type"], anchor["value"]) not in inherited:
+            evidence_ref = anchor.get("evidenceRef")
+            assert evidence_ref in evidence_by_id, (
+                f"{moment['momentId']}: granular anchor {anchor['type']}:{anchor['value']} "
+                "must reference explicit source evidence"
+            )
+            source_evidence = evidence_by_id[evidence_ref]
+            assert source_evidence.get("type") == "official-episode-metadata"
+            assert source_evidence.get("sourcePointer") == moment["sourcePointer"]
 
     evidence_types = {entry.get("type") for entry in moment["evidence"]}
-    assert "source-title" in evidence_types, f"{moment['momentId']}: source-title evidence required"
+    assert evidence_types & {"source-title", "official-episode-metadata"}, (
+        f"{moment['momentId']}: source evidence required"
+    )
     assert any(entry.get("sourcePointer") == moment["sourcePointer"] for entry in moment["evidence"]), (
         f"{moment['momentId']}: evidence must preserve sourcePointer provenance"
     )
+
+exact = [moment for moment in moments["items"] if moment["kind"] == "official-episode"]
+assert exact, "at least one exact official episode Moment is required"
+first = exact[0]
+assert first["momentId"] == "cinema:moment:lumo-matthew:episode-01"
+assert first["startMs"] == 0 and first["endMs"] == 574000
+assert any(a["type"] == "scripture" and a["value"] == "Matt.1.1-2.23" for a in first["anchors"])
+assert {a["type"] for a in first["anchors"]} >= {"scripture", "event", "person", "place", "period"}
+assert first["sourcePointer"].endswith("/lumo-matthew-1-1-2-23.html")
 
 assert "queryMoments" in graph
 assert "momentsForAnchor" in graph
@@ -63,5 +80,6 @@ assert "moment.workId" in ui
 print(
     "PASS moment-anchor-v1 "
     f"moments={len(moments['items'])} "
+    f"exact={len(exact)} "
     f"works={len({item['workId'] for item in moments['items']})}"
 )
