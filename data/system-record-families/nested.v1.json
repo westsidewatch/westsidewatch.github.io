@@ -1,0 +1,14 @@
+{
+  "schema":"dore.system-record-family-shard.v1",
+  "id":"record-shard:nested",
+  "priority":100,
+  "families":[
+    {"id":"records:nested-design-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/design/README.md"]},
+    {"id":"records:nested-design-history","owner":"register:master-work","state":"historical","patterns":["docs/*/design/.candidate*","docs/*/design/candidate*.md"]},
+    {"id":"records:nested-film-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/film/README.md"]},
+    {"id":"records:nested-film-production","owner":"register:master-work","state":"operational","patterns":["docs/*/film/DORÉ-FILM-PRODUCTION-HANDBOOK.md","docs/*/film/DORÉ-ANCHORED-WORLD-*.md","docs/*/film/aw011-*.json","docs/*/film/tools/*"]},
+    {"id":"records:nested-film-evidence","owner":"register:master-work","state":"evidence","patterns":["docs/*/film/*EXPERIMENT*.md","docs/*/film/camera-spine-experiment-01.*","docs/*/film/canvas-placement-experiment-01.json"]},
+    {"id":"records:nested-lessons-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/lessons/README.md"]},
+    {"id":"records:nested-lessons-evidence","owner":"tool:one","state":"evidence","patterns":["docs/*/lessons/ONE-LESSON-*.md"]}
+  ]
+}
