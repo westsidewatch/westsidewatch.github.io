@@ -1,0 +1,21 @@
+{
+  "schema": "dore.design-motion-capability.v0",
+  "id": "design.motion",
+  "status": "experimental-v0",
+  "service": "design",
+  "execution": "browser-native-router",
+  "contract": "dore-design/motion-arsenal.v0.json",
+  "runtime": "static/dore-design/dore-motion.js",
+  "intentCompiler": "dore-design/italian_editorial_motion_compiler.py",
+  "consumers": ["living-water", "westside-watch", "dawn", "one", "multiwrite"],
+  "authority": false,
+  "styleAuthority": false,
+  "engineAuthority": true,
+  "providerNeutral": true,
+  "network": false,
+  "load": "surface-declared",
+  "defaultEngineTier": "native",
+  "heavyRuntimeDefault": false,
+  "promotionPolicy": "promote-to-capability-registry-only-after-real-raster-beauty-acceptance",
+  "firstAcceptanceConsumer": "living-water"
+}
