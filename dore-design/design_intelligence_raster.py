@@ -57,12 +57,17 @@ def browser_binary() -> str:
     raise RuntimeError('real_browser_required_for_raster_evidence')
 
 
-def _browser_command(browser: str, *, output: Path, width: int, height: int, uri: str) -> list[str]:
+def _browser_command(browser: str, *, output: Path, width: int, height: int, uri: str, profile_dir: Path) -> list[str]:
     name = Path(browser).name.lower()
     if 'firefox' in name:
+        # A self-hosted runner may share the machine with an interactive Firefox.
+        # Always use a throwaway profile so headless rasterization never contends
+        # for the user's running profile lock.
         return [
             browser,
             '--headless',
+            '--no-remote',
+            '--profile', str(profile_dir.resolve()),
             '--window-size', f'{width},{height}',
             '--screenshot', str(output.resolve()),
             uri,
@@ -75,6 +80,7 @@ def _browser_command(browser: str, *, output: Path, width: int, height: int, uri
         '--no-sandbox',
         '--disable-dev-shm-usage',
         '--force-device-scale-factor=1',
+        f'--user-data-dir={profile_dir.resolve()}',
         f'--window-size={width},{height}',
         f'--screenshot={output.resolve()}',
         uri,
@@ -100,9 +106,19 @@ def rasterize_html(html: str, *, output: Path, width: int, height: int) -> dict:
     output.parent.mkdir(parents=True, exist_ok=True)
     browser = browser_binary()
     with tempfile.TemporaryDirectory(prefix='dore-raster-') as td:
-        src = Path(td) / 'candidate.html'
+        root = Path(td)
+        src = root / 'candidate.html'
+        profile_dir = root / 'browser-profile'
+        profile_dir.mkdir(parents=True, exist_ok=True)
         src.write_text(html, encoding='utf-8')
-        cmd = _browser_command(browser, output=output, width=width, height=height, uri=src.resolve().as_uri())
+        cmd = _browser_command(
+            browser,
+            output=output,
+            width=width,
+            height=height,
+            uri=src.resolve().as_uri(),
+            profile_dir=profile_dir,
+        )
         cp = subprocess.run(cmd, text=True, capture_output=True, timeout=90)
         if cp.returncode != 0 or not output.exists():
             raise RuntimeError('browser_raster_failed:' + (cp.stderr or cp.stdout or '')[-2000:])
@@ -119,6 +135,7 @@ def rasterize_html(html: str, *, output: Path, width: int, height: int) -> dict:
         'requested_height': height,
         'byte_size': len(raw),
         'real_browser_render': True,
+        'isolated_browser_profile': True,
     }
 
 
