@@ -6,6 +6,7 @@ from typing import Any
 ROOT=Path(__file__).resolve().parents[1]
 DEFAULT_QUEUE=ROOT/'data/dawn-10k-work-queue.json';DEFAULT_STOREFRONT=ROOT/'static/dawn-library/storefront.json';DEFAULT_BIBLICAL_WORLD=ROOT/'static/dawn-library/biblical-world/catalog.json';DEFAULT_ADMISSIONS=ROOT/'data/dawn-publication-admissions';DEFAULT_INDEX=ROOT/'static/dawn-library/canonical-index.json';DEFAULT_DAWN_SURFACE=ROOT/'static/dawn-library/surfaces/dawn-storefront.json';DEFAULT_MULTIWRITE_SURFACE=ROOT/'static/dawn-library/surfaces/multiwrite-biblical-world.json'
 FORBIDDEN_RUNTIME_TOKENS=('wikisource','zh.wikisource.org','openlibrary.org')
+RESOURCE_FABRIC_MANIFEST='../resource-fabric/manifest.json'
 def norm(text:str)->str:
  text=unicodedata.normalize('NFKC',str(text or '')).casefold().strip();text=re.sub(r'[^\w\s-]+',' ',text);return re.sub(r'\s+',' ',text).strip()
 def signature(title:str,author:str)->str:return f'{norm(title)}::{norm(author)}'
@@ -45,14 +46,14 @@ def compile_storefront(storefront:dict,works:dict[str,dict],by_signature:dict[st
   for item in shelf.get('items',[]):
    work_id=surface_item_work_id(item,by_signature);ensure_surface_work(item,work_id,works);refs.append({'workId':work_id})
   shelves.append({'id':shelf.get('id'),'title':shelf.get('title'),'kind':shelf.get('kind'),'items':refs})
- return {'schema':'dawn.library.surface.v1','surfaceId':'dawn-storefront','canonicalIndex':'../canonical-index.json','title':storefront.get('title') or '黎明書局','shelves':shelves}
+ return {'schema':'dawn.library.surface.v1','surfaceId':'dawn-storefront','resourceFabric':RESOURCE_FABRIC_MANIFEST,'title':storefront.get('title') or '黎明書局','shelves':shelves}
 def compile_multiwrite_surface(catalog:dict,works:dict[str,dict],by_signature:dict[str,str])->dict:
  refs=[]
  for item in catalog.get('items',[]):
   work_id=surface_item_work_id(item,by_signature);ensure_surface_work(item,work_id,works);ref={'workId':work_id}
   if item.get('relations'):ref['relations']=list(dict.fromkeys(item.get('relations') or []))
   refs.append(ref)
- return {'schema':'dawn.library.surface.v1','surfaceId':'multiwrite-biblical-world','canonicalIndex':'../canonical-index.json','title':catalog.get('title') or '聖經世界','items':refs}
+ return {'schema':'dawn.library.surface.v1','surfaceId':'multiwrite-biblical-world','resourceFabric':RESOURCE_FABRIC_MANIFEST,'title':catalog.get('title') or '聖經世界','items':refs}
 def load_publication_admissions(directory:Path)->list[dict]:
  if not directory.exists():return []
  result=[]
@@ -98,6 +99,7 @@ def assert_runtime_contract(index:dict,surfaces:list[dict])->None:
    for shelf in surface.get('shelves',[]):yield from shelf.get('items',[])
   else:yield from surface.get('items',[])
  for surface in surfaces:
+  if surface.get('resourceFabric')!=RESOURCE_FABRIC_MANIFEST:raise ValueError(f'surface not bound to Resource Fabric: {surface.get("surfaceId")}')
   for ref in refs(surface):
    if set(ref)-{'workId','relations'}:raise ValueError(f'surface contains identity payload: {surface.get("surfaceId")}')
    if ref.get('workId') not in works:raise ValueError(f'unresolved surface Work ID: {ref.get("workId")}')
