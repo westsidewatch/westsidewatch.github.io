@@ -1,0 +1,27 @@
+{
+  "schema": "dore.editorial-image-ab-isolation.v0",
+  "id": "editorial-image-ab-isolation-protocol-v0",
+  "status": "ACTIVE_EXPERIMENT_GUARD",
+  "purpose": "Prevent generator/evaluator contamination in editorial-intelligence image benchmarks.",
+  "rules": [
+    "Generate control and experimental candidates in separate executor calls.",
+    "Each generation call sees only its own semantic brief and prompt contract.",
+    "Do not expose candidate labels such as control, compiled, Campo Grafico, Italian, score, winner or judge to either generation call unless the prompt itself legitimately requires those words.",
+    "Freeze both generated artifacts before evaluation.",
+    "Anonymize candidates as X and Y before Aesthetic Judge receives them.",
+    "Aesthetic Judge receives the semantic brief and acceptance rubric, but not which prompt produced which candidate.",
+    "Judge records beauty, editorial intentionality, semantic-content/form relation, hierarchy, material justification, non-template behavior and failure reasons.",
+    "Only after judgement may provenance be reattached.",
+    "Self-scores or captions emitted by the image model never count as evaluation evidence.",
+    "A failed or contaminated run is preserved as Experience/Rejection Memory and must not modify historical Evidence Memory."
+  ],
+  "required_artifacts": [
+    "candidate-a-image",
+    "candidate-b-image",
+    "anonymized-pair-manifest",
+    "blind-judge-record",
+    "provenance-unblind-record"
+  ],
+  "pass_condition": "The pair was generated independently, judged blind, provenance was reattached only after judgement, and the record contains no evaluator leakage into generation.",
+  "capability_effect": "None by itself. This protocol only makes later transfer evidence admissible."
+}

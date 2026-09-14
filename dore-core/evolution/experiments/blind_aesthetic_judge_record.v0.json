@@ -1,0 +1,48 @@
+{
+  "schema": "dore.blind-aesthetic-judge-record.v0",
+  "status": "TEMPLATE_NOT_EVALUATED",
+  "experiment": "campo-grafico-prompt-compiler-blind-v0",
+  "execution": "blind-01",
+  "judge_visibility": {
+    "allowed": [
+      "semantic brief",
+      "artifact X",
+      "artifact Y",
+      "rubric"
+    ],
+    "forbidden": [
+      "generation prompts",
+      "grammar ids",
+      "corpus or publication names",
+      "arm provenance",
+      "anonymous mapping",
+      "prior scores or winner labels"
+    ]
+  },
+  "rubric": {
+    "beauty": null,
+    "editorial_intentionality": null,
+    "semantic_content_form_relation": null,
+    "hierarchy": null,
+    "material_justification": null,
+    "non_template_behavior": null,
+    "restraint": null
+  },
+  "candidate_X": {
+    "scores": {},
+    "strengths": [],
+    "failures": []
+  },
+  "candidate_Y": {
+    "scores": {},
+    "strengths": [],
+    "failures": []
+  },
+  "decision": {
+    "preferred": null,
+    "confidence": null,
+    "reason_summary": null,
+    "both_reject": false
+  },
+  "admission_rule": "A preferred candidate is evidence only after both image artifacts are frozen and the sealed provenance is unblinded after judgement. A technically successful but editorially empty candidate may be rejected."
+}
