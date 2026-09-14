@@ -1,0 +1,10 @@
+{
+  "schema":"dore.system-record-family-shard.v1",
+  "id":"record-shard:nested",
+  "priority":100,
+  "families":[
+    {"id":"records:nested-design-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/design/README.md"]},
+    {"id":"records:nested-film-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/film/README.md"]},
+    {"id":"records:nested-lessons-index","owner":"register:master-work","state":"canonical","patterns":["docs/*/lessons/README.md"]}
+  ]
+}
