@@ -1,0 +1,38 @@
+name: Westside Writing Skill
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/writing/**'
+      - 'local/dore-local/westside_writing_capability.py'
+      - 'local/dore-local/westside_writing_acceptance.py'
+      - '.github/workflows/westside-writing-skill.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile adapter
+        run: python -m py_compile local/dore-local/westside_writing_capability.py local/dore-local/westside_writing_acceptance.py
+      - name: Run acceptance
+        run: python local/dore-local/westside_writing_acceptance.py
+      - name: Validate JSON assets
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for path in [
+              Path('dore-core/writing/westside-dimensional-journalism.schema.v0.json'),
+              Path('dore-core/writing/westside-dimensional-journalism.samples.v0.json'),
+          ]:
+              json.loads(path.read_text(encoding='utf-8'))
+              print('PASS', path)
+          PY
