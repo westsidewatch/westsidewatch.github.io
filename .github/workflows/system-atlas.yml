@@ -1,0 +1,34 @@
+name: DORE System Atlas
+
+on:
+  pull_request:
+    paths:
+      - 'data/system-atlas.v0.json'
+      - 'data/system-atlas.schema.json'
+      - 'docs/CURRENT_MAINLINE.md'
+      - 'docs/adr/**'
+      - 'local/dore-local/system_atlas_acceptance.py'
+      - '.github/workflows/system-atlas.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/system-atlas.v0.json'
+      - 'data/system-atlas.schema.json'
+      - 'docs/CURRENT_MAINLINE.md'
+      - 'docs/adr/**'
+      - 'local/dore-local/system_atlas_acceptance.py'
+      - '.github/workflows/system-atlas.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  atlas-acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate System Atlas
+        run: python3 local/dore-local/system_atlas_acceptance.py
