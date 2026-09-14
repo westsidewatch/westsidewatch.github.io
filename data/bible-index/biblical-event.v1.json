@@ -1,11 +1,12 @@
 {
   "schema": "dore.biblical-event.v1",
-  "authority": "biblical-event",
+  "authority": "bible-index",
   "identityPolicy": {
     "canonicalIdAuthority": "this-dataset",
     "labelsAreIdentity": false,
     "aliasesAreIdentity": false,
-    "scriptureRangesAreEvidence": true
+    "scriptureRangesAreEvidence": true,
+    "consumerMayGrantMediaExactness": false
   },
   "items": [
     {

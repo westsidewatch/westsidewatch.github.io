@@ -7,9 +7,20 @@ This file is the engineering entrypoint for ONE records under `docs/one/`. It in
 
 ## Product boundary
 
-ONE is the Bible-study tool surface. Scripture coordinates are the durable content/world reference used to connect events, people, places, periods, themes, maps, media and study resources. ONE should reuse that shared Bible coordinate layer rather than maintaining an unrelated identity scheme.
+ONE is the Bible-study tool surface. Scripture coordinates are the durable content/world reference used to connect events, people, places, periods, themes, maps, media and study resources. ONE reuses the shared Bible Index rather than maintaining an unrelated identity scheme.
 
-The current cross-system direction is defined by `docs/CURRENT_MAINLINE.md` and the System Atlas. Paradise Cinema remains the active product mainline while its Bible-media Moment/BiblicalAnchor layer is completed; ONE remains a shared-coordinate consumer during this stage.
+Canonical Biblical Event identity now lives at `data/bible-index/biblical-event.v1.json`. ONE consumes it through `biblical-event-consumer.v1.json`; the join key is the stable `eventId`, never the display label or alias. ONE does not duplicate canonical event metadata and cannot grant media exactness.
+
+The same event identity is consumed by Paradise Cinema. ONE may hand an event to Cinema with `/cinema/?event={eventId}#cinema-library`; Cinema then resolves only already-admitted official Moments and converts the event entry to its exact Moment deep link. This preserves the boundary: Bible identity can connect surfaces, but it cannot make an unadmitted source exact.
+
+## Current shared-event consumer
+
+- Authority: `data/bible-index/biblical-event.v1.json`
+- ONE consumer: `docs/one/biblical-event-consumer.v1.json`
+- Cinema consumer: `cinema/resource-graph.js`
+- Cross-surface join: canonical `bible:event:*` identity
+- Current core identities: Incarnation, Baptism of Jesus, Crucifixion, Resurrection
+- Crucifixion and Resurrection remain distinct events even when the current admitted Cinema evidence resolves both to the same official Episode 24.
 
 ## Gospel Harmony records
 
@@ -25,10 +36,7 @@ The final audit remains evidence, not a complete declaration of textual or histo
 
 1. Current system identity comes from `data/system-atlas.v0.json`.
 2. Bible-world identity comes from the shared Bible Index.
-3. This README is the current documentation index for ONE.
-4. Dated audit reports remain evidence or superseded provenance and do not override newer code/tests by themselves.
-5. A future Gospel Harmony specification should have explicit textual/editorial sources and its own acceptance gate before it becomes canonical.
-
-## Reopen trigger
-
-Revisit this record family when ONE receives a new Gospel Harmony specification, a shared Bible-coordinate runtime, or when current code/tests materially contradict the 2026-08-29 final audit evidence.
+3. Biblical Event identity comes from `data/bible-index/biblical-event.v1.json`.
+4. ONE references canonical event IDs and does not copy event labels, aliases or Scripture ranges into a second authority.
+5. Dated audit reports remain evidence or superseded provenance and do not override newer code/tests by themselves.
+6. Gospel Harmony specifications require explicit textual/editorial sources and an acceptance gate before becoming canonical.

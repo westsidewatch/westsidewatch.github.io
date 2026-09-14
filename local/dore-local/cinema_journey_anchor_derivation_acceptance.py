@@ -4,10 +4,12 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 journey=json.loads((ROOT/'cinema/data/bible-journey.v0.json').read_text())['journeys'][0]
 moments=json.loads((ROOT/'cinema/data/video-moment.v0.json').read_text())['items']
-events=json.loads((ROOT/'cinema/data/biblical-event.v1.json').read_text())['items']
+event_payload=json.loads((ROOT/'data/bible-index/biblical-event.v1.json').read_text())
+events=event_payload['items']
 overrides=json.loads((ROOT/'cinema/data/bible-journey-moment.v0.json').read_text())
 expected={'incarnation':'cinema:moment:lumo-matthew:episode-01','baptism':'cinema:moment:lumo-matthew:episode-02','cross':'cinema:moment:lumo-matthew:episode-24','resurrection':'cinema:moment:lumo-matthew:episode-24'}
 alias={a:e['eventId'] for e in events for a in [e['canonicalKey'],*e['aliases']]}
+assert event_payload['authority']=='bible-index'
 assert overrides['schema']=='dore.bible-journey-moment.v0';assert overrides['items']==[]
 for station_id,moment_id in expected.items():
     station=next(s for s in journey['stations'] if s['stationId']==station_id)
@@ -19,9 +21,9 @@ for station_id,moment_id in expected.items():
         if event_ids & moment_event_ids:hits.append(moment['momentId'])
     assert hits==[moment_id],(station_id,hits)
 graph=(ROOT/'cinema/resource-graph.js').read_text();index=(ROOT/'cinema/index.html').read_text()
-assert "EVENT_SCHEMA='dore.biblical-event.v1'" in graph;assert 'stationMatchesMoment' in graph;assert 'resolveEvent' in graph
+assert "EVENT_SCHEMA='dore.biblical-event.v1'" in graph;assert "events:'../data/bible-index/biblical-event.v1.json'" in graph;assert 'stationMatchesMoment' in graph;assert 'resolveEvent' in graph
 assert "exactSource=override.length?'editorial-override':(derived.length?'canonical-biblical-event':'none')" in graph
 assert "dataset.cinemaJourneyDerivation='canonical-biblical-event-v1'" in graph
 assert 'journey-anchor-derivation.js' not in index;assert not (ROOT/'cinema/journey-anchor-derivation.js').exists()
 assert any(a['type']=='event' and a['value']=='incarnation' for a in next(m for m in moments if m['momentId']==expected['incarnation'])['anchors'])
-print('PARADISE_CINEMA_JOURNEY_GRAPH_DERIVATION=PASS core=4 overrides=0 identity=canonical-biblical-event fake_timecodes=0')
+print('PARADISE_CINEMA_JOURNEY_GRAPH_DERIVATION=PASS core=4 authority=bible-index overrides=0 identity=canonical-biblical-event fake_timecodes=0')
