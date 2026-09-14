@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-14T22:05:23.711897+00:00",
+  "generatedAt": "2026-09-14T22:08:37.680989+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -85,11 +85,9 @@
     "internetArchiveLinks": 50,
     "cacheEntries": 183
   },
-  "errors": [
-    {
-      "source": "Wikisource",
-      "error": "empty-shelf"
-    }
-  ],
-  "contentDownloaded": false
+  "errors": [],
+  "contentDownloaded": false,
+  "sourcePolicy": {
+    "wikisource": "forbidden"
+  }
 }
