@@ -1,0 +1,81 @@
+{
+  "schema": "dore.system-record-families.v0",
+  "authority": "github-main",
+  "purpose": "Attach durable repository records to stable System Atlas identities without deleting provenance or creating a second memory system.",
+  "states": ["canonical", "operational", "evidence", "historical", "superseded", "unreviewed"],
+  "families": [
+    {
+      "id": "records:site-architecture",
+      "owner": "system:main-site",
+      "state": "canonical",
+      "patterns": ["docs/MASTER_SITE_ARCHITECTURE.md"]
+    },
+    {
+      "id": "records:system-atlas-governance",
+      "owner": "authority:system-atlas",
+      "state": "canonical",
+      "patterns": ["data/system-atlas.v0.json", "data/system-atlas.schema.json", "docs/CURRENT_MAINLINE.md", "docs/adr/*.md"]
+    },
+    {
+      "id": "records:master-work-register",
+      "owner": "register:master-work",
+      "state": "operational",
+      "patterns": ["dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md", "dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md"]
+    },
+    {
+      "id": "records:memory-sweep-checkpoints",
+      "owner": "register:master-work",
+      "state": "evidence",
+      "patterns": ["dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md"]
+    },
+    {
+      "id": "records:memory-evidence-ledgers",
+      "owner": "register:master-work",
+      "state": "evidence",
+      "patterns": ["dore-core/projects/*EVIDENCE-LEDGER*.md"]
+    },
+    {
+      "id": "records:memory-core-boundary",
+      "owner": "system:dore-memory",
+      "state": "canonical",
+      "patterns": ["docs/dore-memory-core-boundary.md"]
+    },
+    {
+      "id": "records:a2a-architecture",
+      "owner": "system:a2a",
+      "state": "canonical",
+      "patterns": ["docs/a2a-reliability-atlas-v1.md", "docs/a2a-reliability-1b-existing-primitives.md"]
+    },
+    {
+      "id": "records:dawn-library-canonical",
+      "owner": "system:dawn-library",
+      "state": "canonical",
+      "patterns": ["docs/dawn-library-display-system-memo.md", "docs/dawn-url-surface-contract.md", "docs/dawn-library-formal-edition/**/*.md"]
+    },
+    {
+      "id": "records:one-docs",
+      "owner": "tool:one",
+      "state": "unreviewed",
+      "patterns": ["docs/one/**/*.md"]
+    },
+    {
+      "id": "records:dore-docs",
+      "owner": "tool:dore-folio",
+      "state": "unreviewed",
+      "patterns": ["docs/dore/**/*.md"]
+    },
+    {
+      "id": "records:paradise-cinema-data",
+      "owner": "system:paradise-cinema",
+      "state": "operational",
+      "patterns": ["cinema/data/*.json"]
+    }
+  ],
+  "rules": [
+    "A family assigns discoverability and reconciliation ownership; it does not rewrite the underlying record.",
+    "Canonical status must be explicit. A glob does not promote evidence or historical material to current truth.",
+    "Old records remain provenance when superseded; they are not deleted merely because a newer record exists.",
+    "Unreviewed families are queues for evidence-based reconciliation, not claims of correctness.",
+    "Memory Sweep checkpoints remain evidence under the existing Master Work Register; System Atlas does not create a second sweep."
+  ]
+}
