@@ -33,8 +33,12 @@ function openMoment(moment,{replaceHistory=true}={}){
   const item=resourceById.get(moment.workId);
   if(!item)return false;
   if(replaceHistory&&graphApi?.deepLink){const target=graphApi.deepLink(moment.momentId);if(target)history.replaceState({momentId:moment.momentId},'',target);}
-  openAt(item,moment.startMs);
+  const target=window.HolyLightProviders?.resolveMoment?.(item,moment)||playbackTarget(item,moment.startMs);
+  if(!target)return false;
+  if(target.kind==='embed'){stage.replaceChildren();window.HolyLightProviders.mount(stage,item,seconds(moment.startMs));dialog.showModal();}
+  else window.open(target.url,'_blank','noopener,noreferrer');
   document.documentElement.dataset.cinemaActiveMoment=moment.momentId;
+  document.documentElement.dataset.cinemaMomentPlayback=target.exact?'exact-source':'work-source';
   return true;
 }
 function mountInlinePlayer(shell,target,item,startMs=0){
