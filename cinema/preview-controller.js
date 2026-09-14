@@ -1,7 +1,8 @@
 (()=>{
   const HOVER_DELAY=420;
   const HOVER_EXIT_DELAY=120;
-  const RUNTIME_PROBE_TIMEOUT=26000;
+  const RUNTIME_PROBE_TIMEOUT=12000;
+  const POSTER_INDEX_URL='data/poster-index.v0.json';
   const previewTimers=new WeakMap();
   const exitTimers=new WeakMap();
 
@@ -118,7 +119,28 @@
     return true;
   }
 
+  async function loadPosterIndex(){
+    try{
+      const response=await fetch(POSTER_INDEX_URL,{cache:'no-store'});
+      if(!response.ok)return {};
+      const payload=await response.json();
+      if(payload.schema!=='dore.cinema-poster-index.v0'||!payload.items||typeof payload.items!=='object')return {};
+      return payload.items;
+    }catch(_error){return {};}
+  }
+
+  function indexedPoster(item,index){
+    const entry=index[item.canonicalId];
+    if(!entry?.posterUrl)return null;
+    return {posterUrl:entry.posterUrl,hoverPreview:false,provider:'poster-index',source:sourceFor(item),posterSource:entry.source||'indexed-official-source'};
+  }
+
+  function runtimeBridgeReady(){
+    return Boolean(document.documentElement.dataset.doreSiteBridge);
+  }
+
   function runtimePoster(item){
+    if(!runtimeBridgeReady())return Promise.resolve(null);
     const url=String(item.sourcePointer||sourceFor(item).url||'').trim();
     if(!url)return Promise.resolve(null);
     const requestId=`cinema-source-probe-${Date.now()}-${Math.random().toString(36).slice(2)}`;
@@ -140,13 +162,28 @@
   }
 
   async function installResourcePreviews(resources){
+    const unresolved=[];
     for(const item of resources){
       if(item.canonicalId==='cinema:video:jesus-film:jesus')continue;
-      const declared=previewSpec(item);
-      if(installPreview(item,declared))continue;
+      if(!installPreview(item,previewSpec(item)))unresolved.push(item);
+    }
+
+    const posterIndex=await loadPosterIndex();
+    const runtimeCandidates=[];
+    for(const item of unresolved){
+      if(!installPreview(item,indexedPoster(item,posterIndex)))runtimeCandidates.push(item);
+    }
+
+    document.documentElement.dataset.cinemaPreviewImmediate=String(resources.length-runtimeCandidates.length-1);
+    if(!runtimeBridgeReady()){
+      document.documentElement.dataset.cinemaRuntimeSourceProbe='bridge-unavailable';
+      return;
+    }
+
+    await Promise.all(runtimeCandidates.map(async item=>{
       const runtime=await runtimePoster(item);
       if(runtime)installPreview(item,runtime);
-    }
+    }));
   }
 
   function installJesusPoster(item){
@@ -184,7 +221,7 @@
         const ready=document.querySelector('.living-poster')&&document.querySelector('.resource-card');
         if(ready){
           if(jesus)installJesusPoster(jesus);
-          installResourcePreviews(resources).then(()=>{document.documentElement.dataset.cinemaPreviewLayer='v2-runtime-source-probe';});
+          installResourcePreviews(resources).then(()=>{document.documentElement.dataset.cinemaPreviewLayer='v3-nonblocking-source-probe';});
           return;
         }
         if(tries++<80)requestAnimationFrame(waitForCards);
