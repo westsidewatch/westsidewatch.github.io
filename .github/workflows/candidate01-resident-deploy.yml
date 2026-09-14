@@ -59,28 +59,31 @@ jobs:
           bash dore-design/install-macos.sh
       - name: Verify running localhost Candidate 01 resident
         run: |
+          FOUND=0
           for i in $(seq 1 30); do
             HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' 2>/dev/null || true)
-            if printf '%s' "$HTML" | grep -q 'candidate01-exact-grid-preview-geometry'; then
-              printf '%s' "$HTML" | grep -q 'candidate01-living-current-runtime'
-              printf '%s' "$HTML" | grep -q 'candidate01-page2-assembly-runtime'
-              printf '%s' "$HTML" | grep -q 'centered-mirror-'
-              printf '%s' "$HTML" | grep -q 'candidate01-four-w-runtime'
-              printf '%s' "$HTML" | grep -q 'WATCH'
-              printf '%s' "$HTML" | grep -q 'WITNESS'
-              printf '%s' "$HTML" | grep -q 'WALK'
-              printf '%s' "$HTML" | grep -q 'WORSHIP'
-              ! printf '%s' "$HTML" | grep -q 'dore-mosaic-layer'
+            if grep -q 'candidate01-exact-grid-preview-geometry' <<<"$HTML"; then
+              grep -q 'candidate01-living-current-runtime' <<<"$HTML"
+              grep -q 'candidate01-page2-assembly-runtime' <<<"$HTML"
+              grep -q 'centered-mirror-' <<<"$HTML"
+              grep -q 'candidate01-four-w-runtime' <<<"$HTML"
+              grep -q 'WATCH' <<<"$HTML"
+              grep -q 'WITNESS' <<<"$HTML"
+              grep -q 'WALK' <<<"$HTML"
+              grep -q 'WORSHIP' <<<"$HTML"
+              ! grep -q 'dore-mosaic-layer' <<<"$HTML"
+              FOUND=1
               break
             fi
             sleep 2
           done
+          test "$FOUND" = 1
           EDITOR=$(curl -fsS 'http://127.0.0.1:4310/editor?page=italian-editorial-atlas')
-          printf '%s' "$EDITOR" | grep -q 'Italian Editorial Atlas / 義大利編輯圖譜'
+          grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"
           ATLAS=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=italian-editorial-atlas')
-          printf '%s' "$ATLAS" | grep -q 'italian-editorial-atlas.html'
+          grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"
           SURFACE=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-atlas.html')
-          printf '%s' "$SURFACE" | grep -q 'Italian Editorial Atlas'
+          grep -q 'Italian Editorial Atlas' <<<"$SURFACE"
           REGISTRY=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-grammars.v1.json')
-          printf '%s' "$REGISTRY" | grep -q 'dore.italian-editorial-grammars.v1'
+          grep -q 'dore.italian-editorial-grammars.v1' <<<"$REGISTRY"
           echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered,four-w,italian-atlas"
