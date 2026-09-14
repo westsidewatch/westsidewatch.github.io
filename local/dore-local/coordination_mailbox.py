@@ -76,7 +76,7 @@ def receive_from_chatgpt(message):
  if message['message_id'] in existing:return {'schema':'dore.mail-receipt.v1','message_id':message['message_id'],'duplicate':True}
  sha=_append(INBOX,message);receipt={'schema':'dore.mail-receipt.v1','message_id':message['message_id'],'received_at':now(),'sha256':sha};_append(RECEIPTS,receipt);return receipt
 def outbound_status(message_id):
- rows=[m for m in read_jsonl(OUTBOX) if m.get('message_id')==message_id];attempts=[d for d in read_jsonl(DELIVERY) if d.get('message_id')==message_id];msg=rows[-1] if rows else None;last=attempts[-1] if attempts else None;published=bool(last and last.get('published')) or bool(msg and _published_versions().get(message_id) in {msg.get('message_sha256'),'*'})
+ rows=[m for m in read_jsonl(OUTBOX) if m.get('message_id')==message_id];attempts=[d for d in read_jsonl(DELIVERY) if d.get('message_id')==message_id];msg=rows[-1] if rows else None;last=attempts[-1] if attempts else None;published=bool(msg and _published_versions().get(message_id) in {msg.get('message_sha256'),'*'})
  return {'ok':bool(msg),'message_id':message_id,'queued':bool(msg),'message_sha256':(msg or {}).get('message_sha256'),'attempt_count':len(attempts),'published':published,'last_delivery':last}
 def status():
  pub=_published_versions();return {'ok':True,'inbox':len(read_jsonl(INBOX)),'outbox_records':len(read_jsonl(OUTBOX)),'canonical_results':len({m.get('message_id') for m in read_jsonl(OUTBOX) if m.get('message_id')}),'receipts':len(read_jsonl(RECEIPTS)),'published_versions':len(pub),'paths':{'inbox':str(INBOX),'outbox':str(OUTBOX),'repo_outbox':str(REPO_OUTBOX)}}

@@ -41,6 +41,10 @@ def _failure_response(task_id,decision,*,result=None,error=None):
  if error is not None:payload["error"]=error
  return payload
 
+def _block_if_needed(plane,task_id,owner,decision):
+ if decision.get('state') in {'UNKNOWN','RESEARCH_REQUIRED'}:
+  plane.block(task_id,decision['state'],decision,consumer=owner)
+
 def execute(envelope:dict[str,Any],descriptor:dict[str,Any],binding:dict[str,Any],provider_call:Callable[[],dict[str,Any]],*,plane:Any)->dict[str,Any]:
  task_id=_task_id(envelope);message=_message(envelope,task_id);task=plane.register(message)
  if task.get("status")=="PASS":
@@ -48,6 +52,9 @@ def execute(envelope:dict[str,Any],descriptor:dict[str,Any],binding:dict[str,Any
 
  owner=f"universal:{envelope.get('consumer_id') or 'dore'}";lease_seconds=max(30,int(descriptor.get("lease_seconds") or binding.get("lease_seconds") or getattr(plane,"DEFAULT_LEASE_SECONDS",300)))
  rec=plane.recoverability(task_id) if hasattr(plane,"recoverability") else {"state":"READY","task":task};resume_from=rec.get("resume_from")
+ if rec.get('state')=='BLOCKED':
+  decision=(rec.get('failure') or {'state':(rec.get('task') or {}).get('status'),'code':'task_blocked'})
+  return _failure_response(task_id,decision,error={'code':'reconciliation_required','message':'execution is blocked pending explicit recovery'})
  if rec.get("state")=="RECLAIMABLE" and resume_from in {"RUNNING","CLAIMED"} and not _retry_safe(binding,descriptor):
   decision=_failure(task_id,{"code":"worker_lost"},descriptor,binding,context={"resume_from":resume_from,"reclaimable":True,"unsafe_replay":True})
   return _failure_response(task_id,decision,error={"code":"unsafe_replay_blocked","message":"expired side-effecting execution requires capability-specific recovery"})
@@ -74,11 +81,18 @@ def execute(envelope:dict[str,Any],descriptor:dict[str,Any],binding:dict[str,Any
   failed=plane.transition(task_id,"FAIL",consumer=owner,result={"ok":False,"error":{"code":"verification_contract_required"}});decision=_failure(task_id,{"code":"policy_violation"},descriptor,binding,context={"stage":"verification_contract"})
   response=_failure_response(task_id,decision,error={"code":"verification_contract_required","message":"side-effect capability requires an explicit verification contract before execution"});response["task"]=failed.get("task");return response
 
+ attempt_row=plane.begin_attempt(task_id,consumer=owner)
+ if not attempt_row.get('ok'):
+  decision=_failure(task_id,{'code':attempt_row.get('code') or 'worker_lost'},descriptor,binding,context={'stage':'attempt_start'})
+  return _failure_response(task_id,decision,error={'code':attempt_row.get('code') or 'attempt_start_failed'})
+ attempt=int(attempt_row['attempt'])
+
  interval=float(binding.get("heartbeat_interval_seconds") or descriptor.get("heartbeat_interval_seconds") or max(1.0,min(30.0,lease_seconds/3.0)));stop=threading.Event();thread=threading.Thread(target=_heartbeat_loop,args=(stop,plane,task_id,owner,lease_seconds,interval),daemon=True,name="dore-a2a-heartbeat");thread.start()
  try:result=provider_call()
  except Exception as exc:
-  stop.set();thread.join(timeout=max(0.1,interval*2));decision=_failure(task_id,exc,descriptor,binding,context={"stage":"provider"})
+  stop.set();thread.join(timeout=max(0.1,interval*2));decision=_failure(task_id,exc,descriptor,binding,attempt=attempt,context={"stage":"provider"})
   if decision.get("state") in {"TERMINAL_FAIL","QUARANTINED"}:plane.transition(task_id,"FAIL",consumer=owner,result={"ok":False,"error":{"code":"provider_exception","message":str(exc)},"failure_state":decision.get("state")})
+  _block_if_needed(plane,task_id,owner,decision)
   return _failure_response(task_id,decision,error={"code":"provider_exception","message":str(exc)})
  finally:stop.set()
  try:thread.join(timeout=max(0.1,interval*2))
@@ -86,15 +100,16 @@ def execute(envelope:dict[str,Any],descriptor:dict[str,Any],binding:dict[str,Any
 
  semantic_ok=bool(isinstance(result,dict) and result.get("ok") is True and str(result.get("status") or "completed").lower() not in {"failed","error"})
  if not semantic_ok:
-  failure=result if isinstance(result,dict) else {"code":"provider_result_invalid","value":result};decision=_failure(task_id,failure,descriptor,binding,context={"stage":"semantic_result"})
+  failure=result if isinstance(result,dict) else {"code":"provider_result_invalid","value":result};decision=_failure(task_id,failure,descriptor,binding,attempt=attempt,context={"stage":"semantic_result"})
   if decision.get("state") in {"TERMINAL_FAIL","QUARANTINED"}:plane.transition(task_id,"FAIL",consumer=owner,result=failure)
+  _block_if_needed(plane,task_id,owner,decision)
   return _failure_response(task_id,decision,result=result)
  artifact={"schema":"dore.a2a-capability-result-artifact.v1","capability_id":envelope.get("capability_id"),"request_id":envelope.get("request_id"),"result_sha256":_digest(result),"result":result}
  recorded=plane.record_artifact(task_id,artifact,consumer=owner)
  if not recorded.get("ok"):
-  decision=_failure(task_id,{"code":recorded.get("code") or "worker_lost"},descriptor,binding,context={"stage":"artifact_record"});response=_failure_response(task_id,decision,result=result,error={"code":recorded.get("code") or "artifact_record_failed"});response["recovery_state"]=plane.status(task_id).get("recovery_state") if hasattr(plane,"status") else None;return response
+  decision=_failure(task_id,{"code":recorded.get("code") or "worker_lost"},descriptor,binding,attempt=attempt,context={"stage":"artifact_record"});_block_if_needed(plane,task_id,owner,decision);response=_failure_response(task_id,decision,result=result,error={"code":recorded.get("code") or "artifact_record_failed"});response["recovery_state"]=plane.status(task_id).get("recovery_state") if hasattr(plane,"status") else None;return response
  verified=plane.verify(task_id,_verification(envelope,binding,artifact["result_sha256"]),consumer=owner)
  if not verified.get("ok"):
-  decision=_failure(task_id,{"code":"verification_failed"},descriptor,binding,context={"stage":"verify"});return _failure_response(task_id,decision,result=result,error={"code":"execution_verification_failed"})
+  decision=_failure(task_id,{"code":"verification_failed"},descriptor,binding,attempt=attempt,context={"stage":"verify"});return _failure_response(task_id,decision,result=result,error={"code":"execution_verification_failed"})
  completed=plane.complete(task_id,result=result,consumer=owner);s=plane.status(task_id)
  return {"ok":bool(completed.get("ok") and s.get("completion_evidence")),"task_id":task_id,"execution_status":(s.get("task") or {}).get("status"),"completion_evidence":bool(s.get("completion_evidence")),"replayed":False,"reclaimed":claimed_recovery,"result":result,"artifact":(s.get("task") or {}).get("artifact"),"verification":(s.get("task") or {}).get("verification")}
