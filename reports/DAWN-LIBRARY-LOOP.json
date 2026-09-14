@@ -1,6 +1,6 @@
 {
-  "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-14T20:45:53.970503+00:00",
+  "schema": "dawn.library.loop.report.v3",
+  "generatedAt": "2026-09-14T22:01:24.205314+00:00",
   "results": {
     "books": {
       "published": 28,
@@ -21,8 +21,10 @@
       "titles": []
     },
     "pipelineThisRun": {
-      "englishDiscoveredThisRun": 0,
       "chineseDiscoveredThisRun": 0,
+      "chinesePromotedThisRun": 0,
+      "chinesePromotedTitles": [],
+      "englishDiscoveredThisRun": 0,
       "englishPromotedThisRun": 0,
       "englishPromotedTitles": []
     },
@@ -71,5 +73,5 @@
       "reason": "missing verified public source"
     }
   ],
-  "invariant": "Seed promotion is not autonomous growth. Autonomous growth requires loop discovery provenance plus verified rights and catalog promotion."
+  "invariant": "Seed promotion is not autonomous growth. Chinese and English autonomous growth both require loop discovery provenance plus verified rights and catalog promotion."
 }

@@ -1,14 +1,15 @@
 {
-  "schema": "dawn.library.chinese-resolver.report.v1",
-  "generatedAt": "2026-09-14T20:45:52.762271+00:00",
-  "qualifiedInput": 16,
+  "schema": "dawn.library.chinese-resolver.report.v2",
+  "generatedAt": "2026-09-14T22:01:21.386566+00:00",
+  "qualifiedInput": 0,
   "results": {
-    "verified": 1,
-    "needs-review": 6,
-    "blocked": 9
+    "verified": 0,
+    "needs-review": 0,
+    "blocked": 0
   },
-  "verifiedTitles": [
-    "聖經 (和合本)"
-  ],
-  "invariant": "Verification reads metadata and root-page rights evidence only; no book full text is stored."
+  "verifiedTitles": [],
+  "sourcePolicy": {
+    "wikisource": "forbidden"
+  },
+  "invariant": "Verification reads Project Gutenberg RDF metadata, explicit US public-domain rights, and explicit Chinese language metadata only; no book full text is stored."
 }

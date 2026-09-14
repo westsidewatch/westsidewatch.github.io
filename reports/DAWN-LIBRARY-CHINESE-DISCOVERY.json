@@ -1,11 +1,16 @@
 {
-  "schema": "dawn.library.chinese-discovery.report.v1",
-  "generatedAt": "2026-09-14T20:45:49.003679+00:00",
-  "source": "zh-wikisource",
+  "schema": "dawn.library.chinese-discovery.report.v2",
+  "generatedAt": "2026-09-14T22:01:19.166373+00:00",
+  "source": "project-gutenberg",
   "language": "zh",
-  "goldenSeeds": 4,
-  "goldenSeedsResolved": 4,
-  "candidateQueue": 200,
+  "queries": 11,
+  "pagesChecked": 11,
+  "newDiscovered": 0,
+  "candidateQueue": 0,
   "errors": [],
-  "invariant": "Metadata only; no bulk full-text ingestion."
+  "sourcePolicy": {
+    "wikisource": "forbidden",
+    "contentBoundary": "theology-bible-inner-life; no political/national/war dispute material"
+  },
+  "invariant": "Metadata only; explicit Chinese-language metadata required; golden status requires exact seed-title resolution; no bulk full-text ingestion."
 }
