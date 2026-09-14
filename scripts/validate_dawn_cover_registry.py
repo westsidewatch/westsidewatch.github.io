@@ -5,7 +5,8 @@ import json
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-REGISTRY = ROOT / 'static/dawn-library/cover-registry.json'
+STATIC_ROOT = ROOT / 'static'
+REGISTRY = STATIC_ROOT / 'dawn-library/cover-registry.json'
 FORBIDDEN_RUNTIME = ('openlibrary.org', 'wikisource', 'zh.wikisource.org')
 
 
@@ -29,9 +30,10 @@ def main() -> int:
             raise SystemExit(f'non-local canonical cover pointer: {work_id}')
         if any(token in lower for token in FORBIDDEN_RUNTIME):
             raise SystemExit(f'forbidden runtime dependency: {work_id}')
-        path = ROOT / pointer.lstrip('/')
+        # Public site pointers are rooted at Hugo's static/ directory before build.
+        path = STATIC_ROOT / pointer.lstrip('/')
         if not path.is_file():
-            raise SystemExit(f'missing canonical cover asset: {work_id}')
+            raise SystemExit(f'missing canonical cover asset: {work_id}: {path.relative_to(ROOT)}')
         if path.stat().st_size > 8 * 1024 * 1024:
             raise SystemExit(f'canonical cover exceeds 8 MiB: {work_id}')
     collision_ids = [c.get('workId') for c in payload.get('identityCollisions') or []]
