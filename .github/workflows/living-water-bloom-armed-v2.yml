@@ -1,0 +1,18 @@
+name: Living Water Bloom Armed v2
+on:
+  pull_request:
+    paths:
+      - 'dore-design/living-water-bloom-armed.v2.json'
+      - 'dore-design/design_arsenal_assimilation.v0.json'
+      - 'static/dore-design/living-water-bloom-armed-v2.html'
+      - 'static/dore-design/dore-motion.js'
+      - 'local/dore-local/living_water_bloom_armed_v2_acceptance.py'
+      - '.github/workflows/living-water-bloom-armed-v2.yml'
+  workflow_dispatch:
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Armed Bloom contract
+        run: python3 local/dore-local/living_water_bloom_armed_v2_acceptance.py
