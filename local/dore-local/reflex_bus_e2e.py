@@ -70,12 +70,13 @@ def main() -> None:
             assert result["capability"] == "reflex.project"
             assert result["source"]["canonicalId"] == SOURCE["canonicalId"]
             assert result["source"]["sourcePointer"] == SOURCE["sourcePointer"]
-            assert result["core_route"] == {
-                "capability": "reflex.project",
-                "caller_product": "multiwrite",
-                "provider": "dore-core",
-                "transport": "core-adapter",
-            }
+            route=result["core_route"]
+            assert route["capability"] == "reflex.project"
+            assert route["caller_product"] == "multiwrite"
+            assert route["provider"] == "dore-core"
+            assert route["transport"] == "core-adapter"
+            assert route.get("binding_kind") in {None,"native"}
+            assert route.get("identity_source") in {None,"dore-core/runtime/capability-registry.v1.json"}
             assert "events" not in result
             assert "session" not in result
             assert "reflex" not in result
