@@ -5,22 +5,28 @@ on:
     paths:
       - 'data/system-atlas.v0.json'
       - 'data/system-atlas.schema.json'
+      - 'data/system-record-families.v0.json'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
       - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
       - 'dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md'
+      - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
+      - 'local/dore-local/system_record_reconciliation_acceptance.py'
       - '.github/workflows/system-atlas.yml'
   push:
     branches: [main]
     paths:
       - 'data/system-atlas.v0.json'
       - 'data/system-atlas.schema.json'
+      - 'data/system-record-families.v0.json'
       - 'docs/CURRENT_MAINLINE.md'
       - 'docs/adr/**'
       - 'dore-core/projects/DORÉ-MASTER-WORK-REGISTER.md'
       - 'dore-core/projects/DORÉ-MEMORY-CONSOLIDATION-SWEEP-01.md'
+      - 'dore-core/projects/DORE-MEMORY-SWEEP-01-CHECKPOINT-*.md'
       - 'local/dore-local/system_atlas_acceptance.py'
+      - 'local/dore-local/system_record_reconciliation_acceptance.py'
       - '.github/workflows/system-atlas.yml'
 
 permissions:
@@ -36,3 +42,5 @@ jobs:
           python-version: '3.12'
       - name: Validate System Atlas
         run: python3 local/dore-local/system_atlas_acceptance.py
+      - name: Validate record reconciliation
+        run: python3 local/dore-local/system_record_reconciliation_acceptance.py
