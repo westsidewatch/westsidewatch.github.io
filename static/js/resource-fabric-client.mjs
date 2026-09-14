@@ -8,6 +8,7 @@ const manifestPromise=fetch(`${ROOT}/manifest.json`,{cache:'no-store'}).then(asy
   return manifest;
 });
 const shardCache=new Map();
+const segmentCache=new Map();
 const encoder=new TextEncoder();
 
 function fnv1a(text=''){
@@ -31,48 +32,52 @@ function decode(row=[]){
     authorityBacked:Boolean(authorityBacked),
   };
 }
+async function loadJson(path,cache='force-cache'){
+  const r=await fetch(`${ROOT}/${path}`,{cache});if(!r.ok)throw new Error(`Resource Fabric ${path} ${r.status}`);return r.json();
+}
 async function loadShard(index){
   const key=Number(index);
-  if(!shardCache.has(key)){
-    shardCache.set(key,fetch(`${ROOT}/work-${hex(key)}.json`,{cache:'force-cache'}).then(r=>{if(!r.ok)throw new Error(`Resource Fabric shard ${key} ${r.status}`);return r.json();}));
-  }
+  if(!shardCache.has(key))shardCache.set(key,loadJson(`work-${hex(key)}.json`));
   return shardCache.get(key);
+}
+async function loadSegment(path){
+  if(!segmentCache.has(path))segmentCache.set(path,loadJson(path));
+  return segmentCache.get(path);
+}
+function deltaRoutes(manifest,kind,key){return manifest?.delta?.[kind]?.[key]||[];}
+async function overlayWork(manifest,workId){
+  const key=hex(fnv1a(workId)%manifest.workShardCount);
+  const routes=deltaRoutes(manifest,'workRoutes',key);
+  for(let i=routes.length-1;i>=0;i--){
+    const seg=await loadSegment(routes[i]);
+    const ops=seg.operations||[];
+    for(let j=ops.length-1;j>=0;j--){const op=ops[j];if(op.workId!==workId)continue;if(op.op==='-Work')return null;if(op.op==='+Work')return op.record||null;}
+  }
+  const shard=await loadShard(parseInt(key,16));
+  return (shard.rows||[]).find(r=>r[0]===workId)||null;
 }
 export async function resourceManifest(){return manifestPromise;}
 export async function resourceWork(workId){
-  if(!workId)return null;
-  const manifest=await manifestPromise;
-  const index=fnv1a(workId)%manifest.workShardCount;
-  const shard=await loadShard(index);
-  const row=(shard.rows||[]).find(r=>r[0]===workId);
-  return row?decode(row):null;
+  if(!workId)return null;const manifest=await manifestPromise;const row=await overlayWork(manifest,workId);return row?decode(row):null;
 }
 export async function resourceWorks(workIds=[]){
-  const manifest=await manifestPromise;
-  const unique=[...new Set(workIds.filter(Boolean))];
-  const groups=new Map();
-  for(const id of unique){const index=fnv1a(id)%manifest.workShardCount;if(!groups.has(index))groups.set(index,[]);groups.get(index).push(id);}
-  const out=new Map();
-  await Promise.all([...groups.entries()].map(async([index,ids])=>{
-    const shard=await loadShard(index);const wanted=new Set(ids);
-    for(const row of shard.rows||[])if(wanted.has(row[0]))out.set(row[0],decode(row));
-  }));
+  const manifest=await manifestPromise;const unique=[...new Set(workIds.filter(Boolean))];const out=new Map();
+  await Promise.all(unique.map(async id=>{const row=await overlayWork(manifest,id);if(row)out.set(id,decode(row));}));
   return out;
 }
 export async function resourceFeatured(){
-  const r=await fetch(`${ROOT}/featured.json`,{cache:'force-cache'});if(!r.ok)throw new Error(`Resource Fabric featured ${r.status}`);
-  const data=await r.json();return (data.rows||[]).map(decode);
+  const data=await loadJson('featured.json');const rows=[];
+  for(const row of data.rows||[]){const work=await resourceWork(row[0]);if(work)rows.push(work);}
+  return rows;
 }
 export async function resourceSearch(query){
   const q=String(query||'').trim().toLocaleLowerCase();if(!q)return [];
   const token=(q.match(/[\p{L}\p{N}_]+/u)||[])[0]||'';if(!token)return [];
-  const prefix=token.slice(0,Math.min(4,token.length));
-  const manifest=await manifestPromise;
-  const bucket=fnv1a(prefix)%manifest.searchBucketCount;
-  const r=await fetch(`${ROOT}/search-${hex(bucket)}.json`,{cache:'force-cache'});if(!r.ok)throw new Error(`Resource Fabric search bucket ${bucket} ${r.status}`);
-  const data=await r.json();
-  const ids=(data.rows||[]).filter(row=>row[0]===prefix&&`${row[2]} ${row[3]}`.toLocaleLowerCase().includes(q)).map(row=>row[1]);
-  const works=await resourceWorks(ids);
-  return ids.map(id=>works.get(id)).filter(Boolean);
+  const prefix=token.slice(0,Math.min(4,token.length));const manifest=await manifestPromise;const bucket=fnv1a(prefix)%manifest.searchBucketCount;const key=hex(bucket);
+  const base=await loadJson(`search-${key}.json`);const rows=[...(base.rows||[])];
+  for(const rel of deltaRoutes(manifest,'searchRoutes',key)){const seg=await loadSegment(rel);rows.push(...(seg.searchRows||[]));}
+  const ids=[];const seen=new Set();
+  for(let i=rows.length-1;i>=0;i--){const row=rows[i];if(row[0]!==prefix||!`${row[2]} ${row[3]}`.toLocaleLowerCase().includes(q)||seen.has(row[1]))continue;seen.add(row[1]);ids.push(row[1]);}
+  const works=await resourceWorks(ids);return ids.map(id=>works.get(id)).filter(Boolean);
 }
 export const resourceFabric={manifest:resourceManifest,work:resourceWork,works:resourceWorks,featured:resourceFeatured,search:resourceSearch};
