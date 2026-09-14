@@ -53,10 +53,22 @@
       "patterns": ["docs/dawn-library-display-system-memo.md", "docs/dawn-url-surface-contract.md", "docs/dawn-library-formal-edition/**/*.md"]
     },
     {
-      "id": "records:one-docs",
+      "id": "records:one-index",
       "owner": "tool:one",
-      "state": "unreviewed",
-      "patterns": ["docs/one/**/*.md"]
+      "state": "canonical",
+      "patterns": ["docs/one/README.md"]
+    },
+    {
+      "id": "records:one-gospel-harmony-final-audit",
+      "owner": "tool:one",
+      "state": "evidence",
+      "patterns": ["docs/one/GOSPEL-HARMONY-FINAL-AUDIT-20260829.md"]
+    },
+    {
+      "id": "records:one-gospel-harmony-preliminary-audits",
+      "owner": "tool:one",
+      "state": "superseded",
+      "patterns": ["docs/one/GOSPEL-HARMONY-AUDIT-20260829.md", "docs/one/GOSPEL-HARMONY-CONSISTENCY-20260829.md"]
     },
     {
       "id": "records:dore-docs",
