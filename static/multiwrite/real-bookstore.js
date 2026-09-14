@@ -1,7 +1,7 @@
 import {canonicalSurface,canonicalBook,canonicalReadHref,canonicalCoverRegistry} from './canonical-library.mjs';
 import {createPersonalReferenceFromDawn} from './library-model.mjs';
 const DB='multiwrite-v1',VER=3,STORE='books';
-const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot',"'":'&#039;'}[c]));
+const esc=(v='')=>String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 function openDb(){return new Promise((resolve,reject)=>{const r=indexedDB.open(DB,VER);r.onupgradeneeded=()=>{const d=r.result;if(!d.objectStoreNames.contains(STORE))d.createObjectStore(STORE,{keyPath:'id'});if(!d.objectStoreNames.contains('drafts'))d.createObjectStore('drafts',{keyPath:'id'});if(!d.objectStoreNames.contains('studyDocuments'))d.createObjectStore('studyDocuments',{keyPath:'id'});};r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error);});}
 async function allBooks(){const d=await openDb();return new Promise((resolve,reject)=>{const t=d.transaction(STORE,'readonly'),r=t.objectStore(STORE).getAll();r.onsuccess=()=>{d.close();resolve(r.result||[])};r.onerror=()=>{d.close();reject(r.error)};});}
 async function put(book){const d=await openDb();return new Promise((resolve,reject)=>{const t=d.transaction(STORE,'readwrite');t.objectStore(STORE).put(book);t.oncomplete=()=>{d.close();resolve(book)};t.onerror=()=>{d.close();reject(t.error)};});}
