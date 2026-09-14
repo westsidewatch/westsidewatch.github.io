@@ -17,6 +17,7 @@ BINDINGS: dict[str, dict[str, Any]] = {
     "reflex.project": {"kind": "native", "handler": "reflex.project"},
     "translation.project": {"kind": "native", "handler": "translation.project"},
     "publishing.book-intelligence": {"kind": "native", "handler": "publishing.book-intelligence"},
+    "writing.westside-dimensional-journalism": {"kind": "native", "handler": "writing.westside-dimensional-journalism"},
     "design.intelligence": {"kind": "native", "handler": "design.intelligence"},
     "design.production.rollout": {"kind": "production-action", "handler": "production_actions.execute"},
     "search.local.repair": {"kind": "production-action", "handler": "production_actions.execute"},

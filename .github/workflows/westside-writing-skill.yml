@@ -1,0 +1,50 @@
+name: Westside Writing Skill
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/writing/**'
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'local/dore-local/westside_writing_capability.py'
+      - 'local/dore-local/westside_writing_acceptance.py'
+      - 'local/dore-local/westside_writing_blind_acceptance.py'
+      - 'local/dore-local/westside_writing_runtime_acceptance.py'
+      - 'local/dore-local/capability_bindings.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/a2a_adapter.py'
+      - '.github/workflows/westside-writing-skill.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Compile adapter and runtime admission
+        run: python -m py_compile local/dore-local/westside_writing_capability.py local/dore-local/westside_writing_acceptance.py local/dore-local/westside_writing_blind_acceptance.py local/dore-local/westside_writing_runtime_acceptance.py local/dore-local/capability_bindings.py local/dore-local/capability_bus.py
+      - name: Run writing acceptance
+        run: python local/dore-local/westside_writing_acceptance.py
+      - name: Run Tian Guo Yu Yan blind manuscript acceptance
+        run: python local/dore-local/westside_writing_blind_acceptance.py
+      - name: Run canonical runtime acceptance
+        run: python local/dore-local/westside_writing_runtime_acceptance.py
+      - name: Validate JSON assets and registry
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          for path in [
+              Path('dore-core/writing/westside-dimensional-journalism.schema.v0.json'),
+              Path('dore-core/writing/westside-dimensional-journalism.samples.v0.json'),
+              Path('dore-core/writing/blind-tests/tian-guo-yu-yan-minimal-history.v0.json'),
+              Path('dore-core/runtime/capability-registry.v1.json'),
+          ]:
+              json.loads(path.read_text(encoding='utf-8'))
+              print('PASS', path)
+          PY
