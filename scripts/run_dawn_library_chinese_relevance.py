@@ -1,16 +1,25 @@
 #!/usr/bin/env python3
+from dawn_resource_exclusions import excluded
 import json,unicodedata
 from datetime import datetime,timezone
 from pathlib import Path
+
 ROOT=Path(__file__).resolve().parents[1]
 CAND=ROOT/'static/dawn-library/biblical-world/chinese-candidates.json'
 POL=ROOT/'static/dawn-library/biblical-world/chinese-relevance-policy.json'
 OUT=ROOT/'static/dawn-library/biblical-world/chinese-relevance-results.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-CHINESE-RELEVANCE.json'
+FORBIDDEN=('wikisource','wikisource.org','維基文庫','维基文库')
+DISPUTE_MARKERS=('政治','戰爭','战争','衝突','冲突','侵略','民族主義','民族主义')
 now=datetime.now(timezone.utc).isoformat()
 candidates=json.loads(CAND.read_text())['items']; policy=json.loads(POL.read_text())
+
 def norm(s): return unicodedata.normalize('NFKC',s or '').casefold().replace(' ','')
+def forbidden(item):
+    serialized=json.dumps(item,ensure_ascii=False).casefold()
+    return excluded(item) or any(t in serialized for t in FORBIDDEN) or any(t in serialized for t in DISPUTE_MARKERS)
 def score(item):
+    if forbidden(item): return -999,'rejected',['hard-boundary']
     title=norm(item.get('title')); reasons=[]; value=0
     if str(item.get('matchedBy','')).startswith('seed:') or item.get('priority')=='golden': value+=policy['signals']['goldenSeed']; reasons.append('golden-seed')
     for term in policy['strongTerms']:
@@ -24,11 +33,14 @@ def score(item):
     elif value>=policy['thresholds']['deferred']: stage='deferred'
     else: stage='rejected'
     return value,stage,reasons
+
 results=[]; counts={'qualified':0,'deferred':0,'rejected':0}
 for item in candidates:
     value,stage,reasons=score(item); counts[stage]+=1
-    results.append({'sourceId':item['sourceId'],'provider':item['provider'],'language':item.get('language','zh'),'title':item['title'],'sourceUrl':item['sourceUrl'],'stage':stage,'relevance':{'score':value,'reasons':reasons,'evaluatedAt':now},'rights':item['rights'],'contentDownloaded':False})
-OUT.write_text(json.dumps({'schema':'dawn.library.chinese-relevance-results.v1','generatedAt':now,'items':results},ensure_ascii=False,indent=2)+'\n')
+    results.append({'sourceId':item['sourceId'],'provider':item['provider'],'language':item.get('language','zh'),'title':item['title'],'author':item.get('author',''),'sourceUrl':item['sourceUrl'],'priority':item.get('priority','discovered'),'stage':stage,'relevance':{'score':value,'reasons':reasons,'evaluatedAt':now},'rights':item['rights'],'contentDownloaded':False})
+
+OUT.write_text(json.dumps({'schema':'dawn.library.chinese-relevance-results.v2','generatedAt':now,'items':results},ensure_ascii=False,indent=2)+'\n')
 REPORT.parent.mkdir(parents=True,exist_ok=True)
-report={'schema':'dawn.library.chinese-relevance.report.v1','generatedAt':now,'collection':'biblical-world-books','language':'zh','total':len(results),'results':counts,'next':'Only qualified Chinese candidates may enter Edition/Rights Resolver; none are auto-promoted.','invariant':'Search hit is not relevance. Relevance is not verification. Verification is not curation.'}
-REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n'); print(json.dumps(report,ensure_ascii=False,indent=2))
+report={'schema':'dawn.library.chinese-relevance.report.v2','generatedAt':now,'collection':'biblical-world-books','language':'zh','total':len(results),'results':counts,'sourcePolicy':{'wikisource':'forbidden','disputedMaterial':'rejected'},'next':'Only qualified Chinese candidates may enter Edition/Rights Resolver; none are auto-promoted.','invariant':'Search hit is not relevance. Relevance is not verification. Verification is not curation.'}
+REPORT.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+print(json.dumps(report,ensure_ascii=False,indent=2))
