@@ -7,6 +7,9 @@ on:
       - 'static/dawn-library/cover-registry.json'
       - 'static/dawn-library/surfaces/dawn-storefront.json'
       - 'static/dawn-library/product/product.js'
+      - 'static/js/resource-fabric-client.mjs'
+      - 'static/multiwrite/canonical-library.mjs'
+      - 'static/one/one-surface-runtime.js'
       - 'dore-core/resource-fabric/**'
       - 'local/dore-local/resource_fabric_surface_compile.py'
       - '.github/workflows/resource-fabric-surface-compile.yml'
@@ -18,7 +21,11 @@ on:
       - 'static/dawn-library/canonical-index.json'
       - 'static/dawn-library/cover-registry.json'
       - 'static/dawn-library/surfaces/dawn-storefront.json'
+      - 'static/js/resource-fabric-client.mjs'
+      - 'static/multiwrite/canonical-library.mjs'
+      - 'static/one/one-surface-runtime.js'
       - 'local/dore-local/resource_fabric_surface_compile.py'
+      - '.github/workflows/resource-fabric-surface-compile.yml'
   workflow_dispatch:
 
 permissions:
@@ -42,7 +49,15 @@ jobs:
           python -m json.tool static/dawn-library/resource-fabric/manifest.json >/dev/null
           grep -q 'DORE_RESOURCE_FABRIC_SURFACE_PROJECTION=PASS' resource-fabric-surface.log
           grep -q 'DORE_RESOURCE_FABRIC_CURATED_NOT_EXISTENCE_GATE=PASS' resource-fabric-surface.log
+          grep -q 'DORE_RESOURCE_FABRIC_SHARED_CONSUMER_PROJECTION=PASS' resource-fabric-surface.log
           ! grep -q 'canonical-index.json' static/dawn-library/product/product.js
+          ! grep -q 'canonical-index.json' static/multiwrite/canonical-library.mjs
+          grep -q 'resource-fabric-client.mjs' static/multiwrite/canonical-library.mjs
+          grep -q 'resource-fabric-client.mjs' static/one/one-surface-runtime.js
+          grep -q 'canonicalMonolithRequired' static/js/resource-fabric-client.mjs
+          echo 'DORE_RESOURCE_FABRIC_DAWN_CONSUMER=PASS'
+          echo 'DORE_RESOURCE_FABRIC_MULTIWRITE_CONSUMER=PASS'
+          echo 'DORE_RESOURCE_FABRIC_ONE_CONSUMER=PASS'
       - name: Persist compiled projections on push
         if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
         run: |
@@ -50,5 +65,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add static/dawn-library/resource-fabric
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'resource-fabric: compile Dawn surface projections'
+          git commit -m 'resource-fabric: compile shared surface projections'
           git push
