@@ -2,6 +2,7 @@
 from __future__ import annotations
 import importlib,os,tempfile
 
+# Real-machine rerun marker: raster browser profile isolation is part of this acceptance.
 def snapshot():
  return {'schema':'dore.design.publish-snapshot.v1','workspace_id':'living-water-real','revision':1,'page_id':'p','page':{'id':'p','canvas':{'w':1200,'h':800},'nodes':[{'id':'hero','type':'text','text':'LET THE CHURCH BLOOM','x':90,'y':180,'w':900,'h':150,'size':64,'text_align':'left'},{'id':'body','type':'text','text':'Living Water','x':90,'y':420,'w':700,'h':90,'size':28,'text_align':'left'}]},'tokens':{},'sha256':'living-water-real-base','created_at':0}
 
