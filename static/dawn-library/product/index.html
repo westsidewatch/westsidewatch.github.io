@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>黎明書局</title>
+  <style>
+    :root{--gold:#CEBD74;--ink:#252525;--paper:#f4efe5;--muted:#756e62;--line:rgba(206,189,116,.42)}*{box-sizing:border-box}html,body{margin:0;background:var(--paper);color:var(--ink);font-family:"Noto Serif TC",serif}body{min-height:100vh}.shell{width:min(1440px,96vw);margin:0 auto;padding:1.4rem 0 4rem}.toolbar{display:flex;gap:.8rem;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:4;padding:.8rem 0 1rem;background:linear-gradient(var(--paper) 75%,transparent)}.search{flex:1;max-width:520px;border:1px solid var(--line);background:rgba(255,255,255,.5);padding:.8rem 1rem;font:inherit;color:var(--ink);outline:none}.count{font-family:"Cormorant Garamond",serif;letter-spacing:.08em;color:#8c6818}.shelf{margin:2.2rem 0 3.4rem}.shelf h2{font-weight:500;font-size:clamp(1.2rem,2vw,1.8rem);margin:0 0 1.2rem;padding-bottom:.65rem;border-bottom:1px solid var(--line)}.rail{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:1.1rem}.book{min-width:0;cursor:pointer}.cover-wrap{aspect-ratio:5/8;position:relative;overflow:hidden;background:#ded7c7;border:1px solid rgba(37,37,37,.08);box-shadow:0 12px 28px rgba(37,37,37,.08)}.cover-wrap img{width:100%;height:100%;display:block;object-fit:cover}.fallback{position:absolute;inset:0;display:grid;align-content:space-between;padding:1rem;background:linear-gradient(145deg,#d8cc99,#efe6ca 42%,#c9b568);color:#2e2a21}.fallback small{font-family:"Cormorant Garamond",serif;letter-spacing:.12em;text-transform:uppercase}.fallback strong{font-weight:500;line-height:1.35;font-size:1rem}.book h3{font-size:.95rem;line-height:1.4;font-weight:500;margin:.7rem 0 .2rem}.book p{font-size:.8rem;line-height:1.35;color:var(--muted);margin:0}.badge{position:absolute;right:.45rem;bottom:.45rem;background:rgba(37,37,37,.82);color:#f6f1e6;font:600 .62rem/1 sans-serif;padding:.35rem .42rem;letter-spacing:.05em}.empty{padding:4rem 0;text-align:center;color:var(--muted)}@media(max-width:680px){.shell{width:94vw}.toolbar{align-items:stretch;flex-direction:column}.rail{grid-template-columns:repeat(2,minmax(0,1fr));gap:.9rem}}
+  </style>
+</head>
+<body data-dawn-product>
+  <main class="shell">
+    <div class="toolbar">
+      <input class="search" type="search" placeholder="搜尋書名、作者…" aria-label="搜尋館藏" data-search>
+      <span class="count" data-count>載入中</span>
+    </div>
+    <div data-shelves></div>
+  </main>
+  <script type="module" src="./product.js"></script>
+</body>
+</html>
