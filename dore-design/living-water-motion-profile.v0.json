@@ -1,0 +1,33 @@
+{
+  "schema": "dore.design-motion-consumer.v0",
+  "consumer": "living-water",
+  "requires": "design.motion",
+  "arsenal": "dore-design/motion-arsenal.v0.json",
+  "purpose": "First real consumer profile for the shared Doré motion language; preparation for Living Water Bloom and later whole-site reuse.",
+  "identityPolicy": {
+    "churchIdentityAuthority": true,
+    "motionMayDefineIdentity": false,
+    "motionMayInventMeaning": false
+  },
+  "intentProfile": [
+    {"context":"entry-threshold","intent":"threshold-opening","reason":"entering the church surface should feel spatial and sacred without literal door theatre"},
+    {"context":"primary-reveal","intent":"ceremonial-reveal","reason":"important church content arrives with measured presence"},
+    {"context":"assembled-window-or-grid","intent":"architectural-assembly","reason":"separate visual parts must resolve precisely into one architectural whole"},
+    {"context":"scripture-or-prayer-stillness","intent":"stillness","reason":"sacred text must be allowed to carry presence without compulsory motion"},
+    {"context":"ambient-depth","intent":"measured-drift","reason":"depth may move slowly only when spatial meaning benefits"}
+  ],
+  "forbidden": [
+    "generic-fade-everything",
+    "literal-door-animation-required",
+    "decorative-water-wave-cliche",
+    "motion-dominance",
+    "scroll-hijack-by-default",
+    "surface-owned-animation-engine"
+  ],
+  "acceptance": {
+    "beautyFirst": true,
+    "realRasterRequiredBeforePromotion": true,
+    "reducedMotionRequired": true,
+    "productionPromotion": false
+  }
+}
