@@ -1,0 +1,48 @@
+{
+  "schema": "dore.resource-fabric.surface-projection.v0",
+  "status": "experimental",
+  "scope": "site-wide-resource-substrate",
+  "authority": false,
+  "sourceAuthority": "Dawn canonical identity spine",
+  "principle": "Surfaces consume bounded projections; curated shelves rank resources but never define existence.",
+  "runtime": {
+    "canonicalMonolithRequired": false,
+    "initialPayloadDependsOnCorpusSize": false,
+    "featuredProjection": "bounded",
+    "workShardCount": 64,
+    "searchBucketCount": 64,
+    "searchRouting": "normalized-token-prefix-to-bucket",
+    "finalIdentityVerification": true
+  },
+  "projectionFields": [
+    "workId",
+    "title",
+    "author",
+    "coverPointer",
+    "readingPointer",
+    "authorityBacked"
+  ],
+  "consumers": [
+    "dawn",
+    "one",
+    "multiwrite",
+    "search",
+    "design",
+    "journal",
+    "cinema"
+  ],
+  "boundaries": {
+    "mayInventIdentity": false,
+    "mayRewriteCanonicalIdentity": false,
+    "mayInferRightsAuthority": false,
+    "rawMediaPersistence": false,
+    "consumerCopiesBecomeAuthority": false,
+    "wikisourceForbidden": true
+  },
+  "acceptance": {
+    "everyCanonicalWorkCompilesToExactlyOneWorkShard": true,
+    "curatedShelfMembershipIsNotExistenceGate": true,
+    "dawnRuntimeDoesNotFetchCanonicalIndex": true,
+    "searchTouchesOneRoutedBucketPerLeadingTokenPrefix": true
+  }
+}
