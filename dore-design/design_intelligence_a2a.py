@@ -19,6 +19,7 @@ import living_water_bloom
 REPO_ROOT = Path(__file__).resolve().parent.parent
 LOCAL_DORE = REPO_ROOT / 'local' / 'dore-local'
 CORE_RUNTIME = REPO_ROOT / 'dore-core' / 'runtime'
+if str(REPO_ROOT) not in sys.path: sys.path.insert(0, str(REPO_ROOT))
 if str(LOCAL_DORE) not in sys.path: sys.path.insert(0, str(LOCAL_DORE))
 if str(CORE_RUNTIME) not in sys.path: sys.path.insert(0, str(CORE_RUNTIME))
 import a2a_execution_plane as plane
