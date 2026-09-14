@@ -57,11 +57,14 @@ jobs:
           assert 'source.probe' in text
           assert 'runtimeSnapshot' in text
           assert 'source.capability-envelope' in background
+          assert 'dore.source-dispatch.v1' in background
+          assert 'dispatch.requiresRuntime' in background
+          assert 'runtimeBoundary' not in background
           assert "needs.includes('runtime-browser-probe')" not in background
           assert 'initialEnvelope.access' not in background
           assert 'goodtv' not in text.lower()
           print('DORE_RUNTIME_PROBE_CINEMA_HANDOFF=PASS')
-          print('DORE_RUNTIME_PROBE_DISPATCH_COMPATIBILITY=PASS')
+          print('DORE_RUNTIME_PROBE_UNIVERSAL_DISPATCH=PASS')
           print('DORE_RUNTIME_PROBE_PROVIDER_NEUTRAL=PASS')
           PY
       - name: Real GOOD TV first-party static boundary probe
