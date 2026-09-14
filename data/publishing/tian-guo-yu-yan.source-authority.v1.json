@@ -2,7 +2,7 @@
   "schema": "dore.book-source-authority.v1",
   "projectId": "book.tian-guo-yu-yan",
   "workId": "book.tian-guo-yu-yan",
-  "status": "source-located-awaiting-lossless-materialization",
+  "status": "source-identity-bound-awaiting-lossless-materialization",
   "authority": {
     "authorThesisAuthority": true,
     "mayRewriteThesis": false,
@@ -20,7 +20,20 @@
     "sourceAuthority": "author-controlled",
     "located": true,
     "repositoryMaterialized": false,
-    "note": "The full manuscript has been located in the author's source library. It is distinct from the research-paper source and must be materialized losslessly before exact census can be admitted as canonical."
+    "sourceIdentity": {
+      "provider": "chatgpt-file-library",
+      "fileId": "file_00000000ee2c822fbba5855796ec34b2",
+      "createdAt": "2026-09-04T03:43:47Z",
+      "modifiedAt": "2026-09-04T03:43:47Z",
+      "identityStatus": "verified-single-source-object"
+    },
+    "ingestionBoundary": {
+      "semanticReadVerified": true,
+      "rawBytesAvailableToRepositoryWriter": false,
+      "mayReconstructFromRetrievalSnippets": false,
+      "reason": "Lossless source authority requires original bytes; retrieved semantic text may be truncated by the reading interface."
+    },
+    "note": "The manuscript has been uniquely identified in the author's File Library and semantically inspected. It is distinct from the research-paper source. Exact SHA/census remains prohibited until original bytes are losslessly materialized into the publishing repository."
   },
   "supportingSource": {
     "title": "天國語言極簡史｜論文.pdf",
@@ -38,7 +51,8 @@
     "rule": "Never infer an exact manuscript count from the source filename. Exact census is emitted only from the losslessly materialized canonical markdown source."
   },
   "observedChapterGraph": {
-    "status": "observed-from-current-manuscript-not-frozen-toc",
+    "status": "verified-from-canonical-manuscript-toc-not-frozen-toc",
+    "nodeCount": 14,
     "nodes": [
       {"id":"preface","label":"序言","kind":"front-matter","spine":[]},
       {"id":"ch01","label":"第一章　要有光","subtitle":"神說話的方式，和語言最初的樣子","kind":"chapter","spine":["創造中的話語","祝福與話語重量"]},
@@ -49,7 +63,7 @@
       {"id":"ch05","label":"第五章　語言回來了","subtitle":"五旬節那天究竟發生了什麼","kind":"chapter","spine":["五旬節","語言歸還"]},
       {"id":"ch06","label":"第六章　沒有人聽出來","subtitle":"哥林多的問題，和你的問題","kind":"chapter","spine":["聖靈與新造","語言歸還"]},
       {"id":"ch07","label":"第七章　方言就是基督的語言","subtitle":"一個讓人意外的連結","kind":"chapter","spine":["道成肉身","聖靈與新造","語言歸還"]},
-      {"id":"ch07-supplement","label":"第七章補遺　教會歷史裡的天國語言","subtitle":"從使徒教父到當代，那個語言沒有消失","kind":"supplement","spine":["語言歸還"]},
+      {"id":"ch07-supplement","label":"第七章補遺　教會歷史裡的天國語言","subtitle":"從使徒教父到當代","kind":"supplement","spine":["語言歸還"]},
       {"id":"ch08","label":"第八章　在你裡面造一個新的你","subtitle":"天國語言的終極目的","kind":"chapter","spine":["聖靈與新造","語言歸還"]},
       {"id":"ch09","label":"第九章　那些問題","subtitle":"方言神學的爭議與誠實的回應","kind":"chapter","spine":["語言歸還"]},
       {"id":"afterword","label":"後記","kind":"back-matter","spine":[]},
