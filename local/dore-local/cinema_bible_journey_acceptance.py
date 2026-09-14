@@ -3,7 +3,10 @@ import json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 journey=json.loads((ROOT/'cinema/data/bible-journey.v0.json').read_text())
+projection=json.loads((ROOT/'cinema/data/bible-journey-moment.v0.json').read_text())
+moments=json.loads((ROOT/'cinema/data/video-moment.v0.json').read_text())
 assert journey['schema']=='dore.bible-journey.v0'
+assert projection['schema']=='dore.bible-journey-moment.v0'
 assert journey['reflexPersistent'] is False
 assert len(journey['journeys'])==1
 item=journey['journeys'][0]
@@ -18,20 +21,43 @@ assert 'new-heavens-new-earth' in stations[-1]['world']
 assert [s['order'] for s in stations]==sorted(s['order'] for s in stations)
 assert len({s['stationId'] for s in stations})==len(stations)
 
+moment_by_id={m['momentId']:m for m in moments['items']}
+station_ids={s['stationId'] for s in stations}
+assert projection['items'], 'Journey exact Moment projection must not be empty'
+for rel in projection['items']:
+    assert rel['journeyId']==item['journeyId']
+    assert rel['stationId'] in station_ids
+    assert rel['momentId'] in moment_by_id
+    assert moment_by_id[rel['momentId']]['kind']=='official-episode'
+    assert rel['basis']['kind']=='biblical-event-alignment'
+
+incarnation=[r for r in projection['items'] if r['stationId']=='incarnation']
+assert len(incarnation)==1
+assert incarnation[0]['momentId']=='cinema:moment:lumo-matthew:episode-01'
+assert incarnation[0]['basis']['scripture']=='Matt.1.1-2.23'
+
 graph=(ROOT/'cinema/resource-graph.js').read_text()
 index=(ROOT/'cinema/index.html').read_text()
 layer=(ROOT/'cinema/journey-layer.js').read_text()
 style=(ROOT/'cinema/journey-layer.css').read_text()
 assert "journeys:'data/bible-journey.v0.json'" in graph
+assert "journeyMoments:'data/bible-journey-moment.v0.json'" in graph
+assert "JOURNEY_MOMENT_SCHEMA='dore.bible-journey-moment.v0'" in graph
 assert "journey(journeyId)" in graph
 assert "queryStation(journeyId,stationId)" in graph
-assert "mediaState:relatedWorks.length?'available':'unmapped'" in graph
+assert "mediaState=exactMoments.length?'exact':(relatedWorks.length?'available':'unmapped')" in graph
+assert 'projectionByStation' in graph
+assert 'exactMoments' in graph
 assert 'stationMatchesWork' in graph
 assert 'journey-layer.css' in index
 assert 'journey-layer.js' in index
 assert 'id="cinema-journey"' in index
 assert "cinema:journey:creation-to-new-creation" in layer
+assert 'station.exactMoments?.length' in layer
+assert 'graph.deepLink(moment.momentId)' in layer
+assert '精確影像' in layer
+assert "cinemaJourney='creation-to-new-creation-v1'" in layer
 assert "終點已建立；影像座標尚待可靠來源。" in layer
 assert '不虛構' in layer
 assert 'journey-station[data-terminal="true"]' in style
-print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d terminal=new-creation' % len(stations))
+print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d exact=%d terminal=new-creation' % (len(stations),len(projection['items'])))
