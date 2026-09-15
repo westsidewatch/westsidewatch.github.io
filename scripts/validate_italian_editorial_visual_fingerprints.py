@@ -12,6 +12,11 @@ def main():
     fpdb = json.loads(FINGERPRINTS.read_text())
     evidence_by_id = {x['id']: x for x in evidence['items']}
     errors = []
+    policy = fpdb.get('compilerPolicy') or {}
+    if not policy.get('lineageMayInfluenceDesignLogicNotConcreteContent'):
+        errors.append('compilerPolicy: lineage/content authority boundary missing')
+    if not policy.get('unsupportedConcreteElementsAreForbidden'):
+        errors.append('compilerPolicy: unsupported concrete invention gate missing')
     for fp in fpdb['items']:
         eid = fp.get('evidenceId')
         ev = evidence_by_id.get(eid)
@@ -31,6 +36,8 @@ def main():
             errors.append(f'{eid}: transferable contract missing')
         if not fp.get('forbidden'):
             errors.append(f'{eid}: forbidden-invention contract missing')
+        if not fp.get('unsupportedInvention'):
+            errors.append(f'{eid}: DNA leakage / unsupported-invention contract missing')
         if not fp.get('fidelityQuestion'):
             errors.append(f'{eid}: fidelity question missing')
     if errors:
@@ -40,6 +47,7 @@ def main():
     print('VISUAL_FINGERPRINT_CONTRACT=PASS')
     print(f'FINGERPRINTS={len(fpdb["items"])}')
     print('REGRESSION_SEEDS=' + ','.join(x['evidenceId'] for x in fpdb['items'] if x.get('status')=='regression-seed'))
+    print('DNA_LEAKAGE_GATE=PASS')
 
 if __name__ == '__main__':
     main()
