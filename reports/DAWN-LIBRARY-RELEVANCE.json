@@ -1,13 +1,13 @@
 {
-  "schema": "dawn.library.relevance.report.v1",
-  "generatedAt": "2026-09-15T07:19:33.652134+00:00",
+  "schema": "dawn.library.relevance.report.v2",
+  "generatedAt": "2026-09-15T07:46:39.496748+00:00",
   "collection": "biblical-world-books",
   "total": 1994,
   "results": {
-    "qualified": 0,
-    "deferred": 356,
-    "rejected": 1638
+    "qualified": 1946,
+    "deferred": 0,
+    "rejected": 48
   },
-  "next": "Only qualified candidates may enter Edition/Rights Resolver; none are auto-promoted.",
-  "invariant": "Search hit is not relevance. Relevance is not verification. Verification is not curation."
+  "next": "All candidates without an explicit hard exclusion proceed to Edition/Rights Resolver.",
+  "invariant": "Collection growth is deny-list first. Recommendation, curation and display quality never gate canonical admission."
 }
