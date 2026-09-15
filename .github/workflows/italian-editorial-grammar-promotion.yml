@@ -2,7 +2,7 @@ name: Italian Editorial Grammar Promotion Gate
 'on':
   push:
     branches:
-      - 'dore/italian-atlas-visual-evidence-v1b'
+      - '**'
     paths:
       - 'static/dore-design/italian-editorial-grammar-candidates.v1.json'
       - 'static/dore-design/italian-editorial-evidence.v1.json'
