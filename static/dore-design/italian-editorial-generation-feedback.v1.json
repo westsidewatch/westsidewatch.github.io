@@ -1,0 +1,18 @@
+{
+  "schema":"dore.italian-editorial-generation-feedback.v1",
+  "principle":"Generated output is evaluation evidence, never historical authority. Feedback may promote, retain, or reject a candidate only through an explicit comparison record.",
+  "verdicts":["promote","retain","reject"],
+  "requiredDimensions":["grammarLegibility","lineageFidelity","subjectPreservation","canonicalRegression"],
+  "items":[
+    {
+      "id":"feedback-il-local-systems-001",
+      "candidateId":"il-local-systems",
+      "baseline":{"prompt":"canonical IL / Franchi grammar without il-local-systems","artifact":null},
+      "candidate":{"prompt":"same canonical grammar plus il-local-systems","artifact":null},
+      "evaluation":{"grammarLegibility":null,"lineageFidelity":null,"subjectPreservation":null,"canonicalRegression":null},
+      "verdict":"retain",
+      "status":"awaiting-generation-pair",
+      "reason":"Historical evidence is strong, but no paired generated artifacts have yet been evaluated. The candidate must remain non-canonical until the comparison is complete."
+    }
+  ]
+}
