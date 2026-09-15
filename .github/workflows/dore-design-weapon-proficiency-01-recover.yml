@@ -1,0 +1,59 @@
+name: DORE Design Weapon Proficiency 01 Recover
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/dore-design-weapon-proficiency-01-recover.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dore-design-weapon-proficiency-01-recover
+  cancel-in-progress: false
+
+jobs:
+  recover:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 10
+    steps:
+      - name: Recover already completed Round 01 without retraining
+        env:
+          GH_PUSH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          test -d "$WT/.git" -o -f "$WT/.git"
+          cd "$WT"
+
+          # The expensive training already passed. Require its exact evidence before transport.
+          test -f dore-design/training/evidence/round-01/report.json
+          python3 - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('dore-design/training/evidence/round-01/report.json')
+          d=json.loads(p.read_text())
+          assert d.get('designer') == 'dore'
+          assert d.get('round') == 1
+          assert len(d.get('candidates', [])) == 4
+          for c in d['candidates']:
+              assert len(c.get('beforeRaster') or {}) == 2
+              assert len(c.get('afterRaster') or {}) == 2
+          assert d.get('winner') is None
+          assert d.get('productionPromoted') is False
+          assert d.get('canonicalWorkspaceMutated') is False
+          print('DORE_WEAPON_PROFICIENCY_01_RECOVERY_EVIDENCE=PASS')
+          PY
+
+          # Require the Doré-authored completion commit from the previous run.
+          HEAD="$(git rev-parse HEAD)"
+          SUBJECT="$(git log -1 --pretty=%s)"
+          test "$SUBJECT" = 'DORÉ Design: complete weapon proficiency round 01'
+          echo "RECOVERING_DORE_COMMIT=$HEAD"
+
+          # Actions' GITHUB_TOKEN is the transport credential; do not depend on macOS Keychain.
+          AUTH="$(printf 'x-access-token:%s' "$GH_PUSH_TOKEN" | base64)"
+          git -c http.https://github.com/.extraheader="AUTHORIZATION: basic $AUTH" \
+            push origin HEAD:refs/heads/dore/design-weapon-proficiency-01
+
+          echo 'DORE_WEAPON_PROFICIENCY_01_TRANSPORT=PASS'
