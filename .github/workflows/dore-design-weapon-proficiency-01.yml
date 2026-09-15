@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'dore-design/training/design-weapon-proficiency-01.v0.json'
+      - 'dore-design/weapon_proficiency.py'
       - '.github/workflows/dore-design-weapon-proficiency-01.yml'
   workflow_dispatch:
 
@@ -55,14 +56,17 @@ jobs:
           export DORE_TRAINING_SPEC="$WT/dore-design/training/design-weapon-proficiency-01.v0.json"
           export DORE_TRAINING_SURFACE="$WT/static/dore-design/living-water-bloom-armed-v2.html"
           export DORE_EDITORIAL_ATLAS="$WT/static/dore-design/italian-editorial-grammars.v1.json"
-          if [ -x dore-design/run-weapon-proficiency ]; then
-            dore-design/run-weapon-proficiency --round 01 --execute --raster --self-revise
-          elif [ -f dore-design/weapon_proficiency.py ]; then
-            python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
+          if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then
+            export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+          elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then
+            export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'
+          elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then
+            export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'
           else
-            echo 'DORÉ_TRAINING_EXECUTOR_MISSING=1'
-            exit 42
+            export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'
           fi
+          echo "DORE_DESIGN_BROWSER=$DORE_DESIGN_BROWSER"
+          python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
       - name: Verify evidence contract
         run: |
           WT="$HOME/.dore/design-weapon-proficiency-01"
@@ -91,7 +95,7 @@ jobs:
           cd "$WT"
           git config user.name 'dore-local'
           git config user.email 'dore-local@users.noreply.github.com'
-          git add static/dore-design/living-water-bloom-armed-v2.html dore-design/training/evidence/round-01
+          git add dore-design/training/evidence/round-01
           if git diff --cached --quiet; then
             echo 'DORÉ_PRODUCED_NO_CHANGE=1'
             exit 43
