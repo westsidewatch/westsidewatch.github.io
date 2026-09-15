@@ -1,0 +1,17 @@
+{
+  "schema":"dore.cinema-coverage.v1",
+  "index":"dore.cinema-canonical-index.v1",
+  "purpose":"guide balanced source discovery; never act as identity or rights authority",
+  "dimensions":["scripture","event","person","place","theme","type","language","provider"],
+  "rules":{
+    "providerVolumeCannotDefineCoverage":true,
+    "seriesVolumeCannotDefineCoverage":true,
+    "missingCanonicalRegionsGainPriority":true,
+    "admissionStillRequiresSourceRightsEditorialGates":true
+  },
+  "seedAssessment":{
+    "status":"sparse-engineering-seed",
+    "knownBiases":["gospel-heavy","jesus-film-project-heavy","sermon-seed-small"],
+    "priorityGaps":["torah","historical-books","wisdom","prophets","acts-and-early-church","epistles","revelation","bible-history","holy-land","archaeology","documentary","children-and-family"]
+  }
+}
