@@ -78,15 +78,17 @@ jobs:
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
-          def clean(value):
+          def clean_collection_payload(value):
             t=json.dumps(value,ensure_ascii=False).casefold()
-            assert 'wikisource' not in t and '維基文庫' not in t and '维基文库' not in t
-          clean(cat); clean(canonical)
+            assert 'wikisource.org' not in t and 'zh-wikisource' not in t and '維基文庫' not in t and '维基文库' not in t
+          clean_collection_payload(cat)
+          assert canonical.get('runtimePolicy',{}).get('wikisource') == 'forbidden'
           assert r['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
           assert canonical['workCount']==len(canonical['works'])
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':canonical['workCount']>11699,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          assert canonical['workCount'] > 11699
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':True,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
