@@ -4,77 +4,63 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 ATLAS = ROOT / "data/system-atlas.v0.json"
-MAINLINE = ROOT / "docs/CURRENT_MAINLINE.md"
-
-ALIASES = {
-    "浮現": "capability:emergence",
-    "emergence": "capability:emergence",
-    "doré emergence": "capability:emergence",
-    "dore emergence": "capability:emergence",
-    "多寫": "tool:dore-folio",
-    "doré folio": "tool:dore-folio",
-    "dore folio": "tool:dore-folio",
-    "one": "tool:one",
-    "天堂電影院": "system:paradise-cinema",
-    "paradise cinema": "system:paradise-cinema",
-    "黎明書局": "system:dawn-library",
-    "dawn library": "system:dawn-library",
-}
+IDENTITIES = ROOT / "data/context-authority-entities.v1.json"
 
 AUTHORITY_RANK = {
     "github-current-canon": 500,
     "accepted-recent-decision": 400,
-    "durable-history": 300,
+    "durable-event-decision-history": 300,
     "memory-summary": 200,
     "model-inference": 100,
 }
 
 
-def load_atlas():
-    return json.loads(ATLAS.read_text(encoding="utf-8"))
+def load_json(path):
+    return json.loads(path.read_text(encoding="utf-8"))
 
 
-def resolve_entity(term, atlas):
+def resolve_identity(term):
     normalized = term.strip().casefold()
-    entity_id = ALIASES.get(normalized)
-    if entity_id:
-        return next((e for e in atlas["entities"] if e["id"] == entity_id), None)
-    for entity in atlas["entities"]:
-        if normalized in {entity["id"].casefold(), entity.get("name", "").casefold()}:
+    registry = load_json(IDENTITIES)
+    for entity in registry["entities"]:
+        keys = [entity["id"], *entity.get("aliases", [])]
+        if normalized in {k.casefold() for k in keys}:
             return entity
     return None
 
 
-def existing_authority_files(entity):
-    candidates = []
-    for rel in entity.get("docs", []):
-        path = ROOT / rel
-        if path.is_file():
-            candidates.append(rel)
-    if MAINLINE.is_file() and "docs/CURRENT_MAINLINE.md" not in candidates:
-        candidates.append("docs/CURRENT_MAINLINE.md")
-    return candidates
+def atlas_entity(entity_id):
+    atlas = load_json(ATLAS)
+    return next((e for e in atlas["entities"] if e["id"] == entity_id), None)
 
 
 def admit(term):
-    atlas = load_atlas()
-    entity = resolve_entity(term, atlas)
-    if not entity:
+    identity = resolve_identity(term)
+    if not identity:
         return {"schema":"dore.context-admission.v1","state":"unregistered","term":term,"mayAnswerEngineeringFacts":False,"reason":"UNKNOWN — registered engineering entity not resolved"}
 
-    authority = existing_authority_files(entity)
-    if not authority:
-        return {"schema":"dore.context-admission.v1","state":"blocked","entity":entity["id"],"mayAnswerEngineeringFacts":False,"reason":"UNKNOWN — authoritative record not retrieved"}
+    required = identity.get("canonicalAuthority", [])
+    missing = [rel for rel in required if not (ROOT / rel).is_file()]
+    if missing:
+        return {"schema":"dore.context-admission.v1","state":"blocked","entity":identity["id"],"missingAuthority":missing,"mayAnswerEngineeringFacts":False,"reason":identity.get("fallback", "UNKNOWN — authoritative record not retrieved")}
+
+    atlas = atlas_entity(identity.get("atlasEntity"))
+    if not atlas:
+        return {"schema":"dore.context-admission.v1","state":"blocked","entity":identity["id"],"mayAnswerEngineeringFacts":False,"reason":"UNKNOWN — System Atlas entity not retrieved"}
 
     return {
         "schema":"dore.context-admission.v1",
         "state":"admitted",
-        "entity":entity["id"],
-        "name":entity.get("name"),
-        "status":entity.get("status"),
+        "entity":identity["id"],
+        "atlasEntity":atlas["id"],
+        "name":atlas.get("name"),
+        "status":identity.get("status"),
         "authorityRank":"github-current-canon",
-        "authorityFiles":authority,
-        "relations":entity.get("relations", []),
+        "authorityFiles":required,
+        "currentCheckpoint":identity.get("currentCheckpoint"),
+        "canonicalPath":identity.get("canonicalPath"),
+        "dependencies":identity.get("dependencies", []),
+        "relations":atlas.get("relations", []),
         "mayAnswerEngineeringFacts":True,
         "policy":"Lower-ranked memory or inference may aid discovery but cannot override admitted GitHub authority.",
     }
@@ -82,5 +68,4 @@ def admit(term):
 
 if __name__ == "__main__":
     import sys
-    term = " ".join(sys.argv[1:]).strip()
-    print(json.dumps(admit(term), ensure_ascii=False, indent=2))
+    print(json.dumps(admit(" ".join(sys.argv[1:]).strip()), ensure_ascii=False, indent=2))
