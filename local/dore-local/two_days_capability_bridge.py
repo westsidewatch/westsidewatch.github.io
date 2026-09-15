@@ -15,7 +15,7 @@ SCHEMA="two-days.capability-context.v0"
 REGISTRY=Path(__file__).resolve().parents[2]/"dore-core/runtime/capability-registry.v1.json"
 
 DEFAULT_PROFILES={
- "writing":["context.fuzzy-search","knowledge.recall"],
+ "writing":["context.fuzzy-search","knowledge.recall","publishing.dimensional-writing"],
  "publishing":["context.fuzzy-search","knowledge.recall","publishing.book-intelligence","publishing.book-compile"],
  "bible-study":["context.fuzzy-search","knowledge.recall","bible.query-plan","bible.scripture-search","bible.original-language-search"],
  "design":["context.fuzzy-search","knowledge.recall","design.intelligence"],
