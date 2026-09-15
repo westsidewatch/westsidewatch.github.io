@@ -1,0 +1,101 @@
+{
+  "schema": "dore.design-weapon-proficiency-training.v0",
+  "trainingId": "living-water-weapon-proficiency-01",
+  "roleBoundary": {
+    "trainer": "art-direction, references, exercises, critique, admission",
+    "designer": "dore",
+    "rule": "Trainer must not manufacture the finished answer for Doré. Doré must diagnose, select weapons, compose, render, compare and revise."
+  },
+  "surface": "living-water-bloom-armed-v2",
+  "corpusPolicy": {
+    "preserveCurrentFourCandidates": true,
+    "selectWinner": false,
+    "productionPromote": false,
+    "generateNewDirection": false,
+    "purpose": "weapon proficiency, not direction selection"
+  },
+  "beautyAdmission": {
+    "beautifulIsFloor": true,
+    "roughnessIsEvidenceNotExcuse": true,
+    "blanknessRequiresCompositionalReason": true,
+    "toolUsageDoesNotEqualProficiency": true
+  },
+  "round": {
+    "number": 1,
+    "name": "Editorial Composition Control",
+    "primaryWeapons": [
+      "design.composition",
+      "design.typography",
+      "design.image-art-direction"
+    ],
+    "secondaryWeapon": "design.motion",
+    "motionRule": "Motion remains subordinate. Do not use motion to conceal unresolved composition."
+  },
+  "italianEditorialCalls": [
+    {
+      "reference": "Campo Grafico / 1933-1934 research grammar",
+      "teach": ["free spatial balance", "asymmetrical hierarchy", "wrapper and insert logic", "material reveal", "local visual object persistence"],
+      "doNotCopy": ["masthead", "historic cover", "Bauhaus pastiche"]
+    },
+    {
+      "reference": "Domus / Ponti-Lupi research grammar",
+      "teach": ["architectural construction", "editorial-architectural hierarchy", "subject structure becomes page structure", "decisive scale shift", "rigor and clarity"]
+    },
+    {
+      "reference": "Ottagono / Unimark-Noorda research grammar",
+      "teach": ["modular grid", "controlled break", "precise crop", "system before deviation"]
+    },
+    {
+      "reference": "Abitare research grammar",
+      "teach": ["breathing spatial composition", "cultured restraint", "human-scale pacing", "journey and dwelling"]
+    },
+    {
+      "reference": "Casabella research grammar",
+      "teach": ["analytical restraint", "image as evidence", "deliberate negative space", "hierarchy reveals evidence"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "E1-composition",
+      "instruction": "Keep each candidate's identity, copy and basic direction. Recompose visual gravity using grid, span, offset, bleed, negative space and scale. Do not solve by changing palette.",
+      "evidenceRequired": ["before raster", "after raster", "weapon choices", "why each change improves hierarchy"]
+    },
+    {
+      "id": "E2-typography",
+      "instruction": "Refine type as architecture: display/body/caption relationships, measure, leading, tracking, line breaks, bilingual hierarchy and optical balance. Typography must carry presence before decoration.",
+      "evidenceRequired": ["type hierarchy map", "before/after raster", "rejected type decisions"]
+    },
+    {
+      "id": "E3-image-art-direction",
+      "instruction": "Treat image as a designed participant: focal point, crop, bleed, scale, edge relation, image-text pressure and responsive behavior. Do not replace weak art direction with more images.",
+      "evidenceRequired": ["crop/focal decisions", "desktop raster", "mobile raster"]
+    },
+    {
+      "id": "E4-coordination",
+      "instruction": "Combine the three weapons without visible tool seams. Motion may enter only after the still composition passes its own beauty gate.",
+      "evidenceRequired": ["still-state admission", "motion rationale", "reduced-motion state"]
+    }
+  ],
+  "candidateAssignments": {
+    "sacred-threshold": ["Campo Grafico emergence", "Domus architectural hierarchy", "Casabella negative space"],
+    "living-community": ["Abitare human-scale pacing", "Campo Grafico local-object persistence"],
+    "quiet-light": ["Casabella deliberate negative space", "Abitare cultured restraint"],
+    "architectural-bloom": ["Ottagono modular grid and controlled break", "Domus architectural construction"]
+  },
+  "trainerQuestions": [
+    "What is the dominant visual gravity and is it intentional?",
+    "Which relationship is carrying hierarchy: scale, position, contrast, crop, or empty space?",
+    "Is every empty region active composition or merely unused canvas?",
+    "Can Doré name the weapon it needs before touching code?",
+    "Did the chosen weapon solve a deterministic problem rather than make the page busier?",
+    "Does the result remain Living Water and Westside rather than becoming a reference imitation?",
+    "Can Doré explain why the revision is better without saying only cleaner, modern, or more polished?"
+  ],
+  "graduation": {
+    "singleWeapon": "Doré selects and controls each weapon intentionally across all four existing candidates.",
+    "coordination": "Doré combines weapons without tool signatures or mutual interference.",
+    "transfer": "On a later unseen design direction, Doré's first proposal is near-mature without trainer manufacturing the answer.",
+    "required": ["real browser raster", "desktop and mobile", "before/after evidence", "failure memory", "beauty admission"]
+  },
+  "nextExecution": "Doré performs E1 on the existing four candidates. Trainer critiques the resulting rasters; trainer does not author the revised pages."
+}

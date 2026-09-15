@@ -1,0 +1,135 @@
+name: DORE Design Weapon Proficiency 01
+
+on:
+  push:
+    branches:
+      - 'dore/design-weapon-proficiency-01'
+    paths:
+      - 'dore-design/training/design-weapon-proficiency-01.v0.json'
+      - 'dore-design/weapon_proficiency.py'
+      - '.github/workflows/dore-design-weapon-proficiency-01.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: dore-design-weapon-proficiency-01-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  train:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 60
+    steps:
+      - name: Resolve immutable training input
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; test -d "$ROOT/.git"; cd "$ROOT"
+          git fetch origin "$GITHUB_SHA"
+          SHA="$(git rev-parse "$GITHUB_SHA^{commit}")"
+          WT="$HOME/.dore/runs/design-weapon-proficiency-01-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "TRAINING_SHA=$SHA" >> "$GITHUB_ENV"
+          echo "TRAINING_WT=$WT" >> "$GITHUB_ENV"
+      - name: Build unique Doré training worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; cd "$ROOT"
+          rm -rf "$TRAINING_WT"
+          git worktree add --detach "$TRAINING_WT" "$TRAINING_SHA"
+          cd "$TRAINING_WT"
+          test -f dore-design/training/design-weapon-proficiency-01.v0.json
+          test -f static/dore-design/living-water-bloom-armed-v2.html
+          test -f static/dore-design/italian-editorial-grammars.v1.json
+      - name: Install Doré Design resident
+        run: |
+          cd "$TRAINING_WT"
+          export DORE_REPO_ROOT="$TRAINING_WT"
+          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
+          bash dore-design/install-macos.sh
+      - name: Execute full proficiency round through Doré local runtime
+        run: |
+          cd "$TRAINING_WT"
+          export DORE_REPO_ROOT="$TRAINING_WT"
+          export DORE_TRAINING_SPEC="$TRAINING_WT/dore-design/training/design-weapon-proficiency-01.v0.json"
+          export DORE_TRAINING_SURFACE="$TRAINING_WT/static/dore-design/living-water-bloom-armed-v2.html"
+          export DORE_EDITORIAL_ATLAS="$TRAINING_WT/static/dore-design/italian-editorial-grammars.v1.json"
+          export DORE_LOCAL_HOME="$TRAINING_WT/.training-home"
+          export DORE_UI_TASTE_DB="$TRAINING_WT/.training-home/design/ui-taste.sqlite3"
+          rm -rf "$DORE_LOCAL_HOME"
+          if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'; elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'; else export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'; fi
+          echo "DORE_DESIGN_BROWSER=$DORE_DESIGN_BROWSER"
+          python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
+      - name: Verify and manifest evidence
+        run: |
+          cd "$TRAINING_WT"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib
+          root=pathlib.Path('dore-design/training/evidence/round-01')
+          p=root/'report.json'; assert p.is_file()
+          d=json.loads(p.read_text())
+          assert d.get('designer')=='dore' and d.get('round')==1 and len(d.get('candidates',[]))==4
+          for c in d['candidates']:
+              assert len(c.get('beforeRaster') or {})==2, (c['id'],'before')
+              assert len(c.get('afterRaster') or {})==2, (c['id'],'after')
+              assert c.get('diagnosis') and c.get('weaponsUsed') and c.get('selfRevision') is not None
+          assert d.get('winner') is None and d.get('productionPromoted') is False and d.get('canonicalWorkspaceMutated') is False
+          manifest={'schema':'dore.design-training-evidence-bundle.v1','training':'design-weapon-proficiency-01','round':1,'inputSha':os.environ['TRAINING_SHA'],'runId':os.environ['GITHUB_RUN_ID'],'runAttempt':os.environ['GITHUB_RUN_ATTEMPT'],'designer':'dore','transport':'github-actions-artifact','reportSha256':hashlib.sha256(p.read_bytes()).hexdigest(),'productionPromoted':False}
+          (root/'evidence-manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
+          print('DORE_WEAPON_PROFICIENCY_01=PASS')
+          PY
+      - name: Upload immutable training evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-design-weapon-proficiency-01-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.TRAINING_WT }}/dore-design/training/evidence/round-01
+          if-no-files-found: error
+          retention-days: 30
+      - name: Cleanup unique worktree
+        if: always()
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; cd "$ROOT"
+          git worktree remove --force "$TRAINING_WT" 2>/dev/null || true
+          rm -rf "$TRAINING_WT"
+
+  integrate:
+    needs: train
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout current training branch
+        uses: actions/checkout@v4
+        with:
+          ref: dore/design-weapon-proficiency-01
+          fetch-depth: 0
+      - name: Download admitted Doré evidence
+        uses: actions/download-artifact@v4
+        with:
+          name: dore-design-weapon-proficiency-01-${{ github.run_id }}-${{ github.run_attempt }}
+          path: /tmp/dore-training-evidence
+      - name: Admit evidence against immutable input
+        env:
+          TRAINING_SHA: ${{ github.sha }}
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, shutil, subprocess
+          src=pathlib.Path('/tmp/dore-training-evidence')
+          manifest=json.loads((src/'evidence-manifest.json').read_text())
+          report=json.loads((src/'report.json').read_text())
+          assert manifest['schema']=='dore.design-training-evidence-bundle.v1'
+          assert manifest['inputSha']==os.environ['TRAINING_SHA']
+          assert manifest['designer']=='dore' and manifest['productionPromoted'] is False
+          assert report.get('winner') is None and report.get('productionPromoted') is False and report.get('canonicalWorkspaceMutated') is False
+          changed=subprocess.check_output(['git','diff','--name-only',manifest['inputSha']+'..HEAD'],text=True).splitlines()
+          protected={'dore-design/training/design-weapon-proficiency-01.v0.json','dore-design/weapon_proficiency.py','.github/workflows/dore-design-weapon-proficiency-01.yml'}
+          stale=sorted(protected.intersection(changed))
+          if stale: raise SystemExit('STALE_EVIDENCE_INPUT_CHANGED:'+','.join(stale))
+          dst=pathlib.Path('dore-design/training/evidence/round-01')
+          if dst.exists(): shutil.rmtree(dst)
+          shutil.copytree(src,dst)
+          print('DORE_WEAPON_PROFICIENCY_01_EVIDENCE_ADMISSION=PASS')
+          PY
+      - name: Integrate evidence through GitHub control plane
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add dore-design/training/evidence/round-01
+          if git diff --cached --quiet; then echo 'DORE_EVIDENCE_ALREADY_INTEGRATED=1'; exit 0; fi
+          git commit -m 'DORÉ Design: admit weapon proficiency round 01 evidence'
+          git push origin HEAD:dore/design-weapon-proficiency-01
