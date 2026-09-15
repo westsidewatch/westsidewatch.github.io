@@ -29,6 +29,8 @@ on:
 permissions:
   contents: write
 
+# PR validation is intentionally deterministic: external discovery belongs to
+# ingestion/reconciliation, never to the canonical acceptance path.
 jobs:
   canonical-substrate:
     runs-on: ubuntu-24.04
