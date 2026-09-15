@@ -5,7 +5,6 @@ on:
     paths:
       - 'scripts/build_dawn_canonical_substrate.py'
       - 'scripts/build_dawn_10k_work_queue.py'
-      - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'static/dawn-library/storefront.json'
       - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/canonical-index.json'
@@ -18,7 +17,6 @@ on:
     paths:
       - 'scripts/build_dawn_canonical_substrate.py'
       - 'scripts/build_dawn_10k_work_queue.py'
-      - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'static/dawn-library/storefront.json'
       - 'static/dawn-library/biblical-world/catalog.json'
       - 'static/dawn-library/canonical-index.json'
@@ -31,17 +29,14 @@ on:
 permissions:
   contents: write
 
+# Canonical acceptance is deterministic. External discovery belongs to
+# ingestion/reconciliation refresh and must never gate PR/runtime validation.
 jobs:
   canonical-substrate:
     runs-on: ubuntu-24.04
-    timeout-minutes: 25
+    timeout-minutes: 15
     env:
       PYTHONPATH: .
-      DAWN_TARGET_WORKS: '10500'
-      DAWN_CHINESE_TARGET: '2000'
-      DAWN_OL_PAGE_SIZE: '100'
-      DAWN_OL_MAX_PAGES_PER_QUERY: '30'
-      DAWN_OL_DELAY_SECONDS: '0.20'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -53,10 +48,8 @@ jobs:
       - name: Verify canonical substrate contract
         run: python -m unittest tests.test_dawn_canonical_substrate -v
 
-      - name: Rebuild Step 6 reconciliation input
-        run: |
-          python scripts/discover_dawn_10k_openlibrary_works.py
-          python scripts/build_dawn_10k_work_queue.py
+      - name: Reconcile checked-in canonical input without network discovery
+        run: python scripts/build_dawn_10k_work_queue.py
 
       - name: Compile Dawn canonical runtime substrate
         run: python scripts/build_dawn_canonical_substrate.py
@@ -103,6 +96,7 @@ jobs:
               'authorityBackedWorks': index['authorityBackedWorks'],
               'dawnSurfaceRefs': sum(len(s.get('items', [])) for s in dawn.get('shelves', [])),
               'multiwriteSurfaceRefs': len(multi.get('items', [])),
+              'networkDiscoveryDuringValidation': False,
           })
           PY
 
