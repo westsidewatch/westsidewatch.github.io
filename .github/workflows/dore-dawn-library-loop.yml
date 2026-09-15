@@ -29,14 +29,14 @@ permissions:
 jobs:
   library-loop:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       PYTHONPATH: .
-      DAWN_TARGET_WORKS: '12000'
-      DAWN_CHINESE_TARGET: '2500'
+      DAWN_TARGET_WORKS: '25000'
+      DAWN_CHINESE_TARGET: '5000'
       DAWN_OL_PAGE_SIZE: '100'
-      DAWN_OL_MAX_PAGES_PER_QUERY: '35'
-      DAWN_OL_DELAY_SECONDS: '0.20'
+      DAWN_OL_MAX_PAGES_PER_QUERY: '60'
+      DAWN_OL_DELAY_SECONDS: '0.15'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -58,11 +58,9 @@ jobs:
           python scripts/run_dawn_library_relevance.py
           python scripts/run_dawn_library_english_resolver.py
           python scripts/promote_dawn_library_english_catalog.py
-      - name: Restore authority seed and reconcile canonical substrate
+      - name: Expand authority inventory and reconcile canonical substrate
         run: |
-          if [ ! -s data/dawn-10k-openlibrary-works.json ]; then
-            python scripts/discover_dawn_10k_openlibrary_works.py
-          fi
+          python scripts/discover_dawn_10k_openlibrary_works.py
           python scripts/build_dawn_10k_work_queue.py
           python scripts/build_dawn_canonical_substrate.py
       - name: Produce measurable collection outputs
@@ -88,7 +86,7 @@ jobs:
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
           assert canonical['workCount']==len(canonical['works'])
           assert canonical['workCount'] > 11699
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':True,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':True,'phase1Target':25000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -125,7 +123,7 @@ jobs:
             python scripts/run_dawn_library_relevance.py
             python scripts/run_dawn_library_english_resolver.py
             python scripts/promote_dawn_library_english_catalog.py
-            [ -s data/dawn-10k-openlibrary-works.json ] || python scripts/discover_dawn_10k_openlibrary_works.py
+            python scripts/discover_dawn_10k_openlibrary_works.py
             python scripts/build_dawn_10k_work_queue.py
             python scripts/build_dawn_canonical_substrate.py
             python scripts/run_dawn_library_loop.py
