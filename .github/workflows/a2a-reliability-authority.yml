@@ -30,6 +30,8 @@ on:
       - 'local/dore-local/native_host.py'
       - 'local/dore-local/two_days_source_buffer.py'
       - 'local/dore-local/two_days_source_buffer_acceptance.py'
+      - 'local/dore-local/two_days_artifact_ledger.py'
+      - 'local/dore-local/two_days_artifact_ledger_acceptance.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/dore-a2a-github-relay.yml'
       - '.github/workflows/a2a-reliability-authority.yml'
@@ -50,6 +52,8 @@ jobs:
           python-version: '3.12'
       - name: Two Days lossless source-buffer acceptance
         run: python local/dore-local/two_days_source_buffer_acceptance.py
+      - name: Two Days artifact accepted-working head recovery
+        run: python local/dore-local/two_days_artifact_ledger_acceptance.py
       - name: Canonical capability authority acceptance
         run: python local/dore-local/a2a_capability_authority_acceptance.py
       - name: Public dore.call normalization acceptance
