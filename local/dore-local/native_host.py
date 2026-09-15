@@ -100,12 +100,17 @@ def route_payload(payload):
  cmd=str(payload.get("command") or payload.get("text") or "").strip().lower()
  if cap==LEGACY_CAPABILITY or cmd in {"/dore stage2","dore stage2"}:return _with_id(payload,{"ok":True,"service":SERVICE,"protocol":PROTOCOL,"capability":LEGACY_CAPABILITY,"available":True,"status":"PASS","diagnostic":True,"transport":"local-routing-host"})
  return _with_id(payload,{"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"unsupported_payload","message":"unsupported local routing payload"}})
+def _capture_two_days(payload):
+ buffer=_module("two_days_source_buffer")
+ if not buffer:raise RuntimeError("two_days_source_buffer_unavailable:"+_LOAD_ERRORS.get("two_days_source_buffer","unknown"))
+ return buffer.capture(payload)
 def serve(stdin=None,stdout=None):
  source=stdin or sys.stdin.buffer;sink=stdout or sys.stdout.buffer
  while True:
   try:
    p=read_message(source)
    if p is None:return 0
+   _capture_two_days(p)
    r=route_payload(p)
   except Exception as exc:r={"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"native_host_error","message":str(exc)}}
   write_message(sink,r)
