@@ -1,0 +1,29 @@
+name: DORE Dimensional Writing A2A
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'dore-core/runtime/dimensional-writing-canon.v0.json'
+      - 'local/dore-local/dimensional_writing_capability.py'
+      - 'local/dore-local/dimensional_writing_a2a_acceptance.py'
+      - 'local/dore-local/capability_bindings.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/a2a_*.py'
+      - '.github/workflows/dore-dimensional-writing-a2a.yml'
+  workflow_dispatch:
+
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Syntax
+        run: |
+          python -m py_compile local/dore-local/dimensional_writing_capability.py
+          python -m py_compile local/dore-local/dimensional_writing_a2a_acceptance.py
+      - name: Dimensional Writing A2A acceptance
+        run: python local/dore-local/dimensional_writing_a2a_acceptance.py
