@@ -1,0 +1,112 @@
+{
+  "schema": "dore.italian-editorial-visual-fingerprints.v1",
+  "principle": "Lineage grammar preserves Italian editorial DNA; evidence-level fingerprints preserve the visible identity of the selected historical specimen. Prompt text is compiler output, never authority.",
+  "dimensions": ["layout", "image", "typography", "material", "density", "sequence", "irony", "emergence"],
+  "compilerPolicy": {
+    "selectedDimensionsOnly": true,
+    "preserveEvidenceGeometry": true,
+    "subjectAndCopyAreTransferable": true,
+    "forbiddenInventionIsBinding": true,
+    "lineageMayInfluenceDesignLogicNotConcreteContent": true,
+    "unsupportedConcreteElementsAreForbidden": true,
+    "generatedImagesMayBecomeHistoricalAuthority": false
+  },
+  "items": [
+    {
+      "evidenceId": "casabella-367", "status": "regression-seed",
+      "dimensions": {
+        "layout": ["Use one monumental central image as the page field; keep the composition vertically frontal and nearly full-cover; do not subdivide the cover into independent modules."],
+        "image": ["Use one confrontational figurative subject at monumental scale; preserve the strong centered silhouette and direct frontal presence; the subject is the argument, not an illustration inside a layout."],
+        "typography": ["Keep the publication/title band confined to the upper edge; use one extremely small, saturated red editorial intervention over the central subject; maintain extreme scale contrast between masthead and intervention."],
+        "density": ["Concentrate almost all visual mass in the single central subject; keep secondary information extremely sparse; preserve open peripheral breathing room rather than filling it with modules."],
+        "sequence": ["Establish the dominant image first, then let the tiny editorial intervention change how the image is read; do not turn the cover into a gallery or information dashboard."],
+        "emergence": ["Meaning should emerge from the hierarchy between monumental evidence and minimal editorial annotation, not from added diagrams or decorative systems."]
+      },
+      "transferable": ["The subject identity may change while preserving scale, crop, position and visual role.", "Text content may change while preserving typographic scale, placement and hierarchy."],
+      "forbidden": ["No secondary photograph or inset image.", "No visible decorative grid.", "No unrelated geometric modules, circles, bars or diagrammatic ornaments.", "No multi-column information system.", "No additional illustration competing with the dominant subject."],
+      "unsupportedInvention": ["Do not infer concrete, architecture photography, modernist furniture, red geometry, grids or other lineage stereotypes unless they are visibly supported by this evidence."],
+      "fidelityQuestion": "Without reading the copy, is the result immediately recognizable as structurally descended from this selected cover?"
+    },
+    {
+      "evidenceId": "casabella-370", "status": "seed",
+      "dimensions": {
+        "layout": ["Preserve the specimen's dominant evidence field and restrained editorial framing; derive divisions from the observed cover rather than a generic modernist grid."],
+        "image": ["Treat the primary image as evidence with a single clear argumentative role; do not multiply image regions unless they are visible in the specimen."],
+        "typography": ["Preserve the observed title-to-image hierarchy and restrained secondary type; typography must annotate the evidence rather than become an unrelated graphic system."],
+        "density": ["Keep information density close to the specimen: one primary visual event, restrained secondary information and deliberate breathing room."],
+        "sequence": ["Let image, title and hierarchy form one editorial argument rather than a collection of modules."],
+        "emergence": ["Reveal the editorial position through the specimen's actual hierarchy, not through invented decoration."]
+      },
+      "transferable": ["Subject and copy may change only within the same visual roles."],
+      "forbidden": ["Do not invent additional image regions.", "Do not draw a grid merely to signal modernism.", "Do not add geometric accents absent from the selected specimen."],
+      "unsupportedInvention": ["Do not introduce concrete, modernist interiors, architectural photographs or signature Italian-design motifs merely because the lineage is Casabella."],
+      "fidelityQuestion": "Does the new work preserve the selected specimen's visible hierarchy before it expresses the broader Casabella lineage?"
+    },
+    {
+      "evidenceId": "abitare-52", "status": "regression-seed",
+      "dimensions": {
+        "layout": ["Preserve one intimate enclosed interior as the dominant field; keep the human figure small-to-medium and embedded inside the room rather than turning the room into a monumental architectural showcase."],
+        "image": ["Observe a lived domestic interior with a real human presence; the person, floor, enclosing timber surfaces and small light source belong to one continuous inhabited scene, not separate editorial modules."],
+        "typography": ["Keep typography subordinate to the inhabited image and restrained at the edge; do not let display type redesign the room or become the main visual event."],
+        "material": ["Preserve the visibly warm timber enclosure, worn/tactile floor and low warm illumination; material specificity must come from the specimen rather than from a generic luxury-interior palette."],
+        "density": ["Keep the scene visually quiet: one room, one human presence, few objects and broad uninterrupted material surfaces."],
+        "sequence": ["Read the enclosure first, then discover the person and small domestic objects; atmosphere precedes information."],
+        "emergence": ["Let inhabitation emerge through traces of use, bodily scale and warm localized light rather than through added architectural spectacle."]
+      },
+      "transferable": ["The inhabitant identity may change while remaining a human-scale presence inside the same spatial role.", "Small domestic objects may change only if their scale and lived-in role remain comparable."],
+      "forbidden": ["No exposed concrete or monumental concrete architecture unless visible in the selected evidence.", "No generic luxury modernist interior.", "No large glazing wall, sculptural furniture or architectural hero shot invented from the Abitare lineage.", "Do not replace the inhabited room with a framed artwork displayed inside another room.", "Do not turn the subject into wall art, poster art or a gallery object."],
+      "unsupportedInvention": ["Lineage may guide restraint, pacing and sensitivity to inhabitation, but it must not supply concrete, stone, designer furniture, glazing systems or other material/architectural content absent from the evidence."],
+      "fidelityQuestion": "At first glance, is this still an intimate inhabited timber enclosure rather than a generic contemporary Italian architectural interior?"
+    },
+    {
+      "evidenceId": "abitare-81", "status": "seed",
+      "dimensions": {
+        "layout": ["Preserve the observed domestic spatial hierarchy and breathing room; do not upgrade it into a monumental architectural composition."],
+        "image": ["Treat domestic light and ordinary objects as the evidence of inhabitation rather than adding architecture as spectacle."],
+        "typography": ["Keep type restrained and navigable, secondary to the lived spatial observation."],
+        "material": ["Use only material relationships visibly supported by the specimen; do not substitute a generic concrete-and-timber luxury palette."],
+        "density": ["Maintain human-scale pacing and low visual congestion."],
+        "sequence": ["Allow light, objects and spatial traces to disclose dwelling gradually."],
+        "emergence": ["Atmosphere accumulates from observed traces, not from dramatic architectural staging."]
+      },
+      "transferable": ["Domestic content may change while keeping the same scale, hierarchy and lived role."],
+      "forbidden": ["No unsupported exposed concrete.", "No generic modernist show-home styling.", "No architectural hero shot unless the evidence itself is one."],
+      "unsupportedInvention": ["Do not use Abitare as permission to invent fashionable architectural materials or furniture absent from the selected specimen."],
+      "fidelityQuestion": "Does the result remain an observation of dwelling rather than an advertisement for contemporary architecture?"
+    },
+    {
+      "evidenceId": "il-franchi-2008-03", "status": "regression-seed",
+      "dimensions": {
+        "layout": ["Build the page from a dominant photographic field plus a narrow peripheral information zone; preserve strong asymmetry and the specimen's major vertical and horizontal divisions; allow one translucent block to intrude across the photographic field."],
+        "image": ["Use an extreme close-up photographic subject that exceeds the frame and dominates the page; preserve aggressive crop and monumental facial/object scale rather than reducing the subject to a conventional portrait."],
+        "typography": ["Use an oversized high-contrast serif headline that crosses structural regions; counterweight it with very small widely tracked editorial microtype in peripheral zones; preserve the large-to-tiny scale jump."],
+        "material": ["Keep monochrome or restrained photography against warm paper and a muted metallic-gold/translucent overlay; the overlay should feel printed and semi-transparent, not like a digital UI card."],
+        "density": ["Use one overwhelming visual mass with sparse but precise peripheral information; density comes from scale contrast, not from filling every region."],
+        "sequence": ["Read in this order: dominant photograph establishes the field; headline cuts across it; compact information anchors the edge; the inserted translucent field remains visibly distinct."],
+        "irony": ["Let the compact technical/editorial information sit against an emotionally oversized subject without explanatory decoration."],
+        "emergence": ["The information layer should appear as a persistent foreign-local object over the established photographic field, preserving its own geometry rather than dissolving into the image."]
+      },
+      "transferable": ["Subject identity may change while preserving extreme crop, scale and anchor.", "Headline and microcopy may change while preserving typographic roles and spatial relationships."],
+      "forbidden": ["No conventional centered portrait with generous margins.", "No unrelated second photographic story.", "No generic infographic dashboard.", "No decorative geometry that is not serving the observed overlay/division logic.", "Do not collapse the large-serif/microtype contrast into one typographic scale."],
+      "unsupportedInvention": ["Do not import concrete architecture, modernist interiors or unrelated Italian-design motifs when the evidence is a photographic/editorial field."],
+      "fidelityQuestion": "Does the result retain the selected issue's extreme crop, asymmetric field, cross-boundary headline and compact edge information at first glance?"
+    },
+    {
+      "evidenceId": "il-franchi-study", "status": "seed",
+      "dimensions": {
+        "layout": ["Preserve the selected study's local graphic systems and their exact hierarchy rather than replacing them with a generic editorial grid."],
+        "image": ["Keep photography, illustration or diagram in the roles visibly assigned by the specimen; do not homogenize them into one image treatment."],
+        "typography": ["Maintain multi-scale navigation and editorial hierarchy with clearly differentiated display, annotation and microtype roles."],
+        "material": ["Preserve print-aware color fields and surface relationships visible in the specimen."],
+        "density": ["High information density must remain navigable through scale, grouping and whitespace, not through simplification."],
+        "sequence": ["Allow local visual identities to remain distinct while a stable navigation system binds them."],
+        "irony": ["Preserve playful information relationships only where they are evidenced by the specimen."],
+        "emergence": ["Let information become image through accumulation and hierarchy without losing navigability."]
+      },
+      "transferable": ["Content may change while visual roles, grouping and hierarchy remain stable."],
+      "forbidden": ["Do not flatten all modules into one uniform style.", "Do not invent decorative modules unrelated to information roles."],
+      "unsupportedInvention": ["Lineage must not introduce concrete, architecture, furniture or other concrete visual content absent from the selected evidence."],
+      "fidelityQuestion": "Can the selected study still be recognized through hierarchy and module relationships after content replacement?"
+    }
+  ]
+}
