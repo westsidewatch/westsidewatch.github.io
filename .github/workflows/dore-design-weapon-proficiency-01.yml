@@ -1,0 +1,100 @@
+name: DORE Design Weapon Proficiency 01
+
+on:
+  pull_request:
+    paths:
+      - 'dore-design/training/design-weapon-proficiency-01.v0.json'
+      - '.github/workflows/dore-design-weapon-proficiency-01.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: dore-design-weapon-proficiency-01
+  cancel-in-progress: false
+
+jobs:
+  train:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 60
+    steps:
+      - name: Resolve training branch
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          test -d "$ROOT/.git"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/design-weapon-proficiency-01:refs/remotes/origin/dore/design-weapon-proficiency-01
+          SHA="$(git rev-parse refs/remotes/origin/dore/design-weapon-proficiency-01)"
+          echo "TRAINING_SHA=$SHA" >> "$GITHUB_ENV"
+      - name: Build isolated Doré training worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          cd "$ROOT"
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force -B dore-design-training-01 "$WT" "$TRAINING_SHA"
+          cd "$WT"
+          test -f dore-design/training/design-weapon-proficiency-01.v0.json
+          test -f static/dore-design/living-water-bloom-armed-v2.html
+          test -f static/dore-design/italian-editorial-grammars.v1.json
+      - name: Install Doré Design resident
+        run: |
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          cd "$WT"
+          export DORE_REPO_ROOT="$WT"
+          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
+          bash dore-design/install-macos.sh
+      - name: Execute full proficiency round through Doré local runtime
+        run: |
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          cd "$WT"
+          export DORE_REPO_ROOT="$WT"
+          export DORE_TRAINING_SPEC="$WT/dore-design/training/design-weapon-proficiency-01.v0.json"
+          export DORE_TRAINING_SURFACE="$WT/static/dore-design/living-water-bloom-armed-v2.html"
+          export DORE_EDITORIAL_ATLAS="$WT/static/dore-design/italian-editorial-grammars.v1.json"
+          if [ -x dore-design/run-weapon-proficiency ]; then
+            dore-design/run-weapon-proficiency --round 01 --execute --raster --self-revise
+          elif [ -f dore-design/weapon_proficiency.py ]; then
+            python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
+          else
+            echo 'DORÉ_TRAINING_EXECUTOR_MISSING=1'
+            exit 42
+          fi
+      - name: Verify evidence contract
+        run: |
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          cd "$WT"
+          test -f dore-design/training/evidence/round-01/report.json
+          python3 - <<'PY'
+          import json, pathlib
+          p=pathlib.Path('dore-design/training/evidence/round-01/report.json')
+          d=json.loads(p.read_text())
+          assert d.get('designer') == 'dore'
+          assert d.get('round') == 1
+          assert len(d.get('candidates', [])) == 4
+          for c in d['candidates']:
+              assert c.get('beforeRaster')
+              assert c.get('afterRaster')
+              assert c.get('diagnosis')
+              assert c.get('weaponsUsed')
+              assert c.get('selfRevision') is not None
+          assert d.get('winner') is None
+          assert d.get('productionPromoted') is False
+          print('DORE_WEAPON_PROFICIENCY_01=PASS')
+          PY
+      - name: Commit Doré-produced training result
+        run: |
+          WT="$HOME/.dore/design-weapon-proficiency-01"
+          cd "$WT"
+          git config user.name 'dore-local'
+          git config user.email 'dore-local@users.noreply.github.com'
+          git add static/dore-design/living-water-bloom-armed-v2.html dore-design/training/evidence/round-01
+          if git diff --cached --quiet; then
+            echo 'DORÉ_PRODUCED_NO_CHANGE=1'
+            exit 43
+          fi
+          git commit -m 'DORÉ Design: complete weapon proficiency round 01'
+          git push origin HEAD:dore/design-weapon-proficiency-01
