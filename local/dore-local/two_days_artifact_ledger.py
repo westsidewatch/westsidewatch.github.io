@@ -68,7 +68,7 @@ def apply(event_id:str,artifact_id:str,event_type:str,to_version:str|None=None,f
    content=db.execute("SELECT content FROM versions WHERE artifact_id=? AND version_id=?",(artifact_id,target)).fetchone()[0]
    lock_id=str(metadata.get("lock_id") or _hash(target+"\0"+content))
    db.execute("INSERT OR REPLACE INTO locks VALUES(?,?,?,?)",(artifact_id,lock_id,_hash(content),encoded))
-  db.execute("INSERT INTO events VALUES(?,?,?,?,?,?,?)",(event_id,artifact_id,event_type,from_version,to_version,encoded,_now(),SCHEMA))
+  db.execute("INSERT INTO events VALUES(?,?,?,?,?,?,?,?)",(event_id,artifact_id,event_type,from_version,to_version,encoded,_now(),SCHEMA))
   db.execute("INSERT INTO heads VALUES(?,?,?,?) ON CONFLICT(artifact_id) DO UPDATE SET accepted_head=excluded.accepted_head,working_head=excluded.working_head,updated_at=excluded.updated_at",(artifact_id,accepted,working,_now()))
   return {"artifact_id":artifact_id,"accepted_head":accepted,"working_head":working}
 
