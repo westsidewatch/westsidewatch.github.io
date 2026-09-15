@@ -1,39 +1,67 @@
 {
   "schema": "dawn.library.loop.report.v3",
-  "generatedAt": "2026-09-14T22:33:28.155499+00:00",
+  "generatedAt": "2026-09-15T05:48:50.157869+00:00",
   "results": {
     "books": {
-      "published": 29,
-      "verified": 28,
+      "published": 43,
+      "verified": 42,
       "pending": 1,
-      "relations": 17,
+      "relations": 28,
       "providers": [
         "Project Gutenberg"
       ]
     },
     "catalogDeltaToday": {
-      "books": 1,
-      "verifiedBooks": 1,
-      "relations": 2
+      "books": 14,
+      "verifiedBooks": 14,
+      "relations": 11
     },
     "autonomousGrowthToday": {
-      "books": 1,
+      "books": 14,
       "titles": [
-        "灵历集光"
+        "The Bible, Douay-Rheims, New Testament",
+        "Concerning Christian Liberty; with Letter of Martin Luther to Pope Leo X.",
+        "Birth Control: A Statement of Christian Doctrine against the Neo-Malthusians",
+        "A catechism of Christian doctrine, no. 1 : $b for first communion classes",
+        "A catechism of Christian doctrine, no. 2 : for confirmation classes",
+        "A catechism of Christian doctrine, no. 3 : for two years' course for post-confirmation classes",
+        "An explanation of the Baltimore catechism of Christian doctrine : $b for the use of Sunday-school teachers and advanced classes",
+        "Hymns for Christian Devotion\nEspecially Adapted to the Universalist Denomination",
+        "The Christian View of the Old Testament",
+        "The Pocket Bible; or, Christian the Printer: A Tale of the Sixteenth Century",
+        "An Essay on the Development of Christian Doctrine",
+        "Expositor's Bible: The Gospel of St Luke",
+        "The Christian Doctrine of Hell",
+        "Post-Biblical Hebrew Literature: An Anthology"
       ]
     },
     "pipelineThisRun": {
       "chineseDiscoveredThisRun": 1,
       "chinesePromotedThisRun": 0,
       "chinesePromotedTitles": [],
-      "englishDiscoveredThisRun": 0,
-      "englishPromotedThisRun": 0,
-      "englishPromotedTitles": []
+      "englishDiscoveredThisRun": 777,
+      "englishPromotedThisRun": 14,
+      "englishPromotedTitles": [
+        "The Bible, Douay-Rheims, New Testament",
+        "Concerning Christian Liberty; with Letter of Martin Luther to Pope Leo X.",
+        "Birth Control: A Statement of Christian Doctrine against the Neo-Malthusians",
+        "A catechism of Christian doctrine, no. 1 : $b for first communion classes",
+        "A catechism of Christian doctrine, no. 2 : for confirmation classes",
+        "A catechism of Christian doctrine, no. 3 : for two years' course for post-confirmation classes",
+        "An explanation of the Baltimore catechism of Christian doctrine : $b for the use of Sunday-school teachers and advanced classes",
+        "Hymns for Christian Devotion\nEspecially Adapted to the Universalist Denomination",
+        "The Christian View of the Old Testament",
+        "The Pocket Bible; or, Christian the Printer: A Tale of the Sixteenth Century",
+        "An Essay on the Development of Christian Doctrine",
+        "Expositor's Bible: The Gospel of St Luke",
+        "The Christian Doctrine of Hell",
+        "Post-Biblical Hebrew Literature: An Anthology"
+      ]
     },
     "cadence": {
       "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 3.667,
-      "density": 28
+      "recentAutonomousGrowthPerDay": 5.143,
+      "density": 42
     },
     "collections": [
       {

@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-14T22:33:28.238325+00:00",
+  "generatedAt": "2026-09-15T05:48:50.237815+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2361,29 +2361,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-renewedbywordbib0000morr",
-          "title": "Renewed by the Word : the Bible and Christian revival since the Reformation",
-          "author": "Morris, J. N. (Jeremy N.), 1960-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/renewedbywordbib0000morr",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/renewedbywordbib0000morr",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-toendsofearthhis0000bens",
           "title": "To the ends of the earth : a history of the Canadian Bible Society",
           "author": "Benson, Gerald E",
@@ -2396,29 +2373,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/toendsofearthhis0000bens",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-motoguzzisportle0000fall",
-          "title": "The Moto Guzzi : Sport & Le Mans bible",
-          "author": "Falloon, Ian",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/motoguzzisportle0000fall",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/motoguzzisportle0000fall",
             "mode": "source"
           },
           "rights": {
@@ -2718,6 +2672,52 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/fortwaynebible1951158fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible1952169fort",
+          "title": "Fort Wayne Bible College The Bible Vision",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible1952169fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible1952169fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible1952173fort",
+          "title": "Fort Wayne Bible College The Bible Vision",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible1952173fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible1952173fort",
             "mode": "source"
           },
           "rights": {
