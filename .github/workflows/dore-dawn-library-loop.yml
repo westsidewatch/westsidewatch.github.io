@@ -94,7 +94,10 @@ jobs:
           assert living['canonicalWorkCount']==canonical['workCount']
           assert len(living['livingWall']['workRefs'])==canonical['workCount']
           assert all(x['workId'] in canonical['works'] for x in living['livingWall']['workRefs'])
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'livingLibraryWorkCount':living['canonicalWorkCount'],'classificationNodes':len(living['classification']['nodes']),'phase3':True,'phase3Target':1000000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          roots=living['classification']['roots']
+          leaf_count=sum(len(x.get('children',[])) for x in roots)
+          assert len(roots)==7 and leaf_count>=40
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'livingLibraryWorkCount':living['canonicalWorkCount'],'classificationRoots':len(roots),'classificationLeaves':leaf_count,'phase3':True,'phase3Target':1000000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
