@@ -1,8 +1,8 @@
 name: Italian Editorial Grammar Promotion Gate
-on:
-  push:
-  pull_request:
-  workflow_dispatch:
+'on':
+  push: {}
+  pull_request: {}
+  workflow_dispatch: {}
 jobs:
   promotion-contract:
     runs-on: ubuntu-latest
