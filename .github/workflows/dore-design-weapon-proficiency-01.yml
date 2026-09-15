@@ -7,15 +7,12 @@ on:
       - 'dore-design/weapon_proficiency.py'
       - '.github/workflows/dore-design-weapon-proficiency-01.yml'
   workflow_dispatch:
-
 permissions:
   contents: write
   pull-requests: write
-
 concurrency:
   group: dore-design-weapon-proficiency-01
   cancel-in-progress: false
-
 jobs:
   train:
     runs-on: [self-hosted, macOS, dore]
@@ -23,82 +20,46 @@ jobs:
     steps:
       - name: Resolve training branch
         run: |
-          ROOT="$HOME/westsidewatch.github.io"
-          test -d "$ROOT/.git"
-          cd "$ROOT"
+          ROOT="$HOME/westsidewatch.github.io"; test -d "$ROOT/.git"; cd "$ROOT"
           git fetch origin +refs/heads/dore/design-weapon-proficiency-01:refs/remotes/origin/dore/design-weapon-proficiency-01
-          SHA="$(git rev-parse refs/remotes/origin/dore/design-weapon-proficiency-01)"
-          echo "TRAINING_SHA=$SHA" >> "$GITHUB_ENV"
+          SHA="$(git rev-parse refs/remotes/origin/dore/design-weapon-proficiency-01)"; echo "TRAINING_SHA=$SHA" >> "$GITHUB_ENV"
       - name: Build isolated Doré training worktree
         run: |
-          ROOT="$HOME/westsidewatch.github.io"
-          WT="$HOME/.dore/design-weapon-proficiency-01"
-          cd "$ROOT"
-          git worktree remove --force "$WT" 2>/dev/null || true
-          rm -rf "$WT"
-          git worktree add --force -B dore-design-training-01 "$WT" "$TRAINING_SHA"
-          cd "$WT"
-          test -f dore-design/training/design-weapon-proficiency-01.v0.json
-          test -f static/dore-design/living-water-bloom-armed-v2.html
-          test -f static/dore-design/italian-editorial-grammars.v1.json
+          ROOT="$HOME/westsidewatch.github.io"; WT="$HOME/.dore/design-weapon-proficiency-01"; cd "$ROOT"
+          git worktree remove --force "$WT" 2>/dev/null || true; rm -rf "$WT"; git worktree add --force -B dore-design-training-01 "$WT" "$TRAINING_SHA"; cd "$WT"
+          test -f dore-design/training/design-weapon-proficiency-01.v0.json; test -f static/dore-design/living-water-bloom-armed-v2.html; test -f static/dore-design/italian-editorial-grammars.v1.json
       - name: Install Doré Design resident
         run: |
-          WT="$HOME/.dore/design-weapon-proficiency-01"
-          cd "$WT"
-          export DORE_REPO_ROOT="$WT"
-          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
-          bash dore-design/install-macos.sh
+          WT="$HOME/.dore/design-weapon-proficiency-01"; cd "$WT"; export DORE_REPO_ROOT="$WT"; export DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh
       - name: Execute full proficiency round through Doré local runtime
         run: |
-          WT="$HOME/.dore/design-weapon-proficiency-01"
-          cd "$WT"
+          WT="$HOME/.dore/design-weapon-proficiency-01"; cd "$WT"
           export DORE_REPO_ROOT="$WT"
           export DORE_TRAINING_SPEC="$WT/dore-design/training/design-weapon-proficiency-01.v0.json"
           export DORE_TRAINING_SURFACE="$WT/static/dore-design/living-water-bloom-armed-v2.html"
           export DORE_EDITORIAL_ATLAS="$WT/static/dore-design/italian-editorial-grammars.v1.json"
-          if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then
-            export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-          elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then
-            export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'
-          elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then
-            export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'
-          else
-            export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'
-          fi
-          echo "DORE_DESIGN_BROWSER=$DORE_DESIGN_BROWSER"
-          python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
+          export DORE_LOCAL_HOME="$WT/.training-home"
+          export DORE_UI_TASTE_DB="$WT/.training-home/design/ui-taste.sqlite3"
+          rm -rf "$DORE_LOCAL_HOME"
+          if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'; elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'; else export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'; fi
+          echo "DORE_DESIGN_BROWSER=$DORE_DESIGN_BROWSER"; python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
       - name: Verify evidence contract
         run: |
-          WT="$HOME/.dore/design-weapon-proficiency-01"
-          cd "$WT"
-          test -f dore-design/training/evidence/round-01/report.json
+          WT="$HOME/.dore/design-weapon-proficiency-01"; cd "$WT"; test -f dore-design/training/evidence/round-01/report.json
           python3 - <<'PY'
           import json, pathlib
-          p=pathlib.Path('dore-design/training/evidence/round-01/report.json')
-          d=json.loads(p.read_text())
-          assert d.get('designer') == 'dore'
-          assert d.get('round') == 1
-          assert len(d.get('candidates', [])) == 4
+          d=json.loads(pathlib.Path('dore-design/training/evidence/round-01/report.json').read_text())
+          assert d.get('designer')=='dore' and d.get('round')==1 and len(d.get('candidates',[]))==4
           for c in d['candidates']:
-              assert c.get('beforeRaster')
-              assert c.get('afterRaster')
-              assert c.get('diagnosis')
-              assert c.get('weaponsUsed')
-              assert c.get('selfRevision') is not None
-          assert d.get('winner') is None
-          assert d.get('productionPromoted') is False
+              assert len(c.get('beforeRaster') or {})==2, (c['id'],'before')
+              assert len(c.get('afterRaster') or {})==2, (c['id'],'after')
+              assert c.get('diagnosis') and c.get('weaponsUsed') and c.get('selfRevision') is not None
+          assert d.get('winner') is None and d.get('productionPromoted') is False and d.get('canonicalWorkspaceMutated') is False
           print('DORE_WEAPON_PROFICIENCY_01=PASS')
           PY
       - name: Commit Doré-produced training result
         run: |
-          WT="$HOME/.dore/design-weapon-proficiency-01"
-          cd "$WT"
-          git config user.name 'dore-local'
-          git config user.email 'dore-local@users.noreply.github.com'
+          WT="$HOME/.dore/design-weapon-proficiency-01"; cd "$WT"; git config user.name 'dore-local'; git config user.email 'dore-local@users.noreply.github.com'
           git add dore-design/training/evidence/round-01
-          if git diff --cached --quiet; then
-            echo 'DORÉ_PRODUCED_NO_CHANGE=1'
-            exit 43
-          fi
-          git commit -m 'DORÉ Design: complete weapon proficiency round 01'
-          git push origin HEAD:dore/design-weapon-proficiency-01
+          if git diff --cached --quiet; then echo 'DORÉ_PRODUCED_NO_CHANGE=1'; exit 43; fi
+          git commit -m 'DORÉ Design: complete weapon proficiency round 01'; git push origin HEAD:dore/design-weapon-proficiency-01
