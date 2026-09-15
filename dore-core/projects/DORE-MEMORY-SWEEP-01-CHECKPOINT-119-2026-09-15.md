@@ -8,36 +8,40 @@ Status: BOUNDED PASS / SWEEP CONTINUES
 - `dore-core/cloudflare/ASSET-MIGRATION-MILESTONE-PLAN-2026-08-24.md`
 - `dore-core/cloudflare/DORE-SERVICE-LAYER-MILESTONE-2026-08-24.md`
 - `dore-core/cloudflare/JOURNAL-LIMING-MEDIA-MILESTONE-2026-08-24.md`
+- `dore-core/cloudflare/receipts/R2-DELIVERY-MILESTONE-PASS.json`
+- `dore-core/cloudflare/receipts/R2-POST-DELIVERY-CLEANUP-RESULT.json`
 - current canonical `DORÉ-MASTER-WORK-REGISTER.md`
-- current `DORÉ-COMPLETED-WORK-LEDGER.md`, revisit queue, and missing-evidence register
+- current completed-work/revisit interpretations
 
 ## Reconciliation
 
-### 1. Priority-A asset migration is a legitimate historical completion
+### 1. Priority-A migration, private delivery and cleanup form a verified historical chain
 
-The 2026-08-24 asset-migration milestone records an explicit PASS: Matthew 3 canonical motion and the priority ONE media set were migrated/deduplicated into R2, registered and verified through D1/search, with Priority A unresolved count zero. It also deliberately retained seven GitHub source copies for rollback/runtime compatibility until R2-backed public delivery was switched on.
+The 2026-08-24 Priority-A migration milestone is a legitimate bounded `VERIFIED_COMPLETE`: Priority A unresolved count reached zero and 7/7 priority ONE media were migrated/deduplicated with D1/search verification.
 
-Classification: `VERIFIED_COMPLETE` for the bounded Priority-A migration milestone. This does **not** prove the later R2-backed public delivery/reference-switch/removal milestone.
+The successor delivery milestone is no longer missing evidence. `R2-DELIVERY-MILESTONE-PASS.json` records `status=PASS`, seven governed assets, `one_page_http_pass=true`, and no requirement for public R2 access. The correct interpretation is stable product-facing private delivery, not public bucket exposure.
 
-Current quality judgment: the placement discipline was strong—no canonical GitHub binary was removed before verified replacement, structured search/corpus data was excluded rather than moved merely because R2 existed, and rollback compatibility was preserved. The remaining historical debt is the explicit next-stage delivery cutover, which must be judged from later runtime evidence rather than inferred from migration receipts.
+The rollback-copy cleanup also completed. `R2-POST-DELIVERY-CLEANUP-RESULT.json` records zero active GitHub references, seven GitHub binaries removed, seven R2 deliveries verified after cleanup, and canonical Doré Original 241 untouched.
 
-Retained capability: governed binary placement; R2+D1 replacement verification; rollback-first migration; distinction between media storage and versioned structured data.
+Therefore the migration document's old statement that seven GitHub source copies remained pending delivery cutover is historical and now `SUPERSEDED`, not a current obligation.
 
-### 2. Journal + Liming zero-migration PASS is valid and should not be mistaken for inactivity
+Current disposition: migration + private delivery + post-delivery cleanup are bounded `VERIFIED_COMPLETE` infrastructure milestones. Preserve them as regression-protected capability; reopen only on delivery/reference regression or a materially changed storage contract.
+
+Retained capability: governed binary placement; R2+D1 replacement verification; rollback-first migration; stable private delivery; destructive cleanup only after verified replacement; preservation of canonical originals.
+
+### 2. Journal + Liming zero-migration PASS is valid
 
 The Journal/Liming audit found zero eligible current local media binaries. Journal editorial YAML and Liming `data/resources.json` correctly remained GitHub-versioned source data; future independently addressable binaries were assigned R2/D1 placement rules.
 
-Classification: `VERIFIED_COMPLETE` for the bounded placement audit. No revisit is warranted merely because the migration count was zero.
+Classification: `VERIFIED_COMPLETE` for the bounded placement audit. No revisit is warranted merely because the migration count was zero. Reassess only when new owned/downloaded binary media appears or placement policy materially changes.
 
-Retained capability: storage decisions must follow access/update/ownership semantics, not a blanket “move everything to R2” rule.
+Retained capability: storage decisions follow access/update/ownership semantics, not a blanket “move everything to R2” rule.
 
-### 3. Doré service-layer milestone is historically complete but its scripture delegation is now a revisit-sensitive boundary
+### 3. Doré service-layer milestone is historically complete; Search drift remains separate
 
 The 2026-08-24 service-layer milestone established `/api/dore/query` / `dore.query.v1`, product-neutral routing and a stable response envelope. Its deliberate decision not to rewrite the proven browser Scripture engine was appropriate for that milestone.
 
-Classification: `VERIFIED_COMPLETE` for the original service-contract milestone; `COMPLETED_REVISIT_CANDIDATE` only for the Scripture execution/delegation boundary.
-
-Reason: later Sweep evidence (Checkpoint 19 / `RQ-003`) found that browser Search and `dore_core.search.BibleSearchIndex` now contain independently evolving normalization/reference/fuzzy logic. Therefore the old compatibility choice has matured into service-boundary drift. The historical service-layer milestone remains valid; future Search work should converge execution/specification and add parity evidence rather than pretending the two paths are equivalent.
+Classification: `VERIFIED_COMPLETE` for the original service-contract milestone. Later Sweep evidence (Checkpoint 19 / `RQ-003`) found independently evolving browser/Core Search logic, so current execution-boundary convergence remains a Search revisit concern rather than grounds to invalidate or reopen the historical service endpoint milestone.
 
 ### 4. No new blocker and no P01 action
 
@@ -46,9 +50,8 @@ This batch found no new `HUMAN_DECISION_BLOCKED` or `ENVIRONMENT_BLOCKED` condit
 ## Register implications
 
 - Keep `RUNTIME` / P01 blocker interpretation unchanged.
-- Preserve Cloudflare Priority-A migration and Journal/Liming placement audit as bounded historical completions in completed-work history.
-- Treat the old Doré service contract as a retained capability, while routing the now-known Scripture/browser duplication debt through existing `RQ-003` rather than creating a duplicate workstream.
-- Do not reopen the zero-migration Journal/Liming milestone absent new owned/downloaded binary media or a changed placement policy.
-- A future bounded storage-history pass should locate later evidence for the explicitly named R2-backed public-delivery cutover before classifying that successor milestone.
+- Preserve Cloudflare Priority-A migration, R2 private delivery, post-delivery cleanup and Journal/Liming placement audit as bounded historical completions.
+- Mark the pre-cutover seven-GitHub-copy state as superseded by the delivery/cleanup receipts.
+- Keep current Search/browser/Core convergence under existing `RQ-003`; do not create a duplicate workstream.
 
 Sweep-wide status remains `ACTIVE_PARALLEL`; Checkpoint 119 does not justify `VERIFIED_COMPLETE`.
