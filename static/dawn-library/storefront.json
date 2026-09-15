@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-14T20:47:02.131160+00:00",
+  "generatedAt": "2026-09-15T14:52:19.644370+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2292,29 +2292,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-zionschristianso0000step",
-          "title": "Zion's Christian soldiers? : the Bible, Irael and the church",
-          "author": "Sizer, Stephen",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/zionschristianso0000step",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/zionschristianso0000step",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-principlesofsama0000unse",
           "title": "The principles of Samaritan bible exegesis",
           "author": "Lowy, S",
@@ -2327,75 +2304,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/principlesofsama0000unse",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-atlasofbibleland00hamm",
-          "title": "Atlas of the Bible lands",
-          "author": "Hammond Incorporated.",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/atlasofbibleland00hamm",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/atlasofbibleland00hamm",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-randmcnallybible0000krae",
-          "title": "Rand McNally Bible atlas",
-          "author": "Kraeling, Emil Gottlieb Heinrich, 1892- dn",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/randmcnallybible0000krae",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/randmcnallybible0000krae",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-biblicalreferenc0000shah_u4n2",
-          "title": "Biblical references in The faerie queene",
-          "author": "Shaheen, Naseeb, 1931-2009",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/biblicalreferenc0000shah_u4n2",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/biblicalreferenc0000shah_u4n2",
             "mode": "source"
           },
           "rights": {
@@ -2488,29 +2396,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/fortwaynebiblein1935fort",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bibleliturgy0000dani",
-          "title": "The Bible and the liturgy",
-          "author": "Daniélou, Jean",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bibleliturgy0000dani",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bibleliturgy0000dani",
             "mode": "source"
           },
           "rights": {
@@ -2727,6 +2612,121 @@
           },
           "quality": "original-scan",
           "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible1952169fort",
+          "title": "Fort Wayne Bible College The Bible Vision",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible1952169fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible1952169fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible1952173fort",
+          "title": "Fort Wayne Bible College The Bible Vision",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible1952173fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible1952173fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible196162fort",
+          "title": "Fort Wayne Bible College Catalog",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible196162fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible196162fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible197879fort",
+          "title": "Fort Wayne Bible College Catalog",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible197879fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible197879fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-sword-unsheathed",
+          "title": "Sword Unsheathed: A Battle of the Bibles & Bible History Manual",
+          "author": "Dallas P. Roberts",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/sword-unsheathed",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/sword-unsheathed",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
         }
       ]
     },
@@ -2887,29 +2887,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/pflca.2000-2004.minutes.complete",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchstateinlut0000unse",
-          "title": "church and state in luther and calvin",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchstateinlut0000unse",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchstateinlut0000unse",
             "mode": "source"
           },
           "rights": {
@@ -3186,6 +3163,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/bwb_S0-ADX-065",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_C0-CBU-603",
+          "title": "An outline of Church History",
+          "author": "Theodore Huggenvik",
+          "language": "Eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_C0-CBU-603",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_C0-CBU-603",
             "mode": "source"
           },
           "rights": {
@@ -3560,26 +3560,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-38808",
-          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/38808",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-69329",
           "title": "The Song of Songs",
           "author": "",
@@ -3625,6 +3605,26 @@
           ]
         },
         {
+          "id": "gutenberg-38808",
+          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/38808",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-26881",
           "title": "The Gospel of Luke, an exposition",
           "author": "",
@@ -3663,6 +3663,51 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-64858",
+          "title": "Toleration and other essays",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/64858",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/676013-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL15228411W",
+            "editionId": "OL1080401M",
+            "isbn": "0879758813",
+            "coverId": 676013,
+            "internetArchiveId": "treatiseontolera00volt",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL15228411W",
+            "openLibraryEdition": "OL1080401M",
+            "isbn": "0879758813"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/treatiseontolera00volt",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -3740,51 +3785,6 @@
             "openLibraryEdition": "OL31930339M",
             "isbn": "034495904X"
           }
-        },
-        {
-          "id": "gutenberg-64858",
-          "title": "Toleration and other essays",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/64858",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/676013-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL15228411W",
-            "editionId": "OL1080401M",
-            "isbn": "0879758813",
-            "coverId": 676013,
-            "internetArchiveId": "treatiseontolera00volt",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL15228411W",
-            "openLibraryEdition": "OL1080401M",
-            "isbn": "0879758813"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/treatiseontolera00volt",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         },
         {
           "id": "gutenberg-13166",
@@ -3873,6 +3873,40 @@
               "rightsStatus": "source-rights-check"
             }
           ]
+        },
+        {
+          "id": "gutenberg-8810",
+          "title": "Ben-Hur: A tale of the Christ",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/8810",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL25475461W",
+            "editionId": "OL37606642M",
+            "isbn": "9798785723320",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL25475461W",
+            "openLibraryEdition": "OL37606642M",
+            "isbn": "9798785723320"
+          }
         },
         {
           "id": "gutenberg-7925",
@@ -4046,49 +4080,13 @@
           }
         },
         {
-          "id": "gutenberg-8200",
-          "title": "Expositions of Holy Scripture: St. Luke",
+          "id": "gutenberg-272",
+          "title": "An Open Letter on Translating",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/8200",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/4970119-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL8336006W",
-            "editionId": "OL9381558M",
-            "isbn": "9781404374355",
-            "coverId": 4970119,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL8336006W",
-            "openLibraryEdition": "OL9381558M",
-            "isbn": "9781404374355"
-          }
-        },
-        {
-          "id": "gutenberg-8810",
-          "title": "Ben-Hur: A tale of the Christ",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/8810",
+            "url": "https://www.gutenberg.org/ebooks/272",
             "kind": "remote-public"
           },
           "cover": {
@@ -4102,17 +4100,17 @@
           "contentDownloaded": false,
           "identity": {
             "provider": "Open Library",
-            "workId": "/works/OL25475461W",
-            "editionId": "OL37606642M",
-            "isbn": "9798785723320",
+            "workId": "/works/OL42469293W",
+            "editionId": "OL57632104M",
+            "isbn": "0585017956",
             "coverId": null,
             "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+            "resolvedAt": "2026-09-13T13:50:14.294927+00:00"
           },
           "identifiers": {
-            "openLibraryWork": "/works/OL25475461W",
-            "openLibraryEdition": "OL37606642M",
-            "isbn": "9798785723320"
+            "openLibraryWork": "/works/OL42469293W",
+            "openLibraryEdition": "OL57632104M",
+            "isbn": "0585017956"
           }
         }
       ]
@@ -5018,6 +5016,50 @@
           ]
         },
         {
+          "id": "gutenberg-40812",
+          "title": "The Swastika, the Earliest Known Symbol, and Its Migration",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/40812",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/6329863-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL15406617W",
+            "editionId": "OL24151649M",
+            "isbn": null,
+            "coverId": 6329863,
+            "internetArchiveId": "cu31924023008067",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL15406617W",
+            "openLibraryEdition": "OL24151649M"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/cu31924023008067",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
           "id": "gutenberg-14672",
           "title": "The Religion of the Ancient Celts",
           "author": "",
@@ -5063,86 +5105,6 @@
           ]
         },
         {
-          "id": "gutenberg-40812",
-          "title": "The Swastika, the Earliest Known Symbol, and Its Migration",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/40812",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6329863-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL15406617W",
-            "editionId": "OL24151649M",
-            "isbn": null,
-            "coverId": 6329863,
-            "internetArchiveId": "cu31924023008067",
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL15406617W",
-            "openLibraryEdition": "OL24151649M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/cu31924023008067",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-20758",
-          "title": "The Religion of Babylonia and Assyria",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/20758",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/1759153-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL247590W",
-            "editionId": "OL11727863M",
-            "isbn": "1412129206",
-            "coverId": 1759153,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL247590W",
-            "openLibraryEdition": "OL11727863M",
-            "isbn": "1412129206"
-          }
-        },
-        {
           "id": "gutenberg-56940",
           "title": "Mycenæ: a narrative of researches and discoveries at Mycenæ and Tiryns",
           "author": "",
@@ -5185,6 +5147,42 @@
               "rightsStatus": "source-rights-check"
             }
           ]
+        },
+        {
+          "id": "gutenberg-20758",
+          "title": "The Religion of Babylonia and Assyria",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/20758",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/1759153-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL247590W",
+            "editionId": "OL11727863M",
+            "isbn": "1412129206",
+            "coverId": 1759153,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL247590W",
+            "openLibraryEdition": "OL11727863M",
+            "isbn": "1412129206"
+          }
         },
         {
           "id": "gutenberg-32066",
@@ -5853,6 +5851,26 @@
           ]
         },
         {
+          "id": "gutenberg-1497",
+          "title": "The Republic",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1497",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-55201",
           "title": "The Republic of Plato",
           "author": "",
@@ -5896,26 +5914,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-1497",
-          "title": "The Republic",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/1497",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
         },
         {
           "id": "gutenberg-51356",
@@ -5982,26 +5980,6 @@
           ]
         },
         {
-          "id": "gutenberg-1636",
-          "title": "Phaedrus",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/1636",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-1658",
           "title": "Phaedo",
           "author": "",
@@ -6034,6 +6012,26 @@
             "openLibraryEdition": "OL54709302M",
             "isbn": "9781986632454"
           }
+        },
+        {
+          "id": "gutenberg-1636",
+          "title": "Phaedrus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1636",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-2130",
@@ -6809,6 +6807,51 @@
           }
         },
         {
+          "id": "gutenberg-6031",
+          "title": "Memoirs of My Life and Writings",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/6031",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/5019103-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1285003W",
+            "editionId": "OL9837422M",
+            "isbn": "9781406930993",
+            "coverId": 5019103,
+            "internetArchiveId": "memoirsofmylifew0000gibb",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1285003W",
+            "openLibraryEdition": "OL9837422M",
+            "isbn": "9781406930993"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/memoirsofmylifew0000gibb",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
           "id": "gutenberg-55070",
           "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England. volume 5 (of 6)",
           "author": "",
@@ -6867,51 +6910,6 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-6031",
-          "title": "Memoirs of My Life and Writings",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/6031",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/5019103-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1285003W",
-            "editionId": "OL9837422M",
-            "isbn": "9781406930993",
-            "coverId": 5019103,
-            "internetArchiveId": "memoirsofmylifew0000gibb",
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1285003W",
-            "openLibraryEdition": "OL9837422M",
-            "isbn": "9781406930993"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/memoirsofmylifew0000gibb",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         },
         {
           "id": "gutenberg-20946",
@@ -7072,26 +7070,6 @@
           }
         },
         {
-          "id": "gutenberg-41357",
-          "title": "The works of Francis Maitland Balfour, Volume 1 (of 4) : Separate memoirs",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/41357",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-53967",
           "title": "Memoirs of the life, exile, and conversations of the Emperor Napoleon. (Vol. I)",
           "author": "",
@@ -7110,6 +7088,26 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-38418",
+          "title": "From Manassas to Appomattox: Memoirs of the Civil War in America",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/38418",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         }
       ]
     }
@@ -7117,7 +7115,7 @@
   "metrics": {
     "shelves": 11,
     "mappedBooks": 214,
-    "sourceCovers": 161,
+    "sourceCovers": 160,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
@@ -7126,11 +7124,11 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 0,
+      "queriedThisRun": 1,
       "resolved": 120,
-      "coversAdded": 63,
+      "coversAdded": 62,
       "internetArchiveLinks": 50,
-      "cacheEntries": 183
+      "cacheEntries": 184
     }
   },
   "errors": [
