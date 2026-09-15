@@ -20,6 +20,7 @@ on:
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'scripts/build_dawn_canonical_substrate.py'
       - 'scripts/build_dawn_storefront.py'
+      - 'scripts/build_dawn_living_library.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 concurrency:
   group: dore-dawn-library-main
@@ -63,6 +64,8 @@ jobs:
           python scripts/discover_dawn_10k_openlibrary_works.py
           python scripts/build_dawn_10k_work_queue.py
           python scripts/build_dawn_canonical_substrate.py
+      - name: Project living library
+        run: python scripts/build_dawn_living_library.py
       - name: Produce measurable collection outputs
         run: |
           python scripts/run_dawn_library_loop.py
@@ -76,6 +79,7 @@ jobs:
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          living=json.loads(Path('static/dawn-library/living-library.json').read_text())
           def clean_collection_payload(value):
             t=json.dumps(value,ensure_ascii=False).casefold()
             assert 'wikisource.org' not in t and 'zh-wikisource' not in t and '維基文庫' not in t and '维基文库' not in t
@@ -86,7 +90,11 @@ jobs:
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
           assert canonical['workCount']==len(canonical['works'])
           assert canonical['workCount'] > 100000
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'phase3':True,'phase3Target':1000000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          assert living['projectionOnly'] is True and living['admissionAuthority'] is False
+          assert living['canonicalWorkCount']==canonical['workCount']
+          assert len(living['livingWall']['workRefs'])==canonical['workCount']
+          assert all(x['workId'] in canonical['works'] for x in living['livingWall']['workRefs'])
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'livingLibraryWorkCount':living['canonicalWorkCount'],'classificationNodes':len(living['classification']['nodes']),'phase3':True,'phase3Target':1000000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -97,6 +105,7 @@ jobs:
             data/dawn-10k-work-queue.json
             data/dawn-canonical/**
             static/dawn-library/canonical-index.json
+            static/dawn-library/living-library.json
             static/dawn-library/surfaces/*.json
             static/dawn-library/storefront.json
             static/dawn-library/identity-cache.json
@@ -110,7 +119,7 @@ jobs:
           current_ref="${GITHUB_REF_NAME}"
           add_outputs() {
             git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
-            git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json static/dawn-library/canonical-index.json static/dawn-library/surfaces/*.json
+            git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json static/dawn-library/canonical-index.json static/dawn-library/living-library.json static/dawn-library/surfaces/*.json
             [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
           }
           regenerate() {
@@ -126,6 +135,7 @@ jobs:
             python scripts/discover_dawn_10k_openlibrary_works.py
             python scripts/build_dawn_10k_work_queue.py
             python scripts/build_dawn_canonical_substrate.py
+            python scripts/build_dawn_living_library.py
             python scripts/run_dawn_library_loop.py
             python scripts/build_dawn_storefront.py
           }
