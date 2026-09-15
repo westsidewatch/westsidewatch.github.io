@@ -1,0 +1,24 @@
+name: Italian Editorial Grammar Promotion Gate
+on:
+  pull_request:
+    paths:
+      - 'static/dore-design/italian-editorial-grammar-candidates.v1.json'
+      - 'static/dore-design/italian-editorial-evidence.v1.json'
+      - 'scripts/validate_italian_editorial_grammar_promotion.py'
+      - 'tests/italian-editorial-grammar-promotion-contract.test.py'
+      - '.github/workflows/italian-editorial-grammar-promotion.yml'
+  workflow_dispatch:
+jobs:
+  promotion-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate promotion contract
+        run: python scripts/validate_italian_editorial_grammar_promotion.py
+      - name: Run regression tests
+        run: |
+          python -m pip install pytest
+          python -m pytest -q tests/italian-editorial-grammar-promotion-contract.test.py
