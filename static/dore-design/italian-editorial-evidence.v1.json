@@ -1,0 +1,82 @@
+{
+  "schema":"dore.italian-editorial-evidence.v1",
+  "principle":"Visual evidence is grammar authority, not decoration.",
+  "items":[
+    {
+      "id":"cg-1933-cover-12",
+      "family":"campo-grafico","era":"cg-1933",
+      "modules":["layout","image","typography","material","density"],
+      "tokens":["free spatial balance","issue-specific composition","photomontage","typographic collage","abstract composition","type as image","asymmetrical hierarchy","range from minimal field to constructivist saturation"],
+      "label":"Campo Grafico · Year I · No. 12 · Dec 1933",
+      "image":"https://www.campografico.org/images/covers/12.jpg",
+      "source":"https://www.campografico.org/",
+      "authority":"official-archive"
+    },
+    {
+      "id":"cg-1933-issue-07",
+      "family":"campo-grafico","era":"cg-1933",
+      "modules":["image","material","sequence","emergence"],
+      "tokens":["photolithography","printed ephemera as evidence","attached cards and invitations","front/back demonstration insert","wrapper -> pages -> attached evidence -> return","material reveal","attached evidence enters as foreign-local grammar"],
+      "label":"Campo Grafico · Year I · No. 7 · Jul 1933 · Luigi Veronesi / inserts",
+      "source":"https://www.campografico.org/journal/7-1933",
+      "authority":"official-archive"
+    },
+    {
+      "id":"domus-ponti-268",
+      "family":"domus","era":"domus-ponti",
+      "modules":["layout","image","typography","material","density","sequence"],
+      "tokens":["architectural construction","object as world","editorial-architectural hierarchy","print-aware colour and surface","controlled contrast","progetto coherence"],
+      "label":"Domus 268 · Mar 1952 · La Rinascente cover / archive context",
+      "source":"https://www.domusweb.it/en/events/domus-discovering-cities/gallery/2020/exploring-milan-through-the-eyes-of-the-domus-archives.html",
+      "authority":"official-archive"
+    },
+    {
+      "id":"ottagono-39-1975",
+      "family":"ottagono","era":"ottagono-unimark",
+      "modules":["layout","image","typography","material","density","sequence"],
+      "tokens":["modular grid","controlled break","precise crop","disciplined sans-serif","industrial print logic","repeated modules","system before deviation"],
+      "label":"Ottagono 39 · Dec 1975 · historical cover specimen",
+      "image":"https://i.ebayimg.com/images/g/CAAAAOSwsq9kmqMM/s-l1200.png",
+      "source":"https://www.ebay.ca/itm/354969239200",
+      "authority":"secondary-specimen"
+    },
+    {
+      "id":"casabella-370-1972",
+      "family":"casabella","era":"casabella-provisional",
+      "modules":["layout","image","typography","density","sequence","emergence"],
+      "tokens":["analytical restraint","image as evidence","critical authority","deliberate negative space","editorial argument","evidence revealed by hierarchy"],
+      "label":"Casabella 370 · Oct 1972 · Mendini period specimen",
+      "image":"https://pictures.abebooks.com/inventory/31372482686.jpg",
+      "source":"https://casabellaweb.eu/the-magazine/",
+      "authority":"official-index-secondary-image"
+    },
+    {
+      "id":"casabella-official-index",
+      "family":"casabella","era":"casabella-provisional",
+      "modules":["sequence","emergence"],
+      "tokens":["editorial argument","evidence revealed by hierarchy"],
+      "label":"Casabella official cover chronology · 1928–2026",
+      "source":"https://casabellaweb.eu/the-magazine/",
+      "authority":"official-archive"
+    },
+    {
+      "id":"abitare-preview",
+      "family":"abitare","era":"abitare-living",
+      "modules":["layout","image","typography","material","density","sequence","emergence"],
+      "tokens":["breathing spatial composition","observational inhabitation","cultured restraint","tactile domestic surfaces","human-scale pacing","journey and dwelling","atmosphere and traces accumulate"],
+      "label":"Abitare · official digital edition / preview archive",
+      "source":"https://www.abitare.it/it/free-digital-edition/",
+      "authority":"official-archive"
+    },
+    {
+      "id":"il-franchi-study",
+      "family":"il","era":"il-franchi",
+      "modules":["layout","image","typography","material","density","sequence","irony","emergence"],
+      "tokens":["modular reinvention","photography plus illustration and diagram","multi-scale information hierarchy","contemporary print colour","high density with navigation","local graphic identities inside one publication","playful information relation","information becomes image over time"],
+      "label":"Francesco Franchi · The Intelligent Lifestyle Magazine · editorial system study",
+      "image":"https://a-g-i.s3.eu-west-3.amazonaws.com/FrancescoFranchi/_500xAUTO_crop_center-center_75_none/03-TILM.jpg",
+      "source":"https://a-g-i.org/user/FrancescoFranchi/view/projects/",
+      "authority":"designer-professional-archive"
+    }
+  ]
+}
