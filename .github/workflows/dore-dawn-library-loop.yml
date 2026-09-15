@@ -16,6 +16,7 @@ on:
       - 'scripts/promote_dawn_library_chinese_catalog.py'
       - 'scripts/test_dawn_collection_source_policy.py'
       - 'scripts/run_dawn_library_loop.py'
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'scripts/build_dawn_canonical_substrate.py'
       - 'scripts/build_dawn_storefront.py'
@@ -28,6 +29,14 @@ permissions:
 jobs:
   library-loop:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      PYTHONPATH: .
+      DAWN_TARGET_WORKS: '12000'
+      DAWN_CHINESE_TARGET: '2500'
+      DAWN_OL_PAGE_SIZE: '100'
+      DAWN_OL_MAX_PAGES_PER_QUERY: '35'
+      DAWN_OL_DELAY_SECONDS: '0.20'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -49,14 +58,13 @@ jobs:
           python scripts/run_dawn_library_relevance.py
           python scripts/run_dawn_library_english_resolver.py
           python scripts/promote_dawn_library_english_catalog.py
-      - name: Reconcile available inventory into canonical substrate
+      - name: Restore authority seed and reconcile canonical substrate
         run: |
-          if [ -f data/dawn-10k-openlibrary-works.json ]; then
-            python scripts/build_dawn_10k_work_queue.py
-            python scripts/build_dawn_canonical_substrate.py
-          else
-            echo 'Bulk authority seed not present on this branch; continue acquisition/admission without blocking the loop.'
+          if [ ! -s data/dawn-10k-openlibrary-works.json ]; then
+            python scripts/discover_dawn_10k_openlibrary_works.py
           fi
+          python scripts/build_dawn_10k_work_queue.py
+          python scripts/build_dawn_canonical_substrate.py
       - name: Produce measurable collection outputs
         run: |
           python scripts/run_dawn_library_loop.py
@@ -69,22 +77,27 @@ jobs:
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
+          canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
           def clean(value):
             t=json.dumps(value,ensure_ascii=False).casefold()
             assert 'wikisource' not in t and '維基文庫' not in t and '维基文库' not in t
-          clean(cat)
+          clean(cat); clean(canonical)
           assert r['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
-          print(json.dumps({'catalogTotal':len(cat['items']),'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          assert canonical['workCount']==len(canonical['works'])
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':canonical['workCount']>11699,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-library-loop-results
           path: |
             reports/DAWN-LIBRARY-*.json
+            data/dawn-10k-openlibrary-works.json
             data/dawn-10k-work-queue.json
             data/dawn-canonical/**
+            static/dawn-library/canonical-index.json
+            static/dawn-library/surfaces/*.json
             static/dawn-library/storefront.json
             static/dawn-library/identity-cache.json
             static/dawn-library/collections.json
@@ -97,7 +110,7 @@ jobs:
           current_ref="${GITHUB_REF_NAME}"
           add_outputs() {
             git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
-            [ ! -f data/dawn-10k-work-queue.json ] || git add data/dawn-10k-work-queue.json
+            git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json static/dawn-library/canonical-index.json static/dawn-library/surfaces/*.json
             [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
           }
           regenerate() {
@@ -110,10 +123,9 @@ jobs:
             python scripts/run_dawn_library_relevance.py
             python scripts/run_dawn_library_english_resolver.py
             python scripts/promote_dawn_library_english_catalog.py
-            if [ -f data/dawn-10k-openlibrary-works.json ]; then
-              python scripts/build_dawn_10k_work_queue.py
-              python scripts/build_dawn_canonical_substrate.py
-            fi
+            [ -s data/dawn-10k-openlibrary-works.json ] || python scripts/discover_dawn_10k_openlibrary_works.py
+            python scripts/build_dawn_10k_work_queue.py
+            python scripts/build_dawn_canonical_substrate.py
             python scripts/run_dawn_library_loop.py
             python scripts/build_dawn_storefront.py
           }
