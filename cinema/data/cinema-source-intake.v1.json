@@ -1,0 +1,12 @@
+{
+  "schema":"dore.cinema-source-intake.v1",
+  "status":"discovered-official-awaiting-runtime-admission",
+  "policy":{"providerDoesNotDefineNavigation":true,"rehostDefault":false,"canonicalAdmissionRequired":true},
+  "items":[
+    {"candidateId":"cinema:intake:bibleproject:genesis-part-1","title":"Genesis Part 1: Creation and Chaos","creator":"BibleProject","kind":"animation","officialUrl":"https://bibleproject.com/videos/torah-genesis-1/","facets":{"scripture":["Genesis 1-11"],"theme":["creation","humanity"],"type":["animation","teaching"]},"gapTargets":["torah"],"sourceStatus":"official-verified"},
+    {"candidateId":"cinema:intake:bibleproject:judges","title":"Judges","creator":"BibleProject","kind":"animation","officialUrl":"https://bibleproject.com/guides/book-of-judges/","facets":{"scripture":["Judges"],"theme":["judges","covenant","kingship"],"type":["animation","teaching"]},"gapTargets":["historical-books"],"sourceStatus":"official-verified"},
+    {"candidateId":"cinema:intake:bibleproject:revelation-1-11","title":"Revelation 1-11","creator":"BibleProject","kind":"animation","officialUrl":"https://bibleproject.com/guides/book-of-revelation/","facets":{"scripture":["Revelation 1-11"],"theme":["apocalypse","kingdom"],"type":["animation","teaching"]},"gapTargets":["revelation"],"sourceStatus":"official-verified"},
+    {"candidateId":"cinema:intake:chosen:series","title":"The Chosen","creator":"The Chosen","kind":"series","officialUrl":"https://watch.thechosen.tv/","facets":{"scripture":["Gospels"],"person":["Jesus"],"type":["series","film"]},"gapTargets":["dramatic-series"],"sourceStatus":"official-verified","note":"admit as one canonical series first; episodes expand beneath series, not as homepage provider flood"},
+    {"candidateId":"cinema:intake:motb:streaming","title":"Museum of the Bible Streaming Collection","creator":"Museum of the Bible","kind":"collection-source","officialUrl":"https://www.museumofthebible.org/museum-from-home","facets":{"theme":["bible-history","artifacts","education"],"type":["documentary","teaching"]},"gapTargets":["bible-history","archaeology","documentary"],"sourceStatus":"official-verified","note":"collection discovery source; individual works require separate canonical admission"}
+  ]
+}
