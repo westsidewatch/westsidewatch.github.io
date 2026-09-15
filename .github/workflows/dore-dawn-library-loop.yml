@@ -29,14 +29,14 @@ permissions:
 jobs:
   library-loop:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
     env:
       PYTHONPATH: .
-      DAWN_TARGET_WORKS: '25000'
-      DAWN_CHINESE_TARGET: '5000'
+      DAWN_TARGET_WORKS: '100000'
+      DAWN_CHINESE_TARGET: '15000'
       DAWN_OL_PAGE_SIZE: '100'
-      DAWN_OL_MAX_PAGES_PER_QUERY: '60'
-      DAWN_OL_DELAY_SECONDS: '0.15'
+      DAWN_OL_MAX_PAGES_PER_QUERY: '120'
+      DAWN_OL_DELAY_SECONDS: '0.12'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -85,8 +85,8 @@ jobs:
           assert store['storagePolicy']=='index-only'
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
           assert canonical['workCount']==len(canonical['works'])
-          assert canonical['workCount'] > 11699
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'aboveLaunchBaseline':True,'phase1Target':25000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          assert canonical['workCount'] > 25000
+          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'phase2':True,'phase2Target':100000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
           PY
       - uses: actions/upload-artifact@v4
         with:
