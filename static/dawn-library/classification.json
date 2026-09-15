@@ -1,0 +1,26 @@
+{
+  "schema":"dawn.library.classification.v1",
+  "role":"knowledge-map",
+  "projectionOnly":true,
+  "admissionAuthority":false,
+  "principle":"classification describes admitted Works; it never decides admission, recommendation, curation or prominence",
+  "roots":[
+    {"id":"bible","label":"聖經","children":[
+      {"id":"bible.text","label":"原文與文本"},{"id":"bible.translation","label":"譯本"},{"id":"bible.old-testament","label":"舊約"},{"id":"bible.new-testament","label":"新約"},{"id":"bible.book-study","label":"單卷研究"}]},
+    {"id":"exegesis","label":"釋經","children":[
+      {"id":"exegesis.commentary","label":"註釋"},{"id":"exegesis.hermeneutics","label":"解經方法"},{"id":"exegesis.reference","label":"串珠／索引／辭典"},{"id":"exegesis.biblical-theology","label":"聖經神學"}]},
+    {"id":"theology","label":"神學","children":[
+      {"id":"theology.systematic","label":"系統神學"},{"id":"theology.trinity","label":"三一論"},{"id":"theology.christology","label":"基督論"},{"id":"theology.salvation","label":"救恩論"},{"id":"theology.spirit","label":"聖靈論"},{"id":"theology.church","label":"教會論"},{"id":"theology.eschatology","label":"末世論"}]},
+    {"id":"biblical-world","label":"聖經世界","children":[
+      {"id":"biblical-world.jewish","label":"猶太背景"},{"id":"biblical-world.second-temple","label":"第二聖殿"},{"id":"biblical-world.archaeology","label":"考古"},{"id":"biblical-world.geography","label":"地理"},{"id":"biblical-world.languages","label":"語言"},{"id":"biblical-world.ane","label":"古代近東"}]},
+    {"id":"church-history","label":"教會歷史","children":[
+      {"id":"church-history.early","label":"初代教會"},{"id":"church-history.fathers","label":"教父"},{"id":"church-history.medieval","label":"中世紀"},{"id":"church-history.reformation","label":"宗教改革"},{"id":"church-history.puritan","label":"清教徒"},{"id":"church-history.revival","label":"復興運動"},{"id":"church-history.missions","label":"宣教史"}]},
+    {"id":"christian-life","label":"基督徒生命","children":[
+      {"id":"christian-life.prayer","label":"禱告"},{"id":"christian-life.devotion","label":"靈修"},{"id":"christian-life.discipleship","label":"門徒訓練"},{"id":"christian-life.holiness","label":"聖潔"},{"id":"christian-life.suffering","label":"苦難"},{"id":"christian-life.family","label":"家庭"},{"id":"christian-life.pastoral-care","label":"牧養"}]},
+    {"id":"ministry","label":"教會與事奉","children":[
+      {"id":"ministry.preaching","label":"講道"},{"id":"ministry.teaching","label":"教導"},{"id":"ministry.worship","label":"敬拜"},{"id":"ministry.mission","label":"宣教"},{"id":"ministry.pastoral","label":"牧會"},{"id":"ministry.governance","label":"教會治理"}]}
+  ],
+  "facets":["author","language","period","bible-book","tradition","resource-type","reading-level","original-publication-era"],
+  "independentEditorialLayers":["three-morning-stars","curated-collections","spectrum"],
+  "surfaceContract":{"browse":"classification+facets","search":"canonical+facets","livingWall":"canonical-work-refs","recommendation":"independent"}
+}
