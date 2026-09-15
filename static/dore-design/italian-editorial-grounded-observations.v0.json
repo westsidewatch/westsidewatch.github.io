@@ -1,0 +1,62 @@
+{
+  "schema": "dore.italian-editorial-grounded-observations.v0",
+  "authority": "historical-image-observation",
+  "canonicalDoréLearning": false,
+  "principle": "These records were produced by inspecting the exact historical evidence images. They are teacher/evaluation evidence, not canonical Doré learning and not hand-authored lineage fingerprints.",
+  "items": [
+    {
+      "schema": "dore.editorial-visual-observation.v0",
+      "authority": "historical-image-observation",
+      "canonicalDoréLearning": false,
+      "evidence": {"id":"casabella-367","imageUri":"https://pictures.abebooks.com/inventory/31820672834.jpg","sourceUri":"https://casabellaweb.eu/the-magazine/","publication":"casabella","era":"casabella-provisional"},
+      "observer": {"providerId":"chatgpt-gpt-5.6-sol:historical-image-inspection","providerKind":"grounded-chatgpt-vision"},
+      "dimensions": {
+        "layout": {"status":"observed","facts":["A single full-cover pictorial field dominates the page with no independent content columns or inset modules.","The gorilla is centered on the vertical axis; its shoulders and arms spread almost the full cover width and its body continues beyond the lower edge.","The masthead occupies a shallow strip along the top edge and overlaps the sky/background rather than sitting in a separate header box.","The only conspicuous secondary intervention is a very small text block placed near the optical center on the gorilla's chest."]},
+        "image": {"status":"observed","facts":["One frontal figurative subject is shown at monumental scale and functions as the cover's primary visual mass.","The subject is not isolated on white; it remains embedded in a pale landscape/jungle photomontage field.","The crop is tight enough that the gorilla's arms nearly touch both side edges and the lower body exits the frame.","There is no second photograph, architectural inset, diagram, visible grid or decorative geometric module."]},
+        "typography": {"status":"observed","facts":["The large Casabella masthead spans almost the entire top width and is visually integrated with the image field.","A compact two-line red 'RADICAL DESIGN' label sits directly on the dark torso, creating extreme scale contrast with the masthead.","Small publication/issue information is confined to the bottom edge and remains subordinate to the image.","Typography is sparse: one very large identifier, one tiny saturated intervention and minimal footer information."]},
+        "material": {"status":"observed","facts":["The cover uses a reproduced color image with muted pale cyan/green landscape tones against the near-black gorilla.","The principal graphic color accent is saturated red type on the dark torso.","The masthead contains a mottled/organic green texture rather than a flat geometric color fill."]},
+        "density": {"status":"observed","facts":["Visual density is concentrated in the large dark central animal mass while text density is extremely low.","Peripheral landscape areas provide lighter breathing space around the dark figure, especially near the upper sides.","The cover avoids multiple information modules; one image carries almost the entire visual load."]},
+        "sequence": {"status":"insufficient","facts":[]},
+        "irony": {"status":"observed","facts":["The tiny red design label is placed like an annotation or badge on an overwhelmingly non-design, animal image, producing a visible scale and semantic collision."]},
+        "emergence": {"status":"observed","facts":["The eye first receives the monumental gorilla and only afterward discovers the small red label; the editorial proposition emerges through that delayed text-on-image encounter."]}
+      },
+      "provenance": {"imageInspected":true,"sourceUri":"https://casabellaweb.eu/the-magazine/","imageUri":"https://pictures.abebooks.com/inventory/31820672834.jpg","derivation":"grounded-chatgpt-vision","inspectionDate":"2026-09-15","lineagePromptUsed":false}
+    },
+    {
+      "schema": "dore.editorial-visual-observation.v0",
+      "authority": "historical-image-observation",
+      "canonicalDoréLearning": false,
+      "evidence": {"id":"abitare-52","imageUri":"https://i.ebayimg.com/images/g/x6MAAOSwE5hiJdlV/s-l400.jpg","sourceUri":"https://www.ebay.it/itm/154886961436","publication":"abitare","era":"abitare-living"},
+      "observer": {"providerId":"chatgpt-gpt-5.6-sol:historical-image-inspection","providerKind":"grounded-chatgpt-vision"},
+      "dimensions": {
+        "layout": {"status":"observed","facts":["The cover is one continuous interior photograph with the masthead overlaid across the upper portion; there are no separate editorial panels.","The steep triangular attic geometry converges toward a central apex and frames the seated person below it.","The person sits below center and slightly right of the vertical axis, leaving broad uninterrupted timber surfaces around the figure.","Small domestic objects remain low in the frame and do not break the continuous room field into modules."]},
+        "image": {"status":"observed","facts":["One inhabited wooden attic interior fills the cover; the room itself and the person are photographed as one continuous scene.","A seated human figure is relatively small compared with the enclosing room and is embedded in the space rather than presented as a portrait.","A small warm light source appears low left of the person; a dark guitar/case-like object extends along the lower right.","The camera view is frontal and emphasizes the symmetrical pitched-roof enclosure while preserving the asymmetry of the inhabitant and objects."]},
+        "typography": {"status":"observed","facts":["The word ABITARE is very large, black, uppercase and stretches across the top over the photograph.","The masthead is the only visually dominant type; other cover copy is absent or too minor to establish a competing hierarchy.","Type does not create a separate box or grid and remains subordinate to the room geometry after identification."]},
+        "material": {"status":"observed","facts":["Warm honey/amber timber boards cover walls, pitched ceiling and much of the visible enclosure.","A shaggy pale floor textile introduces a soft tactile contrast to the hard timber planes.","Localized yellow light near floor level creates a warm pool against darker peripheral timber; no exposed concrete, glass curtain wall or polished stone is visible."]},
+        "density": {"status":"observed","facts":["The scene has low object density: one person, one small light, a few floor objects and large uninterrupted timber planes.","Visual complexity comes from the repeated wood-board lines and roof geometry rather than from editorial information density.","The small figure and objects are surrounded by substantial spatial breathing room."]},
+        "sequence": {"status":"insufficient","facts":[]},
+        "irony": {"status":"insufficient","facts":[]},
+        "emergence": {"status":"observed","facts":["The enclosing triangular timber geometry is perceived first; the inhabitant and small traces of use are discovered within it, so the sense of dwelling emerges from spatial enclosure plus human-scale details."]}
+      },
+      "provenance": {"imageInspected":true,"sourceUri":"https://www.ebay.it/itm/154886961436","imageUri":"https://i.ebayimg.com/images/g/x6MAAOSwE5hiJdlV/s-l400.jpg","derivation":"grounded-chatgpt-vision","inspectionDate":"2026-09-15","lineagePromptUsed":false}
+    },
+    {
+      "schema": "dore.editorial-visual-observation.v0",
+      "authority": "historical-image-observation",
+      "canonicalDoréLearning": false,
+      "evidence": {"id":"il-franchi-2008-03","imageUri":"https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/3043381338_37b0e83a2f_b.jpg?itok=5YGMR6cL","sourceUri":"https://a-g-i.org/user/FrancescoFranchi/view/projects/","publication":"il","era":"il-franchi"},
+      "observer": {"providerId":"chatgpt-gpt-5.6-sol:historical-image-inspection","providerKind":"grounded-chatgpt-vision"},
+      "dimensions": {
+        "layout": {"status":"observed","facts":["The cover is split asymmetrically into a narrow white information column at the left and a much larger photographic portrait field occupying the center and right.","The left column begins near the top margin and ends above the bottom edge, behaving as one vertically stacked editorial object rather than many floating modules.","The portrait overlaps visually with the information column boundary but the two zones remain clearly legible as distinct fields.","The subject's head occupies the upper-right center and the white coat expands across the lower half, creating a strong diagonal/curved counterweight to the rigid left column."]},
+        "image": {"status":"observed","facts":["A single formal portrait of Queen Elizabeth II dominates the cover; the crop runs from crown/head through the upper torso and coat.","The face is near center-right, eyes closed, with crown, pearls and pale fur/coat providing high-detail focal elements.","The portrait is not an extreme facial crop: head, shoulders and substantial clothing remain visible.","There is no second photograph, architecture photograph, diagram field or decorative geometric overlay in the main portrait area."]},
+        "typography": {"status":"observed","facts":["The top of the left column uses a large block-like IL identifier, followed by compact uppercase sans-serif publication and issue metadata.","A tan/beige horizontal issue strip creates a mid-column emphasis with mixed small type and the large number 24 ORE mark.","Below it, several story listings use small black type with short rules and italic/bold headline contrasts.","Typography remains almost entirely inside the narrow left information column; no oversized serif headline crosses the portrait field."]},
+        "material": {"status":"observed","facts":["The photographic field uses a restrained neutral palette: grey background, pale skin/hair, white fur/coat, black clothing and pearl highlights.","The information column is white with black type plus one muted tan/beige printed band.","No translucent metallic-gold block is visible over the portrait and no concrete/architectural material appears."]},
+        "density": {"status":"observed","facts":["Information density is high inside the narrow left column but low over the photographic field.","The composition deliberately concentrates small text into one compact vertical zone while allowing the portrait to remain largely unobstructed.","Scale contrast comes from the large human portrait versus compact editorial text, not from a giant headline crossing the image."]},
+        "sequence": {"status":"insufficient","facts":[]},
+        "irony": {"status":"observed","facts":["The rigid, data-like magazine information column is juxtaposed with a ceremonial royal portrait whose closed eyes and elaborate regalia create a visibly different emotional register."]},
+        "emergence": {"status":"observed","facts":["The cover establishes two persistent local systems at once: a compact informational spine and an expansive portrait; meaning emerges from their adjacency without either system dissolving into the other."]}
+      },
+      "provenance": {"imageInspected":true,"sourceUri":"https://a-g-i.org/user/FrancescoFranchi/view/projects/","imageUri":"https://www.metalocus.es/sites/default/files/styles/mopis_news_carousel_item_desktop/public/3043381338_37b0e83a2f_b.jpg?itok=5YGMR6cL","derivation":"grounded-chatgpt-vision","inspectionDate":"2026-09-15","lineagePromptUsed":false}
+    }
+  ]
+}
