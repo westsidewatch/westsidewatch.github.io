@@ -53,7 +53,86 @@ A person or scene is not decorative illustration. It is an aperture. The book sh
 
 No chapter should exist merely because a systematic-theology outline expects it.
 
+## Book construction authority — whole-book composition before local expansion
+
+This section governs **how this specific book is constructed**. It is project engineering / editorial architecture, not a reusable prose-style rule and must not be conflated with `writing.westside-dimensional-journalism` syntax training.
+
+The current manuscript is uneven in maturity: approximately the first third is substantially more developed, while the latter two thirds remain closer to first-draft material. Therefore the path from roughly 50k source material toward roughly 100k must **not** distribute expansion evenly by chapter or paragraph. The immediate priority is to complete and rebalance the whole-book structure, especially the unfinished latter two thirds, before polishing already mature opening material to publication finish.
+
+### Whole-book is the highest construction unit
+
+For this project, chapter-level writing decisions are subordinate to a whole-book composition plan. Before substantial local expansion, Doré must evaluate the manuscript globally across at least these dimensions:
+
+1. **length / weight allocation** — which movements deserve pages and which should pass quickly;
+2. **narrative speed** — where decades or centuries cross in a paragraph versus where seconds expand across pages;
+3. **scene density** — which canonical scenes are structural load-bearing scenes and therefore deserve magnification;
+4. **evidence visibility** — where research, original language, archaeology or history should surface in the reader-facing text and where it should remain beneath the prose as support;
+5. **theological pressure** — where the book's central argument genuinely turns, deepens, fractures or returns;
+6. **motif orchestration** — where wind, voice/speech/silence, weight, light, door/opening and return first appear, recede, return and change meaning;
+7. **reader breathing / contrast** — deliberate alternation of dense and light, scene and explanation, close view and long historical passage.
+
+These dimensions need not rise and fall together. A passage may be short but slow, lightly sourced on the surface but theologically heavy; another may cover large amounts of historical information quickly without becoming a major dramatic node.
+
+### Construction principle: 該輕輕，該重重
+
+Book weight is not determined by how much research exists for a topic. Research can be deep while reader-facing prose remains light. A single lexical or historical fact may deserve pages if it opens the book's central structure; twenty useful sources may yield only one sentence if that is all the narrative needs.
+
+Likewise, not every biblical episode becomes a cinematic scene. Magnified scenes must remain selective so later peaks can still become larger. The whole book must preserve hierarchy: if every passage is heavy, none is heavy.
+
+### Current expansion priority
+
+The latter two thirds are construction-first territory. Before line-level polishing, inspect each unfinished chapter for:
+- missing structural scenes;
+- conclusions that do not yet have an earned narrative path;
+- theological steps that currently jump over necessary intermediate reasoning;
+- research notes or lexical material that have not yet become book prose;
+- missing historical/person/world context;
+- absent transitions between biblical eras;
+- motifs that should be seeded, withheld, returned or transformed;
+- material that belongs in research/evidence layers rather than the visible book.
+
+The earlier, more mature third acts both as source authority and as training evidence for the book's voice and narrative mechanics. It should be deepened where warranted, especially at selected canonical scenes, but it must not consume the expansion budget merely because it is easier to polish.
+
+As a working allocation, most new manuscript growth should initially be assigned to structural completion of the unfinished latter two thirds; only a minority should be spent deepening already mature material. This is a planning bias, not a rigid word quota. Actual allocation follows the whole-book weight map.
+
+### Load-bearing movement
+
+The current central construction chain to test and strengthen is:
+
+**創造／話語 → 巴別 → 漫長等候 → 道成肉身 → 五旬節 → 哥林多 → 新造／語言歸還**
+
+Within that chain, **道成肉身** and **五旬節** are central hinges and must be capable of carrying what precedes and follows them. They should not remain thin simply because the source draft reaches its conclusion quickly. Conversely, transitional centuries or supporting material may remain deliberately compressed.
+
+### Expansion ledger before bulk prose
+
+Before bulk chapter expansion, produce a whole-book construction ledger that records for each chapter or movement:
+- current maturity;
+- current approximate weight;
+- intended structural function;
+- desired relative weight in the finished book;
+- narrative speed profile;
+- scenes to retain / magnify / add from defensible evidence;
+- evidence and research needs;
+- original-language material and whether it belongs above or below the reader-facing surface;
+- theological load;
+- motif entries / absences / returns;
+- missing bridges;
+- material to compress or relocate;
+- expansion priority.
+
+This ledger is not a frozen table of contents and not a mechanical per-chapter word quota. It is the book's **composition score**. Local writing must be checked against it so a paragraph can be locally good yet still be rejected if it damages whole-book proportion, pacing or hierarchy.
+
+### Construction loop
+
+The project-level construction loop is:
+
+`full manuscript → whole-book weight map → structural gap map → evidence/research allocation → expansion ledger → selective chapter construction → whole-book rebalance → prose refinement`
+
+Do not invert this into `chapter 1 polish → chapter 2 polish → ... → hope the sum becomes a book`.
+
 ## Live writing training — author syntax and scene magnification
+
+This section governs prose realization and reusable writing learning. It is distinct from the project-specific whole-book construction authority above.
 
 Real manuscript writing is itself Doré training data and acceptance evidence. Corrections discovered while writing this book are not disposable chat preferences; they govern subsequent `writing.westside-dimensional-journalism` realization for this project and should inform the reusable Westside writing capability where they generalize.
 
@@ -207,4 +286,4 @@ It must satisfy all of the following:
 
 ## Immediate next milestone
 
-Create the source-authority ingestion for the full current manuscript, measure actual manuscript length, build the first complete chapter/claim/motif map, and produce a **gap-to-100k expansion ledger**. Do not begin bulk expansion before this diagnostic map exists.
+Before further bulk prose expansion, build the **whole-book composition score / expansion ledger** from the full canonical manuscript: maturity, weight, speed, scene hierarchy, evidence visibility, theological pressure, motif orchestration, missing bridges and expansion priority. Use that global construction map to decide where the path from the current manuscript toward approximately 100k should actually grow.
