@@ -49,15 +49,19 @@ jobs:
           python scripts/run_dawn_library_relevance.py
           python scripts/run_dawn_library_english_resolver.py
           python scripts/promote_dawn_library_english_catalog.py
-      - name: Reconcile admitted inventory into global canonical substrate
+      - name: Reconcile available inventory into canonical substrate
         run: |
-          python scripts/build_dawn_10k_work_queue.py
-          python scripts/build_dawn_canonical_substrate.py
+          if [ -f data/dawn-10k-openlibrary-works.json ]; then
+            python scripts/build_dawn_10k_work_queue.py
+            python scripts/build_dawn_canonical_substrate.py
+          else
+            echo 'Bulk authority seed not present on this branch; continue acquisition/admission without blocking the loop.'
+          fi
       - name: Produce measurable collection outputs
         run: |
           python scripts/run_dawn_library_loop.py
           python scripts/build_dawn_storefront.py
-      - name: Validate bulk growth boundaries
+      - name: Validate growth boundaries
         run: |
           python - <<'PY'
           import json
@@ -85,14 +89,16 @@ jobs:
             static/dawn-library/identity-cache.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/*.json
-      - name: Persist bulk canonical library growth
+      - name: Persist autonomous collection growth
         if: github.event_name != 'pull_request'
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
           current_ref="${GITHUB_REF_NAME}"
           add_outputs() {
-            git add reports/DAWN-LIBRARY-*.json data/dawn-10k-work-queue.json data/dawn-canonical static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
+            git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
+            [ ! -f data/dawn-10k-work-queue.json ] || git add data/dawn-10k-work-queue.json
+            [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
           }
           regenerate() {
             python scripts/test_dawn_collection_source_policy.py
@@ -104,15 +110,17 @@ jobs:
             python scripts/run_dawn_library_relevance.py
             python scripts/run_dawn_library_english_resolver.py
             python scripts/promote_dawn_library_english_catalog.py
-            python scripts/build_dawn_10k_work_queue.py
-            python scripts/build_dawn_canonical_substrate.py
+            if [ -f data/dawn-10k-openlibrary-works.json ]; then
+              python scripts/build_dawn_10k_work_queue.py
+              python scripts/build_dawn_canonical_substrate.py
+            fi
             python scripts/run_dawn_library_loop.py
             python scripts/build_dawn_storefront.py
           }
           add_outputs
           if git diff --cached --quiet; then exit 0; fi
           for attempt in 1 2 3 4; do
-            git commit -m 'chore(dawn): persist bulk canonical library growth [skip ci]'
+            git commit -m 'chore(dawn): persist autonomous collection growth [skip ci]'
             if git push origin "HEAD:${current_ref}"; then exit 0; fi
             git fetch origin "${current_ref}"
             git reset --hard "origin/${current_ref}"
