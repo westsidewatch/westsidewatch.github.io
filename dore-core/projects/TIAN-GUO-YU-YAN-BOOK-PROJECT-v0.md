@@ -53,6 +53,52 @@ A person or scene is not decorative illustration. It is an aperture. The book sh
 
 No chapter should exist merely because a systematic-theology outline expects it.
 
+## Live writing training — author syntax and scene magnification
+
+Real manuscript writing is itself Doré training data and acceptance evidence. Corrections discovered while writing this book are not disposable chat preferences; they govern subsequent `writing.westside-dimensional-journalism` realization for this project and should inform the reusable Westside writing capability where they generalize.
+
+### Source-prose authority
+
+The canonical manuscript is not merely a bag of facts or claims to be rewritten into a cleaner model voice. Existing author scenes, transitions, motifs, rhythms and observations are source authority. Expansion begins by preserving them and writing **through and around them**. Moving an existing passage does not imply deleting it. Material from the canonical manuscript is presumed retained unless an editorial decision can state a concrete reason for removal.
+
+A new opening, bridge or research expansion must not silently overwrite a strong existing scene. Doré should compose new material into the author's manuscript rather than replace the manuscript with a newly generated parallel version.
+
+### Paragraph and syntax admission
+
+Do not manufacture emphasis through AI-style one-sentence paragraphs, punchline fragmentation or decorative line breaks. Normal prose uses full, natural Chinese publishing paragraphs. A paragraph break must follow a real change of thought, scene, time, speaker or narrative pressure, not the model's desire to make a sentence look important.
+
+Do not mechanically ban ordinary Chinese connectors. Words such as 「但」「但是」「可是」「於是」「後來」「所以」「因此」 and sentence-final 「了」 may belong to the author's voice. Their admission is functional: retain them when they carry real time, contrast, causality, speech rhythm or narrative pressure; remove them when they merely label a relation already obvious from adjacent sentences. The target is not a forbidden-word list but the removal of AI over-signposting.
+
+Short sentences are also functional, not decorative. A short sentence may land after prior narrative pressure has earned it. Doré must not simulate literary force by repeatedly shortening and isolating sentences without that pressure.
+
+### Scene magnification / prose gear shift
+
+Expansion is **not evenly distributed word growth**. The book's ordinary register remains cool, restrained and relatively fast. Historical orientation, connective exposition and technical explanation should usually move economically. When the manuscript reaches a canonical biblical scene, a decisive theological turn, or a place where the reader must be guided to stop and see, Doré deliberately changes gear.
+
+At those selected points:
+- narrative time slows;
+- defensible visual, spatial, material and sensory detail increases;
+- adjectives and descriptive language may increase markedly compared with the surrounding cool prose;
+- actions may be decompressed into observable sequence;
+- the physical world may become more present;
+- the reader is allowed to inhabit the scene before the theological meaning is explained.
+
+This contrast is structural. **The enlarged scene becomes more vivid because the prose around it is restrained.** Do not beautify every paragraph equally. If everything is lyrical, nothing is highlighted; if everything is cold exposition, the reader cannot feel where to stop.
+
+After the scene has done its work, prose should contract again and return to the cooler register. Importance must be produced by genuine changes in narrative density and speed, not by extra blank lines or typographic emphasis.
+
+For Chapter 1, the Isaac/Esau/Jacob blessing scene is a model case: the opening may establish Isaac and the Abrahamic historical weight with a few economical strokes; the ancient Canaan passage — including the wind, land, barrenness, flourishing and silent growth — is retained as a deliberate transition into a more sensory register; the tent and blessing scene is then substantially magnified; after the blessing becomes an irreversible event, prose contracts into the explanation of `davar`. The same principle applies later when the narrative reaches 「神說：要有光」: approach economically, then slow down where the canonical moment needs to be seen.
+
+The author-provided line beginning 「三千七百年前的迦南地，秋天的風不知道從哪裡吹過來又吹去」 is therefore not expendable scenery. It participates in the long-range **風 / Spirit** motif and marks a prose gear change. Repositioning it must preserve that function; deleting it merely because a new opening was written is a source-prose violation.
+
+### Writing-loop rule
+
+Every substantial writing pass should be treated as a training/acceptance loop:
+
+`canonical author prose → Doré expansion → compare against author syntax and scene hierarchy → identify drift → encode the correction → next writing pass`
+
+The objective is cumulative learning: the same author correction should not have to be rediscovered manually in every new chapter or chat.
+
 ## 100k expansion rule
 
 Expansion must come from **depth, not padding**.
