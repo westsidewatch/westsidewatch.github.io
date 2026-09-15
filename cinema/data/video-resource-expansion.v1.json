@@ -1,90 +1,9 @@
 {
-  "schema": "dore.cinema-resource-expansion.v1",
-  "admission": "official-source-handoff",
-  "items": [
-    {
-      "canonicalId": "cinema:video:bibleproject:genesis-1-11",
-      "kind": "teaching",
-      "title": "Genesis 1-11",
-      "creator": "BibleProject",
-      "series": "Old Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 463,
-      "topics": ["創世記", "創造", "墮落", "亞伯拉罕", "舊約導論"],
-      "sourcePointer": "https://bibleproject.com/videos/genesis-1/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/genesis-1/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    },
-    {
-      "canonicalId": "cinema:video:bibleproject:genesis-12-50",
-      "kind": "teaching",
-      "title": "Genesis 12-50",
-      "creator": "BibleProject",
-      "series": "Old Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 488,
-      "topics": ["創世記", "亞伯拉罕", "以撒", "雅各", "約瑟", "應許"],
-      "sourcePointer": "https://bibleproject.com/videos/genesis-12-50/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/genesis-12-50/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    },
-    {
-      "canonicalId": "cinema:video:bibleproject:judges",
-      "kind": "teaching",
-      "title": "Judges",
-      "creator": "BibleProject",
-      "series": "Old Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 450,
-      "topics": ["士師記", "士師時代", "底波拉", "基甸", "參孫", "舊約導論"],
-      "sourcePointer": "https://bibleproject.com/videos/judges/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/judges/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    },
-    {
-      "canonicalId": "cinema:video:bibleproject:job",
-      "kind": "teaching",
-      "title": "Job",
-      "creator": "BibleProject",
-      "series": "Old Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 661,
-      "topics": ["約伯記", "智慧文學", "苦難", "神的智慧", "舊約導論"],
-      "sourcePointer": "https://bibleproject.com/videos/job/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/job/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    },
-    {
-      "canonicalId": "cinema:video:bibleproject:revelation-1-11",
-      "kind": "teaching",
-      "title": "Revelation 1-11",
-      "creator": "BibleProject",
-      "series": "New Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 709,
-      "topics": ["啟示錄", "新約導論", "異象", "羔羊", "新創造"],
-      "sourcePointer": "https://bibleproject.com/videos/revelation-1-11/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/revelation-1-11/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    },
-    {
-      "canonicalId": "cinema:video:bibleproject:revelation-12-22",
-      "kind": "teaching",
-      "title": "Revelation 12-22",
-      "creator": "BibleProject",
-      "series": "New Testament Overviews",
-      "language": ["en"],
-      "durationSeconds": 711,
-      "topics": ["啟示錄", "新約導論", "巴比倫", "新耶路撒冷", "新天新地"],
-      "sourcePointer": "https://bibleproject.com/videos/revelation-12-22/",
-      "providerSources": [{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/revelation-12-22/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],
-      "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}
-    }
-  ]
-}
+  "schema":"dore.cinema-resource-expansion.v1","admission":"official-source-handoff","items":[
+{"canonicalId":"cinema:video:bibleproject:genesis-1-11","kind":"teaching","title":"Genesis 1-11","creator":"BibleProject","series":"Old Testament Overviews","language":["en"],"durationSeconds":463,"topics":["創世記","創造","墮落","亞伯拉罕","舊約導論"],"sourcePointer":"https://bibleproject.com/videos/genesis-1-11/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/genesis-1-11/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}},
+{"canonicalId":"cinema:video:bibleproject:genesis-12-50","kind":"teaching","title":"Genesis 12-50","creator":"BibleProject","series":"Old Testament Overviews","language":["en"],"durationSeconds":488,"topics":["創世記","亞伯拉罕","以撒","雅各","約瑟","應許"],"sourcePointer":"https://bibleproject.com/videos/genesis-12-50/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/genesis-12-50/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}},
+{"canonicalId":"cinema:video:bibleproject:judges","kind":"teaching","title":"Judges","creator":"BibleProject","series":"Old Testament Overviews","language":["en"],"durationSeconds":450,"topics":["士師記","士師時代","底波拉","基甸","參孫","舊約導論"],"sourcePointer":"https://bibleproject.com/videos/judges/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/judges/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}},
+{"canonicalId":"cinema:video:bibleproject:job","kind":"teaching","title":"Job","creator":"BibleProject","series":"Old Testament Overviews","language":["en"],"durationSeconds":661,"topics":["約伯記","智慧文學","苦難","神的智慧","舊約導論"],"sourcePointer":"https://bibleproject.com/videos/job/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/job/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}},
+{"canonicalId":"cinema:video:bibleproject:revelation-1-11","kind":"teaching","title":"Revelation 1-11","creator":"BibleProject","series":"New Testament Overviews","language":["en"],"durationSeconds":709,"topics":["啟示錄","新約導論","異象","羔羊","新創造"],"sourcePointer":"https://bibleproject.com/videos/revelation-1-11/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/revelation-1-11/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}},
+{"canonicalId":"cinema:video:bibleproject:revelation-12-22","kind":"teaching","title":"Revelation 12-22","creator":"BibleProject","series":"New Testament Overviews","language":["en"],"durationSeconds":711,"topics":["啟示錄","新約導論","巴比倫","新耶路撒冷","新天新地"],"sourcePointer":"https://bibleproject.com/videos/revelation-12-22/","providerSources":[{"provider":"bibleproject-first-party","url":"https://bibleproject.com/videos/revelation-12-22/","official":true,"embed":false,"access":"official-source-handoff","preview":{"hoverPreview":false,"mode":"official-source"}}],"rights":{"rehost":false,"policy":"official-source-only"},"provenance":{"verified":true,"verifiedAt":"2026-09-15","discovery":"BibleProject official video page"}}
+]}
