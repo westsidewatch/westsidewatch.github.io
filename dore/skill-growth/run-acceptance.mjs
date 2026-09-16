@@ -4,7 +4,8 @@ const suites = [
   './sandbox-evolution.test.mjs',
   './promotion-gate.test.mjs',
   './closed-loop.acceptance.test.mjs',
-  './capability-lifecycle.test.mjs'
+  './capability-lifecycle.test.mjs',
+  './design-conservation.test.mjs'
 ];
 
 for (const suite of suites) await import(suite);
