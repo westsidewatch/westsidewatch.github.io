@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 """Real image-grounded provider for DORÉ editorial visual observation.
 
-The provider fetches the exact historical image bytes and sends those bytes to the
-local multimodal model through Ollama. It never substitutes publication/lineage prose
-for pixels. A text-only or image-incapable model fails closed so a grounded external
-vision provider (e.g. ChatGPT vision) can be used explicitly by the caller.
+The exact fetched image bytes are the evidence authority. Every successful observation
+is bound to those bytes by SHA-256, byte length and MIME type. Provider output is never
+rewritten to pretend an image was inspected.
 """
 from __future__ import annotations
 
 import base64
+import hashlib
 import json
 import os
 import urllib.request
@@ -93,7 +93,8 @@ def observe(request: Mapping[str, Any]) -> Mapping[str, Any]:
     image_uri = str(evidence.get("imageUri") or "")
     if not image_uri:
         raise VisualObservationError("grounded provider requires imageUri")
-    image_bytes, _ = _fetch_image(image_uri)
+    image_bytes, content_type = _fetch_image(image_uri)
+    digest = hashlib.sha256(image_bytes).hexdigest()
     image_b64 = base64.b64encode(image_bytes).decode("ascii")
     payload = {
         "model": MODEL,
@@ -122,7 +123,14 @@ def observe(request: Mapping[str, Any]) -> Mapping[str, Any]:
         raise VisualObservationError("local grounded vision returned invalid JSON") from exc
     if not isinstance(value, dict):
         raise VisualObservationError("local grounded vision output must be an object")
-    value["imageInspected"] = True
+    if value.get("imageInspected") is not True:
+        raise VisualObservationError("provider did not attest inspection of the attached image")
+    value["imageEvidence"] = {
+        "uri": image_uri,
+        "sha256": digest,
+        "bytes": len(image_bytes),
+        "contentType": content_type,
+    }
     return value
 
 
