@@ -36,6 +36,8 @@ on:
       - 'local/dore-local/two_days_today_acceptance.py'
       - 'local/dore-local/two_days_capability_bridge.py'
       - 'local/dore-local/two_days_capability_bridge_acceptance.py'
+      - 'local/dore-local/dimensional_publishing_capability.py'
+      - 'local/dore-local/two_days_writing_capability_acceptance.py'
       - 'local/dore-local/unix_rpc_server.py'
       - '.github/workflows/dore-a2a-github-relay.yml'
       - '.github/workflows/a2a-reliability-authority.yml'
@@ -62,6 +64,8 @@ jobs:
         run: python local/dore-local/two_days_today_acceptance.py
       - name: Two Days canonical capability bridge
         run: python local/dore-local/two_days_capability_bridge_acceptance.py
+      - name: Two Days writing capability connection
+        run: python local/dore-local/two_days_writing_capability_acceptance.py
       - name: Canonical capability authority acceptance
         run: python local/dore-local/a2a_capability_authority_acceptance.py
       - name: Public dore.call normalization acceptance
