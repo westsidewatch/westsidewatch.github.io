@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 5
     env:
-      PYTHONPATH: .
+      PYTHONPATH: .:local/dore-local
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -52,6 +52,10 @@ jobs:
           python local/dore-local/test_native_host.py
       - name: Run Dimensional Writing A2A acceptance
         run: python local/dore-local/dimensional_writing_a2a_acceptance.py
+      - name: Run Conversation Gateway acceptance
+        run: |
+          python -m py_compile local/dore-local/conversation_gateway.py local/dore-local/conversation_gateway_stdio.py local/dore-local/conversation_gateway_acceptance.py
+          python local/dore-local/conversation_gateway_acceptance.py
       - name: Validate macOS installer shells
         run: |
           bash -n local/dore-local/install_companion.sh
