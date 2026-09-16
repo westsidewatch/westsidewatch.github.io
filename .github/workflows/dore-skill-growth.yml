@@ -1,0 +1,22 @@
+name: Doré Skill Growth Acceptance
+
+on:
+  pull_request:
+    paths:
+      - 'dore/skill-growth/**'
+      - '.github/workflows/dore-skill-growth.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  closed-loop:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Run Doré Skill Growth v0 acceptance
+        run: node dore/skill-growth/run-acceptance.mjs
