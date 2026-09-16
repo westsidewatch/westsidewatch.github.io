@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+
+const contract=JSON.parse(fs.readFileSync(new URL('./lab-contract.v0.json',import.meta.url)));
+for(const path of Object.values(contract.consumes)) assert.ok(fs.existsSync(path),`missing existing Doré substrate: ${path}`);
+assert.equal(contract.project,'羊走迷');
+assert.equal(contract.canonicalArtDirection,false);
+assert.equal(contract.productionPromoted,false);
+assert.equal(contract.winner,null);
+assert.equal(contract.authority.candidateMaySelfPromote,false);
+assert.equal(contract.authority.mayWriteCapabilityRegistry,false);
+assert.equal(contract.authority.generatedEvidenceMayBecomeHistoricalAuthority,false);
+assert.equal(contract.research.competitionRequired,true);
+assert.deepEqual(new Set(contract.research.candidateFamilies),new Set(['italian-lineage','italian-cross-domain','global-non-italian']));
+assert.equal(contract.fixedBenchmarks[0].id,'benchmark.sheep-enters-world.v0');
+assert.ok(contract.visualGenome.includes('evidenceProvenance'));
+assert.ok(contract.visualGenome.includes('mutationParents'));
+assert.deepEqual(contract.temporalBeauty,['t0','drag','collision','recomposed','rotationOrFold','3dState']);
+assert.ok(contract.invariants.includes('beauty-is-admission-floor'));
+assert.ok(contract.invariants.includes('every-legal-state-remains-composed'));
+assert.ok(contract.invariants.includes('no-second-skill-growth-pipeline'));
+console.log('DORE_GAME_ART_DIRECTION_FOUNDATION_V0=PASS');
