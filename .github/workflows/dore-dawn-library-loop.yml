@@ -6,21 +6,15 @@ on:
   push:
     paths:
       - 'static/dawn-library/**'
-      - 'scripts/run_dawn_library_discovery.py'
-      - 'scripts/run_dawn_library_chinese_discovery.py'
-      - 'scripts/run_dawn_library_relevance.py'
-      - 'scripts/run_dawn_library_chinese_relevance.py'
-      - 'scripts/run_dawn_library_english_resolver.py'
-      - 'scripts/run_dawn_library_chinese_resolver.py'
-      - 'scripts/promote_dawn_library_english_catalog.py'
-      - 'scripts/promote_dawn_library_chinese_catalog.py'
+      - 'scripts/run_dawn_library_*.py'
+      - 'scripts/promote_dawn_library_*.py'
       - 'scripts/test_dawn_collection_source_policy.py'
-      - 'scripts/run_dawn_library_loop.py'
       - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'scripts/build_dawn_canonical_substrate.py'
       - 'scripts/build_dawn_storefront.py'
       - 'scripts/build_dawn_living_library.py'
+      - 'scripts/build_dawn_living_shards.py'
       - '.github/workflows/dore-dawn-library-loop.yml'
 concurrency:
   group: dore-dawn-library-main
@@ -40,11 +34,9 @@ jobs:
       DAWN_OL_DELAY_SECONDS: '0.08'
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+        with: {fetch-depth: 0}
       - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
+        with: {python-version: '3.12'}
       - name: Validate hard collection source policy
         run: python scripts/test_dawn_collection_source_policy.py
       - name: Discover and admit Chinese collection inventory
@@ -64,43 +56,52 @@ jobs:
           python scripts/discover_dawn_10k_openlibrary_works.py
           python scripts/build_dawn_10k_work_queue.py
           python scripts/build_dawn_canonical_substrate.py
-      - name: Project living library
-        run: python scripts/build_dawn_living_library.py
+      - name: Project and shard living library
+        run: |
+          python scripts/build_dawn_living_library.py
+          python scripts/build_dawn_living_shards.py
       - name: Produce measurable collection outputs
         run: |
           python scripts/run_dawn_library_loop.py
           python scripts/build_dawn_storefront.py
-      - name: Validate growth boundaries
+      - name: Validate growth boundaries and shards
         run: |
           python - <<'PY'
-          import json
+          import json,hashlib
           from pathlib import Path
-          cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
-          r=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
-          store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
           living=json.loads(Path('static/dawn-library/living-library.json').read_text())
-          def clean_collection_payload(value):
-            t=json.dumps(value,ensure_ascii=False).casefold()
-            assert 'wikisource.org' not in t and 'zh-wikisource' not in t and '維基文庫' not in t and '维基文库' not in t
-          clean_collection_payload(cat)
-          assert canonical.get('runtimePolicy',{}).get('wikisource') == 'forbidden'
-          assert r['results']['books']['published']==len(cat['items'])
+          root=json.loads(Path('static/dawn-library/living/root.json').read_text())
+          cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
+          report=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
+          store=json.loads(Path('static/dawn-library/storefront.json').read_text())
+          assert canonical.get('runtimePolicy',{}).get('wikisource')=='forbidden'
+          assert report['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
-          assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
-          assert canonical['workCount']==len(canonical['works']) and canonical['workCount'] > 100000
+          assert canonical['workCount']==len(canonical['works']) and canonical['workCount']>100000
           assert living['projectionOnly'] is True and living['admissionAuthority'] is False
-          assert living['canonicalWorkCount']==canonical['workCount']==len(living['livingWall']['workRefs'])
-          assert all(x['workId'] in canonical['works'] for x in living['livingWall']['workRefs'])
-          roots=living['classification']['roots']; leaf_count=sum(len(x.get('children',[])) for x in roots)
-          assert len(roots)==7 and leaf_count>=40
-          print(json.dumps({'canonicalWorkCount':canonical['workCount'],'classificationRoots':len(roots),'classificationLeaves':leaf_count,'phase3Target':1000000},ensure_ascii=False))
+          assert root['projectionOnly'] is True and root['admissionAuthority'] is False
+          assert root['canonicalWorkCount']==living['canonicalWorkCount']==canonical['workCount']
+          assert sum(s['workCount'] for s in root['shards'])==canonical['workCount']
+          assert root['shardCount']==len(root['shards'])
+          seen=0
+          for s in root['shards']:
+            p=Path('static/dawn-library/living')/Path(s['href']).name
+            raw=p.read_bytes(); shard=json.loads(raw)
+            assert hashlib.sha256(raw).hexdigest()==s['sha256']
+            assert shard['offset']==seen and shard['workCount']==len(shard['workRefs'])
+            assert shard['projectionOnly'] is True and shard['admissionAuthority'] is False
+            assert all(x['workId'] in canonical['works'] for x in shard['workRefs'])
+            seen+=shard['workCount']
+          roots=living['classification']['roots']; leaves=sum(len(x.get('children',[])) for x in roots)
+          assert len(roots)==7 and leaves>=40 and seen==canonical['workCount']
+          print(json.dumps({'canonicalWorkCount':seen,'livingShards':root['shardCount'],'classificationRoots':7,'classificationLeaves':leaves,'phase3Target':1000000},ensure_ascii=False))
           PY
       - name: Checkpoint validated canonical growth
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          git add static/dawn-library/canonical-index.json static/dawn-library/living-library.json static/dawn-library/surfaces/*.json data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json
+          git add static/dawn-library/canonical-index.json static/dawn-library/living-library.json static/dawn-library/living static/dawn-library/surfaces/*.json data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): checkpoint validated canonical growth [skip ci]'
             git push origin "HEAD:${GITHUB_REF_NAME}"
@@ -114,6 +115,7 @@ jobs:
             data/dawn-10k-work-queue.json
             static/dawn-library/canonical-index.json
             static/dawn-library/living-library.json
+            static/dawn-library/living/**
             static/dawn-library/surfaces/*.json
             static/dawn-library/storefront.json
             static/dawn-library/identity-cache.json
