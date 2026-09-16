@@ -1,0 +1,35 @@
+name: Italian Editorial Grounded Prompt Authority
+
+on:
+  pull_request:
+    paths:
+      - 'static/dore-design/italian-editorial-atlas.html'
+      - 'static/dore-design/italian-editorial-prompt-compiler.v1.js'
+      - 'static/dore-design/italian-editorial-grounded-observations.v0.json'
+      - 'static/dore-design/italian-editorial-visual-fingerprints.v1.json'
+      - 'scripts/validate_italian_editorial_grounded_observations.py'
+      - 'scripts/validate_italian_editorial_grounded_atlas_consumer.py'
+      - 'scripts/validate_italian_editorial_prompt_authority_cutover.py'
+      - '.github/workflows/italian-editorial-grounded-prompt-authority.yml'
+  push:
+    branches: [ main ]
+    paths:
+      - 'static/dore-design/italian-editorial-atlas.html'
+      - 'static/dore-design/italian-editorial-prompt-compiler.v1.js'
+      - 'static/dore-design/italian-editorial-grounded-observations.v0.json'
+      - 'static/dore-design/italian-editorial-visual-fingerprints.v1.json'
+
+jobs:
+  grounded-prompt-authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate grounded observations
+        run: python scripts/validate_italian_editorial_grounded_observations.py
+      - name: Validate exact Atlas consumer
+        run: python scripts/validate_italian_editorial_grounded_atlas_consumer.py
+      - name: Validate prompt authority cutover
+        run: python scripts/validate_italian_editorial_prompt_authority_cutover.py
