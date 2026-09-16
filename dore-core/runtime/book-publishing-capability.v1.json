@@ -6,9 +6,32 @@
   "purpose": "Compile a Multiwrite manuscript into a governed Doré BookModel, EditorialReport and BookBuild before publication artifacts are emitted.",
   "input": {
     "required": ["source", "sections"],
-    "optional": ["bookIntent", "designDirection", "sourceRevision"]
+    "optional": ["bookIntent", "designDirection", "sourceRevision", "projectGrammar", "surfaceGrammar"]
+  },
+  "preflight": {
+    "writingGrammarRouting": {
+      "required": true,
+      "contract": "dore-core/architecture/DORE-WRITING-GRAMMAR-ROUTING-v0.1.md",
+      "library": "dore-core/writing/grammar-library.v1.json",
+      "existingCapability": "writing.westside-dimensional-journalism",
+      "action": [
+        "load-universal-grammar",
+        "reference-proven-project-grammars",
+        "judge-relevance",
+        "extract-transferable-capabilities",
+        "block-project-identity-contamination",
+        "apply-current-project-grammar",
+        "apply-surface-grammar"
+      ],
+      "referenceRequired": true,
+      "borrowingRequired": false,
+      "runtimeCoreMutationAllowed": false,
+      "parallelWritingPipelineAllowed": false,
+      "authorSourceAuthorityPreserved": true
+    }
   },
   "pipeline": [
+    "writing-grammar-routing",
     "book-intent",
     "book-model",
     "editorial-gate",
@@ -30,7 +53,10 @@
       "unapproved-substantive-rewrite",
       "artifact-first-canonical-state",
       "provider-specific-product-contract",
-      "internalProvenance-in-publicationMetadata"
+      "internalProvenance-in-publicationMetadata",
+      "project-grammar-as-core-authority",
+      "project-voice-contamination",
+      "parallel-writing-grammar-pipeline"
     ]
   },
   "editorial_gate": {
@@ -44,5 +70,5 @@
     "private": "internalProvenance",
     "rule": "Public artifact projections must be allowlisted; never spread BookModel wholesale into publication metadata or manifests."
   },
-  "status": "editorial-gate-v1"
+  "status": "editorial-gate-v1+writing-grammar-preflight"
 }
