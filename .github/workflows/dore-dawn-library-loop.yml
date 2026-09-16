@@ -88,17 +88,23 @@ jobs:
           assert r['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
           assert all(x.get('contentDownloaded') is False for s in store['shelves'] for x in s['items'])
-          assert canonical['workCount']==len(canonical['works'])
-          assert canonical['workCount'] > 100000
+          assert canonical['workCount']==len(canonical['works']) and canonical['workCount'] > 100000
           assert living['projectionOnly'] is True and living['admissionAuthority'] is False
-          assert living['canonicalWorkCount']==canonical['workCount']
-          assert len(living['livingWall']['workRefs'])==canonical['workCount']
+          assert living['canonicalWorkCount']==canonical['workCount']==len(living['livingWall']['workRefs'])
           assert all(x['workId'] in canonical['works'] for x in living['livingWall']['workRefs'])
-          roots=living['classification']['roots']
-          leaf_count=sum(len(x.get('children',[])) for x in roots)
+          roots=living['classification']['roots']; leaf_count=sum(len(x.get('children',[])) for x in roots)
           assert len(roots)==7 and leaf_count>=40
-          print(json.dumps({'catalogTotal':len(cat['items']),'canonicalWorkCount':canonical['workCount'],'livingLibraryWorkCount':living['canonicalWorkCount'],'classificationRoots':len(roots),'classificationLeaves':leaf_count,'phase3':True,'phase3Target':1000000,'pipeline':r['results']['pipelineThisRun']},ensure_ascii=False,indent=2))
+          print(json.dumps({'canonicalWorkCount':canonical['workCount'],'classificationRoots':len(roots),'classificationLeaves':leaf_count,'phase3Target':1000000},ensure_ascii=False))
           PY
+      - name: Checkpoint validated canonical growth
+        run: |
+          git config user.name 'Doré CI'
+          git config user.email 'westsidewatchca@gmail.com'
+          git add static/dawn-library/canonical-index.json static/dawn-library/living-library.json static/dawn-library/surfaces/*.json data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dawn): checkpoint validated canonical growth [skip ci]'
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-library-loop-results
@@ -106,7 +112,6 @@ jobs:
             reports/DAWN-LIBRARY-*.json
             data/dawn-10k-openlibrary-works.json
             data/dawn-10k-work-queue.json
-            data/dawn-canonical/**
             static/dawn-library/canonical-index.json
             static/dawn-library/living-library.json
             static/dawn-library/surfaces/*.json
@@ -114,43 +119,13 @@ jobs:
             static/dawn-library/identity-cache.json
             static/dawn-library/collections.json
             static/dawn-library/biblical-world/*.json
-      - name: Persist autonomous collection growth
-        if: github.event_name != 'pull_request'
+      - name: Persist remaining autonomous outputs
         run: |
           git config user.name 'Doré CI'
           git config user.email 'westsidewatchca@gmail.com'
-          current_ref="${GITHUB_REF_NAME}"
-          add_outputs() {
-            git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
-            git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json static/dawn-library/canonical-index.json static/dawn-library/living-library.json static/dawn-library/surfaces/*.json
-            [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
-          }
-          regenerate() {
-            python scripts/test_dawn_collection_source_policy.py
-            python scripts/run_dawn_library_chinese_discovery.py
-            python scripts/run_dawn_library_chinese_relevance.py
-            python scripts/run_dawn_library_chinese_resolver.py
-            python scripts/promote_dawn_library_chinese_catalog.py
-            python scripts/run_dawn_library_discovery.py
-            python scripts/run_dawn_library_relevance.py
-            python scripts/run_dawn_library_english_resolver.py
-            python scripts/promote_dawn_library_english_catalog.py
-            python scripts/discover_dawn_10k_openlibrary_works.py
-            python scripts/build_dawn_10k_work_queue.py
-            python scripts/build_dawn_canonical_substrate.py
-            python scripts/build_dawn_living_library.py
-            python scripts/run_dawn_library_loop.py
-            python scripts/build_dawn_storefront.py
-          }
-          add_outputs
-          if git diff --cached --quiet; then exit 0; fi
-          for attempt in 1 2 3 4; do
-            git commit -m 'chore(dawn): persist autonomous collection growth [skip ci]'
-            if git push origin "HEAD:${current_ref}"; then exit 0; fi
-            git fetch origin "${current_ref}"
-            git reset --hard "origin/${current_ref}"
-            regenerate
-            add_outputs
-            if git diff --cached --quiet; then exit 0; fi
-          done
-          exit 1
+          git add reports/DAWN-LIBRARY-*.json static/dawn-library/storefront.json static/dawn-library/identity-cache.json static/dawn-library/collections.json static/dawn-library/biblical-world/*.json
+          [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
+          if ! git diff --cached --quiet; then
+            git commit -m 'chore(dawn): persist remaining collection outputs [skip ci]'
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          fi
