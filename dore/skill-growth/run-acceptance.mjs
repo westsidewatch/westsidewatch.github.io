@@ -8,7 +8,8 @@ const suites = [
   './design-conservation.test.mjs',
   './design-taste-episode.test.mjs',
   './design-taste-consolidation.test.mjs',
-  './learning-agenda.test.mjs'
+  './learning-agenda.test.mjs',
+  './capability-mutation.test.mjs'
 ];
 
 for (const suite of suites) await import(suite);
