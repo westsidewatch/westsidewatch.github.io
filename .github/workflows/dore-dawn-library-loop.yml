@@ -9,6 +9,7 @@ on:
       - 'scripts/run_dawn_library_*.py'
       - 'scripts/promote_dawn_library_*.py'
       - 'scripts/test_dawn_collection_source_policy.py'
+      - 'scripts/validate_dawn_living_product.py'
       - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'scripts/build_dawn_canonical_substrate.py'
@@ -97,6 +98,8 @@ jobs:
           assert len(roots)==7 and leaves>=40 and seen==canonical['workCount']
           print(json.dumps({'canonicalWorkCount':seen,'livingShards':root['shardCount'],'classificationRoots':7,'classificationLeaves':leaves,'phase3Target':1000000},ensure_ascii=False))
           PY
+      - name: Validate Living Library product acceptance
+        run: python scripts/validate_dawn_living_product.py
       - name: Checkpoint validated canonical growth
         run: |
           git config user.name 'Doré CI'
