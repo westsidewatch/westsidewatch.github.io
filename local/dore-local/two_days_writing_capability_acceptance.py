@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from two_days_capability_bridge import TwoDaysCapabilityBridge, DEFAULT_PROFILES, REGISTRY
+from two_days_capability_bridge import resolve, DEFAULT_PROFILES, REGISTRY
 from dimensional_publishing_capability import DimensionalPublishingCapability, CAPABILITY_ID
 
 
@@ -17,17 +17,24 @@ def main() -> None:
     assert CAPABILITY_ID not in DEFAULT_PROFILES["publishing"]
 
     today = {
-        "schema": "two-days.today.v0",
-        "active_head": {"work_id": "the-gate", "artifact_id": "article-3"},
-        "work_heads": {"the-gate": {"accepted": "v17", "working": "v18"}},
-        "resume": {"work_id": "the-gate", "edge": "continue article 3 from accepted scene"},
+        "schema_id": "two-days.today.v0",
+        "active_head": "the-gate/article-3",
+        "work_heads": {
+            "the-gate/article-3": {
+                "accepted_head": {"version_id": "v17", "sha256": "accepted"},
+                "working_head": {"version_id": "v18", "sha256": "working"},
+            }
+        },
+        "resume_head": {"artifact_id": "the-gate/article-3", "instruction": "continue article 3", "unfinished_edge": "from accepted scene"},
         "source_refs": [{"kind": "artifact-ledger", "id": "the-gate:v17"}],
     }
-    context = TwoDaysCapabilityBridge().resolve(profile="writing", today=today)
-    refs = context["capability_refs"]
+    context = resolve(profile="writing", today=today)
+    refs = [item["id"] for item in context["capability_refs"]]
     assert CAPABILITY_ID in refs
-    assert context["task"]["active_head"] == today["active_head"]
-    assert context["task"]["resume"] == today["resume"]
+    assert context["task"]["active_artifact"] == today["active_head"]
+    assert context["task"]["accepted_head"]["version_id"] == "v17"
+    assert context["task"]["working_head"]["version_id"] == "v18"
+    assert context["task"]["resume_head"] == today["resume_head"]
 
     manuscript = "城门已经关上，城里的灯仍然亮着。"
     thesis = "作者的原稿与立意保持最高 authority。"
@@ -46,7 +53,7 @@ def main() -> None:
     assert plan["manuscript"] == manuscript
     assert plan["thesis"] == thesis
     assert plan["deep_dive"][0]["note"] == "expand evidence only"
-    assert seen["context"]["task"]["active_head"]["work_id"] == "the-gate"
+    assert seen["context"]["task"]["active_artifact"] == "the-gate/article-3"
     assert context["authority"]["state"] == "TODAY"
     assert context["authority"]["artifact_text"] == "artifact-ledger"
     assert context["authority"]["may_rewrite_author_thesis"] is False
