@@ -24,3 +24,5 @@ jobs:
         run: node dore/game-art-direction/foundation.acceptance.mjs
       - name: Validate Research Observatory and fixed benchmark evidence
         run: node dore/game-art-direction/observatory.acceptance.mjs
+      - name: Validate first real Italian evidence intake
+        run: node dore/game-art-direction/italian-evidence-intake.acceptance.mjs
