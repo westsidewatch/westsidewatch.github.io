@@ -26,3 +26,5 @@ jobs:
         run: node dore/game-art-direction/observatory.acceptance.mjs
       - name: Validate first real Italian evidence intake
         run: node dore/game-art-direction/italian-evidence-intake.acceptance.mjs
+      - name: Validate first Sheep Enters World visual genome candidate
+        run: node dore/game-art-direction/candidate.acceptance.mjs
