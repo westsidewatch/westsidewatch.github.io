@@ -16,6 +16,8 @@ on:
 jobs:
   acceptance:
     runs-on: ubuntu-latest
+    env:
+      PYTHONPATH: local/dore-local
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
