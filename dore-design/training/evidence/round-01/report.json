@@ -1,0 +1,2140 @@
+{
+  "schema": "dore.design-weapon-proficiency-evidence.v0",
+  "designer": "dore",
+  "round": 1,
+  "surface": "living-water-bloom-armed-v2",
+  "trainingSpec": "living-water-weapon-proficiency-01",
+  "winner": null,
+  "productionPromoted": false,
+  "canonicalWorkspaceMutated": false,
+  "candidates": [
+    {
+      "id": "sacred-threshold",
+      "assignment": "Campo Grafico emergence + Domus architectural hierarchy + Casabella deliberate negative space",
+      "diagnosis": {
+        "firstPassFailureDomains": [
+          "scale-hierarchy",
+          "spacing-rhythm"
+        ],
+        "trainerQuestion": "What is carrying visual gravity, and is every empty region active composition?"
+      },
+      "weaponsUsed": [
+        "design.composition",
+        "design.typography",
+        "design.image-art-direction"
+      ],
+      "beforeRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/sacred-threshold-first-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/sacred-threshold-first-B.png"
+      },
+      "afterRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/sacred-threshold-second-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/sacred-threshold-second-B.png"
+      },
+      "firstPass": {
+        "taskId": "design-explore-a013649d38004b6aba36de25da46ed2d",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": "B",
+        "consensus": true,
+        "memoryAdmitted": true,
+        "loserFailures": [
+          {
+            "domain": "scale-hierarchy",
+            "reason": "The size changes applied to the hero and body text in Candidate X do not enhance the visual weight or pacing as effectively as the proportional scaling seen in Candidate Y.",
+            "pixel_basis": "[1000, 800]",
+            "confidence": 0.8
+          },
+          {
+            "domain": "spacing-rhythm",
+            "reason": "The horizontal placement of the main text blocks (body, note) in Candidate X leaves uneven negative space relative to the overall canvas width compared to Candidate Y's more consistent adjustments.",
+            "pixel_basis": "[88, 1100]",
+            "confidence": 0.85
+          }
+        ],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1000.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 470.0
+                },
+                {
+                  "h": 120.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 800.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 100.0,
+                  "y": 650.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "h": 1.5,
+                  "node_id": "rule",
+                  "op": "resize",
+                  "w": 1240.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.408333,
+                  "center_y_ratio": 0.297778,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1000.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.338889,
+                  "center_y_ratio": 0.588889,
+                  "font_size": 28,
+                  "h": 120.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 800.0,
+                  "x": 88.0,
+                  "y": 470.0
+                },
+                {
+                  "center_x_ratio": 0.451389,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 100.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660833,
+                  "font_size": null,
+                  "h": 1.5,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 48068,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-a013649d38004b6aba36de25da46ed2d/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "0090d7954c66f1eade21e0e15737c751f45074c857922f1156640aa3d2c7444e",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 40.0,
+                  "node_id": "eyebrow",
+                  "op": "resize",
+                  "w": 600.0
+                },
+                {
+                  "node_id": "eyebrow",
+                  "op": "move",
+                  "x": 50.0,
+                  "y": 70.0
+                },
+                {
+                  "h": 240.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1200.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 50.0,
+                  "y": 450.0
+                },
+                {
+                  "h": 130.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 50.0,
+                  "y": 650.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 1200.0
+                },
+                {
+                  "node_id": "rule",
+                  "op": "move",
+                  "x": 50.0,
+                  "y": 620.0
+                },
+                {
+                  "h": 2.0,
+                  "node_id": "rule",
+                  "op": "resize",
+                  "w": 1240.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.243056,
+                  "center_y_ratio": 0.1,
+                  "font_size": 18,
+                  "h": 40.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 600.0,
+                  "x": 50.0,
+                  "y": 70.0
+                },
+                {
+                  "center_x_ratio": 0.477778,
+                  "center_y_ratio": 0.308889,
+                  "font_size": 78,
+                  "h": 240.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1200.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.416667,
+                  "center_y_ratio": 0.572222,
+                  "font_size": 28,
+                  "h": 130.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 50.0,
+                  "y": 450.0
+                },
+                {
+                  "center_x_ratio": 0.451389,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1200.0,
+                  "x": 50.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.465278,
+                  "center_y_ratio": 0.69,
+                  "font_size": null,
+                  "h": 2.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 50.0,
+                  "y": 620.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 48070,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-a013649d38004b6aba36de25da46ed2d/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "1aa46577e9bdff5fd8e19d22a807cece6e205a6914e8a5dd996b3ff96148546b",
+              "width": 1440
+            }
+          }
+        ]
+      },
+      "selfRevision": {
+        "taskId": "design-explore-75baf09575704ce5aec7e6b3f37f9583",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": "A",
+        "consensus": true,
+        "memoryAdmitted": true,
+        "loserFailures": [
+          {
+            "domain": "alignment-drift",
+            "reason": "The significant resizing and horizontal shift of the 'hero' text in Y's patch cause it to feel less centered and visually weighted compared to X's rendition, creating alignment drift relative to the surrounding content blocks.",
+            "pixel_basis": "hero node position/size change",
+            "confidence": 0.85
+          },
+          {
+            "domain": "image-text-balance",
+            "reason": "The reallocation of space and the isolation of the final text block in Y create poor visual balance across the canvas width.",
+            "pixel_basis": "Overall composition",
+            "confidence": 0.8
+          },
+          {
+            "domain": "spacing-rhythm",
+            "reason": "Moving the 'note' block significantly to the right (from under the body text's general area to near the right edge) creates a jarring and unbalanced spacing rhythm that disrupts the established vertical flow.",
+            "pixel_basis": "note node position change",
+            "confidence": 0.9
+          }
+        ],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 130.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 900.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 400.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 650.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 1100.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.401389,
+                  "center_y_ratio": 0.281111,
+                  "font_size": 78,
+                  "h": 190.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 980.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.373611,
+                  "center_y_ratio": 0.516667,
+                  "font_size": 28,
+                  "h": 130.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 900.0,
+                  "x": 88.0,
+                  "y": 400.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 48063,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-75baf09575704ce5aec7e6b3f37f9583/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "7b8fa923376a7f53520e2d97fdc0428614c6398b8be9dbceba00e2141b9c8aed",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1050.0
+                },
+                {
+                  "node_id": "hero",
+                  "op": "move",
+                  "x": 80.0,
+                  "y": 120.0
+                },
+                {
+                  "h": 140.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 850.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 440.0
+                },
+                {
+                  "h": 120.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 650.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 900.0,
+                  "y": 550.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": false,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.420139,
+                  "center_y_ratio": 0.255556,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1050.0,
+                  "x": 80.0,
+                  "y": 120.0
+                },
+                {
+                  "center_x_ratio": 0.35625,
+                  "center_y_ratio": 0.566667,
+                  "font_size": 28,
+                  "h": 140.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 850.0,
+                  "x": 88.0,
+                  "y": 440.0
+                },
+                {
+                  "center_x_ratio": 0.850694,
+                  "center_y_ratio": 0.677778,
+                  "font_size": 18,
+                  "h": 120.0,
+                  "id": "note",
+                  "inside_canvas": false,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 650.0,
+                  "x": 900.0,
+                  "y": 550.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 47881,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-75baf09575704ce5aec7e6b3f37f9583/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "48f9dbcf627e79c21a21fb67398f9d15c8aab55243dd9d652e1e400126687024",
+              "width": 1440
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "living-community",
+      "assignment": "Abitare human-scale pacing + Campo Grafico local-object persistence",
+      "diagnosis": {
+        "firstPassFailureDomains": [],
+        "trainerQuestion": "What is carrying visual gravity, and is every empty region active composition?"
+      },
+      "weaponsUsed": [
+        "design.composition",
+        "design.typography",
+        "design.image-art-direction"
+      ],
+      "beforeRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/living-community-first-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/living-community-first-B.png"
+      },
+      "afterRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/living-community-second-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/living-community-second-B.png"
+      },
+      "firstPass": {
+        "taskId": "design-explore-714a0c8dfda04a39a73f0e532e10eff4",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": null,
+        "consensus": false,
+        "memoryAdmitted": false,
+        "loserFailures": [],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 150.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 900.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 590.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 1100.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.401389,
+                  "center_y_ratio": 0.281111,
+                  "font_size": 78,
+                  "h": 190.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 980.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.373611,
+                  "center_y_ratio": 0.561111,
+                  "font_size": 28,
+                  "h": 150.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 900.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.711111,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 590.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 45898,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-714a0c8dfda04a39a73f0e532e10eff4/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "7e4138941cbed80539d8a37ac0f591f135d978074214681239ab5ecd79488972",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "h": 160.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 1000.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 650.0
+                },
+                {
+                  "h": 120.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 1200.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.297778,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.408333,
+                  "center_y_ratio": 0.566667,
+                  "font_size": 28,
+                  "h": 160.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1000.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.477778,
+                  "center_y_ratio": 0.788889,
+                  "font_size": 18,
+                  "h": 120.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1200.0,
+                  "x": 88.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 42323,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-714a0c8dfda04a39a73f0e532e10eff4/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "74ee6edd5ee8cab33baaf151ced5c83075d0b8cdf8ff5215433ed8e64e1aafe4",
+              "width": 1440
+            }
+          }
+        ]
+      },
+      "selfRevision": {
+        "taskId": "design-explore-4645af3a1ce74cf795ebced4643e2ad0",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": null,
+        "consensus": false,
+        "memoryAdmitted": false,
+        "loserFailures": [],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1020.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 60.0,
+                  "y": 380.0
+                },
+                {
+                  "h": 110.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 600.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 80.0,
+                  "y": 550.0
+                },
+                {
+                  "h": 1.0,
+                  "node_id": "rule",
+                  "op": "resize",
+                  "w": 1200.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.415278,
+                  "center_y_ratio": 0.297778,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1020.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.305556,
+                  "center_y_ratio": 0.483333,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 60.0,
+                  "y": 380.0
+                },
+                {
+                  "center_x_ratio": 0.263889,
+                  "center_y_ratio": 0.672222,
+                  "font_size": 18,
+                  "h": 110.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 600.0,
+                  "x": 80.0,
+                  "y": 550.0
+                },
+                {
+                  "center_x_ratio": 0.477778,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1200.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 42320,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-4645af3a1ce74cf795ebced4643e2ad0/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "ed8fef2c34d2e114708905adfd3be7be7ecf36a21d317ac231c5f04ab58cbc6b",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 250.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "h": 130.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 900.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 30.0,
+                  "y": 400.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 30.0,
+                  "y": 650.0
+                },
+                {
+                  "h": 1.0,
+                  "node_id": "rule",
+                  "op": "resize",
+                  "w": 1240.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.314444,
+                  "font_size": 78,
+                  "h": 250.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.333333,
+                  "center_y_ratio": 0.516667,
+                  "font_size": 28,
+                  "h": 130.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 900.0,
+                  "x": 30.0,
+                  "y": 400.0
+                },
+                {
+                  "center_x_ratio": 0.166667,
+                  "center_y_ratio": 0.775556,
+                  "font_size": 18,
+                  "h": 96.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 420.0,
+                  "x": 30.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 43282,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-4645af3a1ce74cf795ebced4643e2ad0/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "369367451343653b5781f41380f003ca2abcacaed48cca5c7bc26f990b788299",
+              "width": 1440
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "quiet-light",
+      "assignment": "Casabella deliberate negative space + Abitare cultured restraint",
+      "diagnosis": {
+        "firstPassFailureDomains": [],
+        "trainerQuestion": "What is carrying visual gravity, and is every empty region active composition?"
+      },
+      "weaponsUsed": [
+        "design.composition",
+        "design.typography",
+        "design.image-art-direction"
+      ],
+      "beforeRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/quiet-light-first-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/quiet-light-first-B.png"
+      },
+      "afterRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/quiet-light-second-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/quiet-light-second-B.png"
+      },
+      "firstPass": {
+        "taskId": "design-explore-996075902e6e491c990064cadaec822e",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": null,
+        "consensus": false,
+        "memoryAdmitted": false,
+        "loserFailures": [],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 180.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 410.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 500.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.275556,
+                  "font_size": 78,
+                  "h": 180.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.325,
+                  "center_y_ratio": 0.516667,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 88.0,
+                  "y": 410.0
+                },
+                {
+                  "center_x_ratio": 0.798611,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 500.0,
+                  "x": 900.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 32183,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-996075902e6e491c990064cadaec822e/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "c754c7933f3b6bb7cb86aa30c79b081ed7e7ee3d471f63fefef211a3774d9d4b",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 200.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1000.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 400.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.408333,
+                  "center_y_ratio": 0.286667,
+                  "font_size": 78,
+                  "h": 200.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1000.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.325,
+                  "center_y_ratio": 0.538889,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.763889,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 400.0,
+                  "x": 900.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 32958,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-996075902e6e491c990064cadaec822e/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "a6202e9e947cb12516a1376e26b53a93a547aa0895f1e825ea5d36769b3454a7",
+              "width": 1440
+            }
+          }
+        ]
+      },
+      "selfRevision": {
+        "taskId": "design-explore-301d31050cb048df9a56cceb3a9a22ce",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": "B",
+        "consensus": true,
+        "memoryAdmitted": true,
+        "loserFailures": [
+          {
+            "domain": "spacing-rhythm",
+            "reason": "The vertical spacing between the main headings/text blocks feels slightly arbitrary or overly separated in X compared to Y's tighter grouping.",
+            "pixel_basis": "y-coordinates around 430.0 and 550.0",
+            "confidence": 0.8
+          }
+        ],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 550.0
+                },
+                {
+                  "h": 130.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 900.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.401389,
+                  "center_y_ratio": 0.281111,
+                  "font_size": 78,
+                  "h": 190.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 980.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.373611,
+                  "center_y_ratio": 0.55,
+                  "font_size": 28,
+                  "h": 130.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 900.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.206944,
+                  "center_y_ratio": 0.664444,
+                  "font_size": 18,
+                  "h": 96.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 420.0,
+                  "x": 88.0,
+                  "y": 550.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 32952,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-301d31050cb048df9a56cceb3a9a22ce/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "03599854ef4a30f43fe815942d4c3512da4738888976bf68456ac117b445a474",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 170.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 520.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "body",
+                  "op": "resize",
+                  "w": 1000.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.27,
+                  "font_size": 78,
+                  "h": 170.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.408333,
+                  "center_y_ratio": 0.533333,
+                  "font_size": 28,
+                  "h": 100.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1000.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.206944,
+                  "center_y_ratio": 0.631111,
+                  "font_size": 18,
+                  "h": 96.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 420.0,
+                  "x": 88.0,
+                  "y": 520.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 32952,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-301d31050cb048df9a56cceb3a9a22ce/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "d67676c1ed19eaa17edb39c71e7df7fc4eb6fcc75490054202a1222556f6118f",
+              "width": 1440
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "architectural-bloom",
+      "assignment": "Ottagono modular grid/controlled break + Domus architectural construction",
+      "diagnosis": {
+        "firstPassFailureDomains": [],
+        "trainerQuestion": "What is carrying visual gravity, and is every empty region active composition?"
+      },
+      "weaponsUsed": [
+        "design.composition",
+        "design.typography",
+        "design.image-art-direction"
+      ],
+      "beforeRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/architectural-bloom-first-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/architectural-bloom-first-B.png"
+      },
+      "afterRaster": {
+        "A": "dore-design/training/evidence/round-01/rasters/architectural-bloom-second-A.png",
+        "B": "dore-design/training/evidence/round-01/rasters/architectural-bloom-second-B.png"
+      },
+      "firstPass": {
+        "taskId": "design-explore-f96176b0f4ab4188b07cc2ed84729262",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": null,
+        "consensus": false,
+        "memoryAdmitted": false,
+        "loserFailures": [],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 88.0,
+                  "y": 400.0
+                },
+                {
+                  "h": 120.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 600.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": false,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.401389,
+                  "center_y_ratio": 0.281111,
+                  "font_size": 78,
+                  "h": 190.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 980.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.325,
+                  "center_y_ratio": 0.505556,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 88.0,
+                  "y": 400.0
+                },
+                {
+                  "center_x_ratio": 0.833333,
+                  "center_y_ratio": 0.788889,
+                  "font_size": 18,
+                  "h": 120.0,
+                  "id": "note",
+                  "inside_canvas": false,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 600.0,
+                  "x": 900.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 40180,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-f96176b0f4ab4188b07cc2ed84729262/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "0fe299d9eac63e89e51594f019d04813ad47613cff0553b0252a3fc903e2657b",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1000.0
+                },
+                {
+                  "node_id": "note",
+                  "op": "move",
+                  "x": 50.0,
+                  "y": 620.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.408333,
+                  "center_y_ratio": 0.297778,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1000.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.325,
+                  "center_y_ratio": 0.538889,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 88.0,
+                  "y": 430.0
+                },
+                {
+                  "center_x_ratio": 0.180556,
+                  "center_y_ratio": 0.742222,
+                  "font_size": 18,
+                  "h": 96.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 420.0,
+                  "x": 50.0,
+                  "y": 620.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 40774,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-f96176b0f4ab4188b07cc2ed84729262/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "807278cc197f86effa8191c8e189a8782378e8a00315eda9d89476761f1fdc78",
+              "width": 1440
+            }
+          }
+        ]
+      },
+      "selfRevision": {
+        "taskId": "design-explore-7651a67e54334f2bb845f156001f0a6f",
+        "provider": "dore-local",
+        "model": "gemma4:e4b",
+        "winner": null,
+        "consensus": false,
+        "memoryAdmitted": false,
+        "loserFailures": [],
+        "repairLoop": null,
+        "rejectionEnforcement": null,
+        "candidates": [
+          {
+            "id": "A",
+            "patch": {
+              "ops": [
+                {
+                  "h": 220.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1050.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 90.0,
+                  "y": 370.0
+                },
+                {
+                  "h": 120.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 650.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": false,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.425694,
+                  "center_y_ratio": 0.297778,
+                  "font_size": 78,
+                  "h": 220.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1050.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.326389,
+                  "center_y_ratio": 0.472222,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 90.0,
+                  "y": 370.0
+                },
+                {
+                  "center_x_ratio": 0.850694,
+                  "center_y_ratio": 0.788889,
+                  "font_size": 18,
+                  "h": 120.0,
+                  "id": "note",
+                  "inside_canvas": false,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 650.0,
+                  "x": 900.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 40185,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-7651a67e54334f2bb845f156001f0a6f/A.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "5eebe78e72df52974dd0ad5154e03a33da5234a26ef8119815b4af5657e52524",
+              "width": 1440
+            }
+          },
+          {
+            "id": "B",
+            "patch": {
+              "ops": [
+                {
+                  "h": 200.0,
+                  "node_id": "hero",
+                  "op": "resize",
+                  "w": 1100.0
+                },
+                {
+                  "node_id": "body",
+                  "op": "move",
+                  "x": 60.0,
+                  "y": 400.0
+                },
+                {
+                  "h": 100.0,
+                  "node_id": "note",
+                  "op": "resize",
+                  "w": 500.0
+                }
+              ],
+              "schema": "dore.design.candidate-patch.v1"
+            },
+            "geometry": {
+              "all_inside_canvas": true,
+              "canvas": {
+                "h": 900.0,
+                "w": 1440.0
+              },
+              "node_count": 5,
+              "nodes": [
+                {
+                  "center_x_ratio": 0.241667,
+                  "center_y_ratio": 0.103333,
+                  "font_size": 18,
+                  "h": 38.0,
+                  "id": "eyebrow",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 520.0,
+                  "x": 88.0,
+                  "y": 74.0
+                },
+                {
+                  "center_x_ratio": 0.443056,
+                  "center_y_ratio": 0.286667,
+                  "font_size": 78,
+                  "h": 200.0,
+                  "id": "hero",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 1100.0,
+                  "x": 88.0,
+                  "y": 158.0
+                },
+                {
+                  "center_x_ratio": 0.305556,
+                  "center_y_ratio": 0.505556,
+                  "font_size": 28,
+                  "h": 110.0,
+                  "id": "body",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 760.0,
+                  "x": 60.0,
+                  "y": 400.0
+                },
+                {
+                  "center_x_ratio": 0.798611,
+                  "center_y_ratio": 0.777778,
+                  "font_size": 18,
+                  "h": 100.0,
+                  "id": "note",
+                  "inside_canvas": true,
+                  "text_align": "left",
+                  "type": "text",
+                  "w": 500.0,
+                  "x": 900.0,
+                  "y": 650.0
+                },
+                {
+                  "center_x_ratio": 0.491667,
+                  "center_y_ratio": 0.660556,
+                  "font_size": null,
+                  "h": 1.0,
+                  "id": "rule",
+                  "inside_canvas": true,
+                  "text_align": null,
+                  "type": "rule",
+                  "w": 1240.0,
+                  "x": 88.0,
+                  "y": 594.0
+                }
+              ]
+            },
+            "raster": {
+              "byte_size": 40187,
+              "engine": "firefox",
+              "height": 900,
+              "path": "/Users/chenjingyu/.dore/runs/design-weapon-proficiency-01-35060237189-1/.training-home/design-intelligence-a2a/rasters/design-explore-7651a67e54334f2bb845f156001f0a6f/B.png",
+              "real_browser_render": true,
+              "requested_height": 900,
+              "requested_width": 1440,
+              "schema": "dore.design.raster-evidence.v1",
+              "sha256": "3127ce546a452c1adfed92e48c5c918a7e593fdd66664d94ba5d552e05649493",
+              "width": 1440
+            }
+          }
+        ]
+      }
+    }
+  ]
+}
