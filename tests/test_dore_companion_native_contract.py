@@ -21,10 +21,12 @@ class CompanionNativeContractTest(unittest.TestCase):
  def test_conversation_binding_and_result_surface(self):
   s=(EXT/'content_script.js').read_text();self.assertIn('function conversationId()',s);self.assertIn('conversation_id:conversationId()',s);self.assertIn('DORÉ_LOCAL_RESULT',s);self.assertIn('TERMINAL_HOLD_MS=30000',s);self.assertIn('new WeakSet()',s)
  def test_assistant_directive_allowlist_is_bounded(self):
-  s=(EXT/'background.js').read_text();self.assertIn('ASSISTANT_DIRECTIVE_ALLOWLIST',s);self.assertIn('"knowledge.substrates.install"',s);self.assertIn('"system.self-maintain"',s);self.assertNotIn('capability.startsWith("knowledge.")',s);self.assertNotIn('capability.startsWith("system.")',s)
+  s=(EXT/'background.js').read_text();self.assertIn('ASSISTANT_DIRECTIVE_ALLOWLIST',s);self.assertIn('"knowledge.substrates.install"',s);self.assertIn('"system.self-maintain"',s);self.assertIn('"image.generate"',s);self.assertNotIn('capability.startsWith("knowledge.")',s);self.assertNotIn('capability.startsWith("system.")',s)
  def test_site_capability_bridge_is_bounded_to_declared_site_capabilities(self):
   bg=(EXT/'background.js').read_text();bridge=(EXT/'site_bridge.js').read_text()
-  self.assertIn('SITE_CAPABILITY_ALLOWLIST=new Set(["context.fuzzy-search","publishing.book-intelligence","image.generate","dawn.library.publish","source.probe"])',bg);self.assertIn('message.type==="dore.site-capability"',bg);self.assertIn('caller_product:',bg)
+  for capability in ('context.fuzzy-search','publishing.book-intelligence','image.generate','design.editorial-visual-observation','dawn.library.publish','source.probe'):
+   self.assertIn(f'"{capability}"',bg)
+  self.assertIn('message.type==="dore.site-capability"',bg);self.assertIn('caller_product:',bg)
   for token in ("const FUZZY_CAPABILITY='context.fuzzy-search'","const BOOK_CAPABILITY='publishing.book-intelligence'","const IMAGE_CAPABILITY='image.generate'","const DAWN_CAPABILITY='dawn.library.publish'"):
    self.assertIn(token,bridge)
   self.assertIn("'dore:context-fuzzy-search'",bridge);self.assertIn("'dore:context-fuzzy-search-result'",bridge);self.assertIn("limit:5",bridge)
