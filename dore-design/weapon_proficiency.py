@@ -4,6 +4,8 @@
 Trainer supplies curriculum and references. Doré local Design Intelligence generates,
 rasters, critiques, remembers failures, and self-revises in executable sandboxes.
 This module does not manufacture a finished design and never promotes production.
+Critic structured-output containment is provided by the resident worker; this executor
+remains evidence-driven and never substitutes fixture results for model-backed training.
 """
 from __future__ import annotations
 import argparse, json, os, shutil, sys
@@ -78,7 +80,6 @@ def run():
         if failures: second_constraints.append('explicitly avoid first-pass failure domains: '+', '.join(failures))
         second=bridge.explore(payload(cid,'self-revision',second_constraints))
         if second.get('decision')=='exploit':
-            # A stable memory verdict is itself evidence that Doré learned; force a fresh transfer context for executable revision.
             p=payload(cid,'self-revision-transfer',second_constraints+['produce fresh executable transfer variants rather than reuse a stable pair'])
             p['surface_family']='living-water-weapon-proficiency-transfer'; second=bridge.explore(p)
         second_refs=copy_rasters(second,rasters,cid+'-second')
