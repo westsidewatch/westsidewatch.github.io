@@ -1,0 +1,45 @@
+{
+  "schema": "dore.italian-editorial-generation-regression.v1",
+  "principle": "Generated images are evaluation evidence only. A regression case may pass only after a real generated artifact is compared with the exact historical evidence image whose grounded observation compiled the prompt.",
+  "authority": {
+    "historicalImage": "primary",
+    "groundedObservation": "derived-evidence",
+    "compiledPrompt": "derived-instruction",
+    "generatedArtifact": "evaluation-only",
+    "generatedArtifactMayBecomeHistoricalAuthority": false
+  },
+  "requiredCases": ["casabella-367", "abitare-52", "il-franchi-2008-03"],
+  "requiredChecks": ["exactEvidenceIdentity", "realGeneratedArtifact", "visualComparison", "noGenericPriorLeakage", "relationshipFidelity"],
+  "cases": [
+    {
+      "id": "regression-casabella-367",
+      "evidenceId": "casabella-367",
+      "observationAuthority": "historical-image-observation",
+      "promptAuthority": "grounded-observation",
+      "generatedArtifact": null,
+      "comparison": null,
+      "verdict": "pending-generation",
+      "knownFailureToReject": ["invented architecture inset", "invented visible grid", "invented decorative geometry", "second photograph unsupported by evidence"]
+    },
+    {
+      "id": "regression-abitare-52",
+      "evidenceId": "abitare-52",
+      "observationAuthority": "historical-image-observation",
+      "promptAuthority": "grounded-observation",
+      "generatedArtifact": null,
+      "comparison": null,
+      "verdict": "pending-generation",
+      "knownFailureToReject": ["invented exposed concrete", "invented glass curtain wall", "invented polished stone", "editorial panels unsupported by evidence"]
+    },
+    {
+      "id": "regression-il-franchi-2008-03",
+      "evidenceId": "il-franchi-2008-03",
+      "observationAuthority": "historical-image-observation",
+      "promptAuthority": "grounded-observation",
+      "generatedArtifact": null,
+      "comparison": null,
+      "verdict": "pending-generation",
+      "knownFailureToReject": ["extreme facial crop", "oversized serif headline across portrait", "translucent metallic-gold overlay", "architecture or diagram field unsupported by evidence"]
+    }
+  ]
+}
