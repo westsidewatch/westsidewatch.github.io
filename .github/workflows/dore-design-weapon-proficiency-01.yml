@@ -7,6 +7,8 @@ on:
     paths:
       - 'dore-design/training/design-weapon-proficiency-01.v0.json'
       - 'dore-design/weapon_proficiency.py'
+      - 'dore-design/design_intelligence_raster.py'
+      - 'scripts/check_design_raster_runtime.py'
       - '.github/workflows/dore-design-weapon-proficiency-01.yml'
   workflow_dispatch:
 permissions:
@@ -55,6 +57,7 @@ jobs:
           rm -rf "$DORE_LOCAL_HOME"
           if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'; elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'; else export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'; fi
           echo "DORE_DESIGN_BROWSER=$DORE_DESIGN_BROWSER"
+          python3 scripts/check_design_raster_runtime.py "$TRAINING_WT/.raster-smoke"
           python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
       - name: Verify and manifest evidence
         run: |
@@ -81,6 +84,16 @@ jobs:
           path: ${{ env.TRAINING_WT }}/dore-design/training/evidence/round-01
           if-no-files-found: error
           retention-days: 30
+      - name: Upload raster failure diagnostics
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: raster-failure-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.TRAINING_WT }}/.training-home/**/*.raster-failure.json
+            ${{ env.TRAINING_WT }}/.raster-smoke
+          if-no-files-found: warn
+          retention-days: 14
       - name: Cleanup unique worktree
         if: always()
         run: |
@@ -117,7 +130,7 @@ jobs:
           assert manifest['designer']=='dore' and manifest['productionPromoted'] is False
           assert report.get('winner') is None and report.get('productionPromoted') is False and report.get('canonicalWorkspaceMutated') is False
           changed=subprocess.check_output(['git','diff','--name-only',manifest['inputSha']+'..HEAD'],text=True).splitlines()
-          protected={'dore-design/training/design-weapon-proficiency-01.v0.json','dore-design/weapon_proficiency.py','.github/workflows/dore-design-weapon-proficiency-01.yml'}
+          protected={'dore-design/design_intelligence_raster.py','scripts/check_design_raster_runtime.py','dore-design/training/design-weapon-proficiency-01.v0.json','dore-design/weapon_proficiency.py','.github/workflows/dore-design-weapon-proficiency-01.yml'}
           stale=sorted(protected.intersection(changed))
           if stale: raise SystemExit('STALE_EVIDENCE_INPUT_CHANGED:'+','.join(stale))
           dst=pathlib.Path('dore-design/training/evidence/round-01')

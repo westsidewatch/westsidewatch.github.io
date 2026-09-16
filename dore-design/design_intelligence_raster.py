@@ -9,6 +9,9 @@ from __future__ import annotations
 
 import hashlib
 import os
+import json
+import signal
+import time
 import shutil
 import struct
 import subprocess
@@ -94,6 +97,53 @@ def png_dimensions(path: Path) -> tuple[int, int]:
     return width, height
 
 
+def _stop_browser(proc):
+    """Reap only this isolated browser session, including inherited children."""
+    if os.name == 'posix':
+        try:
+            os.killpg(proc.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+    elif proc.poll() is None:
+        proc.kill()
+    proc.wait()
+
+
+def _render_attempt(browser, root, output, width, height, attempt):
+    profile = root / f'profile-{attempt}'
+    profile.mkdir()
+    if 'firefox' in Path(browser).name.lower():
+        # Fresh profiles must not perform first-run UI or background updates.
+        prefs = {'browser.shell.checkDefaultBrowser': False,
+                 'browser.startup.homepage_override.mstone': 'ignore',
+                 'browser.aboutwelcome.enabled': False,
+                 'datareporting.policy.dataSubmissionEnabled': False,
+                 'toolkit.telemetry.reportingpolicy.firstRun': False,
+                 'app.update.auto': False,
+                 'layout.css.devPixelsPerPx': '1.0'}
+        (profile / 'user.js').write_text(''.join(
+            f'user_pref({json.dumps(k)}, {json.dumps(v)});\n' for k, v in prefs.items()))
+    cmd = _browser_command(browser, output=output, width=width, height=height,
+                           uri=(root / 'candidate.html').resolve().as_uri(), profile=profile)
+    started = time.monotonic()
+    # File-backed logs avoid waiting forever for EOF from browser descendants.
+    log = root / f'browser-{attempt}.log'
+    with log.open('wb') as stream:
+        proc = subprocess.Popen(cmd, stdout=stream, stderr=stream,
+                                start_new_session=(os.name == 'posix'))
+        try:
+            code = proc.wait(timeout=45)
+            if code != 0:
+                raise RuntimeError(f'browser_exit:{code}')
+            if png_dimensions(output) != (width, height):
+                raise RuntimeError('raster_dimension_mismatch')
+        except (subprocess.TimeoutExpired, RuntimeError, OSError, ValueError) as exc:
+            raise RuntimeError(f'{type(exc).__name__}:{exc}') from exc
+        finally:
+            _stop_browser(proc)
+    return round(time.monotonic() - started, 3)
+
+
 def rasterize_html(html: str, *, output: Path, width: int, height: int) -> dict:
     if not isinstance(html, str) or '<html' not in html.lower():
         raise ValueError('candidate_html_required')
@@ -105,13 +155,23 @@ def rasterize_html(html: str, *, output: Path, width: int, height: int) -> dict:
     with tempfile.TemporaryDirectory(prefix='dore-raster-') as td:
         root = Path(td)
         src = root / 'candidate.html'
-        profile = root / 'browser-profile'
-        profile.mkdir(parents=True, exist_ok=True)
         src.write_text(html, encoding='utf-8')
-        cmd = _browser_command(browser, output=output, width=width, height=height, uri=src.resolve().as_uri(), profile=profile)
-        cp = subprocess.run(cmd, text=True, capture_output=True, timeout=90)
-        if cp.returncode != 0 or not output.exists():
-            raise RuntimeError('browser_raster_failed:' + (cp.stderr or cp.stdout or '')[-2000:])
+        failures = []
+        # Never admit a stale output or a partial screenshot from a failed process.
+        for attempt in (1, 2):
+            pending = root / f'candidate-{attempt}.png'
+            try:
+                elapsed = _render_attempt(browser, root, pending, width, height, attempt)
+                output.write_bytes(pending.read_bytes())
+                break
+            except RuntimeError as exc:
+                log = root / f'browser-{attempt}.log'
+                failures.append({'attempt': attempt, 'error': str(exc),
+                                 'log': log.read_text(errors='replace')[-4000:] if log.exists() else ''})
+        else:
+            diagnostic = output.with_suffix('.raster-failure.json')
+            diagnostic.write_text(json.dumps({'browser': browser, 'attempts': failures}, indent=2))
+            raise RuntimeError('browser_raster_failed:' + str(diagnostic) + ':' + json.dumps(failures))
     actual_w, actual_h = png_dimensions(output)
     raw = output.read_bytes()
     return {
