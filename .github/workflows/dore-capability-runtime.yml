@@ -54,7 +54,8 @@ jobs:
         run: python local/dore-local/dimensional_writing_a2a_acceptance.py
       - name: Run Conversation Gateway acceptance
         run: |
-          python -m py_compile local/dore-local/conversation_gateway.py local/dore-local/conversation_gateway_stdio.py local/dore-local/conversation_gateway_acceptance.py
+          python -m py_compile local/dore-local/conversation_gateway.py local/dore-local/conversation_gateway_stdio.py local/dore-local/conversation_gateway_acceptance.py local/dore-local/test_conversation_gateway.py
+          python -m unittest discover -s local/dore-local -p 'test_conversation_gateway.py' -v
           python local/dore-local/conversation_gateway_acceptance.py
       - name: Validate macOS installer shells
         run: |
