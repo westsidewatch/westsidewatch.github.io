@@ -11,7 +11,8 @@ const suites = [
   './learning-agenda.test.mjs',
   './capability-mutation.test.mjs',
   './design-metamorphic.test.mjs',
-  './design-capability-evolution.acceptance.test.mjs'
+  './design-capability-evolution.acceptance.test.mjs',
+  './living-water-runtime-adapter.test.mjs'
 ];
 
 for (const suite of suites) await import(suite);
