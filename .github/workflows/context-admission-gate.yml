@@ -1,0 +1,33 @@
+name: Context Admission Gate
+
+on:
+  pull_request:
+    paths:
+      - 'data/system-atlas.v0.json'
+      - 'data/context-authority-entities.v1.json'
+      - 'docs/CURRENT_MAINLINE.md'
+      - 'docs/adr/**'
+      - 'local/dore-local/context_admission_gate.py'
+      - 'local/dore-local/context_admission_gate_acceptance.py'
+      - '.github/workflows/context-admission-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'data/system-atlas.v0.json'
+      - 'data/context-authority-entities.v1.json'
+      - 'docs/CURRENT_MAINLINE.md'
+      - 'docs/adr/**'
+      - 'local/dore-local/context_admission_gate.py'
+      - 'local/dore-local/context_admission_gate_acceptance.py'
+      - '.github/workflows/context-admission-gate.yml'
+
+jobs:
+  fresh-session-authority-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Fresh-session Emergence regression
+        run: python3 local/dore-local/context_admission_gate_acceptance.py
