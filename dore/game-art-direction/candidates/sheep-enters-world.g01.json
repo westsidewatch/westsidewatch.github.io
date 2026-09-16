@@ -1,0 +1,56 @@
+{
+  "$id": "dore.game-art-direction.candidate.sheep-enters-world.g01",
+  "project": "羊走迷",
+  "benchmark": "benchmark.sheep-enters-world.v0",
+  "generation": "G01",
+  "status": "EXPERIMENTAL",
+  "canonicalArtDirection": false,
+  "productionPromoted": false,
+  "family": "italian-lineage",
+  "visualGenome": {
+    "historicalLineage": [
+      "cg-1933-cover-12",
+      "cg-1933-cover-01-wrapper",
+      "cg-1933-p6-insert"
+    ],
+    "composition": ["asymmetrical-balance", "block-composition", "meaningful-negative-space"],
+    "geometry": ["movable-rectilinear-fields", "fold-capable-planes", "hidden-grid"],
+    "line": ["editorial-structural-line", "boundary-as-medium"],
+    "palette": ["print-aware-restrained-field", "contrast-by-relation-not-decoration"],
+    "typography": ["editorial-hierarchy", "text-may-cross-or-split-at-block-boundaries"],
+    "material": ["paper-to-space-continuity", "printed-surface-as-world"],
+    "motion": ["recomposition", "fold", "world-state-transition"],
+    "collision": ["foreign-local-persistence", "reveal-without-dissolution", "edge-contact-as-editorial-event"],
+    "spatial": ["2d-to-3d", "world-from-editorial-field", "depth-emerges-from-plane"],
+    "scriptureCompatibility": ["no-religious-skin", "meaning-emerges-through-relation", "world-precedes-revelation"],
+    "distinctiveness": ["not-monument-valley-imitation", "not-generic-bible-parchment", "not-pseudo-bauhaus", "not-retro-costume"]
+  },
+  "temporalBeauty": {
+    "t0": "required",
+    "drag": "required",
+    "collision": "required",
+    "recomposed": "required",
+    "rotationOrFold": "required",
+    "3dState": "required"
+  },
+  "benchmarkScene": {
+    "worldState": "Sheep + Maze only",
+    "sheepfoldVisible": false,
+    "exitMarkerVisible": false,
+    "revelationTriggered": false,
+    "purpose": "Test whether the visual world is compelling before explicit destination or revelation appears."
+  },
+  "evidencePolicy": {
+    "historicalEvidenceRemainsEvidence": true,
+    "generatedOutputIsEvaluationEvidenceOnly": true,
+    "mayCopyHistoricalCover": false,
+    "mayCopyMastheadOrLogo": false,
+    "maySelfPromote": false
+  },
+  "evaluation": {
+    "beautyAdmissionFloor": true,
+    "everyLegalStateMustRemainComposed": true,
+    "champion": false,
+    "humanJudgmentRequiredForPromotion": true
+  }
+}
