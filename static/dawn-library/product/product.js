@@ -1,52 +1,29 @@
 import { resourceManifest, resourceWorks, resourceSearch } from '../../js/resource-fabric-client.mjs';
+import { DawnLivingWall } from '../living/runtime.js';
 
-const root = document.querySelector('[data-dawn-product]');
-const shelvesHost = root.querySelector('[data-shelves]');
-const search = root.querySelector('[data-search]');
-const count = root.querySelector('[data-count]');
+const root=document.querySelector('[data-dawn-product]'),shelvesHost=root.querySelector('[data-shelves]'),search=root.querySelector('[data-search]'),count=root.querySelector('[data-count]');
+const [storefront,surface,launch,manifest]=await Promise.all([fetch('../storefront.json').then(r=>r.json()),fetch('../surfaces/dawn-storefront.json').then(r=>r.json()),fetch('../surfaces/dawn-launch.json').then(r=>r.json()),resourceManifest()]);
+const storeShelves=new Map((storefront?.shelves||[]).map(s=>[s.id,s])),surfaceShelves=[launch,...(surface?.shelves||[])].filter(Boolean);
+const living=new DawnLivingWall('../living/root.json',{windowCards:84,prefetchAhead:1});
 
-const [storefront, surface, launch, manifest] = await Promise.all([
-  fetch('../storefront.json').then(r => r.json()),
-  fetch('../surfaces/dawn-storefront.json').then(r => r.json()),
-  fetch('../surfaces/dawn-launch.json').then(r => r.json()),
-  resourceManifest()
-]);
-const storeShelves = new Map((storefront?.shelves || []).map(shelf => [shelf.id, shelf]));
-const surfaceShelves = [launch, ...(surface?.shelves || [])].filter(Boolean);
-
-function pointerSource(pointer) {
-  if (typeof pointer === 'string' && /^https?:\/\//.test(pointer)) return { url: pointer };
-  if (pointer && typeof pointer === 'object' && typeof pointer.url === 'string') return { url: pointer.url };
-  return null;
+function pointerSource(pointer){if(typeof pointer==='string'&&/^https?:\/\//.test(pointer))return{url:pointer};if(pointer&&typeof pointer==='object'&&typeof pointer.url==='string')return{url:pointer.url};return null}
+function coverUrl(item){const p=item?.resourceCoverPointer||item?.coverPointer;return typeof p==='string'&&p.startsWith('/dawn-library/covers/')?p:''}
+function makeBook(item,wallRef=null){
+ const card=document.createElement('article');card.className='book';card.dataset.workId=item.workId||'';
+ if(wallRef){card.dataset.track=String(wallRef.wall?.trackSeed??0);card.dataset.span=String(wallRef.wall?.span??1);card.style.setProperty('--dawn-weight',String(wallRef.wall?.weight??1));}
+ const wrap=document.createElement('div');wrap.className='cover-wrap';const fallback=document.createElement('div');fallback.className='fallback';fallback.innerHTML='<small>Dawn Library</small><strong></strong><small></small>';fallback.querySelector('strong').textContent=item.title||'Untitled';fallback.querySelector('small:last-child').textContent=item.author||item.authors?.[0]||'Canonical Work';wrap.append(fallback);
+ const url=coverUrl(item);if(url){const img=document.createElement('img');img.alt=`${item.title} 封面`;img.loading='lazy';img.src=url;img.addEventListener('load',()=>fallback.remove(),{once:true});img.addEventListener('error',()=>img.remove(),{once:true});wrap.append(img)}
+ const badge=document.createElement('span');badge.className='badge';badge.textContent='DAWN';wrap.append(badge);const title=document.createElement('h3');title.textContent=item.title||'Untitled';const author=document.createElement('p');author.textContent=item.author||item.authors?.[0]||'—';card.append(wrap,title,author);
+ const source=item.source||pointerSource(item.readingPointer);if(source?.url){card.tabIndex=0;card.setAttribute('role','link');const open=()=>window.open(source.url,'_blank','noopener,noreferrer');card.addEventListener('click',open);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})}return card;
 }
-function coverUrl(item) {
-  const pointer = item?.resourceCoverPointer || item?.coverPointer;
-  return typeof pointer === 'string' && pointer.startsWith('/dawn-library/covers/') ? pointer : '';
+function appendShelf(title,items){if(!items.length)return 0;const section=document.createElement('section');section.className='shelf';const h=document.createElement('h2');h.textContent=title;const rail=document.createElement('div');rail.className='rail';items.forEach(x=>rail.append(makeBook(x)));section.append(h,rail);shelvesHost.append(section);return items.length}
+async function resolveSurfaceShelf(s){const ids=[...new Set((s?.items||[]).map(r=>r.workId).filter(Boolean))],works=await resourceWorks(ids),legacy=storeShelves.get(s.id),old=new Map((legacy?.items||[]).filter(x=>x.workId).map(x=>[x.workId,x]));return{title:s.title||legacy?.title||s.id,items:ids.map(id=>{const w=works.get(id);if(!w)return null;const o=old.get(id)||{};return{...w,author:w.authors?.[0]||o.author||'',source:o.source||pointerSource(w.readingPointer)}}).filter(Boolean)}}
+let resolvedShelves=null,searchGeneration=0,livingOffset=0;
+async function renderLiving(offset=0){
+ searchGeneration++;await living.init();const w=await living.window(offset),ids=w.refs.map(x=>x.workId),works=await resourceWorks(ids),section=document.createElement('section');section.className='shelf living-shelf';section.dataset.livingWall='true';const h=document.createElement('h2');h.textContent='館藏流';const rail=document.createElement('div');rail.className='rail living-rail';for(const ref of w.refs){const work=works.get(ref.workId);if(work)rail.append(makeBook({...work,author:work.authors?.[0]||''},ref))}section.append(h,rail);shelvesHost.replaceChildren(section);livingOffset=offset;living.releaseFarFrom(offset);count.textContent=`${w.offset+1}–${w.offset+w.count} / ${w.total}`;
 }
-function makeBook(item) {
-  const card = document.createElement('article');card.className='book';card.dataset.workId=item.workId||'';
-  const coverWrap=document.createElement('div');coverWrap.className='cover-wrap';
-  const fallback=document.createElement('div');fallback.className='fallback';fallback.innerHTML=`<small>Dawn Library</small><strong></strong><small>${item.author||item.authors?.[0]||'Canonical Work'}</small>`;fallback.querySelector('strong').textContent=item.title||'Untitled';coverWrap.append(fallback);
-  const url=coverUrl(item);if(url){const img=document.createElement('img');img.alt=`${item.title} 封面`;img.loading='lazy';img.src=url;img.addEventListener('load',()=>fallback.remove(),{once:true});img.addEventListener('error',()=>img.remove(),{once:true});coverWrap.append(img)}
-  const badge=document.createElement('span');badge.className='badge';badge.textContent='DAWN';coverWrap.append(badge);
-  const title=document.createElement('h3');title.textContent=item.title||'Untitled';const author=document.createElement('p');author.textContent=item.author||item.authors?.[0]||'—';card.append(coverWrap,title,author);
-  const source=item.source||pointerSource(item.readingPointer);if(source?.url){card.tabIndex=0;card.setAttribute('role','link');const open=()=>window.open(source.url,'_blank','noopener,noreferrer');card.addEventListener('click',open);card.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open()}})}
-  return card;
-}
-function appendShelf(title,items){if(!items.length)return 0;const section=document.createElement('section');section.className='shelf';const heading=document.createElement('h2');heading.textContent=title;const rail=document.createElement('div');rail.className='rail';items.forEach(item=>rail.append(makeBook(item)));section.append(heading,rail);shelvesHost.append(section);return items.length}
-async function resolveSurfaceShelf(surfaceShelf){
-  const refs=surfaceShelf?.items||[];const ids=[...new Set(refs.map(r=>r.workId).filter(Boolean))];const works=await resourceWorks(ids);const legacy=storeShelves.get(surfaceShelf.id);const legacyById=new Map((legacy?.items||[]).filter(x=>x.workId).map(x=>[x.workId,x]));
-  const items=ids.map(id=>{const work=works.get(id);if(!work)return null;const old=legacyById.get(id)||{};return {...work,author:work.authors?.[0]||old.author||'',source:old.source||pointerSource(work.readingPointer)}}).filter(Boolean);
-  return {title:surfaceShelf.title||legacy?.title||surfaceShelf.id,items};
-}
-let resolvedShelves=null;
-async function renderCurated(){
-  if(!resolvedShelves)resolvedShelves=await Promise.all(surfaceShelves.map(resolveSurfaceShelf));
-  shelvesHost.replaceChildren();let visible=0;for(const shelf of resolvedShelves)visible+=appendShelf(shelf.title,shelf.items);count.textContent=`${manifest?.workCount||visible} resources`;
-}
-let searchGeneration=0;
-async function renderSearch(query){
-  const generation=++searchGeneration;const results=await resourceSearch(query);if(generation!==searchGeneration)return;shelvesHost.replaceChildren();const visible=appendShelf('All canonical resources',results.map(work=>({...work,author:work.authors?.[0]||''})));count.textContent=`${visible} / ${manifest?.workCount||0}`;if(!visible){const empty=document.createElement('p');empty.className='empty';empty.textContent='沒有符合目前搜尋的館藏。';shelvesHost.append(empty)}
-}
-search.addEventListener('input',event=>{const q=event.target.value.trim();if(!q){searchGeneration+=1;renderCurated().catch(console.error);return}renderSearch(q).catch(error=>console.error('Resource Fabric search failed',error))});
-renderCurated().catch(error=>console.error('Resource Fabric render failed',error));
+async function renderCurated(){if(!resolvedShelves)resolvedShelves=await Promise.all(surfaceShelves.map(resolveSurfaceShelf));shelvesHost.replaceChildren();let visible=0;for(const s of resolvedShelves)visible+=appendShelf(s.title,s.items);count.textContent=`${manifest?.workCount||visible} resources`}
+async function renderSearch(q){const generation=++searchGeneration,results=await resourceSearch(q);if(generation!==searchGeneration)return;shelvesHost.replaceChildren();const visible=appendShelf('All canonical resources',results.map(w=>({...w,author:w.authors?.[0]||''})));count.textContent=`${visible} / ${manifest?.workCount||0}`}
+search.addEventListener('input',e=>{const q=e.target.value.trim();if(q)renderSearch(q).catch(console.error);else renderLiving(livingOffset).catch(()=>renderCurated().catch(console.error))});
+window.addEventListener('keydown',e=>{if(search.value.trim())return;if(e.key==='ArrowRight'||e.key==='PageDown'){renderLiving(Math.min((living.root?.canonicalWorkCount||84)-1,livingOffset+84)).catch(console.error)}if(e.key==='ArrowLeft'||e.key==='PageUp'){renderLiving(Math.max(0,livingOffset-84)).catch(console.error)}});
+renderLiving(0).catch(error=>{console.error('Living Wall unavailable; curated fallback',error);renderCurated().catch(console.error)});
