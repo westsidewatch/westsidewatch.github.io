@@ -1,0 +1,47 @@
+{
+  "schema": "dore.westside-writing-samples.v0",
+  "capability": "writing.westside-dimensional-journalism",
+  "status": "foundation-candidate",
+  "samples": [
+    {
+      "id": "job-rhythm-negative-001",
+      "kind": "negative",
+      "text": "第八天，約伯開口。",
+      "reason": [
+        "technically-effective-short-sentence",
+        "rhythmic-closure-without-sufficient-perception",
+        "easy-to-overproduce-as-ai-punchline"
+      ],
+      "do_not_learn": "short-sentence-impact-as-default"
+    },
+    {
+      "id": "job-rhythm-positive-001",
+      "kind": "positive",
+      "text": "七天，沒有一個人開口。靜默和約伯的痛苦哪個更大似乎都不能被明辨。七天又過了一天，約伯發出了聲音。",
+      "reason": [
+        "perception-enters-between-facts",
+        "experiential-time-rather-than-calendar-label",
+        "silence-to-sound-semantic-pressure",
+        "rhythm-carries-seeing"
+      ],
+      "preserve": ["七天／七天又過了一天", "靜默／聲音"]
+    },
+    {
+      "id": "job-density-positive-001",
+      "kind": "positive-with-editorial-review",
+      "text": "三個朋友從各自遙遠的地方來，他們眼見約伯的情狀都撕裂外袍，好像撕裂心情撕裂生命撕裂這令人目睹就窒息的痛苦。這時候，塵土飛揚、大漠的孤煙說不盡作為人類的淒涼，塵土飛揚，落在個人頭上，比他們遠程而來的風塵更重。三個朋友說不出話，只能坐在地上，只能默默看著他們的朋友經歷的痛苦。七天，沒有一個人開口。",
+      "reason": [
+        "high-density-rhetoric-ignited-by-source-action",
+        "repetition-accumulates-meaning",
+        "dust-and-road-dust-create-dimensional-pressure",
+        "只能-repetition-marks-human-capacity-shrinking",
+        "kinetic-arc-descends-into-silence"
+      ],
+      "review_flags": [
+        "verify-or-consciously-own-大漠的孤煙-as-Chinese-poetic-intertext-rather-than-Job-geography",
+        "個人頭上-may-be-各人頭上-input-issue",
+        "do-not-flatten-during-copyedit"
+      ]
+    }
+  ]
+}
