@@ -64,7 +64,8 @@ def call(
         "transport": "conversation-gateway",
     })
     return _emit({
-        "ok": bool(result.get("ok")) if isinstance(result, dict) else False,
+        "ok": (result.get("status") == "succeeded" if "status" in result
+               else result.get("ok") is True) if isinstance(result, dict) else False,
         "operation": "call",
         "capability": capability,
         "result": result,
