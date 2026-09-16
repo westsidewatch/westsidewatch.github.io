@@ -20,13 +20,11 @@ def main():
   assert pack["task"]["working_head"]["version_id"]=="V2"
   assert pack["task"]["resume_head"]==resume
   ids=[c["id"] for c in pack["capability_refs"]]
-  assert ids==["context.fuzzy-search","knowledge.recall"]
+  assert ids==["context.fuzzy-search","knowledge.recall","publishing.dimensional-writing"]
   assert pack["authority"]["state"]=="TODAY" and pack["authority"]["capability"]=="dore-core-registry"
   assert pack["authority"]["may_rewrite_author_thesis"] is False
-  # Unknown capability must fail closed: no invented provider/capability.
   try:bridge.resolve("writing",["invented.magic.writer"]);raise AssertionError("unknown capability admitted")
   except ValueError as e:assert str(e).startswith("two_days_unknown_capability:")
-  # Exact text remains ledger authority, not context-pack prose.
   assert ledger.content(aid,"V1")==v1 and ledger.content(aid,"V2")==v2
   print(json.dumps({"ok":True,"code":"TWO_DAYS_CAPABILITY_BRIDGE_PHASE4_PASS","profile":"writing","capabilities":ids,"unknown":"BLOCKED","accepted_head":"V1","working_head":"V2"},ensure_ascii=False))
 if __name__=="__main__":main()
