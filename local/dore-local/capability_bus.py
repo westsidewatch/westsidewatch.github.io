@@ -76,6 +76,19 @@ def _load_local_capability(module_name:str,args:dict[str,Any])->dict[str,Any]:
 def _reflex_project(args:dict[str,Any])->dict[str,Any]:return _load_local_capability("reflex_capability",args)
 def _translation_project(args:dict[str,Any])->dict[str,Any]:return _load_local_capability("translation_capability",args)
 
+def _editorial_visual_observation(args:dict[str,Any])->dict[str,Any]:
+ provider=_load_sibling('editorial_visual_provider');capability=_load_sibling('editorial_visual_observation_capability')
+ evidence=args.get('evidence') if isinstance(args.get('evidence'),dict) else args
+ ev=capability.HistoricalImageEvidence(
+  evidence_id=str(evidence.get('id') or evidence.get('evidenceId') or ''),
+  image_uri=str(evidence.get('imageUri') or evidence.get('image') or ''),
+  source_uri=str(evidence.get('sourceUri') or evidence.get('source') or ''),
+  publication=str(evidence.get('publication') or ''),
+  era=str(evidence.get('era') or ''),
+ )
+ p=provider.provenance();result=capability.observe_historical_editorial_image(ev,provider.observe,provider_id=p['providerId'],provider_kind=p['providerKind'])
+ result=dict(result);result['ok']=True;result['status']='completed';result['capability']='design.editorial-visual-observation';return result
+
 def _design_intelligence(args:dict[str,Any])->dict[str,Any]:
  if not DESIGN_ROOT.is_dir():raise RuntimeError("dore_design_runtime_missing")
  inserted=str(DESIGN_ROOT) not in sys.path
@@ -131,6 +144,7 @@ def _invoke_native(handler:str,args:dict[str,Any],caller_product:str|None)->dict
  if handler=="translation.project":return _translation_project(args)
  if handler=="publishing.book-intelligence":return _book_intelligence(args)
  if handler=="design.intelligence":return _design_intelligence(args)
+ if handler=="design.editorial-visual-observation":return _editorial_visual_observation(args)
  if handler=="bible.query-plan":return _bible_query_plan(args)
  if handler=="context.fuzzy-search":return _fuzzy_search(args,caller_product)
  if handler=="knowledge.recall":return _knowledge_recall(args)
