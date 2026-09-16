@@ -1,0 +1,27 @@
+{
+  "schema": "dore.context-authority-entities.v1",
+  "authority": "github-current-canon",
+  "entities": [
+    {
+      "id": "project.dore.emergence",
+      "atlasEntity": "capability:emergence",
+      "aliases": ["浮現", "Emergence", "Doré Emergence", "Dore Emergence"],
+      "status": "formally-established",
+      "canonicalAuthority": ["docs/CURRENT_MAINLINE.md", "data/system-atlas.v0.json"],
+      "currentCheckpoint": "docs/CURRENT_MAINLINE.md",
+      "dependencies": ["authority:bible-index", "authority:system-atlas", "system:dawn-library", "system:paradise-cinema", "tool:one"],
+      "canonicalPath": "Context -> Bible Coordinate -> Canonical Relation -> Resource -> Emergence",
+      "retrievalPolicy": "exact entity hit -> mandatory authority load",
+      "fallback": "UNKNOWN — authoritative record not retrieved",
+      "maySemanticCompleteWithoutAuthority": false
+    }
+  ],
+  "authorityOrder": [
+    "github-current-canon",
+    "accepted-recent-decision",
+    "durable-event-decision-history",
+    "memory-summary",
+    "model-inference"
+  ],
+  "rule": "Lower authority may discover candidates but cannot override higher authority. Registered engineering entities fail closed when mandatory authority cannot be loaded."
+}
