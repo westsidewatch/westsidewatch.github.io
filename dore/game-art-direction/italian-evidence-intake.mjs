@@ -25,8 +25,8 @@ export function buildItalianSeedProjection(){
     const era=eraGrammar(item);
     if(!era) throw new Error(`missing grammar era ${item.era}`);
     const grammarTokens=new Set(Object.values(era.grammar||{}).flat());
-    const supportedTokens=(item.tokens||[]).filter(token=>grammarTokens.has(token));
-    if(!supportedTokens.length) throw new Error(`no grammar support for ${id}`);
+    const supportedGrammarTokens=(item.tokens||[]).filter(token=>grammarTokens.has(token));
+    if(!supportedGrammarTokens.length) throw new Error(`no grammar support for ${id}`);
     return {
       evidenceId:item.id,
       family:item.family,
