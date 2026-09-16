@@ -1,0 +1,24 @@
+name: Doré Game Art Direction Foundation
+
+on:
+  pull_request:
+    paths:
+      - 'dore/game-art-direction/**'
+      - 'static/dore-design/italian-editorial-*.json'
+      - 'dore/skill-growth/**'
+      - '.github/workflows/dore-game-art-direction-foundation.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Validate Game Art Direction Lab foundation
+        run: node dore/game-art-direction/foundation.acceptance.mjs
