@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""DORÉ local routing host: on-demand, zero-cloud local control plane.
-
-Capability families are loaded lazily. A broken optional Core package must not
-make unrelated local A2A capabilities unavailable. Normal canonical capabilities
-enter Core through the public normalization boundary; direct modules are retained
-only as explicit recovery/acceptance compatibility paths.
-"""
+"""DORÉ local routing host: on-demand, zero-cloud local control plane."""
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
@@ -27,9 +21,7 @@ def _execute(name,cap,args):
  m=_module(name)
  if not m:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"capability_module_unavailable","message":_LOAD_ERRORS.get(name,name)}}
  return m.execute(cap,args)
-def _bus_pair():
- bus=_module("capability_bus");production=_module("production_actions")
- return bus,production
+def _bus_pair():return _module("capability_bus"),_module("production_actions")
 def discover_production(include_planned=False):
  bus,production=_bus_pair()
  if not bus or not production:return []
@@ -68,7 +60,7 @@ def _with_id(req,res):
 def generation_payload():return a2a_generation.identity(loaded_modules=_CACHE_META,degraded_modules=_LOAD_ERRORS)
 def health_payload():
  direct=[]
- for name in ("source_probe_action","source_capability_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
+ for name in ("source_probe_action","source_capability_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action","design_observation_action"):
   direct.extend(sorted(_capabilities(name)))
  production=[x["id"] for x in discover_production() if x.get("callable")]
  generation=generation_payload()
@@ -81,7 +73,7 @@ def _adapter_dispatch(payload):
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "");args=payload.get("args") or {}
- direct=(("source_probe_action",), ("source_capability_action",), ("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
+ direct=(("source_probe_action",),("source_capability_action",),("design_live_acceptance_action",),("design_observation_action",),("self_maintenance_action",),("theology_acceptance_action",),("theology_training_action",),("dawn_publication_action",))
  for entry in direct:
   name=entry[0]
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
