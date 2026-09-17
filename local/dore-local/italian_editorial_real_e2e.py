@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Real Mac A2A acceptance: exact historical pixels -> Doré 8D -> grounded prompt -> canonical image.generate; three specimens required."""
+"""Real Mac A2A acceptance: exact historical pixels -> Doré 8D -> grounded prompt -> canonical image.generate; all three specimens are mandatory and fail closed."""
 from __future__ import annotations
 import json
 from pathlib import Path
@@ -29,8 +29,6 @@ def main():
   byte_ev=(obs.get('provenance') or {}).get('imageEvidence') or {}
   if byte_ev.get('uri')!=item.get('image') or len(str(byte_ev.get('sha256','')))!=64 or int(byte_ev.get('bytes') or 0)<=0:raise SystemExit(f'byte-grounding failed: {eid}')
   prompt=compile_grounded_prompt(obs)
-  # Existing local image resident deliberately accepts only the canonical dore-search
-  # transport identity and a single message field. Evaluation metadata remains in this report.
   result=capability_bus.call('image.generate',{'message':prompt},production_actions,caller_product='dore-search')
   uri=artifact(result)
   if not uri:raise SystemExit(f'image.generate returned no real artifact: {eid}: {result}')
