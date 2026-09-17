@@ -1,4 +1,8 @@
-{{ $matches := where site.Data.visual_graph.visual_works "id" "visual-princeton-galilee-storm-1591" }}
+{{ $visualWorks := slice }}
+{{ with site.Data.visual_graph }}
+  {{ with .visual_works }}{{ $visualWorks = . }}{{ end }}
+{{ end }}
+{{ $matches := where $visualWorks "id" "visual-princeton-galilee-storm-1591" }}
 {{ if gt (len $matches) 0 }}
   {{ $visual := index $matches 0 }}
   <section class="home-visual-bridge" aria-labelledby="home-visual-bridge-title" data-visual-consumer="main-homepage">
