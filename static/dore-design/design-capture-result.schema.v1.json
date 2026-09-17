@@ -1,0 +1,15 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "$id":"dore.design-capture-result.v1",
+  "type":"object",
+  "required":["schema","jobId","sourceId","viewport","capture","evidence","authority"],
+  "properties":{
+    "schema":{"const":"dore.design-capture-result.v1"},
+    "jobId":{"type":"string"},
+    "sourceId":{"type":"string"},
+    "viewport":{"enum":["desktop","mobile"]},
+    "capture":{"type":"object","required":["finalUrl","renderedAt","screenshotRef"],"properties":{"finalUrl":{"type":"string"},"renderedAt":{"type":"string"},"screenshotRef":{"type":"string"},"domSnapshotRef":{"type":"string"},"observerPayloadRef":{"type":"string"}}},
+    "evidence":{"type":"object","required":["schema","authority"],"properties":{"schema":{"const":"dore.design-observation-evidence.v1"},"authority":{"type":"object"}}},
+    "authority":{"type":"object","required":["class","mayPromoteCanonical","requiresBeautifulGate"],"properties":{"class":{"const":"observational-evidence"},"mayPromoteCanonical":{"const":false},"requiresBeautifulGate":{"const":true}}}
+  }
+}
