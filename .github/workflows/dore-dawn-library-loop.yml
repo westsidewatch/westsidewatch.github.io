@@ -13,6 +13,7 @@ on:
       - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'scripts/build_dawn_10k_work_queue.py'
       - 'scripts/build_dawn_canonical_substrate.py'
+      - 'scripts/build_dawn_canonical_shards.py'
       - 'scripts/build_dawn_storefront.py'
       - 'scripts/build_dawn_living_library.py'
       - 'scripts/build_dawn_living_shards.py'
@@ -33,6 +34,7 @@ jobs:
       DAWN_OL_PAGE_SIZE: '100'
       DAWN_OL_MAX_PAGES_PER_QUERY: '300'
       DAWN_OL_DELAY_SECONDS: '0.08'
+      DAWN_CANONICAL_SHARD_SIZE: '10000'
     steps:
       - uses: actions/checkout@v4
         with: {fetch-depth: 0}
@@ -61,11 +63,37 @@ jobs:
           python scripts/discover_dawn_10k_openlibrary_works.py
           python scripts/build_dawn_10k_work_queue.py
           python scripts/build_dawn_canonical_substrate.py
+          python scripts/build_dawn_canonical_shards.py
+      - name: Validate canonical shard coverage
+        run: |
+          python - <<'PY'
+          import hashlib,json
+          from pathlib import Path
+          monolith=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          root=json.loads(Path('static/dawn-library/canonical/root.json').read_text())
+          assert root['workCount']==monolith['workCount']
+          assert root['authorityBackedWorks']==monolith['authorityBackedWorks']
+          assert root['shardCount']==len(root['shards'])
+          seen=0
+          ids=set()
+          for ref in root['shards']:
+            p=Path('static/dawn-library/canonical')/ref['href']
+            raw=p.read_bytes(); shard=json.loads(raw)
+            assert hashlib.sha256(raw).hexdigest()==ref['sha256']
+            assert shard['offset']==seen and shard['workCount']==len(shard['works'])
+            assert shard['admissionAuthority'] is False
+            overlap=ids.intersection(shard['works'])
+            assert not overlap
+            ids.update(shard['works']); seen+=shard['workCount']
+          assert seen==root['workCount']==len(ids)==len(monolith['works'])
+          assert ids==set(monolith['works'])
+          print(json.dumps({'canonicalWorkCount':seen,'canonicalShards':root['shardCount']},ensure_ascii=False))
+          PY
       - name: Checkpoint canonical growth immediately
         run: |
-          git add static/dawn-library/canonical-index.json static/dawn-library/surfaces/*.json data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json
+          git add static/dawn-library/canonical static/dawn-library/surfaces/*.json
           if ! git diff --cached --quiet; then
-            git commit -m 'chore(dawn): checkpoint canonical growth [skip ci]'
+            git commit -m 'chore(dawn): checkpoint sharded canonical growth [skip ci]'
             git push origin "HEAD:${GITHUB_REF_NAME}"
           fi
       - name: Project and shard living library
@@ -113,14 +141,16 @@ jobs:
           import json
           from pathlib import Path
           canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          canonical_root=json.loads(Path('static/dawn-library/canonical/root.json').read_text())
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           report=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
           assert canonical.get('runtimePolicy',{}).get('wikisource')=='forbidden'
+          assert canonical_root['workCount']==canonical['workCount']
           assert report['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
           assert canonical['workCount']==len(canonical['works']) and canonical['workCount']>100000
-          print(json.dumps({'canonicalWorkCount':canonical['workCount'],'phase3Target':1000000},ensure_ascii=False))
+          print(json.dumps({'canonicalWorkCount':canonical['workCount'],'canonicalShards':canonical_root['shardCount'],'phase3Target':1000000},ensure_ascii=False))
           PY
       - uses: actions/upload-artifact@v4
         with:
@@ -129,7 +159,8 @@ jobs:
             reports/DAWN-LIBRARY-*.json
             data/dawn-10k-openlibrary-works.json
             data/dawn-10k-work-queue.json
-            static/dawn-library/canonical-index.json
+            static/dawn-library/canonical/root.json
+            static/dawn-library/canonical/works-*.json
             static/dawn-library/living-library.json
             static/dawn-library/living/**
             static/dawn-library/surfaces/*.json
