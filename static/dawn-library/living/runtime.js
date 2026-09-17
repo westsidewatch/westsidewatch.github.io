@@ -1,6 +1,6 @@
 /* Dawn Living Wall runtime v1 — lazy shards + bounded DOM. */
 export class DawnLivingWall {
-  constructor(rootUrl='/dawn-library/living/root.json',{windowCards=84,prefetchAhead=1}={}){
+  constructor(rootUrl='/static/dawn-library/living/root.json',{windowCards=84,prefetchAhead=1}={}){
     this.rootUrl=rootUrl;this.windowCards=windowCards;this.prefetchAhead=prefetchAhead;this.root=null;this.rootResolvedUrl=null;this.cache=new Map();this.loading=new Map();
   }
   async init(){
