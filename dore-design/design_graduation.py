@@ -8,6 +8,7 @@ for p in (ROOT/'dore-design',ROOT/'local'/'dore-local'):
 import design_intelligence_a2a as bridge
 SPEC=ROOT/'dore-design'/'training'/'design-graduation.v0.json'
 OUT=ROOT/'dore-design'/'training'/'evidence'/'graduation'
+MAX_ATTEMPTS=int(os.environ.get('DORE_GRADUATION_MAX_ATTEMPTS','6'))
 
 def base_snapshot():
     page={'id':'unseen-brief','canvas':{'w':1440,'h':900},'nodes':[
@@ -16,7 +17,7 @@ def base_snapshot():
       {'id':'life','type':'text','text':'Worship · Fellowship · Word · Prayer','x':72,'y':700,'w':900,'h':70,'size':22,'text_align':'left'}]}
     return {'schema':'dore.design.publish-snapshot.v1','workspace_id':'design-graduation-unseen','revision':1,'page_id':'unseen-brief','page':page,'tokens':{'paper':'#F4F0E6','ink':'#252525','gold':'#CEBD74'},'sha256':'graduation-unseen-seed','created_at':0}
 
-def payload(phase, constraints):
+def payload(phase,constraints):
     return {'surface_id':'dore-design-graduation-'+phase,'surface_family':'living-water-graduation-unseen','task_context':'Unseen graduation brief. Independently compose a new Living Water church editorial landing surface expressing arrival, living fellowship, Scripture, and quiet sacred presence. Do not reuse Round 01 geometry. Choose editorial grammar and design weapons yourself.','primary_axis':'composition','viewport_context':'desktop','content_context':'bilingual-sacred-editorial','scope':'surface-family','constraints':constraints,'candidates':['A','B'],'base_snapshot':base_snapshot()}
 
 def copy_rasters(result,prefix):
@@ -30,22 +31,30 @@ def copy_rasters(result,prefix):
 def compact(r):
     return {'decision':r.get('decision'),'provider':r.get('provider'),'model':r.get('model'),'winner':r.get('winner'),'consensus':r.get('consensus'),'memoryAdmitted':r.get('memory_admitted'),'loserFailures':r.get('loser_failures') or [],'repairLoop':r.get('repair_loop'),'candidates':[{'id':c.get('candidate_id'),'patch':c.get('patch'),'geometry':c.get('geometry'),'raster':c.get('raster')} for c in (r.get('candidates') or [])]}
 
+def domains(r):
+    return sorted({str(f.get('domain')) for f in (r.get('loser_failures') or []) if f.get('domain')})
+
 def main():
     spec=json.loads(SPEC.read_text()); OUT.mkdir(parents=True,exist_ok=True)
     base=['preserve required authored content','beautiful is an admission floor','fresh geometry required','no Round 01 template reuse','no palette-only variation','no generic church template','Italian editorial references are teachers not authority','independently select weapons','do not promote to production']
-    first=bridge.explore(payload('first-pass',base))
-    before=copy_rasters(first,'first')
-    failures=sorted({str(f.get('domain')) for f in (first.get('loser_failures') or []) if f.get('domain')})
-    second_constraints=base+['self-diagnose first real-browser result and revise composition, typography, image direction and motion only where semantically justified']
-    if failures: second_constraints.append('explicitly repair failure domains: '+', '.join(failures))
-    second=bridge.explore(payload('self-revision',second_constraints))
-    if second.get('decision')=='exploit':
-        p=payload('self-revision-transfer',second_constraints+['produce fresh executable transfer variants rather than reuse stable pair']); p['surface_family']='living-water-graduation-transfer'; second=bridge.explore(p)
-    after=copy_rasters(second,'second')
-    second_failures=sorted({str(f.get('domain')) for f in (second.get('loser_failures') or []) if f.get('domain')})
-    passed=bool(len(before)==2 and len(after)==2 and not second_failures and second.get('consensus'))
-    report={'schema':'dore.design-graduation-evidence.v0','designer':'dore','mode':'unseen-brief','trainingSpec':spec['trainingId'],'beforeRaster':before,'afterRaster':after,'firstPassFailureDomains':failures,'finalFailureDomains':second_failures,'independentWeaponSelection':True,'freshGeometryRequired':True,'firstPass':compact(first),'selfRevision':compact(second),'graduated':passed,'winner':None,'productionPromoted':False,'canonicalWorkspaceMutated':False}
-    (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-    print(json.dumps({'ok':passed,'graduated':passed,'report':str((OUT/'report.json').relative_to(ROOT))},ensure_ascii=False))
-    if not passed: raise SystemExit(2)
-if __name__=='__main__': main()
+    attempts=[]; previous_failures=[]; graduated=False
+    for attempt in range(1,MAX_ATTEMPTS+1):
+        constraints=list(base)
+        if previous_failures:
+            constraints += ['This is autonomous remedial training after a failed real-browser Beauty Gate. Diagnose and materially repair the prior failure domains before attempting graduation again.','prior failure domains: '+', '.join(previous_failures),'Do not merely vary palette or reuse rejected geometry. Recompose where necessary, control typography and image direction, and use motion only when semantically justified.']
+        result=bridge.explore(payload(f'attempt-{attempt}',constraints))
+        if result.get('decision')=='exploit':
+            p=payload(f'attempt-{attempt}-transfer',constraints+['produce fresh executable transfer variants rather than reuse a stable pair']); p['surface_family']=f'living-water-graduation-transfer-{attempt}'; result=bridge.explore(p)
+        refs=copy_rasters(result,f'attempt-{attempt}')
+        failure_domains=domains(result)
+        passed=bool(len(refs)==2 and not failure_domains and result.get('consensus'))
+        attempts.append({'attempt':attempt,'rasters':refs,'failureDomains':failure_domains,'result':compact(result),'passed':passed})
+        report={'schema':'dore.design-graduation-evidence.v1','designer':'dore','mode':'unseen-brief','trainingSpec':spec['trainingId'],'attempts':attempts,'finalFailureDomains':failure_domains,'independentWeaponSelection':True,'freshGeometryRequired':True,'graduated':passed,'winner':None,'productionPromoted':False,'canonicalWorkspaceMutated':False}
+        (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
+        print(json.dumps({'attempt':attempt,'graduated':passed,'failureDomains':failure_domains,'rasters':len(refs)},ensure_ascii=False),flush=True)
+        if passed:
+            graduated=True; break
+        previous_failures=failure_domains or ['beauty-gate-no-consensus']
+    print(json.dumps({'ok':graduated,'graduated':graduated,'attempts':len(attempts),'report':str((OUT/'report.json').relative_to(ROOT))},ensure_ascii=False))
+    return 0 if graduated else 2
+if __name__=='__main__': raise SystemExit(main())
