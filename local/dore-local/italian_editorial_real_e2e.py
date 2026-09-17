@@ -17,7 +17,7 @@ def artifact(result):
  if not isinstance(result,dict) or not result.get('ok'):return None
  candidates=[result]+[result.get(k) for k in ('artifact','image','output','result') if isinstance(result.get(k),dict)]
  for x in candidates:
-  uri=x.get('uri') or x.get('url') or x.get('image_url') or x.get('path')
+  uri=x.get('uri') or x.get('url') or x.get('image_url') or x.get('path') or x.get('asset_url')
   if isinstance(uri,str) and uri.strip():return uri.strip()
  return None
 def main():
@@ -29,9 +29,11 @@ def main():
   byte_ev=(obs.get('provenance') or {}).get('imageEvidence') or {}
   if byte_ev.get('uri')!=item.get('image') or len(str(byte_ev.get('sha256','')))!=64 or int(byte_ev.get('bytes') or 0)<=0:raise SystemExit(f'byte-grounding failed: {eid}')
   prompt=compile_grounded_prompt(obs)
-  result=capability_bus.call('image.generate',{'message':prompt,'prompt':prompt,'purpose':'italian-editorial-real-e2e','evidence_id':eid,'authority':'historical-image-observation','evaluation_only':True},production_actions,caller_product='italian-editorial-atlas')
+  # Existing local image resident deliberately accepts only the canonical dore-search
+  # transport identity and a single message field. Evaluation metadata remains in this report.
+  result=capability_bus.call('image.generate',{'message':prompt},production_actions,caller_product='dore-search')
   uri=artifact(result)
   if not uri:raise SystemExit(f'image.generate returned no real artifact: {eid}: {result}')
-  rows.append({'evidenceId':eid,'observation':obs,'prompt':prompt,'generatedArtifact':uri,'providerResult':result})
+  rows.append({'evidenceId':eid,'observation':obs,'prompt':prompt,'generatedArtifact':uri,'evaluationOnly':True,'providerResult':result})
  OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps({'schema':'dore.italian-editorial-real-e2e.v1','status':'ARTIFACTS_READY','cases':rows},ensure_ascii=False,indent=2),encoding='utf-8');print('DORÉ_ITALIAN_EDITORIAL_REAL_E2E=ARTIFACTS_READY');print(OUT);return 0
 if __name__=='__main__':raise SystemExit(main())
