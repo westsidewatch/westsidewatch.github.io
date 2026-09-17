@@ -74,16 +74,13 @@ jobs:
           assert root['workCount']==monolith['workCount']
           assert root['authorityBackedWorks']==monolith['authorityBackedWorks']
           assert root['shardCount']==len(root['shards'])
-          seen=0
-          ids=set()
+          seen=0; ids=set()
           for ref in root['shards']:
-            p=Path('static/dawn-library/canonical')/ref['href']
-            raw=p.read_bytes(); shard=json.loads(raw)
+            p=Path('static/dawn-library/canonical')/ref['href']; raw=p.read_bytes(); shard=json.loads(raw)
             assert hashlib.sha256(raw).hexdigest()==ref['sha256']
             assert shard['offset']==seen and shard['workCount']==len(shard['works'])
             assert shard['admissionAuthority'] is False
-            overlap=ids.intersection(shard['works'])
-            assert not overlap
+            assert not ids.intersection(shard['works'])
             ids.update(shard['works']); seen+=shard['workCount']
           assert seen==root['workCount']==len(ids)==len(monolith['works'])
           assert ids==set(monolith['works'])
@@ -94,7 +91,9 @@ jobs:
           git add static/dawn-library/canonical static/dawn-library/surfaces/*.json
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): checkpoint sharded canonical growth [skip ci]'
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
       - name: Project and shard living library
         run: |
@@ -105,30 +104,31 @@ jobs:
           python - <<'PY'
           import json,hashlib
           from pathlib import Path
-          canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          root=json.loads(Path('static/dawn-library/canonical/root.json').read_text())
           living=json.loads(Path('static/dawn-library/living-library.json').read_text())
-          root=json.loads(Path('static/dawn-library/living/root.json').read_text())
+          lroot=json.loads(Path('static/dawn-library/living/root.json').read_text())
           assert living['projectionOnly'] is True and living['admissionAuthority'] is False
-          assert root['projectionOnly'] is True and root['admissionAuthority'] is False
-          assert root['canonicalWorkCount']==living['canonicalWorkCount']==canonical['workCount']
-          assert root['shardCount']==len(root['shards'])
+          assert lroot['projectionOnly'] is True and lroot['admissionAuthority'] is False
+          assert lroot['canonicalWorkCount']==living['canonicalWorkCount']==root['workCount']
+          assert lroot['shardCount']==len(lroot['shards'])
           seen=0
-          for s in root['shards']:
-            p=Path('static/dawn-library/living')/Path(s['href']).name
-            raw=p.read_bytes(); shard=json.loads(raw)
+          for s in lroot['shards']:
+            p=Path('static/dawn-library/living')/Path(s['href']).name; raw=p.read_bytes(); shard=json.loads(raw)
             assert hashlib.sha256(raw).hexdigest()==s['sha256']
             assert shard['offset']==seen and shard['workCount']==len(shard['workRefs'])
             assert shard['projectionOnly'] is True and shard['admissionAuthority'] is False
             seen+=shard['workCount']
-          assert seen==canonical['workCount']
-          print(json.dumps({'canonicalWorkCount':seen,'livingShards':root['shardCount']},ensure_ascii=False))
+          assert seen==root['workCount']
+          print(json.dumps({'canonicalWorkCount':seen,'livingShards':lroot['shardCount']},ensure_ascii=False))
           PY
       - name: Checkpoint living projection immediately
         run: |
           git add static/dawn-library/living-library.json static/dawn-library/living
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): checkpoint living projection [skip ci]'
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
       - name: Produce measurable collection outputs
         run: |
@@ -140,25 +140,21 @@ jobs:
           python - <<'PY'
           import json
           from pathlib import Path
-          canonical=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
-          canonical_root=json.loads(Path('static/dawn-library/canonical/root.json').read_text())
+          root=json.loads(Path('static/dawn-library/canonical/root.json').read_text())
           cat=json.loads(Path('static/dawn-library/biblical-world/catalog.json').read_text())
           report=json.loads(Path('reports/DAWN-LIBRARY-LOOP.json').read_text())
           store=json.loads(Path('static/dawn-library/storefront.json').read_text())
-          assert canonical.get('runtimePolicy',{}).get('wikisource')=='forbidden'
-          assert canonical_root['workCount']==canonical['workCount']
+          assert root.get('runtimePolicy',{}).get('wikisource')=='forbidden'
           assert report['results']['books']['published']==len(cat['items'])
           assert store['storagePolicy']=='index-only'
-          assert canonical['workCount']==len(canonical['works']) and canonical['workCount']>100000
-          print(json.dumps({'canonicalWorkCount':canonical['workCount'],'canonicalShards':canonical_root['shardCount'],'phase3Target':1000000},ensure_ascii=False))
+          assert root['workCount']>100000 and root['shardCount']>1
+          print(json.dumps({'canonicalWorkCount':root['workCount'],'canonicalShards':root['shardCount'],'phase3Target':1000000},ensure_ascii=False))
           PY
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-library-loop-results
           path: |
             reports/DAWN-LIBRARY-*.json
-            data/dawn-10k-openlibrary-works.json
-            data/dawn-10k-work-queue.json
             static/dawn-library/canonical/root.json
             static/dawn-library/canonical/works-*.json
             static/dawn-library/living-library.json
@@ -174,5 +170,7 @@ jobs:
           [ ! -d data/dawn-canonical ] || git add data/dawn-canonical
           if ! git diff --cached --quiet; then
             git commit -m 'chore(dawn): persist secondary collection outputs [skip ci]'
-            git push origin "HEAD:${GITHUB_REF_NAME}"
+            git fetch origin "$GITHUB_REF_NAME"
+            git rebase "origin/$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
           fi
