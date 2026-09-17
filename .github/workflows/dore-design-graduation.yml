@@ -28,31 +28,34 @@ jobs:
       - name: Install Doré Design resident
         run: |
           cd "$GRAD_WT"; export DORE_REPO_ROOT="$GRAD_WT" DORE_SKIP_CONTROL_PLANE_REFRESH=1; bash dore-design/install-macos.sh
-      - name: Execute unseen brief graduation
+      - name: Execute autonomous remedial graduation loop
+        id: graduation
+        continue-on-error: true
         run: |
-          cd "$GRAD_WT"; export DORE_REPO_ROOT="$GRAD_WT" DORE_LOCAL_HOME="$GRAD_WT/.graduation-home" DORE_UI_TASTE_DB="$GRAD_WT/.graduation-home/design/ui-taste.sqlite3"
+          cd "$GRAD_WT"; export DORE_REPO_ROOT="$GRAD_WT" DORE_LOCAL_HOME="$GRAD_WT/.graduation-home" DORE_UI_TASTE_DB="$GRAD_WT/.graduation-home/design/ui-taste.sqlite3" DORE_GRADUATION_MAX_ATTEMPTS=6
           rm -rf "$DORE_LOCAL_HOME"
           if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; else export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'; fi
           python3 scripts/check_design_raster_runtime.py "$GRAD_WT/.raster-smoke"
           python3 dore-design/design_graduation.py
-      - name: Verify graduation evidence
+      - name: Upload graduation evidence regardless of gate result
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-design-graduation-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ env.GRAD_WT }}/dore-design/training/evidence/graduation
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Verify graduation gate
         run: |
           cd "$GRAD_WT"; python3 - <<'PY'
           import json, pathlib
           p=pathlib.Path('dore-design/training/evidence/graduation/report.json'); d=json.loads(p.read_text())
           assert d['designer']=='dore' and d['mode']=='unseen-brief'
-          assert len(d['beforeRaster'])==2 and len(d['afterRaster'])==2
+          assert d['attempts'] and all(len(a['rasters'])==2 for a in d['attempts'])
           assert d['graduated'] is True and d['finalFailureDomains']==[]
           assert d['winner'] is None and d['productionPromoted'] is False
           print('DORE_DESIGN_GRADUATION=PASS')
           PY
-      - name: Upload graduation evidence
-        uses: actions/upload-artifact@v4
-        with:
-          name: dore-design-graduation-${{ github.run_id }}-${{ github.run_attempt }}
-          path: ${{ env.GRAD_WT }}/dore-design/training/evidence/graduation
-          if-no-files-found: error
-          retention-days: 30
       - name: Cleanup
         if: always()
         run: |
