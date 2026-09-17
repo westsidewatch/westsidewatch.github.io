@@ -7,7 +7,7 @@
     {
       "id": "project-gutenberg",
       "label": "Project Gutenberg",
-      "languages": ["en"],
+      "languages": ["en", "zh"],
       "role": "public-domain-catalog-and-source-resolution",
       "catalog": "https://www.gutenberg.org/ebooks/search.opds/",
       "catalogFormat": "OPDS 1.x",
@@ -25,28 +25,6 @@
       "metadataStrategy": "feed-first-edition-metadata",
       "contentPolicy": "Index curated editions and keep EPUB acquisition URLs remote until the user opens or adds a book.",
       "rightsPolicy": "Preserve Standard Ebooks edition provenance and source rights declaration."
-    },
-    {
-      "id": "zh-wikisource",
-      "label": "中文維基文庫",
-      "languages": ["zh-Hant", "zh-Hans", "zh"],
-      "role": "chinese-discovery-and-source-resolution",
-      "catalog": "https://zh.wikisource.org/w/api.php",
-      "catalogFormat": "MediaWiki API",
-      "metadataStrategy": "API-index-and-page-metadata",
-      "contentPolicy": "Index metadata and canonical page references first. Do not bulk-copy full text into 黎明書局.",
-      "rightsPolicy": "Preserve each work/page rights declaration and Wikisource licensing provenance. Do not infer public-domain status solely from age or presence on Wikisource."
-    },
-    {
-      "id": "wikisource-ws-export-zh",
-      "label": "Wikisource WS Export",
-      "languages": ["zh-Hant", "zh-Hans", "zh"],
-      "role": "on-demand-publication-export",
-      "catalog": "https://ws-export.wmcloud.org/",
-      "catalogFormat": "On-demand EPUB/PDF export service",
-      "metadataStrategy": "verified-wikisource-edition-to-export-url",
-      "contentPolicy": "Generate WS Export EPUB links from already verified Chinese Wikisource editions; do not bulk-store exported EPUBs.",
-      "rightsPolicy": "Preserve the verified Chinese Wikisource page rights and attribution provenance used to create each export URL."
     },
     {
       "id": "doab",
