@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+"""Real Mac A2A acceptance: exact historical pixels -> Doré 8D -> prompt -> image.generate."""
 from __future__ import annotations
 import json
 from pathlib import Path
