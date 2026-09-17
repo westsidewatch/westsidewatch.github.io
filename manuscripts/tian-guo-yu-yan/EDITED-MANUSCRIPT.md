@@ -2,9 +2,9 @@
 
 ## 天國語言極簡史
 
-**Canonical edited-manuscript surface**  
-Project: `book.tian-guo-yu-yan`  
-Status: ACTIVE / AUTHOR-EDITED WORKING MANUSCRIPT  
+**Canonical edited-manuscript surface**
+Project: `book.tian-guo-yu-yan`
+Status: ACTIVE / AUTHOR-EDITED WORKING MANUSCRIPT
 Format authority: Markdown
 
 > 本文件只承載已經完成編訂、可繼續作為正文 authority 的書稿。研究稿、寫作實驗、比較稿、Grammar acceptance fixture、尚未經作者確認的生成稿不得自動進入本文件。
