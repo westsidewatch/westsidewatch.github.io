@@ -1,0 +1,11 @@
+(()=>{
+  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const placeLabel={'place:siloam-pool':'西羅亞池','place:gihon-spring':'基訓泉','place:pilgrimage-road':'朝聖之路','place:temple':'聖殿'};
+  const relationTitle=r=>(r?.events||[]).join(' · ')||r?.relationId||'聖經關係';
+  const relationsFor=(graph,key)=>Object.freeze((graph.relations||[]).filter(r=>(r.placeKeys||[r.place?.canonicalKey]).includes(key)));
+  const worksFor=(graph,relations)=>[...new Set(relations.flatMap(r=>r.workIds||[]))].map(id=>graph.get(id)).filter(Boolean);
+  function workCard(w){return `<a class="place-world__work" href="#cinema-library" data-work-id="${esc(w.canonicalId)}"><small>${esc(w.kind||'video')}</small><strong>${esc(w.title)}</strong><span>${esc(w.creator||'')}</span></a>`;}
+  function render(graph,placeKey){const root=document.getElementById('cinema-place-world');if(!root)return;const relations=relationsFor(graph,placeKey),works=worksFor(graph,relations);root.dataset.place=placeKey;root.innerHTML=`<div class="section-head"><p>SCRIPTURE · PLACE · IMAGE</p><h3>${esc(placeLabel[placeKey]||placeKey)}</h3></div><div class="place-world__relations">${relations.map(r=>`<article><small>${esc((r.scripture||[]).join(' · '))}</small><strong>${esc(relationTitle(r))}</strong><span>${esc(r.place?.label||'')}</span></article>`).join('')}</div><div class="place-world__works">${works.map(workCard).join('')}</div>`;root.hidden=false;const url=new URL(location.href);url.searchParams.set('place',placeKey);history.replaceState(null,'',url);root.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});}
+  async function init(){const graph=await window.ParadiseCinemaGraph?.ready;if(!graph)return;document.querySelectorAll('[data-place-key]').forEach(button=>button.addEventListener('click',()=>render(graph,button.dataset.placeKey)));const params=new URLSearchParams(location.search);if(params.get('place'))render(graph,params.get('place'));}
+  init().catch(console.error);
+})();

@@ -1,0 +1,15 @@
+{
+  "schema":"dore.cinema-source-intake.v1",
+  "status":"admitted-graph-reconciled",
+  "policy":{"providerDoesNotDefineNavigation":true,"rehostDefault":false,"canonicalAdmissionRequired":true,"collectionLandingPageIsNotAWork":true},
+  "admittedBatches":[
+    {"sourceFamily":"BibleProject","sourceStatus":"promoted-to-canonical-work","workIds":["cinema:video:bibleproject:genesis-1-11","cinema:video:bibleproject:genesis-12-50","cinema:video:bibleproject:judges","cinema:video:bibleproject:job","cinema:video:bibleproject:revelation-1-11","cinema:video:bibleproject:revelation-12-22","cinema:video:bibleproject:exodus-1-18","cinema:video:bibleproject:exodus-19-40","cinema:video:bibleproject:acts-1-12","cinema:video:bibleproject:acts-13-28","cinema:video:bibleproject:pentecost-acts-1-7","cinema:video:bibleproject:paul-missionary-journeys","cinema:video:bibleproject:isaiah-61"]},
+    {"sourceFamily":"City of David","sourceStatus":"promoted-to-canonical-work","workIds":["cinema:video:city-of-david:pilgrimage-road-revealed","cinema:video:city-of-david:first-temple-burnt-beams","cinema:video:city-of-david:hezekiah-tunnel","cinema:video:city-of-david:david-palace","cinema:video:city-of-david:royal-quarter-kings-judah","cinema:video:city-of-david:babylonian-exile-cyrus","cinema:experience:city-of-david:ancient-jerusalem-3d","cinema:video:city-of-david:gihon-spring-experience","cinema:video:city-of-david:on-road-to-jerusalem","cinema:video:city-of-david:temple-in-flames","cinema:video:city-of-david:hasmonean-revolt","cinema:video:city-of-david:second-temple-drainage-channel","cinema:video:city-of-david:assyrian-inscription"]},
+    {"sourceFamily":"Patterns of Evidence","sourceStatus":"promoted-to-canonical-work","workIds":["cinema:film:patterns-of-evidence:moses-controversy","cinema:film:patterns-of-evidence:red-sea-miracle-1","cinema:film:patterns-of-evidence:red-sea-miracle-2"]}
+  ],
+  "discoveryQueue":[
+    {"candidateId":"cinema:intake:chosen:series","title":"The Chosen","creator":"The Chosen","kind":"series","officialUrl":"https://watch.thechosen.tv/","gapTargets":["dramatic-series","gospel-era"],"sourceStatus":"official-verified-awaiting-runtime-admission","note":"admit as one canonical Series only after concrete official runtime/handoff validation; episodes remain manifestations beneath the Series"},
+    {"candidateId":"cinema:intake:motb:streaming","title":"Museum of the Bible Streaming Collection","creator":"Museum of the Bible","kind":"collection-source","officialUrl":"https://www.museumofthebible.org/museum-from-home","gapTargets":["bible-history","archaeology","documentary"],"sourceStatus":"official-verified-awaiting-work-discovery","note":"discovery source only; generic collection landing page must never be admitted as a Work"}
+  ],
+  "nextGapPriority":["samuel-kings-outside-jerusalem","solomon-and-temple","major-prophets-beyond-isaiah","minor-prophets","epistles","gospel-era-galilee","nazareth","capernaum","early-church-geography","children-and-family","zh-Hant-scripture-teaching","source-family-diversity"]
+}

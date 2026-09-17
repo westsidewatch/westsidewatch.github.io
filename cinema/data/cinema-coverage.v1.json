@@ -1,0 +1,17 @@
+{
+  "schema":"dore.cinema-coverage.v1",
+  "index":"dore.cinema-canonical-index.v1",
+  "purpose":"guide balanced source discovery from the actually admitted Cinema graph; never act as identity or rights authority",
+  "dimensions":["scripture","event","person","place","theme","type","language","provider"],
+  "rules":{"providerVolumeCannotDefineCoverage":true,"seriesVolumeCannotDefineCoverage":true,"missingCanonicalRegionsGainPriority":true,"admissionStillRequiresSourceRightsEditorialGates":true,"coverageMustFollowAdmittedGraph":true},
+  "assessment":{
+    "status":"cross-source-expansion-admitted",
+    "admittedExpansionWorks":29,
+    "sourceFamilies":["BibleProject","City of David","Patterns of Evidence"],
+    "coverageGains":["genesis","historical-books:judges","wisdom:job","exodus-and-torah","acts-and-early-church","major-prophets:isaiah","revelation","jerusalem","david","judah-kings","hezekiah","siloam","first-temple","babylonian-exile","cyrus-and-return","hasmonean-and-second-temple","holy-land","archaeology","documentary","immersive-experience"],
+    "remainingBiases":["english-heavy","jerusalem-heavy-holy-land","animation-teaching-heavy-bible-overview","sermon-seed-small"],
+    "priorityGaps":["samuel-kings-outside-jerusalem","solomon-and-temple","major-prophets-beyond-isaiah","minor-prophets","epistles","gospel-era-galilee","nazareth","capernaum","early-church-geography","children-and-family","zh-Hant-scripture-teaching","source-family-diversity"],
+    "nextRule":"discover the thinnest canonical regions across new source families; never fill a gap by bulk-mirroring one provider or one teacher"
+  },
+  "feedbackLoop":["discover","source-admission","canonical-index","runtime-graph","coverage-map","gap-priority","discover"]
+}
