@@ -25,7 +25,7 @@ jobs:
     runs-on: [self-hosted, macOS, dore]
     timeout-minutes: 60
     env:
-      PYTHONPATH: local/dore-local
+      PYTHONPATH: .:local/dore-local
       DORE_REPO_ROOT: ${{ github.workspace }}
     steps:
       - uses: actions/checkout@v4
