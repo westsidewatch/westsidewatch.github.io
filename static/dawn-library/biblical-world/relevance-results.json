@@ -1,33 +1,7 @@
 {
-  "schema": "dawn.library.relevance-results.v2",
-  "generatedAt": "2026-09-15T08:36:36.078636+00:00",
+  "schema": "dawn.library.relevance-results.v1",
+  "generatedAt": "2026-09-17T07:37:14.102842+00:00",
   "items": [
-    {
-      "sourceId": "30",
-      "provider": "Project Gutenberg",
-      "title": "The Bible, King James Version, Complete",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/30",
-      "matchedQuery": "Bible history",
-      "suggestedRelations": [
-        "聖經背景",
-        "歷史"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
     {
       "sourceId": "395",
       "provider": "Project Gutenberg",
@@ -49,10 +23,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -66,7 +40,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:14:52.585817+00:00",
       "rights": {
         "status": "unverified",
@@ -75,10 +49,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -92,7 +66,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:06:48.230628+00:00",
       "rights": {
         "status": "unverified",
@@ -101,10 +75,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -118,7 +92,7 @@
         "釋經",
         "聖經研究"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-15T06:53:37.249690+00:00",
       "rights": {
         "status": "unverified",
@@ -127,10 +101,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -154,10 +128,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": -8,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [
+          "noise:thirty years war"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -172,7 +148,7 @@
         "聖經翻譯",
         "早期教會"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -181,62 +157,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
-    {
-      "sourceId": "8525",
-      "provider": "Project Gutenberg",
-      "title": "Eve's Diary, Complete",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/8525",
-      "matchedQuery": "Bible history",
-      "suggestedRelations": [
-        "聖經背景",
-        "歷史"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-10T00:36:16.328514+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
-    {
-      "sourceId": "8527",
-      "provider": "Project Gutenberg",
-      "title": "Eve's Diary, Part 2",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/8527",
-      "matchedQuery": "Bible history",
-      "suggestedRelations": [
-        "聖經背景",
-        "歷史"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-10T21:18:24.712165+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -250,7 +174,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:29:10.229292+00:00",
       "rights": {
         "status": "unverified",
@@ -259,10 +183,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -276,7 +200,7 @@
         "早期教會",
         "教會歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:27:40.501298+00:00",
       "rights": {
         "status": "unverified",
@@ -285,10 +209,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:nero"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -302,7 +228,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T22:24:39.632910+00:00",
       "rights": {
         "status": "unverified",
@@ -311,10 +237,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -328,7 +254,7 @@
         "禱告",
         "靈命"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -337,10 +263,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -364,10 +290,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -381,7 +307,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "deferred",
       "discoveredAt": "2026-09-10T20:27:40.501298+00:00",
       "rights": {
         "status": "unverified",
@@ -390,10 +316,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:testament"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -407,7 +335,7 @@
         "宣教",
         "教會史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -416,10 +344,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -443,10 +371,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -470,10 +398,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -487,7 +415,7 @@
         "教會史",
         "歷史神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-15T06:13:14.283615+00:00",
       "rights": {
         "status": "unverified",
@@ -496,10 +424,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 1,
+        "stage": "rejected",
+        "reasons": [
+          "context:roman"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -523,10 +453,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -550,10 +480,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -576,10 +506,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -602,10 +532,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -628,10 +558,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -655,10 +585,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -682,10 +612,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -700,7 +630,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:30:15.549407+00:00",
       "rights": {
         "status": "unverified",
@@ -709,10 +639,14 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine",
+          "noise:old st. augustine"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -736,10 +670,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -753,7 +687,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:14:52.585817+00:00",
       "rights": {
         "status": "unverified",
@@ -762,10 +696,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -780,7 +714,7 @@
         "第二聖殿",
         "新約背景"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:30:15.549407+00:00",
       "rights": {
         "status": "unverified",
@@ -789,10 +723,15 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:josephus",
+          "noise:project gutenberg works",
+          "noise:an index"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -815,10 +754,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -841,10 +780,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -868,10 +807,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -894,10 +833,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -920,10 +859,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -947,10 +886,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -974,10 +913,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -991,7 +930,7 @@
         "聖經背景",
         "歷史"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:32:37.550839+00:00",
       "rights": {
         "status": "unverified",
@@ -1000,10 +939,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1026,10 +965,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1044,7 +983,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:27:40.501298+00:00",
       "rights": {
         "status": "unverified",
@@ -1053,10 +992,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "noise:florida"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1079,10 +1020,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1106,10 +1047,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1133,10 +1074,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1160,10 +1101,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1186,10 +1127,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1212,10 +1153,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 1,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [
+          "context:roman"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1239,10 +1182,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1256,7 +1199,7 @@
         "釋經",
         "聖經研究"
       ],
-      "stage": "qualified",
+      "stage": "deferred",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -1265,10 +1208,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:bible"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1292,10 +1237,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1319,10 +1264,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1337,7 +1282,7 @@
         "清教徒",
         "靈命"
       ],
-      "stage": "rejected",
+      "stage": "deferred",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -1346,10 +1291,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1373,10 +1320,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1400,10 +1347,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1427,10 +1374,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1454,10 +1401,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1472,7 +1419,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:09:09.484148+00:00",
       "rights": {
         "status": "unverified",
@@ -1481,10 +1428,14 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine",
+          "noise:sketches of st. augustine"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1499,7 +1450,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T20:29:10.229292+00:00",
       "rights": {
         "status": "unverified",
@@ -1508,10 +1459,14 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine",
+          "noise:florida"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1526,7 +1481,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:09:09.484148+00:00",
       "rights": {
         "status": "unverified",
@@ -1535,10 +1490,14 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 0,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine",
+          "noise:old st. augustine"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1553,7 +1512,7 @@
         "早期教會",
         "神學"
       ],
-      "stage": "qualified",
+      "stage": "rejected",
       "discoveredAt": "2026-09-10T21:06:48.230628+00:00",
       "rights": {
         "status": "unverified",
@@ -1562,10 +1521,15 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": -8,
+        "stage": "rejected",
+        "reasons": [
+          "query-in-title",
+          "strong:augustine",
+          "noise:florida",
+          "noise:colonial capital"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1588,10 +1552,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1615,10 +1579,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1642,10 +1606,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1668,37 +1632,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
-    {
-      "sourceId": "64632",
-      "provider": "Project Gutenberg",
-      "title": "Cargo to Callisto",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/64632",
-      "matchedQuery": "Jerome",
-      "suggestedRelations": [
-        "教父",
-        "聖經翻譯",
-        "早期教會"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-15T06:13:14.283615+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1722,10 +1659,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1748,10 +1685,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1775,10 +1712,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1801,10 +1738,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1827,10 +1764,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1853,63 +1790,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
-    {
-      "sourceId": "75682",
-      "provider": "Project Gutenberg",
-      "title": "Waterloo",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/75682",
-      "matchedQuery": "Thomas Watson",
-      "suggestedRelations": [
-        "清教徒",
-        "神學",
-        "靈命"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
-      }
-    },
-    {
-      "sourceId": "76835",
-      "provider": "Project Gutenberg",
-      "title": "Die Totentänze (German)",
-      "author": "",
-      "sourceUrl": "https://www.gutenberg.org/ebooks/76835",
-      "matchedQuery": "Bible history",
-      "suggestedRelations": [
-        "聖經背景",
-        "歷史"
-      ],
-      "stage": "qualified",
-      "discoveredAt": "2026-09-10T21:18:24.712165+00:00",
-      "rights": {
-        "status": "unverified",
-        "jurisdiction": "USA",
-        "declaredBy": "Project Gutenberg"
-      },
-      "contentDownloaded": false,
-      "relevance": {
-        "stage": "qualified",
-        "reason": "no-hard-exclusion",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1933,10 +1817,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1950,7 +1834,7 @@
         "護教",
         "神學"
       ],
-      "stage": "rejected",
+      "stage": "deferred",
       "discoveredAt": "2026-09-15T05:48:33.835036+00:00",
       "rights": {
         "status": "unverified",
@@ -1959,10 +1843,12 @@
       },
       "contentDownloaded": false,
       "relevance": {
-        "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "score": 3,
+        "stage": "deferred",
+        "reasons": [
+          "strong:christian"
+        ],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     },
     {
@@ -1986,10 +1872,10 @@
       },
       "contentDownloaded": false,
       "relevance": {
+        "score": 0,
         "stage": "rejected",
-        "reason": "brand-boundary:political-ethnic-war-content",
-        "evaluatedAt": "2026-09-15T08:36:36.078636+00:00",
-        "policy": "hard-exclusion-only"
+        "reasons": [],
+        "evaluatedAt": "2026-09-17T07:37:14.102842+00:00"
       }
     }
   ]

@@ -1,13 +1,13 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-16T14:14:42.689337+00:00",
+  "generatedAt": "2026-09-17T07:36:48.233942+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
-  "queries": 6,
-  "pagesChecked": 10,
-  "newDiscovered": 1,
-  "candidateQueue": 940,
-  "catalogBooks": 28,
+  "queries": 55,
+  "pagesChecked": 77,
+  "newDiscovered": 0,
+  "candidateQueue": 69,
+  "catalogBooks": 1969,
   "errors": [],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }

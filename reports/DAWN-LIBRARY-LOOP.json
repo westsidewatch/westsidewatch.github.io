@@ -1,35 +1,35 @@
 {
   "schema": "dawn.library.loop.report.v2",
-  "generatedAt": "2026-09-16T14:14:52.225408+00:00",
+  "generatedAt": "2026-09-17T07:37:16.360298+00:00",
   "results": {
     "books": {
-      "published": 28,
-      "verified": 27,
+      "published": 1969,
+      "verified": 1968,
       "pending": 1,
-      "relations": 15,
+      "relations": 53,
       "providers": [
         "Project Gutenberg"
       ]
     },
     "catalogDeltaToday": {
-      "books": 0,
-      "verifiedBooks": 0,
-      "relations": 0
+      "books": 1941,
+      "verifiedBooks": 1941,
+      "relations": 38
     },
     "autonomousGrowthToday": {
       "books": 0,
       "titles": []
     },
     "pipelineThisRun": {
-      "englishDiscoveredThisRun": 1,
+      "englishDiscoveredThisRun": 0,
       "chineseDiscoveredThisRun": 0,
       "englishPromotedThisRun": 0,
       "englishPromotedTitles": []
     },
     "cadence": {
-      "recommended": "daily",
-      "recentAutonomousGrowthPerDay": 3.0,
-      "density": 27
+      "recommended": "weekly",
+      "recentAutonomousGrowthPerDay": 0.0,
+      "density": 1968
     },
     "collections": [
       {
