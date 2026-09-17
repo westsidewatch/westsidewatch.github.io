@@ -1,0 +1,39 @@
+{
+  "schema": "dore.cinema-canonical-index.v1",
+  "authority": "cinema-editorial-projection",
+  "identityAuthority": "resource-canonical-id",
+  "providerIsNavigationAuthority": false,
+  "principles": {
+    "hallIsImmersiveFirstViewport": true,
+    "navigationBeginsAfterFirstScroll": true,
+    "workHasSingleCanonicalIdentity": true,
+    "workMayBelongToManyFacets": true,
+    "finalIdentityVerification": true,
+    "coverageGuidesDiscovery": true
+  },
+  "levels": ["hall", "navigation", "facet-world", "collection-or-entity", "work-or-series", "episode", "moment"],
+  "primaryHubs": [
+    {"id":"bible","label":"聖經"},
+    {"id":"film","label":"電影"},
+    {"id":"sermon","label":"講道"},
+    {"id":"study","label":"學習"},
+    {"id":"explore","label":"探索"},
+    {"id":"search","label":"搜索"}
+  ],
+  "facets": [
+    {"id":"journey","label":"時間","valuesAuthority":"dore.bible-journey.v0"},
+    {"id":"scripture","label":"經卷","valuesAuthority":"bible-index"},
+    {"id":"event","label":"事件","valuesAuthority":"bible-index"},
+    {"id":"person","label":"人物","valuesAuthority":"bible-index"},
+    {"id":"place","label":"地點","valuesAuthority":"bible-index"},
+    {"id":"theme","label":"主題","valuesAuthority":"cinema-editorial"},
+    {"id":"type","label":"類型","values":["film","series","documentary","sermon","teaching","animation","course"]},
+    {"id":"language","label":"語言","valuesAuthority":"resource-metadata"}
+  ],
+  "projection": {
+    "providerFacetPublic": false,
+    "providerLivesAtSourceLayer": true,
+    "saturationGate": {"enabled":true,"dimensions":["provider","creator","series","type","scripture"],"purpose":"prevent one source or subject from dominating discovery surfaces"},
+    "gapPriority": {"enabled":true,"purpose":"raise discovery priority for under-covered canonical regions"}
+  }
+}
