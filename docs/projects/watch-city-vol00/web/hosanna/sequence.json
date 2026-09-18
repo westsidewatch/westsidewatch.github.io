@@ -1,6 +1,9 @@
 {
   "id": "watch-city-vol00.hosanna-entry.v0",
-  "role": ["vol00-home", "ten-thousand-year-city-opening"],
+  "role": [
+    "vol00-home",
+    "ten-thousand-year-city-opening"
+  ],
   "principle": "One sequence, two publication needs: the Vol.00 immersive home and the opening movement of 一萬年的建城禮.",
   "master": {
     "type": "dore-original",
@@ -32,12 +35,34 @@
       "id": "life-passion-1903-entry",
       "work": "La Vie et la passion de Jésus Christ",
       "year": 1903,
-      "sourcePage": "https://publicdomainreview.org/collection/life-and-passion-of-christ-1903/",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:La_vie_et_la_passion_de_Jesus_Christ_(1903).ogv",
       "asset": null,
       "timestamp": null,
-      "rightsState": "research-only-until-copy-rights-verified",
+      "tableau": 14,
+      "catalogueNumber": 855,
+      "rightsState": "public-domain-source-verified-moment-timecode-pending",
+      "evidence": [
+        "Wikimedia Commons marks the surviving 43:54 copy as public-domain material.",
+        "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
+        "Exact in-file start/end timecode still requires frame-level verification before extraction."
+      ],
       "durationMs": 1600,
       "offsetMs": 820
+    },
+    {
+      "id": "life-passion-1903-entry-alt-edition",
+      "work": "La Vie et la passion de Jésus Christ",
+      "year": 1903,
+      "sourcePage": "https://www.dailymotion.com/video/x6bftxb",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-reference-copy",
+      "evidence": [
+        "Reference description explicitly labels sequence 10 as ENTRANCE INTO JERUSALEM and describes the crowd, ass, Hosannas and palm branches.",
+        "Not an approved publication asset."
+      ],
+      "durationMs": 1500,
+      "offsetMs": 780
     }
   ],
   "text": {
