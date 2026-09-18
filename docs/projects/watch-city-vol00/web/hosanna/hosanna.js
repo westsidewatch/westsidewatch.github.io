@@ -45,23 +45,27 @@ function showVideoMoment(moment){
   el.muted=true;
   el.playsInline=true;
   el.preload='auto';
-  el.crossOrigin='anonymous';
   el.dataset.moment=moment.id;
-  el.style.setProperty('--dur',`${moment.durationMs||1800}ms`);
 
   const start=Number(moment.timestamp.start);
   const end=Number(moment.timestamp.end);
+  let started=false;
   const stop=()=>{try{el.pause()}catch{};el.remove()};
 
   el.addEventListener('loadedmetadata',()=>{
     if(Number.isFinite(start)) el.currentTime=start;
   },{once:true});
-  el.addEventListener('seeked',()=>{el.play().catch(()=>{});},{once:true});
-  el.addEventListener('timeupdate',()=>{if(Number.isFinite(end)&&el.currentTime>=end) stop()});
+  el.addEventListener('seeked',()=>{
+    if(started) return;
+    started=true;
+    el.classList.add('is-playing');
+    el.play().catch(()=>{});
+    later(stop,Math.max(8000,((end-start)*1000)+1200));
+  });
+  el.addEventListener('timeupdate',()=>{if(started&&Number.isFinite(end)&&el.currentTime>=end) stop()});
+  el.addEventListener('error',()=>{el.dataset.failed='true'});
   montage.append(el);
-  later(stop,(moment.durationMs||1800)+600);
 }
-
 function showMoment(moment){
   if(!admittedMoment(moment)) return;
   const type=moment.assetType || (/\.(mp4|webm|ogv)(\?|$)/i.test(moment.asset)?'video':'image');
