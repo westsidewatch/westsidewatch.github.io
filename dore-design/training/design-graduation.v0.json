@@ -1,0 +1,25 @@
+{
+  "schema": "dore.design-graduation.v0",
+  "trainingId": "design-weapon-proficiency-graduation",
+  "designer": "dore",
+  "mode": "unseen-brief",
+  "brief": {
+    "surfaceFamily": "living-water-church",
+    "task": "Create a new church editorial landing surface that expresses arrival, living fellowship, Scripture, and quiet sacred presence without reusing any of the four Round 01 directions as a template.",
+    "requiredContent": ["Living Water Assembly West", "John 7:38", "Worship · Fellowship · Word · Prayer"],
+    "forbidden": ["copy Round 01 geometry", "palette-only variation", "generic church template", "historical masthead imitation", "trainer-authored layout"]
+  },
+  "availableWeapons": ["design.composition", "design.typography", "design.image-art-direction", "design.motion"],
+  "references": "Italian Editorial Atlas is teacher/evidence only; Doré must choose what to use.",
+  "graduationGate": {
+    "realBrowserRaster": true,
+    "desktopAndMobile": true,
+    "selfDiagnosis": true,
+    "selfRevision": true,
+    "beautifulIsAdmissionFloor": true,
+    "requiresIndependentWeaponSelection": true,
+    "requiresFreshGeometry": true,
+    "winner": null,
+    "productionPromoted": false
+  }
+}
