@@ -20,6 +20,45 @@
   },
   "moments": [
     {
+      "id": "lumiere-arrival-jerusalem-1898",
+      "work": "La Vie et la Passion de Jésus-Christ — L’Arrivée à Jérusalem",
+      "year": 1898,
+      "creator": "Georges Hatot / Lumière",
+      "sourcePage": "https://grimh.org/index.php?Itemid=127&catid=84&id=17023%3Ales-passions-1897-1906&lang=fr&option=com_content&view=article",
+      "asset": null,
+      "timestamp": null,
+      "sourceFacts": {
+        "form": "standalone early-cinema view",
+        "relatedRemake": "Gaumont L’Entrée à Jérusalem",
+        "castEvidence": "Gaston Breteau as Jesus in Hatot Passion recollections"
+      },
+      "rightsState": "historical-work-public-domain-extant-moving-image-unresolved",
+      "retrievalState": "film-identity-and-comparative-still-evidence-verified-extant-copy-not-yet-resolved",
+      "durationMs": 1500,
+      "offsetMs": 760,
+      "note": "GRIMH documents the Lumière view and a Gaumont remake using substantially the same staging/sets. Still evidence is research evidence, not a montage substitute."
+    },
+    {
+      "id": "lear-entry-jerusalem-1897",
+      "work": "Scènes de la vie du Christ — Entrée de Jésus à Jérusalem",
+      "year": 1897,
+      "creator": "Albert Kirchner (Léar) / Henri Levesque",
+      "sourcePage": "https://grimh.org/index.php?Itemid=713&id=5299&lang=fr&layout=edit&option=com_content&view=article",
+      "asset": null,
+      "timestamp": null,
+      "sourceFacts": {
+        "productionWindow": "1897-03/04",
+        "originalLengthMetresApprox": 40,
+        "form": "standalone animated view / tableau",
+        "historicalPosition": "one of the earliest filmed Passion cycles"
+      },
+      "rightsState": "historical-work-public-domain-extant-moving-image-unresolved",
+      "retrievalState": "catalogue-and-production-evidence-verified-extant-film-copy-not-yet-resolved",
+      "durationMs": 1500,
+      "offsetMs": 760,
+      "note": "Earlier than the Pathé M001. Do not render from production stills: a surviving moving-image copy must be resolved first."
+    },
+    {
       "id": "manger-cross-1912-entry",
       "work": "From the Manger to the Cross",
       "year": 1912,
@@ -101,6 +140,11 @@
       "sourceDerivativeResolved": true,
       "binaryRetrieved": false
     },
-    "discovery": "Early-cinema catalogues reveal several distinct Entrée à Jérusalem productions, so the corpus can begin before 1903 rather than treating the Pathé 1902 tableau as the first screen representation."
+    "discovery": "Early-cinema catalogues reveal several distinct Entrée à Jérusalem productions, so the corpus can begin before 1903 rather than treating the Pathé 1902 tableau as the first screen representation.",
+    "earliestScreenLayer": {
+      "status": "expanded-before-1902",
+      "finding": "The corpus now reaches to Léar/Kirchner 1897 and Hatot/Lumière 1898 entry views. The homepage montage should begin with the earliest extant publishable moving image, not with an assumed 1903 origin.",
+      "gate": "No production still may masquerade as a film Moment."
+    }
   }
 }
