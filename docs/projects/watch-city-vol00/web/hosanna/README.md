@@ -11,10 +11,11 @@ The homepage loops the approach / montage / Hosanna arrival. Entering the issue 
 ## Current state
 
 - Runtime and visual grammar: implemented.
+- Runtime now consumes exact time-addressed video Moments directly; no pre-cut duplicate is required.
 - Doré Original master image: pending art production.
 - Historical cinematic Moment corpus: started with 1903 and 1912 public-domain research candidates.
 - No research-only film is rendered.
-- Exact triumphal-entry timestamps/derivatives: pending verification.
+- Exact triumphal-entry timestamps/derivatives: pending verification. Until both start/end exist, the runtime refuses the Moment.
 - Sound design: pending.
 - Next surface: Jerusalem depth descent → ten-thousand-year city map.
 
@@ -28,3 +29,5 @@ The homepage loops the approach / montage / Hosanna arrival. Entering the issue 
 6. Montage is editorial meaning, not a recommendation carousel.
 7. First explanatory text is delayed; image/sound lead.
 8. Reduced-motion users receive the still master composition.
+9. A video Moment is admitted only when `rightsState=publishable`, `asset`, `timestamp.start`, and `timestamp.end` are all present.
+10. The canonical source video may remain whole; runtime seeking turns verified time addresses into montage shots.
