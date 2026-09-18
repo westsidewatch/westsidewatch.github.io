@@ -6,6 +6,7 @@ const soundNote=document.querySelector('[data-sound-note]');
 
 let manifest={master:{},moments:[],timing:{}};
 let timers=[];
+let entering=false;
 
 function clearTimers(){timers.forEach(clearTimeout);timers=[]}
 function later(fn,ms){const id=setTimeout(fn,ms);timers.push(id);return id}
@@ -67,6 +68,7 @@ function showMoment(moment){
 }
 
 function loop(){
+  if(entering) return;
   clearTimers();
   root.dataset.state='approach';
   montage.replaceChildren();
@@ -83,9 +85,17 @@ function loop(){
 }
 
 enter.addEventListener('click',()=>{
-  document.documentElement.classList.add('entered');
-  window.dispatchEvent(new CustomEvent('westside:enter-city',{detail:{from:'hosanna-home'}}));
-  location.hash='enter';
+  if(entering) return;
+  entering=true;
+  clearTimers();
+  montage.replaceChildren();
+  root.dataset.state='threshold';
+  document.documentElement.classList.add('entering');
+  document.querySelector('[data-city-entry]')?.setAttribute('aria-hidden','false');
+  window.dispatchEvent(new CustomEvent('westside:enter-city',{
+    detail:{from:'hosanna-home',coordinate:'city',next:'jerusalem-depth'}
+  }));
+  history.replaceState(null,'','#enter');
 });
 
 document.addEventListener('pointerdown',()=>{soundNote.hidden=true},{once:true});
