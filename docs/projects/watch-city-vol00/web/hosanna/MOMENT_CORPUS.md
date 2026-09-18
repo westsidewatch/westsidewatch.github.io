@@ -138,3 +138,40 @@ This is a useful engineering distinction: future Doré Source Probe / browser-ru
 Evidence:
 - Internet Archive item and derivatives: https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903
 - Wikimedia Commons rights/source record: https://commons.wikimedia.org/wiki/File:La_vie_et_la_passion_de_Jesus_Christ_(1903).ogv
+
+
+## Evidence pass 2026-09-18 — the montage moves back to 1897
+
+The previous working assumption that the usable screen-history line begins with Pathé 1902/1903 is now superseded.
+
+### M000A — Léar / Kirchner, 1897
+
+GRIMH documents a discrete `Entrée de Jésus à Jérusalem` in **Scènes de la vie du Christ**, made by Albert Kirchner (Léar) with Henri Levesque's Passion staging in approximately March–April 1897. Contemporary evidence lists the entry view at approximately **40 metres**.
+
+This is not merely a later filmography title: contemporary 1897 sale evidence for the Passion cycle includes `Entrée de Jésus à Jérusalem`.
+
+State:
+
+**IDENTITY VERIFIED → PRODUCTION DATE VERIFIED → HISTORICAL WORK PUBLIC DOMAIN → EXTANT MOVING-IMAGE COPY NOT YET RESOLVED → NOT RENDERABLE**
+
+Evidence: https://grimh.org/index.php?Itemid=713&id=5299&lang=fr&layout=edit&option=com_content&view=article
+
+### M000B — Hatot / Lumière, 1898
+
+GRIMH's Passion study documents a Lumière `L’Arrivée à Jérusalem` made by Georges Hatot, and compares its staging directly with a later Gaumont remake, `L’Entrée à Jérusalem`. Hatot's 1948 recollections identify Gaston Breteau in the Passion and describe the Gaumont work as a remake of the earlier Lumière Passion.
+
+State:
+
+**IDENTITY VERIFIED → 1898 LAYER VERIFIED → HISTORICAL WORK PUBLIC DOMAIN → EXTANT MOVING-IMAGE COPY NOT YET RESOLVED → NOT RENDERABLE**
+
+Evidence: https://grimh.org/index.php?Itemid=127&catid=84&id=17023%3Ales-passions-1897-1906&lang=fr&option=com_content&view=article
+
+### Editorial consequence
+
+The opening montage no longer has to pretend that cinematic memory begins in 1903. Its desired chronological floor is now:
+
+**1897 Léar → 1898 Lumière/Hatot → 1902 Pathé → later screen eras**
+
+But chronology alone does not admit an image. Production stills and catalogue illustrations remain evidence only. The homepage must wait for an extant moving-image copy before representing either 1897 or 1898 as cinema.
+
+This makes the eventual first cut much stronger: if an extant 1897/1898 view is resolved, the Vol.00 homepage can begin almost at the birth of narrative cinema itself, then let the same biblical entry recur through more than a century of screen history.
