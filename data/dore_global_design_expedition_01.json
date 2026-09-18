@@ -1,0 +1,24 @@
+{
+  "schema":"dore.global-design-expedition.v1",
+  "id":"expedition-01",
+  "objective":"maximize learning yield across global design domains, not corpus count",
+  "domains":["editorial","typography","painting","illustration","photography","film","architecture","interior","furniture","industrial-design","web","motion","historical-visual-systems","christian-screen","church-architecture"],
+  "sourceWaves":[
+    {"source":"Smithsonian Open Access","mode":"bulk-github+api","rights":"CC0 items only","priorityDomains":["graphic-design","industrial-design","furniture","photography","historical-visual-systems"]},
+    {"source":"The Met Open Access","mode":"open-access-api","rights":"public-domain/open-access only","priorityDomains":["painting","illustration","typography","furniture","historical-visual-systems"]},
+    {"source":"Art Institute of Chicago","mode":"authority-corpus","rights":"per-record public-domain gate","priorityDomains":["painting","illustration","photography","historical-visual-systems"]},
+    {"source":"V&A Collections","mode":"metadata-reference","rights":"reference/analysis unless independently cleared","priorityDomains":["typography","furniture","industrial-design","interior","historical-visual-systems"]}
+  ],
+  "pipeline":["discover","content-boundary","provenance","rights","theology","domain-classification","representation","dedup","cluster","cross-domain-relations","curriculum-selection","nourishment","design-action","capability-delta","curriculum-gap"],
+  "selectionPrinciple":"see more, retain less; stop feeding classes whose capability delta approaches zero",
+  "crossDomainHypotheses":[
+    ["architecture-threshold","digital-page-entry"],
+    ["nave-axis","editorial-reading-axis"],
+    ["furniture-modularity","responsive-components"],
+    ["film-shot-progression","homepage-section-reading-focus"],
+    ["photographic-negative-space","typographic-placement"],
+    ["architectural-proportion","editorial-grid"]
+  ],
+  "gates":{"disputeSensitive":"exclude","rights":"fail-closed","theology":"semantic-isolation-or-review","generatedAuthority":false},
+  "reportOnlyAt":["curriculum-selected","capability-delta-complete"]
+}
