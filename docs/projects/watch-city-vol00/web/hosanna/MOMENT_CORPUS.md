@@ -111,3 +111,30 @@ Research evidence:
 - GRIMH Pathé catalogue 851–866: https://www.grimh.org/index.php?Itemid=230&catid=63&id=991:1896-1906-films-pat-851-866&lang=fr&option=com_content&view=article
 - GRIMH 32-tableau ordering: https://www.grimh.org/index.php?Itemid=804&catid=63&id=1468:1896-1906-films-pat0871-0941&lang=fr&option=com_content&view=article
 - GRIMH title index / earlier variants: https://www.grimh.org/index.php?Itemid=680&catid=63&id=11649:1896-1906-films-liste-a&lang=fr&option=com_content&view=article
+
+
+## Evidence pass 2026-09-18 — M001 source binary resolved
+
+The Commons record identifies Internet Archive as the source. The corresponding Archive item has now been resolved directly:
+
+- Archive identifier: `LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903`
+- Archive runtime: **43:55**
+- downloadable OGG derivative exposed by Archive
+- downloadable 512KB MPEG-4 derivative exposed by Archive
+- exact MPEG-4 derivative path resolved as `LaVieEtLaPassionDeJsusChrist1903_512kb.mp4`
+
+The source page confirms this is the same Pathé/Nonguet/Zecca film and exposes the downloadable derivatives. Commons independently supplies the public-domain rights evidence.
+
+### Retrieval boundary encountered
+
+The current execution environment can resolve the exact Archive derivative URL but cannot follow the Archive binary CDN redirect. Therefore this pass **does not invent a timecode** and **does not manufacture a substitute clip**.
+
+M001 is now:
+
+**WORK VERIFIED → RIGHTS VERIFIED → MOMENT IDENTITY VERIFIED → SOURCE BINARY RESOLVED → BINARY RETRIEVAL BLOCKED HERE → TIMECODE NOT VERIFIED → NOT RENDERABLE**
+
+This is a useful engineering distinction: future Doré Source Probe / browser-runtime handling should treat a resolved binary whose CDN redirect is unavailable to a static fetcher as a retrieval-capability boundary, not as missing evidence.
+
+Evidence:
+- Internet Archive item and derivatives: https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903
+- Wikimedia Commons rights/source record: https://commons.wikimedia.org/wiki/File:La_vie_et_la_passion_de_Jesus_Christ_(1903).ogv
