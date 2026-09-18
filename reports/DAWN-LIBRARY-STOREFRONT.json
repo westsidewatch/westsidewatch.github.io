@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-17T14:22:38.747042+00:00",
+  "generatedAt": "2026-09-18T13:40:22.529875+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -39,9 +39,21 @@
       "source": "Project Gutenberg"
     },
     {
+      "id": "gutenberg-early-church-fathers",
+      "title": "早期教會與教父",
+      "books": 10,
+      "source": "Project Gutenberg"
+    },
+    {
       "id": "gutenberg-jewish-history-josephus",
       "title": "猶太與第二聖殿世界",
       "books": 2,
+      "source": "Project Gutenberg"
+    },
+    {
+      "id": "gutenberg-ancient-history-archaeology",
+      "title": "古代世界與考古",
+      "books": 25,
       "source": "Project Gutenberg"
     },
     {
@@ -49,43 +61,34 @@
       "title": "哲學與思想",
       "books": 25,
       "source": "Project Gutenberg"
+    },
+    {
+      "id": "gutenberg-biography-memoir",
+      "title": "傳記與回憶",
+      "books": 25,
+      "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 154,
-  "sourceCovers": 133,
+  "mappedBooks": 214,
+  "sourceCovers": 163,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
     "Internet Archive": 40,
-    "Project Gutenberg": 52
+    "Project Gutenberg": 112
   },
   "identity": {
-    "queriedThisRun": 1,
-    "resolved": 80,
-    "coversAdded": 35,
-    "internetArchiveLinks": 33,
-    "cacheEntries": 185
+    "queriedThisRun": 3,
+    "resolved": 122,
+    "coversAdded": 65,
+    "internetArchiveLinks": 53,
+    "cacheEntries": 188
   },
   "errors": [
     {
       "source": "Wikisource",
       "error": "empty-shelf"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "early church fathers",
-      "error": "URLError: <urlopen error [Errno 101] Network is unreachable>"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "ancient history archaeology",
-      "error": "URLError: <urlopen error [Errno 101] Network is unreachable>"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "biography memoir",
-      "error": "URLError: <urlopen error [Errno 101] Network is unreachable>"
     }
   ],
   "contentDownloaded": false

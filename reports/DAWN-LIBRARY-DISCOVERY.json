@@ -1,39 +1,13 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-17T14:20:02.811017+00:00",
+  "generatedAt": "2026-09-18T13:39:52.483165+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 66,
+  "pagesChecked": 76,
   "newDiscovered": 0,
   "candidateQueue": 70,
   "catalogBooks": 1969,
-  "errors": [
-    {
-      "query": "Josephus",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus&start_index=26",
-      "error": "URLError"
-    },
-    {
-      "query": "John Knox",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Knox",
-      "error": "URLError"
-    },
-    {
-      "query": "R. A. Torrey",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=R.+A.+Torrey",
-      "error": "URLError"
-    },
-    {
-      "query": "Christian biography",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+biography&start_index=51",
-      "error": "URLError"
-    },
-    {
-      "query": "Bible geography",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+geography",
-      "error": "URLError"
-    }
-  ],
+  "errors": [],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
