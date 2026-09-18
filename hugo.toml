@@ -24,6 +24,10 @@ disableKinds = ["taxonomy", "term"]
     source = "static"
     target = "static"
   [[module.mounts]]
+    source = "data"
+    target = "data"
+    excludeFiles = ["**/*.md"]
+  [[module.mounts]]
     source = "join"
     target = "static/join"
   [[module.mounts]]
