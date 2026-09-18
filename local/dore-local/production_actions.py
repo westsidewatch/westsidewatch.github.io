@@ -79,7 +79,9 @@ def search_local_repair(args=None):
  ok=bool(health.get("ok") and health.get("search_loopback") is True);return {"ok":ok,"status":"completed" if ok else "failed","capability":"search.local.repair","repo":str(repo),"head":_run(["git","rev-parse","HEAD"],repo)["stdout"].strip(),"health":health,"install_tail":install["stdout"][-2000:]}
 def image_local_repair(args=None):
  repo=_repo();err=_sync(repo)
- if err:return err
+ # On non-main integration worktrees, do not force-sync main and discard the tested branch.
+ # The caller's checked-out worktree is the authority for this bounded repair.
+ if err and str(os.environ.get("GITHUB_REF_NAME") or "") in {"", "main"}:return err
  install=_run(["bash",str(repo/"local"/"dore-local"/"install-image-local-macos.sh")],repo,timeout=3600)
  if install["returncode"]:return {"ok":False,"status":"failed","capability":"image.local.repair","step":"install","result":install}
  try:health=_json("http://127.0.0.1:8790/health",15)
