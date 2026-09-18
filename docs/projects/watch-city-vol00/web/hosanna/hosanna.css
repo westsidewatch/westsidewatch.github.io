@@ -24,3 +24,17 @@ linear-gradient(180deg,#17140f 0%,#0b0a08 56%,#050504 100%)}
 @keyframes approach{to{transform:scale(1.19) translate3d(1.8%,-1.2%,0)}}@keyframes shot{0%{opacity:0;transform:scale(1.04)}18%{opacity:.92}75%{opacity:.8}100%{opacity:0;transform:scale(1.1)}}
 @media(max-width:720px){.issue-mark{font-size:9px}.arrival{left:24px;bottom:118px}.enter{right:24px}.master{animation-duration:18s}.shot{inset:-8%}}
 @media(prefers-reduced-motion:reduce){.master{animation:none}.shot{animation:none!important}.montage{display:none}}
+
+/* Enter City: A8 is a one-way editorial handoff, not a trailer restart. */
+.city-entry{position:absolute;inset:0;z-index:12;pointer-events:none;visibility:hidden;background:#090908;overflow:hidden}
+.gate-leaf{position:absolute;top:0;bottom:0;width:51%;background:linear-gradient(90deg,#080807,#17140f 72%,#211c12);box-shadow:inset 0 0 0 1px rgba(206,189,116,.08);transition:transform 2.4s cubic-bezier(.72,0,.18,1)}
+.gate-leaf-left{left:0;transform-origin:left center}.gate-leaf-right{right:0;transform-origin:right center;background:linear-gradient(270deg,#080807,#17140f 72%,#211c12)}
+.threshold-line{position:absolute;left:50%;top:0;bottom:0;width:1px;background:linear-gradient(transparent 8%,rgba(206,189,116,.8) 45%,transparent 92%);opacity:0}
+.city-depth{position:absolute;inset:0;display:grid;place-content:center;text-align:center;padding:8vw;background:radial-gradient(circle at 50% 36%,rgba(206,189,116,.12),transparent 20%),linear-gradient(#0e0c09,#070706);opacity:0;transform:scale(1.08);transition:opacity 1.8s 1.2s var(--ease),transform 5.5s .7s var(--ease)}
+.city-name{font-family:"Cormorant Garamond",serif;letter-spacing:.48em;font-size:clamp(10px,1vw,14px);color:var(--gold);margin:0 0 8vh;opacity:.7}
+.city-depth h2{font-weight:400;font-size:clamp(34px,5.2vw,78px);letter-spacing:.08em;margin:0;opacity:0;transform:translateY(18px);transition:opacity 1.8s 3.1s var(--ease),transform 1.8s 3.1s var(--ease)}
+.depth-note{font-size:clamp(12px,1vw,16px);letter-spacing:.2em;margin:3vh 0 0;opacity:0;transition:opacity 1.8s 4.2s var(--ease)}
+.strata{position:absolute;left:8vw;right:8vw;bottom:8vh;height:28vh;opacity:.42}.strata i{display:block;height:20%;border-top:1px solid rgba(206,189,116,.16);transform:scaleX(var(--w,1))}.strata i:nth-child(2){--w:.91}.strata i:nth-child(3){--w:.78}.strata i:nth-child(4){--w:.62}.strata i:nth-child(5){--w:.44}
+html.entering .city-entry{visibility:visible}html.entering .threshold-line{animation:thresholdFlash 1.8s var(--ease) forwards}html.entering .gate-leaf-left{transform:perspective(1200px) rotateY(-72deg)}html.entering .gate-leaf-right{transform:perspective(1200px) rotateY(72deg)}html.entering .city-depth{opacity:1;transform:scale(1)}html.entering .city-depth h2,html.entering .depth-note{opacity:1;transform:none}html.entering .issue-mark,html.entering .arrival,html.entering .enter,html.entering .sound-note{opacity:0!important;transition:opacity .7s ease}
+@keyframes thresholdFlash{0%{opacity:0}35%{opacity:1}100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){.gate-leaf{transition:none}.city-depth{transition:none;transform:none}html.entering .gate-leaf{display:none}html.entering .city-depth,html.entering .city-depth h2,html.entering .depth-note{opacity:1}}
