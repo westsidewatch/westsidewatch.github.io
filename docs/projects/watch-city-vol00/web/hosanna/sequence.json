@@ -59,7 +59,12 @@
         "catalogueNumber": 855,
         "sceneTitle": "L’Entrée à Jérusalem",
         "tableauLengthMetres": 20
-      }
+      },
+      "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
+      "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
+      "sourceRuntime": "43:55",
+      "retrievalState": "source-derivative-resolved-download-blocked-in-current-runtime",
+      "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted."
     },
     {
       "id": "life-passion-1903-entry-alt-edition",
@@ -92,7 +97,9 @@
       "exactMomentIdentityVerified": true,
       "exactTimecodeVerified": false,
       "renderable": false,
-      "blocker": "Frame-level start/end cannot be honestly asserted from catalogue ordering alone; source video extraction is still required."
+      "blocker": "Archive.org exact MP4/OGV derivative URLs are resolved; binary redirect retrieval is blocked in the current execution environment. Frame verification remains mandatory.",
+      "sourceDerivativeResolved": true,
+      "binaryRetrieved": false
     },
     "discovery": "Early-cinema catalogues reveal several distinct Entrée à Jérusalem productions, so the corpus can begin before 1903 rather than treating the Pathé 1902 tableau as the first screen representation."
   }
