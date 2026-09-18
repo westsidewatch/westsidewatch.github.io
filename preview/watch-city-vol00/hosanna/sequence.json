@@ -1,0 +1,552 @@
+{
+  "id": "watch-city-vol00.hosanna-entry.v0",
+  "role": [
+    "vol00-home",
+    "ten-thousand-year-city-opening"
+  ],
+  "principle": "One sequence, two publication needs: the Vol.00 immersive home and the opening movement of 一萬年的建城禮.",
+  "master": {
+    "type": "dore-original",
+    "title": "王進城 / The King Enters the City",
+    "image": null,
+    "cameraPath": "Mount of Olives approach → descent → crowd → garments/branches → donkey → city/gate",
+    "status": "ART_PENDING"
+  },
+  "timing": {
+    "approachMs": 5200,
+    "montageStartMs": 2800,
+    "arrivalMs": 9800,
+    "cycleMs": 15600
+  },
+  "moments": [
+    {
+      "id": "lumiere-arrival-jerusalem-1898",
+      "work": "La Vie et la Passion de Jésus-Christ — L’Arrivée à Jérusalem",
+      "year": 1898,
+      "creator": "Georges Hatot / Lumière",
+      "sourcePage": "https://grimh.org/index.php?Itemid=127&catid=84&id=17023%3Ales-passions-1897-1906&lang=fr&option=com_content&view=article",
+      "asset": null,
+      "timestamp": null,
+      "sourceFacts": {
+        "form": "standalone early-cinema view",
+        "relatedRemake": "Gaumont L’Entrée à Jérusalem",
+        "castEvidence": "Gaston Breteau as Jesus in Hatot Passion recollections"
+      },
+      "rightsState": "historical-work-public-domain-extant-moving-image-unresolved",
+      "retrievalState": "film-identity-and-comparative-still-evidence-verified-extant-copy-not-yet-resolved",
+      "durationMs": 1500,
+      "offsetMs": 760,
+      "note": "GRIMH documents the Lumière view and a Gaumont remake using substantially the same staging/sets. Still evidence is research evidence, not a montage substitute.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "threshold"
+      ]
+    },
+    {
+      "id": "lear-entry-jerusalem-1897",
+      "work": "Scènes de la vie du Christ — Entrée de Jésus à Jérusalem",
+      "year": 1897,
+      "creator": "Albert Kirchner (Léar) / Henri Levesque",
+      "sourcePage": "https://grimh.org/index.php?Itemid=713&id=5299&lang=fr&layout=edit&option=com_content&view=article",
+      "asset": null,
+      "timestamp": null,
+      "sourceFacts": {
+        "productionWindow": "1897-03/04",
+        "originalLengthMetresApprox": 40,
+        "form": "standalone animated view / tableau",
+        "historicalPosition": "one of the earliest filmed Passion cycles"
+      },
+      "rightsState": "historical-work-public-domain-extant-moving-image-unresolved",
+      "retrievalState": "catalogue-and-production-evidence-verified-extant-film-copy-not-yet-resolved",
+      "durationMs": 1500,
+      "offsetMs": 760,
+      "note": "Earlier than the Pathé M001. Do not render from production stills: a surviving moving-image copy must be resolved first.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "threshold"
+      ]
+    },
+    {
+      "id": "manger-cross-1912-entry",
+      "work": "From the Manger to the Cross",
+      "year": 1912,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:From_The_Manger_To_The_Cross_(1912)_Best_Quality.webm",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "candidate-public-domain-needs-moment-extraction",
+      "durationMs": 1700,
+      "offsetMs": 900,
+      "note": "Underlying 1912 U.S. film is public domain; exact entry Moment and served derivative must be verified before publication.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "threshold"
+      ]
+    },
+    {
+      "id": "life-passion-1903-entry",
+      "work": "La Vie et la passion de Jésus Christ",
+      "year": 1903,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:La_vie_et_la_passion_de_Jesus_Christ_(1903).ogv",
+      "asset": null,
+      "timestamp": null,
+      "tableau": 14,
+      "catalogueNumber": 855,
+      "rightsState": "public-domain-source-verified-moment-timecode-pending",
+      "evidence": [
+        "Wikimedia Commons marks the surviving 43:54 copy as public-domain material.",
+        "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
+        "Exact in-file start/end timecode still requires frame-level verification before extraction."
+      ],
+      "durationMs": 1600,
+      "offsetMs": 820,
+      "catalogueYear": 1902,
+      "sourceDuration": "43:54",
+      "sourceResolution": "210x160",
+      "sourceOriginalFile": "https://upload.wikimedia.org/wikipedia/commons/6/6c/La_vie_et_la_passion_de_Jesus_Christ_%281903%29.ogv",
+      "commonsRights": "Public Domain Mark 1.0 / free of known restrictions",
+      "sourceFacts": {
+        "tableauCount": 32,
+        "tableau": 14,
+        "catalogueNumber": 855,
+        "sceneTitle": "L’Entrée à Jérusalem",
+        "tableauLengthMetres": 20
+      },
+      "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
+      "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
+      "sourceRuntime": "43:55",
+      "retrievalState": "source-derivative-resolved-download-blocked-in-current-runtime",
+      "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold"
+      ]
+    },
+    {
+      "id": "life-passion-1903-entry-alt-edition",
+      "work": "La Vie et la passion de Jésus Christ",
+      "year": 1903,
+      "sourcePage": "https://www.dailymotion.com/video/x6bftxb",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-reference-copy",
+      "evidence": [
+        "Reference description explicitly labels sequence 10 as ENTRANCE INTO JERUSALEM and describes the crowd, ass, Hosannas and palm branches.",
+        "Not an approved publication asset."
+      ],
+      "durationMs": 1500,
+      "offsetMs": 780
+    },
+    {
+      "id": "king-of-kings-1927-entry",
+      "work": "The King of Kings",
+      "year": 1927,
+      "creator": "Cecil B. DeMille",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "moment-identity-verified-rights-and-asset-pending",
+      "retrievalState": "scene-guide-verifies-triumphal-entry",
+      "durationMs": 1300,
+      "offsetMs": 620,
+      "note": "Scene guide explicitly identifies Triumphal Entry (Mark 11:1–11).",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "king-of-kings-1961-entry",
+      "work": "King of Kings",
+      "year": 1961,
+      "creator": "Nicholas Ray",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/05/king-of-kings-1961-scene-guide.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-identity-verified",
+      "durationMs": 1200,
+      "offsetMs": 580,
+      "note": "Scene guide explicitly identifies Triumphal entry (Mark 11:7–11a).",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "greatest-story-1965-entry",
+      "work": "The Greatest Story Ever Told",
+      "year": 1965,
+      "creator": "George Stevens",
+      "sourcePage": "https://www.christianitytoday.com/1965/02/summary-greatest-story-ever-told/",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-identity-verified",
+      "durationMs": 1200,
+      "offsetMs": 560,
+      "note": "Contemporary review explicitly lists the triumphal entry among the film's main Gospel components.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "jesus-1979-entry",
+      "work": "JESUS",
+      "year": 1979,
+      "creator": "John Krish / Peter Sykes",
+      "sourcePage": "https://www.jesusfilm.org/watch/jesus.html/jesus-triumphal-entry.html",
+      "asset": null,
+      "timestamp": {
+        "chapter": "Jesus's Triumphal Entry",
+        "duration": "1 min"
+      },
+      "rightsState": "official-source-verified-publication-license-not-assumed",
+      "retrievalState": "official-chapter-and-download-surface-resolved",
+      "durationMs": 1100,
+      "offsetMs": 520,
+      "note": "Official Jesus Film Project exposes a dedicated one-minute Triumphal Entry chapter. Publication permission for this montage must still be resolved.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "visual-bible-matthew-1993-entry",
+      "work": "The Visual Bible: Matthew",
+      "year": 1993,
+      "creator": "Regardt van den Bergh",
+      "sourcePage": "https://subtitlecat.com/subs/1088/1993-The%20Visual%20Bible-Matthew.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-text-sequence-verified",
+      "durationMs": 1050,
+      "offsetMs": 500,
+      "note": "Transcript directly covers Matthew 21: approach to Jerusalem, donkey/colt, cloaks, branches, Hosanna and entry into the city.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "son-of-god-2014-entry",
+      "work": "Son of God",
+      "year": 2014,
+      "creator": "Christopher Spencer",
+      "sourcePage": "https://www.subtitlecat.com/subs/1094/Son%20of%20God%202014.html",
+      "asset": null,
+      "timestamp": {
+        "researchDialogueWindowStart": "00:48:51.080",
+        "researchDialogueWindowEnd": "00:49:41.920"
+      },
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "dialogue-time-window-verified-not-shot-boundary",
+      "durationMs": 950,
+      "offsetMs": 460,
+      "note": "Subtitle timing verifies palms/Hosanna and reports Jesus has entered the city on a donkey. These are dialogue anchors, not yet frame-accurate shot boundaries.",
+      "actionCoordinates": [
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    },
+    {
+      "id": "chosen-2025-entry",
+      "work": "The Chosen — Season 5 Episode 1",
+      "year": 2025,
+      "creator": "Dallas Jenkins / The Chosen",
+      "sourcePage": "https://resources.comeandseefoundation.org/resources/triumphant-entry-into-jerusalem593/clip",
+      "asset": null,
+      "timestamp": {
+        "officialClipDuration": "3:07"
+      },
+      "rightsState": "official-source-verified-publication-license-not-assumed",
+      "retrievalState": "official-dedicated-clip-resolved",
+      "durationMs": 900,
+      "offsetMs": 420,
+      "note": "Official Come and See Foundation resource exposes a dedicated 3:07 Triumphant Entry Into Jerusalem clip.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ]
+    }
+  ],
+  "text": {
+    "first": "和散那。",
+    "second": "王進城了。",
+    "fullTitleDeferred": "一萬年的建城禮"
+  },
+  "rightsRule": "Only moments with rightsState=publishable and a verified asset may render. Research candidates never silently enter the public montage.",
+  "researchState": {
+    "lastPass": "2026-09-18",
+    "firstMoment": {
+      "id": "life-passion-1903-entry",
+      "sourceVerified": true,
+      "publicDomainVerified": true,
+      "exactMomentIdentityVerified": true,
+      "exactTimecodeVerified": false,
+      "renderable": false,
+      "blocker": "Archive.org exact MP4/OGV derivative URLs are resolved; binary redirect retrieval is blocked in the current execution environment. Frame verification remains mandatory.",
+      "sourceDerivativeResolved": true,
+      "binaryRetrieved": false
+    },
+    "discovery": "Early-cinema catalogues reveal several distinct Entrée à Jérusalem productions, so the corpus can begin before 1903 rather than treating the Pathé 1902 tableau as the first screen representation.",
+    "earliestScreenLayer": {
+      "status": "expanded-before-1902",
+      "finding": "The corpus now reaches to Léar/Kirchner 1897 and Hatot/Lumière 1898 entry views. The homepage montage should begin with the earliest extant publishable moving image, not with an assumed 1903 origin.",
+      "gate": "No production still may masquerade as a film Moment."
+    },
+    "multiEraPass": {
+      "date": "2026-09-18",
+      "status": "expanded",
+      "finding": "Verified representation line now spans 1897, 1898, 1902/03, 1912, 1927, 1961, 1965 and 1979. Discovery target is explicitly present-day, not a single early-cinema year."
+    },
+    "modernEraPass": {
+      "date": "2026-09-18",
+      "status": "verified-through-2025",
+      "finding": "The representation line now has verified anchors in 1993, 2014 and 2025. The current evidence span is 1897–2025, with discovery intentionally open beyond 2025."
+    }
+  },
+  "montageScope": {
+    "policy": "multi-era-by-design",
+    "targetRange": "1897–2025+ / continuing",
+    "currentVerifiedRepresentationYears": [
+      1897,
+      1898,
+      1902,
+      1903,
+      1912,
+      1927,
+      1961,
+      1965,
+      1979,
+      1993,
+      2014,
+      2025
+    ],
+    "rule": "Never stop the editorial montage at an arbitrary historical year. Continue discovery across silent, studio-epic, television, modern and contemporary screen eras. Rights admission remains per-Moment.",
+    "temporalBands": [
+      {
+        "id": "birth-of-cinema",
+        "range": "1897–1912",
+        "role": "the biblical Moment appears almost with cinema itself"
+      },
+      {
+        "id": "silent-feature",
+        "range": "1910s–1920s",
+        "role": "the tableau expands into feature-scale spectacle"
+      },
+      {
+        "id": "studio-epic",
+        "range": "1950s–1960s",
+        "role": "mass crowd, widescreen and monumental Jerusalem"
+      },
+      {
+        "id": "television-global",
+        "range": "1970s–1990s",
+        "role": "the entry becomes globally repeated screen memory"
+      },
+      {
+        "id": "digital-contemporary",
+        "range": "2000s–present",
+        "role": "new cinematic, streaming and animated representations continue the recurrence"
+      }
+    ],
+    "editRule": "Cut by biblical action coordinate across years, not by playing one production after another."
+  },
+  "actionCoordinates": {
+    "version": "v0",
+    "principle": "One biblical action continues while cinematic era changes.",
+    "coordinates": [
+      {
+        "id": "approach",
+        "label": "道路／接近",
+        "meaning": "The King approaches Jerusalem before the threshold.",
+        "preferredContrast": "distance, landscape, procession scale"
+      },
+      {
+        "id": "donkey",
+        "label": "驢駒／王顯現",
+        "meaning": "The rider becomes unmistakable.",
+        "preferredContrast": "silhouette, animal movement, actor/era shift"
+      },
+      {
+        "id": "gather",
+        "label": "人群聚集",
+        "meaning": "Private movement becomes public event.",
+        "preferredContrast": "crowd density, camera scale, choreography"
+      },
+      {
+        "id": "branches",
+        "label": "棕枝舉起",
+        "meaning": "Recognition becomes visible gesture.",
+        "preferredContrast": "branch direction, rhythm, foreground occlusion"
+      },
+      {
+        "id": "garments",
+        "label": "鋪衣／道路",
+        "meaning": "The road itself is transformed by reception.",
+        "preferredContrast": "downward gesture, fabric, feet/hoof continuity"
+      },
+      {
+        "id": "hosanna",
+        "label": "和散那",
+        "meaning": "Acclamation accumulates across languages and eras.",
+        "preferredContrast": "mouths, crowd, sound, subtitles only as evidence"
+      },
+      {
+        "id": "threshold",
+        "label": "城門／越過門檻",
+        "meaning": "Approach becomes entry.",
+        "preferredContrast": "gate geometry, cut-on-motion, inside/outside"
+      },
+      {
+        "id": "city",
+        "label": "進入城中",
+        "meaning": "The entry completes and hands off to Jerusalem/time-depth.",
+        "preferredContrast": "urban density, spatial compression"
+      }
+    ]
+  },
+  "montagePlan": {
+    "mode": "action-coordinate-intercut",
+    "draftArc": [
+      {
+        "coordinate": "approach",
+        "yearSweep": [
+          1897,
+          1927,
+          1979,
+          2025
+        ]
+      },
+      {
+        "coordinate": "donkey",
+        "yearSweep": [
+          1898,
+          1961,
+          1993,
+          2025
+        ]
+      },
+      {
+        "coordinate": "branches",
+        "yearSweep": [
+          1902,
+          1927,
+          1965,
+          1979,
+          2014,
+          2025
+        ]
+      },
+      {
+        "coordinate": "garments",
+        "yearSweep": [
+          1927,
+          1961,
+          1979,
+          1993,
+          2025
+        ]
+      },
+      {
+        "coordinate": "hosanna",
+        "yearSweep": [
+          1902,
+          1927,
+          1961,
+          1979,
+          1993,
+          2014,
+          2025
+        ]
+      },
+      {
+        "coordinate": "threshold",
+        "yearSweep": [
+          1897,
+          1912,
+          1927,
+          1961,
+          1979,
+          1993,
+          2014,
+          2025
+        ]
+      },
+      {
+        "coordinate": "city",
+        "yearSweep": [
+          1927,
+          1965,
+          1979,
+          1993,
+          2014,
+          2025
+        ]
+      }
+    ],
+    "caveat": "Coordinate membership is evidence-level and must be frame-confirmed per source before a public edit. This plan does not override rights admission."
+  },
+  "entryHandoff": {
+    "status": "implemented-v0",
+    "trigger": "reader chooses 入城",
+    "fromCoordinate": "city",
+    "behavior": "stop loop → cross threshold → open gate → enter Jerusalem → reveal title → descend toward strata",
+    "nextSurface": "jerusalem-depth",
+    "loopRule": "Once deliberate entry begins, Hosanna loop cannot restart.",
+    "titleReveal": "一萬年的建城禮",
+    "principle": "The reader enters with the King; homepage and article opening are one continuous publication movement."
+  }
+}
