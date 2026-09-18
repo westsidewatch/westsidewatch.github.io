@@ -178,6 +178,53 @@
       "durationMs": 1100,
       "offsetMs": 520,
       "note": "Official Jesus Film Project exposes a dedicated one-minute Triumphal Entry chapter. Publication permission for this montage must still be resolved."
+    },
+    {
+      "id": "visual-bible-matthew-1993-entry",
+      "work": "The Visual Bible: Matthew",
+      "year": 1993,
+      "creator": "Regardt van den Bergh",
+      "sourcePage": "https://subtitlecat.com/subs/1088/1993-The%20Visual%20Bible-Matthew.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-text-sequence-verified",
+      "durationMs": 1050,
+      "offsetMs": 500,
+      "note": "Transcript directly covers Matthew 21: approach to Jerusalem, donkey/colt, cloaks, branches, Hosanna and entry into the city."
+    },
+    {
+      "id": "son-of-god-2014-entry",
+      "work": "Son of God",
+      "year": 2014,
+      "creator": "Christopher Spencer",
+      "sourcePage": "https://www.subtitlecat.com/subs/1094/Son%20of%20God%202014.html",
+      "asset": null,
+      "timestamp": {
+        "researchDialogueWindowStart": "00:48:51.080",
+        "researchDialogueWindowEnd": "00:49:41.920"
+      },
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "dialogue-time-window-verified-not-shot-boundary",
+      "durationMs": 950,
+      "offsetMs": 460,
+      "note": "Subtitle timing verifies palms/Hosanna and reports Jesus has entered the city on a donkey. These are dialogue anchors, not yet frame-accurate shot boundaries."
+    },
+    {
+      "id": "chosen-2025-entry",
+      "work": "The Chosen — Season 5 Episode 1",
+      "year": 2025,
+      "creator": "Dallas Jenkins / The Chosen",
+      "sourcePage": "https://resources.comeandseefoundation.org/resources/triumphant-entry-into-jerusalem593/clip",
+      "asset": null,
+      "timestamp": {
+        "officialClipDuration": "3:07"
+      },
+      "rightsState": "official-source-verified-publication-license-not-assumed",
+      "retrievalState": "official-dedicated-clip-resolved",
+      "durationMs": 900,
+      "offsetMs": 420,
+      "note": "Official Come and See Foundation resource exposes a dedicated 3:07 Triumphant Entry Into Jerusalem clip."
     }
   ],
   "text": {
@@ -209,11 +256,16 @@
       "date": "2026-09-18",
       "status": "expanded",
       "finding": "Verified representation line now spans 1897, 1898, 1902/03, 1912, 1927, 1961, 1965 and 1979. Discovery target is explicitly present-day, not a single early-cinema year."
+    },
+    "modernEraPass": {
+      "date": "2026-09-18",
+      "status": "verified-through-2025",
+      "finding": "The representation line now has verified anchors in 1993, 2014 and 2025. The current evidence span is 1897–2025, with discovery intentionally open beyond 2025."
     }
   },
   "montageScope": {
     "policy": "multi-era-by-design",
-    "targetRange": "1897–present",
+    "targetRange": "1897–2025+ / continuing",
     "currentVerifiedRepresentationYears": [
       1897,
       1898,
@@ -223,7 +275,10 @@
       1927,
       1961,
       1965,
-      1979
+      1979,
+      1993,
+      2014,
+      2025
     ],
     "rule": "Never stop the editorial montage at an arbitrary historical year. Continue discovery across silent, studio-epic, television, modern and contemporary screen eras. Rights admission remains per-Moment.",
     "temporalBands": [
