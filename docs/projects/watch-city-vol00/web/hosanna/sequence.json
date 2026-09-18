@@ -47,7 +47,19 @@
         "Exact in-file start/end timecode still requires frame-level verification before extraction."
       ],
       "durationMs": 1600,
-      "offsetMs": 820
+      "offsetMs": 820,
+      "catalogueYear": 1902,
+      "sourceDuration": "43:54",
+      "sourceResolution": "210x160",
+      "sourceOriginalFile": "https://upload.wikimedia.org/wikipedia/commons/6/6c/La_vie_et_la_passion_de_Jesus_Christ_%281903%29.ogv",
+      "commonsRights": "Public Domain Mark 1.0 / free of known restrictions",
+      "sourceFacts": {
+        "tableauCount": 32,
+        "tableau": 14,
+        "catalogueNumber": 855,
+        "sceneTitle": "L’Entrée à Jérusalem",
+        "tableauLengthMetres": 20
+      }
     },
     {
       "id": "life-passion-1903-entry-alt-edition",
@@ -70,5 +82,18 @@
     "second": "王進城了。",
     "fullTitleDeferred": "一萬年的建城禮"
   },
-  "rightsRule": "Only moments with rightsState=publishable and a verified asset may render. Research candidates never silently enter the public montage."
+  "rightsRule": "Only moments with rightsState=publishable and a verified asset may render. Research candidates never silently enter the public montage.",
+  "researchState": {
+    "lastPass": "2026-09-18",
+    "firstMoment": {
+      "id": "life-passion-1903-entry",
+      "sourceVerified": true,
+      "publicDomainVerified": true,
+      "exactMomentIdentityVerified": true,
+      "exactTimecodeVerified": false,
+      "renderable": false,
+      "blocker": "Frame-level start/end cannot be honestly asserted from catalogue ordering alone; source video extraction is still required."
+    },
+    "discovery": "Early-cinema catalogues reveal several distinct Entrée à Jérusalem productions, so the corpus can begin before 1903 rather than treating the Pathé 1902 tableau as the first screen representation."
+  }
 }
