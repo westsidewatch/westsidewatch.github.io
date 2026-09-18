@@ -538,5 +538,15 @@
       }
     ],
     "caveat": "Coordinate membership is evidence-level and must be frame-confirmed per source before a public edit. This plan does not override rights admission."
+  },
+  "entryHandoff": {
+    "status": "implemented-v0",
+    "trigger": "reader chooses 入城",
+    "fromCoordinate": "city",
+    "behavior": "stop loop → cross threshold → open gate → enter Jerusalem → reveal title → descend toward strata",
+    "nextSurface": "jerusalem-depth",
+    "loopRule": "Once deliberate entry begins, Hosanna loop cannot restart.",
+    "titleReveal": "一萬年的建城禮",
+    "principle": "The reader enters with the King; homepage and article opening are one continuous publication movement."
   }
 }
