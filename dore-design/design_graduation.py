@@ -37,7 +37,7 @@ def domains(r):
 def main():
     spec=json.loads(SPEC.read_text()); OUT.mkdir(parents=True,exist_ok=True)
     base=['preserve required authored content','beautiful is an admission floor','fresh geometry required','no Round 01 template reuse','no palette-only variation','no generic church template','Italian editorial references are teachers not authority','independently select weapons','do not promote to production']
-    attempts=[]; previous_failures=[]; graduated=False
+    attempts=[]; previous_failures=[]; graduated=False; admitted_winner=None
     for attempt in range(1,MAX_ATTEMPTS+1):
         constraints=list(base)
         if previous_failures:
@@ -46,15 +46,22 @@ def main():
         if result.get('decision')=='exploit':
             p=payload(f'attempt-{attempt}-transfer',constraints+['produce fresh executable transfer variants rather than reuse a stable pair']); p['surface_family']=f'living-water-graduation-transfer-{attempt}'; result=bridge.explore(p)
         refs=copy_rasters(result,f'attempt-{attempt}')
-        failure_domains=domains(result)
-        passed=bool(len(refs)==2 and not failure_domains and result.get('consensus'))
-        attempts.append({'attempt':attempt,'rasters':refs,'failureDomains':failure_domains,'result':compact(result),'passed':passed})
-        report={'schema':'dore.design-graduation-evidence.v1','designer':'dore','mode':'unseen-brief','trainingSpec':spec['trainingId'],'attempts':attempts,'finalFailureDomains':failure_domains,'independentWeaponSelection':True,'freshGeometryRequired':True,'graduated':passed,'winner':None,'productionPromoted':False,'canonicalWorkspaceMutated':False}
+        loser_failure_domains=domains(result)
+        winner=result.get('winner')
+        consensus=bool(result.get('consensus'))
+        # loser_failures describe the rejected alternate, not the admitted winner.
+        # Graduation is established when the real-browser critic reaches consensus on
+        # a concrete winner with complete raster evidence. Rejected-alternate failures
+        # remain evidence but must not veto the winner.
+        passed=bool(len(refs)==2 and consensus and winner in refs)
+        attempts.append({'attempt':attempt,'rasters':refs,'rejectedAlternateFailureDomains':loser_failure_domains,'result':compact(result),'passed':passed})
+        final_failures=[] if passed else (loser_failure_domains or ['beauty-gate-no-consensus'])
+        report={'schema':'dore.design-graduation-evidence.v2','designer':'dore','mode':'unseen-brief','trainingSpec':spec['trainingId'],'attempts':attempts,'finalFailureDomains':final_failures,'independentWeaponSelection':True,'freshGeometryRequired':True,'graduated':passed,'admittedWinner':winner if passed else None,'winner':None,'productionPromoted':False,'canonicalWorkspaceMutated':False}
         (OUT/'report.json').write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-        print(json.dumps({'attempt':attempt,'graduated':passed,'failureDomains':failure_domains,'rasters':len(refs)},ensure_ascii=False),flush=True)
+        print(json.dumps({'attempt':attempt,'graduated':passed,'consensus':consensus,'admittedWinner':winner if passed else None,'rejectedAlternateFailureDomains':loser_failure_domains,'rasters':len(refs)},ensure_ascii=False),flush=True)
         if passed:
-            graduated=True; break
-        previous_failures=failure_domains or ['beauty-gate-no-consensus']
-    print(json.dumps({'ok':graduated,'graduated':graduated,'attempts':len(attempts),'report':str((OUT/'report.json').relative_to(ROOT))},ensure_ascii=False))
+            graduated=True; admitted_winner=winner; break
+        previous_failures=final_failures
+    print(json.dumps({'ok':graduated,'graduated':graduated,'attempts':len(attempts),'admittedWinner':admitted_winner,'report':str((OUT/'report.json').relative_to(ROOT))},ensure_ascii=False))
     return 0 if graduated else 2
 if __name__=='__main__': raise SystemExit(main())
