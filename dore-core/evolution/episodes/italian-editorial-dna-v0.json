@@ -1,0 +1,51 @@
+{
+  "schema": "dore.evolution-episode.v0",
+  "id": "evolution:italian-editorial-dna-v0",
+  "status": "IN_PROGRESS",
+  "parent_capability": "publishing.dimensional-writing",
+  "method": "DORÉ-OPEN-RESEARCH-MICRO-LOOP-v0.1",
+  "research_source_branch": "feat/aw-011-camera-corridor",
+  "research_head_evidence": [
+    "d0112b6033958346e609cb55935559ed2a284b87",
+    "57bc294e44f1dd34a44b4ff326ec88457750feb9",
+    "497f825cff6ae663ba3650d75b98ed0e2d88bfa4",
+    "27741e478e0d59621d7cada6718781d70323dbf6"
+  ],
+  "research_scope": {
+    "campo_grafico": {
+      "complete_numbered_issue_research_so_far": 36,
+      "total_numbered_issues": 66,
+      "years_covered": [1933, 1934, 1935],
+      "remaining_years": [1936, 1937, 1938, 1939]
+    },
+    "later_italian_lineage": "1933 -> 2026 remains planned beyond the complete Campo Grafico pass"
+  },
+  "current_phase": "EXPLORE_TO_VERIFY",
+  "required_chain": [
+    "EXPLORE",
+    "CANONICAL_EVIDENCE",
+    "TRANSFERABLE_GRAMMAR",
+    "VERIFY",
+    "ADMIT",
+    "REGISTRY_RETURN",
+    "MEMORY_RETURN",
+    "SYSTEM_ATLAS_RELATION",
+    "REAL_TASK_RECALL",
+    "LATER_BLIND_TRANSFER"
+  ],
+  "next_required_evidence": [
+    "finish Campo Grafico 1936-1939 issue corpus",
+    "run same-source editorial-DNA differentiation benchmark",
+    "run second-source cross-semantic transfer benchmark",
+    "run unprompted Journal task selection test",
+    "run negative-selection test",
+    "prove judgement-to-evidence provenance backtrace"
+  ],
+  "forbidden_shortcuts": [
+    "do not treat research volume as capability proof",
+    "do not add a parallel memory architecture",
+    "do not mark PASS from a named-style prompt",
+    "do not hide source conflicts",
+    "do not copy historical mastheads or produce period cosplay"
+  ]
+}

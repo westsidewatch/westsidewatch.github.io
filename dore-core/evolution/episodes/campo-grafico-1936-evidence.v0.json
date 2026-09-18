@@ -1,0 +1,90 @@
+{
+  "schema": "dore.explore-evidence.v0",
+  "episode": "italian-editorial-dna-v0",
+  "publication": "Campo Grafico",
+  "year": 1936,
+  "year_label": "Year IV",
+  "source_policy": "Campo Grafico official archive is primary; unseen visual details remain unknown.",
+  "coverage": {
+    "numbered_issues": 12,
+    "physical_issue_objects": 9,
+    "combined_numbers": ["9-10-11-12"],
+    "verified_sequence": ["1","2","3","4","5","6","7","8","9-10-11-12"]
+  },
+  "verified_evidence": [
+    {
+      "issue": "1936-02",
+      "pages": 20,
+      "cover": "Dradi-Rossi, Buenos Aires",
+      "evidence": ["glued Atelier de Artes Graficas Futura writing paper/invoice", "glued black brochure by Bruno Munari and Riccardo Ricas Castagnedi", "editorial on intelligent criteria and economical advertising"],
+      "transferable_grammar": ["foreign-object-keeps-local-grammar", "real-object-over-representation", "economy-requires-judgement-not-decoration"],
+      "judge_rule": "When a foreign artifact carries its own evidence and visual system, preserve its identity instead of normalizing it into house style."
+    },
+    {
+      "issue": "1936-03",
+      "pages": 20,
+      "cover": "Musso XIV",
+      "evidence": ["two colour tourist postcards glued to an illustrative table"],
+      "transferable_grammar": ["attached-evidence", "serial-object-comparison"],
+      "judge_rule": "If comparison depends on the object itself, let the object enter the editorial field as evidence rather than simulate it decoratively."
+    },
+    {
+      "issue": "1936-04",
+      "pages": 20,
+      "cover": "unsigned",
+      "evidence": ["article on a new reproduction process", "Nebiolo presents Nilo typeface on cover IV"],
+      "transferable_grammar": ["process-can-be-content", "technical-novelty-needs-editorial-evaluation"],
+      "judge_rule": "A new technique earns prominence only when its process changes meaning, evidence, or production judgement."
+    },
+    {
+      "issue": "1936-05",
+      "pages": 20,
+      "cover": "Luigi Veronesi",
+      "evidence": ["production/foundry/photo-mechanical advertising remains part of issue ecology"],
+      "transferable_grammar": ["production-ecology-as-context"],
+      "judge_rule": "Production context may remain visible when it helps explain how editorial form becomes possible."
+    },
+    {
+      "issue": "1936-07",
+      "pages": 28,
+      "cover": "Carlo Dradi and Attilio Rossi",
+      "evidence": ["issue expands to 28 pages", "Nebiolo presents Neon typeface"],
+      "transferable_grammar": ["format-expansion-recomposes-rhythm"],
+      "judge_rule": "More space should change editorial rhythm and hierarchy; it must not merely stretch an existing template."
+    },
+    {
+      "issue": "1936-08",
+      "pages": 20,
+      "cover": "unsigned",
+      "evidence": ["out-of-text printing-ink advertisement", "Campo Grafico Paris-trip material", "photo-mechanical production context"],
+      "transferable_grammar": ["contextual-interruption", "publication-as-network"],
+      "judge_rule": "An issue may expose the network around its making without confusing contextual evidence with the main argument."
+    },
+    {
+      "issue": "1936-09-12",
+      "pages": 60,
+      "cover": "unsigned",
+      "art_direction": ["Carlo Dradi", "Luigi Veronesi"],
+      "evidence": ["four numbered issues become one physical object", "entire issue dedicated to typefaces", "glued spine", "extended Il campionario dei caratteri sequence", "Quaderno di geometria in memory of Edoardo Persico by Leonardo Sinisgalli with Luigi Veronesi plates", "competition regulations, reviews, useful news and production advertising coexist"],
+      "transferable_grammar": ["theme-can-rewrite-publication-form", "combined-cadence-is-one-object", "special-issue-requires-new-architecture", "long-sequence-can-be-primary-editorial-form", "binding-is-semantic-when-form-changes"],
+      "judge_rule": "When a subject grows large enough to reorganize cadence, page count, binding and sequence, design a new issue-world around the subject instead of compressing it into the normal issue template."
+    }
+  ],
+  "year_synthesis": [
+    "1936 strengthens the distinction between publication identity and repeated surface style.",
+    "Real inserted objects continue to function as evidence rather than decoration.",
+    "The 9-10-11-12 quadruple issue proves that subject scale can rewrite cadence, physical form, page count and sequence together.",
+    "A special issue is not a larger normal issue; its content can generate a different publication architecture.",
+    "Technical processes remain editorial material only when judgement gives them semantic purpose."
+  ],
+  "candidate_capability_effect": [
+    "publishing.dimensional-writing",
+    "aesthetic-judgement",
+    "editorial-spatial-composition",
+    "editorial-material-semantics",
+    "editorial-sequence-composition",
+    "emergence-temporal-translation"
+  ],
+  "admission_status": "EVIDENCE_ONLY_NOT_CAPABILITY_PASS",
+  "next": "Research 1937 while retaining 1936 as evidence. No Registry/System Atlas promotion until blind-transfer acceptance passes."
+}
