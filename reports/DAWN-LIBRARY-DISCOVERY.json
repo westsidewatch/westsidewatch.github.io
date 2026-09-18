@@ -1,13 +1,19 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-18T13:39:52.483165+00:00",
+  "generatedAt": "2026-09-18T23:00:35.372667+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 76,
-  "newDiscovered": 0,
-  "candidateQueue": 70,
+  "pagesChecked": 68,
+  "newDiscovered": 1,
+  "candidateQueue": 71,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "hymns Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity",
+      "error": "RemoteDisconnected"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }

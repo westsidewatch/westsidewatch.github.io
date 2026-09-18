@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-18T13:40:22.529875+00:00",
+  "generatedAt": "2026-09-18T23:01:10.355361+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -11,6 +11,42 @@
       "kind": "premium-shelf",
       "source": "Standard Ebooks",
       "items": [
+        {
+          "id": "standard-ebooks-sentimental-education",
+          "title": "Sentimental Education",
+          "author": "Gustave Flaubert",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/gustave-flaubert/sentimental-education/m-walter-dunne",
+            "downloadUrl": "https://standardebooks.org/ebooks/gustave-flaubert/sentimental-education/m-walter-dunne/downloads/gustave-flaubert_sentimental-education_m-walter-dunne.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/gustave-flaubert/sentimental-education/m-walter-dunne/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL27103128W",
+            "editionId": "OL37022414M",
+            "isbn": "9781627939782",
+            "coverId": 12602042,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-18T23:01:10.355361+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL27103128W",
+            "openLibraryEdition": "OL37022414M",
+            "isbn": "9781627939782"
+          }
+        },
         {
           "id": "standard-ebooks-reflections-on-the-revolution-in-france",
           "title": "Reflections on the Revolution in France",
@@ -562,28 +598,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "standard-ebooks-the-lost-stradivarius",
-          "title": "The Lost Stradivarius",
-          "author": "John Meade Falkner",
-          "language": "en",
-          "source": {
-            "provider": "Standard Ebooks",
-            "url": "https://standardebooks.org/ebooks/john-meade-falkner/the-lost-stradivarius",
-            "downloadUrl": "https://standardebooks.org/ebooks/john-meade-falkner/the-lost-stradivarius/downloads/john-meade-falkner_the-lost-stradivarius.epub?source=feed",
-            "kind": "remote-public-premium"
-          },
-          "cover": {
-            "url": "https://standardebooks.org/ebooks/john-meade-falkner/the-lost-stradivarius/downloads/cover.jpg",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Standard Ebooks"
-          },
-          "quality": "curated-edition",
-          "contentDownloaded": false
         }
       ]
     },
@@ -2292,98 +2306,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-frankmoorecrossc0000cros",
-          "title": "Frank Moore Cross : conversations with a Bible scholar",
-          "author": "Cross, Frank Moore",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/frankmoorecrossc0000cros",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/frankmoorecrossc0000cros",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fromevetoestherr0000bron",
-          "title": "From Eve to Esther : rabbinic reconstructions of biblical women",
-          "author": "Bronner, Leila Leah",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fromevetoestherr0000bron",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fromevetoestherr0000bron",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-makersofenglishb0000robe",
-          "title": "Makers of the English Bible",
-          "author": "Robertson, Edwin Hanton",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/makersofenglishb0000robe",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/makersofenglishb0000robe",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-historyofhebrewp0000unse_m4m7",
-          "title": "A history of the Hebrew people from the earliest times to the year 70 A.D., largely in the language of Bible, prepared by George A. Barton",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/historyofhebrewp0000unse_m4m7",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/historyofhebrewp0000unse_m4m7",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-principlesofsama0000unse",
           "title": "The principles of Samaritan bible exegesis",
           "author": "Lowy, S",
@@ -2718,6 +2640,98 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/fortwaynebible1952173fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible196162fort",
+          "title": "Fort Wayne Bible College Catalog",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible196162fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible196162fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible197879fort",
+          "title": "Fort Wayne Bible College Catalog",
+          "author": "Fort Wayne Bible College",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible197879fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible197879fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-sword-unsheathed",
+          "title": "Sword Unsheathed: A Battle of the Bibles & Bible History Manual",
+          "author": "Dallas P. Roberts",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/sword-unsheathed",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/sword-unsheathed",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebible191617fort",
+          "title": "Fort Wayne Bible Training School Catalog",
+          "author": "Fort Wayne Bible Training School",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebible191617fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebible191617fort",
             "mode": "source"
           },
           "rights": {
@@ -7181,11 +7195,11 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 3,
-      "resolved": 122,
+      "queriedThisRun": 1,
+      "resolved": 123,
       "coversAdded": 65,
       "internetArchiveLinks": 53,
-      "cacheEntries": 188
+      "cacheEntries": 189
     }
   },
   "errors": [
