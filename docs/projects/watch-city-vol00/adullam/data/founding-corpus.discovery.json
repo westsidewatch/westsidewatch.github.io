@@ -1,0 +1,121 @@
+{
+  "schema": "dore.adullam.corpus-discovery.v0",
+  "status": "evidence-backed-candidates",
+  "generatedFrom": "public discovery 2026-09-18",
+  "authorityRule": "Discovery records are evidence candidates, not sermon theology authority. Original sources remain authoritative.",
+  "speakers": [
+    {
+      "id": "speaker:huang-shuhua",
+      "name": "黃淑華",
+      "corpusPressure": "sparse-distributed-cross-ministry",
+      "seriesCandidates": [
+        {
+          "id": "series:huang:revelation",
+          "title": "啟示錄",
+          "identityState": "series-candidate",
+          "evidence": ["src:huang:tcnn-2022-revelation", "src:huang:beclass-2023-kaohsiung", "src:huang:paiwan-2025-revelation"]
+        }
+      ],
+      "ministryEvents": [
+        {
+          "id": "event:huang:2022-tgtc-revelation",
+          "series": "series:huang:revelation",
+          "dateStart": "2022-04-06",
+          "dateEnd": "2022-05-11",
+          "place": "台北總院／台灣女子神學院",
+          "evidence": ["src:huang:tcnn-2022-revelation"],
+          "verification": "source-verified"
+        },
+        {
+          "id": "event:huang:2023-kaohsiung-revelation",
+          "series": "series:huang:revelation",
+          "dateStart": "2023-09-13",
+          "dateEnd": "2023-09-14",
+          "place": "高雄前金教會",
+          "durationClaim": "12 hours",
+          "evidence": ["src:huang:beclass-2023-kaohsiung", "src:huang:local-report-2023-kaohsiung"],
+          "verification": "cross-source-verified"
+        },
+        {
+          "id": "event:huang:2025-paiwan-revelation",
+          "series": "series:huang:revelation",
+          "dateStart": "2025-07-21",
+          "dateEnd": "2025-07-24",
+          "place": "排灣中會",
+          "evidence": ["src:huang:paiwan-2025-revelation"],
+          "verification": "source-verified"
+        }
+      ]
+    },
+    {
+      "id": "speaker:jiang-xiuqin",
+      "name": "江秀琴",
+      "corpusPressure": "dense-series-multi-surface",
+      "seriesCandidates": [
+        {
+          "id": "series:jiang:inner-life",
+          "title": "內在生活",
+          "identityState": "canonical-series-candidate",
+          "evidence": ["src:jiang:frcc-waiting5", "src:jiang:frcc-bride4", "src:jiang:archive-testimony"]
+        }
+      ],
+      "sermonCandidates": [
+        {
+          "id": "sermon:jiang:waiting5",
+          "title": "等後神5 等候神的心態",
+          "speaker": "speaker:jiang-xiuqin",
+          "series": "series:jiang:inner-life",
+          "date": "2025-08-08",
+          "relations": [{"type": "has-handout", "state": "source-indicated"}],
+          "evidence": ["src:jiang:frcc-waiting5"],
+          "verification": "first-party-source"
+        },
+        {
+          "id": "sermon:jiang:bride4",
+          "title": "恩召的指望4 迎娶新婦",
+          "speaker": "speaker:jiang-xiuqin",
+          "series": "series:jiang:inner-life",
+          "date": "2025-08-07",
+          "relations": [{"type": "has-handout", "state": "source-indicated"}],
+          "evidence": ["src:jiang:frcc-bride4"],
+          "verification": "first-party-source"
+        },
+        {
+          "id": "sermon:jiang:inner-life-testimony-2023",
+          "title": "內在生活見證分享",
+          "speaker": "speaker:jiang-xiuqin",
+          "date": "2023-08-12",
+          "media": ["watch", "worship", "listen", "summary"],
+          "evidence": ["src:jiang:archive-testimony"],
+          "verification": "first-party-archive"
+        }
+      ],
+      "courseRelations": [
+        {
+          "id": "course:jiang:pastoral-inner-life",
+          "title": "訓練中心課程—教牧學",
+          "relationClaim": "FRCC states this belongs to the Inner Life teaching re-taught from 2005 with deeper/broader content.",
+          "evidence": ["src:jiang:frcc-pastoral-course"],
+          "verification": "first-party-source"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {"id":"src:huang:tcnn-2022-revelation","url":"https://tcnn.org.tw/archives/109888","kind":"report","publisher":"台灣教會公報新聞網"},
+    {"id":"src:huang:beclass-2023-kaohsiung","url":"https://www.beclass.com/rid=274b23364a774bd4e861","kind":"event-registration","publisher":"BeClass"},
+    {"id":"src:huang:local-report-2023-kaohsiung","url":"https://a056157gmail.home.blog/2023/09/12/9-13-9-14%E6%97%85%E7%BE%8E%E9%BB%83%E6%B7%91%E8%8F%AF%E7%89%A7%E5%B8%AB%E3%80%8C%E5%95%9F%E7%A4%BA%E9%8C%84%E6%9F%A5%E7%B6%93%E8%AA%B2%E7%A8%8B%E3%80%8D%E5%9C%A8%E5%89%8D%E9%87%91%E9%95%B7%E8%80%81/","kind":"local-report","publisher":"在地報導"},
+    {"id":"src:huang:paiwan-2025-revelation","url":"https://paiwan.com.tw/vaqu20/?m=202507","kind":"ministry-report","publisher":"排灣中會"},
+    {"id":"src:jiang:frcc-waiting5","url":"https://www.frcc.us/messages/5/","kind":"message","publisher":"慕主先鋒教會","firstParty":true},
+    {"id":"src:jiang:frcc-bride4","url":"https://www.frcc.us/messages/70-4/","kind":"message","publisher":"慕主先鋒教會","firstParty":true},
+    {"id":"src:jiang:archive-testimony","url":"https://archive.frcc.us/10129?type=sermon","kind":"message-archive","publisher":"慕主先鋒","firstParty":true},
+    {"id":"src:jiang:frcc-pastoral-course","url":"https://www.frcc.us/pastorc-inner-12b/","kind":"course","publisher":"慕主先鋒教會","firstParty":true}
+  ],
+  "identityRules": {
+    "doNotEquateEventWithSermon": true,
+    "doNotSplitMediaVariantsIntoSeparateSermons": true,
+    "seriesMembershipRequiresEvidence": true,
+    "publicationDerivativeRequiresExplicitRelation": true,
+    "missingAuthority": "UNVERIFIED"
+  }
+}
