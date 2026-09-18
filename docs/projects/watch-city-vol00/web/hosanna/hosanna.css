@@ -8,7 +8,7 @@ radial-gradient(circle at 62% 46%,rgba(206,189,116,.22),transparent 13%),
 linear-gradient(118deg,transparent 0 46%,rgba(218,203,149,.08) 47% 49%,transparent 50%),
 linear-gradient(180deg,#17140f 0%,#0b0a08 56%,#050504 100%)}
 .master.has-image .master-fallback{background-position:center;background-size:cover}
-.montage{mix-blend-mode:screen}.shot{position:absolute;inset:-3%;opacity:0;background-position:center;background-size:cover;filter:grayscale(.18) contrast(1.08);animation:shot var(--dur,2.2s) linear forwards}
+.montage{mix-blend-mode:screen;overflow:hidden}.shot-video{width:106%;height:106%;object-fit:cover;object-position:center;pointer-events:none}.shot{position:absolute;inset:-3%;opacity:0;background-position:center;background-size:cover;filter:grayscale(.18) contrast(1.08);animation:shot var(--dur,2.2s) linear forwards}
 .grain{opacity:.11;pointer-events:none;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
 .vignette{background:linear-gradient(180deg,rgba(0,0,0,.28),transparent 28%,transparent 62%,rgba(0,0,0,.7)),radial-gradient(circle at 50% 44%,transparent 35%,rgba(0,0,0,.55) 100%)}
 .issue-mark{position:absolute;z-index:5;top:max(24px,env(safe-area-inset-top));left:clamp(20px,3.2vw,52px);right:clamp(20px,3.2vw,52px);display:flex;justify-content:space-between;font-family:"Cormorant Garamond",serif;font-size:11px;letter-spacing:.22em;opacity:.62}
