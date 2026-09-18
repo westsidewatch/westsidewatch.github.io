@@ -175,3 +175,63 @@ The opening montage no longer has to pretend that cinematic memory begins in 190
 But chronology alone does not admit an image. Production stills and catalogue illustrations remain evidence only. The homepage must wait for an extant moving-image copy before representing either 1897 or 1898 as cinema.
 
 This makes the eventual first cut much stronger: if an extant 1897/1898 view is resolved, the Vol.00 homepage can begin almost at the birth of narrative cinema itself, then let the same biblical entry recur through more than a century of screen history.
+
+
+## Evidence pass 2026-09-18 — multi-era scope is now mandatory
+
+The corpus is no longer an early-cinema hunt. Early cinema supplies the temporal floor, not the stopping point.
+
+Current verified representation line:
+
+**1897 → 1898 → 1902/03 → 1912 → 1927 → 1961 → 1965 → 1979 → … → present**
+
+New verified Moment identities:
+
+- **1927 — The King of Kings**, Cecil B. DeMille: scene guide explicitly identifies the Triumphal Entry.
+- **1961 — King of Kings**, Nicholas Ray: scene guide explicitly identifies the Triumphal Entry after the interval.
+- **1965 — The Greatest Story Ever Told**, George Stevens: contemporary review explicitly includes the triumphal entry among the film's Gospel episodes.
+- **1979 — JESUS**: the official Jesus Film Project exposes a dedicated **Jesus's Triumphal Entry** chapter, approximately one minute, with an official watch/download surface.
+
+Evidence:
+- 1927: https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html
+- 1961: https://biblefilms.blogspot.com/2006/05/king-of-kings-1961-scene-guide.html
+- 1965: https://www.christianitytoday.com/1965/02/summary-greatest-story-ever-told/
+- 1979: https://www.jesusfilm.org/watch/jesus.html/jesus-triumphal-entry.html
+
+### Temporal bands
+
+The editorial corpus must deliberately cover multiple screen eras:
+
+**1897–1912 — birth of cinema**
+The Moment appears almost as soon as narrative cinema exists.
+
+**1910s–1920s — silent feature**
+The entry grows from tableau into feature-scale spectacle.
+
+**1950s–1960s — studio epic**
+Crowd, widescreen, monumental Jerusalem and mass staging transform the same action.
+
+**1970s–1990s — television / global screen memory**
+The Moment becomes repeatedly distributed across cultures and languages.
+
+**2000s–present — digital / streaming / contemporary representation**
+Discovery continues through modern film, television, streaming and animation. No arbitrary year closes the corpus.
+
+### Editing consequence
+
+The homepage must not play a historical slideshow:
+
+1897 clip → 1898 clip → 1902 clip → 1927 clip → 1961 clip.
+
+Instead, years are intercut inside the same action:
+
+**donkey approaches (1897) → hoof / road (1927) → branch rises (1961) → crowd opens (1979) → garment falls (another era) → city threshold (another era).**
+
+Chronology is felt through the changing image, but biblical action remains continuous.
+
+Therefore the montage has two simultaneous axes:
+
+**horizontal = the one entry into Jerusalem**
+**vertical = 130+ years of cinema repeatedly seeing it**
+
+Rights remain independent from editorial importance. Commercial films can be indexed as research evidence without being admitted to the public montage.
