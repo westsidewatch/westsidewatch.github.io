@@ -62,3 +62,52 @@ That is the key Montage Emergence rule:
 3. frame-resolve M002;
 4. widen corpus by cinema era while preserving rights state separately from research value;
 5. only after at least three publishable Moments exist, tune montage rhythm against the Doré Original camera path.
+
+
+## Evidence pass 2026-09-18 — M001 hardened
+
+The Commons source is now independently verified as:
+
+- original file duration: **43 min 54 s**
+- source resolution: **210 × 160**
+- Pathé production, dated 1903 on the Commons record
+- Commons licensing: public domain in country-of-origin jurisdictions with life+70 or less; public domain in the United States because of pre-1931 publication; Public Domain Mark 1.0 / free of known restrictions
+- Pathé series description: **32 tableaux**
+
+The historical catalogue evidence resolves the exact Moment identity more strongly:
+
+- **L’Entrée à Jérusalem**
+- tableau **14**
+- Pathé catalogue **855**
+- catalogue year for this tableau: **1902**
+- listed physical length: **20 m**
+
+This corrects an important distinction: the assembled film/source is conventionally dated 1903, while the entry tableau itself is catalogued to 1902.
+
+### Exact-timecode gate remains CLOSED
+
+No start/end timecode has been written into the manifest. Catalogue order is not enough to infer a frame address in the surviving 43:54 assembled copy, because early exhibitors could use different selections/orderings and surviving editions can differ.
+
+Therefore M001 is now:
+
+**WORK VERIFIED → RIGHTS VERIFIED → MOMENT IDENTITY VERIFIED → TIMECODE NOT VERIFIED → NOT RENDERABLE**
+
+This is the correct state. The homepage runtime will continue to refuse it until the actual surviving file is frame-resolved.
+
+### Earlier-screen discovery
+
+The early-film catalogue index also exposes multiple distinct Jerusalem-entry titles, including:
+
+- `Entrée à Jérusalem` — Pathé / earlier Passion grouping
+- `L’Entrée à Jérusalem` — Pathé / La Vie et la Passion de Jésus-Christ
+- `L’Entrée à Jérusalem` — Gaumont / La Vie du Christ
+- `Entrée de Jésus à Jérusalem` — Léar / Scènes de la Vie du Christ
+- `Entrée à Jérusalem` — Passion de Nancy / Bonne Presse
+
+This changes the corpus strategy: the montage should not assume a 1903 starting point. The screen-history layer can potentially reach further back into the first decade of cinema, provided an extant view and publishable rights state can be verified.
+
+Research evidence:
+- Wikimedia Commons source/rights: https://commons.wikimedia.org/wiki/File:La_vie_et_la_passion_de_Jesus_Christ_(1903).ogv
+- GRIMH Pathé catalogue 851–866: https://www.grimh.org/index.php?Itemid=230&catid=63&id=991:1896-1906-films-pat-851-866&lang=fr&option=com_content&view=article
+- GRIMH 32-tableau ordering: https://www.grimh.org/index.php?Itemid=804&catid=63&id=1468:1896-1906-films-pat0871-0941&lang=fr&option=com_content&view=article
+- GRIMH title index / earlier variants: https://www.grimh.org/index.php?Itemid=680&catid=63&id=11649:1896-1906-films-liste-a&lang=fr&option=com_content&view=article
