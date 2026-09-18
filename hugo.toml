@@ -34,6 +34,9 @@ disableKinds = ["taxonomy", "term"]
     source = "cinema"
     target = "static/cinema"
   [[module.mounts]]
+    source = "preview"
+    target = "static/preview"
+  [[module.mounts]]
     source = "background.jpg"
     target = "static/api/dore/assets/site-file?code=SITE-BACKGROUND"
   [[module.mounts]]
