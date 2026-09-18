@@ -19,6 +19,11 @@ def artifact(result):
   if isinstance(uri,str) and uri.strip():return uri.strip()
  return None
 def main():
+ # A 403 from the resident image provider is a runtime-health failure, not a prompt failure.
+ # Repair/reinstall the canonical model-backed image runtime once before evaluating the three cases.
+ repaired=production_actions.execute('image.local.repair',{})
+ if not repaired.get('ok'):
+  raise SystemExit(f'image.local.repair failed before E2E: {repaired}')
  items={str(x.get('id')):x for x in load(EVIDENCE).get('items',[])}; teachers={(x.get('evidence') or {}).get('id'):x for x in load(TEACHER).get('items',[])};rows=[];prov=editorial_visual_provider.provenance()
  for eid in TARGETS:
   item=items[eid]; local=observe_atlas_evidence(item,editorial_visual_provider.observe,provider_id=prov['providerId'],provider_kind=prov['providerKind']); byte_ev=(local.get('provenance') or {}).get('imageEvidence') or {}
