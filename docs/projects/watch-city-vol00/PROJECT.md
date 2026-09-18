@@ -62,3 +62,77 @@ A manuscript is not complete until its text, visual material, art direction and 
 ## Research status
 
 The historical editorial-design learning line remains `EVIDENCE_ONLY_NOT_CAPABILITY_PASS`. It can inform live decisions, but no historical grammar becomes a rigid Vol.00 template or automatic beauty score.
+
+
+## 《一萬年的建城禮》— current editorial architecture
+
+This derivative project is intentionally large: it may occupy the majority of Vol.00's editorial capacity. It is not a city encyclopedia or biblical-tourism survey. Its material ambition is to gather the major cities named across Canaan / the biblical land-world, including Old Testament cities, Jerusalem, the cities around the Sea of Galilee, Gilead/Jabesh-gilead, and outward to Damascus, using archaeology, ruins, images, maps, Scripture coordinates and historical evidence to let cities carry the issue's central question.
+
+### Core proposition
+
+The work asks what human beings have been doing when they repeatedly build cities, enter cities, defend cities, destroy cities, leave cities and build again across roughly ten thousand years.
+
+「禮」is not asserted as the name of one historical ancient ceremony. It is the editorial name for repeated human acts that disclose what people seek through the city: dwelling, water, security, order, power, worship, memory and permanence. Repetition is structurally important: 建城／守城／攻城／毀城／再建.
+
+The human problem of 入城／出城 is an important deep structure. The work must not resolve this merely as a choice of which earthly city to enter. 「守望」provides the anchor: the watcher's position is received from God as grace rather than produced by the city's security or by human choice.
+
+### Opening: Hosanna / the King enters the city
+
+The preferred opening is the triumphal entry of Jesus into Jerusalem.
+
+Before explanatory prose, the reader first experiences the event: the King enters the city; crowds, garments, branches, noise, movement, Hosanna.
+
+This opening should explore Doré Original together with the static-moving-image / cinematic technology being developed elsewhere. Doré Original supplies the authoritative editorial master image and designed camera trajectory; it does not need to bear the burden of fully animating the entire scene.
+
+Emergence should be explored as a new **Montage Emergence** form: multiple historically distinct screen portrayals of the same biblical Moment — Jesus entering Jerusalem — may emerge and be edited together so that the entry repeats across angles, productions, visual eras and cinematic time. The purpose is not a recommendation carousel but editorial montage: repeated representations of one Moment accumulate into meaning.
+
+Conceptual motion:
+
+Doré Original → designed camera path → historical screen Moments emerge → increasing multi-era montage → noise / Hosanna → cut / stillness → first text.
+
+Possible first textual arrival:
+
+「和散那。」
+「王進城了。」
+
+The full title 《一萬年的建城禮》 may be withheld until after the reader has first experienced 入城 and the movement begins downward through Jerusalem's layers toward the deeper city-history.
+
+### Rights / evidence boundary for cinematic montage
+
+Screen material must remain evidence-addressable. Build a Moment corpus with work/version/year/timestamp/source/rights state. Public-domain or licensed material may be publishable; research-only or rights-restricted material remains indexed evidence and must not silently enter the public montage. Generated imagery must never masquerade as historical screen evidence.
+
+### Ten-thousand-year city map
+
+The project will create a specially designed 「一萬年」 city map as a major editorial object, not a generic pin map.
+
+It must carry geography and time together. Modern national borders must not become the narrative skeleton of the biblical city-world. The map should be capable of extending through Canaan/Judah/Galilee/Jordan Valley/Gilead toward Damascus and other evidence-required regions.
+
+The map may reveal itself progressively as the work proceeds: cities accumulate, layers accumulate, and the reader gradually discovers a dense biblical urban world. Geography answers WHERE; archaeological/temporal strata answer WHEN.
+
+### Structural method
+
+Do not arrange the work as equal city profiles. Cities receive different editorial weights: long movements, spreads, image sequences, map coordinates, short evidence entries or later returns.
+
+The deeper organizing grammar is the repeated city action rather than alphabetical/geographic cataloguing:
+
+入城 → 築牆／建城 → 開門 → 守城 → 攻城 → 毀城 → 再建 → 出城／守望.
+
+Jerusalem should not be exhausted at the beginning. It can become a major temporal compression later, after the reader has already crossed many cities and ruins.
+
+The Sea of Galilee provides a change of scale and rhythm rather than a second unrelated topic: city-world becomes walkable landscape, shore, road, boat and near-distance.
+
+### Visual accumulation / Emergence
+
+Ruins should often accumulate densely rather than behave as isolated scenic photographs. Repeated walls, gates, tells, stones, destruction layers and abandoned structures can allow 「荒場」 to emerge visually before prose explains it.
+
+The project may use map, archaeology, archival/public-domain image, Doré Original, cinematic Moment, typography, sound, motion and absence as competing editorial media. Beauty remains a hard gate.
+
+The future city being watched for should not be reduced to another archaeological pin or prematurely illustrated as if it were one more earthly city. The enormous mapped presence of earthly cities may ultimately make the absent city meaningful.
+
+### Current city-material pool
+
+The active pool includes, but is not limited to: Jericho, Hazor, Megiddo, Lachish, Philistine cities, Beth Shean, Jabesh-gilead, Jerusalem, cities around the Sea of Galilee including Capernaum/Bethsaida/Chorazin, and Damascus. Inclusion does not imply equal treatment or settled archaeological identification; uncertain site identifications must remain explicitly uncertain.
+
+### Relationship to Vol.00
+
+This work carries the largest earthly-city field inside 《守望，一座光明的城》. It should converse with The Gate and later issue movements without mechanically repeating their manuscripts. The larger issue, not this article alone, ultimately allows the watched-for city to emerge.
