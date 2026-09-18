@@ -119,6 +119,65 @@
       ],
       "durationMs": 1500,
       "offsetMs": 780
+    },
+    {
+      "id": "king-of-kings-1927-entry",
+      "work": "The King of Kings",
+      "year": 1927,
+      "creator": "Cecil B. DeMille",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "moment-identity-verified-rights-and-asset-pending",
+      "retrievalState": "scene-guide-verifies-triumphal-entry",
+      "durationMs": 1300,
+      "offsetMs": 620,
+      "note": "Scene guide explicitly identifies Triumphal Entry (Mark 11:1–11)."
+    },
+    {
+      "id": "king-of-kings-1961-entry",
+      "work": "King of Kings",
+      "year": 1961,
+      "creator": "Nicholas Ray",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/05/king-of-kings-1961-scene-guide.html",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-identity-verified",
+      "durationMs": 1200,
+      "offsetMs": 580,
+      "note": "Scene guide explicitly identifies Triumphal entry (Mark 11:7–11a)."
+    },
+    {
+      "id": "greatest-story-1965-entry",
+      "work": "The Greatest Story Ever Told",
+      "year": 1965,
+      "creator": "George Stevens",
+      "sourcePage": "https://www.christianitytoday.com/1965/02/summary-greatest-story-ever-told/",
+      "asset": null,
+      "timestamp": null,
+      "rightsState": "research-only-commercial-rights",
+      "retrievalState": "moment-identity-verified",
+      "durationMs": 1200,
+      "offsetMs": 560,
+      "note": "Contemporary review explicitly lists the triumphal entry among the film's main Gospel components."
+    },
+    {
+      "id": "jesus-1979-entry",
+      "work": "JESUS",
+      "year": 1979,
+      "creator": "John Krish / Peter Sykes",
+      "sourcePage": "https://www.jesusfilm.org/watch/jesus.html/jesus-triumphal-entry.html",
+      "asset": null,
+      "timestamp": {
+        "chapter": "Jesus's Triumphal Entry",
+        "duration": "1 min"
+      },
+      "rightsState": "official-source-verified-publication-license-not-assumed",
+      "retrievalState": "official-chapter-and-download-surface-resolved",
+      "durationMs": 1100,
+      "offsetMs": 520,
+      "note": "Official Jesus Film Project exposes a dedicated one-minute Triumphal Entry chapter. Publication permission for this montage must still be resolved."
     }
   ],
   "text": {
@@ -145,6 +204,55 @@
       "status": "expanded-before-1902",
       "finding": "The corpus now reaches to Léar/Kirchner 1897 and Hatot/Lumière 1898 entry views. The homepage montage should begin with the earliest extant publishable moving image, not with an assumed 1903 origin.",
       "gate": "No production still may masquerade as a film Moment."
+    },
+    "multiEraPass": {
+      "date": "2026-09-18",
+      "status": "expanded",
+      "finding": "Verified representation line now spans 1897, 1898, 1902/03, 1912, 1927, 1961, 1965 and 1979. Discovery target is explicitly present-day, not a single early-cinema year."
     }
+  },
+  "montageScope": {
+    "policy": "multi-era-by-design",
+    "targetRange": "1897–present",
+    "currentVerifiedRepresentationYears": [
+      1897,
+      1898,
+      1902,
+      1903,
+      1912,
+      1927,
+      1961,
+      1965,
+      1979
+    ],
+    "rule": "Never stop the editorial montage at an arbitrary historical year. Continue discovery across silent, studio-epic, television, modern and contemporary screen eras. Rights admission remains per-Moment.",
+    "temporalBands": [
+      {
+        "id": "birth-of-cinema",
+        "range": "1897–1912",
+        "role": "the biblical Moment appears almost with cinema itself"
+      },
+      {
+        "id": "silent-feature",
+        "range": "1910s–1920s",
+        "role": "the tableau expands into feature-scale spectacle"
+      },
+      {
+        "id": "studio-epic",
+        "range": "1950s–1960s",
+        "role": "mass crowd, widescreen and monumental Jerusalem"
+      },
+      {
+        "id": "television-global",
+        "range": "1970s–1990s",
+        "role": "the entry becomes globally repeated screen memory"
+      },
+      {
+        "id": "digital-contemporary",
+        "range": "2000s–present",
+        "role": "new cinematic, streaming and animated representations continue the recurrence"
+      }
+    ],
+    "editRule": "Cut by biblical action coordinate across years, not by playing one production after another."
   }
 }
