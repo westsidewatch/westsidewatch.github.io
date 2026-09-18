@@ -1,0 +1,17 @@
+name: Dore Expedition 01 Check
+
+on:
+  pull_request:
+    paths:
+      - 'data/dore_global_design_expedition_01.json'
+      - 'scripts/dore/expedition-01-selftest.mjs'
+      - '.github/workflows/dore-expedition-01-check.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Expedition 01 corpus
+        run: node scripts/dore/expedition-01-selftest.mjs
