@@ -1,6 +1,6 @@
 /* Dawn Living Wall runtime v1 — lazy shards + bounded DOM. */
 export class DawnLivingWall {
-  constructor(rootUrl='/static/dawn-library/living/root.json',{windowCards=84,prefetchAhead=1}={}){
+  constructor(rootUrl='/dawn-library/living/root.json',{windowCards=84,prefetchAhead=1}={}){
     this.rootUrl=rootUrl;this.windowCards=windowCards;this.prefetchAhead=prefetchAhead;this.root=null;this.rootResolvedUrl=null;this.cache=new Map();this.loading=new Map();
   }
   async init(){
@@ -15,7 +15,7 @@ export class DawnLivingWall {
     if(index<0||index>=this.root.shards.length)return null;
     if(this.cache.has(index))return this.cache.get(index);
     if(this.loading.has(index))return this.loading.get(index);
-    const p=(async()=>{const meta=this.root.shards[index],base=this.rootResolvedUrl||new URL(this.rootUrl,location.href),url=new URL(meta.href,base),r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`Dawn shard ${index+1} ${r.status}`);const data=await r.json();if(data.admissionAuthority!==false||data.projectionOnly!==true||data.workCount!==data.workRefs.length)throw new Error('Dawn shard boundary violated');this.cache.set(index,data);this.loading.delete(index);return data})();
+    const p=(async()=>{const meta=this.root.shards[index],base=this.rootResolvedUrl||new URL(this.rootUrl,location.href),href=typeof meta.href==='string'&&meta.href.startsWith('/static/')?meta.href.slice(7):meta.href,url=new URL(href,base),r=await fetch(url,{cache:'force-cache'});if(!r.ok)throw new Error(`Dawn shard ${index+1} ${r.status}`);const data=await r.json();if(data.admissionAuthority!==false||data.projectionOnly!==true||data.workCount!==data.workRefs.length)throw new Error('Dawn shard boundary violated');this.cache.set(index,data);this.loading.delete(index);return data})();
     this.loading.set(index,p);return p;
   }
   shardForOffset(offset){return Math.floor(Math.max(0,offset)/this.root.shardSize)}
