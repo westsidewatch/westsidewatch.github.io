@@ -24,8 +24,8 @@ async function loadManifest(){
 function admittedMoment(moment){
   return moment?.rightsState==='publishable' &&
     Boolean(moment.asset) &&
-    Boolean(moment.timestamp?.start) &&
-    Boolean(moment.timestamp?.end);
+    Number.isFinite(Number(moment.timestamp?.start)) &&
+    Number.isFinite(Number(moment.timestamp?.end));
 }
 
 function showStillMoment(moment){
@@ -44,7 +44,8 @@ function showVideoMoment(moment){
   el.src=moment.asset;
   el.muted=true;
   el.playsInline=true;
-  el.preload='metadata';
+  el.preload='auto';
+  el.crossOrigin='anonymous';
   el.dataset.moment=moment.id;
   el.style.setProperty('--dur',`${moment.durationMs||1800}ms`);
 
