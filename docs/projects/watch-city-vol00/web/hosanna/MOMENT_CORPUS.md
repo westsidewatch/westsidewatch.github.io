@@ -235,3 +235,54 @@ Therefore the montage has two simultaneous axes:
 **vertical = 130+ years of cinema repeatedly seeing it**
 
 Rights remain independent from editorial importance. Commercial films can be indexed as research evidence without being admitted to the public montage.
+
+
+## Evidence pass 2026-09-18 — modern screen line reaches 2025
+
+The multi-era line now has verified representation anchors beyond the 1979 layer:
+
+### 1993 — The Visual Bible: Matthew
+
+The surviving transcript directly traverses Matthew 21: approach to Jerusalem, donkey/colt, cloaks on the road, branches, Hosanna, and Jesus entering Jerusalem.
+
+State:
+
+**MOMENT TEXT SEQUENCE VERIFIED → COMMERCIAL RIGHTS → RESEARCH ONLY**
+
+### 2014 — Son of God
+
+Subtitle timing provides a useful research address:
+
+- **00:48:51.080** — crowd calls for palms / Messiah
+- **00:48:57.720** — Hosanna
+- **00:49:24.200–00:49:33.685** — Messiah / Hosanna repeated
+- **00:49:39.160–00:49:44.287** — report that he has entered the city on a donkey
+
+These are dialogue/subtitle anchors, not yet frame-accurate editorial shot boundaries.
+
+State:
+
+**MOMENT VERIFIED → RESEARCH TIME WINDOW VERIFIED → COMMERCIAL RIGHTS → RESEARCH ONLY**
+
+### 2025 — The Chosen, Season 5 Episode 1
+
+The Come and See Foundation's official resource exposes a dedicated **Triumphant Entry Into Jerusalem** clip of **3:07**, explicitly describing Jesus entering Jerusalem on a donkey and passing through the gates.
+
+State:
+
+**OFFICIAL MOMENT CLIP VERIFIED → 3:07 CLIP RESOLVED → PUBLICATION LICENSE NOT ASSUMED**
+
+Evidence:
+- 1993 transcript: https://subtitlecat.com/subs/1088/1993-The%20Visual%20Bible-Matthew.html
+- 2014 subtitle address: https://www.subtitlecat.com/subs/1094/Son%20of%20God%202014.html
+- 2025 official clip: https://resources.comeandseefoundation.org/resources/triumphant-entry-into-jerusalem593/clip
+
+### Current historical span
+
+The evidence-addressable representation line now reaches:
+
+**1897 → 1898 → 1902/03 → 1912 → 1927 → 1961 → 1965 → 1979 → 1993 → 2014 → 2025**
+
+This is now a **128-year screen-memory field**. It remains open-ended: 2025 is the newest verified anchor in this pass, not a permanent endpoint.
+
+The next editorial problem is no longer whether enough eras exist. It is to increase density inside the gaps and then select by **action coordinate + visual difference + rights state**, rather than merely collecting titles.
