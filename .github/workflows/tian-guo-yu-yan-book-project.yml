@@ -1,0 +1,34 @@
+name: Tian Guo Yu Yan Book Project
+
+on:
+  pull_request:
+    paths:
+      - 'dore-core/projects/TIAN-GUO-YU-YAN-BOOK-PROJECT-v0.md'
+      - 'data/publishing/tian-guo-yu-yan.book-intent.v1.json'
+      - 'data/publishing/tian-guo-yu-yan.source-authority.v1.json'
+      - 'data/publishing/projects.manifest.v1.json'
+      - 'scripts/tian-guo-yu-yan-project-acceptance.mjs'
+      - 'scripts/tian-guo-yu-yan-manuscript-census.mjs'
+      - 'scripts/tian-guo-yu-yan-native-materialize.mjs'
+      - 'tests/tian-guo-yu-yan-native-materialize-smoke.mjs'
+      - '.github/workflows/tian-guo-yu-yan-book-project.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  project-admission:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate project JSON
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('data/publishing/tian-guo-yu-yan.book-intent.v1.json','utf8')); JSON.parse(require('fs').readFileSync('data/publishing/tian-guo-yu-yan.source-authority.v1.json','utf8')); JSON.parse(require('fs').readFileSync('data/publishing/projects.manifest.v1.json','utf8')); console.log('PASS JSON')"
+      - name: Run publishing project admission
+        run: node scripts/tian-guo-yu-yan-project-acceptance.mjs
+      - name: Verify native lossless manuscript materialization bridge
+        run: node tests/tian-guo-yu-yan-native-materialize-smoke.mjs

@@ -1,0 +1,20 @@
+{
+  "schema": "dore.publishing-projects-manifest.v1",
+  "owner": "dore-publishing",
+  "projects": [
+    {
+      "id": "book.tian-guo-yu-yan",
+      "status": "active-book-development",
+      "title": "神很遠，神很近｜天國語言極簡史",
+      "projectRecord": "/dore-core/projects/TIAN-GUO-YU-YAN-BOOK-PROJECT-v0.md",
+      "bookIntent": "/data/publishing/tian-guo-yu-yan.book-intent.v1.json",
+      "consumer": "multiwrite",
+      "entryAction": "成書",
+      "writingCapability": "writing.westside-dimensional-journalism",
+      "publishingCapability": "publishing.book-compile",
+      "targetChineseCharacters": 100000,
+      "stage": "source-authority-map",
+      "nextMilestone": "full-source ingestion + exact character count + chapter/claim/motif map + gap-to-100k expansion ledger"
+    }
+  ]
+}

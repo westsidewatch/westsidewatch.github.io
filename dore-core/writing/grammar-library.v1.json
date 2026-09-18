@@ -1,0 +1,69 @@
+{
+  "schema": "dore.writing-grammar-library.v1",
+  "authority": false,
+  "runtimeMutationAllowed": false,
+  "entries": [
+    {
+      "grammarId": "project.tian-guo-yu-yan.house-grammar.v1",
+      "projectId": "tian-guo-yu-yan",
+      "status": "proven",
+      "referenceOnly": true,
+      "validatedOn": [
+        "data/publishing/tian-guo-yu-yan.ch2-pre-huang-writing-experiment.v1.md",
+        "data/publishing/tian-guo-yu-yan.huang-renyu-writing-study.v1.md",
+        "data/publishing/tian-guo-yu-yan.ch2-post-huang-writing-experiment.v2.md",
+        "data/publishing/tian-guo-yu-yan.ch2-v1-v2-style-anatomy.v1.md",
+        "data/publishing/tian-guo-yu-yan.ch2-house-grammar-writing-experiment.v3.md"
+      ],
+      "problemsSolved": [
+        "performative-discovery",
+        "dense-landing-sentences",
+        "automatic-aphorism",
+        "premature-relation-explanation",
+        "scene-summary-at-emotional-turn",
+        "digression-mini-essay-closure",
+        "scale-change-signposting",
+        "research-host-narration",
+        "reader-value-announcement",
+        "guide-like-scale-transition",
+        "question-announcement-before-evidence",
+        "layout-as-rhetorical-pressure"
+      ],
+      "transferableCapabilities": [
+        "material-carries-thought",
+        "earned-compression",
+        "selective-scene-magnification",
+        "unannounced-scale-movement",
+        "submerged-recurrence",
+        "curiosity-led-expansion",
+        "re-entry-without-mini-conclusion",
+        "scarce-earned-narrator-pressure",
+        "human-irregular-prose-rhythm",
+        "reader-discovery-without-congratulation",
+        "research-itself-as-plot",
+        "source-as-narrative-voice",
+        "natural-publishing-paragraph-rhythm"
+      ],
+      "nonTransferableIdentity": [
+        "author-thesis",
+        "wind-babel-brick-name-motifs",
+        "chapter-inner-actions",
+        "project-theological-conclusions",
+        "signature-sentences",
+        "project-specific-cadence"
+      ],
+      "surfaceContexts": ["book", "journal", "multiwrite", "long-form-theological-nonfiction"],
+      "promotionCandidates": [
+        "earned-compression",
+        "material-carries-thought",
+        "selective-scene-magnification",
+        "re-entry-without-mini-conclusion",
+        "research-host-narration-ban",
+        "reader-value-announcement-ban",
+        "research-itself-as-plot",
+        "source-as-narrative-voice",
+        "natural-publishing-paragraph-rhythm"
+      ]
+    }
+  ]
+}

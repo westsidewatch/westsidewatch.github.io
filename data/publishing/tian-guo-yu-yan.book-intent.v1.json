@@ -1,0 +1,69 @@
+{
+  "schema": "dore.book-project.v1",
+  "id": "book.tian-guo-yu-yan",
+  "workId": "book.tian-guo-yu-yan",
+  "status": "active-book-development",
+  "source": {
+    "title": "神很遠，神很近｜天國語言極簡史",
+    "language": ["zh-Hant"],
+    "publisher": "Westside Watch / Doré Publishing",
+    "rights": "author-controlled",
+    "description": "A narrative theological popular-knowledge book about divine language, creation, Babel, incarnation, Pentecost, the Spirit and new creation.",
+    "bookIntent": {
+      "category": "narrative-theological-popular-nonfiction",
+      "thesis": "神的語言原本已經賜給了人，因著人的驕傲過犯，神收回了祂那有創造力的語言，再藉著道成肉身的贖回，由聖靈送回我們這份恩賜。",
+      "audience": "general Chinese readers, including readers without formal theological training",
+      "readingMode": "continuous-narrative",
+      "visualTone": "Westside literary-theological; restrained, beautiful, historically grounded, low-temperature surface with high interior tension",
+      "illustrationDensity": "low-to-medium",
+      "scriptureDensity": "high-but-reader-oriented"
+    }
+  },
+  "development": {
+    "currentForm": "existing partial book manuscript",
+    "targetForm": "theological popular-knowledge novel / narrative theological nonfiction book",
+    "targetChineseCharacters": 100000,
+    "expansionPolicy": "depth-not-padding",
+    "writingCapability": "writing.westside-dimensional-journalism",
+    "publishingCapability": "publishing.book-compile",
+    "authorThesisAuthority": true,
+    "mayRewriteThesis": false,
+    "noSilentTruncation": true,
+    "evidenceRoles": [
+      "biblical-text",
+      "original-language",
+      "historical-evidence",
+      "archaeology-geography",
+      "reception-tradition",
+      "author-judgment",
+      "editorial-inference",
+      "sensory-literary-extension"
+    ]
+  },
+  "narrativeSpine": [
+    "創造中的話語",
+    "祝福與話語重量",
+    "人的驕傲與巴別",
+    "語言的失落與等候",
+    "道成肉身",
+    "五旬節",
+    "聖靈與新造",
+    "語言歸還"
+  ],
+  "motifs": ["風", "聲音", "說話", "沉默", "重量", "光", "門", "歸還"],
+  "pipeline": [
+    "source-authority-ingest",
+    "westside-writing-diagnose",
+    "book-intelligence",
+    "book-intent",
+    "book-model",
+    "editorial-gate",
+    "theology-gate",
+    "design-direction",
+    "publication-build",
+    "publishing-qa",
+    "book-build"
+  ],
+  "artifactTargets": ["web", "epub", "pdf", "cover"],
+  "nextMilestone": "full-source ingestion + exact character count + chapter/claim/motif map + gap-to-100k expansion ledger"
+}
