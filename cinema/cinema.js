@@ -94,7 +94,7 @@ async function loadCinema(){
     renderLivingPoster(resourceById.get(JESUS_ID));library.replaceChildren(...resources.map(renderCard));
     document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaMoments=String(moments.length);document.documentElement.dataset.cinemaUiExperiment='inline-living-cinema-v1';document.documentElement.dataset.cinemaResourceAuthority='dore.bible-media-graph.v0';document.documentElement.dataset.cinemaMomentAuthority=graph.momentSchema||'unknown';
     restoreMomentFromUrl();
-  }catch(error){library.innerHTML='<p class="resource-card">館藏資料暫時無法載入。</p>';if(feature)feature.innerHTML='<p class="resource-card">實驗資源暫時無法載入。</p>';document.documentElement.dataset.cinemaError='resource-load';}
+  }catch(error){const failedSource=document.documentElement.dataset.cinemaGraphFailedSource||'compile';const failedUrl=document.documentElement.dataset.cinemaGraphFailedUrl||'';library.innerHTML=`<p class="resource-card">館藏資料暫時無法載入。<small>PRODUCTION DIAGNOSTIC · ${failedSource}${failedUrl?` · ${failedUrl}`:''}</small></p>`;if(feature)feature.innerHTML='<p class="resource-card">實驗資源暫時無法載入。</p>';document.documentElement.dataset.cinemaError='resource-load';document.documentElement.dataset.cinemaErrorDetail=error?.message||'unknown';}
 }
 
 closeButton.addEventListener('click',()=>dialog.close());dialog.addEventListener('close',()=>stage.replaceChildren());dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});momentSearch.addEventListener('click',searchMoments);momentQuery.addEventListener('keydown',event=>{if(event.key==='Enter')searchMoments();});loadCinema();
