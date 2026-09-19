@@ -93,9 +93,12 @@ function showVideoMoment(moment){
   if(el.readyState>=1) seekAndBegin();
   else el.addEventListener('loadedmetadata',seekAndBegin,{once:true});
 
-  el.addEventListener('timeupdate',()=>{
-    if(started&&Number.isFinite(end)&&el.currentTime>=end) stop();
-  });
+  el.ontimeupdate=()=>{
+    if(started&&Number.isFinite(end)&&el.currentTime>=end){
+      stop();
+      el.ontimeupdate=null;
+    }
+  };
 }
 
 function showMoment(moment){
