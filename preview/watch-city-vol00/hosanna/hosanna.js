@@ -95,7 +95,7 @@ function showVideoMoment(moment){
 
   el.addEventListener('timeupdate',()=>{
     if(started&&Number.isFinite(end)&&el.currentTime>=end) stop();
-  },{once:true});
+  });
 }
 
 function showMoment(moment){
