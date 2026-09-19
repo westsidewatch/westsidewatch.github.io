@@ -2,7 +2,8 @@
   const SCHEMA='dore.bible-media-graph.v0';
   const MOMENT_SCHEMA='dore.bible-media-moment.v1';
   const EVENT_SCHEMA='dore.biblical-event.v1';
-  const ROOT=new URL('./',document.baseURI);\n  const URLS={resources:new URL('data/video-resource.v0.json',ROOT),expansion:new URL('data/video-resource-expansion.v1.json',ROOT),jerusalemExpansion:new URL('data/video-resource-expansion-jerusalem.v1.json',ROOT),relations:new URL('data/cinema-scripture-place-relations.v1.json',ROOT),canonicalIndex:new URL('data/cinema-canonical-index.v1.json',ROOT),moments:new URL('data/video-moment.v0.json',ROOT),coordinates:new URL('data/bible-media-coordinate.v0.json',ROOT),journeys:new URL('data/bible-journey.v0.json',ROOT),events:new URL('../data/bible-index/biblical-event.v1.json',ROOT)};
+  const ROOT=new URL('./',document.baseURI);
+  const URLS={resources:new URL('data/video-resource.v0.json',ROOT),expansion:new URL('data/video-resource-expansion.v1.json',ROOT),jerusalemExpansion:new URL('data/video-resource-expansion-jerusalem.v1.json',ROOT),relations:new URL('data/cinema-scripture-place-relations.v1.json',ROOT),canonicalIndex:new URL('data/cinema-canonical-index.v1.json',ROOT),moments:new URL('data/video-moment.v0.json',ROOT),coordinates:new URL('data/bible-media-coordinate.v0.json',ROOT),journeys:new URL('data/bible-journey.v0.json',ROOT),events:new URL('../data/bible-index/biblical-event.v1.json',ROOT)};
   const special=()=>window.ParadiseCinemaSpecialResources;
   const state={graph:null};
   const fetchJson=async (key,url)=>{try{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json();}catch(error){document.documentElement.dataset.cinemaGraphFailedSource=key;document.documentElement.dataset.cinemaGraphFailedUrl=String(url);throw new Error(`Cinema graph source unavailable [${key}]: ${url} (${error.message})`);}};
