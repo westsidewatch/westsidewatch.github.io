@@ -108,6 +108,35 @@
       }
     },
     {
+      "id": "manger-cross-1912-entry-still",
+      "work": "From the Manger to the Cross",
+      "year": 1912,
+      "creator": "Sidney Olcott",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:From_The_Manger_To_The_Cross_(1912)_Best_Quality.webm",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/1912-entry-still.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 0.9
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
+      "durationMs": 900,
+      "offsetMs": 0,
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 2734s.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "threshold"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "purpose": "same-origin still-frame intercut from the public-domain source film"
+      }
+    },
+    {
       "id": "life-passion-1903-entry",
       "work": "La Vie et la passion de Jésus Christ",
       "year": 1903,
@@ -167,6 +196,35 @@
       }
     },
     {
+      "id": "life-passion-1903-entry-still",
+      "work": "La Vie et la passion de Jésus Christ",
+      "year": 1903,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/1903-entry-still.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 0.9
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
+      "durationMs": 900,
+      "offsetMs": 0,
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 1469s.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "purpose": "same-origin still-frame intercut from the public-domain source film"
+      }
+    },
+    {
       "id": "king-of-kings-1927-entry",
       "work": "The King of Kings",
       "year": 1927,
@@ -203,6 +261,36 @@
       "sourceTimestamp": {
         "start": 3973,
         "end": 3979
+      }
+    },
+    {
+      "id": "king-of-kings-1927-entry-still",
+      "work": "The King of Kings",
+      "year": 1927,
+      "creator": "Cecil B. DeMille",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:The_King_of_Kings_(1927).webm",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/1927-entry-still.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 0.9
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
+      "durationMs": 900,
+      "offsetMs": 0,
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 4006s.",
+      "actionCoordinates": [
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "purpose": "same-origin still-frame intercut from the public-domain source film"
       }
     },
     {
@@ -692,6 +780,20 @@
         "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1912-approach.webm"
       },
       {
+        "id": "manger-cross-1912-entry-still",
+        "year": 1912,
+        "start": 0,
+        "end": 0.9,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1912-entry-still.jpg",
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "threshold"
+        ]
+      },
+      {
         "id": "life-passion-1903-entry",
         "year": 1903,
         "start": 0,
@@ -707,6 +809,21 @@
         "sourceStart": 1466,
         "sourceEnd": 1472,
         "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1903-gate.webm"
+      },
+      {
+        "id": "life-passion-1903-entry-still",
+        "year": 1903,
+        "start": 0,
+        "end": 0.9,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1903-entry-still.jpg",
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "hosanna",
+          "threshold"
+        ]
       },
       {
         "id": "king-of-kings-1927-entry",
@@ -726,6 +843,21 @@
         "sourceStart": 3973,
         "sourceEnd": 3979,
         "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1927-crowd.webm"
+      },
+      {
+        "id": "king-of-kings-1927-entry-still",
+        "year": 1927,
+        "start": 0,
+        "end": 0.9,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1927-entry-still.jpg",
+        "coordinates": [
+          "gather",
+          "branches",
+          "garments",
+          "hosanna",
+          "threshold",
+          "city"
+        ]
       },
       {
         "id": "dore-christs-entry-jerusalem",
