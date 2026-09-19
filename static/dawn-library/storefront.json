@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-19T07:39:14.140044+00:00",
+  "generatedAt": "2026-09-19T09:30:22.072250+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2283,64 +2283,18 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-anintroductiont00towngoog",
-          "title": "An introduction to the literary history of the Bible",
-          "author": "James Townley",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/anintroductiont00towngoog",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/anintroductiont00towngoog",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-americanbiblica01agnegoog",
-          "title": "The American Biblical Repository",
-          "author": "John Holmes Agnew",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/americanbiblica01agnegoog",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/americanbiblica01agnegoog",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-apracticalcomme00knecgoog",
-          "title": "A practical commentary on Holy Scripture for the use of those who teach Bible history",
-          "author": "Knecht, Friedrich Justus, 1839-1921",
+          "id": "internet-archive-openingscripture0000gord",
+          "title": "Opening Scripture : Bible reading and interpretive authority in Puritan New England",
+          "author": "Gordis, Lisa M",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/apracticalcomme00knecgoog",
+            "url": "https://archive.org/details/openingscripture0000gord",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/apracticalcomme00knecgoog",
+            "url": "https://archive.org/services/img/openingscripture0000gord",
             "mode": "source"
           },
           "rights": {
@@ -2375,18 +2329,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-storyofbiblereto0000bowi",
-          "title": "The story of the Bible : retold from Genesis to Revelation in the light of present knowledge for both the young and the mature",
-          "author": "Bowie, Walter Russell, 1882-1969, author",
+          "id": "internet-archive-bwb_W8-ASH-091",
+          "title": "The New Cambridge history of the Bible",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofbiblereto0000bowi",
+            "url": "https://archive.org/details/bwb_W8-ASH-091",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/storyofbiblereto0000bowi",
+            "url": "https://archive.org/services/img/bwb_W8-ASH-091",
             "mode": "source"
           },
           "rights": {
@@ -2674,52 +2628,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-isbn_0872392511",
-          "title": "Standard Bible atlas",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/isbn_0872392511",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/isbn_0872392511",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-concisehistoryof0000unse_g9a5",
-          "title": "A concise history of the English Bible",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/concisehistoryof0000unse_g9a5",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/concisehistoryof0000unse_g9a5",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-earlyreligionis03robegoog",
           "title": "The early religion of Israel : as set forth by Biblical writers and by modern critical historians",
           "author": "Robertson, James, 1840-1920",
@@ -2732,6 +2640,98 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/earlyreligionis03robegoog",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-BIBLICALCALENDAR",
+          "title": "BIBLICAL CALENDAR",
+          "author": "FREDDY CANAVIRI APAZA",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/BIBLICALCALENDAR",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/BIBLICALCALENDAR",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-postmodernbible0000unse_b2o1",
+          "title": "The postmodern Bible",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/postmodernbible0000unse_b2o1",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/postmodernbible0000unse_b2o1",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-Revelation217TheKingIsComing11-26-1972-BibleCommentaryAnd",
+          "title": "Revelation 21:7 â The King Is Coming â 11-26-1972 - Bible Commentary and Sermon by Rev Ralph C Link and uploaded by Peter-John Parisis",
+          "author": "Rev Ralph Charles Link and Rev Ralph C. Link",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/Revelation217TheKingIsComing11-26-1972-BibleCommentaryAnd",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/Revelation217TheKingIsComing11-26-1972-BibleCommentaryAnd",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fromancienttable0000ewer_v4a6",
+          "title": "From ancient tablets to modern translations : a general introduction to the Bible",
+          "author": "Ewert, David, 1922-",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fromancienttable0000ewer_v4a6",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fromancienttable0000ewer_v4a6",
             "mode": "source"
           },
           "rights": {
