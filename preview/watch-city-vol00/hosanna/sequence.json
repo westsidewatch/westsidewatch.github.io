@@ -8,9 +8,10 @@
   "master": {
     "type": "dore-original",
     "title": "王進城 / The King Enters the City",
-    "image": null,
+    "image": "/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg",
     "cameraPath": "Mount of Olives approach → descent → crowd → garments/branches → donkey → city/gate",
-    "status": "ART_PENDING"
+    "status": "PUBLISHABLE_PD_ART",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg"
   },
   "timing": {
     "approachMs": 5200,
@@ -202,6 +203,36 @@
       "sourceTimestamp": {
         "start": 3973,
         "end": 3979
+      }
+    },
+    {
+      "id": "dore-christs-entry-jerusalem",
+      "work": "Christ's Entry into Jerusalem",
+      "year": 1876,
+      "creator": "Gustave Doré",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 1.5
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
+      "durationMs": 1500,
+      "offsetMs": 0,
+      "note": "Doré's original-entry composition is a public-domain painting; it is used as a moving still between film eras.",
+      "actionCoordinates": [
+        "donkey",
+        "gather",
+        "branches",
+        "threshold",
+        "city"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "resolution": "2207x1638",
+        "purpose": "same-origin public-domain Doré artwork for a Ken Burns intercut"
       }
     },
     {
@@ -695,6 +726,20 @@
         "sourceStart": 3973,
         "sourceEnd": 3979,
         "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1927-crowd.webm"
+      },
+      {
+        "id": "dore-christs-entry-jerusalem",
+        "year": 1876,
+        "start": 0,
+        "end": 1.5,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg",
+        "coordinates": [
+          "donkey",
+          "gather",
+          "branches",
+          "threshold",
+          "city"
+        ]
       },
       {
         "id": "manger-cross-1912-hosanna",
