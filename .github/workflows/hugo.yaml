@@ -33,21 +33,24 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Materialize Vol.00 diagnostic video
+      - name: Render Vol.00 montage clips
         run: |
-          mkdir -p preview/watch-city-vol00/hosanna/media
-          curl --fail --location --retry 3 --retry-delay 2 \
-            --output preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm \
-            'https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Vie_et_Passion_du_Christ_%281903%29.webm/Vie_et_Passion_du_Christ_%281903%29.webm.240p.vp9.webm'
-          test "$(wc -c < preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm)" -gt 60000000
-          curl --fail --location --retry 3 --retry-delay 2 \
-            --output preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm \
-            'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm.240p.vp9.webm'
-          test "$(wc -c < preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm)" -gt 100000000
-          curl --fail --location --retry 3 --retry-delay 2 \
-            --output preview/watch-city-vol00/hosanna/media/the-king-of-kings-1927.240p.vp9.webm \
-            'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/The_King_of_Kings_%281927%29.webm/The_King_of_Kings_%281927%29.webm.240p.vp9.webm'
-          test "$(wc -c < preview/watch-city-vol00/hosanna/media/the-king-of-kings-1927.240p.vp9.webm)" -gt 200000000
+          source_dir="$RUNNER_TEMP/vol00-source"
+          clip_dir="preview/watch-city-vol00/hosanna/media/clips"
+          mkdir -p "$source_dir" "$clip_dir"
+          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1903.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Vie_et_Passion_du_Christ_%281903%29.webm/Vie_et_Passion_du_Christ_%281903%29.webm.240p.vp9.webm'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1912.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm.240p.vp9.webm'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1927.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/The_King_of_Kings_%281927%29.webm/The_King_of_Kings_%281927%29.webm.240p.vp9.webm'
+          render_clip() {
+            ffmpeg -hide_banner -loglevel error -y -ss "$2" -t 6 -i "$1" -an -c:v libvpx-vp9 -b:v 500k -deadline good -cpu-used 4 "$3"
+          }
+          render_clip "$source_dir/1912.webm" 2730 "$clip_dir/1912-approach.webm"
+          render_clip "$source_dir/1903.webm" 1466 "$clip_dir/1903-gate.webm"
+          render_clip "$source_dir/1927.webm" 3973 "$clip_dir/1927-crowd.webm"
+          render_clip "$source_dir/1912.webm" 2764 "$clip_dir/1912-hosanna.webm"
+          render_clip "$source_dir/1903.webm" 1472 "$clip_dir/1903-crowd.webm"
+          render_clip "$source_dir/1927.webm" 4004 "$clip_dir/1927-hosanna.webm"
+          find "$clip_dir" -name '*.webm' -size +100k -print | wc -l | grep -qx 6
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
