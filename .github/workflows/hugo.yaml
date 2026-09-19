@@ -35,6 +35,8 @@ jobs:
           fetch-depth: 0
       - name: Render Vol.00 montage clips
         run: |
+          sudo apt-get update
+          sudo apt-get install --yes ffmpeg
           source_dir="$RUNNER_TEMP/vol00-source"
           clip_dir="preview/watch-city-vol00/hosanna/media/clips"
           mkdir -p "$source_dir" "$clip_dir"
