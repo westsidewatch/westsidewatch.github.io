@@ -57,3 +57,15 @@
 /* Template Port 1/4 — canonical film evidence becomes the timeline image field. */
 .bible-world__time button{isolation:isolate}.bible-world__frame{position:absolute;inset:0;z-index:-2;background:linear-gradient(135deg,#f3efe5,#ded5c1);overflow:hidden}.bible-world__time button[data-has-image="true"] .bible-world__frame{background-image:linear-gradient(180deg,rgba(243,239,229,.03) 35%,rgba(233,228,216,.88) 92%),var(--journey-poster);background-size:cover;background-position:center;filter:saturate(.72) sepia(.08);transform:scale(1.08);transition:transform 1.2s cubic-bezier(.16,1,.3,1),filter .8s}.bible-world__time button[data-has-image="true"][data-active="true"] .bible-world__frame{transform:scale(1);filter:saturate(.92) sepia(0)}.bible-world__station-copy{position:relative;z-index:2;display:flex;height:100%;flex-direction:column;justify-content:space-between}.bible-world__station-copy em{font-family:"Cormorant Garamond",serif;font-style:normal;font-size:clamp(.9rem,1.15vw,1.25rem);letter-spacing:.04em}.bible-world__time button[data-has-image="true"] .bible-world__station-copy{background:linear-gradient(180deg,rgba(243,239,229,.86),rgba(243,239,229,.08) 30%,rgba(243,239,229,.88));margin:calc(-1*clamp(2rem,4vw,5rem));padding:clamp(2rem,4vw,5rem)}
 @media(prefers-reduced-motion:reduce){.bible-world__frame{transition:none!important}}
+
+/* Template Port 2/4 — cinematic scroll scrub, parallax and frame reveal. */
+@media(min-width:1000px) and (prefers-reduced-motion:no-preference){
+ .bible-world__time{scroll-behavior:auto}
+ .bible-world__time button{opacity:calc(.42 + var(--cinema-proximity,.2)*.58);transform:translateY(calc((1 - var(--cinema-proximity,.2))*3.2rem)) scale(calc(.84 + var(--cinema-proximity,.2)*.16));clip-path:inset(calc((1 - var(--cinema-proximity,.2))*7%) calc((1 - var(--cinema-proximity,.2))*3%) round .15rem);will-change:transform,clip-path,opacity}
+ .bible-world__time button[data-active="true"]{transform:translateY(0) scale(1);clip-path:inset(0);opacity:1}
+ .bible-world__frame{background-position:calc(50% + var(--frame-shift,0%)) center;will-change:background-position,transform}
+ .bible-world__station-copy{transform:translateX(var(--cinema-drift,0%));transition:transform .18s linear}
+ .bible-world__time[data-scrubbing="true"] button{transition:background .6s,opacity .12s linear,clip-path .12s linear,transform .12s linear}
+ .bible-world__moment{view-timeline-name:--cinema-moment;view-timeline-axis:block;animation:cinemaMomentEnter linear both;animation-timeline:--cinema-moment;animation-range:entry 5% cover 35%}
+ @keyframes cinemaMomentEnter{from{opacity:.25;transform:translateY(6vh) scale(.96);clip-path:inset(7% 4%)}to{opacity:1;transform:none;clip-path:inset(0)}}
+}
