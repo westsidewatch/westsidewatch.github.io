@@ -27,6 +27,11 @@ disableKinds = ["taxonomy", "term"]
     source = "data"
     target = "data"
     excludeFiles = ["**/*.md"]
+  # Shared Bible Index is also a browser runtime dependency for Cinema.
+  # Publish the same canonical files; do not duplicate them under cinema/data.
+  [[module.mounts]]
+    source = "data/bible-index"
+    target = "static/data/bible-index"
   [[module.mounts]]
     source = "join"
     target = "static/join"
