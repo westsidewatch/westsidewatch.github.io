@@ -16,8 +16,8 @@
   "timing": {
     "approachMs": 5200,
     "montageStartMs": 2800,
-    "arrivalMs": 35000,
-    "cycleMs": 43000
+    "arrivalMs": 39000,
+    "cycleMs": 48000
   },
   "moments": [
     {
@@ -137,6 +137,36 @@
       }
     },
     {
+      "id": "story-bible-1873-palms-still",
+      "work": "Jesus entering Jerusalem",
+      "year": 1873,
+      "creator": "Unknown author",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Jesus_entering_Jerusalem.jpg",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/1873-palms.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 1.25
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
+      "durationMs": 1250,
+      "offsetMs": 0,
+      "note": "Public-domain 1873 Bible illustration: foreground palms and garments provide a cut-on-gesture bridge between moving-image crowd shots.",
+      "actionCoordinates": [
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "resolution": "1101x1145",
+        "purpose": "same-origin public-domain still for a Ken Burns intercut"
+      }
+    },
+    {
       "id": "life-passion-1903-entry",
       "work": "La Vie et la passion de Jésus Christ",
       "year": 1903,
@@ -222,6 +252,37 @@
       "previewAssetProfile": {
         "format": "JPEG",
         "purpose": "same-origin still-frame intercut from the public-domain source film"
+      }
+    },
+    {
+      "id": "morgner-1912-entry-still",
+      "work": "Entry of Jesus into Jerusalem",
+      "year": 1912,
+      "creator": "Wilhelm Morgner",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Entry_of_Jesus_into_Jerusalem_by_Wilhelm_Morgner.jpg",
+      "asset": "/preview/watch-city-vol00/hosanna/media/clips/morgner-1912-entry.jpg",
+      "timestamp": {
+        "start": 0,
+        "end": 1.35
+      },
+      "assetType": "image",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-york-project-reproduction-materialized",
+      "durationMs": 1350,
+      "offsetMs": 0,
+      "note": "Public-domain 1912 expressionist painting: its broad, tilted procession shifts scale before the silent-film crowd resumes.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "threshold",
+        "city"
+      ],
+      "previewAssetProfile": {
+        "format": "JPEG",
+        "resolution": "2048x1439",
+        "purpose": "same-origin public-domain still for a Ken Burns intercut"
       }
     },
     {
@@ -714,7 +775,13 @@
         "reuseState": "no remix, download, or republication license established",
         "admission": "external official watch link only"
       }
-    ]
+    ],
+    "artStillPass": {
+      "date": "2026-09-19",
+      "status": "two-public-domain-entry-images-materialized",
+      "finding": "The moving-image montage now gains two intentionally brief painting intercuts: the 1873 Bible illustration cuts on palms/garments, and Morgner's 1912 expressionist entry resets procession scale. Both are verified public-domain reproductions from Wikimedia Commons.",
+      "rule": "Paintings remain labelled assetType=image and animate only as short Ken Burns stills; they never represent unverified moving footage."
+    }
   },
   "montageScope": {
     "policy": "multi-era-by-design",
@@ -791,6 +858,35 @@
           "gather",
           "branches",
           "threshold"
+        ]
+      },
+      {
+        "id": "story-bible-1873-palms-still",
+        "year": 1873,
+        "start": 0,
+        "end": 1.25,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1873-palms.jpg",
+        "coordinates": [
+          "gather",
+          "branches",
+          "garments",
+          "hosanna",
+          "threshold"
+        ]
+      },
+      {
+        "id": "morgner-1912-entry-still",
+        "year": 1912,
+        "start": 0,
+        "end": 1.35,
+        "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/morgner-1912-entry.jpg",
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "threshold",
+          "city"
         ]
       },
       {
