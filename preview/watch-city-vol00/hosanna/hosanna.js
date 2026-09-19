@@ -121,7 +121,7 @@ function loop(){
     const start=Number(m.timestamp?.start);
     const end=Number(m.timestamp?.end);
     const clipMs=(m.assetType==='video' && Number.isFinite(start) && Number.isFinite(end))
-      ? Math.max(8000,((end-start)*1000)+1200)
+      ? Math.max(800,((end-start)*1000)+250)
       : (m.durationMs||1800);
     later(()=>showMoment(m),cursor);
     cursor+=Math.max(800,clipMs-450);
