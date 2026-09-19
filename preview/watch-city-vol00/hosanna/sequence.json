@@ -15,8 +15,8 @@
   "timing": {
     "approachMs": 5200,
     "montageStartMs": 2800,
-    "arrivalMs": 9800,
-    "cycleMs": 40000
+    "arrivalMs": 39000,
+    "cycleMs": 45000
   },
   "moments": [
     {
@@ -76,19 +76,31 @@
       "work": "From the Manger to the Cross",
       "year": 1912,
       "sourcePage": "https://commons.wikimedia.org/wiki/File:From_The_Manger_To_The_Cross_(1912)_Best_Quality.webm",
-      "asset": null,
-      "timestamp": null,
-      "rightsState": "candidate-public-domain-needs-moment-extraction",
-      "durationMs": 1700,
-      "offsetMs": 900,
-      "note": "Underlying 1912 U.S. film is public domain; exact entry Moment and served derivative must be verified before publication.",
+      "asset": "/preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm",
+      "timestamp": {
+        "start": 2730,
+        "end": 2743
+      },
+      "rightsState": "publishable",
+      "durationMs": 13000,
+      "offsetMs": 0,
+      "note": "Commons-hosted public-domain film. Frame probe locates the Mount of Olives descent and approaching procession from 2730s to 2743s in the VP9 derivative.",
       "actionCoordinates": [
         "approach",
         "donkey",
         "gather",
         "branches",
         "threshold"
-      ]
+      ],
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
+      "assetType": "video",
+      "previewTimecodeState": "frame-probed-2730-2743-preview",
+      "previewAssetProfile": {
+        "format": "WebM (VP9 + Opus)",
+        "resolution": "312x240",
+        "bitrateKbps": 247,
+        "purpose": "same-origin Pages montage clip; source remains the verified Commons VP9 transcode"
+      }
     },
     {
       "id": "life-passion-1903-entry",
@@ -98,7 +110,7 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm",
       "timestamp": {
         "start": 1466,
-        "end": 1502
+        "end": 1478
       },
       "tableau": 14,
       "catalogueNumber": 855,
@@ -108,8 +120,8 @@
         "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
         "Exact in-file start/end timecode still requires frame-level verification before extraction."
       ],
-      "durationMs": 1600,
-      "offsetMs": 820,
+      "durationMs": 12000,
+      "offsetMs": 0,
       "catalogueYear": 1902,
       "sourceDuration": "43:54",
       "sourceResolution": "210x160",
@@ -136,13 +148,44 @@
         "threshold"
       ],
       "assetType": "video",
-      "previewTimecodeState": "frame-probed-1466-1502-preview",
-      "note": "Verified Commons VP9 240p WebM is materialized into the Pages artifact for same-origin browser playback diagnosis. Frame probe locates the city-entry tableau from approximately 1466s to 1502s in this VP9 derivative; boundaries are verified for preview use.",
+      "previewTimecodeState": "frame-probed-1466-1478-preview",
+      "note": "Verified Commons VP9 240p WebM is materialized into the Pages artifact. Frame probe locates the city-gate entry from 1466s; this 12-second preview cut ends at 1478s.",
       "previewAssetProfile": {
         "format": "WebM (VP9 + Opus)",
         "resolution": "326x240",
         "bitrateKbps": 243,
         "purpose": "same-origin Pages playback diagnostic; source remains the verified Commons VP9 transcode"
+      }
+    },
+    {
+      "id": "manger-cross-1912-hosanna",
+      "work": "From the Manger to the Cross",
+      "year": 1912,
+      "creator": "Sidney Olcott",
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:From_The_Manger_To_The_Cross_(1912)_Best_Quality.webm",
+      "asset": "/preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm",
+      "timestamp": {
+        "start": 2764,
+        "end": 2778
+      },
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
+      "durationMs": 14000,
+      "offsetMs": 0,
+      "assetType": "video",
+      "previewTimecodeState": "frame-probed-2764-2778-preview",
+      "note": "Commons-hosted public-domain film. Frame probe locates palms, crowd acclamation and Hosanna from 2764s to 2778s in the VP9 derivative.",
+      "actionCoordinates": [
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold"
+      ],
+      "previewAssetProfile": {
+        "format": "WebM (VP9 + Opus)",
+        "resolution": "312x240",
+        "bitrateKbps": 247,
+        "purpose": "same-origin Pages montage clip; source remains the verified Commons VP9 transcode"
       }
     },
     {
@@ -414,7 +457,27 @@
         "role": "new cinematic, streaming and animated representations continue the recurrence"
       }
     ],
-    "editRule": "Cut by biblical action coordinate across years, not by playing one production after another."
+    "editRule": "Cut by biblical action coordinate across years, not by playing one production after another.",
+    "currentVerifiedPublicationClips": [
+      {
+        "id": "manger-cross-1912-entry",
+        "coordinate": "approach",
+        "start": 2730,
+        "end": 2743
+      },
+      {
+        "id": "life-passion-1903-entry",
+        "coordinate": "threshold",
+        "start": 1466,
+        "end": 1478
+      },
+      {
+        "id": "manger-cross-1912-hosanna",
+        "coordinate": "hosanna",
+        "start": 2764,
+        "end": 2778
+      }
+    ]
   },
   "actionCoordinates": {
     "version": "v0",
