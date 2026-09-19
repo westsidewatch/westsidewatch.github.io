@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-19T13:13:30.234383+00:00",
+  "generatedAt": "2026-09-19T21:52:58.125925+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2398,29 +2398,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-storyofbiblereto0000bowi",
-          "title": "The story of the Bible : retold from Genesis to Revelation in the light of present knowledge for both the young and the mature",
-          "author": "Bowie, Walter Russell, 1882-1969, author",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofbiblereto0000bowi",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/storyofbiblereto0000bowi",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-dictionaryofbibl0000rowl",
           "title": "Dictionary of Bible place names",
           "author": "Rowley, H. H. (Harold Henry), 1890-1969",
@@ -2732,6 +2709,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/isbn_0872392511",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-pictorialhistory0000ausu_u8b0",
+          "title": "Pictorial history of the Jewish people ; from Bible times to our own day throughout the world",
+          "author": "Ausubel, Nathan, 1898-1986",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/pictorialhistory0000ausu_u8b0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/pictorialhistory0000ausu_u8b0",
             "mode": "source"
           },
           "rights": {
@@ -7186,7 +7186,7 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 1,
+      "queriedThisRun": 0,
       "resolved": 123,
       "coversAdded": 64,
       "internetArchiveLinks": 52,
