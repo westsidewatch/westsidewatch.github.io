@@ -95,7 +95,7 @@
       "work": "La Vie et la passion de Jésus Christ",
       "year": 1903,
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
-      "asset": "https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm",
+      "asset": "https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Vie_et_Passion_du_Christ_%281903%29.webm/Vie_et_Passion_du_Christ_%281903%29.webm.360p.mp4",
       "timestamp": {
         "start": 1020,
         "end": 1085
@@ -125,7 +125,7 @@
       "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
       "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
       "sourceRuntime": "43:55",
-      "retrievalState": "commons-original-webm-public-domain-preview-probe",
+      "retrievalState": "commons-360p-transcode-wired-for-preview",
       "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
       "actionCoordinates": [
         "approach",
@@ -137,7 +137,13 @@
       ],
       "assetType": "video",
       "previewTimecodeState": "provisional-frame-probe",
-      "note": "Public-domain Commons binary is wired into the live preview. 1020–1085s is a provisional visual probe derived from tableau position/film-length evidence and MUST be frame-checked before canonical admission."
+      "note": "Public-domain Commons binary is wired into the live preview. 1020–1085s is a provisional visual probe derived from tableau position/film-length evidence and MUST be frame-checked before canonical admission.",
+      "previewAssetProfile": {
+        "format": "QuickTime 360p (MPEG-4)",
+        "bitrateKbps": 801,
+        "status": "Commons transcode completed 2026-09-11",
+        "purpose": "preview/runtime seek; original remains evidence master"
+      }
     },
     {
       "id": "life-passion-1903-entry-alt-edition",
