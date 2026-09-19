@@ -43,6 +43,7 @@ jobs:
           curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1903.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Vie_et_Passion_du_Christ_%281903%29.webm/Vie_et_Passion_du_Christ_%281903%29.webm.240p.vp9.webm'
           curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1912.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm.240p.vp9.webm'
           curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1927.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/The_King_of_Kings_%281927%29.webm/The_King_of_Kings_%281927%29.webm.240p.vp9.webm'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/dore-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg'
           render_clip() {
             ffmpeg -hide_banner -loglevel error -y -ss "$2" -t 6 -i "$1" -an -c:v libvpx-vp9 -b:v 500k -deadline good -cpu-used 4 "$3"
           }
