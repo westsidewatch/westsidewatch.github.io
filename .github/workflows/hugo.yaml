@@ -49,6 +49,11 @@ jobs:
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/jruchi-12c-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Entry_into_Jerusalem%2C_Jruchi_II_H-1667%2C_182r%2C_12th_c.jpg'
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/giotto-1304-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/1/12/Giotto_di_Bondone_-_No._26_Scenes_from_the_Life_of_Christ_-_10._Entry_into_Jerusalem_-_WGA09206.jpg'
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/durer-1510-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Albrecht_D%C3%BCrer_-_Christ%27s_Entry_into_Jerusalem_%28NGA_1943.3.3638%29.jpg'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/sinai-14c-icon.jpg" 'https://upload.wikimedia.org/wikipedia/commons/5/57/Christ_entering_Jerusalem_icon.jpg'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/flemish-17c-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Entry_into_Jerusalem_flemish_17c.jpg'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/schnorr-1860-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Jesus_entry_into_Jerusalem.jpg'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/prang-1892-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Jesus%27_entry_into_Jerusalem_%28Mark_XXI-8%2C_9%29_LCCN2016652375.jpg'
+          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/ensor-1885-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/4/4b/James_Ensor%2C_La_Vive_et_rayonnante_-_L%27Entr%C3%A9e_a_Jerusalem%2C_1885.jpg'
           render_clip() {
             ffmpeg -hide_banner -loglevel error -y -ss "$2" -t 6 -i "$1" -an -c:v libvpx-vp9 -b:v 500k -deadline good -cpu-used 4 "$3"
           }
