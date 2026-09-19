@@ -5,7 +5,7 @@ on:
     branches:
       - dore/design-editorial-grounding-clean-v1
     paths:
-      - 'local/dore-local/**'
+      - 'local/dore-local/**'\n      - '.github/workflows/italian-editorial-real-a2a-e2e.yml'
       - '.github/workflows/italian-editorial-real-a2a-e2e.yml'
   pull_request:
     paths:
