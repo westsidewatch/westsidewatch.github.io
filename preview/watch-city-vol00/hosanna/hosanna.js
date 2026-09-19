@@ -32,10 +32,12 @@ function admittedMoment(moment){
 
 function showStillMoment(moment){
   const el=document.createElement('div');
-  el.className=`shot ${moment.motion || 'motion-push-in'}`;
+  const presentation=moment.presentation || 'film-frame';
+  el.className=`shot ${presentation} ${moment.motion || 'motion-push-in'}`;
   el.style.backgroundImage=`url("${moment.asset}")`;
   el.style.setProperty('--dur',`${moment.durationMs||1800}ms`);
   el.dataset.moment=moment.id;
+  if(moment.year) el.dataset.era=String(moment.year);
   montage.append(el);
   later(()=>el.remove(),(moment.durationMs||1800)+120);
 }
