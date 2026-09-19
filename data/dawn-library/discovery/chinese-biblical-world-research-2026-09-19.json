@@ -441,5 +441,73 @@
       "David Pawson『世界十字路口』確切出處與原話尚未找到。"
     ],
     "next": "Round 4: 專攻古河道/古氣候/Hammurabi 水法/Nazareth-Megiddo sightline/Pawson 原始出處。"
+  },
+  "round4": {
+    "date": "2026-09-19",
+    "focus": "打通 Round 3 六個洞：水法、古河道/氣候、Ur heating、Nazareth-Megiddo、Pawson",
+    "resolved": [
+      {
+        "topic": "Hammurabi 53–56",
+        "status": "RESOLVED",
+        "authority": "Yale Avalon / L.W. King translation",
+        "url": "https://avalon.law.yale.edu/ancient/hamcode.asp",
+        "finding": "53–54：堤壩疏於維護致決口淹田，責任人須賠償穀物，不能賠則本人與財產處置補償受害農民；55–56：開渠灌溉疏忽淹鄰田，按損失／面積賠穀。",
+        "use": "水利維護已進入法律責任；一條水渠可以帶出鄰里、產權、賠償、行政秩序。"
+      },
+      {
+        "topic": "Ur paleochannels",
+        "status": "PARTLY_RESOLVED",
+        "authority": "American Journal of Archaeology 127.4",
+        "url": "https://www.journals.uchicago.edu/doi/10.1086/725907",
+        "finding": "Ur 古代位於幼發拉底河舊支流之間／沿岸；下游河道頻繁 avulsion，海陸面也顯著改變；海灣在約8000–2000 BCE 比今天深入內陸。",
+        "use": "可以確定『把水灌回今日吾珥地圖』；但約2100–1900 BCE 單一精確河線仍不可假定。"
+      },
+      {
+        "topic": "4.2 ka climate",
+        "status": "RESOLVED_WITH_DISPUTE",
+        "authority": "Journal of Archaeological Science 106 (2019) + Antiquity 95 (2021)",
+        "urls": [
+          "https://www.sciencedirect.com/science/article/pii/S0305440318306198",
+          "https://www.cambridge.org/core/journals/antiquity/article/much-ado-about-nothing-assessing-the-impact-of-the-42-kya-event-on-human-subsistence-patterns-in-northern-mesopotamia-using-stable-isotope-analysis/4F4BF5789FABE111AD46903F8D2E3FE7"
+        ],
+        "finding": "模型研究給出約2000 BCE 降水與兩河可用水量的 Holocene 低點；但考古/同位素研究反對把整個北美索不達米亞簡化成單一 megadrought-collapse 因果。",
+        "use": "可寫『氣候壓力／乾化』，不可寫『一次大旱直接毀滅整個文明』。"
+      },
+      {
+        "topic": "Ur central heating",
+        "status": "NOT_VERIFIED",
+        "finding": "本輪未找到足以支持『吾珥住宅已有中央供暖』的高權威考古來源。找到的是其他古代近東遺址的 underfloor drainage/braziers，不能移植到 Ur。",
+        "use": "正文繼續禁止『中央供暖』說法，直到找到 Woolley excavation 或現代 Ur publication 的直接證據。"
+      },
+      {
+        "topic": "Nazareth–Jezreel–Megiddo sightline",
+        "status": "RESOLVED_WITH_LIMIT",
+        "authority": "KKL-JNF topography + Bible Lands imagery + reverse-view photographic evidence",
+        "urls": [
+          "https://kkl-jnf.org/hiking_and_walking_tracks/mount-of-precipice/",
+          "https://biblelandimages.com/book/files/Nazareth.pdf",
+          "https://commons.wikimedia.org/wiki/File:20110221_Israel_0049_view_toward_Nazareth_from_Megiddo_(5540419014).jpg"
+        ],
+        "finding": "Nazareth Hills/Precipice 明確俯瞰 Jezreel Valley；從 Tel Megiddo 有實拍可見 Nazareth ridge。這支持兩地視域關係。",
+        "use": "可寫『拿撒勒高地俯瞰耶斯列平原；米吉多在同一視域/走廊』。不要宣稱福音書記載少年耶穌曾躺在某坡看 Megiddo。"
+      },
+      {
+        "topic": "David Pawson crossroads",
+        "status": "RESOLVED",
+        "authority": "David Pawson, Unlocking the Bible + Pawson Revelation sermon transcript",
+        "urls": [
+          "https://www.perlego.com/book/669509/unlocking-the-bible-pdf",
+          "https://sermonindex.net/speakers/david-pawson/revelation-07-the-fall-of-babylon-and-the-marriage-supper-of-the-lamb/"
+        ],
+        "finding": "Pawson 明確稱 Israel 為 'at the crossroads of the world'，稱 Megiddo 為道路交會處；並解釋神把百姓放在十字路口作天國治理的 model。講道中另說他『想像』少年耶穌躺在山上看商旅往來。",
+        "use": "可精確歸因 Pawson；尤其少年耶穌畫面本來就是 Pawson 自己標示的 imagination，不能改寫成歷史事實。"
+      }
+    ],
+    "next": [
+      "尋找 Leonard Woolley / Ur Excavations 對住宅 heating 的直接資料",
+      "古河道專攻 2100–1900 BCE GIS/paleochannel",
+      "建立 Haran–Ur–Canaan 古氣候 proxy 對照，不製造假年雨量",
+      "把已解洞轉成《一百年以前》第一組 evidence cards / map briefs"
+    ]
   }
 }
