@@ -16,8 +16,8 @@
   "timing": {
     "approachMs": 5200,
     "montageStartMs": 2800,
-    "arrivalMs": 39000,
-    "cycleMs": 48000
+    "arrivalMs": 35000,
+    "cycleMs": 39000
   },
   "moments": [
     {
@@ -136,7 +136,9 @@
         "format": "JPEG",
         "resolution": "1607x2169",
         "purpose": "same-origin public-domain manuscript miniature as an archival intercut"
-      }
+      },
+      "overlayFor": "manger-cross-1912-entry",
+      "overlayDelayMs": 1250
     },
     {
       "id": "manger-cross-1912-entry-still",
@@ -167,7 +169,9 @@
         "purpose": "same-origin still-frame intercut from the public-domain source film"
       },
       "motion": "motion-push-in",
-      "presentation": "film-frame"
+      "presentation": "film-frame",
+      "overlayFor": "manger-cross-1912-entry",
+      "overlayDelayMs": 3550
     },
     {
       "id": "story-bible-1873-palms-still",
@@ -199,7 +203,9 @@
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
       "motion": "motion-branch-sweep",
-      "presentation": "art-card"
+      "presentation": "art-card",
+      "overlayFor": "manger-cross-1912-hosanna",
+      "overlayDelayMs": 1450
     },
     {
       "id": "life-passion-1903-entry",
@@ -290,7 +296,9 @@
         "format": "JPEG",
         "resolution": "1000x941",
         "purpose": "same-origin public-domain fresco as an archival intercut"
-      }
+      },
+      "overlayFor": "life-passion-1903-entry",
+      "overlayDelayMs": 1150
     },
     {
       "id": "life-passion-1903-entry-still",
@@ -321,7 +329,9 @@
         "purpose": "same-origin still-frame intercut from the public-domain source film"
       },
       "motion": "motion-crowd-turn",
-      "presentation": "film-frame"
+      "presentation": "film-frame",
+      "overlayFor": "life-passion-1903-entry",
+      "overlayDelayMs": 3500
     },
     {
       "id": "morgner-1912-entry-still",
@@ -354,7 +364,9 @@
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
       "motion": "motion-procession-pan",
-      "presentation": "art-card"
+      "presentation": "art-card",
+      "overlayFor": "king-of-kings-1927-hosanna",
+      "overlayDelayMs": 1700
     },
     {
       "id": "king-of-kings-1927-entry",
@@ -425,7 +437,9 @@
         "format": "JPEG",
         "resolution": "2315x3000",
         "purpose": "same-origin public-domain woodcut as an archival intercut"
-      }
+      },
+      "overlayFor": "king-of-kings-1927-entry",
+      "overlayDelayMs": 1100
     },
     {
       "id": "king-of-kings-1927-entry-still",
@@ -457,7 +471,9 @@
         "purpose": "same-origin still-frame intercut from the public-domain source film"
       },
       "motion": "motion-gate-rise",
-      "presentation": "film-frame"
+      "presentation": "film-frame",
+      "overlayFor": "king-of-kings-1927-entry",
+      "overlayDelayMs": 3500
     },
     {
       "id": "dore-christs-entry-jerusalem",
@@ -489,7 +505,9 @@
         "purpose": "same-origin public-domain Doré artwork for a Ken Burns intercut"
       },
       "motion": "motion-gate-rise",
-      "presentation": "art-card"
+      "presentation": "art-card",
+      "overlayFor": "life-passion-1903-crowd",
+      "overlayDelayMs": 1700
     },
     {
       "id": "manger-cross-1912-hosanna",
@@ -941,7 +959,7 @@
         "role": "new cinematic, streaming and animated representations continue the recurrence"
       }
     ],
-    "editRule": "Cut by biblical action coordinate across years. Each still uses a direction-specific camera path and overlaps the preceding or next moving shot; no static image may be used as a dead pause.",
+    "editRule": "The moving-image spine never yields to art. Each image is an action-matched overlay scheduled inside a specific six-second video clip, then fades away while that clip keeps moving.",
     "currentVerifiedPublicationClips": [
       {
         "id": "manger-cross-1912-entry",
@@ -1136,8 +1154,8 @@
     ],
     "stillEditingPass": {
       "date": "2026-09-19",
-      "status": "reframed-as-archive-projections",
-      "principle": "Moving footage remains an immersive field. The image layer forms a deliberate reception-history sequence: manuscript → fresco → woodcut → 19th-century illustration/Doré → Expressionism. Public-domain art appears only as a framed archive projection with a distinct action-matched camera path."
+      "status": "restructured-as-overlays",
+      "principle": "Six public-domain film clips create a continuous moving-image spine. Manuscript, fresco, woodcut, illustration, painting, and source-film frames appear only as transparent, framed overlays during their matched video action; no image occupies a separate slot in the rhythm."
     }
   },
   "actionCoordinates": {
