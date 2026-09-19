@@ -79,12 +79,21 @@ function loop(){
   montage.replaceChildren();
   const t=manifest.timing||{};
   const montageStart=t.montageStartMs||2600;
-  const arrival=t.arrivalMs||9200;
-  const cycle=t.cycleMs||15000;
+  const moments=manifest.moments.filter(admittedMoment);
+  let cursor=montageStart;
 
-  manifest.moments.filter(admittedMoment).forEach((m,i)=>{
-    later(()=>showMoment(m),montageStart+i*(m.offsetMs||900));
+  moments.forEach(m=>{
+    const start=Number(m.timestamp?.start);
+    const end=Number(m.timestamp?.end);
+    const clipMs=(m.assetType==='video' && Number.isFinite(start) && Number.isFinite(end))
+      ? Math.max(8000,((end-start)*1000)+1200)
+      : (m.durationMs||1800);
+    later(()=>showMoment(m),cursor);
+    cursor+=clipMs;
   });
+
+  const arrival=Math.max(t.arrivalMs||9200,cursor-6000);
+  const cycle=Math.max(t.cycleMs||15000,cursor+600);
   later(()=>{root.dataset.state='arrival'},arrival);
   later(loop,cycle);
 }
