@@ -16,7 +16,7 @@
     "approachMs": 5200,
     "montageStartMs": 2800,
     "arrivalMs": 9800,
-    "cycleMs": 15600
+    "cycleMs": 40000
   },
   "moments": [
     {
@@ -97,8 +97,8 @@
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
       "asset": "/preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm",
       "timestamp": {
-        "start": 0,
-        "end": 2634
+        "start": 1466,
+        "end": 1502
       },
       "tableau": 14,
       "catalogueNumber": 855,
@@ -136,8 +136,8 @@
         "threshold"
       ],
       "assetType": "video",
-      "previewTimecodeState": "provisional-frame-probe",
-      "note": "Verified Commons VP9 240p WebM is materialized into the Pages artifact for same-origin browser playback diagnosis. Full-film playback is temporarily admitted; exact Entrée à Jérusalem cut remains NOT canonical until frame-verified.",
+      "previewTimecodeState": "frame-probed-1466-1502-preview",
+      "note": "Verified Commons VP9 240p WebM is materialized into the Pages artifact for same-origin browser playback diagnosis. Frame probe locates the city-entry tableau from approximately 1466s to 1502s in this VP9 derivative; boundaries are verified for preview use.",
       "previewAssetProfile": {
         "format": "WebM (VP9 + Opus)",
         "resolution": "326x240",
