@@ -1,0 +1,16 @@
+{
+  "schema":"dore.design-learning-cycle.v1",
+  "cycle":1,
+  "status":"capture-ready",
+  "objective":"First real cross-source observation cycle: Italian editorial lineage × independent magazines × contemporary editorial web.",
+  "admittedSources":["casabella-official","eye-magazine","eye-issues","itsnicethat-web-design","independent-magazine-it"],
+  "comparisons":[
+    {"id":"c1","sources":["casabella-official","eye-magazine"],"questions":["How does editorial authority appear through hierarchy?","How is negative space used as structure rather than absence?","What image/type tensions survive across print-to-web translation?"]},
+    {"id":"c2","sources":["eye-issues","itsnicethat-web-design"],"questions":["How does issue sequencing become continuous-feed sequencing?","Which density and pacing patterns are transferable without copying surface style?"]},
+    {"id":"c3","sources":["casabella-official","independent-magazine-it"],"questions":["Which Italian editorial grammars persist across architecture and fashion contexts?","Where do composition, typography and image roles diverge?"]}
+  ],
+  "requiredEvidence":["desktop-render","mobile-render","dom-facts","computed-style-facts","visual-composition-observation"],
+  "learningTargets":["composition-grammar","editorial-grammar","typographic-hierarchy","negative-space","image-type-tension","temporal-sequence","responsive-translation"],
+  "promotion":{"automatic":false,"requiresBeautifulGate":true,"requiresHumanCanonicalAuthority":true},
+  "note":"Cycle 001 is admitted and capture-ready. It records no visual findings until actual render/vision evidence exists."
+}
