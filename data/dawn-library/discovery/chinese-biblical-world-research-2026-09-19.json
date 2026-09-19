@@ -641,5 +641,140 @@
       ]
     },
     "next": "Round 6: 做 Fertile Crescent→Canaan→Jezreel→Megiddo→Nazareth 的第二套 Evidence Cards + Map Briefs，與第一套形成章首/章尾雙引擎。"
+  },
+  "round6": {
+    "date": "2026-09-19",
+    "focus": "章尾第二套 Evidence Cards + Map Briefs：Fertile Crescent→Canaan→Jezreel→Megiddo→Nazareth",
+    "evidence_cards": [
+      {
+        "id": "EC-07",
+        "title": "一彎月亮是後來畫上去的",
+        "claim": "Fertile Crescent 是現代歷史地理概念，不是古代居民自稱；可作鏡頭拉高後的分析框架。",
+        "authority": "University of Chicago",
+        "url": "https://news.uchicago.edu/explainer/fertile-crescent-explained",
+        "narrative": "逆行抵達 Ur 後才把鏡頭升高：讀者先走過土地，再看到後人替它畫出的月灣。"
+      },
+      {
+        "id": "EC-08",
+        "title": "很小的一塊地，四種植物世界相遇",
+        "claim": "Israel/adjacent region 有 Mediterranean、Irano-Turanian、Saharo-Arabian、Sudanian 四個 phytogeographical regions/elements 交會，與氣候、岩石、土壤高度多樣相關。",
+        "authority": "Flora of Israel and adjacent areas; Cambridge Southern Levant",
+        "urls": [
+          "https://flora.org.il/en/books/vegetation-of-israel-and-neighboring-countries/chapter-a/local_veg_a2/",
+          "https://assets.cambridge.org/97810095/58327/excerpt/9781009558327_excerpt.pdf"
+        ],
+        "narrative": "不用說『歐亞非所有植物』；讓橡樹、草原、荒漠與熱帶成分在短距離內自己證明這塊地的交界性。"
+      },
+      {
+        "id": "EC-09",
+        "title": "幾十公里，雨就換了一個世界",
+        "claim": "南黎凡特年雨量與植被在短距離急變；現代區域資料由北部山區>1000 mm降至南端Negev約25 mm，古代數值不可直接套用。",
+        "authority": "Vegetation History and Archaeobotany (2018)",
+        "url": "https://link.springer.com/article/10.1007/s00334-017-0658-3",
+        "narrative": "地圖用梯度而非國界：海岸／山地／Jordan Rift／Negev 迅速換景。",
+        "caution": "只用於地形—氣候梯度的現代參照，不冒充亞伯拉罕時代年雨量。"
+      },
+      {
+        "id": "EC-10",
+        "title": "裂谷其實是一條板塊邊界",
+        "claim": "Dead Sea fault/transform 是 Arabian plate 與 Africa plate 之間的大型 continental transform boundary；現代累積左移約105–110 km。",
+        "authority": "USGS",
+        "urls": [
+          "https://www.usgs.gov/publications/geology-and-hydrocarbon-potential-dead-sea-rift-basins-israel-and-jordan",
+          "https://www.usgs.gov/programs/cmhrp/news/imaging-israels-dead-sea-fault-understand-how-continents-stretch-and-rift"
+        ],
+        "narrative": "應許之地不只位於文明路口，也跨著一條真正切入岩石圈的地質邊界。",
+        "caution": "不用『世界最大裂谷』作科學定義。"
+      },
+      {
+        "id": "EC-11",
+        "title": "米吉多：路在這裡碰頭",
+        "claim": "Jezreel excavation 報告指出 Tel Jezreel 可清楚觀察東西向 Via Maris/Way of the Sea 與主要南北 highway 的交會；Megiddo–Beth Shean 走廊是平原交通骨架。",
+        "authority": "Jezreel Expedition / University of Arizona Bible Interpretation",
+        "url": "https://bibleinterp.arizona.edu/articles/2013/08/fra378012",
+        "narrative": "先把道路畫出來，再談『世界十字路口』；十字路口首先是腳、車輪、軍隊和商旅走出來的。"
+      },
+      {
+        "id": "EC-12",
+        "title": "拿撒勒山脊在同一視域",
+        "claim": "Jezreel archaeological field report 的北向全景延伸至 Nazareth hills；既有地形與反向照片支持 Nazareth ridge—Jezreel/Megiddo 的視域關係。",
+        "authority": "Jezreel Expedition + KKL-JNF + photographic evidence",
+        "urls": [
+          "https://bibleinterp.arizona.edu/articles/2013/08/fra378012",
+          "https://kkl-jnf.org/hiking_and_walking_tracks/mount-of-precipice/"
+        ],
+        "narrative": "章末鏡頭可以從道路與軍隊抬到遠處山脊，再縮到一個少年。",
+        "caution": "少年耶穌觀看米吉多是 Pawson 明示的 imagination，不是 Gospel fact。"
+      }
+    ],
+    "map_briefs": [
+      {
+        "id": "MAP-05",
+        "title": "後人畫出的月灣",
+        "purpose": "Ur 逆行完成後第一次 zoom out。",
+        "layers": [
+          "Nile/Levant arc",
+          "Upper Mesopotamia",
+          "Tigris-Euphrates",
+          "Harran",
+          "Ur",
+          "Canaan highlighted only after full crescent appears"
+        ],
+        "motion": "local Ur → whole crescent → western horn."
+      },
+      {
+        "id": "MAP-06",
+        "title": "一塊土地，四個植物世界",
+        "purpose": "用 phytogeography 取代『歐亞非植物大全』式誇張。",
+        "layers": [
+          "Mediterranean",
+          "Irano-Turanian",
+          "Saharo-Arabian",
+          "Sudanian elements",
+          "rainfall gradient",
+          "major relief"
+        ],
+        "motion": "植物帶隨雨量／高度切換；政治邊界淡出。"
+      },
+      {
+        "id": "MAP-07",
+        "title": "地表下面也有一條路",
+        "purpose": "把 Jordan/Dead Sea depression 與 Dead Sea Transform 疊合。",
+        "layers": [
+          "Arabian plate",
+          "Africa plate",
+          "DST trace",
+          "Sea of Galilee",
+          "Jordan Valley",
+          "Dead Sea",
+          "Arabah",
+          "highlands"
+        ],
+        "motion": "surface landscape → fault trace → plate-scale pullback."
+      },
+      {
+        "id": "MAP-08",
+        "title": "世界從米吉多經過",
+        "purpose": "先證明 crossroads，再讓 Pawson 神學解讀進場。",
+        "layers": [
+          "Mediterranean coast",
+          "Jezreel Valley",
+          "Megiddo",
+          "Beth Shean",
+          "Jordan corridor",
+          "north-south routes",
+          "east-west route",
+          "Nazareth ridge"
+        ],
+        "motion": "trade/army route flows converge → Megiddo → camera lifts to Nazareth ridge."
+      }
+    ],
+    "chapter_dual_engine": {
+      "opening": "Harran→rain boundary→Euphrates→canal→law→salt→Ur water-world",
+      "hinge": "reverse journey ends at Ur; camera rises to Fertile Crescent",
+      "ending": "western horn→plant zones→Dead Sea Transform→roads→Jezreel→Megiddo→Pawson crossroads→Nazareth ridge→young Jesus literary camera",
+      "status": "STRUCTURALLY_READY"
+    },
+    "next": "Round 7: research-to-prose compilation — create scene sequence, evidence placement, map insertion points, and source notes without drafting final prose."
   }
 }
