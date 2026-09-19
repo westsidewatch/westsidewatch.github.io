@@ -411,10 +411,10 @@
         "duration": "1 min"
       },
       "rightsState": "official-source-verified-publication-license-not-assumed",
-      "retrievalState": "official-chapter-and-download-surface-resolved",
+      "retrievalState": "official-chapter-and-viewing-terms-resolved; remix-not-authorized",
       "durationMs": 1100,
       "offsetMs": 520,
-      "note": "Official Jesus Film Project exposes a dedicated one-minute Triumphal Entry chapter. Publication permission for this montage must still be resolved.",
+      "note": "Official chapter is freely viewable and downloadable. Jesus Film Project permits no-admission public showings but prohibits including portions in new materials; website use beyond a link needs a separate written agreement.",
       "actionCoordinates": [
         "approach",
         "donkey",
@@ -571,7 +571,31 @@
         }
       ],
       "nextSearch": "Continue through 2026 for a rights-cleared contemporary commission, CC0 documentary material, or an explicit written license. Do not use material merely because a platform streams it."
-    }
+    },
+    "officialPublicViewingCandidates": [
+      {
+        "id": "jesus-film-project-jesus-1979-entry",
+        "work": "JESUS",
+        "year": 1979,
+        "form": "American feature film with official chapter viewing",
+        "officialWatchUrl": "https://www.jesusfilm.org/watch/jesus.html/jesus-triumphal-entry.html",
+        "exactMoment": "Jesus's Triumphal Entry — 1 minute",
+        "publicViewingState": "officially watchable and available for free non-admission public showings",
+        "reuseState": "not admitted to montage: Jesus Film Project prohibits including any portion in a new material; internet-TV use requires a separate contract",
+        "admission": "external official watch link only"
+      },
+      {
+        "id": "the-chosen-season-5-entry",
+        "work": "The Chosen",
+        "year": 2025,
+        "form": "American multi-season television series",
+        "officialWatchUrl": "https://support.thechosen.tv/en-US/seasons-1-5-306266",
+        "exactMoment": "Season 5 Episode 1 begins with the Triumphal Entry",
+        "publicViewingState": "official app offers Seasons 1–5 free to watch",
+        "reuseState": "no remix, download, or republication license established",
+        "admission": "external official watch link only"
+      }
+    ]
   },
   "montageScope": {
     "policy": "multi-era-by-design",
