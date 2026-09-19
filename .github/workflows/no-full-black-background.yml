@@ -1,0 +1,12 @@
+name: Westside Watch Brand Background Gate
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  no-full-black-background:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce no full black backgrounds
+        run: python3 local/dore-local/no_full_black_background_gate.py
