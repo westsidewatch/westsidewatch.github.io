@@ -1,0 +1,46 @@
+{{ define "main" }}
+<section class="lw-home" data-lw-home>
+  <div class="lw-gate" aria-hidden="true"><div class="lw-gate__left"></div><div class="lw-gate__right"></div><i></i></div>
+  <header class="lw-hero">
+    <p class="lw-kicker">Living Water Assembly West · Vaughan</p>
+    <div class="lw-hero__name">
+      {{ with .Params.display_logo }}<img src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ else }}<h1>{{ .Params.display_title }}</h1>{{ end }}
+    </div>
+    <p class="lw-verse">「信我的人，就如經上所說：從他腹中要流出活水的江河來。」</p>
+    <p class="lw-ref">JOHN 7:38</p>
+    <a class="lw-enter" href="#gather">Enter <span>↓</span></a>
+  </header>
+
+  <section class="lw-gather" id="gather">
+    <div class="lw-gather__statement">
+      <p class="lw-kicker">THE GATHERED LIFE</p>
+      <h2>在這裡，<br>我們一起敬拜、<br>讀經、禱告，<br>彼此同行。</h2>
+    </div>
+    <div class="lw-gather__water" aria-hidden="true"><span></span></div>
+  </section>
+
+  <section class="lw-thresholds" aria-label="Church life">
+    {{ range .Pages.ByWeight }}
+      {{ $entryHref := .Params.entry_url | default .RelPermalink }}
+      <a class="lw-threshold" href="{{ $entryHref }}">
+        <span class="lw-threshold__no">{{ printf "%02d" .Weight }}</span>
+        <span class="lw-threshold__title">{{ .Title }}</span>
+        {{ with .Description }}<span class="lw-threshold__desc">{{ . }}</span>{{ end }}
+        <span class="lw-threshold__arrow">↗</span>
+      </a>
+    {{ end }}
+  </section>
+
+  <footer class="lw-close">
+    <p>P.A.O.C. Living Water Assembly West</p>
+    <p>神召會活水堂西區教會</p>
+  </footer>
+</section>
+
+<style>
+body.section-church{background:#eee9df;color:#252525}.section-church .site-header,.section-church .site-footer{position:relative;z-index:30}.lw-home{--paper:#eee9df;--ink:#252525;--gold:#cebd74;--water:#2e8fa3;overflow:hidden;background:var(--paper);font-family:"Noto Serif TC",serif}.lw-kicker,.lw-ref,.lw-enter,.lw-threshold__no{font-family:"Cormorant Garamond",serif;letter-spacing:.14em;text-transform:uppercase}.lw-hero{min-height:calc(100svh - 80px);display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:10vh 7vw;position:relative}.lw-hero:before{content:"";position:absolute;inset:6% 4%;border:1px solid color-mix(in srgb,var(--gold) 45%,transparent);pointer-events:none}.lw-kicker{font-size:11px;margin:0 0 8vh;color:#625d4f}.lw-hero__name{width:min(780px,78vw)}.lw-hero__name img{display:block;width:100%;height:auto}.lw-hero__name h1{font:400 clamp(48px,8vw,120px)/.9 "Cormorant Garamond",serif}.lw-verse{font-size:clamp(16px,1.55vw,23px);line-height:2;max-width:36em;margin:9vh auto 0}.lw-ref{font-size:10px;margin:12px 0 0;color:#756d5a}.lw-enter{position:absolute;bottom:4vh;text-decoration:none;color:var(--ink);font-size:11px}.lw-enter span{display:inline-block;margin-left:10px}.lw-gather{min-height:100svh;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #bdb4a2}.lw-gather__statement{padding:12vh 7vw;display:flex;flex-direction:column;justify-content:space-between}.lw-gather__statement h2{font-weight:400;font-size:clamp(38px,5.5vw,86px);line-height:1.22;letter-spacing:-.045em;margin:0}.lw-gather__water{position:relative;background:#172322;overflow:hidden}.lw-gather__water:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 42% 35%,rgba(206,189,116,.35),transparent 24%),linear-gradient(135deg,#172322 15%,#25484d 52%,#0f252a 100%);transform:scale(1.08)}.lw-gather__water span{position:absolute;left:18%;right:18%;top:50%;height:1px;background:rgba(238,233,223,.68);box-shadow:0 -80px 90px rgba(206,189,116,.18)}.lw-thresholds{border-top:1px solid #bdb4a2}.lw-threshold{min-height:24vh;display:grid;grid-template-columns:9vw 1fr minmax(220px,32vw) 6vw;align-items:center;gap:2vw;padding:3vh 5vw;text-decoration:none;color:var(--ink);border-bottom:1px solid #bdb4a2;position:relative;transition:background .5s ease,color .5s ease}.lw-threshold__no{font-size:12px;color:#766e5e}.lw-threshold__title{font:400 clamp(34px,5vw,76px)/1 "Cormorant Garamond","Noto Serif TC",serif}.lw-threshold__desc{font-size:13px;line-height:1.8;max-width:32em}.lw-threshold__arrow{font-size:22px;text-align:right}.lw-threshold:hover{background:#182321;color:#eee9df}.lw-threshold:hover .lw-threshold__no{color:var(--gold)}.lw-close{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;padding:7vh 5vw;background:#151b1a;color:#eee9df;font:400 clamp(24px,3.2vw,50px)/1.25 "Cormorant Garamond","Noto Serif TC",serif}.lw-close p{margin:.12em 0}.lw-gate{position:fixed;z-index:100;inset:0;pointer-events:none;display:grid;grid-template-columns:1fr 1fr}.lw-gate__left,.lw-gate__right{background:#111716;will-change:transform}.lw-gate i{position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--gold);box-shadow:0 0 70px rgba(206,189,116,.75);transform:scaleY(0);transform-origin:center}.lw-ready .lw-gate__left{animation:lw-open-left 1.65s cubic-bezier(.76,0,.24,1) .35s forwards}.lw-ready .lw-gate__right{animation:lw-open-right 1.65s cubic-bezier(.76,0,.24,1) .35s forwards}.lw-ready .lw-gate i{animation:lw-light 1.9s ease .08s forwards}.lw-hero>*{opacity:0;transform:translateY(12px)}.lw-ready .lw-hero>*{animation:lw-arrive .9s ease 1.5s forwards}.lw-ready .lw-hero__name{animation-delay:1.62s}.lw-ready .lw-verse{animation-delay:1.76s}.lw-ready .lw-ref{animation-delay:1.84s}.lw-ready .lw-enter{animation-delay:2s}@keyframes lw-open-left{to{transform:translateX(-101%)}}@keyframes lw-open-right{to{transform:translateX(101%)}}@keyframes lw-light{0%{transform:scaleY(0);opacity:0}25%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:0}}@keyframes lw-arrive{to{opacity:1;transform:none}}@media(max-width:760px){.lw-gather{grid-template-columns:1fr}.lw-gather__statement{min-height:65svh}.lw-gather__water{min-height:55svh}.lw-threshold{grid-template-columns:12vw 1fr 8vw;min-height:20vh}.lw-threshold__desc{display:none}.lw-hero:before{inset:4% 5%}.lw-hero__name{width:82vw}}@media(prefers-reduced-motion:reduce){.lw-gate{display:none}.lw-hero>*{opacity:1;transform:none}.lw-ready *{animation:none!important;transition:none!important}}
+</style>
+<script>
+document.documentElement.classList.add('lw-ready');
+</script>
+{{ end }}
