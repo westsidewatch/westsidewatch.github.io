@@ -53,6 +53,9 @@ jobs:
           render_clip "$source_dir/1912.webm" 2764 "$clip_dir/1912-hosanna.webm"
           render_clip "$source_dir/1903.webm" 1472 "$clip_dir/1903-crowd.webm"
           render_clip "$source_dir/1927.webm" 4004 "$clip_dir/1927-hosanna.webm"
+          ffmpeg -hide_banner -loglevel error -y -ss 1469 -i "$source_dir/1903.webm" -frames:v 1 -q:v 2 "$clip_dir/1903-entry-still.jpg"
+          ffmpeg -hide_banner -loglevel error -y -ss 2734 -i "$source_dir/1912.webm" -frames:v 1 -q:v 2 "$clip_dir/1912-entry-still.jpg"
+          ffmpeg -hide_banner -loglevel error -y -ss 4006 -i "$source_dir/1927.webm" -frames:v 1 -q:v 2 "$clip_dir/1927-entry-still.jpg"
           find "$clip_dir" -name '*.webm' -size +100k -print | wc -l | grep -qx 6
       - name: Setup Pages
         id: pages
