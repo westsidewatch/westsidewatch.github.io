@@ -95,7 +95,7 @@
       "work": "La Vie et la passion de Jésus Christ",
       "year": 1903,
       "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
-      "asset": "https://upload.wikimedia.org/wikipedia/commons/6/6c/La_vie_et_la_passion_de_Jesus_Christ_%281903%29.ogv",
+      "asset": "/preview/watch-city-vol00/hosanna/media/la-vie-et-la-passion-de-jesus-christ-1903.ogv",
       "timestamp": {
         "start": 0,
         "end": 2634
@@ -125,7 +125,7 @@
       "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
       "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
       "sourceRuntime": "43:55",
-      "retrievalState": "commons-ogv-60.93mb-direct-preview-diagnostic",
+      "retrievalState": "pages-artifact-local-ogv-diagnostic",
       "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
       "actionCoordinates": [
         "approach",
@@ -137,12 +137,12 @@
       ],
       "assetType": "video",
       "previewTimecodeState": "provisional-frame-probe",
-      "note": "Direct Commons OGV known to exist. Full-film playback is temporarily admitted for transport diagnosis; exact Entrée à Jérusalem cut remains NOT canonical until frame-verified.",
+      "note": "Verified Commons OGV is materialized into the Pages artifact for same-origin transport diagnosis. Full-film playback is temporarily admitted; exact Entrée à Jérusalem cut remains NOT canonical until frame-verified.",
       "previewAssetProfile": {
         "format": "Ogg Theora",
         "resolution": "210x160",
         "sizeMB": 60.93,
-        "purpose": "direct browser playback diagnostic; no guessed remote transcode URL"
+        "purpose": "same-origin Pages playback diagnostic; source remains the verified Commons OGV"
       }
     },
     {
