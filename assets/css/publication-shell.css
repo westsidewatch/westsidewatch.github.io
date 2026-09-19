@@ -56,3 +56,4 @@
 /* Keep journal navigation and its closing panel inside their actual container. */
 .publication-shell .site-header:has(.section-nav) .section-nav,
 .publication-shell .journal-coda { margin-inline:0; }
+.publication-shell .site-header { grid-template-columns:minmax(0,1fr); }
