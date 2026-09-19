@@ -12,12 +12,13 @@
       <h1>{{ .Title }}</h1>
       {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
       <nav class="volume__routes" aria-label="Volume routes">
-        <a href="{{ "/#vol-00-proclamation" | relURL }}">Read the opening</a>
+        <a href="{{ "/vol-00/#vol-00-proclamation" | relURL }}">Read the opening</a>
         <a href="#contents">Browse contents</a>
         <a href="{{ "journal/" | relURL }}">Return to Journal</a>
       </nav>
     </header>
 
+    {{ partial "home-proclamation.html" . }}
     {{ partial "vol-00-contents.html" . }}
   </article>
 {{ end }}

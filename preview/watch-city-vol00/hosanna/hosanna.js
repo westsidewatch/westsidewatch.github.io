@@ -110,7 +110,7 @@ function showMoment(moment){
 }
 
 function loop(){
-  if(entering) return;
+  if(entering || coverPaused) return;
   clearTimers();
   root.dataset.state='approach';
   preparedVideos.forEach(el=>{
@@ -161,4 +161,13 @@ document.addEventListener('pointerdown',()=>{soundNote.hidden=true},{once:true})
 loadManifest().then(loop).catch(()=>{
   root.dataset.state='arrival';
   soundNote.hidden=true;
+});
+
+// The home cover embeds this exact sequence, never a separate single-clip cut.
+let coverPaused=false;
+window.addEventListener('message',event=>{
+  if(event.origin!==location.origin||event.source!==parent||event.data?.type!=='watch-cover-playback')return;
+  const pause=Boolean(event.data.paused);
+  if(pause){coverPaused=true;clearTimers();preparedVideos.forEach(video=>video.pause());}
+  else if(coverPaused){coverPaused=false;loop();}
 });

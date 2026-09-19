@@ -11,13 +11,13 @@
   --living-paper: #e8dbb8;
   --ink: #30291d;
   --ink-black: #30291d;
-  --font-display: "Cormorant Garamond", serif;
+  --font-display: "Cormorant Garamond", "Noto Sans TC", serif;
   --font-text: "Noto Sans TC", sans-serif;
   min-height: 100%;
   background-color: var(--paper);
   background-image:
     linear-gradient(rgba(237,224,187,.90), rgba(228,211,166,.92)),
-    url("/api/dore/assets/site-file?code=SITE-TEMPLE-STONE-LIGHT");
+    url("/images/temple-stone-light.png");
   background-attachment: fixed;
   background-size: auto, 48rem auto;
 }
@@ -28,7 +28,8 @@
   font-family: var(--font-display);
   font-weight: 500;
 }
-:where(p,li,blockquote,button,input,.section-nav,.primary-nav) { font-family: var(--font-text); }
+:where(p,li,blockquote,button,input) { font-family: "Cormorant Garamond", "Noto Sans TC", serif; }
+.primary-nav, .section-nav { font-family: var(--font-display); }
 .hero__watchword, .hero__scripture p:nth-child(2), .hero__scripture cite { font-family:var(--font-display); }
 .hero__scripture p[lang], .proclamation__lead, [lang="zh-Hant"] { font-family:var(--font-text); }
 .hero__star, .stone-intro__rhythm, .watch-rhythm b {

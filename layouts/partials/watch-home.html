@@ -1,0 +1,27 @@
+<section class="watch-cover" aria-labelledby="watch-title">
+  <div class="watch-film"><iframe src="/preview/watch-city-vol00/hosanna/?cover=1" title="王進城：完整混剪" allow="autoplay" tabindex="-1"></iframe></div>
+  <div class="watch-cover__top"><img src="/images/westside-watch-masthead-landscape.svg" alt="LivingWater · Westside Watch · 西望"><p>VOL.00 <span>THE FOUNDING VOLUME</span></p></div>
+  <div class="watch-cover__voice"><img class="watch-star" src="/images/westside-watch-morning-star.svg" alt=""><h1 id="watch-title">Watch for<br><em>the Dawn.</em></h1><p lang="zh-Hant">黑夜已深，白晝將近。</p><p class="watch-verse">The night is far spent. The day is at hand.<cite>Romans 13:12 · KJV</cite></p></div>
+  <div class="watch-cover__actions"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#living-current">Follow the water <span lang="zh-Hant">循水而行 ↓</span></a><button type="button" data-film-toggle aria-pressed="false">Pause film · 暫停</button></div>
+  <div class="watch-wall" aria-hidden="true"></div>
+</section>
+<section class="watch-current" id="living-current" aria-labelledby="current-title">
+ <div class="watch-current__stage">
+  <header class="watch-heading"><div><p class="watch-eyebrow">01 / THE LIVING CURRENT</p><h2 id="current-title">Living <em>Water.</em></h2></div><p lang="zh-Hant">從經文出發，<br>流向閱讀、影像與相聚。</p></header>
+  <div class="watch-river" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="watch-streams">
+   {{ range $i, $row := site.Data.home.currents.rows }}
+   <div class="watch-stream" data-stream="{{ $i }}"><div class="watch-stream__track">
+    {{ range $row }}<a class="watch-tile watch-tile--{{ .tone }}" href="{{ .url }}"><img src="{{ .image }}" alt="" loading="lazy"><div><span>{{ .label }}</span><h3>{{ .title }}</h3><p lang="zh-Hant">{{ .zh }}</p></div><b aria-hidden="true">↗</b></a>{{ end }}
+   </div></div>{{ end }}
+  </div>
+  <p class="watch-current__foot">Scripture · Cinema · Library · Community <span>Scroll to gather ↓</span></p>
+ </div>
+</section>
+<section class="watch-confluence" id="confluence" aria-labelledby="confluence-title">
+ <div class="watch-confluence__stage">
+  <header class="watch-heading"><div><p class="watch-eyebrow">02 / MANY WINDOWS, ONE WORLD</p><h2 id="confluence-title">Come <em>together.</em></h2></div><p lang="zh-Hant">不同的窗口，<br>望向同一座城。</p></header>
+  <div class="watch-windows" aria-label="進城畫面由四個窗口匯成完整畫面"><i></i><i></i><i></i><i></i></div>
+  <div class="watch-confluence__copy"><p>Watch for the city.<br><em>Wait for the light.</em></p><a href="/vol-00/">Open the Journal <span lang="zh-Hant">守望，一座光明的城 · 創刊號 ↗</span></a></div>
+ </div>
+</section>
