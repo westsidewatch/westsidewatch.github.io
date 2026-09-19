@@ -53,3 +53,6 @@
 .editorial-chapter__route:hover { color:var(--section-accent); }
 @media (max-width:700px) { .editorial-chapter { grid-template-columns:repeat(4,minmax(0,1fr)); padding-block:5rem; } .editorial-chapter__index,.editorial-chapter__title,.editorial-chapter__body,.editorial-chapter__route { grid-column:1 / -1; } .editorial-chapter__title { margin-top:2rem; } .editorial-chapter__body { margin-top:1.5rem; } }
 
+/* Keep journal navigation and its closing panel inside their actual container. */
+.publication-shell .site-header:has(.section-nav) .section-nav,
+.publication-shell .journal-coda { margin-inline:0; }
