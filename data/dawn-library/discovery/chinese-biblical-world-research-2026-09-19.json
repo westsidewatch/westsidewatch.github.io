@@ -509,5 +509,137 @@
       "建立 Haran–Ur–Canaan 古氣候 proxy 對照，不製造假年雨量",
       "把已解洞轉成《一百年以前》第一組 evidence cards / map briefs"
     ]
+  },
+  "round5": {
+    "date": "2026-09-19",
+    "focus": "把 authority 轉成《一百年以前》可直接驅動寫作的 Evidence Cards + Map Briefs",
+    "evidence_cards": [
+      {
+        "id": "EC-01",
+        "title": "哈蘭：還能靠天吃飯",
+        "claim": "Harran Plain 位於 Upper Mesopotamia，第三千紀城市可在適合 dry-farming 的平原上形成；其農業邏輯與南部灌溉平原不同。",
+        "authority": "AJA 122.2 (2018), Andrew T. Creekmore III",
+        "url": "https://ajaonline.org/article/3616/",
+        "narrative": "逆行從哈蘭開始時，先讓讀者站在一片仍能等雨的土地上。往南，雨不再可靠，文明對水的依賴逐步改變。",
+        "caution": "現代/第三千紀 isohyet 不能直接當作亞伯拉罕某年的精確雨量。"
+      },
+      {
+        "id": "EC-02",
+        "title": "吾珥：把水灌回沙漠",
+        "claim": "今日 Ur 位於 steppe-desert，但古城曾沿幼發拉底舊支流並靠近海灣、沼澤與湖泊；河道頻繁 avulsion。",
+        "authority": "AJA 127.4 (2023), Hammer & Di Michele",
+        "url": "https://www.journals.uchicago.edu/doi/10.1086/725907",
+        "narrative": "先給今日乾燥衛星圖，再逐層恢復 paleochannels、marsh、coast、fields、city。",
+        "caution": "古河道年代仍不夠精確，不能把一條 reconstruction 畫成確定的 2000 BCE 河線。"
+      },
+      {
+        "id": "EC-03",
+        "title": "一條水渠就是政治",
+        "claim": "美索不達米亞灌溉在六千年以上歷史中呈現不同規模與制度配置；生態約束與政治制度共同塑造 irrigation systems。",
+        "authority": "Robert McC. Adams, University of Arizona Press open edition",
+        "url": "https://open.uapress.arizona.edu/read/irrigation-s-impact-on-society/section/f70e97e4-0f77-42ff-81e4-efeaa59b4857",
+        "narrative": "不先介紹王朝；先問誰挖、誰清、誰分水、誰負責。制度從水渠旁長出來。"
+      },
+      {
+        "id": "EC-04",
+        "title": "水渠失守，法律出現",
+        "claim": "Hammurabi 53–56 將堤壩失修、開渠疏忽造成鄰田受淹轉化為穀物／財產賠償責任。",
+        "authority": "Yale Avalon, L.W. King translation",
+        "url": "https://avalon.law.yale.edu/ancient/hamcode.asp",
+        "narrative": "一個人的堤壩破了，第二天問題已不是水，而是別人的麥子、損失與責任。"
+      },
+      {
+        "id": "EC-05",
+        "title": "一粒鹽",
+        "claim": "第三至第二千紀南／中美索不達米亞存在顯著 salinization 議題；排水、淋洗、休耕可緩解，學界對其文明尺度因果仍有爭論。",
+        "authority": "Journal of Archaeological Science 39 (2012)",
+        "url": "https://www.sciencedirect.com/science/article/pii/S0305440311004675",
+        "narrative": "讓鹽先出現在一塊田裡，再擴到作物選擇、勞作、聚落與國家，而不是一句『鹽鹼化毀滅蘇美爾』。"
+      },
+      {
+        "id": "EC-06",
+        "title": "麥變成大麥？",
+        "claim": "經典研究把南部從 emmer wheat 向更耐鹽 barley 的轉變與 salinity 聯繫；後續研究提醒 barley 的高產、飼料價值與季節適應也可能解釋選擇。",
+        "authority": "Science 128 (1958); IRAQ review; JAS resilience study",
+        "urls": [
+          "https://pubmed.ncbi.nlm.nih.gov/17793690/",
+          "https://www.cambridge.org/core/journals/iraq/article/new-insights-on-the-role-of-environmental-dynamics-shaping-southern-mesopotamia-from-the-preubaid-to-the-early-islamic-period/F7084E4BF1171D8B77021B286BFE300C"
+        ],
+        "narrative": "一粒穀物可承載整場學術爭論；正文呈現證據與不確定性，不製造單因果。"
+      }
+    ],
+    "map_briefs": [
+      {
+        "id": "MAP-01",
+        "title": "逆行：哈蘭→吾珥",
+        "purpose": "不是旅遊路線圖，而是『雨水農業如何逐步變成灌溉文明』的空間敘事。",
+        "layers": [
+          "Harran Plain",
+          "Euphrates corridor",
+          "major ancient settlement zones",
+          "rainfall/isohyet context",
+          "Ur",
+          "modern boundaries淡化"
+        ],
+        "motion": "由北向南；雨層逐漸退場，河渠層逐漸加重。"
+      },
+      {
+        "id": "MAP-02",
+        "title": "把水灌回吾珥",
+        "purpose": "本章 signature map。",
+        "layers": [
+          "today satellite/desert baseline",
+          "relict Euphrates paleochannels",
+          "marsh/lake zone",
+          "maximum/possible ancient gulf context",
+          "irrigated fields as interpretive layer",
+          "Ur urban footprint"
+        ],
+        "motion": "dry present → channels → marsh/coast → cultivation → city",
+        "caution": "不把未定年的 paleochannel 標成『亞伯拉罕時代確切河道』。"
+      },
+      {
+        "id": "MAP-03",
+        "title": "一條渠的社會半徑",
+        "purpose": "把 irrigation 從工程圖變成制度圖。",
+        "layers": [
+          "river intake",
+          "main canal",
+          "secondary canals",
+          "levee",
+          "field parcels",
+          "downstream neighbor",
+          "silt/salt zone",
+          "maintenance labor",
+          "legal liability"
+        ],
+        "motion": "water movement becomes responsibility movement."
+      },
+      {
+        "id": "MAP-04",
+        "title": "一粒鹽的遷移",
+        "purpose": "把 evaporation/water table/salt accumulation/crop choice 可視化。",
+        "layers": [
+          "irrigation input",
+          "evaporation",
+          "rising water table",
+          "salt accumulation",
+          "drainage/leaching/fallow mitigation",
+          "wheat/barley evidence with dispute marker"
+        ],
+        "motion": "水進田→水走了→鹽留下；再顯示人如何處理。"
+      }
+    ],
+    "writing_gate": {
+      "ready": true,
+      "ready_for": "第一大段：哈蘭出發→雨的邊界→南行→吾珥水世界",
+      "not_ready_for": [
+        "精確 BCE 2000 年雨量表",
+        "單一確定 Ur paleochannel",
+        "中央供暖",
+        "氣候造成 Ur III 崩潰的單因果敘事"
+      ]
+    },
+    "next": "Round 6: 做 Fertile Crescent→Canaan→Jezreel→Megiddo→Nazareth 的第二套 Evidence Cards + Map Briefs，與第一套形成章首/章尾雙引擎。"
   }
 }
