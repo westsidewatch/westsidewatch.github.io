@@ -9,3 +9,4 @@ body{background:linear-gradient(#eddfbbcc,#e5d7b3dd),url('/images/temple-stone-l
 [data-publication-reveal]{transition:opacity .75s ease,translate .75s cubic-bezier(.22,.7,0,1)}
 [data-publication-reveal].publication-entering{opacity:0;translate:0 22px}
 @media(prefers-reduced-motion:reduce){[data-publication-reveal]{opacity:1!important;translate:none!important;transition:none!important}}
+.hall-brand{color:#fff8e5;text-shadow:0 2px 18px #0009;mix-blend-mode:normal}
