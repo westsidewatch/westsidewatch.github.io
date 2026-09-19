@@ -116,12 +116,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/1912-entry-still.jpg",
       "timestamp": {
         "start": 0,
-        "end": 0.9
+        "end": 1.45
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
-      "durationMs": 900,
+      "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 2734s.",
       "actionCoordinates": [
@@ -134,7 +134,8 @@
       "previewAssetProfile": {
         "format": "JPEG",
         "purpose": "same-origin still-frame intercut from the public-domain source film"
-      }
+      },
+      "motion": "motion-push-in"
     },
     {
       "id": "story-bible-1873-palms-still",
@@ -145,12 +146,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/1873-palms.jpg",
       "timestamp": {
         "start": 0,
-        "end": 1.25
+        "end": 1.8
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
-      "durationMs": 1250,
+      "durationMs": 1800,
       "offsetMs": 0,
       "note": "Public-domain 1873 Bible illustration: foreground palms and garments provide a cut-on-gesture bridge between moving-image crowd shots.",
       "actionCoordinates": [
@@ -164,7 +165,8 @@
         "format": "JPEG",
         "resolution": "1101x1145",
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
-      }
+      },
+      "motion": "motion-branch-sweep"
     },
     {
       "id": "life-passion-1903-entry",
@@ -233,12 +235,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/1903-entry-still.jpg",
       "timestamp": {
         "start": 0,
-        "end": 0.9
+        "end": 1.45
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
-      "durationMs": 900,
+      "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 1469s.",
       "actionCoordinates": [
@@ -252,7 +254,8 @@
       "previewAssetProfile": {
         "format": "JPEG",
         "purpose": "same-origin still-frame intercut from the public-domain source film"
-      }
+      },
+      "motion": "motion-crowd-turn"
     },
     {
       "id": "morgner-1912-entry-still",
@@ -263,12 +266,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/morgner-1912-entry.jpg",
       "timestamp": {
         "start": 0,
-        "end": 1.35
+        "end": 1.8
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-york-project-reproduction-materialized",
-      "durationMs": 1350,
+      "durationMs": 1800,
       "offsetMs": 0,
       "note": "Public-domain 1912 expressionist painting: its broad, tilted procession shifts scale before the silent-film crowd resumes.",
       "actionCoordinates": [
@@ -283,7 +286,8 @@
         "format": "JPEG",
         "resolution": "2048x1439",
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
-      }
+      },
+      "motion": "motion-procession-pan"
     },
     {
       "id": "king-of-kings-1927-entry",
@@ -333,12 +337,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/1927-entry-still.jpg",
       "timestamp": {
         "start": 0,
-        "end": 0.9
+        "end": 1.45
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
-      "durationMs": 900,
+      "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 4006s.",
       "actionCoordinates": [
@@ -352,7 +356,8 @@
       "previewAssetProfile": {
         "format": "JPEG",
         "purpose": "same-origin still-frame intercut from the public-domain source film"
-      }
+      },
+      "motion": "motion-gate-rise"
     },
     {
       "id": "dore-christs-entry-jerusalem",
@@ -363,12 +368,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg",
       "timestamp": {
         "start": 0,
-        "end": 1.5
+        "end": 2.1
       },
       "assetType": "image",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
-      "durationMs": 1500,
+      "durationMs": 2100,
       "offsetMs": 0,
       "note": "Doré's original-entry composition is a public-domain painting; it is used as a moving still between film eras.",
       "actionCoordinates": [
@@ -382,7 +387,8 @@
         "format": "JPEG",
         "resolution": "2207x1638",
         "purpose": "same-origin public-domain Doré artwork for a Ken Burns intercut"
-      }
+      },
+      "motion": "motion-gate-rise"
     },
     {
       "id": "manger-cross-1912-hosanna",
@@ -828,7 +834,7 @@
         "role": "new cinematic, streaming and animated representations continue the recurrence"
       }
     ],
-    "editRule": "Cut by biblical action coordinate across years, not by playing one production after another.",
+    "editRule": "Cut by biblical action coordinate across years. Each still uses a direction-specific camera path and overlaps the preceding or next moving shot; no static image may be used as a dead pause.",
     "currentVerifiedPublicationClips": [
       {
         "id": "manger-cross-1912-entry",
@@ -1020,7 +1026,12 @@
         "sourceEnd": 4010,
         "renderedAsset": "/preview/watch-city-vol00/hosanna/media/clips/1927-hosanna.webm"
       }
-    ]
+    ],
+    "stillEditingPass": {
+      "date": "2026-09-19",
+      "status": "implemented",
+      "principle": "Each artwork has a distinct camera direction tied to its action coordinate: branch sweep, procession pan, gate rise, crowd turn, or forward push. Stills hold long enough to read but are never treated as full-screen cards."
+    }
   },
   "actionCoordinates": {
     "version": "v0",
