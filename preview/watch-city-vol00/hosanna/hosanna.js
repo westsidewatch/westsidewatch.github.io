@@ -119,16 +119,20 @@ function loop(){
   });
   const t=manifest.timing||{};
   const montageStart=t.montageStartMs||2600;
-  const moments=manifest.moments.filter(admittedMoment);
+  const moments=manifest.moments.filter(m=>admittedMoment(m)&&m.assetType==='video');
+  const overlays=manifest.moments.filter(m=>admittedMoment(m)&&m.assetType==='image');
   let cursor=montageStart;
 
   moments.forEach(m=>{
     const start=Number(m.timestamp?.start);
     const end=Number(m.timestamp?.end);
-    const clipMs=(m.assetType==='video' && Number.isFinite(start) && Number.isFinite(end))
+    const clipMs=Number.isFinite(start)&&Number.isFinite(end)
       ? Math.max(800,((end-start)*1000)+250)
-      : (m.durationMs||1800);
+      : 6000;
     later(()=>showMoment(m),cursor);
+    overlays.filter(overlay=>overlay.overlayFor===m.id).forEach(overlay=>{
+      later(()=>showMoment(overlay),cursor+Math.max(0,Number(overlay.overlayDelayMs)||0));
+    });
     cursor+=Math.max(800,clipMs-450);
   });
 
