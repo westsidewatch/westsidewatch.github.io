@@ -1,11 +1,5 @@
 {{ define "main" }}
   <section class="hero" aria-labelledby="hero-title">
-    <div class="cover-film" aria-hidden="true">
-      <video autoplay muted loop playsinline preload="metadata" poster="{{ "images/jerusalem-wall.png" | relURL }}">
-        <source src="/preview/watch-city-vol00/hosanna/media/clips/1912-approach.webm" type="video/webm">
-      </video>
-      <p class="cover-film__credit">From the Manger to the Cross · 1912</p>
-    </div>
     <div class="hero__masthead">
       <picture>
         <source media="(min-width: 701px) and (min-aspect-ratio: 4/3)" srcset="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}">
@@ -22,9 +16,9 @@
       <p><em>The Night Is Far Spent. The Day Is at Hand.</em></p>
       <cite>Romans 13:12, KJV</cite>
     </div>
-    <form class="dore-inline-search" data-dore-search-entry role="search" aria-label="搜索" style="position:relative;z-index:5;width:min(68vw,880px);margin:1.6rem auto 0;display:flex;border-bottom:1px solid rgba(210,188,105,.55);padding:.45rem 0">
-      <input name="q" type="search" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off" style="min-width:0;flex:1;border:0;outline:0;background:transparent;color:#faf9f5;font:400 clamp(.9rem,1.15vw,1.15rem) 'Cormorant Garamond','Noto Serif TC',serif">
-      <button type="submit" aria-label="搜索" style="border:0;background:transparent;color:#d2bc69;font:500 1rem 'Noto Serif TC',serif;cursor:pointer">搜索</button>
+    <form class="dore-inline-search" data-dore-search-entry role="search" aria-label="搜索" style="position:relative;z-index:5;width:min(68vw,880px);margin:1.6rem auto 0;display:flex;border-bottom:1px solid rgba(82,62,20,.42);padding:.45rem 0">
+      <input name="q" type="search" aria-label="搜索" placeholder="搜索經文、關鍵詞、原文字詞…" autocomplete="off" style="min-width:0;flex:1;border:0;outline:0;background:transparent;color:#252525;font:400 clamp(.9rem,1.15vw,1.15rem) 'Cormorant Garamond','Noto Serif TC',serif">
+      <button type="submit" aria-label="搜索" style="border:0;background:transparent;color:#8c6818;font:500 1rem 'Noto Serif TC',serif;cursor:pointer">搜索</button>
     </form>
     <div class="hero__wall" aria-hidden="true">
       <svg viewBox="0 0 12000 392" preserveAspectRatio="xMidYMax meet" focusable="false">
