@@ -12,8 +12,11 @@
     {{ with resources.Get "css/main.css" | minify | fingerprint }}
       <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
     {{ end }}
+    {{ with resources.Get "css/publication-shell.css" | minify | fingerprint }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">
+    {{ end }}
   </head>
-  <body class="{{ if .IsHome }}home{{ else if .Section }}section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }}section-about{{ end }}">
+  <body class="publication-shell {{ if .IsHome }}home{{ else if .Section }}section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }}section-about{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
     <main id="main">
