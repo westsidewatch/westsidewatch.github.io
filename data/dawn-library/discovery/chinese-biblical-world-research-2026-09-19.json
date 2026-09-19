@@ -313,5 +313,133 @@
       "沿每本書參考書目反查英文／原始 authority",
       "專門採集《一百年以前》所需水文、降雨、植被、裂谷、古道路與米吉多視線資料"
     ]
+  },
+  "round3": {
+    "date": "2026-09-19",
+    "focus": "中文研究入口上追國際學術／原始證據；為《一百年以前》建立 authority source graph",
+    "authority_nodes": [
+      {
+        "id": "mesopotamia-ahwar-unesco",
+        "title": "The Ahwar of Southern Iraq",
+        "institution": "UNESCO World Heritage Centre",
+        "url": "https://whc.unesco.org/en/list/1481",
+        "rights": "PUBLIC_REFERENCE",
+        "supports": [
+          "Ur/Uruk/Eridu 原處淡水沼澤邊緣",
+          "古海岸與沼澤動態",
+          "河流水文、降雨、海平面共同塑造南部美索不達米亞",
+          "約第二千紀起海退與乾旱化"
+        ],
+        "use": "〈一百年以前〉南部兩河水世界與『今日沙漠≠古代沙漠』核心證據"
+      },
+      {
+        "id": "mesopotamia-irrigation-isac",
+        "title": "Irrigation Agriculture in Ancient Mesopotamia",
+        "institution": "University of Chicago / ISAC",
+        "url": "https://isac.uchicago.edu/sites/default/files/uploads/shared/docs/ar/61-70/61-62b/61-62b_Mesopotamia_Agriculture.pdf",
+        "rights": "PUBLIC_RESEARCH_REFERENCE",
+        "supports": [
+          "古灌溉系統",
+          "古河道與聚落",
+          "鹽鹼化",
+          "文本與考古聯合研究"
+        ],
+        "use": "水渠→農業→制度→城市的主研究線"
+      },
+      {
+        "id": "ubaid-met",
+        "title": "The Ubaid Period (5500–4000 B.C.)",
+        "institution": "The Metropolitan Museum of Art",
+        "url": "https://www.metmuseum.org/essays/the-ubaid-period-5500-4000-b-c",
+        "rights": "PUBLIC_REFERENCE",
+        "supports": [
+          "南部沖積平原早期灌溉農業",
+          "河海漁業",
+          "聚落向城鎮發展"
+        ],
+        "use": "把『水』放進城市形成的長時段"
+      },
+      {
+        "id": "first-cities-met",
+        "title": "Art of the First Cities — The Setting",
+        "institution": "The Metropolitan Museum of Art",
+        "url": "https://www.metmuseum.org/exhibitions/listings/2003/art-of-the-first-cities",
+        "rights": "PUBLIC_REFERENCE",
+        "supports": [
+          "南部美索不達米亞肥沃並非天然狀態",
+          "灌溉農業應對不穩定降雨與洪水",
+          "Fertile Crescent 東端"
+        ],
+        "use": "避免『兩河天然肥沃』的教科書套話"
+      },
+      {
+        "id": "fertile-crescent-uchicago",
+        "title": "The Fertile Crescent, explained",
+        "institution": "University of Chicago",
+        "url": "https://news.uchicago.edu/explainer/fertile-crescent-explained",
+        "rights": "PUBLIC_REFERENCE",
+        "supports": [
+          "James Henry Breasted 創造／普及 Fertile Crescent 概念",
+          "概念範圍與現代學術反思"
+        ],
+        "use": "肥沃月灣概念史；不把舊概念當無爭議自然單位"
+      },
+      {
+        "id": "dead-sea-transform-usgs",
+        "title": "Geology and hydrocarbon potential of the Dead Sea Rift Basins",
+        "institution": "U.S. Geological Survey",
+        "url": "https://www.usgs.gov/publications/geology-and-hydrocarbon-potential-dead-sea-rift-basins-israel-and-jordan",
+        "rights": "PUBLIC_GOV_REFERENCE",
+        "supports": [
+          "Dead Sea fault zone 是大型 continental transform plate boundary",
+          "左移約105–110 km",
+          "Dead Sea basin 深部構造"
+        ],
+        "use": "取代籠統『世界最大裂谷』表述，建立精確地質語言"
+      },
+      {
+        "id": "israel-phytogeography-danin",
+        "title": "History, Satellite Imagery and the Flora of Israel (Phytogeography)",
+        "institution": "Flora of Israel and adjacent areas",
+        "url": "https://flora.org.il/en/books/vegetation-of-israel-and-neighboring-countries/chapter-a/local_veg_a2/",
+        "rights": "PUBLIC_SCIENTIFIC_REFERENCE",
+        "supports": [
+          "Mediterranean",
+          "Irano-Turanian",
+          "Saharo-Arabian",
+          "Sudanian 四植物地理區在此交會",
+          "氣候、岩石、土壤多樣性"
+        ],
+        "use": "把『亞歐非植被都在應許之地』改寫為可證明的植物地理交會"
+      },
+      {
+        "id": "southern-levant-climate-cambridge",
+        "title": "Climate and Environment in the Southern Levant, 1300–300 BCE (excerpt)",
+        "institution": "Cambridge University Press",
+        "url": "https://assets.cambridge.org/97810095/58327/excerpt/9781009558327_excerpt.pdf",
+        "rights": "PUBLIC_PREVIEW_ONLY",
+        "supports": [
+          "南黎凡特 Mediterranean / Irano-Turanian / Saharo-Arabian 三主要植物地理帶",
+          "Sudanian tropical elements"
+        ],
+        "use": "植物地理的學術交叉驗證"
+      }
+    ],
+    "corrected_claims": [
+      "吾珥今日位於乾燥平原，但古代 Ur/Uruk/Eridu 位於淡水沼澤邊緣；不可把今日地貌投射回前二千紀。",
+      "南部美索不達米亞的農業富饒高度依賴人工灌溉；不可簡化成『兩河之間天然肥沃』。",
+      "『肥沃月灣』是 Breasted 建構並普及的歷史地理概念，今天仍有概念邊界與文明起源敘事上的反思。",
+      "Dead Sea Rift 宜精確處理為 Dead Sea Transform / fault zone；『世界最大裂谷』只能作傳統廣義說法並加限定。",
+      "應許之地植物特色可精確說成多個 phytogeographical regions 的交會，不寫成未證實的『歐亞非所有植被』。"
+    ],
+    "unresolved": [
+      "約公元前2100–1900年的 Euphrates/Tigris 精確 paleochannel 與 Haran→Ur 可行水路／陸路仍需專門 GIS/考古研究。",
+      "前二千紀 Haran、Ur、Canaan 的可比較降雨數據需古氣候 proxy，不能用現代年雨量直接冒充。",
+      "Hammurabi 53–56 原文／權威翻譯尚未進本輪 authority graph。",
+      "Ur 住宅『中央供暖』說法尚未驗證，禁止寫入正文。",
+      "Nazareth 山地→Megiddo/Tel Megiddo 的實際 sightline 尚未完成地形驗證。",
+      "David Pawson『世界十字路口』確切出處與原話尚未找到。"
+    ],
+    "next": "Round 4: 專攻古河道/古氣候/Hammurabi 水法/Nazareth-Megiddo sightline/Pawson 原始出處。"
   }
 }
