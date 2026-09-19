@@ -15,8 +15,8 @@
   "timing": {
     "approachMs": 5200,
     "montageStartMs": 2800,
-    "arrivalMs": 39000,
-    "cycleMs": 45000
+    "arrivalMs": 35000,
+    "cycleMs": 43000
   },
   "moments": [
     {
@@ -79,12 +79,12 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm",
       "timestamp": {
         "start": 2730,
-        "end": 2743
+        "end": 2736
       },
       "rightsState": "publishable",
-      "durationMs": 13000,
+      "durationMs": 6000,
       "offsetMs": 0,
-      "note": "Commons-hosted public-domain film. Frame probe locates the Mount of Olives descent and approaching procession from 2730s to 2743s in the VP9 derivative.",
+      "note": "Frame-probed Mount of Olives descent / approach clip.",
       "actionCoordinates": [
         "approach",
         "donkey",
@@ -94,7 +94,7 @@
       ],
       "retrievalState": "commons-vp9-local-artifact-frame-probed",
       "assetType": "video",
-      "previewTimecodeState": "frame-probed-2730-2743-preview",
+      "previewTimecodeState": "frame-probed-2730-2736-preview",
       "previewAssetProfile": {
         "format": "WebM (VP9 + Opus)",
         "resolution": "312x240",
@@ -110,7 +110,7 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm",
       "timestamp": {
         "start": 1466,
-        "end": 1478
+        "end": 1472
       },
       "tableau": 14,
       "catalogueNumber": 855,
@@ -120,7 +120,7 @@
         "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
         "Exact in-file start/end timecode still requires frame-level verification before extraction."
       ],
-      "durationMs": 12000,
+      "durationMs": 6000,
       "offsetMs": 0,
       "catalogueYear": 1902,
       "sourceDuration": "43:54",
@@ -148,13 +148,48 @@
         "threshold"
       ],
       "assetType": "video",
-      "previewTimecodeState": "frame-probed-1466-1478-preview",
-      "note": "Verified Commons VP9 240p WebM is materialized into the Pages artifact. Frame probe locates the city-gate entry from 1466s; this 12-second preview cut ends at 1478s.",
+      "previewTimecodeState": "frame-probed-1466-1472-preview",
+      "note": "Frame-probed city-gate arrival clip.",
       "previewAssetProfile": {
         "format": "WebM (VP9 + Opus)",
         "resolution": "326x240",
         "bitrateKbps": 243,
         "purpose": "same-origin Pages playback diagnostic; source remains the verified Commons VP9 transcode"
+      }
+    },
+    {
+      "id": "king-of-kings-1927-entry",
+      "work": "The King of Kings",
+      "year": 1927,
+      "creator": "Cecil B. DeMille",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html",
+      "asset": "/preview/watch-city-vol00/hosanna/media/the-king-of-kings-1927.240p.vp9.webm",
+      "timestamp": {
+        "start": 3973,
+        "end": 3979
+      },
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
+      "durationMs": 6000,
+      "offsetMs": 0,
+      "note": "Frame-probed 1927 crowd-acclamation clip in the documented Triumphal Entry sequence.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ],
+      "assetType": "video",
+      "previewTimecodeState": "frame-probed-3973-3979-preview",
+      "previewAssetProfile": {
+        "format": "WebM (VP9 + Opus)",
+        "resolution": "320x240",
+        "bitrateKbps": 232,
+        "purpose": "same-origin Pages montage clip; source remains the verified Commons VP9 transcode"
       }
     },
     {
@@ -166,15 +201,15 @@
       "asset": "/preview/watch-city-vol00/hosanna/media/from-the-manger-to-the-cross-1912.240p.vp9.webm",
       "timestamp": {
         "start": 2764,
-        "end": 2778
+        "end": 2770
       },
       "rightsState": "publishable",
       "retrievalState": "commons-vp9-local-artifact-frame-probed",
-      "durationMs": 14000,
+      "durationMs": 6000,
       "offsetMs": 0,
       "assetType": "video",
-      "previewTimecodeState": "frame-probed-2764-2778-preview",
-      "note": "Commons-hosted public-domain film. Frame probe locates palms, crowd acclamation and Hosanna from 2764s to 2778s in the VP9 derivative.",
+      "previewTimecodeState": "frame-probed-2764-2770-preview",
+      "note": "Frame-probed palms and crowd-acclamation clip.",
       "actionCoordinates": [
         "gather",
         "branches",
@@ -185,6 +220,96 @@
         "format": "WebM (VP9 + Opus)",
         "resolution": "312x240",
         "bitrateKbps": 247,
+        "purpose": "same-origin Pages montage clip; source remains the verified Commons VP9 transcode"
+      }
+    },
+    {
+      "id": "life-passion-1903-crowd",
+      "work": "La Vie et la passion de Jésus Christ",
+      "year": 1903,
+      "sourcePage": "https://commons.wikimedia.org/wiki/File:Vie_et_Passion_du_Christ_(1903).webm",
+      "asset": "/preview/watch-city-vol00/hosanna/media/vie-et-passion-du-christ-1903.240p.vp9.webm",
+      "timestamp": {
+        "start": 1472,
+        "end": 1478
+      },
+      "tableau": 14,
+      "catalogueNumber": 855,
+      "rightsState": "publishable",
+      "evidence": [
+        "Wikimedia Commons marks the surviving 43:54 copy as public-domain material.",
+        "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
+        "Exact in-file start/end timecode still requires frame-level verification before extraction."
+      ],
+      "durationMs": 6000,
+      "offsetMs": 0,
+      "catalogueYear": 1902,
+      "sourceDuration": "43:54",
+      "sourceResolution": "210x160",
+      "sourceOriginalFile": "https://upload.wikimedia.org/wikipedia/commons/6/6c/La_vie_et_la_passion_de_Jesus_Christ_%281903%29.ogv",
+      "commonsRights": "Public Domain Mark 1.0 / free of known restrictions",
+      "sourceFacts": {
+        "tableauCount": 32,
+        "tableau": 14,
+        "catalogueNumber": 855,
+        "sceneTitle": "L’Entrée à Jérusalem",
+        "tableauLengthMetres": 20
+      },
+      "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
+      "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
+      "sourceRuntime": "43:55",
+      "retrievalState": "pages-artifact-local-vp9-webm-diagnostic",
+      "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "hosanna",
+        "threshold"
+      ],
+      "assetType": "video",
+      "previewTimecodeState": "frame-probed-1472-1478-preview",
+      "note": "Frame-probed continuation of the city-gate crowd.",
+      "previewAssetProfile": {
+        "format": "WebM (VP9 + Opus)",
+        "resolution": "326x240",
+        "bitrateKbps": 243,
+        "purpose": "same-origin Pages playback diagnostic; source remains the verified Commons VP9 transcode"
+      }
+    },
+    {
+      "id": "king-of-kings-1927-hosanna",
+      "work": "The King of Kings",
+      "year": 1927,
+      "creator": "Cecil B. DeMille",
+      "sourcePage": "https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html",
+      "asset": "/preview/watch-city-vol00/hosanna/media/the-king-of-kings-1927.240p.vp9.webm",
+      "timestamp": {
+        "start": 4004,
+        "end": 4010
+      },
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
+      "durationMs": 6000,
+      "offsetMs": 0,
+      "note": "Frame-probed 1927 Hosanna crowd clip.",
+      "actionCoordinates": [
+        "approach",
+        "donkey",
+        "gather",
+        "branches",
+        "garments",
+        "hosanna",
+        "threshold",
+        "city"
+      ],
+      "assetType": "video",
+      "previewTimecodeState": "frame-probed-4004-4010-preview",
+      "previewAssetProfile": {
+        "format": "WebM (VP9 + Opus)",
+        "resolution": "320x240",
+        "bitrateKbps": 232,
         "purpose": "same-origin Pages montage clip; source remains the verified Commons VP9 transcode"
       }
     },
@@ -202,30 +327,6 @@
       ],
       "durationMs": 1500,
       "offsetMs": 780
-    },
-    {
-      "id": "king-of-kings-1927-entry",
-      "work": "The King of Kings",
-      "year": 1927,
-      "creator": "Cecil B. DeMille",
-      "sourcePage": "https://biblefilms.blogspot.com/2006/07/king-of-kings-1927-scene-guide.html",
-      "asset": null,
-      "timestamp": null,
-      "rightsState": "moment-identity-verified-rights-and-asset-pending",
-      "retrievalState": "scene-guide-verifies-triumphal-entry",
-      "durationMs": 1300,
-      "offsetMs": 620,
-      "note": "Scene guide explicitly identifies Triumphal Entry (Mark 11:1–11).",
-      "actionCoordinates": [
-        "approach",
-        "donkey",
-        "gather",
-        "branches",
-        "garments",
-        "hosanna",
-        "threshold",
-        "city"
-      ]
     },
     {
       "id": "king-of-kings-1961-entry",
@@ -461,21 +562,88 @@
     "currentVerifiedPublicationClips": [
       {
         "id": "manger-cross-1912-entry",
-        "coordinate": "approach",
+        "year": 1912,
         "start": 2730,
-        "end": 2743
+        "end": 2736,
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "threshold"
+        ]
       },
       {
         "id": "life-passion-1903-entry",
-        "coordinate": "threshold",
+        "year": 1903,
         "start": 1466,
-        "end": 1478
+        "end": 1472,
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "hosanna",
+          "threshold"
+        ]
+      },
+      {
+        "id": "king-of-kings-1927-entry",
+        "year": 1927,
+        "start": 3973,
+        "end": 3979,
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "garments",
+          "hosanna",
+          "threshold",
+          "city"
+        ]
       },
       {
         "id": "manger-cross-1912-hosanna",
-        "coordinate": "hosanna",
+        "year": 1912,
         "start": 2764,
-        "end": 2778
+        "end": 2770,
+        "coordinates": [
+          "gather",
+          "branches",
+          "hosanna",
+          "threshold"
+        ]
+      },
+      {
+        "id": "life-passion-1903-crowd",
+        "year": 1903,
+        "start": 1472,
+        "end": 1478,
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "hosanna",
+          "threshold"
+        ]
+      },
+      {
+        "id": "king-of-kings-1927-hosanna",
+        "year": 1927,
+        "start": 4004,
+        "end": 4010,
+        "coordinates": [
+          "approach",
+          "donkey",
+          "gather",
+          "branches",
+          "garments",
+          "hosanna",
+          "threshold",
+          "city"
+        ]
       }
     ]
   },
