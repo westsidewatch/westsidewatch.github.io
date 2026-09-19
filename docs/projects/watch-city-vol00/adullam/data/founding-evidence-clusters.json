@@ -1,0 +1,23 @@
+{
+ "schema":"dore.adullam.evidence-cluster.v0",
+ "status":"verified-relations-only",
+ "clusters":[
+  {"id":"cluster:huang:revelation-across-place-time","speaker":"speaker:huang-shuhua","emergence":["temporal","spatial"],"series":"series:huang:revelation","nodes":[
+   {"event":"event:huang:2022-tgtc-revelation","time":"2022-04-06/2022-05-11","place":"台北總院／台灣女子神學院","source":"src:huang:tcnn-2022-revelation"},
+   {"event":"event:huang:2023-kaohsiung-revelation","time":"2023-09-13/2023-09-14","place":"高雄前金教會","source":"src:huang:beclass-2023-kaohsiung"},
+   {"event":"event:huang:2025-paiwan-revelation","time":"2025-07-21/2025-07-24","place":"排灣中會","source":"src:huang:paiwan-2025-revelation"}],
+   "claim":"Verified public evidence shows Revelation teaching events by the same speaker across these three place/time coordinates.",
+   "limits":"This cluster does not assert that the events are the same sermon or identical teaching content."
+  },
+  {"id":"cluster:jiang:inner-life-multi-surface","speaker":"speaker:jiang-xiuqin","emergence":["evidential","semantic"],"series":"series:jiang:inner-life","nodes":[
+   {"sermon":"sermon:jiang:waiting5","surface":"message","relation":"handout-indicated","source":"src:jiang:frcc-waiting5"},
+   {"sermon":"sermon:jiang:bride4","surface":"message","relation":"handout-indicated","source":"src:jiang:frcc-bride4"},
+   {"sermon":"sermon:jiang:inner-life-testimony-2023","surface":"archive-multimedia","source":"src:jiang:archive-testimony"},
+   {"course":"course:jiang:pastoral-inner-life","surface":"training-course","source":"src:jiang:frcc-pastoral-course"},
+   {"mediaSource":"src:jiang:eschool-praise-latest-1","surface":"direct-original-audio","sourcePage":"https://archive.frcc.us/eSchool?eid=485"}],
+   "claim":"First-party FRCC surfaces expose a connected field of sermons, handout relations, archive media, training-course relations and original audio around Inner Life teaching.",
+   "limits":"No unverified sermon equivalence, transcript wording, or timestamp relation is inferred."
+  }
+ ],
+ "authorityRule":"Emergence may reveal verified relations but cannot manufacture missing sermon identity, theology, transcript, place or time."
+}
