@@ -119,7 +119,7 @@
         "end": 1.8
       },
       "assetType": "image",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "motion": "motion-branch-sweep",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
@@ -156,7 +156,7 @@
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
-      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 2734s.",
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 2734s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
       "actionCoordinates": [
         "approach",
         "donkey",
@@ -170,8 +170,8 @@
       },
       "motion": "motion-push-in",
       "presentation": "film-frame",
-      "overlayFor": "manger-cross-1912-entry",
-      "overlayDelayMs": 3550
+      "overlayFor": null,
+      "overlayDelayMs": null
     },
     {
       "id": "story-bible-1873-palms-still",
@@ -203,7 +203,7 @@
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
       "motion": "motion-branch-sweep",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "overlayFor": "manger-cross-1912-hosanna",
       "overlayDelayMs": 1450
     },
@@ -278,7 +278,7 @@
         "end": 1.9
       },
       "assetType": "image",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "motion": "motion-procession-pan",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
@@ -315,7 +315,7 @@
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
-      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 1469s.",
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 1469s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
       "actionCoordinates": [
         "approach",
         "donkey",
@@ -330,8 +330,8 @@
       },
       "motion": "motion-crowd-turn",
       "presentation": "film-frame",
-      "overlayFor": "life-passion-1903-entry",
-      "overlayDelayMs": 3500
+      "overlayFor": null,
+      "overlayDelayMs": null
     },
     {
       "id": "morgner-1912-entry-still",
@@ -364,7 +364,7 @@
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
       "motion": "motion-procession-pan",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "overlayFor": "king-of-kings-1927-hosanna",
       "overlayDelayMs": 1700
     },
@@ -419,7 +419,7 @@
         "end": 1.8
       },
       "assetType": "image",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "motion": "motion-crowd-turn",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
@@ -457,7 +457,7 @@
       "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
-      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 4006s.",
+      "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 4006s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
       "actionCoordinates": [
         "gather",
         "branches",
@@ -472,8 +472,8 @@
       },
       "motion": "motion-gate-rise",
       "presentation": "film-frame",
-      "overlayFor": "king-of-kings-1927-entry",
-      "overlayDelayMs": 3500
+      "overlayFor": null,
+      "overlayDelayMs": null
     },
     {
       "id": "dore-christs-entry-jerusalem",
@@ -505,7 +505,7 @@
         "purpose": "same-origin public-domain Doré artwork for a Ken Burns intercut"
       },
       "motion": "motion-gate-rise",
-      "presentation": "art-card",
+      "presentation": "double-exposure",
       "overlayFor": "life-passion-1903-crowd",
       "overlayDelayMs": 1700
     },
@@ -959,7 +959,7 @@
         "role": "new cinematic, streaming and animated representations continue the recurrence"
       }
     ],
-    "editRule": "The moving-image spine never yields to art. Each image is an action-matched overlay scheduled inside a specific six-second video clip, then fades away while that clip keeps moving.",
+    "editRule": "Six moving-image clips carry the entire public rhythm. Each artwork is a single, low-opacity double exposure placed inside its paired clip; artwork neither consumes time nor introduces graphic framing.",
     "currentVerifiedPublicationClips": [
       {
         "id": "manger-cross-1912-entry",
@@ -1154,8 +1154,9 @@
     ],
     "stillEditingPass": {
       "date": "2026-09-19",
-      "status": "restructured-as-overlays",
-      "principle": "Six public-domain film clips create a continuous moving-image spine. Manuscript, fresco, woodcut, illustration, painting, and source-film frames appear only as transparent, framed overlays during their matched video action; no image occupies a separate slot in the rhythm."
+      "status": "double-exposure-cut",
+      "reference": "The documentary double-exposure treatment used to layer archival material with a live image: the historical picture is a temporal texture, never a card, caption, or replacement shot.",
+      "principle": "Each of the six art sources appears once as a translucent full-field exposure over its action-matched moving clip. Derived source-film stills are retained for provenance but removed from playback. The six WebM films remain uninterrupted."
     }
   },
   "actionCoordinates": {
