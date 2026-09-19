@@ -2,10 +2,13 @@
   const SCHEMA='dore.bible-media-graph.v0';
   const MOMENT_SCHEMA='dore.bible-media-moment.v1';
   const EVENT_SCHEMA='dore.biblical-event.v1';
-  const URLS={resources:'data/video-resource.v0.json',expansion:'data/video-resource-expansion.v1.json',jerusalemExpansion:'data/video-resource-expansion-jerusalem.v1.json',relations:'data/cinema-scripture-place-relations.v1.json',canonicalIndex:'data/cinema-canonical-index.v1.json',moments:'data/video-moment.v0.json',coordinates:'data/bible-media-coordinate.v0.json',journeys:'data/bible-journey.v0.json',events:'../data/bible-index/biblical-event.v1.json'};
+  const ROOT=new URL('./',document.baseURI);
+  const PATHS={resources:'data/video-resource.v0.json',expansion:'data/video-resource-expansion.v1.json',jerusalemExpansion:'data/video-resource-expansion-jerusalem.v1.json',relations:'data/cinema-scripture-place-relations.v1.json',canonicalIndex:'data/cinema-canonical-index.v1.json',moments:'data/video-moment.v0.json',coordinates:'data/bible-media-coordinate.v0.json',journeys:'data/bible-journey.v0.json',events:'../data/bible-index/biblical-event.v1.json'};
+  const URLS=Object.fromEntries(Object.entries(PATHS).map(([key,path])=>[key,new URL(path,ROOT)]));
   const special=()=>window.ParadiseCinemaSpecialResources;
   const state={graph:null};
-  const fetchJson=async url=>{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`Cinema graph source unavailable: ${url}`);return response.json();};
+  const sourceKey=url=>Object.entries(URLS).find(([,candidate])=>String(candidate)===String(url))?.[0]||'unknown';
+  const fetchJson=async url=>{const key=sourceKey(url);try{const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`HTTP ${response.status}`);return await response.json();}catch(error){document.documentElement.dataset.cinemaGraphFailedSource=key;document.documentElement.dataset.cinemaGraphFailedUrl=String(url);throw new Error(`Cinema graph source unavailable [${key}]: ${url} (${error.message})`);}};
   const normalize=value=>String(value||'').trim().toLowerCase();
   const scriptureBook=value=>normalize(value).split(/[\s.:]/)[0];
   const stationMatchesWork=(station,work)=>{const c=work.coordinate?.coordinates||{};const textBooks=new Set((c.text||[]).filter(entry=>entry.type==='scripture').map(entry=>scriptureBook(entry.value)));const stationBooks=new Set((station.scripture||[]).map(scriptureBook));const textMatch=[...stationBooks].some(book=>textBooks.has(book));const worldValues=new Set((c.world||[]).map(entry=>normalize(entry.value)));const worldMatch=(station.world||[]).some(value=>worldValues.has(normalize(value)));return textMatch||worldMatch;};
