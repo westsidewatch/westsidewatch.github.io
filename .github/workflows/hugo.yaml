@@ -33,6 +33,13 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Materialize Vol.00 diagnostic video
+        run: |
+          mkdir -p preview/watch-city-vol00/hosanna/media
+          curl --fail --location --retry 3 --retry-delay 2 \
+            --output preview/watch-city-vol00/hosanna/media/la-vie-et-la-passion-de-jesus-christ-1903.ogv \
+            'https://upload.wikimedia.org/wikipedia/commons/6/6c/La_vie_et_la_passion_de_Jesus_Christ_%281903%29.ogv'
+          test "$(wc -c < preview/watch-city-vol00/hosanna/media/la-vie-et-la-passion-de-jesus-christ-1903.ogv)" -gt 60000000
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
