@@ -33,7 +33,15 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
+      - name: Restore Vol.00 generated media cache
+        id: vol00-cache
+        uses: actions/cache@v4
+        with:
+          path: preview/watch-city-vol00/hosanna/media/clips
+          key: vol00-montage-v1-${{ hashFiles('.github/workflows/hugo.yaml') }}
       - name: Render Vol.00 montage clips
+        if: steps.vol00-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 12
         run: |
           sudo apt-get update
           sudo apt-get install --yes ffmpeg
