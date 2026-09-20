@@ -2,11 +2,9 @@
 <div class="lw-story" id="lwStory">
   <section class="lw-stage lw-stage--one" data-stage>
     <div class="lw-wall" aria-hidden="true"></div>
-    <div class="lw-shutter lw-shutter--l" aria-hidden="true"></div>
-    <div class="lw-shutter lw-shutter--r" aria-hidden="true"></div>
-    <div class="lw-seam" aria-hidden="true"></div><div class="lw-light" aria-hidden="true"></div>
+    
     <div class="lw-stage__copy">
-      <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p><p class="lw-hero-mark" aria-hidden="true">LIVING<br>WATER</p>
+      <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
       {{ with .Params.display_logo }}<img class="lw-logo" src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ else }}<h1>{{ .Params.display_title }}</h1>{{ end }}
       <p class="lw-scripture">「信我的人，就如經上所說：<br>從他腹中要流出活水的江河來。」</p>
       <p class="lw-cite">JOHN 7:38</p>
@@ -18,14 +16,14 @@
     <div class="lw-sticky">
       <p class="lw-index">01 / GATHER</p>
       <div class="lw-huge">活水<br><i>不是一個地方。</i></div>
-      <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p><p class="lw-whisper" aria-hidden="true">GATHERED<br>IN CHRIST</p>
-      <div class="lw-orbit" aria-hidden="true"><span></span><span></span><span></span></div><div class="lw-gather-line" aria-hidden="true"></div>
+      <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
+      
     </div>
   </section>
 
   <section class="lw-stage lw-stage--three" data-stage>
     <div class="lw-sticky lw-water">
-      <div class="lw-water__image" aria-hidden="true"></div><div class="lw-water__veil" aria-hidden="true"></div>
+      
       <p class="lw-index">02 / LIVING WATER</p>
       <p class="lw-word lw-word--a">COME</p>
       <p class="lw-word lw-word--b">DRINK</p>
@@ -38,7 +36,7 @@
     <div class="lw-sticky">
       <p class="lw-index">03 / THE GATHERED LIFE</p>
       <h2>一起生活<br>在福音裡。</h2>
-      <div class="lw-crossline" aria-hidden="true"></div><div class="lw-four-field" aria-hidden="true">LIFE<br>TOGETHER</div>
+      
       <p class="lw-manifesto">主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p><p class="lw-verse-rail">WATCH FOR THE DAWN · ROMANS 13:12</p>
     </div>
   </section>
@@ -86,6 +84,15 @@ body.section-church{background:#efe9dc;color:#252525}.section-church main{paddin
 @media(max-width:760px){.lw-stage__copy{width:90vw;min-height:68vh;grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;padding:28px 22px}.lw-logo{grid-column:1;width:78vw;margin:4vh 0}.lw-scripture{grid-column:1;grid-row:3;padding:1.2rem 0 0;border-left:0;border-top:1px solid rgba(37,37,37,.22)}.lw-cite{grid-column:1;grid-row:4;padding-left:0}.lw-hero-mark{font-size:32vw}.lw-stage--two .lw-sticky{background:linear-gradient(180deg,#f4efe5 0 72%,#e5d7be 72%)}.lw-whisper{display:none}.lw-water:after{font-size:30vw}.lw-stage--four .lw-sticky{background:linear-gradient(180deg,#e6d8bf 0 58%,#f1eadf 58%)}.lw-verse-rail{left:6vw;top:auto;bottom:5vh}.lw-doors{padding:0 5vw}.lw-final{display:flex}.lw-final small{writing-mode:initial}}
 </style>
 <script>
-(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));setTimeout(()=>hero.querySelector('.lw-light')?.style.setProperty('--light','1'),650);const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){const o=s.querySelector('.lw-orbit'),line=s.querySelector('.lw-gather-line');if(o)o.style.setProperty('--turn',(p*150)+'deg');if(line)line.style.setProperty('--line',Math.min(1,p*1.45))}if(i===2){const im=s.querySelector('.lw-water__image'),veil=s.querySelector('.lw-water__veil'),quote=s.querySelector('blockquote');if(im)im.style.setProperty('--scale',1.12-p*.12);if(veil)veil.style.setProperty('--veil',(-12+p*18)+'%');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}if(i===3){const field=s.querySelector('.lw-four-field');if(field)field.style.setProperty('--field',((1-p)*4)+'vh')}})};addEventListener('scroll',tick,{passive:true});tick()})();
+(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){}if(i===2){const quote=s.querySelector('blockquote');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}})};addEventListener('scroll',tick,{passive:true});tick()})();
 </script>
 {{ end }}
+
+<style id="living-water-clean-reset">
+/* CLEAN RESET — remove legacy visual patches and low-resolution imagery before rebuilding immersion. */
+.lw-hero,.lw-stage,.lw-water,.lw-four,.lw-footer{background:#f3eee3!important;color:#252525}
+.lw-hero::before,.lw-hero::after,.lw-water::before,.lw-water::after{content:none!important;background:none!important}
+.lw-shutter,.lw-seam,.lw-light,.lw-hero-mark,.lw-whisper,.lw-orbit,.lw-gather-line,.lw-water__image,.lw-water__veil,.lw-crossline,.lw-four-field{display:none!important}
+.lw-hero__copy{background:none!important;backdrop-filter:none!important;box-shadow:none!important}
+.lw-water blockquote{background:none!important;backdrop-filter:none!important}
+</style>
