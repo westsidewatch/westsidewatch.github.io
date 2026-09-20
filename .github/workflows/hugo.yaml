@@ -48,13 +48,24 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Restore Dawn build cache
+        id: dawn-cache
+        uses: actions/cache@v4
+        with:
+          path: .dore-build
+          key: dawn-build-v1-${{ hashFiles('scripts/reconcile_dawn_source_identity.py', 'scripts/build_dawn_source_capability_map.py', 'scripts/dawn_materialization_gate.py', 'scripts/build_dawn_cover_registry.py', 'scripts/validate_dawn_cover_registry.py', 'dawn-library/**', 'data/**') }}
       - name: Admit Dawn source identity claims
+        if: steps.dawn-cache.outputs.cache-hit != 'true'
         run: python scripts/reconcile_dawn_source_identity.py
       - name: Admit Dawn source capabilities
+        if: steps.dawn-cache.outputs.cache-hit != 'true'
         run: python scripts/build_dawn_source_capability_map.py
       - name: Admit Dawn materialization sources
+        if: steps.dawn-cache.outputs.cache-hit != 'true'
         run: python scripts/dawn_materialization_gate.py --minimum-admitted 1
       - name: Reconcile Dawn canonical cover assets
+        if: steps.dawn-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 12
         run: |
           python -m pip install --disable-pip-version-check --no-cache-dir "Pillow>=10,<12"
           python scripts/build_dawn_cover_registry.py --identity-map .dore-build/dawn-materialization-identity-map.json --minimum-resolved 1
