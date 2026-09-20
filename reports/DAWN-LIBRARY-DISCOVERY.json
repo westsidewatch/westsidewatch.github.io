@@ -1,13 +1,24 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-19T21:52:43.290739+00:00",
+  "generatedAt": "2026-09-20T13:36:51.963791+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 77,
+  "pagesChecked": 68,
   "newDiscovered": 0,
   "candidateQueue": 71,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "R. A. Torrey",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=R.+A.+Torrey",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible dictionary",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+dictionary",
+      "error": "HTTPError"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
