@@ -41,6 +41,50 @@
     </div>
   </section>
 
+  {{/* Scripture Environment consumes the same canonical Bible/media substrate as ONE and Cinema. */}}
+  {{ $eventPayload := site.Data.bible_index.biblical_event }}
+  {{ $momentPayload := site.Data.cinema.data.video_moment }}
+  {{ $resourcePayload := site.Data.cinema.data.video_resource }}
+  {{ $sceneEvent := false }}
+  {{ range $eventPayload.items }}{{ if eq .eventId "bible:event:baptism-of-jesus" }}{{ $sceneEvent = . }}{{ end }}{{ end }}
+  {{ with $sceneEvent }}
+    {{ $event := . }}
+    {{ $moment := false }}
+    {{ range $momentPayload.items }}
+      {{ $candidate := . }}
+      {{ range .anchors }}
+        {{ if and (eq .type "event") (or (eq .value $event.eventId) (in $event.aliases .value)) }}{{ $moment = $candidate }}{{ end }}
+      {{ end }}
+    {{ end }}
+    {{ with $moment }}
+      {{ $matchedMoment := . }}
+      {{ $resource := false }}
+      {{ range $resourcePayload.items }}{{ if eq .canonicalId $matchedMoment.workId }}{{ $resource = . }}{{ end }}{{ end }}
+      {{ with $resource }}
+      <section class="lw-scripture-scene" data-bible-event="{{ $event.eventId }}" data-media-moment="{{ $matchedMoment.momentId }}" data-resource-id="{{ .canonicalId }}">
+        <div class="lw-scripture-scene__sticky">
+          <p class="lw-scripture-scene__coordinate">{{ index $event.scriptureRanges 0 }}</p>
+          <h2>水。</h2>
+          <p class="lw-scripture-scene__event">{{ index $event.label "zh-Hant" }}<span>{{ $event.label.en }}</span></p>
+          <p class="lw-scripture-scene__range">{{ index $event.scriptureRanges 0 }}</p>
+          <div class="lw-scripture-env">
+            <p class="lw-scripture-scene__meaning">經文不是資料入口，而是人所進入的環境。影像、地點、歷史與聲音，只在經文關係成立時浮現。</p>
+            {{ if and .provenance.verified (eq .rights.rehost false) }}
+            <a class="lw-scripture-env__media" href="{{ $matchedMoment.sourcePointer }}" rel="noopener">
+              <small>FILM · SCRIPTURE-ALIGNED</small>
+              <strong>{{ $matchedMoment.label }}</strong>
+              <span>official source ↗</span>
+            </a>
+            {{ end }}
+            <div class="lw-scripture-env__world" aria-hidden="true"><span>PLACE / HISTORY</span></div>
+            <div class="lw-scripture-env__voice" aria-hidden="true"><span>SERMON / WITNESS</span></div>
+          </div>
+        </div>
+      </section>
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
   <nav class="lw-doors" aria-label="Church life">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
