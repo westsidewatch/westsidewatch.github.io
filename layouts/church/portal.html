@@ -4,7 +4,7 @@
     <div class="lw-wall" aria-hidden="true"></div>
     <div class="lw-shutter lw-shutter--l" aria-hidden="true"></div>
     <div class="lw-shutter lw-shutter--r" aria-hidden="true"></div>
-    <div class="lw-seam" aria-hidden="true"></div>
+    <div class="lw-seam" aria-hidden="true"></div><div class="lw-light" aria-hidden="true"></div>
     <div class="lw-stage__copy">
       <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p><p class="lw-hero-mark" aria-hidden="true">LIVING<br>WATER</p>
       {{ with .Params.display_logo }}<img class="lw-logo" src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ else }}<h1>{{ .Params.display_title }}</h1>{{ end }}
@@ -19,13 +19,13 @@
       <p class="lw-index">01 / GATHER</p>
       <div class="lw-huge">活水<br><i>不是一個地方。</i></div>
       <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p><p class="lw-whisper" aria-hidden="true">GATHERED<br>IN CHRIST</p>
-      <div class="lw-orbit" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div class="lw-orbit" aria-hidden="true"><span></span><span></span><span></span></div><div class="lw-gather-line" aria-hidden="true"></div>
     </div>
   </section>
 
   <section class="lw-stage lw-stage--three" data-stage>
     <div class="lw-sticky lw-water">
-      <div class="lw-water__image" aria-hidden="true"></div>
+      <div class="lw-water__image" aria-hidden="true"></div><div class="lw-water__veil" aria-hidden="true"></div>
       <p class="lw-index">02 / LIVING WATER</p>
       <p class="lw-word lw-word--a">COME</p>
       <p class="lw-word lw-word--b">DRINK</p>
@@ -38,7 +38,7 @@
     <div class="lw-sticky">
       <p class="lw-index">03 / THE GATHERED LIFE</p>
       <h2>一起生活<br>在福音裡。</h2>
-      <div class="lw-crossline" aria-hidden="true"></div>
+      <div class="lw-crossline" aria-hidden="true"></div><div class="lw-four-field" aria-hidden="true">LIFE<br>TOGETHER</div>
       <p class="lw-manifesto">主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p><p class="lw-verse-rail">WATCH FOR THE DAWN · ROMANS 13:12</p>
     </div>
   </section>
@@ -77,9 +77,15 @@ body.section-church{background:#efe9dc;color:#252525}.section-church main{paddin
 .lw-stage--four .lw-sticky{background:linear-gradient(90deg,#e6d8bf 0 54%,#f1eadf 54%)}.lw-stage--four h2{z-index:2}.lw-crossline{left:54%;background:rgba(37,37,37,.18)}.lw-manifesto{z-index:2}.lw-verse-rail{position:absolute;left:56%;top:8vh;font:500 10px/1.2 "Cormorant Garamond",serif;letter-spacing:.2em;color:#776b56}
 .lw-doors{background:#f4efe6;padding:0 4vw}.lw-door{min-height:22vh;padding:2vh 1vw;grid-template-columns:6vw 1fr minmax(220px,28vw) 3vw;border-top-color:rgba(37,37,37,.18);position:relative;overflow:hidden}.lw-door:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(206,189,116,.18),transparent 55%);transform:translateX(-102%);transition:transform .7s cubic-bezier(.22,1,.36,1)}.lw-door:hover:before{transform:none}.lw-door:after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .55s cubic-bezier(.22,1,.36,1)}.lw-door:hover:after{width:100%}.lw-door:hover{background:transparent;color:var(--ink)}.lw-door>*{position:relative;z-index:1}
 .lw-final{min-height:42vh;background:#ddd1bd;color:var(--ink);border-top:1px solid rgba(37,37,37,.16);display:grid;grid-template-columns:1fr auto;align-content:end;column-gap:4vw}.lw-final strong{grid-column:1;font-size:clamp(34px,5vw,76px)}.lw-final small{grid-column:2;grid-row:1/4;align-self:end;writing-mode:vertical-rl;color:#6c6252}
+.lw-light{position:absolute;z-index:3;left:50%;top:0;width:18vw;height:100%;background:linear-gradient(90deg,transparent,rgba(255,246,211,.24),transparent);transform:translateX(-50%) scaleX(var(--light,0));transform-origin:center;mix-blend-mode:screen;pointer-events:none}
+.lw-gather-line{position:absolute;left:6vw;right:6vw;top:50%;height:1px;background:linear-gradient(90deg,rgba(37,37,37,.12),rgba(206,189,116,.75),rgba(37,37,37,.08));transform:scaleX(var(--line,0));transform-origin:left}
+.lw-water__veil{position:absolute;inset:0;background:linear-gradient(105deg,rgba(244,240,229,.86) 0 17%,transparent 17% 78%,rgba(244,240,229,.38) 78%);transform:translateX(var(--veil,-12%));pointer-events:none}
+.lw-four-field{position:absolute;right:4vw;top:15vh;text-align:right;font:400 clamp(5rem,12vw,13rem)/.7 "Cormorant Garamond",serif;letter-spacing:-.065em;color:rgba(83,68,39,.07);transform:translateY(var(--field,4vh));pointer-events:none}
+.lw-door strong{transition:transform .55s cubic-bezier(.22,1,.36,1)}.lw-door:hover strong{transform:translateX(1.2vw)}
+@media(prefers-reduced-motion:no-preference){.lw-stage__copy{transition:transform .2s linear}.lw-water blockquote{transition:transform .2s linear}.lw-four-field{transition:transform .2s linear}}
 @media(max-width:760px){.lw-stage__copy{width:90vw;min-height:68vh;grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;padding:28px 22px}.lw-logo{grid-column:1;width:78vw;margin:4vh 0}.lw-scripture{grid-column:1;grid-row:3;padding:1.2rem 0 0;border-left:0;border-top:1px solid rgba(37,37,37,.22)}.lw-cite{grid-column:1;grid-row:4;padding-left:0}.lw-hero-mark{font-size:32vw}.lw-stage--two .lw-sticky{background:linear-gradient(180deg,#f4efe5 0 72%,#e5d7be 72%)}.lw-whisper{display:none}.lw-water:after{font-size:30vw}.lw-stage--four .lw-sticky{background:linear-gradient(180deg,#e6d8bf 0 58%,#f1eadf 58%)}.lw-verse-rail{left:6vw;top:auto;bottom:5vh}.lw-doors{padding:0 5vw}.lw-final{display:flex}.lw-final small{writing-mode:initial}}
 </style>
 <script>
-(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){const o=s.querySelector('.lw-orbit');if(o)o.style.setProperty('--turn',(p*150)+'deg')}if(i===2){const im=s.querySelector('.lw-water__image');if(im)im.style.setProperty('--scale',1.12-p*.12);const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}})};addEventListener('scroll',tick,{passive:true});tick()})();
+(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));setTimeout(()=>hero.querySelector('.lw-light')?.style.setProperty('--light','1'),650);const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){const o=s.querySelector('.lw-orbit'),line=s.querySelector('.lw-gather-line');if(o)o.style.setProperty('--turn',(p*150)+'deg');if(line)line.style.setProperty('--line',Math.min(1,p*1.45))}if(i===2){const im=s.querySelector('.lw-water__image'),veil=s.querySelector('.lw-water__veil'),quote=s.querySelector('blockquote');if(im)im.style.setProperty('--scale',1.12-p*.12);if(veil)veil.style.setProperty('--veil',(-12+p*18)+'%');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}if(i===3){const field=s.querySelector('.lw-four-field');if(field)field.style.setProperty('--field',((1-p)*4)+'vh')}})};addEventListener('scroll',tick,{passive:true});tick()})();
 </script>
 {{ end }}
