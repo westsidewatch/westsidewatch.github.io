@@ -33,54 +33,9 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Render Vol.00 montage clips
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes ffmpeg
-          source_dir="$RUNNER_TEMP/vol00-source"
-          clip_dir="preview/watch-city-vol00/hosanna/media/clips"
-          mkdir -p "$source_dir" "$clip_dir"
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1903.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/5/53/Vie_et_Passion_du_Christ_%281903%29.webm/Vie_et_Passion_du_Christ_%281903%29.webm.240p.vp9.webm'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1912.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm.240p.vp9.webm'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1927.webm" 'https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/The_King_of_Kings_%281927%29.webm/The_King_of_Kings_%281927%29.webm.240p.vp9.webm'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/dore-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/1873-palms.jpg" 'https://upload.wikimedia.org/wikipedia/commons/7/71/Jesus_entering_Jerusalem.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/morgner-1912-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Entry_of_Jesus_into_Jerusalem_by_Wilhelm_Morgner.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/jruchi-12c-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/3/3a/Entry_into_Jerusalem%2C_Jruchi_II_H-1667%2C_182r%2C_12th_c.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/giotto-1304-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/1/12/Giotto_di_Bondone_-_No._26_Scenes_from_the_Life_of_Christ_-_10._Entry_into_Jerusalem_-_WGA09206.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/durer-1510-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/1/1d/Albrecht_D%C3%BCrer_-_Christ%27s_Entry_into_Jerusalem_%28NGA_1943.3.3638%29.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/sinai-14c-icon.jpg" 'https://upload.wikimedia.org/wikipedia/commons/5/57/Christ_entering_Jerusalem_icon.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/flemish-17c-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/f/f0/Entry_into_Jerusalem_flemish_17c.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/schnorr-1860-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Jesus_entry_into_Jerusalem.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/prang-1892-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Jesus%27_entry_into_Jerusalem_%28Mark_XXI-8%2C_9%29_LCCN2016652375.jpg'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/ensor-1885-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/4/4b/James_Ensor%2C_La_Vive_et_rayonnante_-_L%27Entr%C3%A9e_a_Jerusalem%2C_1885.jpg'
-          render_clip() {
-            ffmpeg -hide_banner -loglevel error -y -ss "$2" -t 6 -i "$1" -an -c:v libvpx-vp9 -b:v 500k -deadline good -cpu-used 4 "$3"
-          }
-          render_clip "$source_dir/1912.webm" 2730 "$clip_dir/1912-approach.webm"
-          render_clip "$source_dir/1903.webm" 1466 "$clip_dir/1903-gate.webm"
-          render_clip "$source_dir/1927.webm" 3973 "$clip_dir/1927-crowd.webm"
-          render_clip "$source_dir/1912.webm" 2764 "$clip_dir/1912-hosanna.webm"
-          render_clip "$source_dir/1903.webm" 1472 "$clip_dir/1903-crowd.webm"
-          render_clip "$source_dir/1927.webm" 4004 "$clip_dir/1927-hosanna.webm"
-          ffmpeg -hide_banner -loglevel error -y -ss 1469 -i "$source_dir/1903.webm" -frames:v 1 -q:v 2 "$clip_dir/1903-entry-still.jpg"
-          ffmpeg -hide_banner -loglevel error -y -ss 2734 -i "$source_dir/1912.webm" -frames:v 1 -q:v 2 "$clip_dir/1912-entry-still.jpg"
-          ffmpeg -hide_banner -loglevel error -y -ss 4006 -i "$source_dir/1927.webm" -frames:v 1 -q:v 2 "$clip_dir/1927-entry-still.jpg"
-          find "$clip_dir" -name '*.webm' -size +100k -print | wc -l | grep -qx 6
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Admit Dawn source identity claims
-        run: python scripts/reconcile_dawn_source_identity.py
-      - name: Admit Dawn source capabilities
-        run: python scripts/build_dawn_source_capability_map.py
-      - name: Admit Dawn materialization sources
-        run: python scripts/dawn_materialization_gate.py --minimum-admitted 1
-      - name: Reconcile Dawn canonical cover assets
-        run: |
-          python -m pip install --disable-pip-version-check --no-cache-dir "Pillow>=10,<12"
-          python scripts/build_dawn_cover_registry.py --identity-map .dore-build/dawn-materialization-identity-map.json --minimum-resolved 1
-          python scripts/validate_dawn_cover_registry.py
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
