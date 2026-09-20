@@ -41,7 +41,46 @@
     </div>
   </section>
 
-  <nav class="lw-doors" aria-label="Church life">
+    {{/* Scripture Environment consumer: canonical Cinema graph, fail-soft defaults. */}}
+  {{ $filmHref := "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html" }}
+  {{ $filmLabel := "LUMO · Matthew 3:1–4:25" }}
+  {{ $filmProvider := "Jesus Film Project · LUMO" }}
+  {{ $moments := readFile "cinema/data/video-moment.v0.json" | transform.Unmarshal }}
+  {{ $resources := readFile "cinema/data/video-resource.v0.json" | transform.Unmarshal }}
+  {{ with $moments }}
+    {{ range .items }}
+      {{ $moment := . }}{{ $eventMatch := false }}
+      {{ range .anchors }}{{ if and (eq .type "event") (eq .value "baptism-of-jesus") }}{{ $eventMatch = true }}{{ end }}{{ end }}
+      {{ if $eventMatch }}
+        {{ $filmLabel = $moment.label | default $filmLabel }}
+        {{ $filmHref = $moment.sourcePointer | default $filmHref }}
+        {{ with $resources }}{{ range .items }}
+          {{ if and (eq .canonicalId $moment.workId) .provenance.verified (not .rights.rehost) }}
+            {{ $filmHref = .sourcePointer | default $filmHref }}
+            {{ $filmProvider = .creator | default $filmProvider }}
+          {{ end }}
+        {{ end }}{{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+  <section class="lw-scripture-scene" data-scripture-scene aria-label="Matthew 3:13–17 · Baptism of Jesus">
+    <div class="lw-scripture-scene__sticky">
+      <p class="lw-scripture-scene__coordinate">MATTHEW 3:13–17 · JORDAN · BAPTISM</p>
+      <p class="lw-scripture-scene__event">耶穌受洗<span>BAPTISM OF JESUS</span></p>
+      <h2 aria-hidden="true">水</h2>
+      <p class="lw-scripture-scene__range">太 3:13–17<br>MATTHEW 3:13–17</p>
+      <div class="lw-scripture-env">
+        <p class="lw-scripture-scene__meaning">經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。</p>
+        <a class="lw-scripture-env__media" href="{{ $filmHref }}" rel="noopener">
+          <small>IMAGE / FILM</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span>
+        </a>
+        <div class="lw-scripture-env__world">PLACE / HISTORY<br>JORDAN</div>
+        <div class="lw-scripture-env__voice">SERMON / WITNESS<br>VOICE</div>
+      </div>
+    </div>
+  </section>
+
+<nav class="lw-doors" aria-label="Church life">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
       <a class="lw-door" href="{{ $entryHref }}">
