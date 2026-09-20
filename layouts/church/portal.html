@@ -88,11 +88,26 @@ body.section-church{background:#efe9dc;color:#252525}.section-church main{paddin
 </script>
 {{ end }}
 
-<style id="living-water-clean-reset">
-/* CLEAN RESET — remove legacy visual patches and low-resolution imagery before rebuilding immersion. */
-.lw-hero,.lw-stage,.lw-water,.lw-four,.lw-footer{background:#f3eee3!important;color:#252525}
-.lw-hero::before,.lw-hero::after,.lw-water::before,.lw-water::after{content:none!important;background:none!important}
-.lw-shutter,.lw-seam,.lw-light,.lw-hero-mark,.lw-whisper,.lw-orbit,.lw-gather-line,.lw-water__image,.lw-water__veil,.lw-crossline,.lw-four-field{display:none!important}
-.lw-hero__copy{background:none!important;backdrop-filter:none!important;box-shadow:none!important}
-.lw-water blockquote{background:none!important;backdrop-filter:none!important}
+<style id="living-water-immersive-foundation">
+/* Immersive foundation: depth comes from viewport, typography, light and motion — not raster wallpaper. */
+.lw-hero{min-height:100svh;overflow:hidden;isolation:isolate;background:
+radial-gradient(70vw 70vw at 72% 48%,rgba(255,252,235,.96) 0,rgba(239,226,188,.58) 34%,rgba(206,189,116,.12) 58%,transparent 72%),
+linear-gradient(118deg,#d8ccb7 0 17%,#eee7d8 17% 61%,#cbbd9f 61% 100%)!important}
+.lw-hero:before{content:""!important;display:block!important;position:absolute;inset:0!important;background:
+linear-gradient(90deg,rgba(37,37,37,.12) 0 1px,transparent 1px) 17% 0/1px 100% no-repeat,
+linear-gradient(90deg,rgba(37,37,37,.1) 0 1px,transparent 1px) 61% 0/1px 100% no-repeat!important;pointer-events:none}
+.lw-hero:after{content:""!important;display:block!important;position:absolute;width:46vw;height:46vw;left:49%;top:48%;border:1px solid rgba(206,189,116,.34);border-radius:50%;transform:translate(-50%,-50%) scale(var(--sun,.82));opacity:var(--sun-opacity,.35);background:none!important;pointer-events:none}
+.lw-hero__copy{position:relative;z-index:2;width:min(1320px,90vw);min-height:100svh;margin:auto;padding:12vh 0 10vh;display:grid;grid-template-columns:minmax(220px,.72fr) minmax(360px,1.45fr);grid-template-rows:auto 1fr auto;gap:3vh 7vw;align-items:center;background:none!important}
+.lw-hero__copy .lw-eyebrow{align-self:start}
+.lw-hero__copy .lw-logo{align-self:center;max-width:min(43vw,620px);transform:translateY(var(--hero-y,0))}
+.lw-hero__copy blockquote{align-self:center;max-width:29rem;margin:0;padding-left:2rem;border-left:1px solid rgba(37,37,37,.25);transform:translateY(var(--verse-y,0))}
+.lw-scroll{z-index:3}
+.lw-stage{min-height:130svh!important}
+.lw-stage__inner,.lw-water__inner,.lw-four__inner{min-height:100svh}
+@media(max-width:760px){
+.lw-hero{background:radial-gradient(90vw 90vw at 70% 32%,rgba(255,252,235,.92),rgba(206,189,116,.12) 58%,transparent 72%),linear-gradient(155deg,#ded3c0,#f3eee3 54%,#c9b996)!important}
+.lw-hero__copy{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:2rem;padding:11vh 7vw 8vh}
+.lw-hero__copy .lw-logo{max-width:82vw}.lw-hero__copy blockquote{max-width:80vw}
+.lw-hero:before{background:none!important}.lw-hero:after{width:86vw;height:86vw;left:70%;top:35%}
+}
 </style>
