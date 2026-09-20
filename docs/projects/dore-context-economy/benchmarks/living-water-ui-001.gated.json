@@ -1,0 +1,23 @@
+{
+  "benchmark_id": "living-water-ui-001",
+  "task": "Living Water overall UI redesign using the existing MERSI spatial-motion grammar",
+  "head_commit": "52fe162448d84ed5619b32d010f5e3f88bc1cf87",
+  "mode": "context-economy-gated",
+  "target_surface": "layouts/church/portal.html",
+  "measured": {
+    "implementation_files_read": 1,
+    "implementation_files_changed": 1,
+    "target_file_bytes": 15150,
+    "whole_repository_scan": false,
+    "broad_code_search": false
+  },
+  "verification": {
+    "code_change_completed": true,
+    "human_visual_acceptance": null,
+    "status": "pending visual inspection"
+  },
+  "claims": {
+    "token_reduction_percent": null,
+    "reason": "No paired legacy baseline with provider token telemetry exists for the identical task. Do not infer a percentage from file-count reduction."
+  }
+}
