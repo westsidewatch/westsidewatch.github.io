@@ -1,8 +1,12 @@
 {{ define "main" }}
 <div class="lw-story" id="lwStory">
   <section class="lw-stage lw-stage--one" data-stage>
-<div class="lw-stage__copy">
-      <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
+    <div class="lw-wall" aria-hidden="true"></div>
+    <div class="lw-shutter lw-shutter--l" aria-hidden="true"></div>
+    <div class="lw-shutter lw-shutter--r" aria-hidden="true"></div>
+    <div class="lw-seam" aria-hidden="true"></div><div class="lw-light" aria-hidden="true"></div>
+    <div class="lw-stage__copy">
+      <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p><p class="lw-hero-mark" aria-hidden="true">LIVING<br>WATER</p>
       {{ with .Params.display_logo }}<img class="lw-logo" src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ else }}<h1>{{ .Params.display_title }}</h1>{{ end }}
       <p class="lw-scripture">「信我的人，就如經上所說：<br>從他腹中要流出活水的江河來。」</p>
       <p class="lw-cite">JOHN 7:38</p>
@@ -14,14 +18,14 @@
     <div class="lw-sticky">
       <p class="lw-index">01 / GATHER</p>
       <div class="lw-huge">活水<br><i>不是一個地方。</i></div>
-      <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
-      
+      <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p><p class="lw-whisper" aria-hidden="true">GATHERED<br>IN CHRIST</p>
+      <div class="lw-orbit" aria-hidden="true"><span></span><span></span><span></span></div><div class="lw-gather-line" aria-hidden="true"></div>
     </div>
   </section>
 
   <section class="lw-stage lw-stage--three" data-stage>
     <div class="lw-sticky lw-water">
-      
+      <div class="lw-water__image" aria-hidden="true"></div><div class="lw-water__veil" aria-hidden="true"></div>
       <p class="lw-index">02 / LIVING WATER</p>
       <p class="lw-word lw-word--a">COME</p>
       <p class="lw-word lw-word--b">DRINK</p>
@@ -34,54 +38,10 @@
     <div class="lw-sticky">
       <p class="lw-index">03 / THE GATHERED LIFE</p>
       <h2>一起生活<br>在福音裡。</h2>
-      
+      <div class="lw-crossline" aria-hidden="true"></div><div class="lw-four-field" aria-hidden="true">LIFE<br>TOGETHER</div>
       <p class="lw-manifesto">主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p><p class="lw-verse-rail">WATCH FOR THE DAWN · ROMANS 13:12</p>
     </div>
   </section>
-
-  {{/* Scripture Environment consumes the same canonical Bible/media substrate as ONE and Cinema. */}}
-  {{ $eventPayload := site.Data.bible_index.biblical_event }}
-  {{ $momentPayload := site.Data.cinema.data.video_moment }}
-  {{ $resourcePayload := site.Data.cinema.data.video_resource }}
-  {{ $sceneEvent := false }}
-  {{ range $eventPayload.items }}{{ if eq .eventId "bible:event:baptism-of-jesus" }}{{ $sceneEvent = . }}{{ end }}{{ end }}
-  {{ with $sceneEvent }}
-    {{ $event := . }}
-    {{ $moment := false }}
-    {{ range $momentPayload.items }}
-      {{ $candidate := . }}
-      {{ range .anchors }}
-        {{ if and (eq .type "event") (or (eq .value $event.eventId) (in $event.aliases .value)) }}{{ $moment = $candidate }}{{ end }}
-      {{ end }}
-    {{ end }}
-    {{ with $moment }}
-      {{ $matchedMoment := . }}
-      {{ $resource := false }}
-      {{ range $resourcePayload.items }}{{ if eq .canonicalId $matchedMoment.workId }}{{ $resource = . }}{{ end }}{{ end }}
-      {{ with $resource }}
-      <section class="lw-scripture-scene" data-bible-event="{{ $event.eventId }}" data-media-moment="{{ $matchedMoment.momentId }}" data-resource-id="{{ .canonicalId }}">
-        <div class="lw-scripture-scene__sticky">
-          <p class="lw-scripture-scene__coordinate">{{ index $event.scriptureRanges 0 }}</p>
-          <h2>水。</h2>
-          <p class="lw-scripture-scene__event">{{ index $event.label "zh-Hant" }}<span>{{ $event.label.en }}</span></p>
-          <p class="lw-scripture-scene__range">{{ index $event.scriptureRanges 0 }}</p>
-          <div class="lw-scripture-env">
-            <p class="lw-scripture-scene__meaning">經文不是資料入口，而是人所進入的環境。影像、地點、歷史與聲音，只在經文關係成立時浮現。</p>
-            {{ if and .provenance.verified (eq .rights.rehost false) }}
-            <a class="lw-scripture-env__media" href="{{ $matchedMoment.sourcePointer }}" rel="noopener">
-              <small>FILM · SCRIPTURE-ALIGNED</small>
-              <strong>{{ $matchedMoment.label }}</strong>
-              <span>official source ↗</span>
-            </a>
-            {{ end }}
-            <div class="lw-scripture-env__world" aria-hidden="true"><span>PLACE / HISTORY</span></div>
-            <div class="lw-scripture-env__voice" aria-hidden="true"><span>SERMON / WITNESS</span></div>
-          </div>
-        </div>
-      </section>
-      {{ end }}
-    {{ end }}
-  {{ end }}
 
   <nav class="lw-doors" aria-label="Church life">
     {{ range .Pages.ByWeight }}
@@ -124,79 +84,8 @@ body.section-church{background:#efe9dc;color:#252525}.section-church main{paddin
 .lw-door strong{transition:transform .55s cubic-bezier(.22,1,.36,1)}.lw-door:hover strong{transform:translateX(1.2vw)}
 @media(prefers-reduced-motion:no-preference){.lw-stage__copy{transition:transform .2s linear}.lw-water blockquote{transition:transform .2s linear}.lw-four-field{transition:transform .2s linear}}
 @media(max-width:760px){.lw-stage__copy{width:90vw;min-height:68vh;grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;padding:28px 22px}.lw-logo{grid-column:1;width:78vw;margin:4vh 0}.lw-scripture{grid-column:1;grid-row:3;padding:1.2rem 0 0;border-left:0;border-top:1px solid rgba(37,37,37,.22)}.lw-cite{grid-column:1;grid-row:4;padding-left:0}.lw-hero-mark{font-size:32vw}.lw-stage--two .lw-sticky{background:linear-gradient(180deg,#f4efe5 0 72%,#e5d7be 72%)}.lw-whisper{display:none}.lw-water:after{font-size:30vw}.lw-stage--four .lw-sticky{background:linear-gradient(180deg,#e6d8bf 0 58%,#f1eadf 58%)}.lw-verse-rail{left:6vw;top:auto;bottom:5vh}.lw-doors{padding:0 5vw}.lw-final{display:flex}.lw-final small{writing-mode:initial}}
-
-
-.lw-scripture-scene{height:220svh;background:#f3eee3;color:#252525;position:relative;border-top:1px solid rgba(37,37,37,.12)}
-.lw-scripture-scene__sticky{position:sticky;top:0;min-height:100svh;width:min(1320px,88vw);margin:auto;display:grid;grid-template-columns:.7fr 1.5fr .8fr;grid-template-rows:auto 1fr auto;padding:9vh 0 8vh;align-items:center;overflow:hidden}
-.lw-scripture-scene__coordinate{grid-column:1/-1;align-self:start;font:.72rem/1.2 sans-serif;letter-spacing:.22em}
-.lw-scripture-scene h2{grid-column:2;font:400 clamp(9rem,25vw,30rem)/.65 "Noto Serif TC",serif;margin:0;letter-spacing:-.1em;color:rgba(206,189,116,var(--water-alpha,.22));transform:scale(var(--water-scale,.86));transform-origin:center}
-.lw-scripture-scene__event{grid-column:1;grid-row:2;font:400 clamp(2rem,4vw,4.8rem)/1.05 "Noto Serif TC",serif;opacity:var(--event-alpha,0);transform:translateY(var(--event-y,4vh))}
-.lw-scripture-scene__event span{display:block;font:400 1rem/1.4 "Cormorant Garamond",serif;letter-spacing:.08em;margin-top:1rem}
-.lw-scripture-scene__range{grid-column:3;grid-row:2;justify-self:end;opacity:var(--range-alpha,0);font:.78rem/1.5 sans-serif;letter-spacing:.15em}
-.lw-scripture-env{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr;gap:1rem;align-items:end}.lw-scripture-scene__meaning{max-width:30rem;line-height:2;opacity:var(--meaning-alpha,0);transform:translateY(var(--meaning-y,3vh))}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:clamp(5rem,10vw,9rem);border-top:1px solid rgba(37,37,37,.18);display:flex;align-items:flex-end;padding-bottom:.6rem;opacity:var(--resource-alpha,0);transform:translateY(var(--resource-y,3vh));font:.62rem/1.2 sans-serif;letter-spacing:.15em}.lw-scripture-env__media{color:inherit;text-decoration:none;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:.35rem;background:linear-gradient(145deg,rgba(206,189,116,.18),transparent 65%)}.lw-scripture-env__media small{font:inherit;opacity:.55}.lw-scripture-env__media strong{font:400 1rem/1.2 "Cormorant Garamond",serif;letter-spacing:.04em}.lw-scripture-env__media span{letter-spacing:.08em;opacity:.65}.lw-scripture-env__world{border-top-color:rgba(80,96,76,.35)}.lw-scripture-env__voice{border-top-color:rgba(120,92,65,.3)}
-
-@media(max-width:760px){.lw-scripture-scene__sticky{grid-template-columns:1fr;padding:9vh 7vw}.lw-scripture-scene h2{grid-column:1;grid-row:2}.lw-scripture-scene__event{grid-column:1;grid-row:2;align-self:end}.lw-scripture-scene__range{grid-column:1;grid-row:2;align-self:start;justify-self:end}.lw-scripture-env{grid-column:1;grid-row:3;grid-template-columns:1fr 1fr;gap:1.5rem}.lw-scripture-scene__meaning{grid-column:1/-1}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:5rem}}
-
-/* Scripture Environment choreography: resources behave as depth layers, not cards. */
-.lw-scripture-scene{height:300svh;perspective:1200px;contain:paint}
-.lw-scripture-scene__sticky{isolation:isolate}
-.lw-scripture-scene__sticky:before{content:"";position:absolute;inset:12vh 8vw 10vh 18vw;border-radius:50%;background:radial-gradient(circle,rgba(206,189,116,.16),transparent 68%);transform:scale(var(--env-light,.72));opacity:var(--env-light-alpha,.15);pointer-events:none;z-index:-1}
-.lw-scripture-env{position:relative;min-height:24vh;perspective:900px}
-.lw-scripture-scene__meaning{position:relative;z-index:4}
-.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{will-change:transform,opacity;transition:none}
-.lw-scripture-env__media{z-index:3;transform:translate3d(var(--film-x,8vw),var(--film-y,5vh),var(--film-z,-180px)) rotateY(var(--film-r,-5deg));opacity:var(--film-alpha,0);box-shadow:0 2rem 6rem rgba(70,55,30,var(--film-shadow,0))}
-.lw-scripture-env__world{z-index:1;transform:translate3d(var(--world-x,-8vw),var(--world-y,7vh),var(--world-z,-360px)) scale(var(--world-scale,.86));opacity:var(--world-alpha,0)}
-.lw-scripture-env__voice{z-index:2;transform:translate3d(var(--voice-x,5vw),var(--voice-y,8vh),var(--voice-z,-260px));opacity:var(--voice-alpha,0)}
-.lw-scripture-scene[data-phase="scripture"] .lw-scripture-env{pointer-events:none}
-.lw-scripture-scene[data-phase="resource"] .lw-scripture-env__media{pointer-events:auto}
-@media(max-width:760px){.lw-scripture-scene{height:270svh}.lw-scripture-env{min-height:30vh}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{transform:translate3d(0,var(--mobile-y,4vh),0)!important}}
-@media(prefers-reduced-motion:reduce){.lw-scripture-scene{height:auto}.lw-scripture-scene__sticky{position:relative}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{transform:none!important;opacity:1!important}}
-
-/* Final homepage continuity + responsive acceptance guardrails. */
-.lw-story{background:#f3eee3;color:#252525;overflow:clip}
-.lw-story>section{margin:0}
-.lw-stage--four{border-bottom:0}
-.lw-scripture-scene{border-top:0;background:linear-gradient(180deg,#f1eadf 0%,#f3eee3 18%,#eee6d8 100%)}
-.lw-stage--four .lw-sticky:after{content:"";position:absolute;left:6vw;right:6vw;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(206,189,116,.55),transparent);transform:scaleX(var(--handoff,.2));transform-origin:center}
-.lw-scripture-scene__sticky{width:min(1320px,90vw)}
-.lw-doors{background:#eee6d8!important;border-top:1px solid rgba(37,37,37,.1)}
-.lw-door{min-height:clamp(7rem,13vw,11rem)}
-.lw-final{background:#e5d7be!important}
-@media(max-width:980px){.lw-scripture-scene__sticky{width:88vw;grid-template-columns:.85fr 1.15fr}.lw-scripture-scene h2{grid-column:1/-1;justify-self:center}.lw-scripture-scene__event{grid-column:1;z-index:2}.lw-scripture-scene__range{grid-column:2}.lw-scripture-env{grid-template-columns:1fr 1fr}.lw-scripture-scene__meaning{grid-column:1/-1}}
-@media(max-width:760px){.lw-story{overflow:hidden}.lw-scripture-scene__sticky{width:100%;padding-left:7vw;padding-right:7vw}.lw-scripture-scene h2{font-size:clamp(8rem,45vw,15rem)}.lw-scripture-scene__event{font-size:clamp(2rem,10vw,3.5rem)}.lw-scripture-env{grid-template-columns:1fr}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:auto;min-height:5.5rem}.lw-doors{padding-left:7vw;padding-right:7vw}.lw-door{min-height:8rem}}
-@media(max-width:420px){.lw-hero__copy{padding-left:7vw!important;padding-right:7vw!important}.lw-scripture-scene__range{font-size:.68rem}.lw-scripture-env{gap:1rem}}
-
-/* Production visibility guard: never allow Church to fail as a blank surface. */
-html body.section-church #main{display:block!important;visibility:visible!important;opacity:1!important;min-height:100svh;background:#f3eee3!important}
-html body.section-church .lw-story{display:block!important;visibility:visible!important;opacity:1!important;min-height:100svh!important}
-html body.section-church .lw-stage--one{display:grid!important;visibility:visible!important;opacity:1!important;min-height:100svh!important;background:linear-gradient(135deg,#f5f0e6,#e8dfce 58%,#d7c8a8)!important}
-html body.section-church .lw-stage__copy{display:grid!important;visibility:visible!important;opacity:1!important;transform:none!important;animation:none!important}
 </style>
 <script>
-(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){}if(i===2){const quote=s.querySelector('blockquote');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))if(i===3)s.style.setProperty('--handoff',(.2+p*.8).toFixed(3))}})};const envTick=()=>{root.querySelectorAll('.lw-scripture-scene').forEach(s=>{const r=s.getBoundingClientRect(),travel=Math.max(1,r.height-innerHeight),p=clamp(-r.top/travel),q=(a,b)=>clamp((p-a)/(b-a));s.dataset.phase=p<.24?'scripture':p<.68?'resource':'return';s.style.setProperty('--env-light',(.72+q(.05,.55)*.55).toFixed(3));s.style.setProperty('--env-light-alpha',(.12+q(.05,.5)*.58).toFixed(3));s.style.setProperty('--water-alpha',(.12+q(.02,.26)*.38-q(.72,.96)*.25).toFixed(3));s.style.setProperty('--water-scale',(.84+q(.02,.35)*.18).toFixed(3));s.style.setProperty('--event-alpha',q(.14,.32));s.style.setProperty('--event-y',((1-q(.14,.32))*4)+'vh');s.style.setProperty('--range-alpha',q(.22,.4));s.style.setProperty('--meaning-alpha',q(.3,.5));s.style.setProperty('--meaning-y',((1-q(.3,.5))*3)+'vh');const film=q(.38,.58)*(1-q(.84,.98)),world=q(.3,.52)*(1-q(.76,.96)),voice=q(.48,.68)*(1-q(.88,1));s.style.setProperty('--film-alpha',film);s.style.setProperty('--film-x',((1-q(.38,.62))*8)+'vw');s.style.setProperty('--film-y',((1-q(.38,.62))*5)+'vh');s.style.setProperty('--film-z',(-180+q(.38,.7)*180)+'px');s.style.setProperty('--film-r',(-5+q(.38,.7)*5)+'deg');s.style.setProperty('--film-shadow',(.14*q(.5,.7)).toFixed(3));s.style.setProperty('--world-alpha',world*.72);s.style.setProperty('--world-x',((-1+q(.3,.6))*8)+'vw');s.style.setProperty('--world-y',((1-q(.3,.6))*7)+'vh');s.style.setProperty('--world-z',(-360+q(.3,.7)*260)+'px');s.style.setProperty('--world-scale',(.86+q(.3,.7)*.1).toFixed(3));s.style.setProperty('--voice-alpha',voice*.82);s.style.setProperty('--voice-x',((1-q(.48,.72))*5)+'vw');s.style.setProperty('--voice-y',((1-q(.48,.72))*8)+'vh');s.style.setProperty('--voice-z',(-260+q(.48,.78)*210)+'px');s.style.setProperty('--mobile-y',((1-q(.3,.7))*4)+'vh')})};const allTick=()=>{tick();envTick()};addEventListener('scroll',allTick,{passive:true});allTick()})();
+(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));setTimeout(()=>hero.querySelector('.lw-light')?.style.setProperty('--light','1'),650);const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){const o=s.querySelector('.lw-orbit'),line=s.querySelector('.lw-gather-line');if(o)o.style.setProperty('--turn',(p*150)+'deg');if(line)line.style.setProperty('--line',Math.min(1,p*1.45))}if(i===2){const im=s.querySelector('.lw-water__image'),veil=s.querySelector('.lw-water__veil'),quote=s.querySelector('blockquote');if(im)im.style.setProperty('--scale',1.12-p*.12);if(veil)veil.style.setProperty('--veil',(-12+p*18)+'%');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}if(i===3){const field=s.querySelector('.lw-four-field');if(field)field.style.setProperty('--field',((1-p)*4)+'vh')}})};addEventListener('scroll',tick,{passive:true});tick()})();
 </script>
 {{ end }}
-
-<style id="living-water-immersive-foundation">
-/* Immersive foundation: depth comes from viewport, typography, light and motion — not raster wallpaper. */
-.lw-hero{min-height:100svh;overflow:hidden;isolation:isolate;background:
-radial-gradient(70vw 70vw at 72% 48%,rgba(255,252,235,.96) 0,rgba(239,226,188,.58) 34%,rgba(206,189,116,.12) 58%,transparent 72%),
-linear-gradient(118deg,#d8ccb7 0 17%,#eee7d8 17% 61%,#cbbd9f 61% 100%)!important}
-.lw-hero:before{content:""!important;display:block!important;position:absolute;inset:0!important;background:
-linear-gradient(90deg,rgba(37,37,37,.12) 0 1px,transparent 1px) 17% 0/1px 100% no-repeat,
-linear-gradient(90deg,rgba(37,37,37,.1) 0 1px,transparent 1px) 61% 0/1px 100% no-repeat!important;pointer-events:none}
-.lw-hero:after{content:""!important;display:block!important;position:absolute;width:46vw;height:46vw;left:49%;top:48%;border:1px solid rgba(206,189,116,.34);border-radius:50%;transform:translate(-50%,-50%) scale(var(--sun,.82));opacity:var(--sun-opacity,.35);background:none!important;pointer-events:none}
-.lw-hero__copy{position:relative;z-index:2;width:min(1320px,90vw);min-height:100svh;margin:auto;padding:12vh 0 10vh;display:grid;grid-template-columns:minmax(220px,.72fr) minmax(360px,1.45fr);grid-template-rows:auto 1fr auto;gap:3vh 7vw;align-items:center;background:none!important}
-.lw-hero__copy .lw-eyebrow{align-self:start}
-.lw-hero__copy .lw-logo{align-self:center;max-width:min(43vw,620px);transform:translateY(var(--hero-y,0))}
-.lw-hero__copy blockquote{align-self:center;max-width:29rem;margin:0;padding-left:2rem;border-left:1px solid rgba(37,37,37,.25);transform:translateY(var(--verse-y,0))}
-.lw-scroll{z-index:3}
-.lw-stage{min-height:130svh!important}
-.lw-stage__inner,.lw-water__inner,.lw-four__inner{min-height:100svh}
-@media(max-width:760px){
-.lw-hero{background:radial-gradient(90vw 90vw at 70% 32%,rgba(255,252,235,.92),rgba(206,189,116,.12) 58%,transparent 72%),linear-gradient(155deg,#ded3c0,#f3eee3 54%,#c9b996)!important}
-.lw-hero__copy{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:2rem;padding:11vh 7vw 8vh}
-.lw-hero__copy .lw-logo{max-width:82vw}.lw-hero__copy blockquote{max-width:80vw}
-.lw-hero:before{background:none!important}.lw-hero:after{width:86vw;height:86vw;left:70%;top:35%}
-}
-</style>
