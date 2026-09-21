@@ -56,7 +56,7 @@
         {{ $filmHref = $moment.sourcePointer | default $filmHref }}
         {{ with $resources }}{{ range .items }}
           {{ if and (eq .canonicalId $moment.workId) .provenance.verified (not .rights.rehost) }}
-            {{ $filmHref = .sourcePointer | default $filmHref }}
+            {{/* Keep the exact Moment episode URL; Resource supplies verified authority/provider only. */}}
             {{ $filmProvider = .creator | default $filmProvider }}
           {{ end }}
         {{ end }}{{ end }}
