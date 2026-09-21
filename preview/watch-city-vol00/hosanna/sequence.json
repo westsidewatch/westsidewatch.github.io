@@ -120,7 +120,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-branch-sweep",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1800,
@@ -138,7 +138,23 @@
         "purpose": "same-origin public-domain manuscript miniature as an archival intercut"
       },
       "overlayFor": "manger-cross-1912-entry",
-      "overlayDelayMs": 1250
+      "overlayDelayMs": 1250,
+      "edit": {
+        "cut": "gesture-match",
+        "camera": {
+          "focus": "47% 48%",
+          "fromScale": 1.1,
+          "toScale": 1.04,
+          "fromX": -2,
+          "toX": 1,
+          "fromY": 1,
+          "toY": -1
+        },
+        "opacity": {
+          "peak": 0.64,
+          "hold": 0.5
+        }
+      }
     },
     {
       "id": "sinai-14c-icon",
@@ -153,7 +169,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-gate-rise",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1100,
@@ -166,7 +182,23 @@
         "gather",
         "branches",
         "threshold"
-      ]
+      ],
+      "edit": {
+        "cut": "threshold-match",
+        "camera": {
+          "focus": "55% 45%",
+          "fromScale": 1.06,
+          "toScale": 1.11,
+          "fromX": 0,
+          "toX": 0,
+          "fromY": 2,
+          "toY": -1
+        },
+        "opacity": {
+          "peak": 0.58,
+          "hold": 0.45
+        }
+      }
     },
     {
       "id": "manger-cross-1912-entry-still",
@@ -230,10 +262,26 @@
         "resolution": "1101x1145",
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
-      "motion": "motion-branch-sweep",
+      "motion": "motion-semantic",
       "presentation": "double-exposure",
       "overlayFor": "manger-cross-1912-hosanna",
-      "overlayDelayMs": 1450
+      "overlayDelayMs": 1450,
+      "edit": {
+        "cut": "branch-direction-match",
+        "camera": {
+          "focus": "52% 44%",
+          "fromScale": 1.12,
+          "toScale": 1.04,
+          "fromX": -3,
+          "toX": 2,
+          "fromY": 1,
+          "toY": -1
+        },
+        "opacity": {
+          "peak": 0.66,
+          "hold": 0.52
+        }
+      }
     },
     {
       "id": "prang-1892-lithograph",
@@ -248,7 +296,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-crowd-turn",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-library-of-congress-materialized",
       "durationMs": 1100,
@@ -262,7 +310,23 @@
         "garments",
         "hosanna",
         "threshold"
-      ]
+      ],
+      "edit": {
+        "cut": "crowd-density-match",
+        "camera": {
+          "focus": "51% 49%",
+          "fromScale": 1.05,
+          "toScale": 1.09,
+          "fromX": 1,
+          "toX": -1,
+          "fromY": 0,
+          "toY": 0
+        },
+        "opacity": {
+          "peak": 0.6,
+          "hold": 0.47
+        }
+      }
     },
     {
       "id": "life-passion-1903-entry",
@@ -336,7 +400,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-procession-pan",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1900,
@@ -355,7 +419,23 @@
         "purpose": "same-origin public-domain fresco as an archival intercut"
       },
       "overlayFor": "life-passion-1903-entry",
-      "overlayDelayMs": 1150
+      "overlayDelayMs": 1150,
+      "edit": {
+        "cut": "procession-direction-match",
+        "camera": {
+          "focus": "50% 50%",
+          "fromScale": 1.04,
+          "toScale": 1.1,
+          "fromX": 3,
+          "toX": -2,
+          "fromY": 0,
+          "toY": 0
+        },
+        "opacity": {
+          "peak": 0.65,
+          "hold": 0.51
+        }
+      }
     },
     {
       "id": "flemish-17c-entry",
@@ -370,7 +450,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-procession-pan",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1150,
@@ -384,7 +464,23 @@
         "gather",
         "branches",
         "city"
-      ]
+      ],
+      "edit": {
+        "cut": "procession-direction-match",
+        "camera": {
+          "focus": "53% 48%",
+          "fromScale": 1.07,
+          "toScale": 1.11,
+          "fromX": 2,
+          "toX": -2,
+          "fromY": 0,
+          "toY": 0
+        },
+        "opacity": {
+          "peak": 0.57,
+          "hold": 0.44
+        }
+      }
     },
     {
       "id": "life-passion-1903-entry-still",
@@ -449,10 +545,26 @@
         "resolution": "2048x1439",
         "purpose": "same-origin public-domain still for a Ken Burns intercut"
       },
-      "motion": "motion-procession-pan",
+      "motion": "motion-semantic",
       "presentation": "double-exposure",
       "overlayFor": "king-of-kings-1927-hosanna",
-      "overlayDelayMs": 1700
+      "overlayDelayMs": 1700,
+      "edit": {
+        "cut": "scale-disruption",
+        "camera": {
+          "focus": "52% 50%",
+          "fromScale": 1.03,
+          "toScale": 1.09,
+          "fromX": 2,
+          "toX": -2,
+          "fromY": 0,
+          "toY": 0
+        },
+        "opacity": {
+          "peak": 0.62,
+          "hold": 0.49
+        }
+      }
     },
     {
       "id": "king-of-kings-1927-entry",
@@ -506,7 +618,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-crowd-turn",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1800,
@@ -525,7 +637,23 @@
         "purpose": "same-origin public-domain woodcut as an archival intercut"
       },
       "overlayFor": "king-of-kings-1927-entry",
-      "overlayDelayMs": 1100
+      "overlayDelayMs": 1100,
+      "edit": {
+        "cut": "graphic-branch-match",
+        "camera": {
+          "focus": "48% 47%",
+          "fromScale": 1.09,
+          "toScale": 1.06,
+          "fromX": -2,
+          "toX": 1,
+          "fromY": 0,
+          "toY": 0
+        },
+        "opacity": {
+          "peak": 0.66,
+          "hold": 0.52
+        }
+      }
     },
     {
       "id": "schnorr-1860-entry",
@@ -540,7 +668,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-branch-sweep",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1050,
@@ -554,7 +682,23 @@
         "garments",
         "hosanna",
         "threshold"
-      ]
+      ],
+      "edit": {
+        "cut": "branch-gesture-echo",
+        "camera": {
+          "focus": "50% 46%",
+          "fromScale": 1.11,
+          "toScale": 1.05,
+          "fromX": -2,
+          "toX": 2,
+          "fromY": 1,
+          "toY": -1
+        },
+        "opacity": {
+          "peak": 0.58,
+          "hold": 0.45
+        }
+      }
     },
     {
       "id": "king-of-kings-1927-entry-still",
@@ -619,10 +763,26 @@
         "resolution": "2207x1638",
         "purpose": "same-origin public-domain Doré artwork for a Ken Burns intercut"
       },
-      "motion": "motion-gate-rise",
+      "motion": "motion-semantic",
       "presentation": "double-exposure",
       "overlayFor": "life-passion-1903-crowd",
-      "overlayDelayMs": 1700
+      "overlayDelayMs": 1700,
+      "edit": {
+        "cut": "gate-and-rider-match",
+        "camera": {
+          "focus": "54% 47%",
+          "fromScale": 1.08,
+          "toScale": 1.03,
+          "fromX": 0,
+          "toX": 0,
+          "fromY": 2,
+          "toY": -2
+        },
+        "opacity": {
+          "peak": 0.67,
+          "hold": 0.53
+        }
+      }
     },
     {
       "id": "ensor-1885-entry",
@@ -637,7 +797,7 @@
       },
       "assetType": "image",
       "presentation": "double-exposure",
-      "motion": "motion-push-in",
+      "motion": "motion-semantic",
       "rightsState": "publishable",
       "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1200,
@@ -650,7 +810,23 @@
         "branches",
         "hosanna",
         "city"
-      ]
+      ],
+      "edit": {
+        "cut": "crowd-pressure-match",
+        "camera": {
+          "focus": "50% 51%",
+          "fromScale": 1.02,
+          "toScale": 1.12,
+          "fromX": 0,
+          "toX": 0,
+          "fromY": 1,
+          "toY": -1
+        },
+        "opacity": {
+          "peak": 0.6,
+          "hold": 0.46
+        }
+      }
     },
     {
       "id": "manger-cross-1912-hosanna",
@@ -1305,6 +1481,18 @@
       "status": "double-exposure-cut",
       "reference": "The documentary double-exposure treatment used to layer archival material with a live image: the historical picture is a temporal texture, never a card, caption, or replacement shot.",
       "principle": "Eleven historical images are paced as low-opacity double exposures across the six uninterrupted moving clips. Exposure density is distributed by action rather than by historical year, so the film carries the rhythm while the art creates a continuous visual undertow."
+    },
+    "montageGrammarV2": {
+      "date": "2026-09-21",
+      "status": "shot-specific-semantic-edit",
+      "principle": "The six verified moving-image clips remain the uninterrupted spine. Each historical still now carries an explicit cut reason, focal point, virtual-camera path and exposure envelope; timing is still subordinate to the paired film action rather than decorative cadence.",
+      "rules": [
+        "cut on biblical action or visual continuity, never merely on elapsed time",
+        "a still may push, pan, reframe or hold according to its composition",
+        "preserve moving film as temporal authority; stills are semantic counter-images",
+        "do not duplicate source-film frames in public playback",
+        "beauty gate evaluates the transition pair, not only each isolated frame"
+      ]
     }
   },
   "actionCoordinates": {
