@@ -163,9 +163,11 @@ phases.forEach(()=>phaseStrip.append(document.createElement('i'))); const phaseT
 const HERODIAN_LEDGER_URL='./data/objects/herodian-30ce.json';
 const ENU_ORIGIN={lat:31.7780,lon:35.2350};const AOI={west:35.195,east:35.255,south:31.745,north:31.805};
 function geographicPlacement(spatial){
- if(!spatial?.anchor)return null;
- const {lat,lon}=spatial.anchor;
- return {x:(lon-AOI.west)/(AOI.east-AOI.west)*100,y:(AOI.north-lat)/(AOI.north-AOI.south)*100};
+ if(!spatial?.enuMetres)return null;
+ const metresPerDegLat=111319.4908,metresPerDegLon=metresPerDegLat*Math.cos(ENU_ORIGIN.lat*Math.PI/180);
+ const west=(AOI.west-ENU_ORIGIN.lon)*metresPerDegLon,east=(AOI.east-ENU_ORIGIN.lon)*metresPerDegLon;
+ const south=(AOI.south-ENU_ORIGIN.lat)*metresPerDegLat,north=(AOI.north-ENU_ORIGIN.lat)*metresPerDegLat;
+ return {x:(spatial.enuMetres.east-west)/(east-west)*100,y:(north-spatial.enuMetres.north)/(north-south)*100};
 }
 let herodianObjects=[];
 const objectLayer=document.createElement('div');objectLayer.className='j3k-object-layer';city.append(objectLayer);
