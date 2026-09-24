@@ -12,6 +12,8 @@ const eraZh=document.querySelector('.j3k-caption h2');
 const eraNote=document.querySelector('.j3k-era-note');
 const evidenceToggle=document.querySelector('.j3k-evidence-toggle');
 const evidencePanel=document.querySelector('.j3k-evidence-panel');
+const stage=document.querySelector('.j3k-stage');
+const routeToggle=document.querySelector('.j3k-route-toggle');
 
 const blocks=[
   [4,48,16,25,'observed'],[20,45,12,28,'observed'],[34,50,18,23,'reconstructed'],[54,42,12,31,'reconstructed'],
@@ -47,16 +49,24 @@ function update(value){
   });
   const nearest=Math.round(value);
   markerButtons.forEach((x,i)=>x.classList.toggle('is-active',i===nearest));
+  stage.classList.toggle('herodian',nearest===1);
   const display=t<.5?a:b;
   eraEn.textContent=display.en;eraZh.textContent=display.zh;eraNote.textContent=display.note;
   const url=new URL(location.href);url.searchParams.set('era',nearest);history.replaceState(null,'',url);
 }
 slider.addEventListener('input',()=>update(Number(slider.value)));
 markerButtons.forEach((btn,i)=>btn.addEventListener('click',()=>{slider.value=i;update(i)}));
+routeToggle.addEventListener('click',()=>{
+  const on=!stage.classList.contains('route-on');
+  stage.classList.toggle('route-on',on);
+  routeToggle.setAttribute('aria-pressed',String(on));
+  if(on && Math.round(Number(slider.value))!==1){slider.value=1;update(1)}
+});
 evidenceToggle.addEventListener('click',()=>{
   const open=evidencePanel.hasAttribute('hidden');
   evidencePanel.toggleAttribute('hidden',!open);
   evidenceToggle.setAttribute('aria-expanded',String(open));
 });
 const initial=Math.max(0,Math.min(3,Number(new URL(location.href).searchParams.get('era')||0)));
-slider.value=initial;update(initial);
+const routeInitial=new URL(location.href).searchParams.get('route')==='entry';
+if(routeInitial){stage.classList.add('route-on');routeToggle.setAttribute('aria-pressed','true');slider.value=1;update(1)}else{slider.value=initial;update(initial)}
