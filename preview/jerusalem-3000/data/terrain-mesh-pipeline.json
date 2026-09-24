@@ -1,0 +1,70 @@
+{
+  "id": "terrain-mesh-pipeline-v1",
+  "status": "implemented-contract / DEM-payload-pending",
+  "input": {
+    "canonical": "Copernicus DEM",
+    "preferred": "COPERNICUS_30",
+    "fallback": "COPERNICUS_90",
+    "aoi": {
+      "west": 35.195,
+      "south": 31.745,
+      "east": 35.255,
+      "north": 31.805
+    }
+  },
+  "stages": [
+    {
+      "id": "acquire",
+      "output": "source GeoTIFF / elevation raster",
+      "rule": "Preserve source metadata and licence."
+    },
+    {
+      "id": "crop",
+      "output": "Jerusalem AOI raster",
+      "rule": "Never rescale horizontal geography to fit an artistic composition."
+    },
+    {
+      "id": "sample",
+      "output": "regular elevation grid",
+      "rule": "No invented elevation between missing source cells; mark gaps."
+    },
+    {
+      "id": "project",
+      "output": "local ENU vertices",
+      "rule": "Origin and transform come from terrain-authority.json."
+    },
+    {
+      "id": "mesh",
+      "output": "indexed triangle mesh",
+      "rule": "One canonical terrain mesh shared by every era."
+    },
+    {
+      "id": "derive",
+      "output": "normals + relief + anchor elevations",
+      "rule": "No vertical exaggeration in authority data; presentation exaggeration is a reversible view parameter."
+    },
+    {
+      "id": "validate",
+      "output": "terrain acceptance report",
+      "rule": "Check ridge/valley relationships and route elevation profile before publication."
+    }
+  ],
+  "runtime": {
+    "axes": {
+      "x": "east metres",
+      "y": "up metres",
+      "z": "north metres"
+    },
+    "verticalExaggerationAuthority": 1,
+    "lod": "derive lower-resolution display meshes from canonical grid; never create separate historical terrains",
+    "integration": "Three.js historical objects and routes consume the same ENU frame. MapLibre-compatible terrain/elevation queries may be used as verification, not as a second coordinate authority."
+  },
+  "acceptance": [
+    "Mount of Olives higher than Kidron approach in the route profile.",
+    "Jerusalem ridge rises west of Kidron.",
+    "Southeastern ridge/Gihon relationship remains legible.",
+    "Temple/Haram platform anchor is spatially stable through all temporal states.",
+    "Scrubbing time changes objects, not terrain vertices.",
+    "No era-specific terrain mesh."
+  ]
+}
