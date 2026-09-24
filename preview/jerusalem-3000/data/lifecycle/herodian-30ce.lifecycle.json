@@ -1,0 +1,13 @@
+{
+  "schema":"j3k.lifecycle-ledger.v1",
+  "rule":"Lifecycle is expressed against canonical continuous-build phase IDs, never hard-coded slider numbers.",
+  "objects":[
+    {"id":"j3k:object:temple-mount-enclosure-herodian","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
+    {"id":"j3k:object:royal-stoa","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
+    {"id":"j3k:object:antonia","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
+    {"id":"j3k:object:inner-temple","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
+    {"id":"j3k:object:southern-approach","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"transform"}]},
+    {"id":"j3k:object:western-street","lifecycleEvents":[{"phase":"herodian-jesus","state":"build"},{"phase":"roman-destruction","state":"ruin"},{"phase":"aelia","state":"buried"}]},
+    {"id":"j3k:object:eastern-entry-unknown","lifecycleEvents":[]}
+  ]
+}
