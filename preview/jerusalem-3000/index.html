@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jerusalem 3000｜Prototype 01</title>
+<link rel="stylesheet" href="./jerusalem-3000.css">
+</head>
+<body>
+<main class="j3k-shell" data-j3k>
+  <header class="j3k-header">
+    <div>
+      <p class="j3k-kicker">WESTSIDE WATCH · TEMPORAL CITY</p>
+      <h1>Jerusalem 3000</h1>
+      <p>同一個雅法門視角，讓時間在城市裡走。</p>
+    </div>
+    <aside class="j3k-evidence-key" aria-label="Evidence key">
+      <span data-status="observed">實證</span>
+      <span data-status="reconstructed">重建</span>
+      <span data-status="inferred">推定</span>
+      <span data-status="disputed">爭議</span>
+    </aside>
+  </header>
+
+  <section class="j3k-stage" aria-label="Jerusalem temporal reconstruction prototype">
+    <div class="j3k-sky"></div>
+    <div class="j3k-terrain"></div>
+    <div class="j3k-city" aria-hidden="true"></div>
+    <div class="j3k-reticle"><i></i><i></i></div>
+
+    <div class="j3k-caption">
+      <p class="j3k-era-en">TODAY</p>
+      <h2>今天</h2>
+      <p class="j3k-era-note">固定地形與鏡頭。之後改變的是城市的時間狀態，不是觀看座標。</p>
+    </div>
+
+    <button class="j3k-evidence-toggle" type="button" aria-expanded="false">Evidence</button>
+    <aside class="j3k-evidence-panel" hidden>
+      <p class="j3k-panel-label">CURRENT OBJECT</p>
+      <h3>Jaffa Gate reading coordinate</h3>
+      <p>原型階段只證明時間與證據資料契約。抽象量體不聲稱是歷史建築復原。</p>
+      <dl>
+        <div><dt>Status</dt><dd>prototype / inferred geometry</dd></div>
+        <div><dt>Authority</dt><dd>Issue #832 + shared spatial/evidence model</dd></div>
+      </dl>
+    </aside>
+  </section>
+
+  <section class="j3k-time">
+    <div class="j3k-markers" role="tablist" aria-label="Era anchors">
+      <button data-era="0" class="is-active">今天<small>NOW</small></button>
+      <button data-era="1">耶穌時代<small>c. 30 CE</small></button>
+      <button data-era="2">尼希米<small>5th c. BCE</small></button>
+      <button data-era="3">大衛—所羅門<small>10th c. BCE</small></button>
+    </div>
+    <input class="j3k-scrubber" type="range" min="0" max="3" value="0" step="0.001" aria-label="Time">
+    <p class="j3k-direction">← 往回拖動時間 · 可逆 →</p>
+  </section>
+</main>
+<script type="module" src="./jerusalem-3000.js"></script>
+</body>
+</html>
