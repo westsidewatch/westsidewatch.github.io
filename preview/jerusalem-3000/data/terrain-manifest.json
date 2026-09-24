@@ -1,0 +1,9 @@
+{
+  "id": "jerusalem-terrain-manifest",
+  "authority": "./terrain-authority.json",
+  "mesh": null,
+  "elevationGrid": null,
+  "sourceRaster": null,
+  "state": "awaiting-dem-ingest",
+  "message": "The UI must remain explicitly schematic until a provenance-checked Copernicus DEM payload is ingested. Do not silently promote CSS terrain to real terrain."
+}
