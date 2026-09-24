@@ -22,11 +22,48 @@ Date: 2026-09-24
 - IAA, *Western Wall Plaza Excavations Volume III* — 羅馬／拜占庭時期小型出土物與 contexts，補足建築之外的 material evidence。
 - Jerusalem Journal of Archaeology — Hebrew University 開放取得、同行評審；特別保留 Spatial Digital Archaeology and History in Israel 專題作方法層來源。
 
-## C｜地圖與城市形態
+## C｜耶路撒冷地圖時間軸
 
-- National Library of Israel — Eran Laor Cartographic Collection：大型 Holy Land 地圖館藏，含 1486、1493、1560、1590、1698、約1734 等 Jerusalem 地圖／城市想像與測繪。
-- National Library of Israel — 1945 Mandatory Jerusalem / Old City map：二十世紀城市形態與城門／道路比對層。
-- UNESCO — Old City of Jerusalem and its Walls：World Heritage 邊界、座標、官方文檔與可授權圖像；作現代 Old City footprint / conservation reference，不作古代重建 authority。
+這一部分作為 Jerusalem 3000 策展集的固定 Map Atlas。它不是把不同年代的圖當作同等精確的測繪，而是保存「人如何在不同時代看見、記錄、想像與測量耶路撒冷」。每張圖必須標記 map mode：`depiction / pilgrimage / reconstruction / measured survey / modern cartography`，避免把宗教圖像或後世復原誤當 contemporaneous survey。
+
+### 拜占庭時期｜Madaba Map｜6世紀
+- 馬達巴地圖（Madaba Mosaic Map）— 約6世紀的馬賽克聖地圖，Jerusalem vignette 保存城門、柱廊大道、主要教堂與晚期古代城市意象；可與考古城市格局互證，但同時具有明確宗教／朝聖圖像語言，因此標記為 `pilgrimage + depiction`，不是現代比例測繪。
+- 研究入口：M. Avi-Yonah, *The Madaba Mosaic Map*；Pnina Arad, “Another reconsideration of the Madaba map”；晚期古代 Jerusalem / Aelia Capitolina 城市研究。
+
+### 中世紀／早期印刷時代｜1486–1493
+- Bernhard von Breydenbach, Jerusalem, 1486 — 早期印刷旅行／朝聖傳統中的 Jerusalem 城市圖像。
+- Hartmann Schedel, Jerusalem, 1493 — 《紐倫堡編年史》時代的城市圖像；策展時標記 `depiction`，不可直接作建築定位證據。
+
+### 16世紀｜1560–1590
+- Donato Bertelli, Jerusalem, 1560。
+- Christian van Adrichem, Jerusalem and surroundings, 1590 — NLI 明確標為 imaginative historical map；標記 `reconstruction / imaginative`。
+
+### 17–18世紀｜1698–ca.1734
+- Cornelis de Bruyn, View of Jerusalem, 1698。
+- Matthäus Seutter，綜合 Merian / Villalpando 傳統的 Jerusalem，約1734。
+- 這一組用來觀察近代早期歐洲視覺中的 Jerusalem，而非倒推古城精確 geometry。
+
+### 19世紀測繪轉折｜Catherwood → Wilson
+- Frederick Catherwood, *Plan of Jerusalem* — 19世紀 Jerusalem 實地記錄／測繪傳統的重要節點；NLI 條目為 Public Domain / Any Use Permitted。
+- Charles W. Wilson / Ordnance Survey of Jerusalem, 1865 — 現代系統測繪的重要分水嶺；Library of Congress 保存 1865 Ordnance Survey 書冊、照片、圖版與五張折疊 plans。標記 `measured survey`。
+- 這一層開始可以更直接支援 Jerusalem 3000 的 street / gate / wall / terrain alignment，但仍保存 survey date 與後續城市變化。
+
+### 19世紀末｜古代與現代的疊合
+- John Bartholomew, *Jerusalem ancient & modern* — 適合作為「古代復原如何覆蓋現代城市」的策展例子；Public Domain 條目。
+- Schick / 1894–95 Jerusalem cartographic-photographic records — 與歷史照片交叉使用。
+
+### 英國託管時期｜1924–1946
+- Survey of Palestine：Jerusalem 1:5000（1924）、1937、1938，以及 1944/45 分幅圖、1946 guide map。
+- NLI 多個 Survey of Palestine 分幅條目標示 Public Domain / Any Use Permitted，可作20世紀前半城市道路、街區、城牆外擴張的高可信底圖。
+
+### 現代基準
+- UNESCO Old City of Jerusalem and its Walls：World Heritage 邊界、座標與 conservation documents；只作現代 Old City footprint / conservation reference。
+- 現代商業地圖若有版權限制，只保留 pointer，不 rehost。
+
+### Map Atlas authority pool
+- National Library of Israel — Eran Laor / Howard Golden Map Collection：核心約1,600幅 Jerusalem / Holy Land antique maps；NLI 已數位化，並提供從1486到1947的 Jerusalem 高解析地圖集合。
+- NLI Jerusalem Maps 專頁：Temple Mount、Mandatory Jerusalem、antique Jerusalem 分組入口。
+- Library of Congress — 1865 Ordnance Survey of Jerusalem 及相關歷史圖像。
 
 ## D｜圖集與歷史攝影
 
@@ -55,6 +92,7 @@ Date: 2026-09-24
 - spatial target: gate / wall / road / quarter / temple / church / water / terrain / city
 - ledger target: Terrain / Object / Lifecycle / Evidence / Event
 - evidence role: primary / excavation / scholarly synthesis / reconstruction precedent / visual reference
+- map mode: depiction / pilgrimage / reconstruction / measured survey / modern cartography
 - rights: rehost / pointer-only / verify-per-item
 - confidence: observed / reconstructed / inferred / disputed
 
