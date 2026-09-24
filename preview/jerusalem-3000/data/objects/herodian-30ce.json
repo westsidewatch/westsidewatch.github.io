@@ -26,7 +26,13 @@
           "lon": 35.235
         },
         "registration": "provisional-centroid",
-        "accuracy": "platform-scale"
+        "accuracy": "platform-scale",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
@@ -51,7 +57,13 @@
           "lon": 35.2351
         },
         "registration": "provisional-south-platform",
-        "accuracy": "structure-zone"
+        "accuracy": "structure-zone",
+        "enuMetres": {
+          "east": 9.46,
+          "north": -133.58,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
@@ -76,7 +88,13 @@
           "lon": 35.2342
         },
         "registration": "provisional-northwest-adjacency",
-        "accuracy": "zone-not-footprint"
+        "accuracy": "zone-not-footprint",
+        "enuMetres": {
+          "east": -75.71,
+          "north": 222.64,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
@@ -101,7 +119,13 @@
           "lon": 35.235
         },
         "registration": "withheld-exact-placement",
-        "accuracy": "platform-only"
+        "accuracy": "platform-only",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
@@ -125,7 +149,13 @@
           "lon": 35.2349
         },
         "registration": "provisional-archaeological-zone",
-        "accuracy": "approach-zone"
+        "accuracy": "approach-zone",
+        "enuMetres": {
+          "east": -9.46,
+          "north": -244.9,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
@@ -149,7 +179,13 @@
           "lon": 35.2337
         },
         "registration": "provisional-archaeological-zone",
-        "accuracy": "street-zone"
+        "accuracy": "street-zone",
+        "enuMetres": {
+          "east": -123.02,
+          "north": -111.32,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
       }
     },
     {
