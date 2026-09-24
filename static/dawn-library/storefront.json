@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-24T14:15:51.203437+00:00",
+  "generatedAt": "2026-09-24T22:15:09.030555+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2408,6 +2408,52 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-laterrelabibleet0000marc",
+          "title": "La terre, la Bible et l'histoire : \"Vers le pays que je te ferai voir--\"",
+          "author": "Marchadour, Alain, 1937-",
+          "language": "fre",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/laterrelabibleet0000marc",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/laterrelabibleet0000marc",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-dictionaryofbibl0000rowl",
+          "title": "Dictionary of Bible place names",
+          "author": "Rowley, H. H. (Harold Henry), 1890-1969",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/dictionaryofbibl0000rowl",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/dictionaryofbibl0000rowl",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-bible-history-powerpoint_202301",
           "title": "Bible Brief History Powerpoint",
           "author": "",
@@ -2696,52 +2742,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/thecompanionbible_202504",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-BIBLICALCALENDAR",
-          "title": "BIBLICAL CALENDAR",
-          "author": "FREDDY CANAVIRI APAZA",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/BIBLICALCALENDAR",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/BIBLICALCALENDAR",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-postmodernbible0000unse_b2o1",
-          "title": "The postmodern Bible",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/postmodernbible0000unse_b2o1",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/postmodernbible0000unse_b2o1",
             "mode": "source"
           },
           "rights": {
@@ -3629,51 +3629,6 @@
           ]
         },
         {
-          "id": "gutenberg-26881",
-          "title": "The Gospel of Luke, an exposition",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/26881",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL13171206W",
-            "editionId": "OL36576450M",
-            "isbn": "9798520006640",
-            "coverId": 9506551,
-            "internetArchiveId": "gospellukeanexp00erdmgoog",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL13171206W",
-            "openLibraryEdition": "OL36576450M",
-            "isbn": "9798520006640"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-69329",
           "title": "The Song of Songs",
           "author": "",
@@ -3712,6 +3667,51 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/songofsongs00neew_0",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-26881",
+          "title": "The Gospel of Luke, an exposition",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/26881",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL13171206W",
+            "editionId": "OL36576450M",
+            "isbn": "9798520006640",
+            "coverId": 9506551,
+            "internetArchiveId": "gospellukeanexp00erdmgoog",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL13171206W",
+            "openLibraryEdition": "OL36576450M",
+            "isbn": "9798520006640"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -3965,39 +3965,6 @@
           ]
         },
         {
-          "id": "gutenberg-38162",
-          "title": "Practical Religion",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/38162",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL7526202W",
-            "editionId": "OL6691468M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL7526202W",
-            "openLibraryEdition": "OL6691468M"
-          }
-        },
-        {
           "id": "gutenberg-27514",
           "title": "A Handful of Stars: Texts That Have Moved Great Minds",
           "author": "",
@@ -4031,6 +3998,39 @@
             "openLibraryWork": "/works/OL24186625W",
             "openLibraryEdition": "OL31930339M",
             "isbn": "034495904X"
+          }
+        },
+        {
+          "id": "gutenberg-38162",
+          "title": "Practical Religion",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/38162",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL7526202W",
+            "editionId": "OL6691468M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL7526202W",
+            "openLibraryEdition": "OL6691468M"
           }
         },
         {
@@ -4777,26 +4777,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-44884",
-          "title": "The Geography of Strabo, Volume 1 (of 3)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/44884",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
-        },
-        {
           "id": "gutenberg-61792",
           "title": "Olympic Victor Monuments and Greek Athletic Art",
           "author": "",
@@ -4842,49 +4822,24 @@
           ]
         },
         {
-          "id": "gutenberg-47532",
-          "title": "The Catacombs of Rome, and Their Testimony Relative to Primitive Christianity",
+          "id": "gutenberg-44884",
+          "title": "The Geography of Strabo, Volume 1 (of 3)",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/47532",
+            "url": "https://www.gutenberg.org/ebooks/44884",
             "kind": "remote-public"
           },
           "cover": {
-            "url": "https://covers.openlibrary.org/b/id/5610300-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
+            "mode": "one-fallback"
           },
           "rights": {
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
           "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL206994W",
-            "editionId": "OL7089472M",
-            "isbn": "066542373X",
-            "coverId": 5610300,
-            "internetArchiveId": "catacombsofromet00withuoft",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL206994W",
-            "openLibraryEdition": "OL7089472M",
-            "isbn": "066542373X"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/catacombsofromet00withuoft",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-2131",
@@ -4954,6 +4909,51 @@
             "openLibraryWork": "/works/OL31427311W",
             "openLibraryEdition": "OL43082890M"
           }
+        },
+        {
+          "id": "gutenberg-47532",
+          "title": "The Catacombs of Rome, and Their Testimony Relative to Primitive Christianity",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/47532",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/5610300-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL206994W",
+            "editionId": "OL7089472M",
+            "isbn": "066542373X",
+            "coverId": 5610300,
+            "internetArchiveId": "catacombsofromet00withuoft",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL206994W",
+            "openLibraryEdition": "OL7089472M",
+            "isbn": "066542373X"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/catacombsofromet00withuoft",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         },
         {
           "id": "gutenberg-69344",
@@ -5189,6 +5189,26 @@
           ]
         },
         {
+          "id": "gutenberg-41785",
+          "title": "Archaic England : an essay in deciphering prehistory from megalithic monuments, earthworks, customs, coins, place-names, and faerie superstitions",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/41785",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-14672",
           "title": "The Religion of the Ancient Celts",
           "author": "",
@@ -5298,24 +5318,48 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-41785",
-          "title": "Archaic England : an essay in deciphering prehistory from megalithic monuments, earthworks, customs, coins, place-names, and faerie superstitions",
+          "id": "gutenberg-14400",
+          "title": "Manual of Egyptian Archaeology and Guide to the Study of Antiquities in Egypt",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/41785",
+            "url": "https://www.gutenberg.org/ebooks/14400",
             "kind": "remote-public"
           },
           "cover": {
-            "mode": "one-fallback"
+            "url": "https://covers.openlibrary.org/b/id/6331194-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
           },
           "rights": {
             "status": "public-domain-us",
             "declaredBy": "Project Gutenberg"
           },
           "quality": "source-edition",
-          "contentDownloaded": false
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1101822W",
+            "editionId": "OL13807271M",
+            "isbn": null,
+            "coverId": 6331194,
+            "internetArchiveId": "cu31924102198896",
+            "resolvedAt": "2026-09-18T13:40:22.529875+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1101822W",
+            "openLibraryEdition": "OL13807271M"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/cu31924102198896",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         },
         {
           "id": "gutenberg-32066",
@@ -5392,50 +5436,6 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/worldofhomer00languoft",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "gutenberg-14400",
-          "title": "Manual of Egyptian Archaeology and Guide to the Study of Antiquities in Egypt",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/14400",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/6331194-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1101822W",
-            "editionId": "OL13807271M",
-            "isbn": null,
-            "coverId": 6331194,
-            "internetArchiveId": "cu31924102198896",
-            "resolvedAt": "2026-09-18T13:40:22.529875+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1101822W",
-            "openLibraryEdition": "OL13807271M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/cu31924102198896",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -6131,6 +6131,42 @@
           ]
         },
         {
+          "id": "gutenberg-8438",
+          "title": "The Nicomachean ethics of Aristotle",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/8438",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/10954696-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL24411017W",
+            "editionId": "OL32648522M",
+            "isbn": "9780342237951",
+            "coverId": 10954696,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL24411017W",
+            "openLibraryEdition": "OL32648522M",
+            "isbn": "9780342237951"
+          }
+        },
+        {
           "id": "gutenberg-14328",
           "title": "The Consolation of Philosophy",
           "author": "",
@@ -6174,42 +6210,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-8438",
-          "title": "The Nicomachean ethics of Aristotle",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/8438",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/10954696-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL24411017W",
-            "editionId": "OL32648522M",
-            "isbn": "9780342237951",
-            "coverId": 10954696,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL24411017W",
-            "openLibraryEdition": "OL32648522M",
-            "isbn": "9780342237951"
-          }
         },
         {
           "id": "gutenberg-785",
@@ -6313,51 +6313,17 @@
           }
         },
         {
-          "id": "gutenberg-55317",
-          "title": "The Meditations of the Emperor Marcus Aurelius Antoninus",
+          "id": "gutenberg-1974",
+          "title": "The Poetics of Aristotle",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/55317",
+            "url": "https://www.gutenberg.org/ebooks/1974",
             "kind": "remote-public"
           },
           "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL40199512W",
-            "editionId": "OL56539776M",
-            "isbn": "1721589058",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL40199512W",
-            "openLibraryEdition": "OL56539776M",
-            "isbn": "1721589058"
-          }
-        },
-        {
-          "id": "gutenberg-14988",
-          "title": "Cicero's Tusculan Disputations",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/14988",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/12392901-L.jpg?default=false",
+            "url": "https://covers.openlibrary.org/b/id/66397-L.jpg?default=false",
             "mode": "edition-identity",
             "provider": "Open Library"
           },
@@ -6369,18 +6335,72 @@
           "contentDownloaded": false,
           "identity": {
             "provider": "Open Library",
-            "workId": "/works/OL26427624W",
-            "editionId": "OL40248593M",
-            "isbn": "9354157661",
-            "coverId": 12392901,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+            "workId": "/works/OL151549W",
+            "editionId": "OL9263205M",
+            "isbn": "0075546027",
+            "coverId": 66397,
+            "internetArchiveId": "rhetoricpoet00davi",
+            "resolvedAt": "2026-09-24T22:15:09.030555+00:00"
           },
           "identifiers": {
-            "openLibraryWork": "/works/OL26427624W",
-            "openLibraryEdition": "OL40248593M",
-            "isbn": "9354157661"
-          }
+            "openLibraryWork": "/works/OL151549W",
+            "openLibraryEdition": "OL9263205M",
+            "isbn": "0075546027"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/rhetoricpoet00davi",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-16643",
+          "title": "Essays by Ralph Waldo Emerson",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/16643",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/1760046-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL62168W",
+            "editionId": "OL13571132M",
+            "isbn": "9781406918533",
+            "coverId": 1760046,
+            "internetArchiveId": "essaysbyralphwal0000emer",
+            "resolvedAt": "2026-09-24T22:15:09.030555+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL62168W",
+            "openLibraryEdition": "OL13571132M",
+            "isbn": "9781406918533"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/essaysbyralphwal0000emer",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
         }
       ]
     },
@@ -6846,40 +6866,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-4361",
-          "title": "Memoirs of General William T. Sherman — Complete",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/4361",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL40105211W",
-            "editionId": "OL54582118M",
-            "isbn": "9781480224605",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL40105211W",
-            "openLibraryEdition": "OL54582118M",
-            "isbn": "9781480224605"
-          }
-        },
-        {
           "id": "gutenberg-22345",
           "title": "Memoirs of the Private Life, Return, and Reign of Napoleon in 1815, Vol. I",
           "author": "",
@@ -6931,6 +6917,40 @@
             "openLibraryWork": "/works/OL13141771M",
             "openLibraryEdition": "OL13141771M",
             "isbn": "9788171561315"
+          }
+        },
+        {
+          "id": "gutenberg-4361",
+          "title": "Memoirs of General William T. Sherman — Complete",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/4361",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL40105211W",
+            "editionId": "OL54582118M",
+            "isbn": "9781480224605",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL40105211W",
+            "openLibraryEdition": "OL54582118M",
+            "isbn": "9781480224605"
           }
         },
         {
@@ -7068,13 +7088,13 @@
           ]
         },
         {
-          "id": "gutenberg-54743",
-          "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England, Volume 1 (of 6)",
+          "id": "gutenberg-42602",
+          "title": "The Steam Engine Explained and Illustrated (Seventh Edition)",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/54743",
+            "url": "https://www.gutenberg.org/ebooks/42602",
             "kind": "remote-public"
           },
           "cover": {
@@ -7121,13 +7141,13 @@
           }
         },
         {
-          "id": "gutenberg-42602",
-          "title": "The Steam Engine Explained and Illustrated (Seventh Edition)",
+          "id": "gutenberg-54743",
+          "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England, Volume 1 (of 6)",
           "author": "",
           "language": "en",
           "source": {
             "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/42602",
+            "url": "https://www.gutenberg.org/ebooks/54743",
             "kind": "remote-public"
           },
           "cover": {
@@ -7166,7 +7186,7 @@
   "metrics": {
     "shelves": 11,
     "mappedBooks": 214,
-    "sourceCovers": 162,
+    "sourceCovers": 163,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
@@ -7175,11 +7195,11 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 0,
+      "queriedThisRun": 2,
       "resolved": 121,
-      "coversAdded": 64,
-      "internetArchiveLinks": 54,
-      "cacheEntries": 194
+      "coversAdded": 65,
+      "internetArchiveLinks": 56,
+      "cacheEntries": 196
     }
   },
   "errors": [
