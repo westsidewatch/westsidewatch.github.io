@@ -1,0 +1,42 @@
+{
+  "schema": "dore.design-observation-evidence.v1",
+  "id": "observation.fixture.editorial-atlas",
+  "source": {
+    "kind": "artifact",
+    "locator": "static/dore-design/italian-editorial-atlas.html",
+    "capturedAt": null,
+    "viewport": null
+  },
+  "observations": {
+    "visualFacts": {"note": "Fixture only; production observer will populate measured facts."},
+    "componentGrammar": [],
+    "compositionGrammar": [
+      {"statement": "Editorial evidence is organized as a comparative atlas rather than a single reusable template.", "confidence": 1, "evidenceRefs": ["italian-editorial-atlas.html"]}
+    ],
+    "editorialGrammar": [
+      {"statement": "Evidence and grammar remain distinguishable so generated candidates cannot become historical authority.", "confidence": 1, "evidenceRefs": ["italian-editorial-evidence.v1.json", "italian-editorial-grammar-candidates.v1.json"]}
+    ],
+    "motionGrammar": [],
+    "responsiveBehavior": [],
+    "inferredRationale": [
+      {"statement": "A shared observation envelope can let historical editorial evidence and rendered digital references enter Design Intelligence through one evidence boundary.", "confidence": 0.9, "evidenceRefs": ["italian-editorial-atlas.html"], "status": "inference-not-fact"}
+    ]
+  },
+  "provenance": {
+    "evidenceRefs": ["static/dore-design/italian-editorial-atlas.html", "static/dore-design/italian-editorial-evidence.v1.json"],
+    "method": ["document-analysis", "human"],
+    "notes": ["This fixture proves envelope compatibility; it is not a historical claim source."]
+  },
+  "authority": {
+    "class": "observational-evidence",
+    "mayPromoteCanonical": false,
+    "requiresBeautifulGate": true,
+    "historicalAuthority": false
+  },
+  "exports": {
+    "designMd": true,
+    "cssVariables": true,
+    "tailwind": true,
+    "dtcgTokens": true
+  }
+}

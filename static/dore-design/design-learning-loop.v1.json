@@ -1,0 +1,32 @@
+{
+  "schema": "dore.design-learning-loop.v1",
+  "id": "design-intelligence.continuous-observation",
+  "role": "subloop-of-dore-autonomous-loop",
+  "purpose": "Continuously discover, observe, compare and distill design evidence without bypassing Doré canonical authority or the Beautiful Gate.",
+  "sourceLanes": [
+    {"id":"italian-editorial","mode":"deep-lineage","examples":["historical Italian magazines","Casabella","Domus","Ottagono","Abitare"],"minimumShare":0.35},
+    {"id":"independent-editorial","mode":"open-discovery","examples":["independent magazines","small press","experimental editorial publishing"],"minimumShare":0.25},
+    {"id":"digital-web","mode":"open-discovery","examples":["editorial websites","cultural institutions","design studios","experimental digital products"],"minimumShare":0.25},
+    {"id":"outside-mutation","mode":"serendipity","examples":["games","film","architecture","exhibitions","type","motion"],"minimumShare":0.15}
+  ],
+  "cycle":["discover","admit-source","capture","observe","normalize-evidence","compare","distill","generate-candidate","render","beautiful-gate","learn","update-search-priorities"],
+  "hardGates": {
+    "sourceRightsAndAccess": true,
+    "evidenceProvenance": true,
+    "observationMayPromoteCanonical": false,
+    "generatedArtifactMayBecomeHistoricalAuthority": false,
+    "beautifulGateRequired": true,
+    "humanAuthorityForCanonicalPromotion": true
+  },
+  "learning": {
+    "rewardNovelGrammar": true,
+    "rewardCrossEraContinuity": true,
+    "rewardUsefulMutation": true,
+    "penalizeTemplateCopying": true,
+    "penalizeSourceConcentration": true,
+    "penalizeAestheticRegression": true,
+    "feedbackTargets":["source-priority","comparison-pairs","grammar-candidates","UI-skill-growth","game-art-direction","consumer-candidates"]
+  },
+  "outputs": ["design-observation-evidence","comparison-set","grammar-candidate","render-candidate","learning-feedback","DESIGN.md-export","token-export"],
+  "canonicalBoundary": "Only validated learning may be proposed to existing Design Intelligence. This subloop never writes canonical design directly."
+}
