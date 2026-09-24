@@ -161,6 +161,12 @@ const evidenceToggle=document.querySelector('.j3k-evidence-toggle'),evidencePane
 const play=document.querySelector('.j3k-play'),phaseDate=document.querySelector('.j3k-phase-date'),phaseStrip=document.querySelector('.j3k-phase-strip');
 phases.forEach(()=>phaseStrip.append(document.createElement('i'))); const phaseTicks=[...phaseStrip.children];
 const HERODIAN_LEDGER_URL='./data/objects/herodian-30ce.json';
+const ENU_ORIGIN={lat:31.7780,lon:35.2350};const AOI={west:35.195,east:35.255,south:31.745,north:31.805};
+function geographicPlacement(spatial){
+ if(!spatial?.anchor)return null;
+ const {lat,lon}=spatial.anchor;
+ return {x:(lon-AOI.west)/(AOI.east-AOI.west)*100,y:(AOI.north-lat)/(AOI.north-AOI.south)*100};
+}
 let herodianObjects=[];
 const objectLayer=document.createElement('div');objectLayer.className='j3k-object-layer';city.append(objectLayer);
 
@@ -168,7 +174,7 @@ async function loadHerodianLedger(){
  const ledger=await fetch(HERODIAN_LEDGER_URL).then(r=>{if(!r.ok)throw new Error('Herodian object ledger unavailable');return r.json()});
  herodianObjects=ledger.objects.map((object,i)=>{
    const el=document.createElement('div');el.className='j3k-historical-object';el.dataset.objectId=object.id;el.dataset.evidence=object.evidence;
-   el.style.setProperty('--slot',i);el.title=object.label;objectLayer.append(el);return {...object,el};
+   const pos=geographicPlacement(object.spatial);if(pos){el.style.left=pos.x+'%';el.style.top=pos.y+'%';el.dataset.registration=object.spatial.registration}else{el.dataset.registration='withheld';el.hidden=true}el.title=object.label;objectLayer.append(el);return {...object,el};
  });
  updateHistoricalObjects(Number(slider.value));
 }
