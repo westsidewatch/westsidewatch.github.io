@@ -1,19 +1,13 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-24T22:14:50.860576+00:00",
+  "generatedAt": "2026-09-24T22:18:08.472816+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 74,
+  "pagesChecked": 71,
   "newDiscovered": 0,
   "candidateQueue": 71,
   "catalogBooks": 1969,
-  "errors": [
-    {
-      "query": "Hebrew Bible",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Hebrew+Bible",
-      "error": "RemoteDisconnected"
-    }
-  ],
+  "errors": [],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
