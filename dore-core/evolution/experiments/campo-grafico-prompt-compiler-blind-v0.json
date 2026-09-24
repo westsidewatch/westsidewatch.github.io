@@ -1,0 +1,60 @@
+{
+  "schema": "dore.editorial-intelligence-experiment.v0",
+  "experiment": "campo-grafico-prompt-compiler-blind-v0",
+  "status": "READY_FOR_EXECUTION_NOT_CAPABILITY_PASS",
+  "purpose": "Turn the completed Campo Grafico 1933-1939 evidence corpus into a measurable image-prompt generation experiment while keeping research evidence separate from runtime experience.",
+  "principle": "Research feeds execution; execution feeds experience memory; experience must never rewrite historical evidence.",
+  "inputs": {
+    "corpus": "Campo Grafico 1933-1939 canonical evidence packets",
+    "task": "unseen Westside editorial image brief",
+    "forbidden_shortcut": "Do not name Campo Grafico, Italian style, vintage magazine, or any source publication in the experimental prompt."
+  },
+  "pipeline": [
+    "content-semantic-read",
+    "editorial-problem-detection",
+    "evidence-retrieval",
+    "grammar-selection",
+    "negative-constraint-selection",
+    "prompt-compilation",
+    "candidate-generation",
+    "aesthetic-judge",
+    "rejection-or-acceptance",
+    "experience-memory-return"
+  ],
+  "compiler_output_contract": {
+    "semantic_intent": "What the image must mean before visual styling.",
+    "selected_grammars": "Only evidence-backed grammars necessary for this task.",
+    "composition_directives": "Spatial hierarchy, scale, density, asymmetrical equilibrium, image/text relation, material behavior.",
+    "material_directives": "Physical/print/object qualities only when semantically justified.",
+    "negative_constraints": "Prevent motif copying, nostalgia, decorative collage, generic luxury-editorial styling and unjustified distressing.",
+    "image_prompt": "Compact executor-ready prompt with no publication/style-name shortcut.",
+    "provenance": "Grammar IDs and evidence packets used to compile the prompt."
+  },
+  "control": {
+    "prompt": "Create a beautiful high-end modern Italian editorial magazine image for the supplied content.",
+    "rule": "Control receives the same semantic content and image-generation executor but no Campo Grafico evidence retrieval."
+  },
+  "blind_acceptance": [
+    "Experimental output is judged more beautiful and editorially intentional than control without relying on source-name recognition.",
+    "Composition expresses the supplied content rather than merely exhibiting period motifs.",
+    "At least one selected grammar has a traceable evidence path to the canonical corpus.",
+    "No copied masthead, logo, recognizable historical page, or publication-specific motif is required for success.",
+    "Aesthetic Judge can reject a technically successful but editorially empty candidate.",
+    "A semantically different second task can reuse the learned intelligence without reproducing the first composition.",
+    "A non-applicable task can decline the Campo Grafico grammar instead of forcing it."
+  ],
+  "experience_memory_contract": {
+    "separate_from_evidence": true,
+    "record": [
+      "task",
+      "retrieved_grammar_ids",
+      "compiled_prompt",
+      "candidate_outcomes",
+      "judge_reasoning_summary",
+      "accepted_or_rejected",
+      "transfer_observation"
+    ],
+    "must_not": "Promote runtime preference, accidental model behavior, or a successful visual motif into historical evidence."
+  },
+  "capability_gate": "No Capability Registry or System Atlas promotion from this experiment alone. Require successful same-source differentiation, unseen-task transfer, negative selection, provenance backtrace and later blind reuse."
+}
