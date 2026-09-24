@@ -9,6 +9,13 @@ export async function loadTerrainAuthority(){
   return {authority,manifest};
 }
 
+export async function loadCanonicalTerrain(manifest){
+  if(!manifest.mesh?.url) return null;
+  const mesh=await fetch(manifest.mesh.url).then(r=>{if(!r.ok)throw new Error('canonical terrain mesh unavailable');return r.json()});
+  if(mesh.schema!=='j3k-terrain-mesh-v1') throw new Error('unsupported terrain mesh schema');
+  return mesh;
+}
+
 export function terrainRuntimeState(manifest){
   if(manifest.mesh?.url) return {mode:'mesh',label:'REAL TERRAIN',ready:true};
   return {mode:'schematic',label:'TERRAIN DATA PENDING',ready:false};
