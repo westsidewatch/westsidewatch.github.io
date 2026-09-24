@@ -1,0 +1,18 @@
+{
+  "schema":"j3k.lifecycle-ledger.v1",
+  "objects":[
+    {"id":"j3k:object:southeastern-ridge-iron-age","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"late-first-temple","state":"expand"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"rebuild"}]},
+    {"id":"j3k:object:gihon-system-iron-age","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"late-first-temple","state":"transform"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"transform"}]},
+    {"id":"j3k:object:royal-monumental-zone-10c","lifecycleEvents":[{"phase":"david-solomon","state":"build"},{"phase":"babylonian-destruction","state":"ruin"},{"phase":"persian-nehemiah","state":"buried"}]},
+    {"id":"j3k:object:persian-settlement-envelope","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"expand"},{"phase":"herodian-jesus","state":"transform"}]},
+    {"id":"j3k:object:nehemiah-wall","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"transform"},{"phase":"herodian-jesus","state":"buried"}]},
+    {"id":"j3k:object:second-temple-early","lifecycleEvents":[{"phase":"persian-nehemiah","state":"rebuild"},{"phase":"hellenistic-hasmonean","state":"transform"},{"phase":"herodian-jesus","state":"transform"},{"phase":"roman-destruction","state":"ruin"}]},
+    {"id":"j3k:object:ottoman-wall","lifecycleEvents":[{"phase":"ottoman","state":"build"},{"phase":"outside-walls","state":"transform"},{"phase":"modern","state":"transform"}]},
+    {"id":"j3k:object:jaffa-gate-ottoman","lifecycleEvents":[{"phase":"ottoman","state":"build"},{"phase":"outside-walls","state":"transform"},{"phase":"modern","state":"transform"}]},
+    {"id":"j3k:object:damascus-gate-ottoman","lifecycleEvents":[{"phase":"ottoman","state":"build"},{"phase":"outside-walls","state":"transform"},{"phase":"modern","state":"transform"}]},
+    {"id":"j3k:object:old-city-fabric-ottoman","lifecycleEvents":[{"phase":"ottoman","state":"build"},{"phase":"outside-walls","state":"transform"},{"phase":"modern","state":"transform"}]},
+    {"id":"j3k:object:modern-old-city-preserved","lifecycleEvents":[{"phase":"modern","state":"build"}]},
+    {"id":"j3k:object:modern-metropolitan-envelope","lifecycleEvents":[{"phase":"outside-walls","state":"settlement"},{"phase":"modern","state":"expand"}]},
+    {"id":"j3k:object:modern-road-fabric","lifecycleEvents":[{"phase":"outside-walls","state":"build"},{"phase":"modern","state":"expand"}]}
+  ]
+}
