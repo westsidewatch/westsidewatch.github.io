@@ -21,6 +21,29 @@ export function registerObjectsToTerrain(objects,mesh){
   });
 }
 
+function drapePoint(point,sample){
+  if(!Array.isArray(point)||point.length<2) throw new Error('invalid ENU geometry point');
+  const east=point[0],north=point[1],hit=sample(east,north);
+  return {enu:[east,hit.up,north],sampleDistanceMetres:hit.distanceMetres};
+}
+
+function drapeLine(line,sample){return line.map(p=>drapePoint(p,sample));}
+
+export function drapeGeometryEntry(entry,mesh){
+  if(entry.status==='withheld'||entry.coordinatesENU==null) return {...entry,drapedGeometry:null};
+  const sample=buildTerrainSampler(mesh),g=entry.coordinatesENU;
+  let coordinates;
+  if(entry.geometryType==='LineString') coordinates=drapeLine(g,sample);
+  else if(entry.geometryType==='MultiLineString') coordinates=g.map(line=>drapeLine(line,sample));
+  else if(entry.geometryType==='Polygon') coordinates=g.map(ring=>drapeLine(ring,sample));
+  else throw new Error(`unsupported geometry type: ${entry.geometryType}`);
+  return {...entry,drapedGeometry:{frame:'local-enu',verticalAuthority:'canonical-terrain-mesh',coordinates}};
+}
+
+export function drapeGeometryRegistry(registry,mesh){
+  return {...registry,entries:registry.entries.map(entry=>drapeGeometryEntry(entry,mesh))};
+}
+
 export function threePosition(spatial){
   const p=spatial?.enuMetres;
   if(!p||p.up==null) return null;
