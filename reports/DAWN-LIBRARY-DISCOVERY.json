@@ -1,13 +1,39 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-24T14:15:29.928892+00:00",
+  "generatedAt": "2026-09-24T20:15:34.154836+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 72,
+  "pagesChecked": 70,
   "newDiscovered": 0,
   "candidateQueue": 71,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Josephus",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Augustine",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=76",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Chrysostom",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Chrysostom",
+      "error": "HTTPError"
+    },
+    {
+      "query": "F. B. Meyer",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=F.+B.+Meyer",
+      "error": "HTTPError"
+    },
+    {
+      "query": "A. W. Tozer",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=A.+W.+Tozer",
+      "error": "HTTPError"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
