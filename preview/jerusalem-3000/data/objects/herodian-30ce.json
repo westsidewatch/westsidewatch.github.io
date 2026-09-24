@@ -18,6 +18,15 @@
       "geometry": {
         "status": "registration-pending",
         "authority": "surviving retaining fabric + archaeology + literary reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "provisional-centroid",
+        "accuracy": "platform-scale"
       }
     },
     {
@@ -34,6 +43,15 @@
       "geometry": {
         "status": "candidate",
         "rule": "footprint/detail remain reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.7768,
+          "lon": 35.2351
+        },
+        "registration": "provisional-south-platform",
+        "accuracy": "structure-zone"
       }
     },
     {
@@ -50,6 +68,15 @@
       "geometry": {
         "status": "candidate",
         "rule": "northwest adjacency is strong; exact footprint/elevations remain reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.78,
+          "lon": 35.2342
+        },
+        "registration": "provisional-northwest-adjacency",
+        "accuracy": "zone-not-footprint"
       }
     },
     {
@@ -66,6 +93,15 @@
       "geometry": {
         "status": "candidate",
         "rule": "not excavated in situ; literary sources constrain but do not survey exact placement/detail"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "withheld-exact-placement",
+        "accuracy": "platform-only"
       }
     },
     {
@@ -81,6 +117,15 @@
       },
       "geometry": {
         "status": "registration-pending"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.7758,
+          "lon": 35.2349
+        },
+        "registration": "provisional-archaeological-zone",
+        "accuracy": "approach-zone"
       }
     },
     {
@@ -96,6 +141,15 @@
       },
       "geometry": {
         "status": "registration-pending"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.777,
+          "lon": 35.2337
+        },
+        "registration": "provisional-archaeological-zone",
+        "accuracy": "street-zone"
       }
     },
     {
@@ -110,6 +164,12 @@
       "geometry": {
         "status": "withheld",
         "rule": "Do not substitute later Golden Gate as Herodian certainty."
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": null,
+        "registration": "withheld",
+        "accuracy": "unknown-exact-gate"
       }
     }
   ],
