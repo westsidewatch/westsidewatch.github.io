@@ -1,3 +1,4 @@
+import {loadTerrainAuthority,terrainRuntimeState} from './terrain-runtime.js';
 const timeline={
   "id": "jerusalem-continuous-build",
   "title": "Jerusalem — continuous urban biography",
@@ -190,3 +191,11 @@ play.addEventListener('click',()=>raf?stop():start());
 routeToggle.addEventListener('click',()=>{const on=!stage.classList.contains('route-on');stage.classList.toggle('route-on',on);routeToggle.setAttribute('aria-pressed',String(on));if(on){stop();slider.value=8;update(8)}});
 evidenceToggle.addEventListener('click',()=>{const open=evidencePanel.hasAttribute('hidden');evidencePanel.toggleAttribute('hidden',!open);evidenceToggle.setAttribute('aria-expanded',String(open))});
 const requested=new URL(location.href).searchParams.get('phase');const initial=Math.max(0,phases.findIndex(x=>x.id===requested));slider.value=initial;update(initial);
+
+loadTerrainAuthority().then(({manifest})=>{
+ const state=terrainRuntimeState(manifest);
+ const badge=document.querySelector('.j3k-terrain-badge');
+ const terrain=document.querySelector('.j3k-terrain');
+ badge.textContent=state.label;
+ terrain.dataset.terrainState=state.mode;
+}).catch(()=>{document.querySelector('.j3k-terrain-badge').textContent='TERRAIN AUTHORITY ERROR'});
