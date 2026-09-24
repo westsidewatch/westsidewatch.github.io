@@ -160,6 +160,30 @@ const markerButtons=[...document.querySelectorAll('.j3k-markers button')],eraEn=
 const evidenceToggle=document.querySelector('.j3k-evidence-toggle'),evidencePanel=document.querySelector('.j3k-evidence-panel'),routeToggle=document.querySelector('.j3k-route-toggle');
 const play=document.querySelector('.j3k-play'),phaseDate=document.querySelector('.j3k-phase-date'),phaseStrip=document.querySelector('.j3k-phase-strip');
 phases.forEach(()=>phaseStrip.append(document.createElement('i'))); const phaseTicks=[...phaseStrip.children];
+const HERODIAN_LEDGER_URL='./data/objects/herodian-30ce.json';
+let herodianObjects=[];
+const objectLayer=document.createElement('div');objectLayer.className='j3k-object-layer';city.append(objectLayer);
+
+async function loadHerodianLedger(){
+ const ledger=await fetch(HERODIAN_LEDGER_URL).then(r=>{if(!r.ok)throw new Error('Herodian object ledger unavailable');return r.json()});
+ herodianObjects=ledger.objects.map((object,i)=>{
+   const el=document.createElement('div');el.className='j3k-historical-object';el.dataset.objectId=object.id;el.dataset.evidence=object.evidence;
+   el.style.setProperty('--slot',i);el.title=object.label;objectLayer.append(el);return {...object,el};
+ });
+ updateHistoricalObjects(Number(slider.value));
+}
+function updateHistoricalObjects(value){
+ const phase=Math.round(value);
+ herodianObjects.forEach((object,i)=>{
+   let state='absent';
+   if(phase===8) state='standing';
+   else if(phase===9) state='ruin';
+   else if(phase>9) state='buried-reused';
+   object.el.dataset.lifecycle=state;
+   object.el.style.setProperty('--life-opacity',state==='standing'?'1':state==='ruin'?'.42':state==='buried-reused'?'.12':'0');
+ });
+}
+
 const blocks=[
 [4,48,16,25,'observed'],[20,45,12,28,'observed'],[34,50,18,23,'reconstructed'],[54,42,12,31,'reconstructed'],[69,47,14,26,'inferred'],[82,52,10,20,'inferred'],[10,30,13,17,'observed'],[27,27,16,19,'reconstructed'],[48,29,19,18,'disputed'],[73,29,12,18,'inferred'],[6,65,21,12,'observed'],[30,66,16,10,'reconstructed'],[51,64,18,13,'inferred'],[72,67,20,10,'disputed'],[15,15,12,12,'reconstructed'],[39,13,16,13,'inferred'],[64,14,13,12,'disputed']];
 blocks.forEach((b,i)=>{const el=document.createElement('div');el.className='j3k-block';el.dataset.status=b[4];el.style.left=b[0]+'%';el.style.top=b[1]+'%';el.style.width=b[2]+'%';el.style.height=b[3]+'%';el.dataset.birth=Math.floor(i/(blocks.length-1)*17);city.append(el)});
@@ -179,7 +203,7 @@ function update(value){
  });
  eraEn.textContent=(p.state||'').toUpperCase()+' · '+p.dateLabel;eraZh.textContent=p.label;eraNote.textContent=p.note;phaseDate.textContent=p.dateLabel;
  phaseTicks.forEach((x,i)=>{x.classList.toggle('is-past',i<Math.round(value));x.classList.toggle('is-current',i===Math.round(value))});
- markerButtons.forEach(x=>x.classList.toggle('is-active',Number(x.dataset.phase)===Math.round(value)));
+ markerButtons.forEach(x=>x.classList.toggle('is-active',Number(x.dataset.phase)===Math.round(value)));updateHistoricalObjects(value);
  const url=new URL(location.href);url.searchParams.set('phase',p.id);history.replaceState(null,'',url);
 }
 slider.addEventListener('input',()=>{stop();update(Number(slider.value))});
@@ -199,3 +223,5 @@ loadTerrainAuthority().then(({manifest})=>{
  badge.textContent=state.label;
  terrain.dataset.terrainState=state.mode;
 }).catch(()=>{document.querySelector('.j3k-terrain-badge').textContent='TERRAIN AUTHORITY ERROR'});
+
+loadHerodianLedger().catch(()=>{stage.dataset.objectLedger='error'});
