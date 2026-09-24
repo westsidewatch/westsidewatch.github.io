@@ -1,72 +1,192 @@
-const eras=[
-  {en:'TODAY',zh:'今天',note:'固定地形與鏡頭。之後改變的是城市的時間狀態，不是觀看座標.',density:1,profile:1},
-  {en:'HERODIAN · c. 30 CE',zh:'大希律—耶穌',note:'同一座山城進入第二聖殿晚期閱讀座標；歷史幾何尚未聲稱完成。',density:.82,profile:.9},
-  {en:'PERSIAN · 5TH C. BCE',zh:'尼希米',note:'城市量體收縮，城牆與聚落狀態回到波斯時期的閱讀層。',density:.48,profile:.68},
-  {en:'IRON AGE · 10TH C. BCE',zh:'大衛—所羅門',note:'原型只保留「同地形、同鏡頭、較小城市核心」；實際復原需逐物件掛接證據。',density:.28,profile:.52}
-];
-const city=document.querySelector('.j3k-city');
-const slider=document.querySelector('.j3k-scrubber');
-const markerButtons=[...document.querySelectorAll('.j3k-markers button')];
-const eraEn=document.querySelector('.j3k-era-en');
-const eraZh=document.querySelector('.j3k-caption h2');
-const eraNote=document.querySelector('.j3k-era-note');
-const evidenceToggle=document.querySelector('.j3k-evidence-toggle');
-const evidencePanel=document.querySelector('.j3k-evidence-panel');
-const stage=document.querySelector('.j3k-stage');
-const routeToggle=document.querySelector('.j3k-route-toggle');
-
+const timeline={
+  "id": "jerusalem-continuous-build",
+  "title": "Jerusalem — continuous urban biography",
+  "range": {
+    "from": "earliest-settlement",
+    "to": "today"
+  },
+  "principle": "One terrain and coordinate system. Construction, expansion, destruction, abandonment, burial, reuse and rebuilding are all first-class temporal events. Never jump between isolated city models.",
+  "phases": [
+    {
+      "id": "chalcolithic-early-bronze",
+      "label": "最早聚落",
+      "dateLabel": "c. 4th–3rd millennium BCE",
+      "state": "settlement",
+      "confidence": "reconstructed",
+      "note": "Earliest occupation belongs to the southeastern ridge / spring landscape; do not invent monumental city fabric."
+    },
+    {
+      "id": "middle-bronze",
+      "label": "迦南城市",
+      "dateLabel": "c. 19th–17th c. BCE onward",
+      "state": "build",
+      "confidence": "observed",
+      "note": "Public architecture and fortified urban development emerge around the Gihon/eastern slope."
+    },
+    {
+      "id": "late-bronze-iron1",
+      "label": "晚青銅—鐵器早期",
+      "dateLabel": "c. 16th–11th c. BCE",
+      "state": "transform",
+      "confidence": "reconstructed",
+      "note": "Represent occupation intensity and debated urban form rather than a smooth growth curve."
+    },
+    {
+      "id": "david-solomon",
+      "label": "大衛—所羅門",
+      "dateLabel": "10th c. BCE",
+      "state": "build",
+      "confidence": "disputed",
+      "note": "Biblical royal-building coordinate; archaeological extent and specific monumental identifications remain debated."
+    },
+    {
+      "id": "late-first-temple",
+      "label": "第一聖殿晚期",
+      "dateLabel": "8th–7th c. BCE",
+      "state": "expand",
+      "confidence": "observed",
+      "note": "Major westward expansion and fortification become visible."
+    },
+    {
+      "id": "babylonian-destruction",
+      "label": "巴比倫毀城",
+      "dateLabel": "586 BCE",
+      "state": "ruin",
+      "confidence": "observed",
+      "note": "Destruction must be animated as loss/ruin, not skipped as a date marker."
+    },
+    {
+      "id": "persian-nehemiah",
+      "label": "波斯—尼希米",
+      "dateLabel": "5th c. BCE",
+      "state": "rebuild",
+      "confidence": "reconstructed",
+      "note": "Smaller post-exilic city and wall reconstruction layer."
+    },
+    {
+      "id": "hellenistic-hasmonean",
+      "label": "希臘化—哈斯蒙尼",
+      "dateLabel": "4th–1st c. BCE",
+      "state": "expand",
+      "confidence": "reconstructed",
+      "note": "Urban recovery and expansion toward the Second Temple city."
+    },
+    {
+      "id": "herodian-jesus",
+      "label": "大希律—耶穌",
+      "dateLabel": "late 1st c. BCE–30s CE",
+      "state": "build",
+      "confidence": "reconstructed",
+      "note": "Temple-platform and dense Second Temple city; hosts Biblical Route 01: Jesus Entry."
+    },
+    {
+      "id": "roman-destruction",
+      "label": "羅馬毀城",
+      "dateLabel": "70 CE",
+      "state": "ruin",
+      "confidence": "observed",
+      "note": "Destruction event alters walls, monumental fabric and occupation."
+    },
+    {
+      "id": "aelia",
+      "label": "Aelia Capitolina",
+      "dateLabel": "2nd–4th c. CE",
+      "state": "rebuild",
+      "confidence": "reconstructed",
+      "note": "Roman replanning is a new urban layer, not restoration of the Herodian city."
+    },
+    {
+      "id": "byzantine",
+      "label": "拜占庭",
+      "dateLabel": "4th–7th c.",
+      "state": "build",
+      "confidence": "observed",
+      "note": "Christian monumental city and street network."
+    },
+    {
+      "id": "early-islamic",
+      "label": "早期伊斯蘭",
+      "dateLabel": "7th–11th c.",
+      "state": "transform",
+      "confidence": "observed",
+      "note": "Haram/Temple Mount monumental transformation and changing southern urban fabric."
+    },
+    {
+      "id": "crusader",
+      "label": "十字軍",
+      "dateLabel": "1099–1187",
+      "state": "transform",
+      "confidence": "observed",
+      "note": "Reuse and reconstruction of existing city fabric."
+    },
+    {
+      "id": "ayyubid-mamluk",
+      "label": "阿尤布—馬穆魯克",
+      "dateLabel": "12th–16th c.",
+      "state": "transform",
+      "confidence": "observed",
+      "note": "Layered rebuilding, institutions, streets and reused fabric."
+    },
+    {
+      "id": "ottoman",
+      "label": "奧斯曼",
+      "dateLabel": "1517–1917",
+      "state": "build",
+      "confidence": "observed",
+      "note": "Present Old City wall/gate system becomes a major visible layer; Jaffa Gate belongs here."
+    },
+    {
+      "id": "outside-walls",
+      "label": "城外擴張",
+      "dateLabel": "19th–early 20th c.",
+      "state": "expand",
+      "confidence": "observed",
+      "note": "City breaks decisively beyond the Old City walls."
+    },
+    {
+      "id": "modern",
+      "label": "現代耶路撒冷",
+      "dateLabel": "20th c.–today",
+      "state": "expand",
+      "confidence": "observed",
+      "note": "Modern metropolitan fabric grows around the ancient topography; current political boundaries are not encoded as historical certainty."
+    }
+  ]
+};
+const phases=timeline.phases;
+const city=document.querySelector('.j3k-city'),slider=document.querySelector('.j3k-scrubber'),stage=document.querySelector('.j3k-stage');
+const markerButtons=[...document.querySelectorAll('.j3k-markers button')],eraEn=document.querySelector('.j3k-era-en'),eraZh=document.querySelector('.j3k-caption h2'),eraNote=document.querySelector('.j3k-era-note');
+const evidenceToggle=document.querySelector('.j3k-evidence-toggle'),evidencePanel=document.querySelector('.j3k-evidence-panel'),routeToggle=document.querySelector('.j3k-route-toggle');
+const play=document.querySelector('.j3k-play'),phaseDate=document.querySelector('.j3k-phase-date'),phaseStrip=document.querySelector('.j3k-phase-strip');
+phases.forEach(()=>phaseStrip.append(document.createElement('i'))); const phaseTicks=[...phaseStrip.children];
 const blocks=[
-  [4,48,16,25,'observed'],[20,45,12,28,'observed'],[34,50,18,23,'reconstructed'],[54,42,12,31,'reconstructed'],
-  [69,47,14,26,'inferred'],[82,52,10,20,'inferred'],[10,30,13,17,'observed'],[27,27,16,19,'reconstructed'],
-  [48,29,19,18,'disputed'],[73,29,12,18,'inferred'],[6,65,21,12,'observed'],[30,66,16,10,'reconstructed'],
-  [51,64,18,13,'inferred'],[72,67,20,10,'disputed'],[15,15,12,12,'reconstructed'],[39,13,16,13,'inferred'],
-  [64,14,13,12,'disputed']
-];
-blocks.forEach((b,i)=>{
-  const el=document.createElement('div');
-  el.className='j3k-block';
-  el.dataset.status=b[4];
-  el.style.left=b[0]+'%';el.style.top=b[1]+'%';el.style.width=b[2]+'%';el.style.height=b[3]+'%';
-  el.style.setProperty('--seed',i);
-  city.append(el);
-});
+[4,48,16,25,'observed'],[20,45,12,28,'observed'],[34,50,18,23,'reconstructed'],[54,42,12,31,'reconstructed'],[69,47,14,26,'inferred'],[82,52,10,20,'inferred'],[10,30,13,17,'observed'],[27,27,16,19,'reconstructed'],[48,29,19,18,'disputed'],[73,29,12,18,'inferred'],[6,65,21,12,'observed'],[30,66,16,10,'reconstructed'],[51,64,18,13,'inferred'],[72,67,20,10,'disputed'],[15,15,12,12,'reconstructed'],[39,13,16,13,'inferred'],[64,14,13,12,'disputed']];
+blocks.forEach((b,i)=>{const el=document.createElement('div');el.className='j3k-block';el.dataset.status=b[4];el.style.left=b[0]+'%';el.style.top=b[1]+'%';el.style.width=b[2]+'%';el.style.height=b[3]+'%';el.dataset.birth=Math.floor(i/(blocks.length-1)*17);city.append(el)});
 const blockEls=[...city.children];
-
-function interpolate(a,b,t){return a+(b-a)*t}
+const density=[.08,.16,.22,.30,.48,.20,.25,.46,.78,.30,.43,.56,.62,.66,.72,.79,.90,1];
+const profile=[.38,.43,.47,.53,.65,.48,.50,.66,.90,.55,.63,.72,.76,.78,.82,.88,.94,1];
+const lerp=(a,b,t)=>a+(b-a)*t;
 function update(value){
-  const lo=Math.floor(value), hi=Math.min(3,Math.ceil(value)), t=value-lo;
-  const a=eras[lo],b=eras[hi];
-  const density=interpolate(a.density,b.density,t);
-  const profile=interpolate(a.profile,b.profile,t);
-  city.style.transform=`scaleY(${.74+.26*profile}) translateY(${(1-profile)*8}%)`;
-  blockEls.forEach((el,i)=>{
-    const threshold=(i+1)/blockEls.length;
-    const visible=Math.max(0,Math.min(1,(density-threshold+.18)/.18));
-    el.style.opacity=visible;
-    el.style.transform=`scaleY(${.15+.85*visible}) translateY(${(1-visible)*18}px)`;
-    const status=el.dataset.status;
-    el.style.outline=status==='disputed'&&visible>.3?'1px dashed rgba(85,48,42,.65)':'none';
-  });
-  const nearest=Math.round(value);
-  markerButtons.forEach((x,i)=>x.classList.toggle('is-active',i===nearest));
-  stage.classList.toggle('herodian',nearest===1);
-  const display=t<.5?a:b;
-  eraEn.textContent=display.en;eraZh.textContent=display.zh;eraNote.textContent=display.note;
-  const url=new URL(location.href);url.searchParams.set('era',nearest);history.replaceState(null,'',url);
+ const lo=Math.floor(value),hi=Math.min(17,Math.ceil(value)),t=value-lo,p=phases[Math.round(value)],d=lerp(density[lo],density[hi],t),prof=lerp(profile[lo],profile[hi],t);
+ stage.dataset.operation=p.state; stage.classList.toggle('herodian',p.id==='herodian-jesus');
+ city.style.transform=`scaleY(${.72+.28*prof}) translateY(${(1-prof)*9}%)`;
+ blockEls.forEach((el,i)=>{const birth=Number(el.dataset.birth),base=Math.max(0,Math.min(1,(value-birth+1.1)/1.1));let visible=base;
+   if(p.state==='ruin') visible*=.38+(i%3)*.12;
+   visible*=Math.max(.12,Math.min(1,d*1.5));
+   el.style.opacity=visible;el.style.transform=`scaleY(${.12+.88*visible}) translateY(${(1-visible)*22}px)`;
+   el.style.outline=el.dataset.status==='disputed'&&visible>.25?'1px dashed rgba(85,48,42,.65)':'none';
+ });
+ eraEn.textContent=(p.state||'').toUpperCase()+' · '+p.dateLabel;eraZh.textContent=p.label;eraNote.textContent=p.note;phaseDate.textContent=p.dateLabel;
+ phaseTicks.forEach((x,i)=>{x.classList.toggle('is-past',i<Math.round(value));x.classList.toggle('is-current',i===Math.round(value))});
+ markerButtons.forEach(x=>x.classList.toggle('is-active',Number(x.dataset.phase)===Math.round(value)));
+ const url=new URL(location.href);url.searchParams.set('phase',p.id);history.replaceState(null,'',url);
 }
-slider.addEventListener('input',()=>update(Number(slider.value)));
-markerButtons.forEach((btn,i)=>btn.addEventListener('click',()=>{slider.value=i;update(i)}));
-routeToggle.addEventListener('click',()=>{
-  const on=!stage.classList.contains('route-on');
-  stage.classList.toggle('route-on',on);
-  routeToggle.setAttribute('aria-pressed',String(on));
-  if(on && Math.round(Number(slider.value))!==1){slider.value=1;update(1)}
-});
-evidenceToggle.addEventListener('click',()=>{
-  const open=evidencePanel.hasAttribute('hidden');
-  evidencePanel.toggleAttribute('hidden',!open);
-  evidenceToggle.setAttribute('aria-expanded',String(open));
-});
-const initial=Math.max(0,Math.min(3,Number(new URL(location.href).searchParams.get('era')||0)));
-const routeInitial=new URL(location.href).searchParams.get('route')==='entry';
-if(routeInitial){stage.classList.add('route-on');routeToggle.setAttribute('aria-pressed','true');slider.value=1;update(1)}else{slider.value=initial;update(initial)}
+slider.addEventListener('input',()=>{stop();update(Number(slider.value))});
+markerButtons.forEach(btn=>btn.addEventListener('click',()=>{stop();slider.value=btn.dataset.phase;update(Number(btn.dataset.phase))}));
+let raf=null,last=0;function frame(ts){if(!last)last=ts;const delta=(ts-last)/1000;last=ts;let v=Number(slider.value)+delta*.65;if(v>=17){v=17;stop()}slider.value=v;update(v);if(raf)raf=requestAnimationFrame(frame)}
+function start(){if(raf)return;play.textContent='Ⅱ 暫停';play.setAttribute('aria-pressed','true');last=0;raf=requestAnimationFrame(frame)}
+function stop(){if(raf)cancelAnimationFrame(raf);raf=null;last=0;play.textContent='▶ 建城';play.setAttribute('aria-pressed','false')}
+play.addEventListener('click',()=>raf?stop():start());
+routeToggle.addEventListener('click',()=>{const on=!stage.classList.contains('route-on');stage.classList.toggle('route-on',on);routeToggle.setAttribute('aria-pressed',String(on));if(on){stop();slider.value=8;update(8)}});
+evidenceToggle.addEventListener('click',()=>{const open=evidencePanel.hasAttribute('hidden');evidencePanel.toggleAttribute('hidden',!open);evidenceToggle.setAttribute('aria-expanded',String(open))});
+const requested=new URL(location.href).searchParams.get('phase');const initial=Math.max(0,phases.findIndex(x=>x.id===requested));slider.value=initial;update(initial);
