@@ -1,5 +1,6 @@
 import {loadTerrainAuthority,terrainRuntimeState} from './terrain-runtime.js';
 import {lifecycleStateAt} from './construction-engine.js';
+import {loadAnchorEraObjects,updateAnchorEraObjects} from './anchor-era-runtime.js';
 const timeline=await fetch('./data/continuous-build-timeline.json').then(r=>{if(!r.ok)throw new Error('timeline unavailable');return r.json()});
 const phases=timeline.phases;
 const city=document.querySelector('.j3k-city'),slider=document.querySelector('.j3k-scrubber'),stage=document.querySelector('.j3k-stage');
@@ -17,7 +18,7 @@ function geographicPlacement(spatial){
  const south=(AOI.south-ENU_ORIGIN.lat)*metresPerDegLat,north=(AOI.north-ENU_ORIGIN.lat)*metresPerDegLat;
  return {x:(spatial.enuMetres.east-west)/(east-west)*100,y:(north-spatial.enuMetres.north)/(north-south)*100};
 }
-let herodianObjects=[];
+let herodianObjects=[],anchorEraObjects=[];
 const objectLayer=document.createElement('div');objectLayer.className='j3k-object-layer';city.append(objectLayer);
 
 async function loadHerodianLedger(){
@@ -41,6 +42,7 @@ function updateHistoricalObjects(value){
    const opacity={absent:'0',settlement:'.55',build:'1',expand:'1',transform:'.72',ruin:'.42',buried:'.12',rebuild:'.88'}[state]||'0';
    object.el.style.setProperty('--life-opacity',opacity);
  });
+ updateAnchorEraObjects(anchorEraObjects,timeline,phaseId);
 }
 
 const blocks=[
@@ -83,4 +85,4 @@ loadTerrainAuthority().then(({manifest})=>{
  terrain.dataset.terrainState=state.mode;
 }).catch(()=>{document.querySelector('.j3k-terrain-badge').textContent='TERRAIN AUTHORITY ERROR'});
 
-loadHerodianLedger().catch(()=>{stage.dataset.objectLedger='error'});
+Promise.all([loadHerodianLedger(),loadAnchorEraObjects(timeline,objectLayer).then(objects=>{anchorEraObjects=objects;updateHistoricalObjects(Number(slider.value))})]).catch(()=>{stage.dataset.objectLedger='error'});
