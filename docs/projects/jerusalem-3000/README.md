@@ -53,3 +53,23 @@ The first slice deliberately uses abstract architectural masses, not pretend-his
 - data contract for replacing abstract masses with researched geometry later
 
 Historical geometry is blocked until evidence authority is attached to the object.
+
+
+## Continuous Build Mode — hard requirement
+
+Jerusalem 3000 must be able to play the city's urban biography continuously from the earliest settlement landscape to the present. It must not be implemented as four isolated hero-era models.
+
+Canonical runtime phases now live at `preview/jerusalem-3000/data/continuous-build-timeline.json`.
+
+Every phase may emit one or more temporal operations:
+
+- `build` — new fabric appears from terrain/foundation upward
+- `expand` — occupied envelope grows
+- `transform` — existing fabric is reused/replanned
+- `ruin` — destruction is visible as an event and persistent archaeological residue
+- `buried` — earlier fabric remains in the stratigraphic stack
+- `rebuild` — later fabric reuses or overwrites earlier coordinates
+
+The viewer therefore preserves **urban memory**: moving forward never means deleting the past from the data model. Moving backward must reconstruct prior states from the same object/event ledger.
+
+The four original anchors (Today / Jesus / Nehemiah / David–Solomon) remain editorial shortcuts only. They are not the temporal data model.
