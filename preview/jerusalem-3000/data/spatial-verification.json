@@ -1,0 +1,50 @@
+{
+  "schema": "j3k.spatial-verification.v1",
+  "checks": [
+    {
+      "id": "terrain.olives-above-kidron",
+      "type": "relative-elevation",
+      "a": "mount-olives",
+      "relation": ">",
+      "b": "kidron",
+      "status": "pending-real-dem"
+    },
+    {
+      "id": "terrain.jerusalem-ridge-above-kidron",
+      "type": "relative-elevation",
+      "a": "temple-mount",
+      "relation": ">",
+      "b": "kidron",
+      "status": "pending-real-dem"
+    },
+    {
+      "id": "route.entry-descends-to-kidron",
+      "type": "route-profile",
+      "route": "jesus-entry",
+      "pattern": "descent",
+      "segment": "mount-of-olives→kidron",
+      "status": "pending-real-dem"
+    },
+    {
+      "id": "route.entry-rises-to-city",
+      "type": "route-profile",
+      "route": "jesus-entry",
+      "pattern": "ascent",
+      "segment": "kidron→jerusalem",
+      "status": "pending-real-dem"
+    },
+    {
+      "id": "time.terrain-invariant",
+      "type": "temporal-invariant",
+      "rule": "terrain vertex positions identical for every era",
+      "status": "contract"
+    },
+    {
+      "id": "time.objects-not-anachronistic",
+      "type": "lifecycle",
+      "rule": "object visible only when lifecycle state permits",
+      "status": "contract"
+    }
+  ],
+  "precedent": "openbibleinfo/3D-Temple-Mount util/verify.js pattern"
+}
