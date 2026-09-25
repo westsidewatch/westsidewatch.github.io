@@ -1,0 +1,27 @@
+name: Dawn Shared Resource Join Audit
+on:
+  workflow_dispatch:
+  push:
+    branches: [dawn/full-library-editorial-scan-v1]
+    paths:
+      - 'scripts/dawn/build-shared-resource-join.mjs'
+      - '.github/workflows/dawn-shared-resource-join.yml'
+      - 'static/dawn-library/canonical/**'
+      - 'static/dawn-library/living/**'
+      - 'static/dawn-library/resource-fabric/**'
+permissions:
+  contents: read
+jobs:
+  join-audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Join canonical identity, semantic projection, and resource fabric
+        run: node scripts/dawn/build-shared-resource-join.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dawn-shared-resource-join-audit-v1
+          path: static/dawn-library/editorial/shared-resource-join-audit-v1.json
