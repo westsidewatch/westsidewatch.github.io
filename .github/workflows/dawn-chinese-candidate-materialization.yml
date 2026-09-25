@@ -1,0 +1,26 @@
+name: Dawn Chinese Candidate Materialization
+on:
+  workflow_dispatch:
+  push:
+    branches: [dawn/full-library-editorial-scan-v1]
+    paths:
+      - 'static/dawn-library/acquisition/chinese/**'
+      - 'static/dawn-library/canonical/**'
+      - 'scripts/dawn/materialize-chinese-acquisition-candidates.mjs'
+      - '.github/workflows/dawn-chinese-candidate-materialization.yml'
+permissions:
+  contents: read
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Materialize title-level candidates and reconcile canonical Works
+        run: node scripts/dawn/materialize-chinese-acquisition-candidates.mjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dawn-chinese-candidate-materialization-v1
+          path: static/dawn-library/editorial/chinese-acquisition/candidate-materialization-v1.json
