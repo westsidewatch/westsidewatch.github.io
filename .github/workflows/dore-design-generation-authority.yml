@@ -1,0 +1,33 @@
+name: Doré Design Generation Authority
+on:
+  push:
+    paths:
+      - 'static/dore-design/italian-editorial-*.json'
+      - 'static/dore-design/design-generation-consumers.v1.json'
+      - 'scripts/resolve_design_generation_prompt.py'
+      - 'scripts/design_generation_gateway.py'
+      - 'scripts/validate_design_generation_resolver.py'
+      - 'scripts/validate_sitewide_design_generation.py'
+      - 'docs/dore/DESIGN-GENERATION-AUTHORITY.md'
+      - '.github/workflows/dore-design-generation-authority.yml'
+  pull_request:
+    paths:
+      - 'static/dore-design/italian-editorial-*.json'
+      - 'static/dore-design/design-generation-consumers.v1.json'
+      - 'scripts/resolve_design_generation_prompt.py'
+      - 'scripts/design_generation_gateway.py'
+      - 'scripts/validate_design_generation_resolver.py'
+      - 'scripts/validate_sitewide_design_generation.py'
+      - 'docs/dore/DESIGN-GENERATION-AUTHORITY.md'
+  workflow_dispatch:
+jobs:
+  authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Canonical resolver
+        run: python3 scripts/validate_design_generation_resolver.py
+      - name: Site-wide consumers
+        run: python3 scripts/validate_sitewide_design_generation.py
+      - name: Prompt smoke test
+        run: python3 scripts/design_generation_gateway.py --consumer westside-watch --era domus-ponti --subject 'CI authority smoke test' --prompt-only | grep -q 'domus-ponti-250'
