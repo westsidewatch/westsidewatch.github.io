@@ -29,6 +29,16 @@ This is not absence of editorial intelligence. The writer's intelligence operate
 
 Biblical parallels can work the same way: place Cyrus, Assyria as the rod, Babylon raised for judgment, and then the historical event beside one another. Do not force a fourth declarative theological verdict when Scripture plus facts already create the question or inference.
 
+### Implicit factual guidance / 含蓄引導
+
+This is a hard method, not an occasional stylistic flourish. Journalism can remain factual while the writer guides reading through the order and pressure of verified facts. The guidance must often be invisible at sentence level: **the facts are explicit; the intended inference is not.**
+
+A canonical Lions' Gate example is the Ain Jalut sequence. First establish the Mongol terror from Rus', Kyiv, Baghdad, Aleppo and Damascus; establish that the battlefield was suitable for cavalry; establish the contingent conditions of the Mongol withdrawal and Mamluk concentration; then state the Mamluk victory, Kitbuqa's death, and the consequence: although Mongol forces returned repeatedly, they never established rule over Jerusalem. Only after that place Cyrus, Assyria and Nebuchadnezzar beside the event, then let Baybars enter Jerusalem three years later to inspect repairs and build. Do **not** write the theological conclusion for the reader. The arrangement has already created it.
+
+This method is especially important in gospel / biblical historical writing. Scripture supplies its own interpretive precedents; history supplies the observable facts. The writer may deliberately place them together without claiming private knowledge of God's hidden intention in a specific historical event. The reader is allowed to recognize the pattern.
+
+Stopping is therefore part of composition. When a sentence such as “the Mongols returned repeatedly, yet never established rule over Jerusalem” has created the necessary pressure, resist the explanatory reflex. Silence after a fact can carry more meaning than commentary.
+
 ## Literary / New Journalism layer
 
 Doré exploration of literary journalism / New Journalism confirms reusable techniques associated especially with Tom Wolfe and long-form reportage:
@@ -59,6 +69,10 @@ Avoid formulaic narrator labels such as:
 Prefer entering directly through the fact, scene, quotation, object or movement.
 
 During full revision remove unnecessary discourse particles, adverbs, conjunctions, transitions and filler, including habitual 「了」「呢」 where deletion strengthens the sentence. Preserve author-supplied material unless explicitly told to delete it; full revision is not permission to silently shorten or discard established material.
+
+## Protected-text / cumulative-revision rule
+
+Revision is cumulative, not regenerative. Once the author has positively accepted a sentence, paragraph, scene, transition or image, treat it as protected text. A later local rewrite does not authorize deleting or silently replacing accepted material elsewhere. Unless the author explicitly says delete, replace, or rewrite that passage, preserve it and revise around it. This prevents each new pass from destroying earlier successful work and forcing the author to reconstruct lost text manually.
 
 ## Current Lions' Gate training example
 
