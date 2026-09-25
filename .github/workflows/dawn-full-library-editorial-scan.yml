@@ -6,6 +6,8 @@ on:
     paths:
       - 'static/dawn-library/living/**'
       - 'scripts/dawn/full-library-editorial-scan.mjs'
+      - 'docs/projects/dawn-library/EDITORIAL-PROJECTION-CANON.md'
+      - 'docs/projects/dawn-library/DUAL-INDEX-CANON.md'
       - '.github/workflows/dawn-full-library-editorial-scan.yml'
 permissions:
   contents: read
@@ -20,7 +22,7 @@ jobs:
       - name: Scan all canonical Living Library shards
         run: node scripts/dawn/full-library-editorial-scan.mjs
       - name: Validate complete corpus
-        run: node -e "const r=require('./static/dawn-library/editorial/full-library-scan-v1.json'); if(!r.integrity.countMatchesRoot) process.exit(1); console.log(r.scannedWorkCount+' canonical Works scanned')"
+        run: node -e "const r=require('./static/dawn-library/editorial/full-library-scan-v1.json'); if(!r.integrity.countMatchesRoot) process.exit(1); console.log(r.scannedWorkCount+' canonical Works scanned; material topology + semantic topology retained')"
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-full-library-editorial-scan-v1
