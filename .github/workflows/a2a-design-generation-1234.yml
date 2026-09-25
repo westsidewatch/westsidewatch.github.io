@@ -1,0 +1,41 @@
+name: A2A Design Generation 1234
+
+on:
+  push:
+    paths:
+      - '.github/workflows/a2a-design-generation-1234.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-1234:
+    runs-on: ubuntu-24.04
+    env:
+      PYTHONPATH: .
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resolve 1234 through A2A design generation
+        run: |
+          python - <<'PY'
+          import importlib.util
+          from pathlib import Path
+          p=Path('local/dore-local/design_generation_a2a.py')
+          s=importlib.util.spec_from_file_location('dg',p); m=importlib.util.module_from_spec(s); s.loader.exec_module(m)
+          r=m.execute({'operation':'resolve','grammar_id':'domus-ponti','subject':'1234','consumer':'chatgpt-a2a'})
+          assert r['ok'], r
+          assert r['generation_package']['subject']=='1234', r
+          assert r['generation_package']['grammar_id']=='domus-ponti', r
+          assert 'domus-ponti-250' in r['generation_package']['visual_evidence'], r
+          print(r['generator_prompt'])
+          print('PASS resolve: 1234 -> A2A -> Doré canonical design authority')
+          v=m.execute({'operation':'verify','generation_package':r['generation_package'],'observations':{'grammar_fidelity':True,'evidence_fidelity':True,'subject_fidelity':True,'forbidden_artifacts_absent':True}})
+          assert v['verified'] is True, v
+          print('PASS verify: 1234 -> verified-specimen')
+          PY
+      - name: Canonical capability authority
+        run: python local/dore-local/a2a_capability_authority_acceptance.py
