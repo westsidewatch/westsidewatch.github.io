@@ -1,21 +1,13 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jerusalem 3000｜Prototype 02</title><link rel="stylesheet" href="./jerusalem-3000.css"></head>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Jerusalem 3000</title><link rel="stylesheet" href="./jerusalem-3000.css"></head>
 <body><main class="j3k-shell" data-j3k>
 <header class="j3k-header"><div><p class="j3k-kicker">WESTSIDE WATCH · TEMPORAL CITY</p><h1>Jerusalem 3000</h1><p>同一座城。時間在城市裡走；事件在時間裡發生。</p></div><aside class="j3k-evidence-key"><span data-status="observed">實證</span><span data-status="reconstructed">重建</span><span data-status="inferred">推定</span><span data-status="disputed">爭議</span></aside></header>
 <section class="j3k-stage">
-<div class="j3k-sky"></div><div class="j3k-terrain" data-terrain-state="schematic"></div><p class="j3k-terrain-badge">TERRAIN DATA PENDING</p><div class="j3k-city" aria-hidden="true"></div>
-<svg class="j3k-route" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-label="Jesus entry route evidence layer"></svg>
-<div class="j3k-route-labels"></div>
-<div class="j3k-reticle"><i></i><i></i></div>
-<div class="j3k-caption"><p class="j3k-era-en">TODAY</p><h2>今天</h2><p class="j3k-era-note">固定地形與鏡頭。之後改變的是城市的時間狀態，不是觀看座標。</p></div>
+<div class="j3k-three-stage" data-three-stage aria-label="可旋轉的三維耶路撒冷時空重建"></div><p class="j3k-terrain-badge">TERRAIN DATA PENDING</p>
+<svg class="j3k-route" viewBox="0 0 1000 560" preserveAspectRatio="none" aria-label="Jesus entry route evidence layer"></svg><div class="j3k-route-labels"></div>
+<div class="j3k-caption"><p class="j3k-era-en">EARLIEST</p><h2>最早聚落</h2><p class="j3k-era-note">拖動可 360° 旋轉；時間軸控制同一座城的建造、毀壞與重建。</p></div>
 <div class="j3k-event-controls"><button class="j3k-route-toggle" type="button" aria-pressed="false">Jesus Entry · 路線</button><button class="j3k-evidence-toggle" type="button" aria-expanded="false">Evidence</button></div>
-<aside class="j3k-evidence-panel" hidden><p class="j3k-panel-label">BIBLICAL ROUTE 01</p><h3>Entry into Jerusalem</h3><p>路線現在由 Event Evidence Ledger 生成。福音書提供伯法其、橄欖山與耶路撒冷的敘事次序；地形支持下汲淪谷再上耶路撒冷的空間關係；精確古道路、跨谷點與東側城門仍按證據分級，不畫成單一確定史實。</p><dl><div><dt>Textual</dt><dd>Bethphage · Mount of Olives · Jerusalem / Temple destination</dd></div><div><dt>Topographic</dt><dd>Olivet descent · Kidron valley · ascent toward Jerusalem</dd></div><div><dt>Disputed</dt><dd>exact road alignment · crossing · eastern gate</dd></div></dl></aside>
+<aside class="j3k-evidence-panel" hidden><p class="j3k-panel-label">BIBLICAL ROUTE 01</p><h3>Entry into Jerusalem</h3><p>路線由 Event Evidence Ledger 生成；精確古道路、跨谷點與東側城門仍按證據分級。</p></aside>
 </section>
-<section class="j3k-time">
-<div class="j3k-time-head"><div><p class="j3k-panel-label">CONTINUOUS BUILD</p><strong class="j3k-phase-date">c. 4th–3rd millennium BCE</strong></div><button class="j3k-play" type="button" aria-pressed="false">▶ 建城</button></div>
-<div class="j3k-phase-strip" aria-label="Jerusalem continuous urban timeline"></div>
-<input class="j3k-scrubber" type="range" min="0" max="17" value="0" step=".001" aria-label="Jerusalem continuous time">
-<div class="j3k-markers"><button data-phase="0">最早聚落<small>EARLIEST</small></button><button data-phase="3">大衛—所羅門<small>10TH C. BCE</small></button><button data-phase="6">尼希米<small>5TH C. BCE</small></button><button data-phase="8">耶穌時代<small>c. 30 CE</small></button><button data-phase="17">今天<small>NOW</small></button></div>
-<p class="j3k-direction">最早聚落 → 建造 → 擴張 → 毀城 → 埋藏 → 重建 → 當今</p>
-</section>
-</main><script type="module" src="./jerusalem-3000.js"></script></body></html>
+<section class="j3k-time"><div class="j3k-time-head"><div><p class="j3k-panel-label">CONTINUOUS BUILD</p><strong class="j3k-phase-date">c. 4th–3rd millennium BCE</strong></div><button class="j3k-play" type="button" aria-pressed="false">▶ 建城</button></div><div class="j3k-phase-strip"></div><input class="j3k-scrubber" type="range" min="0" max="17" value="0" step=".001"><div class="j3k-markers"><button data-phase="0">最早聚落<small>EARLIEST</small></button><button data-phase="3">大衛—所羅門<small>10TH C. BCE</small></button><button data-phase="6">尼希米<small>5TH C. BCE</small></button><button data-phase="8">耶穌時代<small>c. 30 CE</small></button><button data-phase="17">今天<small>NOW</small></button></div><p class="j3k-direction">最早聚落 → 建造 → 擴張 → 毀城 → 埋藏 → 重建 → 當今</p></section>
+</main><script type="module" src="./jerusalem-3000-three.js"></script></body></html>
