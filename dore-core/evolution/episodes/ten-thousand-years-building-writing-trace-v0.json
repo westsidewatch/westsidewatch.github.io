@@ -1,0 +1,111 @@
+{
+  "schema": "dore.dimensional-writing-evolution-episode.v0",
+  "id": "ten-thousand-years-building-writing-trace-v0",
+  "capability": "publishing.dimensional-writing",
+  "status": "training-corpus-not-canon",
+  "sourceWork": "《一萬年的建城禮》",
+  "sourceAuthority": "docs/projects/watch-city-vol00/manuscript/WRITING-AUTHORITY.md",
+  "purpose": "Train Doré on writing decisions discovered through real long-form revision without creating a parallel writing system or imitating surface style.",
+  "promotionPolicy": {
+    "singleWorkMayNotPromoteToCoreCanon": true,
+    "crossWorkValidationRequired": [
+      "《神很遠，神很近｜天國語言極簡史》",
+      "《十字架的影子》"
+    ],
+    "authorThesisRemainsAuthority": true
+  },
+  "writingTrace": {
+    "example": [
+      "希律門",
+      "希律",
+      "耶穌",
+      "低加波利",
+      "polis／希臘化城市",
+      "希臘文化與觀看世界",
+      "羅馬",
+      "尼祿建造羅馬",
+      "保羅把神的城建在人心裡",
+      "希臘東方／拉丁西方",
+      "烏爾班二世",
+      "十字軍",
+      "耶路撒冷王國",
+      "醫院騎士團從醫院走到島嶼政權"
+    ],
+    "rule": "Learn why each transition is licensed by an entity, place, word, institution, material fact, historical consequence, or latent theological line. Never memorize the example chain as a reusable template.",
+    "antiPattern": "Do not bridge time with narrator signposts such as 如果把時間撥回、再往前追、到了這裡我們看到、值得注意的是 when the material itself can perform the transition."
+  },
+  "learnedPrinciples": [
+    {
+      "id": "entity-driven-free-wandering",
+      "rule": "Free chronology is allowed when every jump has a material or semantic bridge and the reader retains a stable reading anchor."
+    },
+    {
+      "id": "reading-time-anchor",
+      "rule": "When a large historical world first appears, establish enough social, geographic, linguistic, political and material background for a non-specialist reader to stand inside it before wandering further."
+    },
+    {
+      "id": "delayed-meaning",
+      "rule": "Do not explain every implication at first contact. Plant material, let later history increase its weight, and allow Scripture or a later return to disclose the deeper line."
+    },
+    {
+      "id": "multi-pass-history",
+      "rule": "The same historical material may return more than once only when the cut changes. Example: Crusades first as people and building; later as destroying, defending and being destroyed."
+    },
+    {
+      "id": "material-before-abstraction",
+      "rule": "Put civilization back onto food, debt, land, inheritance, roads, ships, horses, walls, stone, water, bodies, institutions and time before drawing large conclusions."
+    },
+    {
+      "id": "pressure-arc",
+      "rule": "Local material must serve the book-scale kinetic arc. In the first 建, human construction grows more brilliant while narrative pressure narrows; 毀 destroys a world the reader already knows; the later 建 becomes redemptive rebuilding through confession, prayer, obedience and worship."
+    },
+    {
+      "id": "history-under-scripture",
+      "rule": "Do not protect religious identities from evidence and do not use history as a pretext for sermonizing. State evidence honestly; let theological judgment remain under Scripture; every person finally answers to God."
+    },
+    {
+      "id": "no-authorial-reporting",
+      "rule": "Remove transitions that merely announce what the author is about to do. Prefer causal, spatial, lexical, biographical and material continuity."
+    },
+    {
+      "id": "meaningful-recurrence",
+      "rule": "A recurring person, city, gate, word or event must accumulate meaning rather than repeat explanation."
+    },
+    {
+      "id": "work-specific-arc-not-core-style",
+      "rule": "Preserve work-specific structures as profiles. Promote only transferable grammar to dimensional-writing Core after cross-work validation."
+    }
+  ],
+  "negativeTraining": [
+    {
+      "pattern": "如果把時間撥回……",
+      "failure": "narrator reports the transition instead of letting material make it"
+    },
+    {
+      "pattern": "再往前追……",
+      "failure": "generic chronological signpost becomes reusable AI scaffolding"
+    },
+    {
+      "pattern": "這讓我們看到……／值得注意的是……",
+      "failure": "premature explanation replaces reader discovery"
+    },
+    {
+      "pattern": "short rhetorical line stacking",
+      "failure": "manufactured intensity and AI-like line breaks replace paragraph thought movement"
+    },
+    {
+      "pattern": "encyclopedic flesh",
+      "failure": "interesting research is added without serving the book arc or a licensed writing trace"
+    }
+  ],
+  "evaluationQuestions": [
+    "Does each chronological jump have a real bridge?",
+    "Can a first-time reader identify the historical world after the jump?",
+    "Is the author announcing transitions that the material could perform?",
+    "Has meaning been explained before the narrative earned it?",
+    "Does repeated material return with a new cut and accumulated weight?",
+    "Does added flesh serve the work-scale pressure arc?",
+    "Are historical claims, reconstruction, inference and theology kept distinct?",
+    "Does the paragraph carry a complete movement without manufactured line breaks?"
+  ]
+}
