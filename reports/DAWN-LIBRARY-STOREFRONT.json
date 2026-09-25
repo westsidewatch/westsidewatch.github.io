@@ -1,24 +1,12 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-25T14:39:11.896590+00:00",
+  "generatedAt": "2026-09-25T20:02:29.710906+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
       "title": "精品書架 · Standard Ebooks",
       "books": 15,
       "source": "Standard Ebooks"
-    },
-    {
-      "id": "doab-theology-or-biblical",
-      "title": "開放學術 · 神學與宗教",
-      "books": 23,
-      "source": "DOAB"
-    },
-    {
-      "id": "doab-archaeology-and-religion",
-      "title": "開放學術 · 聖經世界與考古",
-      "books": 24,
-      "source": "DOAB"
     },
     {
       "id": "internet-archive-原版古籍-聖經歷史與地理",
@@ -69,26 +57,33 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 214,
-  "sourceCovers": 163,
+  "mappedBooks": 167,
+  "sourceCovers": 119,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
-    "DOAB": 47,
     "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
     "queriedThisRun": 0,
-    "resolved": 121,
-    "coversAdded": 65,
-    "internetArchiveLinks": 57,
+    "resolved": 98,
+    "coversAdded": 64,
+    "internetArchiveLinks": 52,
     "cacheEntries": 196
   },
   "errors": [
     {
       "source": "Wikisource",
       "error": "empty-shelf"
+    },
+    {
+      "source": "DOAB theology",
+      "error": "TimeoutError: The read operation timed out"
+    },
+    {
+      "source": "DOAB archaeology",
+      "error": "TimeoutError: The read operation timed out"
     }
   ],
   "contentDownloaded": false
