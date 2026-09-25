@@ -7,17 +7,17 @@
     "project-gutenberg": {
       "mode": "opds",
       "cursor": "per-query-opds-next",
-      "lastChecked": "2026-09-24T14:15:29.928892+00:00",
+      "lastChecked": "2026-09-24T22:58:17.953253+00:00",
       "queryCursors": {
         "Josephus": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus",
         "Eusebius": "https://www.gutenberg.org/ebooks/search.opds/?query=Eusebius",
         "Augustine": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=51",
-        "Bible history": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history&start_index=101",
+        "Bible history": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history&start_index=301",
         "Palestine geography": "https://www.gutenberg.org/ebooks/search.opds/?query=Palestine+geography",
         "early church": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church&start_index=201",
         "Athanasius": "https://www.gutenberg.org/ebooks/search.opds/?query=Athanasius",
         "Chrysostom": "https://www.gutenberg.org/ebooks/search.opds/?query=Chrysostom",
-        "Jerome": "https://www.gutenberg.org/ebooks/search.opds/?query=Jerome&start_index=51",
+        "Jerome": "https://www.gutenberg.org/ebooks/search.opds/?query=Jerome&start_index=101",
         "Tertullian": "https://www.gutenberg.org/ebooks/search.opds/?query=Tertullian",
         "Origen": "https://www.gutenberg.org/ebooks/search.opds/?query=Origen",
         "Irenaeus": "https://www.gutenberg.org/ebooks/search.opds/?query=Irenaeus",
@@ -44,7 +44,7 @@
         "George Muller": "https://www.gutenberg.org/ebooks/search.opds/?query=George+Muller",
         "Amy Carmichael": "https://www.gutenberg.org/ebooks/search.opds/?query=Amy+Carmichael",
         "Oswald Chambers": "https://www.gutenberg.org/ebooks/search.opds/?query=Oswald+Chambers",
-        "Bible commentary": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+commentary&start_index=51",
+        "Bible commentary": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+commentary&start_index=101",
         "Bible dictionary": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+dictionary",
         "Bible concordance": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+concordance",
         "Biblical theology": "https://www.gutenberg.org/ebooks/search.opds/?query=Biblical+theology",
@@ -75,11 +75,11 @@
     "curated"
   ],
   "metrics": {
-    "discovered": 2040,
+    "discovered": 2041,
     "verified": 6,
     "curated": 7,
     "deferred": 1,
-    "candidateQueue": 71,
+    "candidateQueue": 72,
     "newThisRun": 0,
     "pagesCheckedThisRun": 72
   },
