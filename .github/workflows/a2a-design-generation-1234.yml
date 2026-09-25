@@ -4,6 +4,15 @@ on:
   push:
     paths:
       - '.github/workflows/a2a-design-generation-1234.yml'
+      - 'scripts/resolve_design_generation_prompt.py'
+      - 'local/dore-local/design_generation_a2a.py'
+      - 'local/dore-local/a2a_design_generation_acceptance.py'
+      - 'local/dore-local/capability_bus.py'
+      - 'local/dore-local/capability_bindings.py'
+      - 'dore-core/runtime/capability-registry.v1.json'
+      - 'static/dore-design/italian-editorial-grammars.v1.json'
+      - 'static/dore-design/italian-editorial-evidence.v1.json'
+      - 'static/dore-design/italian-editorial-grammar-candidates.v1.json'
   workflow_dispatch:
 
 permissions:
