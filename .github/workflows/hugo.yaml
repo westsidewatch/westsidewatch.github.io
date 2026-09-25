@@ -75,14 +75,18 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
-      - name: Publish Fond static publication
+      - name: Publish Fond static publication and manuscripts
         run: |
           test -f fond/index.html
-          mkdir -p public/fond
+          mkdir -p public/fond/manuscripts/kingdom-language public/fond/manuscripts/city-building public/fond/manuscripts/cross-shadow
           cp -a fond/. public/fond/
+          cp -a static/multiwrite/books/kingdom-language/. public/fond/manuscripts/kingdom-language/
+          cp -a docs/projects/watch-city-vol00/manuscripts/carmel/. public/fond/manuscripts/city-building/
+          cp -a data/publishing/. public/fond/manuscripts/cross-shadow/
           test -f public/fond/index.html
-          test -f public/fond/fond.css
-          test -f public/fond/fond.js
+          test -f public/fond/manuscripts/kingdom-language/chapter-01.md
+          test -f "public/fond/manuscripts/city-building/一萬年的建城禮.md"
+          test -f public/fond/manuscripts/cross-shadow/cross-shadow.current-edited-manuscript.v1.md
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
