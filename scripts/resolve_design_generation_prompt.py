@@ -50,7 +50,6 @@ def resolve(era_id, modules=None, subject=None, artifact_type="image", consumer=
             grammar_lines.append(f"{module}: {value}")
             selected_tokens.append(value)
 
-    # Only admitted evidence-derived candidates may enter generation.
     admitted = []
     for item in cdb.get("items", []):
         if item.get("family") == selected_family.get("id") and item.get("era") == era_id and item.get("state") == "admitted" and item.get("module") in wanted:
@@ -91,6 +90,7 @@ def resolve(era_id, modules=None, subject=None, artifact_type="image", consumer=
         "schema": "dore.design-generation-resolution.v1",
         "consumer": consumer,
         "artifact_type": artifact_type,
+        "subject": subject,
         "family_id": selected_family["id"],
         "publication": selected_family["publication"],
         "grammar_id": era_id,
