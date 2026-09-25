@@ -1,0 +1,33 @@
+#!/usr/bin/env node
+import fs from 'node:fs';
+import path from 'node:path';
+
+const repo=process.cwd();
+const living=path.join(repo,'static/dawn-library/living');
+const root=JSON.parse(fs.readFileSync(path.join(living,'root.json'),'utf8'));
+const shardFiles=fs.readdirSync(living).filter(n=>/^wall-\d+\.json$/.test(n)).sort();
+const LANG={eng:'en',en:'en',English:'en',chi:'zh',cmn:'zh',zh:'zh',ger:'de',German:'de',fre:'fr',French:'fr',spa:'es',Spanish:'es',gre:'el',grc:'grc'};
+const inc=(m,k,n=1)=>m.set(k,(m.get(k)||0)+n);
+const obj=m=>Object.fromEntries([...m.entries()].sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]))));
+const stats={works:0,shards:shardFiles.length,rawLanguages:new Map(),languages:new Map(),periods:new Map(),roots:new Map(),leaves:new Map(),authors:new Map(),rootPairs:new Map(),missing:{language:0,period:0,classification:0,author:0},chinese:{works:0,byRoot:new Map(),byPeriod:new Map()}};
+for(const file of shardFiles){
+ const payload=JSON.parse(fs.readFileSync(path.join(living,file),'utf8'));
+ const works=Array.isArray(payload)?payload:(payload.works||payload.items||[]);
+ for(const w of works){
+  stats.works++;
+  const langs=[...new Set((w.languages||w.language||[]).flat?.()||[])].filter(Boolean);
+  if(!langs.length)stats.missing.language++;
+  const normalized=[...new Set(langs.map(x=>LANG[x]||String(x).toLowerCase()))];
+  langs.forEach(x=>inc(stats.rawLanguages,x)); normalized.forEach(x=>inc(stats.languages,x));
+  const period=w.period||w.classification?.period||'unknown'; inc(stats.periods,period); if(period==='unknown')stats.missing.period++;
+  const roots=[...new Set(w.classification?.roots||[])]; const leaves=[...new Set(w.classification?.leaves||[])];
+  if(!roots.length&&!leaves.length)stats.missing.classification++;
+  roots.forEach(x=>inc(stats.roots,x)); leaves.forEach(x=>inc(stats.leaves,x));
+  for(let i=0;i<roots.length;i++)for(let j=i+1;j<roots.length;j++)inc(stats.rootPairs,[roots[i],roots[j]].sort().join(' × '));
+  const authors=(w.authors||w.author||[]); const aa=Array.isArray(authors)?authors:[authors]; if(!aa.filter(Boolean).length)stats.missing.author++; aa.filter(Boolean).forEach(x=>inc(stats.authors,typeof x==='string'?x:(x.name||x.label||'unknown')));
+  if(normalized.includes('zh')){stats.chinese.works++; roots.forEach(x=>inc(stats.chinese.byRoot,x)); inc(stats.chinese.byPeriod,period)}
+ }
+}
+const report={schema:'dawn.library.editorial-scan.v1',generatedAt:new Date().toISOString(),canonicalWorkCount:root.canonicalWorkCount,scannedWorkCount:stats.works,shardCount:stats.shards,integrity:{countMatchesRoot:stats.works===root.canonicalWorkCount,missing:stats.missing},languages:{raw:obj(stats.rawLanguages),normalized:obj(stats.languages)},topology:{periods:obj(stats.periods),roots:obj(stats.roots),leaves:obj(stats.leaves),rootCooccurrence:obj(stats.rootPairs),topAuthors:Object.fromEntries(Object.entries(obj(stats.authors)).slice(0,250))},chinese:{normalizedWorkCount:stats.chinese.works,share:stats.works?stats.chinese.works/stats.works:0,byRoot:obj(stats.chinese.byRoot),byPeriod:obj(stats.chinese.byPeriod)}};
+const out=path.join(repo,'static/dawn-library/editorial'); fs.mkdirSync(out,{recursive:true}); fs.writeFileSync(path.join(out,'full-library-scan-v1.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({works:report.scannedWorkCount,shards:report.shardCount,countMatchesRoot:report.integrity.countMatchesRoot,chinese:report.chinese.normalizedWorkCount,missing:report.integrity.missing},null,2));
