@@ -1,0 +1,20 @@
+{
+  "schema": "dore.design-generation-consumers.v1",
+  "policy": "All formal visual generation using Doré editorial grammar must pass through the shared canonical prompt resolver. Consumers may add task constraints but may not replace resolved grammar authority.",
+  "gateway": "scripts/design_generation_gateway.py",
+  "resolver": "scripts/resolve_design_generation_prompt.py",
+  "formalMissingAuthorityBehavior": "block",
+  "consumers": [
+    {"id":"westside-watch","label":"Westside Watch","enabled":true},
+    {"id":"journal","label":"Westside Watch Journal","enabled":true},
+    {"id":"dawn-library","label":"Dawn Library","enabled":true},
+    {"id":"living-water","label":"Living Water West","enabled":true},
+    {"id":"one","label":"ONE","enabled":true},
+    {"id":"cinema","label":"Heaven Cinema","enabled":true},
+    {"id":"chidi","label":"Chidi","enabled":true},
+    {"id":"neser","label":"Neser","enabled":true},
+    {"id":"game","label":"Bible Game / Shadow of the Cross","enabled":true},
+    {"id":"publication","label":"Doré Publications","enabled":true},
+    {"id":"pond-bottom","label":"池底","enabled":true}
+  ]
+}
