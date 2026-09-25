@@ -17,21 +17,16 @@ jobs:
         shell: python
         run: |
           from pathlib import Path
-          import re, shutil
-
+          import re
           root=Path('.')
           meta=re.compile(r'^(?:>\s*)?(?:保存狀態|保存状态|來源|来源|本文件|編輯(?:註|注|說明|说明|補錄|补录)|恢復(?:說明|说明|記錄|记录)|工作稿|恢復稿|恢复稿|研究稿|診斷稿|诊断稿|版本|canonical|authority|source\s*:|status\s*:)',re.I)
           def clean_text(s):
-              lines=s.replace('\r\n','\n').replace('\r','\n').split('\n')
               out=[]
-              for line in lines:
+              for line in s.replace('\r\n','\n').replace('\r','\n').split('\n'):
                   t=line.strip()
-                  if meta.match(t):
-                      continue
-                  if t.startswith('<!--') and t.endswith('-->'):
-                      continue
+                  if meta.match(t): continue
+                  if t.startswith('<!--') and t.endswith('-->'): continue
                   out.append(line)
-              # collapse only excessive blank runs; do not rewrite prose
               return re.sub(r'\n{4,}','\n\n\n','\n'.join(out)).strip()+"\n"
           def clean_file(p):
               p=Path(p)
@@ -41,72 +36,52 @@ jobs:
               dst.write_text(clean_text(src.read_text(encoding='utf-8')),encoding='utf-8')
 
           # 天國語言：canonical 本身就是唯一正文 authority
-          for p in (root/'manuscripts/tian-guo-yu-yan/canonical').glob('*.md'): clean_file(p)
+          tian=root/'manuscripts/tian-guo-yu-yan/canonical'
+          for p in tian.glob('*.md'): clean_file(p)
 
-          # 一萬年的建城禮：建立只供出版/池底讀取的 canonical 正文層
-          city=root/'docs/projects/watch-city-vol00/manuscripts/carmel'
-          city_can=city/'canonical'
-          city_map=[
-            ('一萬年的建城禮｜序｜王進城了.md','00-王進城了.md'),
-            ('一萬年的建城禮｜第一部｜人為什麼要建一座城.md','01-人為什麼要建一座城.md'),
-            ('一萬年的建城禮｜第二部｜王的城.md','02-王的城.md'),
-            ('一萬年的建城禮｜第三部｜耶路撒冷三千年.md','03-耶路撒冷三千年.md')]
+          # 一萬年的建城禮
+          city=root/'docs/projects/watch-city-vol00/manuscripts/carmel'; city_can=city/'canonical'
+          city_map=[('一萬年的建城禮｜序｜王進城了.md','00-王進城了.md'),('一萬年的建城禮｜第一部｜人為什麼要建一座城.md','01-人為什麼要建一座城.md'),('一萬年的建城禮｜第二部｜王的城.md','02-王的城.md'),('一萬年的建城禮｜第三部｜耶路撒冷三千年.md','03-耶路撒冷三千年.md')]
           for a,b in city_map: copy_clean(city/a,city_can/b)
 
-          # 十字架的影子：不再讓池底讀 recovered；全部提升為 canonical 純正文
+          # 十字架的影子
           pub=root/'data/publishing'; cross=pub/'canonical/cross-shadow'
           copy_clean(pub/'cross-shadow.current-edited-manuscript.v1.md',cross/'00-義人的血.md')
-          cross_map=[
-            ('01-origin-of-the-shadow.md','01-十字架的影子從哪裡來.md'),
-            ('02-scripture-says.md','02-經上記著說.md'),
-            ('03-law-road-of-salvation.md','03-耶和華的律法救恩的路.md'),
-            ('04-melchizedek.md','04-麥基洗德.md'),
-            ('05-between-us-lay-his-hand.md','05-兩造按手.md'),
-            ('06-better-covenant.md','06-更美的新約.md'),
-            ('07-why-shadow.md','07-為什麼是影子.md')]
+          cross_map=[('01-origin-of-the-shadow.md','01-十字架的影子從哪裡來.md'),('02-scripture-says.md','02-經上記著說.md'),('03-law-road-of-salvation.md','03-耶和華的律法救恩的路.md'),('04-melchizedek.md','04-麥基洗德.md'),('05-between-us-lay-his-hand.md','05-兩造按手.md'),('06-better-covenant.md','06-更美的新約.md'),('07-why-shadow.md','07-為什麼是影子.md')]
           for a,b in cross_map: copy_clean(pub/'recovered/articles'/a,cross/b)
 
-          # 守望一座光明的城：若稿件已在庫中，以標題/正文命中自動建立 canonical；不改原稿。
-          watch=root/'data/publishing/canonical/watch-bright-city'; watch.mkdir(parents=True,exist_ok=True)
-          hits=[]
-          for p in root.rglob('*.md'):
-              if any(x in p.parts for x in ('.git','node_modules')) or 'canonical' in p.parts: continue
-              try: txt=p.read_text(encoding='utf-8')
-              except: continue
-              if '守望一座光明的城' in txt:
-                  hits.append(p)
-          for i,p in enumerate(sorted(set(hits))): copy_clean(p,watch/f'{i+1:02d}-{p.name}')
+          # 《守望，一座光明的城》Vol.00：現存文章全部提升到固定 canonical 路徑。
+          watch=root/'manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical'; watch.mkdir(parents=True,exist_ok=True)
+          gate=root/'docs/projects/watch-city-vol00/manuscripts/the-gate'
+          esther=root/'docs/projects/watch-city-vol00/manuscripts/esther'
+          watch_sources=[gate/'城門口的人.md',gate/'耶路撒冷：在黑暗中軟弱，在光明中剛強.md',gate/'大希律：這個人會建造.md',esther/'廚房裡的人.md']
+          for i,p in enumerate(watch_sources,1):
+              if p.exists(): copy_clean(p,watch/f'{i:02d}-{p.name}')
 
           # 池底只讀 canonical；不再讀 recovered / 工作稿。
           rp=root/'fond/read.html'; s=rp.read_text(encoding='utf-8')
           s=s.replace("base:RAW+'docs/projects/watch-city-vol00/manuscripts/carmel/'","base:RAW+'docs/projects/watch-city-vol00/manuscripts/carmel/canonical/'")
-          s=s.replace("'一萬年的建城禮｜序｜王進城了.md'","'00-王進城了.md'").replace("'一萬年的建城禮｜第一部｜人為什麼要建一座城.md'","'01-人為什麼要建一座城.md'").replace("'一萬年的建城禮｜第二部｜王的城.md'","'02-王的城.md'").replace("'一萬年的建城禮｜第三部｜耶路撒冷三千年.md'","'03-耶路撒冷三千年.md'")
+          for a,b in city_map: s=s.replace(repr(a),repr(b))
           s=s.replace("base:RAW+'data/publishing/'","base:RAW+'data/publishing/canonical/cross-shadow/'")
           s=s.replace("'cross-shadow.current-edited-manuscript.v1.md'","'00-義人的血.md'")
-          repl={
-            "'recovered/articles/01-origin-of-the-shadow.md'":"'01-十字架的影子從哪裡來.md'",
-            "'recovered/articles/02-scripture-says.md'":"'02-經上記著說.md'",
-            "'recovered/articles/03-law-road-of-salvation.md'":"'03-耶和華的律法救恩的路.md'",
-            "'recovered/articles/04-melchizedek.md'":"'04-麥基洗德.md'",
-            "'recovered/articles/05-between-us-lay-his-hand.md'":"'05-兩造按手.md'",
-            "'recovered/articles/06-better-covenant.md'":"'06-更美的新約.md'",
-            "'recovered/articles/07-why-shadow.md'":"'07-為什麼是影子.md'"}
-          for a,b in repl.items(): s=s.replace(a,b)
+          for a,b in cross_map: s=s.replace(repr('recovered/articles/'+a),repr(b))
+          if "'bright-city':" not in s:
+              insert=",\n'bright-city':{n:'04',title:'守望，一座光明的城',subtitle:'',base:RAW+'manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical/',items:[['城門口的人','01-城門口的人.md'],['耶路撒冷：在黑暗中軟弱，在光明中剛強','02-耶路撒冷：在黑暗中軟弱，在光明中剛強.md'],['大希律：這個人會建造','03-大希律：這個人會建造.md'],['廚房裡的人','04-廚房裡的人.md']]}"
+              s=s.replace("\n};",insert+"\n};")
           rp.write_text(s,encoding='utf-8')
 
-          # 驗收：所有池底 canonical MD 禁止工程 metadata。
-          targets=list((root/'manuscripts/tian-guo-yu-yan/canonical').glob('*.md'))+list(city_can.glob('*.md'))+list(cross.glob('*.md'))+list(watch.glob('*.md'))
+          targets=list(tian.glob('*.md'))+list(city_can.glob('*.md'))+list(cross.glob('*.md'))+list(watch.glob('*.md'))
           bad=[]
           for p in targets:
               for n,line in enumerate(p.read_text(encoding='utf-8').splitlines(),1):
                   if meta.match(line.strip()): bad.append(f'{p}:{n}:{line}')
           if bad: raise SystemExit('NON-PROSE RESIDUE\n'+'\n'.join(bad))
-          print(f'validated {len(targets)} canonical manuscript files; residue=0; bright-city hits={len(hits)}')
+          print(f'validated {len(targets)} canonical manuscript files; editorial residue=0')
       - name: Commit canonical manuscript layer
         run: |
           git config user.name 'westsidewatch-bot'
           git config user.email 'actions@users.noreply.github.com'
-          git add manuscripts/tian-guo-yu-yan/canonical docs/projects/watch-city-vol00/manuscripts/carmel/canonical data/publishing/canonical fond/read.html
+          git add manuscripts/tian-guo-yu-yan/canonical manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical docs/projects/watch-city-vol00/manuscripts/carmel/canonical data/publishing/canonical fond/read.html
           if git diff --cached --quiet; then echo 'No changes'; exit 0; fi
           git commit -m 'fix(fond): canonicalize and clean all reader manuscripts'
           git push
