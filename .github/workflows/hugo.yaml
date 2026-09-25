@@ -75,6 +75,14 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: hugo --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Publish Fond static publication
+        run: |
+          test -f fond/index.html
+          mkdir -p public/fond
+          cp -a fond/. public/fond/
+          test -f public/fond/index.html
+          test -f public/fond/fond.css
+          test -f public/fond/fond.js
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
