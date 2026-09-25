@@ -1,0 +1,84 @@
+{
+  "schema": "j3k.geometry-registry.v1",
+  "era": "herodian-jesus",
+  "temporalFocus": "c.30 CE",
+  "frame": "local-enu",
+  "rule": "Geometry is an evidence-bearing historical claim. Approximate geometry must remain visibly and structurally distinct from surveyed/observed geometry.",
+  "entries": [
+    {
+      "objectId": "j3k:object:temple-mount-enclosure-herodian",
+      "geometryType": "Polygon",
+      "status": "provisional-envelope",
+      "basis": "surviving retaining fabric + archaeological reconstruction",
+      "confidence": "high-outline / variable-details",
+      "coordinatesENU": null,
+      "registration": "awaiting sourced perimeter vertices",
+      "renderPolicy": "may render as evidence envelope only; no invented corners"
+    },
+    {
+      "objectId": "j3k:object:royal-stoa",
+      "geometryType": "Polygon",
+      "status": "reconstruction-candidate",
+      "basis": "literary + reconstruction literature",
+      "confidence": "medium",
+      "coordinatesENU": null,
+      "registration": "awaiting sourced footprint",
+      "renderPolicy": "do not derive footprint from centroid or decorative proportions"
+    },
+    {
+      "objectId": "j3k:object:antonia",
+      "geometryType": "Polygon",
+      "status": "location-constrained-form-unresolved",
+      "basis": "Josephus northwest adjacency + archaeological location constraints",
+      "confidence": "high-location / medium-form",
+      "coordinatesENU": null,
+      "registration": "awaiting sourced footprint alternatives",
+      "renderPolicy": "allow variant footprints; never collapse disagreement into one surveyed form"
+    },
+    {
+      "objectId": "j3k:object:inner-temple",
+      "geometryType": "Polygon",
+      "status": "platform-constrained-reconstruction",
+      "basis": "Josephus + Mishnah Middot + reconstruction literature",
+      "confidence": "medium",
+      "coordinatesENU": null,
+      "registration": "exact placement withheld",
+      "renderPolicy": "variant reconstruction only; never mark observed"
+    },
+    {
+      "objectId": "j3k:object:southern-approach",
+      "geometryType": "MultiLineString",
+      "status": "observed-elements-plus-reconstruction",
+      "basis": "archaeological stairs/gates/approach remains",
+      "confidence": "high-elements / medium-complete-route",
+      "coordinatesENU": null,
+      "registration": "awaiting sourced linework",
+      "renderPolicy": "observed segments and reconstructed joins require separate evidence styling"
+    },
+    {
+      "objectId": "j3k:object:western-street",
+      "geometryType": "LineString",
+      "status": "archaeological-linework",
+      "basis": "excavated western retaining-wall street/approach remains",
+      "confidence": "high-elements",
+      "coordinatesENU": null,
+      "registration": "awaiting sourced line vertices",
+      "renderPolicy": "prefer observed excavated segments; extension beyond evidence must be separate geometry"
+    },
+    {
+      "objectId": "j3k:object:eastern-entry-unknown",
+      "geometryType": null,
+      "status": "withheld",
+      "basis": "disputed exact gate/location",
+      "confidence": "low-exact-placement",
+      "coordinatesENU": null,
+      "registration": "withheld",
+      "renderPolicy": "no geometry until a dated evidence-backed variant is explicitly registered"
+    }
+  ],
+  "terrainContract": {
+    "horizontal": "coordinatesENU east/north are immutable under terrain sampling",
+    "vertical": "up/elevation is sampled from canonical terrain only after real DEM ingest",
+    "drape": "lines/polygons may be densified for terrain drape without changing historical plan geometry"
+  }
+}

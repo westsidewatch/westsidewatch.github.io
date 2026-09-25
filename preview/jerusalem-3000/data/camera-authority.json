@@ -1,0 +1,13 @@
+{
+  "id": "jaffa-fixed-camera-v1",
+  "status": "registration-pending-terrain-ingest",
+  "anchor": "jaffa-gate",
+  "principle": "Camera geographic position is persistent across eras; visible architecture is temporal.",
+  "warning": "The present Jaffa Gate is Ottoman. Earlier eras reuse the observation coordinate, not the gate as an anachronistic object.",
+  "runtime": {
+    "projection": "perspective",
+    "localFrame": "ENU",
+    "fovDegrees": 42,
+    "targetRule": "Target remains a stable geographic point in the Old City/Temple ridge system; exact pose will be survey-locked after DEM ingest."
+  }
+}

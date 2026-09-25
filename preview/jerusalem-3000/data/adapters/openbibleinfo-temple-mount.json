@@ -1,0 +1,37 @@
+{
+  "id": "openbibleinfo-3d-temple-mount-adapter-v1",
+  "source": {
+    "repository": "openbibleinfo/3D-Temple-Mount",
+    "license": "MIT",
+    "scope": "Herodian Temple Mount and immediate surrounding terrain, circa AD 30"
+  },
+  "role": "reference geometry/evidence adapter; never replaces Jerusalem 3000 terrain authority",
+  "absorb": [
+    "historical dimensions and citations as candidate evidence records",
+    "relative historical terrain relationships: Kidron, Tyropoeon, western hill, Mount of Olives",
+    "source-disagreement annotations",
+    "headless geometry verification pattern",
+    "passage-to-place precision classes",
+    "static-host WebGL performance techniques"
+  ],
+  "reject": [
+    "treating reconstruction geometry as survey data",
+    "using its terrain as the canonical DEM",
+    "promoting hypothetical city buildings into observed/reconstructed authority",
+    "forcing its local coordinate frame onto Jerusalem 3000"
+  ],
+  "mapping": {
+    "terrain": "verification/reference only → Terrain ledger",
+    "structures": "candidate records → Object ledger",
+    "temporalState": "c.30 CE candidates → Lifecycle ledger",
+    "citationsAndVariants": "→ Evidence ledger",
+    "passageGuide": "→ Event ledger"
+  },
+  "gates": [
+    "Every imported object must receive a Jerusalem 3000 stable ID.",
+    "Every geometry claim must retain source/variant provenance.",
+    "Coordinates must be registered into Jerusalem 3000 local ENU; no independent world frame.",
+    "Objects outside the project's stated evidence confidence remain hypothetical/inferred.",
+    "Automated checks must validate geometric relationships independently of rendering."
+  ]
+}

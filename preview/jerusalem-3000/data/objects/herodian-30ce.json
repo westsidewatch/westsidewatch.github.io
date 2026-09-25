@@ -1,0 +1,234 @@
+{
+  "schema": "j3k.object-ledger.v1",
+  "era": "herodian-jesus",
+  "temporalFocus": "c.30 CE",
+  "rule": "Objects are historical claims, not decorative mesh. Geometry and certainty are independently versioned.",
+  "objects": [
+    {
+      "id": "j3k:object:temple-mount-enclosure-herodian",
+      "label": "Herodian Temple Mount enclosure",
+      "kind": "platform-enclosure",
+      "evidence": "observed+reconstructed",
+      "confidence": "high-outline / variable-details",
+      "lifecycle": {
+        "birth": "Herodian expansion, late 1st c. BCE",
+        "stateAt30CE": "standing",
+        "ruin": "70 CE and later transformation"
+      },
+      "geometry": {
+        "status": "registration-pending",
+        "authority": "surviving retaining fabric + archaeology + literary reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "provisional-centroid",
+        "accuracy": "platform-scale",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:royal-stoa",
+      "label": "Royal Stoa",
+      "kind": "portico-basilica",
+      "evidence": "textual+reconstructed",
+      "confidence": "medium",
+      "lifecycle": {
+        "birth": "Herodian building program",
+        "stateAt30CE": "standing",
+        "ruin": "70 CE"
+      },
+      "geometry": {
+        "status": "candidate",
+        "rule": "footprint/detail remain reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.7768,
+          "lon": 35.2351
+        },
+        "registration": "provisional-south-platform",
+        "accuracy": "structure-zone",
+        "enuMetres": {
+          "east": 9.46,
+          "north": -133.58,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:antonia",
+      "label": "Antonia Fortress",
+      "kind": "fortress",
+      "evidence": "textual+archaeological-location-constraint",
+      "confidence": "high-location / medium-form",
+      "lifecycle": {
+        "birth": "Herodian, before 31 BCE naming context",
+        "stateAt30CE": "standing",
+        "ruin": "70 CE campaign"
+      },
+      "geometry": {
+        "status": "candidate",
+        "rule": "northwest adjacency is strong; exact footprint/elevations remain reconstruction"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.78,
+          "lon": 35.2342
+        },
+        "registration": "provisional-northwest-adjacency",
+        "accuracy": "zone-not-footprint",
+        "enuMetres": {
+          "east": -75.71,
+          "north": 222.64,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:inner-temple",
+      "label": "Temple sanctuary and inner courts",
+      "kind": "sacred-complex",
+      "evidence": "textual+reconstructed",
+      "confidence": "medium",
+      "lifecycle": {
+        "birth": "Herodian rebuilding",
+        "stateAt30CE": "standing",
+        "ruin": "70 CE"
+      },
+      "geometry": {
+        "status": "candidate",
+        "rule": "not excavated in situ; literary sources constrain but do not survey exact placement/detail"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.778,
+          "lon": 35.235
+        },
+        "registration": "withheld-exact-placement",
+        "accuracy": "platform-only",
+        "enuMetres": {
+          "east": 0,
+          "north": 0,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:southern-approach",
+      "label": "Southern monumental approach / stairs and gates",
+      "kind": "pilgrimage-access",
+      "evidence": "observed+reconstructed",
+      "confidence": "high-elements / medium-complete-route",
+      "lifecycle": {
+        "birth": "Herodian",
+        "stateAt30CE": "active",
+        "ruin": "70 CE / later reuse"
+      },
+      "geometry": {
+        "status": "registration-pending"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.7758,
+          "lon": 35.2349
+        },
+        "registration": "provisional-archaeological-zone",
+        "accuracy": "approach-zone",
+        "enuMetres": {
+          "east": -9.46,
+          "north": -244.9,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:western-street",
+      "label": "Western retaining-wall street / approach system",
+      "kind": "street",
+      "evidence": "archaeological",
+      "confidence": "high-elements",
+      "lifecycle": {
+        "birth": "Second Temple / Herodian works",
+        "stateAt30CE": "active",
+        "ruin": "70 CE debris event"
+      },
+      "geometry": {
+        "status": "registration-pending"
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": {
+          "lat": 31.777,
+          "lon": 35.2337
+        },
+        "registration": "provisional-archaeological-zone",
+        "accuracy": "street-zone",
+        "enuMetres": {
+          "east": -123.02,
+          "north": -111.32,
+          "up": null
+        },
+        "enuMethod": "WGS84 local tangent approximation; up awaits canonical DEM sample"
+      }
+    },
+    {
+      "id": "j3k:object:eastern-entry-unknown",
+      "label": "Eastern Temple/city approach — exact gate unresolved",
+      "kind": "uncertain-access",
+      "evidence": "disputed",
+      "confidence": "low-exact-placement",
+      "lifecycle": {
+        "stateAt30CE": "access existed; exact modeled gate withheld"
+      },
+      "geometry": {
+        "status": "withheld",
+        "rule": "Do not substitute later Golden Gate as Herodian certainty."
+      },
+      "spatial": {
+        "frame": "local-enu",
+        "anchor": null,
+        "registration": "withheld",
+        "accuracy": "unknown-exact-gate"
+      }
+    }
+  ],
+  "sources": [
+    {
+      "id": "josephus-war-5",
+      "role": "primary-literary",
+      "note": "Temple precinct, porticoes and Antonia descriptions."
+    },
+    {
+      "id": "mishnah-middot",
+      "role": "primary-literary-tradition",
+      "note": "Measured inner-court tradition; discrepancies with Josephus remain evidence, not noise."
+    },
+    {
+      "id": "archaeological-retaining-fabric",
+      "role": "observed",
+      "note": "Retaining walls, gates, stairs, streets and approach remains constrain outer platform."
+    },
+    {
+      "id": "openbibleinfo-3d-temple-mount",
+      "role": "engineering-precedent",
+      "note": "Candidate geometry/source-disagreement and verification patterns only."
+    }
+  ]
+}
