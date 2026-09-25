@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-25T03:21:52.022592+00:00",
+  "generatedAt": "2026-09-25T03:24:08.540502+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -603,6 +603,787 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/mummyataletwent00jangoog",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "doab-theology-or-biblical",
+      "title": "開放學術 · 神學與宗教",
+      "kind": "academic-shelf",
+      "source": "DOAB",
+      "items": [
+        {
+          "id": "doab-20-500-12854-95839",
+          "title": "The Future of New Testament Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20230105_9783036550114_68",
+            "isbn": null,
+            "handle": "20.500.12854/95839"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/95839",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/d44e1a1d-2db3-4824-9472-81c71cbe3706/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-157616",
+          "title": "Skeppingsorg",
+          "author": "de Wit, Martin P",
+          "language": "Afrikaans",
+          "identifiers": {
+            "doi": "ONIX_20250320_9781990982118_11",
+            "isbn": null,
+            "handle": "20.500.12854/157616"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/157616",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/5684df7d-75db-44ed-9ba8-148e63f92260/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-78886",
+          "title": "Biblical Texts in Digitalization",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": null,
+            "isbn": "3947251211",
+            "handle": "20.500.12854/78886",
+            "openLibraryWork": "/works/OL32143159W",
+            "openLibraryEdition": "OL43878307M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/78886",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/85b6d635-c74f-46b5-b0a0-2eacfd017e2e/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL32143159W",
+            "editionId": "OL43878307M",
+            "isbn": "3947251211",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-132806",
+          "title": "Covenant: A Vital Element of Reformed Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20240111_9789004503328_16",
+            "isbn": "9004503315",
+            "handle": "20.500.12854/132806",
+            "openLibraryWork": "/works/OL25958676W",
+            "openLibraryEdition": "OL35036077M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/132806",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/7e93ed63-9d56-484b-9c53-b1534da6f928/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL25958676W",
+            "editionId": "OL35036077M",
+            "isbn": "9004503315",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-134898",
+          "title": "The biblical concept of the ‘Davidic Covenant’ in 2 Samuel and Ezekiel and its implications for African leadership",
+          "author": "Budha, Victor Lonu",
+          "language": "English",
+          "identifiers": {
+            "doi": "OCN: 1424920257",
+            "isbn": null,
+            "handle": "20.500.12854/134898"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/134898",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/0ef83ee3-956c-4e5f-995d-e0e3ced2b9e8/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-32228",
+          "title": "Reformed theology today",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "640131",
+            "isbn": "201747",
+            "handle": "20.500.12854/32228",
+            "openLibraryWork": "/works/OL23501178W",
+            "openLibraryEdition": "OL31373249M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/32228",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/bd3ff407-ffed-426c-83e5-c44ed4b2916d/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL23501178W",
+            "editionId": "OL31373249M",
+            "isbn": "201747",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-80748",
+          "title": "Biblical Theology of Life in the New Testament",
+          "author": "Viljoen, Francois P.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20220408_9781776341788_10",
+            "isbn": null,
+            "handle": "20.500.12854/80748"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/80748",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/6553c6a9-c879-46a4-9fe7-e0f8b52a63da/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-169682",
+          "title": "Theology of Work",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20251201T131047_9781040258859_56",
+            "isbn": "9781619706507",
+            "handle": "20.500.12854/169682",
+            "openLibraryWork": "/works/OL28062762W",
+            "openLibraryEdition": "OL38408236M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/169682",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/038e9215-4cba-4080-860c-4755d4370b03/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL28062762W",
+            "editionId": "OL38408236M",
+            "isbn": "9781619706507",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-71730",
+          "title": "Jesucristo nos llama",
+          "author": "Arenas Molina, Enrique",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585798341_15",
+            "isbn": null,
+            "handle": "20.500.12854/71730"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71730",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/da9132c0-9056-40ba-9b9d-6721a35ad623/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71718",
+          "title": "55 preguntas sobre san Agustín",
+          "author": "Eguiarte Bendímez, Enrique A.",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498372_3",
+            "isbn": null,
+            "handle": "20.500.12854/71718"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71718",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/36c02fa1-c493-411f-a39c-07d35ccf4ad5/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71719",
+          "title": "Andrés de San Nicolás",
+          "author": "Uriel Patiño Franco, José",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585639577_4",
+            "isbn": null,
+            "handle": "20.500.12854/71719"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71719",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/c5da678e-4be6-4e5b-a6f2-dd0d890d358e/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71731",
+          "title": "La Gratia en los Sermones ad Populum de San Agustín durante la controversia pelagiana",
+          "author": "Dupont, Anthony",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789589981382_16",
+            "isbn": null,
+            "handle": "20.500.12854/71731"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71731",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/e3abd54c-84e7-4ad3-ae6e-b79f226876d0/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71732",
+          "title": "La incomprehensibilidad de Dios",
+          "author": "van Geest, Paul",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789589981351_17",
+            "isbn": null,
+            "handle": "20.500.12854/71732"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71732",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/b97639dd-09d2-4cd3-a5b4-34967467bbbe/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71744",
+          "title": "\"On the Way to Truth and Peace\" (ep. 33, 6): Augustine's Anti-Donatist Readings of John 14, 27a",
+          "author": "Grabau, Joseph",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_7",
+            "isbn": null,
+            "handle": "20.500.12854/71744"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71744",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/1a6bf02a-f2aa-40e6-8ec0-3a71f2c99131/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-37833",
+          "title": "Biblical Terror",
+          "author": "Cataldo, Jeremiah W.",
+          "language": "English",
+          "identifiers": {
+            "doi": "1004297",
+            "isbn": "9780567682628",
+            "handle": "20.500.12854/37833",
+            "openLibraryWork": "/works/OL20928507W",
+            "openLibraryEdition": "OL28355180M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/37833",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/6dbe2683-883b-4b3d-8bc0-d942ef758cff/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL20928507W",
+            "editionId": "OL28355180M",
+            "isbn": "9780567682628",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-132159",
+          "title": "Biblical Theology of prayer in the New Testament",
+          "author": "Mulder, Michael C",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20231221_9781779952776_6",
+            "isbn": null,
+            "handle": "20.500.12854/132159"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/132159",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/a8b3beff-18eb-4436-b431-97cc04c5a409/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-26675",
+          "title": "Reformed theology today",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "640132",
+            "isbn": "201747",
+            "handle": "20.500.12854/26675",
+            "openLibraryWork": "/works/OL23501178W",
+            "openLibraryEdition": "OL31373249M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/26675",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/54b30ba4-9f00-4d42-b5ce-20dd14f05578/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL23501178W",
+            "editionId": "OL31373249M",
+            "isbn": "201747",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          }
+        },
+        {
+          "id": "doab-20-500-12854-172085",
+          "title": "Bruk av Bibelen i fellesskap",
+          "author": "Aadland, Ingunn",
+          "language": "Norwegian Nynorsk",
+          "identifiers": {
+            "doi": "https://library.oapen.org/handle/20.500.12657/109965",
+            "isbn": null,
+            "handle": "20.500.12854/172085"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/172085",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/4e780a3b-42a0-4e9e-97f3-4c2c7d24fea0/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71737",
+          "title": "Profesores agustinianos",
+          "author": "Echazarreta Sarabia, Lucilo",
+          "language": "Spanish",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498525_22",
+            "isbn": null,
+            "handle": "20.500.12854/71737"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71737",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/0939d561-eea0-4110-9458-ca82aaec99b7/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71748",
+          "title": "Ipse Enim est Pax Nostra: Ephesians 2:14 in the Preaching of St. Augustine",
+          "author": "Yates, Jonathan P.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_11",
+            "isbn": null,
+            "handle": "20.500.12854/71748"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71748",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/d86599f6-9ebd-4de6-a539-6851eaf306ae/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-71756",
+          "title": "Practicing Peace, Preaching Psalms: The Centrality of the Enarrationes in Psalmos to Augustine’s Developing Theological Understanding of Peace",
+          "author": "Grove, Kevin G.",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20210825_9789585498211_19",
+            "isbn": null,
+            "handle": "20.500.12854/71756"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/71756",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/3a4c558b-4185-467c-83cf-9201c47cf865/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": null,
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false
+        },
+        {
+          "id": "doab-20-500-12854-168893",
+          "title": "A Prophet to the Nations",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20251118T124429_9783666573644_22",
+            "isbn": "9780931464201",
+            "handle": "20.500.12854/168893",
+            "openLibraryWork": "/works/OL18871796W",
+            "openLibraryEdition": "OL3178110M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/168893",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/0d0573d8-5e7a-4280-a2fa-3788ed95b3ce/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL18871796W",
+            "editionId": "OL3178110M",
+            "isbn": "9780931464201",
+            "coverId": 4229587,
+            "internetArchiveId": "prophettonations0000unse",
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/prophettonations0000unse",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "doab-20-500-12854-29246",
+          "title": "Contextual Theology",
+          "author": "",
+          "language": "English",
+          "identifiers": {
+            "doi": "ONIX_20201221_9781000217261_4",
+            "isbn": "0883448149",
+            "handle": "20.500.12854/29246",
+            "openLibraryWork": "/works/OL4089972W",
+            "openLibraryEdition": "OL1717216M"
+          },
+          "source": {
+            "provider": "DOAB",
+            "url": "https://directory.doabooks.org/handle/20.500.12854/29246",
+            "downloadUrl": null,
+            "kind": "remote-open-access"
+          },
+          "cover": {
+            "url": "https://directory.doabooks.org/rest/bitstreams/6da5839f-4785-4c39-8f35-35b56eedfb94/retrieve",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "open-access",
+            "license": "open access",
+            "declaredBy": "DOAB",
+            "provenanceRequired": true
+          },
+          "quality": "open-access-scholarly",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL4089972W",
+            "editionId": "OL1717216M",
+            "isbn": "0883448149",
+            "coverId": 680992,
+            "internetArchiveId": "modelsofcontextu0000beva_e7z7",
+            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/modelsofcontextu0000beva_e7z7",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -6403,21 +7184,21 @@
     }
   ],
   "metrics": {
-    "shelves": 10,
-    "mappedBooks": 191,
-    "sourceCovers": 140,
+    "shelves": 11,
+    "mappedBooks": 214,
+    "sourceCovers": 163,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
-      "DOAB": 24,
+      "DOAB": 47,
       "Internet Archive": 40,
       "Project Gutenberg": 112
     },
     "identity": {
       "queriedThisRun": 0,
-      "resolved": 113,
+      "resolved": 121,
       "coversAdded": 65,
-      "internetArchiveLinks": 54,
+      "internetArchiveLinks": 56,
       "cacheEntries": 196
     }
   },
@@ -6425,10 +7206,6 @@
     {
       "source": "Wikisource",
       "error": "empty-shelf"
-    },
-    {
-      "source": "DOAB theology",
-      "error": "TimeoutError: The read operation timed out"
     }
   ]
 }
