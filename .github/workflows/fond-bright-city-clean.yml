@@ -1,0 +1,38 @@
+name: Fond bright-city canonical clean
+on:
+  push:
+    paths: ['.github/workflows/fond-bright-city-clean.yml']
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - shell: python
+        run: |
+          from pathlib import Path
+          import re
+          meta=re.compile(r'^(?:>\s*)?(?:保存狀態|保存状态|來源|来源|本文件|編輯(?:註|注|說明|说明|補錄|补录)|恢復(?:說明|说明|記錄|记录)|工作稿|恢復稿|恢复稿|研究稿|診斷稿|诊断稿|版本|canonical|authority|source\s*:|status\s*:)',re.I)
+          def clean(s):
+            return '\n'.join(x for x in s.replace('\r','').split('\n') if not meta.match(x.strip()) and not (x.strip().startswith('<!--') and x.strip().endswith('-->'))).strip()+'\n'
+          root=Path('.'); out=root/'manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical'; out.mkdir(parents=True,exist_ok=True)
+          src=[root/'docs/projects/watch-city-vol00/manuscripts/the-gate/城門口的人.md',root/'docs/projects/watch-city-vol00/manuscripts/the-gate/耶路撒冷：在黑暗中軟弱，在光明中剛強.md',root/'docs/projects/watch-city-vol00/manuscripts/the-gate/大希律：這個人會建造.md',root/'docs/projects/watch-city-vol00/manuscripts/esther/廚房裡的人.md']
+          for i,p in enumerate(src,1):
+            assert p.exists(),p
+            (out/f'{i:02d}-{p.name}').write_text(clean(p.read_text(encoding='utf-8')),encoding='utf-8')
+          bad=[str(p) for p in out.glob('*.md') for line in p.read_text(encoding='utf-8').splitlines() if meta.match(line.strip())]
+          assert not bad,bad
+          rp=root/'fond/read.html'; s=rp.read_text(encoding='utf-8')
+          if "'bright-city':" not in s:
+            insert=",\n'bright-city':{n:'04',title:'守望，一座光明的城',subtitle:'',base:RAW+'manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical/',items:[['城門口的人','01-城門口的人.md'],['耶路撒冷：在黑暗中軟弱，在光明中剛強','02-耶路撒冷：在黑暗中軟弱，在光明中剛強.md'],['大希律：這個人會建造','03-大希律：這個人會建造.md'],['廚房裡的人','04-廚房裡的人.md']]}"
+            s=s.replace('\n};',insert+'\n};')
+            rp.write_text(s,encoding='utf-8')
+          print('bright-city canonical=4; editorial residue=0')
+      - run: |
+          git config user.name westsidewatch-bot
+          git config user.email actions@users.noreply.github.com
+          git add manuscripts/shou-wang-yi-zuo-guang-ming-de-cheng/canonical fond/read.html
+          git commit -m 'fix(fond): canonicalize bright-city reader manuscripts' || exit 0
+          git push
