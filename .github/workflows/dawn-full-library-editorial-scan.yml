@@ -1,0 +1,27 @@
+name: Dawn Full Library Editorial Scan
+on:
+  workflow_dispatch:
+  push:
+    branches: [dawn/full-library-editorial-scan-v1]
+    paths:
+      - 'static/dawn-library/living/**'
+      - 'scripts/dawn/full-library-editorial-scan.mjs'
+      - '.github/workflows/dawn-full-library-editorial-scan.yml'
+permissions:
+  contents: read
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Scan all canonical Living Library shards
+        run: node scripts/dawn/full-library-editorial-scan.mjs
+      - name: Validate complete corpus
+        run: node -e "const r=require('./static/dawn-library/editorial/full-library-scan-v1.json'); if(!r.integrity.countMatchesRoot) process.exit(1); console.log(r.scannedWorkCount+' canonical Works scanned')"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dawn-full-library-editorial-scan-v1
+          path: static/dawn-library/editorial/full-library-scan-v1.json
