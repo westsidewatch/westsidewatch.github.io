@@ -3,39 +3,36 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 const repo=process.cwd();
-const living=path.join(repo,'static/dawn-library/living');
-const root=JSON.parse(fs.readFileSync(path.join(living,'root.json'),'utf8'));
-const shardFiles=fs.readdirSync(living).filter(n=>/^wall-\d+\.json$/.test(n)).sort();
-const LANG={eng:'en',en:'en',English:'en',chi:'zh',cmn:'zh',zh:'zh',ger:'de',German:'de',fre:'fr',French:'fr',spa:'es',Spanish:'es',gre:'el',grc:'grc'};
-const VIDEO_HINT=/(video|movie|film|cinema|sermon|lecture|documentary|youtube|vimeo|影音|視頻|影片|電影|講道|紀錄片)/i;
+const canonical=path.join(repo,'static/dawn-library/canonical');
+const root=JSON.parse(fs.readFileSync(path.join(canonical,'root.json'),'utf8'));
+const shardFiles=(root.shards||[]).map(s=>s.href);
+const LANG={eng:'en',en:'en',English:'en',chi:'zh',cmn:'zh',zh:'zh',zho:'zh',ger:'de',German:'de',deu:'de',fre:'fr',French:'fr',fra:'fr',spa:'es',Spanish:'es',gre:'el',grc:'grc'};
 const inc=(m,k,n=1)=>m.set(k,(m.get(k)||0)+n);
 const obj=m=>Object.fromEntries([...m.entries()].sort((a,b)=>b[1]-a[1]||String(a[0]).localeCompare(String(b[0]))));
 const arr=v=>v==null?[]:(Array.isArray(v)?v:[v]);
-const stats={works:0,shards:shardFiles.length,rawLanguages:new Map(),languages:new Map(),periods:new Map(),roots:new Map(),leaves:new Map(),authors:new Map(),rootPairs:new Map(),mediums:new Map(),missing:{language:0,period:0,classification:0,author:0,medium:0},chinese:{works:0,byRoot:new Map(),byPeriod:new Map(),videoWorks:0},video:{works:0,byRoot:new Map(),byPeriod:new Map(),byLanguage:new Map(),byMedium:new Map(),cinemaCandidates:[]}};
+const strings=v=>arr(v).flatMap(x=>typeof x==='string'?[x]:(x?.name||x?.label||x?.title?[x.name||x.label||x.title]:[])).filter(Boolean);
+const stats={works:0,authority:0,languages:new Map(),rawLanguages:new Map(),authors:new Map(),subjects:new Map(),years:new Map(),sources:new Map(),missing:{title:0,language:0,author:0,subjects:0},chinese:{works:0,authors:new Map(),subjects:new Map(),years:new Map()},samples:{chinese:[],bridge:[]}};
 for(const file of shardFiles){
- const payload=JSON.parse(fs.readFileSync(path.join(living,file),'utf8'));
- const works=Array.isArray(payload)?payload:(payload.workRefs||payload.works||payload.items||[]);
- if(payload.workCount!=null&&works.length!==payload.workCount)throw new Error(`${file}: declared ${payload.workCount} Works but found ${works.length}`);
+ const payload=JSON.parse(fs.readFileSync(path.join(canonical,file),'utf8'));
+ const works=Array.isArray(payload)?payload:(payload.works||payload.items||payload.workRefs||[]);
+ const declared=(root.shards||[]).find(s=>s.href===file)?.workCount;
+ if(declared!=null&&works.length!==declared)throw new Error(`${file}: declared ${declared} Works but found ${works.length}`);
  for(const w of works){
   stats.works++;
-  const facets=w.facets||{};
-  const langs=[...new Set([...arr(facets.languages),...arr(w.languages),...arr(w.language)].filter(Boolean))];
-  if(!langs.length)stats.missing.language++;
-  const normalized=[...new Set(langs.map(x=>LANG[x]||String(x).toLowerCase()))];
-  langs.forEach(x=>inc(stats.rawLanguages,x)); normalized.forEach(x=>inc(stats.languages,x));
-  const period=facets.period||w.period||w.classification?.period||'unknown'; inc(stats.periods,period); if(period==='unknown')stats.missing.period++;
-  const roots=[...new Set(w.classification?.roots||[])]; const leaves=[...new Set(w.classification?.leaves||[])];
-  if(!roots.length&&!leaves.length)stats.missing.classification++;
-  roots.forEach(x=>inc(stats.roots,x)); leaves.forEach(x=>inc(stats.leaves,x));
-  for(let i=0;i<roots.length;i++)for(let j=i+1;j<roots.length;j++)inc(stats.rootPairs,[roots[i],roots[j]].sort().join(' × '));
-  const aa=[...arr(w.authors),...arr(w.author)].filter(Boolean); if(!aa.length)stats.missing.author++; aa.forEach(x=>inc(stats.authors,typeof x==='string'?x:(x.name||x.label||'unknown')));
-  const rawMedium=[...arr(facets.mediums),...arr(facets.medium),...arr(w.medium),...arr(w.mediaType),...arr(w.resourceType),...arr(w.format),...arr(w.type),...arr(w.kind)].filter(Boolean).map(String); if(!rawMedium.length)stats.missing.medium++; rawMedium.forEach(x=>inc(stats.mediums,x));
-  const pointers=[...arr(w.pointer),...arr(w.pointers),...arr(w.url),...arr(w.urls),...arr(w.source),...arr(w.sources),...arr(w.access)].filter(Boolean); const pointerText=JSON.stringify(pointers); const mediumText=rawMedium.join(' '); const titleText=[w.title,w.label,w.name].filter(Boolean).join(' '); const isVideo=VIDEO_HINT.test(`${mediumText} ${pointerText} ${titleText}`);
-  const isChinese=normalized.includes('zh');
-  if(isChinese){stats.chinese.works++; roots.forEach(x=>inc(stats.chinese.byRoot,x)); inc(stats.chinese.byPeriod,period); if(isVideo)stats.chinese.videoWorks++}
-  if(isVideo){stats.video.works++; roots.forEach(x=>inc(stats.video.byRoot,x)); inc(stats.video.byPeriod,period); normalized.forEach(x=>inc(stats.video.byLanguage,x)); rawMedium.forEach(x=>inc(stats.video.byMedium,x)); if(stats.video.cinemaCandidates.length<5000)stats.video.cinemaCandidates.push({id:w.id||w.workId||w.canonicalId||null,title:w.title||w.label||w.name||null,languages:normalized,period,roots,medium:rawMedium,pointers})}
+  const title=w.title||w.name||w.label||''; if(!title)stats.missing.title++;
+  const rawLang=[...new Set([...strings(w.languages),...strings(w.language),...strings(w.editions?.languages)].filter(Boolean))]; if(!rawLang.length)stats.missing.language++;
+  const langs=[...new Set(rawLang.map(x=>LANG[x]||String(x).toLowerCase()))]; rawLang.forEach(x=>inc(stats.rawLanguages,x)); langs.forEach(x=>inc(stats.languages,x));
+  const authors=[...new Set([...strings(w.authors),...strings(w.author),...strings(w.authorNames)])]; if(!authors.length)stats.missing.author++; authors.forEach(x=>inc(stats.authors,x));
+  const subjects=[...new Set([...strings(w.subjects),...strings(w.subject),...strings(w.topics),...strings(w.tags)])]; if(!subjects.length)stats.missing.subjects++; subjects.forEach(x=>inc(stats.subjects,x));
+  const year=w.firstPublishYear||w.first_publish_year||w.publishYear||w.year||null; if(year)inc(stats.years,String(year));
+  const source=w.authority?.source||w.source||w.provenance?.source||null; if(source)inc(stats.sources,typeof source==='string'?source:(source.name||source.id||'unknown'));
+  if(w.authorityBacked||w.authority?.backed||w.authority?.status==='backed')stats.authority++;
+  const zh=langs.includes('zh'); if(zh){stats.chinese.works++; authors.forEach(x=>inc(stats.chinese.authors,x)); subjects.forEach(x=>inc(stats.chinese.subjects,x)); if(year)inc(stats.chinese.years,String(year)); if(stats.samples.chinese.length<200)stats.samples.chinese.push({id:w.id||w.workId,title,authors,subjects:subjects.slice(0,12),year,languages:langs});}
  }
 }
-const report={schema:'dawn.library.editorial-scan.v1',generatedAt:new Date().toISOString(),canonicalWorkCount:root.canonicalWorkCount,scannedWorkCount:stats.works,shardCount:stats.shards,integrity:{countMatchesRoot:stats.works===root.canonicalWorkCount,missing:stats.missing},languages:{raw:obj(stats.rawLanguages),normalized:obj(stats.languages)},media:{mediums:obj(stats.mediums)},topology:{periods:obj(stats.periods),roots:obj(stats.roots),leaves:obj(stats.leaves),rootCooccurrence:obj(stats.rootPairs),topAuthors:Object.fromEntries(Object.entries(obj(stats.authors)).slice(0,250))},chinese:{normalizedWorkCount:stats.chinese.works,share:stats.works?stats.chinese.works/stats.works:0,videoWorkCount:stats.chinese.videoWorks,byRoot:obj(stats.chinese.byRoot),byPeriod:obj(stats.chinese.byPeriod)},video:{workCount:stats.video.works,projectionSurface:'cinema',byRoot:obj(stats.video.byRoot),byPeriod:obj(stats.video.byPeriod),byLanguage:obj(stats.video.byLanguage),byMedium:obj(stats.video.byMedium),cinemaCandidates:stats.video.cinemaCandidates}};
-const out=path.join(repo,'static/dawn-library/editorial'); fs.mkdirSync(out,{recursive:true}); fs.writeFileSync(path.join(out,'full-library-scan-v1.json'),JSON.stringify(report,null,2)+'\n');
-console.log(JSON.stringify({works:report.scannedWorkCount,shards:report.shardCount,countMatchesRoot:report.integrity.countMatchesRoot,chinese:report.chinese.normalizedWorkCount,video:report.video.workCount,chineseVideo:report.chinese.videoWorkCount,missing:report.integrity.missing},null,2));
+const allSubjects=obj(stats.subjects), zhSubjects=obj(stats.chinese.subjects);
+const gaps=Object.entries(allSubjects).filter(([s,n])=>n>=10).map(([subject,total])=>({subject,total,chinese:zhSubjects[subject]||0,chineseShare:(zhSubjects[subject]||0)/total})).sort((a,b)=>a.chineseShare-b.chineseShare||b.total-a.total).slice(0,1000);
+const report={schema:'dawn.library.canonical-scan.v2',phase:'P2_ACTIVE',generatedAt:new Date().toISOString(),source:'static/dawn-library/canonical/root.json + canonical/works-*',canonicalWorkCount:root.workCount,scannedWorkCount:stats.works,shardCount:shardFiles.length,integrity:{countMatchesRoot:stats.works===root.workCount,missing:stats.missing},languages:{raw:obj(stats.rawLanguages),normalized:obj(stats.languages)},topology:{topAuthors:Object.fromEntries(Object.entries(obj(stats.authors)).slice(0,500)),topSubjects:Object.fromEntries(Object.entries(allSubjects).slice(0,2000)),years:obj(stats.years),sources:obj(stats.sources)},chinese:{workCount:stats.chinese.works,share:stats.works?stats.chinese.works/stats.works:0,topAuthors:Object.fromEntries(Object.entries(obj(stats.chinese.authors)).slice(0,500)),topSubjects:Object.fromEntries(Object.entries(zhSubjects).slice(0,2000)),years:obj(stats.chinese.years),samples:stats.samples.chinese},p2:{chineseSubjectGaps:gaps}};
+const out=path.join(repo,'static/dawn-library/editorial'); fs.mkdirSync(out,{recursive:true}); fs.writeFileSync(path.join(out,'canonical-scan-v2.json'),JSON.stringify(report,null,2)+'\n');
+if(!report.integrity.countMatchesRoot)throw new Error(`canonical scan count mismatch: ${stats.works}/${root.workCount}`);
+console.log(JSON.stringify({phase:report.phase,works:report.scannedWorkCount,shards:report.shardCount,chinese:report.chinese.workCount,subjectGapCandidates:gaps.length,missing:report.integrity.missing},null,2));
