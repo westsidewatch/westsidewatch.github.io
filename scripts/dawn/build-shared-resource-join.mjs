@@ -36,12 +36,19 @@ for(const shard of livingRoot.shards||[]){
   }
 }
 
+// Resource Fabric v0 is search-bucket routed, not works-* file routed.
+// rows are [searchKey, workId, title, primaryAuthor]. Multiple rows may point to one Work.
 const fabricIds=new Set();
-for(const name of fs.readdirSync(fabricDir).filter(n=>/^works-.*\.json$/.test(n)).sort()){
+const fabricTitles=new Map();
+let fabricRows=0;
+for(const name of fs.readdirSync(fabricDir).filter(n=>/^search-[0-9a-f]{2}\.json$/i.test(n)).sort()){
   const payload=JSON.parse(fs.readFileSync(path.join(fabricDir,name),'utf8'));
-  const raw=payload.works??payload.items??payload;
-  const entries=Array.isArray(raw)?raw:Object.values(raw||{});
-  for(const w of entries){const id=w.workId||w.id||w.canonicalId;if(id)fabricIds.add(id)}
+  for(const row of payload.rows||[]){
+    fabricRows++;
+    const workId=row?.[1]; if(!workId)continue;
+    fabricIds.add(workId);
+    if(!fabricTitles.has(workId))fabricTitles.set(workId,{title:row?.[2]||'',primaryAuthor:row?.[3]||''});
+  }
 }
 const fabricOrphans=[...fabricIds].filter(id=>!canonicalIds.has(id));
 const canonicalWithSemantic=[...canonicalIds].filter(id=>semanticByWork.has(id)).length;
@@ -50,13 +57,14 @@ const canonicalWithBoth=[...canonicalIds].filter(id=>semanticByWork.has(id)&&fab
 const top=m=>Object.fromEntries([...m.entries()].sort((a,b)=>b[1]-a[1]).slice(0,500));
 
 const report={
- schema:'dawn.shared-resource-join-audit.v1',generatedAt:new Date().toISOString(),
- authority:{identity:'Dawn canonical Work ID',semantic:'Living classification/facets projection',resource:'Resource Fabric'},
- counts:{canonicalWorks:canonicalIds.size,livingRefs,resourceFabricWorks:fabricIds.size,resourceFabricManifestWorks:fabricManifest.workCount,canonicalWithSemantic,canonicalWithFabric,canonicalWithBoth},
- integrity:{canonicalMatchesRoot:canonicalIds.size===canonicalRoot.workCount,livingMatchesRoot:livingRefs===livingRoot.canonicalWorkCount,livingOrphans,resourceFabricOrphans:fabricOrphans.length,resourceFabricOrphanSample:fabricOrphans.slice(0,100)},
+ schema:'dawn.shared-resource-join-audit.v2',generatedAt:new Date().toISOString(),
+ authority:{identity:'Dawn canonical Work ID',semantic:'Living classification/facets projection',resource:'Resource Fabric search buckets'},
+ counts:{canonicalWorks:canonicalIds.size,livingRefs,resourceFabricRows:fabricRows,resourceFabricWorks:fabricIds.size,resourceFabricManifestWorks:fabricManifest.workCount,canonicalWithSemantic,canonicalWithFabric,canonicalWithBoth},
+ integrity:{canonicalMatchesRoot:canonicalIds.size===canonicalRoot.workCount,livingMatchesRoot:livingRefs===livingRoot.canonicalWorkCount,livingOrphans,resourceFabricMatchesManifest:fabricIds.size===fabricManifest.workCount,resourceFabricOrphans:fabricOrphans.length,resourceFabricOrphanSample:fabricOrphans.slice(0,100)},
  semanticTopology:{roots:top(semanticCounts.roots),leaves:top(semanticCounts.leaves),periods:top(semanticCounts.periods),languages:top(semanticCounts.languages)},
- next:{semanticJoinCoverage:canonicalIds.size?canonicalWithSemantic/canonicalIds.size:0,resourceJoinCoverage:canonicalIds.size?canonicalWithFabric/canonicalIds.size:0,bothCoverage:canonicalIds.size?canonicalWithBoth/canonicalIds.size:0}
+ coverage:{semantic:canonicalIds.size?canonicalWithSemantic/canonicalIds.size:0,resourceFabric:canonicalIds.size?canonicalWithFabric/canonicalIds.size:0,both:canonicalIds.size?canonicalWithBoth/canonicalIds.size:0},
+ interpretation:{identityLayer:'complete canonical corpus',semanticLayer:'full Living projection joined by Work ID',resourceLayer:'legacy/partial Resource Fabric v0; absence is a coverage gap, not missing canonical identity'}
 };
-const out=path.join(dawn,'editorial');fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'shared-resource-join-audit-v1.json'),JSON.stringify(report,null,2)+'\n');
-console.log(JSON.stringify(report.counts,null,2));
-if(!report.integrity.canonicalMatchesRoot||!report.integrity.livingMatchesRoot||livingOrphans)process.exitCode=1;
+const out=path.join(dawn,'editorial');fs.mkdirSync(out,{recursive:true});fs.writeFileSync(path.join(out,'shared-resource-join-audit-v2.json'),JSON.stringify(report,null,2)+'\n');
+console.log(JSON.stringify({counts:report.counts,integrity:report.integrity,coverage:report.coverage},null,2));
+if(!report.integrity.canonicalMatchesRoot||!report.integrity.livingMatchesRoot||livingOrphans||!report.integrity.resourceFabricMatchesManifest)process.exitCode=1;
