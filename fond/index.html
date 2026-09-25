@@ -5,26 +5,28 @@
 <title>池底</title>
 <link rel="stylesheet" href="./fond.css">
 </head>
-<body>
-<header class="room" aria-label="池底">
-  <p class="source">Fond de l’Étang</p>
-  <div class="window" aria-hidden="true"><span></span></div>
-  <h1>池底</h1>
-</header>
-<main class="index" aria-label="連載">
-  <p class="index-label">連載</p>
-  <section class="serials">
-    <a class="serial" href="./read.html?book=kingdom-language">
-      <span class="serial-no">01</span><h2>天國語言極簡史</h2><p>神很遠　神很近</p>
-    </a>
-    <a class="serial" href="./read.html?book=city-building">
-      <span class="serial-no">02</span><h2>一萬年的建城禮</h2><p>連載中</p>
-    </a>
-    <a class="serial" href="./read.html?book=cross-shadow">
-      <span class="serial-no">03</span><h2>十字架的影子</h2><p>連載中</p>
-    </a>
-  </section>
-</main>
-<footer>池底設</footer>
+<body class="threshold-locked">
+<section class="threshold" id="threshold" aria-label="進入池底">
+  <p class="threshold-source">Fond de l’Étang</p>
+  <button class="threshold-mark" id="enterFond" type="button" aria-label="進入池底">
+    <span class="mark" aria-hidden="true"><i></i></span>
+  </button>
+  <span class="threshold-enter">ENTER</span>
+</section>
+<div class="publication" id="publication">
+  <header class="room" aria-label="池底">
+    <p class="source">Fond de l’Étang</p>
+    <h1>池底</h1>
+  </header>
+  <main class="index" aria-label="連載">
+    <p class="index-label">連載</p>
+    <section class="serials">
+      <a class="serial" href="./read.html?book=kingdom-language"><span class="serial-no">01</span><h2>天國語言極簡史</h2><p>神很遠　神很近</p></a>
+      <a class="serial" href="./read.html?book=city-building"><span class="serial-no">02</span><h2>一萬年的建城禮</h2><p>連載中</p></a>
+      <a class="serial" href="./read.html?book=cross-shadow"><span class="serial-no">03</span><h2>十字架的影子</h2><p>連載中</p></a>
+    </section>
+  </main>
+  <footer>池底設</footer>
+</div>
 <script src="./fond.js"></script>
 </body></html>
