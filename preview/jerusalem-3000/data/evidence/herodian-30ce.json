@@ -1,0 +1,40 @@
+{
+  "schema": "j3k.evidence-ledger.v1",
+  "records": [
+    {
+      "claim": "Antonia adjoins the Temple precinct at the northwest corner and connects to north/west cloisters.",
+      "objects": [
+        "j3k:object:antonia",
+        "j3k:object:temple-mount-enclosure-herodian"
+      ],
+      "grade": "textual-strong",
+      "source": "Josephus, Jewish War 5.238–247"
+    },
+    {
+      "claim": "Herodian Temple Mount was expanded north, west and south; Royal Stoa occupied the south.",
+      "objects": [
+        "j3k:object:temple-mount-enclosure-herodian",
+        "j3k:object:royal-stoa"
+      ],
+      "grade": "reconstructed-from-archaeology+literary",
+      "source": "Ritmeyer reconstruction / archaeological literature"
+    },
+    {
+      "claim": "Exact placement/details of porticoes, barriers, ancillary buildings and Temple proper cannot be treated as archaeologically surveyed geometry.",
+      "objects": [
+        "j3k:object:inner-temple",
+        "j3k:object:royal-stoa"
+      ],
+      "grade": "constraint",
+      "source": "archaeological synthesis"
+    },
+    {
+      "claim": "Later Golden Gate must not be used as certain Herodian eastern gate.",
+      "objects": [
+        "j3k:object:eastern-entry-unknown"
+      ],
+      "grade": "negative-constraint",
+      "source": "archaeological reconstruction literature"
+    }
+  ]
+}

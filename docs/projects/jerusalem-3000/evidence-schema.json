@@ -1,0 +1,65 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Jerusalem 3000 Evidence Object",
+  "type": "object",
+  "required": [
+    "id",
+    "label",
+    "era",
+    "geometryState",
+    "evidence"
+  ],
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "era": {
+      "type": "string"
+    },
+    "geometryState": {
+      "enum": [
+        "present",
+        "build",
+        "ruin",
+        "buried",
+        "absent"
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": [
+        "status",
+        "summary",
+        "sources"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "observed",
+            "reconstructed",
+            "inferred",
+            "disputed"
+          ]
+        },
+        "summary": {
+          "type": "string"
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "alternatives": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

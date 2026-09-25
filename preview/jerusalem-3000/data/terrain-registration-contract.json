@@ -1,0 +1,24 @@
+{
+  "schema": "j3k.terrain-registration.v1",
+  "input": {
+    "terrain": "j3k-terrain-mesh-v1",
+    "objects": "object ledger spatial.enuMetres"
+  },
+  "rule": "Object east/north are historical-geographic registration. Object up is sampled only from the canonical terrain mesh and must carry sampling provenance.",
+  "pipeline": [
+    "Copernicus DEM",
+    "canonical ENU terrain mesh",
+    "object east/north",
+    "terrain elevation sample",
+    "object up",
+    "Three.js world position"
+  ],
+  "gates": [
+    "No object receives a fabricated elevation before a real terrain payload exists.",
+    "Terrain sampling never changes object east/north.",
+    "Sampling distance is recorded for audit and later interpolation upgrades.",
+    "Withheld geographic objects remain withheld and receive no elevation.",
+    "All eras share the same terrain elevation authority."
+  ],
+  "nextUpgrade": "Replace nearest-vertex sampling with triangle/bilinear interpolation after the first real DEM mesh is ingested; preserve the original sample provenance."
+}

@@ -1,0 +1,23 @@
+{
+  "schema":"j3k.event-route.v1",
+  "id":"j3k:event:jesus-entry",
+  "phase":"herodian-jesus",
+  "label":"耶穌進城",
+  "principle":"The Gospel narrative fixes a sequence of named/topographic zones more securely than an exact modern polyline. Exact street/gate geometry remains withheld where evidence is disputed.",
+  "sources":["Matthew 21:1-11","Mark 11:1-11","Luke 19:28-44","John 12:12-19"],
+  "segments":[
+    {"id":"approach-bethphage","from":"bethphage-zone","to":"mount-of-olives-ridge","status":"textual-anchor","geometry":"withheld-pending-sourced-route","confidence":"high-sequence / low-exact-line"},
+    {"id":"olivet-descent","from":"mount-of-olives-ridge","to":"kidron-descent-zone","status":"topographic-reconstruction","geometry":"withheld-pending-terrain-line","confidence":"high-topography / medium-exact-line"},
+    {"id":"kidron-crossing","from":"kidron-descent-zone","to":"jerusalem-east-approach","status":"topographic-inference","geometry":"variant-required","confidence":"medium"},
+    {"id":"city-entry","from":"jerusalem-east-approach","to":"temple-zone","status":"disputed-exact-gate","geometry":"withheld","confidence":"high-destination / low-exact-gate"}
+  ],
+  "nodes":[
+    {"id":"bethphage-zone","label":"伯法其一帶","evidence":"textual","coordinatesENU":null},
+    {"id":"mount-of-olives-ridge","label":"橄欖山","evidence":"textual-topographic","coordinatesENU":null},
+    {"id":"kidron-descent-zone","label":"汲淪谷下坡／谷地","evidence":"topographic","coordinatesENU":null},
+    {"id":"jerusalem-east-approach","label":"耶路撒冷東側接近區","evidence":"inferred","coordinatesENU":null},
+    {"id":"temple-zone","label":"聖殿區","evidence":"textual","coordinatesENU":null}
+  ],
+  "terrainPolicy":"When canonical DEM exists, sourced/variant ENU route vertices are draped vertex-by-vertex. Terrain may supply elevation only; it must not invent the horizontal route.",
+  "renderPolicy":"Show certainty by segment. Never draw one continuous authoritative line through the disputed exact eastern gate."
+}
