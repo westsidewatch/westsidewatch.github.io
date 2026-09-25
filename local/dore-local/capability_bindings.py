@@ -19,6 +19,7 @@ BINDINGS: dict[str, dict[str, Any]] = {
     "publishing.book-intelligence": {"kind": "native", "handler": "publishing.book-intelligence"},
     "publishing.dimensional-writing": {"kind": "native", "handler": "publishing.dimensional-writing"},
     "design.intelligence": {"kind": "native", "handler": "design.intelligence"},
+    "design.generation": {"kind": "native", "handler": "design.generation"},
     "design.production.rollout": {"kind": "production-action", "handler": "production_actions.execute"},
     "search.local.repair": {"kind": "production-action", "handler": "production_actions.execute"},
     "image.local.repair": {"kind": "production-action", "handler": "production_actions.execute"},
