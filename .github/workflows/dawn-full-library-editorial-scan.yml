@@ -4,7 +4,7 @@ on:
   push:
     branches: [dawn/full-library-editorial-scan-v1]
     paths:
-      - 'static/dawn-library/living/**'
+      - 'static/dawn-library/canonical/**'
       - 'scripts/dawn/full-library-editorial-scan.mjs'
       - 'docs/projects/dawn-library/EDITORIAL-PROJECTION-CANON.md'
       - 'docs/projects/dawn-library/DUAL-INDEX-CANON.md'
@@ -19,11 +19,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Scan all canonical Living Library shards
+      - name: Scan canonical Works and build P2 gap map
         run: node scripts/dawn/full-library-editorial-scan.mjs
-      - name: Validate complete corpus
-        run: node -e "const r=require('./static/dawn-library/editorial/full-library-scan-v1.json'); if(!r.integrity.countMatchesRoot) process.exit(1); console.log(r.scannedWorkCount+' canonical Works scanned; material topology + semantic topology retained')"
+      - name: Validate complete canonical corpus
+        run: node -e "const r=require('./static/dawn-library/editorial/canonical-scan-v2.json'); if(!r.integrity.countMatchesRoot) process.exit(1); console.log(r.scannedWorkCount+' canonical Works scanned; '+r.chinese.workCount+' Chinese Works; P2 gap map generated')"
       - uses: actions/upload-artifact@v4
         with:
-          name: dawn-full-library-editorial-scan-v1
-          path: static/dawn-library/editorial/full-library-scan-v1.json
+          name: dawn-canonical-scan-v2
+          path: static/dawn-library/editorial/canonical-scan-v2.json
