@@ -12,31 +12,10 @@ const PHASE_FALLBACKS={
   'crusader':[{id:'j3k:phase:crusader-city',label:'十字軍城市層',kind:'urban-fabric',evidence:'observed-plus-reconstructed',confidence:'medium-high',geometry:'phase-envelope'}],
   'ayyubid-mamluk':[{id:'j3k:phase:mamluk-city',label:'阿尤布—馬穆魯克城市層',kind:'urban-fabric',evidence:'observed-plus-reconstructed',confidence:'medium-high',geometry:'phase-envelope'}]
 };
-
 export class TemporalCityIntegration{
-  constructor(phases=[],anchorPacks={packs:[]},lifecycle={objects:[]}){
-    this.phases=phases;
-    this.phaseIndex=new Map(phases.map((phase,index)=>[phase.id,index]));
-    this.objects=new Map();
-    for(const pack of anchorPacks.packs||[]){for(const object of pack.objects||[])this.objects.set(object.id,{...object,anchorPhase:pack.phase,anchorLabel:pack.label});}
-    for(const[phase,objects]of Object.entries(PHASE_FALLBACKS)){for(const object of objects)this.objects.set(object.id,{...object,anchorPhase:phase,anchorLabel:phases.find(item=>item.id===phase)?.label||phase,phaseFallback:true});}
-    this.lifecycle=new Map((lifecycle.objects||[]).map(item=>[item.id,item.lifecycleEvents||[]]));
-  }
-  stateFor(id,position,object){
-    const events=this.lifecycle.get(id)||[];
-    if(!events.length&&object?.phaseFallback){const anchor=this.phaseIndex.get(object.anchorPhase);if(anchor===undefined||position<anchor)return{state:'withheld',eventPhase:null,visible:false,ruined:false};const phase=this.phases[Math.floor(position)];const state=phase?.state==='ruin'?'ruin':phase?.state||'transform';return{state,eventPhase:phase?.id||object.anchorPhase,visible:ACTIVE_STATES.has(state),ruined:RUIN_STATES.has(state)};}
-    let state='withheld',eventPhase=null;
-    for(const event of events){const index=this.phaseIndex.get(event.phase);if(index===undefined||index>position)break;state=event.state;eventPhase=event.phase;}
-    return{state,eventPhase,visible:ACTIVE_STATES.has(state),ruined:RUIN_STATES.has(state)};
-  }
-  sample(position){const objects=[];for(const object of this.objects.values())objects.push({...object,...this.stateFor(object.id,position,object)});return objects;}
-  summary(position){const sampled=this.sample(position);return sampled.reduce((out,item)=>{out[item.state]=(out[item.state]||0)+1;return out},{total:sampled.length});}
+ constructor(phases=[],anchorPacks={packs:[]},lifecycle={objects:[]}){this.phases=phases;this.phaseIndex=new Map(phases.map((phase,index)=>[phase.id,index]));this.objects=new Map();for(const pack of anchorPacks.packs||[]){for(const object of pack.objects||[])this.objects.set(object.id,{...object,anchorPhase:pack.phase,anchorLabel:pack.label})}for(const[phase,objects]of Object.entries(PHASE_FALLBACKS)){for(const object of objects)this.objects.set(object.id,{...object,anchorPhase:phase,anchorLabel:phases.find(item=>item.id===phase)?.label||phase,phaseFallback:true})}this.lifecycle=new Map((lifecycle.objects||[]).map(item=>[item.id,item.lifecycleEvents||[]]));}
+ stateFor(id,position,object){const phase=this.phases[Math.floor(position)],phaseId=phase?.id;if(!phaseId)return{state:'withheld',eventPhase:null,visible:false,ruined:false};const events=this.lifecycle.get(id)||[];if(events.length){let state='withheld',eventPhase=null;for(const event of events){const index=this.phaseIndex.get(event.phase);if(index===undefined||index>position)break;state=event.state;eventPhase=event.phase}return{state,eventPhase,visible:ACTIVE_STATES.has(state),ruined:RUIN_STATES.has(state)}}if(object?.anchorPhase!==phaseId)return{state:'withheld',eventPhase:null,visible:false,ruined:false};const state=phase.state==='ruin'?'ruin':phase.state||'transform';return{state,eventPhase:phaseId,visible:ACTIVE_STATES.has(state),ruined:RUIN_STATES.has(state)}}
+ sample(position){const objects=[];for(const object of this.objects.values())objects.push({...object,...this.stateFor(object.id,position,object)});return objects}
+ summary(position){const sampled=this.sample(position);return sampled.reduce((out,item)=>{out[item.state]=(out[item.state]||0)+1;return out},{total:sampled.length})}
 }
-
-export async function loadTemporalCityIntegration(phases){
-  const [packsResponse,lifecycleResponse]=await Promise.all([fetch('./data/anchor-era-packs.json',{cache:'no-store'}),fetch('./data/lifecycle/anchor-era.lifecycle.json',{cache:'no-store'})]);
-  if(!packsResponse.ok)throw new Error(`anchor era packs unavailable (${packsResponse.status})`);
-  if(!lifecycleResponse.ok)throw new Error(`anchor lifecycle unavailable (${lifecycleResponse.status})`);
-  const [packs,lifecycle]=await Promise.all([packsResponse.json(),lifecycleResponse.json()]);
-  return new TemporalCityIntegration(phases,packs,lifecycle);
-}
+export async function loadTemporalCityIntegration(phases){const[packsResponse,lifecycleResponse]=await Promise.all([fetch('./data/anchor-era-packs.json',{cache:'no-store'}),fetch('./data/lifecycle/anchor-era.lifecycle.json',{cache:'no-store'})]);if(!packsResponse.ok)throw new Error(`anchor era packs unavailable (${packsResponse.status})`);if(!lifecycleResponse.ok)throw new Error(`anchor lifecycle unavailable (${lifecycleResponse.status})`);const[packs,lifecycle]=await Promise.all([packsResponse.json(),lifecycleResponse.json()]);return new TemporalCityIntegration(phases,packs,lifecycle)}
