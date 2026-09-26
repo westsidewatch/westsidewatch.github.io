@@ -9,9 +9,10 @@
 *{box-sizing:border-box}
 html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#faf8f2}
 .stage{position:relative;width:100vw;height:100vh;display:grid;place-items:center}
-#numerals{height:min(100vh,841.8898px);width:auto;max-width:100vw;display:block;overflow:visible}
-#numerals .pair{fill:#252525;transform-box:fill-box;transform-origin:left center;backface-visibility:hidden;transition:transform 900ms cubic-bezier(.16,.74,.14,1),filter 900ms ease;cursor:pointer;will-change:transform}
-#numerals .pair:hover{transform:perspective(900px) rotateY(-88deg);filter:drop-shadow(10px 5px 8px rgba(37,37,37,.08))}
+#numerals{height:min(100vh,841.8898px);width:auto;max-width:100vw;display:block;overflow:hidden}
+#numerals .pair{fill:#252525;cursor:pointer;transform-box:fill-box;transform-origin:left center;transform:perspective(1100px) rotateY(0deg);transition:transform 820ms cubic-bezier(.16,.74,.14,1),filter 820ms ease;backface-visibility:hidden;will-change:transform}
+#numerals .pair.is-open{transform:perspective(1100px) rotateY(-88deg);filter:drop-shadow(9px 4px 7px rgba(37,37,37,.10))}
+#numerals .p01{clip-path:url(#clip01)}
 @media(prefers-reduced-motion:reduce){#numerals .pair{transition:none}}
 </style>
 </head>
@@ -19,22 +20,24 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#faf8f2}
 <main class="stage" id="stage" aria-label="01 02 03 04 interactive opening type"></main>
 <script>
 (async()=>{
-  const stage=document.getElementById('stage');
-  try{
-    const r=await fetch('./assets/fond-numerals-source.svg?v=20260926-inline-hover',{cache:'no-store'});
-    if(!r.ok) throw new Error('SVG '+r.status);
-    const text=await r.text();
-    const doc=new DOMParser().parseFromString(text,'image/svg+xml');
-    const svg=doc.documentElement;
-    svg.id='numerals';
-    svg.removeAttribute('width');
-    svg.removeAttribute('height');
-    svg.querySelectorAll('style').forEach(el=>el.remove());
-    svg.querySelectorAll('.pair').forEach(pair=>pair.removeAttribute('style'));
-    stage.replaceChildren(document.importNode(svg,true));
-  }catch(e){
-    console.error(e);
-  }
+ const stage=document.getElementById('stage');
+ const r=await fetch('./assets/fond-numerals-source.svg?v=20260926-pointer-clip-01',{cache:'no-store'});
+ if(!r.ok) return;
+ const doc=new DOMParser().parseFromString(await r.text(),'image/svg+xml');
+ const svg=doc.documentElement;
+ svg.id='numerals'; svg.removeAttribute('width'); svg.removeAttribute('height');
+ svg.querySelectorAll('style').forEach(n=>n.remove());
+ svg.querySelectorAll('.pair').forEach(n=>n.removeAttribute('style'));
+ let defs=svg.querySelector('defs'); if(!defs){defs=doc.createElementNS('http://www.w3.org/2000/svg','defs');svg.prepend(defs)}
+ const cp=doc.createElementNS('http://www.w3.org/2000/svg','clipPath'); cp.id='clip01'; cp.setAttribute('clipPathUnits','userSpaceOnUse');
+ const rect=doc.createElementNS('http://www.w3.org/2000/svg','rect'); rect.setAttribute('x','182');rect.setAttribute('y','300');rect.setAttribute('width','122');rect.setAttribute('height','232'); cp.appendChild(rect); defs.appendChild(cp);
+ const live=document.importNode(svg,true); stage.replaceChildren(live);
+ live.querySelectorAll('.pair').forEach(pair=>{
+   const on=()=>pair.classList.add('is-open');
+   const off=()=>pair.classList.remove('is-open');
+   pair.addEventListener('pointerenter',on); pair.addEventListener('pointerleave',off);
+   pair.addEventListener('pointercancel',off);
+ });
 })();
 </script>
 </body>
