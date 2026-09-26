@@ -1,0 +1,29 @@
+name: Repository Engineering Governance
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  execution-contract:
+    name: Execution Until Stage Complete
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify repository-wide execution governance
+        shell: bash
+        run: |
+          set -euo pipefail
+          GOV='ENGINEERING-GOVERNANCE.md'
+          test -f "$GOV"
+          grep -q 'all engineering work in this repository' "$GOV"
+          grep -q 'Execution-until-stage-complete directive' "$GOV"
+          grep -q 'acknowledgement is not execution' "$GOV"
+          grep -q 'reporting is permitted only after the current stage Definition of Done' "$GOV"
+          grep -q 'genuine hard blocker' "$GOV"
+          grep -q 'New projects inherit it automatically' "$GOV"
