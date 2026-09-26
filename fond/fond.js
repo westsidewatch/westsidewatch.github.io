@@ -12,24 +12,23 @@ function bindFondNumerals(){
  const pairs=[...book.querySelectorAll('.pair')];
  pairs.forEach(pair=>{
    const key=pair.dataset.book;
+   const title=document.querySelector(`.book-titles [data-book="${key}"]`);
    pair.style.pointerEvents='none';
    const box=pair.getBBox();
    const hit=document.createElementNS(ns,'rect');
    hit.setAttribute('x',String(box.x));hit.setAttribute('y',String(box.y));hit.setAttribute('width',String(box.width));hit.setAttribute('height',String(box.height));
    hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');hit.setAttribute('tabindex','0');hit.setAttribute('role','link');hit.dataset.book=key;hit.classList.add('pair-hit');
    pair.parentNode.insertBefore(hit,pair.nextSibling);
-   const open=()=>pair.classList.add('is-open');
-   const close=()=>pair.classList.remove('is-open');
-   if(canHover){
-     hit.addEventListener('pointerenter',open);
-     hit.addEventListener('pointerleave',close);
-   }else{
+   const open=()=>{pair.classList.add('is-open');title?.classList.add('is-open')};
+   const close=()=>{pair.classList.remove('is-open');title?.classList.remove('is-open')};
+   if(canHover){hit.addEventListener('pointerenter',open);hit.addEventListener('pointerleave',close);title?.addEventListener('pointerenter',open);title?.addEventListener('pointerleave',close)}else{
      hit.addEventListener('pointerdown',e=>{e.preventDefault();open()},{passive:false});
      hit.addEventListener('pointerup',e=>{e.preventDefault();const href=window.FOND_BOOKS?.[key];setTimeout(()=>{close();if(href)location.href=href},820)},{passive:false});
+     title?.addEventListener('pointerdown',e=>{e.preventDefault();open()},{passive:false});
+     title?.addEventListener('pointerup',e=>{e.preventDefault();const href=window.FOND_BOOKS?.[key];setTimeout(()=>{close();if(href)location.href=href},820)},{passive:false});
    }
-   hit.addEventListener('pointercancel',close);
-   hit.addEventListener('focus',open);
-   hit.addEventListener('blur',close);
+   hit.addEventListener('pointercancel',close);title?.addEventListener('pointercancel',close);
+   hit.addEventListener('focus',open);hit.addEventListener('blur',close);title?.addEventListener('focus',open);title?.addEventListener('blur',close);
    if(canHover)hit.addEventListener('click',()=>{const href=window.FOND_BOOKS?.[key];if(href)location.href=href});
    hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();open();const href=window.FOND_BOOKS?.[key];setTimeout(()=>{close();if(href)location.href=href},reduce?30:820)}});
  });
