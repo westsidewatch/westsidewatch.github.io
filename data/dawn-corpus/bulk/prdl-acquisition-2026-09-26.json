@@ -1,0 +1,48 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "prdl",
+    "name": "Post-Reformation Digital Library",
+    "upstream": "https://prdl.org/",
+    "authority": "Junius Institute for Digital Reformation Research",
+    "scale": {
+      "authors": 6444,
+      "titles": 110668,
+      "volumes": 149839
+    },
+    "scope": [
+      "theology.reformation",
+      "theology.post-reformation",
+      "church-history.early-modern",
+      "exegesis.commentary",
+      "ministry.sermons",
+      "biblical.bibles",
+      "biblical.scripture-studies",
+      "theological-dictionaries",
+      "historical-atlases"
+    ],
+    "traditions": [
+      "Reformed",
+      "Lutheran",
+      "Anglican",
+      "Anabaptist",
+      "Arminian",
+      "Puritan",
+      "Roman Catholic",
+      "Jewish",
+      "Socinian"
+    ],
+    "acquisition": {
+      "mode": "whole-catalog-index-plus-upstream-public-source-pointers",
+      "retainRawMetadata": true,
+      "preserveUpstreamIdentity": true,
+      "preservePerItemSourceAndRights": true,
+      "assetPolicy": "PRDL is an index rather than the host. Acquire the complete theological catalog/index; acquire linked full assets only where the underlying library/item rights independently permit reuse.",
+      "wikisourceAdmission": "forbidden",
+      "relevance": "native-fit",
+      "postAcquisition": "Doré canonical identity reconciliation and deduplication across PRDL, Theological Commons, CatholicCorpus and existing Dawn Works"
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
