@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - 'local/dore-local/**'
+      - 'dore-core/runtime/**'
       - 'dore-design/knowledge-lab/a2a/**'
       - 'dore-design/knowledge-lab/resources/**'
       - 'dore-design/knowledge-lab/skills/**'
@@ -12,9 +13,11 @@ on:
   pull_request:
     paths:
       - 'local/dore-local/**'
+      - 'dore-core/runtime/**'
       - 'dore-design/knowledge-lab/a2a/**'
       - 'dore-design/knowledge-lab/resources/**'
       - 'dore-design/knowledge-lab/skills/**'
+      - '.github/workflows/dore-loop-contract.yml'
 
 jobs:
   loop-contract:
@@ -31,3 +34,5 @@ jobs:
         run: python3 local/dore-local/a2a_execution_plane_acceptance.py
       - name: Verify coordination worker evidence gate
         run: python3 local/dore-local/coordination_worker_execution_acceptance.py
+      - name: Verify conversation repo task end-to-end execution
+        run: python3 local/dore-local/conversation_repo_task_acceptance.py
