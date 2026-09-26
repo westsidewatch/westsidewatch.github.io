@@ -1,0 +1,42 @@
+{
+  "schema": "dawn.chinese-acquisition.catalog-source.v1",
+  "sourcePool": "yale-cclc",
+  "provider": "Yale University Library — Divinity Library Special Collections",
+  "authorityUrl": "https://web.library.yale.edu/divinity/documenting-christianity-china/chinese-christian-literature-council",
+  "languagePriority": "zh-first",
+  "admissionAuthority": false,
+  "rehost": false,
+  "catalogs": [
+    {
+      "id": "yale-clsc-1906-1962",
+      "publisher": "Christian Literature Society for China / 廣學會",
+      "declaredTitleCount": 692,
+      "period": "1906-1962",
+      "attachmentUrl": "https://web.library.yale.edu/sites/default/files/files/divinity/CLSC_titles.xls",
+      "contentType": "application/vnd.ms-excel",
+      "fetchState": "BINARY_FETCH_REQUIRED",
+      "next": "fetch attachment -> convert XLS to UTF-8 CSV -> ingest-catalog-attachments.mjs"
+    },
+    {
+      "id": "yale-ccloc-1947-1993",
+      "publisher": "Council on Christian Literature for Overseas Chinese / 基督教輔僑出版社",
+      "declaredTitleCount": 616,
+      "period": "1947-1993",
+      "attachmentUrl": "https://web.library.yale.edu/sites/default/files/files/divinity/CCLOC_titles.xls",
+      "contentType": "application/vnd.ms-excel",
+      "fetchState": "BINARY_FETCH_REQUIRED",
+      "next": "fetch attachment -> convert XLS to UTF-8 CSV -> ingest-catalog-attachments.mjs"
+    }
+  ],
+  "declaredTitleCount": 1308,
+  "rights": {
+    "catalogMetadata": "discovery-and-reconciliation-only-until-verified",
+    "digitalCopies": "request-from-Yale-Special-Collections",
+    "rehost": false
+  },
+  "policy": {
+    "wikisource": "PROHIBITED",
+    "politicalEthnicWarControversy": "REJECT",
+    "canonicalAdmissionRequiresIndependentGate": true
+  }
+}
