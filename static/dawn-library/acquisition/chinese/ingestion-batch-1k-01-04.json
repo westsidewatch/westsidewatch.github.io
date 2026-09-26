@@ -1,0 +1,68 @@
+{
+  "schema": "dawn.chinese-acquisition.ingestion-batch.v1",
+  "batchId": "zh-1k-01-04",
+  "status": "INGESTION_QUEUED",
+  "createdAt": "2026-09-25",
+  "rule": "Source-pool size is not candidateRows. This batch is successful only when title-level/provider-level records are materialized and reconciled against canonical Works.",
+  "pools": [
+    {
+      "id": "1k-01-cct-primary",
+      "kind": "work-candidate-source",
+      "scope": "Chinese Christian primary sources, c.1582-1840",
+      "providerFamily": ["Chinese Christian Texts Database", "KU Leuven", "ARSI/Japonica-Sinica"],
+      "target": ">=1000 title-level records",
+      "materialProjection": ["text", "manuscript", "map"],
+      "rightsDefault": "unknown",
+      "rehost": false
+    },
+    {
+      "id": "1k-02-yale-modern-publishing",
+      "kind": "work-candidate-source",
+      "scope": "Chinese Christian publishing, 1906-1993",
+      "providerFamily": ["Yale Divinity Library CLSC", "Yale Divinity Library CCLOC"],
+      "declaredCatalogSize": 1308,
+      "binaryQueue": ["CLSC_titles.xls", "CCLOC_titles.xls"],
+      "materialProjection": ["book", "pamphlet"],
+      "rightsDefault": "unknown",
+      "rehost": false
+    },
+    {
+      "id": "1k-03-modern-chinese-theology",
+      "kind": "work-candidate-source",
+      "scope": "Modern Chinese theology, biblical studies, church history, prayer, preaching and ministry",
+      "providerFamily": ["Chinese-language theological seminary catalogs", "research-library catalogs", "publisher bibliographies"],
+      "target": ">=1000 title-level records",
+      "materialProjection": ["book", "article", "serial"],
+      "rightsDefault": "unknown",
+      "rehost": false
+    },
+    {
+      "id": "1k-04-visual-archive",
+      "kind": "resource-candidate-source",
+      "scope": "Chinese Christianity visual, archival, map and place resources",
+      "providerFamily": ["Yale IMPA", "Whitworth China Mission History", "institutional archives"],
+      "target": ">=1000 resource-level records",
+      "materialProjection": ["image", "album", "map", "manuscript", "archive"],
+      "countAsCanonicalWorkByDefault": false,
+      "rightsDefault": "unknown",
+      "rehost": false
+    }
+  ],
+  "pipeline": [
+    "enumerate provider records",
+    "normalize Chinese metadata",
+    "materialize candidate rows",
+    "reconcile canonical Work identity",
+    "separate Work / Edition / Resource",
+    "rights + relevance + authority gate",
+    "canonical admission",
+    "semantic/material projection"
+  ],
+  "hardGates": {
+    "wikisource": "PROHIBITED",
+    "politicalEthnicWarControversy": "REJECT",
+    "catalogAvailabilityImpliesRehost": false,
+    "periodicalIssueImpliesWork": false,
+    "imageImpliesWork": false
+  }
+}
