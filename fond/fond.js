@@ -32,10 +32,12 @@ function bindFondNumerals(){
    const hit=document.createElementNS(ns,'rect');
    hit.setAttribute('x',String(box.x));hit.setAttribute('y',String(box.y));hit.setAttribute('width',String(box.width));hit.setAttribute('height',String(box.height));
    hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');hit.setAttribute('tabindex','0');hit.setAttribute('role','link');hit.dataset.book=key;hit.classList.add('pair-hit');
-   pair.parentNode.insertBefore(hit,pair.nextSibling);
+   /* Keep the hit target outside the animated group. Otherwise rotateY changes
+      the pointer geometry under the cursor and repeatedly fires leave/enter. */
+   book.appendChild(hit);
    let closingTimer=0;
    const open=()=>{clearTimeout(closingTimer);pair.classList.add('is-open');title?.classList.add('is-open')};
-   const close=()=>{clearTimeout(closingTimer);closingTimer=setTimeout(()=>{pair.classList.remove('is-open');title?.classList.remove('is-open')},70)};
+   const close=()=>{clearTimeout(closingTimer);closingTimer=setTimeout(()=>{pair.classList.remove('is-open');title?.classList.remove('is-open')},140)};
    if(canHover){
      hit.addEventListener('pointerenter',open);hit.addEventListener('pointerleave',close);
      title?.addEventListener('pointerenter',open);title?.addEventListener('pointerleave',close);
