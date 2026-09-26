@@ -18,9 +18,19 @@ def load_registry(path: Path = REGISTRY) -> dict[str, Any]:
 
 
 def _is_existing(item: dict[str, Any]) -> bool:
-    """Existing capabilities may carry a maturity/version suffix (existing-v0/v1)."""
+    """Return capabilities that are already available in production discovery.
+
+    Registry maturity may be expressed as existing[-version] or graduated[-version].
+    Both describe implemented capabilities; planned entries remain excluded unless
+    explicitly requested.
+    """
     status = str(item.get('status') or '').strip().lower()
-    return status == 'existing' or status.startswith('existing-')
+    return (
+        status == 'existing'
+        or status.startswith('existing-')
+        or status == 'graduated'
+        or status.startswith('graduated-')
+    )
 
 
 def discover(*, capability_type: str | None = None, service: str | None = None, include_planned: bool = False) -> list[dict[str, Any]]:
