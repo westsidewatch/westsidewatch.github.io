@@ -1,0 +1,48 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "biblissima-iiif-federation",
+    "name": "Biblissima IIIF Collections of Manuscripts and Rare Books",
+    "upstream": "https://iiif.biblissima.fr/collections/",
+    "scope": ["bible", "exegesis", "theology", "church-history", "biblical-world"],
+    "resourceTypes": ["iiif-manifest", "manuscript", "rare-book", "canvas", "image", "authority", "place", "agent"],
+    "knownCollections": {
+      "gallica": 59326,
+      "arca_irht": 39503,
+      "bayerische_staatsbibliothek": 11916,
+      "digital_bodleian": 5882,
+      "laurentian_library": 4125,
+      "biblioteca_nacional_portugal": 3370,
+      "bibliotheca_palatina": 3082,
+      "ecodices": 2127,
+      "europeana_regia": 1288,
+      "parker_library": 556,
+      "british_library_polonsky_pre1200": 405,
+      "john_rylands": 232,
+      "durham": 199,
+      "cambridge_digital_library": 93
+    },
+    "acquisition": {
+      "mode": "federated-iiif-manifest-harvest",
+      "priority": "biblical-and-christian-manuscripts-first",
+      "retainManifest": true,
+      "retainCanvasGraph": true,
+      "retainAuthorityLinks": true,
+      "preservePerObjectRights": true,
+      "assetRehost": "only-when-item-rights-permit",
+      "metadataPointer": "retain-even-when-image-rehost-is-restricted",
+      "wikisourceAdmission": "forbidden",
+      "postAcquisition": "Doré canonical thinning and cross-collection identity reconciliation"
+    },
+    "examples": [
+      "Vatican Biblioteca Apostolica Vaticana IIIF manifests",
+      "Digital Bodleian biblical manuscripts",
+      "Bibliotheca Palatina",
+      "Europeana Regia",
+      "Parker Library",
+      "Polonsky pre-1200 manuscripts"
+    ],
+    "status": "bulk-acquisition-registered"
+  }
+}
