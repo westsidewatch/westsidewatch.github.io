@@ -1,0 +1,37 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "strategy": "important-IIIF-sources-first",
+  "sources": [
+    {
+      "id": "digivatlib",
+      "name": "Digital Vatican Library / DigiVatLib",
+      "upstream": "https://digi.vatlib.it/",
+      "iiifManifestPattern": "https://digi.vatlib.it/iiif/MSS_{shelfmark}/manifest.json",
+      "digitizedManuscriptsObserved": 31080,
+      "targetScope": ["bible", "biblical-manuscript", "patristics", "theology", "church-history", "liturgy", "biblical-languages"],
+      "acquire": ["manifest", "metadata", "canvas-graph", "shelfmark", "language", "seeAlso", "rights", "attribution", "image-service-pointer"],
+      "imagePolicy": "pointer-first; do not rehost restricted Vatican images; upstream states free image use is for personal/study and publication/reproduction requires rights permission",
+      "retainRaw": true,
+      "canonicalization": "post-acquisition-Dore-thinning"
+    },
+    {
+      "id": "digital-bodleian",
+      "name": "Digital Bodleian",
+      "upstream": "https://digital.bodleian.ox.ac.uk/",
+      "objectsObserved2025": 21428,
+      "imagesObserved2025": 1434809,
+      "targetScope": ["bible", "biblical-manuscript", "theology", "patristics", "church-history", "reformation", "maps", "rare-books"],
+      "acquire": ["iiif-manifest", "metadata", "canvas-graph", "image-service-pointer", "rights", "attribution"],
+      "imagePolicy": "rights-per-object; retain manifest/pointer when rehosting is not permitted",
+      "retainRaw": true,
+      "canonicalization": "post-acquisition-Dore-thinning"
+    }
+  ],
+  "globalGates": {
+    "wikisource": "forbidden",
+    "preserveProvenance": true,
+    "preserveRights": true,
+    "relevance": "Dawn Library Christian/Bible/theology scope; mixed-source nonrelevant records may remain raw but hidden from projections"
+  }
+}
