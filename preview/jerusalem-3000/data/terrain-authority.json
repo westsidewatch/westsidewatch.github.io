@@ -1,82 +1,10 @@
 {
-  "id": "jerusalem-terrain-authority-v1",
-  "status": "source-locked / raster-pending",
-  "coordinateSystem": {
-    "horizontal": "WGS84 / EPSG:4326 source; runtime converts to local ENU",
-    "vertical": "EGM2008-compatible metres where source permits",
-    "origin": {
-      "name": "Jerusalem temporal-city local origin",
-      "lat": 31.778,
-      "lon": 35.235
-    },
-    "rule": "All eras inherit one terrain mesh and one local coordinate transform. Historical layers never move the land to fit a reconstruction."
-  },
-  "areaOfInterest": {
-    "north": 31.805,
-    "south": 31.745,
-    "west": 35.195,
-    "east": 35.255,
-    "reason": "Covers western Old City/Jaffa approach, southeastern ridge/Gihon landscape, Temple Mount/Haram, Kidron Valley and Mount of Olives in one terrain authority."
-  },
-  "terrainSource": {
-    "preferred": "Copernicus DEM GLO-30",
-    "fallback": "Copernicus DEM GLO-90",
-    "type": "DSM",
-    "resolutionMetres": {
-      "preferred": 30,
-      "fallback": 90
-    },
-    "accessNote": "GLO-30 currently requires Copernicus CCM registration; GLO-90 remains the default open service instance.",
-    "rule": "Do not silently substitute proprietary terrain or Google 3D tiles."
-  },
-  "modernVectorContext": {
-    "source": "OpenStreetMap",
-    "license": "ODbL",
-    "attribution": "© OpenStreetMap contributors",
-    "use": "present-day roads/building/wall reference only; never evidence for ancient geometry"
-  },
-  "geographicAnchors": [
-    {
-      "id": "southeast-ridge",
-      "label": "東南山脊 / ancient settlement spine",
-      "role": "terrain"
-    },
-    {
-      "id": "gihon",
-      "label": "基訓泉 / Gihon Spring",
-      "role": "hydrology-anchor"
-    },
-    {
-      "id": "temple-mount",
-      "label": "聖殿山／Haram platform",
-      "role": "topographic-monument-anchor"
-    },
-    {
-      "id": "kidron",
-      "label": "汲淪谷 / Kidron Valley",
-      "role": "valley"
-    },
-    {
-      "id": "mount-olives",
-      "label": "橄欖山 / Mount of Olives",
-      "role": "ridge"
-    },
-    {
-      "id": "western-hill",
-      "label": "西部高地 / Western Hill",
-      "role": "ridge"
-    },
-    {
-      "id": "jaffa-gate",
-      "label": "雅法門 / Jaffa Gate",
-      "role": "ottoman-present-camera-anchor"
-    }
-  ],
-  "acceptance": [
-    "One mesh spans all eras.",
-    "Gihon/southeastern ridge, Temple Mount, Kidron and Mount of Olives must read as one continuous relief system.",
-    "Jesus Entry route must descend from Mount of Olives toward Kidron and rise toward Jerusalem rather than float on a flat plan.",
-    "Jaffa Gate is an Ottoman/present spatial anchor; its geographic camera may persist backward while the gate object itself must disappear before its era.",
-    "DEM provenance and attribution remain visible in project metadata."
-  ]
+  "id":"jerusalem-terrain-authority-v1",
+  "status":"canonical-raster-ingested / runtime-active",
+  "coordinateSystem":{"horizontal":"WGS84 / EPSG:4326 source; runtime converts to local ENU","vertical":"Copernicus DEM orthometric metres; runtime normalizes to AOI minimum","origin":{"name":"Jerusalem temporal-city local origin","lat":31.778,"lon":35.235},"rule":"All eras inherit one terrain mesh and one local coordinate transform. Historical layers never move the land to fit a reconstruction."},
+  "areaOfInterest":{"north":31.805,"south":31.745,"west":35.195,"east":35.255,"reason":"Covers western Old City/Jaffa approach, southeastern ridge/Gihon landscape, Temple Mount/Haram, Kidron Valley and Mount of Olives in one terrain authority."},
+  "terrainSource":{"canonical":"Copernicus DEM GLO-90 / AWS Open Data / 2021 COG","preferredUpgrade":"Copernicus DEM GLO-30 when an equally reproducible public ingest is validated","type":"DSM","resolutionMetres":90,"sourceObject":"Copernicus_DSM_COG_30_N31_00_E035_00_DEM","rule":"Do not silently substitute proprietary terrain, Google 3D tiles, or synthetic relief."},
+  "modernVectorContext":{"source":"OpenStreetMap","license":"ODbL","attribution":"© OpenStreetMap contributors","use":"present-day roads/building/wall reference only; never evidence for ancient geometry"},
+  "geographicAnchors":[{"id":"southeast-ridge","label":"東南山脊 / ancient settlement spine","role":"terrain"},{"id":"gihon","label":"基訓泉 / Gihon Spring","role":"hydrology-anchor"},{"id":"temple-mount","label":"聖殿山／Haram platform","role":"topographic-monument-anchor"},{"id":"kidron","label":"汲淪谷 / Kidron Valley","role":"valley"},{"id":"mount-olives","label":"橄欖山 / Mount of Olives","role":"ridge"},{"id":"western-hill","label":"西部高地 / Western Hill","role":"ridge"},{"id":"jaffa-gate","label":"雅法門 / Jaffa Gate","role":"ottoman-present-camera-anchor"}],
+  "acceptance":["One canonical DEM mesh spans all eras.","Gihon/southeastern ridge, Temple Mount, Kidron and Mount of Olives read as one continuous measured relief system.","Jesus Entry route must descend from Mount of Olives toward Kidron and rise toward Jerusalem rather than float on a flat plan.","Jaffa Gate is an Ottoman/present spatial anchor; its geographic camera may persist backward while the gate object itself must disappear before its era.","DEM provenance and attribution remain visible in project metadata."]
 }
