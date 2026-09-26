@@ -1,0 +1,55 @@
+name: Jerusalem 3000 Production Validation
+
+on:
+  workflow_run:
+    workflows: ['Deploy Hugo site to Pages']
+    types: [completed]
+
+permissions:
+  contents: read
+
+jobs:
+  production-browser:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'main' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install Playwright Chromium
+        run: npx --yes playwright@1.55.0 install --with-deps chromium
+      - name: Validate production runtime and visual states
+        env:
+          J3K_URL: https://westsidewatch.github.io/preview/jerusalem-3000/
+        run: |
+          cat > /tmp/j3k-production.mjs <<'NODE'
+          import { chromium } from 'playwright';
+          const browser=await chromium.launch({headless:true});
+          const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
+          const errors=[];page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+          await page.goto(process.env.J3K_URL,{waitUntil:'networkidle',timeout:90000});
+          await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready',{timeout:45000});
+          const boot=await page.evaluate(()=>window.__JERUSALEM3000__);
+          if(!boot.three||!boot.timeline||!boot.evidence)throw new Error(`runtime flags invalid: ${JSON.stringify(boot)}`);
+          if((boot.evidenceObjects?.renderableObjects||0)<1)throw new Error('no renderable evidence objects');
+          const canvas=page.locator('[data-three-stage] canvas');if(await canvas.count()!==1)throw new Error('Three.js canvas missing');
+          const badge=await page.locator('.j3k-terrain-badge').innerText();if(!badge.includes('ORBIT READY')||!badge.includes('EVIDENCE OBJECTS'))throw new Error(`runtime badge invalid: ${badge}`);
+          const slider=page.locator('.j3k-scrubber');await slider.evaluate(el=>{el.value='8';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(900);
+          const herodian=await page.locator('.j3k-caption h2').innerText();if(!herodian.includes('大希律'))throw new Error(`Herodian timeline state failed: ${herodian}`);
+          await page.screenshot({path:'jerusalem-3000-herodian.png',fullPage:true});
+          await slider.evaluate(el=>{el.value='9';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(700);
+          const ruin=await page.locator('.j3k-caption h2').innerText();if(!ruin.includes('羅馬'))throw new Error(`70 CE timeline state failed: ${ruin}`);
+          await slider.evaluate(el=>{el.value='8';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(500);
+          const reversible=await page.locator('.j3k-caption h2').innerText();if(!reversible.includes('大希律'))throw new Error('reverse timeline failed');
+          if(errors.length)throw new Error(`browser errors: ${errors.join(' | ')}`);
+          await browser.close();
+          NODE
+          npx --yes -p playwright@1.55.0 node /tmp/j3k-production.mjs
+      - name: Upload production visual evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: jerusalem-3000-production-visual
+          path: jerusalem-3000-herodian.png
+          if-no-files-found: error
