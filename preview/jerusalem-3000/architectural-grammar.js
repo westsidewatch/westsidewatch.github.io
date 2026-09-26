@@ -1,14 +1,11 @@
-const SCHEDULE={
-  foundation:{start:.06,duration:.10,lift:90},
-  retaining:{start:.12,duration:.13,lift:120},
-  circulation:{start:.24,duration:.12,lift:95},
-  superstructure:{start:.38,duration:.18,lift:180},
-  colonnade:{start:.52,duration:.18,lift:145}
-};
+const SCHEDULE={foundation:{start:.06,duration:.10,lift:90},retaining:{start:.12,duration:.13,lift:120},circulation:{start:.24,duration:.12,lift:95},superstructure:{start:.38,duration:.18,lift:180},colonnade:{start:.52,duration:.18,lift:145},roof:{start:.68,duration:.14,lift:120}};
 function box(builder,size,p,surface,phase,shade=1){const s=SCHEDULE[phase];builder.box(size,p,surface,s.start,{duration:s.duration,lift:s.lift,shade});}
-function platform(builder,r,surface){const y=r.up;box(builder,[520,18,340],[r.east,y+9,-r.north],surface,'foundation',.94);for(const z of[-170,170])box(builder,[520,28,14],[r.east,y+14,-r.north+z],surface,'retaining');for(const x of[-260,260])box(builder,[14,28,340],[r.east+x,y+14,-r.north],surface,'retaining');}
-function stoa(builder,r,surface){const y=r.up;box(builder,[390,12,70],[r.east,y+6,-r.north],surface,'foundation');for(let i=-9;i<=9;i++){const x=r.east+i*20;box(builder,[6,48,6],[x,y+30,-r.north-24],surface,'colonnade',.98);box(builder,[6,48,6],[x,y+30,-r.north+24],surface,'colonnade',.92)}box(builder,[390,10,70],[r.east,y+59,-r.north],surface,'superstructure');}
-function fortress(builder,r,surface){const y=r.up;box(builder,[120,18,100],[r.east,y+9,-r.north],surface,'foundation');for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]])box(builder,[28,86,28],[r.east+x,y+52,-r.north+z],surface,'superstructure');box(builder,[100,54,80],[r.east,y+36,-r.north],surface,'superstructure',.94);}
-function approach(builder,r,surface){const y=r.up;for(let i=0;i<9;i++)box(builder,[170,5,20],[r.east,y+i*2.2,-r.north+(i-4)*18],surface,'circulation',.96);}
-function street(builder,r,surface){const y=r.up;for(let i=-7;i<=7;i++)box(builder,[48,5,18],[r.east,y+2.5,-r.north+i*18],surface,'circulation',i%2?.92:1);}
+function column(builder,x,y,z,surface,height=48){box(builder,[6,height,6],[x,y+height/2,z],surface,'colonnade',.97);box(builder,[9,3,9],[x,y+1.5,z],surface,'colonnade',.9);box(builder,[9,3,9],[x,y+height-1.5,z],surface,'colonnade',1);}
+function platform(builder,r,surface){const y=r.up;box(builder,[520,18,340],[r.east,y+9,-r.north],surface,'foundation',.94);for(const z of[-170,170])box(builder,[520,32,14],[r.east,y+16,-r.north+z],surface,'retaining');for(const x of[-260,260])box(builder,[14,32,340],[r.east+x,y+16,-r.north],surface,'retaining');for(let x=-230;x<=230;x+=46){box(builder,[40,4,22],[r.east+x,y+20,-r.north-145],surface,'circulation',x%92?.94:1);}}
+function stoa(builder,r,surface){const y=r.up;box(builder,[390,12,76],[r.east,y+6,-r.north],surface,'foundation');for(let i=-9;i<=9;i++){const x=r.east+i*20;column(builder,x,y+12,-r.north-25,surface,48);column(builder,x,y+12,-r.north+25,surface,48)}box(builder,[390,8,76],[r.east,y+64,-r.north],surface,'roof',.94);box(builder,[390,6,12],[r.east,y+70,-r.north],surface,'roof',1);}
+function fortress(builder,r,surface){const y=r.up;box(builder,[126,18,106],[r.east,y+9,-r.north],surface,'foundation');box(builder,[100,54,80],[r.east,y+45,-r.north],surface,'superstructure',.94);for(const[x,z]of[[-50,-40],[50,-40],[-50,40],[50,40]]){box(builder,[30,88,30],[r.east+x,y+62,-r.north+z],surface,'superstructure');box(builder,[34,5,34],[r.east+x,y+108.5,-r.north+z],surface,'roof',.95)}box(builder,[104,6,84],[r.east,y+75,-r.north],surface,'roof',.96);}
+function approach(builder,r,surface){const y=r.up;for(let i=0;i<13;i++){const width=184-i*3;box(builder,[width,4.5,16],[r.east,y+i*2,-r.north+(i-6)*15],surface,'circulation',i%2?.94:1)}for(const x of[-58,58])box(builder,[24,30,20],[r.east+x,y+27,-r.north+104],surface,'superstructure',.95);}
+function street(builder,r,surface){const y=r.up;for(let i=-10;i<=10;i++)for(let j=-1;j<=1;j++)box(builder,[16,4.5,17],[r.east+j*17,y+2.25,-r.north+i*17],surface,'circulation',(i+j)%2?.91:.98);box(builder,[10,24,360],[r.east-34,y+12,-r.north],surface,'retaining',.9);}
+export const ARCHITECTURAL_GRAMMAR_VERSION='j3k.architecture.v1';
+export const SUPPORTED_ARCHITECTURAL_KINDS=Object.freeze(['platform-enclosure','portico-basilica','fortress','pilgrimage-access','street']);
 export function buildArchitecturalGrammar(builder,object,registration,surface){switch(object.kind){case'platform-enclosure':platform(builder,registration,surface);break;case'portico-basilica':stoa(builder,registration,surface);break;case'fortress':fortress(builder,registration,surface);break;case'pilgrimage-access':approach(builder,registration,surface);break;case'street':street(builder,registration,surface);break;default:return false}return true;}
