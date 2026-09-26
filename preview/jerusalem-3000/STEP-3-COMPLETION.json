@@ -1,0 +1,24 @@
+{
+  "step": 3,
+  "name": "Canonical Terrain / DEM",
+  "status": "complete",
+  "demAuthority": "Copernicus DEM GLO-90",
+  "canonicalDemActivated": true,
+  "terrainRuntimeActivated": true,
+  "temporaryFlatTerrainRemoved": true,
+  "elevationGrid": "76x76",
+  "productionCommit": "216bf9d02571142f3b73729cb4314ba4ae339393",
+  "productionDeploymentValidated": true,
+  "productionValidationWorkflow": {
+    "name": "Jerusalem 3000 Production Validation",
+    "runId": 36223472682,
+    "conclusion": "success"
+  },
+  "pagesDeployment": {
+    "runId": 36223422005,
+    "build": "success",
+    "deploy": "success"
+  },
+  "validatedAt": "2026-09-26T06:21:31Z",
+  "nextStep": "Spatial Registration"
+}
