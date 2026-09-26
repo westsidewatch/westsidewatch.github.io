@@ -10,10 +10,14 @@ const KIND_DIMENSIONS={'platform-enclosure':[520,34,340],'portico-basilica':[390
 const EVIDENCE_SURFACE={observed:'observed',reconstructed:'reconstructed',inferred:'inferred',disputed:'disputed'};
 export function evidenceClass(value=''){if(value.includes('disputed'))return'disputed';if(value.includes('observed')||value.includes('archaeological'))return'observed';if(value.includes('reconstructed')||value.includes('textual'))return'reconstructed';return'inferred';}
 export function isWithheld(object){return String(object.spatial?.registration||'').startsWith('withheld')||object.geometry?.status==='withheld';}
-export function addEvidenceArchitecture(builder,object){
+function registeredGround(object,terrain){
+  const lat=object.spatial?.lat,lon=object.spatial?.lon;
+  if(Number.isFinite(lat)&&Number.isFinite(lon)&&terrain?.sampleElevation)return terrain.sampleElevation(lat,lon);
+  return 0;
+}
+export function addEvidenceArchitecture(builder,object,terrain){
   if(!object.spatial?.enuMetres||isWithheld(object))return false;
   const dimensions=KIND_DIMENSIONS[object.kind]||[90,55,90],schedule=KIND_SCHEDULE[object.kind]||{start:.42,duration:.14,lift:160};
-  const east=object.spatial.enuMetres.east||0,north=object.spatial.enuMetres.north||0;const surface=EVIDENCE_SURFACE[evidenceClass(object.evidence)];
-  // One ledger object may later expand into many archaeological components. Step 2 establishes the source mechanism now without inventing unsupported detail.
-  builder.box(dimensions,[east,dimensions[1]/2,-north],surface,schedule.start,{duration:schedule.duration,lift:schedule.lift});return true;
+  const east=object.spatial.enuMetres.east||0,north=object.spatial.enuMetres.north||0,ground=registeredGround(object,terrain);const surface=EVIDENCE_SURFACE[evidenceClass(object.evidence)];
+  builder.box(dimensions,[east,ground+dimensions[1]/2,-north],surface,schedule.start,{duration:schedule.duration,lift:schedule.lift});return true;
 }
