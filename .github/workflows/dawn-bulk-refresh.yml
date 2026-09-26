@@ -40,7 +40,19 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json data/dawn-resource-queue.json public/dawn/canonical-index.json static/dawn-library/canonical-index.json static/dawn-library/canonical-resource-index.json static/dawn-library/surfaces/dawn-resources.json
+          for path in \
+            data/dawn-10k-openlibrary-works.json \
+            data/dawn-10k-work-queue.json \
+            data/dawn-resource-queue.json \
+            public/dawn/canonical-index.json \
+            static/dawn-library/canonical-index.json \
+            static/dawn-library/canonical-resource-index.json \
+            static/dawn-library/surfaces/dawn-resources.json
+          do
+            if [ -e "$path" ]; then
+              git add "$path"
+            fi
+          done
           if git diff --cached --quiet; then
             echo "No corpus changes to persist."
             exit 0
