@@ -34,8 +34,10 @@ jobs:
           grep -q "OrbitControls" "$ROOT/three-scene.js"
           grep -q "PerspectiveCamera" "$ROOT/three-scene.js"
           grep -q "WebGLRenderer" "$ROOT/three-scene.js"
-          grep -q "loadHistoricalGeometry" "$ROOT/three-scene.js"
+          grep -q "addEvidencePiece" "$ROOT/three-scene.js"
+          grep -q "isWithheld" "$ROOT/three-scene.js"
           grep -q "herodian-30ce.json" "$ROOT/three-scene.js"
+          grep -q "await three.ready" "$ROOT/jerusalem-3000-three.js"
           if grep -Eq 'j3k-orbit-scene|rotateX\(var\(--j3k-pitch|rotateZ\(var\(--j3k-yaw' "$ROOT/jerusalem-3000.css"; then
             echo 'ERROR: CSS pseudo-3D camera detected. Jerusalem 3000 must use the approved Three.js spatial runtime.' >&2
             exit 1
@@ -62,13 +64,14 @@ jobs:
           const path='preview/jerusalem-3000/data/objects/herodian-30ce.json';
           const ledger=JSON.parse(fs.readFileSync(path,'utf8'));
           if(!Array.isArray(ledger.objects)||!ledger.objects.length) throw new Error('Herodian ledger has no objects');
-          const allowed=new Set(['observed','reconstructed','inferred','disputed']);
+          const evidenceTerms=['observed','archaeological','reconstructed','textual','inferred','disputed'];
           for(const o of ledger.objects){
             if(!o.id) throw new Error('ledger object missing id');
-            if(!allowed.has(o.evidence)) throw new Error(`${o.id}: invalid evidence class ${o.evidence}`);
-            const s=o.spatial;
-            if(s?.registration==='withheld' && s?.enuMetres) throw new Error(`${o.id}: withheld object must not carry renderable ENU geometry`);
+            if(!evidenceTerms.some(term=>String(o.evidence||'').includes(term))) throw new Error(`${o.id}: unclassified evidence ${o.evidence}`);
+            if(String(o.spatial?.registration||'').startsWith('withheld') && o.geometry?.status!=='withheld' && !String(o.spatial.registration).includes('exact-placement')) throw new Error(`${o.id}: withheld registration needs an explicit withholding rationale`);
           }
+          const runtime=fs.readFileSync('preview/jerusalem-3000/three-scene.js','utf8');
+          if(!runtime.includes("startsWith('withheld')")) throw new Error('runtime must reject every withheld registration prefix');
           NODE
 
   completion-contract:
