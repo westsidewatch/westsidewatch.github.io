@@ -56,6 +56,7 @@ def _load_local_capability(module_name:str,args:dict[str,Any])->dict[str,Any]:
 def _reflex_project(args):return _load_local_capability('reflex_capability',args)
 def _translation_project(args):return _load_local_capability('translation_capability',args)
 def _design_generation(args):return _load_local_capability('design_generation_a2a',args)
+def _repo_task(args):return _load_local_capability('repo_task_runtime',args)
 def _design_intelligence(args):
  if not DESIGN_ROOT.is_dir():raise RuntimeError('dore_design_runtime_missing')
  inserted=str(DESIGN_ROOT) not in sys.path
@@ -102,6 +103,7 @@ def _invoke_native(handler,args,caller_product):
  if handler=='publishing.dimensional-writing':return _dimensional_writing(args)
  if handler=='design.intelligence':return _design_intelligence(args)
  if handler=='design.generation':return _design_generation(args)
+ if handler=='engineering.repo-task':return _repo_task(args)
  if handler=='bible.query-plan':return _bible_query_plan(args)
  if handler=='context.fuzzy-search':return _fuzzy_search(args,caller_product)
  if handler=='knowledge.recall':return _knowledge_recall(args)
