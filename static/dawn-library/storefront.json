@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-25T14:39:11.896590+00:00",
+  "generatedAt": "2026-09-26T13:47:10.411263+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -603,787 +603,6 @@
             {
               "provider": "Internet Archive",
               "url": "https://archive.org/details/mummyataletwent00jangoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "doab-theology-or-biblical",
-      "title": "開放學術 · 神學與宗教",
-      "kind": "academic-shelf",
-      "source": "DOAB",
-      "items": [
-        {
-          "id": "doab-20-500-12854-95839",
-          "title": "The Future of New Testament Theology",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20230105_9783036550114_68",
-            "isbn": null,
-            "handle": "20.500.12854/95839"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/95839",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/d44e1a1d-2db3-4824-9472-81c71cbe3706/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-157616",
-          "title": "Skeppingsorg",
-          "author": "de Wit, Martin P",
-          "language": "Afrikaans",
-          "identifiers": {
-            "doi": "ONIX_20250320_9781990982118_11",
-            "isbn": null,
-            "handle": "20.500.12854/157616"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/157616",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/5684df7d-75db-44ed-9ba8-148e63f92260/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-78886",
-          "title": "Biblical Texts in Digitalization",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": null,
-            "isbn": "3947251211",
-            "handle": "20.500.12854/78886",
-            "openLibraryWork": "/works/OL32143159W",
-            "openLibraryEdition": "OL43878307M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/78886",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/85b6d635-c74f-46b5-b0a0-2eacfd017e2e/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL32143159W",
-            "editionId": "OL43878307M",
-            "isbn": "3947251211",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-132806",
-          "title": "Covenant: A Vital Element of Reformed Theology",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20240111_9789004503328_16",
-            "isbn": "9004503315",
-            "handle": "20.500.12854/132806",
-            "openLibraryWork": "/works/OL25958676W",
-            "openLibraryEdition": "OL35036077M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/132806",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/7e93ed63-9d56-484b-9c53-b1534da6f928/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL25958676W",
-            "editionId": "OL35036077M",
-            "isbn": "9004503315",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-134898",
-          "title": "The biblical concept of the ‘Davidic Covenant’ in 2 Samuel and Ezekiel and its implications for African leadership",
-          "author": "Budha, Victor Lonu",
-          "language": "English",
-          "identifiers": {
-            "doi": "OCN: 1424920257",
-            "isbn": null,
-            "handle": "20.500.12854/134898"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/134898",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/0ef83ee3-956c-4e5f-995d-e0e3ced2b9e8/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-32228",
-          "title": "Reformed theology today",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "640131",
-            "isbn": "201747",
-            "handle": "20.500.12854/32228",
-            "openLibraryWork": "/works/OL23501178W",
-            "openLibraryEdition": "OL31373249M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/32228",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/bd3ff407-ffed-426c-83e5-c44ed4b2916d/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL23501178W",
-            "editionId": "OL31373249M",
-            "isbn": "201747",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-80748",
-          "title": "Biblical Theology of Life in the New Testament",
-          "author": "Viljoen, Francois P.",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20220408_9781776341788_10",
-            "isbn": null,
-            "handle": "20.500.12854/80748"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/80748",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/6553c6a9-c879-46a4-9fe7-e0f8b52a63da/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-169682",
-          "title": "Theology of Work",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20251201T131047_9781040258859_56",
-            "isbn": "9781619706507",
-            "handle": "20.500.12854/169682",
-            "openLibraryWork": "/works/OL28062762W",
-            "openLibraryEdition": "OL38408236M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/169682",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/038e9215-4cba-4080-860c-4755d4370b03/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL28062762W",
-            "editionId": "OL38408236M",
-            "isbn": "9781619706507",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-71730",
-          "title": "Jesucristo nos llama",
-          "author": "Arenas Molina, Enrique",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585798341_15",
-            "isbn": null,
-            "handle": "20.500.12854/71730"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71730",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/da9132c0-9056-40ba-9b9d-6721a35ad623/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71718",
-          "title": "55 preguntas sobre san Agustín",
-          "author": "Eguiarte Bendímez, Enrique A.",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585498372_3",
-            "isbn": null,
-            "handle": "20.500.12854/71718"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71718",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/36c02fa1-c493-411f-a39c-07d35ccf4ad5/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71719",
-          "title": "Andrés de San Nicolás",
-          "author": "Uriel Patiño Franco, José",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585639577_4",
-            "isbn": null,
-            "handle": "20.500.12854/71719"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71719",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/c5da678e-4be6-4e5b-a6f2-dd0d890d358e/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71731",
-          "title": "La Gratia en los Sermones ad Populum de San Agustín durante la controversia pelagiana",
-          "author": "Dupont, Anthony",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789589981382_16",
-            "isbn": null,
-            "handle": "20.500.12854/71731"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71731",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/e3abd54c-84e7-4ad3-ae6e-b79f226876d0/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71732",
-          "title": "La incomprehensibilidad de Dios",
-          "author": "van Geest, Paul",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789589981351_17",
-            "isbn": null,
-            "handle": "20.500.12854/71732"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71732",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/b97639dd-09d2-4cd3-a5b4-34967467bbbe/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71744",
-          "title": "\"On the Way to Truth and Peace\" (ep. 33, 6): Augustine's Anti-Donatist Readings of John 14, 27a",
-          "author": "Grabau, Joseph",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585498211_7",
-            "isbn": null,
-            "handle": "20.500.12854/71744"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71744",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/1a6bf02a-f2aa-40e6-8ec0-3a71f2c99131/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-37833",
-          "title": "Biblical Terror",
-          "author": "Cataldo, Jeremiah W.",
-          "language": "English",
-          "identifiers": {
-            "doi": "1004297",
-            "isbn": "9780567682628",
-            "handle": "20.500.12854/37833",
-            "openLibraryWork": "/works/OL20928507W",
-            "openLibraryEdition": "OL28355180M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/37833",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/6dbe2683-883b-4b3d-8bc0-d942ef758cff/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL20928507W",
-            "editionId": "OL28355180M",
-            "isbn": "9780567682628",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-132159",
-          "title": "Biblical Theology of prayer in the New Testament",
-          "author": "Mulder, Michael C",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20231221_9781779952776_6",
-            "isbn": null,
-            "handle": "20.500.12854/132159"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/132159",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/a8b3beff-18eb-4436-b431-97cc04c5a409/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-26675",
-          "title": "Reformed theology today",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "640132",
-            "isbn": "201747",
-            "handle": "20.500.12854/26675",
-            "openLibraryWork": "/works/OL23501178W",
-            "openLibraryEdition": "OL31373249M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/26675",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/54b30ba4-9f00-4d42-b5ce-20dd14f05578/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL23501178W",
-            "editionId": "OL31373249M",
-            "isbn": "201747",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          }
-        },
-        {
-          "id": "doab-20-500-12854-172085",
-          "title": "Bruk av Bibelen i fellesskap",
-          "author": "Aadland, Ingunn",
-          "language": "Norwegian Nynorsk",
-          "identifiers": {
-            "doi": "https://library.oapen.org/handle/20.500.12657/109965",
-            "isbn": null,
-            "handle": "20.500.12854/172085"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/172085",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/4e780a3b-42a0-4e9e-97f3-4c2c7d24fea0/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71737",
-          "title": "Profesores agustinianos",
-          "author": "Echazarreta Sarabia, Lucilo",
-          "language": "Spanish",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585498525_22",
-            "isbn": null,
-            "handle": "20.500.12854/71737"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71737",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/0939d561-eea0-4110-9458-ca82aaec99b7/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71748",
-          "title": "Ipse Enim est Pax Nostra: Ephesians 2:14 in the Preaching of St. Augustine",
-          "author": "Yates, Jonathan P.",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585498211_11",
-            "isbn": null,
-            "handle": "20.500.12854/71748"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71748",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/d86599f6-9ebd-4de6-a539-6851eaf306ae/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-71756",
-          "title": "Practicing Peace, Preaching Psalms: The Centrality of the Enarrationes in Psalmos to Augustine’s Developing Theological Understanding of Peace",
-          "author": "Grove, Kevin G.",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20210825_9789585498211_19",
-            "isbn": null,
-            "handle": "20.500.12854/71756"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/71756",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/3a4c558b-4185-467c-83cf-9201c47cf865/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": null,
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false
-        },
-        {
-          "id": "doab-20-500-12854-168893",
-          "title": "A Prophet to the Nations",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20251118T124429_9783666573644_22",
-            "isbn": "9780931464201",
-            "handle": "20.500.12854/168893",
-            "openLibraryWork": "/works/OL18871796W",
-            "openLibraryEdition": "OL3178110M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/168893",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/0d0573d8-5e7a-4280-a2fa-3788ed95b3ce/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL18871796W",
-            "editionId": "OL3178110M",
-            "isbn": "9780931464201",
-            "coverId": 4229587,
-            "internetArchiveId": "prophettonations0000unse",
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/prophettonations0000unse",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
-          "id": "doab-20-500-12854-29246",
-          "title": "Contextual Theology",
-          "author": "",
-          "language": "English",
-          "identifiers": {
-            "doi": "ONIX_20201221_9781000217261_4",
-            "isbn": "0883448149",
-            "handle": "20.500.12854/29246",
-            "openLibraryWork": "/works/OL4089972W",
-            "openLibraryEdition": "OL1717216M"
-          },
-          "source": {
-            "provider": "DOAB",
-            "url": "https://directory.doabooks.org/handle/20.500.12854/29246",
-            "downloadUrl": null,
-            "kind": "remote-open-access"
-          },
-          "cover": {
-            "url": "https://directory.doabooks.org/rest/bitstreams/6da5839f-4785-4c39-8f35-35b56eedfb94/retrieve",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "open-access",
-            "license": "open access",
-            "declaredBy": "DOAB",
-            "provenanceRequired": true
-          },
-          "quality": "open-access-scholarly",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL4089972W",
-            "editionId": "OL1717216M",
-            "isbn": "0883448149",
-            "coverId": 680992,
-            "internetArchiveId": "modelsofcontextu0000beva_e7z7",
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/modelsofcontextu0000beva_e7z7",
               "kind": "remote-scan",
               "reader": "Internet Archive BookReader",
               "rightsStatus": "source-rights-check"
@@ -2293,29 +1512,6 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-testamentbiblean00rome",
-          "title": "Testament : the Bible and history",
-          "author": "Romer, John",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/testamentbiblean00rome",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/testamentbiblean00rome",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-anintroductiont00towngoog",
           "title": "An introduction to the literary history of the Bible",
           "author": "James Townley",
@@ -2362,29 +1558,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1988_107_index",
-          "title": "Journal of Biblical Literature 1988: Vol 107 Index",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1988_107_index",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1988_107_index",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-apracticalcomme00knecgoog",
           "title": "A practical commentary on Holy Scripture for the use of those who teach Bible history",
           "author": "Knecht, Friedrich Justus, 1839-1921",
@@ -2408,41 +1581,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-shakespearebible0000marx",
-          "title": "Shakespeare and the Bible",
-          "author": "Marx, Steven, 1942-",
+          "id": "internet-archive-storyofbibleland01talm",
+          "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
+          "author": "Talmage, T. De Witt (Thomas De Witt), 1832-1902",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/shakespearebible0000marx",
+            "url": "https://archive.org/details/storyofbibleland01talm",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/shakespearebible0000marx",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-philosophyofjuda0000cahn",
-          "title": "The philosophy of Judaism : the development of Jewish thought throughout the ages, the Bible, the Talmud, the Jewish philosophers, and the Cabala, until the present time",
-          "author": "Cahn, Zvi",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/philosophyofjuda0000cahn",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/philosophyofjuda0000cahn",
+            "url": "https://archive.org/services/img/storyofbibleland01talm",
             "mode": "source"
           },
           "rights": {
@@ -2477,18 +1627,64 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-biblicalfloodcas0000youn",
-          "title": "The biblical Flood : a case study of the Church's response to extrabiblical evidence",
-          "author": "Young, Davis A",
+          "id": "internet-archive-the-holy-bible-new-king-james-version",
+          "title": "The Holy Bible: New King James Version",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/biblicalfloodcas0000youn",
+            "url": "https://archive.org/details/the-holy-bible-new-king-james-version",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/biblicalfloodcas0000youn",
+            "url": "https://archive.org/services/img/the-holy-bible-new-king-james-version",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-biblicalnarrativ0037vanh",
+          "title": "Biblical narrative in the philosophy of Paul Ricoeur : a study in hermeneutics and theology",
+          "author": "Vanhoozer, Kevin J",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/biblicalnarrativ0037vanh",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/biblicalnarrativ0037vanh",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-laterrelabibleet0000marc",
+          "title": "La terre, la Bible et l'histoire : \"Vers le pays que je te ferai voir--\"",
+          "author": "Marchadour, Alain, 1937-",
+          "language": "fre",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/laterrelabibleet0000marc",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/laterrelabibleet0000marc",
             "mode": "source"
           },
           "rights": {
@@ -2751,6 +1947,29 @@
           },
           "quality": "original-scan",
           "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-dictionaryofbibl0000unse_z3q0",
+          "title": "Dictionary of the Bible and ancient media",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/dictionaryofbibl0000unse_z3q0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/dictionaryofbibl0000unse_z3q0",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
         }
       ]
     },
@@ -2819,6 +2038,213 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/taylorurbanization",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_KV-420-347_3",
+          "title": "EARLY HISTORY OF THE CHRISTIAN CHURCH",
+          "author": "MONSIGNOR LOUIS DUCHESNE",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_KV-420-347_3",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_KV-420-347_3",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-EKJ-822",
+          "title": "A critical analysis of richard hooker's theory of the relation of church and state",
+          "author": "Cletus F. Dirksen",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EKJ-822",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EKJ-822",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_T5-CWP-064",
+          "title": "the church hymnal",
+          "author": "edmund s. lorenz",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_T5-CWP-064",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_T5-CWP-064",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-churchliberalsoc0000emme_p3u4",
+          "title": "The Church and The Liberal Society",
+          "author": "Emmet John HUghes",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/churchliberalsoc0000emme_p3u4",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/churchliberalsoc0000emme_p3u4",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-faithofchristian0000gust_j8r0",
+          "title": "The Faith of the Christian Church",
+          "author": "Gustaf Aulen",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/faithofchristian0000gust_j8r0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/faithofchristian0000gust_j8r0",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-faithofchristian0000gust_k4x9",
+          "title": "The faith of the christian church",
+          "author": "Gustaf Aulen",
+          "language": "Eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/faithofchristian0000gust_k4x9",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/faithofchristian0000gust_k4x9",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fathersofchurch0007royj",
+          "title": "The Fathers of the Church",
+          "author": "Roy Joseph Deferari",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fathersofchurch0007royj",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fathersofchurch0007royj",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-howtobuildupyour0000unse_t8q5",
+          "title": "how to build up your church school",
+          "author": "Weldon Crossland",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/howtobuildupyour0000unse_t8q5",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/howtobuildupyour0000unse_t8q5",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-jesushischurchst0000rnew_q8m2",
+          "title": "Jesus and his church: a study of the idea of the ecclesia in the New Testament",
+          "author": "R. Newton Flew",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/jesushischurchst0000rnew_q8m2",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/jesushischurchst0000rnew_q8m2",
             "mode": "source"
           },
           "rights": {
@@ -2991,225 +2417,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-ChurchHistoryPrint",
-          "title": "Church History Print",
+          "id": "internet-archive-gov.uscourts.paed.110370",
+          "title": "United States v. CHURCH",
           "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/ChurchHistoryPrint",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/ChurchHistoryPrint",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_KQ-734-479",
-          "title": "the faith of the church",
-          "author": "Karl Barth",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_KQ-734-479",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_KQ-734-479",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-ATJ-005",
-          "title": "minutes of the general assembly of the united presbyterian church in the united states of america",
-          "author": "various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-ATJ-005",
+            "url": "https://archive.org/details/gov.uscourts.paed.110370",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-ATJ-005",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-DSF-647",
-          "title": "A Selected Library of the Nicene and Post-Nicene Fathers of The Christian Church",
-          "author": "Various",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-DSF-647",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-DSF-647",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-EAO-213",
-          "title": "new testament church",
-          "author": "roy e. cogdill",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-EAO-213",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-EAO-213",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-CPS-363",
-          "title": "The Church of English 1900-1965",
-          "author": "Roger Lloyd",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-CPS-363",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-CPS-363",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-BXS-114",
-          "title": "Teaching of presidents of the church brigham young",
-          "author": "Various",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-BXS-114",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-BXS-114",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-CAT-998",
-          "title": "When the Church was Young",
-          "author": "Clovis G. Chappell",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-CAT-998",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-CAT-998",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_C0-ATB-321",
-          "title": "Young People In Your Church",
-          "author": "Herbert Carleton Mayer",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_C0-ATB-321",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_C0-ATB-321",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-BFL-750",
-          "title": "A select library of nicene and post-nicene fathers of the christian church",
-          "author": "Philip Schaff, D.D., LL.D.",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-BFL-750",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-BFL-750",
+            "url": "https://archive.org/services/img/gov.uscourts.paed.110370",
             "mode": "source"
           },
           "rights": {
@@ -3228,39 +2447,6 @@
       "kind": "source-shelf",
       "source": "Project Gutenberg",
       "items": [
-        {
-          "id": "gutenberg-50685",
-          "title": "The Story of Genesis and Exodus: An Early English Song, about 1250 A.D.",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/50685",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL14587053M",
-            "editionId": "OL14587053M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL14587053M",
-            "openLibraryEdition": "OL14587053M"
-          }
-        },
         {
           "id": "gutenberg-77935",
           "title": "The book of Enoch",
@@ -3295,6 +2481,39 @@
             "openLibraryWork": "/works/OL9165226W",
             "openLibraryEdition": "OL23092410M",
             "isbn": "1885395590"
+          }
+        },
+        {
+          "id": "gutenberg-50685",
+          "title": "The Story of Genesis and Exodus: An Early English Song, about 1250 A.D.",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/50685",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL14587053M",
+            "editionId": "OL14587053M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL14587053M",
+            "openLibraryEdition": "OL14587053M"
           }
         },
         {
@@ -3584,6 +2803,51 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-26881",
+          "title": "The Gospel of Luke, an exposition",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/26881",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL13171206W",
+            "editionId": "OL36576450M",
+            "isbn": "9798520006640",
+            "coverId": 9506551,
+            "internetArchiveId": "gospellukeanexp00erdmgoog",
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL13171206W",
+            "openLibraryEdition": "OL36576450M",
+            "isbn": "9798520006640"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
           "id": "gutenberg-64858",
           "title": "Toleration and other essays",
           "author": "",
@@ -3674,51 +2938,6 @@
           ]
         },
         {
-          "id": "gutenberg-26881",
-          "title": "The Gospel of Luke, an exposition",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/26881",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/9506551-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL13171206W",
-            "editionId": "OL36576450M",
-            "isbn": "9798520006640",
-            "coverId": 9506551,
-            "internetArchiveId": "gospellukeanexp00erdmgoog",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL13171206W",
-            "openLibraryEdition": "OL36576450M",
-            "isbn": "9798520006640"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/gospellukeanexp00erdmgoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-8810",
           "title": "Ben-Hur: A tale of the Christ",
           "author": "",
@@ -3751,6 +2970,26 @@
             "openLibraryEdition": "OL37606642M",
             "isbn": "9798785723320"
           }
+        },
+        {
+          "id": "gutenberg-38808",
+          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/38808",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
         },
         {
           "id": "gutenberg-13166",
@@ -3795,26 +3034,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-38808",
-          "title": "The Works of Robert G. Ingersoll, Vol. 08 (of 12)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/38808",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
         },
         {
           "id": "gutenberg-13601",
@@ -3884,6 +3103,40 @@
             "openLibraryWork": "/works/OL42469293W",
             "openLibraryEdition": "OL57632104M",
             "isbn": "0585017956"
+          }
+        },
+        {
+          "id": "gutenberg-23038",
+          "title": "Quiet Talks on the Crowned Christ of Revelation",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/23038",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL38153866W",
+            "editionId": "OL56582796M",
+            "isbn": "1537593692",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL38153866W",
+            "openLibraryEdition": "OL56582796M",
+            "isbn": "1537593692"
           }
         },
         {
@@ -4072,50 +3325,6 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-19082",
-          "title": "The Destiny of the Soul: A Critical History of the Doctrine of a Future Life",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/19082",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/5999652-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL15729476W",
-            "editionId": "OL20605968M",
-            "isbn": null,
-            "coverId": 5999652,
-            "internetArchiveId": "destinysoulacri02abbogoog",
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL15729476W",
-            "openLibraryEdition": "OL20605968M"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/destinysoulacri02abbogoog",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
         }
       ]
     },
@@ -4333,6 +3542,39 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-55239",
+          "title": "Italian Yesterdays, vol. 2",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/55239",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL31571342W",
+            "editionId": "OL43241923M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL31571342W",
+            "openLibraryEdition": "OL43241923M"
+          }
+        },
+        {
           "id": "gutenberg-39744",
           "title": "Arne; Early Tales and Sketches",
           "author": "",
@@ -4375,39 +3617,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-55239",
-          "title": "Italian Yesterdays, vol. 2",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/55239",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL31571342W",
-            "editionId": "OL43241923M",
-            "isbn": null,
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-11T13:39:01.086946+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL31571342W",
-            "openLibraryEdition": "OL43241923M"
-          }
         },
         {
           "id": "gutenberg-55240",
@@ -4976,6 +4185,26 @@
           "contentDownloaded": false
         },
         {
+          "id": "gutenberg-41785",
+          "title": "Archaic England : an essay in deciphering prehistory from megalithic monuments, earthworks, customs, coins, place-names, and faerie superstitions",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/41785",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
           "id": "gutenberg-20758",
           "title": "The Religion of Babylonia and Assyria",
           "author": "",
@@ -5098,26 +4327,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-41785",
-          "title": "Archaic England : an essay in deciphering prehistory from megalithic monuments, earthworks, customs, coins, place-names, and faerie superstitions",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/41785",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
         },
         {
           "id": "gutenberg-45229",
@@ -6031,6 +5240,42 @@
           }
         },
         {
+          "id": "gutenberg-8438",
+          "title": "The Nicomachean ethics of Aristotle",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/8438",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/10954696-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL24411017W",
+            "editionId": "OL32648522M",
+            "isbn": "9780342237951",
+            "coverId": 10954696,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL24411017W",
+            "openLibraryEdition": "OL32648522M",
+            "isbn": "9780342237951"
+          }
+        },
+        {
           "id": "gutenberg-1636",
           "title": "Phaedrus",
           "author": "",
@@ -6093,42 +5338,6 @@
               "rightsStatus": "source-rights-check"
             }
           ]
-        },
-        {
-          "id": "gutenberg-8438",
-          "title": "The Nicomachean ethics of Aristotle",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/8438",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/10954696-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL24411017W",
-            "editionId": "OL32648522M",
-            "isbn": "9780342237951",
-            "coverId": 10954696,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL24411017W",
-            "openLibraryEdition": "OL32648522M",
-            "isbn": "9780342237951"
-          }
         },
         {
           "id": "gutenberg-2130",
@@ -6221,51 +5430,6 @@
           ]
         },
         {
-          "id": "gutenberg-785",
-          "title": "On the Nature of Things",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/785",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/4123688-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL1636632W",
-            "editionId": "OL23170230M",
-            "isbn": "0330310585",
-            "coverId": 4123688,
-            "internetArchiveId": "onnatureofthings00gonz",
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL1636632W",
-            "openLibraryEdition": "OL23170230M",
-            "isbn": "0330310585"
-          },
-          "alternateSources": [
-            {
-              "provider": "Internet Archive",
-              "url": "https://archive.org/details/onnatureofthings00gonz",
-              "kind": "remote-scan",
-              "reader": "Internet Archive BookReader",
-              "rightsStatus": "source-rights-check"
-            }
-          ]
-        },
-        {
           "id": "gutenberg-1974",
           "title": "The Poetics of Aristotle",
           "author": "",
@@ -6311,42 +5475,6 @@
           ]
         },
         {
-          "id": "gutenberg-15877",
-          "title": "Thoughts of Marcus Aurelius Antoninus",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/15877",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "url": "https://covers.openlibrary.org/b/id/11133777-L.jpg?default=false",
-            "mode": "edition-identity",
-            "provider": "Open Library"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL24508691W",
-            "editionId": "OL40066028M",
-            "isbn": "1387295632",
-            "coverId": 11133777,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL24508691W",
-            "openLibraryEdition": "OL40066028M",
-            "isbn": "1387295632"
-          }
-        },
-        {
           "id": "gutenberg-16643",
           "title": "Essays by Ralph Waldo Emerson",
           "author": "",
@@ -6390,6 +5518,87 @@
               "rightsStatus": "source-rights-check"
             }
           ]
+        },
+        {
+          "id": "gutenberg-785",
+          "title": "On the Nature of Things",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/785",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/4123688-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1636632W",
+            "editionId": "OL23170230M",
+            "isbn": "0330310585",
+            "coverId": 4123688,
+            "internetArchiveId": "onnatureofthings00gonz",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1636632W",
+            "openLibraryEdition": "OL23170230M",
+            "isbn": "0330310585"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/onnatureofthings00gonz",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-15877",
+          "title": "Thoughts of Marcus Aurelius Antoninus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/15877",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/11133777-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL24508691W",
+            "editionId": "OL40066028M",
+            "isbn": "1387295632",
+            "coverId": 11133777,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL24508691W",
+            "openLibraryEdition": "OL40066028M",
+            "isbn": "1387295632"
+          }
         },
         {
           "id": "gutenberg-56463",
@@ -6895,40 +6104,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "gutenberg-4361",
-          "title": "Memoirs of General William T. Sherman — Complete",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/4361",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL40105211W",
-            "editionId": "OL54582118M",
-            "isbn": "9781480224605",
-            "coverId": null,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL40105211W",
-            "openLibraryEdition": "OL54582118M",
-            "isbn": "9781480224605"
-          }
-        },
-        {
           "id": "gutenberg-53674",
           "title": "The Tuzuk-i-Jahangiri: or, Memoirs of Jahangir (Volume 1 of 2)",
           "author": "",
@@ -6963,6 +6138,40 @@
           }
         },
         {
+          "id": "gutenberg-4361",
+          "title": "Memoirs of General William T. Sherman — Complete",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/4361",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL40105211W",
+            "editionId": "OL54582118M",
+            "isbn": "9781480224605",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL40105211W",
+            "openLibraryEdition": "OL54582118M",
+            "isbn": "9781480224605"
+          }
+        },
+        {
           "id": "gutenberg-4362",
           "title": "Personal Memoirs of P. H. Sheridan, General, United States Army — Complete",
           "author": "",
@@ -6994,6 +6203,40 @@
             "openLibraryWork": "/works/OL41837231W",
             "openLibraryEdition": "OL56811913M",
             "isbn": "9781727769463"
+          }
+        },
+        {
+          "id": "gutenberg-25700",
+          "title": "The Greville Memoirs, Part 1 (of 3), Volume 1 (of 3)",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/25700",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL41555562W",
+            "editionId": "OL56432657M",
+            "isbn": "9781722636876",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-26T13:47:10.411263+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL41555562W",
+            "openLibraryEdition": "OL56432657M",
+            "isbn": "9781722636876"
           }
         },
         {
@@ -7168,53 +6411,37 @@
           },
           "quality": "source-edition",
           "contentDownloaded": false
-        },
-        {
-          "id": "gutenberg-54743",
-          "title": "The Memoirs of François René Vicomte de Chateaubriand sometime Ambassador to England, Volume 1 (of 6)",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Project Gutenberg",
-            "url": "https://www.gutenberg.org/ebooks/54743",
-            "kind": "remote-public"
-          },
-          "cover": {
-            "mode": "one-fallback"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Project Gutenberg"
-          },
-          "quality": "source-edition",
-          "contentDownloaded": false
         }
       ]
     }
   ],
   "metrics": {
-    "shelves": 11,
-    "mappedBooks": 214,
-    "sourceCovers": 163,
+    "shelves": 10,
+    "mappedBooks": 191,
+    "sourceCovers": 139,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
-      "DOAB": 47,
+      "DOAB": 24,
       "Internet Archive": 40,
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 0,
-      "resolved": 121,
-      "coversAdded": 65,
-      "internetArchiveLinks": 57,
-      "cacheEntries": 196
+      "queriedThisRun": 1,
+      "resolved": 114,
+      "coversAdded": 64,
+      "internetArchiveLinks": 54,
+      "cacheEntries": 197
     }
   },
   "errors": [
     {
       "source": "Wikisource",
       "error": "empty-shelf"
+    },
+    {
+      "source": "DOAB theology",
+      "error": "TimeoutError: The read operation timed out"
     }
   ]
 }
