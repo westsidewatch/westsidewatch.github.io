@@ -1,0 +1,62 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "policy": {
+    "scope": ["bible","exegesis","theology","biblical-world","church-history","christian-life","ministry"],
+    "priority": "large-corpus-first; zh-first when available",
+    "wikisource": "forbidden",
+    "rule": "Acquire reusable bulk data immediately; for collections without blanket reuse rights, acquire public catalogue/metadata/pointers only until item-level rights permit assets."
+  },
+  "sources": [
+    {
+      "id": "sermonindex",
+      "name": "SermonIndex Bulk Downloads",
+      "resourceTypes": ["sermon","audio","video","metadata","speaker","topic","scripture-index"],
+      "classification": ["ministry.preaching","ministry.teaching","bible.book-study"],
+      "bulk": {
+        "apiStaticZip": "1.4 GB",
+        "sqlite": "166 MB",
+        "sermonsJsonGz": "26.6 MB",
+        "bibleApiZip": "1.8 GB"
+      },
+      "access": "no key; no sign-up; no limit; upstream explicitly asks bulk users to download rather than crawl",
+      "url": "https://www.sermonindex.net/api/downloads/",
+      "status": "acquire-first"
+    },
+    {
+      "id": "stepbible-data",
+      "name": "STEPBible Data",
+      "resourceTypes": ["bible-text","lexicon","morphology","proper-name","person","place","geolocation","versification","manuscript-variant"],
+      "classification": ["bible.text","exegesis.reference","biblical-world.languages","biblical-world.geography"],
+      "rights": "CC BY 4.0",
+      "url": "https://github.com/STEPBible/STEPBible-Data",
+      "status": "acquire-first"
+    },
+    {
+      "id": "yale-chinese-christianity",
+      "name": "Yale Documentation of Chinese Christianity",
+      "priority": "zh-first",
+      "resourceTypes": ["book","tract","periodical","report","manuscript","archive","metadata"],
+      "classification": ["church-history.missions","church-history.revival","ministry.mission","theology","christian-life"],
+      "knownScale": {
+        "CCLC": "1300+ Christian tracts/books",
+        "ChristianWeekly": "2572 issues through 2013",
+        "FreeMethodistTaiwan": "35 monographs + 619 listed serial issues",
+        "ChineseBaptistConvention": "252 periodical issues",
+        "Reichelt": "101 monographs + 31 manuscripts + 7 serial titles"
+      },
+      "rightsHandling": "Acquire catalogue/collection metadata and public pointers now. Yale states many digitized copies must be requested from Special Collections; do not assume blanket rehosting rights.",
+      "url": "https://web.library.yale.edu/book/export/html/2630",
+      "status": "metadata-first"
+    },
+    {
+      "id": "palestine-open-maps",
+      "name": "PalestineOpenMaps / open geodata",
+      "resourceTypes": ["map","place","geodata"],
+      "classification": ["biblical-world.geography","biblical-world.archaeology"],
+      "rights": "ODbL",
+      "url": "https://data.palopenmaps.org/export",
+      "status": "acquire-relevant-extracts"
+    }
+  ]
+}
