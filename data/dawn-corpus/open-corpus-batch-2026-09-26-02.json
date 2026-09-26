@@ -1,0 +1,112 @@
+{
+  "schema": "dawn.open-corpus-batch.v1",
+  "date": "2026-09-26",
+  "policy": {
+    "acquisition": "bulk-first",
+    "priority": "Chinese-first, then open resources across media",
+    "wikisource": "blocked",
+    "note": "Sources with Wikisource-derived content are not admitted even if an aggregate dataset claims CC0."
+  },
+  "sources": [
+    {
+      "id": "midvash-bible-data",
+      "kind": ["text", "scripture"],
+      "languages": ["zh-Hant", "zh-Hans", "multi"],
+      "upstream": "https://github.com/midvash/bible-data",
+      "acquisition": "whole repository / JSON / SQLite",
+      "license": "per-version; Chinese CUV Traditional and Simplified public domain",
+      "status": "admitted",
+      "priority": 1
+    },
+    {
+      "id": "open-bibles",
+      "kind": ["text", "scripture"],
+      "languages": ["zh-Hant", "zh-Hans", "multi"],
+      "upstream": "https://github.com/seven1m/open-bibles",
+      "acquisition": "whole repository / USFX / OSIS / XML",
+      "license": "public domain and freely licensed per translation; Chinese CUV public domain",
+      "status": "admitted",
+      "priority": 1
+    },
+    {
+      "id": "teochew-bibles",
+      "kind": ["text", "scripture", "Chinese-language heritage"],
+      "languages": ["Teochew", "Chinese"],
+      "upstream": "https://github.com/learn-teochew/tc-bibles",
+      "acquisition": "whole repository transcriptions",
+      "license": "CC BY 4.0 transcriptions; source scans retain source-specific rights",
+      "status": "admitted-text-only",
+      "priority": 1
+    },
+    {
+      "id": "ubs-marble-open-license",
+      "kind": ["image", "illustration", "map", "route", "geo"],
+      "languages": ["zh-Hant", "zh-Hans", "en", "fr", "es"],
+      "upstream": "https://github.com/ubsicap/ubs-open-license",
+      "acquisition": "whole repository / XML / JSON / SVG / GeoJSON",
+      "license": "per-item open license/attribution metadata; preserve original rights fields",
+      "status": "admitted-with-item-rights",
+      "priority": 1
+    },
+    {
+      "id": "openbible-bible-geocoding-data",
+      "kind": ["place", "image", "map", "geo", "scripture-index"],
+      "languages": ["en"],
+      "upstream": "https://github.com/openbibleinfo/Bible-Geocoding-Data",
+      "acquisition": "whole repository / JSONL / GeoJSON / KML; open thumbnails by item license",
+      "license": "CC BY 4.0 for data; OSM portions ODbL; image licenses vary but are open",
+      "status": "admitted-with-item-rights",
+      "priority": 2
+    },
+    {
+      "id": "stepbible-data",
+      "kind": ["person", "place", "lexicon", "scripture-index", "language-data"],
+      "languages": ["multi"],
+      "upstream": "https://github.com/STEPBible/STEPBible-Data",
+      "acquisition": "whole repository datasets",
+      "license": "CC BY 4.0",
+      "status": "admitted",
+      "priority": 2
+    },
+    {
+      "id": "fitzwilliam-collection-raw-data",
+      "kind": ["art", "painting", "object", "image-metadata", "iiif", "museum"],
+      "languages": ["multi"],
+      "upstream": "https://github.com/FitzwilliamMuseum/fitz-collection-raw-data",
+      "acquisition": "whole metadata repository / CSV / JSON / IIIF metadata",
+      "license": "CC0 metadata",
+      "status": "admitted-metadata",
+      "priority": 2
+    },
+    {
+      "id": "national-gallery-of-art-opendata",
+      "kind": ["art", "painting", "object", "image-pointer", "museum"],
+      "languages": ["multi"],
+      "upstream": "https://github.com/NationalGalleryOfArt/opendata",
+      "acquisition": "whole metadata repository / CSV",
+      "license": "CC0 dataset; image rights evaluated separately",
+      "status": "admitted-metadata",
+      "priority": 2
+    },
+    {
+      "id": "mplus-collection-data",
+      "kind": ["art", "design", "object", "museum", "Chinese-cultural-metadata"],
+      "languages": ["zh-Hant", "en", "multi"],
+      "upstream": "https://github.com/mplusmuseum/collection-data",
+      "acquisition": "whole metadata repository / CSV / JSON",
+      "license": "CC0 1.0 metadata; images explicitly excluded",
+      "status": "admitted-metadata-only",
+      "priority": 2
+    }
+  ],
+  "rejected": [
+    {
+      "id": "gujilab-chinese-classical-corpus",
+      "reason": "contains Wikisource-derived records; Dawn permanent Wikisource gate overrides aggregate CC0 claim"
+    },
+    {
+      "id": "getbible-wikisource-derived-Chinese",
+      "reason": "distribution metadata identifies Wikisource as upstream for affected Chinese edition; blocked by Dawn permanent Wikisource gate"
+    }
+  ]
+}
