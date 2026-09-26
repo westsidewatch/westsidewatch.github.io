@@ -1,0 +1,35 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "catholic-corpus",
+    "name": "CatholicCorpus",
+    "upstream": "https://catholiccorpus.org/",
+    "download": "https://catholiccorpus.org/download/",
+    "dataset": "CatholicCorpus/catholiccorpus-text",
+    "rawDataset": "CatholicCorpus/catholiccorpus",
+    "repository": "https://github.com/CatholicCorpus/catholiccorpus",
+    "knownScale": {
+      "documents": 67772,
+      "tokens": "2.6B",
+      "rawSize": "35.9 GB",
+      "languages": ["Latin", "English", "Greek"],
+      "period": "~2000 years",
+      "collections": 16
+    },
+    "resourceTypes": ["patristics","theology","commentary","devotional","scholastic","hagiography","bible","catechism","canon-law","latin-text","greek-text","english-text"],
+    "classification": ["theology","exegesis","church-history.early-church","church-history.fathers","christian-life","biblical-world.languages"],
+    "acquisition": {
+      "mode": "bulk-dataset-and-raw-source",
+      "priority": "large-corpus-first",
+      "retainRaw": true,
+      "retainExtractedText": true,
+      "preservePerFileProvenance": true,
+      "preservePerFileRights": true,
+      "wikisourceAdmission": "forbidden",
+      "relevance": "Christian/Bible/theology corpus; retain corpus now, later Doré canonical thinning and projection",
+      "note": "Upstream states provenance metadata is preserved for every source file; item/source rights remain authoritative and must survive canonical thinning."
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
