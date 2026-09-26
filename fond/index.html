@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>池底</title>
-<link rel="stylesheet" href="./fond.css?v=20260926-mobile-separation-v3">
+<link rel="stylesheet" href="./fond.css?v=20260926-original-clip-v4">
 </head>
 <body class="threshold-locked">
 <section class="threshold" id="threshold" aria-label="進入池底">
@@ -21,7 +21,7 @@
 </div>
 <script>
 window.FOND_BOOKS={p01:'./read.html?book=kingdom-language',p02:'./read.html?book=city-building',p03:'./read.html?book=cross-shadow',p04:'./read.html?book=bright-city'};
-(async()=>{const host=document.getElementById('numberBook');try{const r=await fetch('./assets/fond-numerals-source.svg?v=20260926-transparent',{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=new DOMParser().parseFromString(await r.text(),'image/svg+xml');const s=d.documentElement;s.id='fondNumerals';s.removeAttribute('width');s.removeAttribute('height');s.style.background='transparent';s.querySelectorAll('style').forEach(n=>n.remove());s.querySelectorAll(':scope > rect').forEach(n=>n.remove());s.querySelectorAll('.pair').forEach((g,i)=>{g.removeAttribute('style');g.removeAttribute('clip-path');g.dataset.book=['p01','p02','p03','p04'][i]});host.replaceChildren(document.importNode(s,true));window.dispatchEvent(new Event('fond:numerals-ready'))}catch(e){console.error(e)}})();
+(async()=>{const host=document.getElementById('numberBook');try{const r=await fetch('./assets/fond-numerals-source.svg?v=20260926-original-clip',{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=new DOMParser().parseFromString(await r.text(),'image/svg+xml');const s=d.documentElement;s.id='fondNumerals';s.removeAttribute('width');s.removeAttribute('height');s.style.background='transparent';s.querySelectorAll('style').forEach(n=>n.remove());s.querySelectorAll(':scope > rect').forEach(n=>n.remove());s.querySelectorAll('.pair').forEach((g,i)=>{g.removeAttribute('style');g.dataset.book=['p01','p02','p03','p04'][i]});host.replaceChildren(document.importNode(s,true));window.dispatchEvent(new Event('fond:numerals-ready'))}catch(e){console.error(e)}})();
 </script>
 <script src="./fond.js?v=20260926-pointer-only"></script>
 </body></html>
