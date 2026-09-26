@@ -1,0 +1,50 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "gallica-bnf-iiif",
+    "name": "Bibliothèque nationale de France — Gallica IIIF",
+    "upstream": "https://gallica.bnf.fr",
+    "apiDocumentation": "https://api.bnf.fr/fr/api-iiif-de-recuperation-des-images-de-gallica",
+    "scale": {
+      "documents": ">7000000",
+      "images": ">100000000"
+    },
+    "interfaces": [
+      "IIIF Presentation API",
+      "IIIF Image API",
+      "Gallica search/document APIs",
+      "OCR/document metadata services",
+      "ARK persistent identifiers"
+    ],
+    "dawnPriority": "highest-iiif-source",
+    "dawnScope": [
+      "Bible manuscripts and editions",
+      "biblical illustration and prints",
+      "Christian theology",
+      "church history",
+      "patristics",
+      "Reformation and post-Reformation",
+      "missions",
+      "Christian art",
+      "Holy Land maps and geography",
+      "Ancient Near East and Second Temple background"
+    ],
+    "acquisition": {
+      "mode": "IIIF-manifest-first-bulk-harvest",
+      "retainManifest": true,
+      "retainCanvasSequence": true,
+      "retainImageServicePointers": true,
+      "retainOCRWhenAvailable": true,
+      "retainMetadata": true,
+      "retainARK": true,
+      "preserveRightsPerObject": true,
+      "preserveProvenance": true,
+      "assetRehost": "only when object-level reuse rights permit",
+      "wikisourceAdmission": "forbidden",
+      "nonRelevantPolicy": "retain raw discovery only; hide from Dawn public projections",
+      "postAcquisition": "Doré canonicalizes Work/Edition/Manifest/Canvas/Image/Text identities and thins repeated metadata without discarding rights or provenance"
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
