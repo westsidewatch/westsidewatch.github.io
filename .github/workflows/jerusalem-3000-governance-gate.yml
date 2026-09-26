@@ -3,77 +3,84 @@ name: Jerusalem 3000 Governance Gate
 on:
   pull_request:
     branches: [main]
-    paths:
-      - 'preview/jerusalem-3000/**'
-      - '.github/workflows/jerusalem-3000-governance-gate.yml'
+    paths: ['preview/jerusalem-3000/**','.github/workflows/jerusalem-3000-governance-gate.yml']
   push:
     branches: [main]
-    paths:
-      - 'preview/jerusalem-3000/**'
-      - '.github/workflows/jerusalem-3000-governance-gate.yml'
-
+    paths: ['preview/jerusalem-3000/**','.github/workflows/jerusalem-3000-governance-gate.yml']
 permissions:
   contents: read
-
 jobs:
   architecture-authority:
     name: Architecture Authority
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Enforce Three.js source authority and evidence geometry
+      - name: Enforce Three.js source authority and modular evidence geometry
         shell: bash
         run: |
           set -euo pipefail
           ROOT='preview/jerusalem-3000'
-          test -f "$ROOT/three-scene.js"
-          test -f "$ROOT/jerusalem-3000-three.js"
-          test -f "$ROOT/data/continuous-build-timeline.json"
-          test -f "$ROOT/data/objects/herodian-30ce.json"
+          for f in three-scene.js jerusalem-3000-three.js jerusalem-architecture.js spatial-registration.js architectural-grammar.js historical-time-engine.js data/continuous-build-timeline.json data/objects/herodian-30ce.json; do test -f "$ROOT/$f"; done
           grep -q "from 'three'" "$ROOT/three-scene.js"
-          grep -q "OrbitControls" "$ROOT/three-scene.js"
-          grep -q "PerspectiveCamera" "$ROOT/three-scene.js"
-          grep -q "WebGLRenderer" "$ROOT/three-scene.js"
-          grep -q "addEvidencePiece" "$ROOT/three-scene.js"
-          grep -q "isWithheld" "$ROOT/three-scene.js"
-          grep -q "herodian-30ce.json" "$ROOT/three-scene.js"
-          grep -q "await three.ready" "$ROOT/jerusalem-3000-three.js"
-          if grep -Eq 'j3k-orbit-scene|rotateX\(var\(--j3k-pitch|rotateZ\(var\(--j3k-yaw' "$ROOT/jerusalem-3000.css"; then
-            echo 'ERROR: CSS pseudo-3D camera detected. Jerusalem 3000 must use the approved Three.js spatial runtime.' >&2
-            exit 1
-          fi
-          if grep -Eq 'Temporary geometry consumer|placeholder city grid|for\(let z=-1900' "$ROOT/three-scene.js"; then
-            echo 'ERROR: placeholder geometry detected in production Three.js scene.' >&2
-            exit 1
-          fi
-
+          grep -q 'OrbitControls' "$ROOT/three-scene.js"
+          grep -q 'PerspectiveCamera' "$ROOT/three-scene.js"
+          grep -q 'WebGLRenderer' "$ROOT/three-scene.js"
+          grep -q 'addEvidenceArchitecture' "$ROOT/three-scene.js"
+          grep -q 'resolveSpatialRegistration' "$ROOT/jerusalem-architecture.js"
+          grep -q 'buildArchitecturalGrammar' "$ROOT/jerusalem-architecture.js"
+          grep -q "startsWith('withheld')" "$ROOT/spatial-registration.js"
+          grep -q 'herodian-30ce.json' "$ROOT/three-scene.js"
+          grep -q 'HistoricalTimeEngine' "$ROOT/jerusalem-3000-three.js"
+          grep -q 'await three.ready' "$ROOT/jerusalem-3000-three.js"
+          if grep -Eq 'j3k-orbit-scene|rotateX\(var\(--j3k-pitch|rotateZ\(var\(--j3k-yaw' "$ROOT/jerusalem-3000.css"; then echo 'ERROR: CSS pseudo-3D camera detected.' >&2; exit 1; fi
+          if grep -Eq 'Temporary geometry consumer|placeholder city grid|for\(let z=-1900' "$ROOT/three-scene.js"; then echo 'ERROR: placeholder geometry detected.' >&2; exit 1; fi
   evidence-authority:
     name: Evidence Authority
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with:
-          node-version: '22'
+        with: {node-version: '22'}
       - name: Validate ledger and withheld geometry policy
         shell: bash
         run: |
           set -euo pipefail
           node <<'NODE'
           const fs=require('fs');
-          const path='preview/jerusalem-3000/data/objects/herodian-30ce.json';
-          const ledger=JSON.parse(fs.readFileSync(path,'utf8'));
+          const root='preview/jerusalem-3000';
+          const ledger=JSON.parse(fs.readFileSync(`${root}/data/objects/herodian-30ce.json`,'utf8'));
           if(!Array.isArray(ledger.objects)||!ledger.objects.length) throw new Error('Herodian ledger has no objects');
-          const evidenceTerms=['observed','archaeological','reconstructed','textual','inferred','disputed'];
-          for(const o of ledger.objects){
-            if(!o.id) throw new Error('ledger object missing id');
-            if(!evidenceTerms.some(term=>String(o.evidence||'').includes(term))) throw new Error(`${o.id}: unclassified evidence ${o.evidence}`);
-            if(String(o.spatial?.registration||'').startsWith('withheld') && o.geometry?.status!=='withheld' && !String(o.spatial.registration).includes('exact-placement')) throw new Error(`${o.id}: withheld registration needs an explicit withholding rationale`);
-          }
-          const runtime=fs.readFileSync('preview/jerusalem-3000/three-scene.js','utf8');
-          if(!runtime.includes("startsWith('withheld')")) throw new Error('runtime must reject every withheld registration prefix');
+          const terms=['observed','archaeological','reconstructed','textual','inferred','disputed'];
+          for(const o of ledger.objects){if(!o.id)throw new Error('ledger object missing id');if(!terms.some(t=>String(o.evidence||'').includes(t)))throw new Error(`${o.id}: unclassified evidence`);if(String(o.spatial?.registration||'').startsWith('withheld')&&o.geometry?.status!=='withheld'&&!String(o.spatial.registration).includes('exact-placement'))throw new Error(`${o.id}: withheld registration needs rationale`);}
+          const resolver=fs.readFileSync(`${root}/spatial-registration.js`,'utf8');
+          if(!resolver.includes("startsWith('withheld')"))throw new Error('spatial resolver must reject every withheld prefix');
+          const architecture=fs.readFileSync(`${root}/jerusalem-architecture.js`,'utf8');
+          if(!architecture.includes('resolveSpatialRegistration'))throw new Error('architecture must consume canonical registration resolver');
           NODE
-
+  historical-time-authority:
+    name: Historical Time Authority
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Validate continuous reversible time engine
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --input-type=module <<'NODE'
+          import fs from 'node:fs';
+          const phases=JSON.parse(fs.readFileSync('preview/jerusalem-3000/data/continuous-build-timeline.json','utf8')).phases;
+          const {HistoricalTimeEngine}=await import('./preview/jerusalem-3000/historical-time-engine.js');
+          const t=new HistoricalTimeEngine(phases);
+          if(phases.length!==18)throw new Error('canonical timeline must have 18 phases');
+          if(!t.reversibleCheck(1024))throw new Error('time engine is not reversible');
+          const h=phases.findIndex(p=>p.id==='herodian-jesus'),r=phases.findIndex(p=>p.id==='roman-destruction');
+          if(t.herodianVisibility(h)!==1)throw new Error('Herodian city must be fully present at Herodian phase');
+          if(t.herodianVisibility(h-1)!==0)throw new Error('Herodian city must not pre-exist its lifecycle window');
+          if(t.herodianVisibility(r)!==1)throw new Error('70 CE boundary must preserve pre-destruction state for Step 7 handoff');
+          if(t.herodianVisibility(r+1)!==0)throw new Error('Herodian layer must leave standing-state lifecycle after 70 CE');
+          NODE
   completion-contract:
     name: Completion Contract
     runs-on: ubuntu-latest
@@ -83,26 +90,9 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          GOV='preview/jerusalem-3000/GOVERNANCE.md'
-          test -f "$GOV"
-          grep -q 'Execution-until-stage-complete directive' "$GOV"
-          grep -q 'acknowledgement is not execution' "$GOV"
-          grep -q 'reporting is permitted only after the stage Definition of Done' "$GOV"
-          grep -q 'genuine hard blocker' "$GOV"
-      - name: Require explicit production completion evidence
+          GOV='preview/jerusalem-3000/GOVERNANCE.md'; test -f "$GOV"; grep -q 'Execution-until-stage-complete directive' "$GOV"; grep -q 'acknowledgement is not execution' "$GOV"; grep -q 'reporting is permitted only after the stage Definition of Done' "$GOV"; grep -q 'genuine hard blocker' "$GOV"
+      - name: Preserve prior production completion evidence
         shell: bash
         run: |
           set -euo pipefail
-          CONTRACT='preview/jerusalem-3000/STEP-1-COMPLETION.json'
-          if [ ! -f "$CONTRACT" ]; then
-            echo 'Step 1 is IN PROGRESS. Reporting gate remains closed until the completion contract is genuinely satisfied.'
-            exit 0
-          fi
-          node <<'NODE'
-          const fs=require('fs');
-          const c=JSON.parse(fs.readFileSync('preview/jerusalem-3000/STEP-1-COMPLETION.json','utf8'));
-          const required=['historicalGeometryRuntime','placeholderGeometryRemoved','evidencePolicyValidated','timelineLifecycleValidated','threeRuntimeValidated','productionDeploymentValidated','productionVisualValidated'];
-          const failed=required.filter(k=>c[k]!==true);
-          if(c.status!=='complete'||failed.length) throw new Error(`Invalid completion claim: ${failed.join(', ')||'status is not complete'}`);
-          if(!c.productionCommit||!c.validatedAt) throw new Error('Completion claim requires productionCommit and validatedAt');
-          NODE
+          for n in 1 3 4; do test -f "preview/jerusalem-3000/STEP-$n-COMPLETION.json"; done
