@@ -7,6 +7,20 @@ enter?.addEventListener('click',openFond);
 const numberBook=document.querySelector('.number-book');
 const pages=[...document.querySelectorAll('.number-page')];
 if(numberBook&&pages.length){
+  const alignCanonicalSpine=()=>{
+    const bookRect=numberBook.getBoundingClientRect();
+    const spineX=bookRect.width*.5;
+    numberBook.style.setProperty('--spine-x',`${spineX}px`);
+    pages.forEach(page=>{
+      const rect=page.getBoundingClientRect();
+      const originX=spineX-(rect.left-bookRect.left);
+      page.style.transformOrigin=`${originX}px 50%`;
+    });
+  };
+  alignCanonicalSpine();
+  addEventListener('resize',alignCanonicalSpine,{passive:true});
+  document.fonts?.ready.then(alignCanonicalSpine);
+
   const setActive=page=>{
     pages.forEach(p=>p.classList.toggle('is-near',p===page));
     numberBook.classList.toggle('has-near',!!page);
@@ -20,6 +34,7 @@ if(numberBook&&pages.length){
       if(reduce)return;
       event.preventDefault();
       if(numberBook.classList.contains('is-opening'))return;
+      alignCanonicalSpine();
       numberBook.classList.add('is-opening');
       page.classList.add('is-opening');
       const href=page.href;
