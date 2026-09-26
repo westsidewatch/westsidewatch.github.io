@@ -19,12 +19,14 @@ jobs:
         with:
           node-version: '22'
       - name: Install Playwright Chromium
-        run: npx --yes playwright@1.55.0 install --with-deps chromium
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
       - name: Validate production runtime and visual states
         env:
           J3K_URL: https://westsidewatch.github.io/preview/jerusalem-3000/
         run: |
-          cat > /tmp/j3k-production.mjs <<'NODE'
+          cat > j3k-production.mjs <<'NODE'
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
@@ -46,7 +48,7 @@ jobs:
           if(errors.length)throw new Error(`browser errors: ${errors.join(' | ')}`);
           await browser.close();
           NODE
-          npx --yes -p playwright@1.55.0 node /tmp/j3k-production.mjs
+          node j3k-production.mjs
       - name: Upload production visual evidence
         uses: actions/upload-artifact@v4
         with:
