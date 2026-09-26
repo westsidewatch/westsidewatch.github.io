@@ -1,22 +1,12 @@
+import * as THREE from 'three';
 export const TERRAIN_AUTHORITY_URL='./data/terrain-authority.json';
 export const TERRAIN_MANIFEST_URL='./data/terrain-manifest.json';
-
-export async function loadTerrainAuthority(){
-  const [authority,manifest]=await Promise.all([
-    fetch(TERRAIN_AUTHORITY_URL).then(r=>{if(!r.ok)throw new Error('terrain authority unavailable');return r.json()}),
-    fetch(TERRAIN_MANIFEST_URL).then(r=>{if(!r.ok)throw new Error('terrain manifest unavailable');return r.json()})
-  ]);
-  return {authority,manifest};
+const EARTH=6378137,DEG=Math.PI/180;
+export function geographicToENU(lat,lon,origin){return{north:(lat-origin.lat)*DEG*EARTH,east:(lon-origin.lon)*DEG*EARTH*Math.cos(origin.lat*DEG)}}
+export async function loadTerrainAuthority(){const[authority,manifest]=await Promise.all([fetch(TERRAIN_AUTHORITY_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('terrain authority unavailable');return r.json()}),fetch(TERRAIN_MANIFEST_URL,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('terrain manifest unavailable');return r.json()})]);return{authority,manifest}}
+function bilinear(g,u,v){const x=Math.max(0,Math.min(g.width-1,u*(g.width-1))),y=Math.max(0,Math.min(g.height-1,v*(g.height-1))),x0=Math.floor(x),y0=Math.floor(y),x1=Math.min(g.width-1,x0+1),y1=Math.min(g.height-1,y0+1),tx=x-x0,ty=y-y0,a=g.values[y0*g.width+x0],b=g.values[y0*g.width+x1],c=g.values[y1*g.width+x0],d=g.values[y1*g.width+x1];return THREE.MathUtils.lerp(THREE.MathUtils.lerp(a,b,tx),THREE.MathUtils.lerp(c,d,tx),ty)}
+export async function loadCanonicalTerrain(manifest,root){
+  if(manifest.elevationGrid){const g=await fetch(manifest.elevationGrid,{cache:'no-store'}).then(r=>{if(!r.ok)throw new Error('canonical elevation grid unavailable');return r.json()});if(g.schema!=='j3k-elevation-grid-v1')throw new Error('unsupported elevation grid schema');const nw=geographicToENU(g.bounds.north,g.bounds.west,g.origin),se=geographicToENU(g.bounds.south,g.bounds.east,g.origin),geometry=new THREE.PlaneGeometry(se.east-nw.east,nw.north-se.north,g.width-1,g.height-1);geometry.rotateX(-Math.PI/2);const p=geometry.attributes.position;let min=Infinity,max=-Infinity;for(let i=0;i<p.count;i++){const x=i%g.width,y=Math.floor(i/g.width),e=g.values[y*g.width+x];min=Math.min(min,e);max=Math.max(max,e);p.setY(i,e-g.verticalDatumOffsetMetres)}geometry.computeVertexNormals();const material=new THREE.MeshStandardMaterial({color:0xc8b99e,roughness:.96,metalness:0}),mesh=new THREE.Mesh(geometry,material);mesh.name='canonical-jerusalem-dem';mesh.position.set((nw.east+se.east)/2,0,-(nw.north+se.north)/2);mesh.receiveShadow=true;root?.add(mesh);return{mesh,grid:g,min,max,sampleElevation:(lat,lon)=>bilinear(g,(lon-g.bounds.west)/(g.bounds.east-g.bounds.west),(g.bounds.north-lat)/(g.bounds.north-g.bounds.south))-g.verticalDatumOffsetMetres,dispose(){geometry.dispose();material.dispose();mesh.removeFromParent()}}}
+  if(manifest.mesh?.url){const mesh=await fetch(manifest.mesh.url).then(r=>{if(!r.ok)throw new Error('canonical terrain mesh unavailable');return r.json()});if(mesh.schema!=='j3k-terrain-mesh-v1')throw new Error('unsupported terrain mesh schema');return mesh}return null;
 }
-
-export async function loadCanonicalTerrain(manifest){
-  if(!manifest.mesh?.url) return null;
-  const mesh=await fetch(manifest.mesh.url).then(r=>{if(!r.ok)throw new Error('canonical terrain mesh unavailable');return r.json()});
-  if(mesh.schema!=='j3k-terrain-mesh-v1') throw new Error('unsupported terrain mesh schema');
-  return mesh;
-}
-
-export function terrainRuntimeState(manifest){
-  if(manifest.mesh?.url) return {mode:'mesh',label:'REAL TERRAIN',ready:true};
-  return {mode:'schematic',label:'TERRAIN DATA PENDING',ready:false};
-}
+export function terrainRuntimeState(manifest){if(manifest.elevationGrid||manifest.mesh?.url)return{mode:'mesh',label:'REAL TERRAIN',ready:true};return{mode:'schematic',label:'TERRAIN DATA PENDING',ready:false}}
