@@ -1,0 +1,13 @@
+{
+  "schema": "dawn.resource-corpus.source.v1",
+  "sourceId": "bsb-openbible-geography",
+  "title": "BSB/OpenBible Biblical Geography",
+  "priority": "resource-corpus",
+  "status": "acquisition-approved",
+  "source": "https://github.com/BSB-publishing/bsb-data",
+  "resourceFamilies": ["place", "geo", "map", "scripture-linked-metadata"],
+  "inventory": {"biblicalPlaces": 1342, "placesWithCoordinates": 1309, "verseReferences": 8742},
+  "license": "CC BY 4.0 (OpenBible geography)",
+  "admission": {"wikisourceForbidden": true, "politicalEthnicWarControversyExcluded": true},
+  "acquisitionPolicy": "bulk corpus source; preserve attribution and upstream identifiers"
+}

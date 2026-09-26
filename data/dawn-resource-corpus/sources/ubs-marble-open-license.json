@@ -1,0 +1,13 @@
+{
+  "schema": "dawn.resource-corpus.source.v1",
+  "sourceId": "ubs-marble-open-license",
+  "title": "United Bible Societies MARBLE Open License Resources",
+  "priority": "zh-first",
+  "status": "acquisition-approved",
+  "source": "https://github.com/ubsicap/ubs-open-license",
+  "resourceFamilies": ["image", "map", "geo", "scripture-linked-metadata"],
+  "inventory": {"images": "1000+", "bibleRoutes": "almost 200 SVG/GeoJSON files", "languages": ["zh-Hans", "zh-Hant", "en", "fr", "es"]},
+  "rights": {"mode": "per-resource attribution/license metadata required", "note": "Preserve original copyright/license metadata."},
+  "admission": {"wikisourceForbidden": true, "politicalEthnicWarControversyExcluded": true},
+  "acquisitionPolicy": "take first; preserve original metadata and rights evidence; project later"
+}
