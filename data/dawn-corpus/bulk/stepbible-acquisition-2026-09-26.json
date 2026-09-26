@@ -1,0 +1,41 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "stepbible-data",
+    "name": "STEPBible Data",
+    "upstream": "https://github.com/STEPBible/STEPBible-Data",
+    "clone": "https://github.com/STEPBible/STEPBible-Data.git",
+    "defaultBranch": "master",
+    "upstreamRepositorySizeKB": 690639,
+    "rights": "CC BY 4.0",
+    "rightsEvidence": "Upstream repository description states: Data created for www.STEPBible.org, available to other projects under CC BY 4.0",
+    "scope": [
+      "bible.text",
+      "exegesis.reference",
+      "biblical-world.languages",
+      "biblical-world.geography"
+    ],
+    "resourceTypes": [
+      "hebrew-bible",
+      "greek-new-testament",
+      "lexicon",
+      "morphology",
+      "variants",
+      "proper-name",
+      "person",
+      "place",
+      "geolocation",
+      "versification"
+    ],
+    "acquisition": {
+      "mode": "whole-repository-mirror",
+      "retainRaw": true,
+      "preserveUpstreamIdentity": true,
+      "preserveLicenseAndProvenance": true,
+      "wikisourceAdmission": "forbidden",
+      "postAcquisition": "Doré may thin/deduplicate into Dawn canonical substrate; raw provenance remains authoritative"
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
