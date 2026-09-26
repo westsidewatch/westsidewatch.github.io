@@ -1,0 +1,24 @@
+{
+  "step": 4,
+  "name": "Spatial Registration",
+  "status": "complete",
+  "canonicalFrame": "canonical-dem-enu",
+  "anchorToEnuRuntime": true,
+  "demElevationBinding": true,
+  "withheldPolicyValidated": true,
+  "missingAnchorFailsClosed": true,
+  "outsideDemFailsClosed": true,
+  "registrationAuditValidated": true,
+  "registrationBuildCountParity": true,
+  "productionCommit": "355222d8923b8b4cb1f433a4c8d9bd6ae6b3dc0a",
+  "productionDeploymentValidated": true,
+  "productionVisualValidated": true,
+  "productionValidationWorkflow": {
+    "name": "Jerusalem 3000 Production Validation",
+    "runId": 36224305964,
+    "runNumber": 22,
+    "conclusion": "success"
+  },
+  "validatedAt": "2026-09-26T06:38:20Z",
+  "nextStep": "Architectural Grammar"
+}
