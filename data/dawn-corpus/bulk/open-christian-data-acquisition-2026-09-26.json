@@ -1,0 +1,54 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "open-christian-data",
+    "name": "Open Christian Data",
+    "upstream": "https://huggingface.co/datasets/OpenChristianDataOrg/open-christian-data",
+    "sourceRepository": "https://github.com/OpenChristianData/open-christian-data",
+    "priority": "large-corpus-first",
+    "publishedDataRights": "CC0 1.0 Universal",
+    "scale": {
+      "records": 805146,
+      "tokens": "195.7M",
+      "uncompressed": "1.60 GB",
+      "compressedApprox": "333 MB",
+      "books": 363,
+      "hymns": 34904,
+      "sermons": 5297,
+      "bibleTranslations": 9
+    },
+    "resourceTypes": [
+      "structured-text",
+      "bible-text",
+      "commentary",
+      "reference-entry",
+      "topical-reference",
+      "devotional",
+      "sermon",
+      "doctrinal-document",
+      "catechism",
+      "prayer",
+      "hymn",
+      "church-fathers"
+    ],
+    "classification": [
+      "bible",
+      "exegesis",
+      "theology",
+      "church-history.fathers",
+      "christian-life.prayer",
+      "christian-life.devotion",
+      "ministry.preaching",
+      "ministry.worship"
+    ],
+    "acquisition": {
+      "mode": "whole-published-dataset",
+      "retainRaw": true,
+      "preserveRecordProvenance": true,
+      "wikisourceFilter": "mandatory: dataset source acknowledgements include Wikisource among multiple upstreams; exclude every record whose provenance/source resolves to Wikisource before Dawn admission, retain all other eligible CC0 records",
+      "postAcquisition": "Doré canonical thinning/deduplication after raw acquisition"
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
