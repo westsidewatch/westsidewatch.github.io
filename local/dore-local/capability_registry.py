@@ -17,10 +17,16 @@ def load_registry(path: Path = REGISTRY) -> dict[str, Any]:
     return data
 
 
+def _is_existing(item: dict[str, Any]) -> bool:
+    """Existing capabilities may carry a maturity/version suffix (existing-v0/v1)."""
+    status = str(item.get('status') or '').strip().lower()
+    return status == 'existing' or status.startswith('existing-')
+
+
 def discover(*, capability_type: str | None = None, service: str | None = None, include_planned: bool = False) -> list[dict[str, Any]]:
     out = []
     for item in load_registry().get('capabilities', []):
-        if not include_planned and item.get('status') != 'existing':
+        if not include_planned and not _is_existing(item):
             continue
         if capability_type and item.get('type') != capability_type:
             continue
