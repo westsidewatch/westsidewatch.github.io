@@ -3,33 +3,25 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>池底</title>
-<link rel="stylesheet" href="./fond.css">
+<link rel="stylesheet" href="./fond.css?v=20260926-svg-numerals">
 </head>
 <body class="threshold-locked">
 <section class="threshold" id="threshold" aria-label="進入池底">
   <div class="etch etch-dark" aria-hidden="true"></div>
   <p class="threshold-source">Fond de l’Étang</p>
-  <button class="threshold-mark" id="enterFond" type="button" aria-label="進入池底">
-    <img class="logo-spin logo-dark" src="./assets/Fondlogo-transparent.svg" alt="池底">
-  </button>
+  <button class="threshold-mark" id="enterFond" type="button" aria-label="進入池底"><img class="logo-spin logo-dark" src="./assets/Fondlogo-transparent.svg" alt="池底"></button>
   <span class="threshold-enter">ENTER</span>
 </section>
 <div class="publication" id="publication">
   <div class="etch etch-light" aria-hidden="true"></div>
-  <header class="room" aria-label="池底">
-    <p class="source">Fond de l’Étang</p>
-    <div class="room-core"><img class="room-logo" src="./assets/Fondlogo-transparent.svg" alt="池底"></div>
-  </header>
-  <main class="index" aria-label="作品">
-    <nav class="number-book" aria-label="池底書頁">
-      <a class="number-page p01" href="./read.html?book=kingdom-language" aria-label="01 神很遠 神很近 天國語言極簡史"><span class="zero">0</span><span class="digit">1</span></a>
-      <a class="number-page p02" href="./read.html?book=city-building" aria-label="02 一萬年的建城禮"><span class="zero">0</span><span class="digit">2</span></a>
-      <a class="number-page p03" href="./read.html?book=cross-shadow" aria-label="03 十字架的影子"><span class="zero">0</span><span class="digit">3</span></a>
-      <a class="number-page p04" href="./read.html?book=bright-city" aria-label="04 守望 一座光明的城"><span class="zero">0</span><span class="digit">4</span></a>
-    </nav>
-  </main>
+  <header class="room" aria-label="池底"><p class="source">Fond de l’Étang</p><div class="room-core"><img class="room-logo" src="./assets/Fondlogo-transparent.svg" alt="池底"></div></header>
+  <main class="index" aria-label="作品"><nav class="number-book" id="numberBook" aria-label="池底書頁"></nav></main>
   <div class="quiet-mark" aria-hidden="true"><img class="logo-spin logo-light" src="./assets/Fondlogo-transparent.svg" alt=""></div>
   <footer>池底設</footer>
 </div>
-<script src="./fond.js"></script>
+<script>
+window.FOND_BOOKS={p01:'./read.html?book=kingdom-language',p02:'./read.html?book=city-building',p03:'./read.html?book=cross-shadow',p04:'./read.html?book=bright-city'};
+(async()=>{const host=document.getElementById('numberBook');try{const r=await fetch('./assets/fond-numerals-source.svg?v=20260926-live',{cache:'no-store'});if(!r.ok)throw Error(r.status);const d=new DOMParser().parseFromString(await r.text(),'image/svg+xml');const s=d.documentElement;s.id='fondNumerals';s.removeAttribute('width');s.removeAttribute('height');s.querySelectorAll('style').forEach(n=>n.remove());s.querySelectorAll('.pair').forEach((g,i)=>{g.removeAttribute('style');g.dataset.book=['p01','p02','p03','p04'][i]});let defs=s.querySelector('defs');const cp=d.createElementNS('http://www.w3.org/2000/svg','clipPath');cp.id='fondClip01';cp.setAttribute('clipPathUnits','userSpaceOnUse');const rect=d.createElementNS('http://www.w3.org/2000/svg','rect');rect.setAttribute('x','182');rect.setAttribute('y','300');rect.setAttribute('width','122');rect.setAttribute('height','232');cp.appendChild(rect);defs.appendChild(cp);s.querySelector('.p01')?.setAttribute('clip-path','url(#fondClip01)');host.replaceChildren(document.importNode(s,true));window.dispatchEvent(new Event('fond:numerals-ready'))}catch(e){console.error(e)}})();
+</script>
+<script src="./fond.js?v=20260926-pointer-only"></script>
 </body></html>
