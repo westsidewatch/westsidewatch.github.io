@@ -1,0 +1,22 @@
+{
+  "schema": "j3k.step-completion.v1",
+  "stage": "step-1-historical-geometry-runtime",
+  "status": "complete",
+  "historicalGeometryRuntime": true,
+  "placeholderGeometryRemoved": true,
+  "evidencePolicyValidated": true,
+  "timelineLifecycleValidated": true,
+  "threeRuntimeValidated": true,
+  "productionDeploymentValidated": true,
+  "productionVisualValidated": true,
+  "runtimeCommit": "d8b27fadc8661e61fb0f55bfa5a283f4d5b861ae",
+  "productionCommit": "417ebd80d32a22e220a1a4cb474ebbe6e4165813",
+  "productionDeployRun": 36222381568,
+  "productionValidationRun": 36222422698,
+  "productionVisualArtifact": {
+    "id": 10899761073,
+    "name": "jerusalem-3000-production-visual",
+    "sha256": "fa28bbff917bef856000545f6b698bc2a9487a38a0e40934c56c953433c27e7b"
+  },
+  "validatedAt": "2026-09-26T06:00:44Z"
+}
