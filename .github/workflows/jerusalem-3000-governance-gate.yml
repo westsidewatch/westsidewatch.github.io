@@ -1,0 +1,105 @@
+name: Jerusalem 3000 Governance Gate
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'preview/jerusalem-3000/**'
+      - '.github/workflows/jerusalem-3000-governance-gate.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'preview/jerusalem-3000/**'
+      - '.github/workflows/jerusalem-3000-governance-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  architecture-authority:
+    name: Architecture Authority
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Enforce Three.js source authority and evidence geometry
+        shell: bash
+        run: |
+          set -euo pipefail
+          ROOT='preview/jerusalem-3000'
+          test -f "$ROOT/three-scene.js"
+          test -f "$ROOT/jerusalem-3000-three.js"
+          test -f "$ROOT/data/continuous-build-timeline.json"
+          test -f "$ROOT/data/objects/herodian-30ce.json"
+          grep -q "from 'three'" "$ROOT/three-scene.js"
+          grep -q "OrbitControls" "$ROOT/three-scene.js"
+          grep -q "PerspectiveCamera" "$ROOT/three-scene.js"
+          grep -q "WebGLRenderer" "$ROOT/three-scene.js"
+          grep -q "loadHistoricalGeometry" "$ROOT/three-scene.js"
+          grep -q "herodian-30ce.json" "$ROOT/three-scene.js"
+          if grep -Eq 'j3k-orbit-scene|rotateX\(var\(--j3k-pitch|rotateZ\(var\(--j3k-yaw' "$ROOT/jerusalem-3000.css"; then
+            echo 'ERROR: CSS pseudo-3D camera detected. Jerusalem 3000 must use the approved Three.js spatial runtime.' >&2
+            exit 1
+          fi
+          if grep -Eq 'Temporary geometry consumer|placeholder city grid|for\(let z=-1900' "$ROOT/three-scene.js"; then
+            echo 'ERROR: placeholder geometry detected in production Three.js scene.' >&2
+            exit 1
+          fi
+
+  evidence-authority:
+    name: Evidence Authority
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Validate ledger and withheld geometry policy
+        shell: bash
+        run: |
+          set -euo pipefail
+          node <<'NODE'
+          const fs=require('fs');
+          const path='preview/jerusalem-3000/data/objects/herodian-30ce.json';
+          const ledger=JSON.parse(fs.readFileSync(path,'utf8'));
+          if(!Array.isArray(ledger.objects)||!ledger.objects.length) throw new Error('Herodian ledger has no objects');
+          const allowed=new Set(['observed','reconstructed','inferred','disputed']);
+          for(const o of ledger.objects){
+            if(!o.id) throw new Error('ledger object missing id');
+            if(!allowed.has(o.evidence)) throw new Error(`${o.id}: invalid evidence class ${o.evidence}`);
+            const s=o.spatial;
+            if(s?.registration==='withheld' && s?.enuMetres) throw new Error(`${o.id}: withheld object must not carry renderable ENU geometry`);
+          }
+          NODE
+
+  completion-contract:
+    name: Completion Contract
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify execution-until-stage-complete governance exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          GOV='preview/jerusalem-3000/GOVERNANCE.md'
+          test -f "$GOV"
+          grep -q 'Execution-until-stage-complete directive' "$GOV"
+          grep -q 'acknowledgement is not execution' "$GOV"
+          grep -q 'reporting is permitted only after the stage Definition of Done' "$GOV"
+          grep -q 'genuine hard blocker' "$GOV"
+      - name: Require explicit production completion evidence
+        shell: bash
+        run: |
+          set -euo pipefail
+          CONTRACT='preview/jerusalem-3000/STEP-1-COMPLETION.json'
+          if [ ! -f "$CONTRACT" ]; then
+            echo 'Step 1 is IN PROGRESS. Reporting gate remains closed until the completion contract is genuinely satisfied.'
+            exit 0
+          fi
+          node <<'NODE'
+          const fs=require('fs');
+          const c=JSON.parse(fs.readFileSync('preview/jerusalem-3000/STEP-1-COMPLETION.json','utf8'));
+          const required=['historicalGeometryRuntime','placeholderGeometryRemoved','evidencePolicyValidated','timelineLifecycleValidated','threeRuntimeValidated','productionDeploymentValidated','productionVisualValidated'];
+          const failed=required.filter(k=>c[k]!==true);
+          if(c.status!=='complete'||failed.length) throw new Error(`Invalid completion claim: ${failed.join(', ')||'status is not complete'}`);
+          if(!c.productionCommit||!c.validatedAt) throw new Error('Completion claim requires productionCommit and validatedAt');
+          NODE
