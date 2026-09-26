@@ -5,17 +5,24 @@ function openFond(){if(!threshold||threshold.classList.contains('opening'))retur
 enter?.addEventListener('click',openFond);
 
 function bindFondNumerals(){
- const book=document.querySelector('#fondNumerals'); if(!book)return;
- book.querySelectorAll('.pair').forEach(pair=>{
+ const book=document.querySelector('#fondNumerals'); if(!book||book.dataset.bound==='1')return;
+ book.dataset.bound='1';
+ const ns='http://www.w3.org/2000/svg';
+ const pairs=[...book.querySelectorAll('.pair')];
+ pairs.forEach(pair=>{
    const key=pair.dataset.book;
-   pair.setAttribute('tabindex','0');
-   pair.setAttribute('role','link');
+   pair.style.pointerEvents='none';
+   const box=pair.getBBox();
+   const hit=document.createElementNS(ns,'rect');
+   hit.setAttribute('x',String(box.x));hit.setAttribute('y',String(box.y));hit.setAttribute('width',String(box.width));hit.setAttribute('height',String(box.height));
+   hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');hit.setAttribute('tabindex','0');hit.setAttribute('role','link');hit.dataset.book=key;hit.classList.add('pair-hit');
+   pair.parentNode.insertBefore(hit,pair.nextSibling);
    const on=()=>pair.classList.add('is-open');
    const off=()=>pair.classList.remove('is-open');
-   pair.addEventListener('pointerenter',on); pair.addEventListener('pointerleave',off); pair.addEventListener('pointercancel',off);
-   pair.addEventListener('focus',on); pair.addEventListener('blur',off);
-   pair.addEventListener('click',()=>{const href=window.FOND_BOOKS?.[key];if(href)location.href=href});
-   pair.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();pair.dispatchEvent(new MouseEvent('click'))}});
+   hit.addEventListener('pointerenter',on);hit.addEventListener('pointerleave',off);hit.addEventListener('pointercancel',off);
+   hit.addEventListener('focus',on);hit.addEventListener('blur',off);
+   hit.addEventListener('click',()=>{const href=window.FOND_BOOKS?.[key];if(href)location.href=href});
+   hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit.click()}});
  });
 }
 window.addEventListener('fond:numerals-ready',bindFondNumerals);
