@@ -1,0 +1,13 @@
+{
+  "sourceId": "pd-text-corpus",
+  "sourceType": "bulk-corpus",
+  "priority": "zh-first",
+  "resourceTypes": ["text", "scripture"],
+  "upstream": "https://github.com/sangchy1972/pd-text-corpus",
+  "admitted": [
+    {"language":"zh-Hant","title":"聖經和合本（繁體）","year":1919,"rights":"public-domain"},
+    {"language":"zh-Hans","title":"圣经和合本（简体）","year":1919,"rights":"public-domain"}
+  ],
+  "provenance": "Upstream repository declares the Chinese Union Version 1919 public domain; corpus layout/scripts/metadata MIT. Preserve upstream per-edition rights.",
+  "policy": {"wikisource":"forbidden","politicalEthnicWarControversy":"exclude"}
+}
