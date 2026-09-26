@@ -1,0 +1,33 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "corpus-corporum",
+    "name": "Corpus Corporum",
+    "upstream": "https://www.mlat.uzh.ch/",
+    "discoveryEvidence": "North American Patristics Society describes Corpus Corporum as an extensive corpus of Latin works with approximately 150 million words, TEI XML, lemmatized, and free to the public.",
+    "scale": {
+      "wordsApprox": 150000000,
+      "format": "TEI XML",
+      "features": ["lemmatized", "structured-text"]
+    },
+    "scope": [
+      "church-history.patristics",
+      "theology.patristic",
+      "theology.medieval",
+      "exegesis.historical",
+      "biblical-world.languages.latin"
+    ],
+    "resourceTypes": ["text", "tei-xml", "lemma", "work", "author", "citation"],
+    "acquisition": {
+      "mode": "bulk-corpus-mirror",
+      "retainRaw": true,
+      "preserveUpstreamIdentity": true,
+      "preserveLicenseAndProvenance": true,
+      "rightsAdmission": "per-source/per-work evidence retained; do not broaden rights beyond upstream terms",
+      "wikisourceAdmission": "forbidden",
+      "postAcquisition": "Doré canonical thinning and identity deduplication after raw acquisition"
+    },
+    "status": "bulk-acquisition-registered"
+  }
+}
