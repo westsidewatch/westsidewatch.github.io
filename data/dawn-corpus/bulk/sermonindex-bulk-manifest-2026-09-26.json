@@ -1,0 +1,25 @@
+{
+  "schema": "dawn.bulk-corpus.transfer.v1",
+  "date": "2026-09-26",
+  "source": "SermonIndex",
+  "classification": ["ministry.preaching", "ministry.teaching", "bible.book-study"],
+  "upstream": "https://www.sermonindex.net/api/downloads/",
+  "bulkBase": "https://api.sermonindex.net/downloads/",
+  "status": "transfer-started",
+  "files": [
+    {"name":"sermons.json.gz","size":"26.6 MB","role":"sermon records","action":"acquire"},
+    {"name":"speakers.json.gz","size":"266 KB","role":"preacher metadata","action":"acquire"},
+    {"name":"topics.json.gz","size":"9.9 MB","role":"topic index","action":"acquire"},
+    {"name":"scripture-index.json.gz","size":"3.6 MB","role":"verse-to-sermon index","action":"acquire"},
+    {"name":"sermonindex.db","size":"166 MB","role":"queryable complete sermon dataset","action":"acquire"},
+    {"name":"sermonindex-api.zip","size":"1.4 GB","role":"complete static API mirror","action":"acquire"},
+    {"name":"sermonindex-bible-api.zip","size":"1.8 GB","role":"1000+ Bible translations","action":"acquire-with-item-license-gate"},
+    {"name":"MANIFEST.json","role":"size and SHA-256 authority","action":"acquire"}
+  ],
+  "notes": [
+    "Upstream explicitly provides the whole library as bulk downloads and asks bulk users to download rather than crawl.",
+    "No API key, signup, or request limit is required for the bulk files.",
+    "Bible translations retain per-translation licences from available_translations.json; only licences compatible with Dawn policy may be republished.",
+    "Wikisource remains forbidden regardless of any downstream bundle provenance."
+  ]
+}
