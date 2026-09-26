@@ -8,6 +8,7 @@ function bindFondNumerals(){
  const book=document.querySelector('#fondNumerals'); if(!book||book.dataset.bound==='1')return;
  book.dataset.bound='1';
  const ns='http://www.w3.org/2000/svg';
+ const canHover=matchMedia('(hover: hover) and (pointer: fine)').matches;
  const pairs=[...book.querySelectorAll('.pair')];
  pairs.forEach(pair=>{
    const key=pair.dataset.book;
@@ -17,10 +18,15 @@ function bindFondNumerals(){
    hit.setAttribute('x',String(box.x));hit.setAttribute('y',String(box.y));hit.setAttribute('width',String(box.width));hit.setAttribute('height',String(box.height));
    hit.setAttribute('fill','transparent');hit.setAttribute('pointer-events','all');hit.setAttribute('tabindex','0');hit.setAttribute('role','link');hit.dataset.book=key;hit.classList.add('pair-hit');
    pair.parentNode.insertBefore(hit,pair.nextSibling);
-   const on=()=>pair.classList.add('is-open');
-   const off=()=>pair.classList.remove('is-open');
-   hit.addEventListener('pointerenter',on);hit.addEventListener('pointerleave',off);hit.addEventListener('pointercancel',off);
-   hit.addEventListener('focus',on);hit.addEventListener('blur',off);
+   const on=()=>{if(canHover)pair.classList.add('is-open')};
+   const off=()=>{if(canHover)pair.classList.remove('is-open')};
+   if(canHover){
+     hit.addEventListener('pointerenter',on);
+     hit.addEventListener('pointerleave',off);
+   }
+   hit.addEventListener('pointercancel',off);
+   hit.addEventListener('focus',()=>{if(canHover)pair.classList.add('is-open')});
+   hit.addEventListener('blur',()=>{if(canHover)pair.classList.remove('is-open')});
    hit.addEventListener('click',()=>{const href=window.FOND_BOOKS?.[key];if(href)location.href=href});
    hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();hit.click()}});
  });
