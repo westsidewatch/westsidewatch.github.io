@@ -40,15 +40,16 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          for path in \
-            data/dawn-10k-openlibrary-works.json \
-            data/dawn-10k-work-queue.json \
-            data/dawn-resource-queue.json \
-            public/dawn/canonical-index.json \
-            static/dawn-library/canonical-index.json \
-            static/dawn-library/canonical-resource-index.json \
+          generated_paths=(
+            data/dawn-10k-openlibrary-works.json
+            data/dawn-10k-work-queue.json
+            data/dawn-resource-queue.json
+            public/dawn/canonical-index.json
+            static/dawn-library/canonical-index.json
+            static/dawn-library/canonical-resource-index.json
             static/dawn-library/surfaces/dawn-resources.json
-          do
+          )
+          for path in "${generated_paths[@]}"; do
             if [ -e "$path" ]; then
               git add "$path"
             fi
@@ -58,5 +59,9 @@ jobs:
             exit 0
           fi
           git commit -m "data(dawn): refresh bulk resource corpus"
+          # The refresh script can touch derived files outside the persisted corpus set.
+          # Restore those uncommitted derivatives so rebase always starts from a clean tree.
+          git reset --hard HEAD
+          git clean -fd
           git pull --rebase origin main
           git push origin HEAD:main
