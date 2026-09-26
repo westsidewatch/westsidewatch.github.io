@@ -1,0 +1,63 @@
+{
+  "schema": "dawn.open-corpus-batch.v1",
+  "date": "2026-09-26",
+  "policy": {
+    "acquisition": "bulk-first",
+    "priority": "Chinese-first; acquire open text, art, image, audiovisual, map and cultural datasets",
+    "wikisource": "record-level-block",
+    "note": "Mixed corpora are admitted after provenance filtering. Only Wikisource-derived records are discarded; the rest of the corpus remains eligible. Existing political/ethnic/war controversy exclusion remains in force."
+  },
+  "sources": [
+    {
+      "id": "gujilab-chinese-classical-corpus-filtered",
+      "kind": ["text", "classical-Chinese", "lexicon"],
+      "languages": ["zh-Hans", "zh-Hant-source-material"],
+      "upstream": "https://github.com/gujilab/chinese-classical-corpus",
+      "license": "output datasets CC0 1.0",
+      "scale": "17.24M source characters plus 1.97M instruction records",
+      "admit": ["四书 from chinese-poetry", "诗经 from chinese-poetry", "说文解字 from 殆知阁 + shuowenjiezi", "孝经 from 殆知阁", "尔雅 from 殆知阁", "other records whose provenance is not Wikisource and which pass Dawn content policy"],
+      "block": ["春秋穀梁传 because upstream provenance is Wikisource", "南史 vols 2/7/68/74 because upstream provenance is Wikisource", "any record with zh.wikisource.org provenance"],
+      "status": "admitted-filtered",
+      "priority": 1
+    },
+    {
+      "id": "national-palace-museum-taipei-open-data",
+      "kind": ["painting", "calligraphy", "object", "textile", "image", "museum-metadata"],
+      "languages": ["zh-Hant", "en"],
+      "upstream": "https://digitalarchive.npm.gov.tw/opendata",
+      "license": "low-resolution images CC0; medium-resolution images and site text CC BY 4.0",
+      "scale": "108,670 catalog records shown by Open Data portal; about 410,000 low-resolution open images and about 410,000 medium-resolution open images declared by NPM",
+      "status": "admitted-open-assets",
+      "priority": 1
+    },
+    {
+      "id": "taiwan-cultural-memory-bank-open-data",
+      "kind": ["image", "photograph", "art", "object", "archive", "cultural-metadata"],
+      "languages": ["zh-Hant"],
+      "upstream": "https://tcmb.culture.tw/zh-tw/OpenApi",
+      "license": "open subset explicitly marked PDM, CC0, OGDL, CC BY or CC BY-SA",
+      "acquisition": "Open Datasets JSON + OpenAPI; retain item-level rights declaration",
+      "status": "admitted-open-subset",
+      "priority": 1
+    },
+    {
+      "id": "biblica-open-chinese-contemporary-bible",
+      "kind": ["text", "scripture", "read-aloud-text"],
+      "languages": ["zh-Hans"],
+      "upstream": "https://ebible.org/bible/details.php?id=cmncbs",
+      "license": "CC BY-SA 4.0 with required Biblica attribution; scripture pictures excluded from independent reuse",
+      "acquisition": "EPUB / HTML / PDF / VPL+SQL / plain-text read-aloud chapter files",
+      "status": "admitted-text-only",
+      "priority": 1
+    },
+    {
+      "id": "nk2028-lzh-collection",
+      "kind": ["text", "classical-Chinese"],
+      "languages": ["Classical Chinese"],
+      "upstream": "https://github.com/nk2028/lzh-collection",
+      "license": "CC0 1.0",
+      "status": "admitted-subject-to-provenance-and-content-gates",
+      "priority": 2
+    }
+  ]
+}
