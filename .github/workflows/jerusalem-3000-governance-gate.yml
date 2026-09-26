@@ -76,13 +76,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Verify execution-until-stage-complete governance exists
+        shell: bash
+        run: |
+          set -euo pipefail
+          GOV='preview/jerusalem-3000/GOVERNANCE.md'
+          test -f "$GOV"
+          grep -q 'Execution-until-stage-complete directive' "$GOV"
+          grep -q 'acknowledgement is not execution' "$GOV"
+          grep -q 'reporting is permitted only after the stage Definition of Done' "$GOV"
+          grep -q 'genuine hard blocker' "$GOV"
       - name: Require explicit production completion evidence
         shell: bash
         run: |
           set -euo pipefail
           CONTRACT='preview/jerusalem-3000/STEP-1-COMPLETION.json'
           if [ ! -f "$CONTRACT" ]; then
-            echo 'Step 1 is allowed to remain in progress. No completion claim may be made without STEP-1-COMPLETION.json.'
+            echo 'Step 1 is IN PROGRESS. Reporting gate remains closed until the completion contract is genuinely satisfied.'
             exit 0
           fi
           node <<'NODE'
