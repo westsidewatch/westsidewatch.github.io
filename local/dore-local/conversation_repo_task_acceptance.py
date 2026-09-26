@@ -13,7 +13,7 @@ def main()->int:
   specimen=repo/"specimen.txt";specimen.write_text("before\n",encoding="utf-8");git(repo,"add","specimen.txt");git(repo,"commit","-qm","init");initial_head=git(repo,"rev-parse","HEAD")
   old=os.environ.get("DORE_WORKTREE");os.environ["DORE_WORKTREE"]=str(repo)
   try:
-   discovered=gateway.discover("repo-task");caps=discovered.get("capabilities") or [];found=any(x.get("id")==CAPABILITY and x.get("callable") is True for x in caps)
+   discovered=gateway.discover();caps=discovered.get("capabilities") or [];found=any(x.get("id")==CAPABILITY and x.get("callable") is True for x in caps)
    described=gateway.describe(CAPABILITY);descriptor=described.get("descriptor") or {};callable_descriptor=described.get("ok") is True and descriptor.get("callable") is True
    inspected=call({"operation":"inspect"},"repo-task-e2e-inspect");read=call({"operation":"read","path":"specimen.txt"},"repo-task-e2e-read");escape=call({"operation":"read","path":"../outside.txt"},"repo-task-e2e-escape");write=call({"operation":"write","path":"specimen.txt","content":"after\n"},"repo-task-e2e-write");verify=call({"operation":"verify","verb":"diff-check"},"repo-task-e2e-verify");commit=call({"operation":"commit","paths":["specimen.txt"],"message":"test: Doré repo task acceptance"},"repo-task-e2e-commit")
    final_head=git(repo,"rev-parse","HEAD");committed_content=git(repo,"show","HEAD:specimen.txt")
