@@ -1,0 +1,41 @@
+name: Jerusalem 3000 Canonical DEM Ingest
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/jerusalem3000_ingest_dem.py'
+      - '.github/workflows/jerusalem-3000-dem-ingest.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  ingest:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install --disable-pip-version-check rasterio==1.4.3
+      - name: Ingest public Copernicus GLO-90 Jerusalem AOI
+        run: python scripts/jerusalem3000_ingest_dem.py
+      - name: Validate relief and provenance
+        run: |
+          python - <<'PY'
+          import json
+          p='preview/jerusalem-3000/data/terrain/copernicus-glo90-jerusalem.json'
+          d=json.load(open(p))
+          assert d['schema']=='j3k-elevation-grid-v1'
+          assert d['width']*d['height']==len(d['values'])
+          assert d['maxElevationMetres']-d['minElevationMetres']>100, 'Jerusalem relief unexpectedly flat'
+          assert 'Copernicus DEM' in d['source']
+          print(d['minElevationMetres'],d['maxElevationMetres'])
+          PY
+      - name: Publish canonical terrain payload
+        run: |
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add preview/jerusalem-3000/data/terrain/copernicus-glo90-jerusalem.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'data(jerusalem-3000): ingest canonical Copernicus GLO-90 terrain'
+          git push origin HEAD:main
