@@ -1,0 +1,52 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "princeton-theological-commons",
+    "name": "Princeton Theological Seminary — Theological Commons",
+    "upstream": "https://commons.ptsem.edu/",
+    "scale": {
+      "resources": "171000+",
+      "books": 105589,
+      "periodicals": 18828,
+      "audio": 10044,
+      "journalArticles": 6598,
+      "archivalFiles": 3913,
+      "photographs": 3891,
+      "theses": 1511,
+      "manuscripts": 431,
+      "videos": 116
+    },
+    "notableCollections": [
+      "Moffett Korea Collection",
+      "Missionary Research Library Pamphlets",
+      "Princeton Theological Seminary Media Archive",
+      "Benson Collection of Hymnals and Hymnology",
+      "Princeton Theological Seminary Journals",
+      "Latin America Collection",
+      "Beth Mardutho Syriac materials"
+    ],
+    "acquisition": {
+      "mode": "metadata-fulltext-public-domain-and-rights-aware-media",
+      "metadataProtocol": "OAI-PMH",
+      "internetArchiveBacked": true,
+      "retainRaw": true,
+      "preserveUpstreamIdentity": true,
+      "preserveLicenseAndProvenance": true,
+      "publicDomainOriginals": "acquire",
+      "nonPublicDomainOrUnclearRightsOriginals": "metadata-pointer-only-until-rights-admitted",
+      "wikisourceAdmission": "forbidden",
+      "postAcquisition": "Doré canonical thinning and cross-resource identity/relation merge"
+    },
+    "scope": [
+      "bible",
+      "exegesis",
+      "theology",
+      "biblical-world",
+      "church-history",
+      "christian-life",
+      "church-ministry"
+    ],
+    "status": "bulk-acquisition-registered"
+  }
+}
