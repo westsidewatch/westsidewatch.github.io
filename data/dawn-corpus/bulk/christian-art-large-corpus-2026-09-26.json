@@ -1,0 +1,52 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "policy": {
+    "scope": ["bible","theology","biblical-world","church-history","christian-life","ministry"],
+    "priority": "large-corpus-first; Christian/Biblical relevance filter; public-domain/CC0 assets first",
+    "wikisource": "forbidden",
+    "rawFirst": true,
+    "postAcquisition": "Doré canonical thinning and cross-resource semantic indexing"
+  },
+  "sources": [
+    {
+      "id": "openbrush-religious-art",
+      "name": "OpenBrush Religious Art",
+      "upstream": "https://huggingface.co/datasets/jaddai/openbrush-religious-art",
+      "resourceTypes": ["painting","biblical-scene","devotional-art","saint-image","structured-caption"],
+      "knownScale": {"images": 6119},
+      "rights": "CC0 1.0",
+      "acquisition": "whole curated religious-art corpus",
+      "status": "acquire-whole"
+    },
+    {
+      "id": "nga-open-data",
+      "name": "National Gallery of Art Open Data",
+      "upstream": "https://www.nga.gov/artworks/free-images-and-open-access",
+      "resourceTypes": ["artwork-metadata","artist","image-pointer","audio-pointer","video-pointer"],
+      "knownScale": {"artworksAndArtists": "130000+"},
+      "rights": "CC0 dataset; public-domain images handled by NGA open-access status",
+      "acquisition": "whole metadata corpus then Christian/Biblical relevance projection",
+      "status": "acquire-metadata-whole"
+    },
+    {
+      "id": "smithsonian-open-access",
+      "name": "Smithsonian Open Access",
+      "upstream": "https://www.si.edu/openaccess/devtools",
+      "resourceTypes": ["collection-metadata","image","iiif","3d","research-data"],
+      "rights": "CC0 for designated Open Access assets; item-level OA designation retained",
+      "acquisition": "bulk JSON/GitHub corpus; retain Christian/Biblical/Jewish/Ancient-Near-East/missionary relevant resources for Dawn projection",
+      "status": "acquire-bulk-filter-relevance"
+    },
+    {
+      "id": "met-open-access",
+      "name": "The Met Open Access Christian/Biblical corpus",
+      "upstream": "https://www.metmuseum.org/art/collection",
+      "resourceTypes": ["painting","print","manuscript","biblical-text-object","sculpture","decorative-art","image"],
+      "rights": "Open Access public-domain objects/images only",
+      "evidenceExamples": ["Ostrakon with Biblical Text","Dalziels' Bible Gallery","Biblical Scenes"],
+      "acquisition": "bulk metadata/query extraction with isPublicDomain/open-access gate and Christian/Biblical relevance",
+      "status": "acquire-public-domain-relevant"
+    }
+  ]
+}
