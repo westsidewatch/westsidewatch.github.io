@@ -1,0 +1,39 @@
+{
+  "schema": "dawn.bulk-corpus.acquisition.v1",
+  "date": "2026-09-26",
+  "source": {
+    "id": "eebo-tcp-phase1",
+    "name": "Early English Books Online - Text Creation Partnership Phase I",
+    "upstream": "https://ora.ox.ac.uk/objects/uuid:ad7da8fc-cd8e-4637-8b7c-99498436dbaa",
+    "bulk": "https://earlyprint.org/download/",
+    "rights": "ODC Public Domain Dedication and Licence / Phase I public domain; individual TEI records also state CC0 1.0 reuse",
+    "scale": {
+      "texts": 25363,
+      "estimatedPages": ">2000000",
+      "estimatedWords": "nearly 1 billion"
+    },
+    "period": "1473-1700",
+    "formats": ["TEI XML", "SGML/XML", "HTML", "EPUB where provided"],
+    "scope": [
+      "theology",
+      "bible",
+      "exegesis",
+      "church-history",
+      "sermons",
+      "reformation",
+      "puritan",
+      "christian-life",
+      "church-ministry"
+    ],
+    "admission": {
+      "mode": "bulk-first-filter-after-acquisition",
+      "retainRaw": true,
+      "christianBibleTheologyRelevance": "required for Dawn public projection",
+      "wikisourceAdmission": "forbidden",
+      "politicalEthnicWarControversyAdmission": "forbidden",
+      "nonRelevantRecords": "retain in raw acquisition layer but hide from Dawn public projection pending classification"
+    },
+    "postAcquisition": "Doré canonical thinning: deduplicate authors/works/editions/scripture references/topics while retaining source provenance and rights evidence",
+    "status": "bulk-acquisition-registered"
+  }
+}
