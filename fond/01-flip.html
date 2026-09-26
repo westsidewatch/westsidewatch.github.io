@@ -1,1 +1,55 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>池底｜01 Flip</title><style>*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;background:#f4f2eb;color:#242423;overflow:hidden}.stage{position:relative;width:100vw;height:100vh;perspective:1800px}.sheet{position:absolute;left:15vw;top:5vh;width:48vw;height:88vh;transform-origin:0 50%;transform-style:preserve-3d;transition:transform 900ms cubic-bezier(.2,.7,.16,1);pointer-events:none}.sheet.open{transform:rotateY(-62deg)}.n{position:absolute;font-family:Didot,"Bodoni 72","Bodoni MT","Times New Roman",serif;line-height:.72}.zero{left:0;top:36%;font-size:min(40vw,610px);transform:scaleX(.78);transform-origin:left center}.one{left:20%;top:2%;font-size:min(37vw,565px);font-weight:600;transform:scaleX(.62);transform-origin:left top}.hit{position:absolute;left:14vw;top:4vh;width:31vw;height:90vh;z-index:5;cursor:pointer}.note{position:fixed;right:18px;bottom:18px;font:10px/1 Helvetica,Arial,sans-serif;letter-spacing:.16em;opacity:.28}@media(max-width:700px){.sheet{left:9vw;top:9vh;width:70vw;height:78vh}.zero{top:38%;font-size:72vw}.one{left:22%;font-size:68vw}.hit{left:7vw;top:7vh;width:48vw;height:82vh}}</style></head><body><main class="stage"><div class="sheet" id="p01"><span class="n one">1</span><span class="n zero">0</span></div><div class="hit" id="hit" aria-label="01"></div></main><div class="note">01 · PAGE STUDY</div><script>const p=document.getElementById('p01'),h=document.getElementById('hit');h.addEventListener('pointerenter',()=>p.classList.add('open'));h.addEventListener('pointerleave',()=>p.classList.remove('open'));</script><!-- deploy retrigger: 2026-09-25 --></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>池底｜01 Opening Type</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#f4f2eb;color:#242423}
+.stage{position:relative;width:100vw;height:100vh;perspective:1900px;isolation:isolate}
+.composition{position:absolute;inset:0}
+.glyph{position:absolute;font-family:Didot,"Bodoni 72","Bodoni MT","Times New Roman",serif;line-height:.72;color:#242423;user-select:none}
+.zero{left:15vw;top:36vh;font-size:min(40vw,610px);transform:scaleX(.78);transform-origin:left center}
+.one-shell{position:absolute;left:24.6vw;top:5vh;width:17vw;height:74vh;perspective:1500px;z-index:4}
+.one-static,.one-door{position:absolute;inset:0;font-family:Didot,"Bodoni 72","Bodoni MT","Times New Roman",serif;font-size:min(37vw,565px);font-weight:600;line-height:.72;transform:scaleX(.62);transform-origin:left top;color:#242423}
+.one-static{opacity:.16}
+.one-door{transform-style:preserve-3d;transform-origin:0 49%;transition:transform 1050ms cubic-bezier(.16,.74,.14,1),filter 1050ms ease;will-change:transform;backface-visibility:visible}
+.one-door::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(244,242,235,0) 58%,rgba(244,242,235,.52) 100%);opacity:0;transition:opacity 700ms ease;mix-blend-mode:screen}
+.one-shell.open .one-door{transform:scaleX(.62) rotateY(-118deg);filter:drop-shadow(18px 8px 18px rgba(36,36,35,.10))}
+.one-shell.open .one-door::after{opacity:.8}
+.next{position:absolute;left:42.5vw;top:43vh;font-family:Didot,"Bodoni 72","Bodoni MT","Times New Roman",serif;font-size:clamp(24px,4vw,62px);line-height:.8;letter-spacing:-.08em;color:#242423;opacity:.2;transform:translateX(-10px);transition:opacity 700ms ease,transform 900ms cubic-bezier(.16,.74,.14,1)}
+.one-shell.open~.next{opacity:.72;transform:translateX(0)}
+.hit{position:absolute;left:23vw;top:3vh;width:20vw;height:80vh;z-index:10;cursor:ew-resize}
+.note{position:fixed;right:18px;bottom:18px;font:10px/1 Helvetica,Arial,sans-serif;letter-spacing:.16em;opacity:.22}
+@media(max-width:700px){.zero{left:9vw;top:39vh;font-size:72vw}.one-shell{left:26vw;top:10vh;width:31vw;height:62vh}.one-static,.one-door{font-size:68vw}.next{left:58vw;top:46vh;font-size:8vw}.hit{left:23vw;top:8vh;width:35vw;height:68vh}}
+@media(prefers-reduced-motion:reduce){.one-door,.one-door::after,.next{transition:none}}
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="composition">
+    <span class="glyph zero">0</span>
+    <div class="one-shell" id="opening01" aria-hidden="true">
+      <span class="one-static">1</span>
+      <span class="one-door">1</span>
+    </div>
+    <span class="next">02</span>
+  </div>
+  <div class="hit" id="hit01" role="button" tabindex="0" aria-label="翻開 01"></div>
+</main>
+<div class="note">01 · OPENING TYPE STUDY</div>
+<script>
+const shell=document.getElementById('opening01');
+const hit=document.getElementById('hit01');
+const open=()=>shell.classList.add('open');
+const close=()=>shell.classList.remove('open');
+hit.addEventListener('pointerenter',open);
+hit.addEventListener('pointerleave',close);
+hit.addEventListener('focus',open);
+hit.addEventListener('blur',close);
+hit.addEventListener('click',()=>shell.classList.toggle('open'));
+hit.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();shell.classList.toggle('open')}});
+</script>
+</body>
+</html>
