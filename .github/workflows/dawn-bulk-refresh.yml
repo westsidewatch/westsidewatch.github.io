@@ -2,6 +2,14 @@ name: Dawn Bulk Corpus Refresh
 
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'data/dawn-corpus/**'
+      - 'scripts/build_dawn_resource_queue.py'
+      - 'scripts/build_dawn_resource_substrate.py'
+      - 'scripts/refresh_dawn_bulk_corpus.py'
+      - '.github/workflows/dawn-bulk-refresh.yml'
 
 permissions:
   contents: write
@@ -25,18 +33,18 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Refresh Dawn bulk corpus
+      - name: Refresh Dawn bulk and resource corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
       - name: Persist refreshed corpus
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json public/dawn/canonical-index.json
+          git add data/dawn-10k-openlibrary-works.json data/dawn-10k-work-queue.json data/dawn-resource-queue.json public/dawn/canonical-index.json static/dawn-library/canonical-index.json static/dawn-library/canonical-resource-index.json static/dawn-library/surfaces/dawn-resources.json
           if git diff --cached --quiet; then
             echo "No corpus changes to persist."
             exit 0
           fi
-          git commit -m "data(dawn): refresh bulk corpus"
+          git commit -m "data(dawn): refresh bulk resource corpus"
           git pull --rebase origin main
           git push origin HEAD:main
