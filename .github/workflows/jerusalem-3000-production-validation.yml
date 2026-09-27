@@ -30,9 +30,28 @@ jobs:
           import { chromium } from 'playwright';
           const browser=await chromium.launch({headless:true});
           const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
-          const errors=[];page.on('pageerror',e=>errors.push(String(e)));page.on('console',m=>{if(m.type()==='error')errors.push(m.text())});
+          const errors=[]; const failed=[]; const responses=[];
+          page.on('pageerror',e=>errors.push(`pageerror: ${String(e)}`));
+          page.on('console',m=>{if(m.type()==='error')errors.push(`console: ${m.text()}`)});
+          page.on('requestfailed',r=>failed.push(`${r.method()} ${r.url()} :: ${r.failure()?.errorText||'failed'}`));
+          page.on('response',r=>{if(r.status()>=400||/jerusalem|terrain|three/i.test(r.url()))responses.push(`${r.status()} ${r.url()}`)});
           await page.goto(process.env.J3K_URL,{waitUntil:'networkidle',timeout:90000});
-          await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready',{timeout:45000});
+          try {
+            await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready',{timeout:30000});
+          } catch (error) {
+            const diagnostic=await page.evaluate(()=>({
+              runtime: window.__JERUSALEM3000__ ?? null,
+              href: location.href,
+              scripts:[...document.scripts].map(s=>s.src||'[inline]'),
+              canvasCount:document.querySelectorAll('[data-three-stage] canvas').length,
+              badge:document.querySelector('.j3k-terrain-badge')?.textContent||null,
+              caption:document.querySelector('.j3k-caption h2')?.textContent||null,
+              stage:document.querySelector('[data-three-stage]')?.getAttribute('data-runtime-stage')||null
+            }));
+            console.error('J3K_BOOT_DIAGNOSTIC='+JSON.stringify({diagnostic,errors,failed,responses},null,2));
+            await page.screenshot({path:'jerusalem-3000-bootstrap-failure.png',fullPage:true});
+            throw error;
+          }
           const boot=await page.evaluate(()=>window.__JERUSALEM3000__);
           if(!boot.three||!boot.timeline||!boot.evidence)throw new Error(`runtime flags invalid: ${JSON.stringify(boot)}`);
           if((boot.evidenceObjects?.renderableObjects||0)<1)throw new Error('no renderable evidence objects');
@@ -50,8 +69,11 @@ jobs:
           NODE
           node j3k-production.mjs
       - name: Upload production visual evidence
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jerusalem-3000-production-visual
-          path: jerusalem-3000-herodian.png
-          if-no-files-found: error
+          path: |
+            jerusalem-3000-herodian.png
+            jerusalem-3000-bootstrap-failure.png
+          if-no-files-found: warn
