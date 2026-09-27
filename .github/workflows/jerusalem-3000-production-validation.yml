@@ -39,15 +39,7 @@ jobs:
           try {
             await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready',{timeout:30000});
           } catch (error) {
-            const diagnostic=await page.evaluate(()=>({
-              runtime: window.__JERUSALEM3000__ ?? null,
-              href: location.href,
-              scripts:[...document.scripts].map(s=>s.src||'[inline]'),
-              canvasCount:document.querySelectorAll('[data-three-stage] canvas').length,
-              badge:document.querySelector('.j3k-terrain-badge')?.textContent||null,
-              caption:document.querySelector('.j3k-caption h2')?.textContent||null,
-              stage:document.querySelector('[data-three-stage]')?.getAttribute('data-runtime-stage')||null
-            }));
+            const diagnostic=await page.evaluate(()=>({runtime:window.__JERUSALEM3000__??null,href:location.href,scripts:[...document.scripts].map(s=>s.src||'[inline]'),canvasCount:document.querySelectorAll('[data-three-stage] canvas').length,badge:document.querySelector('.j3k-terrain-badge')?.textContent||null,caption:document.querySelector('.j3k-caption h2')?.textContent||null,stage:document.querySelector('[data-three-stage]')?.getAttribute('data-runtime-stage')||null}));
             console.error('J3K_BOOT_DIAGNOSTIC='+JSON.stringify({diagnostic,errors,failed,responses},null,2));
             await page.screenshot({path:'jerusalem-3000-bootstrap-failure.png',fullPage:true});
             throw error;
@@ -56,7 +48,7 @@ jobs:
           if(!boot.three||!boot.timeline||!boot.evidence)throw new Error(`runtime flags invalid: ${JSON.stringify(boot)}`);
           if((boot.evidenceObjects?.renderableObjects||0)<1)throw new Error('no renderable evidence objects');
           const canvas=page.locator('[data-three-stage] canvas');if(await canvas.count()!==1)throw new Error('Three.js canvas missing');
-          const badge=await page.locator('.j3k-terrain-badge').innerText();if(!badge.includes('ORBIT READY')||!badge.includes('EVIDENCE OBJECTS'))throw new Error(`runtime badge invalid: ${badge}`);
+          const badge=await page.locator('.j3k-terrain-badge').innerText();if(!badge.includes('JERUSALEM 3000')||!badge.includes('TEMPORAL CITY')||!badge.includes('EVIDENCE OBJECTS')||!badge.includes('PIECES'))throw new Error(`runtime badge invalid: ${badge}`);
           const slider=page.locator('.j3k-scrubber');await slider.evaluate(el=>{el.value='8';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(900);
           const herodian=await page.locator('.j3k-caption h2').innerText();if(!herodian.includes('大希律'))throw new Error(`Herodian timeline state failed: ${herodian}`);
           await page.screenshot({path:'jerusalem-3000-herodian.png',fullPage:true});
