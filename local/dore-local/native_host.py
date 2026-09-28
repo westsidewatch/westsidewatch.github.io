@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""DORÉ local routing host: on-demand, zero-cloud local control plane.
-
-Capability families are loaded lazily. A broken optional Core package must not
-make unrelated local A2A capabilities unavailable. Normal canonical capabilities
-enter Core through the public normalization boundary; direct modules are retained
-only as explicit recovery/acceptance compatibility paths.
-"""
+"""DORÉ local routing host: on-demand, zero-cloud local control plane."""
 from __future__ import annotations
 import importlib.util,json,os,struct,sys
 from pathlib import Path
@@ -18,8 +12,7 @@ def _load(name):
  p=Path(__file__).with_name(name+".py");s=importlib.util.spec_from_file_location("dore_"+name,p);m=importlib.util.module_from_spec(s);s.loader.exec_module(m);return m
 def _module(name):
  if name in _CACHE:return _CACHE[name]
- try:
-  m=_load(name);_CACHE[name]=m;_CACHE_META[name]=a2a_generation.module_generation(Path(__file__).with_name(name+".py"));return m
+ try:m=_load(name);_CACHE[name]=m;_CACHE_META[name]=a2a_generation.module_generation(Path(__file__).with_name(name+".py"));return m
  except Exception as exc:_LOAD_ERRORS[name]=f"{type(exc).__name__}:{exc}";return None
 def _capabilities(name):
  m=_module(name);return set(getattr(m,"CAPABILITIES",set())) if m else set()
@@ -27,9 +20,7 @@ def _execute(name,cap,args):
  m=_module(name)
  if not m:return {"ok":False,"protocol":PROTOCOL,"status":"failed","error":{"code":"capability_module_unavailable","message":_LOAD_ERRORS.get(name,name)}}
  return m.execute(cap,args)
-def _bus_pair():
- bus=_module("capability_bus");production=_module("production_actions")
- return bus,production
+def _bus_pair():return _module("capability_bus"),_module("production_actions")
 def discover_production(include_planned=False):
  bus,production=_bus_pair()
  if not bus or not production:return []
@@ -66,12 +57,11 @@ def _with_id(req,res):
  if req.get(CARRIER_ID_KEY):res=dict(res);res[CARRIER_ID_KEY]=req[CARRIER_ID_KEY]
  return res
 def generation_payload():return a2a_generation.identity(loaded_modules=_CACHE_META,degraded_modules=_LOAD_ERRORS)
+def _direct_modules():return ("source_probe_action","source_capability_action","design_live_acceptance_action","design_observation_action","design_learning_feedback_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action")
 def health_payload():
  direct=[]
- for name in ("source_probe_action","source_capability_action","self_maintenance_action","theology_acceptance_action","theology_training_action","dawn_publication_action","design_live_acceptance_action"):
-  direct.extend(sorted(_capabilities(name)))
- production=[x["id"] for x in discover_production() if x.get("callable")]
- generation=generation_payload()
+ for name in _direct_modules():direct.extend(sorted(_capabilities(name)))
+ production=[x["id"] for x in discover_production() if x.get("callable")];generation=generation_payload()
  return {"ok":True,"service":SERVICE,"host":HOST_NAME,"protocol":PROTOCOL,"transport":"local-routing-host","resident":False,"paid_runtime":False,"assistant_directives":True,"production_capabilities":sorted(set(production+direct)),"normalization_boundary":"a2a_ingress.normalize_public_call","runtime_generation":generation,"restart_required":generation.get("restart_required",False),"degraded_modules":dict(_LOAD_ERRORS)}
 def _adapter_dispatch(payload):
  adapter=_module("a2a_adapter")
@@ -81,9 +71,7 @@ def _adapter_dispatch(payload):
 def route_payload(payload):
  if payload.get("action") in {"native.health","health"}:return _with_id(payload,health_payload())
  cap=str(payload.get("capability") or "");args=payload.get("args") or {}
- direct=(("source_probe_action",), ("source_capability_action",), ("design_live_acceptance_action",), ("self_maintenance_action",), ("theology_acceptance_action",), ("theology_training_action",), ("dawn_publication_action",))
- for entry in direct:
-  name=entry[0]
+ for name in _direct_modules():
   if cap in _capabilities(name):return _with_id(payload,_execute(name,cap,args))
  descriptor=resolve_production(cap) if cap else None
  if descriptor and descriptor.get("callable"):

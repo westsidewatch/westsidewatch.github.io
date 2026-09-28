@@ -1,0 +1,13 @@
+{
+  "schema":"dore.design-discovery-sources.v1",
+  "authority":"discovery-input-only",
+  "updated":"2026-09-16",
+  "sources":[
+    {"id":"casabella-official","lane":"italian-editorial","url":"https://casabellaweb.eu/","kind":"publisher-site","status":"verified-public","capture":["render","dom","computed-style"],"notes":"Official Casabella site; current and historical issue entry points."},
+    {"id":"eye-magazine","lane":"independent-editorial","url":"https://eyemagazine.com/","kind":"independent-magazine","status":"verified-public","capture":["render","dom","computed-style"],"notes":"Graphic design and visual culture magazine; issue archive supports longitudinal comparison."},
+    {"id":"eye-issues","lane":"independent-editorial","url":"https://eyemagazine.com/issues","kind":"issue-index","status":"verified-public","capture":["render","dom","computed-style"],"notes":"Issue sequence for cross-era editorial comparison."},
+    {"id":"itsnicethat-web-design","lane":"digital-web","url":"https://www.itsnicethat.com/media/web-design","kind":"editorial-platform","status":"verified-public","capture":["render","dom","computed-style"],"notes":"Current web-design editorial stream; discovery source, not design authority."},
+    {"id":"independent-magazine-it","lane":"independent-editorial","url":"https://www.independent-magazine.com/","kind":"independent-magazine","status":"verified-public","capture":["render","dom","computed-style"],"notes":"Independent Italian fashion/editorial publication; used for comparison, never automatic adoption."}
+  ],
+  "rules":{"generatedSourcesForbiddenAsHistoricalAuthority":true,"sourceAdmissionRequired":true,"beautifulGateRequiredForLearning":true}
+}
