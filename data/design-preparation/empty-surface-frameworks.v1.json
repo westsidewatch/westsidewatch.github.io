@@ -1,0 +1,14 @@
+{
+  "schema":"design-preparation.empty-surface-frameworks.v1",
+  "status":"active",
+  "principle":"A canonical surface may be sparse, but it must not be structurally blank before redesign begins.",
+  "rules":[
+    "Use canonical acceptedKinds and allowedSelections to establish the framework before visual design.",
+    "An empty framework node remains an empty collection; do not invent filler content.",
+    "Framework completion does not prescribe layout or visual hierarchy.",
+    "Cross-surface references may populate a framework node without transferring canonical ownership.",
+    "Do not create new first-level navigation merely to make a sparse page look full."
+  ],
+  "DaylightCafe":{"status":"framework-complete","framework":["life-topics","practical-guides","conversations","family","work","city","culture","events","related-westside-resources"],"contentState":"sparse-growing"},
+  "nextAudit":["Emmaus","OliveMountain","ParadiseCinema","DawnBookshop","LivingWaterWest","Magazine"]
+}
