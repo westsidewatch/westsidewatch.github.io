@@ -1,8 +1,8 @@
 ---
-title: "守望禱告會"
-subtitle: "Watch Prayer"
-description: "A continuing prayer series connecting Scripture, intercession, and the watch for the dawn."
-weight: 4
+title: "守望禱告（legacy）"
+_build:
+  render: never
+  list: never
 ---
 
-守望禱告會是網站的持續內容系列；它可以連接教會實際禱告生活，但不等同於聚會公告頁。
+The old Website-level Watch Prayer surface is retired. Actual church prayer meetings remain under LivingWaterWest; edited prayer writing or a future publication series may be selected into Magazine without creating another first-level resource surface.
