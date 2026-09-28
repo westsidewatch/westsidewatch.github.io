@@ -1,0 +1,27 @@
+{
+  "schema":"westside-core.surface-query-contracts.v1",
+  "status":"canonical",
+  "authority":"Westside Core",
+  "queryLayer":"/js/westside-resource-query.js",
+  "defaultPolicy":{"fullCorpusRead":false,"unscopedTypeRead":false,"fallbackToFullCorpus":false,"missingScope":"fail-closed"},
+  "allowedPrimitives":["resource-by-id","editorial-selection","scoped-index"],
+  "indexes":["by-type","by-speaker","by-series","by-scripture","by-theme","by-place","by-ministry","by-language"],
+  "surfaceContracts":{
+    "LivingWaterWest":{"allowedIndexes":["by-ministry","by-scripture","by-theme"],"allowedSelections":["church-gatherings","church-prayer","church-notices"],"crossSurface":["Emmaus"],"forbidden":["generic-video-corpus","generic-audio-corpus"]},
+    "Magazine":{"allowedIndexes":["by-theme","by-scripture","by-place","by-language"],"allowedSelections":["volume","issue","section","story-package"],"crossSurface":["LivingWaterWest","Emmaus","OliveMountain","DawnBookshop","ParadiseCinema","DaylightCafe"],"rule":"Magazine primarily composes editorial selections; indexes support discovery, not ownership."},
+    "Emmaus":{"allowedIndexes":["by-scripture","by-place","by-theme","by-language"],"allowedSelections":["study-collection","gospel-harmony","map-set","route-set"],"crossSurface":["LivingWaterWest","OliveMountain","ParadiseCinema","DawnBookshop"],"tools":["ONE","DoreFolio"]},
+    "OliveMountain":{"allowedIndexes":["by-speaker","by-series","by-scripture","by-theme","by-ministry","by-language"],"allowedSelections":["sermon-series","sermon-collection","continue-teaching"],"crossSurface":["Emmaus","LivingWaterWest","Magazine"],"forbidden":["by-type:video-as-surface-query","generic-video-corpus"]},
+    "DawnBookshop":{"allowedIndexes":["by-theme","by-scripture","by-language"],"allowedSelections":["shelf","publication","reading-collection"],"crossSurface":["Emmaus","Magazine","DaylightCafe"],"forbidden":["bible-map-collection","study-tool-collection"]},
+    "ParadiseCinema":{"allowedIndexes":["by-scripture","by-theme","by-language"],"allowedSelections":["weekly-programme","feature","special","season","festival","watch-next","bible-timeline"],"crossSurface":["Emmaus","Magazine"],"forbidden":["sermon-corpus","generic-video-corpus"]},
+    "DaylightCafe":{"allowedIndexes":["by-theme","by-place","by-language"],"allowedSelections":["life-topic","practical-guide","event-selection","conversation-selection"],"crossSurface":["LivingWaterWest","Magazine","DawnBookshop","OliveMountain"]},
+    "Search":{"allowedIndexes":["by-type","by-speaker","by-series","by-scripture","by-theme","by-place","by-ministry","by-language"],"crossSurface":["*"],"rule":"Search may discover across all derived indexes but still resolves canonical records by id; it does not become an owner."}
+  },
+  "queryRules":[
+    "Every runtime index query requires an explicit index and key.",
+    "Every resource lookup requires an explicit canonical resource id.",
+    "Every editorial package requires an explicit selection id.",
+    "A surface cannot silently widen a failed scoped query into a corpus read.",
+    "by-type is infrastructure, not a public-surface identity; only Search or explicit offline/index work may use broad type discovery.",
+    "Cross-surface composition resolves references; it never copies canonical records."
+  ]
+}
