@@ -1,0 +1,25 @@
+{
+  "schema":"westside-core.presentation-routing.v1",
+  "principle":"canonical ownership is Westside Core; primarySurface controls public discovery/presentation, not ownership",
+  "routes":[
+    {"classes":["book","authored-work","edition","publication"],"primarySurface":"DawnBookshop"},
+    {"classes":["scripture","bible-translation","bible-study-resource","bible-study-website","bible-map","bible-route","biblical-place","biblical-person","lexicon","cross-reference","gospel-harmony","bible-background"],"primarySurface":"Emmaus"},
+    {"classes":["sermon","speaker","ministry","teaching-series","ministry-teaching"],"primarySurface":"OliveMountain"},
+    {"classes":["film","viewing-programme","cinema-feature"],"primarySurface":"ParadiseCinema"},
+    {"classes":["christian-life","family","work-life","city-life","community-life"],"primarySurface":"DaylightCafe"},
+    {"classes":["journal-issue","journal-story","journal-section"],"primarySurface":"Journal"}
+  ],
+  "crossSurfaceRule":"A record may appear through relations/selections on other surfaces without being copied or renamed.",
+  "bookBibleOverlapRule":"Bible commentaries and authored Bible publications remain Bookshop publications while Emmaus may surface them contextually for study.",
+  "legacyDawnCorpusRouting":{
+    "scripture":"Emmaus",
+    "map":"Emmaus",
+    "route":"Emmaus",
+    "place":"Emmaus",
+    "lexicon":"Emmaus",
+    "scripture-index":"Emmaus",
+    "language-data":"Emmaus when Bible-study-oriented",
+    "book":"DawnBookshop",
+    "publication":"DawnBookshop"
+  }
+}
