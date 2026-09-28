@@ -1,7 +1,8 @@
 ---
-title: "Podcast"
-description: "Future conversations, readings, teaching, and voices from the life of the publication."
-weight: 5
+title: "Podcast (legacy)"
+_build:
+  render: never
+  list: never
 ---
 
-This channel is reserved for future audio work.
+Legacy channel identity only. Audio resources are classified by their actual content destination instead of a standalone Podcast surface.
