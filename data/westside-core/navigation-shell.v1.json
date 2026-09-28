@@ -2,25 +2,27 @@
   "schema":"westside-core.navigation-shell.v1",
   "status":"canonical",
   "resourceAuthority":"Westside Core",
-  "principle":"The shell exposes durable public surfaces only. Resource stores, tools and retired catch-all surfaces are not first-level navigation identities.",
+  "principle":"The shell exposes durable public surfaces with simple navigation labels. Brand identities remain available inside each surface.",
   "firstLevel":[
-    {"id":"LivingWaterWest","display":{"en":"LivingWaterWest","zh-Hant":"活水西區"},"role":"church-institutional-surface","legacyPathPolicy":"preserve-during-migration"},
-    {"id":"Magazine","display":{"en":"Magazine","zh-Hant":"西望雜誌"},"role":"publication-surface","publication":"Westside Watch","sections":["magazine:adullam","magazine:emmaus"],"legacyAliases":["Journal","journal:adullam","journal:emmaus"]},
-    {"id":"DawnBookshop","display":{"zh-Hant":"黎明書局","en":"Dawn Bookshop"},"role":"books-publications-surface"},
-    {"id":"ParadiseCinema","display":{"zh-Hant":"天堂電影院","en":"Paradise Cinema"},"role":"audiovisual-curation-surface"},
-    {"id":"OliveMountain","display":{"zh-Hant":"橄欖山","en":"Olive Mountain"},"role":"sermon-ministry-knowledge-surface"},
-    {"id":"DaylightCafe","display":{"zh-Hant":"白晝咖啡館","en":"Daylight Café"},"role":"christian-life-surface"},
-    {"id":"Emmaus","display":{"zh-Hant":"以馬忤斯","en":"Emmaus"},"role":"bible-study-surface","tools":["ONE","DoreFolio"]}
+    {"id":"LivingWaterWest","navLabel":"LivingWaterWest","display":{"en":"LivingWaterWest","zh-Hant":"活水西區"},"role":"church-institutional-surface","legacyPathPolicy":"preserve-during-migration"},
+    {"id":"Magazine","navLabel":"Magazine","display":{"en":"Magazine","zh-Hant":"西望雜誌"},"role":"publication-surface","publication":"Westside Watch","sections":["magazine:adullam","magazine:emmaus"],"legacyAliases":["Journal","journal:adullam","journal:emmaus"]},
+    {"id":"Emmaus","navLabel":"Bible","display":{"zh-Hant":"以馬忤斯","en":"Emmaus"},"role":"bible-study-surface","tools":["ONE","DoreFolio"]},
+    {"id":"OliveMountain","navLabel":"Sermon","display":{"zh-Hant":"橄欖山","en":"Olive Mountain"},"role":"sermon-ministry-knowledge-surface"},
+    {"id":"DawnBookshop","navLabel":"Book","display":{"zh-Hant":"黎明書局","en":"Dawn Bookshop"},"role":"books-publications-surface","commercialBookshop":false},
+    {"id":"ParadiseCinema","navLabel":"Cinema","display":{"zh-Hant":"天堂電影院","en":"Paradise Cinema"},"role":"programmed-bible-cinema-surface"},
+    {"id":"DaylightCafe","navLabel":"Life","display":{"zh-Hant":"白晝咖啡館","en":"Daylight Café"},"role":"christian-life-surface"}
   ],
-  "utilityNavigation":["Search"],
+  "utilityNavigation":[{"id":"Search","navLabel":"Search"}],
+  "canonicalNavigationOrder":["LivingWaterWest","Magazine","Bible","Sermon","Book","Cinema","Life","Search"],
   "notFirstLevel":["ONE","DoreFolio","Website","About","Video","Podcast","WestsideCore","Journal"],
   "legacyVisibility":{"Website":"hidden","About":"hidden","Video":"hidden","Podcast":"hidden","Journal":"alias-only"},
   "rules":[
+    "Navigation labels are functional and concise; surface brand names appear within their destinations.",
     "ONE and Doré Folio are exposed through Emmaus, never as peer first-level surfaces.",
     "Magazine section Emmaus and surface Emmaus may share visible naming but retain distinct internal IDs.",
     "Legacy Journal identifiers remain migration aliases only and must not be presented as the canonical public surface name.",
     "Legacy paths may remain while migration is active, but the canonical shell must not advertise retired surfaces.",
     "Surface navigation expresses presentation responsibility; it does not imply ownership of canonical resources.",
-    "Search is a utility consumer rather than an editorial/publication surface."
+    "Search is a utility consumer and remains last in the primary navigation."
   ]
 }
