@@ -3,7 +3,7 @@ title: "Olive Mountain"
 translationKey: "surface-olive-mountain"
 surface: "OliveMountain"
 layout: "surface-carrier"
-_build:
+build:
   render: always
   list: always
 ---
