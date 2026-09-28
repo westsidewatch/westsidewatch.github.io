@@ -3,7 +3,7 @@ title: "Paradise Cinema"
 translationKey: "surface-paradise-cinema"
 surface: "ParadiseCinema"
 layout: "surface-carrier"
-_build:
+build:
   render: always
   list: always
 ---
