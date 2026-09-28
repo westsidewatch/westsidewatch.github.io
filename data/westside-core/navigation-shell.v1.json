@@ -1,0 +1,25 @@
+{
+  "schema":"westside-core.navigation-shell.v1",
+  "status":"canonical",
+  "resourceAuthority":"Westside Core",
+  "principle":"The shell exposes durable public surfaces only. Resource stores, tools and retired catch-all surfaces are not first-level navigation identities.",
+  "firstLevel":[
+    {"id":"LivingWaterWest","display":{"en":"LivingWaterWest","zh-Hant":"活水西區"},"role":"church-institutional-surface","legacyPathPolicy":"preserve-during-migration"},
+    {"id":"Journal","display":{"en":"Journal","zh-Hant":"期刊"},"role":"publication-surface","sections":["journal:adullam","journal:emmaus"]},
+    {"id":"DawnBookshop","display":{"zh-Hant":"黎明書局","en":"Dawn Bookshop"},"role":"books-publications-surface"},
+    {"id":"ParadiseCinema","display":{"zh-Hant":"天堂電影院","en":"Paradise Cinema"},"role":"audiovisual-curation-surface"},
+    {"id":"OliveMountain","display":{"zh-Hant":"橄欖山","en":"Olive Mountain"},"role":"sermon-ministry-knowledge-surface"},
+    {"id":"DaylightCafe","display":{"zh-Hant":"白晝咖啡館","en":"Daylight Café"},"role":"christian-life-surface"},
+    {"id":"Emmaus","display":{"zh-Hant":"以馬忤斯","en":"Emmaus"},"role":"bible-study-surface","tools":["ONE","DoreFolio"]}
+  ],
+  "utilityNavigation":["Search"],
+  "notFirstLevel":["ONE","DoreFolio","Website","About","Video","Podcast","WestsideCore"],
+  "legacyVisibility":{"Website":"hidden","About":"hidden","Video":"hidden","Podcast":"hidden"},
+  "rules":[
+    "ONE and Doré Folio are exposed through Emmaus, never as peer first-level surfaces.",
+    "Journal section Emmaus and surface Emmaus may share visible naming but retain distinct internal IDs.",
+    "Legacy paths may remain while migration is active, but the canonical shell must not advertise retired surfaces.",
+    "Surface navigation expresses presentation responsibility; it does not imply ownership of canonical resources.",
+    "Search is a utility consumer rather than an editorial/publication surface."
+  ]
+}
