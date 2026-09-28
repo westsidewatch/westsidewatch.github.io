@@ -4,32 +4,12 @@ const KEEP_RECTANGULAR=new Set(['pool','pool-wall','siloam-pool','bethesda-pool'
 const ROAD_WORDS=['road','street','lane','valley','channel','connector'];
 function stageOf(mesh){return String(mesh.userData?.phase2?.stage||'').toLowerCase()}
 function isRoad(stage){return ROAD_WORDS.some(word=>stage.includes(word))}
-function polygonPrism(w,d,h,seed=0){
- const sx=w/2,sz=d/2,k=.08+((seed%5)*.012);
- const pts=[[-sx,-sz*.84],[-sx*.34,-sz],[sx*.52,-sz*(.92-k)],[sx, -sz*.22],[sx*(.88-k),sz*.68],[sx*.30,sz],[-sx*.56,sz*(.91-k)],[-sx,sz*.28]];
- const shape=new THREE.Shape();pts.forEach(([x,z],i)=>i?shape.lineTo(x,z):shape.moveTo(x,z));shape.closePath();
- const g=new THREE.ExtrudeGeometry(shape,{depth:h,bevelEnabled:false,steps:1});g.rotateX(-Math.PI/2);g.translate(0,-h/2,0);g.computeVertexNormals();return g;
-}
-function wallPrism(w,d,h,seed=0){
- const alongX=w>=d,L=(alongX?w:d)/2,T=(alongX?d:w)/2,j=Math.min(T*.34,1.8+(seed%3));
- const p=[[-L,-T],[-L*.36,-T+j],[L*.22,-T],[L,-T+j*.45],[L,T-j*.25],[L*.31,T],[-L*.44,T-j*.55],[-L,T]];
- const pts=alongX?p:p.map(([a,b])=>[b,a]);const shape=new THREE.Shape();pts.forEach(([x,z],i)=>i?shape.lineTo(x,z):shape.moveTo(x,z));shape.closePath();
- const g=new THREE.ExtrudeGeometry(shape,{depth:h,bevelEnabled:false,steps:1});g.rotateX(-Math.PI/2);g.translate(0,-h/2,0);g.computeVertexNormals();return g;
-}
-function roadRibbonFromBox(w,d,seed=0){
- const alongX=w>=d,L=(alongX?w:d)/2,T=(alongX?d:w)/2,bend=Math.min(L*.10,5+(seed%7));
- const pts=alongX?[[-L,-T],[-L*.18,-T*.72],[L*.30,-T],[L,T*.05],[L,T], [L*.25,T*.72],[-L*.22,T],[-L,-T*.05]]:[[-T,-L],[-T*.72,-L*.18],[-T,L*.30],[T*.05,L],[T,L],[T*.72,L*.25],[T,-L*.22],[-T*.05,-L]];
- const shape=new THREE.Shape();pts.forEach(([x,z],i)=>i?shape.lineTo(x,z):shape.moveTo(x,z));shape.closePath();const g=new THREE.ShapeGeometry(shape);g.rotateX(-Math.PI/2);g.translate(alongX?0:bend*.02,0,alongX?bend*.02:0);g.computeVertexNormals();return g;
-}
-function migrateMesh(mesh,index){
- if(mesh.geometry?.type!=='BoxGeometry')return false;const stage=stageOf(mesh);if(KEEP_RECTANGULAR.has(stage))return false;
- const p=mesh.geometry.parameters||{},w=p.width||1,h=p.height||1,d=p.depth||1;let next;
- if(isRoad(stage))next=roadRibbonFromBox(w,d,index);
- else if(stage.includes('wall')||stage.includes('retaining')||stage.includes('front'))next=wallPrism(w,d,h,index);
- else next=polygonPrism(w,d,h,index);
- mesh.geometry.dispose();mesh.geometry=next;mesh.userData.geometryMigration={from:'BoxGeometry',to:isRoad(stage)?'terrain-ribbon':'irregular-stone-prism',global:true};return true;
-}
-export function migrateRuntimeGeometry(runtime){
- if(!runtime?.meshes)return runtime;let migrated=0;runtime.meshes.forEach((mesh,index)=>{if(migrateMesh(mesh,index))migrated++});
- runtime.geometryMigration={version:'global-debox-v1',migrated,total:runtime.meshes.length};runtime.grammar=`${runtime.grammar||'urban'}-global-debox`;return runtime;
-}
+function shapeGeometry(points,h){const s=new THREE.Shape();points.forEach(([x,z],i)=>i?s.lineTo(x,z):s.moveTo(x,z));s.closePath();const g=new THREE.ExtrudeGeometry(s,{depth:h,bevelEnabled:false,steps:1});g.rotateX(-Math.PI/2);g.translate(0,-h/2,0);g.computeVertexNormals();return g}
+function mergeGeometries(parts){let vertices=[],normals=[],uvs=[],indices=[],offset=0;for(const part of parts){const p=part.index?part.toNonIndexed():part;const pos=p.getAttribute('position'),nor=p.getAttribute('normal'),uv=p.getAttribute('uv');for(let i=0;i<pos.count;i++){vertices.push(pos.getX(i),pos.getY(i),pos.getZ(i));if(nor)normals.push(nor.getX(i),nor.getY(i),nor.getZ(i));if(uv)uvs.push(uv.getX(i),uv.getY(i));indices.push(offset++)}}const g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.Float32BufferAttribute(vertices,3));if(normals.length)g.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));if(uvs.length)g.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));g.setIndex(indices);if(!normals.length)g.computeVertexNormals();parts.forEach(x=>x.dispose());return g}
+function wing(x,z,w,d,h,cut=0){const sx=w/2,sz=d/2,c=Math.min(Math.min(w,d)*.24,Math.max(1,cut));return shapeGeometry([[-sx+c,-sz], [sx,-sz+c*.35],[sx-c*.18,sz],[sx*.12,sz-c*.2],[-sx,sz-c],[-sx,-sz*.18]],h).translate(x,0,z)}
+function architecturalCluster(w,d,h,seed=0){const parts=[],v=seed%4;if(w<18||d<18||h<8)return wing(0,0,w,d,h,seed%3);const courtW=w*(.20+(seed%3)*.035),courtD=d*(.22+((seed+1)%3)*.03),left=(w-courtW)/2,right=left,front=(d-courtD)/2,back=front;parts.push(wing(-(courtW+left)/2,0,left,d,h*(.78+(seed%3)*.07),seed%5));parts.push(wing((courtW+right)/2,0,right,d,h*(.64+((seed+1)%4)*.08),(seed+2)%5));if(v!==1)parts.push(wing(0,-(courtD+front)/2,courtW,front,h*(.70+((seed+2)%3)*.07),(seed+3)%5));if(v!==2)parts.push(wing(0,(courtD+back)/2,courtW,back,h*(.58+((seed+3)%4)*.07),(seed+1)%5));if(v===3){const stair=wing(-w*.12,d*.34,w*.24,d*.16,h*.30,2);parts.push(stair)}return mergeGeometries(parts)}
+function wallCourse(w,d,h,seed=0){const alongX=w>=d,L=(alongX?w:d),segments=Math.max(2,Math.min(7,Math.round(L/34))),parts=[];for(let i=0;i<segments;i++){const len=L/segments,gap=Math.min(1.5,len*.05),shift=((i%3)-1)*Math.min((alongX?d:w)*.16,2.2),hh=h*(.90+((i+seed)%3)*.05),x=alongX?(-L/2+len*(i+.5)):shift,z=alongX?shift:(-L/2+len*(i+.5));parts.push(wing(x,z,alongX?len-gap:w,alongX?d:len-gap,hh,(i+seed)%4))}return mergeGeometries(parts)}
+function ribbon(w,d,seed=0){const alongX=w>=d,L=(alongX?w:d)/2,T=(alongX?d:w)/2,b1=((seed%5)-2)*Math.min(T*.32,2.8),b2=(((seed+2)%5)-2)*Math.min(T*.28,2.4);const p=alongX?[[-L,-T],[-L*.28,-T+b1],[L*.24,-T+b2],[L,T*.02],[L,T], [L*.20,T+b2*.25],[-L*.32,T+b1*.18],[-L,-T*.02]]:[[-T,-L],[-T+b1,-L*.28],[-T+b2,L*.24],[T*.02,L],[T,L],[T+b2*.25,L*.20],[T+b1*.18,-L*.32],[-T*.02,-L]];const s=new THREE.Shape();p.forEach(([x,z],i)=>i?s.lineTo(x,z):s.moveTo(x,z));s.closePath();const g=new THREE.ShapeGeometry(s);g.rotateX(-Math.PI/2);return g}
+function monumentMass(w,d,h,seed=0){const base=wing(0,0,w,d,h*.52,seed%5),upper=wing((seed%2?-.08:.08)*w,-d*.06,w*.66,d*.62,h*.48,(seed+2)%5).translate(0,h*.26,0);return mergeGeometries([base,upper])}
+function migrateMesh(mesh,index){if(mesh.geometry?.type!=='BoxGeometry')return false;const stage=stageOf(mesh);if(KEEP_RECTANGULAR.has(stage))return false;const p=mesh.geometry.parameters||{},w=p.width||1,h=p.height||1,d=p.depth||1;let next,type;if(isRoad(stage)){next=ribbon(w,d,index);type='terrain-ribbon'}else if(stage.includes('wall')||stage.includes('retaining')||stage.includes('front')){next=wallCourse(w,d,h,index);type='segmented-stone-wall'}else if(stage.includes('royal')||stage.includes('sanctuary')||stage.includes('sacred')||stage.includes('civic')||stage.includes('monument')||stage.includes('gate')||stage.includes('tower')){next=monumentMass(w,d,h,index);type='stepped-monument'}else{next=architecturalCluster(w,d,h,index);type='courtyard-cluster'}mesh.geometry.dispose();mesh.geometry=next;mesh.userData.geometryMigration={from:'BoxGeometry',to:type,global:true,grammar:'architectural-cluster-v2'};return true}
+export function migrateRuntimeGeometry(runtime){if(!runtime?.meshes)return runtime;let migrated=0;runtime.meshes.forEach((mesh,index)=>{if(migrateMesh(mesh,index))migrated++});runtime.geometryMigration={version:'global-debox-v2-architectural-clusters',migrated,total:runtime.meshes.length};runtime.grammar=`${runtime.grammar||'urban'}-architectural-clusters`;return runtime}
