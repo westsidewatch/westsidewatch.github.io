@@ -70,6 +70,39 @@ jobs:
           python -m pip install --disable-pip-version-check --no-cache-dir "Pillow>=10,<12"
           python scripts/build_dawn_cover_registry.py --identity-map .dore-build/dawn-materialization-identity-map.json --minimum-resolved 1
           python scripts/validate_dawn_cover_registry.py
+      - name: Normalize Hugo front matter compatibility
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          roots = [Path('content')]
+          changed = []
+          for root in roots:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if not path.is_file() or path.suffix.lower() not in {'.md', '.html'}:
+                      continue
+                  text = path.read_text(encoding='utf-8')
+                  updated = re.sub(r'(?m)^([ \t]*)_build([ \t]*:)', r'\1build\2', text)
+                  if updated != text:
+                      path.write_text(updated, encoding='utf-8')
+                      changed.append(str(path))
+          if changed:
+              print('Normalized deprecated _build front matter:')
+              print('\n'.join(changed))
+          leftovers = []
+          for root in roots:
+              if not root.exists():
+                  continue
+              for path in root.rglob('*'):
+                  if path.is_file() and path.suffix.lower() in {'.md', '.html'}:
+                      if re.search(r'(?m)^[ \t]*_build[ \t]*:', path.read_text(encoding='utf-8')):
+                          leftovers.append(str(path))
+          if leftovers:
+              raise SystemExit('Deprecated _build remains in Hugo content tree: ' + ', '.join(leftovers))
+          PY
       - name: Build with Hugo
         env:
           HUGO_ENVIRONMENT: production
