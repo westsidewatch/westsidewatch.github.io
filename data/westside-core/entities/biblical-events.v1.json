@@ -1,0 +1,12 @@
+{
+  "schema": "westside-core.entities.v1",
+  "authority": "Westside Core",
+  "sourceAdapter": "adapter:bible-index",
+  "identityMode": "legacy-id-preserving",
+  "records": [
+    {"id":"bible:event:incarnation","type":"biblical-event","canonicalKey":"incarnation","label":{"zh-Hant":"道成肉身","en":"Incarnation"},"aliases":["incarnation"]},
+    {"id":"bible:event:baptism-of-jesus","type":"biblical-event","canonicalKey":"baptism-of-jesus","label":{"zh-Hant":"耶穌受洗","en":"Baptism of Jesus"},"aliases":["baptism","baptism-of-jesus"]},
+    {"id":"bible:event:crucifixion","type":"biblical-event","canonicalKey":"crucifixion","label":{"zh-Hant":"十字架","en":"Crucifixion"},"aliases":["cross","crucifixion"]},
+    {"id":"bible:event:resurrection","type":"biblical-event","canonicalKey":"resurrection","label":{"zh-Hant":"復活","en":"Resurrection"},"aliases":["resurrection"]}
+  ]
+}
