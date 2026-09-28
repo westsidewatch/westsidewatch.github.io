@@ -1,6 +1,6 @@
 {
   "schema":"westside-core.phase-4-product-layer.v1",
-  "status":"pure-architecture-active",
+  "status":"pure-architecture-active-validation-fix",
   "principle":"Architecture work is completely independent from the site's previous design. Existing rendered pages are compatibility shells only.",
   "designAuthority":{"previousSiteDesign":"abandoned","previousRedesigns":"abandoned","existingLayouts":"compatibility-shells-only","existingCSS":"non-authoritative","existingAnimations":"non-authoritative","existingComponents":"non-authoritative","sitesProgress":"future-redesign-reference-only"},
   "preserveNow":["canonical content","Westside Core resources","entities","relations","indexes","verified assets","canonical surface identities","routing where required for compatibility","data provenance"],
@@ -9,14 +9,14 @@
   "queryContract":"/data/westside-core/surface-query-contracts.v1.json",
   "crossSurfaceReferenceContract":"/data/westside-core/cross-surface-reference-contract.v1.json",
   "legacyDependencyAudit":"/data/westside-core/legacy-dependency-audit.v1.json",
+  "validation":"/data/westside-core/architecture-validation.v1.json",
   "architectureExecution":[
     {"step":"normalize-content-models-for-seven-surfaces","status":"complete"},
     {"step":"complete-scoped-index-and-query-contracts","status":"complete"},
     {"step":"complete-cross-surface-reference-contracts","status":"complete"},
     {"step":"audit-and-isolate-all-legacy-dependencies","status":"complete"},
-    {"step":"validate-routes-build-and-shared-resource-ownership","status":"next"},
+    {"step":"validate-routes-build-and-shared-resource-ownership","status":"blocked-fix-required","findings":["missing /one/ content carrier","missing /olive/ content carrier","missing /cinema/ content carrier"]},
     {"step":"declare-architecture-complete","status":"queued"}
   ],
-  "afterArchitecture":{"phase":"full-site-layout-redesign","startCondition":"architecture-complete","rule":"Build a new layout system without inheriting previous site design assumptions.","reference":"Use current Sites design progress as a reference at redesign time, not as an architecture dependency."},
-  "next":"validate-routes-build-and-shared-resource-ownership"
+  "next":"establish-missing-canonical-route-carriers-then-revalidate"
 }
