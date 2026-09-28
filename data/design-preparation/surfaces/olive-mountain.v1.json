@@ -1,0 +1,25 @@
+{
+  "schema":"design-preparation.surface-structure.v1",
+  "surface":"OliveMountain",
+  "publicLabel":"Sermon",
+  "displayName":"Olive Mountain / 橄欖山",
+  "status":"proposed-for-lock",
+  "route":"/olive/",
+  "purpose":"Westside Watch 的講道與教導資料庫。它保存講員、講道、系列與教導脈絡，使一篇講道不是孤立的影音檔，而是可以沿講員、系列、經文與事工繼續追蹤的教導記錄。",
+  "designPrinciple":"Olive Mountain 以 teaching identity 為中心，而不是以 Video / Audio / Podcast 格式為中心。影音只是 sermon record 的媒體載體。",
+  "primaryStructure":[
+    {"id":"sermons","label":"Sermons","role":"單篇講道與教導的核心記錄；包含題目、講員、日期、經文座標、系列關係與可用媒體。"},
+    {"id":"speakers","label":"Speakers","role":"講員入口。講員頁聚合其講道、系列與教導脈絡，而不是建立人物新聞頁。"},
+    {"id":"series","label":"Series","role":"有明確連續性的教導系列；系列自身擁有次序與 continue-teaching 關係。"},
+    {"id":"collections","label":"Collections","role":"跨系列或跨講員的講道集合／選集，用於主題、門訓或編輯性組合；不改變原 sermon ownership。"},
+    {"id":"ministries","label":"Ministries","role":"當講道確實屬於穩定事工脈絡時提供入口；不因一個活動或播放清單就創造 ministry。","state":"available-growing"}
+  ],
+  "recordModel":{"sermon":{"requiredRelations":["speaker","scripture-coordinate"],"optionalRelations":["series","ministry","collection","date","media","continuation"],"mediaRule":"video/audio are representations of the sermon record, never separate public content departments"},"series":{"owns":"teaching sequence","supports":"continue teaching"},"speaker":{"owns":"speaker navigation context, not sermon copies"}},
+  "scriptureIntegration":{"home":"Emmaus","rule":"Olive Mountain 保存 sermon → Scripture coordinate 關係；點入經文時進 Emmaus 並保留 sermon context。Emmaus 可反向浮現 related sermons，但不複製 sermon library。"},
+  "crossSurfaceRelations":{"LivingWaterWest":"教會頁可調用相關講道／系列；例如 Discipleship 可調用江秀琴牧師的內在生活系列，但 sermon ownership 留在 Olive Mountain。","Emmaus":"Scripture coordinate 與相關講道雙向關聯。","Magazine":"Magazine 可選取、引用或編輯呈現講道，但不取得講道 ownership。","DaylightCafe":"生活主題可浮現相關講道。"},
+  "knownContentRequirements":["需要支持江秀琴牧師及其內在生活系列的 speaker → series → sermon 關係。","需要支持黃淑華牧師作為獨立 speaker identity；姓名不得當作其他姓名的別名處理。"],
+  "explicitExclusions":["Video 一級欄目","Audio 一級欄目","Podcast 一級欄目","把電影或劇集放入 Sermon","按媒體平台建立重複講道記錄","為了填滿頁面虛構講員、系列或事工"],
+  "designCharacter":{"sharedSiteLanguage":"required","surfaceDifference":"Olive Mountain 的特色是聲音、人物與連續教導。設計應讓使用者感到正在進入一個可持續聆聽與追蹤的 teaching archive，而不是影片網站或媒體播放器集合。"},
+  "unresolvedBeforeLock":["確認 Collections 是否需要公開固定入口，或只作為首頁/講員/系列中的組合機制。","確認 Ministries 在目前內容量下是否像 LivingWaterWest 一樣保留空框架，還是暫時不公開。","盤點現有 sermon canonical data 的實際位置；目前 /olive/ carrier 已明確引用 Westside Core canonical sermon resources，但 content/olive 本身只有 carrier page。"],
+  "layoutAllowed":false
+}
