@@ -27,15 +27,21 @@
       "sourceId":"source:frcc:jiang-xiuqin-inner-life",
       "status":"whole-series-family-admitted",
       "scope":"江秀琴內在生活系列及慕主先鋒官方/授權公開影音來源中的內在生活內容",
-      "evidence":"FRCC official message archive explicitly labels 江秀琴 messages as Series: 內在生活; FRCC app describes 江秀琴牧師內在生活信息 and全集播放.",
       "indexLater":["subseries","episode","theme","scripture"]
     },
     {
-      "speakerId":"speaker:ye-guangming",
-      "speaker":"業光明",
-      "status":"source-identification-active",
-      "admissionWhen":"one unambiguous Chinese source family/channel is verified",
-      "then":"admit whole source family without item-by-item gate"
+      "speakerId":"speaker:derek-prince",
+      "speaker":"葉光明（Derek Prince）",
+      "aliases":["葉光明","Derek Prince"],
+      "sourceId":"source:youtube:derek-prince-ministries-chinese",
+      "sourceLabel":"Derek Prince Ministries 中文頻道",
+      "url":"https://www.youtube.com/@DerekPrinceMinistries_Chinese",
+      "provider":"youtube",
+      "status":"whole-channel-admitted",
+      "scope":"entire public Chinese channel; present and future public videos, shorts and playlists",
+      "authority":"Derek Prince Ministries Chinese-language channel",
+      "rights":{"rehost":false,"policy":"provider-link-or-embed"},
+      "indexLater":["playlist","series","episode","scripture","theme"]
     },
     {
       "speakerId":"speaker:watchman-nee",
@@ -46,6 +52,14 @@
       "knownSeedUploader":"三位書屋",
       "knownSeedPattern":"倪柝聲講道集",
       "then":"admit coherent publication families in bulk, deduplicate and provenance-index afterward"
+    }
+  ],
+  "corrections":[
+    {
+      "date":"2026-09-28",
+      "from":"業光明",
+      "to":"葉光明（Derek Prince）",
+      "reason":"user supplied the canonical Chinese ministry channel; previous source-identification queue used the wrong Chinese name"
     }
   ],
   "next":"expand breadth first; normalize/index after intake rather than serially approving individual videos"
