@@ -7,14 +7,15 @@
   "architectureGuard":"No architecture decision may be justified by the needs or limitations of an existing layout.",
   "contentModel":"/data/westside-core/surface-content-models.v1.json",
   "queryContract":"/data/westside-core/surface-query-contracts.v1.json",
+  "crossSurfaceReferenceContract":"/data/westside-core/cross-surface-reference-contract.v1.json",
   "architectureExecution":[
     {"step":"normalize-content-models-for-seven-surfaces","status":"complete"},
     {"step":"complete-scoped-index-and-query-contracts","status":"complete"},
-    {"step":"complete-cross-surface-reference-contracts","status":"next"},
-    {"step":"audit-and-isolate-all-legacy-dependencies","status":"queued"},
+    {"step":"complete-cross-surface-reference-contracts","status":"complete"},
+    {"step":"audit-and-isolate-all-legacy-dependencies","status":"next"},
     {"step":"validate-routes-build-and-shared-resource-ownership","status":"queued"},
     {"step":"declare-architecture-complete","status":"queued"}
   ],
   "afterArchitecture":{"phase":"full-site-layout-redesign","startCondition":"architecture-complete","rule":"Build a new layout system without inheriting previous site design assumptions.","reference":"Use current Sites design progress as a reference at redesign time, not as an architecture dependency."},
-  "next":"complete-cross-surface-reference-contracts"
+  "next":"audit-and-isolate-all-legacy-dependencies"
 }
