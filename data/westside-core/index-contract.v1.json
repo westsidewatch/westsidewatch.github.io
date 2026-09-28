@@ -19,8 +19,13 @@
     "surfaceOwnsCanonicalResource": false,
     "surfaceMayOwn": ["selection", "ordering", "editorial-context", "presentation", "interaction"]
   },
-  "surfaces": ["LivingWaterWest", "Journal", "DawnBookshop", "ParadiseCinema", "OliveMountain", "DaylightCafe", "Emmaus", "Search"],
-  "nestedPublicationSections": ["journal:adullam", "journal:emmaus"],
+  "surfaces": ["LivingWaterWest", "Magazine", "Emmaus", "OliveMountain", "DawnBookshop", "ParadiseCinema", "DaylightCafe", "Search"],
+  "nestedPublicationSections": ["magazine:adullam", "magazine:emmaus"],
+  "legacyAliases": {
+    "Journal": "Magazine",
+    "journal:adullam": "magazine:adullam",
+    "journal:emmaus": "magazine:emmaus"
+  },
   "tools": {
     "surface:emmaus": ["ONE", "DoreFolio"]
   }
