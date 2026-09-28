@@ -26,7 +26,12 @@
       "speaker":"江秀琴",
       "sourceId":"source:frcc:jiang-xiuqin-inner-life",
       "status":"whole-series-family-admitted",
-      "scope":"江秀琴內在生活系列及慕主先鋒官方/授權公開影音來源中的內在生活內容",
+      "scope":"江秀琴內在生活系列及慕主先鋒官方/授權公開影音來源中的內在生活內容；以 FRCC 官方信息庫與全集入口作整體來源族，不逐條阻塞收錄",
+      "verifiedSourceFamilies":[
+        {"label":"慕主先鋒 FRCC 內在生活","url":"https://www.frcc.us/messages/5/","provider":"frcc","authority":"official"},
+        {"label":"慕主先鋒影音資源 archive","url":"https://archive.frcc.us/eSchool?eid=485","provider":"frcc-archive","authority":"official"}
+      ],
+      "knownSeriesFamilies":["內在生活","等候神","讚美與內在生活真諦","內在生活饗宴","與王同坐席","神國降臨"],
       "indexLater":["subseries","episode","theme","scripture"]
     },
     {
@@ -46,12 +51,20 @@
     {
       "speakerId":"speaker:watchman-nee",
       "speaker":"倪柝聲",
-      "status":"bulk-publication-family-intake-active",
-      "scope":"Chinese audio/video readings and sermon-record publications attributed to Watchman Nee",
+      "status":"bulk-publication-families-admitted",
+      "scope":"coherent Chinese audio/video publication families of Watchman Nee works; admission is family-level rather than item-by-item",
       "provenance":"retain actual uploader/channel; never relabel third-party uploader as official",
-      "knownSeedUploader":"三位書屋",
-      "knownSeedPattern":"倪柝聲講道集",
-      "then":"admit coherent publication families in bulk, deduplicate and provenance-index afterward"
+      "sourceFamilies":[
+        {
+          "sourceId":"source:youtube:sanwei-watchman-nee",
+          "uploader":"三位書屋",
+          "provider":"youtube",
+          "status":"publication-family-admitted",
+          "knownWorks":["正常的基督徒信仰","讀經心得"],
+          "admissionRule":"all coherent Watchman Nee Chinese audiobook/sermon-publication items from this source family may enter; uploader remains provenance, not official authority"
+        }
+      ],
+      "indexLater":["work","publication-series","topic","scripture","uploader-provenance"]
     }
   ],
   "corrections":[
@@ -62,5 +75,5 @@
       "reason":"user supplied the canonical Chinese ministry channel; previous source-identification queue used the wrong Chinese name"
     }
   ],
-  "next":"expand breadth first; normalize/index after intake rather than serially approving individual videos"
+  "next":"continue whole-source-family discovery for additional high-value Chinese sermon teachers; normalize/index existing admitted families in parallel, never serially gate individual items"
 }
