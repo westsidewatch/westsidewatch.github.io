@@ -8,14 +8,15 @@
   "contentModel":"/data/westside-core/surface-content-models.v1.json",
   "queryContract":"/data/westside-core/surface-query-contracts.v1.json",
   "crossSurfaceReferenceContract":"/data/westside-core/cross-surface-reference-contract.v1.json",
+  "legacyDependencyAudit":"/data/westside-core/legacy-dependency-audit.v1.json",
   "architectureExecution":[
     {"step":"normalize-content-models-for-seven-surfaces","status":"complete"},
     {"step":"complete-scoped-index-and-query-contracts","status":"complete"},
     {"step":"complete-cross-surface-reference-contracts","status":"complete"},
-    {"step":"audit-and-isolate-all-legacy-dependencies","status":"next"},
-    {"step":"validate-routes-build-and-shared-resource-ownership","status":"queued"},
+    {"step":"audit-and-isolate-all-legacy-dependencies","status":"complete"},
+    {"step":"validate-routes-build-and-shared-resource-ownership","status":"next"},
     {"step":"declare-architecture-complete","status":"queued"}
   ],
   "afterArchitecture":{"phase":"full-site-layout-redesign","startCondition":"architecture-complete","rule":"Build a new layout system without inheriting previous site design assumptions.","reference":"Use current Sites design progress as a reference at redesign time, not as an architecture dependency."},
-  "next":"audit-and-isolate-all-legacy-dependencies"
+  "next":"validate-routes-build-and-shared-resource-ownership"
 }
