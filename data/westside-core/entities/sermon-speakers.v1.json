@@ -1,0 +1,18 @@
+{
+  "schema":"westside-core.entities.v1",
+  "authority":"Westside Core",
+  "sourceAdapter":"adapter:sermon-media",
+  "records":[
+    {"id":"speaker:david-pawson","type":"speaker","name":"大衛鮑森","aliases":["David Pawson"]},
+    {"id":"speaker:jiang-xiuqin","type":"speaker","name":"江秀琴"},
+    {"id":"speaker:derek-prince","type":"speaker","name":"葉光明","aliases":["Derek Prince"]},
+    {"id":"speaker:watchman-nee","type":"speaker","name":"倪柝聲","aliases":["Watchman Nee"]},
+    {"id":"speaker:kang-lai-chang","type":"speaker","name":"康來昌"},
+    {"id":"speaker:stephen-tong","type":"speaker","name":"唐崇榮"},
+    {"id":"speaker:kou-shao-en","type":"speaker","name":"寇紹恩"},
+    {"id":"speaker:rick-warren","type":"speaker","name":"華理克","aliases":["Rick Warren"]},
+    {"id":"speaker:tong-liu","type":"speaker","name":"劉彤"},
+    {"id":"speaker:jerry-lai","type":"speaker","name":"賴若瀚"},
+    {"id":"speaker:yu-hong-jie","type":"speaker","name":"于宏潔","status":"discovery-pending"}
+  ]
+}
