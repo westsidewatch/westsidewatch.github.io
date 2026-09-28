@@ -5,25 +5,27 @@
   "displayName":"Dawn Bookshop / 黎明書局",
   "status":"proposed-for-lock",
   "route":"/dawn-library/",
-  "purpose":"Westside Watch 的書、書稿、出版物與選題空間。它不是賣書的 ecommerce bookshop，也不是聖經參考資源庫。",
-  "designPrinciple":"先呈現真正存在的書與出版作品，再讓讀者理解作品如何被選入與組織。沒有具體內容的資料能力不形成空的公開欄目。",
+  "purpose":"Westside Watch 的書、書稿、出版物與館藏編輯空間。它不是 ecommerce bookshop，也不是聖經參考資源庫。",
+  "designPrinciple":"作品身份由 canonical Works 決定；光譜、策展集、三晨星是同一館藏上的三個獨立編輯層，不改變作品 ownership，也不控制作品是否有資格進入 canonical 館藏。沒有具體內容的結構不展示。",
   "primaryStructure":[
     {"id":"books","label":"Books","role":"已形成書籍身份的作品入口；可以是完成、連載或持續生長中的書。"},
-    {"id":"manuscripts","label":"Manuscripts","role":"尚處於書稿／寫作狀態但已具有獨立作品身份的內容。是否在公開導航獨立顯示，取決於實際公開書稿數量。","visibility":"content-dependent"},
-    {"id":"publications","label":"Publications","role":"不以單冊 Book 身份呈現的正式出版物或出版項目。是否形成獨立入口取決於實際內容。","visibility":"content-dependent"}
+    {"id":"manuscripts","label":"Manuscripts","role":"尚處於書稿／寫作狀態但已具有獨立作品身份的內容。","visibility":"content-dependent"},
+    {"id":"publications","label":"Publications","role":"不以單冊 Book 身份呈現的正式出版物或出版項目。","visibility":"content-dependent"}
   ],
-  "selectionStandards":{
-    "光譜":{"type":"editorial-selection-standard","role":"黎明書局用來判斷、選入與組織作品的一套標準。不是工具、不是一級 Surface、不是普通 genre tab。","visibility":"requires-real-selected-works"},
-    "三晨星":{"type":"editorial-selection-standard","role":"黎明書局第二套獨立選題標準；與光譜並列但判斷邏輯不同。不是工具或普通分類。","visibility":"requires-real-selected-works"},
-    "策展集":{"type":"editorial-selection-standard","role":"黎明書局第三套選題／策展標準。它組織作品，但不改變作品本身的 canonical identity。","visibility":"requires-real-selected-works"}
+  "editorialLayers":{
+    "光譜":{"type":"knowledge-structure-layer","question":"這些作品與知識彼此是什麼關係？","canonicalDefinition":"看見知識脈絡／真理結構。它長在館藏之上，讓同一作品沿經卷、時間、主題、人物、地理、歷史、神學、藝術及學習深度等不同座標重新顯現。","selectionLogic":["以真實館藏關係形成脈絡，而不是手工 genre 標籤","允許一件作品同時存在於多條光譜關係中","可表達 Beginner → Intermediate → Advanced → Academic 等學習位置，但深度只是光譜的一種軸，不等於光譜全部","光譜發現關係，不替作品評分"],"knownExample":"Jerusalem 3000 是光譜體系中的作品／已跑通範例；它不是獨立 Surface。","visibility":"requires-real-relations"},
+    "策展集":{"type":"curated-learning-context-layer","question":"這些作品應該怎樣被組合、閱讀與使用？","canonicalDefinition":"把館藏中的關係整理成有命題、有目的、可行走的閱讀／學習道路；可跨作品、經文、人物、地點、媒介與分類形成完整 Knowledge Context。","selectionLogic":["必須有明確主題、問題或命題","必須有對象／使用目的，而不是同類資源堆疊","必須存在閱讀或探索次序／路徑","可以跨分類、跨作品組合","需要編輯說明，使集合本身形成知識脈絡"],"visibility":"requires-real-curation"},
+    "三晨星":{"type":"editorial-judgement-layer","question":"什麼值得被特別留下、推薦與再次看見？","canonicalDefinition":"編輯甄選珍貴作品的最高層 editorial judgement。不是流量榜、熱門榜或固定星級評分。","selectionLogic":["基於閱讀、研究與驗證形成編輯判斷","看長期保存、再次推薦與當下編輯語境中的價值，而不是點擊量","可按期刊、主題、時間與生活距離等編輯語境重新甄選，同一作品可以因不同理由再次入選","永久三晨星屬館藏級珍貴作品；日常／期刊三晨星可以是持續出版的 editorial stream"],"visibility":"requires-real-selection"}
   },
-  "selectionRule":"光譜、三晨星、策展集首先是編輯判斷機制。Layout 不得預設把三者做成三個等寬 tab；其視覺形式要等各自標準、內容量與使用方式整理清楚後決定。",
-  "recordModel":{"book":{"relations":["author","edition","related-scripture","reading-sequence","selection-standard"]},"manuscript":{"relations":["author","work-state","related-book-if-promoted","selection-standard"]},"publication":{"relations":["author/editor","edition","publication-context","selection-standard"]},"author":{"rule":"Author 是作品關係與瀏覽入口；只有有足夠真實內容時才需要獨立公開部門。"},"edition":{"rule":"Edition 是作品版本關係，不自動形成一級公開欄目。"}},
+  "relationship":"同一 canonical Work 可以同時被光譜定位、進入一個或多個策展集、並被三晨星甄選。三者不是互斥分類，也不是固定流程 UI：光譜發現關係，策展集整理成道路，三晨星表達編輯判斷。",
+  "admissionBoundary":{"rule":"三個編輯層都不控制 canonical 館藏 admission。","reason":"館藏先解決作品是誰、來源與身份；三晨星判斷珍貴，光譜定位關係，策展集組織閱讀。不能因作品沒有三晨星、光譜或策展位置就拒絕入館。"},
+  "displayRule":"不得把光譜、策展集、三晨星預設成三個等寬 tabs 或普通 category navigation。設計階段應根據它們不同的行為分別設計：光譜偏關係探索；策展集偏路徑／專題；三晨星偏編輯推薦與持續出版。沒有真實結果時不展示空入口。",
+  "recordModel":{"book":{"relations":["author","edition","related-scripture","reading-sequence","spectrum-relations","curated-collections","morning-star-selections"]},"manuscript":{"relations":["author","work-state","related-book-if-promoted","spectrum-relations","curated-collections","morning-star-selections"]},"publication":{"relations":["author/editor","edition","publication-context","spectrum-relations","curated-collections","morning-star-selections"]},"author":{"rule":"Author 是作品關係與瀏覽入口；只有有足夠真實內容時才需要獨立公開部門。"},"edition":{"rule":"Edition 是作品版本關係，不自動形成一級公開欄目。"}},
   "readingModel":{"continueReading":"作品可提供繼續閱讀與閱讀次序。","growth":"書稿可以持續生長，不要求為了進入黎明書局先假裝成已完成出版物。"},
   "crossSurfaceRelations":{"Emmaus":"作品可以引用相關 Scripture；Bible maps、reference sites、study tools 不搬入黎明書局。","Magazine":"Magazine 可以介紹、節選或策展呈現書局作品，但不改變 Book ownership。","DaylightCafe":"Life 主題可以浮現相關書籍或出版物。"},
-  "explicitExclusions":["ecommerce / cart / price / purchase flow","把 Bookshop 理解成賣書商店","Bible maps","Bible reference websites","study tools","ONE","Doré Folio","為了填版面建立空 Authors 或 Editions 欄目","把光譜、三晨星、策展集當作工具","把三套選題標準粗暴做成普通 genre/category tabs"],
-  "visibilityRule":"No concrete content, no public department. Selection standards may exist structurally before display, but only become visible when there are real selected works and a defined editorial meaning.",
-  "designCharacter":{"sharedSiteLanguage":"required","surfaceDifference":"黎明書局應有閱讀、作品、書架與策展的感覺，但不是商店。它與 Magazine 的差別是：Magazine 組織一期一期的出版敘事；Book 組織可持續閱讀的獨立作品與選題。"},
-  "unresolvedBeforeLock":["逐一整理光譜、三晨星、策展集各自真正的選題判斷標準與現有內容，不從名稱猜測。","確認 Books / Manuscripts / Publications 目前各自有哪些真實內容，依 visibilityRule 決定哪些成為公開入口。","確認 Authors 是否已有足夠內容值得固定公開入口。"],
+  "explicitExclusions":["ecommerce / cart / price / purchase flow","把 Bookshop 理解成賣書商店","Bible maps","Bible reference websites","study tools","ONE","Doré Folio","為了填版面建立空 Authors 或 Editions 欄目","把光譜、三晨星、策展集當作工具","把三個編輯層當作互斥分類","把三個編輯層粗暴做成普通 genre/category tabs","用流量或人氣替代三晨星編輯判斷"],
+  "visibilityRule":"No concrete content, no public department. Editorial layers can exist structurally before display, but only become visible through real works, relations, curation or selections.",
+  "designCharacter":{"sharedSiteLanguage":"required","surfaceDifference":"黎明書局應有閱讀、作品、書架與策展的感覺，但不是商店。Magazine 組織一期一期的出版敘事；Book 組織可持續閱讀的獨立作品，並以光譜、策展集、三晨星三種不同尺度重新看見同一館藏。"},
+  "unresolvedBeforeLock":["盤點 Books / Manuscripts / Publications 的真實作品，依 visibilityRule 決定哪些公開入口實際出現。","從現有 canonical Works 恢復／核對光譜、策展集、三晨星的真實結果，而不是用示例填充。","確認 Authors 是否已有足夠內容值得固定公開入口。"],
   "layoutAllowed":false
 }
