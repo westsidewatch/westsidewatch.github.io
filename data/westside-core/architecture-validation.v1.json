@@ -1,11 +1,11 @@
 {
   "schema":"westside-core.architecture-validation.v1",
-  "status":"blocked-by-route-carriers",
-  "validatedAtCommit":"d30635f165f9801231224165089ce3c9cf861df2",
-  "build":{"repositoryEngineeringGovernance":"pass","hugoPages":"pending-at-audit-time","note":"Do not declare architecture complete until the canonical surface carriers are real and a subsequent build passes."},
-  "routes":{"verified":["/church/","/journal/","/dawn-library/","/daylight-cafe/"],"missingContentCarriers":["/one/","/olive/","/cinema/"],"finding":"Navigation contracts name seven canonical routes, but the repository content tree currently has no content/one, content/olive or content/cinema carrier directories. These must be established before route validation can pass."},
-  "ownership":{"authority":"Westside Core","rule":"Surfaces own presentation/editorial context only; canonical resources remain shared.","contracts":["surface-content-models.v1.json","surface-query-contracts.v1.json","cross-surface-reference-contract.v1.json","index-contract.v1.json"],"result":"contract-level-pass"},
-  "legacyIsolation":{"result":"pass","note":"Legacy Website/About/Video/Podcast identities remain excluded from canonical surface ownership and cross-surface targets."},
-  "requiredFixes":["establish Emmaus carrier for /one/","establish OliveMountain carrier for /olive/","establish ParadiseCinema carrier for /cinema/","rerun build and route validation"],
+  "status":"route-and-ownership-pass-build-check-pending",
+  "validatedAtCommit":"a8be08b4e5a6800c6f0f270d7342c078eabb0949",
+  "build":{"repositoryEngineeringGovernance":"pass","githubActionsForHead":"triggered","commitStatus":"pending-no-status-contexts","result":"pending","note":"The route-carrier fix has triggered repository workflows, but the available head status does not yet provide a completed general site-build result. Architecture completion remains gated on a confirmed build/deploy validation."},
+  "routes":{"verified":["/church/","/journal/","/one/","/olive/","/dawn-library/","/cinema/","/daylight-cafe/"],"missingContentCarriers":[],"result":"pass","note":"All seven canonical public surfaces now have repository content carriers."},
+  "ownership":{"authority":"Westside Core","rule":"Surfaces own presentation/editorial/product context only; canonical resources remain shared.","contracts":["surface-content-models.v1.json","surface-query-contracts.v1.json","cross-surface-reference-contract.v1.json","index-contract.v1.json"],"result":"pass"},
+  "legacyIsolation":{"result":"pass","note":"Website/About/Video/Podcast remain excluded from canonical surface ownership and cross-surface targets."},
+  "remainingGate":"confirmed general site build/deploy validation for current architecture head",
   "architectureComplete":false
 }
