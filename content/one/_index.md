@@ -3,7 +3,7 @@ title: "Emmaus"
 translationKey: "surface-emmaus"
 surface: "Emmaus"
 layout: "surface-carrier"
-_build:
+build:
   render: always
   list: always
 ---
