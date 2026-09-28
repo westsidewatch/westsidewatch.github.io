@@ -1,0 +1,72 @@
+{
+  "schema":"westside-core.phase-4-product-layer.v1",
+  "status":"phase-4-active",
+  "principle":"Phase 4 rebuilds each canonical surface as a distinct product. Shared resources remain in Westside Core; each surface owns only its product state, editorial sequence and interaction grammar.",
+  "surfaces":[
+    {
+      "surface":"LivingWaterWest",
+      "path":"/church/",
+      "product":"church",
+      "primaryJobs":["gather","know-the-church","join","learn","pray","serve","give","contact"],
+      "productModules":["door-entry","gatherings","ministries","bible-study-bridge","prayer","giving","contact"],
+      "integration":{"Emmaus":"Bible Study uses the same Scripture/study system directly"}
+    },
+    {
+      "surface":"Magazine",
+      "path":"/journal/",
+      "product":"independent-digital-magazine",
+      "primaryJobs":["enter-current-volume","browse-contents","read-stories","move-between-sections","browse-archive"],
+      "productModules":["current-volume","opening","contents","sections","story-reader","archive"],
+      "editorialSections":["magazine:adullam","magazine:emmaus"]
+    },
+    {
+      "surface":"Emmaus",
+      "path":"/one/",
+      "product":"bible-study-workbench",
+      "primaryJobs":["read-scripture","study-context","use-maps","cross-reference","compare-gospels","write-notes","prepare-study"],
+      "productModules":["scripture","ONE","DoreFolio","maps","routes","places","people","lexicon","cross-reference","gospel-harmony","background","church-study-context"]
+    },
+    {
+      "surface":"OliveMountain",
+      "path":"/olive/",
+      "product":"sermon-ministry-library",
+      "primaryJobs":["find-speaker","enter-series","browse-ministry","follow-scripture","continue-teaching"],
+      "productModules":["speakers","series","ministries","scripture-index","themes","continue-listening"],
+      "forbiddenProductPattern":"generic-video-library"
+    },
+    {
+      "surface":"DawnBookshop",
+      "path":"/dawn-library/",
+      "product":"books-and-publications-library",
+      "primaryJobs":["browse-books","open-publication","read-manuscript","follow-author","continue-reading"],
+      "productModules":["shelves","books","publications","manuscripts","authors","reading-path"],
+      "excluded":["bible-reference-sites","bible-maps","study-tools"]
+    },
+    {
+      "surface":"ParadiseCinema",
+      "path":"/cinema/",
+      "product":"programmed-bible-cinema",
+      "primaryJobs":["see-this-weeks-programme","enter-feature","watch-film","watch-series","follow-season","choose-next"],
+      "productModules":["weekly-programme","feature","special","season","film-page","series-page","episode-page","scripture-coordinate","watch-next","bible-timeline-index"],
+      "timelinePlacement":"bottom",
+      "programmingInputs":["church-calendar","biblical-feast","season","festival","editorial-theme"]
+    },
+    {
+      "surface":"DaylightCafe",
+      "path":"/daylight-cafe/",
+      "product":"christian-life-common-room",
+      "primaryJobs":["browse-life-topics","read-practical-guides","discover-events","join-conversation"],
+      "productModules":["life-topics","family","work","city-life","culture","practical-life","events","community-future"],
+      "futureCapabilities":["discussion","comments","members","forum"]
+    }
+  ],
+  "sharedRules":[
+    "A surface may compose shared resources but may not duplicate their canonical identity.",
+    "Product modules are presentation contracts, not new resource silos.",
+    "Cross-surface links are permitted where the user task naturally crosses products.",
+    "Each surface may develop its own visual and interaction grammar after its product modules are stable.",
+    "Legacy media-format navigation must not return during product rebuilding."
+  ],
+  "executionOrder":["LivingWaterWest","Magazine","Emmaus","OliveMountain","DawnBookshop","ParadiseCinema","DaylightCafe"],
+  "next":"implement-product-modules-on-existing-carriers"
+}
