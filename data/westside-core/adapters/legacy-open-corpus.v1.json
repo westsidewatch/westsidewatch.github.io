@@ -1,0 +1,23 @@
+{
+  "schema":"westside-core.adapter.v1",
+  "id":"adapter:legacy-open-corpus",
+  "status":"active",
+  "source":"/data/dawn-corpus/",
+  "classification":"site-wide-source-intake",
+  "targetAuthority":"Westside Core",
+  "note":"The legacy Dawn corpus contains scripture, maps, places, language data, art/museum metadata and other cross-surface source families; it is not inherently Dawn Bookshop data.",
+  "sourceFamilies":[
+    {"id":"midvash-bible-data","promoteAs":["scripture-resource","translation-metadata"]},
+    {"id":"open-bibles","promoteAs":["scripture-resource","translation-metadata"]},
+    {"id":"teochew-bibles","promoteAs":["scripture-resource","language-resource"]},
+    {"id":"ubs-marble-open-license","promoteAs":["image","map","route","place-relation"]},
+    {"id":"openbible-bible-geocoding-data","promoteAs":["place","map","geo","scripture-relation"]},
+    {"id":"stepbible-data","promoteAs":["biblical-person","place","lexicon","scripture-relation","language-resource"]},
+    {"id":"fitzwilliam-collection-raw-data","promoteAs":["art-metadata","image-pointer"]},
+    {"id":"national-gallery-of-art-opendata","promoteAs":["art-metadata","image-pointer"]},
+    {"id":"mplus-collection-data","promoteAs":["art-metadata","design-metadata"]}
+  ],
+  "rightsRule":"Preserve source/item rights exactly; metadata openness never implies image openness.",
+  "blockedSourceRule":"Existing Wikisource exclusion remains in force during namespace migration.",
+  "migrationPolicy":"adapter-first-record-promotion-no-directory-bulk-copy"
+}
