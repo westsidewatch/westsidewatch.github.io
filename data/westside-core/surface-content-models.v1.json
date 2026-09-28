@@ -1,0 +1,64 @@
+{
+  "schema":"westside-core.surface-content-models.v1",
+  "status":"canonical",
+  "authority":"Westside Core",
+  "purpose":"Normalize content semantics across the seven public surfaces without imposing a shared layout.",
+  "baseModel":{
+    "required":["id","kind","title","canonicalResourceRefs","surfaceRelations"],
+    "optional":["subtitle","summary","language","people","places","scripture","themes","series","date","sourceRefs","editorialState","continuationRefs"],
+    "rules":[
+      "canonicalResourceRefs point to Westside Core resources or entities; surfaces do not clone canonical records",
+      "surfaceRelations describe presentation and workflow relations only",
+      "layout, typography, animation and visual geometry are explicitly outside this model",
+      "one canonical resource may appear in multiple surfaces through different surfaceRelations"
+    ]
+  },
+  "models":{
+    "LivingWaterWest":{
+      "acceptedKinds":["gathering","ministry","church-study","prayer-gathering","service-opportunity","giving-entry","church-contact","church-notice"],
+      "relations":["uses-emmaus","related-sermon","related-magazine-story","related-life-topic"],
+      "owns":["church-event-context","ministry-context","pastoral-navigation"],
+      "doesNotOwn":["scripture-corpus","bible-study-resource","sermon-media"]
+    },
+    "Magazine":{
+      "acceptedKinds":["volume","issue","section","story","essay","interview","testimony","feature","editorial-selection"],
+      "relations":["selects-resource","references-sermon","references-book","references-cinema","references-emmaus"],
+      "owns":["publication-sequence","editorial-context","issue-membership","story-presentation"],
+      "doesNotOwn":["selected-canonical-resource"]
+    },
+    "Emmaus":{
+      "acceptedKinds":["scripture-passage","study-session","study-note","map","route","biblical-place","biblical-person","lexicon-entry","cross-reference","gospel-harmony","background-resource","study-collection"],
+      "relations":["used-by-church-study","related-sermon","related-cinema-coordinate","related-publication"],
+      "tools":["ONE","DoreFolio"],
+      "owns":["study-context","study-workspace-state","study-collection"],
+      "doesNotOwn":["church-gathering-identity"]
+    },
+    "OliveMountain":{
+      "acceptedKinds":["speaker","sermon","teaching-series","ministry","sermon-collection","sermon-selection"],
+      "relations":["teaches-scripture","belongs-series","belongs-ministry","related-magazine-story","continue-teaching"],
+      "owns":["sermon-library-context","teaching-sequence","speaker-series-navigation"],
+      "doesNotOwn":["generic-video-type","cinema-film"]
+    },
+    "DawnBookshop":{
+      "acceptedKinds":["book","publication","manuscript","author","edition","reading-collection"],
+      "relations":["written-by","part-of-publication","related-scripture","related-magazine-story","continue-reading"],
+      "owns":["shelf-context","publication-context","reading-sequence"],
+      "doesNotOwn":["bible-map","bible-reference-site","study-tool"]
+    },
+    "ParadiseCinema":{
+      "acceptedKinds":["programme","screening","film","series","episode","season","special","festival-selection","watch-next"],
+      "relations":["scripture-coordinate","scheduled-for","belongs-season","next-watch","related-emmaus","related-magazine-story"],
+      "owns":["programming-state","screening-context","season-context","watch-sequence"],
+      "doesNotOwn":["sermon","generic-video-type"],
+      "secondaryIndex":"bible-timeline"
+    },
+    "DaylightCafe":{
+      "acceptedKinds":["life-topic","practical-guide","conversation","event","family-resource","work-resource","city-life-resource","culture-resource","community-thread-future"],
+      "relations":["related-church","related-magazine-story","related-book","related-sermon"],
+      "owns":["life-context","conversation-context","community-state-future"],
+      "doesNotOwn":["church-institutional-record","sermon-corpus"]
+    }
+  },
+  "crossSurfaceRule":"Cross-surface composition is relation-based. Moving or displaying an item on another surface never transfers canonical ownership.",
+  "designBoundary":"These models survive the future full-site layout redesign unchanged unless the information architecture itself changes."
+}
