@@ -1,19 +1,39 @@
 {
   "schema":"westside-core.phase-4-product-layer.v1",
-  "status":"phase-4-implementation-active",
-  "principle":"Phase 4 rebuilds each canonical surface as a distinct product. Shared resources remain in Westside Core; each surface owns only its product state, editorial sequence and interaction grammar.",
+  "status":"architecture-only-active",
+  "principle":"Finish the information, resource, routing, product-module and cross-surface architecture before any new full-site layout design. Existing layouts are temporary carriers only and are not design authority for the next visual system.",
+  "architectureScope":["canonical-surface-responsibilities","product-module-contracts","resource-query-boundaries","cross-surface-relations","routing-and-carrier-paths","legacy-isolation","shared-indexes","content-models","future-interaction-boundaries"],
+  "designFreeze":{
+    "active":true,
+    "rule":"Do not continue incremental redesign of existing layouts during architecture work.",
+    "existingLayouts":"temporary-carriers",
+    "previousRedesigns":"non-authoritative-for-future-layout",
+    "allowedNow":["structural fixes required for architecture","routing fixes","data wiring","resource boundaries","hidden legacy cleanup"],
+    "deferred":["new visual composition","new animation grammar","surface visual unification","full-site layout system","responsive visual redesign"]
+  },
   "surfaces":[
-    {
-      "surface":"LivingWaterWest","path":"/church/","product":"church","implementation":"active","primaryJobs":["gather","know-the-church","join","learn","pray","serve","give","contact"],"productModules":["door-entry","gatherings","ministries","bible-study-bridge","prayer","giving","contact"],"implementedModules":["door-entry","bible-study-bridge"],"integration":{"Emmaus":"Bible Study entry resolves directly to /one/ and uses the same Scripture/study system"}
-    },
-    {"surface":"Magazine","path":"/journal/","product":"independent-digital-magazine","implementation":"queued","primaryJobs":["enter-current-volume","browse-contents","read-stories","move-between-sections","browse-archive"],"productModules":["current-volume","opening","contents","sections","story-reader","archive"],"editorialSections":["magazine:adullam","magazine:emmaus"]},
-    {"surface":"Emmaus","path":"/one/","product":"bible-study-workbench","implementation":"queued","primaryJobs":["read-scripture","study-context","use-maps","cross-reference","compare-gospels","write-notes","prepare-study"],"productModules":["scripture","ONE","DoreFolio","maps","routes","places","people","lexicon","cross-reference","gospel-harmony","background","church-study-context"]},
-    {"surface":"OliveMountain","path":"/olive/","product":"sermon-ministry-library","implementation":"queued","primaryJobs":["find-speaker","enter-series","browse-ministry","follow-scripture","continue-teaching"],"productModules":["speakers","series","ministries","scripture-index","themes","continue-listening"],"forbiddenProductPattern":"generic-video-library"},
-    {"surface":"DawnBookshop","path":"/dawn-library/","product":"books-and-publications-library","implementation":"queued","primaryJobs":["browse-books","open-publication","read-manuscript","follow-author","continue-reading"],"productModules":["shelves","books","publications","manuscripts","authors","reading-path"],"excluded":["bible-reference-sites","bible-maps","study-tools"]},
-    {"surface":"ParadiseCinema","path":"/cinema/","product":"programmed-bible-cinema","implementation":"queued","primaryJobs":["see-this-weeks-programme","enter-feature","watch-film","watch-series","follow-season","choose-next"],"productModules":["weekly-programme","feature","special","season","film-page","series-page","episode-page","scripture-coordinate","watch-next","bible-timeline-index"],"timelinePlacement":"bottom","programmingInputs":["church-calendar","biblical-feast","season","festival","editorial-theme"]},
-    {"surface":"DaylightCafe","path":"/daylight-cafe/","product":"christian-life-common-room","implementation":"queued","primaryJobs":["browse-life-topics","read-practical-guides","discover-events","join-conversation"],"productModules":["life-topics","family","work","city-life","culture","practical-life","events","community-future"],"futureCapabilities":["discussion","comments","members","forum"]}
+    {"surface":"LivingWaterWest","path":"/church/","product":"church","architecture":"defined","modules":["door-entry","gatherings","ministries","bible-study-bridge","prayer","giving","contact"],"relations":{"Emmaus":"shared Bible-study system"}},
+    {"surface":"Magazine","path":"/journal/","product":"independent-digital-magazine","architecture":"defined","modules":["current-volume","opening","contents","sections","story-reader","archive"],"editorialSections":["magazine:adullam","magazine:emmaus"]},
+    {"surface":"Emmaus","path":"/one/","product":"bible-study-workbench","architecture":"defined","modules":["scripture","ONE","DoreFolio","maps","routes","places","people","lexicon","cross-reference","gospel-harmony","background","church-study-context"]},
+    {"surface":"OliveMountain","path":"/olive/","product":"sermon-ministry-library","architecture":"defined","modules":["speakers","series","ministries","scripture-index","themes","continue-listening"],"forbidden":"generic-video-library"},
+    {"surface":"DawnBookshop","path":"/dawn-library/","product":"books-and-publications-library","architecture":"defined","modules":["shelves","books","publications","manuscripts","authors","reading-path"],"excluded":["bible-reference-sites","bible-maps","study-tools"]},
+    {"surface":"ParadiseCinema","path":"/cinema/","product":"programmed-bible-cinema","architecture":"defined","modules":["weekly-programme","feature","special","season","film-page","series-page","episode-page","scripture-coordinate","watch-next","bible-timeline-index"],"timelinePlacement":"bottom"},
+    {"surface":"DaylightCafe","path":"/daylight-cafe/","product":"christian-life-common-room","architecture":"defined","modules":["life-topics","family","work","city-life","culture","practical-life","events","community-future"],"futureCapabilities":["discussion","comments","members","forum"]}
   ],
-  "sharedRules":["A surface may compose shared resources but may not duplicate their canonical identity.","Product modules are presentation contracts, not new resource silos.","Cross-surface links are permitted where the user task naturally crosses products.","Each surface may develop its own visual and interaction grammar after its product modules are stable.","Legacy media-format navigation must not return during product rebuilding."],
-  "executionOrder":["LivingWaterWest","Magazine","Emmaus","OliveMountain","DawnBookshop","ParadiseCinema","DaylightCafe"],
-  "next":"complete-LivingWaterWest-product-modules-then-Magazine"
+  "architectureExecution":[
+    "normalize-content-models-for-seven-surfaces",
+    "complete-scoped-index-and-query-contracts",
+    "complete-cross-surface-reference-contracts",
+    "audit-and-isolate-all-legacy-dependencies",
+    "validate-routes-build-and-shared-resource-ownership",
+    "declare-architecture-complete"
+  ],
+  "afterArchitecture":{
+    "phase":"full-site-layout-redesign",
+    "rule":"Start from a clean layout system and discard prior redesign assumptions.",
+    "reference":"Use the current Sites design progress as the primary design reference together with the stabilized architecture.",
+    "preserve":"content, routes where still useful, resource architecture, verified assets, canonical identities",
+    "discard":"previous page-layout redesigns, accumulated visual patches, obsolete template assumptions"
+  },
+  "next":"normalize-content-models-for-seven-surfaces"
 }
