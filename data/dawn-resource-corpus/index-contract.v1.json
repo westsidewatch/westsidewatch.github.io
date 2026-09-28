@@ -1,0 +1,32 @@
+{
+  "schema": "dawn.index-contract.v1",
+  "purpose": "Derived scoped indexes for shared resources. Consumers query indexes; they do not load the full Dawn corpus by default.",
+  "canonicalResourceAuthority": "/data/dawn-resource-corpus/",
+  "indexes": {
+    "by-type": { "key": "resource.type", "output": "/data/dawn-index/by-type/" },
+    "by-speaker": { "key": "entity:speaker", "output": "/data/dawn-index/by-speaker/" },
+    "by-series": { "key": "entity:series", "output": "/data/dawn-index/by-series/" },
+    "by-scripture": { "key": "entity:scripture", "output": "/data/dawn-index/by-scripture/" },
+    "by-theme": { "key": "entity:theme", "output": "/data/dawn-index/by-theme/" },
+    "by-place": { "key": "entity:place", "output": "/data/dawn-index/by-place/" },
+    "by-ministry": { "key": "entity:ministry", "output": "/data/dawn-index/by-ministry/" },
+    "by-language": { "key": "resource.language", "output": "/data/dawn-index/by-language/" }
+  },
+  "consumerPolicy": {
+    "defaultFullCorpusRead": false,
+    "allowedInputs": ["scoped-index", "editorial-selection", "single-resource", "explicit-offline-index-build"],
+    "surfaceOwnsCanonicalResource": false,
+    "surfaceMayOwn": ["selection", "ordering", "editorial-context", "presentation", "interaction"]
+  },
+  "surfaceQueries": {
+    "LivingWaterWest": ["editorial-selection", "single-resource"],
+    "Journal": ["editorial-selection", "single-resource", "by-theme", "by-scripture", "by-speaker"],
+    "Adullam": ["editorial-selection", "single-resource"],
+    "DawnBookshop": ["by-type", "by-author", "by-theme", "editorial-selection"],
+    "ParadiseCinema": ["by-type", "by-speaker", "by-series", "by-scripture", "by-theme", "editorial-selection"],
+    "OliveMountain": ["by-speaker", "by-series", "by-ministry", "by-scripture", "by-theme", "by-type"],
+    "DaylightCafe": ["by-theme", "by-type", "editorial-selection"],
+    "ONE": ["by-scripture", "by-place", "by-theme", "single-resource"],
+    "Search": ["scoped-index"]
+  }
+}
