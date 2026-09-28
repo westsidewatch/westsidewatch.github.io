@@ -6,11 +6,11 @@
     <nav class="primary-nav" aria-label="Primary navigation">
       <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>LivingWaterWest</a>
       <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Magazine</a>
+      <a href="{{ "one/" | relURL }}"{{ if eq .Section "one" }} aria-current="page"{{ end }}>Bible</a>
+      <a href="{{ "olive/" | relURL }}"{{ if eq .Section "olive" }} aria-current="page"{{ end }}>Sermon</a>
       <a href="{{ "dawn-library/" | relURL }}"{{ if eq .Section "dawn-library" }} aria-current="page"{{ end }}>Book</a>
       <a href="{{ "cinema/" | relURL }}"{{ if eq .Section "cinema" }} aria-current="page"{{ end }}>Cinema</a>
-      <a href="{{ "olive/" | relURL }}"{{ if eq .Section "olive" }} aria-current="page"{{ end }}>Sermon</a>
       <a href="{{ "daylight-cafe/" | relURL }}"{{ if eq .Section "daylight-cafe" }} aria-current="page"{{ end }}>Life</a>
-      <a href="{{ "one/" | relURL }}"{{ if eq .Section "one" }} aria-current="page"{{ end }}>Bible</a>
       <a href="/dore/search/"{{ if eq .RelPermalink "/dore/search/" }} aria-current="page"{{ end }}>Search</a>
     </nav>
   </div>
