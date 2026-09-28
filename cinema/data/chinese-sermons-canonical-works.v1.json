@@ -1,0 +1,53 @@
+{
+  "schema":"dore.cinema-chinese-sermons-canonical-works.v1",
+  "collectionId":"cinema:collection:chinese-sermons",
+  "status":"active-growing",
+  "admissionRule":"verified provider item; provider embed only; no rehost",
+  "series":[
+    {
+      "canonicalId":"cinema:series:david-pawson:unlocking-old-testament-zh",
+      "title":"大衛鮑森舊約縱覽",
+      "speakerId":"speaker:david-pawson",
+      "speaker":"大衛鮑森",
+      "language":["zh-Hant","zh"],
+      "sourceId":"source:youtube:david-pawson-international-chinese",
+      "provider":"youtube",
+      "status":"canonical-growing",
+      "works":[
+        {
+          "canonicalId":"cinema:video:david-pawson:unlocking-exodus-1-zh",
+          "title":"大衛鮑森舊約縱覽 - 出埃及記(一)",
+          "scripture":["Exodus"],
+          "url":"https://www.youtube.com/watch?v=jlHOgXhkEMo",
+          "embedUrl":"https://www.youtube.com/embed/jlHOgXhkEMo",
+          "providerChannel":"大衛鮑森國際中文頻道",
+          "verified":true,
+          "rights":{"rehost":false,"policy":"provider-embed"}
+        }
+      ]
+    },
+    {
+      "canonicalId":"cinema:series:david-pawson:unlocking-new-testament-zh",
+      "title":"大衛鮑森新約縱覽",
+      "speakerId":"speaker:david-pawson",
+      "speaker":"大衛鮑森",
+      "language":["zh-Hant","zh"],
+      "sourceId":"source:youtube:david-pawson-international-chinese",
+      "provider":"youtube",
+      "status":"canonical-growing",
+      "works":[
+        {
+          "canonicalId":"cinema:video:david-pawson:unlocking-matthew-1-zh",
+          "title":"大衛鮑森新約縱覽 - 馬太福音(一)",
+          "scripture":["Matthew"],
+          "url":"https://www.youtube.com/watch?v=mbNZAzDSWbo",
+          "embedUrl":"https://www.youtube.com/embed/mbNZAzDSWbo",
+          "providerChannel":"大衛鮑森國際中文頻道",
+          "verified":true,
+          "rights":{"rehost":false,"policy":"provider-embed"}
+        }
+      ]
+    }
+  ],
+  "next":"continue enumerating verified episodes under both canonical series and map each work to scripture coordinates"
+}
