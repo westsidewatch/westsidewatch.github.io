@@ -1,0 +1,22 @@
+{
+  "schema": "westside-core.adapter.v1",
+  "id": "adapter:bible-index",
+  "status": "active",
+  "legacyAuthority": "bible-index",
+  "source": "/data/bible-index/biblical-event.v1.json",
+  "targetAuthority": "Westside Core",
+  "targetStore": "/data/westside-core/entities/",
+  "entityType": "biblical-event",
+  "identity": {
+    "preserveLegacyIds": true,
+    "idField": "eventId",
+    "canonicalKeyField": "canonicalKey",
+    "labelsAreIdentity": false,
+    "aliasesAreIdentity": false
+  },
+  "relations": {
+    "scriptureRanges": "references-scripture"
+  },
+  "migrationPolicy": "adapter-first-no-copy",
+  "consumerRule": "new consumers resolve biblical events through Westside Core; legacy consumers may continue reading the original Bible Index during migration"
+}
