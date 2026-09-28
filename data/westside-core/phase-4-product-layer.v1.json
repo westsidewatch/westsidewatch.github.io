@@ -1,9 +1,12 @@
 {
   "schema":"westside-core.phase-4-product-layer.v1",
-  "status":"architecture-only-active",
-  "principle":"Finish the information, resource, routing, product-module and cross-surface architecture before any new full-site layout design. Existing layouts are temporary carriers only and are not design authority for the next visual system.",
+  "status":"pure-architecture-active",
+  "principle":"Architecture work is now completely independent from the site's previous design. Existing rendered pages are compatibility shells only; they carry no visual, layout, animation or component authority into the future redesign.",
   "architectureScope":["canonical-surface-responsibilities","product-module-contracts","resource-query-boundaries","cross-surface-relations","routing-and-carrier-paths","legacy-isolation","shared-indexes","content-models","future-interaction-boundaries"],
-  "designFreeze":{"active":true,"rule":"Do not continue incremental redesign of existing layouts during architecture work.","existingLayouts":"temporary-carriers","previousRedesigns":"non-authoritative-for-future-layout","allowedNow":["structural fixes required for architecture","routing fixes","data wiring","resource boundaries","hidden legacy cleanup"],"deferred":["new visual composition","new animation grammar","surface visual unification","full-site layout system","responsive visual redesign"]},
+  "designAuthority":{"previousSiteDesign":"abandoned","previousRedesigns":"abandoned","existingLayouts":"compatibility-shells-only","existingCSS":"non-authoritative","existingAnimations":"non-authoritative","existingComponents":"non-authoritative","existingPageComposition":"non-authoritative","sitesProgress":"future-redesign-reference-only"},
+  "preserveNow":["canonical content","Westside Core resources","entities","relations","indexes","verified assets","canonical surface identities","routing where required for compatibility","data provenance"],
+  "doNotPreserveAsDesign":["layout hierarchy","CSS conventions","template structure","component geometry","animation grammar","page spacing","typographic hierarchy","old responsive behavior","visual patches"],
+  "architectureGuard":"No architecture decision may be justified by the needs or limitations of an existing layout. Existing layouts may only be touched when required to keep routes/build/data access functional during architecture migration.",
   "contentModel":"/data/westside-core/surface-content-models.v1.json",
   "architectureExecution":[
     {"step":"normalize-content-models-for-seven-surfaces","status":"complete"},
@@ -13,6 +16,6 @@
     {"step":"validate-routes-build-and-shared-resource-ownership","status":"queued"},
     {"step":"declare-architecture-complete","status":"queued"}
   ],
-  "afterArchitecture":{"phase":"full-site-layout-redesign","rule":"Start from a clean layout system and discard prior redesign assumptions.","reference":"Use the current Sites design progress as the primary design reference together with the stabilized architecture.","preserve":"content, routes where still useful, resource architecture, verified assets, canonical identities","discard":"previous page-layout redesigns, accumulated visual patches, obsolete template assumptions"},
+  "afterArchitecture":{"phase":"full-site-layout-redesign","startCondition":"architecture-complete","rule":"Build a new layout system without inheriting previous site design assumptions.","reference":"Use current Sites design progress as a reference at redesign time, not as an architecture dependency.","preserve":"content, stabilized architecture, verified assets, canonical identities and useful compatibility routes","discard":"all previous design authority"},
   "next":"complete-scoped-index-and-query-contracts"
 }
