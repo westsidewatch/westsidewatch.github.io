@@ -1,0 +1,78 @@
+name: DORE Living Water UI Round 2
+
+on:
+  push:
+    branches: ['dore/living-water-ui-round2']
+    paths:
+      - 'static/dore-design/living-water-bloom-round2.html'
+      - 'dore-design/living-water-bloom-round2.v1.json'
+      - 'dore-design/training/living-water-ui-round2.v0.json'
+      - 'local/dore-local/living_water_bloom_round2_acceptance.py'
+      - '.github/workflows/dore-living-water-ui-round2.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: dore-living-water-ui-round2-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  train:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 60
+    steps:
+      - name: Resolve immutable input
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; test -d "$ROOT/.git"; cd "$ROOT"
+          git fetch origin "$GITHUB_SHA"
+          SHA="$(git rev-parse "$GITHUB_SHA^{commit}")"
+          WT="$HOME/.dore/runs/living-water-ui-round2-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          echo "TRAINING_SHA=$SHA" >> "$GITHUB_ENV"
+          echo "TRAINING_WT=$WT" >> "$GITHUB_ENV"
+      - name: Build isolated Doré worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; cd "$ROOT"
+          rm -rf "$TRAINING_WT"
+          git worktree add --detach "$TRAINING_WT" "$TRAINING_SHA"
+          cd "$TRAINING_WT"
+          test -f static/dore-design/living-water-bloom-round2.html
+          test -f dore-design/training/living-water-ui-round2.v0.json
+      - name: Install resident
+        run: |
+          cd "$TRAINING_WT"
+          export DORE_REPO_ROOT="$TRAINING_WT"
+          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
+          bash dore-design/install-macos.sh
+      - name: Run Doré UI proficiency on real surface
+        run: |
+          cd "$TRAINING_WT"
+          export DORE_REPO_ROOT="$TRAINING_WT"
+          export DORE_TRAINING_SPEC="$TRAINING_WT/dore-design/training/living-water-ui-round2.v0.json"
+          export DORE_TRAINING_SURFACE="$TRAINING_WT/static/dore-design/living-water-bloom-round2.html"
+          export DORE_EDITORIAL_ATLAS="$TRAINING_WT/static/dore-design/italian-editorial-grammars.v1.json"
+          export DORE_LOCAL_HOME="$TRAINING_WT/.training-home"
+          export DORE_UI_TASTE_DB="$TRAINING_WT/.training-home/design/ui-taste.sqlite3"
+          rm -rf "$DORE_LOCAL_HOME"
+          if [ -x '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' ]; then export DORE_DESIGN_BROWSER='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'; elif [ -x '/Applications/Chromium.app/Contents/MacOS/Chromium' ]; then export DORE_DESIGN_BROWSER='/Applications/Chromium.app/Contents/MacOS/Chromium'; elif [ -x '/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge' ]; then export DORE_DESIGN_BROWSER='/Applications/Microsoft Edge.app/Contents/MacOS/Microsoft Edge'; else export DORE_DESIGN_BROWSER='/opt/homebrew/bin/firefox'; fi
+          python3 scripts/check_design_raster_runtime.py "$TRAINING_WT/.raster-smoke"
+          python3 dore-design/weapon_proficiency.py --round 01 --execute --raster --self-revise
+      - name: Validate experiment boundary
+        run: |
+          cd "$TRAINING_WT"
+          python3 local/dore-local/living_water_bloom_round2_acceptance.py
+      - name: Upload evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-living-water-ui-round2-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ env.TRAINING_WT }}/dore-design/training/evidence/round-01
+            ${{ env.TRAINING_WT }}/.training-home/**/*.raster-failure.json
+          if-no-files-found: warn
+          retention-days: 30
+      - name: Cleanup
+        if: always()
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"; cd "$ROOT"
+          git worktree remove --force "$TRAINING_WT" 2>/dev/null || true
+          rm -rf "$TRAINING_WT"
