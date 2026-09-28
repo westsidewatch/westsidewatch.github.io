@@ -1,0 +1,25 @@
+{
+  "schema":"westside-core.legacy-retirement.v1",
+  "retiredSurfaces":[
+    {
+      "id":"Website",
+      "status":"retired-from-canonical-navigation",
+      "reason":"Temporary catch-all website/resource surface has been replaced by explicit first-level surfaces and Westside Core routing.",
+      "newConsumerAllowed":false,
+      "deleteLegacyPhysicalFiles":false,
+      "migration":"route useful records by content authority before physical deletion",
+      "routing":{
+        "bible-study-website":"Emmaus",
+        "scripture-resource":"Emmaus",
+        "bible-map":"Emmaus",
+        "lexicon":"Emmaus",
+        "sermon-or-ministry-site":"OliveMountain",
+        "book-or-publication":"DawnBookshop",
+        "video-resource":"ParadiseCinema",
+        "christian-life-information":"DaylightCafe",
+        "church-official-content":"LivingWaterWest"
+      }
+    }
+  ],
+  "rule":"Retired surfaces cannot become canonical consumers in new framework code. Legacy paths may remain temporarily only as migration sources or redirects."
+}
