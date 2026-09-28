@@ -1,0 +1,23 @@
+{
+  "schema": "westside-core.index-contract.v1",
+  "purpose": "Neutral site-wide shared resource infrastructure. No publication surface owns this layer.",
+  "canonicalResourceAuthority": "/data/westside-core/",
+  "derivedIndexRoot": "/data/westside-index/",
+  "indexes": {
+    "by-type": { "key": "resource.type" },
+    "by-speaker": { "key": "entity:speaker" },
+    "by-series": { "key": "entity:series" },
+    "by-scripture": { "key": "entity:scripture" },
+    "by-theme": { "key": "entity:theme" },
+    "by-place": { "key": "entity:place" },
+    "by-ministry": { "key": "entity:ministry" },
+    "by-language": { "key": "resource.language" }
+  },
+  "consumerPolicy": {
+    "defaultFullCorpusRead": false,
+    "allowedInputs": ["scoped-index", "editorial-selection", "single-resource", "explicit-offline-index-build"],
+    "surfaceOwnsCanonicalResource": false,
+    "surfaceMayOwn": ["selection", "ordering", "editorial-context", "presentation", "interaction"]
+  },
+  "surfaces": ["LivingWaterWest", "Journal", "Adullam", "DawnBookshop", "ParadiseCinema", "OliveMountain", "DaylightCafe", "ONE", "Search"]
+}
