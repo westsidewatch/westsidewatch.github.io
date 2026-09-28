@@ -1,0 +1,14 @@
+{
+  "schema":"westside-core.relations.v1",
+  "authority":"Westside Core",
+  "sourceAdapter":"adapter:sermon-media",
+  "records":[
+    {"from":"resource:video:david-pawson:unlocking-exodus-1-zh","predicate":"spoken-by","to":"speaker:david-pawson"},
+    {"from":"resource:video:david-pawson:unlocking-exodus-1-zh","predicate":"belongs-to-series","to":"series:david-pawson:unlocking-old-testament-zh"},
+    {"from":"resource:video:david-pawson:unlocking-exodus-1-zh","predicate":"references-scripture","to":"Exodus"},
+    {"from":"resource:video:david-pawson:unlocking-matthew-1-zh","predicate":"spoken-by","to":"speaker:david-pawson"},
+    {"from":"resource:video:david-pawson:unlocking-matthew-1-zh","predicate":"belongs-to-series","to":"series:david-pawson:unlocking-new-testament-zh"},
+    {"from":"resource:video:david-pawson:unlocking-matthew-1-zh","predicate":"references-scripture","to":"Matthew"},
+    {"from":"series:jiang-xiuqin:inner-life-45","predicate":"spoken-by","to":"speaker:jiang-xiuqin"}
+  ]
+}
