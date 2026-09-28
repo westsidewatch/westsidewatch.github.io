@@ -1,0 +1,27 @@
+{
+  "schema":"westside-core.surface-consumers.v1",
+  "queryLayer":"/js/westside-resource-query.js",
+  "consumers":{
+    "OliveMountain":{
+      "status":"active-contract",
+      "primaryClasses":["sermon","speaker","ministry","teaching-series","ministry-teaching"],
+      "queries":[
+        {"index":"by-speaker","key":"speaker:david-pawson"},
+        {"index":"by-series","key":"series:jiang-xiuqin:inner-life-45"},
+        {"index":"by-type","key":"video"}
+      ],
+      "rule":"Olive Mountain reads scoped Westside indexes and never owns or bulk-loads the canonical sermon corpus."
+    },
+    "Emmaus":{
+      "status":"active-contract",
+      "primaryClasses":["scripture","bible-translation","bible-study-resource","bible-study-website","bible-map","bible-route","biblical-place","biblical-person","lexicon","cross-reference","gospel-harmony","bible-background"],
+      "queries":[
+        {"index":"by-scripture","key":"Matthew"}
+      ],
+      "tools":["ONE","DoreFolio"],
+      "rule":"Emmaus is the Bible-study presentation surface. ONE and Doré Folio are tools beneath it and consume the same Core authority."
+    }
+  },
+  "fallbackPolicy":"fail-closed-no-full-corpus-read",
+  "legacyPathPolicy":"existing legacy page paths may remain until presentation migration; new resource access must use WestsideResources"
+}
