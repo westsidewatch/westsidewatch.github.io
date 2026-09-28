@@ -1,25 +1,26 @@
 {
   "schema":"westside-core.legacy-retirement.v1",
+  "retirementPolicy":{
+    "visibility":"hidden",
+    "navigationExposure":false,
+    "searchExposure":false,
+    "newLinksAllowed":false,
+    "physicalDeletion":"blocked-until-migration-complete",
+    "deletionGate":["all-useful-records-routed","all-consumers-migrated","new-framework-stable","no-resource-authority-conflicts","no-route-conflicts","no-required-legacy-dependencies"]
+  },
   "retiredSurfaces":[
     {
       "id":"Website",
-      "status":"retired-from-canonical-navigation",
+      "status":"hidden-migration-source",
       "reason":"Temporary catch-all website/resource surface has been replaced by explicit first-level surfaces and Westside Core routing.",
       "newConsumerAllowed":false,
       "deleteLegacyPhysicalFiles":false,
       "migration":"route useful records by content authority before physical deletion",
-      "routing":{
-        "bible-study-website":"Emmaus",
-        "scripture-resource":"Emmaus",
-        "bible-map":"Emmaus",
-        "lexicon":"Emmaus",
-        "sermon-or-ministry-site":"OliveMountain",
-        "book-or-publication":"DawnBookshop",
-        "video-resource":"ParadiseCinema",
-        "christian-life-information":"DaylightCafe",
-        "church-official-content":"LivingWaterWest"
-      }
-    }
+      "routing":{"bible-study-website":"Emmaus","scripture-resource":"Emmaus","bible-map":"Emmaus","lexicon":"Emmaus","sermon-or-ministry-site":"OliveMountain","book-or-publication":"DawnBookshop","video-resource":"ParadiseCinema","christian-life-information":"DaylightCafe","church-official-content":"LivingWaterWest"}
+    },
+    {"id":"Podcast","status":"hidden-migration-source","newConsumerAllowed":false,"deleteLegacyPhysicalFiles":false,"migration":"route reusable audio/media and editorial records before deletion"},
+    {"id":"Video","status":"hidden-migration-source","newConsumerAllowed":false,"deleteLegacyPhysicalFiles":false,"migration":"route canonical media to Westside Core and presentation to ParadiseCinema/OliveMountain as appropriate"},
+    {"id":"About","status":"hidden-migration-source","newConsumerAllowed":false,"deleteLegacyPhysicalFiles":false,"migration":"route institutional identity/content to LivingWaterWest or the relevant canonical surface before deletion"}
   ],
-  "rule":"Retired surfaces cannot become canonical consumers in new framework code. Legacy paths may remain temporarily only as migration sources or redirects."
+  "rule":"Retired surfaces remain physically available only as hidden migration sources. They must not appear in canonical navigation, public discovery, new links or new framework consumers. Physical deletion is permitted only after the deletion gate is fully satisfied."
 }
