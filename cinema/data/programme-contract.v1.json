@@ -1,0 +1,20 @@
+{
+  "schema":"paradise-cinema.programme.v1",
+  "status":"canonical-product-contract",
+  "surface":"ParadiseCinema",
+  "principle":"Cinema is a programmed Bible cinema, not a generic video archive.",
+  "homepageOrder":[
+    "now-showing",
+    "this-week",
+    "season-or-festival",
+    "films-and-series",
+    "up-next",
+    "bible-timeline-index"
+  ],
+  "ownedEditorialTypes":["programme","screening","season","festival","feature","sequence"],
+  "coreBackedTypes":["film","series","episode","biblical-event","scripture-coordinate","person","place","theme"],
+  "schedulingSignals":["church-season","biblical-feast","holiday","commemoration","magazine-theme","editorial-theme"],
+  "timeline":{"role":"bottom-index","primaryHomepageNarrative":false,"rule":"Bible Timeline is a persistent collection index reached after the programmed experience; it grows as Scripture-coordinate coverage grows."},
+  "sermonBoundary":{"canonicalHome":"OliveMountain","homepageAllowed":false,"archiveAllowed":false,"crossReferenceOnly":true,"rule":"Sermon/ministry video is not Cinema inventory. Cinema may reference a sermon only editorially when a programme explicitly requires it."},
+  "upNextRule":"Combine current programme sequence, related biblical event/scripture coordinate and active season/festival; do not reduce Up Next to generic similarity recommendations."
+}
