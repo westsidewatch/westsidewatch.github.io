@@ -1,0 +1,22 @@
+{
+  "schema":"j3k.temporal-city.registration.v1",
+  "phase":"herodian-jesus",
+  "authority":"migration scaffold from existing Jerusalem 3000 runtime; not archaeological survey geometry",
+  "purpose":"Replace legacy grid generation without discarding the established world scale, DEM registration, and Herodian spatial work. All migrated geometry remains reconstructed/inferred until upgraded by sourced linework.",
+  "districts":[
+    {
+      "id":"j3k:district:western-lower-city",
+      "confidence":"inferred",
+      "geometry":{"status":"provisional-runtime-registration","frame":"scene-local-metres","polygon":[{"x":-175,"z":70},{"x":-118,"z":52},{"x":-42,"z":60},{"x":42,"z":82},{"x":118,"z":101},{"x":164,"z":145},{"x":142,"z":222},{"x":66,"z":246},{"x":-24,"z":238},{"x":-112,"z":214},{"x":-164,"z":158}]},
+      "sources":["legacy-herodian-lower-city-zone","legacy-lower-city-lanes","canonical-dem"],
+      "upgradeRequired":"historical-map / archaeological district registration"
+    }
+  ],
+  "roads":[
+    {"id":"j3k:road:lower-city-lane-a","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-155,"z":82},{"x":-92,"z":112},{"x":-28,"z":126},{"x":38,"z":151},{"x":106,"z":166}]}},
+    {"id":"j3k:road:lower-city-lane-b","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-128,"z":205},{"x":-73,"z":174},{"x":-15,"z":153},{"x":49,"z":132},{"x":118,"z":108}]}},
+    {"id":"j3k:road:lower-city-lane-c","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-66,"z":72},{"x":-55,"z":116},{"x":-42,"z":165},{"x":-28,"z":220}]}},
+    {"id":"j3k:road:lower-city-lane-d","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":58,"z":80},{"x":48,"z":121},{"x":64,"z":168},{"x":86,"z":214}]}}
+  ],
+  "migration":{"legacySource":"herodian-lower-city-debox.js","legacyGridAuthority":false,"preserveCoordinates":true,"preserveTerrain":true,"allowParcelGeneration":true}
+}
