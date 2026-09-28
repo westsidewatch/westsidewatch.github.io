@@ -1,0 +1,47 @@
+{
+  "schema":"dore.cinema-chinese-sermons-discovery.v1",
+  "collectionId":"cinema:collection:chinese-sermons",
+  "status":"active-growing",
+  "verifiedAt":"2026-09-27",
+  "sources":[
+    {
+      "sourceId":"source:youtube:david-pawson-international-chinese",
+      "speakerId":"speaker:david-pawson",
+      "speaker":"大衛鮑森",
+      "label":"大衛鮑森國際中文頻道",
+      "provider":"youtube",
+      "url":"https://www.youtube.com/channel/UCKkUuEC1rNnuQ1yZ-RCAHPQ",
+      "authority":"official-authorized-chinese-channel",
+      "verified":true,
+      "evidence":"Channel description identifies it as official authorized and supervised by GOOD TV; GOOD TV states long-term Chinese authorization from the David Pawson foundation.",
+      "seriesSeeds":["舊約縱覽","新約縱覽","靈恩派與福音派","耶穌給教會的七封信","完整系列"],
+      "admission":"series-discovery-source"
+    },
+    {
+      "sourceId":"source:youtube:jiang-xiuqin-inner-life-goodtv",
+      "speakerId":"speaker:jiang-xiuqin",
+      "speaker":"江秀琴",
+      "label":"江秀琴・內在生活｜GOOD TV 特會精選",
+      "provider":"youtube",
+      "authority":"authorized-broadcaster-source",
+      "verified":true,
+      "seedWork":{
+        "canonicalId":"cinema:video:goodtv:jiang-xiuqin-return-to-lords-love",
+        "title":"如何脫離錯誤的思想模式？醫治的關鍵是內在生活！｜江秀琴《回到主愛裡》",
+        "url":"https://www.youtube.com/watch?v=kfHp9f_Z9TQ",
+        "series":"回到主愛裡",
+        "language":["zh-Hant"],
+        "topics":["內在生活","醫治","等候神","與神連結"],
+        "providerChannel":"GOOD TV 特會精選",
+        "embedUrl":"https://www.youtube.com/embed/kfHp9f_Z9TQ",
+        "rights":{"rehost":false,"policy":"provider-embed"}
+      },
+      "admission":"verified-work-plus-series-discovery-source"
+    }
+  ],
+  "pendingSources":[
+    {"speakerId":"speaker:ye-guangming","speaker":"業光明","status":"continue-verification","rule":"do not admit ambiguous same-name results"},
+    {"speakerId":"speaker:watchman-nee","speaker":"倪柝聲","status":"continue-item-verification","rule":"speaker authority and uploader provenance must remain separate; do not label third-party uploader official"}
+  ],
+  "nextPriority":["enumerate-david-pawson-chinese-series","enumerate-jiang-xiuqin-inner-life-series","verify-ye-guangming-source","verify-watchman-nee-items","deduplicate-against-existing-video-resource"]
+}
