@@ -1,24 +1,22 @@
 {
   "schema":"design-preparation.surface-structure.v1",
   "surface":"LivingWaterWest",
-  "status":"proposed-for-lock",
+  "status":"locked",
   "route":"/church/",
-  "purpose":"The gathered life of the local church: worship, formation, prayer, ministry, service and practical connection.",
+  "purpose":"The gathered life of the local church: worship, formation, prayer, service and practical connection.",
   "designPrinciple":"LivingWaterWest is not an About/organization website. It should express a living church community while handing specialist content to the appropriate Westside surface without duplicating it.",
   "primaryStructure":[
     {"id":"worship","label":"Worship","role":"Regular gathered worship and service information.","existingEvidence":["content/church/sunday-worship.md"]},
     {"id":"bible-study","label":"Bible Study","role":"The church's actual study gatherings and study-group context.","existingEvidence":["content/church/bible-study.md"],"handoff":"Emmaus","rule":"Meeting identity stays in LivingWaterWest; Scripture, maps, background, cross references, ONE and Doré Folio are shared through Emmaus rather than duplicated."},
     {"id":"discipleship","label":"Discipleship","role":"Formation, courses, practice, service and shared discipleship life.","existingEvidence":["content/church/discipleship.md"]},
-    {"id":"prayer","label":"Prayer","role":"Prayer gatherings and the church's prayer life.","existingEvidence":["content/church/prayer-meeting.md"]},
-    {"id":"ministries","label":"Ministries","role":"Stable ministry/group identities and their activities; a ministry is not recreated as a separate top-level site surface."},
-    {"id":"church-life","label":"Church Life","role":"Current notices, gatherings, events and practical participation that belong to the local church rather than the wider Life surface."},
+    {"id":"prayer","label":"Prayer","role":"Prayer gatherings and the church's prayer life.","existingEvidence":["content/church/prayer-meeting.md"],"currentProgramme":[{"name":"線上守望禱告會","schedule":"每週三晚八點","mode":"online"}]},
     {"id":"serve-give","label":"Serve & Give","role":"Service opportunities and giving as practical participation, not editorial content.","existingEvidence":["content/church/giving.md"]},
     {"id":"visit-contact","label":"Visit & Contact","role":"Location, gathering access and contact information.","existingEvidence":["content/church/contact.md"]}
   ],
+  "deferredStructures":{"ministries":"Do not expose as a fixed department until multiple stable ministries require their own structure. The current weekly online watch prayer meeting belongs under Prayer.","church-life":"Do not create as a fixed department; it overlaps with gatherings, ministry and participation and currently adds no distinct structural function."},
   "supportingIdentity":{"about":"Church identity/history/pastoral information may exist as supporting information but About must not return as a first-level product or navigation identity."},
-  "crossSurfaceRelations":{"Emmaus":"Bible Study resources and study workspace","OliveMountain":"sermons and teaching records","Magazine":"editorial stories/features about church life","DaylightCafe":"Christian everyday-life material that is broader than a local church event or ministry"},
-  "explicitExclusions":["standalone About surface","generic Video section","generic Podcast section","duplicate Bible-resource library","duplicate sermon archive","general Christian lifestyle bucket"],
+  "crossSurfaceRelations":{"Emmaus":"Bible Study resources and study workspace","OliveMountain":"sermons and teaching records","Magazine":"editorial stories/features about church life","DaylightCafe":"Christian everyday-life material that is broader than a local church gathering"},
+  "explicitExclusions":["standalone About surface","fixed Ministries department without sufficient distinct ministries","Church Life catch-all department","generic Video section","generic Podcast section","duplicate Bible-resource library","duplicate sermon archive","general Christian lifestyle bucket"],
   "designCharacter":{"sharedSiteLanguage":"required","surfaceDifference":"Living, gathered and participatory. Its structure should privilege what the church is doing together and how a person joins that life, rather than behaving like a publication archive or research tool."},
-  "unresolvedBeforeLock":["Inventory actual ministry/group identities already present elsewhere in repository/data and decide which are stable enough to appear under Ministries.","Confirm whether Church Life needs a stable public label distinct from events/notices, or should remain a composition layer rather than a named department."],
   "layoutAllowed":false
 }
