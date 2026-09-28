@@ -1,0 +1,34 @@
+{
+  "schema":"westside-core.adapter.v1",
+  "id":"adapter:dawn-bookshop",
+  "status":"active",
+  "legacyNamespace":"dawn",
+  "surface":"DawnBookshop",
+  "rule":"Dawn Bookshop is a consumer/editorial product. Only independently reusable canonical works/authors/resources may be promoted into Westside Core.",
+  "classifications":{
+    "surfaceOwned":[
+      "/data/dawn-10k-work-queue.json",
+      "/data/dawn-resource-queue.json",
+      "shelves",
+      "reading-paths",
+      "acquisition-workflow",
+      "review-workflow",
+      "bookshop-specific-catalog-presentation"
+    ],
+    "promotionCandidates":[
+      "canonical-work-record",
+      "author-entity",
+      "edition-entity-when-cross-surface-reusable",
+      "reusable-book-resource",
+      "subject/theme relation",
+      "provenance-and-rights"
+    ],
+    "auditRequired":[
+      "/data/dawn-10k-openlibrary-works.json",
+      "/data/dawn-corpus/"
+    ]
+  },
+  "bulkMoveForbidden":true,
+  "migrationPolicy":"record-by-record-authority-promotion",
+  "consumerRule":"Bookshop queues and catalog workflow never become Westside Core merely because they contain bibliographic metadata."
+}
