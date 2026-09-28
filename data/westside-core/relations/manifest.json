@@ -1,0 +1,6 @@
+{
+  "schema": "westside-core.relations.manifest.v1",
+  "records": [],
+  "predicates": ["spoken-by", "authored-by", "published-by", "belongs-to-series", "associated-with-ministry", "references-scripture", "about-theme", "about-place", "about-person", "related-to"],
+  "rule": "relations connect stable Core IDs; presentation surfaces are not canonical resource owners"
+}
