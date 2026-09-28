@@ -1,0 +1,6 @@
+{
+  "schema": "westside-core.resources.manifest.v1",
+  "records": [],
+  "types": ["video", "sermon", "audio", "book", "article", "image", "map", "manuscript", "dataset", "other"],
+  "migration": { "mode": "adapter-first", "copyLegacyByDefault": false }
+}
