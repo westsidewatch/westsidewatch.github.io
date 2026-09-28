@@ -1,8 +1,8 @@
 ---
-title: "About Westside Watch"
-description: "A publication formed in the practice of watching for the dawn."
+title: "About (legacy)"
+_build:
+  render: never
+  list: never
 ---
 
-Westside Watch is the formal publication of a watchful community: attentive to Scripture, place, memory, and the life of the city.
-
-The journal begins with **Vol.00 — The Foundations of a Watchful City**.
+The standalone About surface is retired. Church identity and institutional information belong to LivingWaterWest; publication identity is expressed by Magazine and Westside Watch itself rather than a first-level About navigation item.
