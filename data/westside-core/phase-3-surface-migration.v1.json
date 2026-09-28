@@ -2,9 +2,9 @@
   "schema":"westside-core.phase-3-surface-migration.v1",
   "status":"surface-carriers-established",
   "surfaces":[
-    {"surface":"LivingWaterWest","path":"/church/","carrier":"preserved","publicIdentity":"canonical"},
+    {"surface":"LivingWaterWest","path":"/church/","carrier":"preserved","publicIdentity":"canonical","connectedSurfaces":["Emmaus"]},
     {"surface":"Magazine","path":"/journal/","carrier":"preserved","publicIdentity":"canonical"},
-    {"surface":"Emmaus","path":"/one/","carrier":"preserved","publicIdentity":"canonical","nestedTools":["ONE","DoreFolio"]},
+    {"surface":"Emmaus","path":"/one/","carrier":"preserved","publicIdentity":"canonical","nestedTools":["ONE","DoreFolio"],"churchIntegration":"LivingWaterWest: Bible Study"},
     {"surface":"OliveMountain","path":"/olive/","carrier":"established","publicIdentity":"canonical"},
     {"surface":"DawnBookshop","path":"/dawn-library/","carrier":"established","publicIdentity":"canonical"},
     {"surface":"ParadiseCinema","path":"/cinema/","carrier":"established","publicIdentity":"canonical"},
@@ -13,7 +13,7 @@
   "retiredPublicSurfaces":["Website","About","Video","Podcast","Journal-identity","Church-identity"],
   "hiddenMigrationSources":["/website/*","/about/"],
   "boundaryNotes":[
-    "LivingWaterWest retains its own Bible Study gathering page; shared Bible-study tools and reference resources belong to Emmaus.",
+    "LivingWaterWest Bible Study and Emmaus share one Bible-study resource system. The church gathering remains visible inside LivingWaterWest while its Scripture tools, study materials and indexes are supplied directly by Emmaus / Westside Core.",
     "Magazine Emmaus is an editorial section distinct from the first-level Emmaus Bible surface.",
     "Video and audio remain shared resource types and are routed by content responsibility rather than public media-format surfaces."
   ],
