@@ -1,0 +1,17 @@
+{
+  "schema":"design-preparation.content-inventory.v1",
+  "status":"design-input",
+  "authority":"Westside Core surface content models",
+  "purpose":"Give redesign work a clean inventory of what each public surface must be able to present, without importing legacy navigation or layout assumptions.",
+  "inventory":{
+    "LivingWaterWest":{"kinds":["gathering","ministry","church-study","prayer-gathering","service-opportunity","giving-entry","church-contact","church-notice"],"legacyInputs":["About"],"nestedOrLinked":["Emmaus study system","Olive Mountain sermons","Magazine stories","Life topics"]},
+    "Magazine":{"kinds":["volume","issue","section","story","essay","interview","testimony","feature","editorial-selection"],"legacyInputs":["Journal"],"nestedOrLinked":["editorial selections from any canonical surface"]},
+    "Emmaus":{"kinds":["scripture-passage","study-session","study-note","map","route","biblical-place","biblical-person","lexicon-entry","cross-reference","gospel-harmony","background-resource","study-collection"],"legacyInputs":["Website:bible-study","Book:bible-reference"],"nestedOrLinked":["ONE","Doré Folio","LivingWaterWest Bible Study entry"]},
+    "OliveMountain":{"kinds":["speaker","sermon","teaching-series","ministry","sermon-collection","sermon-selection"],"legacyInputs":["Video:sermon","Podcast:sermon","Adullam:sermon-selection"],"nestedOrLinked":["audio/video media attached to sermon identity","Scripture links into Emmaus"]},
+    "DawnBookshop":{"kinds":["book","publication","manuscript","author","edition","reading-collection"],"legacyInputs":["Book","Publication","Manuscript"],"excluded":["Bible maps","Bible reference websites","study tools"],"nestedOrLinked":["continue reading","related Scripture","Magazine selections"]},
+    "ParadiseCinema":{"kinds":["programme","screening","film","series","episode","season","special","festival-selection","watch-next"],"legacyInputs":["Video:film","Video:series","CinemaLegacy"],"nestedOrLinked":["weekly programming","seasonal/feast programming","Scripture coordinates","Bible Timeline as secondary index","watch next"]},
+    "DaylightCafe":{"kinds":["life-topic","practical-guide","conversation","event","family-resource","work-resource","city-life-resource","culture-resource","community-thread-future"],"legacyInputs":["Website:christian-life","Life","CommunityFuture"],"nestedOrLinked":["church life","Magazine stories","books","sermons"]}
+  },
+  "legacyHandling":{"Website":"hidden migration source only","About":"hidden migration source only","Video":"media/source classification only","Podcast":"media/source classification only","Journal":"Magazine alias/migration source only","Church":"not a separate identity; LivingWaterWest uses the existing /church/ carrier","ONE":"tool inside Emmaus","DoreFolio":"tool inside Emmaus"},
+  "designRule":"A redesign may create new presentation patterns for these kinds, but may not create new ownership categories merely to fit a layout."
+}
