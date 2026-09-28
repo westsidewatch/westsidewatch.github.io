@@ -1,0 +1,19 @@
+{
+  "schema": "westside-core.registry.v1",
+  "status": "active",
+  "authority": "Westside Core",
+  "principle": "one canonical resource identity, many consumers",
+  "stores": {
+    "resources": "/data/westside-core/resources/manifest.json",
+    "entities": "/data/westside-core/entities/manifest.json",
+    "relations": "/data/westside-core/relations/manifest.json",
+    "provenance": "/data/westside-core/provenance/manifest.json"
+  },
+  "derivedIndexes": "/data/westside-index/",
+  "consumerQuery": "/js/westside-resource-query.js",
+  "legacyAdapters": {
+    "bibleIndex": "/data/bible-index/",
+    "oldDawnShared": ["/data/dawn-resource-corpus/", "/data/dawn-corpus/"],
+    "policy": "legacy data remains readable during migration; no new consumer may treat a legacy path as canonical shared authority"
+  }
+}
