@@ -1,6 +1,6 @@
 {
   "schema":"westside-core.phase-4-product-layer.v1",
-  "status":"pure-architecture-active-validation-fix",
+  "status":"pure-architecture-build-gate",
   "principle":"Architecture work is completely independent from the site's previous design. Existing rendered pages are compatibility shells only.",
   "designAuthority":{"previousSiteDesign":"abandoned","previousRedesigns":"abandoned","existingLayouts":"compatibility-shells-only","existingCSS":"non-authoritative","existingAnimations":"non-authoritative","existingComponents":"non-authoritative","sitesProgress":"future-redesign-reference-only"},
   "preserveNow":["canonical content","Westside Core resources","entities","relations","indexes","verified assets","canonical surface identities","routing where required for compatibility","data provenance"],
@@ -15,8 +15,8 @@
     {"step":"complete-scoped-index-and-query-contracts","status":"complete"},
     {"step":"complete-cross-surface-reference-contracts","status":"complete"},
     {"step":"audit-and-isolate-all-legacy-dependencies","status":"complete"},
-    {"step":"validate-routes-build-and-shared-resource-ownership","status":"blocked-fix-required","findings":["missing /one/ content carrier","missing /olive/ content carrier","missing /cinema/ content carrier"]},
+    {"step":"validate-routes-build-and-shared-resource-ownership","status":"build-gate-pending","routes":"pass","shared-resource-ownership":"pass","legacy-isolation":"pass"},
     {"step":"declare-architecture-complete","status":"queued"}
   ],
-  "next":"establish-missing-canonical-route-carriers-then-revalidate"
+  "next":"confirm-general-site-build-deploy-then-declare-architecture-complete"
 }
