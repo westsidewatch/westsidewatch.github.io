@@ -1,0 +1,25 @@
+{
+  "schema":"j3k.temporal-city.urban.v1",
+  "phase":"herodian-jesus",
+  "temporalFocus":"c.30 CE",
+  "principle":"This file describes urban relationships before buildings. It does not restore the old Herodian model and does not invent parcel footprints where evidence is absent.",
+  "frame":{"type":"local-enu","origin":{"lat":31.778,"lon":35.235},"terrain":"canonical-dem"},
+  "districts":[
+    {"id":"j3k:district:temple-mount","label":"Temple Mount precinct","role":"sacred-monumental","confidence":"reconstructed","anchorObjectIds":["j3k:object:temple-mount-enclosure-herodian","j3k:object:inner-temple","j3k:object:royal-stoa"]},
+    {"id":"j3k:district:western-lower-city","label":"Western / Lower City urban fabric","role":"mixed-residential-commercial","confidence":"inferred","geometry":{"status":"withheld-pending-historical-parcel-reconstruction"}},
+    {"id":"j3k:district:southern-approach","label":"Southern pilgrimage approach","role":"pilgrimage-access","confidence":"reconstructed","anchorObjectIds":["j3k:object:southern-approach"]},
+    {"id":"j3k:district:antonia-northwest","label":"Antonia / northwest precinct","role":"military-monumental","confidence":"reconstructed","anchorObjectIds":["j3k:object:antonia"]}
+  ],
+  "movementNetwork":[
+    {"id":"j3k:road:western-street","type":"road","label":"Western retaining-wall street","confidence":"observed","anchorObjectId":"j3k:object:western-street","geometry":{"status":"registration-pending","mode":"terrain-following-line"}},
+    {"id":"j3k:road:southern-pilgrimage-approach","type":"road","label":"Southern pilgrimage approach","confidence":"reconstructed","anchorObjectId":"j3k:object:southern-approach","geometry":{"status":"registration-pending","mode":"terrain-following-line"}},
+    {"id":"j3k:gate:eastern-access-unresolved","type":"gate","label":"Eastern access — exact gate unresolved","confidence":"disputed","anchorObjectId":"j3k:object:eastern-entry-unknown","geometry":{"status":"withheld"}}
+  ],
+  "parcelPolicy":{"mode":"evidence-first","rules":["Observed or historically registered footprints may become explicit parcels.","Where individual footprints are unknown, generate typological parcels only inside a supported district envelope and mark them inferred.","Never derive parcels from rows × columns.","Parcel orientation follows road edge, slope or terrace before visual variety.","Monument precincts use their own geometry builders and are never filled by residential parcel grammar."]},
+  "typologyZones":[
+    {"districtId":"j3k:district:western-lower-city","allowed":["courtyard-house","street-house","workshop-house"],"confidence":"inferred","generator":"parcel-driven"},
+    {"districtId":"j3k:district:temple-mount","allowed":["retaining-wall","court","portico","stair","gate","sanctuary","basilica"],"confidence":"reconstructed","generator":"monument-builder"},
+    {"districtId":"j3k:district:antonia-northwest","allowed":["fortress-wall","court","tower","barracks"],"confidence":"reconstructed","generator":"monument-builder"}
+  ],
+  "hardRules":{"noGridPopulation":true,"noSemanticBoxBuildings":true,"noMonumentSlabs":true,"terrainFirst":true,"evidenceTravelsWithGeometry":true}
+}
