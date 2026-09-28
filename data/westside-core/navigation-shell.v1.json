@@ -2,11 +2,11 @@
   "schema":"westside-core.navigation-shell.v1",
   "status":"phase-3-surface-migration-active",
   "resourceAuthority":"Westside Core",
-  "principle":"Seven durable public surfaces form the visible site. Legacy paths may continue to resolve during migration, but legacy identities are hidden and all content moves toward an explicit canonical surface.",
+  "principle":"Seven durable public surfaces form the visible site. Existing carrier paths may remain while public identities and content responsibilities are normalized.",
   "firstLevel":[
-    {"id":"LivingWaterWest","navLabel":"LivingWaterWest","display":{"en":"LivingWaterWest","zh-Hant":"活水西區"},"role":"church-institutional-surface","canonicalPath":"/church/","migrationSources":["Church","About"]},
+    {"id":"LivingWaterWest","navLabel":"LivingWaterWest","display":{"en":"LivingWaterWest","zh-Hant":"活水西區"},"role":"church-institutional-surface","canonicalPath":"/church/","carrierPathStatus":"preserved-current","migrationSources":["About"],"rule":"/church/ is the existing LivingWaterWest carrier path, not a legacy surface scheduled for removal."},
     {"id":"Magazine","navLabel":"Magazine","display":{"en":"Magazine","zh-Hant":"西望雜誌"},"role":"publication-surface","publication":"Westside Watch","canonicalPath":"/journal/","sections":["magazine:adullam","magazine:emmaus"],"migrationSources":["Journal"]},
-    {"id":"Emmaus","navLabel":"Bible","display":{"zh-Hant":"以馬忤斯","en":"Emmaus"},"role":"bible-study-surface","canonicalPath":"/one/","tools":["ONE","DoreFolio"],"migrationSources":["ONE","DoreFolio","Website:bible-study","Book:bible-reference"]},
+    {"id":"Emmaus","navLabel":"Bible","display":{"zh-Hant":"以馬忤斯","en":"Emmaus"},"role":"bible-study-surface","canonicalPath":"/one/","tools":["ONE","DoreFolio"],"migrationSources":["DoreFolio","Website:bible-study","Book:bible-reference"],"rule":"/one/ remains a carrier path during migration; ONE itself is a tool beneath Emmaus."},
     {"id":"OliveMountain","navLabel":"Sermon","display":{"zh-Hant":"橄欖山","en":"Olive Mountain"},"role":"sermon-ministry-knowledge-surface","canonicalPath":"/olive/","migrationSources":["Video:sermon","Podcast:sermon","Adullam:sermon-selection"]},
     {"id":"DawnBookshop","navLabel":"Book","display":{"zh-Hant":"黎明書局","en":"Dawn Bookshop"},"role":"books-publications-surface","canonicalPath":"/dawn-library/","commercialBookshop":false,"migrationSources":["Book","Publication","Manuscript"]},
     {"id":"ParadiseCinema","navLabel":"Cinema","display":{"zh-Hant":"天堂電影院","en":"Paradise Cinema"},"role":"programmed-bible-cinema-surface","canonicalPath":"/cinema/","migrationSources":["Video:film","Video:series","CinemaLegacy"]},
@@ -17,7 +17,7 @@
   "migrationRouting":[
     {"legacy":"About","destination":"LivingWaterWest","visibility":"hidden"},
     {"legacy":"Journal","destination":"Magazine","visibility":"alias-only"},
-    {"legacy":"ONE","destination":"Emmaus","visibility":"tool-beneath-surface"},
+    {"legacy":"ONE-identity","destination":"Emmaus","visibility":"tool-beneath-surface"},
     {"legacy":"DoreFolio","destination":"Emmaus","visibility":"tool-beneath-surface"},
     {"legacy":"Website:bible-study","destination":"Emmaus","visibility":"hidden-source"},
     {"legacy":"Book:bible-reference","destination":"Emmaus","visibility":"hidden-source"},
@@ -27,13 +27,13 @@
     {"legacy":"Video:series","destination":"ParadiseCinema","visibility":"hidden-source"},
     {"legacy":"Website:christian-life","destination":"DaylightCafe","visibility":"hidden-source"}
   ],
+  "preservedCarrierPaths":[{"path":"/church/","surface":"LivingWaterWest"},{"path":"/journal/","surface":"Magazine","identityAlias":"Journal"},{"path":"/one/","surface":"Emmaus","tool":"ONE"}],
   "notFirstLevel":["ONE","DoreFolio","Website","About","Video","Podcast","WestsideCore","Journal"],
   "legacyVisibility":{"Website":"hidden","About":"hidden","Video":"hidden","Podcast":"hidden","Journal":"alias-only","ONE":"nested-tool","DoreFolio":"nested-tool"},
   "rules":[
+    "Church is not a legacy surface: /church/ remains the current carrier path for LivingWaterWest.",
     "Every migrated public item must resolve to one of the seven canonical surfaces or Search utility; no new catch-all Website surface is permitted.",
-    "Navigation labels are functional and concise; surface brand names appear within their destinations.",
     "ONE and Doré Folio are exposed through Emmaus, never as peer first-level surfaces.",
-    "Magazine section Emmaus and surface Emmaus may share visible naming but retain distinct internal IDs.",
     "Legacy paths may remain until conflict-free migration is complete, but legacy identities must not reappear in public navigation.",
     "Moving presentation responsibility never moves canonical resource ownership away from Westside Core."
   ]
