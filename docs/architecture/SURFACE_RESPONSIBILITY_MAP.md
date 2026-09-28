@@ -20,8 +20,8 @@ Consumers must query scoped indexes/selections. A page must not load the complet
 
 ## Surface responsibilities
 
-### Church
-Official institutional presence. Static-first. Future interaction may be added without turning Church into a resource authority.
+### LivingWaterWest
+Official institutional presence for Living Water Assembly West. `LivingWaterWest` is the canonical product/surface name; do not use `Church` as the surface name in new architecture, navigation, data contracts or consumer identifiers. Static-first. Future interaction may be added without turning LivingWaterWest into a resource authority.
 
 ### Journal
 Independent magazine/publication system. Owns issues, sections, stories, editorial sequencing and edition snapshots. It references Dawn resources but does not own them.
