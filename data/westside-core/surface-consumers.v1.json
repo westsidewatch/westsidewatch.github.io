@@ -1,39 +1,74 @@
 {
   "schema":"westside-core.surface-consumers.v1",
+  "status":"phase-2-complete",
   "queryLayer":"/js/westside-resource-query.js",
+  "resourceAuthority":"Westside Core",
+  "globalRules":[
+    "No surface owns canonical shared resources.",
+    "No surface may bulk-load the full corpus by default.",
+    "Consumers use scoped indexes, editorial selections or single-resource reads.",
+    "Editorial/product state belongs to its surface and must not be written back as canonical resource identity.",
+    "Legacy Website, About, Video and Podcast surfaces are migration sources only and cannot become new resource authorities."
+  ],
   "consumers":{
-    "OliveMountain":{
-      "status":"active-contract",
-      "navLabel":"Sermon",
-      "primaryClasses":["sermon","speaker","ministry","teaching-series","ministry-teaching"],
-      "queries":[
-        {"index":"by-speaker","key":"speaker:david-pawson"},
-        {"index":"by-speaker","key":"speaker:jiang-xiuqin"},
-        {"index":"by-speaker","key":"speaker:derek-prince"},
-        {"index":"by-speaker","key":"speaker:watchman-nee"},
-        {"index":"by-speaker","key":"speaker:kang-lai-chang"},
-        {"index":"by-speaker","key":"speaker:stephen-tong"},
-        {"index":"by-speaker","key":"speaker:kou-shao-en"},
-        {"index":"by-speaker","key":"speaker:rick-warren"},
-        {"index":"by-speaker","key":"speaker:tong-liu"},
-        {"index":"by-speaker","key":"speaker:jerry-lai"},
-        {"index":"by-speaker","key":"speaker:yu-hong-jie"},
-        {"index":"by-speaker","key":"speaker:huang-shuhua"},
-        {"index":"by-series","key":"series:jiang-xiuqin:inner-life-45"}
-      ],
-      "rule":"Olive Mountain reads explicit sermon speaker/series/ministry scopes from Westside indexes and never owns or bulk-loads the canonical sermon or generic video corpus."
+    "LivingWaterWest":{
+      "navLabel":"LivingWaterWest",
+      "primaryClasses":["church","ministry","event","sermon-reference","publication-reference"],
+      "allowedAccess":["editorial-selection","single-resource","scoped-index"],
+      "owns":["institutional-presentation","church-page-ordering"]
+    },
+    "Magazine":{
+      "navLabel":"Magazine",
+      "primaryClasses":["issue","story","feature","editorial-selection"],
+      "allowedAccess":["editorial-selection","single-resource","scoped-index"],
+      "owns":["issue-snapshot","section-order","story-context","publication-sequence"],
+      "nestedSections":["magazine:adullam","magazine:emmaus"]
     },
     "Emmaus":{
-      "status":"active-contract",
       "navLabel":"Bible",
       "primaryClasses":["scripture","bible-translation","bible-study-resource","bible-study-website","bible-map","bible-route","biblical-place","biblical-person","lexicon","cross-reference","gospel-harmony","bible-background"],
-      "queries":[
-        {"index":"by-scripture","key":"Matthew"}
-      ],
+      "allowedAccess":["single-resource","scoped-index","editorial-selection"],
       "tools":["ONE","DoreFolio"],
-      "rule":"Emmaus is the Bible-study presentation surface. ONE and Doré Folio are tools beneath it and consume the same Core authority."
+      "owns":["study-context","tool-state"]
+    },
+    "OliveMountain":{
+      "navLabel":"Sermon",
+      "primaryClasses":["sermon","speaker","ministry","teaching-series","ministry-teaching"],
+      "allowedAccess":["scoped-index","single-resource","editorial-selection"],
+      "preferredIndexes":["by-speaker","by-series","by-ministry","by-scripture","by-theme"],
+      "forbiddenGenericScopes":["by-type:video"],
+      "owns":["sermon-curation","speaker-presentation","series-ordering"]
+    },
+    "DawnBookshop":{
+      "navLabel":"Book",
+      "primaryClasses":["book","publication","edition","author","manuscript"],
+      "allowedAccess":["editorial-selection","single-resource","scoped-index"],
+      "owns":["shelf","reading-path","publication-presentation"],
+      "commercialBookshop":false
+    },
+    "ParadiseCinema":{
+      "navLabel":"Cinema",
+      "primaryClasses":["film","series","episode","biblical-event","scripture-coordinate"],
+      "allowedAccess":["editorial-selection","single-resource","scoped-index"],
+      "owns":["programme","screening","season","festival","feature","sequence"],
+      "forbiddenPrimaryClasses":["sermon","ministry-channel"],
+      "timelineRole":"bottom-collection-index"
+    },
+    "DaylightCafe":{
+      "navLabel":"Life",
+      "primaryClasses":["christian-life","family","work","city-life","culture","event","practical-life"],
+      "allowedAccess":["editorial-selection","single-resource","scoped-index"],
+      "owns":["life-topic-curation","community-presentation"],
+      "futureCapabilities":["discussion","comments","members","forum"]
+    },
+    "Search":{
+      "navLabel":"Search",
+      "primaryClasses":["cross-site-discovery"],
+      "allowedAccess":["derived-search-index"],
+      "owns":[],
+      "rule":"Search consumes derived indexes and never becomes a canonical resource store."
     }
   },
   "fallbackPolicy":"fail-closed-no-full-corpus-read",
-  "legacyPathPolicy":"existing legacy page paths may remain until presentation migration; new resource access must use WestsideResources"
+  "legacyPathPolicy":"Existing legacy page paths may remain during presentation migration; all new shared-resource access must use the Westside Core query contract."
 }
