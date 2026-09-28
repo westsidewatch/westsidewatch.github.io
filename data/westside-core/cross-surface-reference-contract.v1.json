@@ -1,0 +1,31 @@
+{
+  "schema":"westside-core.cross-surface-reference-contract.v1",
+  "status":"canonical",
+  "authority":"Westside Core",
+  "principle":"Surfaces exchange references and context, never duplicated canonical records.",
+  "referenceShape":{"required":["resourceId","relation","targetSurface"],"optional":["selectionId","scriptureCoordinate","contextId","continuationId","labelOverride"],"forbidden":["embeddedCanonicalCopy","layoutInstruction","visualInstruction"]},
+  "resolution":{"resourceId":"resolve through canonical by-id resource index","selectionId":"resolve through editorial selection index","targetSurface":"controls destination context only, never ownership","missingResource":"fail-closed","circularReference":"allowed only as navigation relation; recursive content expansion forbidden"},
+  "relations":{
+    "LivingWaterWest":{"Emmaus":["uses-study-system","opens-study-context"],"OliveMountain":["related-sermon"],"Magazine":["related-story"],"DaylightCafe":["related-life-topic"]},
+    "Magazine":{"LivingWaterWest":["references-church-context"],"Emmaus":["references-study-resource"],"OliveMountain":["references-sermon"],"DawnBookshop":["references-publication"],"ParadiseCinema":["references-film-or-series"],"DaylightCafe":["references-life-topic"]},
+    "Emmaus":{"LivingWaterWest":["used-by-church-study"],"OliveMountain":["related-teaching"],"ParadiseCinema":["related-screen-work"],"DawnBookshop":["related-publication"]},
+    "OliveMountain":{"Emmaus":["teaches-scripture"],"LivingWaterWest":["belongs-church-context"],"Magazine":["selected-by-editorial"]},
+    "DawnBookshop":{"Emmaus":["related-scripture-or-study"],"Magazine":["selected-by-editorial"],"DaylightCafe":["related-life-reading"]},
+    "ParadiseCinema":{"Emmaus":["scripture-coordinate","open-study-context"],"Magazine":["selected-by-editorial"]},
+    "DaylightCafe":{"LivingWaterWest":["related-church-life"],"Magazine":["selected-by-editorial"],"DawnBookshop":["related-reading"],"OliveMountain":["related-teaching"]}
+  },
+  "specialContracts":{
+    "churchBibleStudyToEmmaus":{"source":"LivingWaterWest","target":"Emmaus","mode":"shared-workspace-entry","rule":"Bible Study opens the same Emmaus study system; no duplicate church-study corpus is created."},
+    "cinemaToEmmaus":{"source":"ParadiseCinema","target":"Emmaus","mode":"scripture-coordinate","rule":"A film, series or episode may expose Scripture coordinates that resolve into Emmaus study context."},
+    "magazineComposition":{"source":"Magazine","mode":"editorial-reference","rule":"Magazine may select resources from any canonical surface domain while retaining only issue/section/story editorial context."},
+    "sermonMedia":{"source":"OliveMountain","mode":"canonical-sermon-reference","rule":"Audio/video is attached to sermon identity; media format does not become a cross-surface owner."}
+  },
+  "continuation":{"purpose":"Allow continue-reading, continue-teaching and watch-next without coupling surfaces.","shape":["continuationId","resourceId","targetSurface","contextId"],"rule":"Continuation state references canonical ids and surface context only."},
+  "guardrails":[
+    "No surface imports another surface's rendered page as data.",
+    "No cross-surface relation depends on CSS, templates, DOM structure or route-specific visual composition.",
+    "A reference may carry context but cannot mutate canonical ownership.",
+    "Recursive expansion across surfaces is prohibited; resolve one hop at a time.",
+    "Legacy Website, Video, Podcast and About identities cannot be cross-surface targets."
+  ]
+}
