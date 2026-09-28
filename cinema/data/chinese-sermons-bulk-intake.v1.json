@@ -1,0 +1,52 @@
+{
+  "schema":"dore.cinema-bulk-intake.v1",
+  "collectionId":"cinema:collection:chinese-sermons",
+  "mode":"source-family-wholesale-intake",
+  "createdAt":"2026-09-28",
+  "policy":{
+    "admitVerifiedSourceFamilyAsWhole":true,
+    "itemLevelIndexingDoesNotBlockAdmission":true,
+    "rehost":false,
+    "preserveProviderProvenance":true,
+    "deduplicateLaterByCanonicalIdentity":true,
+    "seriesAndScriptureIndexing":"asynchronous-followup"
+  },
+  "intakes":[
+    {
+      "speakerId":"speaker:david-pawson",
+      "speaker":"大衛鮑森",
+      "sourceId":"source:youtube:david-pawson-international-chinese",
+      "status":"whole-source-family-admitted",
+      "scope":"entire verified Chinese YouTube channel; present and future public Chinese teaching items",
+      "provider":"youtube",
+      "indexLater":["playlist","series","scripture","theme"]
+    },
+    {
+      "speakerId":"speaker:jiang-xiuqin",
+      "speaker":"江秀琴",
+      "sourceId":"source:frcc:jiang-xiuqin-inner-life",
+      "status":"whole-series-family-admitted",
+      "scope":"江秀琴內在生活系列及慕主先鋒官方/授權公開影音來源中的內在生活內容",
+      "evidence":"FRCC official message archive explicitly labels 江秀琴 messages as Series: 內在生活; FRCC app describes 江秀琴牧師內在生活信息 and全集播放.",
+      "indexLater":["subseries","episode","theme","scripture"]
+    },
+    {
+      "speakerId":"speaker:ye-guangming",
+      "speaker":"業光明",
+      "status":"source-identification-active",
+      "admissionWhen":"one unambiguous Chinese source family/channel is verified",
+      "then":"admit whole source family without item-by-item gate"
+    },
+    {
+      "speakerId":"speaker:watchman-nee",
+      "speaker":"倪柝聲",
+      "status":"bulk-publication-family-intake-active",
+      "scope":"Chinese audio/video readings and sermon-record publications attributed to Watchman Nee",
+      "provenance":"retain actual uploader/channel; never relabel third-party uploader as official",
+      "knownSeedUploader":"三位書屋",
+      "knownSeedPattern":"倪柝聲講道集",
+      "then":"admit coherent publication families in bulk, deduplicate and provenance-index afterward"
+    }
+  ],
+  "next":"expand breadth first; normalize/index after intake rather than serially approving individual videos"
+}
