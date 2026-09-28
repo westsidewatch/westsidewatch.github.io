@@ -7,7 +7,7 @@
   "hub": "sermon",
   "language": ["zh-Hant", "zh-Hans", "zh"],
   "status": "active-growing",
-  "description": "天堂電影院的中文講道與中文聖經教導館藏。以講員、系列、經卷、主題與來源 provenance 組織；持續擴充，不以單一頻道作為導航權威。",
+  "description": "天堂電影院的中文講道與中文聖經教導館藏。以講員、系列、經卷、主題與來源 provenance 組織；持續擴充。",
   "principles": {
     "openEnded": true,
     "providerDoesNotDefineNavigation": true,
@@ -16,25 +16,39 @@
     "episodesRemainUnderSeries": true,
     "rehostDefault": false,
     "canonicalAdmissionRequired": true,
-    "preserveUploaderProvenance": true
+    "preserveUploaderProvenance": true,
+    "verifiedChannelMayBeAdmittedAsBulkSource": true
   },
   "seedCreators": [
     {"id":"speaker:ye-guangming","name":"業光明","role":"牧師","status":"discovery"},
     {"id":"speaker:watchman-nee","name":"倪柝聲","role":"講員／作者","status":"discovery","provenanceRule":"do-not-mark-third-party-uploaders-official"},
-    {"id":"speaker:david-pawson","name":"大衛鮑森","nameEn":"David Pawson","role":"牧師／聖經教師","status":"seeded","existingCanonicalWorkIds":["cinema:video:david-pawson:unlocking-matthew-1"]},
-    {"id":"speaker:jiang-xiuqin","name":"江秀琴","role":"牧師","status":"seeded","focusSeries":["內在生活"],"existingCanonicalWorkIds":["cinema:video:goodtv:waiting-on-god-no-minute-wasted","cinema:video:goodtv:jiang-xiuqin-enter-grace","cinema:video:goodtv:jiang-xiuqin-rise-and-shine","cinema:video:goodtv:jiang-xiuqin-rest-in-god"]}
+    {"id":"speaker:david-pawson","name":"大衛鮑森","nameEn":"David Pawson","role":"牧師／聖經教師","status":"bulk-source-admitted"},
+    {"id":"speaker:jiang-xiuqin","name":"江秀琴","role":"牧師","status":"seeded","focusSeries":["內在生活"]}
   ],
   "seedSourceFamilies": [
     {"id":"source:youtube:ye-guangming-zh","label":"業光明牧師中文 YouTube","status":"awaiting-source-verification"},
     {"id":"source:youtube:watchman-nee-zh","label":"倪柝聲中文內容","status":"awaiting-item-verification","authority":"speaker-authority-plus-uploader-provenance"},
-    {"id":"source:youtube:david-pawson-international-chinese","label":"大衛鮑森國際中文頻道","status":"verified-seed","provider":"youtube"},
+    {
+      "id":"source:youtube:david-pawson-international-chinese",
+      "label":"大衛鮑森國際中文頻道",
+      "status":"bulk-source-admitted",
+      "provider":"youtube",
+      "channelId":"UCKkUuEC1rNnuQ1yZ-RCAHPQ",
+      "url":"https://www.youtube.com/channel/UCKkUuEC1rNnuQ1yZ-RCAHPQ",
+      "scope":"entire-channel",
+      "ingestMode":"provider-index-and-embed",
+      "rehost":false,
+      "rule":"All public Chinese videos and playlists from this verified source are members of the David Pawson Chinese collection unless explicitly excluded. New channel items inherit collection membership and can be indexed incrementally without one-by-one admission.",
+      "organization":"Preserve channel as source; derive series, scripture, theme and episode facets asynchronously."
+    },
     {"id":"source:youtube:jiang-xiuqin-inner-life","label":"江秀琴・內在生活系列","status":"expansion-seed","provider":"youtube"}
   ],
   "navigationFacets": ["speaker", "series", "scripture", "theme", "language"],
   "expansionPolicy": {
-    "next": "continue-discovery-after-collection-establishment",
-    "priority": ["complete-series", "official-or-authorized-sources", "stable-playlists", "scripture-coordinate", "topic-coordinate"],
-    "deduplicateByCanonicalIdentity": true
+    "next": "bulk-source-first",
+    "priority": ["admit-complete-verified-channels", "complete-series", "stable-playlists", "scripture-coordinate", "topic-coordinate"],
+    "deduplicateByCanonicalIdentity": true,
+    "itemByItemAdmissionRequiredForVerifiedBulkSources": false
   },
-  "createdAt": "2026-09-27"
+  "updatedAt": "2026-09-28"
 }
