@@ -1,0 +1,11 @@
+{
+  "schema": "westside-core.relations.v1",
+  "authority": "Westside Core",
+  "sourceAdapter": "adapter:bible-index",
+  "records": [
+    {"from":"bible:event:incarnation","predicate":"references-scripture","to":"Matt.1.1-2.23"},
+    {"from":"bible:event:baptism-of-jesus","predicate":"references-scripture","to":"Matt.3.1-4.25"},
+    {"from":"bible:event:crucifixion","predicate":"references-scripture","to":"Matt.27.32-28.20"},
+    {"from":"bible:event:resurrection","predicate":"references-scripture","to":"Matt.27.32-28.20"}
+  ]
+}
