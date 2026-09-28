@@ -1,0 +1,19 @@
+{
+  "schema":"westside-core.legacy-dependency-audit.v1",
+  "status":"isolated",
+  "scope":"public architecture and runtime resource contracts",
+  "retiredIdentities":["Website","About","Video","Podcast","Journal-identity","Church-identity"],
+  "auditQueries":["/website/","Website","Podcast","Journal"],
+  "auditResult":{"activeArchitectureReferences":"none-found-by-repository-code-search","legacyContentContainer":"content/website remains hidden migration-only","legacyAbout":"hidden/non-rendering","carrierPaths":{"/church/":"LivingWaterWest","/journal/":"Magazine","/one/":"Emmaus"}},
+  "isolationRules":[
+    "Retired identities cannot appear in first-level navigation.",
+    "Retired identities cannot be targets in cross-surface reference contracts.",
+    "Legacy content files may remain only as hidden migration sources until final deletion.",
+    "Carrier paths do not inherit their former public identity: /church/ is LivingWaterWest, /journal/ is Magazine, /one/ is Emmaus.",
+    "Video and Podcast may exist only as media/source metadata, never as product or ownership surfaces.",
+    "Website cannot be used as a catch-all destination or resource owner.",
+    "No future architecture contract may depend on legacy layout, CSS, template or component structure."
+  ],
+  "deletionPolicy":"Do not delete hidden legacy source files until route/build/resource validation passes; after validation they may be removed if no compatibility requirement remains.",
+  "next":"validate-routes-build-and-shared-resource-ownership"
+}
