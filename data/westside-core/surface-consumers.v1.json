@@ -4,16 +4,28 @@
   "consumers":{
     "OliveMountain":{
       "status":"active-contract",
+      "navLabel":"Sermon",
       "primaryClasses":["sermon","speaker","ministry","teaching-series","ministry-teaching"],
       "queries":[
         {"index":"by-speaker","key":"speaker:david-pawson"},
-        {"index":"by-series","key":"series:jiang-xiuqin:inner-life-45"},
-        {"index":"by-type","key":"video"}
+        {"index":"by-speaker","key":"speaker:jiang-xiuqin"},
+        {"index":"by-speaker","key":"speaker:derek-prince"},
+        {"index":"by-speaker","key":"speaker:watchman-nee"},
+        {"index":"by-speaker","key":"speaker:kang-lai-chang"},
+        {"index":"by-speaker","key":"speaker:stephen-tong"},
+        {"index":"by-speaker","key":"speaker:kou-shao-en"},
+        {"index":"by-speaker","key":"speaker:rick-warren"},
+        {"index":"by-speaker","key":"speaker:tong-liu"},
+        {"index":"by-speaker","key":"speaker:jerry-lai"},
+        {"index":"by-speaker","key":"speaker:yu-hong-jie"},
+        {"index":"by-speaker","key":"speaker:huang-shuhua"},
+        {"index":"by-series","key":"series:jiang-xiuqin:inner-life-45"}
       ],
-      "rule":"Olive Mountain reads scoped Westside indexes and never owns or bulk-loads the canonical sermon corpus."
+      "rule":"Olive Mountain reads explicit sermon speaker/series/ministry scopes from Westside indexes and never owns or bulk-loads the canonical sermon or generic video corpus."
     },
     "Emmaus":{
       "status":"active-contract",
+      "navLabel":"Bible",
       "primaryClasses":["scripture","bible-translation","bible-study-resource","bible-study-website","bible-map","bible-route","biblical-place","biblical-person","lexicon","cross-reference","gospel-harmony","bible-background"],
       "queries":[
         {"index":"by-scripture","key":"Matthew"}
