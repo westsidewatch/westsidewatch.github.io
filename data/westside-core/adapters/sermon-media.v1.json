@@ -1,0 +1,22 @@
+{
+  "schema":"westside-core.adapter.v1",
+  "id":"adapter:sermon-media",
+  "status":"active",
+  "legacySources":[
+    "/cinema/data/chinese-sermons-bulk-intake.v1.json",
+    "/cinema/data/chinese-sermons-canonical-works.v1.json"
+  ],
+  "targetAuthority":"Westside Core",
+  "classification":"sermon-ministry-knowledge",
+  "migrationPolicy":"adapter-first-preserve-source-provenance",
+  "identityPolicy":{"preserveLegacySpeakerIds":true,"newCanonicalMediaPrefix":"resource:video:","surfaceNamesAreIdentity":false},
+  "primaryPublicSurface":"OliveMountain",
+  "otherConsumers":["ParadiseCinema","Journal","Emmaus","Search"],
+  "rules":[
+    "Olive Mountain is the primary public outlet, not the owner of canonical records.",
+    "Cinema remains a media curation consumer and must not remain canonical authority for shared sermon records.",
+    "Journal/Adullam consumes explicit editorial selections only.",
+    "Emmaus consumes scripture/theme-related teaching resources.",
+    "Provider links and embed rights remain attached to provenance/rights records; no rehosting is introduced."
+  ]
+}
