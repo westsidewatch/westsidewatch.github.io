@@ -1,21 +1,29 @@
 {
   "schema":"westside-core.phase-3-surface-migration.v1",
-  "status":"surface-carriers-established",
+  "status":"phase-3-complete",
+  "completed":true,
   "surfaces":[
-    {"surface":"LivingWaterWest","path":"/church/","carrier":"preserved","publicIdentity":"canonical","connectedSurfaces":["Emmaus"]},
-    {"surface":"Magazine","path":"/journal/","carrier":"preserved","publicIdentity":"canonical"},
-    {"surface":"Emmaus","path":"/one/","carrier":"preserved","publicIdentity":"canonical","nestedTools":["ONE","DoreFolio"],"churchIntegration":"LivingWaterWest: Bible Study"},
-    {"surface":"OliveMountain","path":"/olive/","carrier":"established","publicIdentity":"canonical"},
-    {"surface":"DawnBookshop","path":"/dawn-library/","carrier":"established","publicIdentity":"canonical"},
-    {"surface":"ParadiseCinema","path":"/cinema/","carrier":"established","publicIdentity":"canonical"},
-    {"surface":"DaylightCafe","path":"/daylight-cafe/","carrier":"established","publicIdentity":"canonical"}
+    {"surface":"LivingWaterWest","navLabel":"LivingWaterWest","path":"/church/","carrier":"preserved","publicIdentity":"canonical","connectedSurfaces":["Emmaus"]},
+    {"surface":"Magazine","navLabel":"Magazine","path":"/journal/","carrier":"preserved","publicIdentity":"canonical"},
+    {"surface":"Emmaus","navLabel":"Bible","path":"/one/","carrier":"preserved","publicIdentity":"canonical","nestedTools":["ONE","DoreFolio"],"churchIntegration":"LivingWaterWest: Bible Study"},
+    {"surface":"OliveMountain","navLabel":"Sermon","path":"/olive/","carrier":"established","publicIdentity":"canonical"},
+    {"surface":"DawnBookshop","navLabel":"Book","path":"/dawn-library/","carrier":"established","publicIdentity":"canonical","scope":"books-publications-only"},
+    {"surface":"ParadiseCinema","navLabel":"Cinema","path":"/cinema/","carrier":"established","publicIdentity":"canonical","scope":"programmed-films-series"},
+    {"surface":"DaylightCafe","navLabel":"Life","path":"/daylight-cafe/","carrier":"established","publicIdentity":"canonical"}
   ],
+  "utility":{"surface":"Search","path":"/dore/search/","position":"last"},
+  "canonicalNavigationOrder":["LivingWaterWest","Magazine","Bible","Sermon","Book","Cinema","Life","Search"],
   "retiredPublicSurfaces":["Website","About","Video","Podcast","Journal-identity","Church-identity"],
   "hiddenMigrationSources":["/website/*","/about/"],
-  "boundaryNotes":[
-    "LivingWaterWest Bible Study and Emmaus share one Bible-study resource system. The church gathering remains visible inside LivingWaterWest while its Scripture tools, study materials and indexes are supplied directly by Emmaus / Westside Core.",
-    "Magazine Emmaus is an editorial section distinct from the first-level Emmaus Bible surface.",
-    "Video and audio remain shared resource types and are routed by content responsibility rather than public media-format surfaces."
+  "resolvedBoundaries":[
+    "LivingWaterWest Bible Study and Emmaus use one shared Bible-study resource system; no duplicate church Bible resource silo is maintained.",
+    "Magazine Emmaus remains an editorial section and does not compete with the first-level Bible / Emmaus surface.",
+    "Book presents books and publications only; Bible references, maps and study websites surface through Emmaus.",
+    "Sermon presents sermons, speakers, ministries and teaching series without consuming the generic video corpus.",
+    "Cinema presents programmed films and series; Bible Timeline is a lower collection index rather than the homepage product.",
+    "Video and audio are shared resource types, not public first-level surfaces.",
+    "Website is a hidden migration container and cannot regain public navigation status."
   ],
-  "next":"surface-content-alignment-audit"
+  "legacyDeletionPolicy":"defer-until-framework-stable-and-conflict-free",
+  "next":"phase-4-product-layer-rebuild"
 }
