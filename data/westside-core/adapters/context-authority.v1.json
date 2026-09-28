@@ -1,0 +1,11 @@
+{
+  "schema": "westside-core.adapter.v1",
+  "id": "adapter:context-authority",
+  "status": "active",
+  "source": "/data/context-authority-entities.v1.json",
+  "classification": "engineering-authority",
+  "targetAuthority": "runtime-tooling",
+  "corePromotion": "explicit-only",
+  "reason": "The current file describes engineering/system authority such as Doré Emergence, dependency resolution and fail-closed retrieval policy. It is not a public knowledge-entity corpus and must not be bulk-imported into Westside Core resources/entities.",
+  "promotionRule": "Only independently reusable public knowledge entities discovered in future authority files may be promoted record-by-record into Westside Core. Engineering capability/system/tool identities remain outside canonical public resource authority."
+}
