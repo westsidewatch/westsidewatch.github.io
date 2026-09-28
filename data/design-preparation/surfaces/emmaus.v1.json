@@ -1,0 +1,29 @@
+{
+  "schema":"design-preparation.surface-structure.v1",
+  "surface":"Emmaus",
+  "publicLabel":"Bible",
+  "displayName":"Emmaus / 以馬忤斯",
+  "status":"proposed-for-lock",
+  "route":"/one/",
+  "purpose":"Westside Watch 的聖經、查經與經文關係環境。它不是單一工具頁，而是 Scripture 與所有查經資源、查經工作流程的共同入口。",
+  "designPrinciple":"Emmaus 必須先讓人進入聖經，再自然進入背景、人物、地點、地圖、串珠、合參與工作區。ONE 與 Doré Folio 是嵌入其中的產品能力，不是粗暴跳轉到另一套網站。",
+  "primaryStructure":[
+    {"id":"scripture","label":"Scripture","role":"66 卷聖經與章節閱讀的 canonical 入口；其他查經能力都可以保持當前 Scripture coordinate。"},
+    {"id":"study","label":"Study","role":"查經課程、study sessions、study notes 與 study collections；可承接 LivingWaterWest Bible Study 的聚會上下文，但不取得聚會 ownership。"},
+    {"id":"people-places","label":"People & Places","role":"聖經人物、地點及其關係；人物與地點可進一步連到經文、地圖、背景與其他 Surface。"},
+    {"id":"maps-routes","label":"Maps & Routes","role":"聖經地圖、旅程、路線與地理背景。"},
+    {"id":"cross-references","label":"Cross References","role":"經文串珠與跨章、跨卷關係，不作為普通文章分類。"},
+    {"id":"gospel-harmony","label":"Gospel Harmony","role":"四福音合參；以事件與平行經文建立閱讀關係。"},
+    {"id":"background","label":"Background","role":"歷史、文化、語詞與必要背景資源；lexicon entries 屬於這個知識層。"}
+  ],
+  "embeddedProducts":{
+    "ONE":{"role":"深度查經工作環境","integration":"從 Scripture、Study、People & Places、Maps 等上下文直接進入，保留當前經文與相關 canonical resources；返回時仍在 Emmaus。","rule":"ONE 有自己的工作區密度與操作語法，但繼承全站 identity、navigation、type/material/motion grammar 與跨 Surface 關係。"},
+    "DoreFolio":{"displayName":"Doré Folio / 多寫","role":"查經筆記、寫作與資料浮現工作環境","integration":"可從當前 Scripture coordinate、人物、地點、主題或 study context 開啟，帶入上下文而不是開一個無關的新產品。","rule":"筆記與寫作狀態可以屬於工作區；引用的 Scripture/person/place 等仍指向 Westside Core canonical resources。"}
+  },
+  "contextModel":{"persistentContext":["scripture-coordinate","person","place","theme","study-session","study-collection"],"principle":"在 Emmaus 內閱讀、探索、ONE、Doré Folio 之間移動時，能保留的上下文不應被無故清空。"},
+  "crossSurfaceRelations":{"LivingWaterWest":"Bible Study 聚會從教會進入 Emmaus 的查經環境","OliveMountain":"講道的 Scripture coordinates 回到 Emmaus；Emmaus 可顯示相關講道但不複製 sermon ownership","ParadiseCinema":"電影與劇集的 Scripture coordinates 進入 Emmaus；Emmaus 不承擔排片","DawnBookshop":"書與出版物可連到相關 Scripture；Emmaus 不承擔出版 ownership","Magazine":"文章與互動作品可引用 Emmaus canonical Bible resources"},
+  "explicitExclusions":["把 ONE 做成一級導航 Surface","把 Doré Folio 做成一級導航 Surface","把 LivingWaterWest Bible Study 聚會搬進 Emmaus","建立重複的 sermon library","建立重複的 cinema library","把 Bible reference resources 放進 Dawn Bookshop","以工具入口卡片取代聖經本身的主入口"],
+  "designCharacter":{"sharedSiteLanguage":"required","surfaceDifference":"Emmaus 是全站最接近知識環境與工作台的 Surface：以經文為中心，允許高資訊密度、關係探索與工作區狀態，但仍必須像 Westside Watch 本身，而不是嵌入第三方軟件。"},
+  "unresolvedBeforeLock":["確認 Study 是否需要固定拆分為 church study / personal study / collections，還是保持一個統一 Study 層。","確認 Background 內 lexicon 是否值得成為可直接瀏覽的穩定入口，或只在經文上下文中浮現。","盤點 ONE 現有 66 卷導航、進度狀態、章節故事、助手、四福音合參、分享資訊等能力，決定哪些屬於 Emmaus 共用層、哪些只留在 ONE 工作區。","盤點 Doré Folio 現有查經筆記與模糊搜索/資料浮現能力，確定與 Emmaus Search/Study 的邊界。"],
+  "layoutAllowed":false
+}
