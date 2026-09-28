@@ -1,0 +1,21 @@
+{
+  "schema":"westside-core.legacy-surface-reference-gate.v1",
+  "status":"enforced-contract",
+  "blockedPublicSurfaceIds":["Website","About","Video","Podcast"],
+  "publicContexts":["global-navigation","surface-navigation","footer","breadcrumb","button","card","directory","search-discovery","new-internal-link"],
+  "rules":[
+    "Blocked legacy surface identities must not be exposed as public navigation destinations.",
+    "Legacy files and URLs may remain reachable only for migration compatibility and must not be advertised by the new shell.",
+    "Visible words such as about or video are not globally forbidden when they are ordinary content labels; the gate targets legacy surface identity/destination semantics.",
+    "LivingWaterWest must express institutional information inside its own information architecture rather than linking to the retired global About surface.",
+    "New framework code must not introduce links to /content/website or equivalent retired catch-all destinations.",
+    "Physical deletion remains blocked until the legacy retirement deletion gate is satisfied."
+  ],
+  "surfaceRepairs":{
+    "LivingWaterWest":{"retired":"About","replacement":"LivingWaterWest internal institutional information"},
+    "ParadiseCinema":{"retired":"Video","replacement":"Cinema-owned viewing navigation backed by Westside Core media"},
+    "OliveMountain":{"retired":["Video","Podcast"],"replacement":"sermon/ministry/teaching views backed by Westside Core"},
+    "Emmaus":{"retired":"Website","replacement":"Bible-study resource/tool views backed by Westside Core"}
+  },
+  "implementation":"repository-wide visible-reference cleanup during shell migration; fail closed for newly introduced legacy destinations"
+}
