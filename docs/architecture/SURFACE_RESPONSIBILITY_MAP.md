@@ -30,10 +30,14 @@ Independent magazine/publication system. Owns issues, sections, stories, editori
 A Journal section and editorial surface. It may select and embed sermons, video, books and other Westside Core resources. It is not a Chinese-sermon resource collection and must never rename imported ministries/channels as Adullam resources.
 
 #### Emmaus / 以馬忤斯 — Journal section
-The Journal may retain a section named 以馬忤斯. This is a publication-section identity, distinct from the first-level Bible-study surface below. Internal identifiers must distinguish them (for example `journal:emmaus` and `surface:emmaus`); visible naming may be identical.
+The Journal may retain a section named 以馬忤斯. This is a publication-section identity, distinct from the first-level Bible-study surface below. Internal identifiers must distinguish them (`journal:emmaus` and `surface:emmaus`); visible naming may be identical.
 
 ### Dawn Bookshop / 黎明書局
-Reading and book curation surface. It discovers, selects and publishes editorial paths through shared resources. It must not become the universal knowledge database.
+Books-and-publications surface. Its public responsibility is books, authored works, editions, publications, authors, shelves, reading paths and editorial book/publication selections.
+
+Dawn Bookshop must not act as the public home for Scripture datasets, Bible maps, Bible geography, lexicons, cross references, Bible-study websites, Bible-study datasets or general study/reference resources merely because they are readable resources. Those are presented through Emmaus when their primary use is Bible study.
+
+A Bible commentary or Bible-related authored publication may still appear in Dawn Bookshop as a book/publication and may simultaneously be surfaced contextually in Emmaus through Westside Core relations.
 
 ### Paradise Cinema / 天堂電影院
 Viewing and audiovisual curation surface. It selects video/media resources and builds programmes, features and Bible-world viewing experiences. It must not own the canonical video corpus.
@@ -49,14 +53,16 @@ First-class site section for Christian life information: family, work, reading, 
 ### Emmaus / 以馬忤斯 — Bible-study surface
 First-level public surface for everything explicitly organized around Bible study. Emmaus is the visible navigation identity; ONE is no longer a first-level surface.
 
-Emmaus contains and coordinates:
+Emmaus is the primary presentation surface for:
 - ONE — Bible-study/navigation tool;
 - Doré Folio / 多寫 — notes, writing and study-work tool;
-- Scripture / 經文;
-- Bible-study materials / 查經資料彙集;
+- Scripture and Bible translations;
+- Bible-study materials and reference datasets;
+- Bible-study websites/resources;
 - biblical people and places;
 - historical/background material;
-- maps;
+- Bible maps, routes and geography;
+- lexicons and language/reference data;
 - cross references / 串珠;
 - Gospel harmony / 四福音合參;
 - future Bible-study tools and study-oriented views.
@@ -70,6 +76,19 @@ Cross-site discovery consumer over Westside Core indexes and publication indexes
 
 `ONE` and `Doré Folio / 多寫` are tools within Emmaus, not first-level public surfaces. Their existing paths may remain during migration; navigation and presentation should progressively expose them through Emmaus.
 
+## Presentation routing rule
+
+Resource authority and public presentation are separate decisions.
+
+- Book / authored publication -> Dawn Bookshop is the primary publication surface.
+- Scripture / translation / Bible map / Bible place / lexicon / cross-reference / Bible-study dataset or website -> Emmaus is the primary presentation surface.
+- Sermon / ministry / teacher / teaching series -> Olive Mountain is the primary presentation surface.
+- Film/video as viewing programme -> Paradise Cinema is the primary curation surface.
+- Christian-life information -> Daylight Café is the primary presentation surface.
+- Journal story/issue/section -> Journal owns the publication context.
+
+The same Core record may be contextually surfaced elsewhere without changing canonical ownership or primary presentation routing.
+
 ## Required flow
 
 Source acquisition -> Westside Core Resource Registry -> Entity/Relation Graph -> Derived scoped indexes -> Editorial selections/queries -> Surface presentation
@@ -82,4 +101,4 @@ Source -> private section database -> duplicated copy in another section
 
 Resource migration is site-wide, not limited to sermons. Existing Bible Index, shared authority entities, reusable book/video/image/map data and cross-surface relations must be audited for Westside Core. Surface-owned editorial/product data and runtime/tooling/queue data remain outside the canonical shared-resource authority.
 
-Olive Mountain is the primary public outlet for sermon/ministry/knowledge resources; Paradise Cinema may curate the same video resources; Journal/Adullam may select them editorially; Emmaus may retrieve them through scripture/theme relations. No consumer loads the entire corpus unless explicitly building an offline index.
+Olive Mountain is the primary public outlet for sermon/ministry/knowledge resources; Paradise Cinema may curate the same video resources; Journal/Adullam may select them editorially; Emmaus retrieves and presents Bible-study resources through scripture/theme/place/person relations. No consumer loads the entire corpus unless explicitly building an offline index.
