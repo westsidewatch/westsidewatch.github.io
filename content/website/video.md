@@ -1,7 +1,8 @@
 ---
-title: "Video"
-description: "Future visual essays, teaching, worship, and documentary material."
-weight: 6
+title: "Video (legacy)"
+_build:
+  render: never
+  list: never
 ---
 
-This channel is reserved for future video work.
+Legacy channel identity only. Video is a shared resource type: sermons resolve to Sermon / Olive Mountain; films and series resolve to Cinema; other video resolves by editorial context.
