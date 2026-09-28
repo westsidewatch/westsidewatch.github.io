@@ -2,7 +2,7 @@
   "schema":"dore.cinema-chinese-sermons-discovery.v1",
   "collectionId":"cinema:collection:chinese-sermons",
   "status":"active-growing",
-  "verifiedAt":"2026-09-27",
+  "verifiedAt":"2026-09-28",
   "sources":[
     {
       "sourceId":"source:youtube:david-pawson-international-chinese",
@@ -13,8 +13,13 @@
       "url":"https://www.youtube.com/channel/UCKkUuEC1rNnuQ1yZ-RCAHPQ",
       "authority":"official-authorized-chinese-channel",
       "verified":true,
-      "evidence":"Channel description identifies it as official authorized and supervised by GOOD TV; GOOD TV states long-term Chinese authorization from the David Pawson foundation.",
-      "seriesSeeds":["舊約縱覽","新約縱覽","靈恩派與福音派","耶穌給教會的七封信","完整系列"],
+      "evidence":"Channel is identified as officially authorized and supervised by GOOD TV. Search verification confirms complete Old Testament and New Testament overview playlist structures and individual canonical episodes.",
+      "seriesSeeds":[
+        {"title":"舊約縱覽","status":"verified-series","playlistUrl":"https://www.youtube.com/playlist?list=PLZfkFcz5Qd09Rnpvl27xY4Tb1rPFEWu-e","scriptureScope":"Old Testament","verifiedEpisodes":["創世記(一) 聖經的基礎","創世記(二)","創世記(三) 生物與進化","創世記(四) 從伊甸園到巴別塔","創世記(五) 亞伯拉罕、以撒和雅各","創世記(六) 約瑟和耶穌","出埃及記(一)","出埃及記(二)","利未記(一)","利未記(二)","民數記(一)","民數記(二)","申命記(一)","申命記(二)","以斯帖記","以賽亞書(一)"]},
+        {"title":"新約縱覽","status":"verified-series","playlistUrl":"https://www.youtube.com/playlist?list=PLZfkFcz5Qd08819jIw0Vo3q_ob7-dumbW","scriptureScope":"New Testament","verifiedEpisodes":["馬太福音(一)","約翰福音(一)","約翰福音(二)","使徒行傳(一)","羅馬書(一)","以弗所書","帖撒羅尼迦前後書","啟示錄(一) 啟示錄之謎","啟示錄(六) 從天而降的新婦"]},
+        {"title":"靈恩派與福音派","status":"series-seed"},
+        {"title":"耶穌給教會的七封信","status":"series-seed"}
+      ],
       "admission":"series-discovery-source"
     },
     {
@@ -25,17 +30,12 @@
       "provider":"youtube",
       "authority":"authorized-broadcaster-source",
       "verified":true,
-      "seedWork":{
-        "canonicalId":"cinema:video:goodtv:jiang-xiuqin-return-to-lords-love",
-        "title":"如何脫離錯誤的思想模式？醫治的關鍵是內在生活！｜江秀琴《回到主愛裡》",
-        "url":"https://www.youtube.com/watch?v=kfHp9f_Z9TQ",
-        "series":"回到主愛裡",
-        "language":["zh-Hant"],
-        "topics":["內在生活","醫治","等候神","與神連結"],
-        "providerChannel":"GOOD TV 特會精選",
-        "embedUrl":"https://www.youtube.com/embed/kfHp9f_Z9TQ",
-        "rights":{"rehost":false,"policy":"provider-embed"}
-      },
+      "seedWork":{"canonicalId":"cinema:video:goodtv:jiang-xiuqin-return-to-lords-love","title":"如何脫離錯誤的思想模式？醫治的關鍵是內在生活！｜江秀琴《回到主愛裡》","url":"https://www.youtube.com/watch?v=kfHp9f_Z9TQ","series":"回到主愛裡","language":["zh-Hant"],"topics":["內在生活","醫治","等候神","與神連結"],"providerChannel":"GOOD TV 特會精選","embedUrl":"https://www.youtube.com/embed/kfHp9f_Z9TQ","rights":{"rehost":false,"policy":"provider-embed"}},
+      "seriesDiscovery":[
+        {"title":"內在生活","status":"verified-program-family","authorityEvidence":"Forerunner Christian Church official app explicitly provides 江秀琴牧師內在生活信息全集 as a core collection."},
+        {"title":"內在生活饗宴・與王同坐席","status":"verified-series","episodes":["與王同坐席 (一)","與王同坐席 (二)","與王同坐席 (三)"],"year":2021,"sourceFamily":"Forerunner Christian Church"},
+        {"title":"回到主愛裡","status":"verified-seed-series"}
+      ],
       "admission":"verified-work-plus-series-discovery-source"
     }
   ],
@@ -43,5 +43,5 @@
     {"speakerId":"speaker:ye-guangming","speaker":"業光明","status":"continue-verification","rule":"do not admit ambiguous same-name results"},
     {"speakerId":"speaker:watchman-nee","speaker":"倪柝聲","status":"continue-item-verification","rule":"speaker authority and uploader provenance must remain separate; do not label third-party uploader official"}
   ],
-  "nextPriority":["enumerate-david-pawson-chinese-series","enumerate-jiang-xiuqin-inner-life-series","verify-ye-guangming-source","verify-watchman-nee-items","deduplicate-against-existing-video-resource"]
+  "nextPriority":["promote-david-pawson-old-testament-series-to-canonical-works","promote-david-pawson-new-testament-series-to-canonical-works","enumerate-jiang-xiuqin-inner-life-series","verify-ye-guangming-source","verify-watchman-nee-items","deduplicate-against-existing-video-resource"]
 }
