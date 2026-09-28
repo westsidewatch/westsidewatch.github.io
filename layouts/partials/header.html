@@ -4,36 +4,32 @@
       <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="Westside Watch">
     </a>
     <nav class="primary-nav" aria-label="Primary navigation">
-      <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Journal</a>
-      <a href="{{ "website/" | relURL }}"{{ if eq .Section "website" }} aria-current="page"{{ end }}>Website</a>
-      <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>Church</a>
-      <a href="{{ "dawn-library/" | relURL }}"{{ if eq .Section "dawn-library" }} aria-current="page"{{ end }}>Library</a>
-      <a href="/dore/search/"{{ if eq .RelPermalink "/dore/search/" }} aria-current="page"{{ end }}>Doré</a>
-      <a href="/dore/account/"{{ if eq .RelPermalink "/dore/account/" }} aria-current="page"{{ end }}>註冊／登入</a>
-      <a href="{{ "about/" | relURL }}"{{ if eq .RelPermalink "/about/" }} aria-current="page"{{ end }}>About</a>
+      <a href="{{ "church/" | relURL }}"{{ if eq .Section "church" }} aria-current="page"{{ end }}>LivingWaterWest</a>
+      <a href="{{ "journal/" | relURL }}"{{ if or (eq .Section "journal") (eq .Section "vol-00") }} aria-current="page"{{ end }}>Magazine</a>
+      <a href="{{ "dawn-library/" | relURL }}"{{ if eq .Section "dawn-library" }} aria-current="page"{{ end }}>黎明書局</a>
+      <a href="{{ "cinema/" | relURL }}"{{ if eq .Section "cinema" }} aria-current="page"{{ end }}>天堂電影院</a>
+      <a href="{{ "olive/" | relURL }}"{{ if eq .Section "olive" }} aria-current="page"{{ end }}>橄欖山</a>
+      <a href="{{ "daylight-cafe/" | relURL }}"{{ if eq .Section "daylight-cafe" }} aria-current="page"{{ end }}>白晝咖啡館</a>
+      <a href="{{ "one/" | relURL }}"{{ if eq .Section "one" }} aria-current="page"{{ end }}>以馬忤斯</a>
+      <a href="/dore/search/"{{ if eq .RelPermalink "/dore/search/" }} aria-current="page"{{ end }}>Search</a>
     </nav>
   </div>
 
   {{ if or (eq .Section "journal") (eq .Section "vol-00") }}
-    <nav class="section-nav" aria-label="Journal navigation">
-      <span class="section-nav__identity">Journal</span>
+    <nav class="section-nav" aria-label="Magazine navigation">
+      <span class="section-nav__identity">Magazine</span>
       <a href="{{ "journal/" | relURL }}"{{ if eq .RelPermalink "/journal/" }} aria-current="page"{{ end }}>Overview</a>
       <a href="{{ "vol-00/" | relURL }}"{{ if eq .Section "vol-00" }} aria-current="page"{{ end }}>Vol.00</a>
       <a href="{{ "/vol-00/#contents" | relURL }}">Contents</a>
       <a href="{{ "/vol-00/#vol-00-proclamation" | relURL }}">Opening</a>
     </nav>
-  {{ else if eq .Section "website" }}
-    <nav class="section-nav" aria-label="Website navigation">
-      <a class="section-nav__identity" href="{{ "website/" | relURL }}">Website</a>
-      {{ range (site.GetPage "/website").Pages.ByWeight }}
-        <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
-      {{ end }}
-    </nav>
   {{ else if eq .Section "church" }}
-    <nav class="section-nav" aria-label="Church navigation">
-      <a class="section-nav__identity" href="{{ "church/" | relURL }}">Church</a>
+    <nav class="section-nav" aria-label="LivingWaterWest navigation">
+      <a class="section-nav__identity" href="{{ "church/" | relURL }}">LivingWaterWest</a>
       {{ range (site.GetPage "/church").Pages.ByWeight }}
-        <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
+        {{ if ne (lower .Title) "about" }}
+          <a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .Title }}</a>
+        {{ end }}
       {{ end }}
     </nav>
   {{ end }}
