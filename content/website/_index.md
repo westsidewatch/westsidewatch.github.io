@@ -1,8 +1,13 @@
 ---
 title: "Website"
-display_title: "橄欖山"
-description: "The continuing content series and shared spaces of Westside Watch."
-layout: "portal"
-aliases:
-  - "/resources/"
+headless: true
+_build:
+  render: never
+  list: never
+cascade:
+  _build:
+    render: never
+    list: never
 ---
+
+Legacy migration container only. Public content is being reassigned to the seven canonical surfaces; this section must not render or appear in navigation.
