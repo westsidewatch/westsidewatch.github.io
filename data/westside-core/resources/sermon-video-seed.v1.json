@@ -1,0 +1,31 @@
+{
+  "schema":"westside-core.resources.v1",
+  "authority":"Westside Core",
+  "sourceAdapter":"adapter:sermon-media",
+  "records":[
+    {
+      "id":"resource:video:david-pawson:unlocking-exodus-1-zh",
+      "type":"video",
+      "contentClass":"sermon-teaching",
+      "title":"大衛鮑森舊約縱覽 - 出埃及記(一)",
+      "language":["zh-Hant","zh"],
+      "provider":"youtube",
+      "url":"https://www.youtube.com/watch?v=jlHOgXhkEMo",
+      "embedUrl":"https://www.youtube.com/embed/jlHOgXhkEMo",
+      "rights":{"rehost":false,"policy":"provider-embed"},
+      "verified":true
+    },
+    {
+      "id":"resource:video:david-pawson:unlocking-matthew-1-zh",
+      "type":"video",
+      "contentClass":"sermon-teaching",
+      "title":"大衛鮑森新約縱覽 - 馬太福音(一)",
+      "language":["zh-Hant","zh"],
+      "provider":"youtube",
+      "url":"https://www.youtube.com/watch?v=mbNZAzDSWbo",
+      "embedUrl":"https://www.youtube.com/embed/mbNZAzDSWbo",
+      "rights":{"rehost":false,"policy":"provider-embed"},
+      "verified":true
+    }
+  ]
+}
