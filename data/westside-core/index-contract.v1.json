@@ -1,32 +1,14 @@
 {
-  "schema": "westside-core.index-contract.v1",
-  "purpose": "Neutral site-wide shared resource infrastructure. No publication surface owns this layer.",
-  "canonicalResourceAuthority": "/data/westside-core/",
-  "derivedIndexRoot": "/data/westside-index/",
-  "indexes": {
-    "by-type": { "key": "resource.type" },
-    "by-speaker": { "key": "entity:speaker" },
-    "by-series": { "key": "entity:series" },
-    "by-scripture": { "key": "entity:scripture" },
-    "by-theme": { "key": "entity:theme" },
-    "by-place": { "key": "entity:place" },
-    "by-ministry": { "key": "entity:ministry" },
-    "by-language": { "key": "resource.language" }
-  },
-  "consumerPolicy": {
-    "defaultFullCorpusRead": false,
-    "allowedInputs": ["scoped-index", "editorial-selection", "single-resource", "explicit-offline-index-build"],
-    "surfaceOwnsCanonicalResource": false,
-    "surfaceMayOwn": ["selection", "ordering", "editorial-context", "presentation", "interaction"]
-  },
-  "surfaces": ["LivingWaterWest", "Magazine", "Emmaus", "OliveMountain", "DawnBookshop", "ParadiseCinema", "DaylightCafe", "Search"],
-  "nestedPublicationSections": ["magazine:adullam", "magazine:emmaus"],
-  "legacyAliases": {
-    "Journal": "Magazine",
-    "journal:adullam": "magazine:adullam",
-    "journal:emmaus": "magazine:emmaus"
-  },
-  "tools": {
-    "surface:emmaus": ["ONE", "DoreFolio"]
-  }
+  "schema":"westside-core.index-contract.v1",
+  "purpose":"Neutral site-wide shared resource infrastructure. No publication surface owns this layer.",
+  "canonicalResourceAuthority":"/data/westside-core/",
+  "derivedIndexRoot":"/data/westside-index/",
+  "surfaceQueryContract":"/data/westside-core/surface-query-contracts.v1.json",
+  "indexes":{"by-type":{"key":"resource.type","surfaceUse":"restricted"},"by-speaker":{"key":"entity:speaker"},"by-series":{"key":"entity:series"},"by-scripture":{"key":"entity:scripture"},"by-theme":{"key":"entity:theme"},"by-place":{"key":"entity:place"},"by-ministry":{"key":"entity:ministry"},"by-language":{"key":"resource.language"}},
+  "consumerPolicy":{"defaultFullCorpusRead":false,"fallbackToFullCorpus":false,"unscopedRuntimeRead":false,"allowedInputs":["scoped-index","editorial-selection","single-resource","explicit-offline-index-build"],"surfaceOwnsCanonicalResource":false,"surfaceMayOwn":["selection","ordering","editorial-context","presentation","interaction"]},
+  "runtimeContract":{"scopedIndex":"index + explicit key","singleResource":"canonical id","editorialSelection":"selection id","missingScope":"fail-closed","broadByType":"Search or explicit offline/index work only"},
+  "surfaces":["LivingWaterWest","Magazine","Emmaus","OliveMountain","DawnBookshop","ParadiseCinema","DaylightCafe","Search"],
+  "nestedPublicationSections":["magazine:adullam","magazine:emmaus"],
+  "legacyAliases":{"Journal":"Magazine","journal:adullam":"magazine:adullam","journal:emmaus":"magazine:emmaus"},
+  "tools":{"surface:emmaus":["ONE","DoreFolio"]}
 }
