@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "dawn.resource-registry.v1",
+  "title": "Dawn Resource Registry v1",
+  "type": "object",
+  "required": ["schema", "resources", "entities", "relations"],
+  "properties": {
+    "schema": { "const": "dawn.resource-registry.v1" },
+    "resources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "title", "provenance"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["video", "video-series", "audio", "book", "article", "image", "map", "manuscript", "sermon", "dataset", "other"] },
+          "title": { "type": "string" },
+          "language": { "type": "string" },
+          "provider": { "type": "string" },
+          "url": { "type": "string" },
+          "provenance": { "type": "object" },
+          "rights": { "type": "object" },
+          "authority": { "type": "object" },
+          "metadata": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "entities": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "type", "name"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["speaker", "author", "ministry", "church", "series", "scripture", "biblical-person", "place", "theme", "publication", "issue", "section", "other"] },
+          "name": { "type": "string" },
+          "aliases": { "type": "array", "items": { "type": "string" } },
+          "metadata": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "relations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["from", "predicate", "to"],
+        "properties": {
+          "from": { "type": "string" },
+          "predicate": { "type": "string" },
+          "to": { "type": "string" },
+          "metadata": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    }
+  },
+  "additionalProperties": true
+}
