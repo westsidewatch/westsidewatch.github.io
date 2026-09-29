@@ -55,9 +55,7 @@ jobs:
             REQUEST_MODE=$(python -c 'import json; print(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("mode", ""))')
             REQUEST_LIMIT=$(python -c 'import json; print(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("limit", 1000))')
             REQUEST_DOWNLOAD=$(python -c 'import json; print(str(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("fullTextDownload", True)).lower())')
-            if [ "$REQUEST_MODE" = "full-catalogue" ] && [ "$REQUEST_LIMIT" = "0" ] && [ "$REQUEST_DOWNLOAD" = "false" ]; then
-              LIMIT="0"
-            fi
+            if [ "$REQUEST_MODE" = "full-catalogue" ] && [ "$REQUEST_LIMIT" = "0" ] && [ "$REQUEST_DOWNLOAD" = "false" ]; then LIMIT="0"; fi
           fi
           echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
           echo "authority=$AUTHORITY" >> "$GITHUB_OUTPUT"
@@ -65,46 +63,37 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/textcreationpartnership/Texts.git /tmp/tcp-texts
           test -s /tmp/tcp-texts/TCP.csv
-      - name: Run remote-holdings admission
+      - name: Run remote-holdings admission and reader catalogue build
         env:
           DORE_CORPUS_LIMIT: ${{ steps.mode.outputs.limit }}
           DORE_AUTHORITY_MODE: ${{ steps.mode.outputs.authority }}
         run: |
           mkdir -p artifacts/dore-corpus
           LIMIT_ARGS=()
-          if [ "$DORE_CORPUS_LIMIT" != "0" ]; then
-            LIMIT_ARGS=(--limit "$DORE_CORPUS_LIMIT")
-          fi
+          if [ "$DORE_CORPUS_LIMIT" != "0" ]; then LIMIT_ARGS=(--limit "$DORE_CORPUS_LIMIT"); fi
           AUTHORITY_ARGS=()
-          if [ "$DORE_AUTHORITY_MODE" = "openlibrary-local-cache" ] && [ -s data/dawn-corpus/authority/openlibrary-works.txt.gz ]; then
-            AUTHORITY_ARGS=(--openlibrary data/dawn-corpus/authority/openlibrary-works.txt.gz)
-          fi
+          if [ "$DORE_AUTHORITY_MODE" = "openlibrary-local-cache" ] && [ -s data/dawn-corpus/authority/openlibrary-works.txt.gz ]; then AUTHORITY_ARGS=(--openlibrary data/dawn-corpus/authority/openlibrary-works.txt.gz); fi
           python -m dore_core.corpus.run_bulk_admission \
-            /tmp/tcp-texts/TCP.csv \
-            --format csv \
-            "${LIMIT_ARGS[@]}" \
-            "${AUTHORITY_ARGS[@]}" \
-            --out artifacts/dore-corpus/eebo-tcp-admission-report.json
+            /tmp/tcp-texts/TCP.csv --format csv "${LIMIT_ARGS[@]}" "${AUTHORITY_ARGS[@]}" \
+            --out artifacts/dore-corpus/eebo-tcp-admission-report.json \
+            --catalogue-out artifacts/dore-corpus/dawn-library-catalogue.json
           python - <<'PY'
           import json, os
           from pathlib import Path
           p = Path('artifacts/dore-corpus/eebo-tcp-admission-report.json')
-          report = json.loads(p.read_text())
-          if report['sourceRecords'] == 0:
-              raise SystemExit('EEBO-TCP admission emitted zero records')
+          c = Path('artifacts/dore-corpus/dawn-library-catalogue.json')
+          report = json.loads(p.read_text()); catalogue = json.loads(c.read_text())
+          if report['sourceRecords'] == 0: raise SystemExit('EEBO-TCP admission emitted zero records')
+          if catalogue['count'] != report['workCandidates']: raise SystemExit('catalogue/work candidate count mismatch')
           report['requestedLimit'] = int(os.environ['DORE_CORPUS_LIMIT'])
           report['fullCatalogueRun'] = os.environ['DORE_CORPUS_LIMIT'] == '0'
           report['holdingsModel'] = 'remote-pointer-on-demand-reading'
-          report['readingContract'] = {
-              'catalogueAdmissionRequiresFullTextDownload': False,
-              'authorityEnrichmentRequiredForReading': False,
-              'contentFetch': 'on-demand when a reader opens source/zh-Hant/bilingual text',
-              'translation': 'Doré Language Faculty after readable source resolution'
-          }
+          report['catalogueManifest'] = {'schema': catalogue['schema'], 'works': catalogue['count'], 'file': c.name}
+          report['readingContract'] = {'catalogueAdmissionRequiresFullTextDownload': False, 'authorityEnrichmentRequiredForReading': False, 'contentFetch': 'on-demand when a reader opens source/zh-Hant/bilingual text', 'translation': 'Doré Language Faculty after readable source resolution'}
           p.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
           print(json.dumps(report, indent=2, ensure_ascii=False))
           PY
-      - name: Upload admission report
+      - name: Upload admission and reader catalogue artifacts
         uses: actions/upload-artifact@v4
         with:
           name: dore-corpus-admission-report
