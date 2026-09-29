@@ -1,0 +1,18 @@
+{
+  "schema":"dawn.library.foreign.eebo-thinning.v1",
+  "status":"active-admission-pass-1",
+  "source":"eebo-tcp-phase1",
+  "sourceScale":{"texts":25363,"period":"1473-1700","formats":["TEI XML","SGML/XML","HTML","EPUB where provided"]},
+  "purpose":"把黎明書局外文整理從教父資料擴到早期現代英文基督教文獻；25,363 texts 是 source scale，不是館藏書數。先按 Work identity、基督教閱讀相關性、Bible exclusion、rights/provenance 做 thinning，再進 canonical。",
+  "hardFilters":[{"filter":"scripture-text-and-bible-editions","action":"exclude-from-Dawn-translation","note":"Bible 正文與聖經譯本不進黎明書局即時外譯中產品。"},{"filter":"exegesis-commentary-scripture-study","action":"route-to-Bible-world/ONE-candidate","note":"與普通書局閱讀館藏分離。"},{"filter":"non-Christian/non-reading-relevant","action":"retain-raw-hide-public"},{"filter":"political-ethnic-war-controversy","action":"retain-raw-hide-public-per-existing-acquisition-rule"},{"filter":"duplicate-editions","action":"merge-under-canonical-Work"}],
+  "readerFamilies":["spirituality-prayer","theology-thought","church-history-traditions","biography-testimony-hagiography","sermons-ministry-worship","ethics-society-education","literature-culture","reference-research"],
+  "firstTargetClusters":[
+    {"cluster":"Reformation/Post-Reformation theology","admitWhen":["authored long-form Work identity stable","readable TEI scope sufficient","rights/provenance retained"],"translationPriority":"high"},
+    {"cluster":"Puritan spirituality and Christian life","admitWhen":["not Bible text/commentary-only","Work identity stable","long-form reading value"],"translationPriority":"high"},
+    {"cluster":"sermons and ministry collections","admitWhen":["historical collection identity resolvable","individual sermons not inflated into fake books"],"translationPriority":"medium-high"},
+    {"cluster":"church history / biography / testimony","admitWhen":["Work identity stable","source text complete enough for selected reading scope"],"translationPriority":"high"}
+  ],
+  "normalization":{"author":"authority-normalized creator identity","title":"historical title retained; normalized short title may be reader-facing","edition":"TEI record/print witness attaches beneath Work","segments":"sermons/chapters/letters remain components when historically part of a collection","language":"Early Modern English remains source witness; zh-Hant is generated reading projection","visual":"title page/scan attaches to concrete edition witness, never fake cover"},
+  "translation":{"faculty":"Doré Language Faculty","aiRequired":false,"mode":"segment-aligned long-form translation","outputs":["source","zh-Hant","bilingual"],"cache":"legal/stable segments may cache without creating a published Chinese edition"},
+  "next":"Extract identifiable long-form Christian Works from EEBO-TCP metadata/TEI in batches; prioritize theology, spirituality, church history and biography; cross-deduplicate against PRDL before canonical promotion."
+}
