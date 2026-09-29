@@ -1,0 +1,27 @@
+{
+  "schema":"dawn.foreign-admission.open-christian-data.pass1.v1",
+  "status":"canonical-thinning-started",
+  "date":"2026-09-28",
+  "source":{"id":"open-christian-data","upstreamRepo":"OpenChristianData/open-christian-data","datasetConfig":"structured_text","publishedLicense":"CC0-1.0","upstreamCurrentDescription":"288 books/long-form works in structured_text; the earlier Dawn bulk manifest recorded 363 books for the wider dataset snapshot, so admission uses actual upstream work files rather than assuming the old aggregate count."},
+  "admissionUnit":"one upstream structured-text work file -> candidate canonical Work; passage rows are never counted as books",
+  "sourceFieldsPreserved":["upstream work id","title","author/author_id","language","original_language","tradition","era","license","completeness","source_url","source_edition","source_format","translator/contributors","processing provenance"],
+  "firstVerifiedCandidates":[
+    {"sourceId":"ambrose-of-milan-concerning-repentance","title":"Concerning Repentance","author":"Ambrose of Milan","family":"spirituality-prayer","secondary":["theology-thought","church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-concerning-virgins","title":"Concerning Virgins","author":"Ambrose of Milan","family":"spirituality-prayer","secondary":["church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-concerning-widows","title":"Concerning Widows","author":"Ambrose of Milan","family":"spirituality-prayer","secondary":["church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-exposition-of-christian-faith","title":"Exposition of the Christian Faith","author":"Ambrose of Milan","family":"theology-thought","secondary":["church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-letters","title":"Letters","author":"Ambrose of Milan","family":"church-history-traditions","secondary":["biography-testimony-hagiography"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-on-duties-of-clergy","title":"On the Duties of the Clergy","author":"Ambrose of Milan","family":"sermons-ministry-worship","secondary":["ethics-society-education","church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-on-holy-spirit","title":"On the Holy Spirit","author":"Ambrose of Milan","family":"theology-thought","secondary":["church-history-traditions"],"language":"en","originalLanguage":"lat","era":"patristic","tradition":["patristic","ecumenical"],"license":"public-domain","completeness":"full","sourceEdition":"Nicene and Post-Nicene Fathers, Series 2, Vol. 10 (1896)","translationEligibility":"eligible-after-Dawn-rights/provenance-gate","state":"verified-candidate"},
+    {"sourceId":"ambrose-of-milan-on-mysteries","title":"On the Mysteries","author":"Ambrose of Milan","family":"theology-thought","secondary":["spirituality-prayer","church-history-traditions"],"state":"candidate"},
+    {"sourceId":"ambrose-of-milan-on-satyrus","title":"On Satyrus","author":"Ambrose of Milan","family":"biography-testimony-hagiography","secondary":["spirituality-prayer","church-history-traditions"],"state":"candidate"},
+    {"sourceId":"athanasius-against-the-arians","title":"Against the Arians","author":"Athanasius","family":"theology-thought","secondary":["church-history-traditions"],"state":"candidate"},
+    {"sourceId":"athanasius-against-the-heathen","title":"Against the Heathen","author":"Athanasius","family":"theology-thought","secondary":["church-history-traditions"],"state":"candidate"},
+    {"sourceId":"athanasius-apology-to-the-emperor","title":"Apology to the Emperor","author":"Athanasius","family":"church-history-traditions","secondary":["biography-testimony-hagiography"],"state":"candidate"}
+  ],
+  "translationPolicy":{"target":"zh-Hant","readerModes":["original","zh-Hant","bilingual"],"identity":"generated Chinese remains a reading projection of the same canonical Work; never create a fake Chinese edition","bibleExclusion":"scripture quotations inside an eligible non-Bible work may remain contextual source material, but the Bible itself and Bible-translation resources are excluded from Dawn translation admission"},
+  "classificationRule":"One primary reader-facing family plus zero or more secondary facets. Patristic is a period/tradition facet, not a separate silo that hides these works from theology/spirituality/history browsing.",
+  "dedupRule":"Before canonical promotion compare author/title/work identity against PRDL, CatholicCorpus, Corpus Corporum and existing Dawn Works; editions/translations become relations under one Work where appropriate.",
+  "visualRule":"Resolve source edition/title-page/cover after identity reconciliation; do not invent historical covers during admission.",
+  "nextPass":"Continue enumerating structured_text works in upstream order, classify them into Dawn reader-facing families, run cross-source identity reconciliation, and promote only records with preserved provenance/rights/readable text."
+}
