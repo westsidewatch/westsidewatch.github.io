@@ -1,0 +1,35 @@
+{
+  "schema":"dawn.library.foreign-work-admission.v1",
+  "status":"canonical-ready-after-rights-dedup",
+  "batch":"open-christian-data-patristic-03",
+  "mission":"Expand foreign long-form works that can surface as original/zh-Hant/bilingual reading projections for Chinese readers.",
+  "sourceAnchors":[
+    {"source":"CCEL NPNF Series I","scope":"Augustine and John Chrysostom historical English editions","role":"edition/readable-text anchor"},
+    {"source":"CCEL NPNF Series II vols VII, XII, XIII","scope":"Cyril of Jerusalem, Leo the Great, Gregory the Great, Ephrem Syrus, Aphrahat","role":"edition/readable-text anchor"},
+    {"source":"Open Christian Data / existing bulk acquisition","role":"structured-text/provenance candidate source"}
+  ],
+  "works":[
+    {"author":"Augustine of Hippo","title":"Confessions","family":["biography-testimony-hagiography","spirituality-prayer"],"period":"Early Church","originalLanguage":"Latin","translationPriority":"high","bibleText":false},
+    {"author":"Augustine of Hippo","title":"The City of God","family":["theology-thought","church-history-traditions"],"period":"Early Church","originalLanguage":"Latin","translationPriority":"high","bibleText":false},
+    {"author":"Augustine of Hippo","title":"On the Trinity","family":["theology-thought"],"period":"Early Church","originalLanguage":"Latin","translationPriority":"high","bibleText":false},
+    {"author":"Augustine of Hippo","title":"On Christian Doctrine","family":["theology-thought","sermons-ministry-worship"],"period":"Early Church","originalLanguage":"Latin","translationPriority":"high","bibleText":false,"note":"Treat as a non-Scripture authored work; biblical quotations inside the work do not turn the Work into Bible text."},
+    {"author":"John Chrysostom","title":"On the Priesthood","family":["sermons-ministry-worship","spirituality-prayer"],"period":"Early Church","originalLanguage":"Greek","translationPriority":"high","bibleText":false},
+    {"author":"John Chrysostom","title":"Homilies on the Statues","family":["sermons-ministry-worship","ethics-society-education"],"period":"Early Church","originalLanguage":"Greek","translationPriority":"high","bibleText":false},
+    {"author":"Cyril of Jerusalem","title":"Catechetical Lectures","family":["theology-thought","sermons-ministry-worship"],"period":"Early Church","originalLanguage":"Greek","translationPriority":"high","bibleText":false},
+    {"author":"Leo the Great","title":"Sermons","family":["sermons-ministry-worship","theology-thought"],"period":"Early Church","originalLanguage":"Latin","translationPriority":"medium-high","bibleText":false},
+    {"author":"Gregory the Great","title":"Pastoral Rule","family":["sermons-ministry-worship","spirituality-prayer"],"period":"Early Medieval","originalLanguage":"Latin","translationPriority":"high","bibleText":false},
+    {"author":"Gregory the Great","title":"Epistles","family":["church-history-traditions","sermons-ministry-worship"],"period":"Early Medieval","originalLanguage":"Latin","translationPriority":"medium-high","bibleText":false,"workIdentityRule":"Books I-XIV are parts of one epistolary corpus/work grouping for browsing; do not count NPNF volume boundaries as separate Works."},
+    {"author":"Ephrem the Syrian","title":"Nisibene Hymns","family":["spirituality-prayer","literature-culture","sermons-ministry-worship"],"period":"Early Church","originalLanguage":"Syriac","translationPriority":"high","bibleText":false},
+    {"author":"Ephrem the Syrian","title":"The Pearl: Seven Hymns on the Faith","family":["theology-thought","literature-culture","spirituality-prayer"],"period":"Early Church","originalLanguage":"Syriac","translationPriority":"high","bibleText":false},
+    {"author":"Aphrahat","title":"Demonstrations","family":["theology-thought","spirituality-prayer"],"period":"Early Church","originalLanguage":"Syriac","translationPriority":"high","bibleText":false}
+  ],
+  "identityRules":[
+    "NPNF editorial volumes are Edition/container witnesses, never automatic Work identities.",
+    "Homily, hymn and epistle collections may remain collection-level Works when the historical source presents them as coherent authored corpora; individual items remain child ReadingUnits.",
+    "Original-language witnesses and historical English translations attach to the same canonical Work when identity is secure.",
+    "Generated zh-Hant remains a reading projection, never a fabricated Chinese Edition.",
+    "Scripture quotations embedded in patristic works remain contextual quotations; Bible text/translation products themselves remain excluded."
+  ],
+  "visualEnrichment":"Resolve NPNF title pages/edition images as Edition visuals while separately seeking authentic work-specific historical title pages where available.",
+  "next":"Continue work-level admission beyond the initial NPNF patristic core, then deduplicate these identities against PRDL/CatholicCorpus and attach cover/title-page plus translation eligibility states."
+}
