@@ -8,6 +8,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / 'data/dawn-resource-queue.json'
+CANONICAL = ROOT / 'static/dawn-library/canonical-resource-index.json'
 REPORT = ROOT / 'data/dawn-promotion-gate-report.json'
 MAX_BATCH = max(1, int(os.environ.get('DAWN_PROMOTION_BATCH', '250')))
 
@@ -33,7 +34,9 @@ SURFACE_ROUTES = {
 }
 
 
-def load(path: Path):
+def load(path: Path, fallback=None):
+    if not path.exists():
+        return {} if fallback is None else fallback
     return json.loads(path.read_text(encoding='utf-8'))
 
 
@@ -50,6 +53,17 @@ def rows(payload):
 
 def text(value):
     return str(value or '').strip()
+
+
+def identity(item: dict) -> str:
+    return text(item.get('resourceId') or item.get('workId') or item.get('id'))
+
+
+def canonical_ids(payload) -> set[str]:
+    resources = payload.get('resources') if isinstance(payload, dict) else None
+    if isinstance(resources, dict):
+        return {text(key) for key in resources if text(key)}
+    return {identity(item) for item in rows(payload) if isinstance(item, dict) and identity(item)}
 
 
 def resource_type(item: dict) -> str:
@@ -70,7 +84,7 @@ def routes_for(item: dict) -> list[str]:
 
 def eligible(item: dict) -> tuple[bool, list[str]]:
     reasons = []
-    rid = text(item.get('resourceId') or item.get('workId') or item.get('id'))
+    rid = identity(item)
     title = text(item.get('title'))
     providers = item.get('providers') or ([item.get('provider')] if item.get('provider') else [])
     pointers = item.get('pointers') or [p for p in (item.get('readingPointer'), item.get('editionPointer'), item.get('workPointer')) if p]
@@ -88,11 +102,12 @@ def eligible(item: dict) -> tuple[bool, list[str]]:
 def main() -> int:
     payload = load(QUEUE)
     candidates = rows(payload)
-    accepted, blocked = [], []
+    existing_ids = canonical_ids(load(CANONICAL, {'resources': {}}))
+    eligible_new, eligible_existing, blocked = [], [], []
     reason_counts: Counter[str] = Counter()
     type_counts: Counter[str] = Counter()
     route_counts: Counter[str] = Counter()
-    total_eligible = 0
+
     for item in candidates:
         if not isinstance(item, dict):
             continue
@@ -100,28 +115,45 @@ def main() -> int:
         type_counts[kind] += 1
         ok, reasons = eligible(item)
         if ok:
-            total_eligible += 1
             routes = routes_for(item)
             for route in routes:
                 route_counts[route] += 1
-            if len(accepted) < MAX_BATCH:
-                accepted.append({
-                    'resourceId': item.get('resourceId') or item.get('workId') or item.get('id'),
-                    'resourceType': kind,
-                    'routes': routes,
-                })
+            accepted_row = {
+                'resourceId': identity(item),
+                'resourceType': kind,
+                'routes': routes,
+            }
+            if accepted_row['resourceId'] in existing_ids:
+                eligible_existing.append(accepted_row)
+            else:
+                eligible_new.append(accepted_row)
         else:
             reason_counts.update(reasons)
             blocked.append({
-                'resourceId': item.get('resourceId') or item.get('workId') or item.get('id'),
+                'resourceId': identity(item),
                 'resourceType': kind,
                 'reasons': reasons,
             })
+
+    # Growth-first selection: fill every batch with resources that are not yet
+    # canonical before spending remaining capacity refreshing existing records.
+    ordered = eligible_new + eligible_existing
+    accepted = ordered[:MAX_BATCH]
+    selected_new = sum(1 for item in accepted if item['resourceId'] not in existing_ids)
+    selected_existing = len(accepted) - selected_new
+    total_eligible = len(ordered)
+
     report = {
-        'schema': 'dawn.resource-fabric.promotion-gate.v2',
+        'schema': 'dawn.resource-fabric.promotion-gate.v3',
+        'selectionPolicy': 'uncatalogued-first',
         'inputCandidates': len(candidates),
+        'canonicalBaseline': len(existing_ids),
         'batchLimit': MAX_BATCH,
         'eligible': len(accepted),
+        'eligibleUncatalogued': len(eligible_new),
+        'eligibleExisting': len(eligible_existing),
+        'selectedUncatalogued': selected_new,
+        'selectedExisting': selected_existing,
         'blocked': len(blocked),
         'remainingEligible': max(0, total_eligible - len(accepted)),
         'resourceTypeCounts': dict(type_counts.most_common()),
@@ -135,7 +167,12 @@ def main() -> int:
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({
         'inputCandidates': report['inputCandidates'],
+        'canonicalBaseline': report['canonicalBaseline'],
         'eligible': report['eligible'],
+        'eligibleUncatalogued': report['eligibleUncatalogued'],
+        'eligibleExisting': report['eligibleExisting'],
+        'selectedUncatalogued': report['selectedUncatalogued'],
+        'selectedExisting': report['selectedExisting'],
         'blocked': report['blocked'],
         'remainingEligible': report['remainingEligible'],
         'resourceTypeCounts': report['resourceTypeCounts'],
