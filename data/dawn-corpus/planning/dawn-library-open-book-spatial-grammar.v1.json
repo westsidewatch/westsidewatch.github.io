@@ -1,0 +1,14 @@
+{
+  "schema":"dawn.library.open-book-spatial-grammar.v1",
+  "status":"locked-for-design",
+  "parent":"黎明書局",
+  "concept":"整個黎明書局工作台就是一本攤開的書。這不是裝飾性 book mockup，而是產品結構與閱讀行為本身的空間隱喻。",
+  "spread":{"leftLeaf":{"role":"resource/navigation leaf","content":["search","collections/categories","三晨星館藏投影","bookmarks","recent reading","work selection"],"behavior":"像翻到書前頁、目錄、索引與藏書票；選中 Work 後仍保持可回到資源世界。"},"gutter":{"role":"structural hinge","behavior":"不是粗分隔線；承擔兩頁關係、拖曳比例/收束、閱讀模式轉換與微弱的書脊/裝訂感。"},"rightLeaf":{"role":"reading/translation leaf","content":["work identity","chapter/locator","original text","zh-Hant reading translation","bilingual comparison","source/provenance on demand"],"behavior":"是真正的正文頁；選書後閱讀立即在此發生。"}},
+  "translationGrammar":{"original":"右頁可作單頁原文正文。","zh-Hant":"右頁可作單頁中文閱讀層。","bilingual":"打開的書不再機械理解為左原文右翻譯，因為左頁仍需保留資源導航；右頁內部使用雙欄、行間/段落配對或可展開 parallel sheet 呈現 stable-segment 對照。","principle":"open-book metaphor serves product hierarchy first; never sacrifice navigation or segment alignment merely to imitate a printed bilingual book."},
+  "visualRestraint":{"avoid":["寫實皮革書皮","厚重 page curl","假紙張陰影","仿古羊皮紙","裝飾性翻書音效","為了像書而大量浪費屏幕空間"],"retain":["兩個 page fields 的呼吸","中央 gutter 的微妙深度","頁邊距與版心","頁碼/locator 的編輯感","紙張而非卡片堆疊的連續性","必要時極輕的翻頁/展開動效"]},
+  "entryBehavior":{"fromSite":"從首頁三晨星、光譜、策展集進入指定 Work 時，spread 已經是打開狀態：左頁顯示其館藏上下文，右頁直接落到作品/指定 locator。","directLibrary":"直接進黎明書局而未選 Work 時，左頁先成立為資源索引，右頁保持安靜的空白閱讀頁/最近閱讀恢復，不另做宣傳首頁。"},
+  "responsive":{"desktop":"完整 spread；左右共同構成一本打開的書。","tablet":"可維持 spread，但允許 gutter 偏移以增加閱讀頁面。","mobile":"不是縮小一本雙頁書；保留『書的連續性』，導航 leaf 作前頁/抽屜式頁面退場，正文 leaf 佔滿屏幕，返回即回到上一 leaf。"},
+  "relationshipToSiteDesign":"這是黎明書局自己的版塊特徵。全站仍使用同一設計語言與動效語法；open-book spatial grammar 不外溢成所有版塊都像書。",
+  "designInvariant":"任何後續視覺方案首先應讓使用者一眼理解：左邊是在這座書局裡找書，右邊是在讀選中的書。",
+  "next":"Define the right-leaf information hierarchy and bilingual translation composition without styling the final visual skin."
+}
