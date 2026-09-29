@@ -1,0 +1,14 @@
+{
+  "schema":"site.canonical-content-contract.v1",
+  "status":"locked-for-layout-preparation",
+  "purpose":"讓三晨星、光譜、策展集以及各產品 projection 共用同一內容身份，不複製 underlying content，也不讓 editorial layer 變成工具或內容 owner。",
+  "identity":{"required":["contentId","contentType","ownerSurface","canonicalLabel","canonicalHrefOrResolver","publicState"],"optional":["creatorIds","seriesId","workId","date/period","languages","visualRef","rightsState","provenanceRefs"]},
+  "contentTypes":["work","article","issue/periodical-project","sermon/teaching","series","film/programme","event/practice","map","image/photograph","research-publication","collection/source","3d/gis-precedent"],
+  "ownerRule":"Every content object has one canonical owner/resolver. 三晨星、光譜、策展集 only point to it. A projection may alter presentation but never identity or ownership.",
+  "editorialExtensions":{"threeMorningStars":{"fields":["contentId","selectionReason","editorialProvenance","selectedAt","reviewAt?"],"rule":"Eligibility never equals selection; absence is valid."},"spectrum":{"fields":["contentId","axis","coordinate","relationProvenance","editorialStatus"],"rule":"Multiple simultaneous coordinates are allowed; coordinates do not create categories or duplicate content."},"curatedSet":{"fields":["setId","title","proposition","members.contentId","members.role","members.order?","curator/provenance","publishedState"],"rule":"Members may cross owner surfaces and media; set order/composition belongs to the set, underlying identity does not."}},
+  "handoff":{"DawnLibrary":"resolve Work -> original/zh-Hant/bilingual reader","Church":"resolve teaching/series/event -> relevant Church surface","Magazine":"resolve article/issue/project -> publication surface","Cinema":"resolve film/programme -> Cinema surface","externalResearch":"resolve pointer -> rights-safe external/source record"},
+  "layoutContract":{"sharedCardMinimum":["canonicalLabel","contentType","ownerSurface","visualRef?","short editorial context?"],"threeMorningStars":"sparse emphasis; never fill empty slots artificially","spectrum":"continuous relational field; no equal-tab/filter-panel reduction","curatedSet":"composed sequence/path; mixed media allowed","emptyRule":"No concrete content = no public structural placeholder."},
+  "translationContract":{"capability":"Doré Language Faculty","rule":"Language projection is presentation/reading state, never canonical identity mutation.","DawnWorkModes":["source","zh-Hant","bilingual"]},
+  "migration":"Existing Jerusalem 3000 normalized pointers and Jiang Xiuqin Inner Life specimen can migrate to this contract without changing their old editorial rules.",
+  "next":"Use this contract when normalizing additional content and when building layout data adapters; do not invent a separate schema per surface."
+}
