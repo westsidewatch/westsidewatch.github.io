@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - 'data/dawn-corpus/**'
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
       - 'scripts/build_dawn_resource_queue.py'
       - 'scripts/build_dawn_resource_substrate.py'
       - 'scripts/refresh_dawn_bulk_corpus.py'
@@ -36,11 +37,12 @@ jobs:
       - name: Refresh Dawn bulk and resource corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
-      - name: Persist refreshed corpus
+      - name: Persist refreshed corpus and harvest cursor
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           generated_paths=(
+            data/dawn-harvest-ledger-openlibrary.json
             data/dawn-10k-openlibrary-works.json
             data/dawn-10k-work-queue.json
             data/dawn-resource-queue.json
@@ -55,12 +57,12 @@ jobs:
             fi
           done
           if git diff --cached --quiet; then
-            echo "No corpus changes to persist."
+            echo "No corpus or harvest-ledger changes to persist."
             exit 0
           fi
-          git commit -m "data(dawn): refresh bulk resource corpus"
-          # The refresh script can touch derived files outside the persisted corpus set.
-          # Restore those uncommitted derivatives so rebase always starts from a clean tree.
+          git commit -m "data(dawn): advance bulk harvest and resource corpus"
+          # Temporary compatibility path: persist the cursor with the corpus until
+          # autonomous state storage is split from canonical Promotion writes.
           git reset --hard HEAD
           git clean -fd
           git pull --rebase origin main
