@@ -1,0 +1,27 @@
+name: Doré Vector Forge Gate
+
+on:
+  pull_request:
+    paths:
+      - 'tools/dore/vector-forge/**'
+      - '.github/workflows/dore-vector-forge.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'tools/dore/vector-forge/**'
+      - '.github/workflows/dore-vector-forge.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  vector-forge-regression:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run provider-neutral SVG regression gate
+        run: node tools/dore/vector-forge/test-vector-forge.mjs
