@@ -2,7 +2,12 @@ import { resourceManifest } from '../../js/resource-fabric-client.mjs';
 
 const manifest=await resourceManifest();
 const canonicalCount=Number(manifest?.workCount||0);
+const LIBRARY_TYPES=new Set(['work','book','publication','manuscript']);
 let applying=false;
+
+function resourceTypeOf(node){
+  return String(node?.dataset?.resourceType||node?.dataset?.type||'').trim().toLowerCase();
+}
 
 function finalizeLibrarySurface(){
   if(applying)return;
@@ -13,6 +18,13 @@ function finalizeLibrarySurface(){
 
     // The moving wall is only a renderer mechanism, never a named product section.
     document.querySelectorAll('.living-shelf > h2').forEach(node=>node.remove());
+
+    // Dawn Library renders publication resources only. Global Resource Fabric may
+    // contain AV/maps/tools, but those belong to their own product projections.
+    document.querySelectorAll('[data-resource-type],[data-type]').forEach(node=>{
+      const type=resourceTypeOf(node);
+      if(type&&!LIBRARY_TYPES.has(type))node.remove();
+    });
 
     // Archive Field and Library Index share the same canonical count authority.
     document.querySelectorAll('.archive-field-head small').forEach(node=>{
@@ -29,6 +41,7 @@ function finalizeLibrarySurface(){
 
     document.documentElement.dataset.dawnLibraryFinal='true';
     document.documentElement.dataset.dawnLibraryCountAuthority='resource-manifest';
+    document.documentElement.dataset.dawnLibraryProjection='publication-only';
   }finally{
     applying=false;
   }
