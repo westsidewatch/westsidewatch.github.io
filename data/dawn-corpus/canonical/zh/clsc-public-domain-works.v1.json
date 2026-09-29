@@ -1,0 +1,23 @@
+{
+  "schema":"dawn.library.canonical-work-set.v1",
+  "status":"canonical-remote-first",
+  "parent":"黎明書局 / 中文館藏",
+  "source":{"name":"Christian Literature Society for China Collection","institution":"Yale Divinity Library / Hong Kong Baptist University Library","collectionPage":"https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html","collectionSize":692,"sourceStatement":"Collection page states works published in 1930 or earlier are public domain and available for download; post-1930 digital files are restricted to private study/scholarship/research on request."},
+  "delivery":{"mode":"remote-first","localAssetRequired":false,"currentEndpoint":"collectionPage + title/year identity","endpointState":"source collection exposes 692 PDFs through its browse interface; exact per-item PDF/reader endpoints may be resolved lazily at read time or cached later without changing canonical Work identity","hostTermsBoundary":"Work public-domain status and host delivery/embed terms remain separate."},
+  "works":[
+    {"id":"clsc-1907-zhu-zai-zhu-limian","title":"住在主裏面","creator":"慕安德烈","year":1907,"domain":"spiritual formation","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"住在主裏面","year":1907}},
+    {"id":"clsc-1910-zenyang-daogao","title":"怎樣禱告","creator":"道來博士","year":1910,"domain":"prayer/spiritual formation","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"怎樣禱告","year":1910}},
+    {"id":"clsc-1918-jiaohui-gushi-jieyao","title":"教會古史節要","year":1918,"domain":"church history","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"教會古史節要","year":1918}},
+    {"id":"clsc-1926-jindai-jidujiao-sichao","title":"近代基督教思潮","year":1926,"domain":"Christian thought/history","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"近代基督教思潮","year":1926}},
+    {"id":"clsc-1927-jiaohui-lingxiu-shenghuo-gexin","title":"教會靈修生活的革新","year":1927,"domain":"spiritual formation/church life","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"教會靈修生活的革新","year":1927}},
+    {"id":"clsc-1929-jidu-lunli-biaozhun","title":"基督倫理標準","year":1929,"domain":"Christian ethics","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"基督倫理標準","year":1929}},
+    {"id":"clsc-1929-wenhua-de-yanjiu","title":"文化的研究","year":1929,"domain":"culture/Christian thought","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"文化的研究","year":1929}},
+    {"id":"clsc-1929-mentu-de-qidao","title":"門徒的祈禱","creator":"谷德屏","year":1929,"domain":"prayer/spiritual formation","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"門徒的祈禱","year":1929}},
+    {"id":"clsc-1929-yaoma","title":"姚媽","creator":"潘筠","year":1929,"domain":"biography/testimony","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"姚媽","year":1929}},
+    {"id":"clsc-1929-jidu-zhiyou","title":"基督之友","year":1929,"domain":"Christian life","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"基督之友","year":1929}},
+    {"id":"clsc-1930-zhuoshi-lanhua","title":"濁世蘭花","year":1930,"domain":"Christian literature","rights":"public-domain-per-source-year-policy","deliveryMode":"remote-first","sourceLookup":{"title":"濁世蘭花","year":1930}}
+  ],
+  "excludedBibleWorld":["二約釋義叢書","以賽亞述要","雅各書新註釋","馬可福音新註釋","帖撒羅尼迦前後書新註釋","保羅達哥林多人後書新註釋","新約釋義叢書 -- 保羅達加拉太人書釋義","舊約人物"],
+  "admissionDecision":"These 11 works are admitted as the first remote-first canonical Chinese collection set because their title/year identities are exposed by the source and the source explicitly marks works through 1930 public domain and downloadable. Exact per-item delivery endpoints are a delivery-resolution concern, not a Work-identity prerequisite.",
+  "next":"Expand the pre-1931 CLSC non-Bible set beyond the initial 11, resolve exact per-item endpoints opportunistically, and merge legacy Yale Chinese identities without duplicating canonical Works."
+}
