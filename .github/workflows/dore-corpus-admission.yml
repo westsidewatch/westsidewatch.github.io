@@ -48,7 +48,7 @@ jobs:
           test -s /tmp/tcp-texts/TCP.csv
       - name: Run remote-holdings admission
         env:
-          DORE_CORPUS_LIMIT: ${{ inputs.limit || '1000' }}
+          DORE_CORPUS_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.limit || '1000' }}
         run: |
           mkdir -p artifacts/dore-corpus
           LIMIT_ARGS=()
