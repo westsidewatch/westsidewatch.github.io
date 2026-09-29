@@ -1,0 +1,15 @@
+{
+  "schema":"dawn.library.product-boundary.v1",
+  "status":"locked-for-design-planning",
+  "product":"黎明書局",
+  "primaryIntent":"使用者進入黎明書局，是為了找書、閱讀，以及閱讀外文作品的即時繁體中文翻譯。",
+  "productFlow":["find","select Work","open reading workspace","read original or zh-Hant translation","switch to bilingual comparison","resume/bookmark"],
+  "layoutContract":{"left":"resource navigation","right":"persistent reading + translation workspace","principle":"Selecting a Work on the left changes the reading projection on the right; it does not navigate into an unrelated product page."},
+  "leftNavigation":{"core":["search","collections/categories","三晨星（館藏推薦標準）","bookmarks","recent reading"],"rule":"Only navigation that materially helps select or resume a Work belongs here."},
+  "rightWorkspace":{"modes":["original","zh-Hant","original+zh-Hant"],"inherits":["BookReader","PDF reader","Readability/text reader"],"keeps":["work identity","edition/source","reading position","chapter/segment","provenance","rights state"],"excludes":["Bible text","Bible translations","Hebrew/Greek Scripture witnesses"]},
+  "siteLevelRecommendation":{"三晨星":{"level":"site-first + Dawn Library projection","siteRole":"全站內容綜合推薦標準之一，可推薦 Magazine、Cinema、黎明書局、ONE、講道及其他內容。","libraryRole":"同一份標準投影到黎明書局左側，只推薦/篩選館藏 Work。","implementation":"one canonical recommendation grammar/data; multiple projections, never duplicate systems"},"光譜":{"level":"site-first","role":"全站內容關係與選題推薦面貌；不是黎明書局閱讀工作台的常駐主模式。","libraryHandoff":"若光譜選中一個 Work，直接把 workId/context 帶入黎明書局右側閱讀工作區。"},"策展集":{"level":"site-first","role":"全站策展與選題組合；可以包含跨版塊內容。","libraryHandoff":"策展集中若包含書籍，可直接打開對應 canonical Work；書局可以展示策展結果中的書，但不承擔全站策展本體。"}},
+  "architecturePrinciple":"三晨星、光譜、策展集首先是網站第一層的內容推薦/組織語言，不要求使用者先進黎明書局才能看見。三晨星因同時是有效選書標準，在黎明書局保留一個館藏投影。",
+  "designConsequence":"Dawn Library front-end should become quieter, not accumulate every discovery capability. Its visual hierarchy is resource navigation on the left and reading/translation on the right. Site-level discovery hands a selected Work into this workspace.",
+  "sharedCore":"Translation, retrieval, canonical Work identity, recommendation grammar and context remain shared core capabilities; Dawn Library owns only its reading-oriented surfaces.",
+  "naming":{"canonical":"黎明書局","forbidden":["黎明書店","Bookshop","Dawn Bookshop"]}
+}
