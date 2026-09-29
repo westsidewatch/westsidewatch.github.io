@@ -1,0 +1,23 @@
+{
+  "schema":"dawn.corpus.batch-admission.v1",
+  "status":"implementation-started",
+  "implementation":"dore_core/corpus/admission_pipeline.py",
+  "objective":"Stop manually admitting 2–5 books per pass. Process source corpora in bulk, reserve manual review for ambiguous identity/rights/boundary cases, and promote verified Works in batches.",
+  "sourceScale":{"EEBO-TCP-Phase-I":"~25.3k public-domain transcriptions; ingest from TCP master metadata/TEI rather than hand-built title lists","future":["PRDL","Open Christian Data","CatholicCorpus","other already acquired legal sources"]},
+  "pipeline":[
+    "source adapter / metadata extraction",
+    "deterministic Bible-text and commentary routing",
+    "Christian-reading relevance thinning",
+    "rights/readable-witness gate",
+    "normalized creator/title work-key generation",
+    "candidate Work clustering",
+    "cross-source identity/dedup against PRDL and other authorities",
+    "edition/witness attachment under stable Work",
+    "canonical batch promotion",
+    "Doré Language Faculty source -> zh-Hant/bilingual projection"
+  ],
+  "costShape":{"cheapPass":"all records; deterministic/local; no AI","expensivePass":"only surviving/ambiguous candidates","manualReview":"only conflicts, unclear rights, uncertain Work identity and Bible-world boundary","translation":"after admission/readable witness; Doré native language faculty; ordinary path requires no LLM"},
+  "batchTargets":{"scan":"hundreds-to-thousands records per run","identityResolution":"tens-to-hundreds surviving Work clusters per run","canonicalPromotion":"batch, not title-by-title"},
+  "hardRules":["source record != Work","edition/container != Work","Bible text/translation excluded from Dawn automatic translation","commentary/exposition routes to ONE/Bible-world review","rights are witness-level","translation creates no fake Chinese edition","no public empty structures"],
+  "next":"Add EEBO TCP.csv/TEI adapter and machine-readable output writer; run the first real bulk batch; use resulting exception queue to improve rules instead of returning to hand admission."
+}
