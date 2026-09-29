@@ -1,0 +1,16 @@
+{
+  "schema":"dawn.library.foreign.eebo-prdl-work-clusters.v1",
+  "status":"admission-candidates-pass-4",
+  "purpose":"繼續館藏整理，按 Work 而非作者/來源整批分流。這一輪擴展清教徒、聖公會與早期現代靈修/神學作品，同時保留 ONE/聖經世界邊界。",
+  "clusters":[
+    {"creator":"Lewis Bayly","candidateWorks":[{"title":"The Practice of Piety","route":"Dawn","families":["spirituality-prayer"]}],"priority":"high"},
+    {"creator":"William Gurnall","candidateWorks":[{"title":"The Christian in Complete Armour","route":"Dawn","families":["spirituality-prayer","theology-thought"]}],"priority":"high","identityRisk":"multi-part historical publication and later abridgements"},
+    {"creator":"George Herbert","candidateWorks":[{"title":"The Temple","route":"Dawn","families":["literature-culture","spirituality-prayer"]},{"title":"A Priest to the Temple / The Country Parson","route":"Dawn","families":["sermons-ministry-worship","ethics-society-education"]}],"priority":"high"},
+    {"creator":"Jeremy Taylor","candidateWorks":[{"title":"The Rule and Exercises of Holy Living","route":"Dawn","families":["spirituality-prayer","ethics-society-education"]},{"title":"The Rule and Exercises of Holy Dying","route":"Dawn","families":["spirituality-prayer"]}],"priority":"high"},
+    {"creator":"Lancelot Andrewes","candidateWorks":[{"title":"Preces Privatae / Private Devotions","route":"Dawn","families":["spirituality-prayer"]},{"title":"sermon collections","route":"Dawn-after-collection-identity-resolution","families":["sermons-ministry-worship"]}],"priority":"high"},
+    {"creator":"Matthew Henry","candidateWorks":[{"title":"Exposition of the Old and New Testaments","route":"ONE/Bible-world","reason":"Scripture commentary; not ordinary Dawn reading collection"}],"priority":"boundary-example"}
+  ],
+  "gates":["resolve exact EEBO/other acquired witness","cross-deduplicate PRDL where represented","retain historical title and publication structure","separate abridgement/modernization as edition witness","verify rights/provenance","attach authentic title-page/scan when available"],
+  "translation":{"faculty":"Doré Language Faculty","aiRequired":false,"onlyAfterReadableWitness":true,"target":"zh-Hant"},
+  "next":"Continue identifier resolution across passes 1–4 and begin canonical promotion of candidates with stable Work identity and verified readable witnesses."
+}
