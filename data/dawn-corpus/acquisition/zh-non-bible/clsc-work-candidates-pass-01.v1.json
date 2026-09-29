@@ -1,0 +1,24 @@
+{
+  "schema":"dawn.corpus.work-candidates.v1",
+  "status":"normalized-candidates",
+  "parent":"黎明書局 / 中文館藏",
+  "source":"Yale Divinity Library / HKBU Christian Literature Society for China Collection",
+  "sourceCollectionFacts":{"titles":692,"years":"1906-1962","rightsRule":"Yale collection page states works published in 1930 or earlier are public domain and available for download; post-1930 digital files may require request and may remain copyright-protected."},
+  "purpose":"把上一輪 source/queue 層推進到獨立 Work candidate 層。這些記錄已有可核對的 title/creator/year/source identity；仍需完成 asset fetch/format verification 與最終 admission 才成為 canonical Work。",
+  "candidates":[
+    {"id":"clsc-1907-abide-in-christ-zh","title":"住在主裏面","creator":"慕安德烈","year":1907,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1907 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1910-how-to-pray-zh","title":"怎樣禱告","creator":"道來博士","year":1910,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1910 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1918-early-church-history-zh","title":"教會古史節要","creator":null,"year":1918,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1918 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1926-modern-christian-thought-zh","title":"近代基督教思潮","creator":null,"year":1926,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1926 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1927-renewal-spiritual-life-zh","title":"教會靈修生活的革新","creator":null,"year":1927,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1927 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1929-christian-ethical-standards-zh","title":"基督倫理標準","creator":null,"year":1929,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1929 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1929-study-of-culture-zh","title":"文化的研究","creator":null,"year":1929,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1929 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1929-disciples-prayer-zh","title":"門徒的祈禱","creator":"谷德屏","year":1929,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1929 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1929-mother-yao-zh","title":"姚媽","creator":"潘筠","year":1929,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1929 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1929-friends-of-christ-zh","title":"基督之友","creator":null,"year":1929,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1929 title","admissionState":"identity-rights-cleared; asset-pending"},
+    {"id":"clsc-1930-orchid-in-muddy-world-zh","title":"濁世蘭花","creator":null,"year":1930,"type":"book","bucket":"zh-non-bible","rights":"public-domain-by-source-year-rule","sourceIdentity":"CLSC 1930 title","admissionState":"identity-rights-cleared; asset-pending"}
+  ],
+  "bibleWorldExcludedExamples":["二約釋義叢書","以賽亞述要","雅各書新註釋","馬可福音新註釋","帖撒羅尼迦前後書新註釋","舊約人物"],
+  "dedupe":{"against":"existing CLSC queue + 靈歷集光 + future recovered Yale identities","result":"These 11 records are normalized representations of the existing CLSC queue, not 11 additional works. No duplicate count inflation."},
+  "next":"Resolve downloadable asset/PDF identity for each candidate, verify file-level provenance, then promote successful records to canonical Work membership in 黎明書局 / 中文館藏."
+}
