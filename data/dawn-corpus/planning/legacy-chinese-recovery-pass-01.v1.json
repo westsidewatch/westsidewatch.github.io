@@ -1,0 +1,55 @@
+{
+  "schema":"dawn.corpus.legacy-chinese-recovery-pass.v1",
+  "pass":1,
+  "status":"source-manifest-audit-complete",
+  "parent":"黎明書局",
+  "purpose":"第一輪逐個核對舊 bulk/source manifests，找出真正已經取得或登記過的中文來源能力，避免把沒有中文的巨型 corpus 誤算成中文館藏。",
+  "auditedSources":[
+    {
+      "id":"yale-chinese-christianity",
+      "sourceManifest":"data/dawn-corpus/bulk/large-corpus-acquisition-2026-09-26.json",
+      "legacyState":"metadata-first",
+      "classification":"zh-non-bible-source-pool + item-level bible-world split required",
+      "confirmedScale":{"CCLC":"1300+ Christian tracts/books","ChristianWeekly":"2572 issues through 2013","FreeMethodistTaiwan":"35 monographs + 619 listed serial issues","ChineseBaptistConvention":"252 periodical issues","Reichelt":"101 monographs + 31 manuscripts + 7 serial titles"},
+      "rightsBoundary":"Existing acquisition explicitly registered catalogue/collection metadata and public pointers, not blanket rehosting rights. Item-level rights remain required.",
+      "recoveryDecision":"This is the major legacy Chinese source pool. Recover its catalogue identities into the Chinese acquisition index, then split Bible/study items from non-Bible works and promote only rights-cleared works."
+    },
+    {
+      "id":"catholic-corpus",
+      "sourceManifest":"data/dawn-corpus/bulk/catholic-corpus-acquisition-2026-09-26.json",
+      "classification":"not-Chinese-source",
+      "confirmedLanguages":["Latin","English","Greek"],
+      "recoveryDecision":"Do not scan its 67,772 documents as a Chinese collection. It may later provide translation/reference relations, but contributes zero confirmed Chinese-language works at source-manifest level."
+    },
+    {
+      "id":"prdl",
+      "sourceManifest":"data/dawn-corpus/bulk/prdl-acquisition-2026-09-26.json",
+      "classification":"global-index-language-unknown",
+      "confirmedScale":{"authors":6444,"titles":110668,"volumes":149839},
+      "recoveryDecision":"Do not count as Chinese. PRDL manifest has no Chinese-language coverage claim. Only recover an item into zh when item metadata itself proves Chinese title/text/edition."
+    },
+    {
+      "id":"open-christian-data",
+      "sourceManifest":"data/dawn-corpus/bulk/open-christian-data-acquisition-2026-09-26.json",
+      "classification":"large-mixed-corpus-language-unresolved",
+      "confirmedScale":{"records":805146,"books":363,"hymns":34904,"sermons":5297,"bibleTranslations":9},
+      "recoveryDecision":"Potential Chinese records cannot be inferred from scale. Requires record-level language/provenance scan. Any Wikisource-derived record remains forbidden from Dawn admission."
+    },
+    {
+      "id":"ubs-marble-open-license",
+      "sourceManifest":"data/dawn-resource-corpus/sources/ubs-marble-open-license.json",
+      "classification":"bible-world-zh / zh-metadata-only",
+      "recoveryDecision":"Recover Chinese-localized Bible-world metadata for Emmaus planning; never count as 黎明書局 Chinese works merely because Chinese localization exists."
+    },
+    {
+      "id":"bsb-openbible-geography",
+      "sourceManifest":"data/dawn-resource-corpus/sources/bsb-openbible-geography.json",
+      "classification":"bible-world-zh when localized",
+      "recoveryDecision":"Route Chinese-localized geography to Bible-world planning, not Chinese collection admission."
+    }
+  ],
+  "keyFinding":"The earlier acquisition layer DID already register a substantial Chinese-Christianity source: Yale Documentation of Chinese Christianity. The gap was not absence of Chinese acquisition intent; it was that this source remained at metadata-first/source-pool level and was never normalized into item-level Chinese canonical Works. This is the main legacy bridge to build now.",
+  "doNotCountAsCollection":["source headline scale","metadata-only records","Chinese localization of Bible-world datasets","global corpora without item-level Chinese evidence","items lacking rights/admission clearance"],
+  "nextPass":{"target":"Yale Documentation of Chinese Christianity legacy pool","actions":["recover collection/catalog identities","normalize item title/author/date/type/source identifiers","split bible-world-zh vs zh-non-bible","preserve item rights/access status","deduplicate against current CLSC queue and 靈歷集光","produce first promotable legacy Chinese Work candidates"]},
+  "naming":{"canonicalParent":"黎明書局","forbidden":["黎明書店","Bookshop","Dawn Bookshop"]}
+}
