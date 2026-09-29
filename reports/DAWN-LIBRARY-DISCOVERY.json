@@ -1,13 +1,24 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-29T16:05:52.191802+00:00",
+  "generatedAt": "2026-09-29T16:16:05.080469+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 72,
+  "pagesChecked": 73,
   "newDiscovered": 0,
   "candidateQueue": 73,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Christian apologetics",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+apologetics",
+      "error": "RemoteDisconnected"
+    },
+    {
+      "query": "hymns Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity",
+      "error": "RemoteDisconnected"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
