@@ -1,0 +1,44 @@
+name: Dawn Library Renderer Gate
+
+on:
+  pull_request:
+    paths:
+      - 'static/dawn-library/**'
+      - 'layouts/dawn-library/**'
+      - '.github/workflows/dawn-library-renderer-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  renderer-contract:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check static/dawn-library/product/library-contract.js
+          node --check static/dawn-library/product/library-renderer-boundary.js
+          node --check static/dawn-library/product/product-bootstrap.js
+          node --check static/dawn-library/product/product.js
+      - name: Check Dawn Library ownership contract
+        run: |
+          node --input-type=module <<'NODE'
+          import { isLibrarySurface, isSiteEditorialSurface } from './static/dawn-library/product/library-contract.js';
+          if (!isLibrarySurface('morning-stars')) throw new Error('Three Morning Stars must remain inside Dawn Library');
+          if (!isLibrarySurface('reader')) throw new Error('Reader must remain inside Dawn Library');
+          if (isLibrarySurface('curated-collection')) throw new Error('Curated Collection must not be owned by Dawn Library');
+          if (!isSiteEditorialSurface('curated-collection')) throw new Error('Curated Collection must delegate to site editorial layer');
+          if (!isSiteEditorialSurface('spectrum')) throw new Error('Spectrum must delegate to site editorial layer');
+          console.log('Dawn Library ownership contract: PASS');
+          NODE
+      - name: Check renderer bootstrap wiring
+        run: |
+          grep -q "library-renderer-boundary.js" static/dawn-library/product/product-bootstrap.js
+          grep -q "assertLibraryRendererBoundary" static/dawn-library/product/product-bootstrap.js
+          grep -q "await import('./product.js')" static/dawn-library/product/product-bootstrap.js

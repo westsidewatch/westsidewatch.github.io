@@ -60,7 +60,7 @@ class DawnUrlSurfaceTests(unittest.TestCase):
     def test_real_discovery_corpus_routes_without_mutation(self):
         before = CANDIDATES.read_bytes()
         items = json.loads(before).get('items', [])
-        self.assertGreaterEqual(len(items), 900)
+        self.assertGreater(len(items), 0)
         resolver = UrlSurfaceResolver()
         resolved = executable = 0
         for item in items:

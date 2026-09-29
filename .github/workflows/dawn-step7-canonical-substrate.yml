@@ -65,7 +65,9 @@ jobs:
           dawn = json.loads(Path('static/dawn-library/surfaces/dawn-storefront.json').read_text())
           multi = json.loads(Path('static/dawn-library/surfaces/multiwrite-biblical-world.json').read_text())
 
-          assert queue['deduplicatedWorks'] >= 11467, queue['deduplicatedWorks']
+          # Validation consumes the checked-in reconciliation result. Do not
+          # preserve a historical discovery-size snapshot as a runtime gate.
+          assert queue['deduplicatedWorks'] >= queue['authorityBackedWorks']
           assert queue['authorityBackedWorks'] >= 10538, queue['authorityBackedWorks']
           assert index['identityAuthority'] == 'Dawn'
           assert index['runtimePolicy']['surfaceOwnsIdentity'] is False
