@@ -1,10 +1,18 @@
 name: Dawn Library Renderer Gate
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'static/dawn-library/**'
+      - 'layouts/dawn-library/**'
+      - 'scripts/check_dawn_library_final.py'
+      - '.github/workflows/dawn-library-renderer-gate.yml'
   pull_request:
     paths:
       - 'static/dawn-library/**'
       - 'layouts/dawn-library/**'
+      - 'scripts/check_dawn_library_final.py'
       - '.github/workflows/dawn-library-renderer-gate.yml'
   workflow_dispatch:
 
@@ -17,6 +25,9 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -26,6 +37,7 @@ jobs:
           node --check static/dawn-library/product/library-renderer-boundary.js
           node --check static/dawn-library/product/product-bootstrap.js
           node --check static/dawn-library/product/product.js
+          node --check static/dawn-library/product/product-finalize.js
       - name: Check Dawn Library ownership contract
         run: |
           node --input-type=module <<'NODE'
@@ -42,3 +54,5 @@ jobs:
           grep -q "library-renderer-boundary.js" static/dawn-library/product/product-bootstrap.js
           grep -q "assertLibraryRendererBoundary" static/dawn-library/product/product-bootstrap.js
           grep -q "await import('./product.js')" static/dawn-library/product/product-bootstrap.js
+      - name: Final Dawn Library acceptance
+        run: python3 scripts/check_dawn_library_final.py
