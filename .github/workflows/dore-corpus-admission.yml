@@ -1,0 +1,54 @@
+name: Doré Corpus Admission
+
+on:
+  workflow_dispatch:
+    inputs:
+      source:
+        description: Corpus source
+        required: true
+        default: eebo-tcp-phase1
+        type: choice
+        options:
+          - eebo-tcp-phase1
+      limit:
+        description: Optional record limit; 0 means full corpus
+        required: true
+        default: '0'
+        type: string
+  push:
+    paths:
+      - 'dore_core/corpus/**'
+      - '.github/workflows/dore-corpus-admission.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  admission:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Acquire EEBO-TCP Phase I metadata/corpus
+        if: ${{ inputs.source == 'eebo-tcp-phase1' || github.event_name == 'push' }}
+        run: |
+          git clone --depth 1 https://github.com/textcreationpartnership/Texts.git /tmp/tcp-texts
+      - name: Run Doré corpus admission
+        env:
+          DORE_CORPUS_LIMIT: ${{ inputs.limit || '1000' }}
+        run: |
+          mkdir -p artifacts/dore-corpus
+          python -m dore_core.corpus.run_admission \
+            --tei-root /tmp/tcp-texts \
+            --limit "$DORE_CORPUS_LIMIT" \
+            --report artifacts/dore-corpus/eebo-tcp-admission-report.json \
+            --exceptions artifacts/dore-corpus/eebo-tcp-exceptions.jsonl
+      - name: Upload admission report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dore-corpus-admission-report
+          path: artifacts/dore-corpus/
+          retention-days: 30
