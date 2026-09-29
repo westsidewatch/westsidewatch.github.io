@@ -1,0 +1,16 @@
+{
+  "schema":"dawn.library.foreign.eebo-prdl-work-clusters.v1",
+  "status":"admission-candidates-pass-2",
+  "purpose":"繼續從 EEBO-TCP 大池抽出早期現代基督教長文本，與 PRDL 做 Work/edition 去重；不把 source record 數量當館藏數。",
+  "rules":{"bibleTextExcluded":true,"commentaryRoutesToBibleWorld":true,"editionIsNotWork":true,"collectionNeedsHistoricalIdentity":true,"crossSourceDedupRequired":true},
+  "clusters":[
+    {"creator":"William Perkins","candidateWorks":["A Golden Chain","The Foundation of Christian Religion","A Treatise of the Vocations or Callings of Men"],"families":["theology-thought","spirituality-prayer","ethics-society-education"],"priority":"high","identityRisk":"historical title variants and collected editions require PRDL reconciliation"},
+    {"creator":"John Flavel","candidateWorks":["The Mystery of Providence","Keeping the Heart","The Fountain of Life"],"families":["spirituality-prayer","theology-thought"],"priority":"high","identityRisk":"later devotional retitlings/abridgements must not replace historical Work identity"},
+    {"creator":"Thomas Brooks","candidateWorks":["Precious Remedies Against Satan's Devices","Heaven on Earth"],"families":["spirituality-prayer","theology-thought"],"priority":"high","identityRisk":"modernized editions remain witnesses, not new Works"},
+    {"creator":"Thomas Goodwin","candidateWorks":["The Heart of Christ in Heaven Towards Sinners on Earth","The Child of Light Walking in Darkness"],"families":["spirituality-prayer","theology-thought"],"priority":"high","identityRisk":"later collected Works containers must be decomposed"},
+    {"creator":"John Foxe","candidateWorks":["Actes and Monuments"],"families":["church-history-traditions","biography-testimony-hagiography"],"priority":"high","identityRisk":"large evolving edition tradition; edition state and textual scope must remain explicit"}
+  ],
+  "canonicalGate":["exact EEBO-TCP witness resolved","PRDL cluster reconciled where available","historical Work title/identity stable","readable scope sufficient","rights/provenance attached","Bible/commentary boundary checked","visual/title-page attached to edition witness where possible"],
+  "readerConsequence":"Once admitted, Early Modern English is simply a source witness. Doré Language Faculty supplies zh-Hant/bilingual reading without AI calls and without manufacturing a Chinese edition.",
+  "next":"Resolve identifiers and promote only verified Works; continue clustering while the first two batches are deduplicated and visually enriched."
+}
