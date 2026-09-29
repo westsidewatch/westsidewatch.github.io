@@ -23,4 +23,19 @@
   @media(max-width:700px){.dawn-library-brand{width:100%;padding-top:1.5rem}.dawn-library-brand__frame{min-height:900px;height:1200px}}
   @media(prefers-reduced-motion:reduce){.dawn-library-brand__header,.dawn-library-brand__frame-wrap{animation:none}}
 </style>
+<script type="module">
+  const frame=document.getElementById('dawn-library-product-surface');
+  frame?.addEventListener('load',async()=>{
+    try{
+      const boundaryModule=await import('{{ "dawn-library/product/library-renderer-boundary.js" | relURL }}');
+      const boundary=await boundaryModule.createLibraryRendererBoundary();
+      boundaryModule.assertLibraryRendererBoundary(boundary);
+      frame.dataset.libraryContract='ready';
+      frame.dataset.libraryContractSchema=boundary.contract.schema;
+    }catch(error){
+      frame.dataset.libraryContract='failed';
+      console.error('[Dawn Library] renderer boundary validation failed',error);
+    }
+  });
+</script>
 {{ end }}
