@@ -1,0 +1,30 @@
+{
+  "schema":"dawn.corpus.acquisition-queue.v1",
+  "status":"active",
+  "scope":"non-Bible Chinese Dawn Bookshop acquisition",
+  "purpose":"Seed a real Chinese-language Bookshop collection after Bible-world resources are separated. Candidates are acquisition inputs only; none become canonical Dawn Works until identity, provenance, rights and admission gates pass.",
+  "rules":["exclude Bible text and ordinary Bible-study/reference resources from Bookshop counting","prefer full readable works over metadata-only records","preserve source edition and rights evidence","do not use Chinese Wikisource","do not equate acquisition with public admission"],
+  "sourceQueues":[
+    {
+      "id":"project-gutenberg-chinese-christian",
+      "priority":"P0",
+      "source":"Project Gutenberg",
+      "candidateWorks":[{"title":"靈歷集光","author":"宋尚節","language":"zh","type":"book/diary-biography","rightsEvidence":"Project Gutenberg marks the ebook public domain in the USA","reason":"Chinese Christian primary work; biography, testimony, evangelism and 20th-century Chinese church-history value."}],
+      "action":"Acquire source metadata and available full-text formats; run edition/author identity and jurisdiction-aware rights gate before admission."
+    },
+    {
+      "id":"clsc-yale-hkbu",
+      "priority":"P0",
+      "source":"Christian Literature Society for China collection (Yale Divinity Library / HKBU)",
+      "sourceScale":"692 titles, 1906-1962",
+      "rightsBoundary":"Collection notice states works published in 1930 or earlier are public domain and downloadable; post-1930 works may remain copyrighted and are not automatically admissible.",
+      "firstPassDomains":["Chinese Christian classics","theology","church history","prayer/devotional life","Christian biography","ethics and Christian social thought","Christian literature/culture"],
+      "excludeOrRouteElsewhere":["Bible text","verse-by-verse/commentary works whose primary function is Bible study -> bible-world-zh/Emmaus planning","post-1930 works without independent reusable-rights clearance"],
+      "seedCandidates":["住在主裏面 (1907)","怎樣禱告 (1910)","教會古史節要 (1918)","近代基督教思潮 (1926)","教會靈修生活的革新 (1927)","基督倫理標準 (1929)","文化的研究 (1929)","門徒的祈禱 (1929)"],
+      "action":"Enumerate pre-1931 downloadable records, classify Bible-world vs Bookshop, normalize title/author/year, then admit only records with clear source and rights evidence."
+    }
+  ],
+  "laterQueue":[{"source":"Open-access Chinese Christian research journals","example":"Journal of Research for Christianity in China","rule":"Useful as article/publication acquisition, but CC BY-NC-ND material must retain license restrictions and should not be treated as public-domain book stock."}],
+  "promotionPipeline":["acquire","normalize identity","deduplicate Work/Edition","verify provenance","verify rights","classify bible-world-zh vs dawn-bookshop","admission gate","canonical Work","optional 光譜/策展集/三晨星 editorial layers"],
+  "successCriterion":"First milestone is not a large count. It is a rights-clean, non-Bible Chinese canonical collection with enough real works to support Bookshop design without fake shelves."
+}
