@@ -1,0 +1,14 @@
+{
+  "schema":"dawn.library.canonical.foreign.eebo.v1",
+  "status":"verified-canonical-admission-batch-2",
+  "collection":"黎明書局",
+  "principle":"Only promote Works with a concrete readable witness and stable bibliographic identity. EEBO/TCP Phase II restrictions are not treated as equivalent to Phase I reuse rights; rights remain witness-level.",
+  "works":[
+    {"workId":"baxter-christian-religion-1660","creator":"Richard Baxter","canonicalTitle":"The Christian Religion Expressed","publicationYear":1660,"sourceWitness":{"provider":"EEBO-TCP","phase":"Phase 1","state":"publicly available","repository":"Oxford Text Archive","identity":"1660 edition","readable":true},"families":["theology-thought","ethics-society-education"],"translationEligibility":"eligible-after-record-level-rights-lock","readerModes":["source","zh-Hant","bilingual"]},
+    {"workId":"allestree-practice-christian-graces","creator":"traditionally attributed to Richard Allestree; collaboration attribution includes John Fell","canonicalTitle":"The Practice of Christian Graces, or, The Whole Duty of Man","publicationYear":1658,"sourceWitness":{"provider":"EEBO-TCP","phase":"Phase 1","state":"publicly available","repository":"Oxford Text Archive","readable":true},"families":["spirituality-prayer","ethics-society-education"],"attributionState":"historical attribution must remain explicit; do not flatten to a single certain author","translationEligibility":"eligible-after-record-level-rights-lock","readerModes":["source","zh-Hant","bilingual"]}
+  ],
+  "rightsGateExample":{"candidate":"Hieron. Zanchius — The Whole Body of Christian Religion, English translation by Ralph Winterton","tcpId":"A97309","phase":"Phase 2","decision":"hold","reason":"The accessible TCP record states subsequent electronic/print distribution requires permission; do not promote this witness into the reusable translation corpus merely because it is readable online."},
+  "boundaryExample":{"candidate":"John Bale — The Image of Both Churches","decision":"ONE/Bible-world boundary review","reason":"The work contains/exposes Revelation and is an exposition/paraphrase; Scripture-study routing must be decided before Dawn admission."},
+  "countEffect":{"newCanonicalWorks":2,"rightsHeld":1,"boundaryHeld":1},
+  "next":"Continue exact-witness verification across the existing candidate clusters; prioritize Phase I/publicly reusable long-form works, retain attribution uncertainty, and never infer reuse rights from online readability alone."
+}
