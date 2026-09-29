@@ -1,0 +1,18 @@
+{
+  "schema":"dawn.library.collection.v1",
+  "collectionId":"zh",
+  "displayName":"中文館藏",
+  "parent":"黎明書局",
+  "status":"active-building",
+  "publicVisibility":"content-dependent",
+  "purpose":"先建立黎明書局的中文館藏工作集，承接已確認的新攝取作品與即將恢復的 legacy 中文資源。這是館藏集合，不是 Bookshop、商店或獨立 Surface。",
+  "admissionRule":"只有通過 identity、provenance、rights、Bible-world separation 與 Dawn admission 的作品才能成為 canonical member。Acquisition candidate/queue 可以被此工作集追蹤，但不得冒充已入館作品。",
+  "currentPipelineMembers":[
+    {"title":"靈歷集光","author":"宋尚節","source":"Project Gutenberg","state":"ingested-candidate","canonicalMember":false},
+    {"source":"Christian Literature Society for China Collection (Yale/HKBU)","state":"source-verified-queue","candidateCount":11,"canonicalMember":false}
+  ],
+  "excludedFromCollectionCount":["Bible text","ordinary Bible-study/reference works","biblical maps/geography/routes","Bible-world datasets and localized metadata-only resources"],
+  "bibleWorldDestination":"bible-world-zh planning set for Emmaus and Scripture-context consumers",
+  "legacyRecovery":{"status":"next","scanScopes":["data/dawn-corpus","data/dawn-resource-corpus","data/dawn-corpus/bulk","data/dawn-corpus/records"],"buckets":["bible-world-zh","zh-non-bible","zh-metadata-only"],"mergeRule":"deduplicate legacy results against current Chinese acquisition candidates before canonical promotion"},
+  "naming":{"canonical":"黎明書局 / 中文館藏","forbidden":["Bookshop","Dawn Bookshop","Chinese Bookshop"]}
+}
