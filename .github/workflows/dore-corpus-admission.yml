@@ -11,7 +11,7 @@ on:
         options:
           - eebo-tcp-phase1
       limit:
-        description: Optional record limit; 0 means full corpus
+        description: Optional record limit; 0 means full catalogue
         required: true
         default: '0'
         type: string
@@ -32,10 +32,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Acquire EEBO-TCP Phase I metadata/corpus
-        if: ${{ inputs.source == 'eebo-tcp-phase1' || github.event_name == 'push' }}
+      - name: Acquire EEBO-TCP catalogue
         run: |
           git clone --depth 1 https://github.com/textcreationpartnership/Texts.git /tmp/tcp-texts
+          test -s /tmp/tcp-texts/TCP.csv
       - name: Run Doré corpus admission
         env:
           DORE_CORPUS_LIMIT: ${{ inputs.limit || '1000' }}
@@ -46,10 +46,19 @@ jobs:
             LIMIT_ARGS=(--limit "$DORE_CORPUS_LIMIT")
           fi
           python -m dore_core.corpus.run_bulk_admission \
-            /tmp/tcp-texts \
-            --format tei \
+            /tmp/tcp-texts/TCP.csv \
+            --format csv \
             "${LIMIT_ARGS[@]}" \
             --out artifacts/dore-corpus/eebo-tcp-admission-report.json
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('artifacts/dore-corpus/eebo-tcp-admission-report.json')
+          report = json.loads(p.read_text())
+          if report['sourceRecords'] == 0:
+              raise SystemExit('EEBO-TCP admission emitted zero records')
+          print(json.dumps(report, indent=2, ensure_ascii=False))
+          PY
       - name: Upload admission report
         uses: actions/upload-artifact@v4
         with:
