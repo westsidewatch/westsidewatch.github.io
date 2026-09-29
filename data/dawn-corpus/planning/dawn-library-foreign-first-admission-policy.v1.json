@@ -1,0 +1,17 @@
+{
+  "schema":"dawn.library.foreign-first-admission-policy.v1",
+  "status":"locked-active-policy",
+  "parent":"黎明書局",
+  "mission":"黎明書局的責任不是以中文原生館藏為中心，而是幫助中文閱讀者更好地閱讀世界上的可用作品。大量外文資源因此是核心基礎，不是附屬館藏。",
+  "collectionModel":{"principle":"collection admission and Chinese reading capability grow together","tracks":[{"id":"foreign-canonical-admission","priority":"primary-continuous","goal":"持續把既有大型外文 acquisition pools 正規化、去重、判權、提升為 canonical Works。"},{"id":"zh-native-admission","priority":"continuous","goal":"繼續擴充原生中文非聖經作品。"},{"id":"zh-reading-layer","priority":"primary-continuous","goal":"外文 canonical Work 一旦具備合法可讀 source，即可進入原文/繁中/對照閱讀能力，不必等待正式中文出版物。"}]},
+  "foreignPrioritySources":["PRDL","Open Christian Data book/text records","Catholic Corpus Latin/English/Greek texts","existing IIIF and historical Christian text sources","other already-ingested non-Chinese source pools"],
+  "admissionPipeline":["source record","normalize Work/Edition identity","deduplicate editions/volumes","exclude Bible Scripture text from translation product","classify rights/access/transformation state","resolve readable source lazily","promote eligible Work to canonical collection","attach cover/title-page visual when available","expose translation eligibility to Dawn Library reader"],
+  "scaleRule":"Large source counts are not displayed as collection counts. Only admitted canonical Work identities count as holdings; source records, editions, volumes and mirrors remain subordinate relations.",
+  "readerConsequence":"The browse leaf must become language-agnostic at the Work layer. Language is a facet and reading condition, not a wall separating foreign works from Chinese readers.",
+  "translationConsequence":"For eligible foreign Works, Chinese is a reading projection generated from the authoritative source text. It does not create a fake Chinese edition or duplicate Work identity.",
+  "existingChineseEditionReference":"Existing copyrighted Chinese editions may contribute lawful bibliographic and terminology signals but are never silently ingested or reconstructed as the generated reading layer.",
+  "bibleBoundary":"Bible text and Bible translations in other languages remain excluded from this translation product. Non-Scripture books about theology, history, spirituality, church life, culture and related subjects remain eligible according to rights policy.",
+  "designConsequence":"黎明書局的 visual browse should eventually mix Chinese and foreign canonical Works naturally. A foreign-language cover is not a warning state; translation availability is a positive reading affordance. The interface should help a Chinese reader choose a work first, then decide original/繁中/對照.",
+  "operationalRule":"Foreign canonical admission must continue in parallel with cover enrichment and interface planning. Do not pause collection growth while waiting for final layout design.",
+  "successDefinition":"The value of Dawn Library is measured less by how many Chinese files it stores and more by how much trustworthy world-language material it can make legible and readable to Chinese readers through one canonical reading system."
+}
