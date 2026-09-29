@@ -1,0 +1,22 @@
+{
+  "schema":"dawn.acquisition.queue.v1",
+  "status":"source-verified-queue",
+  "scope":"zh-non-bible",
+  "source":{"name":"Christian Literature Society for China Collection","institution":"Yale Divinity Library / Hong Kong Baptist University Library","collectionSize":692,"publicationRange":"1906-1962","rightsBoundary":"Collection page states works published in 1930 or earlier are public domain and available for download; post-1930 works may remain under copyright and are not admitted by this queue.","url":"https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"},
+  "policy":{"maxYear":1930,"excludeBibleWorld":true,"excludeCommentaryAndBibleReference":true,"excludeScriptureText":true,"rightsGateStillRequired":true,"canonicalAdmissionSeparate":true},
+  "priorityCandidates":[
+    {"title":"住在主裏面","author":"慕安德烈","year":1907,"provisionalDomain":"spiritual formation","state":"queued"},
+    {"title":"怎樣禱告","author":"道來博士","year":1910,"provisionalDomain":"prayer/spiritual formation","state":"queued"},
+    {"title":"教會古史節要","year":1918,"provisionalDomain":"church history","state":"queued"},
+    {"title":"近代基督教思潮","year":1926,"provisionalDomain":"Christian thought/history","state":"queued"},
+    {"title":"教會靈修生活的革新","year":1927,"provisionalDomain":"spiritual formation/church life","state":"queued"},
+    {"title":"基督倫理標準","year":1929,"provisionalDomain":"Christian ethics","state":"queued"},
+    {"title":"文化的研究","year":1929,"provisionalDomain":"culture/Christian thought","state":"queued"},
+    {"title":"門徒的祈禱","author":"谷德屏","year":1929,"provisionalDomain":"prayer/spiritual formation","state":"queued"},
+    {"title":"姚媽","author":"潘筠","year":1929,"provisionalDomain":"biography/testimony","state":"queued"},
+    {"title":"基督之友","year":1929,"provisionalDomain":"Christian life","state":"queued"},
+    {"title":"濁世蘭花","year":1930,"provisionalDomain":"Christian literature","state":"queued"}
+  ],
+  "bibleWorldExamplesExcluded":["二約釋義叢書","以賽亞述要","雅各書新註釋","馬可福音新註釋","帖撒羅尼迦前後書新註釋","保羅達哥林多人後書新註釋","新約釋義叢書 -- 保羅達加拉太人書釋義","舊約人物"],
+  "nextPromotionPass":"Resolve exact downloadable item identifiers/files for each queued title, normalize author/title/edition identity, capture per-item provenance and rights, then promote eligible works individually."
+}
