@@ -1,0 +1,21 @@
+{
+  "schema":"dawn.library.foreign-work-admission-and-zh-reading.v1",
+  "status":"active-architecture",
+  "parent":"黎明書局",
+  "productIdea":"黎明書局同時是一個外文館藏的中文閱讀入口：canonical Work 保持原語言身份，中文由閱讀層即時生成，而不是偽裝成已出版中文譯本。",
+  "parallelTracks":{
+    "foreignAdmission":{"goal":"把既有非中文 acquisition pools 按與中文相同的 identity/provenance/rights/admission 規則轉成 canonical Works。","prioritySources":["PRDL","Open Christian Data book/text records","Catholic Corpus Latin/English/Greek texts","existing IIIF/historical Christian text sources"],"rule":"source scale is not collection size; only normalized, deduplicated, rights/access-classified Work identities count as canonical collection."},
+    "instantChineseReading":{"goal":"對符合條件的非中文 canonical Works 提供即時繁體中文閱讀層。","modes":["original","zh-Hant","original+zh-Hant"],"exclude":["Bible text","Bible translations","Hebrew/Greek Scripture text"],"rule":"translation is a reader capability and never creates a second canonical Chinese Work."}
+  },
+  "existingChineseTranslationReferencePolicy":{
+    "principle":"已存在但因版權不能收錄的正式中文譯本，可以作為受限制的翻譯參考訊號，但不能因此被複製、重建或作為本站譯文的替代來源。",
+    "allowedUses":["書名、人名、地名、機構名等既有慣用譯名的 bibliographic verification","神學與歷史專名的術語一致性核對","確認某作品已有中文出版史及版本關係","在法律/授權允許的檢索或有限片段範圍內，用於 terminology/alignment quality signals"],
+    "forbiddenUses":["抓取受版權保護的完整中文譯本建立本站全文","逐段照抄或近似重建現有譯本","把受版權中文譯本放入 translation cache","把機器譯文標成某出版社/譯者的版本","用既有譯本規避原本不能收錄的版權限制"],
+    "authority":"原語言 source text remains translation authority; existing Chinese editions are bibliographic/terminology references only unless their rights explicitly permit fuller use."
+  },
+  "translationPipeline":["canonical foreign Work","source/edition text resolution","Bible-text exclusion gate","rights + transformation/cache policy","segment/chapter extraction","terminology/entity alignment","machine zh-Hant translation","optional existing-edition terminology verification","translation cache when permitted","reader renders original / zh-Hant / bilingual"],
+  "cachePolicy":{"publicDomainOrOpen":"chapter/segment translations may be persisted and reused","copyrightRestricted":"translation generation, persistence and redistribution depend on source and transformation rights; default to the least persistent lawful mode","existingCopyrightedChineseEdition":"never cache its text merely as a reference source"},
+  "identityRule":"A foreign Work with an instant Chinese reading layer remains one Work. A separately published Chinese translation is a distinct Edition relation only when its bibliographic identity is recorded; it is not automatically an ingestible asset.",
+  "strategicEffect":"This lets the large foreign-language acquisition base become directly useful to Chinese readers without waiting for licensed Chinese editions, while keeping provenance, copyright boundaries and edition identity explicit.",
+  "naming":{"canonicalParent":"黎明書局","forbidden":["黎明書店","Bookshop","Dawn Bookshop"]}
+}
