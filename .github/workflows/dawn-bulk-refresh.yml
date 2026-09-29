@@ -6,6 +6,9 @@ on:
     branches: [main]
     paths:
       - 'data/dawn-corpus/**'
+      - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'scripts/gate_dawn_canonical_promotion.py'
+      - 'scripts/promote_dawn_canonical_batch.py'
       - 'scripts/build_dawn_resource_queue.py'
       - 'scripts/build_dawn_resource_substrate.py'
       - 'scripts/refresh_dawn_bulk_corpus.py'
@@ -18,15 +21,26 @@ concurrency:
   group: dawn-bulk-corpus-refresh
   cancel-in-progress: false
 
+env:
+  DAWN_GROWTH_STATE_BRANCH: dawn-autonomous-growth-state
+  DAWN_PROMOTION_BATCH: '250'
+
 jobs:
   refresh:
     runs-on: ubuntu-latest
     timeout-minutes: 60
     steps:
-      - name: Checkout
+      - name: Checkout canonical baseline
         uses: actions/checkout@v4
         with:
+          ref: main
           fetch-depth: 0
+
+      - name: Restore autonomous harvest state
+        run: |
+          git fetch origin "$DAWN_GROWTH_STATE_BRANCH" || true
+          git show "origin/$DAWN_GROWTH_STATE_BRANCH:data/dawn-harvest-ledger-openlibrary.json" > data/dawn-harvest-ledger-openlibrary.json 2>/dev/null || true
+          git show "origin/$DAWN_GROWTH_STATE_BRANCH:data/dawn-10k-openlibrary-works.json" > data/dawn-10k-openlibrary-works.json 2>/dev/null || true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -36,32 +50,42 @@ jobs:
       - name: Refresh Dawn bulk and resource corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
-      - name: Persist refreshed corpus
+      - name: Gate canonical promotion batch
+        run: python3 scripts/gate_dawn_canonical_promotion.py
+
+      - name: Build canonical promotion batch
+        run: python3 scripts/promote_dawn_canonical_batch.py
+
+      - name: Persist harvest state only
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          generated_paths=(
-            data/dawn-10k-openlibrary-works.json
+          set -euo pipefail
+          tmpdir="$(mktemp -d)"
+          cp data/dawn-harvest-ledger-openlibrary.json "$tmpdir/ledger.json"
+          cp data/dawn-10k-openlibrary-works.json "$tmpdir/openlibrary.json"
+          git config user.name "Dore CI"
+          git config user.email "dore-ci@users.noreply.github.com"
+          git fetch origin "$DAWN_GROWTH_STATE_BRANCH"
+          git checkout -B "$DAWN_GROWTH_STATE_BRANCH" "origin/$DAWN_GROWTH_STATE_BRANCH"
+          mkdir -p data
+          cp "$tmpdir/ledger.json" data/dawn-harvest-ledger-openlibrary.json
+          cp "$tmpdir/openlibrary.json" data/dawn-10k-openlibrary-works.json
+          git add data/dawn-harvest-ledger-openlibrary.json data/dawn-10k-openlibrary-works.json
+          if git diff --cached --quiet; then
+            echo "No autonomous harvest-state changes."
+          else
+            git commit -m "data(dawn): advance autonomous harvest state [skip ci]"
+            git push origin "HEAD:$DAWN_GROWTH_STATE_BRANCH"
+          fi
+
+      - name: Publish gated canonical promotion artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-canonical-promotion-candidate
+          if-no-files-found: error
+          retention-days: 14
+          path: |
+            data/dawn-promotion-gate-report.json
+            data/dawn-promotion-batch-report.json
+            data/dawn-promoted-canonical-resource-index.json
             data/dawn-10k-work-queue.json
             data/dawn-resource-queue.json
-            public/dawn/canonical-index.json
-            static/dawn-library/canonical-index.json
-            static/dawn-library/canonical-resource-index.json
-            static/dawn-library/surfaces/dawn-resources.json
-          )
-          for path in "${generated_paths[@]}"; do
-            if [ -e "$path" ]; then
-              git add "$path"
-            fi
-          done
-          if git diff --cached --quiet; then
-            echo "No corpus changes to persist."
-            exit 0
-          fi
-          git commit -m "data(dawn): refresh bulk resource corpus"
-          # The refresh script can touch derived files outside the persisted corpus set.
-          # Restore those uncommitted derivatives so rebase always starts from a clean tree.
-          git reset --hard HEAD
-          git clean -fd
-          git pull --rebase origin main
-          git push origin HEAD:main
