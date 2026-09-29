@@ -1,0 +1,26 @@
+{
+  "schema": "dore.language.product-binding/v1",
+  "product": "dawn-library",
+  "service": "dore_core.language.service",
+  "operation": "plan_translation",
+  "translation": {
+    "sourceLanguage": "auto",
+    "targetLanguage": "zh-Hant",
+    "profile": "book-long-form",
+    "runtime": "local",
+    "longForm": true,
+    "browserPreferred": false
+  },
+  "providers": {
+    "authority": "dore_core.language.provider_registry.DEFAULT_LANGUAGE_PROVIDERS",
+    "preferred": ["ctranslate2", "argos", "bergamot"],
+    "productMayBindEngineDirectly": false
+  },
+  "input": {
+    "contract": "dore_core.language.base.LanguageUnit",
+    "witness": "dore_core.language.base.TextWitness",
+    "provenanceValidationRequired": true
+  },
+  "readerModes": ["source", "zh-Hant", "bilingual"],
+  "status": "bound-awaiting-materialized-text"
+}
