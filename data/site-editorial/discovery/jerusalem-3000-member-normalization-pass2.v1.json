@@ -1,0 +1,17 @@
+{
+  "schema":"site.discovery.curated-set-member-normalization.v1",
+  "status":"pass-2",
+  "setId":"curated:jerusalem-3000-research",
+  "rule":"Continue normalizing the existing curated collection without changing its old editorial rules. Map series remain distinct historical evidence objects; modern research publications remain pointers until Dawn/research canonical admission resolves them. No ownership transfer and no duplicate objects.",
+  "members":[
+    {"contentId":"map:jerusalem-crusader-cartographic-tradition","label":"Crusader / medieval Jerusalem cartographic tradition","kind":"map-series","state":"series-pointer","spectrum":{"time":"medieval","place":"Jerusalem","evidence":"depiction/pilgrimage cartography"}},
+    {"contentId":"map:jerusalem-early-modern-pilgrim-views","label":"Early-modern Jerusalem pilgrim views","kind":"map-series","state":"series-pointer","spectrum":{"time":"early-modern","place":"Jerusalem","evidence":"depiction/pilgrimage"}},
+    {"contentId":"map:jerusalem-19c-measured-surveys","label":"19th-century measured surveys of Jerusalem","kind":"map-series","state":"series-pointer","spectrum":{"time":"19th-century","place":"Jerusalem","evidence":"measured survey"},"anchor":"map:wilson-ordnance-survey-jerusalem-1865"},
+    {"contentId":"collection:jerusalem-early-photography","label":"Early photography of Jerusalem","kind":"photograph-series","state":"series-pointer","anchors":["collection:loc-whiting-jerusalem","collection:loc-matson-jerusalem"]},
+    {"contentId":"research:jerusalem-archaeology-excavation-reports","label":"Jerusalem archaeological excavation reports","kind":"research-series","state":"series-pointer","anchors":["source:iaa-publications-portal","publication:iaa-western-wall-plaza-vol1","publication:iaa-western-wall-plaza-vol3"]},
+    {"contentId":"research:jerusalem-digital-reconstruction-precedents","label":"Jerusalem / historical-city digital reconstruction precedents","kind":"precedent-series","state":"series-pointer","anchors":["precedent:epfl-jerusalem-1840-1940","precedent:cologne-muristan","precedent:virtual-illes","precedent:openbibleinfo-temple-mount-3d","precedent:virtual-angkor"]}
+  ],
+  "crossLayerConsequence":"These normalized series can be used by Curated Sets as grouped members and by Spectrum as relation/axis evidence without becoming new public sections.",
+  "result":{"normalizedSeries":6,"duplicatesCreated":0,"ownershipMoves":0},
+  "next":"Resolve individual members behind the series only when they add evidence value; connect eligible book/report identities to Dawn canonical Works; avoid exploding every map/image into top-level public navigation."
+}
