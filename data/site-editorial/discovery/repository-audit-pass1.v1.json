@@ -1,0 +1,10 @@
+{
+  "schema":"site.discovery.repository-audit-pass1.v1",
+  "status":"complete-pass-1",
+  "searchedTerms":["三晨星","光譜","策展集","spectrum","morning stars","curated","SPECTRUM","SHELF","FLOW","CollectionContext"],
+  "result":"Default-branch code search returned no indexed matches for the current canonical names or the earlier Formal Edition vocabulary in this pass.",
+  "interpretation":"Do not assume a mature reusable implementation exists merely because earlier planning discussed FLOW/SHELF/SPECTRUM. Treat the newly locked site-first contracts as canonical until concrete legacy records are located by directory/file audit.",
+  "preservePrinciples":{"threeMorningStars":"site-first recommendation + Dawn Library projection","spectrum":"site-first relational/editorial distribution; not a tool","curatedSets":"site-first cross-section editorial grouping","noDuplicateContentObjects":true},
+  "nextAudit":"Traverse likely static/data/formal-edition/editorial directories and identify files by structure rather than keyword search; classify each discovered artifact as reusable contract, reusable data, obsolete UI, or unrelated.",
+  "parallel":"This audit remains independent of Dawn Library canonical thinning and Doré language implementation."
+}
