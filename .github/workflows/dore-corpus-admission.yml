@@ -42,13 +42,33 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Resolve admission mode
+        id: mode
+        run: |
+          LIMIT="1000"
+          AUTHORITY="none"
+          REQUEST="data/dawn-corpus/admission/full-eebo-remote-holdings.request.json"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            LIMIT="${{ inputs.limit }}"
+            AUTHORITY="${{ inputs.authority_enrichment }}"
+          elif [ -s "$REQUEST" ]; then
+            REQUEST_MODE=$(python -c 'import json; print(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("mode", ""))')
+            REQUEST_LIMIT=$(python -c 'import json; print(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("limit", 1000))')
+            REQUEST_DOWNLOAD=$(python -c 'import json; print(str(json.load(open("data/dawn-corpus/admission/full-eebo-remote-holdings.request.json")).get("fullTextDownload", True)).lower())')
+            if [ "$REQUEST_MODE" = "full-catalogue" ] && [ "$REQUEST_LIMIT" = "0" ] && [ "$REQUEST_DOWNLOAD" = "false" ]; then
+              LIMIT="0"
+            fi
+          fi
+          echo "limit=$LIMIT" >> "$GITHUB_OUTPUT"
+          echo "authority=$AUTHORITY" >> "$GITHUB_OUTPUT"
       - name: Acquire EEBO-TCP catalogue metadata
         run: |
           git clone --depth 1 https://github.com/textcreationpartnership/Texts.git /tmp/tcp-texts
           test -s /tmp/tcp-texts/TCP.csv
       - name: Run remote-holdings admission
         env:
-          DORE_CORPUS_LIMIT: ${{ github.event_name == 'workflow_dispatch' && inputs.limit || '1000' }}
+          DORE_CORPUS_LIMIT: ${{ steps.mode.outputs.limit }}
+          DORE_AUTHORITY_MODE: ${{ steps.mode.outputs.authority }}
         run: |
           mkdir -p artifacts/dore-corpus
           LIMIT_ARGS=()
@@ -56,7 +76,7 @@ jobs:
             LIMIT_ARGS=(--limit "$DORE_CORPUS_LIMIT")
           fi
           AUTHORITY_ARGS=()
-          if [ "${{ inputs.authority_enrichment || 'none' }}" = "openlibrary-local-cache" ] && [ -s data/dawn-corpus/authority/openlibrary-works.txt.gz ]; then
+          if [ "$DORE_AUTHORITY_MODE" = "openlibrary-local-cache" ] && [ -s data/dawn-corpus/authority/openlibrary-works.txt.gz ]; then
             AUTHORITY_ARGS=(--openlibrary data/dawn-corpus/authority/openlibrary-works.txt.gz)
           fi
           python -m dore_core.corpus.run_bulk_admission \
@@ -66,12 +86,14 @@ jobs:
             "${AUTHORITY_ARGS[@]}" \
             --out artifacts/dore-corpus/eebo-tcp-admission-report.json
           python - <<'PY'
-          import json
+          import json, os
           from pathlib import Path
           p = Path('artifacts/dore-corpus/eebo-tcp-admission-report.json')
           report = json.loads(p.read_text())
           if report['sourceRecords'] == 0:
               raise SystemExit('EEBO-TCP admission emitted zero records')
+          report['requestedLimit'] = int(os.environ['DORE_CORPUS_LIMIT'])
+          report['fullCatalogueRun'] = os.environ['DORE_CORPUS_LIMIT'] == '0'
           report['holdingsModel'] = 'remote-pointer-on-demand-reading'
           report['readingContract'] = {
               'catalogueAdmissionRequiresFullTextDownload': False,
