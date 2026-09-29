@@ -41,4 +41,4 @@ jobs:
         run: |
           grep -q "library-renderer-boundary.js" static/dawn-library/product/product-bootstrap.js
           grep -q "assertLibraryRendererBoundary" static/dawn-library/product/product-bootstrap.js
-          grep -q "libraryContract" static/dawn-library/product/index.html
+          grep -q "await import('./product.js')" static/dawn-library/product/product-bootstrap.js
