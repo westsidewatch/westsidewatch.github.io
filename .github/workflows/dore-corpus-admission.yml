@@ -18,6 +18,8 @@ on:
   push:
     paths:
       - 'dore_core/corpus/**'
+      - 'data/dawn-corpus/bulk/**'
+      - 'data/dawn-corpus/admission/**'
       - '.github/workflows/dore-corpus-admission.yml'
 
 permissions:
