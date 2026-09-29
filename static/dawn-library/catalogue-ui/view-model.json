@@ -1,18 +1,28 @@
 {
-  "schema": "dawn-library-view-model/v1",
+  "schema": "dawn-library-view-model/v2",
   "identity": {
     "name": "黎明書局",
-    "purpose": "read-and-read-in-Chinese"
+    "purpose": "discover-and-read-books"
   },
-  "leftPage": {
+  "architecture": {
+    "primaryPageCount": 2,
+    "layoutDeferred": true,
+    "motionDeferred": true,
+    "thirdPage": {
+      "status": "conditional",
+      "reason": "only-if-corpus-capacity-or-index-density-requires-it"
+    }
+  },
+  "firstPage": {
     "role": "discovery-index",
     "primaryEntries": [
       {"id": "morning-stars", "label": "三晨星", "kind": "recommendation-standard"},
       {"id": "catalogue", "label": "館藏", "kind": "catalogue"},
       {"id": "search", "label": "搜尋", "kind": "search"}
-    ]
+    ],
+    "futurePresentation": "resolve-during-site-layout-redesign"
   },
-  "rightPage": {
+  "secondPage": {
     "role": "reader",
     "emptyState": "select-work",
     "defaultMode": "bilingual",
@@ -22,15 +32,20 @@
       {"id": "bilingual", "label": "對照"}
     ],
     "contentFetch": "on-demand",
-    "translation": "dore-language-faculty"
+    "translation": "dore-language-faculty",
+    "futurePresentation": "resolve-during-site-layout-redesign"
   },
   "catalogue": {
     "identitySource": "../canonical-resource-index.json",
     "initialFullCatalogueLoad": false,
     "search": "resource-fabric",
-    "localFullText": false
+    "localFullText": false,
+    "externalCorpusValidationRequired": true
   },
   "invariants": {
+    "twoPrimaryPages": true,
+    "thirdPageIsNotDefault": true,
+    "layoutAndMotionAreDeferred": true,
     "threeMorningStarsBelongsToLibrary": true,
     "threeMorningStarsIsNotSpectrum": true,
     "threeMorningStarsIsNotCuratedCollection": true,
@@ -41,6 +56,7 @@
     "legacyMorningSelectionForbidden": true,
     "legacyCollectionStreamForbidden": true,
     "hardCodedCatalogueCountForbidden": true,
-    "audioVideoBelongToLibrary": false
+    "audioVideoBelongToLibrary": false,
+    "siteNativePublicationsAreNotExternalCorpusTestFixtures": true
   }
 }
