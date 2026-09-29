@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "westsidewatch://calligraphy/corpus/v1",
+  "title": "Calligraphy Jizi Corpus",
+  "type": "object",
+  "required": ["version", "characters", "glyphs", "sources"],
+  "properties": {
+    "version": {"const": 1},
+    "characters": {"type": "array", "items": {"$ref": "#/$defs/character"}},
+    "glyphs": {"type": "array", "items": {"$ref": "#/$defs/glyph"}},
+    "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}}
+  },
+  "$defs": {
+    "character": {
+      "type": "object",
+      "required": ["id", "unicode", "literal"],
+      "properties": {
+        "id": {"type": "string"},
+        "unicode": {"type": "string"},
+        "literal": {"type": "string", "minLength": 1},
+        "variants": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["id", "title", "rights"],
+      "properties": {
+        "id": {"type": "string"},
+        "title": {"type": "string"},
+        "calligrapher": {"type": ["string", "null"]},
+        "dynasty": {"type": ["string", "null"]},
+        "date": {"type": ["string", "null"]},
+        "holding": {"type": ["string", "null"]},
+        "sourceUrl": {"type": ["string", "null"]},
+        "rights": {"enum": ["public-domain", "licensed", "unknown"]},
+        "evidenceAsset": {"type": ["string", "null"]}
+      }
+    },
+    "glyph": {
+      "type": "object",
+      "required": ["id", "characterId", "sourceId", "style", "asset", "crop"],
+      "properties": {
+        "id": {"type": "string"},
+        "characterId": {"type": "string"},
+        "sourceId": {"type": "string"},
+        "style": {"enum": ["seal", "clerical", "regular", "running", "cursive", "other"]},
+        "asset": {"type": "string"},
+        "derivativeOf": {"type": ["string", "null"]},
+        "crop": {
+          "type": "object",
+          "required": ["x", "y", "width", "height"],
+          "properties": {
+            "page": {"type": ["integer", "null"]},
+            "x": {"type": "number"}, "y": {"type": "number"},
+            "width": {"type": "number"}, "height": {"type": "number"},
+            "rotation": {"type": "number", "default": 0}
+          }
+        }
+      }
+    }
+  }
+}
