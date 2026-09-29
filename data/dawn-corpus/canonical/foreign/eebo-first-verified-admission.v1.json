@@ -1,0 +1,57 @@
+{
+  "schema":"dawn.library.canonical.foreign.eebo.v1",
+  "status":"first-verified-admission",
+  "sourceAuthority":"Oxford Text Archive / EEBO-TCP Phase I",
+  "purpose":"從前四批 candidate clustering 轉入真正 verified admission。只提升已能確認具體 EEBO-TCP readable witness、穩定 Work identity、可重用權利資訊的作品；沒有驗證的名著繼續留在 admission，不用知名度代替證據。",
+  "rightsBaseline":"EEBO-TCP Phase I keyboarded/encoded texts expose CC0 1.0 reuse notices on verified records; rights remain witness-level and are recorded per admitted witness.",
+  "works":[
+    {
+      "workId":"baxter-certainty-worlds-spirits",
+      "creator":"Richard Baxter",
+      "canonicalTitle":"The Certainty of the Worlds of Spirits",
+      "publicationYear":1691,
+      "families":["theology-thought","spirituality-prayer"],
+      "witnesses":[{"provider":"Oxford Text Archive / EEBO-TCP Phase I","tcpId":"A26888","language":"Early Modern English","readable":true,"rights":"CC0 1.0 reuse notice on TCP edition","format":"HTML/TCP encoded text"}],
+      "translationEligibility":"eligible",
+      "readerModes":["source","zh-Hant","bilingual"],
+      "aiRequired":false
+    },
+    {
+      "workId":"baxter-glorious-kingdom-christ",
+      "creator":"Richard Baxter",
+      "canonicalTitle":"The Glorious Kingdom of Christ",
+      "publicationYear":1691,
+      "families":["theology-thought","church-history-traditions"],
+      "witnesses":[{"provider":"Oxford Text Archive / EEBO-TCP","tcpId":"A26934","language":"Early Modern English","readable":true,"format":"HTML/TCP encoded text"}],
+      "translationEligibility":"eligible-after-rights-record-normalization",
+      "readerModes":["source","zh-Hant","bilingual"],
+      "aiRequired":false
+    },
+    {
+      "workId":"baxter-poetical-fragments",
+      "creator":"Richard Baxter",
+      "canonicalTitle":"Poetical Fragments: Heart-Imployment with God and It Self",
+      "publicationYear":1681,
+      "families":["literature-culture","spirituality-prayer"],
+      "witnesses":[{"provider":"Oxford Text Archive / EEBO-TCP Phase I","tcpId":"A26987","language":"Early Modern English","readable":true,"rights":"CC0 1.0 Universal explicitly stated on TCP edition","format":"HTML/TCP encoded text"}],
+      "translationEligibility":"eligible",
+      "readerModes":["source","zh-Hant","bilingual"],
+      "aiRequired":false
+    },
+    {
+      "workId":"baxter-second-sheet-ministry",
+      "creator":"Richard Baxter",
+      "canonicalTitle":"A Second Sheet for the Ministry",
+      "publicationYear":1657,
+      "families":["sermons-ministry-worship","church-history-traditions"],
+      "witnesses":[{"provider":"Oxford Text Archive / EEBO-TCP","tcpId":"A27034","language":"Early Modern English","readable":true,"format":"HTML/TCP encoded text"}],
+      "translationEligibility":"eligible-after-rights-record-normalization",
+      "readerModes":["source","zh-Hant","bilingual"],
+      "aiRequired":false
+    }
+  ],
+  "notPromotedYet":["The Saints' Everlasting Rest","A Call to the Unconverted","The Reformed Pastor","The Pilgrim's Progress","Of Communion with God","The Bruised Reed","The Practice of Piety","The Temple"],
+  "reasonNotPromoted":"Candidate identity alone is insufficient; exact acquired witness and rights/provenance must be resolved first.",
+  "countEffect":{"newCanonicalWorks":4,"unverifiedFamousWorksPromoted":0},
+  "next":"Continue exact TCP-ID resolution across candidate passes 1–4, cross-deduplicate PRDL editions, then promote verified Works in batches."
+}
