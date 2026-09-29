@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-29T09:02:04.758511+00:00",
+  "generatedAt": "2026-09-29T09:13:24.564694+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2375,6 +2375,52 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-fencebiblehowtop00bene",
+          "title": "The Fence Bible",
+          "author": "Jeff Beneke",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fencebiblehowtop00bene",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fencebiblehowtop00bene",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-G.AmadonAncientJewishCalendation.-JBiblicalLiterature1942V61",
+          "title": "G. Amadon, Ancient Jewish Calendation. - J Biblical Literature, 1942, V 61, Part 4, 227-280",
+          "author": "MVT",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/G.AmadonAncientJewishCalendation.-JBiblicalLiterature1942V61",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/G.AmadonAncientJewishCalendation.-JBiblicalLiterature1942V61",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-truthisstrangert0000midd",
           "title": "Truth is stranger than it used to be : biblical faith in a postmodern age",
           "author": "Middleton, J. Richard, 1955-",
@@ -2421,29 +2467,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-          "title": "Jeremiah 7:1-16 - The Right Groove â 01-18-1973- Bible Commentary and Sermon by Rev Ralph C Link and uploaded by Peter-John Parisis",
-          "author": "Rev Ralph Charles Link and Rev Ralph C. Link",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-CyclopaediaBiblicalTheologicalEcclesiasticalLiterature.Mcclintock.Strong",
           "title": "Cyclopaedia Biblical Theological Ecclesiastical Literature. McClintock. Strong. 12 Volumes.1867-1894.",
           "author": "John, M'Clintock, Rev. D.D.; James, Strong, S.T.D.1867-1894.",
@@ -2456,29 +2479,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/CyclopaediaBiblicalTheologicalEcclesiasticalLiterature.Mcclintock.Strong",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-makingofenglishb0000bobr_v6g1",
-          "title": "The making of the English Bible",
-          "author": "Bobrick, Benson, 1947-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/makingofenglishb0000bobr_v6g1",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/makingofenglishb0000bobr_v6g1",
             "mode": "source"
           },
           "rights": {
@@ -2525,29 +2525,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/fortwaynebible198082fort",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fencebiblehowtop00bene",
-          "title": "The Fence Bible",
-          "author": "Jeff Beneke",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fencebiblehowtop00bene",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fencebiblehowtop00bene",
             "mode": "source"
           },
           "rights": {
@@ -2732,6 +2709,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/fortwaynebibleco1988fort",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-fortwaynebiblein19496fort",
+          "title": "Fort Wayne Bible Institute The Bible Vision",
+          "author": "Fort Wayne Bible Institute",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fortwaynebiblein19496fort",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fortwaynebiblein19496fort",
             "mode": "source"
           },
           "rights": {
