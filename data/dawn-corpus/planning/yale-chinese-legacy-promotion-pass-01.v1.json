@@ -1,0 +1,30 @@
+{
+  "schema":"dawn.corpus.yale-chinese-legacy-promotion.v1",
+  "pass":1,
+  "status":"promotion-started",
+  "parent":"黎明書局 / 中文館藏",
+  "answerToDataQuestion":"YES_WITH_BOUNDARY",
+  "dataState":"The legacy acquisition contains Chinese collection/catalog metadata and public pointers at substantial scale. It does NOT mean the repository already contains the full Chinese book text/assets for those thousands of items. Existing manifest explicitly registered Yale Chinese Christianity as metadata-first because many digitized copies require Special Collections access and item-level rights review.",
+  "source":"Yale Documentation of Chinese Christianity",
+  "legacyManifest":"data/dawn-corpus/bulk/large-corpus-acquisition-2026-09-26.json",
+  "registeredPools":[
+    {"name":"CCLC","scale":"1300+ Christian tracts/books","candidateRole":"primary Chinese monograph/tract identity pool"},
+    {"name":"ChristianWeekly","scale":"2572 issues through 2013","candidateRole":"periodical identity pool"},
+    {"name":"FreeMethodistTaiwan","scale":"35 monographs + 619 listed serial issues","candidateRole":"monograph/serial identity pool"},
+    {"name":"ChineseBaptistConvention","scale":"252 periodical issues","candidateRole":"periodical identity pool"},
+    {"name":"Reichelt","scale":"101 monographs + 31 manuscripts + 7 serial titles","candidateRole":"monograph/manuscript/serial identity pool"}
+  ],
+  "promotionStages":[
+    "recover item/catalog identity from legacy metadata/pointers",
+    "normalize Chinese title, creator, date, type and stable source identifier",
+    "classify bible-world-zh vs zh-non-bible",
+    "resolve item-level access/rights and asset availability",
+    "deduplicate against current CLSC public-domain queue and 靈歷集光",
+    "promote eligible item to canonical Work",
+    "attach canonical Work to 黎明書局 / 中文館藏"
+  ],
+  "firstPriority":"CCLC public-domain/rights-clear monographs and tracts, because this pool most directly converts the existing metadata-first acquisition into readable Chinese Works.",
+  "dedupeAgainst":["data/dawn-corpus/acquisition/zh-non-bible/clsc-public-domain-1930-queue.v1.json","data/dawn-corpus/acquisition/zh-non-bible/song-shangjie-lingli-jiguang.v1.json"],
+  "doNotClaim":["Do not say 1300+ CCLC books are already locally stored full text.","Do not count catalogue metadata as canonical collection membership.","Do not count Bible/study/reference items as 黎明書局 Chinese works.","Do not re-ingest an item already represented by the current CLSC queue or another canonical Work."],
+  "next":"Resolve the first CCLC item identities from the existing/newly verified public-domain queue into individual normalized Work candidates, then continue outward through the larger legacy CCLC catalogue."
+}
