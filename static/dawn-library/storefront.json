@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-29T05:54:15.909820+00:00",
+  "generatedAt": "2026-09-29T06:20:57.937063+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2283,6 +2283,52 @@
       "source": "Internet Archive",
       "items": [
         {
+          "id": "internet-archive-testamentbiblean00rome",
+          "title": "Testament : the Bible and history",
+          "author": "Romer, John",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/testamentbiblean00rome",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/testamentbiblean00rome",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-sim_journal-of-biblical-literature_1988_107_index",
+          "title": "Journal of Biblical Literature 1988: Vol 107 Index",
+          "author": "",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1988_107_index",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1988_107_index",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-apracticalcomme00knecgoog",
           "title": "A practical commentary on Holy Scripture for the use of those who teach Bible history",
           "author": "Knecht, Friedrich Justus, 1839-1921",
@@ -2306,29 +2352,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-studiesinbiblica0000pata",
-          "title": "Studies in Biblical and Jewish folklore",
-          "author": "Patai, Raphael, 1910- ed",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/studiesinbiblica0000pata",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/studiesinbiblica0000pata",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-storyofbibleland01talm",
           "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
           "author": "Talmage, T. De Witt (Thomas De Witt), 1832-1902",
@@ -2341,6 +2364,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/storyofbibleland01talm",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-philosophyofjuda0000cahn",
+          "title": "The philosophy of Judaism : the development of Jewish thought throughout the ages, the Bible, the Talmud, the Jewish philosophers, and the Cabala, until the present time",
+          "author": "Cahn, Zvi",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/philosophyofjuda0000cahn",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/philosophyofjuda0000cahn",
             "mode": "source"
           },
           "rights": {
@@ -2398,18 +2444,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-atlasofbiblicalw0000rhym",
-          "title": "Atlas of the biblical world",
-          "author": "Rhymer, Joseph, 1927-",
+          "id": "internet-archive-biblicalnarrativ0037vanh",
+          "title": "Biblical narrative in the philosophy of Paul Ricoeur : a study in hermeneutics and theology",
+          "author": "Vanhoozer, Kevin J",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/atlasofbiblicalw0000rhym",
+            "url": "https://archive.org/details/biblicalnarrativ0037vanh",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/atlasofbiblicalw0000rhym",
+            "url": "https://archive.org/services/img/biblicalnarrativ0037vanh",
             "mode": "source"
           },
           "rights": {
@@ -2674,64 +2720,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-concisehistoryof0000unse_g9a5",
-          "title": "A concise history of the English Bible",
-          "author": "",
+          "id": "internet-archive-takingwordtoworl0000robe",
+          "title": "Taking the Word to the world : 50 years of the United Bible Societies",
+          "author": "Robertson, Edwin Hanton",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/concisehistoryof0000unse_g9a5",
+            "url": "https://archive.org/details/takingwordtoworl0000robe",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/concisehistoryof0000unse_g9a5",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-dictionaryofbibl0000unse_z3q0",
-          "title": "Dictionary of the Bible and ancient media",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/dictionaryofbibl0000unse_z3q0",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/dictionaryofbibl0000unse_z3q0",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-earlyreligionis03robegoog",
-          "title": "The early religion of Israel : as set forth by Biblical writers and by modern critical historians",
-          "author": "Robertson, James, 1840-1920",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/earlyreligionis03robegoog",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/earlyreligionis03robegoog",
+            "url": "https://archive.org/services/img/takingwordtoworl0000robe",
             "mode": "source"
           },
           "rights": {
@@ -2809,213 +2809,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/taylorurbanization",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_KV-420-347_3",
-          "title": "EARLY HISTORY OF THE CHRISTIAN CHURCH",
-          "author": "MONSIGNOR LOUIS DUCHESNE",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_KV-420-347_3",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_KV-420-347_3",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-EKJ-822",
-          "title": "A critical analysis of richard hooker's theory of the relation of church and state",
-          "author": "Cletus F. Dirksen",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-EKJ-822",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-EKJ-822",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_T5-CWP-064",
-          "title": "the church hymnal",
-          "author": "edmund s. lorenz",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T5-CWP-064",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_T5-CWP-064",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchliberalsoc0000emme_p3u4",
-          "title": "The Church and The Liberal Society",
-          "author": "Emmet John HUghes",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchliberalsoc0000emme_p3u4",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchliberalsoc0000emme_p3u4",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-faithofchristian0000gust_j8r0",
-          "title": "The Faith of the Christian Church",
-          "author": "Gustaf Aulen",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/faithofchristian0000gust_j8r0",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/faithofchristian0000gust_j8r0",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-faithofchristian0000gust_k4x9",
-          "title": "The faith of the christian church",
-          "author": "Gustaf Aulen",
-          "language": "Eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/faithofchristian0000gust_k4x9",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/faithofchristian0000gust_k4x9",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fathersofchurch0007royj",
-          "title": "The Fathers of the Church",
-          "author": "Roy Joseph Deferari",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fathersofchurch0007royj",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fathersofchurch0007royj",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-howtobuildupyour0000unse_t8q5",
-          "title": "how to build up your church school",
-          "author": "Weldon Crossland",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/howtobuildupyour0000unse_t8q5",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/howtobuildupyour0000unse_t8q5",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-jesushischurchst0000rnew_q8m2",
-          "title": "Jesus and his church: a study of the idea of the ecclesia in the New Testament",
-          "author": "R. Newton Flew",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/jesushischurchst0000rnew_q8m2",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/jesushischurchst0000rnew_q8m2",
             "mode": "source"
           },
           "rights": {
@@ -3188,6 +2981,29 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-ChurchHistoryPrint",
+          "title": "Church History Print",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ChurchHistoryPrint",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ChurchHistoryPrint",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-bwb_KQ-734-479",
           "title": "the faith of the church",
           "author": "Karl Barth",
@@ -3200,6 +3016,190 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/bwb_KQ-734-479",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-ATJ-005",
+          "title": "minutes of the general assembly of the united presbyterian church in the united states of america",
+          "author": "various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-ATJ-005",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-ATJ-005",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-gov.uscourts.paed.110370",
+          "title": "United States v. CHURCH",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/gov.uscourts.paed.110370",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/gov.uscourts.paed.110370",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-DSF-647",
+          "title": "A Selected Library of the Nicene and Post-Nicene Fathers of The Christian Church",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-DSF-647",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-DSF-647",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-gov.uscourts.paed.574599",
+          "title": "STATE FARM FIRE & CASUALTY CO. v. CANAAN BAPTIST CHURCH",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/gov.uscourts.paed.574599",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/gov.uscourts.paed.574599",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-EAO-213",
+          "title": "new testament church",
+          "author": "roy e. cogdill",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EAO-213",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EAO-213",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CPS-363",
+          "title": "The Church of English 1900-1965",
+          "author": "Roger Lloyd",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-CPS-363",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-CPS-363",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BXS-114",
+          "title": "Teaching of presidents of the church brigham young",
+          "author": "Various",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BXS-114",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BXS-114",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CAT-998",
+          "title": "When the Church was Young",
+          "author": "Clovis G. Chappell",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-CAT-998",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-CAT-998",
             "mode": "source"
           },
           "rights": {
