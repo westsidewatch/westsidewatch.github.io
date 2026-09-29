@@ -1,0 +1,19 @@
+{
+  "schema":"dawn.corpus.planning-separation.v1",
+  "status":"active-planning-boundary",
+  "name":"Chinese Bible-world resource separation",
+  "purpose":"Separate Chinese-language or Chinese-localized Bible-world resources from the Dawn acquisition layer before evaluating the actual Chinese Dawn Bookshop collection. Preserve all source records; this is a planning/index boundary, not destructive deletion or public admission.",
+  "sourceLayers":["/data/dawn-corpus/","/data/dawn-resource-corpus/"],
+  "targetPlanningClass":"bible-world-zh",
+  "includeWhen":{"language":["zh","zh-Hans","zh-Hant","Chinese","Simplified Chinese","Traditional Chinese"],"andAnyDomain":["Bible text or Bible translation","Bible study/reference","biblical geography/place/route/map","biblical person/entity","Scripture-linked image or visual resource","Gospel/Bible chronology or harmony","Bible-world archaeology/history/background","Bible teaching/reference dataset"]},
+  "excludeFromChineseBookshopInventory":true,
+  "destinationSurfacePlanning":"Emmaus / Bible and other Scripture-context consumers; exact downstream placement to be planned separately.",
+  "doNotClassifyAsBookshopJustBecause":["resource.type=book","resource.type=manuscript","Chinese metadata exists","the resource was acquired by Dawn","the source supports a book reader"],
+  "knownSourceSeeds":[
+    {"source":"UBS MARBLE open-license resources","reason":"Bible-world images/routes with Traditional and Simplified Chinese metadata; belongs in Bible-world planning rather than inflating Chinese Bookshop inventory."},
+    {"source":"BSB/OpenBible biblical geography","reason":"Biblical places and verse-linked geography; if/when Chinese-localized metadata is present, classify under Bible-world planning rather than Bookshop."}
+  ],
+  "inventoryConsequence":"After this separation, measure Chinese Dawn Bookshop holdings only from non-Bible/non-study canonical works or promotable acquisition candidates. Do not report Bible-world resources as evidence of a healthy Chinese general collection.",
+  "nextAudit":["enumerate Chinese/Chinese-localized acquisition records","tag Bible-world vs non-Bible","count promotable non-Bible Chinese works","identify acquisition gaps for Chinese Christian literature, theology, church history, biography, devotional/literary works, art/culture and other Bookshop-appropriate domains"],
+  "safety":"No source record is deleted, moved, or stripped of provenance/rights metadata by this planning separation."
+}
