@@ -1,0 +1,14 @@
+{
+  "schema":"dawn.library.dore-reader-translation-integration.v1",
+  "status":"integration-path-locked",
+  "parent":"黎明書局",
+  "decision":"Reuse and extend the existing Doré reader/ingestion core before introducing any parallel document conversion stack.",
+  "existingCore":{"path":"dore_core/readers","confirmedModules":["corpus_ingestion.py","original_language.py"],"capability":"source-specific adapters normalize recognized corpus records into validated internal records with lossless ingestion checks"},
+  "integrationArchitecture":["remote/local source resolver","existing or new source-format adapter","Doré normalized reading representation","stable segment identity","Bible-text exclusion gate","rights/transformation policy","translation provider adapter","zh-Hant translation cache/resume","original / zh-Hant / bilingual reader"],
+  "reuseFromExploration":{"KoodoReader":"provider/plugin interface ideas only","EbookTranslatorCalibre":"cache, batch and resume patterns only","BabelEbook":"paragraph alignment and bilingual rendering grammar only","BabelDOC":"PDF-specific fallback only if existing Doré adapters cannot produce a reliable normalized reading representation","foliate-js":"do not introduce as a second reader kernel unless a concrete unsupported EPUB requirement remains"},
+  "extensionRule":"Any missing PDF/EPUB/HTML/DOCX/TXT/IIIF capability should first be implemented as an adapter into the Doré normalized representation. Do not create format-specific translation pipelines.",
+  "translationBoundary":"Translation consumes normalized segments, never raw file formats. Therefore translation logic is format-agnostic once ingestion succeeds.",
+  "bibleExclusion":"Bible text, Bible translations, Hebrew/Greek Scripture witnesses and scripture-text records are rejected before translation provider invocation. Bible-world reference works may be handled separately according to product policy, but Scripture itself is hard-excluded.",
+  "benefit":"Existing ingestion validation, provenance and source identity remain authoritative; new work is reduced to document adapters that are genuinely missing plus translation/cache/reader presentation.",
+  "next":"Inventory all existing source/document adapters outside dore_core/readers and map them to the normalized representation before writing any new adapter."
+}
