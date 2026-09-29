@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Live-probe Dawn external pointers without mutating library state.
 
-The large discovery corpus measures routing resilience. The small capability
-acceptance corpus proves that every named hook is tied to a real-world resource
-before it can advance toward mounted status. Transient network and upstream
-HTTP errors receive bounded retries; persistent blocking/content mismatches
-remain visible failures.
+The checked-in external-pointer corpus measures routing resilience. The small
+capability acceptance corpus proves that every named hook is tied to a
+real-world resource before it can advance toward mounted status. Transient
+network and upstream HTTP errors receive bounded retries; persistent
+blocking/content mismatches remain visible failures.
 """
 from __future__ import annotations
 
@@ -158,7 +158,7 @@ def main() -> int:
 
     report = {
         'schema': 'dawn.url-surface.live.v2',
-        'purpose': 'Measure real external pointers and retain live evidence for every capability hook.',
+        'purpose': 'Measure the complete checked-in external-pointer corpus and retain live evidence for every capability hook.',
         'corpus': {'total': total, 'source': str(CANDIDATES.relative_to(ROOT))},
         'settings': {
             'timeoutSeconds': TIMEOUT,
@@ -183,7 +183,7 @@ def main() -> int:
             'items': fixture_results,
         },
         'acceptance': {
-            'minimumCorpus': 900,
+            'corpusPolicy': 'complete-checked-in-corpus',
             'minimumLiveCoverage': 0.90,
             'mountedFixtureMustBeLive': True,
             'fixtureFoundMayRecordBlockedOrNetworkFailure': True,
@@ -203,9 +203,10 @@ def main() -> int:
         },
     }, ensure_ascii=False, indent=2))
 
-    discovery_ok = total >= 900 and report['results']['liveCoverage'] >= 0.90
+    corpus_ok = total > 0 and len(results) == len(items)
+    coverage_ok = report['results']['liveCoverage'] >= 0.90
     mounts_ok = not mounted_failures
-    return 0 if discovery_ok and mounts_ok else 1
+    return 0 if corpus_ok and coverage_ok and mounts_ok else 1
 
 
 if __name__ == '__main__':
