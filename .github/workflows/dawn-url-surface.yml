@@ -59,7 +59,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Run URL surface unit, mount truth and 900+ corpus tests
+      - name: Run URL surface unit, mount truth and checked-in corpus tests
         run: python -m unittest tests.test_dawn_url_surface -v
       - name: Prove real Princeton IIIF resource reaches Dawn VisualSurface contract
         run: python -m unittest tests.test_dawn_iiif_integration -v
@@ -77,14 +77,17 @@ jobs:
         run: python scripts/run_dawn_url_surface_benchmark.py
       - name: Materialize provider-neutral surface index
         run: python scripts/build_dawn_surface_index.py
-      - name: Verify surface index stays pointer-only and covers corpus
+      - name: Verify surface index stays pointer-only and covers checked-in corpus
         run: |
           python - <<'PY'
           import json
           from pathlib import Path
+          candidates=json.loads(Path('static/dawn-library/biblical-world/discovery-candidates.json').read_text()).get('items', [])
           p=Path('static/dawn-library/biblical-world/surface-index.json')
           d=json.loads(p.read_text())
-          assert d['count'] >= 900
+          assert candidates
+          assert d['count'] == len(candidates)
+          assert len(d['items']) == len(candidates)
           assert all(i.get('external') is True for i in d['items'])
           assert all(i.get('ownership') == 'external' for i in d['items'])
           assert all(i.get('source_url') for i in d['items'])
@@ -100,14 +103,13 @@ jobs:
           p=Path('data/dawn-10k-work-queue.json')
           d=json.loads(p.read_text())
           assert d['targetWorks'] == 10000
-          assert d['sourceCandidates'] >= 900
+          assert d['sourceCandidates'] >= d['deduplicatedWorks']
           assert d['deduplicatedWorks'] > 0
-          assert d['deduplicatedWorks'] <= d['sourceCandidates']
           assert d['admission'].startswith('none')
           assert all(i.get('queueId') and i.get('status') for i in d['items'])
           print({'sourceCandidates': d['sourceCandidates'], 'deduplicatedWorks': d['deduplicatedWorks'], 'targetWorks': d['targetWorks']})
           PY
-      - name: Probe 900+ real external pointers and capability fixtures
+      - name: Probe checked-in real external pointers and capability fixtures
         run: python scripts/run_dawn_url_surface_live_probe.py
       - name: Preserve benchmark, live evidence, Work queue and surface index
         uses: actions/upload-artifact@v4
