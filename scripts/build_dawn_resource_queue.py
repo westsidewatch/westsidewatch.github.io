@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,8 +32,6 @@ def infer_type(source: dict, filename: str) -> str:
 
 
 def source_pointers(source: dict) -> list[str]:
-    # A corpus source is itself a canonical Resource candidate. Preserve its
-    # public landing/data URL when no more specific machine pointer exists.
     values = [
         source.get('upstream'),
         source.get('iiifManifestPattern'),
@@ -90,8 +89,6 @@ def main() -> int:
                     'status': 'corpus-source-established'
                 })
 
-    # Harvested records are the actual canonical growth units. External manifests remain
-    # evidence/pointers; Dawn owns only the local canonical Resource identity.
     if RECORDS.exists():
         for path in sorted(RECORDS.glob('*.json')):
             doc = json.loads(path.read_text(encoding='utf-8'))
@@ -126,16 +123,27 @@ def main() -> int:
                 })
 
     unique = {item['resourceId']: item for item in items}
+    missing_pointer = [item for item in unique.values() if not item.get('pointers')]
+    missing_pointer_types = Counter(str(item.get('resourceType') or 'resource') for item in missing_pointer)
     payload = {
         'schema': 'dawn.library.resource-queue.v1',
         'identityAuthority': 'Dawn',
         'legacyWorkCompatible': True,
         'wikisource': 'forbidden',
         'resourceCount': len(unique),
+        'integrity': {
+            'missingPointerCount': len(missing_pointer),
+            'missingPointerTypeCounts': dict(missing_pointer_types.most_common()),
+        },
         'items': list(unique.values())
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({'resourceCount': payload['resourceCount'], 'output': str(OUT.relative_to(ROOT))}, ensure_ascii=False))
+    print(json.dumps({
+        'resourceCount': payload['resourceCount'],
+        'missingPointerCount': payload['integrity']['missingPointerCount'],
+        'missingPointerTypeCounts': payload['integrity']['missingPointerTypeCounts'],
+        'output': str(OUT.relative_to(ROOT)),
+    }, ensure_ascii=False))
     return 0
 
 
