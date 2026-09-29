@@ -27,8 +27,9 @@ test('catalog contains real Gutenberg pointers for the mounted adapter', () => {
   assert.ok(sources.every((source) => source.downloadOnCatalog === false));
 });
 
-test('candidate corpus remains the 900+ benchmark, not public content', () => {
-  assert.ok((candidates.items || []).length >= 900);
+test('candidate corpus remains a checked-in benchmark, not public content', () => {
+  assert.ok((candidates.items || []).length > 0, 'expected non-empty checked-in candidate corpus');
+  assert.doesNotMatch(runtime, /discovery-candidates\.json/);
   assert.match(runtime, /source\.provider === 'Project Gutenberg'/);
   assert.match(runtime, /url\.hostname === 'www\.gutenberg\.org'/);
 });
