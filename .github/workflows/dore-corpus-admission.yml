@@ -38,7 +38,13 @@ jobs:
         run: |
           git clone --depth 1 https://github.com/textcreationpartnership/Texts.git /tmp/tcp-texts
           test -s /tmp/tcp-texts/TCP.csv
-      - name: Run Doré corpus admission
+      - name: Acquire Open Library Works authority dump
+        run: |
+          curl --fail --location --retry 3 \
+            https://openlibrary.org/data/ol_dump_works_latest.txt.gz \
+            --output /tmp/ol_dump_works_latest.txt.gz
+          test -s /tmp/ol_dump_works_latest.txt.gz
+      - name: Run Doré corpus admission with authority reconciliation
         env:
           DORE_CORPUS_LIMIT: ${{ inputs.limit || '1000' }}
         run: |
@@ -51,6 +57,7 @@ jobs:
             /tmp/tcp-texts/TCP.csv \
             --format csv \
             "${LIMIT_ARGS[@]}" \
+            --openlibrary /tmp/ol_dump_works_latest.txt.gz \
             --out artifacts/dore-corpus/eebo-tcp-admission-report.json
           python - <<'PY'
           import json
@@ -59,6 +66,8 @@ jobs:
           report = json.loads(p.read_text())
           if report['sourceRecords'] == 0:
               raise SystemExit('EEBO-TCP admission emitted zero records')
+          if 'OpenLibrary' not in report.get('authority', {}).get('sources', []):
+              raise SystemExit('Open Library authority reconciliation did not run')
           print(json.dumps(report, indent=2, ensure_ascii=False))
           PY
       - name: Upload admission report
