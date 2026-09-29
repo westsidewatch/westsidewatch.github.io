@@ -7,6 +7,7 @@ on:
     paths:
       - 'data/dawn-corpus/**'
       - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'scripts/discover_dawn_av_records.py'
       - 'scripts/gate_dawn_canonical_promotion.py'
       - 'scripts/promote_dawn_canonical_batch.py'
       - 'scripts/build_dawn_resource_queue.py'
