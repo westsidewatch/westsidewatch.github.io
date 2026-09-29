@@ -42,13 +42,16 @@ def ia_records() -> list[dict]:
         if not identifier or not title:
             continue
         mediatype = str(row.get('mediatype') or '').lower()
+        resource_type = 'audio' if mediatype == 'audio' else 'video'
         records.append({
             'sourceRecordId': identifier,
             'title': title,
             'authors': [row['creator']] if isinstance(row.get('creator'), str) else (row.get('creator') or []),
             'language': row.get('language') if isinstance(row.get('language'), str) else None,
             'record': f'https://archive.org/details/{urllib.parse.quote(identifier)}',
-            'relations': ['audio' if mediatype == 'audio' else 'video'],
+            'resourceType': resource_type,
+            'sourceMediaType': mediatype or None,
+            'relations': [resource_type],
             'dateLabel': str(row.get('date') or ''),
         })
     return records
@@ -60,7 +63,8 @@ def main() -> int:
     payload = {
         'schema': 'dawn.corpus.records.v1',
         'sourceId': 'internet-archive-av',
-        'resourceType': 'video',
+        'resourceType': 'av',
+        'resourceTypePolicy': 'record-level',
         'acquisitionMode': 'metadata-pointer-only',
         'contentDownloaded': False,
         'rightsPolicy': 'source-record; verify item rights before reuse',
@@ -68,7 +72,7 @@ def main() -> int:
         'items': items,
     }
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({'source': payload['sourceId'], 'itemCount': len(items), 'contentDownloaded': False, 'output': str(OUT.relative_to(ROOT))}, ensure_ascii=False))
+    print(json.dumps({'source': payload['sourceId'], 'itemCount': len(items), 'contentDownloaded': False, 'resourceTypePolicy': 'record-level', 'output': str(OUT.relative_to(ROOT))}, ensure_ascii=False))
     return 0
 
 
