@@ -1,0 +1,14 @@
+{
+  "schema":"dawn.library.right-leaf-hierarchy.v1",
+  "status":"locked-for-design-planning",
+  "parent":"黎明書局 / open-book workspace / right leaf",
+  "purpose":"確定右頁一本書打開後的信息層級與翻譯對照行為；只定義產品層級，不提前決定最終 layout 視覺。",
+  "hierarchy":{"alwaysVisible":[{"id":"work-anchor","content":["short title or current work identity","current chapter/section/locator"],"rule":"足以知道正在讀什麼，但不能形成佔據正文上方的大型書籍詳情 header。"},{"id":"reading-mode","content":["原文","繁中","對照"],"rule":"是閱讀模式，不是三個不同頁面；切換保持同一 locator/segment。"},{"id":"reading-body","content":["normalized ReadingUnit segments"],"rule":"正文永遠是右頁最大、最穩定的信息層。"},{"id":"progress","content":["reading locator/progress"],"rule":"低干擾、可恢復。"}],"secondaryOnDemand":["作者/譯者/編者","edition","出版年/出版者","source institution","remote source/read link","rights/public-domain state","provenance","目錄/章節導航","字體/字級/行距等閱讀設定"],"contextualEmergence":["段落翻譯狀態","術語/人名既有譯名","原文詞義/簡短註解","書籤/高亮/筆記","來源段落定位","翻譯重新生成/修訂入口"],"neverPermanentChrome":["AI chat panel","大型 metadata card","推薦卡片流","光譜視圖","策展集視圖","全站 navigation duplication"]},
+  "translationComposition":{"original":{"body":"source-authority segments","translationWork":"none until requested/prefetched"},"zhHant":{"body":"generated zh-Hant segments using the same stable segment ids","sourceAccess":"original remains one action away and remains authority"},"bilingual":{"alignment":"stable segment id","defaultUnit":"paragraph/semantic segment rather than page number","behavior":"原文與繁中必須可視覺追蹤同一 segment；長短不等時允許自然伸縮，不以固定行高強迫對齊。","possibleDesignGrammars":["parallel columns inside right leaf","paired paragraph bands","translation sheet that expands from the reading leaf"],"decision":"final grammar deferred to later modern-layout exploration"}},
+  "translationStates":[{"id":"not-generated","display":"原文可先閱讀；翻譯不阻塞正文。"},{"id":"generating","display":"只標記正在生成的當前/鄰近 segments，不用全頁 loading。"},{"id":"cached","display":"直接復用允許持久化的翻譯。"},{"id":"restricted","display":"rights policy 不允許生成/保存時清楚降級，不偽造可用翻譯。"},{"id":"failed","display":"保留原文，允許單段重試，不使整本書失效。"}],
+  "contextRule":"翻譯每個 segment 前可由 Doré Context 組裝作品、作者、前後文、術語與既有合法譯名訊號；這是核心能力，不在 UI 中暴露成工程面板。",
+  "metadataRule":"書籍 metadata 的任務是建立 authority 與定位，不是與正文競爭。完整書目資訊按需展開。",
+  "entryRule":"從首頁三晨星/光譜/策展集帶 locator 進入時，右頁直接落在目標位置；來源推薦 context 可以輕量保留，但不得遮蔽正文。",
+  "modernLayoutDeferred":"最終雙欄比例、grid、typography、gutter、motion、paper/material language 必須等全站版塊功能盤點完成後，通過現代 editorial/digital-publishing/workspace 設計探索統一決定。",
+  "next":"Define left-leaf resource taxonomy and selection hierarchy so the library can scale from dozens to very large canonical collections without turning navigation into a catalogue dump."
+}
