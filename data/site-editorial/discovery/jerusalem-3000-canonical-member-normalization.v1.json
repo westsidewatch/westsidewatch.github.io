@@ -1,0 +1,28 @@
+{
+  "schema":"site.discovery.curated-set-member-normalization.v1",
+  "status":"pass-1",
+  "setId":"curated:jerusalem-3000-research",
+  "source":"docs/projects/jerusalem-3000/DAWN-CURATED-COLLECTION.md",
+  "rule":"Normalize identities without moving ownership. A curated-set member points to an existing canonical content/source identity where one exists; otherwise it receives a stable pointer identity pending canonical admission. No duplicate book, map, image, report or project object is created.",
+  "members":[
+    {"contentId":"publication:montefiore-jerusalem-biography","label":"Jerusalem: The Biography / 《耶路撒冷三千年》","kind":"book","owner":"Dawn Library candidate/pointer","state":"bibliographic-pointer-only","rights":"copyrighted; no full-text rehost"},
+    {"contentId":"source:iaa-publications-portal","label":"Israel Antiquities Authority Publications Portal","kind":"research-source","owner":"external-source registry","state":"pointer"},
+    {"contentId":"publication:iaa-western-wall-plaza-vol1","label":"Jerusalem: Western Wall Plaza Excavations Volume I","kind":"excavation-report","owner":"research/publication identity","state":"canonical-pointer"},
+    {"contentId":"publication:iaa-western-wall-plaza-vol3","label":"Western Wall Plaza Excavations Volume III","kind":"excavation-report","owner":"research/publication identity","state":"canonical-pointer"},
+    {"contentId":"journal:jerusalem-journal-archaeology","label":"Jerusalem Journal of Archaeology","kind":"journal","owner":"external publication identity","state":"pointer"},
+    {"contentId":"map:madaba-mosaic-map","label":"Madaba Mosaic Map","kind":"map","owner":"historical-map identity","state":"canonical-pointer","mapMode":["pilgrimage","depiction"]},
+    {"contentId":"map:breydenbach-jerusalem-1486","label":"Bernhard von Breydenbach — Jerusalem, 1486","kind":"map/depiction","owner":"historical-map identity","state":"canonical-pointer","mapMode":["depiction"]},
+    {"contentId":"map:schedel-jerusalem-1493","label":"Hartmann Schedel — Jerusalem, 1493","kind":"map/depiction","owner":"historical-map identity","state":"canonical-pointer","mapMode":["depiction"]},
+    {"contentId":"map:wilson-ordnance-survey-jerusalem-1865","label":"Ordnance Survey of Jerusalem, 1865","kind":"map/survey","owner":"historical-map identity","state":"canonical-pointer","mapMode":["measured survey"]},
+    {"contentId":"collection:nli-jerusalem-maps","label":"National Library of Israel — Jerusalem Maps / Eran Laor & Howard Golden Map Collection","kind":"map-collection","owner":"external collection identity","state":"pointer"},
+    {"contentId":"collection:loc-whiting-jerusalem","label":"Library of Congress — John D. Whiting Papers visual materials","kind":"photograph-collection","owner":"external collection identity","state":"pointer"},
+    {"contentId":"collection:loc-matson-jerusalem","label":"Library of Congress — G. Eric and Edith Matson Photograph Collection","kind":"photograph-collection","owner":"external collection identity","state":"pointer"},
+    {"contentId":"precedent:epfl-jerusalem-1840-1940","label":"EPFL DHLAB — Jerusalem 1840–1940","kind":"3d/gis precedent","owner":"Jerusalem 3000 research shelf","state":"existing-precedent"},
+    {"contentId":"precedent:virtual-angkor","label":"Virtual Angkor","kind":"3d/gis precedent","owner":"Jerusalem 3000 research shelf","state":"existing-precedent"},
+    {"contentId":"precedent:cologne-muristan","label":"University of Cologne — The Muristan in Jerusalem","kind":"3d/archaeology precedent","owner":"Jerusalem 3000 research shelf","state":"existing-precedent"},
+    {"contentId":"precedent:virtual-illes","label":"The Virtual Illés Initiative","kind":"immersive-gis precedent","owner":"Jerusalem 3000 research shelf","state":"existing-precedent"},
+    {"contentId":"precedent:openbibleinfo-temple-mount-3d","label":"openbibleinfo / 3D Temple Mount","kind":"browser-3d precedent","owner":"Jerusalem 3000 research shelf","state":"existing-precedent"}
+  ],
+  "result":{"normalizedMembers":17,"duplicatesCreated":0,"ownershipMoves":0},
+  "next":"Normalize the remaining map series and publication records; connect Dawn-eligible books/reports to canonical Work IDs as they are admitted; retain pointer-only status for copyrighted or externally hosted resources."
+}
