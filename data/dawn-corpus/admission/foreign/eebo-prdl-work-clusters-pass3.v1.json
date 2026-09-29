@@ -1,0 +1,16 @@
+{
+  "schema":"dawn.library.foreign.eebo-prdl-work-clusters.v1",
+  "status":"admission-candidates-pass-3",
+  "purpose":"館藏整理繼續並行；擴充早期現代英文長文本候選，但仍以精確 Work identity、EEBO witness、PRDL dedup 和 rights/provenance 為 canonical gate。",
+  "rules":{"sourceRecordIsNotWork":true,"editionIsNotWork":true,"bibleTextExcluded":true,"commentaryRoutesToBibleWorld":true,"crossSourceDedupRequired":true,"translationCreatesNoEdition":true},
+  "clusters":[
+    {"creator":"Thomas Manton","candidateWorks":["A Treatise of the Life of Faith","A Practical Commentary, or an Exposition with Notes upon the Epistle of James"],"routing":{"lifeOfFaith":"Dawn candidate","JamesCommentary":"Bible-world/ONE candidate"},"note":"同一作者不同作品可以因內容性質進不同系統；不能以作者整批入館。"},
+    {"creator":"Jeremiah Burroughs","candidateWorks":["The Rare Jewel of Christian Contentment","Gospel Worship"],"families":["spirituality-prayer","sermons-ministry-worship"],"priority":"high"},
+    {"creator":"Stephen Charnock","candidateWorks":["The Existence and Attributes of God"],"families":["theology-thought"],"priority":"high","identityRisk":"later multi-volume/edited forms must resolve to historical Work structure"},
+    {"creator":"Isaac Ambrose","candidateWorks":["Looking Unto Jesus"],"families":["spirituality-prayer","theology-thought"],"priority":"high"},
+    {"creator":"Joseph Hall","candidateWorks":["Contemplations upon the Principal Passages of the Holy Story","Characters of Virtues and Vices"],"routing":{"Contemplations":"Bible-world boundary review required","Characters":"Dawn ethics/literature candidate"},"note":"boundary review is per Work, not per creator."}
+  ],
+  "qualityRule":"The growing foreign pool must not weaken separation between general Christian reading and Scripture-study resources. Classification/admission decisions remain Work-specific.",
+  "translation":{"faculty":"Doré Language Faculty","aiRequired":false,"target":"zh-Hant","afterAdmission":true},
+  "next":"Resolve exact source identifiers and PRDL clusters across passes 1–3; promote verified non-Bible Works while routing commentary/exposition material to ONE/Bible-world candidates."
+}
