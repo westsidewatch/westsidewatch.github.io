@@ -1,0 +1,36 @@
+{
+  "schema":"dawn.corpus.legacy-chinese-recovery.v1",
+  "status":"scan-started",
+  "parent":"黎明書局",
+  "purpose":"重新掃描既有 Dawn 攝取層，恢復此前沒有被統一編目的中文與中文本地化資源；先分流，再決定是否進中文館藏。",
+  "scanScopes":[
+    "data/dawn-corpus/acquisition",
+    "data/dawn-corpus/bulk",
+    "data/dawn-corpus/chinese",
+    "data/dawn-corpus/records",
+    "data/dawn-corpus/open-corpus-batch-*",
+    "data/dawn-resource-corpus/sources"
+  ],
+  "discoverySignals":[
+    "language/locale fields: zh, zh-Hans, zh-Hant, Chinese, Simplified Chinese, Traditional Chinese",
+    "Chinese title/creator/description/subject metadata",
+    "source-level Chinese localization even when the Dawn source record itself is not language-indexed",
+    "Chinese-readable full text or edition",
+    "Chinese metadata attached to multilingual Bible-world datasets"
+  ],
+  "buckets":{
+    "bible-world-zh":"中文或中文本地化的聖經、查經、聖經地理/人物/路線/地圖/圖像/年代/背景資料；不計入黎明書局中文館藏。",
+    "zh-non-bible":"中文可閱讀、非普通 Bible-study/reference 的作品候選；進 identity/provenance/rights/admission 管線後才可成為中文館藏 canonical member。",
+    "zh-metadata-only":"只有中文 metadata/localization、沒有可作為中文作品閱讀的內容；保留作 discovery/search 能力，不計作中文館藏作品。"
+  },
+  "confirmedLegacySignalsSoFar":[
+    {"source":"data/dawn-corpus/chinese/pd-text-corpus-source.json","classification":"bible-world-zh","note":"兩個和合本 edition 已知，從中文館藏作品統計剝離。"},
+    {"source":"data/dawn-resource-corpus/sources/ubs-marble-open-license.json","classification":"bible-world-zh / zh-metadata-only depending item","note":"多語 Bible-world source；需要 item-level 恢復中文 metadata/localization，不能當黎明書局中文作品。"},
+    {"source":"data/dawn-resource-corpus/sources/bsb-openbible-geography.json","classification":"bible-world-zh when Chinese-localized item exists","note":"Bible geography source；中文化結果歸 Emmaus 規劃。"}
+  ],
+  "bulkScanObservation":"Existing bulk acquisition directory contains many source-level acquisition manifests (IIIF, Christian corpora, historical text corpora, art corpora and related sources), but repository-wide code search does not expose a reliable unified Chinese language marker. Therefore recovery must inspect source manifests and source capabilities rather than equating absence of a zh code-search hit with absence of Chinese resources.",
+  "dedupeKeys":["normalized title","creator/author","edition/year","source stable identifier","canonical URL/identifier","content fingerprint when available"],
+  "promotionRule":"Recovery is not admission. A recovered zh-non-bible item becomes a canonical 中文館藏 member only after identity, provenance, rights, duplicate and Dawn admission checks pass.",
+  "naming":{"canonicalParent":"黎明書局","forbidden":["黎明書店","Bookshop","Dawn Bookshop"]},
+  "next":"Inspect each legacy source manifest for multilingual/Chinese coverage, produce item/source recovery candidates, then merge and deduplicate against the newly established 中文館藏 pipeline."
+}
