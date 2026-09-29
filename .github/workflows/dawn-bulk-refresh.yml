@@ -7,6 +7,7 @@ on:
     paths:
       - 'data/dawn-corpus/**'
       - 'scripts/discover_dawn_10k_openlibrary_works.py'
+      - 'scripts/gate_dawn_canonical_promotion.py'
       - 'scripts/build_dawn_resource_queue.py'
       - 'scripts/build_dawn_resource_substrate.py'
       - 'scripts/refresh_dawn_bulk_corpus.py'
@@ -21,6 +22,7 @@ concurrency:
 
 env:
   DAWN_GROWTH_STATE_BRANCH: dawn-autonomous-growth-state
+  DAWN_PROMOTION_BATCH: '250'
 
 jobs:
   refresh:
@@ -47,6 +49,9 @@ jobs:
       - name: Refresh Dawn bulk and resource corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
+      - name: Gate canonical promotion batch
+        run: python3 scripts/gate_dawn_canonical_promotion.py
+
       - name: Persist harvest state only
         run: |
           set -euo pipefail
@@ -68,13 +73,14 @@ jobs:
             git push origin "HEAD:$DAWN_GROWTH_STATE_BRANCH"
           fi
 
-      - name: Publish canonical promotion candidate artifact
+      - name: Publish gated canonical promotion candidate artifact
         uses: actions/upload-artifact@v4
         with:
           name: dawn-canonical-promotion-candidate
           if-no-files-found: error
           retention-days: 14
           path: |
+            data/dawn-promotion-gate-report.json
             data/dawn-10k-work-queue.json
             data/dawn-resource-queue.json
             public/dawn/canonical-index.json
