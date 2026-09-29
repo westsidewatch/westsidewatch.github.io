@@ -1,0 +1,10 @@
+{
+  "schema":"site.editorial.independent-system-stores.v1",
+  "status":"locked",
+  "principle":"三晨星、光譜、策展集各自擁有獨立 corpus/store、獨立 admission/selection logic、獨立 public projection。共用的只有底層 content identity resolver 與站級能力；不得建立 universal editorial feed。",
+  "stores":{"threeMorningStars":{"store":"editorial/three-morning-stars","membership":"explicit editorial selection only","emptyAllowed":true,"input":"eligible content may come from any site surface but does not enter until selected","output":"small high-intensity selected corpus","doesNotConsume":["Spectrum membership","Curated Set membership"]},"spectrum":{"store":"editorial/spectrum","membership":"existing Spectrum topic-selection rules","input":"works/projects/content admitted specifically by Spectrum rules","output":"Spectrum corpus with its own relational structure","knownMember":"Jerusalem 3000","doesNotMean":"site-wide metadata graph"},"curatedSets":{"store":"editorial/curated-sets","membership":"explicit curator proposition + selected members","input":"members chosen for each set","output":"multiple independent curated collections","knownSet":"Jerusalem 3000 research curated set","doesNotMean":"a rendering of Spectrum corpus"}},
+  "sharedSubstrate":["canonical content resolver","rights/provenance resolver","visual resolver","Doré Language Faculty","cross-surface handoff"],
+  "overlapPolicy":"If the same underlying content is independently selected by two systems, both stores reference the same canonical identity. No editorial membership is inherited across systems.",
+  "layoutConsequence":"Future layout adapters must read three different stores. Visual coherence may be shared, information architecture may not be collapsed.",
+  "next":"Normalize each real corpus independently: Spectrum first around existing works; Curated Sets by actual sets; Three Morning Stars only from authoritative selections."
+}
