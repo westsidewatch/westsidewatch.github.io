@@ -9,8 +9,12 @@ CONTRACT = ROOT / 'static/dawn-library/catalogue-ui/view-model.json'
 MORNING = ROOT / 'static/dawn-library/surfaces/dawn-launch.json'
 BOUNDARY = ROOT / 'static/dawn-library/product/library-renderer-boundary.js'
 FINALIZER = ROOT / 'static/dawn-library/product/product-finalize.js'
+PRODUCT = ROOT / 'static/dawn-library/product/product.js'
 
-FORBIDDEN_TEXT = ('203,448', '黎明選讀', '館藏流')
+# These strings are forbidden as shipped UI/product copy. The finalizer may
+# still name an obsolete label in a migration guard whose sole purpose is to
+# remove it from legacy/runtime markup.
+FORBIDDEN_PRODUCT_TEXT = ('203,448', '黎明選讀', '館藏流')
 REQUIRED_TYPES = {'work', 'book', 'publication', 'manuscript'}
 FORBIDDEN_TYPES = {'video', 'audio', 'map', 'place', 'tool', 'dataset', 'resource'}
 
@@ -24,6 +28,7 @@ def main() -> int:
     morning = load(MORNING)
     boundary = BOUNDARY.read_text(encoding='utf-8')
     finalizer = FINALIZER.read_text(encoding='utf-8')
+    product = PRODUCT.read_text(encoding='utf-8')
 
     entries = {row.get('id') for row in contract.get('leftPage', {}).get('primaryEntries', [])}
     if entries != {'morning-stars', 'catalogue', 'search'}:
@@ -43,10 +48,23 @@ def main() -> int:
     if invariants.get('hardCodedCatalogueCountForbidden') is not True:
         raise SystemExit('hard-coded catalogue count guard missing')
 
-    combined = '\n'.join((boundary, finalizer))
-    for token in FORBIDDEN_TEXT:
-        if token in combined:
-            raise SystemExit(f'legacy Dawn Library token remains: {token}')
+    # Test actual product/contract surfaces, not the migration guard that removes
+    # obsolete labels from any stale runtime markup.
+    shipped_surface = '\n'.join((
+        json.dumps(contract, ensure_ascii=False),
+        json.dumps(morning, ensure_ascii=False),
+        boundary,
+        product,
+    ))
+    for token in FORBIDDEN_PRODUCT_TEXT:
+        if token in shipped_surface:
+            raise SystemExit(f'legacy Dawn Library product token remains: {token}')
+
+    # If a stale DOM still contains the old label, the finalizer must explicitly
+    # remove/replace it rather than silently allowing it back into the UI.
+    if '館藏流' not in finalizer or "node.textContent='返回館藏'" not in finalizer:
+        raise SystemExit('legacy collection-stream cleanup guard missing')
+
     for kind in REQUIRED_TYPES:
         if f"'{kind}'" not in boundary:
             raise SystemExit(f'missing publication type: {kind}')
@@ -58,13 +76,14 @@ def main() -> int:
         raise SystemExit('canonical count authority missing')
 
     print(json.dumps({
-        'schema': 'dawn.library.final-acceptance.v1',
+        'schema': 'dawn.library.final-acceptance.v2',
         'status': 'pass',
         'navigation': sorted(entries),
         'readerModes': sorted(modes),
         'morningStars': len(items),
         'publicationTypes': sorted(REQUIRED_TYPES),
-        'legacyTokens': 0,
+        'legacyProductTokens': 0,
+        'legacyRuntimeCleanupGuard': True,
         'countAuthority': 'resource-manifest'
     }, ensure_ascii=False))
     return 0
