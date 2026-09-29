@@ -1,0 +1,13 @@
+{
+  "schema":"dawn.acquisition.candidate.v1",
+  "status":"ingested-candidate",
+  "admission":"pending-canonical-promotion",
+  "bookshopScope":"zh-non-bible",
+  "work":{"title":"灵历集光","titleTraditional":"靈歷集光","alternateTitle":"Ling Li Ji Guang","author":"宋尚節","authorRomanized":"Shangjie Song","authorDates":"1901-1944","compiler":"宋利未 / Levi Song","language":"zh","resourceType":"book","domains":["Chinese Christianity","biography/testimony","diary/reflection","church history","spiritual formation"],"bibleWorld":false},
+  "source":{"provider":"Project Gutenberg","ebookNumber":25716,"landingPage":"https://www.gutenberg.org/ebooks/25716","readOnline":"https://www.gutenberg.org/cache/epub/25716/pg25716-images.html","formatsAvailable":["EPUB3","EPUB","plain text","HTML","Kindle"],"releaseDate":"2008-06-07","lastUpdate":"2021-01-03"},
+  "rights":{"sourceStatement":"Public domain in the USA","verification":"Project Gutenberg title record","admissionRule":"Preserve source rights statement and provenance. Canadian/public deployment rights still pass the normal Dawn rights gate before canonical promotion."},
+  "provenance":{"credits":"Produced by Zhang Ya-Chu","subjects":["Song, Shangjie, 1901-1944 -- Diaries","Evangelists -- China -- Biography","China -- Church history -- 20th century"],"evidence":"Project Gutenberg metadata identifies the work as Chinese text, biography/diary and Chinese church-history material."},
+  "classification":{"separation":"Retained in Dawn Bookshop candidate pool after bible-world-zh separation.","reason":"The work is a Christian biography/diary and church-history witness. Although it contains Scripture and Bible-study experiences, its work identity is not a Bible text, commentary, reference dataset or study tool."},
+  "promotionChecklist":{"identityNormalized":true,"sourceProvenanceCaptured":true,"sourceRightsCaptured":true,"bibleWorldSeparated":true,"editionDeduplication":"pending","canadianRightsReview":"pending","canonicalWorkRecord":"pending","bookshopAdmission":"pending","editorialLayers":"after canonical promotion"},
+  "editorialNote":"Do not assign 光譜、策展集 or 三晨星 merely because the work has been ingested. Those layers operate after canonical admission and require their own evidence/judgement."
+}
