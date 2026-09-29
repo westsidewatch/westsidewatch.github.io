@@ -1,5 +1,5 @@
 {
-  "schema": "dawn.library.work-discovery.openlibrary.v1",
+  "schema": "dawn.library.work-discovery.openlibrary.v2",
   "targetWorks": 10500,
   "provider": "Open Library Search API",
   "workLevel": true,
@@ -28,10 +28,13 @@
     ]
   },
   "metrics": {
-    "works": 10538,
-    "chineseMatchedWorksAdded": 2060,
-    "englishMatchedWorksAdded": 8478,
-    "requests": 113
+    "works": 10686,
+    "existingWorks": 10538,
+    "newWorks": 148,
+    "chineseMatchedWorksAdded": 84,
+    "englishMatchedWorksAdded": 64,
+    "requests": 115,
+    "scannedRecords": 11464
   },
   "items": [
     {
@@ -1224,6 +1227,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL10196722W",
+      "title": "Jie shi yu zheng jiu",
+      "authors": [
+        "Zhicheng Wang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL10196722W",
+        "isbn": "9787806163122",
+        "oclc": "41975685"
+      },
+      "preferredEdition": "OL19897794M",
+      "coverId": 12976011,
+      "workPointer": "https://openlibrary.org/works/OL10196722W",
+      "editionPointer": "https://openlibrary.org/books/OL19897794M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL10198071W",
       "title": "Taiwan di Jidu jiao hui yu zu xian chong bai (Shi jian shen xue cong shu)",
       "authors": [
@@ -1764,6 +1792,58 @@
       "admission": "none"
     },
     {
+      "workId": "OL102028W",
+      "title": "Jesus",
+      "authors": [
+        "John Dominic Crossan"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1994,
+      "authorityIds": {
+        "openLibraryWork": "OL102028W",
+        "isbn": "9780060616618",
+        "oclc": "525290529",
+        "lccn": "93024685"
+      },
+      "preferredEdition": "OL9234452M",
+      "coverId": 32030,
+      "workPointer": "https://openlibrary.org/works/OL102028W",
+      "editionPointer": "https://openlibrary.org/books/OL9234452M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL102029W",
+      "title": "The Historical Jesus",
+      "authors": [
+        "John Dominic Crossan"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1991,
+      "authorityIds": {
+        "openLibraryWork": "OL102029W",
+        "isbn": "9780060616298",
+        "oclc": "2331585",
+        "lccn": "90056451"
+      },
+      "preferredEdition": "OL9234435M",
+      "coverId": 4940356,
+      "workPointer": "https://openlibrary.org/works/OL102029W",
+      "editionPointer": "https://openlibrary.org/books/OL9234435M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL10204134W",
       "title": "Kai duan yu jin zhan",
       "authors": [
@@ -1864,6 +1944,32 @@
       "coverId": 5242467,
       "workPointer": "https://openlibrary.org/works/OL10206853W",
       "editionPointer": "https://openlibrary.org/books/OL22629910M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL10209232W",
+      "title": "Jidu jiao yu Ming Qing ji Zhongguo she hui",
+      "authors": [
+        "Zengyou Cao"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL10209232W",
+        "isbn": "9787506337755",
+        "oclc": "85840613",
+        "lccn": "2008488011"
+      },
+      "preferredEdition": "OL21191384M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL10209232W",
+      "editionPointer": "https://openlibrary.org/books/OL21191384M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -3229,6 +3335,32 @@
       "workPointer": "https://openlibrary.org/works/OL10554790W",
       "editionPointer": "https://openlibrary.org/books/OL28275418M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL10567759W",
+      "title": "Sun, moon, star",
+      "authors": [
+        "Kurt Vonnegut"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1980,
+      "authorityIds": {
+        "openLibraryWork": "OL10567759W",
+        "isbn": "0091424003",
+        "oclc": "6015561",
+        "lccn": "79009612"
+      },
+      "preferredEdition": "OL27224391M",
+      "coverId": 8541450,
+      "workPointer": "https://openlibrary.org/works/OL10567759W",
+      "editionPointer": "https://openlibrary.org/books/OL27224391M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -7494,6 +7626,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1124744W",
+      "title": "The life of Jesus Christ",
+      "authors": [
+        "James Stalker"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1880,
+      "authorityIds": {
+        "openLibraryWork": "OL1124744W",
+        "isbn": "9780548454343",
+        "oclc": "2438275",
+        "lccn": "50004997"
+      },
+      "preferredEdition": "OL22885316M",
+      "coverId": 5866404,
+      "workPointer": "https://openlibrary.org/works/OL1124744W",
+      "editionPointer": "https://openlibrary.org/books/OL22885316M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1124745W",
       "title": "The life of St. Paul",
       "authors": [
@@ -9568,6 +9726,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL114201W",
+      "title": "Room for a Little One",
+      "authors": [
+        "Martin Waddell"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2004,
+      "authorityIds": {
+        "openLibraryWork": "OL114201W",
+        "isbn": "141692518X",
+        "oclc": "60511101",
+        "lccn": "2003017841"
+      },
+      "preferredEdition": "OL8458478M",
+      "coverId": 761469,
+      "workPointer": "https://openlibrary.org/works/OL114201W",
+      "editionPointer": "https://openlibrary.org/books/OL8458478M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL114202W",
       "title": "Stories from the Bible",
       "authors": [
@@ -10347,6 +10531,33 @@
       "workPointer": "https://openlibrary.org/works/OL1148758W",
       "editionPointer": "https://openlibrary.org/books/OL13742463M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1148762W",
+      "title": "Von Reimarus zu Wrede",
+      "authors": [
+        "Albert Schweitzer"
+      ],
+      "languages": [
+        "eng",
+        "ger"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1906,
+      "authorityIds": {
+        "openLibraryWork": "OL1148762W",
+        "isbn": "9780486440279",
+        "oclc": "2589249",
+        "lccn": "00049032"
+      },
+      "preferredEdition": "OL13545302M",
+      "coverId": 314390,
+      "workPointer": "https://openlibrary.org/works/OL1148762W",
+      "editionPointer": "https://openlibrary.org/books/OL13545302M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -11645,6 +11856,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL11736104W",
+      "title": "Cong Sheng jing guan dian kan ru jia si xiang",
+      "authors": [
+        "Runyue Huang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1994,
+      "authorityIds": {
+        "openLibraryWork": "OL11736104W",
+        "isbn": "9839093010",
+        "lccn": "2007335858"
+      },
+      "preferredEdition": "OL16321259M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL11736104W",
+      "editionPointer": "https://openlibrary.org/books/OL16321259M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL11742957W",
       "title": "Fu li lu shang",
       "authors": [
@@ -12331,6 +12567,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL11814195W",
+      "title": "An ye li de guo ke",
+      "authors": [
+        "Jun Wu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL11814195W",
+        "isbn": "9787801864109",
+        "oclc": "64762349",
+        "lccn": "2008555940"
+      },
+      "preferredEdition": "OL17086697M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL11814195W",
+      "editionPointer": "https://openlibrary.org/books/OL17086697M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL11814931W",
       "title": "Dr. Paul G. Trulin's my body, his life",
       "authors": [
@@ -12377,6 +12639,32 @@
       "workPointer": "https://openlibrary.org/works/OL118182W",
       "editionPointer": "https://openlibrary.org/books/OL28421112M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL11819393W",
+      "title": "Jidu jiao wen hua yu Zhongguo xiao shuo xu shi xin zhi",
+      "authors": [
+        "Weihua Chen"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL11819393W",
+        "isbn": "7500460902",
+        "oclc": "161586181",
+        "lccn": "2008553513"
+      },
+      "preferredEdition": "OL16508561M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL11819393W",
+      "editionPointer": "https://openlibrary.org/books/OL16508561M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -16632,6 +16920,32 @@
       "workPointer": "https://openlibrary.org/works/OL1272813W",
       "editionPointer": "https://openlibrary.org/books/OL26376429M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL12732526W",
+      "title": "Wu shi nian lai Chong ji xue yuan de Jidu jiao jiao yu",
+      "authors": [
+        "Ng, Tze-ming, Peter."
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2001,
+      "authorityIds": {
+        "openLibraryWork": "OL12732526W",
+        "isbn": "9628655647",
+        "oclc": "49274857",
+        "lccn": "2012363337"
+      },
+      "preferredEdition": "OL20099167M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL12732526W",
+      "editionPointer": "https://openlibrary.org/books/OL20099167M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -21360,6 +21674,32 @@
       "workPointer": "https://openlibrary.org/works/OL1357806W",
       "editionPointer": "https://openlibrary.org/books/OL58130331M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1357807W",
+      "title": "The Servant-Messiah",
+      "authors": [
+        "Thomas Walter Manson"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1953,
+      "authorityIds": {
+        "openLibraryWork": "OL1357807W",
+        "isbn": "0801060125",
+        "oclc": "283340",
+        "lccn": "53009504"
+      },
+      "preferredEdition": "OL16353588M",
+      "coverId": 10702482,
+      "workPointer": "https://openlibrary.org/works/OL1357807W",
+      "editionPointer": "https://openlibrary.org/books/OL16353588M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -30601,6 +30941,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL15022486W",
+      "title": "Jesus and the disinherited",
+      "authors": [
+        "Howard Thurman"
+      ],
+      "languages": [
+        "eng",
+        "ger"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1949,
+      "authorityIds": {
+        "openLibraryWork": "OL15022486W",
+        "isbn": "9780687199334",
+        "oclc": "9719540",
+        "lccn": "49008371"
+      },
+      "preferredEdition": "OL3791207M",
+      "coverId": 587739,
+      "workPointer": "https://openlibrary.org/works/OL15022486W",
+      "editionPointer": "https://openlibrary.org/books/OL3791207M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL15025182W",
       "title": "I Don't Have Enough Faith to Be an Atheist",
       "authors": [
@@ -39098,6 +39465,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL15404W",
+      "title": "The miracles of our Lord",
+      "authors": [
+        "George MacDonald"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1870,
+      "authorityIds": {
+        "openLibraryWork": "OL15404W",
+        "isbn": "151429737X",
+        "oclc": "505745506",
+        "lccn": "87082968"
+      },
+      "preferredEdition": "OL58135677M",
+      "coverId": 14357695,
+      "workPointer": "https://openlibrary.org/works/OL15404W",
+      "editionPointer": "https://openlibrary.org/books/OL58135677M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL15407276W",
       "title": "Kingdom life",
       "authors": [
@@ -45459,6 +45852,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL15919031W",
+      "title": "Ren xing zhi zun yan ji ze ren",
+      "authors": [
+        "Robert Edward Brennan"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1967,
+      "authorityIds": {
+        "openLibraryWork": "OL15919031W",
+        "lccn": "2010493297"
+      },
+      "preferredEdition": "OL24825429M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL15919031W",
+      "editionPointer": "https://openlibrary.org/books/OL24825429M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL15920912W",
       "title": "Seven days that divide the world",
       "authors": [
@@ -46023,6 +46440,32 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL15950469W",
       "editionPointer": "https://openlibrary.org/books/OL24856520M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL15955265W",
+      "title": "Tiao yue te quan zhi du xia de yi liao shi ye",
+      "authors": [
+        "Chuanbin Li"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL15955265W",
+        "isbn": "7543855739",
+        "oclc": "672152288",
+        "lccn": "2011367834"
+      },
+      "preferredEdition": "OL24861307M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL15955265W",
+      "editionPointer": "https://openlibrary.org/books/OL24861307M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -47909,6 +48352,31 @@
       "workPointer": "https://openlibrary.org/works/OL16048015W",
       "editionPointer": "https://openlibrary.org/books/OL24948556M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL16048389W",
+      "title": "The day of defense",
+      "authors": [
+        "A. Melvin McDonald"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2003,
+      "authorityIds": {
+        "openLibraryWork": "OL16048389W",
+        "isbn": "9781886472532",
+        "oclc": "64568107"
+      },
+      "preferredEdition": "OL8706250M",
+      "coverId": 6977975,
+      "workPointer": "https://openlibrary.org/works/OL16048389W",
+      "editionPointer": "https://openlibrary.org/books/OL8706250M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -51178,6 +51646,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1639828W",
+      "title": "The greatest story ever told",
+      "authors": [
+        "Fulton Oursler"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1949,
+      "authorityIds": {
+        "openLibraryWork": "OL1639828W",
+        "isbn": "9780517187166",
+        "oclc": "11543214",
+        "lccn": "79018716"
+      },
+      "preferredEdition": "OL6047889M",
+      "coverId": 321167,
+      "workPointer": "https://openlibrary.org/works/OL1639828W",
+      "editionPointer": "https://openlibrary.org/books/OL6047889M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1640207W",
       "title": "Pastoral Theology in an Intercultural World (Epworth's Groundwork)",
       "authors": [
@@ -51572,6 +52066,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL16451412W",
+      "title": "Proving history",
+      "authors": [
+        "Richard Carrier"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL16451412W",
+        "isbn": "1616145595",
+        "oclc": "764387191",
+        "lccn": "2011050577"
+      },
+      "preferredEdition": "OL25162601M",
+      "coverId": 13203614,
+      "workPointer": "https://openlibrary.org/works/OL16451412W",
+      "editionPointer": "https://openlibrary.org/books/OL25162601M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL16451643W",
       "title": "Loving",
       "authors": [
@@ -51777,6 +52297,32 @@
       "coverId": 10715586,
       "workPointer": "https://openlibrary.org/works/OL164621W",
       "editionPointer": "https://openlibrary.org/books/OL21236036M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL16463214W",
+      "title": "Ming Qing jian Yesu hui shi ru Hua yu Zhong xi hui tong",
+      "authors": [
+        "Jacques Gernet"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2011,
+      "authorityIds": {
+        "openLibraryWork": "OL16463214W",
+        "isbn": "7506040786",
+        "oclc": "852964539",
+        "lccn": "2011442009"
+      },
+      "preferredEdition": "OL25171864M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL16463214W",
+      "editionPointer": "https://openlibrary.org/books/OL25171864M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -53151,6 +53697,33 @@
       "workPointer": "https://openlibrary.org/works/OL16528878W",
       "editionPointer": "https://openlibrary.org/books/OL25220480M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL16529042W",
+      "title": "Successful marriages and families",
+      "authors": [
+        "Alan J. Hawkins",
+        "David C. Dollahite",
+        "Thomas Draper"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2011,
+      "authorityIds": {
+        "openLibraryWork": "OL16529042W",
+        "isbn": "0842528032",
+        "lccn": "2011030493"
+      },
+      "preferredEdition": "OL25220643M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL16529042W",
+      "editionPointer": "https://openlibrary.org/books/OL25220643M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -54872,6 +55445,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL16643975W",
+      "title": "Did Jesus Exist?",
+      "authors": [
+        "Bart D. Ehrman",
+        "Bart D. Ehrman"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL16643975W",
+        "isbn": "9781620906378",
+        "oclc": "773671784",
+        "lccn": "2011277536"
+      },
+      "preferredEdition": "OL35767346M",
+      "coverId": 7351197,
+      "workPointer": "https://openlibrary.org/works/OL16643975W",
+      "editionPointer": "https://openlibrary.org/books/OL35767346M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1664421W",
       "title": "The disappearance of God",
       "authors": [
@@ -56486,6 +57086,33 @@
       "workPointer": "https://openlibrary.org/works/OL16799763W",
       "editionPointer": "https://openlibrary.org/books/OL5215088M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL16800953W",
+      "title": "Killing Jesus",
+      "authors": [
+        "Bill O'Reilly",
+        "Martin Dugard"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2013,
+      "authorityIds": {
+        "openLibraryWork": "OL16800953W",
+        "isbn": "9780805098549",
+        "oclc": "827256836",
+        "lccn": "2013021752"
+      },
+      "preferredEdition": "OL25423182M",
+      "coverId": 7251625,
+      "workPointer": "https://openlibrary.org/works/OL16800953W",
+      "editionPointer": "https://openlibrary.org/books/OL25423182M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -58989,6 +59616,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1704002W",
+      "title": "A Christmas Story",
+      "authors": [
+        "Brian Wildsmith"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL1704002W",
+        "isbn": "0802851738",
+        "oclc": "123797113",
+        "lccn": "98018067"
+      },
+      "preferredEdition": "OL7717256M",
+      "coverId": 573241,
+      "workPointer": "https://openlibrary.org/works/OL1704002W",
+      "editionPointer": "https://openlibrary.org/books/OL7717256M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL17043609W",
       "title": "The Healer's Touch",
       "authors": [
@@ -59269,6 +59922,32 @@
       "workPointer": "https://openlibrary.org/works/OL17062005W",
       "editionPointer": "https://openlibrary.org/books/OL3966869M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1706574W",
+      "title": "Jesus",
+      "authors": [
+        "A. N. Wilson"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1992,
+      "authorityIds": {
+        "openLibraryWork": "OL1706574W",
+        "isbn": "9780006377382",
+        "oclc": "26716088",
+        "lccn": "92037046"
+      },
+      "preferredEdition": "OL1489987M",
+      "coverId": 246766,
+      "workPointer": "https://openlibrary.org/works/OL1706574W",
+      "editionPointer": "https://openlibrary.org/books/OL1489987M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -59633,6 +60312,31 @@
       "workPointer": "https://openlibrary.org/works/OL17099889W",
       "editionPointer": "https://openlibrary.org/books/OL51575682M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL17100248W",
+      "title": "The Freedom of Self Forgetfulness",
+      "authors": [
+        "Timothy J. Keller",
+        "Grover Gardner narrator"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL17100248W",
+        "isbn": "9781610457231"
+      },
+      "preferredEdition": "OL30522991M",
+      "coverId": 7341768,
+      "workPointer": "https://openlibrary.org/works/OL17100248W",
+      "editionPointer": "https://openlibrary.org/books/OL30522991M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -67344,6 +68048,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL1796430W",
+      "title": "The life of Christ",
+      "authors": [
+        "Frederic William Farrar"
+      ],
+      "languages": [
+        "eng",
+        "dan"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1800,
+      "authorityIds": {
+        "openLibraryWork": "OL1796430W",
+        "isbn": "0865240892",
+        "oclc": "28473149",
+        "lccn": "04005611"
+      },
+      "preferredEdition": "OL6937593M",
+      "coverId": 5937851,
+      "workPointer": "https://openlibrary.org/works/OL1796430W",
+      "editionPointer": "https://openlibrary.org/books/OL6937593M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL17971636W",
       "title": "Religio medici",
       "authors": [
@@ -71076,6 +71807,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1827693W",
+      "title": "The Case for the Real Jesus",
+      "authors": [
+        "Lee Strobel"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL1827693W",
+        "isbn": "0310275393",
+        "oclc": "528695099",
+        "lccn": "2008026382"
+      },
+      "preferredEdition": "OL24283326M",
+      "coverId": 1166051,
+      "workPointer": "https://openlibrary.org/works/OL1827693W",
+      "editionPointer": "https://openlibrary.org/books/OL24283326M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL18277642W",
       "title": "Encyclopedia of theology",
       "authors": [
@@ -74058,6 +74815,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL1849560W",
+      "title": "One Wintry Night",
+      "authors": [
+        "Ruth Bell Graham"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1994,
+      "authorityIds": {
+        "openLibraryWork": "OL1849560W",
+        "isbn": "0801012449",
+        "lccn": "91048107"
+      },
+      "preferredEdition": "OL1565888M",
+      "coverId": 563208,
+      "workPointer": "https://openlibrary.org/works/OL1849560W",
+      "editionPointer": "https://openlibrary.org/books/OL1565888M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1849948W",
       "title": "Be your own best friend",
       "authors": [
@@ -74632,6 +75414,32 @@
       "coverId": 9880925,
       "workPointer": "https://openlibrary.org/works/OL18551138W",
       "editionPointer": "https://openlibrary.org/books/OL49822929M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL18554446W",
+      "title": "Zhongguo xian dai zuo jia yu Jidu jiao wen hua",
+      "authors": [
+        "Jianlong Yang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2008,
+      "authorityIds": {
+        "openLibraryWork": "OL18554446W",
+        "isbn": "9810807732",
+        "oclc": "232009114",
+        "lccn": "2009323557"
+      },
+      "preferredEdition": "OL23911330M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL18554446W",
+      "editionPointer": "https://openlibrary.org/books/OL23911330M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -80238,6 +81046,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1896935W",
+      "title": "Meeting Jesus Again for the First Time",
+      "authors": [
+        "Marcus J. Borg"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1994,
+      "authorityIds": {
+        "openLibraryWork": "OL1896935W",
+        "isbn": "9780061747625",
+        "oclc": "32624349",
+        "lccn": "2005026934"
+      },
+      "preferredEdition": "OL1415882M",
+      "coverId": 3939054,
+      "workPointer": "https://openlibrary.org/works/OL1896935W",
+      "editionPointer": "https://openlibrary.org/books/OL1415882M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1896937W",
       "title": "Reading the Bible Again For the First Time",
       "authors": [
@@ -81214,6 +82048,33 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL19029874W",
       "editionPointer": "https://openlibrary.org/books/OL14804917M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19030232W",
+      "title": "Jing ji yu lun li =",
+      "authors": [
+        "Xiaochao Wang",
+        "Xinan Yang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL19030232W",
+        "isbn": "9787563357796",
+        "oclc": "65214736",
+        "lccn": "2007350008"
+      },
+      "preferredEdition": "OL16343641M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19030232W",
+      "editionPointer": "https://openlibrary.org/books/OL16343641M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -84764,6 +85625,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL19264486W",
+      "title": "She hui zhuan xing yu jiao hui da xue",
+      "authors": [
+        "Kaiyuan Zhang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1998,
+      "authorityIds": {
+        "openLibraryWork": "OL19264486W",
+        "isbn": "753512299X",
+        "oclc": "817691444"
+      },
+      "preferredEdition": "OL19294074M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19264486W",
+      "editionPointer": "https://openlibrary.org/books/OL19294074M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL19265222W",
       "title": "The Cambridge companion to feminist theology",
       "authors": [
@@ -86049,6 +86935,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL19382930W",
+      "title": "Man hua sheng jing zhi mi",
+      "authors": [
+        "Kōji Akizawa"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL19382930W",
+        "isbn": "9789570482027",
+        "oclc": "52190413"
+      },
+      "preferredEdition": "OL23033896M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19382930W",
+      "editionPointer": "https://openlibrary.org/books/OL23033896M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL19383806W",
       "title": "The How-to book",
       "authors": [
@@ -86407,6 +87318,32 @@
       "workPointer": "https://openlibrary.org/works/OL19412059W",
       "editionPointer": "https://openlibrary.org/books/OL15134964M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1941989W",
+      "title": "Jesus the Magician",
+      "authors": [
+        "Morton Smith"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1978,
+      "authorityIds": {
+        "openLibraryWork": "OL1941989W",
+        "isbn": "9781566192859",
+        "oclc": "39391253",
+        "lccn": "77014518"
+      },
+      "preferredEdition": "OL9234854M",
+      "coverId": 815287,
+      "workPointer": "https://openlibrary.org/works/OL1941989W",
+      "editionPointer": "https://openlibrary.org/books/OL9234854M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -87319,6 +88256,31 @@
       "workPointer": "https://openlibrary.org/works/OL19491099W",
       "editionPointer": "https://openlibrary.org/books/OL19911384M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1949492W",
+      "title": "A Story Book of Jesus",
+      "authors": [
+        "Enid Blyton"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1969,
+      "authorityIds": {
+        "openLibraryWork": "OL1949492W",
+        "isbn": "9780551002159",
+        "oclc": "59814498"
+      },
+      "preferredEdition": "OL10588846M",
+      "coverId": 14571249,
+      "workPointer": "https://openlibrary.org/works/OL1949492W",
+      "editionPointer": "https://openlibrary.org/books/OL10588846M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -88366,6 +89328,30 @@
       "workPointer": "https://openlibrary.org/works/OL19589154W",
       "editionPointer": "https://openlibrary.org/books/OL48622679M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19594070W",
+      "title": "JiDu jiao ci yu Ying Han Han Ying dui zhao shou ce",
+      "authors": [
+        "Yuhua Wang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1997,
+      "authorityIds": {
+        "openLibraryWork": "OL19594070W",
+        "isbn": "9787801230706"
+      },
+      "preferredEdition": "OL20810975M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19594070W",
+      "editionPointer": "https://openlibrary.org/books/OL20810975M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -90166,6 +91152,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL19744336W",
+      "title": "Lan qiu huo",
+      "authors": [
+        "Wen, Xiaoping"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2017,
+      "authorityIds": {
+        "openLibraryWork": "OL19744336W",
+        "isbn": "9571194131",
+        "oclc": "1051003786"
+      },
+      "preferredEdition": "OL26957405M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19744336W",
+      "editionPointer": "https://openlibrary.org/books/OL26957405M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL19746820W",
       "title": "Inspired",
       "authors": [
@@ -90673,6 +91684,31 @@
       "workPointer": "https://openlibrary.org/works/OL19791056W",
       "editionPointer": "https://openlibrary.org/books/OL27002547M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19795345W",
+      "title": "Mo shi mi zong =",
+      "authors": [
+        "Tim F. LaHaye"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2001,
+      "authorityIds": {
+        "openLibraryWork": "OL19795345W",
+        "isbn": "7500824602",
+        "oclc": "48955351"
+      },
+      "preferredEdition": "OL27006863M",
+      "coverId": 8598450,
+      "workPointer": "https://openlibrary.org/works/OL19795345W",
+      "editionPointer": "https://openlibrary.org/books/OL27006863M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -91484,6 +92520,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1984534W",
+      "title": "Did Jesus rise from the dead?",
+      "authors": [
+        "Gary R. Habermas"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1987,
+      "authorityIds": {
+        "openLibraryWork": "OL1984534W",
+        "isbn": "0060635495",
+        "oclc": "14903934",
+        "lccn": "85045355"
+      },
+      "preferredEdition": "OL7279860M",
+      "coverId": 10053185,
+      "workPointer": "https://openlibrary.org/works/OL1984534W",
+      "editionPointer": "https://openlibrary.org/books/OL7279860M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL1984546W",
       "title": "The Risen Jesus and Future Hope",
       "authors": [
@@ -91810,6 +92872,32 @@
       "workPointer": "https://openlibrary.org/works/OL19869805W",
       "editionPointer": "https://openlibrary.org/books/OL27057313M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL1987164W",
+      "title": "Lamb",
+      "authors": [
+        "Christopher Moore"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL1987164W",
+        "isbn": "9780380978403",
+        "oclc": "49054082",
+        "lccn": "2002283370"
+      },
+      "preferredEdition": "OL3564323M",
+      "coverId": 237227,
+      "workPointer": "https://openlibrary.org/works/OL1987164W",
+      "editionPointer": "https://openlibrary.org/books/OL3564323M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -92249,6 +93337,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL1992671W",
+      "title": "The murder of Christ",
+      "authors": [
+        "Wilhelm Reich"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1953,
+      "authorityIds": {
+        "openLibraryWork": "OL1992671W",
+        "isbn": "9780285647855",
+        "oclc": "5715401",
+        "lccn": "75324806"
+      },
+      "preferredEdition": "OL51753290M",
+      "coverId": 4608945,
+      "workPointer": "https://openlibrary.org/works/OL1992671W",
+      "editionPointer": "https://openlibrary.org/books/OL51753290M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL19929185W",
       "title": "Sheng jing de gu shi",
       "authors": [
@@ -92366,6 +93480,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL19937736W",
       "editionPointer": "https://openlibrary.org/books/OL27118315M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19940899W",
+      "title": "Qi shi yu cheng bao",
+      "authors": [
+        "Geoffrey Chaucer"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL19940899W",
+        "isbn": "9861466290",
+        "oclc": "712783681"
+      },
+      "preferredEdition": "OL27121374M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL19940899W",
+      "editionPointer": "https://openlibrary.org/books/OL27121374M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -92897,6 +94036,32 @@
       "workPointer": "https://openlibrary.org/works/OL19972131W",
       "editionPointer": "https://openlibrary.org/books/OL27152320M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL19972241W",
+      "title": "Killing Jesus",
+      "authors": [
+        "Bill O'Reilly"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2013,
+      "authorityIds": {
+        "openLibraryWork": "OL19972241W",
+        "isbn": "1250142202",
+        "oclc": "854610145",
+        "lccn": "2013031996"
+      },
+      "preferredEdition": "OL28516963M",
+      "coverId": 9917598,
+      "workPointer": "https://openlibrary.org/works/OL19972241W",
+      "editionPointer": "https://openlibrary.org/books/OL28516963M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -94032,6 +95197,32 @@
       "workPointer": "https://openlibrary.org/works/OL20024339W",
       "editionPointer": "https://openlibrary.org/books/OL27204391M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL20025288W",
+      "title": "Jesus before the Gospels",
+      "authors": [
+        "Bart D. Ehrman"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2016,
+      "authorityIds": {
+        "openLibraryWork": "OL20025288W",
+        "isbn": "9780062285201",
+        "oclc": "910983675",
+        "lccn": "2015034482"
+      },
+      "preferredEdition": "OL27205337M",
+      "coverId": 12380363,
+      "workPointer": "https://openlibrary.org/works/OL20025288W",
+      "editionPointer": "https://openlibrary.org/books/OL27205337M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -104304,6 +105495,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL20965115W",
+      "title": "My Christian testimony",
+      "authors": [
+        "Paul Sing-Hoh Hang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1971,
+      "authorityIds": {
+        "openLibraryWork": "OL20965115W",
+        "oclc": "32867793"
+      },
+      "preferredEdition": "OL28400678M",
+      "coverId": 11025404,
+      "workPointer": "https://openlibrary.org/works/OL20965115W",
+      "editionPointer": "https://openlibrary.org/books/OL28400678M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL20965372W",
       "title": "Life together",
       "authors": [
@@ -108275,6 +109490,30 @@
       "workPointer": "https://openlibrary.org/works/OL21246829W",
       "editionPointer": "https://openlibrary.org/books/OL28764577M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL21246944W",
+      "title": "Jesus of Nazareth",
+      "authors": [
+        "Joseph Ratzinger"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1971,
+      "authorityIds": {
+        "openLibraryWork": "OL21246944W",
+        "isbn": "9781586171988"
+      },
+      "preferredEdition": "OL29576272M",
+      "coverId": 11658520,
+      "workPointer": "https://openlibrary.org/works/OL21246944W",
+      "editionPointer": "https://openlibrary.org/books/OL29576272M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -116701,6 +117940,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL22369240W",
+      "title": "Zhongguo jin dai jiao hui da xue jian zhu shi yan jiu",
+      "authors": [
+        "Li Dong"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL22369240W",
+        "isbn": "9787030280619",
+        "oclc": "657042499",
+        "lccn": "2011422915"
+      },
+      "preferredEdition": "OL30453803M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22369240W",
+      "editionPointer": "https://openlibrary.org/books/OL30453803M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL22369784W",
       "title": "Hua ren fu nü yu Xianggang Jidu jiao",
       "authors": [
@@ -116933,6 +118198,32 @@
       "workPointer": "https://openlibrary.org/works/OL22378837W",
       "editionPointer": "https://openlibrary.org/books/OL30464577M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL22379089W",
+      "title": "Di fang she hui wen hua yu jin dai zhong xi wen hua jiao liu",
+      "authors": [
+        "Yixiong Wu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL22379089W",
+        "isbn": "7208088012",
+        "oclc": "541757697",
+        "lccn": "2010432283"
+      },
+      "preferredEdition": "OL30464868M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22379089W",
+      "editionPointer": "https://openlibrary.org/books/OL30464868M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -117867,6 +119158,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL22549947W",
+      "title": "\"Jian\" xing tan you",
+      "authors": [
+        "Xinping Zhuo"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2011,
+      "authorityIds": {
+        "openLibraryWork": "OL22549947W",
+        "isbn": "751610129X",
+        "oclc": "815577147",
+        "lccn": "2012412058"
+      },
+      "preferredEdition": "OL30607006M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22549947W",
+      "editionPointer": "https://openlibrary.org/books/OL30607006M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL22550486W",
       "title": "Zhongguo Jidu jiao diao yan bao gao ji",
       "authors": [
@@ -118226,6 +119543,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL22622356W",
+      "title": "Shen ti, ling hun, zi ran",
+      "authors": [
+        "Tianlu Liu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL22622356W",
+        "isbn": "7208092567",
+        "oclc": "646696827",
+        "lccn": "2011369614"
+      },
+      "preferredEdition": "OL30647380M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22622356W",
+      "editionPointer": "https://openlibrary.org/books/OL30647380M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL226241W",
       "title": "The book of Revelation",
       "authors": [
@@ -118477,6 +119820,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL22714109W",
+      "title": "Wan Ming gai guo si xiang zhi yan jiu",
+      "authors": [
+        "Jiliang Zheng"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL22714109W",
+        "isbn": "986314052X",
+        "oclc": "816475987",
+        "lccn": "2012425508"
+      },
+      "preferredEdition": "OL30702990M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22714109W",
+      "editionPointer": "https://openlibrary.org/books/OL30702990M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL2271474W",
       "title": "Creation; Genesis 1:1--Exodus 19:20",
       "authors": [
@@ -118524,6 +119893,32 @@
       "workPointer": "https://openlibrary.org/works/OL2271488W",
       "editionPointer": "https://openlibrary.org/books/OL8572139M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL2272014W",
+      "title": "Mors turpissima crucis",
+      "authors": [
+        "Martin Hengel"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1977,
+      "authorityIds": {
+        "openLibraryWork": "OL2272014W",
+        "isbn": "0334019591",
+        "oclc": "3264362",
+        "lccn": "79348635"
+      },
+      "preferredEdition": "OL4564421M",
+      "coverId": 7886329,
+      "workPointer": "https://openlibrary.org/works/OL2272014W",
+      "editionPointer": "https://openlibrary.org/books/OL4564421M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -118607,6 +120002,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL22725515W",
+      "title": "Tasŏk Chungyong kangŭi",
+      "authors": [
+        "Yŏng-ho Pak"
+      ],
+      "languages": [
+        "chi",
+        "kor"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL22725515W",
+        "isbn": "899179971X",
+        "oclc": "810135717",
+        "lccn": "2012441077"
+      },
+      "preferredEdition": "OL30710516M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22725515W",
+      "editionPointer": "https://openlibrary.org/books/OL30710516M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL22755673W",
       "title": "The art of detachment",
       "authors": [
@@ -118653,6 +120075,33 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL22767380W",
       "editionPointer": "https://openlibrary.org/books/OL30739394M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL22768295W",
+      "title": "Liu dong zhong de chuan tong",
+      "authors": [
+        "Qimin He",
+        "Qiaogui Zhang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2011,
+      "authorityIds": {
+        "openLibraryWork": "OL22768295W",
+        "isbn": "7802543436",
+        "oclc": "858943843",
+        "lccn": "2012481159"
+      },
+      "preferredEdition": "OL30740056M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22768295W",
+      "editionPointer": "https://openlibrary.org/books/OL30740056M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -118784,6 +120233,33 @@
       "workPointer": "https://openlibrary.org/works/OL22773172W",
       "editionPointer": "https://openlibrary.org/books/OL30743282M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL22773643W",
+      "title": "Zhongguo di yi suo xian dai da xue",
+      "authors": [
+        "Dasong Guo",
+        "Xuexia Du"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL22773643W",
+        "isbn": "9787209068253",
+        "oclc": "823821202",
+        "lccn": "2012484939"
+      },
+      "preferredEdition": "OL30743576M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL22773643W",
+      "editionPointer": "https://openlibrary.org/books/OL30743576M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -124480,6 +125956,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL23642721W",
+      "title": "Zhongguo jiao hui da xue li shi wen xian yan tao hui lun wen ji",
+      "authors": [],
+      "languages": [
+        "chi",
+        "cmn",
+        "eng"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL23642721W",
+        "isbn": "962201674X",
+        "oclc": "35858535",
+        "lccn": "96472704"
+      },
+      "preferredEdition": "OL13075489M",
+      "coverId": 5241802,
+      "workPointer": "https://openlibrary.org/works/OL23642721W",
+      "editionPointer": "https://openlibrary.org/books/OL13075489M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL23652687W",
       "title": "Ruckman's apocalypse",
       "authors": [
@@ -125909,6 +127411,32 @@
       "workPointer": "https://openlibrary.org/works/OL23906579W",
       "editionPointer": "https://openlibrary.org/books/OL31614037M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL23906594W",
+      "title": "Yi dong de bian jie",
+      "authors": [
+        "Huilin Yang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL23906594W",
+        "isbn": "9787500065500",
+        "oclc": "55207777",
+        "lccn": "2004391647"
+      },
+      "preferredEdition": "OL31614051M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL23906594W",
+      "editionPointer": "https://openlibrary.org/books/OL31614051M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -127986,6 +129514,32 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL24128785W",
       "editionPointer": "https://openlibrary.org/books/OL31820910M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL24128870W",
+      "title": "Menggu min zu Jidu zong jiao shi",
+      "authors": [
+        "Guizhen Bao"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2008,
+      "authorityIds": {
+        "openLibraryWork": "OL24128870W",
+        "isbn": "9787802540347",
+        "oclc": "317723008",
+        "lccn": "2009392405"
+      },
+      "preferredEdition": "OL31820999M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL24128870W",
+      "editionPointer": "https://openlibrary.org/books/OL31820999M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -132994,6 +134548,31 @@
       "workPointer": "https://openlibrary.org/works/OL251107W",
       "editionPointer": "https://openlibrary.org/books/OL53720043M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL25130833W",
+      "title": "Jesus",
+      "authors": [
+        "Marcus J. Borg",
+        "Society for Promoting Christian Knowledge (Great Britain) Staff"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL25130833W",
+        "isbn": "0281064180"
+      },
+      "preferredEdition": "OL33429609M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL25130833W",
+      "editionPointer": "https://openlibrary.org/books/OL33429609M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -139828,6 +141407,42 @@
       "admission": "none"
     },
     {
+      "workId": "OL262496W",
+      "title": "A Study in Scarlet",
+      "authors": [
+        "Arthur Conan Doyle"
+      ],
+      "languages": [
+        "spa",
+        "heb",
+        "fre",
+        "ita",
+        "por",
+        "jpn",
+        "ukr",
+        "ger",
+        "fin",
+        "chi",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1887,
+      "authorityIds": {
+        "openLibraryWork": "OL262496W",
+        "isbn": "1688519998",
+        "oclc": "1245817748",
+        "lccn": "99604516"
+      },
+      "preferredEdition": "OL61027614M",
+      "coverId": 13405534,
+      "workPointer": "https://openlibrary.org/works/OL262496W",
+      "editionPointer": "https://openlibrary.org/books/OL61027614M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL2624974W",
       "title": "The moral vision of the New Testament",
       "authors": [
@@ -143008,6 +144623,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL26604905W",
+      "title": "A Redneck's Guide",
+      "authors": [
+        "Jeff Todd"
+      ],
+      "languages": [
+        "fre",
+        "spa",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL26604905W",
+        "isbn": "9781479133680"
+      },
+      "preferredEdition": "OL54570793M",
+      "coverId": 12500362,
+      "workPointer": "https://openlibrary.org/works/OL26604905W",
+      "editionPointer": "https://openlibrary.org/books/OL54570793M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL266084W",
       "title": "Fetich in theology",
       "authors": [
@@ -144873,6 +146514,33 @@
       "workPointer": "https://openlibrary.org/works/OL2682835W",
       "editionPointer": "https://openlibrary.org/books/OL8739636M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL26828W",
+      "title": "The Jesus I never knew",
+      "authors": [
+        "Philip Yancey"
+      ],
+      "languages": [
+        "per",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL26828W",
+        "isbn": "0310295815",
+        "oclc": "60294825",
+        "lccn": "95009395"
+      },
+      "preferredEdition": "OL18895733M",
+      "coverId": 570952,
+      "workPointer": "https://openlibrary.org/works/OL26828W",
+      "editionPointer": "https://openlibrary.org/books/OL18895733M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -149644,6 +151312,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL27545W",
+      "title": "Edgar Cayce's story of Jesus",
+      "authors": [
+        "Edgar Cayce"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1968,
+      "authorityIds": {
+        "openLibraryWork": "OL27545W",
+        "isbn": "9780425103272",
+        "oclc": "24019194",
+        "lccn": "74088576"
+      },
+      "preferredEdition": "OL4959556M",
+      "coverId": 270350,
+      "workPointer": "https://openlibrary.org/works/OL27545W",
+      "editionPointer": "https://openlibrary.org/books/OL4959556M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL275480W",
       "title": "Jesus, the Greatest Therapist Who Ever Lived",
       "authors": [
@@ -150966,6 +152660,56 @@
       "admission": "none"
     },
     {
+      "workId": "OL2775420W",
+      "title": "The millennial Messiah",
+      "authors": [
+        "Bruce R. McConkie"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1982,
+      "authorityIds": {
+        "openLibraryWork": "OL2775420W",
+        "isbn": "9780877478966",
+        "lccn": "81019599"
+      },
+      "preferredEdition": "OL4273313M",
+      "coverId": 12182935,
+      "workPointer": "https://openlibrary.org/works/OL2775420W",
+      "editionPointer": "https://openlibrary.org/books/OL4273313M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL2775426W",
+      "title": "A new witness for the Articles of Faith",
+      "authors": [
+        "Bruce R. McConkie"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1985,
+      "authorityIds": {
+        "openLibraryWork": "OL2775426W",
+        "isbn": "9781590388167",
+        "lccn": "85012888"
+      },
+      "preferredEdition": "OL8112095M",
+      "coverId": 13695666,
+      "workPointer": "https://openlibrary.org/works/OL2775426W",
+      "editionPointer": "https://openlibrary.org/books/OL8112095M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL2775428W",
       "title": "Mormon doctrine",
       "authors": [
@@ -151349,6 +153093,32 @@
       "workPointer": "https://openlibrary.org/works/OL278627W",
       "editionPointer": "https://openlibrary.org/books/OL43154827M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL278798W",
+      "title": "The Passover Plot",
+      "authors": [
+        "Hugh Joseph Schonfield"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1965,
+      "authorityIds": {
+        "openLibraryWork": "OL278798W",
+        "isbn": "1649211635",
+        "oclc": "58725794",
+        "lccn": "2004114763"
+      },
+      "preferredEdition": "OL8293023M",
+      "coverId": 960657,
+      "workPointer": "https://openlibrary.org/works/OL278798W",
+      "editionPointer": "https://openlibrary.org/books/OL8293023M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -154843,6 +156613,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL2910399W",
+      "title": "The kingdom within",
+      "authors": [
+        "John A. Sanford"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1970,
+      "authorityIds": {
+        "openLibraryWork": "OL2910399W",
+        "isbn": "0060670568",
+        "oclc": "28038689",
+        "lccn": "77105548"
+      },
+      "preferredEdition": "OL2740872M",
+      "coverId": 32485,
+      "workPointer": "https://openlibrary.org/works/OL2910399W",
+      "editionPointer": "https://openlibrary.org/books/OL2740872M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL29103W",
       "title": "The marriage builder",
       "authors": [
@@ -156712,6 +158508,35 @@
       "workPointer": "https://openlibrary.org/works/OL2932899W",
       "editionPointer": "https://openlibrary.org/books/OL2414572M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL2933075W",
+      "title": "The historical figure of Jesus",
+      "authors": [
+        "E. P. Sanders",
+        "E. Sanders",
+        "Ed Parish Sanders"
+      ],
+      "languages": [
+        "eng",
+        "ita"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1993,
+      "authorityIds": {
+        "openLibraryWork": "OL2933075W",
+        "isbn": "9780713990591",
+        "oclc": "30112315",
+        "lccn": "gb93052206"
+      },
+      "preferredEdition": "OL39196592M",
+      "coverId": 95766,
+      "workPointer": "https://openlibrary.org/works/OL2933075W",
+      "editionPointer": "https://openlibrary.org/books/OL39196592M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -158933,6 +160758,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL2989692W",
+      "title": "Easter Story",
+      "authors": [
+        "Heather Amery",
+        "Norman Young"
+      ],
+      "languages": [
+        "eng",
+        "fre"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1999,
+      "authorityIds": {
+        "openLibraryWork": "OL2989692W",
+        "isbn": "0746033583",
+        "oclc": "51288356"
+      },
+      "preferredEdition": "OL9679535M",
+      "coverId": 484140,
+      "workPointer": "https://openlibrary.org/works/OL2989692W",
+      "editionPointer": "https://openlibrary.org/books/OL9679535M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL2989701W",
       "title": "Family Bible",
       "authors": [
@@ -160239,6 +162091,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL3086852W",
+      "title": "Under the feet of Jesus",
+      "authors": [
+        "Helena María Viramontes"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1995,
+      "authorityIds": {
+        "openLibraryWork": "OL3086852W",
+        "isbn": "0452273870",
+        "oclc": "38255903",
+        "lccn": "94046860"
+      },
+      "preferredEdition": "OL17697279M",
+      "coverId": 3888921,
+      "workPointer": "https://openlibrary.org/works/OL3086852W",
+      "editionPointer": "https://openlibrary.org/books/OL17697279M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3088233W",
       "title": "Tokens of trust",
       "authors": [
@@ -161151,6 +163029,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL31580614W",
+      "title": "Jidu jiao yu 20 shi ji Zhongguo she hui",
+      "authors": [
+        "Weijun Yao",
+        "Junxiu Hu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL31580614W",
+        "isbn": "7549550107",
+        "oclc": "880671144"
+      },
+      "preferredEdition": "OL43252162M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL31580614W",
+      "editionPointer": "https://openlibrary.org/books/OL43252162M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3160328W",
       "title": "God, the Black man and truth",
       "authors": [
@@ -161222,6 +163126,31 @@
       "workPointer": "https://openlibrary.org/works/OL31617739W",
       "editionPointer": "https://openlibrary.org/books/OL44623244M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL31617762W",
+      "title": "Chuan jiao shi xin wen gong zuo zhe zai Zhongguo",
+      "authors": [
+        "Beinaite"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL31617762W",
+        "isbn": "7563386912",
+        "oclc": "884857139"
+      },
+      "preferredEdition": "OL43294344M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL31617762W",
+      "editionPointer": "https://openlibrary.org/books/OL43294344M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -161930,6 +163859,59 @@
       "admission": "none"
     },
     {
+      "workId": "OL32130440W",
+      "title": "Jiu she hui, xin xin yang",
+      "authors": [
+        "Muzhou Pu",
+        "H. A. Drake",
+        "Lisa Ann Raphals"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2021,
+      "authorityIds": {
+        "openLibraryWork": "OL32130440W",
+        "isbn": "9570857048",
+        "oclc": "1246258227",
+        "lccn": "2021366567"
+      },
+      "preferredEdition": "OL43865010M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32130440W",
+      "editionPointer": "https://openlibrary.org/books/OL43865010M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32130473W",
+      "title": "Zai zhong fan shu de Jidu",
+      "authors": [
+        "Weimin Cai"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2021,
+      "authorityIds": {
+        "openLibraryWork": "OL32130473W",
+        "isbn": "9863268836",
+        "oclc": "1257022265"
+      },
+      "preferredEdition": "OL43865044M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32130473W",
+      "editionPointer": "https://openlibrary.org/books/OL43865044M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL32130576W",
       "title": "Jing shi yu ge ming",
       "authors": [
@@ -162055,6 +164037,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL32145238W",
+      "title": "Zheng yi yi yuan lun",
+      "authors": [
+        "Yang Shen"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL32145238W",
+        "isbn": "9787307094819",
+        "oclc": "808418398"
+      },
+      "preferredEdition": "OL43881111M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32145238W",
+      "editionPointer": "https://openlibrary.org/books/OL43881111M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL32149551W",
       "title": "Dong xi fang zhe xue",
       "authors": [
@@ -162102,6 +164109,30 @@
       "workPointer": "https://openlibrary.org/works/OL32150114W",
       "editionPointer": "https://openlibrary.org/books/OL43887493M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32156092W",
+      "title": "Gai bian zhong de Jidu xin yang",
+      "authors": [
+        "Qingchun Yi"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2021,
+      "authorityIds": {
+        "openLibraryWork": "OL32156092W",
+        "isbn": "9863504394"
+      },
+      "preferredEdition": "OL43893841M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32156092W",
+      "editionPointer": "https://openlibrary.org/books/OL43893841M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -162426,6 +164457,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL32238831W",
+      "title": "Li Shuqing yi sheng",
+      "authors": [
+        "Xiuliang Wu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL32238831W",
+        "isbn": "751081412X",
+        "oclc": "836202861"
+      },
+      "preferredEdition": "OL43983611M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32238831W",
+      "editionPointer": "https://openlibrary.org/books/OL43983611M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3226101W",
       "title": "The mustard seed",
       "authors": [
@@ -162447,6 +164503,31 @@
       "workPointer": "https://openlibrary.org/works/OL3226101W",
       "editionPointer": "https://openlibrary.org/books/OL3981736M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32265957W",
+      "title": "Kang zhan jian guo yu bian jiang xue shu",
+      "authors": [
+        "Hongliang Wang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2020,
+      "authorityIds": {
+        "openLibraryWork": "OL32265957W",
+        "isbn": "7101142893",
+        "oclc": "1149317796"
+      },
+      "preferredEdition": "OL44012971M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32265957W",
+      "editionPointer": "https://openlibrary.org/books/OL44012971M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -162797,6 +164878,32 @@
       "workPointer": "https://openlibrary.org/works/OL32373459W",
       "editionPointer": "https://openlibrary.org/books/OL44128632M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3238448W",
+      "title": "The Humor of Christ",
+      "authors": [
+        "Elton Trueblood"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1964,
+      "authorityIds": {
+        "openLibraryWork": "OL3238448W",
+        "isbn": "0060686324",
+        "oclc": "387155",
+        "lccn": "64010756"
+      },
+      "preferredEdition": "OL9234905M",
+      "coverId": 8015303,
+      "workPointer": "https://openlibrary.org/works/OL3238448W",
+      "editionPointer": "https://openlibrary.org/books/OL9234905M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -163323,6 +165430,31 @@
       "workPointer": "https://openlibrary.org/works/OL3243242W",
       "editionPointer": "https://openlibrary.org/books/OL23015723M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32435819W",
+      "title": "Zhang Xueyan zhuan",
+      "authors": [
+        "Jianming Chen"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL32435819W",
+        "isbn": "7507740862",
+        "oclc": "820122234"
+      },
+      "preferredEdition": "OL44212439M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32435819W",
+      "editionPointer": "https://openlibrary.org/books/OL44212439M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -165416,6 +167548,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL32714676W",
       "editionPointer": "https://openlibrary.org/books/OL44532363M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32715236W",
+      "title": "Xian song fu li ge",
+      "authors": [
+        "Daijun"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2017,
+      "authorityIds": {
+        "openLibraryWork": "OL32715236W",
+        "isbn": "9787100119764",
+        "oclc": "991264092"
+      },
+      "preferredEdition": "OL44532973M",
+      "coverId": 14308031,
+      "workPointer": "https://openlibrary.org/works/OL32715236W",
+      "editionPointer": "https://openlibrary.org/books/OL44532973M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -167686,6 +169843,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL32825147W",
+      "title": "Lading jiao hui wen ji",
+      "authors": [
+        "Mushi Xu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1959,
+      "authorityIds": {
+        "openLibraryWork": "OL32825147W",
+        "oclc": "33389170",
+        "lccn": "c65001293"
+      },
+      "preferredEdition": "OL44653099M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32825147W",
+      "editionPointer": "https://openlibrary.org/books/OL44653099M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL32825850W",
       "title": "Jidu jiao yan jiu fang fa lun",
       "authors": [
@@ -168442,6 +170624,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL32848642W",
+      "title": "Jidu zong jiao zhi ren guan yu zui guan",
+      "authors": [
+        "Hong-Hsin Lin"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2013,
+      "authorityIds": {
+        "openLibraryWork": "OL32848642W",
+        "isbn": "9789860368253",
+        "oclc": "905100301"
+      },
+      "preferredEdition": "OL44679151M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32848642W",
+      "editionPointer": "https://openlibrary.org/books/OL44679151M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3285046W",
       "title": "Paul the apostle",
       "authors": [
@@ -168540,6 +170747,33 @@
       "workPointer": "https://openlibrary.org/works/OL3286446W",
       "editionPointer": "https://openlibrary.org/books/OL6134398M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3286877W",
+      "title": "Je vois Satan tomber comme l'éclair",
+      "authors": [
+        "René Girard"
+      ],
+      "languages": [
+        "fre",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1999,
+      "authorityIds": {
+        "openLibraryWork": "OL3286877W",
+        "isbn": "2246267919",
+        "oclc": "45172749",
+        "lccn": "00333651"
+      },
+      "preferredEdition": "OL8698700M",
+      "coverId": 2149911,
+      "workPointer": "https://openlibrary.org/works/OL3286877W",
+      "editionPointer": "https://openlibrary.org/books/OL8698700M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -168695,6 +170929,32 @@
       "workPointer": "https://openlibrary.org/works/OL3290269W",
       "editionPointer": "https://openlibrary.org/books/OL993214M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3291104W",
+      "title": "Jesus the Messiah",
+      "authors": [
+        "Robert H. Stein"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL3291104W",
+        "isbn": "0830818847",
+        "oclc": "35084294",
+        "lccn": "96032172"
+      },
+      "preferredEdition": "OL993654M",
+      "coverId": 633540,
+      "workPointer": "https://openlibrary.org/works/OL3291104W",
+      "editionPointer": "https://openlibrary.org/books/OL993654M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -168940,6 +171200,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL32931944W",
       "editionPointer": "https://openlibrary.org/books/OL45216449M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL32931954W",
+      "title": "Qing nian hui shi ye gai yao",
+      "authors": [
+        "Young Men's Christian Associations (Hong Kong)"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL32931954W",
+        "oclc": "894648774"
+      },
+      "preferredEdition": "OL44778298M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL32931954W",
+      "editionPointer": "https://openlibrary.org/books/OL44778298M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -169777,6 +172061,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL33001605W",
+      "title": "Wang lu shen en juan ci sheng",
+      "authors": [
+        "Jie Yu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2011,
+      "authorityIds": {
+        "openLibraryWork": "OL33001605W",
+        "isbn": "9868637937",
+        "oclc": "793747699"
+      },
+      "preferredEdition": "OL44858467M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33001605W",
+      "editionPointer": "https://openlibrary.org/books/OL44858467M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL33007336W",
       "title": "Jidu hua yu shi su hua de zheng zha",
       "authors": [
@@ -169846,6 +172155,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL33008860W",
       "editionPointer": "https://openlibrary.org/books/OL44866888M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33008914W",
+      "title": "Jiu shu yu zi jiu",
+      "authors": [
+        "Tianhong Yang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2010,
+      "authorityIds": {
+        "openLibraryWork": "OL33008914W",
+        "isbn": "710803493X",
+        "oclc": "698070295"
+      },
+      "preferredEdition": "OL44866945M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33008914W",
+      "editionPointer": "https://openlibrary.org/books/OL44866945M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -170245,6 +172579,31 @@
       "workPointer": "https://openlibrary.org/works/OL33074880W",
       "editionPointer": "https://openlibrary.org/books/OL44941294M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33077269W",
+      "title": "Bian ji de gong rong",
+      "authors": [
+        "Ziming Wu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2009,
+      "authorityIds": {
+        "openLibraryWork": "OL33077269W",
+        "isbn": "7208085048",
+        "oclc": "645460335"
+      },
+      "preferredEdition": "OL44944002M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33077269W",
+      "editionPointer": "https://openlibrary.org/books/OL44944002M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -170670,6 +173029,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL33283841W",
       "editionPointer": "https://openlibrary.org/books/OL45180126M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33292568W",
+      "title": "Zhong xi wen xue yu zhe xue zong jiao",
+      "authors": [
+        "Xudong Gao"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2004,
+      "authorityIds": {
+        "openLibraryWork": "OL33292568W",
+        "isbn": "9787301065891",
+        "oclc": "56136459"
+      },
+      "preferredEdition": "OL45189742M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33292568W",
+      "editionPointer": "https://openlibrary.org/books/OL45189742M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -171580,6 +173964,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL33413949W",
+      "title": "Ben di hua",
+      "authors": [
+        "N. Standaert"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1993,
+      "authorityIds": {
+        "openLibraryWork": "OL33413949W",
+        "isbn": "9789575461485",
+        "oclc": "51990473"
+      },
+      "preferredEdition": "OL45323683M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33413949W",
+      "editionPointer": "https://openlibrary.org/books/OL45323683M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3341864W",
       "title": "Toward a Jewish theology of liberation",
       "authors": [
@@ -171602,6 +174011,32 @@
       "workPointer": "https://openlibrary.org/works/OL3341864W",
       "editionPointer": "https://openlibrary.org/books/OL1636048M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33419463W",
+      "title": "Huang yuan shang de yun cai",
+      "authors": [
+        "Yizhang Liu"
+      ],
+      "languages": [
+        "chi",
+        "eng"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2003,
+      "authorityIds": {
+        "openLibraryWork": "OL33419463W",
+        "isbn": "9789627922193",
+        "oclc": "52603589"
+      },
+      "preferredEdition": "OL45330179M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33419463W",
+      "editionPointer": "https://openlibrary.org/books/OL45330179M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -172380,6 +174815,78 @@
       "admission": "none"
     },
     {
+      "workId": "OL33495394W",
+      "title": "Bian xue shu gao",
+      "authors": [
+        "Guangqi Xu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL33495394W",
+        "oclc": "502952525"
+      },
+      "preferredEdition": "OL45417983M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33495394W",
+      "editionPointer": "https://openlibrary.org/books/OL45417983M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33495402W",
+      "title": "Jue si lu",
+      "authors": [
+        "Ning Liu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL33495402W",
+        "oclc": "502952528"
+      },
+      "preferredEdition": "OL45417993M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33495402W",
+      "editionPointer": "https://openlibrary.org/books/OL45417993M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33495407W",
+      "title": "Wei tian ai ren ji lun",
+      "authors": [
+        "Zheng Wang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL33495407W",
+        "oclc": "502952533"
+      },
+      "preferredEdition": "OL45417998M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33495407W",
+      "editionPointer": "https://openlibrary.org/books/OL45417998M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL33495438W",
       "title": "Kai tian bao yao",
       "authors": [
@@ -172543,6 +175050,30 @@
       "workPointer": "https://openlibrary.org/works/OL33495661W",
       "editionPointer": "https://openlibrary.org/books/OL45418302M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33495886W",
+      "title": "Zheng shi lüe shuo",
+      "authors": [
+        "Zongyuan Zhu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL33495886W",
+        "oclc": "502953185"
+      },
+      "preferredEdition": "OL45418586M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33495886W",
+      "editionPointer": "https://openlibrary.org/books/OL45418586M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -173127,6 +175658,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL33527022W",
       "editionPointer": "https://openlibrary.org/books/OL45458275M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33530682W",
+      "title": "Qian xian di Ji du tu qing nian",
+      "authors": [
+        "Liangmo Liu"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1940,
+      "authorityIds": {
+        "openLibraryWork": "OL33530682W",
+        "oclc": "502686611"
+      },
+      "preferredEdition": "OL45462625M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33530682W",
+      "editionPointer": "https://openlibrary.org/books/OL45462625M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -174277,6 +176832,30 @@
       "workPointer": "https://openlibrary.org/works/OL3359542W",
       "editionPointer": "https://openlibrary.org/books/OL1012968M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL33596260W",
+      "title": "Kongzi yu Yesu",
+      "authors": [
+        "Chengxiao Na"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1962,
+      "authorityIds": {
+        "openLibraryWork": "OL33596260W",
+        "oclc": "502395009"
+      },
+      "preferredEdition": "OL45543602M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL33596260W",
+      "editionPointer": "https://openlibrary.org/books/OL45543602M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -178843,6 +181422,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL3543478W",
+      "title": "Nine Faces of Christ",
+      "authors": [
+        "Eugene E. Whitworth"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1972,
+      "authorityIds": {
+        "openLibraryWork": "OL3543478W",
+        "isbn": "0875166660",
+        "oclc": "31673041",
+        "lccn": "72192743"
+      },
+      "preferredEdition": "OL5339147M",
+      "coverId": 4983777,
+      "workPointer": "https://openlibrary.org/works/OL3543478W",
+      "editionPointer": "https://openlibrary.org/books/OL5339147M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3543485W",
       "title": "An introduction to theology",
       "authors": [
@@ -180004,6 +182609,32 @@
       "workPointer": "https://openlibrary.org/works/OL36124256W",
       "editionPointer": "https://openlibrary.org/books/OL48811054M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL3615084W",
+      "title": "When Jesus Became God",
+      "authors": [
+        "Richard E. Rubenstein"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1999,
+      "authorityIds": {
+        "openLibraryWork": "OL3615084W",
+        "isbn": "0151003688",
+        "oclc": "45054281",
+        "lccn": "98052097"
+      },
+      "preferredEdition": "OL37177215M",
+      "coverId": 112080,
+      "workPointer": "https://openlibrary.org/works/OL3615084W",
+      "editionPointer": "https://openlibrary.org/books/OL37177215M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -184826,6 +187457,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL39025016W",
+      "title": "元　西域人　華化考",
+      "authors": [
+        "Yuan Chen"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1970,
+      "authorityIds": {
+        "openLibraryWork": "OL39025016W",
+        "oclc": "502800567"
+      },
+      "preferredEdition": "OL53132993M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39025016W",
+      "editionPointer": "https://openlibrary.org/books/OL53132993M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3902755W",
       "title": "Faiths of the world",
       "authors": [
@@ -185368,6 +188023,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL39072943W",
+      "title": "Proposals in relation to reorganization of the National Christian Council of China",
+      "authors": [
+        "National Christian Council of China"
+      ],
+      "languages": [
+        "eng",
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1928,
+      "authorityIds": {
+        "openLibraryWork": "OL39072943W",
+        "oclc": "53070650"
+      },
+      "preferredEdition": "OL53185763M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39072943W",
+      "editionPointer": "https://openlibrary.org/books/OL53185763M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL39072955W",
       "title": "The open door",
       "authors": [],
@@ -185457,6 +188137,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL39073271W",
       "editionPointer": "https://openlibrary.org/books/OL53186110M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL39073275W",
+      "title": "Christian Middle Schools in China",
+      "authors": [
+        "Earl Herbert Cressy"
+      ],
+      "languages": [
+        "eng",
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1933,
+      "authorityIds": {
+        "openLibraryWork": "OL39073275W",
+        "oclc": "53386026"
+      },
+      "preferredEdition": "OL53186115M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39073275W",
+      "editionPointer": "https://openlibrary.org/books/OL53186115M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -186748,6 +189453,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL39344441W",
+      "title": "學生福音事工的推手",
+      "authors": [
+        "Xiaohua Hong"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2006,
+      "authorityIds": {
+        "openLibraryWork": "OL39344441W",
+        "isbn": "9789577273000",
+        "oclc": "85776931"
+      },
+      "preferredEdition": "OL53547478M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39344441W",
+      "editionPointer": "https://openlibrary.org/books/OL53547478M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL39344443W",
       "title": "人間天使",
       "authors": [
@@ -186998,6 +189728,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL39406502W",
       "editionPointer": "https://openlibrary.org/books/OL53627571M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL39406557W",
+      "title": "在文学与神学的边界",
+      "authors": [
+        "Huilin Yang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2012,
+      "authorityIds": {
+        "openLibraryWork": "OL39406557W",
+        "isbn": "7309089588",
+        "oclc": "820630675"
+      },
+      "preferredEdition": "OL53627635M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39406557W",
+      "editionPointer": "https://openlibrary.org/books/OL53627635M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -188030,6 +190785,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL39737047W",
+      "title": "女鐸",
+      "authors": [
+        "Changlin Ma",
+        "Xiaoxin Wu"
+      ],
+      "languages": [
+        "eng",
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL39737047W",
+        "isbn": "9787900690166",
+        "oclc": "237162414"
+      },
+      "preferredEdition": "OL54141112M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL39737047W",
+      "editionPointer": "https://openlibrary.org/books/OL54141112M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL3976395W",
       "title": "The Purpose of Temptation",
       "authors": [
@@ -188378,6 +191160,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL40110474W",
+      "title": "集說詮真續編; 集說詮真提要",
+      "authors": [
+        "Bolu Huang"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL40110474W",
+        "oclc": "24265377"
+      },
+      "preferredEdition": "OL54588539M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL40110474W",
+      "editionPointer": "https://openlibrary.org/books/OL54588539M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL40110975W",
       "title": "大千圖說",
       "authors": [
@@ -188397,6 +191203,30 @@
       "workPointer": "https://openlibrary.org/works/OL40110975W",
       "editionPointer": "https://openlibrary.org/books/OL54589135M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL40111140W",
+      "title": "破除迷信全書",
+      "authors": [
+        "Ganchen Li"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL40111140W",
+        "oclc": "24265470"
+      },
+      "preferredEdition": "OL54589329M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL40111140W",
+      "editionPointer": "https://openlibrary.org/books/OL54589329M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -189877,6 +192707,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL41091479W",
+      "title": "犹太教审判",
+      "authors": [
+        "Hyam Maccoby"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL41091479W",
+        "isbn": "9787560716213",
+        "oclc": "41540492"
+      },
+      "preferredEdition": "OL55826563M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL41091479W",
+      "editionPointer": "https://openlibrary.org/books/OL55826563M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL4111106W",
       "title": "The eclipse of Biblical narrative",
       "authors": [
@@ -191232,6 +194087,54 @@
       "admission": "none"
     },
     {
+      "workId": "OL42028138W",
+      "title": "山東德縣衛氏博濟醫院報告書",
+      "authors": [
+        "Wei shi Bo ji yi yuan"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1930,
+      "authorityIds": {
+        "openLibraryWork": "OL42028138W",
+        "oclc": "786384129"
+      },
+      "preferredEdition": "OL57066585M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42028138W",
+      "editionPointer": "https://openlibrary.org/books/OL57066585M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42028557W",
+      "title": "太谷基督敎衆議會第十六次年會記錄",
+      "authors": [
+        "Taigu ji du jiao zhong yi hui"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1929,
+      "authorityIds": {
+        "openLibraryWork": "OL42028557W",
+        "oclc": "56123439"
+      },
+      "preferredEdition": "OL57067018M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42028557W",
+      "editionPointer": "https://openlibrary.org/books/OL57067018M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL42029320W",
       "title": "華北基督敎公理會復員大會記錄",
       "authors": [],
@@ -191272,6 +194175,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL42029341W",
       "editionPointer": "https://openlibrary.org/books/OL57067830M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42029372W",
+      "title": "太谷基督敎衆議會第十七次年會記錄",
+      "authors": [
+        "Taigu Jidu jiao zhong yi hui"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1930,
+      "authorityIds": {
+        "openLibraryWork": "OL42029372W",
+        "oclc": "56124545"
+      },
+      "preferredEdition": "OL57067862M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42029372W",
+      "editionPointer": "https://openlibrary.org/books/OL57067862M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -191512,6 +194439,52 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL42029536W",
       "editionPointer": "https://openlibrary.org/books/OL57068032M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42030173W",
+      "title": "徵信錄",
+      "authors": [],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1900,
+      "authorityIds": {
+        "openLibraryWork": "OL42030173W",
+        "oclc": "56125504"
+      },
+      "preferredEdition": "OL57068686M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42030173W",
+      "editionPointer": "https://openlibrary.org/books/OL57068686M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42030208W",
+      "title": "臨淸基督敎公理會五十週年紀念小史",
+      "authors": [
+        "Linqing ji du jiao gong li hui"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1936,
+      "authorityIds": {
+        "openLibraryWork": "OL42030208W",
+        "oclc": "56125595"
+      },
+      "preferredEdition": "OL57068721M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42030208W",
+      "editionPointer": "https://openlibrary.org/books/OL57068721M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -192243,6 +195216,30 @@
       "admission": "none"
     },
     {
+      "workId": "OL42039807W",
+      "title": "基督敎經濟思想與人文和平",
+      "authors": [
+        "Zemin Deng"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1956,
+      "authorityIds": {
+        "openLibraryWork": "OL42039807W",
+        "oclc": "56201153"
+      },
+      "preferredEdition": "OL57078710M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42039807W",
+      "editionPointer": "https://openlibrary.org/books/OL57078710M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL42040263W",
       "title": "繪圖蒙学捷徑",
       "authors": [
@@ -192355,6 +195352,30 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL42043854W",
       "editionPointer": "https://openlibrary.org/books/OL57082924M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42044691W",
+      "title": "汾州公理會衆議會選立王景文張耀齋高喜亭三君担任牧師之經過",
+      "authors": [
+        "Fenzhou ji du jiao gong li hui"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1939,
+      "authorityIds": {
+        "openLibraryWork": "OL42044691W",
+        "oclc": "786384191"
+      },
+      "preferredEdition": "OL57083795M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42044691W",
+      "editionPointer": "https://openlibrary.org/books/OL57083795M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -193518,6 +196539,58 @@
       "admission": "none"
     },
     {
+      "workId": "OL42200629W",
+      "title": "《鐸书》校注",
+      "authors": [
+        "Lin Han",
+        "Shangyang Sun",
+        "Qinghe Xiao"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2008,
+      "authorityIds": {
+        "openLibraryWork": "OL42200629W",
+        "isbn": "9787508041469",
+        "oclc": "226310261"
+      },
+      "preferredEdition": "OL57250840M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42200629W",
+      "editionPointer": "https://openlibrary.org/books/OL57250840M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42202513W",
+      "title": "日本近代浪漫主义文学与基督教",
+      "authors": [
+        "Xia Xiao"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL42202513W",
+        "isbn": "9787560733838",
+        "oclc": "191989492"
+      },
+      "preferredEdition": "OL57253127M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42202513W",
+      "editionPointer": "https://openlibrary.org/books/OL57253127M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL42205996W",
       "title": "Zhonggong bi hai zong jiao",
       "authors": [
@@ -193660,6 +196733,54 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL42270882W",
       "editionPointer": "https://openlibrary.org/books/OL57333921M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42274224W",
+      "title": "創作神學藝術",
+      "authors": [
+        "Baoluo Feng"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2002,
+      "authorityIds": {
+        "openLibraryWork": "OL42274224W",
+        "oclc": "68841529"
+      },
+      "preferredEdition": "OL57339604M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42274224W",
+      "editionPointer": "https://openlibrary.org/books/OL57339604M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL42275099W",
+      "title": "Protestant missionary works in Chinese [at the] Harvard-Yenching Library, Harvard University on microfiche",
+      "authors": [
+        "Yung-hsiang Lai"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1983,
+      "authorityIds": {
+        "openLibraryWork": "OL42275099W",
+        "oclc": "10166295"
+      },
+      "preferredEdition": "OL57340885M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL42275099W",
+      "editionPointer": "https://openlibrary.org/books/OL57340885M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -197578,6 +200699,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL43002148W",
+      "title": "近代教會大學歷史文獻叢刊",
+      "authors": [
+        "王强"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2015,
+      "authorityIds": {
+        "openLibraryWork": "OL43002148W",
+        "isbn": "755062173X",
+        "oclc": "913445491"
+      },
+      "preferredEdition": "OL58584337M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43002148W",
+      "editionPointer": "https://openlibrary.org/books/OL58584337M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL43004276W",
       "title": "易的神學",
       "authors": [
@@ -198597,6 +201743,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL43422958W",
+      "title": "近代中国社会变迁",
+      "authors": [
+        "杜志章"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2018,
+      "authorityIds": {
+        "openLibraryWork": "OL43422958W",
+        "isbn": "9787568034531",
+        "oclc": "1028072292"
+      },
+      "preferredEdition": "OL59147515M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43422958W",
+      "editionPointer": "https://openlibrary.org/books/OL59147515M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL43444275W",
       "title": "西风落叶",
       "authors": [
@@ -199100,6 +202271,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL43591746W",
+      "title": "基督教与中囯现代文学",
+      "authors": [
+        "王列耀"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1998,
+      "authorityIds": {
+        "openLibraryWork": "OL43591746W",
+        "isbn": "9787810297523",
+        "oclc": "43662962"
+      },
+      "preferredEdition": "OL59420870M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43591746W",
+      "editionPointer": "https://openlibrary.org/books/OL59420870M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL43597682W",
       "title": "強者",
       "authors": [
@@ -199173,6 +202369,31 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL43607188W",
       "editionPointer": "https://openlibrary.org/books/OL59443981M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL43619892W",
+      "title": "清代基督宗教小說選注",
+      "authors": [
+        "吳淳邦"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2018,
+      "authorityIds": {
+        "openLibraryWork": "OL43619892W",
+        "isbn": "9860574278",
+        "oclc": "1100376594"
+      },
+      "preferredEdition": "OL59460532M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43619892W",
+      "editionPointer": "https://openlibrary.org/books/OL59460532M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -199963,6 +203184,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL43878166W",
+      "title": "ð̄Đ̇·̆̄ı̃Ư ̄",
+      "authors": [
+        "ơ̆Øı̃þ̇  EHGBooks. ʺ̇·ʹ̄,̆"
+      ],
+      "languages": [
+        "chi",
+        "eng"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2014,
+      "authorityIds": {
+        "openLibraryWork": "OL43878166W",
+        "isbn": "9781625031396",
+        "oclc": "929504336",
+        "lccn": "2014944973"
+      },
+      "preferredEdition": "OL59821853M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43878166W",
+      "editionPointer": "https://openlibrary.org/books/OL59821853M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL43883616W",
       "title": "聖多默的神學",
       "authors": [
@@ -200182,6 +203430,30 @@
       "workPointer": "https://openlibrary.org/works/OL43930962W",
       "editionPointer": "https://openlibrary.org/books/OL59902988M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL43934016W",
+      "title": "佛敎與基督敎的比較",
+      "authors": [
+        "煮雲法師"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1969,
+      "authorityIds": {
+        "openLibraryWork": "OL43934016W",
+        "oclc": "38825571"
+      },
+      "preferredEdition": "OL59908244M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL43934016W",
+      "editionPointer": "https://openlibrary.org/books/OL59908244M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -202985,6 +206257,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL44724146W",
+      "title": "齊魯大學校史",
+      "authors": [
+        "楊懋春",
+        "李培華"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1986,
+      "authorityIds": {
+        "openLibraryWork": "OL44724146W",
+        "oclc": "22819979"
+      },
+      "preferredEdition": "OL61073746M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL44724146W",
+      "editionPointer": "https://openlibrary.org/books/OL61073746M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL4472633W",
       "title": "Genesis",
       "authors": [
@@ -203130,6 +206427,32 @@
       "workPointer": "https://openlibrary.org/works/OL4474030W",
       "editionPointer": "https://openlibrary.org/books/OL5756430M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL4474061W",
+      "title": "The Day Christ Died",
+      "authors": [
+        "Jim Bishop"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1957,
+      "authorityIds": {
+        "openLibraryWork": "OL4474061W",
+        "isbn": "9780517446485",
+        "oclc": "3072353",
+        "lccn": "84004211"
+      },
+      "preferredEdition": "OL6221171M",
+      "coverId": 31932,
+      "workPointer": "https://openlibrary.org/works/OL4474061W",
+      "editionPointer": "https://openlibrary.org/books/OL6221171M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -205409,6 +208732,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL450696W",
+      "title": "The Incomparable Christ",
+      "authors": [
+        "J. Oswald Sanders"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1982,
+      "authorityIds": {
+        "openLibraryWork": "OL450696W",
+        "isbn": "9781934718322",
+        "oclc": "435631286",
+        "lccn": "2009502304"
+      },
+      "preferredEdition": "OL3488512M",
+      "coverId": 570236,
+      "workPointer": "https://openlibrary.org/works/OL450696W",
+      "editionPointer": "https://openlibrary.org/books/OL3488512M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL450698W",
       "title": "Spiritual discipleship",
       "authors": [
@@ -205582,6 +208931,32 @@
       "workPointer": "https://openlibrary.org/works/OL450884W",
       "editionPointer": "https://openlibrary.org/books/OL39207M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL45094626W",
+      "title": "中世紀哲學史",
+      "authors": [
+        "Dunhua Zhao"
+      ],
+      "languages": [
+        "eng",
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL45094626W",
+        "isbn": "9579935521",
+        "oclc": "38149660"
+      },
+      "preferredEdition": "OL61503469M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL45094626W",
+      "editionPointer": "https://openlibrary.org/books/OL61503469M",
+      "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -206490,6 +209865,30 @@
       "coverId": 4985610,
       "workPointer": "https://openlibrary.org/works/OL4528765W",
       "editionPointer": "https://openlibrary.org/books/OL22021146M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL45307509W",
+      "title": "哲學與生活",
+      "authors": [
+        "羅光"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 1983,
+      "authorityIds": {
+        "openLibraryWork": "OL45307509W",
+        "oclc": "10949319"
+      },
+      "preferredEdition": "OL61759126M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL45307509W",
+      "editionPointer": "https://openlibrary.org/books/OL61759126M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -209278,6 +212677,33 @@
       "coverId": null,
       "workPointer": "https://openlibrary.org/works/OL45969727W",
       "editionPointer": "https://openlibrary.org/books/OL62534853M",
+      "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL45972973W",
+      "title": "异同之间",
+      "authors": [
+        "Elizabeth J. Perry",
+        "陈红民",
+        "China) \"Tong zhi yu cha yi : jiao hui da xue zai Zhongguo\" xue shu lun tan (2017 Zhejiang da xue"
+      ],
+      "languages": [
+        "chi"
+      ],
+      "matchedLanguage": "chi",
+      "firstPublishYear": 2019,
+      "authorityIds": {
+        "openLibraryWork": "OL45972973W",
+        "isbn": "7213092332",
+        "oclc": "1107365882"
+      },
+      "preferredEdition": "OL62538622M",
+      "coverId": null,
+      "workPointer": "https://openlibrary.org/works/OL45972973W",
+      "editionPointer": "https://openlibrary.org/books/OL62538622M",
       "matchedSubject": "Christianity",
       "provider": "Open Library",
       "contentDownloaded": false,
@@ -213036,6 +216462,33 @@
       "workPointer": "https://openlibrary.org/works/OL478297W",
       "editionPointer": "https://openlibrary.org/books/OL4877486M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL4783048W",
+      "title": "The Bronze Bow",
+      "authors": [
+        "Elizabeth George Speare"
+      ],
+      "languages": [
+        "und",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1961,
+      "authorityIds": {
+        "openLibraryWork": "OL4783048W",
+        "isbn": "9780745947051",
+        "oclc": "61230566",
+        "lccn": "66001231"
+      },
+      "preferredEdition": "OL47316038M",
+      "coverId": 255407,
+      "workPointer": "https://openlibrary.org/works/OL4783048W",
+      "editionPointer": "https://openlibrary.org/books/OL47316038M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -218405,6 +221858,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL502293W",
+      "title": "The Infinite Atonement",
+      "authors": [
+        "Tad R. Callister"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2000,
+      "authorityIds": {
+        "openLibraryWork": "OL502293W",
+        "isbn": "1573456233",
+        "oclc": "65407179",
+        "lccn": "99055571"
+      },
+      "preferredEdition": "OL9780157M",
+      "coverId": 825057,
+      "workPointer": "https://openlibrary.org/works/OL502293W",
+      "editionPointer": "https://openlibrary.org/books/OL9780157M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL502381W",
       "title": "Holy sweat",
       "authors": [
@@ -221163,6 +224642,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL528088W",
+      "title": "The second coming of Christ",
+      "authors": [
+        "Yogananda Paramahansa"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1979,
+      "authorityIds": {
+        "openLibraryWork": "OL528088W",
+        "isbn": "0937134058",
+        "oclc": "6664988",
+        "lccn": "2004009159"
+      },
+      "preferredEdition": "OL26395197M",
+      "coverId": 4805705,
+      "workPointer": "https://openlibrary.org/works/OL528088W",
+      "editionPointer": "https://openlibrary.org/books/OL26395197M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL5283057W",
       "title": "Controlling your emotions, before they control you",
       "authors": [
@@ -223835,6 +227340,33 @@
       "workPointer": "https://openlibrary.org/works/OL5432661W",
       "editionPointer": "https://openlibrary.org/books/OL10517797M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL544208W",
+      "title": "Jesus and the Essenes",
+      "authors": [
+        "Dolores Cannon"
+      ],
+      "languages": [
+        "spa",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1985,
+      "authorityIds": {
+        "openLibraryWork": "OL544208W",
+        "isbn": "1886940088",
+        "oclc": "43516030",
+        "lccn": "93106159"
+      },
+      "preferredEdition": "OL8450649M",
+      "coverId": 7024878,
+      "workPointer": "https://openlibrary.org/works/OL544208W",
+      "editionPointer": "https://openlibrary.org/books/OL8450649M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -228234,6 +231766,58 @@
       "workPointer": "https://openlibrary.org/works/OL57154W",
       "editionPointer": "https://openlibrary.org/books/OL35474427M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL57155W",
+      "title": "No Wonder They Call Him the Savior",
+      "authors": [
+        "Max Lucado"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1986,
+      "authorityIds": {
+        "openLibraryWork": "OL57155W",
+        "isbn": "1576733882",
+        "oclc": "33352593",
+        "lccn": "96157305"
+      },
+      "preferredEdition": "OL2548959M",
+      "coverId": 645846,
+      "workPointer": "https://openlibrary.org/works/OL57155W",
+      "editionPointer": "https://openlibrary.org/books/OL2548959M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL57156W",
+      "title": "Six Hours One Friday",
+      "authors": [
+        "Max Lucado"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1989,
+      "authorityIds": {
+        "openLibraryWork": "OL57156W",
+        "isbn": "9780849908576",
+        "oclc": "35758687",
+        "lccn": "2003022809"
+      },
+      "preferredEdition": "OL9690180M",
+      "coverId": 645848,
+      "workPointer": "https://openlibrary.org/works/OL57156W",
+      "editionPointer": "https://openlibrary.org/books/OL9690180M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -237202,6 +240786,33 @@
       "admission": "none"
     },
     {
+      "workId": "OL646332W",
+      "title": "Bloodline of the Holy Grail",
+      "authors": [
+        "Laurence Gardner"
+      ],
+      "languages": [
+        "spa",
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1996,
+      "authorityIds": {
+        "openLibraryWork": "OL646332W",
+        "isbn": "9780760720837",
+        "oclc": "47676634",
+        "lccn": "99176247"
+      },
+      "preferredEdition": "OL7262210M",
+      "coverId": 956569,
+      "workPointer": "https://openlibrary.org/works/OL646332W",
+      "editionPointer": "https://openlibrary.org/books/OL7262210M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL6464980W",
       "title": "Practical theology",
       "authors": [
@@ -238035,6 +241646,31 @@
       "workPointer": "https://openlibrary.org/works/OL6565211W",
       "editionPointer": "https://openlibrary.org/books/OL5429611M",
       "matchedSubject": "Bible",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL6567553W",
+      "title": "Drawing on the powers of heaven",
+      "authors": [
+        "Grant Von Harrison"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1979,
+      "authorityIds": {
+        "openLibraryWork": "OL6567553W",
+        "isbn": "0910558043",
+        "oclc": "9130947"
+      },
+      "preferredEdition": "OL40293008M",
+      "coverId": 6491133,
+      "workPointer": "https://openlibrary.org/works/OL6567553W",
+      "editionPointer": "https://openlibrary.org/books/OL40293008M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -245050,6 +248686,32 @@
       "workPointer": "https://openlibrary.org/works/OL7198387W",
       "editionPointer": "https://openlibrary.org/books/OL10517848M",
       "matchedSubject": "Theology",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL7207648W",
+      "title": "The Wisdom Jesus",
+      "authors": [
+        "Cynthia Bourgeault"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2008,
+      "authorityIds": {
+        "openLibraryWork": "OL7207648W",
+        "isbn": "9781590305805",
+        "oclc": "180907736",
+        "lccn": "2007044952"
+      },
+      "preferredEdition": "OL32181026M",
+      "coverId": 2950492,
+      "workPointer": "https://openlibrary.org/works/OL7207648W",
+      "editionPointer": "https://openlibrary.org/books/OL32181026M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -253846,6 +257508,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL82094W",
+      "title": "The Gospel according to Jesus",
+      "authors": [
+        "John MacArthur"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1988,
+      "authorityIds": {
+        "openLibraryWork": "OL82094W",
+        "isbn": "0310394910",
+        "oclc": "213384862",
+        "lccn": "88010476"
+      },
+      "preferredEdition": "OL22652751M",
+      "coverId": 171240,
+      "workPointer": "https://openlibrary.org/works/OL82094W",
+      "editionPointer": "https://openlibrary.org/books/OL22652751M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL82096W",
       "title": "James",
       "authors": [
@@ -260351,6 +264039,31 @@
       "admission": "none"
     },
     {
+      "workId": "OL8541954W",
+      "title": "Jesus the Christ",
+      "authors": [
+        "James Edward Talmage"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1973,
+      "authorityIds": {
+        "openLibraryWork": "OL8541954W",
+        "isbn": "9781425367336",
+        "oclc": "123313249"
+      },
+      "preferredEdition": "OL8505492M",
+      "coverId": 4846310,
+      "workPointer": "https://openlibrary.org/works/OL8541954W",
+      "editionPointer": "https://openlibrary.org/books/OL8505492M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL8544614W",
       "title": "Basics for Believers",
       "authors": [
@@ -265806,6 +269519,32 @@
       "admission": "none"
     },
     {
+      "workId": "OL9035432W",
+      "title": "Who moved the stone?",
+      "authors": [
+        "Frank Morison"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 1930,
+      "authorityIds": {
+        "openLibraryWork": "OL9035432W",
+        "isbn": "1537512498",
+        "oclc": "71120671",
+        "lccn": "76026084"
+      },
+      "preferredEdition": "OL56578782M",
+      "coverId": 898539,
+      "workPointer": "https://openlibrary.org/works/OL9035432W",
+      "editionPointer": "https://openlibrary.org/books/OL56578782M",
+      "matchedSubject": "Jesus Christ",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
       "workId": "OL9036575W",
       "title": "Navarre Bible",
       "authors": [
@@ -265931,6 +269670,32 @@
       "workPointer": "https://openlibrary.org/works/OL905020W",
       "editionPointer": "https://openlibrary.org/books/OL13860023M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL9066206W",
+      "title": "Jesus and His Friends (I Can Read Books/ the Beginner's Bible)",
+      "authors": [
+        "Kelly Pulley"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2007,
+      "authorityIds": {
+        "openLibraryWork": "OL9066206W",
+        "isbn": "9780310714613",
+        "oclc": "74648978",
+        "lccn": "2006034386"
+      },
+      "preferredEdition": "OL9747595M",
+      "coverId": 1166671,
+      "workPointer": "https://openlibrary.org/works/OL9066206W",
+      "editionPointer": "https://openlibrary.org/books/OL9747595M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"
@@ -267174,6 +270939,32 @@
       "workPointer": "https://openlibrary.org/works/OL929829W",
       "editionPointer": "https://openlibrary.org/books/OL51560696M",
       "matchedSubject": "Christianity",
+      "provider": "Open Library",
+      "contentDownloaded": false,
+      "admission": "none"
+    },
+    {
+      "workId": "OL9302813W",
+      "title": "Stolen Innocence",
+      "authors": [
+        "Elissa Wall"
+      ],
+      "languages": [
+        "eng"
+      ],
+      "matchedLanguage": "eng",
+      "firstPublishYear": 2008,
+      "authorityIds": {
+        "openLibraryWork": "OL9302813W",
+        "isbn": "9780007321100",
+        "oclc": "828204808",
+        "lccn": "2009275050"
+      },
+      "preferredEdition": "OL37045391M",
+      "coverId": 6299592,
+      "workPointer": "https://openlibrary.org/works/OL9302813W",
+      "editionPointer": "https://openlibrary.org/books/OL37045391M",
+      "matchedSubject": "Jesus Christ",
       "provider": "Open Library",
       "contentDownloaded": false,
       "admission": "none"

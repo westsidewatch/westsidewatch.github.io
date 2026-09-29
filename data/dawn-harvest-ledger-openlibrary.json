@@ -1,0 +1,49 @@
+{
+  "schema": "dawn.harvest-ledger.openlibrary.v1",
+  "provider": "Open Library Search API",
+  "cursors": {
+    "chi:Bible": {
+      "nextPage": 1,
+      "lastPage": 5,
+      "exhausted": true
+    },
+    "chi:Theology": {
+      "nextPage": 1,
+      "lastPage": 3,
+      "exhausted": true
+    },
+    "chi:Christianity": {
+      "nextPage": 17,
+      "lastPage": 16,
+      "exhausted": false
+    },
+    "eng:Bible": {
+      "nextPage": 31,
+      "lastPage": 30,
+      "exhausted": false
+    },
+    "eng:Theology": {
+      "nextPage": 31,
+      "lastPage": 30,
+      "exhausted": false
+    },
+    "eng:Christianity": {
+      "nextPage": 31,
+      "lastPage": 30,
+      "exhausted": false
+    },
+    "eng:Jesus Christ": {
+      "nextPage": 2,
+      "lastPage": 1,
+      "exhausted": false
+    }
+  },
+  "metrics": {
+    "existingWorks": 10538,
+    "newWorks": 148,
+    "scannedRecords": 11464,
+    "requests": 115,
+    "totalWorks": 10686
+  },
+  "updatedAt": 1790670448
+}
