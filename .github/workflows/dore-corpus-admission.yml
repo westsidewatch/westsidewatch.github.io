@@ -41,11 +41,15 @@ jobs:
           DORE_CORPUS_LIMIT: ${{ inputs.limit || '1000' }}
         run: |
           mkdir -p artifacts/dore-corpus
-          python -m dore_core.corpus.run_admission \
-            --tei-root /tmp/tcp-texts \
-            --limit "$DORE_CORPUS_LIMIT" \
-            --report artifacts/dore-corpus/eebo-tcp-admission-report.json \
-            --exceptions artifacts/dore-corpus/eebo-tcp-exceptions.jsonl
+          LIMIT_ARGS=()
+          if [ "$DORE_CORPUS_LIMIT" != "0" ]; then
+            LIMIT_ARGS=(--limit "$DORE_CORPUS_LIMIT")
+          fi
+          python -m dore_core.corpus.run_bulk_admission \
+            /tmp/tcp-texts \
+            --format tei \
+            "${LIMIT_ARGS[@]}" \
+            --out artifacts/dore-corpus/eebo-tcp-admission-report.json
       - name: Upload admission report
         uses: actions/upload-artifact@v4
         with:
