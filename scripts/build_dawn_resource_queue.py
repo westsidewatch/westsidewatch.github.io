@@ -30,6 +30,18 @@ def infer_type(source: dict, filename: str) -> str:
     return 'resource'
 
 
+def source_pointers(source: dict) -> list[str]:
+    # A corpus source is itself a canonical Resource candidate. Preserve its
+    # public landing/data URL when no more specific machine pointer exists.
+    values = [
+        source.get('upstream'),
+        source.get('iiifManifestPattern'),
+        source.get('clone'),
+        source.get('url'),
+    ]
+    return list(dict.fromkeys(str(v).strip() for v in values if str(v or '').strip()))
+
+
 def main() -> int:
     items = []
     if LEGACY.exists():
@@ -71,7 +83,7 @@ def main() -> int:
                     'authors': [], 'languages': [],
                     'authorityIds': {'corpusSource': sid},
                     'providers': [name],
-                    'pointers': [v for v in [source.get('upstream'), source.get('iiifManifestPattern'), source.get('clone')] if v],
+                    'pointers': source_pointers(source),
                     'relations': list(dict.fromkeys(source.get('targetScope', []) + source.get('scope', []))),
                     'rights': source.get('rights') or source.get('imagePolicy'),
                     'provenance': {'source': str(path.relative_to(ROOT)), 'sourceId': sid},
