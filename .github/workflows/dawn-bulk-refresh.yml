@@ -10,7 +10,6 @@ on:
       - 'scripts/gate_dawn_canonical_promotion.py'
       - 'scripts/promote_dawn_canonical_batch.py'
       - 'scripts/build_dawn_resource_queue.py'
-      - 'scripts/build_dawn_resource_substrate.py'
       - 'scripts/refresh_dawn_bulk_corpus.py'
       - '.github/workflows/dawn-bulk-refresh.yml'
 
@@ -47,7 +46,7 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Refresh Dawn bulk and resource corpus
+      - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
       - name: Gate canonical promotion batch
@@ -59,23 +58,26 @@ jobs:
       - name: Persist harvest state only
         run: |
           set -euo pipefail
-          tmpdir="$(mktemp -d)"
-          cp data/dawn-harvest-ledger-openlibrary.json "$tmpdir/ledger.json"
-          cp data/dawn-10k-openlibrary-works.json "$tmpdir/openlibrary.json"
+          state_dir="$(mktemp -d)"
+          worktree_dir="$(mktemp -d)"
+          cp data/dawn-harvest-ledger-openlibrary.json "$state_dir/ledger.json"
+          cp data/dawn-10k-openlibrary-works.json "$state_dir/openlibrary.json"
           git config user.name "Dore CI"
           git config user.email "dore-ci@users.noreply.github.com"
           git fetch origin "$DAWN_GROWTH_STATE_BRANCH"
-          git checkout -B "$DAWN_GROWTH_STATE_BRANCH" "origin/$DAWN_GROWTH_STATE_BRANCH"
-          mkdir -p data
-          cp "$tmpdir/ledger.json" data/dawn-harvest-ledger-openlibrary.json
-          cp "$tmpdir/openlibrary.json" data/dawn-10k-openlibrary-works.json
-          git add data/dawn-harvest-ledger-openlibrary.json data/dawn-10k-openlibrary-works.json
-          if git diff --cached --quiet; then
+          git worktree add --detach "$worktree_dir" "origin/$DAWN_GROWTH_STATE_BRANCH"
+          git -C "$worktree_dir" switch -C "$DAWN_GROWTH_STATE_BRANCH"
+          mkdir -p "$worktree_dir/data"
+          cp "$state_dir/ledger.json" "$worktree_dir/data/dawn-harvest-ledger-openlibrary.json"
+          cp "$state_dir/openlibrary.json" "$worktree_dir/data/dawn-10k-openlibrary-works.json"
+          git -C "$worktree_dir" add data/dawn-harvest-ledger-openlibrary.json data/dawn-10k-openlibrary-works.json
+          if git -C "$worktree_dir" diff --cached --quiet; then
             echo "No autonomous harvest-state changes."
           else
-            git commit -m "data(dawn): advance autonomous harvest state [skip ci]"
-            git push origin "HEAD:$DAWN_GROWTH_STATE_BRANCH"
+            git -C "$worktree_dir" commit -m "data(dawn): advance autonomous harvest state [skip ci]"
+            git -C "$worktree_dir" push origin "HEAD:$DAWN_GROWTH_STATE_BRANCH"
           fi
+          git worktree remove --force "$worktree_dir"
 
       - name: Publish gated canonical promotion artifact
         uses: actions/upload-artifact@v4
