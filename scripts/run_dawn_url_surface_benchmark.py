@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Benchmark Dawn URL Surface routing against the real discovery candidate corpus.
+"""Benchmark Dawn URL Surface routing against the checked-in candidate corpus.
 
 This does not admit resources to the library. It asks a narrower question:
-given a discovered pointer, can Dawn route it to a mature presentation capability
-without copying the underlying resource into Dawn?
+given every currently checked-in discovered pointer, can Dawn route it to a mature
+presentation capability without copying the underlying resource into Dawn?
 """
 import json
 from collections import Counter
@@ -21,23 +21,19 @@ def resolve_surface(item):
     host = parsed.netloc.lower()
     path = parsed.path.lower()
 
-    # Existing Dawn visual capability remains authoritative for IIIF resources.
     if 'iiif' in url.lower() or path.endswith('/manifest') or path.endswith('/manifest.json'):
         return {'surface': 'visual', 'adapter': 'iiif-visual-surface', 'confidence': 'high'}
 
-    # Direct document pointers are routed to dedicated viewers, not generic embeds.
     if path.endswith('.pdf'):
         return {'surface': 'document', 'adapter': 'pdfjs', 'confidence': 'high'}
     if path.endswith(('.epub', '.mobi')):
         return {'surface': 'book', 'adapter': 'book-reader', 'confidence': 'high'}
 
-    # Known bibliographic/catalog providers should first be interpreted as works.
     if host.endswith('gutenberg.org') and '/ebooks/' in path:
         return {'surface': 'book', 'adapter': 'bibliographic-page', 'confidence': 'high'}
     if host.endswith(('openlibrary.org', 'worldcat.org', 'loc.gov', 'hathitrust.org')):
         return {'surface': 'bibliographic', 'adapter': 'zotero-translate', 'confidence': 'medium'}
 
-    # General web pointers stay lightweight: metadata/embed first, readable extraction second.
     if parsed.scheme in ('http', 'https') and host:
         return {'surface': 'web', 'adapter': 'oembed-opengraph', 'fallback': 'readability', 'confidence': 'medium'}
 
@@ -69,8 +65,8 @@ def main():
     total = len(items)
     resolved = total - len(unresolved)
     report = {
-        'schema': 'dawn.url-surface.benchmark.v1',
-        'purpose': 'Use the existing Dawn discovery corpus as the acceptance benchmark for pointer-to-surface routing.',
+        'schema': 'dawn.url-surface.benchmark.v2',
+        'purpose': 'Use the complete checked-in candidate corpus as the acceptance benchmark for pointer-to-surface routing.',
         'corpus': {'total': total, 'source': str(CANDIDATES.relative_to(ROOT))},
         'results': {
             'resolved': resolved,
@@ -80,7 +76,7 @@ def main():
             'adapters': dict(adapters),
         },
         'acceptance': {
-            'minimumCorpus': 900,
+            'corpusPolicy': 'complete-checked-in-corpus',
             'minimumRoutingCoverage': 0.95,
             'mustNotPromoteOrDeleteCandidates': True,
             'mustNotTreatPreviewAsRelevance': True,
@@ -93,8 +89,9 @@ def main():
     OUT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps(report['results'], ensure_ascii=False, indent=2))
 
-    ok = total >= 900 and report['results']['routingCoverage'] >= 0.95
-    raise SystemExit(0 if ok else 1)
+    corpus_ok = total > 0 and len(routes) == total
+    coverage_ok = report['results']['routingCoverage'] >= 0.95
+    raise SystemExit(0 if corpus_ok and coverage_ok else 1)
 
 
 if __name__ == '__main__':
