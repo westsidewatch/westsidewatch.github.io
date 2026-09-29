@@ -14,5 +14,6 @@ Object.defineProperty(globalThis,'__DAWN_LIBRARY_BOUNDARY__',{
 });
 
 await import('./product.js');
+await import('./product-finalize.js');
 
 document.documentElement.dataset.libraryOwnership='contract-v1';
