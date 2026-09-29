@@ -1,0 +1,43 @@
+{
+  "schema":"dawn.library.chinese-collection-admission-ledger.v1",
+  "status":"active-canonical-ledger",
+  "parent":"黎明書局 / 中文館藏",
+  "purpose":"先把目前已通過 admission 的中文作品收斂成單一館藏帳本，再進入即時中文閱讀層工程。避免 queue、legacy source pool、Bible-world 中文資料和 canonical 中文作品混算。",
+  "canonicalBatches":[
+    {
+      "id":"clsc-pre1931",
+      "source":"Christian Literature Society for China Collection / Yale Divinity Library + Hong Kong Baptist University Library",
+      "record":"data/dawn-corpus/acquisition/zh-non-bible/clsc-pre1931-expanded-canonical-batch.v1.json",
+      "count":46,
+      "delivery":"remote-first",
+      "rights":"works published in 1930 or earlier admitted under the source collection's stated public-domain boundary",
+      "bibleWorldExcluded":true
+    }
+  ],
+  "additionalCanonicalWorks":[
+    {
+      "title":"靈歷集光",
+      "author":"宋尚節",
+      "source":"Project Gutenberg",
+      "record":"data/dawn-corpus/acquisition/zh-non-bible/song-shangjie-lingli-jiguang.v1.json",
+      "state":"canonical-or-promotable-source-verified",
+      "dedupeRule":"Do not duplicate if later recovered from Yale or another catalogue; attach alternate source/edition relation instead."
+    }
+  ],
+  "currentConfirmedCollectionFloor":47,
+  "countSemantics":"46 CLSC canonical works plus 靈歷集光 as an independent Chinese work identity. This is a conservative confirmed floor, not the size of the full legacy Chinese source pool.",
+  "notCountedYet":[
+    "CLSC 1931-1962 items that have not passed item-level rights/admission",
+    "CCLOC 1947-1993 catalogue identities",
+    "Christian Weekly issues",
+    "Free Methodist Taiwan monographs and serials",
+    "Chinese Baptist Convention periodicals",
+    "Reichelt monographs/manuscripts/serials",
+    "metadata-only Chinese records",
+    "Chinese-localized Bible-world resources"
+  ],
+  "bibleWorldBoundary":"Bible text, commentary, Bible人物/故事、聖經地理/地圖/路線及其他查經/reference resources remain in bible-world-zh and are not counted in 黎明書局中文館藏。",
+  "remoteFirst":true,
+  "localDownloadRequired":false,
+  "nextAfterAdmissionConsolidation":"Build the instant Chinese reading layer as a reader capability over canonical source works. Translation output must remain a reading layer, not inflate 中文館藏 work counts."
+}
