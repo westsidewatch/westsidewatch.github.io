@@ -1,0 +1,19 @@
+{
+  "schema":"dawn.library.remote-first-delivery.v1",
+  "status":"active-policy",
+  "parent":"黎明書局",
+  "principle":"A canonical Work does not require the source PDF/full-text asset to be downloaded into this repository. Canonical identity, provenance, rights, source identifiers and a stable delivery reference are sufficient for admission when the source permits remote reading/display/linking.",
+  "deliveryModes":[
+    {"id":"remote-reader","use":"Preferred when the source exposes a stable web reader/item page that can be opened or embedded under its terms."},
+    {"id":"remote-asset","use":"Use when a stable rights-cleared PDF/image/text asset URL can be delivered directly without local mirroring."},
+    {"id":"iiif","use":"Use when the source exposes IIIF manifest/canvas/image services; store the manifest identity and render remotely."},
+    {"id":"metadata-plus-source","use":"Use when remote embedding/direct asset delivery is unavailable but the canonical Work can still display normalized metadata, cover/preview when permitted, provenance and a source/read link."},
+    {"id":"local-mirror","use":"Optional resilience/performance mode only when rights and operational need justify storing a local copy; never a prerequisite for canonical admission."}
+  ],
+  "canonicalWorkMinimum":["stable work identity","normalized title/creator/edition/date","source institution and stable item identifier","provenance","rights/access state","delivery mode","source/read reference"],
+  "assetRule":"Do not block Chinese collection growth on downloading PDFs. Resolve exact source item/asset identity and choose the least duplicative valid delivery mode. Download/mirror only when necessary for reliability, transformation, offline processing or source fragility and when rights permit.",
+  "rightsRule":"Public-domain status does not automatically imply that every host asset may be hotlinked or embedded. Record work copyright/public-domain status separately from host delivery/access terms.",
+  "clscApplication":"For the current 11 CLSC candidates, the next pass should resolve each Yale/HKBU item identifier and available reader/download/asset endpoint. Eligible works may become canonical 黎明書局 works using remote-first delivery; local PDF storage is optional.",
+  "bibleWorldBoundary":"The same remote-first mechanism can serve bible-world-zh resources in Emmaus, but those resources remain outside 黎明書局 Chinese collection counts.",
+  "naming":{"canonicalParent":"黎明書局","forbidden":["黎明書店","Bookshop","Dawn Bookshop"]}
+}
