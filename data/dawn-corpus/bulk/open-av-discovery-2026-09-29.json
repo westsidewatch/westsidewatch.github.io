@@ -1,0 +1,43 @@
+{
+  "schema": "dawn.corpus.bulk-acquisition.v1",
+  "acquisitionMode": "metadata-pointer-only",
+  "contentDownloaded": false,
+  "policy": {
+    "downloadMedia": false,
+    "mirrorMedia": false,
+    "storeCanonicalPointersOnly": true,
+    "rightsRequiredForReuse": true
+  },
+  "sources": [
+    {
+      "id": "internet-archive-av",
+      "name": "Internet Archive AV Metadata",
+      "url": "https://archive.org/advancedsearch.php",
+      "resourceTypes": ["video", "audio"],
+      "targetScope": ["christianity", "bible", "sermon", "church-history", "documentary"],
+      "rights": "source-record",
+      "discovery": "metadata-api",
+      "contentDownloaded": false
+    },
+    {
+      "id": "wikimedia-commons-av",
+      "name": "Wikimedia Commons AV Metadata",
+      "url": "https://commons.wikimedia.org/w/api.php",
+      "resourceTypes": ["video", "audio"],
+      "targetScope": ["biblical-places", "jerusalem", "christian-history", "church", "documentary"],
+      "rights": "per-file-license",
+      "discovery": "metadata-api",
+      "contentDownloaded": false
+    },
+    {
+      "id": "europeana-av",
+      "name": "Europeana Audiovisual Metadata",
+      "url": "https://api.europeana.eu/record/v2/search.json",
+      "resourceTypes": ["video", "audio"],
+      "targetScope": ["christian-art", "church-history", "biblical-culture", "documentary"],
+      "rights": "edm-rights",
+      "discovery": "metadata-api",
+      "contentDownloaded": false
+    }
+  ]
+}
