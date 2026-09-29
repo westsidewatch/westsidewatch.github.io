@@ -20,6 +20,7 @@ on:
       - 'static/css/dawn-visual.css'
       - 'static/css/visual-surface-engine.css'
       - 'scripts/dore/**'
+      - 'scripts/normalize_hugo_frontmatter.py'
       - '.github/workflows/dawn-visual-graph-check.yml'
   workflow_dispatch:
 
@@ -119,6 +120,8 @@ jobs:
         with:
           hugo-version: 'latest'
           extended: true
+      - name: Normalize Hugo front matter compatibility
+        run: python scripts/normalize_hugo_frontmatter.py
       - name: Build site
         run: hugo --minify --gc
       - name: Verify shared Surface consumers
