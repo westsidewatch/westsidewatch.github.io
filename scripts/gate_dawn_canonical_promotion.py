@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+from collections import Counter
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -51,13 +52,18 @@ def main() -> int:
     payload = load(QUEUE)
     candidates = rows(payload)
     accepted, blocked = [], []
+    reason_counts: Counter[str] = Counter()
+    total_eligible = 0
     for item in candidates:
         if not isinstance(item, dict):
             continue
         ok, reasons = eligible(item)
-        if ok and len(accepted) < MAX_BATCH:
-            accepted.append(item)
-        elif not ok:
+        if ok:
+            total_eligible += 1
+            if len(accepted) < MAX_BATCH:
+                accepted.append(item)
+        else:
+            reason_counts.update(reasons)
             blocked.append({'workId': item.get('workId') or item.get('id'), 'reasons': reasons})
     report = {
         'schema': 'dawn.library.promotion-gate.v1',
@@ -65,12 +71,19 @@ def main() -> int:
         'batchLimit': MAX_BATCH,
         'eligible': len(accepted),
         'blocked': len(blocked),
-        'remainingEligible': max(0, sum(1 for x in candidates if isinstance(x, dict) and eligible(x)[0]) - len(accepted)),
+        'remainingEligible': max(0, total_eligible - len(accepted)),
+        'blockedReasonCounts': dict(reason_counts.most_common()),
         'acceptedWorkIds': [x.get('workId') or x.get('id') for x in accepted],
         'blockedRecords': blocked[:500],
     }
     REPORT.write_text(json.dumps(report, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
-    print(json.dumps({k: report[k] for k in ('inputCandidates','eligible','blocked','remainingEligible')}, ensure_ascii=False))
+    print(json.dumps({
+        'inputCandidates': report['inputCandidates'],
+        'eligible': report['eligible'],
+        'blocked': report['blocked'],
+        'remainingEligible': report['remainingEligible'],
+        'blockedReasonCounts': report['blockedReasonCounts'],
+    }, ensure_ascii=False))
     return 0
 
 
