@@ -1,0 +1,16 @@
+{
+  "schema":"dawn.library.foreign.eebo-prdl-work-clusters.v1",
+  "status":"admission-candidates-pass-1",
+  "purpose":"把 EEBO-TCP 的早期現代英文文本開始收縮為可與 PRDL 對齊的 Work clusters。這是 candidate/admission 層，不因作者或名著知名度直接宣告 canonical。",
+  "rules":{"sourceRecordIsNotWork":true,"editionIsNotWork":true,"bibleTextExcluded":true,"commentaryRoutesToBibleWorld":true,"crossSourceDedupRequired":true,"translationProjectionCreatesNoEdition":true},
+  "clusters":[
+    {"creator":"Richard Baxter","candidateWorks":["The Saints' Everlasting Rest","A Call to the Unconverted","The Reformed Pastor"],"families":["spirituality-prayer","sermons-ministry-worship","theology-thought"],"eeBoRole":"early English edition witness candidate","prdlRole":"bibliographic/edition cluster authority","priority":"high"},
+    {"creator":"John Bunyan","candidateWorks":["The Pilgrim's Progress","Grace Abounding to the Chief of Sinners","The Holy War"],"families":["literature-culture","biography-testimony-hagiography","spirituality-prayer"],"eeBoRole":"early English full-text witness candidate","prdlRole":"edition/dedup authority where represented","priority":"high"},
+    {"creator":"John Owen","candidateWorks":["Of the Mortification of Sin in Believers","Of Communion with God","The Death of Death in the Death of Christ"],"families":["spirituality-prayer","theology-thought"],"eeBoRole":"early English edition witness candidate","prdlRole":"bibliographic/edition cluster authority","priority":"high"},
+    {"creator":"Thomas Watson","candidateWorks":["A Body of Divinity","The Godly Man's Picture"],"families":["theology-thought","spirituality-prayer"],"eeBoRole":"early English witness candidate","prdlRole":"cross-source identity check","priority":"high"},
+    {"creator":"Richard Sibbes","candidateWorks":["The Bruised Reed","The Soul's Conflict"],"families":["spirituality-prayer","theology-thought"],"eeBoRole":"early English witness candidate","prdlRole":"cross-source identity check","priority":"high"}
+  ],
+  "admissionGate":["confirm exact EEBO-TCP record/edition identity","confirm readable scope and rights evidence","cross-deduplicate PRDL title/volume cluster","separate later editorial compilations from historical Work","attach title-page/scan to edition witness when available","promote only stable Work identities"],
+  "translation":{"faculty":"Doré Language Faculty","sourceLanguage":"Early Modern English","target":"zh-Hant","aiRequired":false,"readerModes":["source","zh-Hant","bilingual"]},
+  "next":"Resolve exact EEBO-TCP identifiers and PRDL clusters for these candidates, promote verified Works, then continue through additional Puritan/Reformation authors rather than inflating source-record counts."
+}
