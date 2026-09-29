@@ -95,7 +95,7 @@ def main() -> int:
             if doc.get('schema') != 'dawn.corpus.records.v1':
                 continue
             source_id = str(doc.get('sourceId') or '').strip()
-            resource_type = str(doc.get('resourceType') or 'resource').strip()
+            default_resource_type = str(doc.get('resourceType') or 'resource').strip()
             rights = doc.get('rightsPolicy')
             for row in doc.get('items', []):
                 source_record_id = str(row.get('sourceRecordId') or '').strip()
@@ -105,6 +105,8 @@ def main() -> int:
                 serialized = json.dumps(row, ensure_ascii=False).lower()
                 if 'wikisource' in serialized:
                     continue
+                row_resource_type = str(row.get('resourceType') or default_resource_type or 'resource').strip().lower()
+                resource_type = TYPE_MAP.get(row_resource_type, row_resource_type)
                 rid = stable_id(f'{source_id}::{source_record_id}')
                 items.append({
                     'resourceId': rid,
@@ -118,6 +120,7 @@ def main() -> int:
                     'relations': row.get('relations') or [],
                     'rights': rights,
                     'dateLabel': row.get('dateLabel'),
+                    'sourceMediaType': row.get('sourceMediaType'),
                     'provenance': {'source': str(path.relative_to(ROOT)), 'sourceId': source_id, 'sourceRecordId': source_record_id},
                     'status': 'identity-established'
                 })
