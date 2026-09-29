@@ -1,0 +1,13 @@
+{
+  "schema":"site.discovery.three-stars-spectrum-curation-boundary.v1",
+  "status":"parallel-audit-started",
+  "purpose":"在館藏 canonical thinning 與 Doré Language Faculty 工程並行時，開始梳理網站第一層的三晨星、光譜、策展集；三者都是全站內容推薦/選題語言，不是工具。",
+  "sharedLevel":"site-first editorial/discovery layer",
+  "objects":"可指向全站已有內容實體，包括 Magazine、Cinema、Dawn Library Work、ONE 的非工具型內容入口、講道/教會內容，以及被編輯為期刊內容的 Jerusalem 3000 等；是否展示取決於真實內容和各自規則。",
+  "threeMorningStars":{"nature":"高強度、少量、清晰的推薦標準","siteRole":"在第一層回答『現在最值得進入的少數內容是什麼』，可跨版塊。","dawnLibraryProjection":"同一 canonical 三晨星標準在黎明書局左側投影，只返回館藏 Work，作為選書入口。","not":"不是獨立工具，不建立第二份書局專用演算法/資料。","auditQuestions":["三顆星各自代表固定標準還是同一標準下的三個席位","更新節奏與人工/規則權重","跨版塊如何避免三個位置被同一類內容佔滿","推薦理由是否需要顯性呈現"]},
+  "spectrum":{"nature":"以一條連續尺度/關係軸觀看全站內容的選題與推薦標準","siteRole":"讓彼此不同但可比較/相連的內容在同一視野中形成分布，而不是排行榜。","dawnLibrary":"不是黎明書局常駐閱讀模式；若選中 Work，handoff 到黎明書局閱讀 workspace。","jerusalem3000":"Jerusalem 3000 是可被光譜組織/呈現的作品或期刊內容，不是 Spectrum 本身，也不是獨立工具。","auditQuestions":["光譜的 canonical axes 是什麼","一個內容可否同時位於多條光譜","位置由 metadata/規則/編輯如何共同決定","首頁如何讓光譜成為面貌而不是 filter UI"]},
+  "curatedSets":{"nature":"有明確編輯意圖的跨內容組合","siteRole":"以主題、問題、時間、人物、事件或閱讀路徑組織一組內容。","dawnLibrary":"策展集本體在網站第一層；其中的書籍 item 可直接 handoff 到黎明書局 canonical Work。書局可以顯示策展結果中的書，但不承擔全站策展本體。","auditQuestions":["策展集最小/最大單位","是否有序閱讀路徑","策展者/策展理由如何保存","跨 Magazine/Cinema/Library/Church 的 identity contract"]},
+  "sharedInfrastructure":{"canonicalContentId":true,"crossSectionHandoff":true,"editorialReason/provenance":true,"noDuplicateContentObjects":true,"projectionNotCopy":true},
+  "parallelRule":"這項梳理不得阻塞 Dawn Library 外文 canonical admission、cover enrichment 或 Doré language implementation；三條線並行。",
+  "next":"Inventory existing repository records, UI remnants and editorial rules named Three Morning Stars / Spectrum / curated collections, then separate reusable data contracts from obsolete section-specific UI."
+}
