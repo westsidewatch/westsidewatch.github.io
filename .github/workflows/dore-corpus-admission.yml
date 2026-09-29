@@ -27,7 +27,7 @@ on:
       - 'data/dawn-corpus/admission/**'
       - '.github/workflows/dore-corpus-admission.yml'
 permissions:
-  contents: read
+  contents: write
 jobs:
   admission:
     runs-on: ubuntu-latest
@@ -69,14 +69,24 @@ jobs:
           report=json.loads(p.read_text()); catalogue=enrich_languages(json.loads(c.read_text()))
           if report['sourceRecords']==0: raise SystemExit('EEBO-TCP admission emitted zero records')
           if catalogue['count']!=report['workCandidates']: raise SystemExit('catalogue/work candidate count mismatch')
-          index=write_consumption_index(catalogue, 'artifacts/dore-corpus/dawn-library', page_size=250)
+          index=write_consumption_index(catalogue,'artifacts/dore-corpus/dawn-library',page_size=250)
           report['requestedLimit']=int(os.environ['DORE_CORPUS_LIMIT']); report['fullCatalogueRun']=os.environ['DORE_CORPUS_LIMIT']=='0'; report['holdingsModel']='remote-pointer-on-demand-reading'
-          report['catalogueManifest']={'schema':catalogue['schema'],'works':catalogue['count'],'file':c.name}
-          report['consumptionIndex']={'schema':index['schema'],'works':index['count'],'pageSize':index['pageSize'],'pageCount':index['pageCount'],'file':'dawn-library/index.json'}
+          report['catalogueManifest']={'schema':catalogue['schema'],'works':catalogue['count'],'file':c.name}; report['consumptionIndex']={'schema':index['schema'],'works':index['count'],'pageSize':index['pageSize'],'pageCount':index['pageCount'],'file':'dawn-library/index.json'}
           report['readingContract']={'catalogueAdmissionRequiresFullTextDownload':False,'authorityEnrichmentRequiredForReading':False,'initialFullCatalogueLoad':False,'contentFetch':'on-demand when a reader opens source/zh-Hant/bilingual text','translation':'Doré Language Faculty after readable source resolution'}
           c.write_text(json.dumps(catalogue,ensure_ascii=False,separators=(',',':'))+'\n'); p.write_text(json.dumps(report,ensure_ascii=False,indent=2)+'\n')
-          print(json.dumps(report,indent=2,ensure_ascii=False))
           PY
+      - name: Publish full catalogue consumption index
+        if: steps.mode.outputs.limit == '0'
+        run: |
+          rm -rf static/dawn-library/catalogue
+          mkdir -p static/dawn-library/catalogue
+          cp -R artifacts/dore-corpus/dawn-library/. static/dawn-library/catalogue/
+          git config user.name "dore-corpus-bot"
+          git config user.email "dore-corpus-bot@users.noreply.github.com"
+          git add static/dawn-library/catalogue
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "data: publish Dawn library consumption index [skip ci]"
+          git push
       - name: Upload admission and reader catalogue artifacts
         uses: actions/upload-artifact@v4
         with:
