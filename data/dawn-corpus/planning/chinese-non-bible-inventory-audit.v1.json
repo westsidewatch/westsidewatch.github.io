@@ -1,0 +1,26 @@
+{
+  "schema":"dawn.corpus.inventory-audit.v1",
+  "status":"audited-current-repository-evidence",
+  "scope":"Chinese-language Dawn acquisition and canonical inventory after Bible-world separation",
+  "finding":"The repository currently does not contain a substantive admitted/promotable non-Bible Chinese collection in the Dawn corpus. The explicit Chinese acquisition source currently records only two admitted items, both Chinese Union Version Bible editions, so both leave the Bookshop inventory under the bible-world-zh separation.",
+  "evidence":{
+    "explicitChineseSource":"data/dawn-corpus/chinese/pd-text-corpus-source.json",
+    "explicitChineseAdmissions":["聖經和合本（繁體） 1919","圣经和合本（简体） 1919"],
+    "recordsDirectory":"Current dawn-corpus/records contains only the Vatican biblical IIIF seed record.",
+    "codeSearch":"Repository searches for Chinese-language inventory markers and known Chinese manuscript titles did not expose additional Dawn canonical/admitted non-Bible Chinese works. Search absence is not proof that no user-authored manuscripts exist elsewhere; it means they are not presently represented in the Dawn corpus/canonical inventory being audited."
+  },
+  "counts":{"explicitChineseAcquisitionAdmissions":2,"removedToBibleWorldPlanning":2,"confirmedNonBibleChineseDawnCorpusWorks":0},
+  "interpretation":"This is an acquisition/admission gap, not a design gap. Do not create Chinese Bookshop shelves, genres or departments to mask it.",
+  "priorityAcquisitionDomains":[
+    "Chinese Christian literature and classics",
+    "Chinese theology and church history",
+    "Chinese Christian biography and testimony",
+    "devotional and spiritual formation works",
+    "Chinese literature/culture useful to Westside Watch editorial work",
+    "Christian art, architecture and visual culture with Chinese text/metadata",
+    "Chinese translations of public-domain or openly licensed major Christian works"
+  ],
+  "admissionStrategy":"Keep Bible-world Chinese resources available to Emmaus planning. Build a separate non-Bible Chinese acquisition queue, then run identity/rights/provenance/admission before anything becomes a Dawn Bookshop canonical Work.",
+  "visibilityRule":"Until real non-Bible Chinese canonical works exist, do not expose an empty Chinese department in Dawn Bookshop.",
+  "nextStep":"Build the first non-Bible Chinese acquisition queue from mature open/public-domain sources, prioritizing actual readable works rather than metadata-only indexes."
+}
