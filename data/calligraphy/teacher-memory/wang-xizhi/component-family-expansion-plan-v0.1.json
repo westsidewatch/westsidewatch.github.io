@@ -1,0 +1,88 @@
+{
+  "id": "wang-xizhi-component-family-expansion-plan-v0.1",
+  "teacher": "wang-xizhi",
+  "generationAllowed": false,
+  "goal": "Expand component-family evidence beyond the TC001 seed glyphs and promote only cross-example invariants into stable Teacher Memory.",
+  "researchBasis": {
+    "method": "single-glyph and component study",
+    "flowUse": false,
+    "note": "The Palace Museum's Shengjiao technical-study framework explicitly treats basic strokes, component combinations, structural characteristics and same-character variants as study dimensions. Huairen Shengjiao remains single-glyph evidence only in this project."
+  },
+  "families": {
+    "日": {
+      "seed": ["是","智"],
+      "expansionTargets": ["時","明","晉","書","昔","春","景","暢"],
+      "measure": ["width-height ratio","closure degree","inner whitespace","host position","vertical compression"],
+      "promotionQuestion": "Does 日 retain a recognizable inner-space and enclosure strategy across independent host characters while changing proportion contextually?"
+    },
+    "心": {
+      "seed": ["慧"],
+      "expansionTargets": ["感","意","思","忘","情","悲","懷","惠"],
+      "measure": ["lower spread","support width","point/stroke distribution","upper-lower handoff","center-axis relation"],
+      "promotionQuestion": "What remains recognizable when 心 is compressed below a dense upper body versus written with more lateral freedom?"
+    },
+    "立": {
+      "seed": ["端"],
+      "expansionTargets": ["意","位","章","童","竭"],
+      "measure": ["component width","axis","upper treatment","lower closure","neighbor-mass balance"],
+      "promotionQuestion": "How does 立 narrow, tilt or simplify without losing its stabilizing function?"
+    },
+    "口": {
+      "seed": ["智"],
+      "expansionTargets": ["和","知","名","君","可","同","向","足"],
+      "measure": ["closure","corner treatment","aspect ratio","merge/open behavior","host-position response"],
+      "promotionQuestion": "Which enclosure cues are indispensable, and which edges may open or merge in running-script transmission?"
+    },
+    "矢-知": {
+      "seed": ["智"],
+      "expansionTargets": ["知","矣"],
+      "measure": ["stroke-path hypothesis","compression","slant","transition into 口","upper-body density"],
+      "promotionQuestion": "Can a stable 知 skeleton be distinguished from incidental carving or compilation effects?"
+    },
+    "耑": {
+      "seed": ["端"],
+      "expansionTargets": ["瑞","端"],
+      "measure": ["stacking","internal whitespace","right-side width","vertical compression","host balance"],
+      "promotionQuestion": "Which structural cues preserve 耑 identity under compression?"
+    },
+    "dense-upper-plus-heart": {
+      "seed": ["慧"],
+      "expansionTargets": ["慧","意","感","懷","思"],
+      "measure": ["density relief","upper-lower ratio","axis continuity","handoff into 心","negative-space preservation"],
+      "promotionQuestion": "How does the whole character prevent a dense upper body plus 心 from becoming a single dark rectangular mass?"
+    }
+  },
+  "evidenceLadder": [
+    "continuous transmitted Wang manuscript/copy with defensible single-glyph identity",
+    "early transmitted Wang copy or facsimile preserving glyph structure",
+    "Huairen collected Wang form via early rubbing",
+    "later Wang-model copy/rubbing with explicit provenance",
+    "component analogue only"
+  ],
+  "promotionStates": ["seed","hypothesis","supported-pattern","stable-rule","state-dependent-rule","conflicted"],
+  "promotionRules": {
+    "supported-pattern": "At least two verified examples with compatible behavior and no decisive contradiction.",
+    "stable-rule": "Evidence spans multiple host glyphs and, where possible, more than one transmitted witness class.",
+    "state-dependent-rule": "A behavior recurs but varies systematically with host position, density or script state.",
+    "conflicted": "Credible evidence disagrees without a defensible state/context explanation; retain both rather than average.",
+    "single-example": "Never above hypothesis."
+  },
+  "antiContamination": [
+    "Do not promote carving thickness to brush-pressure memory.",
+    "Do not use Shengjiao neighboring characters as Wang flow evidence.",
+    "Do not paste radicals or average outlines.",
+    "Do not treat a modern reconstructed Wang-style glyph as historical evidence.",
+    "Do not let public-display eligibility affect internal research value."
+  ],
+  "tc001Payoff": {
+    "智": "Resolve the internal behavior of 知/口/日 before any stylistic reconstruction.",
+    "慧": "Increase evidence for 心 and dense-upper-to-heart handoff before declaring a stable Wang solution.",
+    "端": "Test 立 and 耑 independently so the final character is not merely copied from one transmitted occurrence.",
+    "futureMissingGlyphs": "Use component rules as constraints on whole-character reconstruction, never as detachable pieces."
+  },
+  "nextGate": {
+    "name": "first-component-promotions",
+    "requirement": "Run remote text/index discovery for the expansion targets, bind verified Wang-form occurrences, and promote only the first evidence-backed supported-patterns; no glyph generation yet.",
+    "generationAllowedAfterThisFile": false
+  }
+}
