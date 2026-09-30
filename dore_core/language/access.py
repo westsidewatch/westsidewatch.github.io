@@ -13,6 +13,7 @@ class WitnessAccessMode(str, Enum):
     LICENSED_API = "licensed_api"
     EXTERNAL_READER = "external_reader"
     HUMAN_ONLY = "human_only"
+    AUTHENTICATED_ACQUISITION = "authenticated_acquisition"
 
 @dataclass(frozen=True)
 class WitnessAccessPolicy:
@@ -25,6 +26,9 @@ class WitnessAccessPolicy:
     automated_access_permitted: bool = False
     full_text_storage_permitted: bool = False
     persistent_cache_permitted: bool = False
+    authentication_required: bool = False
+    authentication_scheme: str | None = None
+    credential_env: str | None = None
     quotation_notes: str | None = None
     notes: str | None = None
 
@@ -32,7 +36,17 @@ class WitnessAccessPolicy:
         return self.mode == WitnessAccessMode.LOCAL_CORPUS and self.full_text_storage_permitted
 
     def may_retrieve_automatically(self) -> bool:
-        return self.mode in {WitnessAccessMode.LICENSED_API, WitnessAccessMode.EXTERNAL_READER} and self.automated_access_permitted
+        return self.mode in {WitnessAccessMode.LICENSED_API, WitnessAccessMode.EXTERNAL_READER, WitnessAccessMode.AUTHENTICATED_ACQUISITION} and self.automated_access_permitted
+
+    def requires_authentication(self) -> bool:
+        return self.authentication_required or self.mode == WitnessAccessMode.AUTHENTICATED_ACQUISITION
+
+    def acquisition_ready(self, *, credential_available: bool = False) -> bool:
+        if not self.may_retrieve_automatically():
+            return False
+        if self.requires_authentication() and not credential_available:
+            return False
+        return True
 
     def may_persist_retrieved_text(self) -> bool:
         return self.persistent_cache_permitted
