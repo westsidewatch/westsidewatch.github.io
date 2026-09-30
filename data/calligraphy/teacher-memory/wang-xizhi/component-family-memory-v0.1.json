@@ -1,0 +1,86 @@
+{
+  "id": "wang-xizhi-component-family-memory-v0.1",
+  "teacher": "wang-xizhi",
+  "stage": "component-family-research",
+  "generationAllowed": false,
+  "purpose": "Learn reusable single-glyph construction habits from component families without treating components as detachable font parts or using assembled-inscription adjacency as flow evidence.",
+  "evidencePolicy": {
+    "shengjiaoSingleGlyphAllowed": true,
+    "shengjiaoFlowAllowed": false,
+    "continuousInkWitnessPreferredForFlow": true,
+    "wholeWorkDownloadRequired": false,
+    "accessMode": "remote-reference-or-existing-transcode-layer",
+    "provenanceRequired": true
+  },
+  "families": {
+    "日": {
+      "seedCharacters": ["是","智"],
+      "study": ["aspect ratio","internal white space","top/bottom closure","vertical placement inside host glyph","relationship to host center of gravity"],
+      "question": "When 日 is an independent structural body versus a lower component, what remains stable and what compresses?"
+    },
+    "心": {
+      "seedCharacters": ["慧"],
+      "study": ["width relative to upper mass","distribution of lower points/strokes","support versus release","compression under dense upper structure"],
+      "confidence": "hypothesis-only-until-more-Wang-evidence",
+      "question": "How can 心 support a dense upper structure without making the whole glyph bottom-heavy?"
+    },
+    "立": {
+      "seedCharacters": ["端"],
+      "study": ["left-side width","vertical axis","top-dot/upper treatment","relationship to right component height","degree of running-script simplification"],
+      "question": "How narrow may 立 become while retaining its structural identity and stabilizing the right mass?"
+    },
+    "口": {
+      "seedCharacters": ["智"],
+      "study": ["closure","angular versus rounded turning","compression","placement inside 知-derived structure"],
+      "question": "Which enclosure features survive running-script compression and which may open or merge?"
+    },
+    "矢-知": {
+      "seedCharacters": ["智"],
+      "study": ["left-right compression","stroke-order hypothesis","transition from 矢-like upper/left mass toward 口","whole-component slant","density management"],
+      "question": "What is the stable readable skeleton of 知 when compressed into the upper body of 智?"
+    },
+    "耑": {
+      "seedCharacters": ["端"],
+      "study": ["upper-lower stacking","right-side width","vertical compression","internal negative space","balance against 立"],
+      "question": "Which features make the right side read as 耑 while allowing 端 to close firmly without becoming square and static?"
+    },
+    "dense-upper-plus-heart": {
+      "seedCharacters": ["慧"],
+      "study": ["upper-density relief","center-axis continuity","transition into 心","upper/lower proportion","negative-space preservation"],
+      "confidence": "hypothesis-only",
+      "question": "How does a dense multi-layer upper body hand weight to 心 without creating a dark block?"
+    }
+  },
+  "antiLegoRule": {
+    "statement": "A component family is a behavioral memory, not a library of detachable shapes.",
+    "forbidden": [
+      "copy 日 from one glyph and paste it unchanged into another",
+      "assemble a missing glyph by geometric component collage",
+      "average component outlines into a synthetic font radical",
+      "infer phrase flow from component evidence"
+    ],
+    "required": [
+      "re-solve proportion inside each host glyph",
+      "preserve host-glyph center of gravity",
+      "adapt compression and simplification to the whole character",
+      "record which evidence supports each reconstruction hypothesis"
+    ]
+  },
+  "tc001Application": {
+    "智": ["日","口","矢-知"],
+    "慧": ["心","dense-upper-plus-heart"],
+    "端": ["立","耑"],
+    "goal": "Before any missing-glyph reconstruction, determine whether the project understands the teacher's component behavior well enough to predict constraints rather than paste shapes."
+  },
+  "promotionGate": {
+    "minimumEvidenceForStableRule": "multiple verified Wang-form examples across at least two host glyphs or independent transmitted witnesses where possible",
+    "singleExampleTreatment": "hypothesis-only",
+    "conflictingEvidence": "retain variants and state-dependent rules; do not average them",
+    "transmissionNoise": "stone/rubbing edge and thickness differences cannot become brush-pressure rules"
+  },
+  "nextGate": {
+    "name": "component-family-expansion-pass",
+    "requirement": "Expand 日、心、立、口、矢/知、耑 families from additional Wang-form characters, then mark stable invariants only where evidence crosses the promotion threshold.",
+    "generationAllowedAfterThisFile": false
+  }
+}
