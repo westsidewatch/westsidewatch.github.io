@@ -23,7 +23,21 @@ jobs:
       - name: Build cover preview shards
         run: python3 scripts/build_dawn_cover_preview_shards.py
       - name: Verify cover surface
-        run: python3 -c "import json; p=json.load(open('static/dawn-library/cover-preview/root.json')); assert p['workCount']==203448; assert p['shardCount']==21; print(p['workCount'], p['shardCount'])"
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('static/dawn-library/cover-preview')
+          p=json.load(open(root/'root.json'))
+          assert p['workCount']==203448
+          assert p['previewShardSize']==500
+          assert p['shardCount']==407
+          assert p['shards'][0]['offset']==0 and p['shards'][0]['count']==500
+          first=json.load(open(root/p['shards'][0]['href']))
+          assert first['count']==500 and len(first['items'])==500
+          assert any(x.get('cover',{}).get('src') for x in first['items'])
+          print(p['workCount'],p['shardCount'],first['count'])
+          PY
       - name: Publish cover preview surface
         run: |
           git config user.name 'Dore CI'
