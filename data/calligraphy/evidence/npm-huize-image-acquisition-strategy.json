@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "work": {
+    "title": "淳化閣法帖（五） 冊 隋朝慧則帖",
+    "collectionDetailId": 23758,
+    "workNumber": "贈帖00007200010",
+    "imageIds": [456274, 456275]
+  },
+  "targets": ["敬", "慧"],
+  "acquisitionPolicy": {
+    "primary": "iiif-manifest-and-image-api",
+    "secondary": "npm-open-image-download",
+    "reason": "NPM states that the object exposes IIIF for its 6MP imagery; IIIF guidance confirms object pages expose a copyable manifest. This avoids treating the interactive download dialog as the only pixel route.",
+    "downloadCaptchaIsNotCorpusDependency": true
+  },
+  "verifiedPublicFacts": {
+    "script": "行楷書",
+    "transcriptionContains": ["敬", "慧"],
+    "lowResolutionRights": "CC0",
+    "mediumResolutionRights": "CC BY 4.0",
+    "iiifAvailable": true
+  },
+  "promotionState": "awaiting-manifest-pixel-fetch",
+  "hardRule": "No crop coordinates or glyph records may be created from transcription order alone. Pixels must be fetched from the NPM IIIF/Open Image representation and visually verified."
+}
