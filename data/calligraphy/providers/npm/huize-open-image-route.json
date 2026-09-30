@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "sourceId": "daguan-v5-huize",
+  "collectionDetailId": "17063",
+  "objectNumber": "故帖00002900010",
+  "unifiedNumber": "故帖000029N000000005",
+  "officialRecord": "https://digitalarchive.npm.gov.tw/opendata/Pub/Detail/17063?dep=P&mode=full",
+  "imageAccess": {
+    "lowResolution": {
+      "nominalPixels": 1000000,
+      "rights": "CC0",
+      "requiresAttribution": false,
+      "status": "official-download-confirmed"
+    },
+    "mediumResolution": {
+      "nominalPixels": 6000000,
+      "rights": "CC BY 4.0",
+      "requiresAttribution": true,
+      "attributionZh": "宋拓大觀帖（五） 冊 隋慧則帖。國立故宮博物院，臺北，CC BY 4.0 @ www.npm.gov.tw",
+      "status": "official-download-confirmed"
+    }
+  },
+  "targets": [
+    {"character":"敬","characterId":"u656c","transcriptionEvidence":"皇帝敬問婺州雙林寺慧則法師","cropStatus":"needs-image-pixels"},
+    {"character":"慧","characterId":"u6167","transcriptionEvidence":"皇帝敬問婺州雙林寺慧則法師","cropStatus":"needs-image-pixels"}
+  ],
+  "policy": {
+    "preferMediumResolution": true,
+    "allowLowResolutionFallback": true,
+    "neverInferDownloadUrl": true,
+    "neverInferCropCoordinates": true,
+    "preserveOriginal": true,
+    "derivativesRequireEvidenceLink": true
+  }
+}
