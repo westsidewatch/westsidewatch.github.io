@@ -1,1 +1,49 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>天堂電影院</title><link rel="stylesheet" href="cinema.css"><link rel="stylesheet" href="preview-layer.css"><link rel="stylesheet" href="journey-layer.css"><link rel="stylesheet" href="/css/publication-material.css"></head><body><a class="publication-return" href="/">← Westside Watch</a><main><section class="cinema-hall" aria-label="天堂電影院大廳"><div class="hall-brand"><p>PARADISE CINEMA</p><h1>Cinema<br><em>Paradiso.</em><span lang="zh-Hant">天堂電影院</span></h1></div><div id="cinema-hall-stream" class="hall-stream" aria-live="polite"></div><a class="hall-enter" href="#cinema-feature">NOW SHOWING ↓</a></section><section id="cinema-navigation" class="cinema-navigation cinema-transition cinema-transition--world" aria-labelledby="cinema-navigation-title"><div class="section-head"><p>PARADISE CINEMA · PROGRAMME</p><h2 id="cinema-navigation-title">本週放映</h2></div><nav class="world-nav" aria-label="天堂電影院主要導航"><a href="#cinema-feature">正在放映</a><a href="#cinema-week">本週排片</a><a href="#cinema-season">專題／節期</a><a href="#cinema-library">影片與劇集</a><a href="#cinema-up-next">接下來觀看</a><a href="#cinema-journey">聖經索引</a></nav></section><section class="cinema-feature cinema-transition cinema-transition--feature" aria-labelledby="cinema-feature-title"><div class="section-head"><p>NOW SHOWING</p><h3 id="cinema-feature-title">正在放映</h3></div><div id="cinema-feature" aria-live="polite"></div></section><section id="cinema-week" class="library cinema-transition cinema-transition--archive" aria-labelledby="cinema-week-title"><div class="section-head"><p>THIS WEEK</p><h3 id="cinema-week-title">本週排片</h3><p>每週依照節期、節日、聖經事件與編輯專題安排放映。</p></div><div id="cinema-week-programme" class="resource-grid" aria-live="polite"></div></section><section id="cinema-season" class="cinema-explore cinema-transition cinema-transition--explore" aria-labelledby="cinema-season-title"><div class="section-head"><p>SEASON · FESTIVAL · FEATURE</p><h3 id="cinema-season-title">專題與節期</h3></div><div id="cinema-season-stage" class="cinema-lens-stage" aria-live="polite"><p>依教會節期、聖經節期、節日與當期主題形成放映季。</p></div></section><section class="library library--archive cinema-transition cinema-transition--archive" aria-labelledby="first-batch-title"><div class="section-head"><p>FILMS · SERIES</p><h3 id="first-batch-title">影片與劇集</h3><button id="cinema-archive-toggle" class="archive-toggle" type="button" aria-expanded="false" aria-controls="cinema-library">打開館藏</button></div><div id="cinema-library" class="resource-grid" aria-live="polite" hidden></div></section><section id="cinema-up-next" class="cinema-explore cinema-transition cinema-transition--explore" aria-labelledby="cinema-up-next-title"><div class="section-head"><p>UP NEXT</p><h3 id="cinema-up-next-title">接下來觀看</h3></div><div id="cinema-up-next-stage" class="cinema-lens-stage" aria-live="polite"><p>依目前排片、聖經下一事件與當期專題接續觀看。</p></div></section><section class="moment-search" aria-labelledby="moment-search-title"><div class="section-head"><p>FIND A MOMENT</p><h3 id="moment-search-title">搜尋影片內容</h3></div><label for="cinema-moment-query">搜尋影片中的人物、事件、經文或主題</label><div class="moment-search-row"><input id="cinema-moment-query" type="search" placeholder="例如：馬太福音、耶路撒冷" autocomplete="off"><button id="cinema-moment-search" type="button">搜尋</button></div><div id="cinema-moment-results" class="moment-results" aria-live="polite"></div></section><section class="bible-journey bible-world cinema-transition cinema-transition--journey" aria-labelledby="cinema-journey-title"><div id="cinema-journey" aria-live="polite"><div class="section-head"><p>BIBLE TIMELINE · COLLECTION INDEX</p><h3 id="cinema-journey-title">聖經時間索引</h3><p>從創世到新天新地，按聖經坐標瀏覽已收入的電影、劇集與單集。</p></div></div></section><section id="cinema-place-world" class="place-world" aria-live="polite" hidden></section><section class="special-source" aria-labelledby="special-source-title"><div class="section-head"><p>SPECIAL SOURCE</p><h3 id="special-source-title">GOOD TV</h3></div><p>GOOD TV 第一方受保護播放資源另設專頁，不計入天堂電影院館藏總數與預覽管線。</p><p><a href="goodtv/">進入 GOOD TV 專頁 →</a></p></section></main><dialog id="cinema-player"><button class="player-close" type="button" aria-label="關閉">×</button><div id="player-stage"></div></dialog><script src="special-resource-policy.js"></script><script src="resource-graph.js"></script><script src="event-entry.js"></script><script src="provider-adapters.js"></script><script src="cinema.js"></script><script src="cinema-navigation.js"></script><script src="place-world.js"></script><script src="journey-layer.js"></script><script src="play-control.js"></script><script src="preview-controller.js"></script><script src="/js/publication-motion.js" defer></script></body></html>
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>天堂電影院</title>
+<link rel="stylesheet" href="cinema.css">
+<link rel="stylesheet" href="/css/publication-material.css">
+</head>
+<body>
+<a class="publication-return" href="/">← Westside Watch</a>
+<main>
+<section class="cinema-hall" aria-labelledby="cinema-title">
+  <div class="hall-brand">
+    <p>PARADISE CINEMA</p>
+    <h1 id="cinema-title">Cinema <em>Paradiso.</em><span lang="zh-Hant">天堂電影院</span></h1>
+  </div>
+  <div id="cinema-screen" class="cinema-screen" aria-label="天堂電影院銀幕">
+    <div id="cinema-feature" aria-live="polite"></div>
+  </div>
+  <a class="hall-enter" href="#why-tonight">WHY TONIGHT ↓</a>
+</section>
+
+<section id="why-tonight" class="programme-reason" aria-labelledby="why-tonight-title">
+  <div class="section-head"><p>WHY TONIGHT</p><h2 id="why-tonight-title">今晚為什麼看這部電影</h2></div>
+  <div id="cinema-why-tonight" aria-live="polite"><p>排片不是推薦算法。日期、教會年、聖經節期、福音事件與歷史紀念共同決定今天的銀幕。</p></div>
+</section>
+
+<section id="cinema-week" class="programme-week" aria-labelledby="cinema-week-title">
+  <div class="section-head"><p>THIS WEEK</p><h2 id="cinema-week-title">本週排片</h2></div>
+  <div id="cinema-week-programme" class="resource-grid" aria-live="polite"></div>
+</section>
+
+<section id="cinema-archive" class="library library--archive" aria-labelledby="cinema-archive-title">
+  <div class="section-head"><p>ARCHIVE</p><h2 id="cinema-archive-title">片庫與節目</h2><p>本站可播放的作品直接進入銀幕；不能在本站播放的優秀作品保留節目介紹與官方觀看入口。</p></div>
+  <div id="cinema-library" class="resource-grid" aria-live="polite"></div>
+</section>
+
+<footer class="cinema-friends"><p>FRIENDS</p><a href="https://www.goodtv.tv/" rel="external noopener noreferrer">GOOD TV ↗</a></footer>
+</main>
+<dialog id="cinema-player"><button class="player-close" type="button" aria-label="關閉">×</button><div id="player-stage"></div></dialog>
+<script src="special-resource-policy.js"></script>
+<script src="resource-graph.js"></script>
+<script src="provider-adapters.js"></script>
+<script src="cinema.js"></script>
+<script src="play-control.js"></script>
+<script src="/js/publication-motion.js" defer></script>
+</body>
+</html>
