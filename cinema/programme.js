@@ -2,20 +2,12 @@
   const URL='data/programme.v1.json';
   const pad=n=>String(n).padStart(2,'0');
   const key=d=>`${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-  const matches=(rule,d)=>rule?.type==='annual'&&rule.month===d.getMonth()+1&&rule.day===d.getDate();
-  const choose=(items,d)=>[...items].filter(x=>matches(x.dateRule,d)).sort((a,b)=>(b.priority||0)-(a.priority||0))[0]||items.find(x=>x.dateRule?.type==='fallback');
-  const renderReason=item=>{
-    const root=document.querySelector('#cinema-why-tonight'); if(!root||!item)return;
-    root.replaceChildren();
-    const meta=document.createElement('p');meta.className='programme-meta';meta.textContent=item.label;
-    const body=document.createElement('p');body.className='programme-copy';body.textContent=item.why;
-    const scripture=document.createElement('p');scripture.className='programme-scripture';scripture.textContent=(item.scripture||[]).join(' · ');
-    root.append(meta,body,scripture);
-  };
-  const renderWeek=(items,start)=>{
-    const root=document.querySelector('#cinema-week-programme');if(!root)return;const cards=[];
-    for(let i=0;i<7;i++){const d=new Date(start);d.setDate(start.getDate()+i);const item=choose(items,d);const card=document.createElement('article');card.className='programme-card';card.dataset.workId=item?.workId||'';card.innerHTML=`<time datetime="${key(d)}">${d.toLocaleDateString('zh-Hant',{month:'short',day:'numeric',weekday:'short'})}</time><strong>${item?.label||'天堂電影院'}</strong><span>${(item?.scripture||[]).join(' · ')}</span>`;cards.push(card);}
-    root.replaceChildren(...cards);
-  };
-  fetch(URL).then(r=>{if(!r.ok)throw new Error('programme');return r.json();}).then(data=>{const now=new Date();const selected=choose(data.occasions||[],now);renderReason(selected);renderWeek(data.occasions||[],now);window.ParadiseCinemaProgramme={data,selected};document.documentElement.dataset.cinemaProgramme='ready';}).catch(()=>{document.documentElement.dataset.cinemaProgramme='error';});
+  function easter(year){const a=year%19,b=Math.floor(year/100),c=year%100,d=Math.floor(b/4),e=b%4,f=Math.floor((b+8)/25),g=Math.floor((b-f+1)/3),h=(19*a+b-d-g+15)%30,i=Math.floor(c/4),k=c%4,l=(32+2*e+2*i-h-k)%7,m=Math.floor((a+11*h+22*l)/451),month=Math.floor((h+l-7*m+114)/31),day=((h+l-7*m+114)%31)+1;return new Date(year,month-1,day);}
+  const dayKey=d=>new Date(d.getFullYear(),d.getMonth(),d.getDate()).getTime();
+  function matches(rule,date){if(!rule)return false;if(rule.type==='annual')return rule.month===date.getMonth()+1&&rule.day===date.getDate();if(rule.type==='easter-offset'){const target=easter(date.getFullYear());target.setDate(target.getDate()+(rule.days||0));return dayKey(target)===dayKey(date);}return false;}
+  const choose=(items,date)=>[...items].filter(x=>matches(x.dateRule,date)).sort((a,b)=>(b.priority||0)-(a.priority||0))[0]||items.find(x=>x.dateRule?.type==='fallback');
+  function renderReason(item){const root=document.querySelector('#cinema-why-tonight');if(!root||!item)return;root.replaceChildren();const meta=document.createElement('p');meta.className='programme-meta';meta.textContent=item.label;const body=document.createElement('p');body.className='programme-copy';body.textContent=item.why;const scripture=document.createElement('p');scripture.className='programme-scripture';scripture.textContent=(item.scripture||[]).join(' · ');root.append(meta,body,scripture);}
+  function focusWork(workId){if(!workId)return;document.documentElement.dataset.cinemaProgrammeWork=workId;const card=document.querySelector(`[data-canonical-id="${CSS.escape(workId)}"]`);if(card)card.dataset.programmeSelected='true';window.dispatchEvent(new CustomEvent('paradise-cinema:programme',{detail:{workId}}));}
+  function renderWeek(items,start){const root=document.querySelector('#cinema-week-programme');if(!root)return;const cards=[];for(let i=0;i<7;i++){const date=new Date(start);date.setDate(start.getDate()+i);const item=choose(items,date);const card=document.createElement('button');card.type='button';card.className='programme-card';card.dataset.workId=item?.workId||'';card.innerHTML=`<time datetime="${key(date)}">${date.toLocaleDateString('zh-Hant',{month:'short',day:'numeric',weekday:'short'})}</time><strong>${item?.label||'天堂電影院'}</strong><span>${(item?.scripture||[]).join(' · ')}</span>`;card.addEventListener('click',()=>{renderReason(item);focusWork(item?.workId);document.querySelector('#cinema-screen')?.scrollIntoView({behavior:'smooth',block:'start'});});cards.push(card);}root.replaceChildren(...cards);}
+  fetch(URL).then(r=>{if(!r.ok)throw new Error('programme');return r.json();}).then(data=>{const now=new Date(),selected=choose(data.occasions||[],now);renderReason(selected);renderWeek(data.occasions||[],now);focusWork(selected?.workId);window.ParadiseCinemaProgramme={data,selected,easter,choose};document.documentElement.dataset.cinemaProgramme='ready';}).catch(()=>{document.documentElement.dataset.cinemaProgramme='error';});
 })();
