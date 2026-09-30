@@ -1,0 +1,30 @@
+name: Dawn Standard Ebooks Publication
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/probe_standard_ebooks_publication.py'
+      - 'dore_core/publication.py'
+      - 'dore_core/publication_adapters/standard_ebooks.py'
+      - 'dore_core/publication_adapters/standard_ebooks_opds.py'
+      - 'dore_core/publication_adapters/epub.py'
+      - '.github/workflows/dawn-standard-ebooks-publication.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Probe Standard Ebooks OPDS to DawnPublication
+        run: python3 scripts/probe_standard_ebooks_publication.py
