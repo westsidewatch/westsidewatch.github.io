@@ -18,7 +18,17 @@ def work_array(payload):
     if isinstance(payload,list): return payload
     if isinstance(payload,dict):
         for key in ('works','items','entries'):
-            if isinstance(payload.get(key),list): return payload[key]
+            collection=payload.get(key)
+            if isinstance(collection,list): return collection
+            if isinstance(collection,dict):
+                rows=[]
+                for canonical_id, work in collection.items():
+                    if not isinstance(work,dict): continue
+                    if not (work.get('workId') or work.get('id')):
+                        work=dict(work)
+                        work['workId']=canonical_id
+                    rows.append(work)
+                return rows
         vals=[v for v in payload.values() if isinstance(v,dict)]
         if vals: return vals
     raise ValueError('canonical shard has no Work collection')
@@ -40,7 +50,7 @@ def cover(work):
             src=v.get('src') or v.get('url') or v.get('href')
             if isinstance(src,str):return {'src':src,'source':v.get('source') or 'canonical','width':v.get('width'),'height':v.get('height')}
     ids=work.get('authorityIds') or {}
-    ol=(ids.get('openLibrary') if isinstance(ids,dict) else None) or work.get('openLibraryId')
+    ol=((ids.get('openLibraryWork') or ids.get('openLibrary')) if isinstance(ids,dict) else None) or work.get('openLibraryId')
     if ol:return {'src':f'https://covers.openlibrary.org/b/olid/{quote(str(ol))}-M.jpg?default=false','source':'open-library'}
     return {'src':None,'source':'dawn-placeholder'}
 
