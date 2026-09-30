@@ -1,0 +1,59 @@
+{
+  "schema":"dore.cinema-resource-expansion.v1",
+  "authority":"curated-official-playable",
+  "items":[
+    {
+      "canonicalId":"cinema:film:jesus-film:story-for-children",
+      "kind":"film",
+      "title":"The Story of Jesus for Children",
+      "creator":"Jesus Film Project",
+      "language":["en","multi"],
+      "durationSeconds":3660,
+      "topics":["耶穌生平","兒童","家庭","福音"],
+      "sourcePointer":"https://www.youtube.com/watch?v=H6u9eRxMbeE",
+      "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=H6u9eRxMbeE","embedUrl":"https://www.youtube-nocookie.com/embed/H6u9eRxMbeE","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "rights":{"rehost":false,"policy":"official-provider-embed"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube full movie and Jesus Film Project official watch page"}
+    },
+    {
+      "canonicalId":"cinema:short:jesus-film:my-last-day",
+      "kind":"animation-film",
+      "title":"My Last Day",
+      "creator":"Jesus Film Project",
+      "language":["en","multi"],
+      "durationSeconds":540,
+      "topics":["受難","十字架","悔改","強盜","動畫短片"],
+      "sourcePointer":"https://www.youtube.com/watch?v=1pY3s5P3MAo",
+      "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=1pY3s5P3MAo","embedUrl":"https://www.youtube-nocookie.com/embed/1pY3s5P3MAo","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "rights":{"rehost":false,"policy":"official-provider-embed"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube and Jesus Film Project official watch page"}
+    },
+    {
+      "canonicalId":"cinema:series:jesus-film:rivka",
+      "kind":"series",
+      "title":"Rivka",
+      "creator":"Jesus Film Project",
+      "series":"Rivka · 12 episodes",
+      "language":["en","multi"],
+      "episodeCount":12,
+      "topics":["初代教會","信仰生活","盼望","第一世紀"],
+      "sourcePointer":"https://www.youtube.com/watch?v=765-vl4MSZU",
+      "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=765-vl4MSZU","embedUrl":"https://www.youtube-nocookie.com/embed/765-vl4MSZU","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "rights":{"rehost":false,"policy":"official-provider-embed"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube full compilation and Jesus Film Project official 12-episode collection"}
+    },
+    {
+      "canonicalId":"cinema:film:jesus-film:magdalena",
+      "kind":"film",
+      "title":"Magdalena",
+      "creator":"Jesus Film Project",
+      "language":["en","multi"],
+      "durationSeconds":3660,
+      "topics":["抹大拉馬利亞","婦女","耶穌生平","福音"],
+      "sourcePointer":"https://www.jesusfilm.org/watch/magdalena.html/english.html",
+      "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/magdalena.html/english.html","official":true,"embed":false,"access":"official-source-handoff"}],
+      "rights":{"rehost":false,"policy":"official-source-only"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film Project official feature-film page; playable source exists but site embed not yet verified"}
+    }
+  ]
+}
