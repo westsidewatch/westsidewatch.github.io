@@ -1,0 +1,49 @@
+{
+  "id": "lanting-shenlong-image-source-pass-v0.1",
+  "work": "蘭亭序・神龍本",
+  "teacher": "wang-xizhi",
+  "purpose": "Identify a geometry-preserving high-resolution research image candidate without ingesting or publishing the image itself.",
+  "generationAllowed": false,
+  "canonicalObject": {
+    "institution": "故宮博物院",
+    "collectionId": "故00002597",
+    "dimensionsCm": [24.5, 69.9],
+    "layout": {"totalLines": 28, "totalCharacters": 324, "frontPaperLines": 13, "backPaperLines": 15},
+    "officialRecord": "https://www.dpm.org.cn/collection/handwriting/228279.html"
+  },
+  "candidate": {
+    "source": "集古作網・馮承素《摹蘭亭序》卷（神龍本）",
+    "url": "https://www.jiguzuo.com/shufa/feng-cheng-su-mo-lan-ting-xu-shen-long-ben.html",
+    "reportedRaster": {"width": 144503, "height": 6283, "dpi": 600, "reportedFileSize": "1.77 GB"},
+    "reportedObjectDimensionsCm": [24.5, 69.9],
+    "previewSegments": 25,
+    "status": "B-candidate-pending-registration",
+    "reason": "The page reports an ultra-high-resolution full-scroll raster and identifies the same Palace Museum object dimensions. It is suitable as a research registration candidate, but it is not promoted to authoritative geometry until the writing field, 28 original lines, and object landmarks are checked against the official museum record.",
+    "storagePolicy": "Do not commit or publish the source raster. Store only source reference, derived normalized measurements, provenance, and research annotations."
+  },
+  "negativeControl": {
+    "source": "蘭木・神龍本數字復刻",
+    "url": "https://lanmuy.com/works/lanting/index.html",
+    "status": "D-text-only",
+    "reason": "The site explicitly states that the original 28 irregular lines were rearranged into 27 lines of 12 characters; it cannot supply spatial evidence."
+  },
+  "registrationGate": {
+    "requiredChecks": [
+      "Confirm the raster preserves the complete writing field rather than a reconstructed typeset sequence.",
+      "Recover exactly 28 original writing lines, with 13 on the front paper and 15 on the back paper.",
+      "Locate the two-paper join and compare its position with the museum description.",
+      "Register normalized writing-field coordinates independently of seals, mounting and later colophons.",
+      "Bind transcription to line IDs before glyph boxes are created.",
+      "Retain complete parent-line geometry for every isolated glyph measurement."
+    ],
+    "promotion": {
+      "B-candidate-to-B-registered": "all geometry checks pass",
+      "B-registered-to-image-bound-evidence": "target glyph and parent line are measured and cross-checked against the official object record"
+    }
+  },
+  "targets": {
+    "是": {"textAnchor": "是日也", "status": "awaiting-line-registration"},
+    "和": {"textAnchor": "惠風和暢", "status": "awaiting-line-registration"}
+  },
+  "nextGate": "Register the candidate raster to the 28-line object geometry, identify the exact parent lines for 是 and 和, then record normalized line and glyph boxes."
+}
