@@ -75,15 +75,21 @@ def map_public_domain_source(work: dict) -> SourceMapping | None:
                 source_url=source_url,
                 policy=WitnessAccessPolicy(
                     witness_id=witness_id,
-                    mode=WitnessAccessMode.EXTERNAL_READER,
+                    mode=WitnessAccessMode.AUTHENTICATED_ACQUISITION,
                     source_name="Standard Ebooks",
                     source_url=source_url,
                     license_id="standard-ebooks-public-domain",
-                    terms_url="https://standardebooks.org/contribute/faq",
+                    terms_url="https://standardebooks.org/feeds",
                     automated_access_permitted=True,
                     full_text_storage_permitted=False,
                     persistent_cache_permitted=False,
-                    notes="Provider-specific public-domain mapping; persistence disabled by default.",
+                    authentication_required=True,
+                    authentication_scheme="http-basic",
+                    credential_env="STANDARD_EBOOKS_FEED_USERNAME",
+                    notes=(
+                        "Catalog identity remains usable without credentials. Full OPDS acquisition requires "
+                        "provider-authorized feed access; open-source projects may request access from Standard Ebooks."
+                    ),
                 ),
             )
 
