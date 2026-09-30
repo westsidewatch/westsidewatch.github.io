@@ -39,11 +39,11 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Index current library and project Chinese collection
-        run: python3 scripts/build_dawn_library_index.py
-
       - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
+
+      - name: Index current library and project refreshed Chinese collection
+        run: python3 scripts/build_dawn_library_index.py
 
       - name: Gate current canonical promotion queue
         run: python3 scripts/gate_dawn_canonical_promotion.py
