@@ -3,7 +3,10 @@ from __future__ import annotations
 import argparse,hashlib,json,re,unicodedata
 from pathlib import Path
 from typing import Any
-from dawn_collection_scope import classify
+try:
+ from scripts.dawn_collection_scope import classify
+except ModuleNotFoundError:  # Direct script execution keeps the legacy path.
+ from dawn_collection_scope import classify
 ROOT=Path(__file__).resolve().parents[1]
 DEFAULT_QUEUE=ROOT/'data/dawn-10k-work-queue.json';DEFAULT_STOREFRONT=ROOT/'static/dawn-library/storefront.json';DEFAULT_BIBLICAL_WORLD=ROOT/'static/dawn-library/biblical-world/catalog.json';DEFAULT_ADMISSIONS=ROOT/'data/dawn-publication-admissions';DEFAULT_READING_MAP=ROOT/'static/dawn-library/reading-pointer-map.json';DEFAULT_INDEX=ROOT/'static/dawn-library/canonical-index.json';DEFAULT_DAWN_SURFACE=ROOT/'static/dawn-library/surfaces/dawn-storefront.json';DEFAULT_MULTIWRITE_SURFACE=ROOT/'static/dawn-library/surfaces/multiwrite-biblical-world.json'
 FORBIDDEN_RUNTIME_TOKENS=('wikisource','zh.wikisource.org','openlibrary.org')
@@ -104,6 +107,7 @@ def assert_runtime_contract(index:dict,surfaces:list[dict])->None:
  if len(works)!=index.get('workCount'):raise ValueError('workCount does not match canonical works')
  for work_id,work in works.items():
   if work.get('collectionScope')=='excluded' or not classify(work)['admit']:raise ValueError(f'out-of-scope canonical work: {work_id}')
+  if work.get('readingPointer') and not local_runtime_pointer(work.get('readingPointer')):raise ValueError(f'forbidden runtime dependency: {work_id}')
   if work.get('workId')!=work_id:raise ValueError(f'canonical key mismatch: {work_id}')
 def build(queue:dict,storefront:dict,biblical_world:dict,admissions:list[dict]|None=None,reading_map:dict|None=None):
  works={};by_signature={};excluded=0
@@ -113,10 +117,10 @@ def build(queue:dict,storefront:dict,biblical_world:dict,admissions:list[dict]|N
   record=canonical_from_queue(item);work_id=record['workId'];works[work_id]=record;sig=signature(record['title'],record['authors'][0] if record['authors'] else '')
   if sig!='::':by_signature.setdefault(sig,work_id)
  dawn_surface=compile_storefront(storefront,works,by_signature);multiwrite_surface=compile_multiwrite_surface(biblical_world,works,by_signature);apply_publications(works,dawn_surface,admissions or []);reading_stats=apply_reading_pointer_map(works,reading_map or {});authority_backed=sum(1 for work in works.values() if work.get('authorityBacked'))
- index={'schema':'dawn.library.canonical-index.v2','identityAuthority':'Dawn','collectionPolicy':'Christian/Biblical religious holdings; Jewish research admitted; other religions excluded before canonical publication.','excludedByCollectionScope':excluded,'readingPointers':reading_stats,'workCount':len(works),'authorityBackedWorks':authority_backed,'works':dict(sorted(works.items()))};assert_runtime_contract(index,[dawn_surface,multiwrite_surface]);return index,dawn_surface,multiwrite_surface,reading_stats
+ index={'schema':'dawn.library.canonical-index.v2','identityAuthority':'Dawn','collectionPolicy':'Christian/Biblical religious holdings; Jewish research admitted; other religions excluded before canonical publication.','excludedByCollectionScope':excluded,'readingPointers':reading_stats,'workCount':len(works),'authorityBackedWorks':authority_backed,'works':dict(sorted(works.items()))};assert_runtime_contract(index,[dawn_surface,multiwrite_surface]);return index,dawn_surface,multiwrite_surface
 def write_json(path:Path,payload:dict)->None:path.parent.mkdir(parents=True,exist_ok=True);path.write_text(json.dumps(payload,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
 def main()->int:
  p=argparse.ArgumentParser();p.add_argument('--queue',type=Path,default=DEFAULT_QUEUE);p.add_argument('--storefront',type=Path,default=DEFAULT_STOREFRONT);p.add_argument('--biblical-world',type=Path,default=DEFAULT_BIBLICAL_WORLD);p.add_argument('--admissions-dir',type=Path,default=DEFAULT_ADMISSIONS);p.add_argument('--reading-map',type=Path,default=DEFAULT_READING_MAP);p.add_argument('--index-out',type=Path,default=DEFAULT_INDEX);p.add_argument('--dawn-surface-out',type=Path,default=DEFAULT_DAWN_SURFACE);p.add_argument('--multiwrite-surface-out',type=Path,default=DEFAULT_MULTIWRITE_SURFACE);args=p.parse_args();queue=read_json(args.queue)
  if queue.get('schema') not in ('dawn.library.10k-work-queue.v2','dawn.library.10k-work-queue.v3'):raise SystemExit('Step 6 queue missing or schema mismatch')
- admissions=load_publication_admissions(args.admissions_dir);reading_map=read_json(args.reading_map,{});index,dawn_surface,multiwrite_surface,reading_stats=build(queue,read_json(args.storefront,{'shelves':[]}),read_json(args.biblical_world,{'items':[]}),admissions,reading_map);write_json(args.index_out,index);write_json(args.dawn_surface_out,dawn_surface);write_json(args.multiwrite_surface_out,multiwrite_surface);print(json.dumps({'schema':index['schema'],'workCount':index['workCount'],'authorityBackedWorks':index['authorityBackedWorks'],'excludedByCollectionScope':index['excludedByCollectionScope'],'readingPointers':reading_stats},ensure_ascii=False));return 0
+ admissions=load_publication_admissions(args.admissions_dir);reading_map=read_json(args.reading_map,{});index,dawn_surface,multiwrite_surface=build(queue,read_json(args.storefront,{'shelves':[]}),read_json(args.biblical_world,{'items':[]}),admissions,reading_map);write_json(args.index_out,index);write_json(args.dawn_surface_out,dawn_surface);write_json(args.multiwrite_surface_out,multiwrite_surface);print(json.dumps({'schema':index['schema'],'workCount':index['workCount'],'authorityBackedWorks':index['authorityBackedWorks'],'excludedByCollectionScope':index['excludedByCollectionScope'],'readingPointers':index['readingPointers']},ensure_ascii=False));return 0
 if __name__=='__main__':raise SystemExit(main())
