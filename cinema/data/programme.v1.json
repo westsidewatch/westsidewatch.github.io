@@ -1,0 +1,39 @@
+{
+  "schema":"dore.paradise-cinema.programme.v1",
+  "timezone":"America/Toronto",
+  "editorialRule":"date -> occasion -> scripture -> work -> why",
+  "occasions":[
+    {
+      "id":"ordinary-gospel-jesus",
+      "kind":"editorial",
+      "label":"福音書中的耶穌",
+      "dateRule":{"type":"fallback"},
+      "workId":"cinema:video:jesus-film:jesus",
+      "scripture":["Luke 1–24"],
+      "why":"天堂電影院從福音本身開始。今晚的銀幕不是因為熱門排序，而是先回到《路加福音》所敘述的耶穌一生：降生、傳道、受難與復活。",
+      "priority":10
+    },
+    {
+      "id":"christmas-day",
+      "kind":"church-year",
+      "label":"聖誕日",
+      "dateRule":{"type":"annual","month":12,"day":25},
+      "workId":"cinema:video:jesus-film:jesus",
+      "scripture":["Luke 2:1–20"],
+      "why":"聖誕日的排片從降生敘事開始。電影把伯利恆放回完整福音故事之中，使馬槽不是孤立的聖誕圖像，而是通向十字架與復活的開端。",
+      "priority":100
+    },
+    {
+      "id":"epiphany",
+      "kind":"church-year",
+      "label":"主顯節",
+      "dateRule":{"type":"annual","month":1,"day":6},
+      "workId":"cinema:video:jesus-film:jesus",
+      "scripture":["Matthew 2:1–12"],
+      "why":"主顯節記念基督向萬民顯明。今天看片的理由不是重播聖誕，而是從外邦人尋見基督的方向重新觀看福音。",
+      "priority":90
+    }
+  ],
+  "week":{"mode":"derive-from-occasions","days":7},
+  "subtitlePolicy":{"format":"WebVTT","defaultLanguage":"zh-Hant","rights":"subtitle rights are verified separately from embed rights"}
+}
