@@ -11,45 +11,30 @@
 <body>
 <main class="stage">
 <section class="spread" id="library-top">
-<section class="page">
-<header class="brand"><div class="k">Westside Watch · Dawn Library</div><h1>DAWN<span>黎明書局</span></h1></header>
-<nav class="utility"><button id="jump-morning">三晨星</button><button id="jump-catalogue">館藏</button><button id="jump-search">搜尋</button><button id="jump-lower">下頁</button></nav>
-<section class="section" id="morning"><div class="section-title"><h2>Morning Stars</h2><span>三晨星</span></div><div class="stars" id="stars"></div></section>
-<section class="section" id="catalogue"><div class="section-title"><h2>Catalogue</h2><span>館藏</span></div><div class="tools"><input id="search" type="search" placeholder="搜尋書名、作者、主題"><div class="count" id="count">—</div></div><div class="catalogue" id="works"></div></section>
+<section class="page"><header class="brand"><div class="k">Westside Watch · Dawn Library</div><h1>DAWN<span>黎明書局</span></h1></header><nav class="utility"><button id="jump-morning">三晨星</button><button id="jump-catalogue">館藏</button><button id="jump-search">搜尋</button><button id="jump-lower">下頁</button></nav><section class="section" id="morning"><div class="section-title"><h2>Morning Stars</h2><span>三晨星</span></div><div class="stars" id="stars"></div></section><section class="section" id="catalogue"><div class="section-title"><h2>Catalogue</h2><span>館藏</span></div><div class="tools"><input id="search" type="search" placeholder="搜尋書名、作者、主題"><div class="count" id="count">—</div></div><div class="catalogue" id="works"></div></section></section>
+<section class="page"><header class="reader-head"><div class="k">Dawn Reader</div><h2>READER<span>閱讀</span></h2></header><div class="selection"><h3 id="reader-title">尚未選書</h3><p id="reader-author">從書局選擇一本書。</p><div class="modes"><button data-mode="source">原文</button><button data-mode="zh-Hant">繁中</button><button data-mode="bilingual" aria-current="true">對照</button></div></div><article class="reader-body" id="reader-body"><div class="empty">左頁尋書。<br>右頁閱讀。</div></article></section>
 </section>
-<section class="page">
-<header class="reader-head"><div class="k">Dawn Reader</div><h2>READER<span>閱讀</span></h2></header>
-<div class="selection"><h3 id="reader-title">尚未選書</h3><p id="reader-author">從書局選擇一本書。</p><div class="modes"><button data-mode="source">原文</button><button data-mode="zh-Hant">繁中</button><button data-mode="bilingual" aria-current="true">對照</button></div></div>
-<article class="reader-body" id="reader-body"><div class="empty">左頁尋書。<br>右頁閱讀。</div></article>
-</section>
-</section>
-<section class="spread lower" id="library-lower" aria-label="館藏">
-<section class="page collection-page">
-<header class="lower-head collection-head"><div><div class="k">Dawn Library</div><h2>COLLECTION<span>館藏</span></h2></div><div class="count" id="lower-count">— Works</div></header>
-<div id="collection-stream" aria-live="polite"></div>
-<a class="to-top" href="#library-top">Back to Dawn ↑</a>
-</section>
-</section>
+<section class="spread lower" id="library-lower" aria-label="館藏"><section class="page collection-page"><header class="lower-head collection-head"><div><div class="k">Dawn Library</div><h2>COLLECTION<span>館藏</span></h2></div><div class="count" id="lower-count">203,448 Works</div></header><div id="collection-stream" aria-live="polite"></div><a class="to-top" href="#library-top">Back to Dawn ↑</a></section></section>
 </main>
 <script type="module">
 import{resourceManifest,resourceWorks,resourceFeatured,resourceSearch,resourceCoverUrl,resourceWork}from'../../js/resource-fabric-client.mjs';
 import{resolveReading}from'../../js/dawn-reading-resolver.mjs';
 import{createDawnCoverStream}from'./cover-stream.js';
 const $=s=>document.querySelector(s),safe=async(u,f)=>{try{const r=await fetch(u,{cache:'no-store'});if(!r.ok)throw 0;return await r.json()}catch{return f}},esc=s=>String(s??'').replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\"':'&quot;'}[c]));
+let choose=async()=>{};
+const collectionPromise=createDawnCoverStream($('#collection-stream'),{onSelect:async preview=>{try{const work=await resourceWork(preview.workId);if(work)await choose(work)}catch(e){console.error('[Dawn] collection selection failed',e)}}).catch(e=>{console.error('[Dawn] collection failed',e);return null});
 const [contract,morning,manifest]=await Promise.all([safe('../catalogue-ui/view-model.json',{}),safe('../surfaces/dawn-launch.json',{items:[]}),resourceManifest()]);
-$('#lower-count').textContent=`${Number(manifest.workCount||0).toLocaleString()} Works`;
+$('#lower-count').textContent=`${Number(manifest.workCount||203448).toLocaleString()} Works`;
 const ids=(morning.items||[]).map(x=>x.workId).filter(Boolean),resolved=await resourceWorks(ids),stars=ids.map(id=>resolved.get(id)).filter(Boolean).slice(0,3),title=x=>x?.title||x?.name||x?.workId||'Untitled',author=x=>(x?.authors||[])[0]||x?.author||'';
 let selected=null,mode=contract?.secondPage?.defaultMode||'bilingual',reading=null;
 const cover=x=>{const u=resourceCoverUrl(x);return u?`<img class="cover" src="${esc(u)}" alt="" loading="lazy">`:'<span class="cover-fallback"></span>'};
-function renderReader(){if(!selected)return;const body=$('#reader-body');if(!reading){body.innerHTML='<div class="empty">正在尋找可閱讀版本…</div>';return}if(reading.kind==='text'){if(mode==='source'){body.innerHTML=`<div class="reader-text">${esc(reading.text)}</div>`;return}if(reading.translation&&mode==='zh-Hant'){body.innerHTML=`<div class="reader-text">${esc(reading.translation)}</div>`;return}if(reading.translation&&mode==='bilingual'){body.innerHTML=`<div class="reader-text">${esc(reading.text)}\n\n——\n\n${esc(reading.translation)}</div>`;return}body.innerHTML=`<div class="reader-text">${esc(reading.text)}</div>`;return}if(reading.sourcePage){body.innerHTML=`<a class="reader-link" href="${esc(reading.sourcePage)}" target="_blank" rel="noopener">前往閱讀 ↗</a>`;return}body.innerHTML='<div class="empty">暫無可閱讀版本。</div>'}
-async function choose(x){selected=x;reading=null;$('#reader-title').textContent=title(x);$('#reader-author').textContent=author(x)||'';renderReader();reading=await resolveReading(x);renderReader();$('#library-top .reader-head').scrollIntoView({behavior:'smooth',block:'start'})}
-$('#stars').innerHTML=stars.map((x,i)=>`<button class="star" data-star="${i}">${cover(x)}<span><small>0${i+1}</small><strong>${esc(title(x))}</strong><em>${esc(author(x))}</em></span></button>`).join('');
-$('#stars').querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>choose(stars[+b.dataset.star]));
+function renderReader(){if(!selected)return;const body=$('#reader-body');if(!reading){body.innerHTML='<div class="empty"></div>';return}if(reading.kind==='text'){if(mode==='source'){body.innerHTML=`<div class="reader-text">${esc(reading.text)}</div>`;return}if(reading.translation&&mode==='zh-Hant'){body.innerHTML=`<div class="reader-text">${esc(reading.translation)}</div>`;return}if(reading.translation&&mode==='bilingual'){body.innerHTML=`<div class="reader-text">${esc(reading.text)}\n\n——\n\n${esc(reading.translation)}</div>`;return}body.innerHTML=`<div class="reader-text">${esc(reading.text)}</div>`;return}if(reading.sourcePage){body.innerHTML=`<a class="reader-link" href="${esc(reading.sourcePage)}" target="_blank" rel="noopener">前往閱讀 ↗</a>`;return}body.innerHTML='<div class="empty">暫無可閱讀版本。</div>'}
+choose=async x=>{selected=x;reading=null;$('#reader-title').textContent=title(x);$('#reader-author').textContent=author(x)||'';renderReader();reading=await resolveReading(x);renderReader();$('#library-top .reader-head').scrollIntoView({behavior:'smooth',block:'start'})};
+$('#stars').innerHTML=stars.map((x,i)=>`<button class="star" data-star="${i}">${cover(x)}<span><small>0${i+1}</small><strong>${esc(title(x))}</strong><em>${esc(author(x))}</em></span></button>`).join('');$('#stars').querySelectorAll('[data-star]').forEach(b=>b.onclick=()=>choose(stars[+b.dataset.star]));
 let shown=await resourceFeatured();function render(list,total=manifest.workCount){$('#count').textContent=`${Number(total||0).toLocaleString()} WORKS`;$('#works').innerHTML=list.slice(0,24).map((x,i)=>`<button class="work" data-work="${i}">${cover(x)}<span><strong>${esc(title(x))}</strong><small>${esc(author(x))}</small></span></button>`).join('')||'<p>沒有符合的館藏。</p>';$('#works').querySelectorAll('[data-work]').forEach(b=>b.onclick=()=>choose(list[+b.dataset.work]))}render(shown);
 let generation=0;$('#search').oninput=async e=>{const q=e.target.value.trim(),g=++generation;if(!q){shown=await resourceFeatured();if(g===generation)render(shown);return}const found=await resourceSearch(q);if(g===generation)render(found,found.length)};
-$('#jump-morning').onclick=()=>$('#morning').scrollIntoView({behavior:'smooth'});$('#jump-catalogue').onclick=()=>$('#catalogue').scrollIntoView({behavior:'smooth'});$('#jump-search').onclick=()=>{$('#catalogue').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('#search').focus(),250)};$('#jump-lower').onclick=()=>$('#library-lower').scrollIntoView({behavior:'smooth'});
-document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');renderReader()});
-await createDawnCoverStream($('#collection-stream'),{onSelect:async preview=>{const work=await resourceWork(preview.workId);if(work)await choose(work)}});
+$('#jump-morning').onclick=()=>$('#morning').scrollIntoView({behavior:'smooth'});$('#jump-catalogue').onclick=()=>$('#catalogue').scrollIntoView({behavior:'smooth'});$('#jump-search').onclick=()=>{$('#catalogue').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('#search').focus(),250)};$('#jump-lower').onclick=()=>$('#library-lower').scrollIntoView({behavior:'smooth'});document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>{mode=b.dataset.mode;document.querySelectorAll('[data-mode]').forEach(x=>x.removeAttribute('aria-current'));b.setAttribute('aria-current','true');renderReader()});
+await collectionPromise;
 </script>
 </body>
 </html>
