@@ -1,0 +1,87 @@
+{
+  "id": "calligraphy-research-publication-gate-v0.1",
+  "purpose": "Separate internal calligraphy research eligibility from Daylight Cafe public exhibition eligibility.",
+  "defaultPolicy": {
+    "researchAllowed": true,
+    "publicDisplayAllowed": true,
+    "wholeWorkPublicDisplayAllowed": true
+  },
+  "researchCorpus": {
+    "description": "Internal evidence layer for Teacher Memory, Hand Grammar, character retrieval, component study, phrase-flow study, copies/tracings/rubbings and reconstruction research.",
+    "mayUseNonPublicWorks": true,
+    "mayUseCopies": true,
+    "mayUseTracingCopies": true,
+    "mayUseRubbings": true,
+    "mayUseRemoteResourcesWithoutDownloadingWholeWork": true,
+    "provenanceRequired": true
+  },
+  "daylightCafe": {
+    "description": "Public-facing calligraphy-post exhibition in Daylight Cafe. This is a curated publication surface, not a mirror of the Research Corpus.",
+    "queryRule": "Only records with publicDisplayAllowed=true may be returned to Daylight Cafe exhibition queries.",
+    "wholeWorkRule": "A work with wholeWorkPublicDisplayAllowed=false must never appear as a complete displayed calligraphy resource, even when internal research evidence derived from it is retained.",
+    "excludedWholeWorkCategories": [
+      "金剛經",
+      "道德經",
+      "佛教寺廟相關作品",
+      "佛教經典或寺院語境作品 explicitly marked non-public by project policy"
+    ]
+  },
+  "policyExamples": [
+    {
+      "work": "懷仁集王羲之聖教序",
+      "researchAllowed": true,
+      "publicDisplayAllowed": false,
+      "wholeWorkPublicDisplayAllowed": false,
+      "researchUses": ["王羲之字形傳承研究","結體研究","部件研究","行書規則研究","TC001 缺字證據","Project Hand 補字研究"],
+      "publicationNote": "May contribute internal evidence but must not be surfaced as a Daylight Cafe exhibition resource."
+    },
+    {
+      "work": "金剛經相關書法作品",
+      "researchAllowed": true,
+      "publicDisplayAllowed": false,
+      "wholeWorkPublicDisplayAllowed": false
+    },
+    {
+      "work": "道德經相關書法作品",
+      "researchAllowed": true,
+      "publicDisplayAllowed": false,
+      "wholeWorkPublicDisplayAllowed": false
+    }
+  ],
+  "evidenceInheritance": {
+    "rule": "Derived research observations inherit source provenance and publication restriction metadata.",
+    "historicalGlyphEvidence": "A glyph or structural observation from a non-public work may inform Teacher Memory and Project Hand internally. It does not make the source work eligible for public exhibition.",
+    "generatedProjectOutput": "Future original Project Hand output is evaluated under its own publication policy and does not automatically inherit whole-work exhibition status from every research source used to learn grammar."
+  },
+  "requiredFieldsForRestrictedSources": [
+    "researchAllowed",
+    "publicDisplayAllowed",
+    "wholeWorkPublicDisplayAllowed",
+    "restrictionReason",
+    "sourceProvenance"
+  ],
+  "gateOrder": [
+    "source registration",
+    "research eligibility",
+    "Teacher Memory / Hand Grammar evidence processing",
+    "public exhibition eligibility",
+    "Daylight Cafe query"
+  ],
+  "hardRules": [
+    "Research exclusion and publication exclusion are different decisions.",
+    "Never discard useful internal evidence merely because the complete source work is excluded from Daylight Cafe.",
+    "Never expose a restricted complete work through Daylight Cafe merely because individual evidence records are research-eligible.",
+    "Do not download whole works by default; use remote-resource adapters and existing transcoding infrastructure when visual access is required.",
+    "All derived evidence remains traceable to its source and restriction state."
+  ],
+  "tc001Correction": {
+    "work": "懷仁集王羲之聖教序",
+    "previousTreatment": "hits excluded from coverage because the work was treated as globally prohibited",
+    "correctedTreatment": "restore hits such as 端、智、慧、是 as research candidates with restricted-publication provenance; verify each candidate before promoting its TC001 evidence state",
+    "generationAllowed": false
+  },
+  "nextGate": {
+    "name": "restricted-research-evidence-pass",
+    "requirement": "Verify TC001 candidates from research-allowed/public-hidden sources and bind them to Teacher Memory without making those works visible in Daylight Cafe."
+  }
+}
