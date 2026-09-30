@@ -1,7 +1,7 @@
 """Source mapping for lawful book-text materialization.
 
 Maps bibliographic authority records to known full-text providers without
-making Open Library bibliographic identity itself a full-text source.
+making bibliographic identity itself permission to fetch full text.
 """
 from __future__ import annotations
 
@@ -24,13 +24,7 @@ def _clean(value: object) -> str:
 
 
 def map_public_domain_source(work: dict) -> SourceMapping | None:
-    """Return a materializable source only when an explicit provider id exists.
-
-    Supported mappings deliberately require provider-specific identifiers.
-    ISBN/Open Library IDs remain bibliographic authority and never silently
-    become permission to fetch full text.
-    """
-    work_id = _clean(work.get("workId"))
+    """Map explicit provider identities to access-policy-bound reader sources."""
     ids = work.get("authorityIds") or {}
     edition = work.get("edition") or {}
 
@@ -53,11 +47,14 @@ def map_public_domain_source(work: dict) -> SourceMapping | None:
                 source_name="Project Gutenberg",
                 source_url=source_url,
                 license_id="project-gutenberg-license",
-                terms_url="https://www.gutenberg.org/policy/license.html",
-                automated_access_permitted=True,
+                terms_url="https://www.gutenberg.org/policy/terms_of_use.html",
+                automated_access_permitted=False,
                 full_text_storage_permitted=False,
                 persistent_cache_permitted=False,
-                notes="Public-domain source mapping; persistence remains disabled by default.",
+                notes=(
+                    "Human-reader source only. Project Gutenberg states that its website is for human users; "
+                    "Doré keeps the canonical landing-page pointer but does not automate website text retrieval."
+                ),
             ),
         )
 
