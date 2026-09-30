@@ -1,0 +1,51 @@
+{
+  "schema": "dore.cinema-clean-inventory.v1",
+  "status": "classification-baseline",
+  "principle": "cinema-collects-works-not-video-resources",
+  "admission": {
+    "allowedKinds": ["film", "documentary", "animation", "series"],
+    "excludedKinds": ["sermon", "teaching", "course", "bible-study"],
+    "goodTv": {
+      "mode": "friend-link-only",
+      "index": false,
+      "preview": false,
+      "embed": false,
+      "resourceDiscovery": false
+    }
+  },
+  "routing": {
+    "sermon": "olive-mountain",
+    "teaching": "emmaus",
+    "course": "emmaus",
+    "bible-study": "emmaus"
+  },
+  "assetPreservation": [
+    "canonicalId",
+    "title",
+    "kind",
+    "source",
+    "officialUrl",
+    "embedUrl",
+    "runtime",
+    "timestamps",
+    "metadata"
+  ],
+  "cinemaCandidates": [
+    "cinema:film:patterns-of-evidence:moses-controversy",
+    "cinema:film:patterns-of-evidence:red-sea-miracle-1",
+    "cinema:film:patterns-of-evidence:red-sea-miracle-2"
+  ],
+  "pendingClassification": [
+    "JESUS / Jesus Film Project",
+    "The Chosen"
+  ],
+  "excludedSourceFamiliesPendingMigration": [
+    "Chinese Sermons",
+    "BibleProject"
+  ],
+  "notes": [
+    "Do not redesign Cinema until classification and asset salvage are complete.",
+    "Provider identity never creates a Cinema section.",
+    "GOOD TV is intentionally excluded from resource engineering."
+  ]
+}
