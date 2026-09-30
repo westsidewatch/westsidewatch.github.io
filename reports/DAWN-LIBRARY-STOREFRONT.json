@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-30T18:46:36.849604+00:00",
+  "generatedAt": "2026-09-30T19:54:06.160754+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -23,6 +23,12 @@
     {
       "id": "internet-archive-原版古籍-聖經歷史與地理",
       "title": "原版古籍 · 聖經歷史與地理",
+      "books": 20,
+      "source": "Internet Archive"
+    },
+    {
+      "id": "internet-archive-原版古籍-教會歷史",
+      "title": "原版古籍 · 教會歷史",
       "books": 20,
       "source": "Internet Archive"
     },
@@ -63,13 +69,13 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 194,
-  "sourceCovers": 143,
+  "mappedBooks": 214,
+  "sourceCovers": 163,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
-    "Internet Archive": 20,
+    "Internet Archive": 40,
     "Project Gutenberg": 112
   },
   "identity": {
@@ -83,10 +89,6 @@
     {
       "source": "Wikisource",
       "error": "empty-shelf"
-    },
-    {
-      "source": "Internet Archive church history",
-      "error": "TimeoutError: The read operation timed out"
     }
   ],
   "contentDownloaded": false
