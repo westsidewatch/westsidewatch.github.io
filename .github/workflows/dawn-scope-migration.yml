@@ -1,0 +1,46 @@
+name: Dawn Scope Migration
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/rebuild_dawn_collection_scope.py
+      - scripts/dawn_collection_scope.py
+      - .github/workflows/dawn-scope-migration.yml
+permissions:
+  contents: write
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Rebuild current collection through scope gate
+        run: python3 scripts/rebuild_dawn_collection_scope.py
+      - name: Verify no excluded work remains
+        run: |
+          python3 - <<'PY'
+          import json,sys
+          from pathlib import Path
+          sys.path.insert(0,'scripts')
+          from dawn_collection_scope import classify
+          p=json.loads(Path('static/dawn-library/canonical-index.json').read_text())
+          bad=[wid for wid,w in p.get('works',{}).items() if not classify(w)['admit']]
+          print('workCount=',p.get('workCount'))
+          print('excludedRemaining=',len(bad))
+          if bad: raise SystemExit('scope gate failed')
+          PY
+      - name: Publish migration
+        run: |
+          git config user.name 'Dore CI'
+          git config user.email 'dore-ci@users.noreply.github.com'
+          git add static/dawn-library/canonical-index.json static/dawn-library/cover-preview static/dawn-library/cover-authority static/dawn-library/surfaces data/dawn-collection-scope-audit.json
+          if git diff --cached --quiet; then echo 'No migration changes.'; exit 0; fi
+          git commit -m 'data(dawn): apply locked collection scope [skip ci]'
+          git pull --rebase origin main
+          git push origin HEAD:main
