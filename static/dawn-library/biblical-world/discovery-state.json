@@ -7,9 +7,9 @@
     "project-gutenberg": {
       "mode": "opds",
       "cursor": "per-query-opds-next",
-      "lastChecked": "2026-09-30T04:44:14.867559+00:00",
+      "lastChecked": "2026-09-30T05:05:35.088005+00:00",
       "queryCursors": {
-        "Josephus": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus",
+        "Josephus": "https://www.gutenberg.org/ebooks/search.opds/?query=Josephus&start_index=26",
         "Eusebius": "https://www.gutenberg.org/ebooks/search.opds/?query=Eusebius",
         "Augustine": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine",
         "Bible history": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history",
@@ -58,7 +58,7 @@
         "sermons Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=sermons+Christianity",
         "hymns Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity",
         "church fathers": "https://www.gutenberg.org/ebooks/search.opds/?query=church+fathers",
-        "church history Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=church+history+Christianity&start_index=101",
+        "church history Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=church+history+Christianity&start_index=126",
         "Reformation Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=Reformation+Christianity",
         "Puritans Christianity": "https://www.gutenberg.org/ebooks/search.opds/?query=Puritans+Christianity",
         "Hebrew Bible": "https://www.gutenberg.org/ebooks/search.opds/?query=Hebrew+Bible",
@@ -81,7 +81,7 @@
     "deferred": 1,
     "candidateQueue": 73,
     "newThisRun": 0,
-    "pagesCheckedThisRun": 32
+    "pagesCheckedThisRun": 8
   },
   "rules": {
     "downloadFullTextDuringDiscovery": false,

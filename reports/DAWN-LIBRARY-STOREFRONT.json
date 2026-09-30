@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-30T04:48:39.348965+00:00",
+  "generatedAt": "2026-09-30T05:11:24.274876+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -33,26 +33,32 @@
       "source": "Internet Archive"
     },
     {
-      "id": "gutenberg-philosophy-classics",
-      "title": "哲學與思想",
+      "id": "gutenberg-bible-christianity",
+      "title": "聖經與基督教",
       "books": 25,
+      "source": "Project Gutenberg"
+    },
+    {
+      "id": "gutenberg-early-church-fathers",
+      "title": "早期教會與教父",
+      "books": 10,
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 127,
+  "mappedBooks": 137,
   "sourceCovers": 118,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
     "Internet Archive": 40,
-    "Project Gutenberg": 25
+    "Project Gutenberg": 35
   },
   "identity": {
     "queriedThisRun": 0,
-    "resolved": 58,
+    "resolved": 66,
     "coversAdded": 20,
-    "internetArchiveLinks": 27,
+    "internetArchiveLinks": 22,
     "cacheEntries": 203
   },
   "errors": [
@@ -62,22 +68,17 @@
     },
     {
       "source": "Project Gutenberg",
-      "query": "bible christianity",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "early church fathers",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
-    },
-    {
-      "source": "Project Gutenberg",
       "query": "jewish history josephus",
       "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     },
     {
       "source": "Project Gutenberg",
       "query": "ancient history archaeology",
+      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
+    },
+    {
+      "source": "Project Gutenberg",
+      "query": "philosophy classics",
       "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     },
     {
