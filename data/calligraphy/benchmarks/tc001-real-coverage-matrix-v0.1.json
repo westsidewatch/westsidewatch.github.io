@@ -5,15 +5,15 @@
   "matrixPurpose": "Operational 11 x 4 evidence matrix. A cell becomes resolved only after a source-bound corpus record with retained line/column context is attached.",
   "characters": ["敬","畏","耶","和","華","是","智","慧","的","開","端"],
   "teachers": ["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
-  "states": ["context-match","same-work","same-teacher","transcription-bound","structural-analogue","unresolved"],
+  "states": ["context-match","same-work","same-teacher","transcription-bound","parallel-witness","structural-analogue","unresolved"],
   "admissionRule": "No visual guess, dictionary-font substitute, cross-teacher glyph, or generated glyph may resolve a cell.",
   "matrix": {
     "敬": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "畏": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "耶": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
-    "和": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-he-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "和": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-he-001","wxz-lanting-mige-he-001","wxz-lanting-dingwu-he-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "華": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
-    "是": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-shi-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "是": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-shi-001","wxz-lanting-mige-shi-001","wxz-lanting-dingwu-shi-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "智": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "慧": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "的": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
@@ -21,44 +21,24 @@
     "端": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}}
   },
   "records": {
-    "wxz-lanting-shenlong-shi-001": {
-      "recordId":"wxz-lanting-shenlong-shi-001","character":"是","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/journal_detail/239217.html","attributionStatus":"傳馮承素摹王羲之；唐摹本系統","context":{"previousCharacter":"情","nextCharacter":"日","twoCharacterWindow":"是日","threeCharacterWindow":"是日也","fiveCharacterWindow":"幽情是日也"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"神龍本為唐摹蘭亭序的重要傳本。釋文確認『是日也』；在完成高清原卷定位前不得升級為 same-work glyph-bound。"
-    },
-    "wxz-lanting-shenlong-he-001": {
-      "recordId":"wxz-lanting-shenlong-he-001","character":"和","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/journal_detail/239217.html","attributionStatus":"傳馮承素摹王羲之；唐摹本系統","context":{"previousCharacter":"風","nextCharacter":"暢","twoCharacterWindow":"和暢","threeCharacterWindow":"風和暢","fiveCharacterWindow":"清惠風和暢"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"釋文確認『惠風和暢』。保留原字組，等待高清原卷定位後測量字距、欹側、出入勢。"
-    }
+    "wxz-lanting-shenlong-shi-001": {"recordId":"wxz-lanting-shenlong-shi-001","character":"是","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/collection/handwriting/228279.html","attributionStatus":"唐馮承素摹王羲之；故宮藏神龍本","context":{"previousCharacter":"情","nextCharacter":"日","twoCharacterWindow":"是日","threeCharacterWindow":"是日也","fiveCharacterWindow":"幽情是日也"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"故宮藏神龍本縱24.5厘米、橫69.9厘米，為楮紙兩幅拼接。故宮說明《蘭亭序》凡二十八行三百二十四字。釋文位置為『是日也』。"},
+    "wxz-lanting-shenlong-he-001": {"recordId":"wxz-lanting-shenlong-he-001","character":"和","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/collection/handwriting/228279.html","attributionStatus":"唐馮承素摹王羲之；故宮藏神龍本","context":{"previousCharacter":"風","nextCharacter":"暢","twoCharacterWindow":"和暢","threeCharacterWindow":"風和暢","fiveCharacterWindow":"清惠風和暢"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"釋文位置為『惠風和暢』。原卷空間測量仍必須直接基於神龍本影像，不以重排版代替。"},
+    "wxz-lanting-mige-shi-001": {"recordId":"wxz-lanting-mige-shi-001","character":"是","teacher":"wang-xizhi","work":"祕閣帖（一）・晉王羲之蘭亭序","workState":"Song modelbook witness","lineOrColumnId":"pending-image-coordinate","sourceType":"later-copy","sourceURI":"https://digitalarchive.npm.gov.tw/Collection/Detail/28034?dep=P","attributionStatus":"國立故宮著錄王羲之；宋宣和二年法帖","context":{"previousCharacter":"情","nextCharacter":"日","twoCharacterWindow":"是日","threeCharacterWindow":"是日也","fiveCharacterWindow":"幽情是日也"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"parallel-witness transcription-bound","evidenceNote":"平行傳本確認同一文本位置，可用於比較字形傳承差異，不得覆蓋神龍本自身空間證據。"},
+    "wxz-lanting-mige-he-001": {"recordId":"wxz-lanting-mige-he-001","character":"和","teacher":"wang-xizhi","work":"祕閣帖（一）・晉王羲之蘭亭序","workState":"Song modelbook witness","lineOrColumnId":"pending-image-coordinate","sourceType":"later-copy","sourceURI":"https://digitalarchive.npm.gov.tw/Collection/Detail/28034?dep=P","attributionStatus":"國立故宮著錄王羲之；宋宣和二年法帖","context":{"previousCharacter":"風","nextCharacter":"暢","twoCharacterWindow":"和暢","threeCharacterWindow":"風和暢","fiveCharacterWindow":"清惠風和暢"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"parallel-witness transcription-bound","evidenceNote":"與神龍本同文位置的宋代法帖見證，供後續 witness comparison。"},
+    "wxz-lanting-dingwu-shi-001": {"recordId":"wxz-lanting-dingwu-shi-001","character":"是","teacher":"wang-xizhi","work":"定武蘭亭序墨拓本","workState":"rubbing witness","lineOrColumnId":"pending-image-coordinate","sourceType":"rubbing","sourceURI":"https://digitalarchive.npm.gov.tw/Collection/Detail/31280?dep=P","attributionStatus":"國立故宮藏定武蘭亭序墨拓本","context":{"previousCharacter":"情","nextCharacter":"日","twoCharacterWindow":"是日","threeCharacterWindow":"是日也","fiveCharacterWindow":"幽情是日也"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"parallel-witness transcription-bound","evidenceNote":"拓本只作字形傳承與結構對照，不代替唐摹墨跡的墨法、壓力與原始筆觸證據。"},
+    "wxz-lanting-dingwu-he-001": {"recordId":"wxz-lanting-dingwu-he-001","character":"和","teacher":"wang-xizhi","work":"定武蘭亭序墨拓本","workState":"rubbing witness","lineOrColumnId":"pending-image-coordinate","sourceType":"rubbing","sourceURI":"https://digitalarchive.npm.gov.tw/Collection/Detail/31280?dep=P","attributionStatus":"國立故宮藏定武蘭亭序墨拓本","context":{"previousCharacter":"風","nextCharacter":"暢","twoCharacterWindow":"和暢","threeCharacterWindow":"風和暢","fiveCharacterWindow":"清惠風和暢"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"parallel-witness transcription-bound","evidenceNote":"拓本可協助判斷結構穩定特徵，但不能用於推定原墨跡壓力變化。"}
   },
   "wangXizhiPass": {
-    "status":"first-source-bound-pass",
+    "status":"witness-ladder-established",
     "directTranscriptionHits":["是","和"],
     "unresolved":["敬","畏","耶","華","智","慧","的","開","端"],
     "verifiedNegativeCoreWorks":["快雪時晴帖","雨後帖"],
-    "importantFinding":"Core works can contribute Hand Grammar without contributing direct TC001 glyph coverage.",
-    "nextAction":"Bind 是 and 和 to exact high-resolution Shenlong image coordinates and full original line context; then expand Wang Xizhi facsimile/copy/rubbing search for the remaining nine characters."
+    "lantingWitnessLadder":["神龍本（唐摹墨跡，primary spatial witness）","祕閣帖蘭亭序（宋法帖，parallel witness）","定武蘭亭拓本（rubbing structural witness）"],
+    "importantFinding":"The same textual positions for 是 and 和 survive across independent Lanting witness classes. These witnesses must be compared, not averaged. Tang tracing-copy evidence remains primary for spatial/brush study; modelbooks and rubbings are controls for transmission and structure.",
+    "nextAction":"Acquire/resolve an image representation of the Shenlong scroll that preserves its original 28-line layout; then attach exact line IDs and normalized bounding boxes for 是 and 和 before any isolated glyph crop is admitted."
   },
-  "recordContract": {
-    "required": ["recordId","character","teacher","work","workState","lineOrColumnId","sourceType","sourceURI","attributionStatus","context","spatial","brushObservation"],
-    "context": ["previousCharacter","nextCharacter","twoCharacterWindow","threeCharacterWindow","fiveCharacterWindow"],
-    "spatial": ["boundingBox","relativeScale","centerOfGravity","lean","interCharacterGap","lineAxisOffset"],
-    "brushObservation": ["entryDirection","exitDirection","pressureChange","visibleLink","implicitContinuation"]
-  },
-  "coverageMetrics": {
-    "resolvedCells": 0,
-    "transcriptionBoundCells": 2,
-    "totalCells": 44,
-    "wangXizhiTranscriptionCoverage": 0.1818,
-    "historicalGlyphCoverage": 0.0,
-    "contextMatchCoverage": 0.0,
-    "note": "是 and 和 are source/transcription-bound but intentionally not counted as resolved until image coordinates and original spatial context are attached."
-  },
-  "specialHandling": {
-    "耶": "Expect lower historical coverage. Do not treat rarity as permission to synthesize early; collect component and structural analogues separately.",
-    "的": "Modern-frequency expectations must not bias historical retrieval. Preserve historical variants and contextual forms.",
-    "耶和華": "All three characters remain subject to the scripture-name readability gate before stylistic ranking."
-  },
-  "nextGate": {
-    "name": "wang-xizhi-image-bound-first-cells",
-    "requirement": "Locate 是 and 和 in a high-resolution Shenlong witness, retain the complete original line/column crop, and attach measurable spatial/brush observations before marking either cell resolved.",
-    "generationAllowedAfterThisFile": false
-  }
+  "recordContract": {"required":["recordId","character","teacher","work","workState","lineOrColumnId","sourceType","sourceURI","attributionStatus","context","spatial","brushObservation"],"context":["previousCharacter","nextCharacter","twoCharacterWindow","threeCharacterWindow","fiveCharacterWindow"],"spatial":["boundingBox","relativeScale","centerOfGravity","lean","interCharacterGap","lineAxisOffset"],"brushObservation":["entryDirection","exitDirection","pressureChange","visibleLink","implicitContinuation"]},
+  "coverageMetrics": {"resolvedCells":0,"transcriptionBoundCells":2,"parallelWitnessRecords":4,"totalCells":44,"wangXizhiTranscriptionCoverage":0.1818,"historicalGlyphCoverage":0.0,"contextMatchCoverage":0.0,"note":"是 and 和 now have a three-level Lanting witness ladder but remain unresolved until the Shenlong image coordinate is bound."},
+  "specialHandling": {"耶":"Expect lower historical coverage. Do not treat rarity as permission to synthesize early; collect component and structural analogues separately.","的":"Modern-frequency expectations must not bias historical retrieval. Preserve historical variants and contextual forms.","耶和華":"All three characters remain subject to the scripture-name readability gate before stylistic ranking."},
+  "nextGate": {"name":"shenlong-original-layout-binding","requirement":"Bind 是 and 和 to the original 28-line Shenlong layout with normalized image coordinates and retained full-line crops. Parallel witnesses may validate structure but may not supply missing Shenlong spatial measurements.","generationAllowedAfterThisFile":false}
 }
