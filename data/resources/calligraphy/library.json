@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "id": "calligraphy-library",
+  "title": "書法庫",
+  "resourceScope": "site-shared",
+  "presentationSurface": "白晝咖啡館",
+  "architecture": {
+    "storage": "shared-resource-corpus",
+    "presentationOnly": true,
+    "reuseExistingResourceTranscoding": true,
+    "noParallelDownloader": true,
+    "consumers": ["白晝咖啡館", "集字工具", "Doré", "全站搜索"]
+  },
+  "collectionPolicy": {
+    "include": ["法書墨跡", "碑帖", "尺牘", "手札", "詩文", "題跋", "可追溯摹本與拓本"],
+    "excludeSubjects": ["金剛經", "道德經", "佛教寺廟相關作品"],
+    "excludeIf": [
+      "work.title or normalized title identifies 金剛經",
+      "work.title or normalized title identifies 道德經",
+      "work subject, commission, provenance context, or primary content is tied to a Buddhist temple"
+    ],
+    "rule": "excluded works must not enter canonical corpus, derivatives, search index, glyph index, or presentation surfaces"
+  },
+  "initialCalligraphers": [
+    {"id":"wang-xizhi","name":"王羲之","period":"東晉","status":"collecting"},
+    {"id":"wen-zhengming","name":"文徵明","period":"明","status":"collecting"},
+    {"id":"mi-fu","name":"米芾","period":"北宋","status":"collecting"},
+    {"id":"zhao-mengfu","name":"趙孟頫","period":"元","status":"collecting"},
+    {"id":"wei-dayu","name":"魏大愚","period":"近代","status":"identity-verification-required"}
+  ],
+  "workAdmission": {
+    "required": ["calligrapherId", "title", "sourceInstitution", "sourceUrl", "rightsStatus", "workType", "evidence"],
+    "optional": ["date", "scriptStyle", "dimensions", "collectionNumber", "iiifManifest", "transcription", "notes"],
+    "derivatives": ["normalized-image", "thumbnail", "tiles", "glyph-crops", "search-text"],
+    "sourceOfTruth": "canonical work record + immutable provenance"
+  }
+}
