@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "sourceId": "npm-chunhua-pavilion-v5-huize",
+  "workNumber": "贈帖00007200010",
+  "officialRecord": "https://digitalarchive.npm.gov.tw/Collection/Detail/23758?dep=P",
+  "transcriptionPrefix": "皇帝敬問婺州雙林寺慧則法師",
+  "imageRecords": [
+    {
+      "imageId": "456274",
+      "order": 1,
+      "role": "candidate-first-leaf",
+      "targetsExpectedByTextOrder": ["敬", "慧"],
+      "pixelProof": null
+    },
+    {
+      "imageId": "456275",
+      "order": 2,
+      "role": "candidate-continuation-leaf",
+      "targetsExpectedByTextOrder": [],
+      "pixelProof": null
+    }
+  ],
+  "promotionRule": "Text order narrows the first-leaf candidate but never substitutes for pixel proof. No glyph may be promoted until the actual image bytes are inspected and the character crop is visually verified.",
+  "status": "first-leaf-prioritized-awaiting-pixels"
+}
