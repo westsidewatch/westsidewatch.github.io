@@ -1,13 +1,23 @@
 {
   "schema": "dore.cinema-clean-inventory.v1",
-  "status": "salvage-pass-1",
+  "status": "salvage-pass-2",
   "principle": "cinema-collects-works-not-video-resources",
   "admission": {
-    "allowedKinds": ["film", "documentary", "animation", "series"],
-    "excludedKinds": ["sermon", "teaching", "course", "bible-study", "visual-commentary"],
+    "rule": "admission is editorial by work function, not by file kind alone",
+    "cinemaFunctions": ["feature-film", "documentary-film", "narrative-film", "filmic-series"],
+    "excludedFunctions": ["sermon", "teaching", "course", "bible-study", "visual-commentary", "scripture-overview", "archaeology-reference", "historical-reference"],
     "goodTv": {"mode":"friend-link-only","index":false,"preview":false,"embed":false,"resourceDiscovery":false}
   },
-  "routing": {"sermon":"olive-mountain","teaching":"emmaus","course":"emmaus","bible-study":"emmaus","visual-commentary":"emmaus"},
+  "routing": {
+    "sermon":"olive-mountain",
+    "teaching":"emmaus",
+    "course":"emmaus",
+    "bible-study":"emmaus",
+    "visual-commentary":"emmaus",
+    "scripture-overview":"emmaus",
+    "archaeology-reference":"emmaus",
+    "historical-reference":"emmaus"
+  },
   "assetPreservation": ["canonicalId","title","kind","source","officialUrl","embedUrl","runtime","timestamps","metadata"],
   "cinemaConfirmed": [
     {"canonicalId":"cinema:video:jesus-film:jesus","title":"JESUS","kind":"film","access":"embedded-playback","durationSeconds":7680},
@@ -20,8 +30,11 @@
     {"canonicalId":"cinema:film:patterns-of-evidence:red-sea-miracle-2","title":"Patterns of Evidence: The Red Sea Miracle 2","kind":"documentary-film","access":"official-paid-handoff","durationSeconds":8520}
   ],
   "routeToEmmaus": [
-    {"canonicalId":"cinema:video:david-pawson:unlocking-matthew-1","kind":"teaching"},
-    {"sourceFamily":"BibleProject","rule":"teaching and visual-commentary always route to Emmaus; BibleProject animation remains pending editorial classification"}
+    {"canonicalId":"cinema:video:david-pawson:unlocking-matthew-1","reason":"Bible teaching"},
+    {"sourceFamily":"BibleProject","reason":"BibleProject works in current inventory are teaching, scripture overview, visual commentary or animated Bible explanation; animation technique alone does not make them cinema"},
+    {"canonicalId":"cinema:video:city-of-david:pilgrimage-road-revealed","reason":"archaeology reference video, not a programmed documentary film"},
+    {"canonicalId":"cinema:video:city-of-david:first-temple-burnt-beams","reason":"archaeology reference video, not a programmed documentary film"},
+    {"canonicalId":"cinema:video:city-of-david:hezekiah-tunnel","reason":"historical/archaeological learning resource; retain source and media metadata outside Cinema"}
   ],
   "routeToOliveMountain": [
     {"sourceFamily":"Chinese Sermons","kind":"sermon"}
@@ -29,15 +42,13 @@
   "friendLinksOnly": [
     {"sourceFamily":"GOOD TV","rule":"no indexing, preview, embed, extraction or resource discovery"}
   ],
-  "pendingClassification": [
-    "The Chosen",
-    "BibleProject animation works",
-    "City of David archaeology-documentary and historical-film works"
-  ],
+  "pendingClassification": ["The Chosen"],
   "notes": [
-    "JESUS is confirmed as the primary directly embeddable film asset.",
-    "LUMO is retained as filmic series, but currently uses official-source handoff rather than local embed.",
-    "Patterns of Evidence is retained as cinema works but requires paid official handoff.",
-    "Do not redesign Cinema until remaining resource families are classified."
+    "BibleProject is removed from Cinema as a source family in the current inventory; its animation is pedagogical rather than cinematic programming.",
+    "City of David current clips are removed from Cinema and preserved for Emmaus/reference use.",
+    "JESUS remains the primary directly embeddable film asset.",
+    "LUMO remains as filmic Gospel series.",
+    "Patterns of Evidence remains as paid official-handoff documentary cinema.",
+    "Do not redesign Cinema until The Chosen and any remaining legacy media sources are resolved."
   ]
 }
