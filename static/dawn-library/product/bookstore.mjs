@@ -1,4 +1,4 @@
-import { resolveReading } from '../../js/dawn-reading-resolver.mjs';
+import { localReadingPack, resolveReading } from '../../js/dawn-reading-resolver.mjs';
 
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
@@ -39,10 +39,17 @@ function cards(host, rows, className) {
     button.onclick = () => choose(rows[Number(button.dataset.i)]);
   });
 }
+function packText(pack, activeMode) {
+  const source = pack.segments.map(segment => `<p class="reader-text">${esc(segment.source)}</p>`).join('');
+  const translation = pack.segments.map(segment => `<p class="reader-text" lang="zh-Hant">${esc(segment.translation)}</p>`).join('');
+  if (activeMode === 'zh-Hant') return translation;
+  if (activeMode === 'bilingual') return `<div class="reader-columns"><div>${source}</div><div>${translation}</div></div>`;
+  return source;
+}
 
 let selected, reading, selectionTicket = 0, mode = 'source';
 function renderReader() {
-  const hasTranslation = Boolean(reading?.translation);
+  const hasTranslation = Boolean(reading?.translation || reading?.pack?.segments?.length);
   document.querySelectorAll('[data-mode]').forEach(button => {
     button.disabled = button.dataset.mode !== 'source' && !hasTranslation;
     button.setAttribute('aria-pressed', String(button.dataset.mode === mode));
@@ -50,6 +57,12 @@ function renderReader() {
   });
   if (!reading) {
     $('#reader-body').textContent = selected ? '正在載入閱讀版本…' : '左頁尋書。右頁閱讀。';
+  } else if (reading.pack?.segments?.length) {
+    const url = safeUrl(reading.sourcePage || reading.pack.source?.url || '');
+    const notice = reading.pack.scope === 'editorial-sample'
+      ? '這是黎明隨站發佈、逐段對照的試讀。完整原文保留在原館藏。'
+      : '這是黎明隨站發佈、逐段對照的閱讀包。';
+    $('#reader-body').innerHTML = `<p class="reader-note">${notice}</p>${packText(reading.pack, mode)}${url ? `<a class="reader-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">閱讀完整原文 ↗</a>` : ''}`;
   } else if (reading.kind === 'text') {
     const source = `<div class="reader-text">${esc(reading.text)}</div>`;
     const translation = `<div class="reader-text">${esc(reading.translation)}</div>`;
@@ -58,7 +71,7 @@ function renderReader() {
   } else {
     const url = safeUrl(reading.sourcePage || '');
     $('#reader-body').innerHTML = reading.sourcePage && url
-      ? `<p class="reader-note">此書尚無站內全文，可前往原館藏查看可用的閱讀版本。</p><a class="reader-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">前往原館藏 ↗</a>`
+      ? `<p class="reader-note">原文保留在原館藏。本書尚未有隨站發佈的繁中閱讀包，因此不會以機器翻譯替代。</p><a class="reader-link" href="${esc(url)}" target="_blank" rel="noopener noreferrer">前往原館藏 ↗</a>`
       : '<p class="reader-note">這本書目前尚未提供可閱讀版本。</p>';
   }
 }
@@ -76,10 +89,10 @@ async function choose(preview) {
     const canonical = await api.resourceWork(preview.workId);
     if (ticket !== selectionTicket) return;
     if (!canonical) throw new Error('Missing canonical work');
-    const result = await resolveReading(canonical);
+    const [result, pack] = await Promise.all([resolveReading(canonical), localReadingPack(canonical.workId)]);
     if (ticket !== selectionTicket) return;
     selected = canonical;
-    reading = result;
+    reading = {...result, pack};
     $('#reader-title').textContent = canonical.title;
     $('#reader-author').textContent = author(canonical);
     renderReader();
@@ -91,10 +104,34 @@ async function choose(preview) {
 }
 document.querySelectorAll('[data-mode]').forEach(button => button.onclick = () => { mode = button.dataset.mode; renderReader(); });
 $('#jump-morning').onclick = () => scroll('#morning');
+$('#jump-reading').onclick = () => scroll('#reading-entry');
 $('#jump-catalogue').onclick = () => scroll('#catalogue');
 $('#jump-lower').onclick = () => scroll('#library-lower');
 $('#jump-search').onclick = () => { scroll('#catalogue'); $('#search').focus({preventScroll: true}); };
 renderReader();
+
+async function readingShelf() {
+  try {
+    $('#reading-entry .reader-note').textContent = '閱讀包含原文與繁中對照，隨網站版本發佈；不下載館藏正文、翻譯模型，也不呼叫翻譯 API。';
+    const packs = await json('../reading-packs/index.json');
+    const rows = packs.items || [];
+    $('#reader-ready').innerHTML = rows.map((item, i) => `<button type="button" class="reader-ready-card" data-reader-pack="${i}"><strong>${esc(item.title)}</strong><small>原文 · 繁中 · 對照</small></button>`).join('');
+    $('#reader-ready').querySelectorAll('[data-reader-pack]').forEach(button => {
+      button.onclick = async () => {
+        const item = rows[Number(button.dataset.readerPack)];
+        try {
+          const api = await fabric();
+          const work = await api.resourceWork(item.workId);
+          if (work) choose(work);
+        } catch (error) { console.error('[Dawn] reading shelf', error); }
+      };
+    });
+    $('#reader-ready-status').textContent = rows.length ? '所有試讀內容隨本頁發佈；閱讀過程不下載正文或模型。' : '尚無可用閱讀包。';
+  } catch (error) {
+    $('#reader-ready-status').textContent = '閱讀包暫時無法載入。';
+    console.error('[Dawn] reading packs', error);
+  }
+}
 
 // Each surface starts independently. Catalogue failure cannot hide covers.
 async function morningStars() {
@@ -174,6 +211,7 @@ async function moreCovers() {
 }
 $('#collection-more').onclick = moreCovers;
 moreCovers();
+readingShelf();
 morningStars();
 catalogue();
 fabric().then(api => api.resourceManifest()).then(manifest => {
