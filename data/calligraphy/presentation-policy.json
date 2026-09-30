@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "library": {
+    "scope": "site-shared-resource",
+    "publicSurface": "daylight-cafe",
+    "publicMode": "resource-display"
+  },
+  "jiziTool": {
+    "status": "internal-development",
+    "publicRoute": false,
+    "navigationEntry": false,
+    "daylightCafeEntry": false,
+    "searchPresentation": false,
+    "mayConsumeSharedCorpusInternally": true
+  },
+  "rules": [
+    "Calligraphy works may be published in Daylight Cafe as browsable resources.",
+    "The Jizi tool remains an internal corpus consumer and must not be exposed as a public website feature yet.",
+    "Publishing a calligraphy work must not implicitly publish or enable the Jizi interface.",
+    "Shared glyph and provenance data may continue to grow while the tool remains offline."
+  ]
+}
