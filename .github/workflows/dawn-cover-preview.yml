@@ -1,0 +1,28 @@
+name: Dawn Cover Preview Shards
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - scripts/build_dawn_cover_preview_shards.py
+      - static/dawn-library/canonical/**
+      - .github/workflows/dawn-cover-preview.yml
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build cover preview shards
+        run: python3 scripts/build_dawn_cover_preview_shards.py
+      - name: Verify cover surface
+        run: python3 -c "import json; p=json.load(open('static/dawn-library/cover-preview/root.json')); assert p['workCount']==203448; assert p['shardCount']==21; print(p['workCount'], p['shardCount'])"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dawn-cover-preview
+          path: static/dawn-library/cover-preview
