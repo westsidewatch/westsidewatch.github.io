@@ -135,15 +135,18 @@ async function readingShelf() {
 
 function chineseCards(items) {
   return items.map(item => {
-    const meta = [item.creator, item.year, item.domain].filter(Boolean).join(' · ');
-    const source = safeUrl(item.cover?.src || '');
+    const title = item.work?.title || '';
+    const creator = item.work?.creator || '';
+    const meta = [item.edition?.year, item.classification?.label].filter(Boolean).join(' · ');
+    const source = safeUrl(item.cover?.url || '');
     const visual = source
-      ? `<img class="chinese-cover" src="${esc(source)}" alt="${esc(item.title)} 封面" loading="lazy" decoding="async">`
-      : `<span class="chinese-cover chinese-cover--pending">封面待解析</span>`;
-    const action = item.reading?.state === 'ready' && safeUrl(item.reading.url)
-      ? `<a class="chinese-work" href="${esc(safeUrl(item.reading.url))}" target="_blank" rel="noopener noreferrer">${visual}<span><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>全文閱讀 ↗</em></span></a>`
-      : `<div class="chinese-work">${visual}<span><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>${esc(item.reading?.provider || '來源')} · 閱讀入口待解析</em></span></div>`;
-    return action;
+      ? `<img class="chinese-cover" src="${esc(source)}" alt="${esc(title)} 封面" loading="lazy" decoding="async">`
+      : `<span class="chinese-cover chinese-cover--pending" role="img" aria-label="${esc(title)} 黎明書局替代封面"><small>黎明書局</small><strong>${esc(title)}</strong></span>`;
+    const href = safeUrl(item.access?.url || item.source?.catalogUrl || '');
+    const body = `${visual}<span><strong>${esc(title)}</strong><small>${esc(creator)}</small>${meta ? `<small>${esc(meta)}</small>` : ''}<em>${esc(item.access?.label || '查看館藏')} ↗</em></span>`;
+    return href
+      ? `<a class="chinese-work" href="${esc(href)}" target="_blank" rel="noopener noreferrer">${body}</a>`
+      : `<div class="chinese-work">${body}</div>`;
   }).join('');
 }
 
@@ -156,7 +159,7 @@ async function chineseCollection() {
     const render = expanded => {
       const works = collection.works || [];
       const visible = expanded ? works : works.slice(0, 8);
-      section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">Canonical Work／Edition／Cover／Pointer 索引。已核定身份、來源與權利；正文維持遠端優先，封面依來源解析狀態顯示。</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看完整索引</button>'}`;
+      section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">早期中文基督教著作。依靈修、教會歷史、神學與倫理編目；正文保留於原館藏。</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看完整索引</button>'}`;
       section.querySelector('.show-chinese')?.addEventListener('click', () => render(true));
     };
     render(false);

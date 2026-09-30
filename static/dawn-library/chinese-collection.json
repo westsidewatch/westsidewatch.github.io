@@ -3,7 +3,7 @@
   "collectionId": "zh",
   "title": "中文館藏",
   "count": 47,
-  "authority": "Dawn canonical work/edition/cover/pointer substrate",
+  "authority": "Dawn canonical work / edition / cover / source substrate",
   "source": {
     "name": "Christian Literature Society for China Collection",
     "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
@@ -12,7 +12,8 @@
   "policy": {
     "bibleWorldExcluded": true,
     "localTextDownloaded": false,
-    "identityRule": "Work identity is independent of delivery endpoint resolution."
+    "identityRule": "Work identity is independent of delivery endpoint resolution.",
+    "cardRule": "Every card has a source cover or a Dawn one-fallback cover and a reader-facing access link."
   },
   "facets": {
     "domain": {
@@ -147,989 +148,1693 @@
   "works": [
     {
       "workId": "dawn:zh:lingli-jiguang",
-      "title": "靈歷集光",
-      "creator": "宋尚節",
-      "year": null,
-      "domain": "biography/testimony/diary/reflection",
-      "identity": {
-        "state": "promotable-source-verified",
-        "source": "Project Gutenberg"
+      "work": {
+        "title": "靈歷集光",
+        "creator": "宋尚節",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "Public domain in the USA",
-      "reading": {
-        "state": "ready",
+      "edition": {
+        "provenance": "Project Gutenberg"
+      },
+      "classification": {
+        "label": "biography/testimony/diary/reflection"
+      },
+      "rights": {
+        "status": "Public domain in the USA",
+        "declaredBy": "Project Gutenberg"
+      },
+      "source": {
         "provider": "Project Gutenberg",
+        "catalogUrl": "https://www.gutenberg.org/cache/epub/25716/pg25716-images.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "full-text",
+        "label": "閱讀全文",
         "url": "https://www.gutenberg.org/cache/epub/25716/pg25716-images.html"
       },
       "cover": {
-        "state": "source-resolved",
-        "src": "https://www.gutenberg.org/cache/epub/25716/pg25716.cover.medium.jpg",
+        "mode": "source",
+        "url": "https://www.gutenberg.org/cache/epub/25716/pg25716.cover.medium.jpg",
+        "title": "靈歷集光",
+        "creator": "宋尚節",
         "pointer": "dawn://cover/dawn:zh:lingli-jiguang"
       }
     },
     {
       "workId": "dawn:zh:clsc:4016adc2848573c9",
-      "title": "住在主裏面",
-      "creator": "慕安德烈",
-      "year": 1907,
-      "domain": "spiritual formation",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "住在主裏面",
+        "creator": "慕安德烈",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1907,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "spiritual formation"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "住在主裏面",
+        "creator": "慕安德烈",
         "pointer": "dawn://cover/dawn:zh:clsc:4016adc2848573c9"
       }
     },
     {
       "workId": "dawn:zh:clsc:19c8aa774f7e5154",
-      "title": "慕牧師木鐸記",
-      "creator": "",
-      "year": 1909,
-      "domain": "biography/church history",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "慕牧師木鐸記",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1909,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography/church history"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "慕牧師木鐸記",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:19c8aa774f7e5154"
       }
     },
     {
       "workId": "dawn:zh:clsc:3e6b851a4720a155",
-      "title": "基督證道論",
-      "creator": "",
-      "year": 1910,
-      "domain": "homiletics/Christian ministry",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督證道論",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1910,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "homiletics/Christian ministry"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督證道論",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:3e6b851a4720a155"
       }
     },
     {
       "workId": "dawn:zh:clsc:43ce29a38b861f0f",
-      "title": "怎樣禱告",
-      "creator": "道來博士",
-      "year": 1910,
-      "domain": "prayer/spiritual formation",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "怎樣禱告",
+        "creator": "道來博士",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1910,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "prayer/spiritual formation"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "怎樣禱告",
+        "creator": "道來博士",
         "pointer": "dawn://cover/dawn:zh:clsc:43ce29a38b861f0f"
       }
     },
     {
       "workId": "dawn:zh:clsc:1f65389b3d4f2b29",
-      "title": "活水永流",
-      "creator": "戈爾騰",
-      "year": 1910,
-      "domain": "Christian life",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "活水永流",
+        "creator": "戈爾騰",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1910,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian life"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "活水永流",
+        "creator": "戈爾騰",
         "pointer": "dawn://cover/dawn:zh:clsc:1f65389b3d4f2b29"
       }
     },
     {
       "workId": "dawn:zh:clsc:556c186d927aa29c",
-      "title": "基督之聖神",
-      "creator": "",
-      "year": 1914,
-      "domain": "theology/spiritual life",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督之聖神",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1914,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "theology/spiritual life"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督之聖神",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:556c186d927aa29c"
       }
     },
     {
       "workId": "dawn:zh:clsc:2f07dc111fed46a2",
-      "title": "彭威廉傳",
-      "creator": "",
-      "year": 1915,
-      "domain": "biography/testimony",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "彭威廉傳",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1915,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography/testimony"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "彭威廉傳",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:2f07dc111fed46a2"
       }
     },
     {
       "workId": "dawn:zh:clsc:3c2e0f92afe707f1",
-      "title": "基督誡命",
-      "creator": "",
-      "year": 1916,
-      "domain": "Christian ethics/discipleship",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督誡命",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1916,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian ethics/discipleship"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督誡命",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:3c2e0f92afe707f1"
       }
     },
     {
       "workId": "dawn:zh:clsc:e4462332ce484d04",
-      "title": "餐禮闡微",
-      "creator": "英國杜冀",
-      "year": 1916,
-      "domain": "church practice/theology",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "餐禮闡微",
+        "creator": "英國杜冀",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1916,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "church practice/theology"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "餐禮闡微",
+        "creator": "英國杜冀",
         "pointer": "dawn://cover/dawn:zh:clsc:e4462332ce484d04"
       }
     },
     {
       "workId": "dawn:zh:clsc:2187d9fde57b93f5",
-      "title": "教會古史節要",
-      "creator": "",
-      "year": 1918,
-      "domain": "church history",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "教會古史節要",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1918,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "church history"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "教會古史節要",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:2187d9fde57b93f5"
       }
     },
     {
       "workId": "dawn:zh:clsc:aeaa0289ac7f5e2b",
-      "title": "基督道為真之證",
-      "creator": "",
-      "year": 1919,
-      "domain": "apologetics",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督道為真之證",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1919,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "apologetics"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督道為真之證",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:aeaa0289ac7f5e2b"
       }
     },
     {
       "workId": "dawn:zh:clsc:7cb1961797de9ead",
-      "title": "宗教道德教育學",
-      "creator": "柯嘉芝",
-      "year": 1920,
-      "domain": "religious education/ethics",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "宗教道德教育學",
+        "creator": "柯嘉芝",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1920,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "religious education/ethics"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "宗教道德教育學",
+        "creator": "柯嘉芝",
         "pointer": "dawn://cover/dawn:zh:clsc:7cb1961797de9ead"
       }
     },
     {
       "workId": "dawn:zh:clsc:295a666f959ea139",
-      "title": "簡明就基督的指南針",
-      "creator": "Rev. R. Pogue, D.D.",
-      "year": 1922,
-      "domain": "Christian introduction/discipleship",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "簡明就基督的指南針",
+        "creator": "Rev. R. Pogue, D.D.",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1922,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian introduction/discipleship"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "簡明就基督的指南針",
+        "creator": "Rev. R. Pogue, D.D.",
         "pointer": "dawn://cover/dawn:zh:clsc:295a666f959ea139"
       }
     },
     {
       "workId": "dawn:zh:clsc:990cbc999ee59040",
-      "title": "貧子成名鑑",
-      "creator": "布理登",
-      "year": 1922,
-      "domain": "biography/moral literature",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "貧子成名鑑",
+        "creator": "布理登",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1922,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography/moral literature"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "貧子成名鑑",
+        "creator": "布理登",
         "pointer": "dawn://cover/dawn:zh:clsc:990cbc999ee59040"
       }
     },
     {
       "workId": "dawn:zh:clsc:1e087a0d6f9b474f",
-      "title": "基掃斯登信道記",
-      "creator": "林樂知譯",
-      "year": 1923,
-      "domain": "biography/testimony",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基掃斯登信道記",
+        "creator": "林樂知譯",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1923,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography/testimony"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基掃斯登信道記",
+        "creator": "林樂知譯",
         "pointer": "dawn://cover/dawn:zh:clsc:1e087a0d6f9b474f"
       }
     },
     {
       "workId": "dawn:zh:clsc:e498fe42c9c851a9",
-      "title": "永生證",
-      "creator": "美國法斯的",
-      "year": 1923,
-      "domain": "Christian thought/apologetics",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "永生證",
+        "creator": "美國法斯的",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1923,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian thought/apologetics"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "永生證",
+        "creator": "美國法斯的",
         "pointer": "dawn://cover/dawn:zh:clsc:e498fe42c9c851a9"
       }
     },
     {
       "workId": "dawn:zh:clsc:40a2f91d796b8199",
-      "title": "長腿蜘蛛爹爹",
-      "creator": "韋思德",
-      "year": 1923,
-      "domain": "literature",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "長腿蜘蛛爹爹",
+        "creator": "韋思德",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1923,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "literature"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "長腿蜘蛛爹爹",
+        "creator": "韋思德",
         "pointer": "dawn://cover/dawn:zh:clsc:40a2f91d796b8199"
       }
     },
     {
       "workId": "dawn:zh:clsc:61b25b1a531104a3",
-      "title": "不是他們的耶穌",
-      "creator": "野渡",
-      "year": 1924,
-      "domain": "Christian literature/thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "不是他們的耶穌",
+        "creator": "野渡",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1924,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian literature/thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "不是他們的耶穌",
+        "creator": "野渡",
         "pointer": "dawn://cover/dawn:zh:clsc:61b25b1a531104a3"
       }
     },
     {
       "workId": "dawn:zh:clsc:5e08a09a29264258",
-      "title": "基督教之公堂",
-      "creator": "施密司",
-      "year": 1924,
-      "domain": "Christian thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督教之公堂",
+        "creator": "施密司",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1924,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督教之公堂",
+        "creator": "施密司",
         "pointer": "dawn://cover/dawn:zh:clsc:5e08a09a29264258"
       }
     },
     {
       "workId": "dawn:zh:clsc:68cb3ee1d7177598",
-      "title": "民德論",
-      "creator": "英國白來斯",
-      "year": 1924,
-      "domain": "ethics/civic thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "民德論",
+        "creator": "英國白來斯",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1924,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "ethics/civic thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "民德論",
+        "creator": "英國白來斯",
         "pointer": "dawn://cover/dawn:zh:clsc:68cb3ee1d7177598"
       }
     },
     {
       "workId": "dawn:zh:clsc:79a06e6604f15548",
-      "title": "基督教義",
-      "creator": "李兆民路德",
-      "year": 1925,
-      "domain": "theology",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督教義",
+        "creator": "李兆民路德",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1925,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "theology"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督教義",
+        "creator": "李兆民路德",
         "pointer": "dawn://cover/dawn:zh:clsc:79a06e6604f15548"
       }
     },
     {
       "workId": "dawn:zh:clsc:10415f9ef2949fe8",
-      "title": "基督與社會秩序",
-      "creator": "英國葛羅",
-      "year": 1925,
-      "domain": "Christian social thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督與社會秩序",
+        "creator": "英國葛羅",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1925,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian social thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督與社會秩序",
+        "creator": "英國葛羅",
         "pointer": "dawn://cover/dawn:zh:clsc:10415f9ef2949fe8"
       }
     },
     {
       "workId": "dawn:zh:clsc:ac2768bc9236b2a7",
-      "title": "成人論 (進化上的研究)",
-      "creator": "洛志俄里佛爾",
-      "year": 1925,
-      "domain": "human studies/Christian thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "成人論 (進化上的研究)",
+        "creator": "洛志俄里佛爾",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1925,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "human studies/Christian thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "成人論 (進化上的研究)",
+        "creator": "洛志俄里佛爾",
         "pointer": "dawn://cover/dawn:zh:clsc:ac2768bc9236b2a7"
       }
     },
     {
       "workId": "dawn:zh:clsc:77920f804d4f9474",
-      "title": "中國古代宗教詩歌集",
-      "creator": "張仕章",
-      "year": 1926,
-      "domain": "religion/literature/culture",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "中國古代宗教詩歌集",
+        "creator": "張仕章",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1926,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "religion/literature/culture"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "中國古代宗教詩歌集",
+        "creator": "張仕章",
         "pointer": "dawn://cover/dawn:zh:clsc:77920f804d4f9474"
       }
     },
     {
       "workId": "dawn:zh:clsc:8e7c0eea40a943af",
-      "title": "孩童的禱告",
-      "creator": "季理斐夫人",
-      "year": 1926,
-      "domain": "prayer/children",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "孩童的禱告",
+        "creator": "季理斐夫人",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1926,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "prayer/children"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "孩童的禱告",
+        "creator": "季理斐夫人",
         "pointer": "dawn://cover/dawn:zh:clsc:8e7c0eea40a943af"
       }
     },
     {
       "workId": "dawn:zh:clsc:6ac4af9b065d8bef",
-      "title": "教會問題及其解決",
-      "creator": "美國和裕德",
-      "year": 1926,
-      "domain": "church life/ecclesiology",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "教會問題及其解決",
+        "creator": "美國和裕德",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1926,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "church life/ecclesiology"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "教會問題及其解決",
+        "creator": "美國和裕德",
         "pointer": "dawn://cover/dawn:zh:clsc:6ac4af9b065d8bef"
       }
     },
     {
       "workId": "dawn:zh:clsc:094fdf4e045b31c1",
-      "title": "近代基督教思潮",
-      "creator": "",
-      "year": 1926,
-      "domain": "Christian thought/history",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "近代基督教思潮",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1926,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian thought/history"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "近代基督教思潮",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:094fdf4e045b31c1"
       }
     },
     {
       "workId": "dawn:zh:clsc:a1b06f3b3264d69f",
-      "title": "道德俠士略說",
-      "creator": "英國馬提務",
-      "year": 1926,
-      "domain": "ethics/biography",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "道德俠士略說",
+        "creator": "英國馬提務",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1926,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "ethics/biography"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "道德俠士略說",
+        "creator": "英國馬提務",
         "pointer": "dawn://cover/dawn:zh:clsc:a1b06f3b3264d69f"
       }
     },
     {
       "workId": "dawn:zh:clsc:e2c9ebb8ea51248c",
-      "title": "教會靈修生活的革新",
-      "creator": "",
-      "year": 1927,
-      "domain": "spiritual formation/church life",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "教會靈修生活的革新",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1927,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "spiritual formation/church life"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "教會靈修生活的革新",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:e2c9ebb8ea51248c"
       }
     },
     {
       "workId": "dawn:zh:clsc:8326cf9740d86128",
-      "title": "未來的正道",
-      "creator": "",
-      "year": 1927,
-      "domain": "Christian thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "未來的正道",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1927,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "未來的正道",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:8326cf9740d86128"
       }
     },
     {
       "workId": "dawn:zh:clsc:1986afddbea09bc1",
-      "title": "悔過記",
-      "creator": "",
-      "year": 1928,
-      "domain": "testimony/spiritual life",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "悔過記",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1928,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "testimony/spiritual life"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "悔過記",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:1986afddbea09bc1"
       }
     },
     {
       "workId": "dawn:zh:clsc:66f8285d47db831b",
-      "title": "青年模範",
-      "creator": "",
-      "year": 1928,
-      "domain": "youth/biography/formation",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "青年模範",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1928,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "youth/biography/formation"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "青年模範",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:66f8285d47db831b"
       }
     },
     {
       "workId": "dawn:zh:clsc:ed5e683bffa40ca8",
-      "title": "基督之友",
-      "creator": "",
-      "year": 1929,
-      "domain": "Christian life",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督之友",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian life"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督之友",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:ed5e683bffa40ca8"
       }
     },
     {
       "workId": "dawn:zh:clsc:1c981564ed142b53",
-      "title": "基督倫理標準",
-      "creator": "",
-      "year": 1929,
-      "domain": "Christian ethics",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "基督倫理標準",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian ethics"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "基督倫理標準",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:1c981564ed142b53"
       }
     },
     {
       "workId": "dawn:zh:clsc:444e8f37224b7525",
-      "title": "如何測驗主的旨意",
-      "creator": "葉道勝",
-      "year": 1929,
-      "domain": "discernment/spiritual formation",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "如何測驗主的旨意",
+        "creator": "葉道勝",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "discernment/spiritual formation"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "如何測驗主的旨意",
+        "creator": "葉道勝",
         "pointer": "dawn://cover/dawn:zh:clsc:444e8f37224b7525"
       }
     },
     {
       "workId": "dawn:zh:clsc:ab1e0bb6a528964d",
-      "title": "姚媽",
-      "creator": "潘筠",
-      "year": 1929,
-      "domain": "biography/testimony",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "姚媽",
+        "creator": "潘筠",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography/testimony"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "姚媽",
+        "creator": "潘筠",
         "pointer": "dawn://cover/dawn:zh:clsc:ab1e0bb6a528964d"
       }
     },
     {
       "workId": "dawn:zh:clsc:725b1726ab5561a0",
-      "title": "文化的研究",
-      "creator": "",
-      "year": 1929,
-      "domain": "culture/Christian thought",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "文化的研究",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "culture/Christian thought"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "文化的研究",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:725b1726ab5561a0"
       }
     },
     {
       "workId": "dawn:zh:clsc:67560a0fb1d2203e",
-      "title": "為富不仁",
-      "creator": "女鐸社",
-      "year": 1929,
-      "domain": "social ethics/literature",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "為富不仁",
+        "creator": "女鐸社",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "social ethics/literature"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "為富不仁",
+        "creator": "女鐸社",
         "pointer": "dawn://cover/dawn:zh:clsc:67560a0fb1d2203e"
       }
     },
     {
       "workId": "dawn:zh:clsc:67abdbb7d8b4be99",
-      "title": "社會生活的詩篇",
-      "creator": "",
-      "year": 1929,
-      "domain": "social thought/literature",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "社會生活的詩篇",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "social thought/literature"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "社會生活的詩篇",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:67abdbb7d8b4be99"
       }
     },
     {
       "workId": "dawn:zh:clsc:cccd52033496c846",
-      "title": "福特的奮鬥史",
-      "creator": "",
-      "year": 1929,
-      "domain": "biography",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "福特的奮鬥史",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "biography"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "福特的奮鬥史",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:cccd52033496c846"
       }
     },
     {
       "workId": "dawn:zh:clsc:e3d968ff342f2a4b",
-      "title": "福音的意義",
-      "creator": "",
-      "year": 1929,
-      "domain": "theology/Christian introduction",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "福音的意義",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "theology/Christian introduction"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "福音的意義",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:e3d968ff342f2a4b"
       }
     },
     {
       "workId": "dawn:zh:clsc:f81ef524590ec8e0",
-      "title": "門徒的祈禱",
-      "creator": "谷德屏",
-      "year": 1929,
-      "domain": "prayer/spiritual formation",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "門徒的祈禱",
+        "creator": "谷德屏",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1929,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "prayer/spiritual formation"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "門徒的祈禱",
+        "creator": "谷德屏",
         "pointer": "dawn://cover/dawn:zh:clsc:f81ef524590ec8e0"
       }
     },
     {
       "workId": "dawn:zh:clsc:c39a7ee577ca6bdc",
-      "title": "Sowing and Reaping the Forty-third Annual Report of the Christian Literature Society for China",
-      "creator": "",
-      "year": 1930,
-      "domain": "institutional history/annual report",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "Sowing and Reaping the Forty-third Annual Report of the Christian Literature Society for China",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1930,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "institutional history/annual report"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "Sowing and Reaping the Forty-third Annual Report of the Christian Literature Society for China",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:c39a7ee577ca6bdc"
       }
     },
     {
       "workId": "dawn:zh:clsc:a27ad5171f6693e1",
-      "title": "健康之研究",
-      "creator": "英國湯穆森",
-      "year": 1930,
-      "domain": "health/education",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "健康之研究",
+        "creator": "英國湯穆森",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1930,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "health/education"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "健康之研究",
+        "creator": "英國湯穆森",
         "pointer": "dawn://cover/dawn:zh:clsc:a27ad5171f6693e1"
       }
     },
     {
       "workId": "dawn:zh:clsc:9d08c555610d8749",
-      "title": "濁世蘭花",
-      "creator": "",
-      "year": 1930,
-      "domain": "Christian literature",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "濁世蘭花",
+        "creator": "",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1930,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "Christian literature"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "濁世蘭花",
+        "creator": "",
         "pointer": "dawn://cover/dawn:zh:clsc:9d08c555610d8749"
       }
     },
     {
       "workId": "dawn:zh:clsc:2308a90f725b5407",
-      "title": "瑞士牧童",
-      "creator": "瑞士史班烈",
-      "year": 1930,
-      "domain": "literature/children",
-      "identity": {
-        "state": "canonical",
-        "source": "CLSC pre-1931 canonical batch"
+      "work": {
+        "title": "瑞士牧童",
+        "creator": "瑞士史班烈",
+        "language": "zh-Hant",
+        "form": "book"
       },
-      "rights": "public-domain-per-source-year-policy",
-      "reading": {
-        "state": "lookup-required",
+      "edition": {
+        "year": 1930,
+        "provenance": "CLSC pre-1931 canonical batch"
+      },
+      "classification": {
+        "label": "literature/children"
+      },
+      "rights": {
+        "status": "public-domain-per-source-year-policy",
+        "declaredBy": "Christian Literature Society for China Collection"
+      },
+      "source": {
         "provider": "Christian Literature Society for China Collection",
+        "catalogUrl": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html",
+        "delivery": "remote-first"
+      },
+      "access": {
+        "kind": "catalogue",
+        "label": "查看館藏",
         "url": "https://adhoc.yalepages.org/Collections/HKBU/CLSC/index.html"
       },
       "cover": {
-        "state": "unresolved",
+        "mode": "one-fallback",
+        "title": "瑞士牧童",
+        "creator": "瑞士史班烈",
         "pointer": "dawn://cover/dawn:zh:clsc:2308a90f725b5407"
       }
     }
