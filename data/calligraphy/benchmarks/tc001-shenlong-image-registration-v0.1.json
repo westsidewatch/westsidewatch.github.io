@@ -1,0 +1,96 @@
+{
+  "id": "TC001-shenlong-image-registration-v0.1",
+  "work": "蘭亭序・神龍本",
+  "teacher": "wang-xizhi",
+  "stage": "authoritative-image-registration",
+  "generationAllowed": false,
+  "purpose": "Prevent reconstructed/reflowed digital editions from entering spatial training while preparing exact image-bound measurements for TC001 是 and 和.",
+  "authoritativeWorkFacts": {
+    "museum": "故宮博物院（北京）",
+    "attribution": "唐馮承素摹王羲之",
+    "format": "paper handscroll / tracing-copy witness",
+    "dimensionsCm": {"height": 24.5, "width": 69.9},
+    "originalTextLayout": {"lines": 28, "characters": 324},
+    "primarySource": "https://www.dpm.org.cn/collection/handwriting/228279.html"
+  },
+  "sourceClasses": {
+    "A": "museum/original-object image preserving the historical writing field and line arrangement",
+    "B": "institutional facsimile preserving the original 28-line geometry",
+    "C": "scholarly reproduction whose geometry can be registered against A/B",
+    "D": "reflowed, font-substituted, redrawn, decorative, or otherwise reconstructed edition"
+  },
+  "admission": {
+    "spatialMeasurementAllowed": ["A", "B"],
+    "conditionalRegistrationOnly": ["C"],
+    "neverSpatialTraining": ["D"],
+    "rule": "No image may supply bounding boxes, line gaps, lean, scale, or line-axis measurements until its geometry is shown to preserve the original writing field."
+  },
+  "knownNegativeControl": {
+    "source": "https://lanmuy.com/works/lanting/index.html",
+    "classification": "D",
+    "reason": "The site explicitly states that it reflows the original 28 irregular lines into 27 lines of 12 characters. It is useful for text/order checking only and must never supply spatial evidence."
+  },
+  "textAnchors": {
+    "是": {
+      "sequence": "暢敘幽情｜是日也｜天朗氣清",
+      "status": "transcription-bound",
+      "targetRecord": "wxz-lanting-shenlong-shi-001"
+    },
+    "和": {
+      "sequence": "天朗氣清｜惠風和暢｜仰觀宇宙",
+      "status": "transcription-bound",
+      "targetRecord": "wxz-lanting-shenlong-he-001"
+    }
+  },
+  "registrationContract": {
+    "step1": "Register the full historical writing field before any line or glyph crop.",
+    "step2": "Represent the writing field in normalized coordinates x,y,w,h within [0,1].",
+    "step3": "Segment all 28 historical lines/columns and retain their irregular lengths; do not regularize spacing.",
+    "step4": "Bind each line to transcription by sequence, not by assumed fixed character count.",
+    "step5": "Locate the complete lines containing 是日也 and 惠風和暢 and preserve those line crops as parent evidence.",
+    "step6": "Only then derive glyph bounding boxes for 是 and 和 relative to both parent line and full writing field.",
+    "step7": "Record neighboring gaps, relative scale, center of gravity, lean, line-axis offset, entry/exit direction and visible/implicit continuation.",
+    "step8": "Cross-check structure against 秘閣帖 and 定武 witnesses without importing their spacing or brush-pressure properties."
+  },
+  "imageRecordTemplate": {
+    "sourceURI": null,
+    "sourceClass": null,
+    "pixelDimensions": null,
+    "writingFieldBBox": null,
+    "geometryPreserved": null,
+    "registrationEvidence": [],
+    "lineSegmentation": [],
+    "notes": []
+  },
+  "measurementTemplate": {
+    "character": null,
+    "parentLineId": null,
+    "fullFieldBBoxNormalized": null,
+    "lineLocalBBoxNormalized": null,
+    "relativeScale": null,
+    "centerOfGravity": null,
+    "lean": null,
+    "gapBefore": null,
+    "gapAfter": null,
+    "lineAxisOffset": null,
+    "entryDirection": null,
+    "exitDirection": null,
+    "visibleLink": null,
+    "implicitContinuation": null,
+    "measurementStatus": "pending-authoritative-image"
+  },
+  "currentStatus": {
+    "authoritativeObjectIdentity": "verified",
+    "originalLayoutFacts": "verified",
+    "textAnchors": "verified",
+    "authoritativePixelImageRegistered": false,
+    "lineCoordinatesAvailable": false,
+    "glyphCoordinatesAvailable": false,
+    "reasonForHold": "No authoritative pixel representation preserving the original 28-line geometry has yet been registered in the corpus. Coordinates must not be guessed from text or from a reflowed digital recreation."
+  },
+  "nextGate": {
+    "name": "shenlong-first-image-bound-cells",
+    "requirement": "Register an A/B source image preserving the original geometry, segment its historical lines, then attach measured bounding boxes and parent-line evidence to 是 and 和.",
+    "generationAllowedAfterThisFile": false
+  }
+}
