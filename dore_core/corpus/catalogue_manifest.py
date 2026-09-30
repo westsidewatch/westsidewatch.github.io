@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from collections import Counter, defaultdict
-from typing import Iterable, Sequence
+from collections import Counter
+from typing import Sequence
 import re
 
 from dore_core.corpus.admission_pipeline import SourceRecord, WorkCandidate
@@ -30,14 +30,51 @@ def _record_pointer(record: SourceRecord) -> dict:
     }
 
 
+def _authority_ids(records: Sequence[SourceRecord]) -> dict[str, list[str]]:
+    """Promote source provenance into deterministic catalogue authorities.
+
+    Candidate ids remain stable internal ids. Source ids and provider identifiers
+    are preserved separately so downstream indexing never has to infer identity
+    from title/creator text.
+    """
+    authorities: dict[str, list[str]] = {}
+
+    def add(key: str, value: object) -> None:
+        text = str(value or "").strip()
+        if not text:
+            return
+        values = authorities.setdefault(key, [])
+        if text not in values:
+            values.append(text)
+
+    for record in records:
+        source_key = re.sub(r"[^a-z0-9]+", "-", str(record.source).casefold()).strip("-") or "source"
+        add(f"source:{source_key}", record.source_id)
+        for key, value in dict(record.identifiers).items():
+            if isinstance(value, (list, tuple, set)):
+                for member in value:
+                    add(str(key), member)
+            else:
+                add(str(key), value)
+    return authorities
+
+
 def work_entry(candidate: WorkCandidate) -> dict:
     records = candidate.source_records
     anchor = records[0]
     years = [year for year in (_year(record.date) for record in records) if year is not None]
     languages = sorted({record.language for record in records if record.language})
     subjects = sorted({subject for record in records for subject in record.subjects if subject})
+    authorities = _authority_ids(records)
     return {
         "id": candidate.candidate_id,
+        "internalId": candidate.candidate_id,
+        "identity": {
+            "kind": "source-authority",
+            "authorityIds": authorities,
+            "provenanceCount": len(records),
+        },
+        "authorityIds": authorities,
         "title": candidate.normalized_title,
         "creator": candidate.normalized_creator,
         "date": min(years) if years else anchor.date,
@@ -66,10 +103,13 @@ def build_catalogue_manifest(candidates: Sequence[WorkCandidate]) -> dict:
     centuries = Counter(entry["century"] for entry in entries if entry["century"])
     languages = Counter(language for entry in entries for language in entry["languages"])
     creators = Counter(entry["creator"] for entry in entries if entry["creator"])
+    authority_backed = sum(1 for entry in entries if entry["authorityIds"])
     return {
-        "schema": "dawn-library-catalogue-manifest/v1",
+        "schema": "dawn-library-catalogue-manifest/v2",
         "holdingsModel": "remote-pointer-on-demand-reading",
+        "identityModel": "stable-internal-id+source-authority",
         "count": len(entries),
+        "authorityBackedCount": authority_backed,
         "facets": {
             "centuries": dict(sorted(centuries.items())),
             "languages": dict(languages.most_common()),
