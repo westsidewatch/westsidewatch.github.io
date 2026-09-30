@@ -1,0 +1,70 @@
+{
+  "id": "TC001-four-teacher-production-pass-v0.1",
+  "text": "敬畏耶和華是智慧的開端",
+  "stage": "mainline-production-diagnostic",
+  "generationAllowed": false,
+  "purpose": "Return the project to the actual calligraphy-tool mainline: make each Core Teacher attempt the complete scripture and expose only the missing capabilities that block production.",
+  "scopeLock": {
+    "coreTeachers": ["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
+    "projectHand": "after-four-teacher-pass",
+    "noNewDeepResearchBranches": true,
+    "shengjiaoRole": "Wang Xizhi single-glyph reference only",
+    "componentResearch": "on-demand only when a concrete missing TC001 glyph requires it",
+    "whiteDayCafe": "display resources only; tool remains offline until mature"
+  },
+  "pipeline": [
+    "input scripture",
+    "retrieve verified teacher glyph candidates",
+    "mark direct / transmitted / missing",
+    "choose candidates by whole-sentence needs rather than isolated beauty",
+    "for missing glyphs, request only the minimum reconstruction evidence needed",
+    "teacher-specific composition planning",
+    "flow adjustment from legitimate continuous-writing evidence",
+    "produce a non-rendering composition specification",
+    "diagnose blockers"
+  ],
+  "teacherPasses": {
+    "wang-xizhi": {
+      "knownTC001Evidence": {
+        "continuousOrCopyContext": ["是","和"],
+        "singleGlyphRestrictedReference": ["是","智","慧","端"],
+        "remainingToRetrieveOrReconstruct": ["敬","畏","耶","華","的","開"]
+      },
+      "compositionIntent": "natural emergence, contextual variation, implicit continuity before visible linking",
+      "blockers": ["six unresolved or insufficiently bound characters","need legitimate flow evidence beyond assembled inscription"]
+    },
+    "mi-fu": {
+      "knownTC001Evidence": "coverage pass required",
+      "compositionIntent": "controlled imbalance and recovery, pressure/space contrast, non-uniform agitation",
+      "blockers": ["TC001 glyph coverage not yet run as a complete sentence"]
+    },
+    "zhao-mengfu": {
+      "knownTC001Evidence": "coverage pass required",
+      "compositionIntent": "high readability with movement inside disciplined structure",
+      "blockers": ["TC001 glyph coverage not yet run as a complete sentence"]
+    },
+    "wen-zhengming": {
+      "knownTC001Evidence": "coverage pass required",
+      "compositionIntent": "bone strength, cultivated long-line rhythm, controlled density and spacing",
+      "blockers": ["TC001 glyph coverage not yet run as a complete sentence"]
+    }
+  },
+  "outputContract": {
+    "oneTeacherOutput": [
+      "11-character coverage map",
+      "source/provenance class for each character",
+      "missing-character list",
+      "sentence-level rhythm plan",
+      "scale/lean/density/spacing roles",
+      "legibility check for 耶和華",
+      "specific blockers preventing rendering"
+    ],
+    "notRequiredYet": ["final SVG","final raster image","website UI","public deployment","perfect pixel bounding boxes"]
+  },
+  "stopResearchRule": "If a research question does not unblock one of the eleven TC001 characters, teacher-specific sentence flow, or the scripture-name readability gate, defer it.",
+  "nextGate": {
+    "name": "four-teacher-11-character-coverage",
+    "requirement": "Run the same eleven-character coverage pass for Mi Fu, Zhao Mengfu and Wen Zhengming, then compare all four teacher blockers in one table before doing any further deep research.",
+    "generationAllowedAfterThisFile": false
+  }
+}
