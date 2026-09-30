@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-30T05:05:35.088005+00:00",
+  "generatedAt": "2026-09-30T05:20:06.095895+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 8,
+  "pagesChecked": 6,
   "newDiscovered": 0,
   "candidateQueue": 73,
   "catalogBooks": 1969,
@@ -50,11 +50,6 @@
       "error": "HTTPError"
     },
     {
-      "query": "Irenaeus",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Irenaeus",
-      "error": "HTTPError"
-    },
-    {
       "query": "Clement of Alexandria",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Clement+of+Alexandria",
       "error": "HTTPError"
@@ -62,11 +57,6 @@
     {
       "query": "John Calvin",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Calvin",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Martin Luther",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Martin+Luther&start_index=51",
       "error": "HTTPError"
     },
     {
@@ -91,7 +81,7 @@
     },
     {
       "query": "John Owen",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Owen&start_index=26",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Owen&start_index=51",
       "error": "HTTPError"
     },
     {
@@ -112,6 +102,11 @@
     {
       "query": "John Wesley",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Wesley&start_index=26",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Charles Wesley",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Charles+Wesley",
       "error": "HTTPError"
     },
     {
@@ -145,8 +140,13 @@
       "error": "HTTPError"
     },
     {
-      "query": "George Muller",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=George+Muller",
+      "query": "Hudson Taylor",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Hudson+Taylor",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Amy Carmichael",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Amy+Carmichael",
       "error": "HTTPError"
     },
     {
@@ -165,8 +165,8 @@
       "error": "HTTPError"
     },
     {
-      "query": "Bible concordance",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+concordance",
+      "query": "Biblical theology",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Biblical+theology",
       "error": "HTTPError"
     },
     {
@@ -190,6 +190,11 @@
       "error": "HTTPError"
     },
     {
+      "query": "Christian devotion",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+devotion",
+      "error": "HTTPError"
+    },
+    {
       "query": "Christian missions",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+missions",
       "error": "HTTPError"
@@ -201,7 +206,7 @@
     },
     {
       "query": "sermons Christianity",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=sermons+Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=sermons+Christianity&start_index=26",
       "error": "HTTPError"
     },
     {
@@ -242,6 +247,11 @@
     {
       "query": "Bible archaeology",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+archaeology",
+      "error": "HTTPError"
+    },
+    {
+      "query": "Bible geography",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+geography",
       "error": "HTTPError"
     },
     {
