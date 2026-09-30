@@ -38,7 +38,7 @@ jobs:
         run: python3 scripts/bridge_dawn_reading_pointers.py
       - name: Rebuild canonical index with reading pointers
         run: python3 scripts/build_dawn_canonical_substrate.py
-      - name: Verify recovered pointers reached canonical works
+      - name: Lock canonical reading-pointer consistency
         run: |
           python3 - <<'PY'
           import json
@@ -46,16 +46,36 @@ jobs:
           root=Path('.')
           pointer=json.loads((root/'static/dawn-library/reading-pointer-map.json').read_text())
           canonical=json.loads((root/'static/dawn-library/canonical-index.json').read_text())
-          mapped=int((canonical.get('readingPointers') or {}).get('mapped') or 0)
-          if pointer.get('count',0) < 1:
-              raise SystemExit('no recovered reading pointers')
-          if mapped < 1:
-              raise SystemExit('no reading pointers reached canonical works')
+          items=pointer.get('items') or []
           works=canonical.get('works') or {}
-          actual=sum(1 for w in works.values() if str(w.get('readingPointer') or '').startswith('dawn://reading/'))
-          if actual < mapped:
-              raise SystemExit(f'canonical pointer count {actual} below mapped {mapped}')
-          print(json.dumps({'pointerMap':pointer.get('count'),'mapped':mapped,'canonicalReadingWorks':actual},ensure_ascii=False))
+          summary=canonical.get('readingPointers') or {}
+          count=int(pointer.get('count') or 0)
+          mapped=int(summary.get('mapped') or 0)
+          ambiguous=int(pointer.get('ambiguous') or 0)
+          unmatched=int(pointer.get('unmatched') or 0)
+          if ambiguous or unmatched:
+              raise SystemExit(f'unresolved reading pointers: ambiguous={ambiguous} unmatched={unmatched}')
+          if count != len(items):
+              raise SystemExit(f'pointer count mismatch: count={count} items={len(items)}')
+          ids=[str(x.get('workId') or '') for x in items]
+          if len(set(ids)) != len(ids):
+              raise SystemExit('duplicate workId in reading-pointer-map')
+          missing=[wid for wid in ids if wid not in works]
+          if missing:
+              raise SystemExit(f'pointer workIds missing from canonical: {missing[:10]}')
+          bad=[]
+          for row in items:
+              wid=str(row.get('workId') or '')
+              expected=str(row.get('readingPointer') or '')
+              actual=str((works.get(wid) or {}).get('readingPointer') or '')
+              if not expected.startswith('dawn://reading/') or actual != expected:
+                  bad.append({'workId':wid,'expected':expected,'actual':actual})
+          if bad:
+              raise SystemExit(f'canonical pointer mismatch: {bad[:10]}')
+          actual_count=sum(1 for w in works.values() if str(w.get('readingPointer') or '').startswith('dawn://reading/'))
+          if mapped != count or actual_count != count:
+              raise SystemExit(f'count drift: map={count} mapped={mapped} canonical={actual_count}')
+          print(json.dumps({'pointerMap':count,'mapped':mapped,'canonicalReadingWorks':actual_count,'ambiguous':ambiguous,'unmatched':unmatched,'status':'locked'},ensure_ascii=False))
           PY
       - name: Persist generated reading state
         run: |
