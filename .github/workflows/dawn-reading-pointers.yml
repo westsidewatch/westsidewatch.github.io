@@ -1,0 +1,68 @@
+name: Dawn Reading Pointers
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/bridge_dawn_reading_pointers.py'
+      - 'scripts/build_dawn_canonical_substrate.py'
+      - 'dore_core/language/pointer_bridge.py'
+      - 'dore_core/language/source_mapping.py'
+      - 'static/dawn-library/biblical-world/discovery-candidates.json'
+      - 'data/dawn-10k-work-queue.json'
+      - '.github/workflows/dawn-reading-pointers.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dawn-reading-pointers
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Recover Gutenberg reading pointers
+        run: python3 scripts/bridge_dawn_reading_pointers.py
+      - name: Rebuild canonical index with reading pointers
+        run: python3 scripts/build_dawn_canonical_substrate.py
+      - name: Verify recovered pointers reached canonical works
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          root=Path('.')
+          pointer=json.loads((root/'static/dawn-library/reading-pointer-map.json').read_text())
+          canonical=json.loads((root/'static/dawn-library/canonical-index.json').read_text())
+          mapped=int((canonical.get('readingPointers') or {}).get('mapped') or 0)
+          if pointer.get('count',0) < 1:
+              raise SystemExit('no recovered reading pointers')
+          if mapped < 1:
+              raise SystemExit('no reading pointers reached canonical works')
+          works=canonical.get('works') or {}
+          actual=sum(1 for w in works.values() if str(w.get('readingPointer') or '').startswith('dawn://reading/'))
+          if actual < mapped:
+              raise SystemExit(f'canonical pointer count {actual} below mapped {mapped}')
+          print(json.dumps({'pointerMap':pointer.get('count'),'mapped':mapped,'canonicalReadingWorks':actual},ensure_ascii=False))
+          PY
+      - name: Persist generated reading state
+        run: |
+          git config user.name 'Dore CI'
+          git config user.email 'dore-ci@users.noreply.github.com'
+          git add static/dawn-library/reading-pointer-map.json static/dawn-library/canonical-index.json static/dawn-library/surfaces/dawn-storefront.json static/dawn-library/surfaces/multiwrite-biblical-world.json
+          if git diff --cached --quiet; then
+            echo 'Reading state already current.'
+          else
+            git commit -m 'data(dawn): refresh canonical reading pointers [skip ci]'
+            git push origin HEAD:main
+          fi
