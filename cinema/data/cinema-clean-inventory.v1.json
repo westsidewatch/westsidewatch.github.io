@@ -1,39 +1,43 @@
 {
   "schema": "dore.cinema-clean-inventory.v1",
-  "status": "salvage-pass-2-corrected",
-  "principle": "cinema-collects-watchable-works-not-general-video-resources",
+  "status": "playability-rule-locked",
+  "principle": "a Cinema resource is a work verified to play inside this site; non-playable cinema works are program-guide links",
   "admission": {
-    "rule": "admit watchable film works by form: feature film, documentary including short documentary, narrative film, animation film, and filmic series",
-    "cinemaFunctions": ["feature-film", "documentary-film", "documentary-short", "archaeology-documentary", "historical-documentary", "narrative-film", "animation-film", "filmic-series"],
-    "excludedFunctions": ["sermon", "teaching", "course", "bible-study", "visual-commentary", "scripture-overview"],
+    "playableResource": "must be verified to play inside /cinema/ using an authorised direct stream or embed",
+    "programGuide": "cinema work that cannot be played inside this site; retain metadata and link to official viewing page",
+    "cinemaForms": ["feature-film","documentary-film","documentary-short","archaeology-documentary","historical-documentary","narrative-film","animation-film","filmic-series"],
+    "excludedFunctions": ["sermon","teaching","course","bible-study","visual-commentary","scripture-overview"],
     "goodTv": {"mode":"friend-link-only","index":false,"preview":false,"embed":false,"resourceDiscovery":false}
   },
   "routing": {"sermon":"olive-mountain","teaching":"emmaus","course":"emmaus","bible-study":"emmaus","visual-commentary":"emmaus","scripture-overview":"emmaus"},
-  "assetPreservation": ["canonicalId","title","kind","source","officialUrl","embedUrl","runtime","timestamps","metadata"],
-  "cinemaConfirmed": [
-    {"canonicalId":"cinema:video:jesus-film:jesus","title":"JESUS","kind":"film","access":"embedded-playback","durationSeconds":7680},
-    {"canonicalId":"cinema:video:jesus-film:lumo-matthew","title":"LUMO · The Gospel of Matthew","kind":"series","access":"official-source-handoff","episodeCount":25},
-    {"canonicalId":"cinema:video:jesus-film:lumo-mark","title":"LUMO · The Gospel of Mark","kind":"series","access":"official-source-handoff","episodeCount":15},
-    {"canonicalId":"cinema:video:jesus-film:lumo-luke","title":"LUMO · The Gospel of Luke","kind":"series","access":"official-source-handoff","episodeCount":26},
-    {"canonicalId":"cinema:video:jesus-film:lumo-john","title":"LUMO · The Gospel of John","kind":"series","access":"official-source-handoff","episodeCount":22},
-    {"canonicalId":"cinema:film:patterns-of-evidence:moses-controversy","title":"Patterns of Evidence: The Moses Controversy","kind":"documentary-film","access":"official-paid-handoff","durationSeconds":7640},
-    {"canonicalId":"cinema:film:patterns-of-evidence:red-sea-miracle-1","title":"Patterns of Evidence: The Red Sea Miracle","kind":"documentary-film","access":"official-paid-handoff","durationSeconds":6813},
-    {"canonicalId":"cinema:film:patterns-of-evidence:red-sea-miracle-2","title":"Patterns of Evidence: The Red Sea Miracle 2","kind":"documentary-film","access":"official-paid-handoff","durationSeconds":8520},
-    {"canonicalId":"cinema:video:city-of-david:pilgrimage-road-revealed","title":"The Pilgrimage Road Revealed","kind":"archaeology-documentary","access":"official-embed"},
-    {"canonicalId":"cinema:video:city-of-david:first-temple-burnt-beams","title":"Evidence of Jerusalem's Destruction: Burnt Wooden Beams Uncovered in the City of David","kind":"archaeology-documentary","access":"official-embed"},
-    {"canonicalId":"cinema:video:city-of-david:hezekiah-tunnel","title":"Two Boys Make History: The Digging of the Siloam Tunnel","kind":"historical-film","access":"official-source"}
+  "explorationSources": [
+    {"name":"Jesus Film Project","priority":"highest","reason":"large multilingual evangelistic film library; official policy permits sharing films/clips on websites through supplied embed codes and links","mode":"discover-and-verify-embed"},
+    {"name":"BIBLE EPICS","priority":"high","reason":"mature free Bible video library architecture using source CDN rather than rehosting; includes Jesus Film Project-authorised publication and unfoldingWord Open Bible Stories CC BY-SA 4.0","mode":"architecture-and-source-index-reference"},
+    {"name":"unfoldingWord Open Bible Stories","priority":"high","reason":"CC BY-SA 4.0 open Bible story corpus surfaced through BIBLE EPICS","mode":"open-corpus-candidate"},
+    {"name":"PrayWorks Studios / Bible in a Nutshell","priority":"medium","reason":"cinematic Bible animation published free on YouTube and explicitly intended to be watched and shared; site playback still requires embed verification","mode":"verify-youtube-embed"},
+    {"name":"The Bible Film Project","priority":"medium","reason":"free cinematic Scripture visual library with no subscription/paywall/licensing barrier claimed by publisher; playback and reuse terms require per-source verification","mode":"verify-playback-and-license"},
+    {"name":"Internet Archive","priority":"conditional","reason":"large streamable public-domain/Creative-Commons film infrastructure; rights metadata is item-specific and uploader claims are not guaranteed","mode":"only-admit-individually-verified-public-domain-or-cc-items"}
+  ],
+  "playableCandidates": [
+    {"canonicalId":"cinema:video:jesus-film:jesus","title":"JESUS","verification":"existing-site-player"},
+    {"canonicalId":"cinema:video:city-of-david:pilgrimage-road-revealed","title":"The Pilgrimage Road Revealed","verification":"needs-live-site-playback-check"},
+    {"canonicalId":"cinema:video:city-of-david:first-temple-burnt-beams","title":"Evidence of Jerusalem's Destruction: Burnt Wooden Beams Uncovered in the City of David","verification":"needs-live-site-playback-check"}
+  ],
+  "programGuideCandidates": [
+    {"sourceFamily":"LUMO","reason":"current records are official-source handoff until site playback is verified"},
+    {"sourceFamily":"Patterns of Evidence","reason":"paid official handoff, not current in-site playback"},
+    {"canonicalId":"cinema:video:city-of-david:hezekiah-tunnel","reason":"official source exists but in-site playback not yet verified"},
+    {"sourceFamily":"The Chosen","reason":"retain as program-guide candidate unless authorised in-site playback is verified"}
   ],
   "routeToEmmaus": [
     {"canonicalId":"cinema:video:david-pawson:unlocking-matthew-1","reason":"Bible teaching"},
-    {"sourceFamily":"BibleProject","reason":"current inventory is Bible teaching, scripture overview, visual commentary or pedagogical animation; animation technique alone does not make it a cinema work"}
+    {"sourceFamily":"BibleProject","reason":"current inventory is pedagogical Bible material rather than Cinema programming"}
   ],
   "routeToOliveMountain": [{"sourceFamily":"Chinese Sermons","kind":"sermon"}],
-  "friendLinksOnly": [{"sourceFamily":"GOOD TV","rule":"no indexing, preview, embed, extraction or resource discovery"}],
-  "pendingClassification": ["The Chosen"],
+  "friendLinksOnly": [{"sourceFamily":"GOOD TV","rule":"single friendship link only; no resource work"}],
   "notes": [
-    "Correction: archaeology documentaries and historical documentary films belong in Cinema, including short-form works.",
-    "Emmaus may reference Cinema documentary works for study, but ownership remains Cinema; do not duplicate canonical ownership.",
-    "BibleProject remains in Emmaus because the current works are pedagogical in function.",
-    "Do not redesign Cinema until remaining legacy media sources are resolved."
+    "Do not split future discovery into many manual passes: harvest source indexes first, then batch playback verification.",
+    "Never rehost merely because a work is free to watch; preserve source CDN/embed when authorised.",
+    "Program-guide entries remain Cinema works but are not counted as site resources."
   ]
 }
