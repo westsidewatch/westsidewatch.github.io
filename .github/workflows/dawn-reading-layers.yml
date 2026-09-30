@@ -1,0 +1,35 @@
+name: Dawn Reading Layers
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dore_core/reading_capability.py'
+      - 'dore_core/library_reading_layers.py'
+      - 'scripts/build_dawn_reading_layers.py'
+      - 'static/dawn-library/canonical/**'
+      - '.github/workflows/dawn-reading-layers.yml'
+permissions:
+  contents: write
+concurrency:
+  group: dawn-reading-layers
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Build readable and jump-reading layers
+        run: python3 scripts/build_dawn_reading_layers.py
+      - name: Persist reading surfaces
+        run: |
+          git config user.name 'Dore CI'
+          git config user.email 'dore-ci@users.noreply.github.com'
+          git add static/dawn-library/surfaces/dawn-reading-layers.json static/dawn-library/surfaces/dawn-readable-layer.json static/dawn-library/surfaces/dawn-jump-reading-layer.json
+          if git diff --cached --quiet; then echo 'Reading layers already current.'; else git commit -m 'data(dawn): refresh two-layer reading surfaces [skip ci]'; git push origin HEAD:main; fi
