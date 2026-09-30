@@ -16,16 +16,26 @@ def read(path):return json.loads(path.read_text(encoding='utf-8'))
 def gutenberg_id(value):
  m=re.search(r'(?:ebooks/)?(\d+)',str(value or ''))
  return m.group(1) if m else ''
+def authority_rank(wid,work):
+ authority=work.get('authorityIds') or {}
+ return (1 if authority.get('openLibraryWork') or str(wid).startswith('OL') else 0,1 if work.get('authorityBacked') else 0,0 if str(wid).startswith('dawn:') else 1,str(wid))
 def resolve(ids,works,item):
  if len(ids)<=1:return ids
  source_id=gutenberg_id(item.get('sourceId') or item.get('sourceUrl'))
- if not source_id:return ids
- exact=[]
- for wid in ids:
-  authority=works[wid].get('authorityIds') or {}
-  candidates=(authority.get('projectGutenberg'),authority.get('gutenberg'),authority.get('gutenbergId'))
-  if source_id in {gutenberg_id(v) for v in candidates if v}:exact.append(wid)
- return exact or ids
+ if source_id:
+  exact=[]
+  for wid in ids:
+   authority=works[wid].get('authorityIds') or {}
+   candidates=(authority.get('projectGutenberg'),authority.get('gutenberg'),authority.get('gutenbergId'))
+   if source_id in {gutenberg_id(v) for v in candidates if v}:exact.append(wid)
+  if exact:return exact
+ # A surface-created dawn:* record can duplicate an authority-backed Work when the
+ # discovery row omitted its author. Prefer the established authority identity;
+ # keep true authority-vs-authority collisions ambiguous.
+ authoritative=[wid for wid in ids if authority_rank(wid,works[wid])[:2]!=(0,0)]
+ provisional=[wid for wid in ids if wid not in authoritative]
+ if len(authoritative)==1 and provisional:return authoritative
+ return ids
 
 def main()->int:
  p=argparse.ArgumentParser();p.add_argument('--canonical',type=Path,default=DEFAULT_CANONICAL);p.add_argument('--discovery',type=Path,default=DEFAULT_DISCOVERY);p.add_argument('--out',type=Path,default=DEFAULT_OUT);a=p.parse_args()
