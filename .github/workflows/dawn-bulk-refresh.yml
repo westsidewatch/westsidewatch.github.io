@@ -42,6 +42,49 @@ jobs:
       - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
+      - name: Validate authority-backed catalogue schema against current holdings
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          from dore_core.corpus.catalogue_manifest import _authority_ids
+          from dore_core.corpus.admission_pipeline import SourceRecord
+
+          root = Path('static/dawn-library/catalogue')
+          index = json.loads((root / 'index.json').read_text(encoding='utf-8'))
+          expected = int(index['count'])
+          seen = 0
+          authority_backed = 0
+          for page_name in index['pages']:
+              page = json.loads((root / page_name).read_text(encoding='utf-8'))
+              for work in page.get('works', []):
+                  seen += 1
+                  records = []
+                  for src in work.get('sources', []):
+                      try:
+                          records.append(SourceRecord(
+                              source=str(src.get('source') or ''),
+                              source_id=str(src.get('sourceId') or ''),
+                              title=str(work.get('title') or ''),
+                              creator=str(work.get('creator') or ''),
+                              date=str(work.get('date') or ''),
+                              language=None,
+                              subjects=(),
+                              readable=bool(src.get('readable')),
+                              identifiers=dict(src.get('identifiers') or {}),
+                          ))
+                      except TypeError:
+                          records = []
+                          break
+                  if records and _authority_ids(records):
+                      authority_backed += 1
+          report = {'schema':'dawn-library-catalogue-authority-validation/v1','count':seen,'expected':expected,'authorityBackedCount':authority_backed}
+          Path('data/dawn-library-catalogue-authority-validation.json').write_text(json.dumps(report, ensure_ascii=False, separators=(',',':')), encoding='utf-8')
+          print(json.dumps(report, ensure_ascii=False))
+          if seen != expected:
+              raise SystemExit(f'catalogue count mismatch: {seen} != {expected}')
+          PY
+
       - name: Index current library and project refreshed Chinese collection
         run: python3 scripts/build_dawn_library_index.py
 
@@ -82,6 +125,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
           path: |
+            data/dawn-library-catalogue-authority-validation.json
             data/dawn-library-build-index.json
             data/dawn-library-chinese-projection.json
             data/dawn-promotion-gate-report.json
