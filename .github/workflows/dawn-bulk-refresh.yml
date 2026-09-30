@@ -12,6 +12,7 @@ on:
       - 'scripts/promote_dawn_canonical_batch.py'
       - 'scripts/build_dawn_resource_queue.py'
       - 'scripts/refresh_dawn_bulk_corpus.py'
+      - 'scripts/build_dawn_library_index.py'
       - '.github/workflows/dawn-bulk-refresh.yml'
 
 permissions:
@@ -23,8 +24,6 @@ concurrency:
 
 env:
   DAWN_GROWTH_STATE_BRANCH: dawn-autonomous-growth-state
-  # Drain the already-discovered collection in one bounded run. Do not discover
-  # a new corpus here; the goal is to finish the current library before growth resumes.
   DAWN_PROMOTION_BATCH: '250000'
 
 jobs:
@@ -48,6 +47,9 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+
+      - name: Index current library and project Chinese collection
+        run: python3 scripts/build_dawn_library_index.py
 
       - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
@@ -82,13 +84,15 @@ jobs:
           fi
           git worktree remove --force "$worktree_dir"
 
-      - name: Publish drained canonical promotion artifact
+      - name: Publish library scan and drained promotion artifact
         uses: actions/upload-artifact@v4
         with:
           name: dawn-canonical-promotion-candidate
           if-no-files-found: error
           retention-days: 14
           path: |
+            data/dawn-library-build-index.json
+            data/dawn-library-chinese-projection.json
             data/dawn-promotion-gate-report.json
             data/dawn-promotion-batch-report.json
             data/dawn-promoted-canonical-resource-index.json
