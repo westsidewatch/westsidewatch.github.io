@@ -5,20 +5,36 @@
   "matrixPurpose": "Operational 11 x 4 evidence matrix. A cell becomes resolved only after a source-bound corpus record with retained line/column context is attached.",
   "characters": ["敬","畏","耶","和","華","是","智","慧","的","開","端"],
   "teachers": ["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
-  "states": ["context-match","same-work","same-teacher","structural-analogue","unresolved"],
+  "states": ["context-match","same-work","same-teacher","transcription-bound","structural-analogue","unresolved"],
   "admissionRule": "No visual guess, dictionary-font substitute, cross-teacher glyph, or generated glyph may resolve a cell.",
   "matrix": {
     "敬": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "畏": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "耶": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
-    "和": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "和": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-he-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "華": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
-    "是": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "是": {"wang-xizhi":{"state":"transcription-bound","records":["wxz-lanting-shenlong-shi-001"]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "智": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "慧": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "的": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "開": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
     "端": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}}
+  },
+  "records": {
+    "wxz-lanting-shenlong-shi-001": {
+      "recordId":"wxz-lanting-shenlong-shi-001","character":"是","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/journal_detail/239217.html","attributionStatus":"傳馮承素摹王羲之；唐摹本系統","context":{"previousCharacter":"情","nextCharacter":"日","twoCharacterWindow":"是日","threeCharacterWindow":"是日也","fiveCharacterWindow":"幽情是日也"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"神龍本為唐摹蘭亭序的重要傳本。釋文確認『是日也』；在完成高清原卷定位前不得升級為 same-work glyph-bound。"
+    },
+    "wxz-lanting-shenlong-he-001": {
+      "recordId":"wxz-lanting-shenlong-he-001","character":"和","teacher":"wang-xizhi","work":"蘭亭序・神龍本","workState":"flowing-running / Tang tracing-copy witness","lineOrColumnId":"pending-image-coordinate","sourceType":"tracing-copy","sourceURI":"https://www.dpm.org.cn/journal_detail/239217.html","attributionStatus":"傳馮承素摹王羲之；唐摹本系統","context":{"previousCharacter":"風","nextCharacter":"暢","twoCharacterWindow":"和暢","threeCharacterWindow":"風和暢","fiveCharacterWindow":"清惠風和暢"},"spatial":{"boundingBox":null,"relativeScale":null,"centerOfGravity":null,"lean":null,"interCharacterGap":null,"lineAxisOffset":null},"brushObservation":{"entryDirection":null,"exitDirection":null,"pressureChange":null,"visibleLink":null,"implicitContinuation":null},"evidenceStatus":"transcription-bound; image-coordinate pending","evidenceNote":"釋文確認『惠風和暢』。保留原字組，等待高清原卷定位後測量字距、欹側、出入勢。"
+    }
+  },
+  "wangXizhiPass": {
+    "status":"first-source-bound-pass",
+    "directTranscriptionHits":["是","和"],
+    "unresolved":["敬","畏","耶","華","智","慧","的","開","端"],
+    "verifiedNegativeCoreWorks":["快雪時晴帖","雨後帖"],
+    "importantFinding":"Core works can contribute Hand Grammar without contributing direct TC001 glyph coverage.",
+    "nextAction":"Bind 是 and 和 to exact high-resolution Shenlong image coordinates and full original line context; then expand Wang Xizhi facsimile/copy/rubbing search for the remaining nine characters."
   },
   "recordContract": {
     "required": ["recordId","character","teacher","work","workState","lineOrColumnId","sourceType","sourceURI","attributionStatus","context","spatial","brushObservation"],
@@ -26,18 +42,14 @@
     "spatial": ["boundingBox","relativeScale","centerOfGravity","lean","interCharacterGap","lineAxisOffset"],
     "brushObservation": ["entryDirection","exitDirection","pressureChange","visibleLink","implicitContinuation"]
   },
-  "queryBatches": [
-    {"priority":1,"teacher":"wang-xizhi","preferredWorks":["快雪時晴帖","蘭亭序傳本系統","雨後帖"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
-    {"priority":2,"teacher":"mi-fu","preferredWorks":["苕溪詩帖","蜀素帖","尺牘","盛制帖"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
-    {"priority":3,"teacher":"zhao-mengfu","preferredWorks":["洛神賦","付至紙素尺牘","致晉之尺牘"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
-    {"priority":4,"teacher":"wen-zhengming","preferredWorks":["自書紀行詩","自書詩帖","行書七言詩","行書七律軸"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]}
-  ],
   "coverageMetrics": {
     "resolvedCells": 0,
+    "transcriptionBoundCells": 2,
     "totalCells": 44,
+    "wangXizhiTranscriptionCoverage": 0.1818,
     "historicalGlyphCoverage": 0.0,
     "contextMatchCoverage": 0.0,
-    "note": "Metrics are intentionally zero until actual corpus records are attached."
+    "note": "是 and 和 are source/transcription-bound but intentionally not counted as resolved until image coordinates and original spatial context are attached."
   },
   "specialHandling": {
     "耶": "Expect lower historical coverage. Do not treat rarity as permission to synthesize early; collect component and structural analogues separately.",
@@ -45,8 +57,8 @@
     "耶和華": "All three characters remain subject to the scripture-name readability gate before stylistic ranking."
   },
   "nextGate": {
-    "name": "first-source-bound-cells",
-    "requirement": "Populate the first verified records from the preferred works, beginning with Wang Xizhi, while retaining the complete original line/column context before isolated glyph derivation.",
+    "name": "wang-xizhi-image-bound-first-cells",
+    "requirement": "Locate 是 and 和 in a high-resolution Shenlong witness, retain the complete original line/column crop, and attach measurable spatial/brush observations before marking either cell resolved.",
     "generationAllowedAfterThisFile": false
   }
 }
