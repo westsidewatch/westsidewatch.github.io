@@ -1,59 +1,98 @@
 {
   "schema":"dore.cinema-resource-expansion.v1",
   "authority":"curated-official-playable",
+  "admissionRule":"candidate until preview and in-site playback are verified",
   "items":[
     {
       "canonicalId":"cinema:film:jesus-film:story-for-children",
-      "kind":"film",
-      "title":"The Story of Jesus for Children",
-      "creator":"Jesus Film Project",
-      "language":["en","multi"],
-      "durationSeconds":3660,
+      "kind":"film","title":"The Story of Jesus for Children","creator":"Jesus Film Project",
+      "language":["en","multi"],"durationSeconds":3660,
       "topics":["耶穌生平","兒童","家庭","福音"],
       "sourcePointer":"https://www.youtube.com/watch?v=H6u9eRxMbeE",
       "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=H6u9eRxMbeE","embedUrl":"https://www.youtube-nocookie.com/embed/H6u9eRxMbeE","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "preview":{"posterUrl":"https://i.ytimg.com/vi/H6u9eRxMbeE/hqdefault.jpg"},
+      "admission":{"status":"candidate","playbackVerified":false},
       "rights":{"rehost":false,"policy":"official-provider-embed"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube full movie and Jesus Film Project official watch page"}
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film YouTube full movie and official Jesus Film Project watch page"}
     },
     {
       "canonicalId":"cinema:short:jesus-film:my-last-day",
-      "kind":"animation-film",
-      "title":"My Last Day",
-      "creator":"Jesus Film Project",
-      "language":["en","multi"],
-      "durationSeconds":540,
+      "kind":"animation-film","title":"My Last Day","creator":"Jesus Film Project",
+      "language":["en","multi"],"durationSeconds":540,
       "topics":["受難","十字架","悔改","強盜","動畫短片"],
       "sourcePointer":"https://www.youtube.com/watch?v=1pY3s5P3MAo",
       "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=1pY3s5P3MAo","embedUrl":"https://www.youtube-nocookie.com/embed/1pY3s5P3MAo","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "preview":{"posterUrl":"https://i.ytimg.com/vi/1pY3s5P3MAo/hqdefault.jpg"},
+      "admission":{"status":"candidate","playbackVerified":false},
       "rights":{"rehost":false,"policy":"official-provider-embed"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube and Jesus Film Project official watch page"}
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film YouTube and official Jesus Film Project watch page"}
     },
     {
       "canonicalId":"cinema:series:jesus-film:rivka",
-      "kind":"series",
-      "title":"Rivka",
-      "creator":"Jesus Film Project",
-      "series":"Rivka · 12 episodes",
-      "language":["en","multi"],
-      "episodeCount":12,
+      "kind":"series","title":"Rivka","creator":"Jesus Film Project",
+      "series":"Rivka · 12 episodes","language":["en","multi"],"episodeCount":12,
       "topics":["初代教會","信仰生活","盼望","第一世紀"],
       "sourcePointer":"https://www.youtube.com/watch?v=765-vl4MSZU",
       "providerSources":[{"provider":"youtube","url":"https://www.youtube.com/watch?v=765-vl4MSZU","embedUrl":"https://www.youtube-nocookie.com/embed/765-vl4MSZU","official":true,"embed":true,"access":"embedded-playback","publisher":"Jesus Film Project"}],
+      "preview":{"posterUrl":"https://i.ytimg.com/vi/765-vl4MSZU/hqdefault.jpg"},
+      "admission":{"status":"candidate","playbackVerified":false},
       "rights":{"rehost":false,"policy":"official-provider-embed"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film verified official YouTube full compilation and Jesus Film Project official 12-episode collection"}
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film YouTube compilation and official Jesus Film Project 12-episode collection"}
     },
     {
       "canonicalId":"cinema:film:jesus-film:magdalena",
-      "kind":"film",
-      "title":"Magdalena",
-      "creator":"Jesus Film Project",
-      "language":["en","multi"],
-      "durationSeconds":3660,
+      "kind":"film","title":"Magdalena","creator":"Jesus Film Project",
+      "language":["en","multi"],"durationSeconds":3660,
       "topics":["抹大拉馬利亞","婦女","耶穌生平","福音"],
       "sourcePointer":"https://www.jesusfilm.org/watch/magdalena.html/english.html",
       "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/magdalena.html/english.html","official":true,"embed":false,"access":"official-source-handoff"}],
+      "admission":{"status":"collection","playbackVerified":false},
       "rights":{"rehost":false,"policy":"official-source-only"},
-      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Jesus Film Project official feature-film page; playable source exists but site embed not yet verified"}
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film Project feature-film page; first-party playback exists but site embed is not yet verified"}
+    },
+    {
+      "canonicalId":"cinema:series:jesus-film:lumo-mark",
+      "kind":"series","title":"LUMO — The Gospel of Mark","creator":"LUMO / Jesus Film Project",
+      "language":["en","multi"],"episodeCount":15,
+      "topics":["馬可福音","耶穌生平","福音","聖經電影"],
+      "sourcePointer":"https://www.jesusfilm.org/watch/english.html/videos",
+      "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/english.html/videos","official":true,"embed":false,"access":"official-source-handoff"}],
+      "admission":{"status":"candidate","playbackVerified":false},
+      "rights":{"rehost":false,"policy":"official-source-only"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film Project collection: 15 Mark segments, 56 audio translations"}
+    },
+    {
+      "canonicalId":"cinema:series:jesus-film:lumo-luke",
+      "kind":"series","title":"LUMO — The Gospel of Luke","creator":"LUMO / Jesus Film Project",
+      "language":["en","multi"],"episodeCount":25,
+      "topics":["路加福音","耶穌生平","福音","聖經電影"],
+      "sourcePointer":"https://www.jesusfilm.org/watch/english.html/videos",
+      "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/english.html/videos","official":true,"embed":false,"access":"official-source-handoff"}],
+      "admission":{"status":"candidate","playbackVerified":false},
+      "rights":{"rehost":false,"policy":"official-source-only"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film Project collection: 25 Luke segments, 56 audio translations"}
+    },
+    {
+      "canonicalId":"cinema:series:jesus-film:lumo-john",
+      "kind":"series","title":"LUMO — The Gospel of John","creator":"LUMO / Jesus Film Project",
+      "language":["en","multi"],
+      "topics":["約翰福音","耶穌生平","福音","聖經電影"],
+      "sourcePointer":"https://www.jesusfilm.org/watch/english.html/videos",
+      "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/english.html/videos","official":true,"embed":false,"access":"official-source-handoff"}],
+      "admission":{"status":"candidate","playbackVerified":false},
+      "rights":{"rehost":false,"policy":"official-source-only"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film Project LUMO Gospel collection"}
+    },
+    {
+      "canonicalId":"cinema:series:jesus-film:lumo-acts",
+      "kind":"series","title":"LUMO — Acts of the Apostles","creator":"LUMO / Jesus Film Project",
+      "language":["en","multi"],"episodeCount":4,
+      "topics":["使徒行傳","初代教會","福音","聖經電影"],
+      "sourcePointer":"https://www.jesusfilm.org/watch/lamba.html",
+      "providerSources":[{"provider":"jesus-film-project-first-party","url":"https://www.jesusfilm.org/watch/lamba.html","official":true,"embed":false,"access":"official-source-handoff"}],
+      "admission":{"status":"candidate","playbackVerified":false},
+      "rights":{"rehost":false,"policy":"official-source-only"},
+      "provenance":{"verified":true,"verifiedAt":"2026-09-30","evidence":"Official Jesus Film Project Watch page lists four LUMO Acts segments"}
     }
   ]
 }
