@@ -46,8 +46,16 @@ def cover(work):
             src=v.get('src') or v.get('url') or v.get('href')
             if isinstance(src,str):return {'src':src,'source':v.get('source') or 'canonical','width':v.get('width'),'height':v.get('height')}
     ids=work.get('authorityIds') or {}
-    ol=((ids.get('openLibraryWork') or ids.get('openLibrary')) if isinstance(ids,dict) else None) or work.get('openLibraryId')
-    if ol:return {'src':f'https://covers.openlibrary.org/b/olid/{quote(str(ol))}-M.jpg?default=false','source':'open-library'}
+    if isinstance(ids,dict):
+        cover_id=ids.get('openLibraryCover') or ids.get('coverId')
+        if cover_id:return {'src':f'https://covers.openlibrary.org/b/id/{quote(str(cover_id))}-M.jpg?default=false','source':'open-library-cover-id'}
+        edition=ids.get('openLibraryEdition') or ids.get('openLibraryEditionId')
+        if edition:return {'src':f'https://covers.openlibrary.org/b/olid/{quote(str(edition))}-M.jpg?default=false','source':'open-library-edition'}
+        ol=ids.get('openLibraryWork') or ids.get('openLibrary')
+    else: ol=None
+    ol=ol or work.get('openLibraryId') or work.get('workId') or work.get('id')
+    if ol and str(ol).startswith('OL') and str(ol).endswith('W'):
+        return {'src':f'https://covers.openlibrary.org/b/olid/{quote(str(ol))}-M.jpg?default=false','source':'open-library-work-fallback','workLookup':f'https://openlibrary.org/works/{quote(str(ol))}.json'}
     return {'src':None,'source':'dawn-placeholder'}
 
 
@@ -56,7 +64,7 @@ def item(work):
     if not wid:raise ValueError('Work missing canonical id')
     c=cover(work); w=c.get('width'); h=c.get('height')
     ratio=(round(float(w)/float(h),5) if w and h else None)
-    return {'workId':wid,'motionKey':f'dawn-work:{wid}','title':work.get('title') or 'Untitled','authors':strings(work.get('authors') or work.get('author'))[:4],'languages':strings(work.get('languages') or work.get('language'))[:4],'cover':{'src':c.get('src'),'source':c.get('source'),'width':w,'height':h,'aspectRatio':ratio},'motion':{'layer':'cover','detachable':True,'layoutStable':bool(ratio),'preferredProperties':['transform','opacity']}}
+    return {'workId':wid,'motionKey':f'dawn-work:{wid}','title':work.get('title') or 'Untitled','authors':strings(work.get('authors') or work.get('author'))[:4],'languages':strings(work.get('languages') or work.get('language'))[:4],'cover':{'src':c.get('src'),'source':c.get('source'),'width':w,'height':h,'aspectRatio':ratio,'workLookup':c.get('workLookup')},'motion':{'layer':'cover','detachable':True,'layoutStable':bool(ratio),'preferredProperties':['transform','opacity']}}
 
 
 def write_preview_shard(manifest, rows, offset, number):
