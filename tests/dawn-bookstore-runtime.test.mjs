@@ -75,12 +75,36 @@ test('Reader uses a published bilingual pack and never fetches the provider text
   } finally { globalThis.fetch = original; }
 });
 
-test('Chinese Collection is a first-class, bounded index with a full-text entry', async () => {
+test('Chinese Collection preserves the bookstore card contract and a full-text entry', async () => {
   const collection = JSON.parse(await readFile(new URL('dawn-library/chinese-collection.json', staticRoot)));
+  assert.equal(collection.schema, 'dawn.library.collection-index.v1');
   assert.equal(collection.count, 47);
-  assert.equal(collection.items.length, 47);
-  const fullText = collection.items.find(item => item.fullText);
-  assert.equal(fullText.title, '靈歷集光');
-  assert.equal(fullText.readUrl, 'https://www.gutenberg.org/cache/epub/25716/pg25716-images.html');
-  assert.match(fullText.readUrl, /^https:\/\//);
+  assert.equal(collection.works.length, 47);
+  const fullText = collection.works.find(item => item.access?.kind === 'full-text');
+  assert.equal(fullText.work.title, '靈歷集光');
+  assert.equal(fullText.access.url, 'https://www.gutenberg.org/cache/epub/25716/pg25716-images.html');
+  assert.match(fullText.cover.url, /^https:\/\//);
+  assert.ok(collection.works.every(item => item.work?.title && item.source?.provider && item.access?.url));
+  assert.ok(collection.works.every(item => ['source', 'one-fallback'].includes(item.cover?.mode)));
+  assert.equal(collection.coverPreview.href, 'cover-preview/chinese-collection.json');
+  const preview = JSON.parse(await readFile(new URL('dawn-library/cover-preview/chinese-collection.json', staticRoot)));
+  assert.equal(preview.schema, 'dawn.library.cover-preview-shard.v1');
+  assert.equal(preview.count, collection.count);
+  assert.deepEqual(preview.items.map(item => item.workId), collection.works.map(item => item.workId));
+  const product = await readFile(new URL('dawn-library/product/bookstore.mjs', staticRoot), 'utf8');
+  assert.doesNotMatch(product, /封面待解析|閱讀入口待解析|來源整理中/);
+});
+
+test('the bookstore reads its catalogue, Chinese collection, and cover projections through one Library client', async () => {
+  await fixture(async (fabric, requests) => {
+    const library = await import(`../static/dawn-library/product/library-system.mjs?test=${sequence++}`);
+    const [manifest, chinese, previews] = await Promise.all([
+      library.dawnLibrary.manifest(), library.dawnLibrary.chineseCollection(), library.dawnLibrary.coverPreviewRoot()
+    ]);
+    assert.ok(manifest.workCount > 200000);
+    assert.equal(chinese.works.length, 47);
+    assert.equal(previews.workCount, manifest.workCount);
+    assert.ok(requests.includes('/dawn-library/chinese-collection.json'));
+    assert.ok(requests.includes('/dawn-library/cover-preview/chinese-collection.json'));
+  });
 });

@@ -1,7 +1,18 @@
 {
   "schema": "dawn.library.collections.v1",
-  "generatedAt": "2026-09-30T18:29:11.226924+00:00",
+  "generatedAt": "2026-09-30T19:58:08.004705+00:00",
   "collections": [
+    {
+      "id": "zh",
+      "title": "中文館藏",
+      "kind": "books",
+      "status": "active-building",
+      "published": 47,
+      "fullText": 1,
+      "output": "/dawn-library/chinese-collection.json",
+      "coverPreview": "/dawn-library/cover-preview/chinese-collection.json",
+      "delivery": "remote-first"
+    },
     {
       "id": "biblical-world-books",
       "title": "聖經世界 · 書籍",
