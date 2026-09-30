@@ -7,7 +7,7 @@
     <p lang="zh-Hant">從經文、神學與內在生活出發，尋找值得慢讀的書。</p>
   </header>
   <div class="dawn-library-brand__frame-wrap">
-    <iframe id="dawn-library-product-surface" class="dawn-library-brand__frame" src="{{ "dawn-library/product/?surface=spread-20260929c" | relURL }}" title="黎明書局館藏" loading="eager"></iframe>
+    <iframe id="dawn-library-product-surface" class="dawn-library-brand__frame" src="{{ "dawn-library/product/?surface=spread-20260930a" | relURL }}" title="黎明書局館藏" loading="eager"></iframe>
   </div>
 </section>
 <style>
@@ -37,10 +37,32 @@
       frame.style.height=`${available}px`;
     }catch(error){console.warn('[Dawn Library] frame resize unavailable',error)}
   };
+  const cleanPublicCopy=()=>{
+    const doc=frame?.contentDocument;if(!doc)return;
+    const replacements=new Map([
+      ['作者入口。由 canonical 館藏生成，不另建第二套資料。',''],
+      ['聖經世界相關書籍索引；查經資料本身仍歸以馬忤斯。',''],
+      ['神學作品入口。',''],
+      ['靈修與內在生活作品入口。',''],
+      ['第二頁先恢復結構與容量入口。最終索引密度、第三頁需求與翻頁／下滾動效留待全站 layout 重建決定。',''],
+      ['三晨星正在同步 canonical 館藏。',''],
+      ['原文已取得。繁中翻譯等待 Doré Language Runtime。','繁中譯文準備中。'],
+      ['正文尚未 materialize，翻譯不能開始','可前往來源閱讀'],
+      ['正在解析正文來源。','正在開書。']
+    ]);
+    const forbidden=/canonical|第二套資料|先恢復結構|最終索引密度|第三頁需求|layout 重建|materialize|Doré Language Runtime|READING\s*·\s*RESOLVING|AUTHORITY\s*·\s*RESOLVED/i;
+    const walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_TEXT);
+    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
+    for(const node of nodes){let text=node.nodeValue;for(const [from,to] of replacements)text=text.split(from).join(to);if(forbidden.test(text))text='';node.nodeValue=text;}
+    doc.querySelectorAll('.index-block p').forEach(p=>{if(!p.textContent.trim())p.remove()});
+  };
   frame?.addEventListener('load',async()=>{
+    cleanPublicCopy();
+    const doc=frame.contentDocument;
+    if(doc?.body)new MutationObserver(cleanPublicCopy).observe(doc.body,{subtree:true,childList:true,characterData:true});
     resizeFrame();
     try{
-      const boundaryModule=await import('{{ "dawn-library/product/library-renderer-boundary.js" | relURL }}?v=20260929c');
+      const boundaryModule=await import('{{ "dawn-library/product/library-renderer-boundary.js" | relURL }}?v=20260930a');
       const boundary=await boundaryModule.createLibraryRendererBoundary();
       boundaryModule.assertLibraryRendererBoundary(boundary);
       frame.dataset.libraryContract='ready';frame.dataset.libraryContractSchema=boundary.contract.schema;
