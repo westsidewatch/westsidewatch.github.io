@@ -1,0 +1,83 @@
+{
+  "id": "shengjiao-tc001-variant-study-v0.1",
+  "teacher": "wang-xizhi",
+  "sourceWork": "懷仁集王羲之聖教序",
+  "researchMode": "single-glyph-only",
+  "generationAllowed": false,
+  "flowEngineInputAllowed": false,
+  "publicDisplayAllowed": false,
+  "purpose": "Extract a reusable single-glyph analysis grammar for TC001 from repeated transmitted Wang-form examples without treating Huairen inscription adjacency as Wang Xizhi phrase flow.",
+  "sourceCautions": [
+    "Huairen assembled the inscription from collected Wang-form sources; neighboring inscription characters are locator context only.",
+    "Stone carving and rubbing transmission may alter edge, thickness and micro-turn appearance.",
+    "Do not infer original ink pressure, inter-character spacing, entry from the previous glyph, exit into the next glyph, or phrase rhythm from this source.",
+    "Some scholarship discusses possible constructed or composite glyphs in the compilation; every unusual form therefore remains provenance-sensitive rather than automatically canonical Wang autograph evidence."
+  ],
+  "comparisonProtocol": {
+    "repeatedGlyphMinimum": 2,
+    "layers": [
+      "identity skeleton",
+      "component topology",
+      "load-bearing axis",
+      "internal opening-closing pattern",
+      "running-script simplification",
+      "stroke-path hypothesis",
+      "variable zones",
+      "transmission-noise candidates"
+    ],
+    "rule": "Only a feature recurring across defensible instances may be promoted toward a stable skeleton. A feature visible in one instance remains a variant or hypothesis."
+  },
+  "tc001": {
+    "是": {
+      "verifiedOccurrenceCount": 2,
+      "studyMode": "same-character-variant-comparison",
+      "stableSkeletonTargets": ["日部与下部的纵向统摄关系","中轴如何保持识别稳定","下部行书化后仍保留的是字形关键节点"],
+      "variableZoneTargets": ["日部长扁","中部横画收放","下部折转的连断与简省","整体长宽比例","局部方圆"],
+      "forbiddenInference": ["两个碑文上下文造成了写法变化","相邻字决定其入出势"]
+    },
+    "智": {
+      "verifiedOccurrenceCount": 3,
+      "studyMode": "same-character-variant-comparison",
+      "stableSkeletonTargets": ["知与日的上下层级","上部左右构件的主次与咬合","下部日如何承托上部密度"],
+      "variableZoneTargets": ["矢旁伸缩","口部开合","知部横向压缩程度","上下部距离","日部长扁与欹正","行书简省程度"],
+      "specialQuestion": "How can a dense glyph remain legible and mobile without becoming a dark block?",
+      "forbiddenInference": ["碑文前后字提供TC001智慧的行气"]
+    },
+    "端": {
+      "verifiedOccurrenceCount": 3,
+      "studyMode": "same-character-variant-comparison",
+      "stableSkeletonTargets": ["立与耑的左右拓扑","左部作为支点还是伴随结构的稳定关系","右部纵向骨架与下部收束节点"],
+      "variableZoneTargets": ["立部大小与高低","左右部件间距","耑部上收下放程度","末段转折/收锋的传世形态差异","整体欹侧"],
+      "specialQuestion": "Which structural features make 端 feel conclusive while allowing the final glyph to remain alive?",
+      "forbiddenInference": ["碑文中的句末位置可直接训练TC001结尾节奏"]
+    },
+    "慧": {
+      "verifiedOccurrenceCount": 1,
+      "studyMode": "single-instance-plus-component-expansion",
+      "stableSkeletonStatus": "not-yet-promotable",
+      "directObservationTargets": ["彗与心的上下比例","密集上部如何保持层次","心部如何承接而不形成机械底座","可见简省与转折"],
+      "componentExpansion": {
+        "required": true,
+        "searchTargets": ["彗 component analogues in transmitted Wang material","心 component analogues in running/running-cursive Wang material","dense-over-heart structural analogues"],
+        "rule": "Component analogues may strengthen a structural hypothesis but may not be assembled into a synthetic 慧 until the later reconstruction gate explicitly opens."
+      }
+    }
+  },
+  "teacherMemoryOutputs": {
+    "stableSkeletonMemory": "only after repeated-instance agreement or cross-source corroboration",
+    "variantMemory": "retain legitimate alternatives instead of collapsing them into one canonical glyph",
+    "componentMemory": "store component behavior separately from whole-glyph behavior",
+    "noiseMemory": "record likely carving/rubbing artifacts so later systems do not imitate them as brush style",
+    "provenanceRequired": true
+  },
+  "tc001Use": {
+    "glyphShapeEvidenceAllowed": true,
+    "flowEvidenceAllowed": false,
+    "futureRole": "When TC001 composition begins, this source may propose structural glyph candidates for 是、智、慧、端; size, lean, spacing, entry/exit relationship and sentence rhythm must come from independent continuous-writing evidence and Project Hand planning."
+  },
+  "nextGate": {
+    "name": "component-family-memory-v0.1",
+    "requirement": "Expand from these four TC001 glyphs into reusable component families—especially 日、心、立、口、矢/知、耑 and dense-over-heart structures—using Wang transmitted material while preserving source class and single-glyph-only restrictions where applicable.",
+    "generationAllowedAfterThisFile": false
+  }
+}
