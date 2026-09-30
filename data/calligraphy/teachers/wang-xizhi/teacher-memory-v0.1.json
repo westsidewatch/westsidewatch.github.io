@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "teacherId": "wang-xizhi",
+  "name": "王羲之",
+  "status": "research-seed",
+  "generationAllowed": false,
+  "purpose": "First evidence-grounded living-teacher memory for running and running-cursive script. This is not a style preset and must not label reconstructions as authentic Wang Xizhi handwriting.",
+  "sourceClasses": ["transmitted-copy", "tracing-copy", "rubbing", "later-copy-for-study"],
+  "coreEvidence": [
+    {
+      "work": "快雪時晴帖",
+      "transmission": "唐代精摹本",
+      "observations": [
+        "行書為主，兼帶楷法與少量連筆草書",
+        "運筆沉著，不疾不徐",
+        "多圓鈍用筆，點畫勾挑多不露鋒",
+        "結體平穩勻稱",
+        "筆意前後貫通而不依賴連筆",
+        "可作為克制、內斂、可讀性較高的王羲之狀態"
+      ],
+      "evidenceUrls": [
+        "https://digitalarchive.npm.gov.tw/Collection/Detail/19?dep=P",
+        "https://theme.npm.edu.tw/selection/Article.aspx?sNo=04001001"
+      ]
+    },
+    {
+      "work": "蘭亭序",
+      "transmission": "傳唐摹本系統；具多種傳本",
+      "observations": [
+        "行書遒媚勁健",
+        "體勢自然且變化豐富",
+        "同字異寫應作為 context-sensitive variation 的重要研究對象",
+        "不可把某一傳本的單一字形提升為唯一王羲之標準字"
+      ],
+      "evidenceUrls": [
+        "https://www.dpm.org.cn/collection/handwriting/228277.html"
+      ]
+    },
+    {
+      "work": "雨後帖",
+      "transmission": "宋摹本",
+      "observations": [
+        "作為行草狀態證據，與快雪時晴帖的克制行書狀態分開",
+        "用於研究更強的連帶、簡省、速度與欹側，不與行楷狀態平均化"
+      ],
+      "evidenceUrls": [
+        "https://www.dpm.org.cn/collection/handwriting/231120.html"
+      ]
+    }
+  ],
+  "stableWriterHabits": [
+    {
+      "rule": "自然體勢優先於幾何整齊",
+      "confidence": "medium",
+      "evidence": ["蘭亭序傳本系統", "快雪時晴帖"]
+    },
+    {
+      "rule": "筆意連續不等於字字物理連筆；可用收放、方向與間距延續氣脈",
+      "confidence": "medium-high",
+      "evidence": ["快雪時晴帖"]
+    },
+    {
+      "rule": "同一書家存在行楷、行書、行草不同狀態；不得壓成單一 style vector",
+      "confidence": "high",
+      "evidence": ["快雪時晴帖", "蘭亭序傳本系統", "雨後帖"]
+    },
+    {
+      "rule": "結體允許變化，但必須維持字形識讀與整體平衡",
+      "confidence": "medium",
+      "evidence": ["快雪時晴帖", "蘭亭序傳本系統"]
+    }
+  ],
+  "workStateVariants": {
+    "restrained-running": {
+      "anchor": "快雪時晴帖",
+      "tempo": "measured",
+      "connection": "selective",
+      "structure": "stable-balanced",
+      "edgeExposure": "restrained"
+    },
+    "fluid-running": {
+      "anchor": "蘭亭序傳本系統",
+      "tempo": "variable",
+      "connection": "contextual",
+      "structure": "natural-variable"
+    },
+    "running-cursive": {
+      "anchor": "雨後帖等行草傳本",
+      "tempo": "faster",
+      "connection": "stronger",
+      "simplification": "higher"
+    }
+  },
+  "counterExamplesPolicy": {
+    "required": true,
+    "rule": "Every promoted habit must retain works or glyph groups where Wang Xizhi behaves differently. Variation is evidence, not noise."
+  },
+  "tc001": {
+    "text": "敬畏耶和華是智慧的開端",
+    "mode": "teacher-explanation-only",
+    "generationAllowed": false,
+    "firstHypothesis": [
+      "先決定全句採 restrained-running、fluid-running 或 running-cursive 狀態，不混成平均風格",
+      "真字候選必須保留原行與前後字環境",
+      "敬→畏→耶與智→慧→的優先作三字窗口比較，而非逐字挑最漂亮字形",
+      "缺字保持 unresolved；目前不生成王羲之式假字",
+      "最後評估整句大小收放、欹正、字距與行軸是否形成自然氣脈"
+    ]
+  },
+  "promotionGate": [
+    "A habit needs repeated evidence across more than one work-state unless explicitly marked work-specific.",
+    "Counterexamples must be recorded before confidence can become high.",
+    "Transmission type must remain visible: original, tracing copy, later copy, rubbing, or reconstruction.",
+    "No reconstructed glyph may be described as authentic Wang Xizhi handwriting."
+  ]
+}
