@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-30T05:26:02.329694+00:00",
+  "generatedAt": "2026-09-30T05:45:33.495270+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -33,9 +33,21 @@
       "source": "Internet Archive"
     },
     {
+      "id": "gutenberg-bible-christianity",
+      "title": "聖經與基督教",
+      "books": 25,
+      "source": "Project Gutenberg"
+    },
+    {
       "id": "gutenberg-early-church-fathers",
       "title": "早期教會與教父",
       "books": 10,
+      "source": "Project Gutenberg"
+    },
+    {
+      "id": "gutenberg-jewish-history-josephus",
+      "title": "猶太與第二聖殿世界",
+      "books": 2,
       "source": "Project Gutenberg"
     },
     {
@@ -57,36 +69,26 @@
       "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 187,
-  "sourceCovers": 148,
+  "mappedBooks": 214,
+  "sourceCovers": 163,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
     "Internet Archive": 40,
-    "Project Gutenberg": 85
+    "Project Gutenberg": 112
   },
   "identity": {
     "queriedThisRun": 0,
-    "resolved": 100,
-    "coversAdded": 50,
-    "internetArchiveLinks": 48,
+    "resolved": 123,
+    "coversAdded": 65,
+    "internetArchiveLinks": 56,
     "cacheEntries": 203
   },
   "errors": [
     {
       "source": "Wikisource",
       "error": "empty-shelf"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "bible christianity",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "jewish history josephus",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     }
   ],
   "contentDownloaded": false
