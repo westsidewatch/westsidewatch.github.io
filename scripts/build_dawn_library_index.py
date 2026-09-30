@@ -23,14 +23,25 @@ def load(path: Path):
 
 
 def payload(obj):
-    # GitHub connector snapshots sometimes expose JSON as a content string; repo
-    # files themselves are plain JSON. Keep this tolerant for generated inputs.
     if isinstance(obj, dict) and isinstance(obj.get("content"), str):
         try:
             return json.loads(obj["content"])
         except json.JSONDecodeError:
             pass
     return obj
+
+
+def page_items(page):
+    """Accept current consumption shards plus legacy catalogue shapes."""
+    if isinstance(page, list):
+        return page
+    if not isinstance(page, dict):
+        return []
+    for key in ("works", "items", "resources", "entries"):
+        value = page.get(key)
+        if isinstance(value, list):
+            return value
+    return []
 
 
 def text_of(item):
@@ -82,7 +93,7 @@ def main():
 
     for page_name in pages:
         page = payload(load(CATALOGUE / page_name))
-        items = page.get("items", page if isinstance(page, list) else [])
+        items = page_items(page)
         for item in items:
             if not isinstance(item, dict):
                 continue
