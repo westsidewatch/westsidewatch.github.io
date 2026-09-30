@@ -10,7 +10,39 @@ function playbackTarget(item,startMs=0){return window.HolyLightProviders?.resolv
 function isProgrammeReady(item){return playbackTarget(item,0)?.kind==='embed'&&posterCandidates(item).length>0;}
 function publicTarget(item){const target=playbackTarget(item,0);if(target)return target;const source=sourceFor(item),url=source.url||source.embedUrl;return url?{kind:'external',url}:null;}
 function openPublic(item){const target=publicTarget(item);if(!target)return;if(target.kind==='embed'&&isProgrammeReady(item)){renderScreen(item);document.querySelector('#cinema-screen')?.scrollIntoView({behavior:'smooth',block:'center'});return;}if(target.url)window.open(target.url,'_blank','noopener,noreferrer');}
-function renderScreen(item){if(!feature||!item||!isProgrammeReady(item))return;const posters=posterCandidates(item),shell=document.createElement('article');shell.className='cinema-feature';shell.dataset.canonicalId=item.canonicalId;const visual=document.createElement('div');visual.className='cinema-feature__visual';const media=document.createElement('div');media.className='cinema-feature__media';media.setAttribute('aria-label',`${item.title} player`);const img=document.createElement('img');img.className='cinema-feature__poster';img.alt=`${item.title} preview`;let index=0;const tryNext=()=>{if(index>=posters.length){shell.dataset.poster='unavailable';shell.hidden=true;return;}img.src=posters[index++];};img.addEventListener('load',()=>{shell.dataset.poster='ready';});img.addEventListener('error',tryNext);tryNext();media.appendChild(img);const action=document.createElement('button');action.type='button';action.className='cinema-feature__curtain cinema-feature__play';action.innerHTML='<span>PLAY</span>';action.addEventListener('click',()=>{const mounted=window.HolyLightProviders?.mount(media,item,0);if(mounted)shell.dataset.state='playing';});visual.append(media,action);const copy=document.createElement('div');copy.className='cinema-feature__copy';copy.innerHTML='<p>NOW SHOWING</p><h2></h2><p class="cinema-feature__creator"></p>';copy.querySelector('h2').textContent=item.title;copy.querySelector('.cinema-feature__creator').textContent=item.creator||item.series||'';shell.append(visual,copy);feature.replaceChildren(shell);document.documentElement.dataset.cinemaScreenWork=item.canonicalId;document.documentElement.dataset.cinemaScreenPlayable='true';}
+function renderScreen(item){
+  if(!feature||!item||!isProgrammeReady(item))return;
+  const posters=posterCandidates(item),shell=document.createElement('article');
+  shell.className='cinema-feature';shell.dataset.canonicalId=item.canonicalId;
+  const visual=document.createElement('div');visual.className='cinema-feature__visual';
+  const media=document.createElement('div');media.className='cinema-feature__media';media.setAttribute('aria-label',`${item.title} player`);
+  const img=document.createElement('img');img.className='cinema-feature__poster';img.alt=`${item.title} preview`;img.referrerPolicy='no-referrer';
+  const fallback=document.createElement('div');fallback.className='cinema-feature__poster-fallback';fallback.innerHTML='<p>OFFICIAL FILM PREVIEW</p><strong></strong>';
+  fallback.querySelector('strong').textContent=item.title;
+  const player=document.createElement('div');player.className='cinema-feature__player';
+  let index=0;
+  const tryNext=()=>{if(index>=posters.length){shell.dataset.poster='unavailable';return;}img.src=posters[index++];};
+  img.addEventListener('load',()=>{shell.dataset.poster='ready';});
+  img.addEventListener('error',tryNext);tryNext();
+  media.append(img,fallback,player);
+  const action=document.createElement('button');action.type='button';action.className='cinema-feature__curtain cinema-feature__play';action.innerHTML='<span>播放電影</span>';
+  const status=document.createElement('p');status.className='cinema-feature__status';status.setAttribute('aria-live','polite');
+  const source=sourceFor(item),officialUrl=source.url||source.embedUrl;
+  const handoff=document.createElement('a');handoff.className='cinema-feature__handoff';handoff.href=officialUrl;handoff.target='_blank';handoff.rel='noopener noreferrer';handoff.textContent='在官方網站播放 ↗';
+  let timeoutId;
+  const fail=()=>{if(shell.dataset.state==='playing')return;clearTimeout(timeoutId);player.replaceChildren();shell.dataset.state='fallback';status.textContent='播放器暫時未能載入；可從官方網站繼續播放。';action.disabled=false;};
+  action.addEventListener('click',()=>{
+    if(shell.dataset.state==='loading')return;
+    shell.dataset.state='loading';action.disabled=true;status.textContent='正在連接官方播放器…';
+    const mounted=window.HolyLightProviders?.mount(player,item,0,{onLoad:()=>{clearTimeout(timeoutId);shell.dataset.state='playing';status.textContent='';},onError:fail});
+    if(!mounted){fail();return;}
+    timeoutId=window.setTimeout(fail,12000);
+  });
+  visual.append(media,action,status,handoff);
+  const copy=document.createElement('div');copy.className='cinema-feature__copy';copy.innerHTML='<p>NOW SHOWING</p><h2></h2><p class="cinema-feature__creator"></p>';
+  copy.querySelector('h2').textContent=item.title;copy.querySelector('.cinema-feature__creator').textContent=item.creator||item.series||'';
+  shell.append(visual,copy);feature.replaceChildren(shell);document.documentElement.dataset.cinemaScreenWork=item.canonicalId;document.documentElement.dataset.cinemaScreenPlayable='true';
+}
 function renderCard(item){const ready=isProgrammeReady(item),target=publicTarget(item),card=document.createElement('article');card.className='resource-card';card.dataset.canonicalId=item.canonicalId;const meta=document.createElement('div');meta.className='resource-meta';meta.textContent=`${ready?'PLAYABLE HERE':'COLLECTION'} · ${item.kind||'film'} · ${item.creator||''}`;const title=document.createElement('h3');title.textContent=item.title;const series=document.createElement('p');series.textContent=item.series||'';card.append(meta,title,series);if(target){const action=document.createElement('button');action.className='resource-action';action.type='button';action.textContent=ready?'在銀幕播放':'查看節目／來源 ↗';action.addEventListener('click',()=>openPublic(item));card.append(action);}return card;}
 function selectProgrammeWork(workId){const item=resourceById.get(workId);if(!item||!isProgrammeReady(item))return false;renderScreen(item);document.querySelectorAll('[data-programme-selected]').forEach(node=>delete node.dataset.programmeSelected);document.querySelector(`[data-canonical-id="${CSS.escape(workId)}"]`)?.setAttribute('data-programme-selected','true');return true;}
 async function loadCinema(){try{const [graph,curatedResponse]=await Promise.all([window.ParadiseCinemaGraph?.ready,fetch('data/video-resource-curated.v1.json',{cache:'no-store'})]);if(!graph||!Array.isArray(graph.works)||!curatedResponse.ok)throw new Error('Cinema resources unavailable');const curated=await curatedResponse.json();if(curated.schema!=='dore.cinema-resource-expansion.v1')throw new Error('Invalid curated resource schema');const merged=[...graph.works,...curated.items],unique=new Map();for(const item of merged)if(!excluded.has(item.kind))unique.set(item.canonicalId,item);resources=[...unique.values()];programmeResources=resources.filter(isProgrammeReady);resourceById=new Map(resources.map(item=>[item.canonicalId,item]));library.replaceChildren(...resources.map(renderCard));const scheduled=window.ParadiseCinemaProgramme?.selected?.workId;selectProgrammeWork(scheduled)||renderScreen(programmeResources.find(item=>item.canonicalId===JESUS_ID)||programmeResources[0]);document.documentElement.dataset.cinemaResources=String(resources.length);document.documentElement.dataset.cinemaProgrammeReady=String(programmeResources.length);document.documentElement.dataset.cinemaAdmission='programme-preview-and-playback-required';}catch(error){library.innerHTML='<p class="resource-card">館藏資料暫時無法載入。</p>';if(feature)feature.innerHTML='<p class="resource-card">銀幕暫時無法載入。</p>';document.documentElement.dataset.cinemaError='resource-load';}}
