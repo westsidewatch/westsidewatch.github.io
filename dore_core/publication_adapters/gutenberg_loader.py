@@ -36,8 +36,10 @@ def _assert_gutenberg_policy(policy: WitnessAccessPolicy) -> None:
 
 
 def gutenberg_plain_text_urls(ebook_id: str) -> tuple[str, ...]:
-    """Known Gutenberg UTF-8 plain-text routes, ordered by preference."""
+    """Known Gutenberg UTF-8/plain-text routes, ordered by current canonical route first."""
     return (
+        f"https://www.gutenberg.org/cache/epub/{ebook_id}/pg{ebook_id}.txt",
+        f"https://www.gutenberg.org/cache/epub/{ebook_id}/pg{ebook_id}.txt.utf8",
         f"https://www.gutenberg.org/ebooks/{ebook_id}.txt.utf-8",
         f"https://www.gutenberg.org/files/{ebook_id}/{ebook_id}-0.txt",
         f"https://www.gutenberg.org/files/{ebook_id}/{ebook_id}.txt",
