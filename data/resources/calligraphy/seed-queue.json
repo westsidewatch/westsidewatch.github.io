@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "libraryId": "calligraphy-library",
+  "admissionPolicy": "apply exclusions before fetch/transcode/persist",
+  "calligraphers": [
+    {
+      "id": "wang-xizhi",
+      "name": "王羲之",
+      "priority": 1,
+      "seedWorks": [
+        {"title":"蘭亭序（傳世摹拓系統）","status":"candidate","notes":"retain attribution/version separately; do not collapse Tang/Song copies into autograph"},
+        {"title":"雨後帖（宋摹本）","status":"candidate"},
+        {"title":"快雪時晴帖","status":"candidate"},
+        {"title":"喪亂帖","status":"candidate"},
+        {"title":"上虞帖","status":"candidate"}
+      ]
+    },
+    {"id":"wen-zhengming","name":"文徵明","priority":2,"seedWorks":[],"status":"discover-authoritative-nonexcluded-works"},
+    {"id":"mi-fu","name":"米芾","priority":3,"seedWorks":[{"title":"蘭亭序卷題跋","status":"candidate"}],"status":"discover-authoritative-nonexcluded-works"},
+    {"id":"zhao-mengfu","name":"趙孟頫","priority":4,"seedWorks":[{"title":"蘭亭十三跋／蘭亭相關題跋系統","status":"candidate","notes":"verify exact object/version before admission"}],"status":"discover-authoritative-nonexcluded-works"},
+    {"id":"wei-dayu","name":"魏大愚","priority":5,"seedWorks":[],"status":"hold-for-identity-and-rights-verification","notes":"Do not conflate homonyms or ingest unattributed web images. Modern works require rights review before derivatives/glyph indexing."}
+  ]
+}
