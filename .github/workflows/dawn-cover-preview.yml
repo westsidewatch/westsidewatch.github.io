@@ -8,13 +8,15 @@ on:
       - static/dawn-library/canonical/**
       - .github/workflows/dawn-cover-preview.yml
 permissions:
-  contents: read
+  contents: write
 jobs:
   build:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -22,6 +24,18 @@ jobs:
         run: python3 scripts/build_dawn_cover_preview_shards.py
       - name: Verify cover surface
         run: python3 -c "import json; p=json.load(open('static/dawn-library/cover-preview/root.json')); assert p['workCount']==203448; assert p['shardCount']==21; print(p['workCount'], p['shardCount'])"
+      - name: Publish cover preview surface
+        run: |
+          git config user.name 'Dore CI'
+          git config user.email 'dore-ci@users.noreply.github.com'
+          git add static/dawn-library/cover-preview
+          if git diff --cached --quiet; then
+            echo 'Cover preview surface already current.'
+          else
+            git commit -m 'data(dawn): publish cover preview surface [skip ci]'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: dawn-cover-preview
