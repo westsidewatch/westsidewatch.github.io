@@ -38,7 +38,7 @@ window.HolyLightProviders={
     }
     return this.resolve(item,Math.max(0,Math.floor((moment.startMs||0)/1000)));
   },
-  mount(target,item,startSeconds=0){
+  mount(target,item,startSeconds=0,{onLoad,onError}={}){
     const resolved=this.resolve(item,startSeconds);
     if(!resolved||resolved.kind!=='embed')return null;
     target.replaceChildren();
@@ -50,6 +50,8 @@ window.HolyLightProviders={
     frame.allow='autoplay; fullscreen; picture-in-picture; encrypted-media';
     frame.allowFullscreen=true;
     frame.dataset.provider=resolved.provider||'unknown';
+    frame.addEventListener('load',()=>onLoad?.({frame,resolved}),{once:true});
+    frame.addEventListener('error',()=>onError?.({frame,resolved}),{once:true});
     target.appendChild(frame);
     return{frame,resolved};
   }
