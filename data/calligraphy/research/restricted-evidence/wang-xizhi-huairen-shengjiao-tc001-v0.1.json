@@ -1,0 +1,46 @@
+{
+  "id": "wang-xizhi-huairen-shengjiao-tc001-v0.1",
+  "teacher": "wang-xizhi",
+  "work": "懷仁集王羲之聖教序",
+  "role": "restricted-research-evidence",
+  "researchAllowed": true,
+  "publicDisplayAllowed": false,
+  "wholeWorkPublicDisplayAllowed": false,
+  "whiteDayCafeEligible": false,
+  "generationAllowed": false,
+  "reasonForRestriction": "Research evidence is permitted, but this work is excluded from the White Day Cafe public exhibition collection under the project's subject-display policy.",
+  "resourcePolicy": {
+    "downloadWholeWork": false,
+    "storeWholeWorkInRepository": false,
+    "accessMode": "remote-reference-or-existing-transcode-layer",
+    "derivedResearchAnnotationsAllowed": true
+  },
+  "tc001Candidates": {
+    "是": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
+    "智": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
+    "慧": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
+    "端": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false}
+  },
+  "evidenceRules": [
+    "A collected Wang Xizhi glyph in Huairen's compilation is evidence for transmitted Wang-form vocabulary, not direct evidence of Wang Xizhi's original local phrase context.",
+    "Keep Huairen compilation context distinct from the unknown or different source context of the collected Wang glyph.",
+    "Do not infer original ink pressure from stele/rubbing transmission.",
+    "Use the evidence for structure, component treatment, stroke-path hypotheses and variant comparison; downgrade claims about original ink dynamics.",
+    "A TC001 character remains unresolved until the exact occurrence and surrounding inscription context are verified.",
+    "Restricted research evidence must never make its parent work eligible for White Day Cafe exhibition."
+  ],
+  "teacherMemoryBinding": {
+    "allowedTargets": ["glyphVariantMemory","componentAnalogueMemory","structuralCounterexamples","strokePathHypotheses"],
+    "blockedTargets": ["originalInkPressure","originalWangPhraseFlow","publicExhibitionCollection"]
+  },
+  "publicationLeakTest": {
+    "queryInvariant": "whiteDayCafeEligible == true AND publicDisplayAllowed == true",
+    "expectedResultForThisWork": "excluded",
+    "failClosed": true
+  },
+  "nextGate": {
+    "name": "restricted-candidate-context-verification",
+    "requirement": "Verify exact inscription occurrences and local text context for 是、智、慧、端 through remote source metadata/transcription before promoting any candidate into TC001 research evidence.",
+    "generationAllowedAfterThisFile": false
+  }
+}
