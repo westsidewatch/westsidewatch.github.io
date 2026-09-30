@@ -134,7 +134,7 @@ function chineseCards(items) {
     const source = safeUrl(item.cover?.url || '');
     const visual = source
       ? `<img class="chinese-cover" src="${esc(source)}" alt="${esc(title)} 封面" loading="lazy" decoding="async">`
-      : `<span class="chinese-cover chinese-cover--pending" role="img" aria-label="${esc(title)} 黎明書局替代封面"><small>黎明書局</small><strong>${esc(title)}</strong></span>`;
+      : `<span class="chinese-cover chinese-cover--fallback" role="img" aria-label="${esc(title)} 黎明書局版封面"><i>DAWN LIBRARY</i><strong>${esc(title)}</strong><small>${esc(creator)}</small></span>`;
     const href = safeUrl(item.access?.url || item.source?.catalogUrl || '');
     const body = `${visual}<span><strong>${esc(title)}</strong><small>${esc(creator)}</small>${meta ? `<small>${esc(meta)}</small>` : ''}<em>${esc(item.access?.label || '查看館藏')} ↗</em></span>`;
     return href
