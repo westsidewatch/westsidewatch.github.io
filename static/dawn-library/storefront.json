@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-30T15:59:01.256636+00:00",
+  "generatedAt": "2026-09-30T17:53:01.974613+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2352,6 +2352,29 @@
           "contentDownloaded": false
         },
         {
+          "id": "internet-archive-storyofbibleland01talm",
+          "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
+          "author": "Talmage, T. De Witt (Thomas De Witt), 1832-1902",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/storyofbibleland01talm",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/storyofbibleland01talm",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
           "id": "internet-archive-studiesinbiblica0000pata",
           "title": "Studies in Biblical and Jewish folklore",
           "author": "Patai, Raphael, 1910- ed",
@@ -2375,18 +2398,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-storyofbibleland01talm",
-          "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
-          "author": "Talmage, T. De Witt (Thomas De Witt), 1832-1902",
+          "id": "internet-archive-the-holy-bible-new-king-james-version",
+          "title": "The Holy Bible: New King James Version",
+          "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/storyofbibleland01talm",
+            "url": "https://archive.org/details/the-holy-bible-new-king-james-version",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/storyofbibleland01talm",
+            "url": "https://archive.org/services/img/the-holy-bible-new-king-james-version",
             "mode": "source"
           },
           "rights": {
@@ -2421,18 +2444,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-the-holy-bible-new-king-james-version",
-          "title": "The Holy Bible: New King James Version",
-          "author": "",
-          "language": "eng",
+          "id": "internet-archive-laterrelabibleet0000marc",
+          "title": "La terre, la Bible et l'histoire : \"Vers le pays que je te ferai voir--\"",
+          "author": "Marchadour, Alain, 1937-",
+          "language": "fre",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/the-holy-bible-new-king-james-version",
+            "url": "https://archive.org/details/laterrelabibleet0000marc",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/the-holy-bible-new-king-james-version",
+            "url": "https://archive.org/services/img/laterrelabibleet0000marc",
             "mode": "source"
           },
           "rights": {
@@ -2709,29 +2732,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/earlyreligionis03robegoog",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-postmodernbible0000unse_b2o1",
-          "title": "The postmodern Bible",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/postmodernbible0000unse_b2o1",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/postmodernbible0000unse_b2o1",
             "mode": "source"
           },
           "rights": {
@@ -7224,7 +7224,7 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 1,
+      "queriedThisRun": 0,
       "resolved": 123,
       "coversAdded": 65,
       "internetArchiveLinks": 56,
