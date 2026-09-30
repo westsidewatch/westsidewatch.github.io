@@ -1,6 +1,6 @@
 {{ define "main" }}
 <section class="dawn-library-shell" aria-label="黎明書局">
-  <iframe id="dawn-library-product-surface" class="dawn-library-shell__frame" src="{{ "dawn-library/product/?surface=single-20260930b" | relURL }}" title="黎明書局" loading="eager"></iframe>
+  <iframe id="dawn-library-product-surface" class="dawn-library-shell__frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
 </section>
 <style>
   .dawn-library-shell{width:100%;margin:0;padding:0;background:#f4efe5}
@@ -8,6 +8,22 @@
   @media(max-width:900px){.dawn-library-shell__frame{min-height:100svh}}
 </style>
 <script>
-(()=>{const frame=document.getElementById('dawn-library-product-surface');if(!frame)return;const resize=()=>{try{const doc=frame.contentDocument;if(!doc)return;frame.style.height=Math.max(window.innerHeight,doc.documentElement.scrollHeight||0)+'px'}catch{}};frame.addEventListener('load',resize);window.addEventListener('resize',resize,{passive:true})})();
+(() => {
+  const frame = document.getElementById('dawn-library-product-surface');
+  if (!frame) return;
+  let observer;
+  frame.addEventListener('load', () => {
+    observer?.disconnect();
+    const stage = frame.contentDocument?.querySelector('.stage');
+    if (!stage) return;
+    const resize = () => {
+      const height = Math.ceil(stage.getBoundingClientRect().height);
+      if (height && frame.style.height !== `${height}px`) frame.style.height = `${height}px`;
+    };
+    observer = new ResizeObserver(resize);
+    observer.observe(stage);
+    resize();
+  });
+})();
 </script>
 {{ end }}
