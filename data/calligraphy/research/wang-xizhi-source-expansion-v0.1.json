@@ -1,0 +1,63 @@
+{
+  "id": "wang-xizhi-source-expansion-v0.1",
+  "mode": "remote-index-research",
+  "downloadPolicy": "no-whole-work-download",
+  "purpose": "Expand Wang Xizhi Teacher Memory and TC001 evidence through eligible remote modelbooks and letters while keeping prohibited religious works outside the calligraphy corpus.",
+  "tc001": "敬畏耶和華是智慧的開端",
+  "eligibleSources": [
+    {
+      "work": "淳化閣法帖（七）",
+      "institution": "國立故宮博物院",
+      "sourceURI": "https://digitalarchive.npm.gov.tw/Collection/Detail/24146?dep=P",
+      "type": "modelbook",
+      "script": "行楷書",
+      "extent": "二十三開、四十六幅",
+      "remoteCapabilities": ["institutional images", "IIIF", "CC0 low-resolution", "CC BY 4.0 medium-resolution"],
+      "admission": "research + canonical candidate",
+      "use": ["teacher-memory expansion", "TC001 character search", "context-window study", "remote region access when needed"],
+      "note": "Do not pre-download the complete album. Resolve individual sub-items and request only the smallest useful remote representation."
+    },
+    {
+      "work": "淳化祖帖（七）",
+      "institution": "國立故宮博物院",
+      "sourceURI": "https://digitalarchive.npm.gov.tw/Collection/Detail/15594?dep=P",
+      "type": "modelbook",
+      "extent": "二十四開",
+      "remoteCapabilities": ["institutional images", "IIIF", "CC0 low-resolution", "CC BY 4.0 medium-resolution"],
+      "admission": "research + canonical candidate",
+      "use": ["parallel witness", "variant comparison", "Teacher Memory counterexamples"],
+      "note": "Treat as transmission evidence; retain sub-item identity instead of flattening the album into a font-like glyph pool."
+    },
+    {
+      "work": "十七帖傳本系統",
+      "type": "letter/modelbook tradition",
+      "script": "草書",
+      "admission": "research candidate pending institutional witness binding",
+      "use": ["running-cursive state", "speed and simplification grammar", "TC001 search after witness verification"],
+      "note": "Do not admit web transcriptions or images as canonical records until tied to an institutional or otherwise authoritative witness."
+    }
+  ],
+  "excludedSources": [
+    {
+      "work": "懷仁集王羲之聖教序",
+      "reason": "Buddhist/temple-related content conflicts with project collection policy.",
+      "status": "blocked from canonical corpus, public collection, TC001 glyph sourcing and Project Hand evidence promotion",
+      "note": "Search may encounter it because it contains several TC001 characters, but those hits must not improve coverage metrics."
+    }
+  ],
+  "researchRules": [
+    "Search and inspect remotely; do not download whole works as a prerequisite.",
+    "Preserve work, sub-item, line/column and local phrase identity.",
+    "A remote IIIF/region or existing site transcoding response is sufficient for visual inspection when available.",
+    "Do not count a text-only web hit as a historical glyph hit.",
+    "Do not allow prohibited-work hits to resolve TC001 cells.",
+    "Modelbooks and later witnesses may teach structure and transmission; attribution/provenance must remain explicit.",
+    "Teacher Memory may learn from variation and counterexamples without turning every observed form into a canonical glyph."
+  ],
+  "nextPass": {
+    "name": "chunhua-subitem-text-index",
+    "action": "Resolve the Wang Xizhi sub-items inside the two Chunhua volume-seven witnesses, index their transcriptions remotely, and test the nine unresolved TC001 characters before any visual region request.",
+    "targetCharacters": ["敬","畏","耶","華","智","慧","的","開","端"],
+    "generationAllowed": false
+  }
+}
