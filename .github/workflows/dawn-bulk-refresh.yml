@@ -23,7 +23,9 @@ concurrency:
 
 env:
   DAWN_GROWTH_STATE_BRANCH: dawn-autonomous-growth-state
-  DAWN_PROMOTION_BATCH: '250'
+  # Drain the already-discovered collection in one bounded run. Do not discover
+  # a new corpus here; the goal is to finish the current library before growth resumes.
+  DAWN_PROMOTION_BATCH: '250000'
 
 jobs:
   refresh:
@@ -50,10 +52,10 @@ jobs:
       - name: Refresh Dawn pre-canonical corpus
         run: python3 scripts/refresh_dawn_bulk_corpus.py
 
-      - name: Gate canonical promotion batch
+      - name: Gate current canonical promotion queue
         run: python3 scripts/gate_dawn_canonical_promotion.py
 
-      - name: Build canonical promotion batch
+      - name: Drain current canonical promotion queue
         run: python3 scripts/promote_dawn_canonical_batch.py
 
       - name: Persist harvest state only
@@ -80,7 +82,7 @@ jobs:
           fi
           git worktree remove --force "$worktree_dir"
 
-      - name: Publish gated canonical promotion artifact
+      - name: Publish drained canonical promotion artifact
         uses: actions/upload-artifact@v4
         with:
           name: dawn-canonical-promotion-candidate
