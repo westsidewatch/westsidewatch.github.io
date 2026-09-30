@@ -1,10 +1,10 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-30T04:31:30.506809+00:00",
+  "generatedAt": "2026-09-30T04:44:14.867559+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 13,
+  "pagesChecked": 32,
   "newDiscovered": 0,
   "candidateQueue": 73,
   "catalogBooks": 1969,
@@ -15,48 +15,8 @@
       "error": "HTTPError"
     },
     {
-      "query": "Augustine",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Augustine&start_index=151",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Chrysostom",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Chrysostom",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Jerome",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Jerome&start_index=51",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Origen",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Origen",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Irenaeus",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Irenaeus",
-      "error": "HTTPError"
-    },
-    {
-      "query": "John Calvin",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Calvin",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Martin Luther",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Martin+Luther",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Philip Melanchthon",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Philip+Melanchthon",
-      "error": "HTTPError"
-    },
-    {
-      "query": "John Bunyan",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Bunyan",
+      "query": "John Knox",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Knox&start_index=26",
       "error": "HTTPError"
     },
     {
@@ -66,17 +26,12 @@
     },
     {
       "query": "John Owen",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Owen",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Owen&start_index=26",
       "error": "HTTPError"
     },
     {
       "query": "Thomas Watson",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Thomas+Watson",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Jonathan Edwards",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Jonathan+Edwards",
       "error": "HTTPError"
     },
     {
@@ -86,7 +41,7 @@
     },
     {
       "query": "John Wesley",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Wesley",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=John+Wesley&start_index=26",
       "error": "HTTPError"
     },
     {
@@ -95,13 +50,8 @@
       "error": "HTTPError"
     },
     {
-      "query": "F. B. Meyer",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=F.+B.+Meyer",
-      "error": "HTTPError"
-    },
-    {
-      "query": "A. W. Tozer",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=A.+W.+Tozer",
+      "query": "Charles Spurgeon",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Charles+Spurgeon",
       "error": "HTTPError"
     },
     {
@@ -110,18 +60,18 @@
       "error": "HTTPError"
     },
     {
-      "query": "R. A. Torrey",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=R.+A.+Torrey",
+      "query": "Hudson Taylor",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Hudson+Taylor",
+      "error": "HTTPError"
+    },
+    {
+      "query": "George Muller",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=George+Muller",
       "error": "HTTPError"
     },
     {
       "query": "Amy Carmichael",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Amy+Carmichael",
-      "error": "HTTPError"
-    },
-    {
-      "query": "Oswald Chambers",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Oswald+Chambers",
       "error": "HTTPError"
     },
     {
@@ -146,7 +96,7 @@
     },
     {
       "query": "Christian doctrine",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+doctrine",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+doctrine&start_index=26",
       "error": "HTTPError"
     },
     {
@@ -177,11 +127,6 @@
     {
       "query": "sermons Christianity",
       "url": "https://www.gutenberg.org/ebooks/search.opds/?query=sermons+Christianity",
-      "error": "HTTPError"
-    },
-    {
-      "query": "hymns Christianity",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=hymns+Christianity",
       "error": "HTTPError"
     },
     {
@@ -220,8 +165,13 @@
       "error": "HTTPError"
     },
     {
+      "query": "Bible history",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Bible+history",
+      "error": "HTTPError"
+    },
+    {
       "query": "early church Christianity",
-      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church+Christianity",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=early+church+Christianity&start_index=26",
       "error": "HTTPError"
     }
   ],

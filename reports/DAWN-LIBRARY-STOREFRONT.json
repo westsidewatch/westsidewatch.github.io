@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.report.v4",
-  "generatedAt": "2026-09-30T04:36:32.507678+00:00",
+  "generatedAt": "2026-09-30T04:48:39.348965+00:00",
   "shelves": [
     {
       "id": "standard-ebooks-new",
@@ -31,21 +31,28 @@
       "title": "原版古籍 · 教會歷史",
       "books": 20,
       "source": "Internet Archive"
+    },
+    {
+      "id": "gutenberg-philosophy-classics",
+      "title": "哲學與思想",
+      "books": 25,
+      "source": "Project Gutenberg"
     }
   ],
-  "mappedBooks": 102,
-  "sourceCovers": 99,
+  "mappedBooks": 127,
+  "sourceCovers": 118,
   "directPublications": 15,
   "providers": {
     "Standard Ebooks": 15,
     "DOAB": 47,
-    "Internet Archive": 40
+    "Internet Archive": 40,
+    "Project Gutenberg": 25
   },
   "identity": {
     "queriedThisRun": 0,
-    "resolved": 37,
-    "coversAdded": 1,
-    "internetArchiveLinks": 12,
+    "resolved": 58,
+    "coversAdded": 20,
+    "internetArchiveLinks": 27,
     "cacheEntries": 203
   },
   "errors": [
@@ -71,11 +78,6 @@
     {
       "source": "Project Gutenberg",
       "query": "ancient history archaeology",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "philosophy classics",
       "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     },
     {

@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-09-30T04:36:32.507678+00:00",
+  "generatedAt": "2026-09-30T04:48:39.348965+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -2283,18 +2283,110 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-yournetbibleversionevangelism1",
-          "title": "Yournet Bible Version Evangelism",
+          "id": "internet-archive-testamentbiblean00rome",
+          "title": "Testament : the Bible and history",
+          "author": "Romer, John",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/testamentbiblean00rome",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/testamentbiblean00rome",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-sim_journal-of-biblical-literature_1988_107_index",
+          "title": "Journal of Biblical Literature 1988: Vol 107 Index",
+          "author": "",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1988_107_index",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1988_107_index",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-storyofbibleland01talm",
+          "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
+          "author": "Talmage, T. De Witt (Thomas De Witt), 1832-1902",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/storyofbibleland01talm",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/storyofbibleland01talm",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-ageneralviewhis03westgoog",
+          "title": "A General View of the History of the English Bible",
+          "author": "Brooke Foss Westcott",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ageneralviewhis03westgoog",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ageneralviewhis03westgoog",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-the-holy-bible-new-king-james-version",
+          "title": "The Holy Bible: New King James Version",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/yournetbibleversionevangelism1",
+            "url": "https://archive.org/details/the-holy-bible-new-king-james-version",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/yournetbibleversionevangelism1",
+            "url": "https://archive.org/services/img/the-holy-bible-new-king-james-version",
             "mode": "source"
           },
           "rights": {
@@ -2306,41 +2398,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-OurOwnEnglishBiblehistoryOfTheBibleByW.J.Heaton",
-          "title": "Our Own English Bible [History of the Bible] by W. J. Heaton",
-          "author": "Heaton, W.J. Heaton, Heaton, W. J. (William James), Tyndale, Coverdale, Beza, Beze, Presbyterian Lutheran Anglican Puritan Pilgrim Founding Fathers, Bradford, Congregational 912",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/OurOwnEnglishBiblehistoryOfTheBibleByW.J.Heaton",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/OurOwnEnglishBiblehistoryOfTheBibleByW.J.Heaton",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-ManualOfBibleTruths1898",
-          "title": "Manual of Bible truths and histories adapted to the questions of the Baltimore catechism together with A life of Christ from the Four Gospels ..",
-          "author": "Baxter, James Joseph, 1865-",
+          "id": "internet-archive-isamericainbible0000hitc",
+          "title": "Is America in Bible prophecy?",
+          "author": "Hitchcock, Mark, 1959-",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/ManualOfBibleTruths1898",
+            "url": "https://archive.org/details/isamericainbible0000hitc",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/ManualOfBibleTruths1898",
+            "url": "https://archive.org/services/img/isamericainbible0000hitc",
             "mode": "source"
           },
           "rights": {
@@ -2352,18 +2421,87 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-freudlecteurdela0000pfri",
-          "title": "Freud, lecteur de la Bible",
-          "author": "Pfrimmer, Théo",
+          "id": "internet-archive-livingtraditions0000unse",
+          "title": "Living traditions of the Bible : scripture in Jewish, Christian, and Muslim practice",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/livingtraditions0000unse",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/livingtraditions0000unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-annalsofenglishb00ande",
+          "title": "The annals of the English Bible ...",
+          "author": "Anderson, Christopher, 1782-1852, Prime, Samuel Irenæus, 1812-1885",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/annalsofenglishb00ande",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/annalsofenglishb00ande",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-biblicalnarrativ0037vanh",
+          "title": "Biblical narrative in the philosophy of Paul Ricoeur : a study in hermeneutics and theology",
+          "author": "Vanhoozer, Kevin J",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/biblicalnarrativ0037vanh",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/biblicalnarrativ0037vanh",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-laterrelabibleet0000marc",
+          "title": "La terre, la Bible et l'histoire : \"Vers le pays que je te ferai voir--\"",
+          "author": "Marchadour, Alain, 1937-",
           "language": "fre",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/freudlecteurdela0000pfri",
+            "url": "https://archive.org/details/laterrelabibleet0000marc",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/freudlecteurdela0000pfri",
+            "url": "https://archive.org/services/img/laterrelabibleet0000marc",
             "mode": "source"
           },
           "rights": {
@@ -2375,18 +2513,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-churchbibleoffic0000unse",
-          "title": "The Church and the Bible : official documents of the Catholic Church",
+          "id": "internet-archive-greatpeopleofbib0000unse",
+          "title": "Great people of the Bible and how they lived",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchbibleoffic0000unse",
+            "url": "https://archive.org/details/greatpeopleofbib0000unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/churchbibleoffic0000unse",
+            "url": "https://archive.org/services/img/greatpeopleofbib0000unse",
             "mode": "source"
           },
           "rights": {
@@ -2398,110 +2536,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fromevetoestherr0000bron",
-          "title": "From Eve to Esther : rabbinic reconstructions of biblical women",
-          "author": "Bronner, Leila Leah",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fromevetoestherr0000bron",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fromevetoestherr0000bron",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-          "title": "Jeremiah 7:1-16 - The Right Groove â 01-18-1973- Bible Commentary and Sermon by Rev Ralph C Link and uploaded by Peter-John Parisis",
-          "author": "Rev Ralph Charles Link and Rev Ralph C. Link",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/Jeremiah71-16-TheRightGroove01-18-1973-BibleCommentaryAndSermon",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bibleinhumantran0000wink",
-          "title": "The Bible in human transformation; toward a new paradigm for biblical study",
-          "author": "Wink, Walter",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bibleinhumantran0000wink",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bibleinhumantran0000wink",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-EVwmENSTxtbook9NaturalHistoryOfTheBible",
-          "title": "Natural history of the Bible; embracing a brief and concise description of the trees, plants, flowers, animals, birds, insects, reptiles, fishes and minerals mentioned in the Bible (Evangelical Normal Series, Textbook 9)",
-          "author": "Rev. Amon Stapleton",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/EVwmENSTxtbook9NaturalHistoryOfTheBible",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/EVwmENSTxtbook9NaturalHistoryOfTheBible",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-the-holy-bible-volume-4-1875",
-          "title": "The Holy Bible, Volume 4",
+          "id": "internet-archive-bible-history-powerpoint_202301",
+          "title": "Bible Brief History Powerpoint",
           "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bible-history-powerpoint_202301",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bible-history-powerpoint_202301",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-biblicalresearc00robigoog",
+          "title": "Later biblical researches in Palestine, and in the adjacent regions. A journal of travels in the year 1852. Drawn up from the original diaries, with historical illustrations, with new maps and plans",
+          "author": "Robinson, Edward, 1794-1863",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/the-holy-bible-volume-4-1875",
+            "url": "https://archive.org/details/biblicalresearc00robigoog",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/the-holy-bible-volume-4-1875",
+            "url": "https://archive.org/services/img/biblicalresearc00robigoog",
             "mode": "source"
           },
           "rights": {
@@ -2513,41 +2582,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-LesVersionsOrientalesDeLaBibleUneOrientationBibliographique",
-          "title": "Les versions orientales de la Bible: une orientation bibliographique",
-          "author": "M. van Esbroeck",
-          "language": "French",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/LesVersionsOrientalesDeLaBibleUneOrientationBibliographique",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/LesVersionsOrientalesDeLaBibleUneOrientationBibliographique",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fortwaynebibleco19752fort",
-          "title": "Fort Wayne Bible College Vine Yearbook",
-          "author": "Fort Wayne Bible College",
+          "id": "internet-archive-bibleinmiddleeng0000fowl",
+          "title": "The Bible in Middle English literature",
+          "author": "Fowler, David C., 1921-2007",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebibleco19752fort",
+            "url": "https://archive.org/details/bibleinmiddleeng0000fowl",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebibleco19752fort",
+            "url": "https://archive.org/services/img/bibleinmiddleeng0000fowl",
             "mode": "source"
           },
           "rights": {
@@ -2559,18 +2605,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebibleco1978fort",
-          "title": "Fort Wayne Bible College Vine Yearbook",
-          "author": "Fort Wayne Bible College",
+          "id": "internet-archive-biblebritishmuse0000habe",
+          "title": "The Bible and the British Museum",
+          "author": "Habershon, Ada R. (Ada Ruth), 1861-1918",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebibleco1978fort",
+            "url": "https://archive.org/details/biblebritishmuse0000habe",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebibleco1978fort",
+            "url": "https://archive.org/services/img/biblebritishmuse0000habe",
             "mode": "source"
           },
           "rights": {
@@ -2582,18 +2628,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebiblein1935fort",
-          "title": "Fort Wayne Bible Institute Light Tower Yearbook",
-          "author": "Fort Wayne Bible Institute",
+          "id": "internet-archive-biblehistorytowh00whit",
+          "title": "Bible history; to which is added a short history of the church",
+          "author": "[White, Catherine Ann] 1825-1878. [from old catalog]",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebiblein1935fort",
+            "url": "https://archive.org/details/biblehistorytowh00whit",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebiblein1935fort",
+            "url": "https://archive.org/services/img/biblehistorytowh00whit",
             "mode": "source"
           },
           "rights": {
@@ -2605,18 +2651,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-urdu-commentary-to-the-bible-part-4-40-41-1990",
-          "title": "Tafseer Bible (Urdu Commentary of the Bible)",
+          "id": "internet-archive-biblical-patterns-and-historical-echoes",
+          "title": "Biblical Patterns and Historical Parallels: Israel’s Monarchy, the Corrupt System of Jeroboam, the Apostolic Church, and the Hope for Recovery Today",
           "author": "",
-          "language": "urd",
+          "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/urdu-commentary-to-the-bible-part-4-40-41-1990",
+            "url": "https://archive.org/details/biblical-patterns-and-historical-echoes",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/urdu-commentary-to-the-bible-part-4-40-41-1990",
+            "url": "https://archive.org/services/img/biblical-patterns-and-historical-echoes",
             "mode": "source"
           },
           "rights": {
@@ -2628,18 +2674,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-biblicaldramaine0000rost",
-          "title": "Biblical drama in England: from the Middle Ages to the present day",
-          "author": "Roston, Murray",
+          "id": "internet-archive-biblicalexposito01hirsuoft",
+          "title": "Biblical expositor and people's commentary",
+          "author": "Hirschfelder, Jacob M. (Jacob Maier), 1819-1902",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/biblicaldramaine0000rost",
+            "url": "https://archive.org/details/biblicalexposito01hirsuoft",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/biblicaldramaine0000rost",
+            "url": "https://archive.org/services/img/biblicalexposito01hirsuoft",
             "mode": "source"
           },
           "rights": {
@@ -2651,18 +2697,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebibleco1981fort",
-          "title": "Fort Wayne Bible College Vine Yearbook",
-          "author": "Fort Wayne Bible College",
+          "id": "internet-archive-bibleancientnear0000wrig_t0m3",
+          "title": "The Bible and the ancient Near East; essays in honor of William Foxwell Albright",
+          "author": "Wright, George Ernest, 1909-1974, ed",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebibleco1981fort",
+            "url": "https://archive.org/details/bibleancientnear0000wrig_t0m3",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebibleco1981fort",
+            "url": "https://archive.org/services/img/bibleancientnear0000wrig_t0m3",
             "mode": "source"
           },
           "rights": {
@@ -2674,64 +2720,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebibleco1988fort",
-          "title": "Fort Wayne Bible College Vine Yearbook",
-          "author": "Fort Wayne Bible College",
+          "id": "internet-archive-biblebackgroundvol1",
+          "title": "The Bible and Its Background, Volume I: Old Testament and More Important Books of the Apocrypha",
+          "author": "Robertson, Archibald, 1886-1961",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebibleco1988fort",
+            "url": "https://archive.org/details/biblebackgroundvol1",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebibleco1988fort",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fortwaynebiblein19496fort",
-          "title": "Fort Wayne Bible Institute The Bible Vision",
-          "author": "Fort Wayne Bible Institute",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebiblein19496fort",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fortwaynebiblein19496fort",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-fortwaynebible1949142fort",
-          "title": "Fort Wayne Bible Institute The Bible Vision",
-          "author": "Fort Wayne Bible Institute",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebible1949142fort",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/fortwaynebible1949142fort",
+            "url": "https://archive.org/services/img/biblebackgroundvol1",
             "mode": "source"
           },
           "rights": {
@@ -2751,18 +2751,202 @@
       "source": "Internet Archive",
       "items": [
         {
-          "id": "internet-archive-officialjournalo0000vari_j3q0",
-          "title": "Official Journal ofthe Eighty-Second Session of The Oregon Annual Conference of the Methodist Episcopal Church",
+          "id": "internet-archive-ny1597jtanis",
+          "title": "Christmas Eve at the Evangelical Lutheran Church of the Holy Trinity",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ny1597jtanis",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ny1597jtanis",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-ny515jtanis",
+          "title": "St. Mary's Roman Catholic Church",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ny515jtanis",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ny515jtanis",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-taylorurbanization",
+          "title": "Urbanization and the Church in India",
+          "author": "Richard Taylor",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/taylorurbanization",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/taylorurbanization",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-ny1810jtanis",
+          "title": "Main Sanctuary, St. Vincent Ferrer Church",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/ny1810jtanis",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/ny1810jtanis",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BIB-507",
+          "title": "A Story of the Southern Synod of the Evangelical and Reformed Church",
+          "author": "Rev. Banks J. Peeler",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BIB-507",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BIB-507",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_Y0-BCM-857",
+          "title": "The growth of the christian church",
+          "author": "Robert hastings Nichols",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_Y0-BCM-857",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_Y0-BCM-857",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-gov.uscourts.wvsd.89432",
+          "title": "Church v. CMH Homes, Inc.",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/gov.uscourts.wvsd.89432",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/gov.uscourts.wvsd.89432",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_C0-BPX-774",
+          "title": "The Black Church",
+          "author": "William L. Banks",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_C0-BPX-774",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_C0-BPX-774",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_C0-AZG-697",
+          "title": "The Order Of Holry Communion The Liturgy Or Eucharist Of The Church Of The Province Of New Zealand",
           "author": "Various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/officialjournalo0000vari_j3q0",
+            "url": "https://archive.org/details/bwb_C0-AZG-697",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/officialjournalo0000vari_j3q0",
+            "url": "https://archive.org/services/img/bwb_C0-AZG-697",
             "mode": "source"
           },
           "rights": {
@@ -2774,156 +2958,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-ct045jtanis",
-          "title": "First Baptist Church",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/ct045jtanis",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/ct045jtanis",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-nby_LL5842",
-          "title": "South United Free Church and Wallace Statue, Aberdeen",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/nby_LL5842",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/nby_LL5842",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-yearbooklutheran0000vari",
-          "title": "YEARBOOK LUTHERAN CHURCH IN AMERICA",
-          "author": "VARIOUS",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/yearbooklutheran0000vari",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/yearbooklutheran0000vari",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-lutheran-church-quarterly_1929-07_2",
-          "title": "The Lutheran Church Quarterly 1929-07: Vol 2",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/lutheran-church-quarterly_1929-07_2",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/lutheran-church-quarterly_1929-07_2",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-solvingchurchsch0000unse_k5m4",
-          "title": "solving church school problems",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/solvingchurchsch0000unse_k5m4",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/solvingchurchsch0000unse_k5m4",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-betweenchurchand0000park",
-          "title": "Between a church and a hard place : one faith-free dad's struggle to understand what it means to be religious (or not)",
-          "author": "Park, Andrew. 1970-",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/betweenchurchand0000park",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/betweenchurchand0000park",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-EKC-128",
-          "title": "great songs of the church",
-          "author": "e. l. jorgenson",
+          "id": "internet-archive-bwb_C0-ANH-860",
+          "title": "CHRISTIAN EDUCATION IN THE CHURCH TODAY",
+          "author": "HENRY M. BULLOCK",
           "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-EKC-128",
+            "url": "https://archive.org/details/bwb_C0-ANH-860",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-EKC-128",
+            "url": "https://archive.org/services/img/bwb_C0-ANH-860",
             "mode": "source"
           },
           "rights": {
@@ -2935,156 +2981,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_Y0-CRE-988",
-          "title": "The strategy of city church planning",
-          "author": "Ross W. Sanderson",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-CRE-988",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-CRE-988",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchandchristi0000wade_v3f8",
-          "title": "The Church and A Christian Society",
-          "author": "Wade Crawford Barclay",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchandchristi0000wade_v3f8",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchandchristi0000wade_v3f8",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-churchpeople17890000scca_c3h9",
-          "title": "church and people, 1789-1889",
-          "author": "s. c. carpenters, b. d.",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/churchpeople17890000scca_c3h9",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/churchpeople17890000scca_c3h9",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-howchurchgrows0000roya_k3p4",
-          "title": "How The Church Grows",
-          "author": "Roy A. Burkhart",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/howchurchgrows0000roya_k3p4",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/howchurchgrows0000roya_k3p4",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-gov.uscourts.wieb.427556",
-          "title": "Christopher G Church",
+          "id": "internet-archive-ChurchHistoryPrint",
+          "title": "Church History Print",
           "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/gov.uscourts.wieb.427556",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/gov.uscourts.wieb.427556",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-jesushischurch0000rnew",
-          "title": "Jesus and His Church",
-          "author": "R. Newton Flew",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/jesushischurch0000rnew",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/jesushischurch0000rnew",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_T5-CRK-126",
-          "title": "church unity movements in the united states",
-          "author": "H. Paul Douglass",
           "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T5-CRK-126",
+            "url": "https://archive.org/details/ChurchHistoryPrint",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_T5-CRK-126",
+            "url": "https://archive.org/services/img/ChurchHistoryPrint",
             "mode": "source"
           },
           "rights": {
@@ -3096,18 +3004,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_T5-AGB-073",
-          "title": "How toteachin the church school",
-          "author": "Paul H.Vieth",
+          "id": "internet-archive-bwb_KQ-734-479",
+          "title": "the faith of the church",
+          "author": "Karl Barth",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_KQ-734-479",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_KQ-734-479",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-ATJ-005",
+          "title": "minutes of the general assembly of the united presbyterian church in the united states of america",
+          "author": "various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_T5-AGB-073",
+            "url": "https://archive.org/details/bwb_S0-ATJ-005",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_T5-AGB-073",
+            "url": "https://archive.org/services/img/bwb_S0-ATJ-005",
             "mode": "source"
           },
           "rights": {
@@ -3119,18 +3050,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-childrensworship0000jean_h4r3",
-          "title": "Children's Worship in the Church School",
-          "author": "Jeanette E. Perkins",
+          "id": "internet-archive-bwb_S0-DSF-647",
+          "title": "A Selected Library of the Nicene and Post-Nicene Fathers of The Christian Church",
+          "author": "Various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/childrensworship0000jean_h4r3",
+            "url": "https://archive.org/details/bwb_S0-DSF-647",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/childrensworship0000jean_h4r3",
+            "url": "https://archive.org/services/img/bwb_S0-DSF-647",
             "mode": "source"
           },
           "rights": {
@@ -3142,18 +3073,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_S0-ADX-065",
-          "title": "Brief History of the Christian Church",
-          "author": "William Stuart",
+          "id": "internet-archive-bwb_S0-EAO-213",
+          "title": "new testament church",
+          "author": "roy e. cogdill",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EAO-213",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EAO-213",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CPS-363",
+          "title": "The Church of English 1900-1965",
+          "author": "Roger Lloyd",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-ADX-065",
+            "url": "https://archive.org/details/bwb_S0-CPS-363",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-ADX-065",
+            "url": "https://archive.org/services/img/bwb_S0-CPS-363",
             "mode": "source"
           },
           "rights": {
@@ -3165,41 +3119,87 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_C0-CBU-603",
-          "title": "An outline of Church History",
-          "author": "Theodore Huggenvik",
-          "language": "Eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_C0-CBU-603",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_C0-CBU-603",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_C0-AAO-306",
-          "title": "The Church and its Function in Society",
-          "author": "W. A. Wisser 'T Hooft and J. H. Oldham",
+          "id": "internet-archive-bwb_S0-BXS-114",
+          "title": "Teaching of presidents of the church brigham young",
+          "author": "Various",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_C0-AAO-306",
+            "url": "https://archive.org/details/bwb_S0-BXS-114",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_C0-AAO-306",
+            "url": "https://archive.org/services/img/bwb_S0-BXS-114",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-CAT-998",
+          "title": "When the Church was Young",
+          "author": "Clovis G. Chappell",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-CAT-998",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-CAT-998",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BFL-750",
+          "title": "A select library of nicene and post-nicene fathers of the christian church",
+          "author": "Philip Schaff, D.D., LL.D.",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BFL-750",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BFL-750",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_S0-BXD-173",
+          "title": "Architecture and the Church",
+          "author": "Darby Wood Betts",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-BXD-173",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-BXD-173",
             "mode": "source"
           },
           "rights": {
@@ -3211,23 +3211,998 @@
           "contentDownloaded": false
         }
       ]
+    },
+    {
+      "id": "gutenberg-philosophy-classics",
+      "title": "哲學與思想",
+      "kind": "source-shelf",
+      "source": "Project Gutenberg",
+      "items": [
+        {
+          "id": "gutenberg-174",
+          "title": "The Picture of Dorian Gray",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/174",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/14314858-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL8193416W",
+            "editionId": "OL61374738M",
+            "isbn": "1530351235",
+            "coverId": 14314858,
+            "internetArchiveId": "pictureofdoriang00wild_5",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL8193416W",
+            "openLibraryEdition": "OL61374738M",
+            "isbn": "1530351235"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/pictureofdoriang00wild_5",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-2680",
+          "title": "Meditations",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/2680",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/211529-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1317211W",
+            "editionId": "OL61959056M",
+            "isbn": "9781497684300",
+            "coverId": 211529,
+            "internetArchiveId": "marcusaureliusan00marcrich",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1317211W",
+            "openLibraryEdition": "OL61959056M",
+            "isbn": "9781497684300"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/marcusaureliusan00marcrich",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-1232",
+          "title": "The Prince",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1232",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/12726168-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1089297W",
+            "editionId": "OL26385143M",
+            "isbn": "8471662566",
+            "coverId": 12726168,
+            "internetArchiveId": "machiavelli00machuoft",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1089297W",
+            "openLibraryEdition": "OL26385143M",
+            "isbn": "8471662566"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/machiavelli00machuoft",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-3296",
+          "title": "The Confessions of St. Augustine",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/3296",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/10613584-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL15402128W",
+            "editionId": "OL50911099M",
+            "isbn": "9780343153489",
+            "coverId": 10613584,
+            "internetArchiveId": "harvardclassics70000unse",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL15402128W",
+            "openLibraryEdition": "OL50911099M",
+            "isbn": "9780343153489"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/harvardclassics70000unse",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-3207",
+          "title": "Leviathan",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/3207",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/6525465-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL653987W",
+            "editionId": "OL57272948M",
+            "isbn": "9780521567978",
+            "coverId": 6525465,
+            "internetArchiveId": "hobbessleviathan00hobbuoft",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL653987W",
+            "openLibraryEdition": "OL57272948M",
+            "isbn": "9780521567978"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/hobbessleviathan00hobbuoft",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-1998",
+          "title": "Thus Spake Zarathustra: A Book for All and None",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1998",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/756575-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL98115W",
+            "editionId": "OL20502735M",
+            "isbn": "1406947199",
+            "coverId": 756575,
+            "internetArchiveId": "thusspakezaralt00nietuoft",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL98115W",
+            "openLibraryEdition": "OL20502735M",
+            "isbn": "1406947199"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/thusspakezaralt00nietuoft",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-1497",
+          "title": "The Republic",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1497",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-1656",
+          "title": "Apology",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1656",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/9753744-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL11373174W",
+            "editionId": "OL47671004M",
+            "isbn": "9781107390584",
+            "coverId": 9753744,
+            "internetArchiveId": "mathematiciansap0000ghha",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL11373174W",
+            "openLibraryEdition": "OL47671004M",
+            "isbn": "9781107390584"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/mathematiciansap0000ghha",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-45109",
+          "title": "The Enchiridion",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/45109",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/12622080-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL27292376W",
+            "editionId": "OL38140317M",
+            "isbn": "1941129439",
+            "coverId": 12622080,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL27292376W",
+            "openLibraryEdition": "OL38140317M",
+            "isbn": "1941129439"
+          }
+        },
+        {
+          "id": "gutenberg-1600",
+          "title": "Symposium",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1600",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/4034160-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL26416W",
+            "editionId": "OL12680117M",
+            "isbn": "0140123091",
+            "coverId": 4034160,
+            "internetArchiveId": "symposium00muri",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL26416W",
+            "openLibraryEdition": "OL12680117M",
+            "isbn": "0140123091"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/symposium00muri",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-57342",
+          "title": "The Lives and Opinions of Eminent Philosophers",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/57342",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/12622128-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL27292394W",
+            "editionId": "OL37044796M",
+            "isbn": "9798841391449",
+            "coverId": 12622128,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL27292394W",
+            "openLibraryEdition": "OL37044796M",
+            "isbn": "9798841391449"
+          }
+        },
+        {
+          "id": "gutenberg-44833",
+          "title": "Chaucer's Works, Volume 2 — Boethius and Troilus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/44833",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-8438",
+          "title": "The Nicomachean ethics of Aristotle",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/8438",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/10954696-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL24411017W",
+            "editionId": "OL32648522M",
+            "isbn": "9780342237951",
+            "coverId": 10954696,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL24411017W",
+            "openLibraryEdition": "OL32648522M",
+            "isbn": "9780342237951"
+          }
+        },
+        {
+          "id": "gutenberg-55201",
+          "title": "The Republic of Plato",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/55201",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/14377522-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL380265W",
+            "editionId": "OL24872087M",
+            "isbn": "052111876X",
+            "coverId": 14377522,
+            "internetArchiveId": "republicbooksiv00plat",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL380265W",
+            "openLibraryEdition": "OL24872087M",
+            "isbn": "052111876X"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/republicbooksiv00plat",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-1658",
+          "title": "Phaedo",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1658",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL40210846W",
+            "editionId": "OL54709302M",
+            "isbn": "9781986632454",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL40210846W",
+            "openLibraryEdition": "OL54709302M",
+            "isbn": "9781986632454"
+          }
+        },
+        {
+          "id": "gutenberg-51356",
+          "title": "The Birth of Tragedy; or, Hellenism and Pessimism",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/51356",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-1636",
+          "title": "Phaedrus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1636",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false
+        },
+        {
+          "id": "gutenberg-23639",
+          "title": "Plutarch's Morals",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/23639",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/7933206-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL17660229W",
+            "editionId": "OL26264860M",
+            "isbn": null,
+            "coverId": 7933206,
+            "internetArchiveId": "b24886105_0003",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL17660229W",
+            "openLibraryEdition": "OL26264860M"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/b24886105_0003",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-16643",
+          "title": "Essays by Ralph Waldo Emerson",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/16643",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/1760046-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL62168W",
+            "editionId": "OL13571132M",
+            "isbn": "9781406918533",
+            "coverId": 1760046,
+            "internetArchiveId": "essaysbyralphwal0000emer",
+            "resolvedAt": "2026-09-24T22:15:09.030555+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL62168W",
+            "openLibraryEdition": "OL13571132M",
+            "isbn": "9781406918533"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/essaysbyralphwal0000emer",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-2130",
+          "title": "Utopia",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/2130",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/7222976-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL15366912W",
+            "editionId": "OL32072789M",
+            "isbn": "0521819253",
+            "coverId": 7222976,
+            "internetArchiveId": "TheUtopia",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL15366912W",
+            "openLibraryEdition": "OL32072789M",
+            "isbn": "0521819253"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/TheUtopia",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-1974",
+          "title": "The Poetics of Aristotle",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/1974",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/66397-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL151549W",
+            "editionId": "OL9263205M",
+            "isbn": "0075546027",
+            "coverId": 66397,
+            "internetArchiveId": "rhetoricpoet00davi",
+            "resolvedAt": "2026-09-24T22:15:09.030555+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL151549W",
+            "openLibraryEdition": "OL9263205M",
+            "isbn": "0075546027"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/rhetoricpoet00davi",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-14328",
+          "title": "The Consolation of Philosophy",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/14328",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/418429-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL107928W",
+            "editionId": "OL20137300M",
+            "isbn": "9780786167371",
+            "coverId": 418429,
+            "internetArchiveId": "consolationsofph00debo",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL107928W",
+            "openLibraryEdition": "OL20137300M",
+            "isbn": "9780786167371"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/consolationsofph00debo",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-18269",
+          "title": "Pascal's Pensées",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/18269",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "mode": "one-fallback"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1305558W",
+            "editionId": "OL20822574M",
+            "isbn": "9782718116822",
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-27T14:44:56.745127+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1305558W",
+            "openLibraryEdition": "OL20822574M",
+            "isbn": "9782718116822"
+          }
+        },
+        {
+          "id": "gutenberg-785",
+          "title": "On the Nature of Things",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/785",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/4123688-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL1636632W",
+            "editionId": "OL23170230M",
+            "isbn": "0330310585",
+            "coverId": 4123688,
+            "internetArchiveId": "onnatureofthings00gonz",
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL1636632W",
+            "openLibraryEdition": "OL23170230M",
+            "isbn": "0330310585"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/onnatureofthings00gonz",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
+        {
+          "id": "gutenberg-15877",
+          "title": "Thoughts of Marcus Aurelius Antoninus",
+          "author": "",
+          "language": "en",
+          "source": {
+            "provider": "Project Gutenberg",
+            "url": "https://www.gutenberg.org/ebooks/15877",
+            "kind": "remote-public"
+          },
+          "cover": {
+            "url": "https://covers.openlibrary.org/b/id/11133777-L.jpg?default=false",
+            "mode": "edition-identity",
+            "provider": "Open Library"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Project Gutenberg"
+          },
+          "quality": "source-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL24508691W",
+            "editionId": "OL40066028M",
+            "isbn": "1387295632",
+            "coverId": 11133777,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-09-12T07:49:10.645811+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL24508691W",
+            "openLibraryEdition": "OL40066028M",
+            "isbn": "1387295632"
+          }
+        }
+      ]
     }
   ],
   "metrics": {
-    "shelves": 5,
-    "mappedBooks": 102,
-    "sourceCovers": 99,
+    "shelves": 6,
+    "mappedBooks": 127,
+    "sourceCovers": 118,
     "directPublications": 15,
     "providers": {
       "Standard Ebooks": 15,
       "DOAB": 47,
-      "Internet Archive": 40
+      "Internet Archive": 40,
+      "Project Gutenberg": 25
     },
     "identity": {
       "queriedThisRun": 0,
-      "resolved": 37,
-      "coversAdded": 1,
-      "internetArchiveLinks": 12,
+      "resolved": 58,
+      "coversAdded": 20,
+      "internetArchiveLinks": 27,
       "cacheEntries": 203
     }
   },
@@ -3254,11 +4229,6 @@
     {
       "source": "Project Gutenberg",
       "query": "ancient history archaeology",
-      "error": "HTTPError: HTTP Error 504: Gateway Time-out"
-    },
-    {
-      "source": "Project Gutenberg",
-      "query": "philosophy classics",
       "error": "HTTPError: HTTP Error 504: Gateway Time-out"
     },
     {
