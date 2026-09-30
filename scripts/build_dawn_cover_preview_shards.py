@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Build lightweight, motion-ready cover-preview shards from Dawn canonical Works."""
+"""Build lightweight, motion-ready cover-preview shards from Dawn canonical Works.
+
+The generated surface is deliberately presentation-neutral: layout and motion are
+consumers of stable canonical cover objects, not part of the data build.
+"""
 from __future__ import annotations
 from pathlib import Path
 from urllib.parse import quote
@@ -15,7 +19,6 @@ def work_array(payload):
     if isinstance(payload,dict):
         for key in ('works','items','entries'):
             if isinstance(payload.get(key),list): return payload[key]
-        # Canonical shards may be workId -> Work maps.
         vals=[v for v in payload.values() if isinstance(v,dict)]
         if vals: return vals
     raise ValueError('canonical shard has no Work collection')
@@ -30,7 +33,6 @@ def strings(v):
 
 
 def cover(work):
-    # Preserve explicit preview assets when canonical data already knows them.
     for key in ('coverPreview','coverUrl','coverURL','cover','thumbnail','thumbnailUrl'):
         v=work.get(key)
         if isinstance(v,str) and v.startswith(('https://','http://','/')):return {'src':v,'source':'canonical'}
@@ -39,7 +41,6 @@ def cover(work):
             if isinstance(src,str):return {'src':src,'source':v.get('source') or 'canonical','width':v.get('width'),'height':v.get('height')}
     ids=work.get('authorityIds') or {}
     ol=(ids.get('openLibrary') if isinstance(ids,dict) else None) or work.get('openLibraryId')
-    # Open Library Work IDs provide a lightweight remote preview endpoint; no image is stored by Dawn.
     if ol:return {'src':f'https://covers.openlibrary.org/b/olid/{quote(str(ol))}-M.jpg?default=false','source':'open-library'}
     return {'src':None,'source':'dawn-placeholder'}
 
@@ -60,17 +61,20 @@ def main():
     root=json.loads((CANONICAL/'root.json').read_text(encoding='utf-8'))
     OUT.mkdir(parents=True,exist_ok=True)
     manifest={'schema':'dawn.library.cover-preview-root.v1','workCount':0,'shardCount':0,'motionContract':'dawn.cover-motion.v1','shards':[]}
+    source_counts={}
     for n,shard in enumerate(root['shards'],1):
         payload=json.loads((CANONICAL/shard['href']).read_text(encoding='utf-8'))
         rows=[item(w) for w in work_array(payload)]
         if len(rows)!=shard['workCount']:raise SystemExit(f"count mismatch {shard['href']}: {len(rows)} != {shard['workCount']}")
+        for row in rows:
+            source=row['cover']['source']; source_counts[source]=source_counts.get(source,0)+1
         name=f'covers-{n:06d}.json'; raw=json.dumps({'schema':'dawn.library.cover-preview-shard.v1','offset':shard['offset'],'count':len(rows),'items':rows},ensure_ascii=False,separators=(',',':'))+'\n'
         (OUT/name).write_text(raw,encoding='utf-8')
         manifest['shards'].append({'offset':shard['offset'],'count':len(rows),'href':name,'sha256':hashlib.sha256(raw.encode()).hexdigest()})
         manifest['workCount']+=len(rows)
-    manifest['shardCount']=len(manifest['shards'])
+    manifest['shardCount']=len(manifest['shards']); manifest['coverSources']=dict(sorted(source_counts.items()))
     if manifest['workCount']!=root['workCount']:raise SystemExit('cover-preview total mismatch')
     (OUT/'root.json').write_text(json.dumps(manifest,ensure_ascii=False,separators=(',',':'))+'\n',encoding='utf-8')
-    print(json.dumps({'status':'PASS','workCount':manifest['workCount'],'shardCount':manifest['shardCount']},ensure_ascii=False))
+    print(json.dumps({'status':'PASS','workCount':manifest['workCount'],'shardCount':manifest['shardCount'],'coverSources':manifest['coverSources']},ensure_ascii=False))
     return 0
 if __name__=='__main__':raise SystemExit(main())
