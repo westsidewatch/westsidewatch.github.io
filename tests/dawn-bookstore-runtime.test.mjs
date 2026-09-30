@@ -74,3 +74,13 @@ test('Reader uses a published bilingual pack and never fetches the provider text
       `Reader must not fetch external text: ${requests.join(', ')}`);
   } finally { globalThis.fetch = original; }
 });
+
+test('Chinese Collection is a first-class, bounded index with a full-text entry', async () => {
+  const collection = JSON.parse(await readFile(new URL('dawn-library/chinese-collection.json', staticRoot)));
+  assert.equal(collection.count, 47);
+  assert.equal(collection.items.length, 47);
+  const fullText = collection.items.find(item => item.fullText);
+  assert.equal(fullText.title, '靈歷集光');
+  assert.equal(fullText.readUrl, 'https://www.gutenberg.org/cache/epub/25716/pg25716-images.html');
+  assert.match(fullText.readUrl, /^https:\/\//);
+});
