@@ -7,8 +7,14 @@ on:
     paths:
       - 'scripts/bridge_dawn_reading_pointers.py'
       - 'scripts/build_dawn_canonical_substrate.py'
+      - 'scripts/probe_dawn_gutenberg_publication.py'
       - 'dore_core/language/pointer_bridge.py'
       - 'dore_core/language/source_mapping.py'
+      - 'dore_core/language/materialization.py'
+      - 'dore_core/publication.py'
+      - 'dore_core/publication_materialization.py'
+      - 'dore_core/publication_adapters/gutenberg.py'
+      - 'dore_core/publication_adapters/gutenberg_loader.py'
       - 'static/dawn-library/biblical-world/discovery-candidates.json'
       - 'data/dawn-10k-work-queue.json'
       - '.github/workflows/dawn-reading-pointers.yml'
@@ -53,38 +59,26 @@ jobs:
           mapped=int(summary.get('mapped') or 0)
           ambiguous=int(pointer.get('ambiguous') or 0)
           unmatched=int(pointer.get('unmatched') or 0)
-          if ambiguous or unmatched:
-              raise SystemExit(f'unresolved reading pointers: ambiguous={ambiguous} unmatched={unmatched}')
-          if count != len(items):
-              raise SystemExit(f'pointer count mismatch: count={count} items={len(items)}')
+          if ambiguous or unmatched: raise SystemExit(f'unresolved reading pointers: ambiguous={ambiguous} unmatched={unmatched}')
+          if count != len(items): raise SystemExit(f'pointer count mismatch: count={count} items={len(items)}')
           ids=[str(x.get('workId') or '') for x in items]
-          if len(set(ids)) != len(ids):
-              raise SystemExit('duplicate workId in reading-pointer-map')
+          if len(set(ids)) != len(ids): raise SystemExit('duplicate workId in reading-pointer-map')
           missing=[wid for wid in ids if wid not in works]
-          if missing:
-              raise SystemExit(f'pointer workIds missing from canonical: {missing[:10]}')
+          if missing: raise SystemExit(f'pointer workIds missing from canonical: {missing[:10]}')
           bad=[]
           for row in items:
-              wid=str(row.get('workId') or '')
-              expected=str(row.get('readingPointer') or '')
-              actual=str((works.get(wid) or {}).get('readingPointer') or '')
-              if not expected.startswith('dawn://reading/') or actual != expected:
-                  bad.append({'workId':wid,'expected':expected,'actual':actual})
-          if bad:
-              raise SystemExit(f'canonical pointer mismatch: {bad[:10]}')
+              wid=str(row.get('workId') or ''); expected=str(row.get('readingPointer') or ''); actual=str((works.get(wid) or {}).get('readingPointer') or '')
+              if not expected.startswith('dawn://reading/') or actual != expected: bad.append({'workId':wid,'expected':expected,'actual':actual})
+          if bad: raise SystemExit(f'canonical pointer mismatch: {bad[:10]}')
           actual_count=sum(1 for w in works.values() if str(w.get('readingPointer') or '').startswith('dawn://reading/'))
-          if mapped != count or actual_count != count:
-              raise SystemExit(f'count drift: map={count} mapped={mapped} canonical={actual_count}')
+          if mapped != count or actual_count != count: raise SystemExit(f'count drift: map={count} mapped={mapped} canonical={actual_count}')
           print(json.dumps({'pointerMap':count,'mapped':mapped,'canonicalReadingWorks':actual_count,'ambiguous':ambiguous,'unmatched':unmatched,'status':'locked'},ensure_ascii=False))
           PY
+      - name: Probe live Gutenberg publication
+        run: python3 scripts/probe_dawn_gutenberg_publication.py
       - name: Persist generated reading state
         run: |
           git config user.name 'Dore CI'
           git config user.email 'dore-ci@users.noreply.github.com'
           git add static/dawn-library/reading-pointer-map.json static/dawn-library/canonical-index.json static/dawn-library/surfaces/dawn-storefront.json static/dawn-library/surfaces/multiwrite-biblical-world.json
-          if git diff --cached --quiet; then
-            echo 'Reading state already current.'
-          else
-            git commit -m 'data(dawn): refresh canonical reading pointers [skip ci]'
-            git push origin HEAD:main
-          fi
+          if git diff --cached --quiet; then echo 'Reading state already current.'; else git commit -m 'data(dawn): refresh canonical reading pointers [skip ci]'; git push origin HEAD:main; fi
