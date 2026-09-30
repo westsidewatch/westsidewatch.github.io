@@ -12,6 +12,7 @@ CLSC = ROOT / 'data/dawn-corpus/acquisition/zh-non-bible/clsc-pre1931-expanded-c
 SONG = ROOT / 'data/dawn-corpus/acquisition/zh-non-bible/song-shangjie-lingli-jiguang.v1.json'
 OUT = ROOT / 'static/dawn-library/chinese-collection.json'
 PREVIEW_OUT = ROOT / 'static/dawn-library/cover-preview/chinese-collection.json'
+COLLECTIONS = ROOT / 'static/dawn-library/collections.json'
 
 
 def load(path):
@@ -79,6 +80,14 @@ def main():
         })
     PREVIEW_OUT.parent.mkdir(parents=True, exist_ok=True)
     PREVIEW_OUT.write_text(json.dumps({'schema': 'dawn.library.cover-preview-shard.v1', 'collectionId': 'zh', 'offset': 0, 'count': len(previews), 'items': previews}, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
+    # Register the projection in the same collection registry used by every
+    # Dawn Library surface. A collection build may update its own counters,
+    # but never creates a separate storefront runtime.
+    registry = load(COLLECTIONS)
+    entry = {'id': 'zh', 'title': '中文館藏', 'kind': 'books', 'status': 'active-building', 'published': len(works), 'fullText': sum(1 for row in works if row['access']['kind'] == 'full-text'), 'output': '/dawn-library/chinese-collection.json', 'coverPreview': '/dawn-library/cover-preview/chinese-collection.json', 'delivery': 'remote-first'}
+    rows = [row for row in registry.get('collections', []) if row.get('id') != 'zh']
+    registry['collections'] = [entry, *rows]
+    COLLECTIONS.write_text(json.dumps(registry, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':
