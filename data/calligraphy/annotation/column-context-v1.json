@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "name": "calligraphy-column-context",
+  "levels": ["work", "column", "group", "glyph"],
+  "column": {
+    "required": ["workId", "columnId", "readingOrder", "transcription", "bbox"],
+    "metrics": ["axis", "widthProfile", "densityProfile", "sizeRhythm", "leanRhythm", "spacingRhythm", "inkMassRhythm"]
+  },
+  "group": {
+    "windows": [2, 3, 5],
+    "metrics": ["entryExitDirection", "connection", "spacing", "relativeScale", "centerOfMassShift", "leanRelation", "densityRelation"]
+  },
+  "glyph": {
+    "metrics": ["bbox", "centerOfMass", "scale", "lean", "entryDirection", "exitDirection", "inkMass"],
+    "mustRetainNeighbors": true,
+    "mustRetainSourceCrop": true
+  },
+  "principle": "Never destroy source context when deriving isolated glyphs. Retrieval ranks a glyph together with its original local flow context."
+}
