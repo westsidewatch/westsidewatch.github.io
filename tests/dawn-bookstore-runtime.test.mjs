@@ -77,10 +77,12 @@ test('Reader uses a published bilingual pack and never fetches the provider text
 
 test('Chinese Collection is a first-class, bounded index with a full-text entry', async () => {
   const collection = JSON.parse(await readFile(new URL('dawn-library/chinese-collection.json', staticRoot)));
+  assert.equal(collection.schema, 'dawn.library.collection-index.v1');
   assert.equal(collection.count, 47);
-  assert.equal(collection.items.length, 47);
-  const fullText = collection.items.find(item => item.fullText);
+  assert.equal(collection.works.length, 47);
+  const fullText = collection.works.find(item => item.reading?.state === 'ready');
   assert.equal(fullText.title, '靈歷集光');
-  assert.equal(fullText.readUrl, 'https://www.gutenberg.org/cache/epub/25716/pg25716-images.html');
-  assert.match(fullText.readUrl, /^https:\/\//);
+  assert.equal(fullText.reading.url, 'https://www.gutenberg.org/cache/epub/25716/pg25716-images.html');
+  assert.match(fullText.cover.src, /^https:\/\//);
+  assert.ok(collection.works.every(item => item.cover?.pointer));
 });

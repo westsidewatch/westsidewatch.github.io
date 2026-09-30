@@ -135,10 +135,14 @@ async function readingShelf() {
 
 function chineseCards(items) {
   return items.map(item => {
-    const meta = [item.author, item.year, item.domain].filter(Boolean).join(' · ');
-    const action = item.fullText && safeUrl(item.readUrl)
-      ? `<a class="chinese-work" href="${esc(safeUrl(item.readUrl))}" target="_blank" rel="noopener noreferrer"><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>全文閱讀 ↗</em></a>`
-      : `<div class="chinese-work"><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>來源整理中</em></div>`;
+    const meta = [item.creator, item.year, item.domain].filter(Boolean).join(' · ');
+    const source = safeUrl(item.cover?.src || '');
+    const visual = source
+      ? `<img class="chinese-cover" src="${esc(source)}" alt="${esc(item.title)} 封面" loading="lazy" decoding="async">`
+      : `<span class="chinese-cover chinese-cover--pending">封面待解析</span>`;
+    const action = item.reading?.state === 'ready' && safeUrl(item.reading.url)
+      ? `<a class="chinese-work" href="${esc(safeUrl(item.reading.url))}" target="_blank" rel="noopener noreferrer">${visual}<span><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>全文閱讀 ↗</em></span></a>`
+      : `<div class="chinese-work">${visual}<span><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>${esc(item.reading?.provider || '來源')} · 閱讀入口待解析</em></span></div>`;
     return action;
   }).join('');
 }
@@ -150,8 +154,9 @@ async function chineseCollection() {
     section.className = 'section chinese-collection';
     section.id = 'chinese-collection';
     const render = expanded => {
-      const visible = expanded ? collection.items : collection.items.slice(0, 8);
-      section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">${esc(collection.description)}</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看全部中文館藏</button>'}`;
+      const works = collection.works || [];
+      const visible = expanded ? works : works.slice(0, 8);
+      section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">Canonical Work／Edition／Cover／Pointer 索引。已核定身份、來源與權利；正文維持遠端優先，封面依來源解析狀態顯示。</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看完整索引</button>'}`;
       section.querySelector('.show-chinese')?.addEventListener('click', () => render(true));
     };
     render(false);
