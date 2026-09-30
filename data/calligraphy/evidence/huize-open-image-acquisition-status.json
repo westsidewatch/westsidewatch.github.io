@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "sourceId": "daguan-v5-huize",
+  "collectionDetailId": "17063",
+  "accessed": "2026-09-29",
+  "officialRecord": "https://digitalarchive.npm.gov.tw/opendata/Pub/Detail/17063?dep=P&mode=full",
+  "verified": {
+    "workNumber": "故帖00002900010",
+    "unifiedNumber": "故帖000029N000000005",
+    "quantity": "一幅",
+    "script": "行楷書",
+    "transcriptionContains": ["敬", "慧"],
+    "downloadTiers": [
+      {"megapixels": 1, "rights": "CC0"},
+      {"megapixels": 6, "rights": "CC BY 4.0"}
+    ]
+  },
+  "acquisition": {
+    "status": "blocked-by-interactive-download",
+    "reason": "The public record advertises direct downloads, but the exposed download flow requires an interactive verification step and the indexed page does not expose a stable raw image URL. No image URL or pixel dimensions are inferred.",
+    "rawImageUrl": null,
+    "pixelWidth": null,
+    "pixelHeight": null
+  },
+  "glyphPromotion": {
+    "敬": "blocked",
+    "慧": "blocked",
+    "rule": "Do not create crop coordinates or glyph assets until the actual source pixels are acquired and visually verified."
+  }
+}
