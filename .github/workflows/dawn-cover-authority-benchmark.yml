@@ -11,7 +11,7 @@ permissions:
 jobs:
   benchmark:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
         with:
@@ -19,34 +19,38 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Benchmark first 100 works
-        run: python3 scripts/build_dawn_cover_authority.py --shard 1 --limit 100 --delay 0.12
-      - name: Verify benchmark
+      - name: Resolve full first cover shard
+        run: python3 scripts/build_dawn_cover_authority.py --shard 1 --limit 500 --delay 0.08
+      - name: Verify authority pass
         run: |
           python3 - <<'PY'
           import json
           from pathlib import Path
           p=json.loads(Path('static/dawn-library/cover-authority/authority-000001.json').read_text())
-          assert p['sampleCount']==100
-          assert 0 <= p['resolvedCount'] <= 100
+          assert 1 <= p['sampleCount'] <= 500
+          assert p['eligibleCount'] + p['excludedCount'] == p['sampleCount']
+          assert 0 <= p['resolvedCount'] <= p['eligibleCount']
           assert 0 <= p['hitRate'] <= 1
+          assert all(x.get('status') in {'resolved','unresolved','excluded'} for x in p['items'])
           print('sampleCount=',p['sampleCount'])
+          print('eligibleCount=',p['eligibleCount'])
+          print('excludedCount=',p['excludedCount'])
           print('resolvedCount=',p['resolvedCount'])
           print('hitRate=',p['hitRate'])
           PY
-      - name: Publish benchmark authority
+      - name: Publish cover authority
         run: |
           git config user.name 'Dore CI'
           git config user.email 'dore-ci@users.noreply.github.com'
           git add static/dawn-library/cover-authority/authority-000001.json
           if git diff --cached --quiet; then
-            echo 'Benchmark unchanged.'
+            echo 'Authority unchanged.'
           else
-            git commit -m 'data(dawn): publish cover authority benchmark [skip ci]'
+            git commit -m 'data(dawn): publish expanded cover authority [skip ci]'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
       - uses: actions/upload-artifact@v4
         with:
-          name: dawn-cover-authority-benchmark
+          name: dawn-cover-authority-shard-000001
           path: static/dawn-library/cover-authority/authority-000001.json
