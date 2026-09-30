@@ -1,73 +1,13 @@
 {{ define "main" }}
-<section class="dawn-library-brand" aria-labelledby="dawn-library-title">
-  <header class="dawn-library-brand__header">
-    <p class="section-label">Westside Watch · Dawn Library</p>
-    <h1 id="dawn-library-title">Dawn Library<span lang="zh-Hant">黎明書局</span></h1>
-    <p class="dawn-library-brand__dek">Theology · Scripture · Inner Life</p>
-    <p lang="zh-Hant">從經文、神學與內在生活出發，尋找值得慢讀的書。</p>
-  </header>
-  <div class="dawn-library-brand__frame-wrap">
-    <iframe id="dawn-library-product-surface" class="dawn-library-brand__frame" src="{{ "dawn-library/product/?surface=spread-20260930a" | relURL }}" title="黎明書局館藏" loading="eager"></iframe>
-  </div>
+<section class="dawn-library-shell" aria-label="黎明書局">
+  <iframe id="dawn-library-product-surface" class="dawn-library-shell__frame" src="{{ "dawn-library/product/?surface=single-20260930b" | relURL }}" title="黎明書局" loading="eager"></iframe>
 </section>
 <style>
-  .dawn-library-brand{width:100%;max-width:none;margin:0;padding:clamp(.75rem,1.4vw,1.4rem) 0 0;color:#30291d}
-  .dawn-library-brand__header{width:min(94vw,1500px);margin:0 auto clamp(.7rem,1.2vw,1.2rem);text-align:center;padding:0 1rem;animation:dawn-arrive .65s cubic-bezier(.22,.7,0,1) both}
-  .dawn-library-brand__header .section-label{margin:0 0 .25rem;font-size:clamp(.52rem,.55vw,.7rem);letter-spacing:.16em}
-  .dawn-library-brand__header h1{margin:.04em 0;font-family:'Cormorant Garamond','Noto Sans TC',sans-serif;font-size:clamp(2.8rem,4.4vw,5.8rem);font-weight:500;letter-spacing:.02em;line-height:.9}
-  .dawn-library-brand__header h1 span{display:block;font:400 clamp(.72rem,.8vw,1rem)/1.35 var(--font-text);letter-spacing:.15em;margin-top:.55em}
-  .dawn-library-brand__dek{margin:.45rem 0 .25rem;font-family:'Cormorant Garamond',serif;font-size:clamp(.72rem,.75vw,.95rem);letter-spacing:.16em;text-transform:uppercase;color:#8c6818}
-  .dawn-library-brand__header>p:last-child{margin:.2rem 0 0;font-family:'Noto Sans TC',sans-serif;font-size:clamp(.68rem,.7vw,.88rem);line-height:1.5;color:#59534a}
-  .dawn-library-brand__frame-wrap{position:relative;width:calc(100% - clamp(12px,1.4vw,28px));margin:0 auto;overflow:hidden;border:1px solid rgba(162,135,42,.42);background:#f4efe5;box-shadow:0 18px 55px rgba(64,48,22,.09);animation:dawn-arrive .75s .08s cubic-bezier(.22,.7,0,1) both}
-  .dawn-library-brand__frame-wrap::before{position:absolute;inset:0;z-index:1;pointer-events:none;content:"";background:linear-gradient(115deg,rgba(210,188,105,.07),transparent 38%)}
-  .dawn-library-brand__frame{display:block;position:relative;z-index:0;width:100%;height:calc(100vh - clamp(150px,15vh,210px));min-height:680px;border:0;background:#f4efe5;transition:height .15s ease}
-  @keyframes dawn-arrive{from{opacity:0;transform:translateY(.8rem)}to{opacity:1;transform:none}}
-  @media(max-width:900px){.dawn-library-brand{padding-top:.5rem}.dawn-library-brand__header{width:96vw}.dawn-library-brand__frame-wrap{width:100%;border-left:0;border-right:0}.dawn-library-brand__frame{height:100svh;min-height:100svh}}
-  @media(prefers-reduced-motion:reduce){.dawn-library-brand__header,.dawn-library-brand__frame-wrap{animation:none}.dawn-library-brand__frame{transition:none}}
+  .dawn-library-shell{width:100%;margin:0;padding:0;background:#f4efe5}
+  .dawn-library-shell__frame{display:block;width:100%;height:100svh;min-height:760px;border:0;background:#f4efe5}
+  @media(max-width:900px){.dawn-library-shell__frame{min-height:100svh}}
 </style>
-<script type="module">
-  const frame=document.getElementById('dawn-library-product-surface');
-  const resizeFrame=()=>{
-    try{
-      const doc=frame?.contentDocument;
-      if(!doc)return;
-      const mobile=window.matchMedia('(max-width:900px)').matches;
-      if(mobile){frame.style.height=`${Math.max(doc.documentElement?.scrollHeight||0,window.innerHeight)}px`;return;}
-      const available=Math.max(680,window.innerHeight-frame.getBoundingClientRect().top-10);
-      frame.style.height=`${available}px`;
-    }catch(error){console.warn('[Dawn Library] frame resize unavailable',error)}
-  };
-  const cleanPublicCopy=()=>{
-    const doc=frame?.contentDocument;if(!doc)return;
-    const replacements=new Map([
-      ['作者入口。由 canonical 館藏生成，不另建第二套資料。',''],
-      ['聖經世界相關書籍索引；查經資料本身仍歸以馬忤斯。',''],
-      ['神學作品入口。',''],
-      ['靈修與內在生活作品入口。',''],
-      ['第二頁先恢復結構與容量入口。最終索引密度、第三頁需求與翻頁／下滾動效留待全站 layout 重建決定。',''],
-      ['三晨星正在同步 canonical 館藏。',''],
-      ['原文已取得。繁中翻譯等待 Doré Language Runtime。','繁中譯文準備中。'],
-      ['正文尚未 materialize，翻譯不能開始','可前往來源閱讀'],
-      ['正在解析正文來源。','正在開書。']
-    ]);
-    const forbidden=/canonical|第二套資料|先恢復結構|最終索引密度|第三頁需求|layout 重建|materialize|Doré Language Runtime|READING\s*·\s*RESOLVING|AUTHORITY\s*·\s*RESOLVED/i;
-    const walker=doc.createTreeWalker(doc.body,NodeFilter.SHOW_TEXT);
-    const nodes=[];while(walker.nextNode())nodes.push(walker.currentNode);
-    for(const node of nodes){let text=node.nodeValue;for(const [from,to] of replacements)text=text.split(from).join(to);if(forbidden.test(text))text='';node.nodeValue=text;}
-    doc.querySelectorAll('.index-block p').forEach(p=>{if(!p.textContent.trim())p.remove()});
-  };
-  frame?.addEventListener('load',async()=>{
-    cleanPublicCopy();
-    const doc=frame.contentDocument;
-    if(doc?.body)new MutationObserver(cleanPublicCopy).observe(doc.body,{subtree:true,childList:true,characterData:true});
-    resizeFrame();
-    try{
-      const boundaryModule=await import('{{ "dawn-library/product/library-renderer-boundary.js" | relURL }}?v=20260930a');
-      const boundary=await boundaryModule.createLibraryRendererBoundary();
-      boundaryModule.assertLibraryRendererBoundary(boundary);
-      frame.dataset.libraryContract='ready';frame.dataset.libraryContractSchema=boundary.contract.schema;
-    }catch(error){frame.dataset.libraryContract='failed';console.error('[Dawn Library] renderer boundary validation failed',error)}
-  });
-  window.addEventListener('resize',resizeFrame,{passive:true});
+<script>
+(()=>{const frame=document.getElementById('dawn-library-product-surface');if(!frame)return;const resize=()=>{try{const doc=frame.contentDocument;if(!doc)return;frame.style.height=Math.max(window.innerHeight,doc.documentElement.scrollHeight||0)+'px'}catch{}};frame.addEventListener('load',resize);window.addEventListener('resize',resize,{passive:true})})();
 </script>
 {{ end }}
