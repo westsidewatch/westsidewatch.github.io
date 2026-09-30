@@ -1,0 +1,51 @@
+name: Dawn Catalogue V3 Isolated Build
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_dawn_catalogue_v3.py'
+      - 'static/dawn-library/catalogue/**'
+      - '.github/workflows/dawn-catalogue-v3.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build isolated catalogue v3
+        run: python3 scripts/build_dawn_catalogue_v3.py
+      - name: Validate complete v3 output
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          p=Path('static/dawn-library/catalogue-v3')
+          m=json.loads((p/'manifest.json').read_text())
+          assert m['sourceCount']==21047, m
+          assert m['admittedCount']+m['excludedCount']==21047, m
+          assert m['chineseCount']>=0
+          assert all((p/x).exists() for x in m['shards'])
+          assert all((p/x).exists() for x in m['indexes'])
+          ids=[]
+          for s in m['shards']:
+              ids += [w['id'] for w in json.loads((p/s).read_text())['works']]
+          assert len(ids)==m['admittedCount']
+          assert len(ids)==len(set(ids))
+          print(json.dumps(m,ensure_ascii=False))
+          PY
+      - name: Upload v3 candidate only
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-catalogue-v3-candidate
+          retention-days: 14
+          if-no-files-found: error
+          path: static/dawn-library/catalogue-v3/
