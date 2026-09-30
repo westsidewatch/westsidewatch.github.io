@@ -1,0 +1,78 @@
+{
+  "version": 1,
+  "purpose": "Shorten the Living Calligrapher / Project Hand research chain by reusing mature open-source schemas, benchmarks and algorithms without making them the canonical public corpus.",
+  "adoption": [
+    {
+      "project": "HCSU",
+      "role": "style-understanding teacher and evaluation benchmark",
+      "adopt": ["hierarchical style dimensions", "ink/stroke/structure annotation vocabulary", "Tie-vs-Bei modality separation", "anti-leakage evaluation where target/reference characters differ", "explainable style reasoning benchmark"],
+      "doNot": ["copy NC research images into public corpus", "treat model aesthetic prose as canonical truth"],
+      "priority": "P0"
+    },
+    {
+      "project": "UniCalli",
+      "role": "column/context annotation accelerator",
+      "adopt": ["column-level representation", "character bounding boxes", "modern transcription", "author/style labels", "recognition-generation mutual checking"],
+      "doNot": ["make diffusion model a required runtime", "import CC-BY-NC-ND dataset into public collection"],
+      "priority": "P0"
+    },
+    {
+      "project": "SDT",
+      "role": "writer-vs-character style disentanglement reference",
+      "adopt": ["separate stable writer traits from character-local variation", "writer-level and glyph-level style scoring ideas", "offline generation evaluation utilities where useful"],
+      "doNot": ["replace historical evidence with generated samples", "collapse Project Hand into a latent style vector"],
+      "priority": "P0"
+    },
+    {
+      "project": "CHISE IDS",
+      "role": "deterministic character structure backbone for missing-glyph reconstruction",
+      "adopt": ["Unicode-to-IDS decomposition", "component topology", "variant-aware structural representation"],
+      "doNot": ["infer calligraphic stroke order directly from IDS", "treat typographic components as historical brush forms"],
+      "priority": "P0"
+    },
+    {
+      "project": "MCCD",
+      "role": "research-only coverage oracle and metadata reference",
+      "adopt": ["character/style/dynasty/calligrapher attribute schema", "coverage comparison", "recognition benchmark ideas"],
+      "doNot": ["publish dataset assets", "make NC/ND data canonical"],
+      "priority": "P1"
+    },
+    {
+      "project": "StrokeExtraction",
+      "role": "experimental stroke/skeleton analysis",
+      "adopt": ["stroke extraction pipeline concepts", "semantic plus stroke-prior decomposition for structure checks"],
+      "doNot": ["assume regular-handwriting stroke segmentation transfers unchanged to running/cursive calligraphy"],
+      "priority": "P1"
+    },
+    {
+      "project": "chinese-calligraphy-dataset",
+      "role": "research coverage sanity check",
+      "adopt": ["large isolated-glyph lookup for coverage experiments", "calligrapher-separated loaders"],
+      "doNot": ["use internet-collected images as provenance-grade public sources", "use isolated glyphs to teach flow directly"],
+      "priority": "P2"
+    },
+    {
+      "project": "CalliECD",
+      "role": "watchlist for future missing-character reconstruction",
+      "adopt": ["skeleton-constrained generation concept", "recognition-correction loop concept"],
+      "doNot": ["depend on it until promised code/data are actually released and reviewed"],
+      "priority": "WATCH"
+    }
+  ],
+  "revisedPipeline": [
+    "shared historical works and research references",
+    "UniCalli-like work/column/group/glyph annotation",
+    "HCSU-like fine-grained stroke/structure/style descriptors",
+    "SDT-like writer-stable vs glyph-local feature separation",
+    "CHISE deterministic component graph",
+    "four independent Core Teacher Hand Grammars",
+    "Project Hand Stable Spine",
+    "TC001 anti-leakage and provenance evaluation",
+    "only then reconstructed glyph experiments"
+  ],
+  "shortcut": {
+    "before": "build ingestion + segmentation + style vocabulary + structure decomposition + writer disentanglement + evaluation from scratch",
+    "after": "reuse mature schemas/evaluation/code ideas; build only provenance integration, four-teacher grammar, flow model and scripture-specific composition rules",
+    "keepCustom": ["provenance", "four-teacher evidence graph", "Flow Engine", "Project Hand Stable Spine", "Scripture Calligraphy", "Scripture Couplet", "TC001 regression history"]
+  }
+}
