@@ -51,3 +51,26 @@ test('search and selecting a preview preserve the canonical Work identity', asyn
     assert.ok(manifest.workCount > 200000);
   });
 });
+
+test('Reader uses a published bilingual pack and never fetches the provider text', async () => {
+  const original = globalThis.fetch, requests = [];
+  globalThis.fetch = async url => {
+    const path = String(url);
+    requests.push(path);
+    const body = await readFile(new URL(path.replace(/^\//, ''), staticRoot), 'utf8');
+    return new Response(body, {status: 200});
+  };
+  try {
+    const reader = await import(`../static/js/dawn-reading-resolver.mjs?test=${sequence++}`);
+    const workId = 'dawn:dbdea4adcc7625e7d64e';
+    const result = await reader.resolveReading({workId, authorityIds: {}, edition: {}});
+    const pack = await reader.localReadingPack(workId);
+    assert.equal(result.kind, 'external-reader');
+    assert.equal(result.sourcePage, 'https://www.gutenberg.org/ebooks/395');
+    assert.equal(pack.workId, workId);
+    assert.equal(pack.segments.length, 3);
+    assert.equal(reader.readingTranslationCapability({...result, pack}).mode, 'local-reading-pack');
+    assert.ok(requests.every(url => url.startsWith('/dawn-library/')),
+      `Reader must not fetch external text: ${requests.join(', ')}`);
+  } finally { globalThis.fetch = original; }
+});
