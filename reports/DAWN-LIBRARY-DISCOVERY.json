@@ -1,13 +1,19 @@
 {
   "schema": "dawn.library.discovery.report.v2",
-  "generatedAt": "2026-09-30T15:58:39.190210+00:00",
+  "generatedAt": "2026-09-30T17:54:22.911414+00:00",
   "collection": "biblical-world-books",
   "source": "project-gutenberg",
   "queries": 55,
-  "pagesChecked": 74,
+  "pagesChecked": 73,
   "newDiscovered": 0,
   "candidateQueue": 73,
   "catalogBooks": 1969,
-  "errors": [],
+  "errors": [
+    {
+      "query": "Christian missions",
+      "url": "https://www.gutenberg.org/ebooks/search.opds/?query=Christian+missions&start_index=26",
+      "error": "RemoteDisconnected"
+    }
+  ],
   "invariant": "Discovery advances through OPDS result pages, persists per-query cursors, stores metadata only, and removes promoted source IDs from the candidate queue."
 }
