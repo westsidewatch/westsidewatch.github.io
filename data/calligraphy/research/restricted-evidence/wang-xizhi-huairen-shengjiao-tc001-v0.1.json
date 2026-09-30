@@ -1,5 +1,5 @@
 {
-  "id": "wang-xizhi-huairen-shengjiao-tc001-v0.1",
+  "id": "wang-xizhi-huairen-shengjiao-tc001-v0.2",
   "teacher": "wang-xizhi",
   "work": "懷仁集王羲之聖教序",
   "role": "restricted-research-evidence",
@@ -15,32 +15,83 @@
     "accessMode": "remote-reference-or-existing-transcode-layer",
     "derivedResearchAnnotationsAllowed": true
   },
+  "sourceAuthority": {
+    "institution": "National Palace Museum, Taipei",
+    "workNumber": "贈拓00044500000",
+    "category": "拓片",
+    "script": "行書",
+    "sourceURI": "https://digitalarchive.npm.gov.tw/opendata/Pub/DetailEng/36283?dep=P&mode=full",
+    "verificationBasis": "institutional full transcription"
+  },
   "tc001Candidates": {
-    "是": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
-    "智": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
-    "慧": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false},
-    "端": {"status":"candidate-pending-context-verification","mayInformTeacherMemory":true,"mayResolveCoverageCell":false}
+    "是": {
+      "status": "transcription-verified-restricted-evidence",
+      "mayInformTeacherMemory": true,
+      "mayResolveCoverageCell": true,
+      "occurrences": [
+        {"context":"四時無形。潛寒暑以化物。是以窺天鑑地。庸愚皆識其端。","role":"hinge: 是以"},
+        {"context":"舍利子。是諸法空相。不生不滅。","role":"copular/deictic transition"}
+      ],
+      "evidenceClass": "collected-Wang-form-via-Huairen-rubbing"
+    },
+    "智": {
+      "status": "transcription-verified-restricted-evidence",
+      "mayInformTeacherMemory": true,
+      "mayResolveCoverageCell": true,
+      "occurrences": [
+        {"context":"形潛莫覩。在智猶迷。況乎道佛崇虛。","role":"lexical: 智"},
+        {"context":"傳智燈之長燄。皎幽闇而恆明。","role":"compound: 智燈"},
+        {"context":"無苦集滅道。無智亦無得。","role":"parallel: 無智"}
+      ],
+      "evidenceClass": "collected-Wang-form-via-Huairen-rubbing"
+    },
+    "慧": {
+      "status": "transcription-verified-restricted-evidence",
+      "mayInformTeacherMemory": true,
+      "mayResolveCoverageCell": true,
+      "occurrences": [
+        {"context":"慧日法流。轉雙輪於鹿苑。","role":"compound: 慧日"}
+      ],
+      "evidenceClass": "collected-Wang-form-via-Huairen-rubbing"
+    },
+    "端": {
+      "status": "transcription-verified-restricted-evidence",
+      "mayInformTeacherMemory": true,
+      "mayResolveCoverageCell": true,
+      "occurrences": [
+        {"context":"庸愚皆識其端。明陰洞陽。","role":"phrase closure: 其端"},
+        {"context":"麗象開圖。空端四八之相。於是微言廣被。","role":"compound/contextual occurrence"},
+        {"context":"昇墜之端。惟人所託。","role":"phrase closure: 之端"}
+      ],
+      "evidenceClass": "collected-Wang-form-via-Huairen-rubbing"
+    }
+  },
+  "teacherMemoryBinding": {
+    "promoteTo": ["glyphVariantMemory","componentAnalogueMemory","structuralCounterexamples","strokePathHypotheses"],
+    "blockedTargets": ["originalInkPressure","originalWangPhraseFlow","publicExhibitionCollection"],
+    "interpretation": "Multiple inscription contexts may be compared for structural variation, but Huairen's assembled inscription context is not treated as Wang Xizhi's original phrase-flow context."
+  },
+  "coverageEffect": {
+    "teacher": "wang-xizhi",
+    "charactersPromoted": ["是","智","慧","端"],
+    "coverageClass": "restricted-transcription-bound",
+    "note": "These cells may now count as historically source-bound research coverage, but remain lower confidence for ink dynamics and original phrase flow than direct ink witnesses."
   },
   "evidenceRules": [
     "A collected Wang Xizhi glyph in Huairen's compilation is evidence for transmitted Wang-form vocabulary, not direct evidence of Wang Xizhi's original local phrase context.",
     "Keep Huairen compilation context distinct from the unknown or different source context of the collected Wang glyph.",
     "Do not infer original ink pressure from stele/rubbing transmission.",
-    "Use the evidence for structure, component treatment, stroke-path hypotheses and variant comparison; downgrade claims about original ink dynamics.",
-    "A TC001 character remains unresolved until the exact occurrence and surrounding inscription context are verified.",
+    "Use repeated occurrences to study structural invariants and controlled variation.",
     "Restricted research evidence must never make its parent work eligible for White Day Cafe exhibition."
   ],
-  "teacherMemoryBinding": {
-    "allowedTargets": ["glyphVariantMemory","componentAnalogueMemory","structuralCounterexamples","strokePathHypotheses"],
-    "blockedTargets": ["originalInkPressure","originalWangPhraseFlow","publicExhibitionCollection"]
-  },
   "publicationLeakTest": {
     "queryInvariant": "whiteDayCafeEligible == true AND publicDisplayAllowed == true",
     "expectedResultForThisWork": "excluded",
     "failClosed": true
   },
   "nextGate": {
-    "name": "restricted-candidate-context-verification",
-    "requirement": "Verify exact inscription occurrences and local text context for 是、智、慧、端 through remote source metadata/transcription before promoting any candidate into TC001 research evidence.",
+    "name": "restricted-glyph-variant-comparison",
+    "requirement": "Compare repeated 是、智、端 occurrences and the verified 慧 occurrence through remote regions to extract structural invariants and contextual variation without downloading the whole work.",
     "generationAllowedAfterThisFile": false
   }
 }
