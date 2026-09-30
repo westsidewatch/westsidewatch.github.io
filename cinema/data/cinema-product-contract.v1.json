@@ -1,0 +1,13 @@
+{
+  "schema":"dore.cinema-product-contract.v1",
+  "status":"implementation-ready",
+  "product":"天堂電影院",
+  "principle":"when-to-watch-and-why-is-content",
+  "core":{"screen":"immersive first-screen player","programme":"calendar-driven screenings","whyTonight":"editorial reason for the screening","archive":"playable library plus program guide"},
+  "player":{"openSourceCore":"Video.js","license":"Apache-2.0","remotePlayback":true,"rehostRequired":false,"subtitleFormat":"WebVTT","chineseSubtitles":true,"subtitleRights":"verify separately from playback rights","chapters":true},
+  "resourcePolicy":{"playableLibrary":"only works verified to play inside this site via authorised stream/embed","programGuide":"cinema works that cannot play inside this site; metadata plus official viewing link","openCollections":"ingest mature openly licensed indexes/corpora broadly, curate front-end selectively","goodTv":"friend-link-only"},
+  "programmeEngine":{"runtimeDependency":"none","apiPolicy":"open-source and self-hostable only","pipeline":["date","occasion","scripture","film-relation","editorial-reason"],"occasionFamilies":["church-year","biblical-feasts","gospel-events","church-history","biblical-archaeology","editorial-specials"],"rule":"calendar engines are references/algorithms; Westside Watch owns its canonical programme rules"},
+  "exploration":{"player":"Video.js + WebVTT/vtt.js","openCorpus":"unfoldingWord Open Bible Stories","matureVideoArchitecture":"BIBLE EPICS source-CDN model","primaryFilmPool":"Jesus Film Project","calendarReference":"open-source liturgical calendar implementations; fork/adapt algorithms, no closed runtime API","avoid":"commercial API dependency, paid AI runtime dependency, unnecessary video rehosting"},
+  "homepageOrder":["SCREEN / NOW SHOWING","WHY TONIGHT","THIS WEEK","ARCHIVE"],
+  "implementationGate":{"ready":true,"reason":"player, subtitle, resource, programme, open-API and source-pool rules are now fixed"}
+}
