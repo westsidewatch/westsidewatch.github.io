@@ -3,17 +3,8 @@ name: Dawn Bulk Corpus Refresh
 on:
   workflow_dispatch:
   push:
-    branches: [main]
-    paths:
-      - 'data/dawn-corpus/**'
-      - 'scripts/discover_dawn_10k_openlibrary_works.py'
-      - 'scripts/discover_dawn_av_records.py'
-      - 'scripts/gate_dawn_canonical_promotion.py'
-      - 'scripts/promote_dawn_canonical_batch.py'
-      - 'scripts/build_dawn_resource_queue.py'
-      - 'scripts/refresh_dawn_bulk_corpus.py'
-      - 'scripts/build_dawn_library_index.py'
-      - '.github/workflows/dawn-bulk-refresh.yml'
+    branches:
+      - main
 
 permissions:
   contents: write
