@@ -11,6 +11,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CLSC = ROOT / 'data/dawn-corpus/acquisition/zh-non-bible/clsc-pre1931-expanded-canonical-batch.v1.json'
 SONG = ROOT / 'data/dawn-corpus/acquisition/zh-non-bible/song-shangjie-lingli-jiguang.v1.json'
 OUT = ROOT / 'static/dawn-library/chinese-collection.json'
+PREVIEW_OUT = ROOT / 'static/dawn-library/cover-preview/chinese-collection.json'
 
 
 def load(path):
@@ -57,9 +58,27 @@ def main():
         'source': {'name': source['name'], 'url': source['collectionUrl'], 'delivery': 'remote-first'},
         'policy': {'bibleWorldExcluded': True, 'localTextDownloaded': False, 'identityRule': 'Work identity is independent of delivery endpoint resolution.', 'cardRule': 'Every card has a source cover or a Dawn one-fallback cover and a reader-facing access link.'},
         'facets': {'domain': dict(sorted(domains.items())), 'year': dict(sorted(years.items()))},
+        'coverPreview': {'href': 'cover-preview/chinese-collection.json', 'schema': 'dawn.library.cover-preview-shard.v1', 'count': len(works)},
         'works': works
     }
     OUT.write_text(json.dumps(index, ensure_ascii=False, indent=2) + '\n', encoding='utf-8')
+    # This is a scoped member of the existing cover-preview-shard contract.  It
+    # lets the Chinese Collection load 47 cover records directly instead of
+    # scanning the 407 general-catalogue shards for every card.
+    previews = []
+    for row in works:
+        cover = row['cover']
+        previews.append({
+            'workId': row['workId'],
+            'motionKey': f"dawn-work:{row['workId']}",
+            'title': row['work']['title'],
+            'authors': [row['work']['creator']] if row['work']['creator'] else [],
+            'languages': [row['work']['language']],
+            'cover': {'src': cover.get('url'), 'source': 'source' if cover['mode'] == 'source' else 'dawn-placeholder', 'width': None, 'height': None, 'aspectRatio': None},
+            'motion': {'layer': 'cover', 'detachable': True, 'layoutStable': False, 'preferredProperties': ['transform', 'opacity']}
+        })
+    PREVIEW_OUT.parent.mkdir(parents=True, exist_ok=True)
+    PREVIEW_OUT.write_text(json.dumps({'schema': 'dawn.library.cover-preview-shard.v1', 'collectionId': 'zh', 'offset': 0, 'count': len(previews), 'items': previews}, ensure_ascii=False, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
 if __name__ == '__main__':

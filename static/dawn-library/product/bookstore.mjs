@@ -1,17 +1,10 @@
 import { localReadingPack, resolveReading } from '../../js/dawn-reading-resolver.mjs';
+import { dawnLibrary } from './library-system.mjs';
 
 const $ = selector => document.querySelector(selector);
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'}[c]));
 const scroll = selector => $(selector).scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'});
-async function json(url) {
-  const response = await fetch(url, {signal: AbortSignal.timeout(15000)});
-  if (!response.ok) throw new Error(`${response.status}: ${url}`);
-  return response.json();
-}
-let fabricPromise;
-function fabric() {
-  return fabricPromise ||= import('../../js/resource-fabric-client.mjs');
-}
+const fabric = () => Promise.resolve(dawnLibrary);
 const author = work => (work.authors || []).join(' · ');
 const safeUrl = value => {
   try { const url = new URL(value, location.href); return ['https:', 'http:'].includes(url.protocol) ? url.href : ''; }
@@ -113,7 +106,7 @@ renderReader();
 async function readingShelf() {
   try {
     $('#reading-entry .reader-note').textContent = '閱讀包含原文與繁中對照，隨網站版本發佈；不下載館藏正文、翻譯模型，也不呼叫翻譯 API。';
-    const packs = await json('../reading-packs/index.json');
+    const packs = await dawnLibrary.readingPacks();
     const rows = packs.items || [];
     $('#reader-ready').innerHTML = rows.map((item, i) => `<button type="button" class="reader-ready-card" data-reader-pack="${i}"><strong>${esc(item.title)}</strong><small>原文 · 繁中 · 對照</small></button>`).join('');
     $('#reader-ready').querySelectorAll('[data-reader-pack]').forEach(button => {
@@ -152,12 +145,12 @@ function chineseCards(items) {
 
 async function chineseCollection() {
   try {
-    const collection = await json('../chinese-collection.json');
+    const collection = await dawnLibrary.chineseCollection();
+    const works = collection.works || [];
     const section = document.createElement('section');
     section.className = 'section chinese-collection';
     section.id = 'chinese-collection';
     const render = expanded => {
-      const works = collection.works || [];
       const visible = expanded ? works : works.slice(0, 8);
       section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">早期中文基督教著作。依靈修、教會歷史、神學與倫理編目；正文保留於原館藏。</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看完整索引</button>'}`;
       section.querySelector('.show-chinese')?.addEventListener('click', () => render(true));
@@ -172,7 +165,7 @@ async function chineseCollection() {
 // Each surface starts independently. Catalogue failure cannot hide covers.
 async function morningStars() {
   try {
-    const morning = await json('../surfaces/dawn-launch.json');
+    const morning = await dawnLibrary.morningStars();
     const api = await fabric();
     const ids = morning.items.map(item => item.workId);
     const works = await api.resourceWorks(ids);
@@ -224,9 +217,9 @@ async function moreCovers() {
   $('#collection-more').disabled = true;
   $('#collection-status').textContent = '正在載入封面…';
   try {
-    coverRoot ||= await json('../cover-preview/root.json');
+    coverRoot ||= await dawnLibrary.coverPreviewRoot();
     while (!pending.length && shardIndex < coverRoot.shards.length) {
-      const shard = await json(`../cover-preview/${coverRoot.shards[shardIndex].href}`);
+      const shard = await dawnLibrary.coverPreviewShard(coverRoot.shards[shardIndex].href);
       pending = shard.items || [];
       shardIndex++;
     }

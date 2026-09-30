@@ -86,6 +86,25 @@ test('Chinese Collection preserves the bookstore card contract and a full-text e
   assert.match(fullText.cover.url, /^https:\/\//);
   assert.ok(collection.works.every(item => item.work?.title && item.source?.provider && item.access?.url));
   assert.ok(collection.works.every(item => ['source', 'one-fallback'].includes(item.cover?.mode)));
+  assert.equal(collection.coverPreview.href, 'cover-preview/chinese-collection.json');
+  const preview = JSON.parse(await readFile(new URL('dawn-library/cover-preview/chinese-collection.json', staticRoot)));
+  assert.equal(preview.schema, 'dawn.library.cover-preview-shard.v1');
+  assert.equal(preview.count, collection.count);
+  assert.deepEqual(preview.items.map(item => item.workId), collection.works.map(item => item.workId));
   const product = await readFile(new URL('dawn-library/product/bookstore.mjs', staticRoot), 'utf8');
   assert.doesNotMatch(product, /封面待解析|閱讀入口待解析|來源整理中/);
+});
+
+test('the bookstore reads its catalogue, Chinese collection, and cover projections through one Library client', async () => {
+  await fixture(async (fabric, requests) => {
+    const library = await import(`../static/dawn-library/product/library-system.mjs?test=${sequence++}`);
+    const [manifest, chinese, previews] = await Promise.all([
+      library.dawnLibrary.manifest(), library.dawnLibrary.chineseCollection(), library.dawnLibrary.coverPreviewRoot()
+    ]);
+    assert.ok(manifest.workCount > 200000);
+    assert.equal(chinese.works.length, 47);
+    assert.equal(previews.workCount, manifest.workCount);
+    assert.ok(requests.includes('/dawn-library/chinese-collection.json'));
+    assert.ok(requests.includes('/dawn-library/cover-preview/chinese-collection.json'));
+  });
 });

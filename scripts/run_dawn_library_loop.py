@@ -6,6 +6,7 @@ from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 CATALOG=ROOT/'static/dawn-library/biblical-world/catalog.json'
 COLLECTIONS=ROOT/'static/dawn-library/collections.json'
+CHINESE_COLLECTION=ROOT/'static/dawn-library/chinese-collection.json'
 REPORT=ROOT/'reports/DAWN-LIBRARY-LOOP.json'
 HISTORY=ROOT/'reports/DAWN-LIBRARY-GROWTH.json'
 ENG_DISC=ROOT/'reports/DAWN-LIBRARY-DISCOVERY.json'
@@ -22,6 +23,10 @@ pending=[b for b in items if b not in verified]
 relations=sorted({r for b in items for r in b.get('relations',[])})
 providers=sorted({s.get('provider') for b in items for s in b.get('sources',[]) if s.get('provider')})
 book_state=next(c for c in registry['collections'] if c['id']=='biblical-world-books');book_state.update(published=len(items),verified=len(verified),pending=len(pending))
+zh=load(CHINESE_COLLECTION,{'works':[]})
+zh_state=next((c for c in registry['collections'] if c['id']=='zh'),None)
+if zh_state is not None:
+    zh_state.update(published=len(zh.get('works',[])),fullText=sum(1 for work in zh.get('works',[]) if work.get('access',{}).get('kind')=='full-text'))
 now=datetime.now(timezone.utc).isoformat();today=now[:10];registry['generatedAt']=now
 history=load(HISTORY,{'schema':'dawn.library.growth.v2','days':[]}); history['schema']='dawn.library.growth.v2'
 prior_days=[d for d in history.get('days',[]) if d.get('date')!=today]

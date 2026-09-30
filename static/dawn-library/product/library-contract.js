@@ -6,13 +6,14 @@ const DEFAULT_CONTRACT={
     primaryEntries:[
       {id:'morning-stars',label:'三晨星',kind:'recommendation-standard'},
       {id:'catalogue',label:'館藏',kind:'catalogue'},
+      {id:'chinese-collection',label:'中文館藏',kind:'collection'},
       {id:'search',label:'搜尋',kind:'search'}
     ]
   },
   rightPage:{
     role:'reader',emptyState:'select-work',defaultMode:'bilingual',
     modes:[{id:'source',label:'原文'},{id:'zh-Hant',label:'繁中'},{id:'bilingual',label:'對照'}],
-    contentFetch:'on-demand',translation:'dore-language-faculty'
+    contentFetch:'on-demand',translation:'published-bilingual-reading-pack'
   },
   invariants:{
     threeMorningStarsBelongsToLibrary:true,
@@ -35,5 +36,5 @@ export async function loadLibraryContract(){
 
 export function libraryEntries(contract){return contract?.leftPage?.primaryEntries||DEFAULT_CONTRACT.leftPage.primaryEntries}
 export function readerModes(contract){return contract?.rightPage?.modes||DEFAULT_CONTRACT.rightPage.modes}
-export function isLibrarySurface(id){return ['morning-stars','catalogue','search','reader'].includes(id)}
+export function isLibrarySurface(id){return ['morning-stars','catalogue','chinese-collection','search','reader'].includes(id)}
 export function isSiteEditorialSurface(id){return ['spectrum','curated-collection'].includes(id)}

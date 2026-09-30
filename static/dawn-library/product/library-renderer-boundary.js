@@ -22,7 +22,7 @@ export async function createLibraryRendererBoundary(){
     owns(surfaceId){return isLibrarySurface(surfaceId)},
     delegates(surfaceId){return isSiteEditorialSurface(surfaceId)},
     renderPolicy:Object.freeze({
-      library:['morning-stars','catalogue','search','reader'],
+      library:['morning-stars','catalogue','chinese-collection','search','reader'],
       siteEditorial:['spectrum','curated-collection'],
       resourceProjection:'publication-only',
       fullCatalogueInitialLoad:false,
