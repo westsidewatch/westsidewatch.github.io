@@ -133,6 +133,34 @@ async function readingShelf() {
   }
 }
 
+function chineseCards(items) {
+  return items.map(item => {
+    const meta = [item.author, item.year, item.domain].filter(Boolean).join(' · ');
+    const action = item.fullText && safeUrl(item.readUrl)
+      ? `<a class="chinese-work" href="${esc(safeUrl(item.readUrl))}" target="_blank" rel="noopener noreferrer"><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>全文閱讀 ↗</em></a>`
+      : `<div class="chinese-work"><strong>${esc(item.title)}</strong><small>${esc(meta)}</small><em>來源整理中</em></div>`;
+    return action;
+  }).join('');
+}
+
+async function chineseCollection() {
+  try {
+    const collection = await json('../chinese-collection.json');
+    const section = document.createElement('section');
+    section.className = 'section chinese-collection';
+    section.id = 'chinese-collection';
+    const render = expanded => {
+      const visible = expanded ? collection.items : collection.items.slice(0, 8);
+      section.innerHTML = `<div class="section-title"><h2>Chinese Collection</h2><span>中文館藏 · ${esc(collection.count)} 本</span></div><p class="reader-note">${esc(collection.description)}</p><div class="chinese-works">${chineseCards(visible)}</div>${expanded ? '' : '<button type="button" class="show-chinese">查看全部中文館藏</button>'}`;
+      section.querySelector('.show-chinese')?.addEventListener('click', () => render(true));
+    };
+    render(false);
+    $('#morning').before(section);
+  } catch (error) {
+    console.error('[Dawn] Chinese collection', error);
+  }
+}
+
 // Each surface starts independently. Catalogue failure cannot hide covers.
 async function morningStars() {
   try {
@@ -212,6 +240,7 @@ async function moreCovers() {
 $('#collection-more').onclick = moreCovers;
 moreCovers();
 readingShelf();
+chineseCollection();
 morningStars();
 catalogue();
 fabric().then(api => api.resourceManifest()).then(manifest => {
