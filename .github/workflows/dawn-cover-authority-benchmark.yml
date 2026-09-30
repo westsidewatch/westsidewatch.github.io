@@ -21,6 +21,30 @@ jobs:
           python-version: '3.12'
       - name: Resolve full first cover shard
         run: python3 scripts/build_dawn_cover_authority.py --shard 1 --limit 500 --delay 0.08
+      - name: Apply authority to public preview shard
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+          a=Path('static/dawn-library/cover-authority/authority-000001.json')
+          p=Path('static/dawn-library/cover-preview/covers-000001.json')
+          authority=json.loads(a.read_text())
+          preview=json.loads(p.read_text())
+          resolved={x['workId']:x for x in authority['items'] if x.get('status')=='resolved' and x.get('coverUrl')}
+          excluded={x['workId'] for x in authority['items'] if x.get('status')=='excluded'}
+          rows=[]
+          for item in preview.get('items',[]):
+            wid=item.get('workId')
+            if wid in excluded: continue
+            hit=resolved.get(wid)
+            if hit:
+              item['cover']={'src':hit['coverUrl'],'source':hit.get('source','cover-authority'),'width':None,'height':None,'aspectRatio':None}
+            rows.append(item)
+          preview['items']=rows
+          preview['count']=len(rows)
+          p.write_text(json.dumps(preview,ensure_ascii=False,separators=(',',':'))+'\n')
+          print('resolvedApplied=',len(resolved),'excluded=',len(excluded),'previewCount=',len(rows))
+          PY
       - name: Verify authority pass
         run: |
           python3 - <<'PY'
@@ -32,21 +56,23 @@ jobs:
           assert 0 <= p['resolvedCount'] <= p['eligibleCount']
           assert 0 <= p['hitRate'] <= 1
           assert all(x.get('status') in {'resolved','unresolved','excluded'} for x in p['items'])
+          preview=json.loads(Path('static/dawn-library/cover-preview/covers-000001.json').read_text())
+          direct=sum(1 for x in preview['items'] if (x.get('cover') or {}).get('source') in {'open-library-work','open-library-edition'})
+          assert direct > 0
           print('sampleCount=',p['sampleCount'])
-          print('eligibleCount=',p['eligibleCount'])
-          print('excludedCount=',p['excludedCount'])
           print('resolvedCount=',p['resolvedCount'])
           print('hitRate=',p['hitRate'])
+          print('directPreviewCovers=',direct)
           PY
-      - name: Publish cover authority
+      - name: Publish cover authority and preview
         run: |
           git config user.name 'Dore CI'
           git config user.email 'dore-ci@users.noreply.github.com'
-          git add static/dawn-library/cover-authority/authority-000001.json
+          git add static/dawn-library/cover-authority/authority-000001.json static/dawn-library/cover-preview/covers-000001.json
           if git diff --cached --quiet; then
-            echo 'Authority unchanged.'
+            echo 'Authority and preview unchanged.'
           else
-            git commit -m 'data(dawn): publish expanded cover authority [skip ci]'
+            git commit -m 'data(dawn): publish resolved cover authority into preview [skip ci]'
             git pull --rebase origin main
             git push origin HEAD:main
           fi
