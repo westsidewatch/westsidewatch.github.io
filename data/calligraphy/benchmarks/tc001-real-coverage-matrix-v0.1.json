@@ -1,0 +1,52 @@
+{
+  "id": "TC001-real-coverage-matrix-v0.1",
+  "text": "敬畏耶和華是智慧的開端",
+  "generationAllowed": false,
+  "matrixPurpose": "Operational 11 x 4 evidence matrix. A cell becomes resolved only after a source-bound corpus record with retained line/column context is attached.",
+  "characters": ["敬","畏","耶","和","華","是","智","慧","的","開","端"],
+  "teachers": ["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
+  "states": ["context-match","same-work","same-teacher","structural-analogue","unresolved"],
+  "admissionRule": "No visual guess, dictionary-font substitute, cross-teacher glyph, or generated glyph may resolve a cell.",
+  "matrix": {
+    "敬": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "畏": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "耶": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "和": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "華": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "是": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "智": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "慧": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "的": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "開": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}},
+    "端": {"wang-xizhi":{"state":"unresolved","records":[]},"mi-fu":{"state":"unresolved","records":[]},"zhao-mengfu":{"state":"unresolved","records":[]},"wen-zhengming":{"state":"unresolved","records":[]}}
+  },
+  "recordContract": {
+    "required": ["recordId","character","teacher","work","workState","lineOrColumnId","sourceType","sourceURI","attributionStatus","context","spatial","brushObservation"],
+    "context": ["previousCharacter","nextCharacter","twoCharacterWindow","threeCharacterWindow","fiveCharacterWindow"],
+    "spatial": ["boundingBox","relativeScale","centerOfGravity","lean","interCharacterGap","lineAxisOffset"],
+    "brushObservation": ["entryDirection","exitDirection","pressureChange","visibleLink","implicitContinuation"]
+  },
+  "queryBatches": [
+    {"priority":1,"teacher":"wang-xizhi","preferredWorks":["快雪時晴帖","蘭亭序傳本系統","雨後帖"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
+    {"priority":2,"teacher":"mi-fu","preferredWorks":["苕溪詩帖","蜀素帖","尺牘","盛制帖"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
+    {"priority":3,"teacher":"zhao-mengfu","preferredWorks":["洛神賦","付至紙素尺牘","致晉之尺牘"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]},
+    {"priority":4,"teacher":"wen-zhengming","preferredWorks":["自書紀行詩","自書詩帖","行書七言詩","行書七律軸"],"characters":["敬","畏","耶","和","華","是","智","慧","的","開","端"]}
+  ],
+  "coverageMetrics": {
+    "resolvedCells": 0,
+    "totalCells": 44,
+    "historicalGlyphCoverage": 0.0,
+    "contextMatchCoverage": 0.0,
+    "note": "Metrics are intentionally zero until actual corpus records are attached."
+  },
+  "specialHandling": {
+    "耶": "Expect lower historical coverage. Do not treat rarity as permission to synthesize early; collect component and structural analogues separately.",
+    "的": "Modern-frequency expectations must not bias historical retrieval. Preserve historical variants and contextual forms.",
+    "耶和華": "All three characters remain subject to the scripture-name readability gate before stylistic ranking."
+  },
+  "nextGate": {
+    "name": "first-source-bound-cells",
+    "requirement": "Populate the first verified records from the preferred works, beginning with Wang Xizhi, while retaining the complete original line/column context before isolated glyph derivation.",
+    "generationAllowedAfterThisFile": false
+  }
+}
