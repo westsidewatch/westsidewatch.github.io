@@ -20,7 +20,7 @@ export function readingDescriptor(work={}){
   };
 }
 
-async function json(url){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`reading source ${r.status}`);return r.json();}
+async function json(url){const r=await fetch(url,{cache:'no-store',signal:AbortSignal.timeout(15000)});if(!r.ok)throw new Error(`reading source ${r.status}`);return r.json();}
 
 export async function resolveReading(work={}){
   const descriptor=readingDescriptor(work);

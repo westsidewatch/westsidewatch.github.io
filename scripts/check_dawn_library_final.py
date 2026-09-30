@@ -30,11 +30,11 @@ def main() -> int:
     finalizer = FINALIZER.read_text(encoding='utf-8')
     product = PRODUCT.read_text(encoding='utf-8')
 
-    entries = {row.get('id') for row in contract.get('leftPage', {}).get('primaryEntries', [])}
+    entries = {row.get('id') for row in contract.get('firstPage', {}).get('primaryEntries', [])}
     if entries != {'morning-stars', 'catalogue', 'search'}:
         raise SystemExit(f'library navigation drift: {sorted(entries)}')
 
-    modes = {row.get('id') for row in contract.get('rightPage', {}).get('modes', [])}
+    modes = {row.get('id') for row in contract.get('secondPage', {}).get('modes', [])}
     if modes != {'source', 'zh-Hant', 'bilingual'}:
         raise SystemExit(f'reader mode drift: {sorted(modes)}')
 
@@ -55,6 +55,8 @@ def main() -> int:
         json.dumps(morning, ensure_ascii=False),
         boundary,
         product,
+        (PRODUCT.parent / 'index.html').read_text(encoding='utf-8'),
+        (PRODUCT.parent / 'bookstore.mjs').read_text(encoding='utf-8'),
     ))
     for token in FORBIDDEN_PRODUCT_TEXT:
         if token in shipped_surface:

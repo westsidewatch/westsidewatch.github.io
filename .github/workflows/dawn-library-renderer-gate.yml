@@ -7,12 +7,18 @@ on:
       - 'static/dawn-library/**'
       - 'layouts/dawn-library/**'
       - 'scripts/check_dawn_library_final.py'
+      - 'static/js/resource-fabric-client.mjs'
+      - 'static/js/dawn-reading-resolver.mjs'
+      - 'tests/dawn-bookstore-runtime.test.mjs'
       - '.github/workflows/dawn-library-renderer-gate.yml'
   pull_request:
     paths:
       - 'static/dawn-library/**'
       - 'layouts/dawn-library/**'
       - 'scripts/check_dawn_library_final.py'
+      - 'static/js/resource-fabric-client.mjs'
+      - 'static/js/dawn-reading-resolver.mjs'
+      - 'tests/dawn-bookstore-runtime.test.mjs'
       - '.github/workflows/dawn-library-renderer-gate.yml'
   workflow_dispatch:
 
@@ -54,5 +60,9 @@ jobs:
           grep -q "library-renderer-boundary.js" static/dawn-library/product/product-bootstrap.js
           grep -q "assertLibraryRendererBoundary" static/dawn-library/product/product-bootstrap.js
           grep -q "await import('./product.js')" static/dawn-library/product/product-bootstrap.js
+      - name: Check live bookstore runtime
+        run: |
+          node --check static/dawn-library/product/bookstore.mjs
+          node --test tests/dawn-bookstore-runtime.test.mjs
       - name: Final Dawn Library acceptance
         run: python3 scripts/check_dawn_library_final.py
