@@ -1,0 +1,33 @@
+name: Dawn Reading Capability Audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'dore_core/reading_capability.py'
+      - 'scripts/audit_dawn_reading_capabilities.py'
+      - 'static/dawn-library/canonical/**'
+      - '.github/workflows/dawn-reading-capability-audit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONPATH: ${{ github.workspace }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Resolve every canonical Work
+        run: python3 scripts/audit_dawn_reading_capabilities.py
+      - name: Upload capability report
+        uses: actions/upload-artifact@v4
+        with:
+          name: dawn-reading-capabilities
+          path: static/dawn-library/reading-capabilities.json
