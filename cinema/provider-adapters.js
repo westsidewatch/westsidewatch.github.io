@@ -1,10 +1,6 @@
 (()=>{
   if(!document.querySelector('link[data-cinema-inline-player]')){
-    const style=document.createElement('link');
-    style.rel='stylesheet';
-    style.href='inline-player.css';
-    style.dataset.cinemaInlinePlayer='true';
-    document.head.appendChild(style);
+    const style=document.createElement('link');style.rel='stylesheet';style.href='inline-player.css';style.dataset.cinemaInlinePlayer='true';document.head.appendChild(style);
   }
 })();
 
@@ -17,7 +13,12 @@ window.HolyLightProviders={
         if(source.provider==='youtube')url.searchParams.set('start',String(startSeconds));
         else if(source.startParam)url.searchParams.set(source.startParam,String(startSeconds));
       }
-      if(source.provider==='youtube')url.searchParams.set('autoplay','1');
+      if(source.provider==='youtube'){
+        url.searchParams.set('autoplay','1');
+        url.searchParams.set('playsinline','1');
+        url.searchParams.set('origin',window.location.origin);
+        url.searchParams.set('widget_referrer',window.location.href);
+      }
       return{kind:'embed',provider:source.provider,url:url.toString(),official:!!source.official};
     }
     if(source.url){
@@ -28,31 +29,16 @@ window.HolyLightProviders={
     return null;
   },
   resolveMoment(item,moment){
-    if(!item||!moment)return null;
-    const exactPointer=moment.sourcePointer;
+    if(!item||!moment)return null;const exactPointer=moment.sourcePointer;
     if(exactPointer&&exactPointer!==item.sourcePointer){
-      const source=(item.providerSources||[])[0]||{};
-      const hasOfficialEvidence=(moment.evidence||[]).some(entry=>String(entry.type||'').startsWith('official-')&&entry.sourcePointer===exactPointer);
+      const source=(item.providerSources||[])[0]||{};const hasOfficialEvidence=(moment.evidence||[]).some(entry=>String(entry.type||'').startsWith('official-')&&entry.sourcePointer===exactPointer);
       if(!hasOfficialEvidence)return null;
       return{kind:'handoff',provider:source.provider||'official-source',url:new URL(exactPointer,window.location.href).toString(),official:true,exact:true,momentId:moment.momentId};
     }
     return this.resolve(item,Math.max(0,Math.floor((moment.startMs||0)/1000)));
   },
   mount(target,item,startSeconds=0,{onLoad,onError}={}){
-    const resolved=this.resolve(item,startSeconds);
-    if(!resolved||resolved.kind!=='embed')return null;
-    target.replaceChildren();
-    const frame=document.createElement('iframe');
-    frame.src=resolved.url;
-    frame.title=`${item.title} — official embedded player`;
-    frame.loading='eager';
-    frame.referrerPolicy='strict-origin-when-cross-origin';
-    frame.allow='autoplay; fullscreen; picture-in-picture; encrypted-media';
-    frame.allowFullscreen=true;
-    frame.dataset.provider=resolved.provider||'unknown';
-    frame.addEventListener('load',()=>onLoad?.({frame,resolved}),{once:true});
-    frame.addEventListener('error',()=>onError?.({frame,resolved}),{once:true});
-    target.appendChild(frame);
-    return{frame,resolved};
+    const resolved=this.resolve(item,startSeconds);if(!resolved||resolved.kind!=='embed')return null;
+    target.replaceChildren();const frame=document.createElement('iframe');frame.src=resolved.url;frame.title=`${item.title} — official embedded player`;frame.loading='eager';frame.referrerPolicy='strict-origin-when-cross-origin';frame.allow='autoplay; fullscreen; picture-in-picture; encrypted-media';frame.allowFullscreen=true;frame.dataset.provider=resolved.provider||'unknown';frame.addEventListener('load',()=>onLoad?.({frame,resolved}),{once:true});frame.addEventListener('error',()=>onError?.({frame,resolved}),{once:true});target.appendChild(frame);return{frame,resolved};
   }
 };
