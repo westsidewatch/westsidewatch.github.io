@@ -17,7 +17,7 @@ window.HolyLightProviders={
         if(source.provider==='youtube')url.searchParams.set('start',String(startSeconds));
         else if(source.startParam)url.searchParams.set(source.startParam,String(startSeconds));
       }
-      if(source.provider==='youtube')url.searchParams.set('autoplay','1');
+      if(source.provider==='youtube')url.searchParams.set('autoplay','1');if(source.provider==='jesus-film-project-arclight'){if(!url.searchParams.has('apiSessionId')){const seed=globalThis.crypto?.randomUUID?.()||`${Date.now().toString(16)}.${Math.floor(Math.random()*0x10000000).toString(16)}`;url.searchParams.set('apiSessionId',seed.replace(/-/g,''));}if(!url.searchParams.has('playerStyle'))url.searchParams.set('playerStyle','default');if(!url.searchParams.has('player'))url.searchParams.set('player','bc.vanilla5');}
       return{kind:'embed',provider:source.provider,url:url.toString(),official:!!source.official};
     }
     if(source.url){
