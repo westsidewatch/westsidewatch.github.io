@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 """Resolve all preview-first glyphs in corpus.json and write successes back.
 
-Usage:
-  python3 scripts/calligraphy_preview_batch.py
-
 No image download, crop, browser, or vectorization. A failed page stays unresolved
-and never blocks successful glyphs.
+and never blocks successful glyphs. This script is the single batch entrypoint.
 """
 from __future__ import annotations
 
@@ -22,7 +19,6 @@ def main() -> int:
     data = json.loads(CORPUS.read_text(encoding="utf-8"))
     ok = 0
     failed = []
-
     for glyph in data.get("glyphs", []):
         if glyph.get("status") != "preview-resolve":
             continue
@@ -42,12 +38,10 @@ def main() -> int:
                 failed.append({"id": glyph.get("id"), "pageUrl": page, "error": "no preview candidate"})
         except Exception as exc:
             failed.append({"id": glyph.get("id"), "pageUrl": page, "error": str(exc)})
-
     tc = data.setdefault("tc001", {})
     tc["previewResolved"] = ok
     tc["previewFailed"] = [x["id"] for x in failed]
     tc["next"] = "render-resolved-previews-now"
-
     CORPUS.write_text(json.dumps(data, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps({"resolved": ok, "failed": failed, "corpus": str(CORPUS)}, ensure_ascii=False, indent=2))
     return 0
