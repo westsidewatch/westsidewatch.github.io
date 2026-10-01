@@ -24,12 +24,13 @@ export function buildPhase2UrbanMorphology(group,phaseId,materials,terrain,{ruin
   const c=CALIBRATION[phaseId];if(!c)return null;
   const meshes=[],building=materials.reconstructed,road=materials.observed||materials.reconstructed,wall=materials.reconstructed,herodian=phaseId==='herodian-jesus',david=phaseId==='david-solomon',crusader=phaseId==='crusader';
   const pitchX=(c.block+c.lane)*c.sx,pitchZ=(c.block+c.lane)*c.sz;
-  if(!david&&!crusader)for(let r=0;r<c.rows;r++)for(let col=0;col<c.cols;col++){const x=c.cx+(col-(c.cols-1)/2)*pitchX,z=c.cz+(r-(c.rows-1)/2)*pitchZ,seed=(r+1)*37+(col+1)*19,h=ruined?10+(seed%8):28+(seed%44),rot=((seed%7)-3)*.012,start=herodian?HERODIAN_SEQUENCE.block+(r*c.cols+col)/(c.rows*c.cols)*.34:0;courtyardBlock(group,meshes,building,terrain,x,z,c.block*c.sx,c.block*c.sz,h,c.courtyard,rot,start)}
+  // Herodian residential fabric is now owned by the 4D parcel/typology core; avoid double-rendering the old 6x8 synthetic courtyard grid.
+  if(!david&&!crusader&&!herodian)for(let r=0;r<c.rows;r++)for(let col=0;col<c.cols;col++){const x=c.cx+(col-(c.cols-1)/2)*pitchX,z=c.cz+(r-(c.rows-1)/2)*pitchZ,seed=(r+1)*37+(col+1)*19,h=ruined?10+(seed%8):28+(seed%44),rot=((seed%7)-3)*.012,start=herodian?HERODIAN_SEQUENCE.block+(r*c.cols+col)/(c.rows*c.cols)*.34:0;courtyardBlock(group,meshes,building,terrain,x,z,c.block*c.sx,c.block*c.sz,h,c.courtyard,rot,start)}
   if(!david&&!crusader){for(let col=0;col<c.cols-1;col++){const x=c.cx+(col-(c.cols-2)/2)*pitchX+pitchX/2;street(group,meshes,road,terrain,x,c.cz,c.lane*.42,c.rows*pitchZ,herodian?HERODIAN_SEQUENCE.road+col*.018:0)}for(let r=0;r<c.rows-1;r++){const z=c.cz+(r-(c.rows-2)/2)*pitchZ+pitchZ/2;street(group,meshes,road,terrain,c.cx,z,c.cols*pitchX,c.lane*.42,herodian?HERODIAN_SEQUENCE.road+r*.018:0)}}
   const bounds=c.wall?wallCircuit(group,meshes,wall,terrain,c,herodian?HERODIAN_SEQUENCE.wall:david?DAVID_SEQUENCE.wall:crusader?CRUSADER_SEQUENCE.wall:0):null;
   if(herodian&&bounds){herodianAnchors(group,meshes,materials,terrain,c,bounds);herodianDistricts(group,meshes,materials,terrain,c,bounds)}
   if(david&&bounds)davidSolomonCity(group,meshes,materials,terrain,c,bounds);
   if(crusader&&bounds)crusaderCity(group,meshes,materials,terrain,c,bounds);
-  const grammar=herodian?'herodian-layered-city':david?'david-solomon-ridge-growth-complete':crusader?'crusader-quarter-sacred-axis-growth':'courtyard-block-street-wall';
-  const runtime={phaseId,meshes,blocks:david?26:crusader?42:c.rows*c.cols,grammar,status:'phase2-calibration',progress:1,ruined};setPhase2MorphologyProgress(runtime,(herodian||david||crusader)?progress:1,{ruined});return runtime;
+  const grammar=herodian?'herodian-layered-city-hybrid-4d':david?'david-solomon-ridge-growth-complete':crusader?'crusader-quarter-sacred-axis-growth':'courtyard-block-street-wall';
+  const runtime={phaseId,meshes,blocks:herodian?0:david?26:crusader?42:c.rows*c.cols,grammar,status:herodian?'phase2-4d-core-migration':'phase2-calibration',progress:1,ruined};setPhase2MorphologyProgress(runtime,(herodian||david||crusader)?progress:1,{ruined});return runtime;
 }
