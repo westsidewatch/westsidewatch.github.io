@@ -1,5 +1,5 @@
 {
-  "version": 3,
+  "version": 4,
   "characters": [
     {"id":"u656c","unicode":"U+656C","literal":"敬","variants":[]},{"id":"u754f","unicode":"U+754F","literal":"畏","variants":[]},{"id":"u8036","unicode":"U+8036","literal":"耶","variants":[]},{"id":"u548c","unicode":"U+548C","literal":"和","variants":[]},{"id":"u83ef","unicode":"U+83EF","literal":"華","variants":["华"]},{"id":"u662f","unicode":"U+662F","literal":"是","variants":[]},{"id":"u667a","unicode":"U+667A","literal":"智","variants":[]},{"id":"u6167","unicode":"U+6167","literal":"慧","variants":[]},{"id":"u7684","unicode":"U+7684","literal":"的","variants":[]},{"id":"u958b","unicode":"U+958B","literal":"開","variants":["开"]},{"id":"u7aef","unicode":"U+7AEF","literal":"端","variants":[]}
   ],
@@ -9,11 +9,12 @@
     {"id":"wxz-dadao-ye","characterId":"u8036","teacher":"wang-xizhi","style":"running-cursive","sourceId":"dadao-npm","sourceUrl":"https://digitalarchive.npm.gov.tw/Collection/Detail/14859?dep=P","transmission":"attributed Wang Xizhi; possible later copy","cropStatus":"queued"},
     {"id":"wxz-shengjiao-jing","characterId":"u656c","teacher":"wang-xizhi","style":"running","sourceId":"shengjiao-huairen","sourceUrl":"https://www.sfds.cn/656C/1924160.html","transmission":"Huairen collected Wang glyph; single-glyph use only","cropStatus":"queued"},
     {"id":"wxz-linzhongyao-hua","characterId":"u83ef","teacher":"wang-xizhi","style":"running","sourceId":"lin-zhongyao-qianziwen","sourceUrl":"https://sfzd.jiguzuo.com/shufa/zi-394979559edgsdrjt.html","transmission":"attributed reference","cropStatus":"queued"},
-
     {"id":"zhao-wei-running","characterId":"u754f","teacher":"zhao-mengfu","style":"running","sourceId":"jiguzuo-wei-running","sourceUrl":"https://cha.jiguzuo.com/cha/lcdtxt-20791/","cropStatus":"queued","selectionRole":"cross-teacher-fill"},
     {"id":"mi-zhi-running","characterId":"u667a","teacher":"mi-fu","style":"running","sourceId":"jida-jizi-zhi-running","sourceUrl":"https://app.6z6z.com/xingshu/2061397.html","cropStatus":"queued","selectionRole":"cross-teacher-fill"},
     {"id":"wen-hui-running","characterId":"u6167","teacher":"wen-zhengming","style":"running","sourceId":"jiguzuo-hui-running","sourceUrl":"https://cha.jiguzuo.com/cha/zlv3w3-9676/","cropStatus":"queued","selectionRole":"cross-teacher-fill"},
-    {"id":"wxz-shengjiao-duan","characterId":"u7aef","teacher":"wang-xizhi","style":"running","sourceId":"shengjiao-huairen","sourceUrl":"https://digitalarchive.npm.gov.tw/","transmission":"Huairen collected Wang glyph; single-glyph use only","cropStatus":"queued"}
+    {"id":"wxz-shengjiao-duan","characterId":"u7aef","teacher":"wang-xizhi","style":"running","sourceId":"shengjiao-huairen","sourceUrl":"https://digitalarchive.npm.gov.tw/","transmission":"Huairen collected Wang glyph; single-glyph use only","cropStatus":"queued"},
+    {"id":"core-di-running","characterId":"u7684","teacher":"project-hand","style":"running","sourceId":"multi-master-di-running","sourceUrl":"https://www.cidianwang.com/","cropStatus":"queued","selectionRole":"mixed-core-teacher-candidate","note":"High-frequency glyph: choose final source by visual fit from Wang/Mi/Zhao/Wen or close running-script evidence during crop pass."},
+    {"id":"mi-kai-running","characterId":"u958b","teacher":"mi-fu","style":"running","sourceId":"jiguzuo-kai-running","sourceUrl":"https://cha.jiguzuo.com/cha/nul903-21769/","cropStatus":"queued","selectionRole":"cross-teacher-fill","alternatives":["wen-zhengming","zhao-mengfu","wang-xizhi"]}
   ],
   "sources": [
     {"id":"lanting-shenlong-feng-chengsu","title":"馮承素摹《蘭亭集序》神龍本","calligrapher":"馮承素（摹王羲之）","rights":"public-domain"},
@@ -22,14 +23,18 @@
     {"id":"lin-zhongyao-qianziwen","title":"傳王羲之臨鍾繇千字文","calligrapher":"傳王羲之","rights":"research-reference"},
     {"id":"jiguzuo-wei-running","title":"畏字行書字例集合","calligrapher":"趙孟頫等","rights":"research-reference"},
     {"id":"jida-jizi-zhi-running","title":"智字行書字例集合","calligrapher":"米芾等","rights":"research-reference"},
-    {"id":"jiguzuo-hui-running","title":"慧字行書字例集合","calligrapher":"文徵明等","rights":"research-reference"}
+    {"id":"jiguzuo-hui-running","title":"慧字行書字例集合","calligrapher":"文徵明等","rights":"research-reference"},
+    {"id":"multi-master-di-running","title":"的字行書候選集合","calligrapher":"歷代行書候選；裁字時優先四核心書家","rights":"research-reference"},
+    {"id":"jiguzuo-kai-running","title":"開字行書字例集合","calligrapher":"米芾、文徵明、趙孟頫、王羲之等","rights":"research-reference"}
   ],
   "tc001": {
     "text":"敬畏耶和華是智慧的開端",
     "strategy":"mixed-core-teachers",
     "preferredTeachers":["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
-    "bound":["敬","畏","耶","和","華","是","智","慧","端"],
-    "remaining":["的","開"],
+    "bound":["敬","畏","耶","和","華","是","智","慧","的","開","端"],
+    "remaining":[],
+    "coverage":"11/11",
+    "next":"crop-and-render",
     "rule":"Prefer the four core teachers in running/running-cursive styles; mix them when needed, then normalize the assembled sentence through Project Hand layout rather than blocking on one teacher."
   }
 }
