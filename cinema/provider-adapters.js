@@ -11,6 +11,9 @@
 window.HolyLightProviders={
   resolve(item,startSeconds=0){
     const source=(item.providerSources||[])[0]||{};
+    if(source.streamUrl){
+      return{kind:'hls',provider:source.provider,url:source.streamUrl,source,official:!!source.official,startSeconds};
+    }
     if(source.embed&&source.embedUrl){
       const url=new URL(source.embedUrl,window.location.href);
       if(startSeconds>0){
@@ -29,8 +32,39 @@ window.HolyLightProviders={
   },
   mount(target,item,startSeconds=0){
     const resolved=this.resolve(item,startSeconds);
-    if(!resolved||resolved.kind!=='embed')return null;
+    if(!resolved)return null;
     target.replaceChildren();
+    if(resolved.kind==='hls'){
+      const video=document.createElement('video');
+      video.className='cinema-feature__player';
+      video.controls=true;
+      video.playsInline=true;
+      video.autoplay=true;
+      video.muted=true;
+      video.preload='metadata';
+      video.crossOrigin='anonymous';
+      video.poster=resolved.source.preview?.posterUrl||item.preview?.posterUrl||'';
+      video.setAttribute('aria-label',`${item.title} — official player`);
+      for(const track of resolved.source.subtitleTracks||[]){
+        const node=document.createElement('track');
+        node.kind='subtitles';node.src=track.src;node.srclang=track.srclang;node.label=track.label;node.default=track.default===true;
+        video.append(node);
+      }
+      const start=Number(resolved.startSeconds)||0;
+      if(video.canPlayType('application/vnd.apple.mpegurl')){
+        video.src=resolved.url;
+      }else if(window.Hls?.isSupported?.()){
+        const hls=new window.Hls({enableWorker:true});
+        hls.loadSource(resolved.url);hls.attachMedia(video);
+        hls.on(window.Hls.Events.MANIFEST_PARSED,()=>{if(start)video.currentTime=start;video.play().catch(()=>{});});
+        hls.on(window.Hls.Events.ERROR,(_event,data)=>{if(data.fatal)video.dataset.playbackError='true';});
+        video._hls=hls;
+      }else{return null;}
+      video.addEventListener('loadedmetadata',()=>{if(start&&video.currentTime<start)video.currentTime=start;},{once:true});
+      target.append(video);
+      return{video,resolved};
+    }
+    if(resolved.kind!=='embed')return null;
     const frame=document.createElement('iframe');
     frame.src=resolved.url;
     frame.title=`${item.title} — official embedded player`;
