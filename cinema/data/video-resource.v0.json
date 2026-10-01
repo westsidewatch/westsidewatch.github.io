@@ -23,9 +23,14 @@
           "provider": "jesus-film-project-arclight",
           "url": "https://www.jesusfilm.org/watch/jesus.html",
           "embedUrl": "https://api.arclight.org/videoPlayerUrl?refId=1_529-jf-0-0&apiSessionId=59a983dd905c98.68801366&playerStyle=default&player=bc.vanilla5",
+          "streamUrl": "https://stream.mux.com/Dl8dRUL01MKAdzv7XtfvvUj1jVYq029z2TS9TGeH8Xj00o.m3u8",
+          "subtitleTracks": [
+            {"src": "https://api-media-core.jesusfilm.org/1_jf-0-0/editions/ot/subtitles/1_jf-0-0_ot_21753.vtt", "srclang": "zh-Hant", "label": "中文（繁體）", "default": true},
+            {"src": "https://api-media-core.jesusfilm.org/1_jf-0-0/editions/ot/subtitles/1_jf-0-0_ot_21754.vtt", "srclang": "zh-Hans", "label": "中文（簡體）"}
+          ],
           "official": true,
           "embed": true,
-          "access": "embedded-playback",
+          "access": "official-hls-playback",
           "embedPermissionUrl": "https://www.jesusfilm.org/about/faq/",
           "preview": {
             "posterUrl": "https://image.mux.com/Dl8dRUL01MKAdzv7XtfvvUj1jVYq029z2TS9TGeH8Xj00o/thumbnail.webp?time=2&width=1280",
@@ -75,7 +80,7 @@
       ],
       "rights": {
         "rehost": false,
-        "policy": "official-provider-embed"
+        "policy": "official-provider-stream-no-rehost"
       },
       "provenance": {
         "verified": true,
