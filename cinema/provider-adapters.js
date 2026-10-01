@@ -17,7 +17,7 @@ window.HolyLightProviders={
         if(source.provider==='youtube')url.searchParams.set('start',String(startSeconds));
         else if(source.startParam)url.searchParams.set(source.startParam,String(startSeconds));
       }
-      if(source.provider==='youtube')url.searchParams.set('autoplay','1');if(source.provider==='jesus-film-project-arclight'){url.searchParams.set('autoplay','1');url.searchParams.set('muted','0');}
+      if(source.provider==='youtube')url.searchParams.set('autoplay','1');
       return{kind:'embed',provider:source.provider,url:url.toString(),official:!!source.official};
     }
     if(source.url){
