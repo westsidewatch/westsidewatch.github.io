@@ -1,9 +1,11 @@
 import { scriptureJiziCells } from './scripture-jizi.js';
 
 function esc(value='') { return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function imageHref(glyph) { return glyph?.regionUrl || glyph?.imageUrl || glyph?.src || glyph?.url || null; }
+// First-version fast path: a visible remote single-glyph preview is already a usable glyph asset.
+function imageHref(glyph) {
+  return glyph?.previewUrl || glyph?.regionUrl || glyph?.imageUrl || glyph?.src || glyph?.url || null;
+}
 
-// Small deterministic rhythm: avoids typeset-like equal boxes without opening a research pipeline.
 const RHYTHM = [
   {x:0, s:1.04, r:-1.2, gap:.96}, {x:7, s:.94, r:.8, gap:1.04},
   {x:-5, s:1.08, r:-.5, gap:.91}, {x:4, s:.98, r:1.1, gap:1.08},
@@ -15,15 +17,7 @@ function layoutCells(cells, cellH, margin) {
   return cells.map((cell, i) => {
     const p = RHYTHM[i % RHYTHM.length];
     const user = cell.transform || {};
-    const out = {
-      ...cell,
-      layout: {
-        x: p.x + (user.x || 0),
-        y: cursor + (user.y || 0),
-        scale: p.s * (user.scale ?? 1),
-        rotate: p.r + (user.rotate || 0)
-      }
-    };
+    const out = {...cell, layout:{x:p.x+(user.x||0), y:cursor+(user.y||0), scale:p.s*(user.scale??1), rotate:p.r+(user.rotate||0)}};
     cursor += cellH * p.gap;
     return out;
   });
