@@ -1,40 +1,311 @@
 {
   "version": 5,
   "characters": [
-    {"id":"u656c","unicode":"U+656C","literal":"敬","variants":[]},{"id":"u754f","unicode":"U+754F","literal":"畏","variants":[]},{"id":"u8036","unicode":"U+8036","literal":"耶","variants":[]},{"id":"u548c","unicode":"U+548C","literal":"和","variants":[]},{"id":"u83ef","unicode":"U+83EF","literal":"華","variants":["华"]},{"id":"u662f","unicode":"U+662F","literal":"是","variants":[]},{"id":"u667a","unicode":"U+667A","literal":"智","variants":[]},{"id":"u6167","unicode":"U+6167","literal":"慧","variants":[]},{"id":"u7684","unicode":"U+7684","literal":"的","variants":[]},{"id":"u958b","unicode":"U+958B","literal":"開","variants":["开"]},{"id":"u7aef","unicode":"U+7AEF","literal":"端","variants":[]}
+    {
+      "id": "u656c",
+      "unicode": "U+656C",
+      "literal": "敬",
+      "variants": []
+    },
+    {
+      "id": "u754f",
+      "unicode": "U+754F",
+      "literal": "畏",
+      "variants": []
+    },
+    {
+      "id": "u8036",
+      "unicode": "U+8036",
+      "literal": "耶",
+      "variants": []
+    },
+    {
+      "id": "u548c",
+      "unicode": "U+548C",
+      "literal": "和",
+      "variants": []
+    },
+    {
+      "id": "u83ef",
+      "unicode": "U+83EF",
+      "literal": "華",
+      "variants": [
+        "华"
+      ]
+    },
+    {
+      "id": "u662f",
+      "unicode": "U+662F",
+      "literal": "是",
+      "variants": []
+    },
+    {
+      "id": "u667a",
+      "unicode": "U+667A",
+      "literal": "智",
+      "variants": []
+    },
+    {
+      "id": "u6167",
+      "unicode": "U+6167",
+      "literal": "慧",
+      "variants": []
+    },
+    {
+      "id": "u7684",
+      "unicode": "U+7684",
+      "literal": "的",
+      "variants": []
+    },
+    {
+      "id": "u958b",
+      "unicode": "U+958B",
+      "literal": "開",
+      "variants": [
+        "开"
+      ]
+    },
+    {
+      "id": "u7aef",
+      "unicode": "U+7AEF",
+      "literal": "端",
+      "variants": []
+    }
   ],
   "glyphs": [
-    {"id":"wxz-lanting-shi","characterId":"u662f","teacher":"wang-xizhi","style":"running","sourceId":"lanting-shenlong-feng-chengsu","sourceUrl":"https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG","context":{"phrase":"是日也"},"assetMode":"source-image-region","status":"source-ready"},
-    {"id":"wxz-lanting-he","characterId":"u548c","teacher":"wang-xizhi","style":"running","sourceId":"lanting-shenlong-feng-chengsu","sourceUrl":"https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG","context":{"phrase":"恵風和暢"},"assetMode":"source-image-region","status":"source-ready"},
-    {"id":"wxz-dadao-ye","characterId":"u8036","teacher":"wang-xizhi","style":"running-cursive","sourceId":"dadao-npm","sourceUrl":"https://digitalarchive.npm.gov.tw/Collection/Detail/14859?dep=P","transmission":"attributed Wang Xizhi; possible later copy","assetMode":"page-preview","status":"preview-resolve"},
-    {"id":"wxz-shengjiao-jing","characterId":"u656c","teacher":"wang-xizhi","style":"running","sourceId":"shengjiao-huairen","sourceUrl":"https://www.sfds.cn/656C/1924160.html","transmission":"Huairen collected Wang glyph; single-glyph use only","assetMode":"page-preview","status":"preview-resolve"},
-    {"id":"wxz-linzhongyao-hua","characterId":"u83ef","teacher":"wang-xizhi","style":"running","sourceId":"lin-zhongyao-qianziwen","sourceUrl":"https://sfzd.jiguzuo.com/shufa/zi-394979559edgsdrjt.html","transmission":"attributed reference","assetMode":"page-preview","status":"preview-resolve"},
-    {"id":"zhao-wei-running","characterId":"u754f","teacher":"zhao-mengfu","style":"running","sourceId":"jiguzuo-wei-running","sourceUrl":"https://cha.jiguzuo.com/cha/lcdtxt-20791/","assetMode":"page-preview","status":"preview-resolve","selectionRole":"cross-teacher-fill"},
-    {"id":"mi-zhi-running","characterId":"u667a","teacher":"mi-fu","style":"running","sourceId":"jida-jizi-zhi-running","sourceUrl":"https://app.6z6z.com/xingshu/2061397.html","assetMode":"page-preview","status":"preview-resolve","selectionRole":"cross-teacher-fill"},
-    {"id":"wen-hui-running","characterId":"u6167","teacher":"wen-zhengming","style":"running","sourceId":"jiguzuo-hui-running","sourceUrl":"https://cha.jiguzuo.com/cha/zlv3w3-9676/","assetMode":"page-preview","status":"preview-resolve","selectionRole":"cross-teacher-fill"},
-    {"id":"wxz-shengjiao-duan","characterId":"u7aef","teacher":"wang-xizhi","style":"running","sourceId":"shengjiao-huairen","sourceUrl":"https://www.dpm.org.cn/collection/impres/228597.html","transmission":"Huairen collected Wang glyph; single-glyph use only","assetMode":"page-preview","status":"preview-resolve"},
-    {"id":"core-di-running","characterId":"u7684","teacher":"project-hand","style":"running","sourceId":"multi-master-di-running","sourceUrl":"https://www.cidianwang.com/","assetMode":"page-preview","status":"preview-resolve","selectionRole":"mixed-core-teacher-candidate"},
-    {"id":"mi-kai-running","characterId":"u958b","teacher":"mi-fu","style":"running","sourceId":"jiguzuo-kai-running","sourceUrl":"https://cha.jiguzuo.com/cha/nul903-21769/","assetMode":"page-preview","status":"preview-resolve","selectionRole":"cross-teacher-fill","alternatives":["wen-zhengming","zhao-mengfu","wang-xizhi"]}
+    {
+      "id": "wxz-lanting-shi",
+      "characterId": "u662f",
+      "teacher": "wang-xizhi",
+      "style": "running",
+      "sourceId": "lanting-shenlong-feng-chengsu",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG",
+      "context": {
+        "phrase": "是日也"
+      },
+      "assetMode": "source-image-region",
+      "status": "source-ready"
+    },
+    {
+      "id": "wxz-lanting-he",
+      "characterId": "u548c",
+      "teacher": "wang-xizhi",
+      "style": "running",
+      "sourceId": "lanting-shenlong-feng-chengsu",
+      "sourceUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG",
+      "context": {
+        "phrase": "恵風和暢"
+      },
+      "assetMode": "source-image-region",
+      "status": "source-ready"
+    },
+    {
+      "id": "wxz-dadao-ye",
+      "characterId": "u8036",
+      "teacher": "wang-xizhi",
+      "style": "running-cursive",
+      "sourceId": "dadao-npm",
+      "sourceUrl": "https://digitalarchive.npm.gov.tw/Collection/Detail/14859?dep=P",
+      "transmission": "attributed Wang Xizhi; possible later copy",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "previewUrl": "https://digitalarchive.npm.gov.tw/Content/images/PubWeb_share.jpg",
+      "previewResolvedFrom": "https://digitalarchive.npm.gov.tw/Collection/Detail/14859?dep=P"
+    },
+    {
+      "id": "wxz-shengjiao-jing",
+      "characterId": "u656c",
+      "teacher": "wang-xizhi",
+      "style": "running",
+      "sourceId": "shengjiao-huairen",
+      "sourceUrl": "https://www.sfds.cn/656C/1924160.html",
+      "transmission": "Huairen collected Wang glyph; single-glyph use only",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "previewUrl": "https://www.sfds.cn/U/u.gif",
+      "previewResolvedFrom": "https://www.sfds.cn/656C/1924160.html"
+    },
+    {
+      "id": "wxz-linzhongyao-hua",
+      "characterId": "u83ef",
+      "teacher": "wang-xizhi",
+      "style": "running",
+      "sourceId": "lin-zhongyao-qianziwen",
+      "sourceUrl": "https://sfzd.jiguzuo.com/shufa/zi-394979559edgsdrjt.html",
+      "transmission": "attributed reference",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "previewUrl": "https://imgcha.jiguzuo.com/shufazidian/hdpng/2uqbmvbckcd2110721711.png!avif",
+      "previewResolvedFrom": "https://sfzd.jiguzuo.com/shufa/zi-394979559edgsdrjt.html"
+    },
+    {
+      "id": "zhao-wei-running",
+      "characterId": "u754f",
+      "teacher": "zhao-mengfu",
+      "style": "running",
+      "sourceId": "jiguzuo-wei-running",
+      "sourceUrl": "https://cha.jiguzuo.com/cha/lcdtxt-20791/",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "selectionRole": "cross-teacher-fill",
+      "previewUrl": "https://imgcha.jiguzuo.com/shufazidian/xingshu/031dn1j3c0c5028.jpg!w600",
+      "previewResolvedFrom": "https://cha.jiguzuo.com/cha/lcdtxt-20791/"
+    },
+    {
+      "id": "mi-zhi-running",
+      "characterId": "u667a",
+      "teacher": "mi-fu",
+      "style": "running",
+      "sourceId": "jida-jizi-zhi-running",
+      "sourceUrl": "https://app.6z6z.com/xingshu/2061397.html",
+      "assetMode": "page-preview",
+      "status": "preview-resolve",
+      "selectionRole": "cross-teacher-fill"
+    },
+    {
+      "id": "wen-hui-running",
+      "characterId": "u6167",
+      "teacher": "wen-zhengming",
+      "style": "running",
+      "sourceId": "jiguzuo-hui-running",
+      "sourceUrl": "https://cha.jiguzuo.com/cha/zlv3w3-9676/",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "selectionRole": "cross-teacher-fill",
+      "previewUrl": "https://imgcha.jiguzuo.com/shufazidian/xingshu/vccl3hqm21s3223.jpg!w600",
+      "previewResolvedFrom": "https://cha.jiguzuo.com/cha/zlv3w3-9676/"
+    },
+    {
+      "id": "wxz-shengjiao-duan",
+      "characterId": "u7aef",
+      "teacher": "wang-xizhi",
+      "style": "running",
+      "sourceId": "shengjiao-huairen",
+      "sourceUrl": "https://www.dpm.org.cn/collection/impres/228597.html",
+      "transmission": "Huairen collected Wang glyph; single-glyph use only",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "previewUrl": "https://img.dpm.org.cn/static/themes_wap/image/wechat_share1.png",
+      "previewResolvedFrom": "https://www.dpm.org.cn/collection/impres/228597.html"
+    },
+    {
+      "id": "core-di-running",
+      "characterId": "u7684",
+      "teacher": "project-hand",
+      "style": "running",
+      "sourceId": "multi-master-di-running",
+      "sourceUrl": "https://www.cidianwang.com/",
+      "assetMode": "page-preview",
+      "status": "preview-resolve",
+      "selectionRole": "mixed-core-teacher-candidate"
+    },
+    {
+      "id": "mi-kai-running",
+      "characterId": "u958b",
+      "teacher": "mi-fu",
+      "style": "running",
+      "sourceId": "jiguzuo-kai-running",
+      "sourceUrl": "https://cha.jiguzuo.com/cha/nul903-21769/",
+      "assetMode": "page-preview",
+      "status": "preview-ready",
+      "selectionRole": "cross-teacher-fill",
+      "alternatives": [
+        "wen-zhengming",
+        "zhao-mengfu",
+        "wang-xizhi"
+      ],
+      "previewUrl": "https://imgcha.jiguzuo.com/shufazidian/xingshu/14zwwz0s0mu1230.jpg!w600",
+      "previewResolvedFrom": "https://cha.jiguzuo.com/cha/nul903-21769/"
+    }
   ],
   "sources": [
-    {"id":"lanting-shenlong-feng-chengsu","title":"馮承素摹《蘭亭集序》神龍本","calligrapher":"馮承素（摹王羲之）","rights":"public-domain"},
-    {"id":"dadao-npm","title":"晉王羲之大道帖","calligrapher":"傳王羲之","rights":"remote-reference"},
-    {"id":"shengjiao-huairen","title":"懷仁集王羲之聖教序","calligrapher":"懷仁集王羲之書","rights":"research-reference","singleGlyphOnly":true,"publicDisplayAllowed":false},
-    {"id":"lin-zhongyao-qianziwen","title":"傳王羲之臨鍾繇千字文","calligrapher":"傳王羲之","rights":"research-reference"},
-    {"id":"jiguzuo-wei-running","title":"畏字行書字例集合","calligrapher":"趙孟頫等","rights":"research-reference"},
-    {"id":"jida-jizi-zhi-running","title":"智字行書字例集合","calligrapher":"米芾等","rights":"research-reference"},
-    {"id":"jiguzuo-hui-running","title":"慧字行書字例集合","calligrapher":"文徵明等","rights":"research-reference"},
-    {"id":"multi-master-di-running","title":"的字行書候選集合","calligrapher":"歷代行書候選；優先四核心書家","rights":"research-reference"},
-    {"id":"jiguzuo-kai-running","title":"開字行書字例集合","calligrapher":"米芾、文徵明、趙孟頫、王羲之等","rights":"research-reference"}
+    {
+      "id": "lanting-shenlong-feng-chengsu",
+      "title": "馮承素摹《蘭亭集序》神龍本",
+      "calligrapher": "馮承素（摹王羲之）",
+      "rights": "public-domain"
+    },
+    {
+      "id": "dadao-npm",
+      "title": "晉王羲之大道帖",
+      "calligrapher": "傳王羲之",
+      "rights": "remote-reference"
+    },
+    {
+      "id": "shengjiao-huairen",
+      "title": "懷仁集王羲之聖教序",
+      "calligrapher": "懷仁集王羲之書",
+      "rights": "research-reference",
+      "singleGlyphOnly": true,
+      "publicDisplayAllowed": false
+    },
+    {
+      "id": "lin-zhongyao-qianziwen",
+      "title": "傳王羲之臨鍾繇千字文",
+      "calligrapher": "傳王羲之",
+      "rights": "research-reference"
+    },
+    {
+      "id": "jiguzuo-wei-running",
+      "title": "畏字行書字例集合",
+      "calligrapher": "趙孟頫等",
+      "rights": "research-reference"
+    },
+    {
+      "id": "jida-jizi-zhi-running",
+      "title": "智字行書字例集合",
+      "calligrapher": "米芾等",
+      "rights": "research-reference"
+    },
+    {
+      "id": "jiguzuo-hui-running",
+      "title": "慧字行書字例集合",
+      "calligrapher": "文徵明等",
+      "rights": "research-reference"
+    },
+    {
+      "id": "multi-master-di-running",
+      "title": "的字行書候選集合",
+      "calligrapher": "歷代行書候選；優先四核心書家",
+      "rights": "research-reference"
+    },
+    {
+      "id": "jiguzuo-kai-running",
+      "title": "開字行書字例集合",
+      "calligrapher": "米芾、文徵明、趙孟頫、王羲之等",
+      "rights": "research-reference"
+    }
   ],
   "tc001": {
-    "text":"敬畏耶和華是智慧的開端",
-    "strategy":"preview-first-mixed-core-teachers",
-    "preferredTeachers":["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
-    "bound":["敬","畏","耶","和","華","是","智","慧","的","開","端"],
-    "remaining":[],
-    "coverage":"11/11 sources",
-    "next":"resolve-visible-previews-and-render-immediately",
-    "rule":"Use visible single-glyph previews or a source-image region directly. Do not block TC001 on vectorization, Potrace, canonical per-glyph SVG, or full-work downloads. Render partial real previews immediately and replace only failed items."
+    "text": "敬畏耶和華是智慧的開端",
+    "strategy": "preview-first-mixed-core-teachers",
+    "preferredTeachers": [
+      "wang-xizhi",
+      "mi-fu",
+      "zhao-mengfu",
+      "wen-zhengming"
+    ],
+    "bound": [
+      "敬",
+      "畏",
+      "耶",
+      "和",
+      "華",
+      "是",
+      "智",
+      "慧",
+      "的",
+      "開",
+      "端"
+    ],
+    "remaining": [],
+    "coverage": "11/11 sources",
+    "next": "render-resolved-previews-now",
+    "rule": "Use visible single-glyph previews or a source-image region directly. Do not block TC001 on vectorization, Potrace, canonical per-glyph SVG, or full-work downloads. Render partial real previews immediately and replace only failed items.",
+    "previewResolved": 7,
+    "previewFailed": [
+      "mi-zhi-running",
+      "core-di-running"
+    ]
   }
 }
