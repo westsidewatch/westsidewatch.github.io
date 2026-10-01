@@ -1,5 +1,5 @@
 export const EVIDENCE_CONFIDENCE=Object.freeze({OBSERVED:'observed',RECONSTRUCTED:'reconstructed',INFERRED:'inferred',DISPUTED:'disputed'});
-export const CITY_OBJECT_TYPES=Object.freeze({DISTRICT:'district',ROAD:'road',GATE:'gate',WALL:'wall',PARCEL:'parcel',BUILDING:'building',MONUMENT:'monument',WATER:'water',ROUTE:'route'});
+export const CITY_OBJECT_TYPES=Object.freeze({DISTRICT:'district',ROAD:'road',GATE:'gate',WALL:'wall',BLOCK:'block',PARCEL:'parcel',BUILDING:'building',MONUMENT:'monument',WATER:'water',ROUTE:'route'});
 
 function freezeRecord(value){return Object.freeze({...value});}
 function requireId(value,label){if(!value||typeof value!=='string')throw new Error(`${label} requires a stable string id`);return value}
@@ -13,7 +13,7 @@ export class TemporalCityCore{
  connect(predecessorId,successorId){if(!this.objects.has(predecessorId)||!this.objects.has(successorId))throw new Error('lifecycle link requires registered objects');this.links.get(predecessorId).successors.add(successorId);this.links.get(successorId).predecessors.add(predecessorId);return this;}
  lineage(id){const link=this.links.get(id);if(!link)return null;return{predecessors:[...link.predecessors],successors:[...link.successors]}}
  summary(phaseId){const objects=this.phase(phaseId),types={},evidence={};for(const object of objects){types[object.type]=(types[object.type]||0)+1;evidence[object.confidence]=(evidence[object.confidence]||0)+1}return{phaseId,total:objects.length,types,evidence}}
- validate(){const errors=[];for(const [id,object] of this.objects){for(const predecessor of object.predecessorIds)if(!this.objects.has(predecessor))errors.push(`${id}: missing predecessor ${predecessor}`);for(const successor of object.successorIds)if(!this.objects.has(successor))errors.push(`${id}: missing successor ${successor}`);if(object.type===CITY_OBJECT_TYPES.BUILDING&&object.geometry?.primitive==='box')errors.push(`${id}: BoxGeometry cannot be a semantic building primitive`);if(object.type===CITY_OBJECT_TYPES.MONUMENT&&object.geometry?.primitive==='slab')errors.push(`${id}: naked slab cannot represent a monument`)}return{ok:errors.length===0,errors,count:this.objects.size}}
+ validate(){const errors=[];for(const [id,object] of this.objects){for(const predecessor of object.predecessorIds)if(!this.objects.has(predecessor))errors.push(`${id}: missing predecessor ${predecessor}`);for(const successor of object.successorIds)if(!this.objects.has(successor))errors.push(`${id}: missing successor ${successor}`);if(object.type===CITY_OBJECT_TYPES.BUILDING&&object.geometry?.primitive==='box')errors.push(`${id}: BoxGeometry cannot be a semantic building primitive`);if(object.type===CITY_OBJECT_TYPES.MONUMENT&&object.geometry?.primitive==='slab')errors.push(`${id}: naked slab cannot represent a monument`);if(object.type===CITY_OBJECT_TYPES.PARCEL&&!object.source?.blockId)errors.push(`${id}: parcel must belong to an urban block`)}return{ok:errors.length===0,errors,count:this.objects.size}}
 }
 
 export function createTemporalCityCore({phases,terrain}={}){return new TemporalCityCore({phases,terrain});}
