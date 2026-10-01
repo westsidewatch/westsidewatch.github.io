@@ -2,21 +2,26 @@
   "schema":"j3k.temporal-city.registration.v1",
   "phase":"herodian-jesus",
   "authority":"migration scaffold from existing Jerusalem 3000 runtime; not archaeological survey geometry",
-  "purpose":"Replace legacy grid generation without discarding the established world scale, DEM registration, and Herodian spatial work. All migrated geometry remains reconstructed/inferred until upgraded by sourced linework.",
+  "purpose":"Replace legacy grid generation without discarding established world scale, DEM registration, and Herodian spatial work. Geometry remains reconstructed/inferred until upgraded by sourced historical linework.",
   "districts":[
     {
       "id":"j3k:district:western-lower-city",
       "confidence":"inferred",
-      "geometry":{"status":"provisional-runtime-registration","frame":"scene-local-metres","polygon":[{"x":-175,"z":70},{"x":-118,"z":52},{"x":-42,"z":60},{"x":42,"z":82},{"x":118,"z":101},{"x":164,"z":145},{"x":142,"z":222},{"x":66,"z":246},{"x":-24,"z":238},{"x":-112,"z":214},{"x":-164,"z":158}]},
-      "sources":["legacy-herodian-lower-city-zone","legacy-lower-city-lanes","canonical-dem"],
+      "geometry":{"status":"provisional-city-scale-registration","frame":"scene-local-metres","polygon":[{"x":-720,"z":-360},{"x":-430,"z":-520},{"x":-60,"z":-570},{"x":330,"z":-500},{"x":650,"z":-300},{"x":790,"z":40},{"x":700,"z":390},{"x":430,"z":650},{"x":40,"z":760},{"x":-350,"z":680},{"x":-650,"z":430},{"x":-790,"z":80}]},
+      "sources":["legacy-herodian-city-footprint","legacy-herodian-lower-city-zone","canonical-dem"],
       "upgradeRequired":"historical-map / archaeological district registration"
     }
   ],
   "roads":[
-    {"id":"j3k:road:lower-city-lane-a","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-155,"z":82},{"x":-92,"z":112},{"x":-28,"z":126},{"x":38,"z":151},{"x":106,"z":166}]}},
-    {"id":"j3k:road:lower-city-lane-b","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-128,"z":205},{"x":-73,"z":174},{"x":-15,"z":153},{"x":49,"z":132},{"x":118,"z":108}]}},
-    {"id":"j3k:road:lower-city-lane-c","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-66,"z":72},{"x":-55,"z":116},{"x":-42,"z":165},{"x":-28,"z":220}]}},
-    {"id":"j3k:road:lower-city-lane-d","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":58,"z":80},{"x":48,"z":121},{"x":64,"z":168},{"x":86,"z":214}]}}
+    {"id":"j3k:road:western-spine","confidence":"reconstructed","geometry":{"status":"provisional-city-scale-linework","frame":"scene-local-metres","points":[{"x":-610,"z":-250},{"x":-430,"z":-130},{"x":-230,"z":-40},{"x":-20,"z":40},{"x":210,"z":120},{"x":470,"z":210},{"x":650,"z":330}]}},
+    {"id":"j3k:road:southern-spine","confidence":"reconstructed","geometry":{"status":"provisional-city-scale-linework","frame":"scene-local-metres","points":[{"x":-520,"z":-390},{"x":-260,"z":-330},{"x":20,"z":-280},{"x":300,"z":-250},{"x":570,"z":-180}]}},
+    {"id":"j3k:road:central-valley","confidence":"inferred","geometry":{"status":"provisional-city-scale-linework","frame":"scene-local-metres","points":[{"x":-170,"z":-500},{"x":-130,"z":-300},{"x":-90,"z":-80},{"x":-40,"z":160},{"x":20,"z":390},{"x":80,"z":650}]}},
+    {"id":"j3k:road:eastern-slope","confidence":"inferred","geometry":{"status":"provisional-city-scale-linework","frame":"scene-local-metres","points":[{"x":330,"z":-430},{"x":300,"z":-230},{"x":330,"z":-20},{"x":400,"z":190},{"x":500,"z":430}]}},
+    {"id":"j3k:road:lower-city-lane-a","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-520,"z":100},{"x":-330,"z":170},{"x":-120,"z":200},{"x":100,"z":260},{"x":330,"z":310}]}},
+    {"id":"j3k:road:lower-city-lane-b","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-430,"z":470},{"x":-250,"z":360},{"x":-40,"z":290},{"x":190,"z":230},{"x":430,"z":150}]}},
+    {"id":"j3k:road:lower-city-lane-c","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":-360,"z":-260},{"x":-320,"z":-40},{"x":-280,"z":190},{"x":-220,"z":450}]}},
+    {"id":"j3k:road:lower-city-lane-d","confidence":"inferred","geometry":{"status":"migrated-runtime-linework","frame":"scene-local-metres","points":[{"x":170,"z":-330},{"x":140,"z":-100},{"x":180,"z":140},{"x":260,"z":390}]}}
   ],
-  "migration":{"legacySource":"herodian-lower-city-debox.js","legacyGridAuthority":false,"preserveCoordinates":true,"preserveTerrain":true,"allowParcelGeneration":true}
+  "generation":{"scope":"city-scale-provisional","blockSize":96,"roadClearance":18,"target":"visible urban morphology rather than local demonstration patch"},
+  "migration":{"legacySource":"herodian-lower-city-debox.js + established Herodian runtime footprint","legacyGridAuthority":false,"preserveCoordinates":true,"preserveTerrain":true,"allowParcelGeneration":true}
 }
