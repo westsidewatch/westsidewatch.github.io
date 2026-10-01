@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "sourceId": "daguan-vol5-huize",
+  "workNumber": "故帖00002900010",
+  "objectNumber": "故帖000029N000000005",
+  "title": "宋拓大觀帖（五） 冊 隋慧則帖",
+  "author": "慧則",
+  "script": "行楷書",
+  "quantity": "一幅",
+  "transcription": "隋法帖。皇帝敬問婺州雙林寺慧則法師。朕尊崇聖教。重興三寶。欲使一切生靈咸蒙福力。法師捨離塵俗。投志法門。專心講誦。宣揚妙典。精誠如此。深副朕懷。既利益羣生。當不辭勞也。猶寒。道體如宜。今遣使人。指宣往意。",
+  "officialRecord": "https://digitalarchive.npm.gov.tw/Collection/Detail/17063?dep=P",
+  "rights": {
+    "lowResolution": "CC0",
+    "highResolution": "CC BY 4.0"
+  },
+  "targets": [
+    {
+      "character": "敬",
+      "characterId": "u656c",
+      "textEvidence": true,
+      "historicalNote": "故宮本系研究記錄指出此帖敬字有避諱缺筆現象；不得以現代標準字形修補。",
+      "cropStatus": "awaiting-verified-iiif-region"
+    },
+    {
+      "character": "慧",
+      "characterId": "u6167",
+      "textEvidence": true,
+      "cropStatus": "awaiting-verified-iiif-region"
+    }
+  ],
+  "promotionRule": "No glyph may be emitted until an exact IIIF image service/canvas and visually verified xywh region are recorded. Text order is not pixel evidence."
+}

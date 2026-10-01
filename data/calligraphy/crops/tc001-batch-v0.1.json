@@ -1,0 +1,20 @@
+{
+  "id":"tc001-batch-v0.1",
+  "text":"敬畏耶和華是智慧的開端",
+  "mode":"batch-real-glyph-acquisition",
+  "rule":"Do not create one commit per glyph. Resolve all eleven into direct image/region URLs, then render once.",
+  "targets":[
+    {"literal":"敬","glyphId":"wxz-shengjiao-jing","sourceType":"single-glyph-page","source":"https://www.sfds.cn/656C/1924160.html","status":"resolve-direct-image"},
+    {"literal":"畏","glyphId":"zhao-wei-running","sourceType":"glyph-collection","source":"https://cha.jiguzuo.com/cha/lcdtxt-20791/","status":"resolve-direct-image"},
+    {"literal":"耶","glyphId":"wxz-dadao-ye","sourceType":"museum-object","source":"https://digitalarchive.npm.gov.tw/Collection/Detail/14859?dep=P","status":"resolve-region"},
+    {"literal":"和","glyphId":"wxz-lanting-he","sourceType":"full-open-image","source":"https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG","context":"惠風和暢","status":"resolve-region"},
+    {"literal":"華","glyphId":"wxz-linzhongyao-hua","sourceType":"single-glyph-page","source":"https://sfzd.jiguzuo.com/shufa/zi-394979559edgsdrjt.html","status":"resolve-direct-image"},
+    {"literal":"是","glyphId":"wxz-lanting-shi","sourceType":"full-open-image","source":"https://upload.wikimedia.org/wikipedia/commons/2/2a/%E7%A5%9E%E9%BE%8D%E8%98%AD%E4%BA%AD%E5%BA%8F%E5%85%A8.JPG","context":"是日也","status":"resolve-region"},
+    {"literal":"智","glyphId":"mi-zhi-running","sourceType":"glyph-collection","source":"https://app.6z6z.com/xingshu/2061397.html","status":"resolve-direct-image"},
+    {"literal":"慧","glyphId":"wen-hui-running","sourceType":"glyph-collection","source":"https://cha.jiguzuo.com/cha/zlv3w3-9676/","status":"resolve-direct-image"},
+    {"literal":"的","glyphId":"core-di-running","sourceType":"glyph-collection","source":"https://www.cidianwang.com/","status":"choose-and-resolve"},
+    {"literal":"開","glyphId":"mi-kai-running","sourceType":"glyph-collection","source":"https://cha.jiguzuo.com/cha/nul903-21769/","status":"resolve-direct-image"},
+    {"literal":"端","glyphId":"wxz-shengjiao-duan","sourceType":"shengjiao-full-work","status":"resolve-region"}
+  ],
+  "renderGate":{"requiredRealGlyphs":11,"fontPlaceholdersAllowed":0,"next":"tc001-real-render-v0.2.svg"}
+}

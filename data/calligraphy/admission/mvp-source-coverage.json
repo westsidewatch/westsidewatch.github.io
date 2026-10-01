@@ -1,0 +1,32 @@
+{
+  "phrase":"敬畏耶和華是智慧的開端",
+  "policy":"transcription evidence admits a source for crop verification; it does not create a glyph",
+  "sources":[
+    {
+      "sourceId":"daguan-v5-huize-npm",
+      "verifiedFromTranscription":["敬","慧","智"],
+      "evidenceNote":"Published description transcribes 皇帝敬問…慧則… and lists 智果、智永 in the volume metadata.",
+      "cropStatus":"pending"
+    },
+    {
+      "sourceId":"baoxiantang-v5-npm",
+      "verifiedFromTranscription":["敬","慧","智"],
+      "evidenceNote":"Published description transcribes 皇帝敬問…慧則… and identifies 智果、智永 among represented calligraphers.",
+      "cropStatus":"pending"
+    },
+    {
+      "sourceId":"jingshengzhai-v15-npm",
+      "verifiedFromTranscription":["畏","是","的"],
+      "evidenceNote":"Published transcription includes 而畏高明 and repeated 是/之 constructions; exact glyph crop still requires leaf-level verification.",
+      "cropStatus":"pending"
+    },
+    {
+      "sourceId":"zhiyong-thousand-character-npm",
+      "verifiedFromTranscription":[],
+      "evidenceNote":"High-value regular/cursive source admitted from NPM Open Data; character-level coverage must be derived from authoritative 千字文 text and then checked against leaf images.",
+      "cropStatus":"pending"
+    }
+  ],
+  "unresolved":["耶","和","華","開","端"],
+  "nextGate":"leaf-level IIIF crop coordinates + visual verification"
+}

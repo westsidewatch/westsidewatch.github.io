@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "provider": "National Palace Museum Taipei",
+  "collectionDetail": "https://digitalarchive.npm.gov.tw/Collection/Detail/{cid}?dep=P",
+  "manifest": "https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid={cid}&dept=P&imageName=",
+  "openDataManifest": "https://digitalarchive.npm.gov.tw/opendata/Integrate/GetJson?cid={cid}&dept=P&imageName=",
+  "imageInfoPattern": "https://iiifod2.npm.gov.tw/iiif/2/{prefix}%2F{imageId}/info.json",
+  "rules": {
+    "manifestIsAuthoritativeForCanvasIds": true,
+    "neverGuessCidFromAccessionNumber": true,
+    "neverGuessImageId": true,
+    "neverPromoteCropWithoutVisualVerification": true
+  },
+  "target": {
+    "accession": "故帖00002900010",
+    "title": "宋拓大觀帖（五）　冊　隋慧則帖",
+    "collectionDetailCid": 17063,
+    "desiredCharacters": ["敬", "慧"],
+    "cidStatus": "collection-detail-id-not-yet-proven-as-IIIF-cid",
+    "imageIds": [],
+    "cropStatus": "blocked-until-manifest-image-id-resolved"
+  }
+}

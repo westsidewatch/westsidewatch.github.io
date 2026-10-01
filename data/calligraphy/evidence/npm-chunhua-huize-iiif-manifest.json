@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "provider": "National Palace Museum Taipei",
+  "collectionDetailId": "23758",
+  "workNumber": "贈帖00007200010",
+  "manifest": {
+    "url": "https://digitalarchive.npm.gov.tw/Integrate/GetJson?cid=23758&dept=P",
+    "cid": "23758",
+    "dept": "P",
+    "resolution": "verified-from-official-copy-iiif-link",
+    "evidencePage": "https://digitalarchive.npm.gov.tw/Collection/Detail/23758?dep=P"
+  },
+  "viewer": "https://digitalarchive.npm.gov.tw/Integrate/IIIFViewer?dep=P&id=23758&imageName=",
+  "targets": ["敬", "慧"],
+  "status": "manifest-endpoint-resolved",
+  "notes": [
+    "The official Collection page's Copy IIIF Link resolves cid=23758; this removes the earlier uncertainty over whether Collection Detail ID may be used as the IIIF cid for this work.",
+    "Canvas/image-service parsing and pixel crop verification remain required before glyph promotion."
+  ]
+}

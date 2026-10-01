@@ -1,0 +1,47 @@
+{
+  "version": 1,
+  "targetCharacters": ["敬", "慧"],
+  "purpose": "Keep the first-glyph milestone moving without weakening provenance requirements when one NPM record has an interactive image-download barrier.",
+  "sources": [
+    {
+      "collectionDetailId": "17388",
+      "title": "淳化祖帖（五） 冊 隋朝慧則帖",
+      "transcriptionVerified": true,
+      "contains": ["敬", "慧"],
+      "offersCC0Image": true,
+      "offersCCBY4Image": true,
+      "offersIIIF": true,
+      "status": "candidate"
+    },
+    {
+      "collectionDetailId": "23758",
+      "title": "淳化閣法帖（五） 冊 隋朝慧則帖",
+      "transcriptionVerified": true,
+      "contains": ["敬", "慧"],
+      "offersCC0Image": true,
+      "offersCCBY4Image": true,
+      "offersIIIF": true,
+      "status": "candidate"
+    },
+    {
+      "collectionDetailId": "21543",
+      "title": "宋搨武岡帖（二） 冊 隋朝慧則帖",
+      "transcriptionVerified": true,
+      "contains": ["敬", "慧"],
+      "offersCC0Image": true,
+      "offersCCBY4Image": true,
+      "offersIIIF": true,
+      "status": "candidate"
+    },
+    {
+      "collectionDetailId": "20210",
+      "title": "清王澍書積書巖帖（二十六） 冊 臨隋文帝與慧則法師書",
+      "transcriptionVerified": true,
+      "contains": ["敬", "慧"],
+      "offersCC0Image": true,
+      "offersCCBY4Image": true,
+      "status": "candidate-copy"
+    }
+  ],
+  "selectionRule": "Prefer the earliest source for which actual pixels and a stable evidence reference can be acquired; never transfer crop coordinates between editions."
+}

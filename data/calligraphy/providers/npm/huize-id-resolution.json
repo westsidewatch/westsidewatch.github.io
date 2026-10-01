@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "provider": "npm-taipei",
+  "object": {
+    "collectionDetailId": "17063",
+    "accessionNumber": "故帖000029N000000005",
+    "workNumber": "故帖00002900010",
+    "title": "宋拓大觀帖（五） 冊 隋慧則帖",
+    "author": "慧則",
+    "script": "行楷書",
+    "extent": "一幅"
+  },
+  "officialEvidence": {
+    "detailUrl": "https://digitalarchive.npm.gov.tw/Collection/Detail/17063?dep=P",
+    "openDataUrl": "https://digitalarchive.npm.gov.tw/opendata/Pub/Detail/17063?dep=P&mode=full",
+    "transcriptionContains": ["敬", "慧"],
+    "iiifAdvertised": true
+  },
+  "resolution": {
+    "collectionDetailIdIsManifestCid": "unverified",
+    "manifestCid": null,
+    "imageName": null,
+    "canvasId": null,
+    "imageService": null
+  },
+  "notes": [
+    "NPM public search evidence confirms the object and IIIF availability but does not expose this object's manifest identifier in indexed text.",
+    "Other indexed NPM Mirador pages demonstrate that viewer id/cid values are numeric and canvas identifiers are separate accession-like identifiers; therefore workNumber, accessionNumber, Collection Detail ID, manifest cid, imageName and canvas ID must remain separate fields.",
+    "Do not promote 敬 or 慧 to glyph until the manifest/canvas/image service and crop rectangle are independently verified."
+  ]
+}

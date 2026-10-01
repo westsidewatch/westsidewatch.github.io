@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "source": {
+    "collectionDetailId": "23758",
+    "objectNo": "贈帖00007200010",
+    "title": "淳化閣法帖（五） 冊 隋朝慧則帖",
+    "style": "running-regular",
+    "transcriptionEvidence": "隋朝法帖。皇帝敬問婺州雙林寺慧則法師。",
+    "rights": {
+      "lowResolution": "CC0",
+      "mediumResolution": "CC BY 4.0"
+    }
+  },
+  "resolvedImages": [
+    {
+      "imageId": 456274,
+      "endpoint": "https://digitalarchive.npm.gov.tw/Image/GetImage?imageId=456274",
+      "discoveredFrom": "Collection/Detail/23758 image link",
+      "role": "candidate-leaf-image",
+      "fetchState": "endpoint-resolved-runtime-fetch-restricted"
+    },
+    {
+      "imageId": 456275,
+      "endpoint": "https://digitalarchive.npm.gov.tw/Image/GetImage?imageId=456275",
+      "discoveredFrom": "Collection/Detail/23758 image link",
+      "role": "candidate-leaf-image",
+      "fetchState": "endpoint-resolved-runtime-fetch-restricted"
+    }
+  ],
+  "targets": [
+    {"literal":"敬","characterId":"u656c","crop":null,"status":"image-endpoint-resolved-awaiting-pixels"},
+    {"literal":"慧","characterId":"u6167","crop":null,"status":"image-endpoint-resolved-awaiting-pixels"}
+  ],
+  "gate": {
+    "promoteToGlyph": false,
+    "reason": "Real image IDs are now resolved, but this runtime cannot fetch the restricted NPM image endpoints. Pixel dimensions and visual crop coordinates must still be obtained from actual image bytes before promotion."
+  }
+}
