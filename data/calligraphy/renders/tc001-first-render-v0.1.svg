@@ -1,7 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="720" height="1860" viewBox="0 0 720 1860" role="img" aria-label="敬畏耶和華是智慧的開端">
   <rect width="720" height="1860" fill="#f4efe3"/>
+  <!-- First real-image pass. The image layer is intentionally clipped and normalized here; individual TC001 glyph crops will replace it incrementally. -->
+  <defs><clipPath id="realGlyphWindow"><rect x="250" y="70" width="220" height="1710" rx="2"/></clipPath></defs>
+  <g clip-path="url(#realGlyphWindow)" opacity=".94">
+    <image href="https://c.cidianwang.com/file/20162/20162710535748.jpg" x="250" y="70" width="220" height="220" preserveAspectRatio="xMidYMid slice"/>
+  </g>
   <g fill="#171512" font-family="STKaiti, KaiTi, 'Noto Serif CJK TC', serif" text-anchor="middle">
-    <text x="360" y="155" font-size="112" transform="rotate(-1.2 360 155)">敬</text>
     <text x="368" y="300" font-size="101" transform="rotate(.8 368 300)">畏</text>
     <text x="354" y="456" font-size="117" transform="rotate(-.5 354 456)">耶</text>
     <text x="365" y="592" font-size="106" transform="rotate(1.1 365 592)">和</text>
@@ -13,5 +17,5 @@
     <text x="365" y="1500" font-size="102" transform="rotate(.9 365 1500)">開</text>
     <text x="359" y="1655" font-size="115" transform="rotate(-.7 359 1655)">端</text>
   </g>
-  <text x="664" y="1775" font-family="serif" font-size="16" fill="#171512" opacity=".45" text-anchor="end">TC001 · first render / glyph crops pending</text>
+  <text x="664" y="1775" font-family="serif" font-size="16" fill="#171512" opacity=".45" text-anchor="end">TC001 · real-image replacement pass 01</text>
 </svg>
