@@ -6,21 +6,19 @@
     <meta name="description" content="{{ .Description | default site.Params.description }}">
     <meta name="theme-color" content="#faf9f5">
     <title>{{ if .IsHome }}{{ site.Title }}{{ else }}{{ .Title }} — {{ site.Title }}{{ end }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Noto+Sans+TC:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
 
-    {{ $sitesSection := or (eq .Section "journal") (eq .Section "dawn-library") (eq .Section "cinema") (eq .Section "church") (eq .Section "olive") (eq .Section "vol-00") }}
+    {{ $sitesSection := or (eq .Section "journal") (eq .Section "dawn-library") (eq .Section "cinema") (eq .Section "church") (eq .Section "olive") (eq .Section "daylight-cafe") (eq .Section "vol-00") }}
     {{ $sitesSurface := or .IsHome $sitesSection }}
 
     {{ if .IsHome }}
       <link rel="stylesheet" href="{{ "css/sites-home.css" | relURL }}">
     {{ else if $sitesSurface }}
-      <!-- Sites-covered second layer: legacy site presentation is intentionally disconnected. -->
       <link rel="stylesheet" href="{{ "css/sites-surface-reset.css" | relURL }}">
     {{ else }}
-      <!-- Products/surfaces not designed in Sites keep their existing presentation stack. -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Noto+Sans+TC:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
       {{ with resources.Get "css/main.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       {{ with resources.Get "css/publication-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       {{ with resources.Get "css/brand-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
@@ -34,28 +32,14 @@
   </head>
   <body class="{{ if .IsHome }}home sites-home-isolated{{ else if $sitesSurface }}sites-surface sites-section-{{ .Section }}{{ else }}publication-shell{{ if .Section }} section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }} section-about{{ end }}{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>
-    {{ if .IsHome }}
-      <header class="sites-home-header">
-        <a class="sites-home-wordmark" href="{{ site.Home.RelPermalink }}" aria-label="Westside Watch home"><img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="Westside Watch"></a>
-        <nav class="sites-home-nav" aria-label="Primary navigation">
-          <a href="{{ "church/" | relURL }}">LivingWaterWest</a><a href="{{ "journal/" | relURL }}">Magazine</a><a href="{{ "one/" | relURL }}">Bible</a><a href="{{ "olive/" | relURL }}">Sermon</a><a href="{{ "dawn-library/" | relURL }}">Book</a><a href="{{ "cinema/" | relURL }}">Cinema</a><a href="{{ "daylight-cafe/" | relURL }}">Life</a><a href="/dore/search/">Search</a>
-        </nav>
+    {{ if $sitesSurface }}
+      <header class="sites-layer-header">
+        <a class="sites-layer-wordmark" href="{{ site.Home.RelPermalink }}"><img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="Westside Watch"></a>
+        <nav class="sites-layer-nav" aria-label="Primary navigation"><a href="{{ "church/" | relURL }}">LivingWaterWest</a><a href="{{ "journal/" | relURL }}">Magazine</a><a href="{{ "one/" | relURL }}">Bible</a><a href="{{ "olive/" | relURL }}">Sermon</a><a href="{{ "dawn-library/" | relURL }}">Book</a><a href="{{ "cinema/" | relURL }}">Cinema</a><a href="{{ "daylight-cafe/" | relURL }}">Life</a><a href="/dore/search/">Search</a></nav>
       </header>
-    {{ else if $sitesSurface }}
-      <header class="sites-layer-header">{{ partial "header.html" . }}</header>
     {{ else }}{{ partial "header.html" . }}{{ end }}
-
     <main id="main">{{ block "main" . }}{{ end }}</main>
-
-    {{ if .IsHome }}
-      <footer class="sites-home-footer"><a href="{{ site.Home.RelPermalink }}">Westside Watch</a><p>{{ now.Year }}</p></footer>
-    {{ else if $sitesSurface }}
-      <footer class="sites-layer-footer">{{ partial "footer.html" . }}</footer>
-    {{ else }}{{ partial "footer.html" . }}{{ end }}
-
-    {{ if not $sitesSurface }}
-      <script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script>
-      <script src="{{ "js/typography-system.js" | relURL }}" defer></script>
-    {{ end }}
+    {{ if $sitesSurface }}<footer class="sites-layer-footer"><a href="{{ site.Home.RelPermalink }}">Westside Watch</a><p>{{ now.Year }}</p></footer>{{ else }}{{ partial "footer.html" . }}{{ end }}
+    {{ if not $sitesSurface }}<script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script><script src="{{ "js/typography-system.js" | relURL }}" defer></script>{{ end }}
   </body>
 </html>
