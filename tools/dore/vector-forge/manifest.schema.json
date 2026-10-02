@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://westsidewatch.github.io/schemas/dore-vector-forge-manifest.schema.json",
+  "title": "Doré Vector Forge Asset Manifest",
+  "type": "object",
+  "required": ["version", "assetId", "kind", "canonical", "geometry", "provenance", "gates"],
+  "properties": {
+    "version": {"const": "1.0"},
+    "assetId": {"type": "string", "minLength": 1},
+    "kind": {"enum": ["logo", "glyph", "icon", "illustration", "diagram", "editorial", "other"]},
+    "canonical": {
+      "type": "object",
+      "required": ["svg", "animated"],
+      "properties": {
+        "svg": {"type": "string", "pattern": "\\.svg$"},
+        "animated": {"type": "boolean", "const": false}
+      },
+      "additionalProperties": false
+    },
+    "geometry": {
+      "type": "object",
+      "required": ["viewBox", "cropAuthority", "preserveNegativeSpace"],
+      "properties": {
+        "viewBox": {"type": "array", "items": {"type": "number"}, "minItems": 4, "maxItems": 4},
+        "cropAuthority": {"enum": ["source", "explicit", "derived"]},
+        "preserveNegativeSpace": {"type": "boolean"},
+        "protectedGroups": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["engine", "providerClass"],
+      "properties": {
+        "engine": {"type": "string"},
+        "providerClass": {"enum": ["deterministic-local", "semantic-local", "external-optional", "manual"]},
+        "model": {"type": ["string", "null"]},
+        "source": {"type": ["string", "null"]},
+        "costRequired": {"type": "boolean", "default": false}
+      },
+      "additionalProperties": false
+    },
+    "gates": {
+      "type": "object",
+      "required": ["embeddedRaster", "externalReferences", "scripts", "validViewBox", "siblingPreservation"],
+      "properties": {
+        "embeddedRaster": {"const": 0},
+        "externalReferences": {"const": 0},
+        "scripts": {"const": 0},
+        "validViewBox": {"const": true},
+        "siblingPreservation": {"const": true},
+        "visualDiff": {"type": ["number", "null"], "minimum": 0},
+        "geometryDiff": {"type": ["number", "null"], "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "motion": {
+      "type": "object",
+      "properties": {
+        "layer": {"type": ["string", "null"]},
+        "removable": {"const": true}
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

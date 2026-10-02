@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "assetId": "fixture-cropped-glyph-01",
+  "kind": "glyph",
+  "canonical": {
+    "svg": "cropped-glyph-01.svg",
+    "animated": false
+  },
+  "geometry": {
+    "viewBox": [18, 0, 46, 100],
+    "cropAuthority": "explicit",
+    "preserveNegativeSpace": true,
+    "protectedGroups": ["protected-glyph"]
+  },
+  "provenance": {
+    "engine": "manual-fixture",
+    "providerClass": "manual",
+    "model": null,
+    "source": "Vector Forge crop-authority regression fixture; replace with canonical 池底 01 source when located",
+    "costRequired": false
+  },
+  "gates": {
+    "embeddedRaster": 0,
+    "externalReferences": 0,
+    "scripts": 0,
+    "validViewBox": true,
+    "siblingPreservation": true,
+    "visualDiff": null,
+    "geometryDiff": null
+  },
+  "motion": {
+    "layer": null,
+    "removable": true
+  }
+}
