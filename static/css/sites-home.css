@@ -1,25 +1,9 @@
-/*
-  SITES HOME — sole homepage presentation authority.
-  Legacy homepage presentation layers are intentionally disconnected in baseof.html.
-  Fill this file only from the Sites visual system; do not re-import Candidate, realm-flow,
-  watch-home, visual-refinement, typography-system, brand-surface-overrides or editorial-authority.
-*/
-
-.home {
-  margin: 0;
-  background: #eee4c9;
-  color: #252525;
-}
-
-.home *,
-.home *::before,
-.home *::after {
-  box-sizing: border-box;
-}
-
-.home img,
-.home video,
-.home iframe {
-  display: block;
-  max-width: 100%;
-}
+/* Structural reset only. Sites visual design will be filled after demolition. */
+html,body{margin:0;padding:0}
+body.home{background:#fff;color:#000;font:initial;line-height:normal;letter-spacing:normal}
+.home *, .home *::before, .home *::after{box-sizing:border-box;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none}
+.home h1,.home h2,.home h3,.home h4,.home h5,.home h6,.home p,.home small,.home strong,.home em,.home cite,.home a,.home span,.home nav,.home header,.home footer{margin:0;padding:0;font:inherit;color:inherit}
+.home ul,.home ol{margin:0;padding:0;list-style:none}
+.home a{text-decoration:none}
+.home img,.home video,.home iframe{display:block;max-width:100%;height:auto}
+.home button,.home input,.home select,.home textarea{font:inherit;color:inherit}
