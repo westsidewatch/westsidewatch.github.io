@@ -1,0 +1,52 @@
+name: Doré Semantic Decision Resident Gate
+
+on:
+  push:
+    branches:
+      - dore/semantic-decision-v0
+    paths:
+      - '.github/workflows/semantic-decision-resident-gate.yml'
+      - 'local/dore-local/semantic_decision.py'
+      - 'local/dore-local/semantic_decision_blind_test.py'
+      - 'local/dore-local/design_local_inference.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dore-semantic-decision-resident-gate
+  cancel-in-progress: true
+
+jobs:
+  blind-gate:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 10
+    steps:
+      - name: Verify Doré Mac resident
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          test -d "$ROOT/.git"
+          curl -fsS http://127.0.0.1:11434/api/tags >/dev/null
+      - name: Resolve semantic decision branch
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/semantic-decision-v0:refs/remotes/origin/dore/semantic-decision-v0
+          SHA="$(git rev-parse refs/remotes/origin/dore/semantic-decision-v0)"
+          echo "SEMANTIC_SHA=$SHA" >> "$GITHUB_ENV"
+      - name: Build isolated semantic decision worktree
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/semantic-decision-v0"
+          cd "$ROOT"
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force --detach "$WT" "$SEMANTIC_SHA"
+          python3 -m py_compile "$WT/local/dore-local/semantic_decision.py" "$WT/local/dore-local/semantic_decision_blind_test.py" "$WT/local/dore-local/design_local_inference.py"
+      - name: Run blind semantic decision on resident Ollama
+        run: |
+          WT="$HOME/.dore/semantic-decision-v0"
+          cd "$WT/local/dore-local"
+          python3 semantic_decision_blind_test.py
+          cat artifacts/semantic-decision-blind-gate.json
