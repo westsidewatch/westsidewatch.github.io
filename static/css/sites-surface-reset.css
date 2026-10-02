@@ -1,0 +1,6 @@
+/* Neutral structural reset for pages explicitly covered by the Sites visual project.
+   This file is intentionally not a design layer. It exists so legacy site presentation
+   can be disconnected before the Sites visuals are filled back in. */
+.sites-surface{margin:0;background:#fff;color:#252525}
+.sites-surface *, .sites-surface *::before, .sites-surface *::after{box-sizing:border-box}
+.sites-surface img,.sites-surface video,.sites-surface iframe{display:block;max-width:100%}
