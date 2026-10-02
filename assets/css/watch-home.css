@@ -1,69 +1,67 @@
 /* First layer: cover → four living currents → four-window confluence.
-   Adapted from Doré Living Water C01/C04 and Architectural Bloom. */
-.home{--paper:#e8dbb8;--watch-ink:#352d20;background:linear-gradient(#eddfbbcc,#e5d7b3dd),url('/images/temple-stone-light.png') center/520px;color:var(--watch-ink)}
+   Award Visual Gate v1: static hierarchy before motion. */
+.home{--paper:#e8dbb8;--watch-ink:#352d20;--watch-gold:#a2872a;--watch-rule:#77684966;background:linear-gradient(#eddfbbcc,#e5d7b3dd),url('/images/temple-stone-light.png') center/520px;color:var(--watch-ink)}
 .home h1,.home h2,.home h3,.home a,.home .watch-verse{font-family:'Cormorant Garamond','Noto Sans TC',serif}
 .home [lang=zh-Hant]{font-family:'Noto Sans TC',sans-serif}
-.home .site-header{position:absolute;top:0;left:0;transform:none;width:100%;padding:1.1rem 4vw;background:transparent;border:0;color:#493b22}
-.home .primary-nav{font-size:clamp(.85rem,1vw,1.9rem);gap:2vw;letter-spacing:.07em}
-.home .primary-nav a{font-family:'Cormorant Garamond','Noto Sans TC',serif}
-.home .site-footer{background:transparent;width:92%;font-size:clamp(.9rem,1.1vw,1.8rem)}
-.watch-cover{position:relative;min-height:100svh;isolation:isolate;overflow:hidden;padding:6vh 5vw 22vh;display:flex;flex-direction:column;justify-content:space-between}
-.watch-film{position:absolute;z-index:-2;inset:0 0 0 32%;background:url('/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg') center/cover}
-.watch-film iframe{width:100%;height:100%;border:0;pointer-events:none;opacity:.83;filter:sepia(.23) saturate(.7)}
-.watch-film::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#e8dbb8 0%,#e8dbb8bb 12%,transparent 40%),linear-gradient(0deg,#e8dbb8 1%,transparent 45%,#e8dbb855);pointer-events:none}
-.watch-cover__top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:1;margin-top:2vh}
-.watch-cover__top img{width:clamp(19rem,44vw,120rem);height:auto}
-.watch-cover__top>p{font:500 clamp(.8rem,1vw,1.7rem)/1.5 'Cormorant Garamond',serif;text-align:right;letter-spacing:.12em;margin:1rem 0}
-.watch-cover__top span{display:block;font-size:.7em}
-.watch-cover__voice{margin-top:5vh;width:65%;position:relative}
-.watch-star{position:absolute;width:clamp(1.8rem,3vw,5rem);height:auto;left:0;top:-4vh}
-.home .watch-cover h1{font-size:clamp(5rem,10.4vw,26rem);max-width:none;letter-spacing:-.05em;line-height:.82;font-weight:400;margin:0 0 3vh}
+.home .site-header{position:absolute;top:0;left:0;transform:none;width:100%;padding:1.15rem 5vw;background:transparent;border:0;color:#493b22}
+.home .primary-nav{font-size:clamp(.78rem,.82vw,1.35rem);gap:clamp(1rem,1.65vw,2.4rem);letter-spacing:.09em}
+.home .primary-nav a{font-family:'Cormorant Garamond','Noto Sans TC',serif;text-decoration-thickness:1px;text-underline-offset:.35em}
+.home .site-footer{background:transparent;width:90%;font-size:clamp(.82rem,.9vw,1.35rem)}
+.watch-cover{position:relative;min-height:100svh;isolation:isolate;overflow:hidden;padding:8vh 5vw 22vh;display:flex;flex-direction:column;justify-content:space-between}
+.watch-film{position:absolute;z-index:-2;inset:0 0 0 29%;background:url('/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg') center/cover}
+.watch-film iframe{width:100%;height:100%;border:0;pointer-events:none;opacity:.88;filter:sepia(.12) saturate(.82) contrast(1.03)}
+.watch-film::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,#e8dbb8 0%,#e8dbb8e8 10%,#e8dbb878 28%,transparent 52%),linear-gradient(0deg,#e8dbb8 1%,transparent 40%,#e8dbb82e);pointer-events:none}
+.watch-cover__top{display:flex;justify-content:space-between;align-items:start;position:relative;z-index:1;margin-top:1vh}
+.watch-cover__top img{width:clamp(19rem,41vw,110rem);height:auto}
+.watch-cover__top>p{font:500 clamp(.72rem,.78vw,1.2rem)/1.45 'Cormorant Garamond',serif;text-align:right;letter-spacing:.15em;margin:.85rem 0;color:#493b22cc}
+.watch-cover__top span{display:block;font-size:.68em;margin-top:.25em}
+.watch-cover__voice{margin-top:8vh;width:min(61%,76rem);position:relative}
+.watch-star{position:absolute;width:clamp(1.6rem,2.4vw,4rem);height:auto;left:0;top:-4.5vh;opacity:.82}
+.home .watch-cover h1{font-size:clamp(5rem,9.7vw,24rem);max-width:none;letter-spacing:-.055em;line-height:.82;font-weight:400;margin:0 0 4vh}
 .watch-cover em,.watch-heading em{font-weight:400}
-.watch-cover__voice>p[lang]{font-size:clamp(1rem,1.65vw,3rem);letter-spacing:.12em;margin:2vh 0 1vh}
-.home .watch-verse{font-size:clamp(1.2rem,2vw,4rem);line-height:1.3;margin:0;max-width:28em}
-.watch-verse cite{display:block;font-size:.6em;margin-top:.6em;letter-spacing:.1em}
-.watch-cover__actions{display:flex;gap:3vw;align-items:end;margin-top:3vh;z-index:2}
-.watch-cover__actions a{font-size:clamp(1.2rem,1.7vw,3rem);text-decoration:none;border-bottom:1px solid #776849;padding-bottom:.6em;line-height:1.2}
-.watch-cover__actions span{display:block;font-size:.53em;margin-top:.6em}
-.watch-cover__actions button{margin-left:auto;border:1px solid #938261;padding:.7em 1em;background:#eddfbbcc;color:#352d20;cursor:pointer;font:clamp(.75rem,.85vw,1.3rem) 'Noto Sans TC',sans-serif}
+.watch-cover__voice>p[lang]{font-size:clamp(.95rem,1.25vw,2.2rem);letter-spacing:.14em;margin:2vh 0 1.2vh}
+.home .watch-verse{font-size:clamp(1.05rem,1.55vw,2.8rem);line-height:1.35;margin:0;max-width:30em;color:#493b22e8}
+.watch-verse cite{display:block;font-size:.52em;margin-top:.75em;letter-spacing:.13em;color:#493b22aa}
+.watch-cover__actions{display:flex;gap:clamp(1.5rem,3vw,4rem);align-items:end;margin-top:5vh;z-index:2}
+.watch-cover__actions a{font-size:clamp(1.05rem,1.35vw,2.2rem);text-decoration:none;border-bottom:1px solid var(--watch-rule);padding-bottom:.55em;line-height:1.15;transition:border-color .35s ease,transform .35s ease}
+.watch-cover__actions a:hover,.watch-cover__actions a:focus-visible{border-color:var(--watch-gold);transform:translateY(-2px)}
+.watch-cover__actions span{display:block;font-size:.5em;margin-top:.65em;letter-spacing:.04em}
+.watch-cover__actions button{margin-left:auto;border:0;border-bottom:1px solid var(--watch-rule);padding:.55em .1em;background:transparent;color:#493b22b8;cursor:pointer;font:clamp(.68rem,.72vw,1rem) 'Noto Sans TC',sans-serif;letter-spacing:.04em}
+.watch-cover__actions button:hover,.watch-cover__actions button:focus-visible{color:#352d20;border-color:var(--watch-gold)}
 .watch-wall{position:absolute;bottom:0;left:0;right:0;height:clamp(85px,16vh,480px);background:url('/images/jerusalem-wall.png') center bottom/auto 100% repeat-x;pointer-events:none}
-.watch-current{height:240svh;position:relative;border-top:1px solid #9c875c}
-.watch-current__stage{position:sticky;top:0;height:100svh;overflow:hidden;padding:4vh 0 2vh;background:linear-gradient(#eddfbbdb,#e5d7b3d9),url('/images/temple-stone-light.png') center/520px}
-.watch-heading{display:flex;justify-content:space-between;align-items:end;margin:0 5vw 3vh;position:relative;z-index:2}
-.watch-heading .watch-eyebrow{font:500 clamp(.7rem,.85vw,1.4rem) 'Cormorant Garamond',serif;letter-spacing:.18em;margin:0 0 1vh}
-.home .watch-heading h2{font-size:clamp(3.5rem,6vw,13rem);font-weight:400;line-height:.88;letter-spacing:-.035em;margin:0}
-.watch-heading>p{font-size:clamp(.8rem,1.1vw,2rem);line-height:1.7;margin:0}
-.watch-streams{position:relative;z-index:1;display:grid;gap:1.4vh}
+.watch-current{height:240svh;position:relative;border-top:1px solid var(--watch-rule)}
+.watch-current__stage{position:sticky;top:0;height:100svh;overflow:hidden;padding:6vh 0 2vh;background:linear-gradient(#eddfbbdb,#e5d7b3d9),url('/images/temple-stone-light.png') center/520px}
+.watch-heading{display:flex;justify-content:space-between;align-items:end;margin:0 5vw 4.5vh;position:relative;z-index:2}
+.watch-heading .watch-eyebrow{font:500 clamp(.65rem,.72vw,1.05rem) 'Cormorant Garamond',serif;letter-spacing:.2em;margin:0 0 1.25vh;color:#493b22b8}
+.home .watch-heading h2{font-size:clamp(3.5rem,5.6vw,11rem);font-weight:400;line-height:.88;letter-spacing:-.04em;margin:0}
+.watch-heading>p{font-size:clamp(.78rem,.92vw,1.55rem);line-height:1.75;margin:0;color:#493b22cc}
+.watch-streams{position:relative;z-index:1;display:grid;gap:1.65vh}
 .watch-stream{overflow-x:auto;scrollbar-width:none;scroll-padding:5vw}
 .watch-stream::-webkit-scrollbar{display:none}
-.watch-stream__track{display:flex;width:max-content;gap:1.3vw;padding:0 5vw;transform:translateX(var(--flow,0px));will-change:transform}
-.watch-tile{height:15.2vh;min-height:90px;width:37vw;min-width:250px;position:relative;overflow:hidden;display:flex;align-items:end;text-decoration:none;background:#bba575;color:#fff8df;border:1px solid #8b7648;isolation:isolate}
-.watch-tile:nth-child(2){width:45vw}
-.watch-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:sepia(.3) saturate(.5)}
-.watch-tile::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#34281adc,transparent)}
-.watch-tile--paper{color:#32281c}.watch-tile--paper::after{background:linear-gradient(90deg,#efe4c9f0,#efe4c977)}
-.watch-tile>div{padding:1.6vh 1.6vw}.watch-tile span{font-size:clamp(.65rem,.7vw,1.3rem);letter-spacing:.1em}
-.home .watch-tile h3{font-size:clamp(1.9rem,2.6vw,6rem);font-weight:400;line-height:1;margin:.15em 0}
-.watch-tile p{font-size:clamp(.75rem,.85vw,1.6rem);margin:0}.watch-tile b{position:absolute;right:1.3vw;bottom:1.5vh;font-size:1.4rem;font-weight:400}
-.watch-tile:focus-visible,.watch-tile:hover{outline:2px solid #a2872a;outline-offset:-3px}.watch-tile:hover img{transform:scale(1.035);transition:transform .7s}
+.watch-stream__track{display:flex;width:max-content;gap:1.1vw;padding:0 5vw;transform:translateX(var(--flow,0px));will-change:transform}
+.watch-tile{height:14.5vh;min-height:92px;width:36vw;min-width:250px;position:relative;overflow:hidden;display:flex;align-items:end;text-decoration:none;background:#bba575;color:#fff8df;border:1px solid #77684955;isolation:isolate;transition:border-color .4s ease}
+.watch-tile:nth-child(2){width:44vw}
+.watch-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;filter:sepia(.16) saturate(.68) contrast(1.02);transition:transform .8s cubic-bezier(.2,.7,.2,1),filter .6s ease}
+.watch-tile::after{content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#34281ad6 0%,#34281a72 45%,transparent 78%);transition:opacity .45s ease}
+.watch-tile--paper{color:#32281c}.watch-tile--paper::after{background:linear-gradient(90deg,#efe4c9f2,#efe4c98a 68%,#efe4c930)}
+.watch-tile>div{padding:1.5vh 1.45vw}.watch-tile span{font-size:clamp(.6rem,.62vw,1rem);letter-spacing:.13em;opacity:.86}
+.home .watch-tile h3{font-size:clamp(1.8rem,2.35vw,4.8rem);font-weight:400;line-height:.96;margin:.18em 0}
+.watch-tile p{font-size:clamp(.7rem,.76vw,1.25rem);margin:0;opacity:.9}.watch-tile b{position:absolute;right:1.3vw;bottom:1.5vh;font-size:1.15rem;font-weight:400;opacity:.72;transition:transform .4s ease,opacity .4s ease}
+.watch-tile:hover,.watch-tile:focus-visible{border-color:var(--watch-gold);outline:none}.watch-tile:hover img,.watch-tile:focus-visible img{transform:scale(1.025);filter:sepia(.08) saturate(.82) contrast(1.04)}.watch-tile:hover b,.watch-tile:focus-visible b{transform:translate(2px,-2px);opacity:1}
+.watch-tile:focus-visible{box-shadow:inset 0 0 0 2px #a2872acc}
 .watch-river{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.watch-river i{position:absolute;left:-20%;width:140%;height:70%;top:30%;border:1px solid #a2872a77;border-radius:48%;box-shadow:0 0 35px #fef7d366;animation:water-drift 11s ease-in-out infinite alternate}
-.watch-river i:nth-child(2){top:36%;animation-delay:-4s}.watch-river i:nth-child(3){top:42%;animation-delay:-8s}
-@keyframes water-drift{to{transform:translate(6%,-9%) rotate(-7deg)}}
-.watch-current__foot{margin:2vh 5vw 0;display:flex;justify-content:space-between;font:clamp(.8rem,1vw,1.7rem) 'Cormorant Garamond',serif}
+.watch-river i{position:absolute;left:-20%;width:140%;height:70%;top:30%;border:1px solid #a2872a45;border-radius:48%;box-shadow:0 0 28px #fef7d32e;animation:water-drift 14s ease-in-out infinite alternate}
+.watch-river i:nth-child(2){top:36%;animation-delay:-5s}.watch-river i:nth-child(3){top:42%;animation-delay:-9s}
+@keyframes water-drift{to{transform:translate(4%,-6%) rotate(-5deg)}}
+.watch-current__foot{margin:2.5vh 5vw 0;display:flex;justify-content:space-between;font:clamp(.72rem,.82vw,1.2rem) 'Cormorant Garamond',serif;letter-spacing:.05em;color:#493b22aa}
 .watch-confluence{height:230svh;position:relative;background:linear-gradient(#e6d7b688,#e8dbb8cc),url('/images/temple-stone-light.png') center/520px}
-.watch-confluence__stage{height:100svh;position:sticky;top:0;padding:5vh 0;overflow:hidden}
-.watch-windows{display:flex;width:84vw;height:53vh;margin:5vh auto 3vh;isolation:isolate}
-.watch-windows i{display:block;width:25%;height:100%;background-image:url('/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg');background-size:400% auto;background-repeat:no-repeat;background-position-y:center;transform:translate(var(--wx,0),var(--wy,0));outline:1px solid #84714a55;box-shadow:0 20px 40px #49331415;will-change:transform}
+.watch-confluence__stage{height:100svh;position:sticky;top:0;padding:7vh 0;overflow:hidden}
+.watch-windows{display:flex;width:82vw;height:55vh;margin:6vh auto 4vh;isolation:isolate}
+.watch-windows i{display:block;width:25%;height:100%;background-image:url('/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg');background-size:400% auto;background-repeat:no-repeat;background-position-y:center;transform:translate(var(--wx,0),var(--wy,0));outline:1px solid #84714a38;box-shadow:0 18px 36px #49331410;will-change:transform}
 .watch-windows i:nth-child(1){background-position:0% 50%}.watch-windows i:nth-child(2){background-position:33.3333% 50%}.watch-windows i:nth-child(3){background-position:66.6667% 50%}.watch-windows i:nth-child(4){background-position:100% 50%}
-.watch-confluence__copy{display:flex;align-items:center;justify-content:space-between;margin:0 8vw}
-.watch-confluence__copy p{font:clamp(1.2rem,2.1vw,4rem)/1.1 'Cormorant Garamond',serif;margin:0}
-.watch-confluence__copy a{font-size:clamp(1.6rem,2.8vw,5rem);text-decoration:none;border-bottom:1px solid #84714a;padding-bottom:.4em}.watch-confluence__copy span{display:block;font-size:.35em;margin-top:.6em}
-@media(max-width:700px){.home .site-header{padding:1rem 5vw}.home .primary-nav{font-size:.72rem;gap:.7rem;flex-wrap:wrap;justify-content:flex-start;border:0}.watch-cover{padding:12vh 6vw 20vh;min-height:100svh}.watch-cover__top{margin:0}.watch-cover__top img{width:84vw}.watch-cover__top>p{display:none}.watch-film{inset:0}.watch-film iframe{opacity:.52}.watch-film::after{background:linear-gradient(90deg,#e8dbb8dd,#e8dbb844),linear-gradient(0deg,#e8dbb8,transparent)}.watch-cover__voice{width:100%;margin-top:8vh}.home .watch-cover h1{font-size:21vw}.watch-star{width:1.7rem;top:-5vh}.watch-cover__actions{flex-wrap:wrap;gap:1.3rem}.watch-cover__actions button{margin:0;font-size:.7rem}.watch-wall{height:12vh}.watch-heading{margin-inline:6vw}.watch-heading>p{display:none}.home .watch-heading h2{font-size:13vw}.watch-current__stage{padding-top:6vh}.watch-tile{width:73vw}.watch-tile:nth-child(2){width:83vw}.watch-tile>div{padding:1rem}.watch-tile p{font-size:.7rem}.watch-tile span{font-size:.6rem}.watch-current__foot{font-size:.7rem}.watch-current__foot>span{display:none}.watch-windows{height:44vh;width:88vw;margin-top:7vh}.watch-confluence__copy{display:block}.watch-confluence__copy p{font-size:1.4rem}.watch-confluence__copy a{display:block;margin-top:1rem;font-size:2rem}.watch-confluence__copy span{font-size:.4em}}
-@media(prefers-reduced-motion:reduce){.watch-current,.watch-confluence{height:auto}.watch-current__stage,.watch-confluence__stage{position:relative;min-height:100svh;height:auto}.watch-stream__track{transform:none!important}.watch-windows i{transform:none!important}.watch-river i{animation:none}.watch-tile img{transition:none}}
-@media(prefers-reduced-motion:no-preference){
-.watch-stream__track{animation:current-breath 18s ease-in-out infinite alternate}
-.watch-stream:nth-child(even) .watch-stream__track{animation-direction:alternate-reverse;animation-delay:-7s}
-.watch-stream:hover .watch-stream__track,.watch-stream:focus-within .watch-stream__track{animation-play-state:paused}
-@keyframes current-breath{from{translate:0 0}to{translate:-2vw 0}}
-}
+.watch-confluence__copy{display:flex;align-items:flex-end;justify-content:space-between;margin:0 9vw;gap:6vw}
+.watch-confluence__copy p{font:clamp(1rem,1.55vw,2.6rem)/1.15 'Cormorant Garamond',serif;margin:0;color:#493b22c7}
+.watch-confluence__copy a{font-size:clamp(1.45rem,2.35vw,4rem);text-decoration:none;border-bottom:1px solid var(--watch-rule);padding-bottom:.4em;transition:border-color .35s ease}.watch-confluence__copy a:hover,.watch-confluence__copy a:focus-visible{border-color:var(--watch-gold)}.watch-confluence__copy span{display:block;font-size:.34em;margin-top:.65em;letter-spacing:.04em}
+@media(max-width:700px){.home .site-header{padding:.9rem 5vw}.home .primary-nav{font-size:.68rem;gap:.45rem .8rem;flex-wrap:wrap;justify-content:flex-start;border:0;line-height:1.25}.watch-cover{padding:14vh 6vw 20vh;min-height:100svh}.watch-cover__top{margin:0}.watch-cover__top img{width:82vw}.watch-cover__top>p{display:none}.watch-film{inset:0}.watch-film iframe{opacity:.6;filter:sepia(.12) saturate(.76)}.watch-film::after{background:linear-gradient(90deg,#e8dbb8e8 0%,#e8dbb89a 46%,#e8dbb82e 100%),linear-gradient(0deg,#e8dbb8 0%,transparent 48%,#e8dbb83d)}.watch-cover__voice{width:100%;margin-top:10vh}.home .watch-cover h1{font-size:20vw;margin-bottom:3vh}.watch-star{width:1.5rem;top:-5vh}.watch-cover__voice>p[lang]{font-size:.9rem;letter-spacing:.1em}.home .watch-verse{font-size:1.05rem;max-width:23em}.watch-cover__actions{flex-wrap:wrap;gap:1.15rem 1.6rem;margin-top:4vh}.watch-cover__actions a{font-size:1.05rem}.watch-cover__actions button{margin:0 0 0 auto;font-size:.64rem}.watch-wall{height:12vh}.watch-heading{margin-inline:6vw;margin-bottom:4vh}.watch-heading>p{display:none}.home .watch-heading h2{font-size:12.5vw}.watch-current__stage{padding-top:7vh}.watch-streams{gap:1.5vh}.watch-tile{width:72vw}.watch-tile:nth-child(2){width:82vw}.watch-tile>div{padding:1rem}.watch-tile p{font-size:.68rem}.watch-tile span{font-size:.58rem}.watch-current__foot{font-size:.66rem}.watch-current__foot>span{display:none}.watch-confluence__stage{padding-top:7vh}.watch-windows{height:46vh;width:88vw;margin-top:6vh}.watch-confluence__copy{display:block;margin-inline:8vw}.watch-confluence__copy p{font-size:1.15rem}.watch-confluence__copy a{display:block;margin-top:1.3rem;font-size:1.8rem}.watch-confluence__copy span{font-size:.38em}}
+@media(prefers-reduced-motion:reduce){.watch-current,.watch-confluence{height:auto}.watch-current__stage,.watch-confluence__stage{position:relative;min-height:100svh;height:auto}.watch-stream__track{transform:none!important}.watch-windows i{transform:none!important}.watch-river i{animation:none}.watch-tile img,.watch-tile b,.watch-cover__actions a{transition:none}}
+@media(prefers-reduced-motion:no-preference){.watch-stream__track{animation:current-breath 22s ease-in-out infinite alternate}.watch-stream:nth-child(even) .watch-stream__track{animation-direction:alternate-reverse;animation-delay:-8s}.watch-stream:hover .watch-stream__track,.watch-stream:focus-within .watch-stream__track{animation-play-state:paused}@keyframes current-breath{from{translate:0 0}to{translate:-1.4vw 0}}}
