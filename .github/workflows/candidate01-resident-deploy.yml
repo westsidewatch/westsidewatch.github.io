@@ -7,6 +7,9 @@ on:
       - 'dore-design/**'
       - 'static/dore-design/italian-editorial-atlas.html'
       - 'static/dore-design/italian-editorial-grammars.v1.json'
+      - 'local/dore-local/semantic_decision.py'
+      - 'local/dore-local/semantic_decision_blind_test.py'
+      - 'local/dore-local/design_local_inference.py'
   workflow_dispatch:
 
 permissions:
@@ -17,7 +20,38 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  semantic-decision-blind-gate:
+    if: github.ref == 'refs/heads/dore/semantic-decision-v0'
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 10
+    steps:
+      - name: Verify Doré Mac resident and Ollama
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          test -d "$ROOT/.git"
+          curl -fsS http://127.0.0.1:11434/api/tags >/dev/null
+      - name: Resolve semantic decision head
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/semantic-decision-v0:refs/remotes/origin/dore/semantic-decision-v0
+          SHA="$(git rev-parse refs/remotes/origin/dore/semantic-decision-v0)"
+          echo "SEMANTIC_SHA=$SHA" >> "$GITHUB_ENV"
+      - name: Run isolated semantic decision blind gate
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/semantic-decision-v0"
+          cd "$ROOT"
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force --detach "$WT" "$SEMANTIC_SHA"
+          cd "$WT/local/dore-local"
+          python3 -m py_compile semantic_decision.py semantic_decision_blind_test.py design_local_inference.py
+          python3 semantic_decision_blind_test.py
+          cat artifacts/semantic-decision-blind-gate.json
+
   deploy:
+    if: github.ref != 'refs/heads/dore/semantic-decision-v0'
     runs-on: [self-hosted, macOS, dore]
     timeout-minutes: 20
     steps:
