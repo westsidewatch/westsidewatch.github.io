@@ -1,6 +1,9 @@
-/* Neutral structural reset for pages explicitly covered by the Sites visual project.
-   This file is intentionally not a design layer. It exists so legacy site presentation
-   can be disconnected before the Sites visuals are filled back in. */
-.sites-surface{margin:0;background:#fff;color:#252525}
-.sites-surface *, .sites-surface *::before, .sites-surface *::after{box-sizing:border-box}
-.sites-surface img,.sites-surface video,.sites-surface iframe{display:block;max-width:100%}
+/* Structural reset only for Sites-covered surfaces. No visual design authority lives here. */
+html,body{margin:0;padding:0}
+body.sites-surface{background:#fff;color:#000;font:initial;line-height:normal;letter-spacing:normal}
+.sites-surface *, .sites-surface *::before, .sites-surface *::after{box-sizing:border-box;font-family:inherit;font-size:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;letter-spacing:inherit;text-transform:none}
+.sites-surface h1,.sites-surface h2,.sites-surface h3,.sites-surface h4,.sites-surface h5,.sites-surface h6,.sites-surface p,.sites-surface small,.sites-surface strong,.sites-surface em,.sites-surface cite,.sites-surface a,.sites-surface span,.sites-surface nav,.sites-surface header,.sites-surface footer{margin:0;padding:0;font:inherit;color:inherit}
+.sites-surface ul,.sites-surface ol{margin:0;padding:0;list-style:none}
+.sites-surface a{text-decoration:none}
+.sites-surface img,.sites-surface video,.sites-surface iframe{display:block;max-width:100%;height:auto}
+.sites-surface button,.sites-surface input,.sites-surface select,.sites-surface textarea{font:inherit;color:inherit}
