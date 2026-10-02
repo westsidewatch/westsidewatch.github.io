@@ -10,27 +10,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Noto+Sans+TC:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
-    {{ with resources.Get "css/main.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
-    {{ with resources.Get "css/publication-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
-    {{ with resources.Get "css/brand-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
-    {{ with resources.Get "css/global-navigation.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
     {{ if .IsHome }}
+      <!-- HOME ISOLATION: no legacy presentation CSS enters the homepage. -->
       <link rel="stylesheet" href="{{ "css/sites-home.css" | relURL }}">
     {{ else }}
+      {{ with resources.Get "css/main.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
+      {{ with resources.Get "css/publication-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
+      {{ with resources.Get "css/brand-shell.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
+      {{ with resources.Get "css/global-navigation.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       {{ with resources.Get "css/second-layer-system.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       {{ with resources.Get "css/visual-refinement.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       {{ with resources.Get "css/typography-system.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
       <link rel="stylesheet" href="{{ "css/brand-surface-overrides.css" | relURL }}">
       <link rel="stylesheet" href="{{ "css/editorial-authority.css" | relURL }}">
+      {{ if eq .Section "church" }}<link rel="stylesheet" href="{{ "css/church-mersi-motion.css" | relURL }}">{{ end }}
     {{ end }}
-    {{ if eq .Section "church" }}<link rel="stylesheet" href="{{ "css/church-mersi-motion.css" | relURL }}">{{ end }}
   </head>
-  <body class="publication-shell {{ if .IsHome }}home{{ else if .Section }}section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }}section-about{{ end }}">
+  <body class="{{ if .IsHome }}home sites-home-isolated{{ else }}publication-shell{{ if .Section }} section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }} section-about{{ end }}{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>
     {{ partial "header.html" . }}
     <main id="main">{{ block "main" . }}{{ end }}</main>
     {{ partial "footer.html" . }}
-    {{ if not .IsHome }}<script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script>{{ end }}
-    {{ if not .IsHome }}<script src="{{ "js/typography-system.js" | relURL }}" defer></script>{{ end }}
+    {{ if not .IsHome }}
+      <script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script>
+      <script src="{{ "js/typography-system.js" | relURL }}" defer></script>
+    {{ end }}
   </body>
 </html>
