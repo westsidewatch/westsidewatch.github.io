@@ -1,0 +1,13 @@
+/* Sites composition authority: loaded last on home to prevent legacy candidate layers from flattening the recovered composition. */
+.home .watch-cover{min-height:100svh}
+.home .watch-film{inset:0 0 0 27%}
+.home .watch-cover__voice{position:relative;z-index:3}
+.home .watch-cover__actions{position:relative;z-index:4}
+.home .watch-current__stage,.home .watch-confluence__stage{background-blend-mode:multiply}
+.home .watch-streams{perspective:1200px}
+.home .watch-stream:nth-child(2n) .watch-tile:first-child{margin-left:7vw}
+.home .watch-stream:nth-child(3n) .watch-tile:first-child{margin-left:13vw}
+.home .watch-stream:nth-child(4n) .watch-tile:first-child{margin-left:3vw}
+.home .watch-tile{transform-origin:center center}
+.home .watch-windows{overflow:hidden}
+@media(max-width:700px){.home .watch-stream:nth-child(n) .watch-tile:first-child{margin-left:0}.home .watch-film{inset:0}}
