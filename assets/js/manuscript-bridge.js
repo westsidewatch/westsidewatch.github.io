@@ -1,61 +1,35 @@
-/* Westside Watch Manuscript Bridge
- * Shared, dependency-free reader/edit coordination layer.
- * Keeps long Markdown addressable by heading/range without coupling consumers
- * to a CMS or to a specific reader UI.
+/* Westside Watch Manuscript Bridge 2.0
+ * Shared live manuscript state for every reader/editor on the site.
+ * Git remains persistence; browser state is the immediate preview layer.
  */
-(function (global) {
-  'use strict';
-
-  const VERSION = '1.1.0';
-
-  function normalize(text) { return String(text || '').replace(/\r\n?/g, '\n'); }
-  function slug(text) {
-    return String(text || '').replace(/[*_`~[\]()]/g, '').trim().toLowerCase()
-      .replace(/\s+/g, '-').replace(/[^\p{L}\p{N}\-]+/gu, '').replace(/-+/g, '-');
-  }
-  function hash(text) {
-    let h = 2166136261;
-    const s = normalize(text);
-    for (let i=0;i<s.length;i++) { h ^= s.charCodeAt(i); h = Math.imul(h,16777619); }
-    return (h>>>0).toString(16).padStart(8,'0');
-  }
-  function headings(text) {
-    const lines=normalize(text).split('\n'),out=[];
-    lines.forEach((line,index)=>{const m=line.match(/^(#{1,6})\s+(.+?)\s*$/);if(!m)return;out.push({level:m[1].length,title:m[2].replace(/[*_`]/g,'').trim(),raw:line,line:index+1,index,id:slug(m[2])});});
-    return out;
-  }
-  function section(text,selector) {
-    const source=normalize(text),lines=source.split('\n'),hs=headings(source),wanted=typeof selector==='string'?{title:selector}:(selector||{});
-    const matches=hs.filter(h=>(wanted.id&&h.id===wanted.id)||(wanted.title&&h.title===wanted.title)||(wanted.line&&h.line===Number(wanted.line)));
-    if(!matches.length)return null;
-    const occurrence=Math.max(1,Number(wanted.occurrence)||1),start=matches[occurrence-1]; if(!start)return null;
-    const next=hs.find(h=>h.index>start.index&&h.level<=start.level),endIndex=next?next.index:lines.length;
-    const body=lines.slice(start.index,endIndex).join('\n').replace(/\n+$/,'')+'\n';
-    return {heading:start,startLine:start.line,endLine:endIndex,text:body,hash:hash(body)};
-  }
-  function range(text,startSelector,endSelector) {
-    const source=normalize(text),lines=source.split('\n'),start=section(source,startSelector); if(!start)return null;
-    let endLine=start.endLine;
-    if(endSelector){const end=section(source,endSelector);if(!end||end.startLine<=start.startLine)throw new Error('Invalid manuscript end selector');endLine=end.startLine-1;}
-    const body=lines.slice(start.startLine-1,endLine).join('\n').replace(/\n+$/,'')+'\n';
-    return {heading:start.heading,startLine:start.startLine,endLine,text:body,hash:hash(body)};
-  }
-  function replaceRange(text,target,replacement,expectedHash) {
-    const source=normalize(text),part=target&&target.end?range(source,target.start,target.end):section(source,target&&target.start?target.start:target);
-    if(!part)throw new Error('Manuscript range not found');
-    if(expectedHash&&part.hash!==expectedHash)throw new Error(`Manuscript range changed (${part.hash} != ${expectedHash})`);
-    const lines=source.split('\n'),before=lines.slice(0,part.startLine-1),after=lines.slice(part.endLine),insert=normalize(replacement).replace(/^\n+|\n+$/g,'').split('\n');
-    return {text:[...before,...insert,...after].join('\n').replace(/\n{3,}/g,'\n\n'),previous:part,insertedHash:hash(insert.join('\n')+'\n')};
-  }
-  function replaceSection(text,selector,replacement,expectedHash){return replaceRange(text,{start:selector},replacement,expectedHash).text;}
-  function patchPlan(text,target,replacement){const source=normalize(text),part=target&&target.end?range(source,target.start,target.end):section(source,target&&target.start?target.start:target);if(!part)throw new Error('Manuscript range not found');return {target,expectedHash:part.hash,startLine:part.startLine,endLine:part.endLine,before:part.text,replacement:normalize(replacement).replace(/^\n+|\n+$/g,'')+'\n'};}
-  function applyPlan(text,plan){return replaceRange(text,plan.target,plan.replacement,plan.expectedHash);}
-  function sourceWithRevision(url,revision){const u=new URL(url,global.location&&global.location.href||undefined);u.searchParams.set('_rev',revision||Date.now().toString(36));return u.toString();}
-  async function read(url,options){const opts=options||{},target=opts.fresh===false?url:sourceWithRevision(url,opts.revision),response=await fetch(target,{cache:opts.fresh===false?'default':'no-store'});if(!response.ok)throw new Error(`Manuscript read failed (${response.status})`);const text=normalize(await response.text());return{text,headings:headings(text),hash:hash(text),url};}
-  function rememberPosition(key){if(!global.sessionStorage)return;global.sessionStorage.setItem(`manuscript:${key}:position`,JSON.stringify({y:global.scrollY||0,at:Date.now()}));}
-  function restorePosition(key){if(!global.sessionStorage)return false;const raw=global.sessionStorage.getItem(`manuscript:${key}:position`);if(!raw)return false;try{const saved=JSON.parse(raw);requestAnimationFrame(()=>global.scrollTo(0,Number(saved.y)||0));return true}catch(_){return false}}
-  function nearestHeading(root){if(!root)return null;const hs=[...root.querySelectorAll('h1,h2,h3,h4,h5,h6')];let current=null;for(const h of hs){if(h.getBoundingClientRect().top<=Math.max(120,global.innerHeight*.28))current=h;else break}return current?{title:current.textContent.trim(),id:current.id||slug(current.textContent)}:null;}
-  function rememberAnchor(key,root){const anchor=nearestHeading(root);if(!anchor||!global.sessionStorage)return rememberPosition(key);global.sessionStorage.setItem(`manuscript:${key}:anchor`,JSON.stringify(anchor));rememberPosition(key);}
-  function restoreAnchor(key,root){if(!global.sessionStorage||!root)return restorePosition(key);const raw=global.sessionStorage.getItem(`manuscript:${key}:anchor`);if(!raw)return restorePosition(key);try{const saved=JSON.parse(raw),target=[...root.querySelectorAll('h1,h2,h3,h4,h5,h6')].find(h=>(h.id&&h.id===saved.id)||h.textContent.trim()===saved.title);if(!target)return restorePosition(key);requestAnimationFrame(()=>target.scrollIntoView({block:'start'}));return true}catch(_){return restorePosition(key)}}
-  global.ManuscriptBridge=Object.freeze({version:VERSION,normalize,slug,hash,headings,section,range,replaceSection,replaceRange,patchPlan,applyPlan,sourceWithRevision,read,rememberPosition,restorePosition,rememberAnchor,restoreAnchor});
+(function(global){
+'use strict';
+const VERSION='2.0.0', CHANNEL='westsidewatch-manuscripts-v2', PREFIX='ww:manuscript:v2:';
+const states=new Map(), listeners=new Map();
+const bc=('BroadcastChannel' in global)?new BroadcastChannel(CHANNEL):null;
+function normalize(t){return String(t||'').replace(/\r\n?/g,'\n')}
+function slug(t){return String(t||'').replace(/[*_`~[\]()]/g,'').trim().toLowerCase().replace(/\s+/g,'-').replace(/[^\p{L}\p{N}\-]+/gu,'').replace(/-+/g,'-')}
+function hash(t){let h=2166136261,s=normalize(t);for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return(h>>>0).toString(16).padStart(8,'0')}
+function key(url){try{return new URL(url,location.href).href.replace(/[?&]_rev=[^&]*/,'')}catch(_){return String(url)}}
+function headings(text){const out=[];normalize(text).split('\n').forEach((line,index)=>{const m=line.match(/^(#{1,6})\s+(.+?)\s*$/);if(m)out.push({level:m[1].length,title:m[2].replace(/[*_`]/g,'').trim(),raw:line,line:index+1,index,id:slug(m[2])})});return out}
+function section(text,selector){const source=normalize(text),lines=source.split('\n'),hs=headings(source),w=typeof selector==='string'?{title:selector}:(selector||{}),matches=hs.filter(h=>(w.id&&h.id===w.id)||(w.title&&h.title===w.title)||(w.line&&h.line===Number(w.line)));if(!matches.length)return null;const start=matches[Math.max(1,Number(w.occurrence)||1)-1];if(!start)return null;const next=hs.find(h=>h.index>start.index&&h.level<=start.level),end=next?next.index:lines.length,body=lines.slice(start.index,end).join('\n').replace(/\n+$/,'')+'\n';return{heading:start,startLine:start.line,endLine:end,text:body,hash:hash(body)}}
+function range(text,a,b){const source=normalize(text),lines=source.split('\n'),start=section(source,a);if(!start)return null;let end=start.endLine;if(b){const e=section(source,b);if(!e||e.startLine<=start.startLine)throw Error('Invalid manuscript end selector');end=e.startLine-1}const body=lines.slice(start.startLine-1,end).join('\n').replace(/\n+$/,'')+'\n';return{heading:start.heading,startLine:start.startLine,endLine:end,text:body,hash:hash(body)}}
+function replaceRange(text,target,replacement,expectedHash){const source=normalize(text),part=target&&target.end?range(source,target.start,target.end):section(source,target&&target.start?target.start:target);if(!part)throw Error('Manuscript range not found');if(expectedHash&&part.hash!==expectedHash)throw Error(`Manuscript range changed (${part.hash} != ${expectedHash})`);const lines=source.split('\n'),insert=normalize(replacement).replace(/^\n+|\n+$/g,'').split('\n');return{text:[...lines.slice(0,part.startLine-1),...insert,...lines.slice(part.endLine)].join('\n').replace(/\n{3,}/g,'\n\n'),previous:part,insertedHash:hash(insert.join('\n')+'\n')}}
+function emit(url,state,origin){const k=key(url),detail={...state,url:k,origin:origin||'local'};states.set(k,detail);try{localStorage.setItem(PREFIX+k,JSON.stringify(detail))}catch(_){};if(bc&&origin!=='broadcast')bc.postMessage(detail);(listeners.get(k)||new Set()).forEach(fn=>fn(detail));global.dispatchEvent(new CustomEvent('manuscript:update',{detail}))}
+function get(url){const k=key(url);if(states.has(k))return states.get(k);try{const raw=localStorage.getItem(PREFIX+k);if(raw){const s=JSON.parse(raw);states.set(k,s);return s}}catch(_){}return null}
+function publish(url,text,meta){const old=get(url),revision=(old?.revision||0)+1,state={text:normalize(text),hash:hash(text),headings:headings(text),revision,status:meta?.status||'dirty',section:meta?.section||null,at:Date.now()};emit(url,state);return state}
+function patch(url,target,replacement,options){const current=get(url);if(!current?.text)throw Error('Manuscript is not loaded into live state');const changed=replaceRange(current.text,target,replacement,options?.expectedHash);return publish(url,changed.text,{status:options?.status||'dirty',section:changed.previous.heading?.title})}
+function mark(url,status,meta){const s=get(url);if(!s)return null;const next={...s,status,commit:meta?.commit||s.commit,error:meta?.error||null,at:Date.now()};emit(url,next);return next}
+function subscribe(url,fn,{immediate=true}={}){const k=key(url);if(!listeners.has(k))listeners.set(k,new Set());listeners.get(k).add(fn);if(immediate){const s=get(k);if(s)fn(s)}return()=>listeners.get(k)?.delete(fn)}
+function sourceWithRevision(url,rev){const u=new URL(url,location.href);u.searchParams.set('_rev',rev||Date.now().toString(36));return u.toString()}
+async function read(url,options){const opts=options||{},live=get(url);if(live&&opts.preferLive!==false)return{...live,url:key(url),live:true};const target=opts.fresh===false?url:sourceWithRevision(url,opts.revision),r=await fetch(target,{cache:opts.fresh===false?'default':'no-store'});if(!r.ok)throw Error(`Manuscript read failed (${r.status})`);const text=normalize(await r.text()),state={text,headings:headings(text),hash:hash(text),revision:live?.revision||0,status:'saved',at:Date.now()};emit(url,state);return{...state,url:key(url),live:false}}
+function syncFromGit(url,text,meta){const incoming=normalize(text),live=get(url);if(live&&live.status==='dirty'&&live.hash!==hash(incoming))return{conflict:true,live,incomingHash:hash(incoming)};const state={text:incoming,headings:headings(incoming),hash:hash(incoming),revision:(live?.revision||0)+1,status:'saved',commit:meta?.commit||null,at:Date.now()};emit(url,state);return state}
+if(bc)bc.onmessage=e=>{const s=e.data;if(s?.url)emit(s.url,s,'broadcast')};
+global.addEventListener('storage',e=>{if(!e.key?.startsWith(PREFIX)||!e.newValue)return;try{const s=JSON.parse(e.newValue);if(s?.url){states.set(s.url,s);(listeners.get(s.url)||new Set()).forEach(fn=>fn(s));global.dispatchEvent(new CustomEvent('manuscript:update',{detail:s}))}}catch(_){}});
+function rememberPosition(k){sessionStorage.setItem(`manuscript:${k}:position`,JSON.stringify({y:scrollY||0,at:Date.now()}))}
+function restorePosition(k){const raw=sessionStorage.getItem(`manuscript:${k}:position`);if(!raw)return false;try{const s=JSON.parse(raw);requestAnimationFrame(()=>scrollTo(0,Number(s.y)||0));return true}catch(_){return false}}
+function nearestHeading(root){if(!root)return null;let current=null;for(const h of root.querySelectorAll('h1,h2,h3,h4,h5,h6')){if(h.getBoundingClientRect().top<=Math.max(120,innerHeight*.28))current=h;else break}return current?{title:current.textContent.trim(),id:current.id||slug(current.textContent)}:null}
+function rememberAnchor(k,root){const a=nearestHeading(root);if(a)sessionStorage.setItem(`manuscript:${k}:anchor`,JSON.stringify(a));rememberPosition(k)}
+function restoreAnchor(k,root){const raw=sessionStorage.getItem(`manuscript:${k}:anchor`);if(!raw)return restorePosition(k);try{const a=JSON.parse(raw),t=[...root.querySelectorAll('h1,h2,h3,h4,h5,h6')].find(h=>h.id===a.id||h.textContent.trim()===a.title);if(!t)return restorePosition(k);requestAnimationFrame(()=>t.scrollIntoView({block:'start'}));return true}catch(_){return restorePosition(k)}}
+global.ManuscriptBridge=Object.freeze({version:VERSION,normalize,slug,hash,headings,section,range,replaceRange,replaceSection:(t,s,r,h)=>replaceRange(t,{start:s},r,h).text,patchPlan:(t,target,r)=>{const p=target?.end?range(t,target.start,target.end):section(t,target?.start||target);if(!p)throw Error('Manuscript range not found');return{target,expectedHash:p.hash,startLine:p.startLine,endLine:p.endLine,before:p.text,replacement:normalize(r).replace(/^\n+|\n+$/g,'')+'\n'}},applyPlan:(t,p)=>replaceRange(t,p.target,p.replacement,p.expectedHash),key,get,publish,patch,mark,subscribe,read,syncFromGit,sourceWithRevision,rememberPosition,restorePosition,rememberAnchor,restoreAnchor});
 })(window);
