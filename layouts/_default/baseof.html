@@ -11,7 +11,7 @@
     <link rel="icon" type="image/svg+xml" href="{{ "favicon.svg" | relURL }}">
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,400&amp;family=Noto+Sans+TC:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
     {{ if .IsHome }}
-      <!-- HOME ISOLATION: no legacy presentation CSS enters the homepage. -->
+      <!-- HOME ISOLATION: structural content only; no legacy presentation CSS/JS. -->
       <link rel="stylesheet" href="{{ "css/sites-home.css" | relURL }}">
     {{ else }}
       {{ with resources.Get "css/main.css" | minify | fingerprint }}<link rel="stylesheet" href="{{ .RelPermalink }}" integrity="{{ .Data.Integrity }}">{{ end }}
@@ -28,9 +28,18 @@
   </head>
   <body class="{{ if .IsHome }}home sites-home-isolated{{ else }}publication-shell{{ if .Section }} section-{{ .Section }}{{ else if eq .RelPermalink "/about/" }} section-about{{ end }}{{ end }}">
     <a class="skip-link" href="#main">Skip to content</a>
-    {{ partial "header.html" . }}
+    {{ if .IsHome }}
+      <header class="sites-home-header">
+        <a class="sites-home-wordmark" href="{{ site.Home.RelPermalink }}" aria-label="Westside Watch home"><img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="Westside Watch"></a>
+        <nav class="sites-home-nav" aria-label="Primary navigation">
+          <a href="{{ "church/" | relURL }}">LivingWaterWest</a><a href="{{ "journal/" | relURL }}">Magazine</a><a href="{{ "one/" | relURL }}">Bible</a><a href="{{ "olive/" | relURL }}">Sermon</a><a href="{{ "dawn-library/" | relURL }}">Book</a><a href="{{ "cinema/" | relURL }}">Cinema</a><a href="{{ "daylight-cafe/" | relURL }}">Life</a><a href="/dore/search/">Search</a>
+        </nav>
+      </header>
+    {{ else }}{{ partial "header.html" . }}{{ end }}
     <main id="main">{{ block "main" . }}{{ end }}</main>
-    {{ partial "footer.html" . }}
+    {{ if .IsHome }}
+      <footer class="sites-home-footer"><a href="{{ site.Home.RelPermalink }}">Westside Watch</a><p>{{ now.Year }}</p></footer>
+    {{ else }}{{ partial "footer.html" . }}{{ end }}
     {{ if not .IsHome }}
       <script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script>
       <script src="{{ "js/typography-system.js" | relURL }}" defer></script>
