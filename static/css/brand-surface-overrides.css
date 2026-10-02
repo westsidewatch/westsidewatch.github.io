@@ -1,0 +1,5 @@
+/* Public surfaces never use black as a full-bleed field. */
+.am-panel[data-tone="dark"],.am-end{background:#102a43;color:#f1ede4}
+.am-motion-ready .am-panel[data-tone="dark"]:after{background:#102a43}
+.readable-pulpit__spread>aside{background:#102a43;color:#f3efe6}
+.readable-pulpit__spread>.readable-pulpit__reading{padding:clamp(34px,5vw,76px)}

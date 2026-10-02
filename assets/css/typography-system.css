@@ -1,0 +1,59 @@
+/* Westside Watch type authority — the only cross-site bilingual scale. */
+:root{
+  --type-en:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --type-zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
+  --type-ui:Inter,"Helvetica Neue",Arial,sans-serif;
+  --type-zh-light:300;
+  --type-zh-regular:400;
+  --type-zh-strong:600;
+  --type-en-regular:400;
+  --type-body:clamp(1rem,.97rem + .12vw,1.1rem);
+  --type-small:clamp(.78rem,.76rem + .08vw,.84rem);
+  --leading-body:1.9;
+  --tracking-zh:.035em;
+}
+html{font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body{font-family:var(--type-zh)!important;font-size:var(--type-body);font-weight:var(--type-zh-light);line-height:var(--leading-body)}
+.type-en,[lang^="en"]{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important;font-synthesis:none}
+.type-zh,[lang="zh-Hant"],[lang="zh-TW"],[lang="zh"]{font-family:var(--type-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal}
+.type-mixed{font-family:var(--type-zh)!important;font-synthesis:none}
+p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--type-body)!important;font-weight:var(--type-zh-light)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
+h1.type-en,h2.type-en,h3.type-en,h4.type-en,.type-en:is(strong,b){font-weight:var(--type-en-regular)!important}
+h1.type-zh,h2.type-zh,h3.type-zh,h4.type-zh,.type-zh:is(strong,b){font-weight:var(--type-zh-strong)!important;line-height:1.24!important;letter-spacing:.025em!important}
+h1.type-zh{font-size:clamp(2.75rem,5.4vw,5.8rem)!important}
+h2.type-zh{font-size:clamp(2.15rem,3.8vw,4rem)!important}
+h3.type-zh{font-size:clamp(1.45rem,2.25vw,2.35rem)!important}
+h4.type-zh{font-size:clamp(1.15rem,1.45vw,1.45rem)!important}
+h1.type-en{font-size:clamp(5rem,10vw,11rem)}
+h2.type-en{font-size:clamp(3.6rem,7vw,7.5rem)}
+h3.type-en{font-size:clamp(2rem,3.5vw,3.8rem)}
+small.type-zh,.type-zh:is(.meta,.eyebrow,.kicker){font-size:var(--type-small)!important;font-weight:var(--type-zh-regular)!important;line-height:1.65!important;letter-spacing:.08em!important}
+small.type-en,.type-en:is(.meta,.eyebrow,.kicker){font-family:var(--type-ui)!important;font-size:var(--type-small)!important;font-weight:400!important;line-height:1.35!important;letter-spacing:.14em!important;text-transform:uppercase}
+
+/* Paired title grammar: English leads in scale; Chinese annotates with weight. */
+.living-screen__head h2,.realm__copy h2,.grid-focus__copy h3,.layer-hero h1,.layer-statement h2,.layer-channel>header h2,.layer-closing h2,.section-atlas__title h1,.section-atlas__index h2,.issue-cover h1,.issue-contents strong,.movement-spread__head h2,.story-card__name,.mc-intro h2,.mc-bethel h2,.mc-list strong,.mc-paths strong,.section-heading h2,.index-block h3,.facet-head h2,.archive-field-head h2{
+  font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important;font-synthesis:none
+}
+.living-screen__head>span,.realm__zh,.current-card__copy em,.grid-focus__copy>p,.focus-preview__item em,.realm-preview__copy em,.layer-hero__zh,.layer-channel>header p,.layer-story em,.layer-closing>span,.section-atlas__zh,.section-atlas__index h2 span,.atlas-entry h3,.issue-cover__zh,.issue-contents em,.movement-spread__statement,.story-card h3,.story-card__name small,.mc-zh,.mc-list em,.mc-paths span,.section-heading h2 span,.index-block h3 span,.facet-head h2 span,.archive-field-head h2 span{
+  font-family:var(--type-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict
+}
+.living-screen__head>span,.realm__zh,.layer-hero__zh,.layer-channel>header p,.layer-closing>span,.section-atlas__zh,.issue-cover__zh,.mc-zh{
+  font-size:clamp(.95rem,1.05vw,1.15rem)!important;font-weight:var(--type-zh-strong)!important;line-height:1.72!important;letter-spacing:.07em!important
+}
+.current-card__copy em,.focus-preview__item em,.realm-preview__copy em,.layer-story em,.issue-contents em,.story-card__name small,.mc-list em,.section-atlas__index h2 span,.section-heading h2 span,.index-block h3 span,.facet-head h2 span,.archive-field-head h2 span{
+  font-size:clamp(.78rem,.82vw,.9rem)!important;font-weight:var(--type-zh-strong)!important;line-height:1.62!important;letter-spacing:.045em!important
+}
+.atlas-entry h3,.story-card h3{font-size:clamp(1.35rem,2vw,2.15rem)!important;font-weight:var(--type-zh-strong)!important;line-height:1.38!important;letter-spacing:.025em!important}
+.movement-spread__statement,.mc-paths span{font-size:clamp(.95rem,1vw,1.05rem)!important;font-weight:var(--type-zh-light)!important;line-height:1.9!important;letter-spacing:.035em!important}
+
+/* Prevent single-character lines and artificial bold faces. */
+:where(.type-zh,h1,h2,h3,h4,p,li,strong,em,span){text-wrap:pretty}
+:where(h1,h2,h3,h4,.type-en){font-synthesis:none}
+.primary-nav,.utility-nav,.section-nav,.site-footer{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important}
+.primary-nav,.utility-nav,.section-nav{font-size:clamp(.78rem,.74rem + .12vw,.88rem)!important;line-height:1.2!important;letter-spacing:.1em!important}
+
+@media(max-width:700px){
+  h1.type-zh{font-size:clamp(2.4rem,12vw,4.35rem)!important}
+  h2.type-zh{font-size:clamp(2rem,9vw,3.25rem)!important}
+  .living-screen__head>span,.realm__zh,.layer-hero__zh,.section-atlas__zh,.issue-cover__zh,.mc-zh{font-size:.95rem!important;line-height:1.7!important}
+}

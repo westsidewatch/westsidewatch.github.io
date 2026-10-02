@@ -1,0 +1,92 @@
+/*
+ * Homepage pages 02–03 — Candidate 01 motion authority.
+ * This file is intentionally loaded after the fingerprinted legacy bundle.
+ * Keep every card visible; the only ambient displacement is horizontal.
+ */
+.living-grid .current-card,
+.living-grid .current-card.is-focus-source {
+  opacity: 1 !important;
+  transform: none !important;
+  rotate: 0deg !important;
+  animation-duration: 28s !important;
+  animation-timing-function: cubic-bezier(.45,.05,.55,.95) !important;
+  animation-iteration-count: infinite !important;
+  animation-direction: alternate !important;
+}
+
+.living-grid .current-card:nth-child(1) { animation-name: current-flow-a !important; animation-delay: -2s !important; }
+.living-grid .current-card:nth-child(2) { animation-name: current-flow-b !important; animation-delay: -11s !important; }
+.living-grid .current-card:nth-child(3) { animation-name: current-flow-a !important; animation-delay: -19s !important; }
+.living-grid .current-card:nth-child(4) { animation-name: current-flow-c !important; animation-delay: -7s !important; }
+.living-grid .current-card:nth-child(5) { animation-name: current-flow-b !important; animation-delay: -23s !important; }
+.living-grid .current-card:nth-child(6) { animation-name: current-flow-a !important; animation-delay: -14s !important; }
+.living-grid .current-card:nth-child(7) { animation-name: current-flow-c !important; animation-delay: -5s !important; }
+.living-grid .current-card:nth-child(8) { animation-name: current-flow-b !important; animation-delay: -17s !important; }
+
+.living-grid .current-card:hover,
+.living-grid .current-card:focus-within {
+  animation-play-state: paused !important;
+}
+
+@keyframes current-flow-a {
+  0%   { translate: -1.25vw 0; rotate: 0deg; }
+  50%  { translate: .35vw 0; rotate: 0deg; }
+  100% { translate: 1.3vw 0; rotate: 0deg; }
+}
+
+@keyframes current-flow-b {
+  0%   { translate: 1.4vw 0; rotate: 0deg; }
+  50%  { translate: -.4vw 0; rotate: 0deg; }
+  100% { translate: -1.2vw 0; rotate: 0deg; }
+}
+
+@keyframes current-flow-c {
+  0%   { translate: -1.1vw 0; rotate: 0deg; }
+  50%  { translate: 1.15vw 0; rotate: 0deg; }
+  100% { translate: .25vw 0; rotate: 0deg; }
+}
+
+.living-grid .current-card img {
+  animation-name: current-image-flow !important;
+}
+
+@keyframes current-image-flow {
+  from { object-position: 47% 50%; }
+  to   { object-position: 55% 50%; }
+}
+
+/* Candidate 01 opening: the focus window unfolds, never replaces the grid. */
+.living-grid .grid-focus {
+  width: calc((100% - 4vw) / 2);
+  opacity: 0;
+  transform: scale(.96);
+}
+
+.living-grid .grid-focus.is-open {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.living-grid .grid-focus__rail {
+  display: flex;
+  width: max-content;
+  gap: .6rem;
+  translate: none !important;
+  animation: focus-rail 20s linear infinite !important;
+  will-change: transform;
+  backface-visibility: hidden;
+  transform: translate3d(0,0,0);
+}
+
+@keyframes focus-rail {
+  from { transform: translate3d(0,0,0); }
+  to   { transform: translate3d(calc(-50% - .3rem),0,0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .living-grid .current-card,
+  .living-grid .current-card img,
+  .living-grid .grid-focus__rail {
+    animation: none !important;
+  }
+}

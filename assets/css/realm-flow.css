@@ -1,0 +1,19 @@
+/* Candidate 01: centred moving editorial windows for every major realm. */
+.realm__flow{position:absolute;z-index:1;left:50%;top:11vh;width:min(88vw,92rem);height:61vh;overflow:hidden;transform:translateX(-50%);border:1px solid var(--realm-line);box-shadow:0 2.6rem 7rem rgba(10,18,22,.18);isolation:isolate}
+.realm__flow:after{content:"";position:absolute;z-index:4;inset:0;pointer-events:none;background:linear-gradient(90deg,var(--realm-bg),transparent 8% 92%,var(--realm-bg)),linear-gradient(0deg,rgba(8,18,24,.38),transparent 52%)}
+.realm__flow-track{display:flex;width:max-content;height:100%;gap:1rem;padding:1rem;animation:realm-flow 42s linear infinite;will-change:transform}
+.realm:nth-child(even) .realm__flow-track{animation-direction:reverse;animation-duration:48s}
+.realm__flow:hover .realm__flow-track,.realm__flow:focus-within .realm__flow-track{animation-play-state:paused}
+.realm-preview{position:relative;display:block;flex:0 0 clamp(20rem,27vw,32rem);height:100%;overflow:hidden;color:#fff;text-decoration:none;background:#1b2b37}
+.realm-preview img{position:absolute;inset:-2%;width:104%;height:104%;object-fit:cover;filter:sepia(.15) saturate(.68) contrast(.96);transition:transform 1.2s cubic-bezier(.2,.75,.2,1)}
+.realm-preview:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,16,24,.92),rgba(5,16,24,.03) 68%)}
+.realm-preview__copy{position:absolute;z-index:2;left:1.2rem;right:1.2rem;bottom:1.1rem;display:grid;gap:.25rem}
+.realm-preview__copy small{font:600 .7rem/1 var(--font-display);letter-spacing:.16em;color:var(--home-gold)}
+.realm-preview__copy strong{font:500 clamp(1.65rem,2.1vw,2.45rem)/.95 var(--font-display);letter-spacing:-.025em}
+.realm-preview__copy em{font:500 .86rem/1.5 var(--home-zh);font-style:normal;letter-spacing:.04em}
+.realm-preview:hover img,.realm-preview:focus-visible img{transform:scale(1.055) translateX(-1%)}
+.realm-preview:focus-visible{outline:2px solid var(--home-gold);outline-offset:-3px}
+.realm__copy{left:max(6vw,calc((100vw - 86rem)/2));bottom:10vh;width:min(48vw,50rem);text-shadow:0 1px 28px rgba(0,0,0,.2)}
+@keyframes realm-flow{to{transform:translateX(calc(-50% - .5rem))}}
+@media(max-width:900px){.realm__flow{top:9vh;width:90vw;height:52vh}.realm-preview{flex-basis:72vw}.realm__copy{left:5vw;right:5vw;bottom:9vh;width:auto}}
+@media(prefers-reduced-motion:reduce){.realm__flow{overflow-x:auto}.realm__flow-track{animation:none!important}}

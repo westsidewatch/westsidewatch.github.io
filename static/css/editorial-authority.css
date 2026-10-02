@@ -1,0 +1,43 @@
+/* Final visual authority: bilingual hierarchy, visible engraving, no enlarged wall. */
+:root{--ww-en:"Cormorant Garamond",Georgia,"Times New Roman",serif;--ww-zh-only:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--ww-zh:var(--ww-en),var(--ww-zh-only);--font-display:var(--ww-en);--font-sans:var(--ww-en);--font-text:var(--ww-zh);--type-en:var(--ww-en);--type-ui:var(--ww-en);--type-zh:var(--ww-zh);--sl-en:var(--ww-en);--sl-zh:var(--ww-zh);--west-en:var(--ww-en);--west-zh:var(--ww-zh);--home-zh:var(--ww-zh)}
+/* One resolver for the whole site: Latin glyphs always come from Cormorant;
+   CJK glyphs fall through to Noto Sans TC. No English sans-serif remains. */
+html body{font-family:var(--ww-zh)!important}
+html body [class][class],html body :is(h1,h2,h3,h4,h5,h6,p,a,button,label,input,textarea,select,option,span,strong,b,em,small,time,li,dt,dd,blockquote,figcaption,th,td){font-family:var(--ww-zh)!important}
+.adullam-motion{font-family:var(--ww-zh)!important}
+.adullam-motion :is(p,a,b,span):not(.am-title-en):not(.am-label):not(.am-kicker):not(.am-num){font-family:var(--ww-zh)}
+.adullam-motion :is(.am-kicker,.am-label,.am-num,.am-open,.am-enter,.am-field span,.am-cross span){font-family:var(--ww-en)!important;font-weight:400!important}
+.adullam-motion .am-panel h2{margin:auto 0;max-width:min(64rem,72vw);font-family:var(--ww-en)!important;font-size:clamp(4.5rem,9vw,10rem)!important;font-weight:400!important;line-height:.76!important;letter-spacing:-.045em!important;text-wrap:balance}
+.adullam-motion .am-title-en{display:block;font-family:var(--ww-en)!important;font-weight:400!important}
+.adullam-motion .am-title-zh{display:block;width:max-content;max-width:min(34rem,75vw);margin-top:clamp(1.1rem,2vw,2rem);font-family:var(--ww-zh)!important;font-size:clamp(.95rem,1.35vw,1.35rem)!important;font-weight:600!important;line-height:1.55!important;letter-spacing:.08em!important;word-break:keep-all;line-break:strict;overflow-wrap:normal}
+.adullam-motion .am-cover__title>span{font-family:var(--ww-zh)!important;font-size:clamp(.9rem,1.15vw,1.15rem)!important;font-weight:600;letter-spacing:.12em}
+.adullam-motion .am-cover>p,.adullam-motion .am-voice__statement,.adullam-motion .am-emerge>p:not(.am-label){font-family:var(--ww-zh)!important;font-weight:300!important;line-height:1.9!important;letter-spacing:.045em!important}
+
+/* Every large colour field gets a different Doré-derived engraved plate. */
+.adullam-motion .am-panel{isolation:isolate;background-color:var(--paper)}
+.adullam-motion .am-panel::before{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;opacity:.28;mix-blend-mode:multiply}
+.adullam-motion .am-panel>*{position:relative;z-index:2}
+.adullam-motion .am-cover::before{background-image:repeating-radial-gradient(ellipse 105% 74% at 18% 48%,transparent 0 13px,rgba(206,189,116,.44) 13.5px 14.5px),repeating-linear-gradient(112deg,transparent 0 17px,rgba(255,255,255,.12) 17.5px 18.5px);opacity:.46;mix-blend-mode:screen}
+.adullam-motion .am-huang::before{background-image:linear-gradient(110deg,transparent 8%,rgba(100,72,27,.16) 43%,transparent 70%),repeating-linear-gradient(76deg,transparent 0 12px,rgba(58,45,27,.25) 12.5px 13.5px),repeating-linear-gradient(104deg,transparent 0 31px,rgba(58,45,27,.13) 31.5px 32.5px)}
+.adullam-motion .am-jiang::before{background-image:repeating-radial-gradient(ellipse 88% 46% at 76% 42%,transparent 0 15px,rgba(206,189,116,.5) 15.5px 16.5px),repeating-linear-gradient(25deg,transparent 0 22px,rgba(255,255,255,.11) 22.5px 23.5px);opacity:.42;mix-blend-mode:screen}
+.adullam-motion .am-voice::before{background-image:radial-gradient(circle at 77% 24%,rgba(255,250,224,.44),transparent 28%),repeating-linear-gradient(7deg,transparent 0 10px,rgba(57,43,19,.24) 10.5px 11.5px),repeating-linear-gradient(173deg,transparent 0 27px,rgba(57,43,19,.13) 27.5px 28.5px)}
+.adullam-motion .am-emerge::before{background-image:repeating-radial-gradient(ellipse 54% 88% at 26% 52%,transparent 0 12px,rgba(43,39,30,.23) 12.5px 13.5px),repeating-radial-gradient(ellipse 62% 38% at 78% 44%,transparent 0 21px,rgba(43,39,30,.13) 21.5px 22.5px)}
+.adullam-motion .am-panel::after{box-shadow:inset 0 18vh 24vh rgba(255,255,255,.09),inset 0 -18vh 24vh rgba(22,20,17,.12)}
+
+/* The supplied wall is a 3000×100 strip. It may only remain a bottom strip. */
+.section-vol-00 .issue-cover{isolation:isolate;padding-bottom:clamp(8rem,12vw,12rem)!important}
+.section-vol-00 .issue-cover::before{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;background-image:radial-gradient(ellipse at 22% 62%,rgba(206,189,116,.13),transparent 34%),repeating-radial-gradient(ellipse 104% 72% at 18% 56%,transparent 0 12px,rgba(206,189,116,.27) 12.5px 13.5px),repeating-linear-gradient(111deg,transparent 0 19px,rgba(255,255,255,.095) 19.5px 20.5px);opacity:.72;mix-blend-mode:screen}
+.section-vol-00 .issue-cover>*:not(.issue-cover__image){position:relative;z-index:2}
+.section-vol-00 .issue-cover__image{position:absolute!important;z-index:3!important;inset:auto 0 0 0!important;grid-column:auto!important;grid-row:auto!important;align-self:auto!important;justify-self:auto!important;width:100%!important;max-width:none!important;height:clamp(38px,3vw,52px)!important;min-height:0!important;margin:0!important;overflow:hidden!important;clip-path:none!important;background:transparent!important;line-height:0!important}
+/* The build crops the transparent lower portion of the source plate. Preserve
+   that cropped wall's proportions and land its masonry base on the gold edge. */
+.section-vol-00 .issue-cover__image img{position:absolute!important;inset:0!important;display:block!important;width:100%!important;height:100%!important;max-width:none!important;object-fit:cover!important;object-position:center bottom!important;transform:none!important;filter:sepia(.12) saturate(.72) contrast(1.08)!important;image-rendering:auto}
+.section-vol-00 .issue-cover__image::before,.section-vol-00 .issue-cover__image::after,.section-vol-00 .issue-cover__image figcaption{display:none!important}
+
+.section-vol-00 .issue-dispatch,.section-vol-00 .issue-coda{position:relative;isolation:isolate;overflow:hidden}
+.section-vol-00 .issue-dispatch::before,.section-vol-00 .issue-coda::before{content:"";position:absolute;z-index:0;inset:0;pointer-events:none;opacity:.34;mix-blend-mode:multiply}
+.section-vol-00 .issue-dispatch::before{background-image:radial-gradient(circle at 78% 26%,rgba(255,255,255,.36),transparent 24%),repeating-linear-gradient(8deg,transparent 0 9px,rgba(55,41,16,.3) 9.5px 10.5px),repeating-linear-gradient(172deg,transparent 0 23px,rgba(55,41,16,.16) 23.5px 24.5px)}
+.section-vol-00 .issue-coda::before{background-image:radial-gradient(ellipse at 18% 72%,rgba(255,225,196,.22),transparent 30%),repeating-radial-gradient(ellipse 82% 55% at 16% 68%,transparent 0 13px,rgba(48,19,15,.34) 13.5px 14.5px),repeating-linear-gradient(128deg,transparent 0 18px,rgba(48,19,15,.18) 18.5px 19.5px)}
+.section-vol-00 .issue-dispatch>*,.section-vol-00 .issue-coda>*{position:relative;z-index:1}
+
+@media(max-width:760px){.adullam-motion .am-panel h2{max-width:94vw;font-size:clamp(3.8rem,17vw,7rem)!important;line-height:.79!important}.adullam-motion .am-title-zh{max-width:82vw;font-size:.95rem!important}.section-vol-00 .issue-cover{padding-bottom:7rem!important}.section-vol-00 .issue-cover__image{height:38px!important}}
