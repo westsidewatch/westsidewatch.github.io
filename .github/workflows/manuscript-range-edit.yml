@@ -1,0 +1,48 @@
+name: Manuscript Range Edit
+on:
+  push:
+    paths:
+      - '.manuscript-patches/*.json'
+permissions:
+  contents: write
+concurrency:
+  group: manuscript-range-edit
+  cancel-in-progress: false
+jobs:
+  apply:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply range patch
+        shell: python
+        run: |
+          import json, pathlib, re, subprocess
+          reqs=sorted(pathlib.Path('.manuscript-patches').glob('*.json'), key=lambda p:p.stat().st_mtime)
+          if not reqs: raise SystemExit('no patch request')
+          req=reqs[-1]; d=json.loads(req.read_text())
+          path=pathlib.Path(d['path']); text=path.read_text()
+          title=d['heading']; occurrence=int(d.get('occurrence',1)); replacement=d['replacement'].strip()+'\n'
+          lines=text.splitlines()
+          hits=[]
+          for i,line in enumerate(lines):
+            m=re.match(r'^(#{1,6})\s+(.+?)\s*$',line)
+            if m and re.sub(r'[*_`]','',m.group(2)).strip()==title: hits.append((i,len(m.group(1))))
+          if len(hits)<occurrence: raise SystemExit(f'heading not found: {title}')
+          start,level=hits[occurrence-1]; end=len(lines)
+          for i in range(start+1,len(lines)):
+            m=re.match(r'^(#{1,6})\s+',lines[i])
+            if m and len(m.group(1))<=level: end=i; break
+          old='\n'.join(lines[start:end]).strip()+'\n'
+          expected=d.get('expected')
+          if expected and expected.strip()!=old.strip(): raise SystemExit('range changed; refusing stale patch')
+          new='\n'.join(lines[:start]+replacement.strip().splitlines()+lines[end:]).rstrip()+'\n'
+          path.write_text(new)
+          req.unlink()
+          subprocess.run(['git','config','user.name','westsidewatch-manuscript-bot'],check=True)
+          subprocess.run(['git','config','user.email','actions@users.noreply.github.com'],check=True)
+          subprocess.run(['git','add',str(path),str(req)],check=True)
+          subprocess.run(['git','commit','-m',d.get('message',f'Edit manuscript range: {title}')],check=True)
+          subprocess.run(['git','push'],check=True)
