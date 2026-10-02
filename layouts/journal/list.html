@@ -1,43 +1,18 @@
 {{ define "main" }}
-  <section class="publication-index" aria-labelledby="journal-title">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{{ site.Home.RelPermalink }}">Home</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">Journal</span>
-    </nav>
-    <header class="publication-index__header">
-      <img class="publication-index__masthead" src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
-      <h1 id="journal-title" class="visually-hidden">{{ .Title }}</h1>
-      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
-    </header>
-
-    <a class="issue-door index-card--landscape"
-       href="{{ "/#vol-00-proclamation" | relURL }}"
-       aria-label="Open Vol.00: The Foundations of a Watchful City"
-       data-dore-surface-product="journal"
-       data-editorial-role="primary"
-       data-editorial-weight="2"
-       data-editorial-motion="near-still"
-       data-editorial-surface="journal-current-volume"
-       data-surface-preset="card-8x5">
-      <span class="issue-door__windows image-windows" aria-hidden="true">
-        <i></i><i></i><i></i>
-      </span>
-      <span class="issue-door__shade" aria-hidden="true"></span>
-      <span class="issue-door__content">
-        <span class="issue-door__watch">Current volume · Vol.00</span>
-        <span class="issue-door__title">The Foundations<br>of a Watchful City</span>
-        <span class="issue-door__summary">A founding volume in four movements, twelve permanent columns, and three watches of the night.</span>
-        <span class="issue-door__action">Open the volume <b aria-hidden="true">→</b></span>
-      </span>
-      <span class="issue-door__credit">Jerusalem · Damascus Gate</span>
-      <span class="issue-door__light" aria-hidden="true"></span>
-    </a>
-
-    <nav class="journal-quicklinks" aria-label="Journal visual index">
-      {{ partial "index-card.html" (dict "href" ("/#contents" | relURL) "number" "01" "section" "VOL.00" "title" "Contents" "subtitle" "目錄" "description" "Four movements · Twelve columns · Three watches" "orientation" "portrait" "action" "Browse" "surfaceProduct" "journal" "editorialRole" "secondary" "editorialWeight" 1 "editorialMotion" "slow-flow" "editorialSurface" "journal-contents" "surfacePreset" "card-8x5") }}
-      {{ partial "index-card.html" (dict "href" ("/#vol-00-proclamation" | relURL) "number" "02" "section" "VOL.00" "title" "Opening" "subtitle" "卷首序曲" "description" "The founding proclamation of a watchful city" "orientation" "portrait" "action" "Enter" "surfaceProduct" "journal" "editorialRole" "reading-focus" "editorialWeight" 1 "editorialMotion" "focus" "editorialSurface" "journal-opening" "surfacePreset" "card-8x5") }}
-      {{ partial "index-card.html" (dict "href" ("/#movement-watch" | relURL) "number" "03" "section" "VOL.00" "title" "Read Vol.00" "subtitle" "開始閱讀" "description" "Begin with Watch and continue toward the Great Light" "orientation" "portrait" "action" "Read" "surfaceProduct" "journal" "editorialRole" "secondary" "editorialWeight" 1 "editorialMotion" "slow-flow" "editorialSurface" "journal-read" "surfacePreset" "card-8x5") }}
-    </nav>
-  </section>
+<section class="sites-second-layer sites-journal" aria-labelledby="journal-title">
+  <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><span aria-current="page">Journal</span></nav>
+  <header class="sites-journal-head">
+    <img src="{{ "images/westside-watch-masthead-landscape.svg" | relURL }}" alt="LivingWater — Westside Watch, Vol.00, 西望">
+    <h1 id="journal-title">{{ .Title }}</h1>
+    {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  </header>
+  <a class="sites-journal-current" href="{{ "/#vol-00-proclamation" | relURL }}" aria-label="Open Vol.00: The Foundations of a Watchful City">
+    <span>Current volume · Vol.00</span><strong>The Foundations<br>of a Watchful City</strong><p>A founding volume in four movements, twelve permanent columns, and three watches of the night.</p><b>Open the volume →</b>
+  </a>
+  <nav class="sites-journal-routes" aria-label="Journal index">
+    <a href="{{ "/#contents" | relURL }}"><span>01 · VOL.00</span><strong>Contents</strong><em>目錄</em></a>
+    <a href="{{ "/#vol-00-proclamation" | relURL }}"><span>02 · VOL.00</span><strong>Opening</strong><em>卷首序曲</em></a>
+    <a href="{{ "/#movement-watch" | relURL }}"><span>03 · VOL.00</span><strong>Read Vol.00</strong><em>開始閱讀</em></a>
+  </nav>
+</section>
 {{ end }}
