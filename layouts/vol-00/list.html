@@ -1,24 +1,10 @@
 {{ define "main" }}
-  <article class="volume volume--contents">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{{ site.Home.RelPermalink }}">Home</a>
-      <span aria-hidden="true">/</span>
-      <a href="{{ "journal/" | relURL }}">Journal</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">Vol.00</span>
-    </nav>
-    <header class="volume__header volume__header--contents">
-      <p class="kicker">{{ .Params.volume }} · Founding Volume</p>
-      <h1>{{ .Title }}</h1>
-      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
-      <nav class="volume__routes" aria-label="Volume routes">
-        <a href="{{ "/vol-00/#vol-00-proclamation" | relURL }}">Read the opening</a>
-        <a href="#contents">Browse contents</a>
-        <a href="{{ "journal/" | relURL }}">Return to Journal</a>
-      </nav>
-    </header>
-
-    {{ partial "home-proclamation.html" . }}
-    {{ partial "vol-00-contents.html" . }}
-  </article>
+<article class="sites-second-layer sites-volume" id="vol-00">
+  <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><a href="{{ "journal/" | relURL }}">Journal</a><span aria-hidden="true">/</span><span aria-current="page">Vol.00</span></nav>
+  <header class="sites-volume-head">
+    <p>{{ .Params.volume }} · Founding Volume</p><h1>{{ .Title }}</h1>{{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <nav class="sites-volume-routes" aria-label="Volume routes"><a href="{{ "/vol-00/#vol-00-proclamation" | relURL }}">Read the opening</a><a href="#contents">Browse contents</a><a href="{{ "journal/" | relURL }}">Return to Journal</a></nav>
+  </header>
+  <div class="sites-volume-content">{{ partial "home-proclamation.html" . }}{{ partial "vol-00-contents.html" . }}</div>
+</article>
 {{ end }}
