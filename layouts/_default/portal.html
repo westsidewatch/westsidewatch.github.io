@@ -1,66 +1,21 @@
 {{ define "main" }}
-  <article class="portal">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{{ site.Home.RelPermalink }}">Home</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ .Title }}</span>
-    </nav>
-    <header class="portal__header">
-      <p class="kicker">Westside Watch</p>
-      {{ if and (eq .Section "church") .Params.display_logo }}
-        <h1 class="church-display-name">
-          <img src="{{ .Params.display_logo | relURL }}" alt="" aria-hidden="true">
-          <span class="visually-hidden">{{ .Params.display_title | default .Title }}</span>
-        </h1>
-      {{ else }}
-        <h1>{{ .Params.display_title | default .Title }}</h1>
-      {{ end }}
-      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
+  <article class="sites-surface" data-surface="{{ .Section }}">
+    <header class="sites-surface-head">
+      <p>Westside Watch</p>
+      <h1>{{ .Params.display_title | default .Title }}</h1>
+      {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
     </header>
 
-    <section class="visual-index" aria-labelledby="visual-index-title">
-      <header class="visual-index__header">
-        <p class="kicker">Visual Index · 視覺索引</p>
-        <h2 id="visual-index-title">A catalogue<br>of entrances</h2>
-        <p>Each card is both a cover and an index: a fixed window into the continuing life of {{ .Title }}.</p>
-      </header>
-      <div class="visual-index__cards">
-        {{ $cardSection := upper .Title }}
-        {{ if eq .Section "website" }}
-          {{ $cardSection = "MOUNT OF OLIVES" }}
-        {{ else if eq .Section "church" }}
-          {{ $cardSection = "LIVING WATER" }}
-        {{ end }}
+    {{ with .Content }}<div class="sites-surface-content">{{ . }}</div>{{ end }}
+
+    {{ if .Pages }}
+      <nav class="sites-surface-entries" aria-label="{{ .Title }} entries">
         {{ range .Pages.ByWeight }}
           {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-          {{ partial "index-card.html" (dict
-            "href" $entryHref
-            "number" (printf "%02d" .Weight)
-            "section" $cardSection
-            "title" .Title
-            "subtitle" .Params.subtitle
-            "description" .Description
-            "orientation" "portrait"
-          ) }}
+          <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Params.subtitle }}<small>{{ . }}</small>{{ end }}{{ with .Description }}<p>{{ . }}</p>{{ end }}</a>
         {{ end }}
-      </div>
-    </section>
-
-    <header class="directory-heading">
-      <p class="kicker">Directory · 文字目錄</p>
-      <p>Browse the same collection as a compact editorial index.</p>
-    </header>
-    <div class="portal-grid">
-      {{ range .Pages.ByWeight }}
-        {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-        <a class="portal-card" href="{{ $entryHref }}">
-          <span class="portal-card__number">{{ printf "%02d" .Weight }}</span>
-          <strong>{{ .Title }}</strong>
-          {{ with .Params.subtitle }}<span class="portal-card__subtitle">{{ . }}</span>{{ end }}
-          {{ with .Description }}<p>{{ . }}</p>{{ end }}
-          <span class="portal-card__arrow" aria-hidden="true">→</span>
-        </a>
-      {{ end }}
-    </div>
+      </nav>
+    {{ end }}
   </article>
 {{ end }}
