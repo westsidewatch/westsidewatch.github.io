@@ -1,0 +1,59 @@
+name: Doré Semantic Decision Resident Gate
+
+on:
+  push:
+    branches:
+      - dore/semantic-decision-v0
+    paths:
+      - '.github/workflows/dore-semantic-decision-resident-gate.yml'
+      - 'local/dore-local/semantic_decision.py'
+      - 'local/dore-local/semantic_decision_blind_test.py'
+      - 'local/dore-local/design_local_inference.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dore-semantic-decision-resident-gate
+  cancel-in-progress: true
+
+jobs:
+  blind-gate:
+    runs-on: [self-hosted, macOS, dore]
+    timeout-minutes: 10
+    steps:
+      - name: Resolve semantic-decision branch on Doré Mac
+        run: |
+          ROOT="$HOME/westsidewatch.github.io"
+          WT="$HOME/.dore/semantic-decision-v0"
+          test -d "$ROOT/.git"
+          cd "$ROOT"
+          git fetch origin +refs/heads/dore/semantic-decision-v0:refs/remotes/origin/dore/semantic-decision-v0
+          SHA="$(git rev-parse refs/remotes/origin/dore/semantic-decision-v0)"
+          git worktree remove --force "$WT" 2>/dev/null || true
+          rm -rf "$WT"
+          git worktree add --force --detach "$WT" "$SHA"
+          echo "DORE_TEST_SHA=$SHA" >> "$GITHUB_ENV"
+          echo "DORE_TEST_WT=$WT" >> "$GITHUB_ENV"
+
+      - name: Verify resident Ollama
+        run: |
+          curl -fsS --max-time 10 http://127.0.0.1:11434/api/tags >/tmp/dore-ollama-tags.json
+          test -s /tmp/dore-ollama-tags.json
+
+      - name: Run blind semantic decision gate
+        run: |
+          cd "$DORE_TEST_WT/local/dore-local"
+          python3 semantic_decision_blind_test.py
+
+      - name: Print gate evidence
+        if: always()
+        run: |
+          ART="$DORE_TEST_WT/local/dore-local/artifacts/semantic-decision-blind-gate.json"
+          if test -f "$ART"; then
+            cat "$ART"
+          else
+            echo 'semantic decision artifact missing'
+            exit 1
+          fi
