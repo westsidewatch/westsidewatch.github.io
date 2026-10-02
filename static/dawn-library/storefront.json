@@ -1,6 +1,6 @@
 {
   "schema": "dawn.library.storefront.v3",
-  "generatedAt": "2026-10-01T16:32:24.060193+00:00",
+  "generatedAt": "2026-10-02T12:22:07.573281+00:00",
   "title": "黎明書局",
   "storagePolicy": "index-only",
   "principle": "映射 ≠ 導入。閱讀 ≠ 收藏。收藏 ≠ 下載。",
@@ -11,6 +11,86 @@
       "kind": "premium-shelf",
       "source": "Standard Ebooks",
       "items": [
+        {
+          "id": "standard-ebooks-oberland",
+          "title": "Oberland",
+          "author": "Dorothy M. Richardson",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland",
+            "downloadUrl": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland/downloads/dorothy-m-richardson_oberland.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/dorothy-m-richardson/oberland/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL3045981W",
+            "editionId": "OL14227829M",
+            "isbn": null,
+            "coverId": null,
+            "internetArchiveId": null,
+            "resolvedAt": "2026-10-02T12:22:07.573281+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL3045981W",
+            "openLibraryEdition": "OL14227829M"
+          }
+        },
+        {
+          "id": "standard-ebooks-the-house-of-the-arrow",
+          "title": "The House of the Arrow",
+          "author": "A. E. W. Mason",
+          "language": "en",
+          "source": {
+            "provider": "Standard Ebooks",
+            "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow",
+            "downloadUrl": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow/downloads/a-e-w-mason_the-house-of-the-arrow.epub?source=feed",
+            "kind": "remote-public-premium"
+          },
+          "cover": {
+            "url": "https://standardebooks.org/ebooks/a-e-w-mason/the-house-of-the-arrow/downloads/cover.jpg",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "public-domain-us",
+            "declaredBy": "Standard Ebooks"
+          },
+          "quality": "curated-edition",
+          "contentDownloaded": false,
+          "identity": {
+            "provider": "Open Library",
+            "workId": "/works/OL532448W",
+            "editionId": "OL18456542M",
+            "isbn": "9781515442486",
+            "coverId": 1787768,
+            "internetArchiveId": "houseofarrow0000maso",
+            "resolvedAt": "2026-10-02T12:22:07.573281+00:00"
+          },
+          "identifiers": {
+            "openLibraryWork": "/works/OL532448W",
+            "openLibraryEdition": "OL18456542M",
+            "isbn": "9781515442486"
+          },
+          "alternateSources": [
+            {
+              "provider": "Internet Archive",
+              "url": "https://archive.org/details/houseofarrow0000maso",
+              "kind": "remote-scan",
+              "reader": "Internet Archive BookReader",
+              "rightsStatus": "source-rights-check"
+            }
+          ]
+        },
         {
           "id": "standard-ebooks-barlasch-of-the-guard",
           "title": "Barlasch of the Guard",
@@ -526,78 +606,6 @@
             "openLibraryEdition": "OL52846364M",
             "isbn": "9997530004"
           }
-        },
-        {
-          "id": "standard-ebooks-malleus-maleficarum",
-          "title": "Malleus Maleficarum",
-          "author": "Heinrich Kramer",
-          "language": "en",
-          "source": {
-            "provider": "Standard Ebooks",
-            "url": "https://standardebooks.org/ebooks/heinrich-kramer/malleus-maleficarum/montague-summers",
-            "downloadUrl": "https://standardebooks.org/ebooks/heinrich-kramer/malleus-maleficarum/montague-summers/downloads/heinrich-kramer_malleus-maleficarum_montague-summers.epub?source=feed",
-            "kind": "remote-public-premium"
-          },
-          "cover": {
-            "url": "https://standardebooks.org/ebooks/heinrich-kramer/malleus-maleficarum/montague-summers/downloads/cover.jpg",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Standard Ebooks"
-          },
-          "quality": "curated-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL4062616W",
-            "editionId": "OL5764355M",
-            "isbn": "9780521813457",
-            "coverId": 5315382,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL4062616W",
-            "openLibraryEdition": "OL5764355M",
-            "isbn": "9780521813457"
-          }
-        },
-        {
-          "id": "standard-ebooks-the-fall-of-robespierre",
-          "title": "The Fall of Robespierre",
-          "author": "Samuel Taylor Coleridge, Robert Southey",
-          "language": "en",
-          "source": {
-            "provider": "Standard Ebooks",
-            "url": "https://standardebooks.org/ebooks/samuel-taylor-coleridge_robert-southey/the-fall-of-robespierre",
-            "downloadUrl": "https://standardebooks.org/ebooks/samuel-taylor-coleridge_robert-southey/the-fall-of-robespierre/downloads/samuel-taylor-coleridge-robert-southey_the-fall-of-robespierre.epub?source=feed",
-            "kind": "remote-public-premium"
-          },
-          "cover": {
-            "url": "https://standardebooks.org/ebooks/samuel-taylor-coleridge_robert-southey/the-fall-of-robespierre/downloads/cover.jpg",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "public-domain-us",
-            "declaredBy": "Standard Ebooks"
-          },
-          "quality": "curated-edition",
-          "contentDownloaded": false,
-          "identity": {
-            "provider": "Open Library",
-            "workId": "/works/OL15201280W",
-            "editionId": "OL51380539M",
-            "isbn": "1419161830",
-            "coverId": 1802430,
-            "internetArchiveId": null,
-            "resolvedAt": "2026-09-10T22:36:50.656359+00:00"
-          },
-          "identifiers": {
-            "openLibraryWork": "/works/OL15201280W",
-            "openLibraryEdition": "OL51380539M",
-            "isbn": "1419161830"
-          }
         }
       ]
     },
@@ -607,75 +615,6 @@
       "kind": "scan-shelf",
       "source": "Internet Archive",
       "items": [
-        {
-          "id": "internet-archive-testamentbiblean00rome",
-          "title": "Testament : the Bible and history",
-          "author": "Romer, John",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/testamentbiblean00rome",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/testamentbiblean00rome",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-sim_journal-of-biblical-literature_1988_107_index",
-          "title": "Journal of Biblical Literature 1988: Vol 107 Index",
-          "author": "",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/sim_journal-of-biblical-literature_1988_107_index",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/sim_journal-of-biblical-literature_1988_107_index",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-ageneralviewhis03westgoog",
-          "title": "A General View of the History of the English Bible",
-          "author": "Brooke Foss Westcott",
-          "language": "English",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/ageneralviewhis03westgoog",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/ageneralviewhis03westgoog",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
         {
           "id": "internet-archive-storyofbibleland01talm",
           "title": "Story of Bible land : a graphic narrative of inspired events, holy places, sacred walks, and hallowed scenes amid the People of Promise together with full historic incidents of the Master's life from Bethlehem to ascension",
@@ -700,18 +639,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-isamericainbible0000hitc",
-          "title": "Is America in Bible prophecy?",
-          "author": "Hitchcock, Mark, 1959-",
+          "id": "internet-archive-studiesinbiblica0000pata",
+          "title": "Studies in Biblical and Jewish folklore",
+          "author": "Patai, Raphael, 1910- ed",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/isamericainbible0000hitc",
+            "url": "https://archive.org/details/studiesinbiblica0000pata",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/isamericainbible0000hitc",
+            "url": "https://archive.org/services/img/studiesinbiblica0000pata",
             "mode": "source"
           },
           "rights": {
@@ -746,18 +685,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-annalsofenglishb00ande",
-          "title": "The annals of the English Bible ...",
-          "author": "Anderson, Christopher, 1782-1852, Prime, Samuel Irenæus, 1812-1885",
+          "id": "internet-archive-bibleafricanamer0000wimb",
+          "title": "The Bible and African Americans : a brief history",
+          "author": "Wimbush, Vincent L., author",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/annalsofenglishb00ande",
+            "url": "https://archive.org/details/bibleafricanamer0000wimb",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/annalsofenglishb00ande",
+            "url": "https://archive.org/services/img/bibleafricanamer0000wimb",
             "mode": "source"
           },
           "rights": {
@@ -769,18 +708,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-laterrelabibleet0000marc",
-          "title": "La terre, la Bible et l'histoire : \"Vers le pays que je te ferai voir--\"",
-          "author": "Marchadour, Alain, 1937-",
-          "language": "fre",
+          "id": "internet-archive-isamericainbible0000hitc",
+          "title": "Is America in Bible prophecy?",
+          "author": "Hitchcock, Mark, 1959-",
+          "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/laterrelabibleet0000marc",
+            "url": "https://archive.org/details/isamericainbible0000hitc",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/laterrelabibleet0000marc",
+            "url": "https://archive.org/services/img/isamericainbible0000hitc",
             "mode": "source"
           },
           "rights": {
@@ -792,18 +731,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-concisehistoryof0000unse_g9a5",
-          "title": "A concise history of the English Bible",
+          "id": "internet-archive-bwb_P8-DHH-297",
+          "title": "Biblical hermeneutics in historical perspective : studies in honor of Karlfried Froehlich on his sixtieth birthday",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/concisehistoryof0000unse_g9a5",
+            "url": "https://archive.org/details/bwb_P8-DHH-297",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/concisehistoryof0000unse_g9a5",
+            "url": "https://archive.org/services/img/bwb_P8-DHH-297",
             "mode": "source"
           },
           "rights": {
@@ -815,18 +754,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-earlyreligionis03robegoog",
-          "title": "The early religion of Israel : as set forth by Biblical writers and by modern critical historians",
-          "author": "Robertson, James, 1840-1920",
-          "language": "eng",
+          "id": "internet-archive-TheBibleInTheSyriacTradition",
+          "title": "The Bible in the Syriac Tradition",
+          "author": "Sebastian P. Brock",
+          "language": "en",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/earlyreligionis03robegoog",
+            "url": "https://archive.org/details/TheBibleInTheSyriacTradition",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/earlyreligionis03robegoog",
+            "url": "https://archive.org/services/img/TheBibleInTheSyriacTradition",
             "mode": "source"
           },
           "rights": {
@@ -838,18 +777,41 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-secretsofbible0000unse",
-          "title": "Secrets of the Bible",
+          "id": "internet-archive-atlasdesignedtoa00unse",
+          "title": "Atlas designed to accompany the new hand-book of Bible geography",
           "author": "",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/secretsofbible0000unse",
+            "url": "https://archive.org/details/atlasdesignedtoa00unse",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/secretsofbible0000unse",
+            "url": "https://archive.org/services/img/atlasdesignedtoa00unse",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-dictionaryofbibl0000unse_z3q0",
+          "title": "Dictionary of the Bible and ancient media",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/dictionaryofbibl0000unse_z3q0",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/dictionaryofbibl0000unse_z3q0",
             "mode": "source"
           },
           "rights": {
@@ -884,18 +846,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fromsermontocomm0000sega",
-          "title": "From sermon to commentary : expounding the Bible in Talmudic Babylonia",
-          "author": "Segal, Eliezer",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1721",
+          "title": "The Holy Bible, containing the Old and New Testaments, ... 1721",
+          "author": "[Bible. English. Authorised].",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fromsermontocomm0000sega",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1721",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fromsermontocomm0000sega",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1721",
             "mode": "source"
           },
           "rights": {
@@ -907,18 +869,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fromancienttable0000ewer_v4a6",
-          "title": "From ancient tablets to modern translations : a general introduction to the Bible",
-          "author": "Ewert, David, 1922-",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1771",
+          "title": "The Holy Bible, containing the Old Testament and the New: ... 1771",
+          "author": "[Bible. English. Authorised].",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fromancienttable0000ewer_v4a6",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1771",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fromancienttable0000ewer_v4a6",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-holy-bible-containi_bible-english-authori_1771",
             "mode": "source"
           },
           "rights": {
@@ -930,18 +892,64 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-a-muslim-commentary-of-the-bible-matthew-mark-luke-and-john",
-          "title": "A Muslim Commentary Of The Bible Matthew, Mark, Luke And John by Syed Mashhood Ahmad",
+          "id": "internet-archive-fromshadowstorea0000dani",
+          "title": "From shadows to reality; studies in the Biblical typology of the Fathers",
+          "author": "Daniélou, Jean",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/fromshadowstorea0000dani",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/fromshadowstorea0000dani",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bim_eighteenth-century_the-natural-history-of-t_harris-thaddeus-mason_1793",
+          "title": "The natural history of the Bible: or a description of all the beasts, birds, ... precious stones, &c. Mentioned in the sacred scriptures. Collected from the best authorities, and alphabetically arranged. By Thaddeus M. Harris, ... 1793",
+          "author": "Harris, Thaddeus Mason.",
+          "language": "English",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-natural-history-of-t_harris-thaddeus-mason_1793",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-natural-history-of-t_harris-thaddeus-mason_1793",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bim_eighteenth-century_the-holy-bible-containi_1766",
+          "title": "The Holy Bible, containing the Old and New Testaments: ... 1766",
           "author": "",
-          "language": "eng",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/a-muslim-commentary-of-the-bible-matthew-mark-luke-and-john",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-holy-bible-containi_1766",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/a-muslim-commentary-of-the-bible-matthew-mark-luke-and-john",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-holy-bible-containi_1766",
             "mode": "source"
           },
           "rights": {
@@ -953,18 +961,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebible1951159fort",
-          "title": "Fort Wayne Bible College The Bible Vision",
-          "author": "Fort Wayne Bible College",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-holy-bible-translate_1750_1",
+          "title": "The Holy Bible translated from the Latin Vulgat: ... first published by the English College at Doway, Anno 1609. Newly revised, and corrected, according to the Clementin edition of the Scriptures. With annotations ... 1750: Vol 1",
+          "author": "",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebible1951159fort",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-holy-bible-translate_1750_1",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebible1951159fort",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-holy-bible-translate_1750_1",
             "mode": "source"
           },
           "rights": {
@@ -976,18 +984,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebibleco1969fort",
-          "title": "Fort Wayne Bible College Light Tower Yearbook",
-          "author": "Fort Wayne Bible College",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-holy-bible_1796_1",
+          "title": "The Holy Bible. 1796: Vol 1",
+          "author": "",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebibleco1969fort",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-holy-bible_1796_1",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebibleco1969fort",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-holy-bible_1796_1",
             "mode": "source"
           },
           "rights": {
@@ -999,18 +1007,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-fortwaynebible192829fort",
-          "title": "Fort Wayne Bible Training School Catalog",
-          "author": "Fort Wayne Bible Training School",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-history-of-the-holy-_fellows-john_1777_4",
+          "title": "The history of the Holy Bible. As contained in the Old and New Testament. Attempted in easy verse. In four volumes. Volume the Fourth. Containing the Sacred History, from the Babylonish Captivity, to the Destruction of Jerusalem. By John Fellows. Author of Grace Triumphant. 1777: Vol 4",
+          "author": "Fellows, John",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/fortwaynebible192829fort",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-history-of-the-holy-_fellows-john_1777_4",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/fortwaynebible192829fort",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-history-of-the-holy-_fellows-john_1777_4",
             "mode": "source"
           },
           "rights": {
@@ -1022,18 +1030,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-inbeginningessay0000batt",
-          "title": "In the beginning : essays on creation motifs in the ancient Near East and the Bible",
-          "author": "Batto, Bernard Frank",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_the-christians-guide-o_smith-samuel-dd_1738",
+          "title": "The Christian's guide; on, the Holy Bible : by way of question and answer. Being an exposition of the Old and New Testament. ... Adorned with maps, cuts, &c. ... By S. Smith, D.D. 1738",
+          "author": "Smith, Samuel, D.D.",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/inbeginningessay0000batt",
+            "url": "https://archive.org/details/bim_eighteenth-century_the-christians-guide-o_smith-samuel-dd_1738",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/inbeginningessay0000batt",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_the-christians-guide-o_smith-samuel-dd_1738",
             "mode": "source"
           },
           "rights": {
@@ -1045,18 +1053,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-randmcnallybible0000krae_e6d4",
-          "title": "Rand McNally Bible atlas",
-          "author": "Kraeling, Emil Gottlieb Heinrich, 1892-",
-          "language": "eng",
+          "id": "internet-archive-bim_eighteenth-century_an-apology-for-the-bible_watson-richard_1796_3",
+          "title": "An apology for the Bible, in a series of letters, addressed to Thomas Paine, ... By R. Watson, ... 1796",
+          "author": "Watson, Richard",
+          "language": "English",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/randmcnallybible0000krae_e6d4",
+            "url": "https://archive.org/details/bim_eighteenth-century_an-apology-for-the-bible_watson-richard_1796_3",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/randmcnallybible0000krae_e6d4",
+            "url": "https://archive.org/services/img/bim_eighteenth-century_an-apology-for-the-bible_watson-richard_1796_3",
             "mode": "source"
           },
           "rights": {
@@ -1075,6 +1083,121 @@
       "kind": "scan-shelf",
       "source": "Internet Archive",
       "items": [
+        {
+          "id": "internet-archive-bwb_S0-EKJ-822",
+          "title": "A critical analysis of richard hooker's theory of the relation of church and state",
+          "author": "Cletus F. Dirksen",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_S0-EKJ-822",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_S0-EKJ-822",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-bwb_T5-CWP-064",
+          "title": "the church hymnal",
+          "author": "edmund s. lorenz",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/bwb_T5-CWP-064",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/bwb_T5-CWP-064",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-churchliberalsoc0000emme_p3u4",
+          "title": "The Church and The Liberal Society",
+          "author": "Emmet John HUghes",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/churchliberalsoc0000emme_p3u4",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/churchliberalsoc0000emme_p3u4",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-howtobuildupyour0000unse_t8q5",
+          "title": "how to build up your church school",
+          "author": "Weldon Crossland",
+          "language": "en",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/howtobuildupyour0000unse_t8q5",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/howtobuildupyour0000unse_t8q5",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-jesushischurchst0000rnew_q8m2",
+          "title": "Jesus and his church: a study of the idea of the ecclesia in the New Testament",
+          "author": "R. Newton Flew",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/jesushischurchst0000rnew_q8m2",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/jesushischurchst0000rnew_q8m2",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
         {
           "id": "internet-archive-gov.uscourts.wvsd.89432",
           "title": "Church v. CMH Homes, Inc.",
@@ -1168,75 +1291,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-ChurchHistoryPrint",
-          "title": "Church History Print",
-          "author": "",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/ChurchHistoryPrint",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/ChurchHistoryPrint",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-gov.uscourts.paed.110370",
-          "title": "United States v. CHURCH",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/gov.uscourts.paed.110370",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/gov.uscourts.paed.110370",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-gov.uscourts.paed.574599",
-          "title": "STATE FARM FIRE & CASUALTY CO. v. CANAAN BAPTIST CHURCH",
-          "author": "",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/gov.uscourts.paed.574599",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/gov.uscourts.paed.574599",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-bwb_KQ-734-479",
           "title": "the faith of the church",
           "author": "Karl Barth",
@@ -1272,6 +1326,29 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/bwb_S0-DSF-647",
+            "mode": "source"
+          },
+          "rights": {
+            "status": "source-rights-check",
+            "declaredBy": "Internet Archive",
+            "provenanceRequired": true
+          },
+          "quality": "original-scan",
+          "contentDownloaded": false
+        },
+        {
+          "id": "internet-archive-gov.uscourts.paed.574599",
+          "title": "STATE FARM FIRE & CASUALTY CO. v. CANAAN BAPTIST CHURCH",
+          "author": "",
+          "language": "eng",
+          "source": {
+            "provider": "Internet Archive",
+            "url": "https://archive.org/details/gov.uscourts.paed.574599",
+            "kind": "remote-scan",
+            "reader": "Internet Archive BookReader"
+          },
+          "cover": {
+            "url": "https://archive.org/services/img/gov.uscourts.paed.574599",
             "mode": "source"
           },
           "rights": {
@@ -1352,29 +1429,6 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_C0-ATB-321",
-          "title": "Young People In Your Church",
-          "author": "Herbert Carleton Mayer",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_C0-ATB-321",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_C0-ATB-321",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
           "id": "internet-archive-bwb_S0-BFL-750",
           "title": "A select library of nicene and post-nicene fathers of the christian church",
           "author": "Philip Schaff, D.D., LL.D.",
@@ -1410,29 +1464,6 @@
           },
           "cover": {
             "url": "https://archive.org/services/img/bwb_S0-BFR-524_2",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_S0-BVX-073",
-          "title": "history of the church",
-          "author": "Joseph Smith",
-          "language": "eng",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_S0-BVX-073",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_S0-BVX-073",
             "mode": "source"
           },
           "rights": {
@@ -1490,41 +1521,18 @@
           "contentDownloaded": false
         },
         {
-          "id": "internet-archive-bwb_Y0-BRI-998",
-          "title": "THE EPISCOPAL CHURCH IN NORTH CALIFORNIA",
-          "author": "LAWRENCE FOUSHEE LONDON AND SARAH MCCULLOH LEMMON",
+          "id": "internet-archive-bwb_C0-ATB-321",
+          "title": "Young People In Your Church",
+          "author": "Herbert Carleton Mayer",
           "language": "eng",
           "source": {
             "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-BRI-998",
+            "url": "https://archive.org/details/bwb_C0-ATB-321",
             "kind": "remote-scan",
             "reader": "Internet Archive BookReader"
           },
           "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-BRI-998",
-            "mode": "source"
-          },
-          "rights": {
-            "status": "source-rights-check",
-            "declaredBy": "Internet Archive",
-            "provenanceRequired": true
-          },
-          "quality": "original-scan",
-          "contentDownloaded": false
-        },
-        {
-          "id": "internet-archive-bwb_Y0-DBY-232",
-          "title": "The History of the Reorganized Church of Jesus Christ of Letter Day Saints",
-          "author": "Herald House",
-          "language": "en",
-          "source": {
-            "provider": "Internet Archive",
-            "url": "https://archive.org/details/bwb_Y0-DBY-232",
-            "kind": "remote-scan",
-            "reader": "Internet Archive BookReader"
-          },
-          "cover": {
-            "url": "https://archive.org/services/img/bwb_Y0-DBY-232",
+            "url": "https://archive.org/services/img/bwb_C0-ATB-321",
             "mode": "source"
           },
           "rights": {
@@ -5528,11 +5536,11 @@
       "Project Gutenberg": 112
     },
     "identity": {
-      "queriedThisRun": 3,
+      "queriedThisRun": 2,
       "resolved": 100,
       "coversAdded": 63,
-      "internetArchiveLinks": 49,
-      "cacheEntries": 207
+      "internetArchiveLinks": 50,
+      "cacheEntries": 209
     }
   },
   "errors": [
