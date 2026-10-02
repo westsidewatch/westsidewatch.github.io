@@ -1,0 +1,25 @@
+/*
+  SITES HOME — sole homepage presentation authority.
+  Legacy homepage presentation layers are intentionally disconnected in baseof.html.
+  Fill this file only from the Sites visual system; do not re-import Candidate, realm-flow,
+  watch-home, visual-refinement, typography-system, brand-surface-overrides or editorial-authority.
+*/
+
+.home {
+  margin: 0;
+  background: #eee4c9;
+  color: #252525;
+}
+
+.home *,
+.home *::before,
+.home *::after {
+  box-sizing: border-box;
+}
+
+.home img,
+.home video,
+.home iframe {
+  display: block;
+  max-width: 100%;
+}
