@@ -1,47 +1,37 @@
 {{ define "main" }}
-<div class="lw-story" id="lwStory">
-  <section class="lw-stage lw-stage--one" data-stage>
-    <div class="lw-wall" aria-hidden="true"></div>
-    
-    <div class="lw-stage__copy">
-      <p class="lw-eyebrow">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
-      {{ with .Params.display_logo }}<img class="lw-logo" src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ else }}<h1>{{ .Params.display_title }}</h1>{{ end }}
-      <p class="lw-scripture">「信我的人，就如經上所說：<br>從他腹中要流出活水的江河來。」</p>
-      <p class="lw-cite">JOHN 7:38</p>
-    </div>
-    <div class="lw-scroll">SCROLL TO ENTER <b>↓</b></div>
+<div class="sites-church" id="church">
+  <section class="sites-church-intro" aria-labelledby="church-title">
+    <p>P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
+    {{ with .Params.display_logo }}
+      <img src="{{ . | relURL }}" alt="神召會活水堂西區教會">
+      <h1 id="church-title" class="sites-structural-title">{{ $.Params.display_title | default "神召會活水堂西區教會" }}</h1>
+    {{ else }}
+      <h1 id="church-title">{{ .Params.display_title }}</h1>
+    {{ end }}
+    <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
   </section>
 
-  <section class="lw-stage lw-stage--two" data-stage>
-    <div class="lw-sticky">
-      <p class="lw-index">01 / GATHER</p>
-      <div class="lw-huge">活水<br><i>不是一個地方。</i></div>
-      <p class="lw-side">The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
-      
-    </div>
+  <section class="sites-church-gather" aria-labelledby="church-gather-title">
+    <p>01 / GATHER</p>
+    <h2 id="church-gather-title">活水</h2>
+    <p>不是一個地方。</p>
+    <p>The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
   </section>
 
-  <section class="lw-stage lw-stage--three" data-stage>
-    <div class="lw-sticky lw-water">
-      
-      <p class="lw-index">02 / LIVING WATER</p>
-      <p class="lw-word lw-word--a">COME</p>
-      <p class="lw-word lw-word--b">DRINK</p>
-      <p class="lw-word lw-word--c">FLOW</p>
-      <blockquote>「我所賜的水，要在他裡頭成為泉源，直湧到永生。」<cite>JOHN 4:14</cite></blockquote>
-    </div>
+  <section class="sites-church-water" aria-labelledby="church-water-title">
+    <p>02 / LIVING WATER</p>
+    <h2 id="church-water-title">COME · DRINK · FLOW</h2>
+    <blockquote>「我所賜的水，要在他裡頭成為泉源，直湧到永生。」<cite>JOHN 4:14</cite></blockquote>
   </section>
 
-  <section class="lw-stage lw-stage--four" data-stage>
-    <div class="lw-sticky">
-      <p class="lw-index">03 / THE GATHERED LIFE</p>
-      <h2>一起生活<br>在福音裡。</h2>
-      
-      <p class="lw-manifesto">主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p><p class="lw-verse-rail">WATCH FOR THE DAWN · ROMANS 13:12</p>
-    </div>
+  <section class="sites-church-life" aria-labelledby="church-life-title">
+    <p>03 / THE GATHERED LIFE</p>
+    <h2 id="church-life-title">一起生活<br>在福音裡。</h2>
+    <p>主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p>
+    <p>WATCH FOR THE DAWN · ROMANS 13:12</p>
   </section>
 
-    {{/* Scripture Environment consumer: canonical Cinema graph, fail-soft defaults. */}}
+  {{/* Scripture Environment consumer: preserve canonical Cinema data and fail-soft defaults. */}}
   {{ $filmHref := "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html" }}
   {{ $filmLabel := "LUMO · Matthew 3:1–4:25" }}
   {{ $filmProvider := "Jesus Film Project · LUMO" }}
@@ -56,132 +46,34 @@
         {{ $filmHref = $moment.sourcePointer | default $filmHref }}
         {{ with $resources }}{{ range .items }}
           {{ if and (eq .canonicalId $moment.workId) .provenance.verified (not .rights.rehost) }}
-            {{/* Keep the exact Moment episode URL; Resource supplies verified authority/provider only. */}}
             {{ $filmProvider = .creator | default $filmProvider }}
           {{ end }}
         {{ end }}{{ end }}
       {{ end }}
     {{ end }}
   {{ end }}
-  <section class="lw-scripture-scene" data-scripture-scene aria-label="Matthew 3:13–17 · Baptism of Jesus">
-    <div class="lw-scripture-scene__sticky">
-      <p class="lw-scripture-scene__coordinate">MATTHEW 3:13–17 · JORDAN · BAPTISM</p>
-      <p class="lw-scripture-scene__event">耶穌受洗<span>BAPTISM OF JESUS</span></p>
-      <h2 aria-hidden="true">水</h2>
-      <p class="lw-scripture-scene__range">太 3:13–17<br>MATTHEW 3:13–17</p>
-      <div class="lw-scripture-env">
-        <p class="lw-scripture-scene__meaning">經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。</p>
-        <a class="lw-scripture-env__media" href="{{ $filmHref }}" rel="noopener">
-          <small>IMAGE / FILM</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span>
-        </a>
-        <div class="lw-scripture-env__world">PLACE / HISTORY<br>JORDAN</div>
-        <div class="lw-scripture-env__voice">SERMON / WITNESS<br>VOICE</div>
-      </div>
-    </div>
+
+  <section class="sites-church-scripture" aria-labelledby="church-scripture-title">
+    <p>MATTHEW 3:13–17 · JORDAN · BAPTISM</p>
+    <h2 id="church-scripture-title">耶穌受洗 <span>BAPTISM OF JESUS</span></h2>
+    <p>太 3:13–17 · MATTHEW 3:13–17</p>
+    <p>經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。</p>
+    <a href="{{ $filmHref }}" rel="noopener"><small>IMAGE / FILM</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span></a>
+    <p>PLACE / HISTORY · JORDAN</p>
+    <p>SERMON / WITNESS · VOICE</p>
   </section>
 
-<nav class="lw-doors" aria-label="Church life">
+  <nav class="sites-church-entries" aria-label="Church life">
     {{ range .Pages.ByWeight }}
       {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-      <a class="lw-door" href="{{ $entryHref }}">
-        <span class="lw-door__n">{{ printf "%02d" .Weight }}</span>
-        <strong>{{ .Title }}</strong>
-        {{ with .Description }}<em>{{ . }}</em>{{ end }}
-        <b>↗</b>
-      </a>
+      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
     {{ end }}
   </nav>
 
-  <footer class="lw-final"><span>P.A.O.C. Living Water Assembly West</span><strong>神召會活水堂西區教會</strong><small>Watch for the Dawn · Romans 13:12</small></footer>
+  <footer class="sites-church-footer">
+    <span>P.A.O.C. Living Water Assembly West</span>
+    <strong>神召會活水堂西區教會</strong>
+    <small>Watch for the Dawn · Romans 13:12</small>
+  </footer>
 </div>
-
-<style>
-body.section-church{background:#efe9dc;color:#252525}.section-church main{padding:0!important;max-width:none!important}.lw-story{--paper:#efe9dc;--ink:#242522;--gold:#cebd74;--night:#d8cfbb;--water:#7d9c9a;background:var(--paper);overflow:clip;font-family:"Noto Serif TC",serif}.lw-stage{position:relative}.lw-stage--one{height:calc(100svh - 88px);min-height:620px;background:linear-gradient(135deg,#f5f0e6 0%,#e8dfce 58%,#d7c8a8 100%);color:var(--ink);display:grid;place-items:center;overflow:hidden}.lw-wall{position:absolute;inset:0;background:linear-gradient(rgba(9,17,16,.36),rgba(9,17,16,.74)),url('/images/jerusalem-wall.png') center/cover;filter:saturate(.34) contrast(.92) brightness(1.18);transform:scale(1.12);animation:lw-breathe 12s ease-out forwards}.lw-shutter{position:absolute;top:0;bottom:0;width:50.1%;z-index:2;background:#d8cfbb;transition:transform 1.7s cubic-bezier(.77,0,.18,1)}.lw-shutter--l{left:0}.lw-shutter--r{right:0}.lw-seam{position:absolute;z-index:3;top:0;bottom:0;left:50%;width:1px;background:var(--gold);box-shadow:0 0 55px rgba(206,189,116,.75);transform-origin:center;animation:lw-seam 2.2s ease forwards}.lw-stage__copy{position:relative;z-index:4;width:min(900px,80vw);text-align:center;opacity:0;transform:translateY(24px);animation:lw-copy 1.2s ease 1.5s forwards}.lw-eyebrow,.lw-cite,.lw-index,.lw-scroll,.lw-door__n{font:500 10px/1.2 "Cormorant Garamond",serif;letter-spacing:.2em}.lw-logo{display:block;width:min(680px,72vw);margin:7vh auto 6vh;filter:none;opacity:.92}.lw-scripture{font-size:clamp(17px,1.55vw,24px);line-height:2.05}.lw-cite{color:var(--gold)}.lw-scroll{position:absolute;z-index:4;bottom:4vh;left:50%;transform:translateX(-50%);color:#5e594f}.lw-scroll b{margin-left:12px}.lw-stage--one.lw-open .lw-shutter--l{transform:translateX(-100%)}.lw-stage--one.lw-open .lw-shutter--r{transform:translateX(100%)}.lw-stage--two,.lw-stage--three,.lw-stage--four{height:180vh}.lw-sticky{position:sticky;top:0;height:100svh;overflow:hidden;padding:8vh 6vw;box-sizing:border-box}.lw-stage--two .lw-sticky{background:var(--paper)}.lw-index{position:absolute;top:8vh;left:6vw;color:#756c5c}.lw-huge{position:absolute;left:6vw;bottom:8vh;font-size:clamp(78px,13vw,210px);line-height:.76;letter-spacing:-.075em;font-weight:500}.lw-huge i{display:block;font-size:.22em;line-height:1.4;font-style:normal;font-weight:400;letter-spacing:.02em;margin:1.2em 0 0 32vw}.lw-side{position:absolute;right:6vw;top:18vh;font-size:13px;line-height:2;color:#5e594f}.lw-orbit{position:absolute;width:46vw;height:46vw;right:-10vw;bottom:-15vw;border:1px solid rgba(162,135,42,.38);border-radius:50%;transform:rotate(var(--turn,0deg))}.lw-orbit span{position:absolute;border:1px solid rgba(162,135,42,.22);border-radius:50%;inset:12%}.lw-orbit span:nth-child(2){inset:27%}.lw-orbit span:nth-child(3){inset:42%;background:var(--gold)}.lw-water{background:linear-gradient(120deg,#dce6e1,#b8cfca 58%,#e9e2d4);color:#252525}.lw-water__image{position:absolute;inset:0;background:linear-gradient(90deg,rgba(15,27,26,.88),rgba(15,27,26,.18)),url('/images/jerusalem-wall.png') center/cover;opacity:.38;transform:scale(var(--scale,1.12));filter:saturate(.3)}.lw-stage--three .lw-index{color:var(--gold);z-index:2}.lw-word{position:absolute;z-index:2;margin:0;font:500 clamp(90px,17vw,270px)/.72 "Cormorant Garamond",serif;letter-spacing:-.055em;mix-blend-mode:multiply;opacity:.72;transform:translateX(var(--x,0))}.lw-word--a{top:15%;left:-2vw}.lw-word--b{top:43%;right:-1vw}.lw-word--c{bottom:5%;left:18vw;color:var(--gold)}.lw-water blockquote{position:absolute;z-index:3;right:7vw;bottom:9vh;width:min(390px,35vw);font-size:clamp(15px,1.3vw,21px);line-height:1.9;margin:0}.lw-water cite{display:block;font:500 10px "Cormorant Garamond",serif;letter-spacing:.18em;color:var(--gold);margin-top:1em}.lw-stage--four .lw-sticky{background:#e5d7bc}.lw-stage--four h2{position:absolute;left:6vw;top:17vh;margin:0;font-size:clamp(72px,12vw,190px);font-weight:400;line-height:.88;letter-spacing:-.065em}.lw-crossline{position:absolute;left:54%;top:0;bottom:0;width:1px;background:rgba(37,37,37,.23)}.lw-crossline:after{content:"";position:absolute;left:-20vw;top:57%;width:40vw;height:1px;background:rgba(37,37,37,.23)}.lw-manifesto{position:absolute;right:6vw;bottom:10vh;width:min(520px,38vw);font-size:clamp(15px,1.3vw,20px);line-height:2}.lw-doors{background:#f2ede3}.lw-door{min-height:26vh;padding:3vh 5vw;display:grid;grid-template-columns:8vw 1fr minmax(220px,30vw) 4vw;gap:2vw;align-items:center;color:var(--ink);text-decoration:none;border-top:1px solid #bdb3a0;transition:background .45s,color .45s}.lw-door:hover{background:#d9cfba;color:#252525}.lw-door__n{color:#837967}.lw-door strong{font:400 clamp(34px,5vw,78px)/1 "Cormorant Garamond","Noto Serif TC",serif}.lw-door em{font-style:normal;font-size:13px;line-height:1.7}.lw-door b{font-size:22px}.lw-final{min-height:58vh;background:#d8cfbb;color:#252525;padding:8vh 5vw;display:flex;flex-direction:column;justify-content:flex-end}.lw-final span{font:500 12px "Cormorant Garamond",serif;letter-spacing:.14em;color:var(--gold)}.lw-final strong{font-weight:400;font-size:clamp(38px,6vw,94px);margin:.18em 0}.lw-final small{font:500 11px "Cormorant Garamond",serif;letter-spacing:.14em}@keyframes lw-breathe{to{transform:scale(1)}}@keyframes lw-seam{0%{transform:scaleY(0);opacity:0}25%{transform:scaleY(1);opacity:1}100%{transform:scaleY(1);opacity:.25}}@keyframes lw-copy{to{opacity:1;transform:none}}@media(max-width:760px){.lw-stage--one{height:calc(100svh - 64px)}.lw-logo{width:80vw}.lw-stage--two,.lw-stage--three,.lw-stage--four{height:150vh}.lw-sticky{padding:7vh 6vw}.lw-huge{font-size:22vw;bottom:12vh}.lw-huge i{margin-left:4vw;font-size:.28em}.lw-side{top:16vh;right:6vw}.lw-word{font-size:25vw}.lw-water blockquote{width:70vw;right:7vw}.lw-stage--four h2{font-size:20vw}.lw-manifesto{width:76vw}.lw-crossline{left:78%}.lw-door{grid-template-columns:12vw 1fr 8vw;min-height:20vh}.lw-door em{display:none}}@media(prefers-reduced-motion:reduce){.lw-shutter{display:none}.lw-stage__copy{opacity:1;transform:none;animation:none}.lw-wall{animation:none}.lw-seam{display:none}}
-
-/* Living Water UI v2 — spatial motion, church visual authority only; editorial research is not a promotion dependency */
-.lw-story{--paper:#f0eadf;--paper-2:#e4d7c1;--ink:#252525;--gold:#cebd74;--sage:#a9b8a8;background:var(--paper)}
-.lw-stage--one{background:#eee6d8;color:var(--ink)}
-.lw-wall{background:linear-gradient(90deg,rgba(244,239,229,.2),rgba(244,239,229,.48) 46%,rgba(244,239,229,.14)),url('/images/jerusalem-wall.png') center/cover;filter:saturate(.25) sepia(.08) contrast(.88) brightness(1.16)}
-.lw-shutter{background:#e2d7c3}.lw-stage--one:after{content:"";position:absolute;inset:clamp(18px,3vw,52px);z-index:3;border:1px solid rgba(112,92,43,.22);pointer-events:none}
-.lw-stage__copy{width:min(1180px,88vw);min-height:62vh;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(240px,.55fr);grid-template-rows:auto 1fr auto;text-align:left;align-items:end;padding:clamp(30px,5vw,78px);background:linear-gradient(100deg,rgba(247,243,235,.78),rgba(247,243,235,.24) 70%,transparent);backdrop-filter:blur(1.5px)}
-.lw-eyebrow{grid-column:1/-1;align-self:start}.lw-logo{grid-column:1;width:min(610px,56vw);margin:5vh 0 3vh}.lw-scripture{grid-column:2;grid-row:2;align-self:center;border-left:1px solid rgba(37,37,37,.28);padding-left:2rem;font-size:clamp(15px,1.2vw,20px)}.lw-cite{grid-column:2;grid-row:3;padding-left:2rem}.lw-hero-mark{position:absolute;right:-.03em;bottom:-.16em;margin:0;font:400 clamp(8rem,20vw,23rem)/.62 "Cormorant Garamond",serif;letter-spacing:-.075em;color:rgba(111,88,33,.075);pointer-events:none}
-.lw-seam{background:#a88b3e;box-shadow:0 0 44px rgba(206,189,116,.36)}.lw-scroll{left:auto;right:4vw;transform:none;writing-mode:vertical-rl;letter-spacing:.22em}
-.lw-stage--two .lw-sticky{background:linear-gradient(115deg,#f4efe5 0 63%,#e5d7be 63%)}.lw-stage--two .lw-sticky:before{content:"01";position:absolute;right:4vw;top:3vh;font:400 clamp(10rem,25vw,29rem)/1 "Cormorant Garamond",serif;color:rgba(104,84,39,.06)}
-.lw-huge{z-index:2;max-width:78vw}.lw-huge i{color:#716755}.lw-side{z-index:2;right:7vw;top:22vh}.lw-whisper{position:absolute;right:6vw;bottom:8vh;margin:0;text-align:right;font:400 clamp(2rem,4.5vw,6rem)/.9 "Cormorant Garamond",serif;letter-spacing:-.03em;color:rgba(37,37,37,.22)}
-.lw-orbit{width:42vw;height:42vw;border-color:rgba(146,116,43,.32)}.lw-orbit span:nth-child(3){background:rgba(206,189,116,.72)}
-.lw-water{background:#d8e0d9;color:var(--ink)}.lw-water__image{background:linear-gradient(90deg,rgba(229,235,228,.84),rgba(229,235,228,.1)),url('/images/jerusalem-wall.png') center/cover;opacity:.52;filter:saturate(.22) brightness(1.12)}.lw-water:after{content:"LIVING WATER";position:absolute;right:-.03em;top:-.11em;font:400 clamp(8rem,20vw,24rem)/1 "Cormorant Garamond",serif;letter-spacing:-.07em;color:rgba(255,255,255,.31);pointer-events:none}
-.lw-word{mix-blend-mode:multiply;opacity:.6}.lw-word--a{color:#394b45}.lw-word--b{color:#5d716a}.lw-word--c{color:#9a7e34}.lw-water blockquote{background:rgba(246,242,232,.7);padding:2rem;border-top:1px solid rgba(37,37,37,.25);backdrop-filter:blur(3px)}
-.lw-stage--four .lw-sticky{background:linear-gradient(90deg,#e6d8bf 0 54%,#f1eadf 54%)}.lw-stage--four h2{z-index:2}.lw-crossline{left:54%;background:rgba(37,37,37,.18)}.lw-manifesto{z-index:2}.lw-verse-rail{position:absolute;left:56%;top:8vh;font:500 10px/1.2 "Cormorant Garamond",serif;letter-spacing:.2em;color:#776b56}
-.lw-doors{background:#f4efe6;padding:0 4vw}.lw-door{min-height:22vh;padding:2vh 1vw;grid-template-columns:6vw 1fr minmax(220px,28vw) 3vw;border-top-color:rgba(37,37,37,.18);position:relative;overflow:hidden}.lw-door:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(206,189,116,.18),transparent 55%);transform:translateX(-102%);transition:transform .7s cubic-bezier(.22,1,.36,1)}.lw-door:hover:before{transform:none}.lw-door:after{content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--gold);transition:width .55s cubic-bezier(.22,1,.36,1)}.lw-door:hover:after{width:100%}.lw-door:hover{background:transparent;color:var(--ink)}.lw-door>*{position:relative;z-index:1}
-.lw-final{min-height:42vh;background:#ddd1bd;color:var(--ink);border-top:1px solid rgba(37,37,37,.16);display:grid;grid-template-columns:1fr auto;align-content:end;column-gap:4vw}.lw-final strong{grid-column:1;font-size:clamp(34px,5vw,76px)}.lw-final small{grid-column:2;grid-row:1/4;align-self:end;writing-mode:vertical-rl;color:#6c6252}
-.lw-light{position:absolute;z-index:3;left:50%;top:0;width:18vw;height:100%;background:linear-gradient(90deg,transparent,rgba(255,246,211,.24),transparent);transform:translateX(-50%) scaleX(var(--light,0));transform-origin:center;mix-blend-mode:screen;pointer-events:none}
-.lw-gather-line{position:absolute;left:6vw;right:6vw;top:50%;height:1px;background:linear-gradient(90deg,rgba(37,37,37,.12),rgba(206,189,116,.75),rgba(37,37,37,.08));transform:scaleX(var(--line,0));transform-origin:left}
-.lw-water__veil{position:absolute;inset:0;background:linear-gradient(105deg,rgba(244,240,229,.86) 0 17%,transparent 17% 78%,rgba(244,240,229,.38) 78%);transform:translateX(var(--veil,-12%));pointer-events:none}
-.lw-four-field{position:absolute;right:4vw;top:15vh;text-align:right;font:400 clamp(5rem,12vw,13rem)/.7 "Cormorant Garamond",serif;letter-spacing:-.065em;color:rgba(83,68,39,.07);transform:translateY(var(--field,4vh));pointer-events:none}
-.lw-door strong{transition:transform .55s cubic-bezier(.22,1,.36,1)}.lw-door:hover strong{transform:translateX(1.2vw)}
-@media(prefers-reduced-motion:no-preference){.lw-stage__copy{transition:transform .2s linear}.lw-water blockquote{transition:transform .2s linear}.lw-four-field{transition:transform .2s linear}}
-@media(max-width:760px){.lw-stage__copy{width:90vw;min-height:68vh;grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;padding:28px 22px}.lw-logo{grid-column:1;width:78vw;margin:4vh 0}.lw-scripture{grid-column:1;grid-row:3;padding:1.2rem 0 0;border-left:0;border-top:1px solid rgba(37,37,37,.22)}.lw-cite{grid-column:1;grid-row:4;padding-left:0}.lw-hero-mark{font-size:32vw}.lw-stage--two .lw-sticky{background:linear-gradient(180deg,#f4efe5 0 72%,#e5d7be 72%)}.lw-whisper{display:none}.lw-water:after{font-size:30vw}.lw-stage--four .lw-sticky{background:linear-gradient(180deg,#e6d8bf 0 58%,#f1eadf 58%)}.lw-verse-rail{left:6vw;top:auto;bottom:5vh}.lw-doors{padding:0 5vw}.lw-final{display:flex}.lw-final small{writing-mode:initial}}
-
-
-.lw-scripture-scene{height:220svh;background:#f3eee3;color:#252525;position:relative;border-top:1px solid rgba(37,37,37,.12)}
-.lw-scripture-scene__sticky{position:sticky;top:0;min-height:100svh;width:min(1320px,88vw);margin:auto;display:grid;grid-template-columns:.7fr 1.5fr .8fr;grid-template-rows:auto 1fr auto;padding:9vh 0 8vh;align-items:center;overflow:hidden}
-.lw-scripture-scene__coordinate{grid-column:1/-1;align-self:start;font:.72rem/1.2 sans-serif;letter-spacing:.22em}
-.lw-scripture-scene h2{grid-column:2;font:400 clamp(9rem,25vw,30rem)/.65 "Noto Serif TC",serif;margin:0;letter-spacing:-.1em;color:rgba(206,189,116,var(--water-alpha,.22));transform:scale(var(--water-scale,.86));transform-origin:center}
-.lw-scripture-scene__event{grid-column:1;grid-row:2;font:400 clamp(2rem,4vw,4.8rem)/1.05 "Noto Serif TC",serif;opacity:var(--event-alpha,0);transform:translateY(var(--event-y,4vh))}
-.lw-scripture-scene__event span{display:block;font:400 1rem/1.4 "Cormorant Garamond",serif;letter-spacing:.08em;margin-top:1rem}
-.lw-scripture-scene__range{grid-column:3;grid-row:2;justify-self:end;opacity:var(--range-alpha,0);font:.78rem/1.5 sans-serif;letter-spacing:.15em}
-.lw-scripture-env{grid-column:1/-1;grid-row:3;display:grid;grid-template-columns:1.2fr .8fr .8fr .8fr;gap:1rem;align-items:end}.lw-scripture-scene__meaning{max-width:30rem;line-height:2;opacity:var(--meaning-alpha,0);transform:translateY(var(--meaning-y,3vh))}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:clamp(5rem,10vw,9rem);border-top:1px solid rgba(37,37,37,.18);display:flex;align-items:flex-end;padding-bottom:.6rem;opacity:var(--resource-alpha,0);transform:translateY(var(--resource-y,3vh));font:.62rem/1.2 sans-serif;letter-spacing:.15em}.lw-scripture-env__media{color:inherit;text-decoration:none;flex-direction:column;align-items:flex-start;justify-content:flex-end;gap:.35rem;background:linear-gradient(145deg,rgba(206,189,116,.18),transparent 65%)}.lw-scripture-env__media small{font:inherit;opacity:.55}.lw-scripture-env__media strong{font:400 1rem/1.2 "Cormorant Garamond",serif;letter-spacing:.04em}.lw-scripture-env__media span{letter-spacing:.08em;opacity:.65}.lw-scripture-env__world{border-top-color:rgba(80,96,76,.35)}.lw-scripture-env__voice{border-top-color:rgba(120,92,65,.3)}
-
-@media(max-width:760px){.lw-scripture-scene__sticky{grid-template-columns:1fr;padding:9vh 7vw}.lw-scripture-scene h2{grid-column:1;grid-row:2}.lw-scripture-scene__event{grid-column:1;grid-row:2;align-self:end}.lw-scripture-scene__range{grid-column:1;grid-row:2;align-self:start;justify-self:end}.lw-scripture-env{grid-column:1;grid-row:3;grid-template-columns:1fr 1fr;gap:1.5rem}.lw-scripture-scene__meaning{grid-column:1/-1}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:5rem}}
-
-/* Scripture Environment choreography: spatial depth, not resource cards. */
-.lw-scripture-scene{height:300svh;perspective:1200px;contain:paint}
-.lw-scripture-scene__sticky{isolation:isolate}
-.lw-scripture-scene__sticky:before{content:"";position:absolute;inset:12vh 8vw 10vh 18vw;border-radius:50%;background:radial-gradient(circle,rgba(206,189,116,.16),transparent 68%);transform:scale(var(--env-light,.72));opacity:var(--env-light-alpha,.15);pointer-events:none;z-index:-1}
-.lw-scripture-env{position:relative;min-height:24vh;perspective:900px}.lw-scripture-scene__meaning{position:relative;z-index:4}
-.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{will-change:transform,opacity;transition:none}
-.lw-scripture-env__media{z-index:3;transform:translate3d(var(--film-x,8vw),var(--film-y,5vh),var(--film-z,-180px)) rotateY(var(--film-r,-5deg));opacity:var(--film-alpha,0);box-shadow:0 2rem 6rem rgba(70,55,30,var(--film-shadow,0))}
-.lw-scripture-env__world{z-index:1;transform:translate3d(var(--world-x,-8vw),var(--world-y,7vh),var(--world-z,-360px)) scale(var(--world-scale,.86));opacity:var(--world-alpha,0)}
-.lw-scripture-env__voice{z-index:2;transform:translate3d(var(--voice-x,5vw),var(--voice-y,8vh),var(--voice-z,-260px));opacity:var(--voice-alpha,0)}
-.lw-scripture-scene[data-phase="scripture"] .lw-scripture-env{pointer-events:none}.lw-scripture-scene[data-phase="resource"] .lw-scripture-env__media{pointer-events:auto}
-@media(max-width:760px){.lw-scripture-scene{height:270svh}.lw-scripture-env{min-height:30vh}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{transform:translate3d(0,var(--mobile-y,4vh),0)!important}}
-@media(prefers-reduced-motion:reduce){.lw-scripture-scene{height:auto}.lw-scripture-scene__sticky{position:relative}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{transform:none!important;opacity:1!important}}
-
-/* Final continuity handoff: one uninterrupted scripture environment. */
-.lw-stage--four{border-bottom:0}
-.lw-scripture-scene{border-top:0;background:linear-gradient(180deg,#f1eadf 0%,#f3eee3 18%,#eee6d8 100%)}
-.lw-stage--four .lw-sticky:after{content:"";position:absolute;left:6vw;right:6vw;bottom:0;height:1px;background:linear-gradient(90deg,transparent,rgba(206,189,116,.55),transparent);transform:scaleX(var(--handoff,.2));transform-origin:center}
-.lw-scripture-scene__sticky{width:min(1320px,90vw)}
-.lw-doors{background:#eee6d8!important;border-top:1px solid rgba(37,37,37,.1)}.lw-door{min-height:clamp(7rem,13vw,11rem)}.lw-final{background:#e5d7be!important}
-@media(max-width:980px){.lw-scripture-scene__sticky{width:88vw;grid-template-columns:.85fr 1.15fr}.lw-scripture-scene h2{grid-column:1/-1;justify-self:center}.lw-scripture-scene__event{grid-column:1;z-index:2}.lw-scripture-scene__range{grid-column:2}.lw-scripture-env{grid-template-columns:1fr 1fr}.lw-scripture-scene__meaning{grid-column:1/-1}}
-@media(max-width:760px){.lw-story{overflow:hidden}.lw-scripture-scene__sticky{width:100%;padding-left:7vw;padding-right:7vw}.lw-scripture-scene h2{font-size:clamp(8rem,45vw,15rem)}.lw-scripture-scene__event{font-size:clamp(2rem,10vw,3.5rem)}.lw-scripture-env{grid-template-columns:1fr}.lw-scripture-env__media,.lw-scripture-env__world,.lw-scripture-env__voice{height:auto;min-height:5.5rem}.lw-doors{padding-left:7vw;padding-right:7vw}.lw-door{min-height:8rem}}
-@media(max-width:420px){.lw-scripture-scene__range{font-size:.68rem}.lw-scripture-env{gap:1rem}}
-</style>
-<script>
-(()=>{const root=document.getElementById('lwStory'),hero=root?.querySelector('.lw-stage--one');if(!root||!hero)return;requestAnimationFrame(()=>hero.classList.add('lw-open'));const clamp=n=>Math.max(0,Math.min(1,n));const tick=()=>{root.querySelectorAll('[data-stage]').forEach((s,i)=>{if(i===0)return;const r=s.getBoundingClientRect(),p=clamp(-r.top/Math.max(1,r.height-innerHeight));if(i===1){}if(i===2){const quote=s.querySelector('blockquote');if(quote)quote.style.transform='translateY('+((1-p)*4)+'vh)';const w=s.querySelectorAll('.lw-word');w.forEach((el,j)=>el.style.setProperty('--x',((j%2?1:-1)*p*10)+'vw'))}if(i===3)s.style.setProperty('--handoff',(.2+p*.8).toFixed(3))})};const envTick=()=>{root.querySelectorAll('.lw-scripture-scene').forEach(s=>{const r=s.getBoundingClientRect(),travel=Math.max(1,r.height-innerHeight),p=clamp(-r.top/travel),q=(a,b)=>clamp((p-a)/(b-a));s.dataset.phase=p<.24?'scripture':p<.68?'resource':'return';s.style.setProperty('--env-light',(.72+q(.05,.55)*.55).toFixed(3));s.style.setProperty('--env-light-alpha',(.12+q(.05,.5)*.58).toFixed(3));s.style.setProperty('--water-alpha',(.12+q(.02,.26)*.38-q(.72,.96)*.25).toFixed(3));s.style.setProperty('--water-scale',(.84+q(.02,.35)*.18).toFixed(3));s.style.setProperty('--event-alpha',q(.14,.32));s.style.setProperty('--event-y',((1-q(.14,.32))*4)+'vh');s.style.setProperty('--range-alpha',q(.22,.4));s.style.setProperty('--meaning-alpha',q(.3,.5));s.style.setProperty('--meaning-y',((1-q(.3,.5))*3)+'vh');const film=q(.38,.58)*(1-q(.84,.98)),world=q(.3,.52)*(1-q(.76,.96)),voice=q(.48,.68)*(1-q(.88,1));s.style.setProperty('--film-alpha',film);s.style.setProperty('--film-x',((1-q(.38,.62))*8)+'vw');s.style.setProperty('--film-y',((1-q(.38,.62))*5)+'vh');s.style.setProperty('--film-z',(-180+q(.38,.7)*180)+'px');s.style.setProperty('--film-r',(-5+q(.38,.7)*5)+'deg');s.style.setProperty('--film-shadow',(.14*q(.5,.7)).toFixed(3));s.style.setProperty('--world-alpha',world*.72);s.style.setProperty('--world-x',((-1+q(.3,.6))*8)+'vw');s.style.setProperty('--world-y',((1-q(.3,.6))*7)+'vh');s.style.setProperty('--world-z',(-360+q(.3,.7)*260)+'px');s.style.setProperty('--world-scale',(.86+q(.3,.7)*.1).toFixed(3));s.style.setProperty('--voice-alpha',voice*.82);s.style.setProperty('--voice-x',((1-q(.48,.72))*5)+'vw');s.style.setProperty('--voice-y',((1-q(.48,.72))*8)+'vh');s.style.setProperty('--voice-z',(-260+q(.48,.78)*210)+'px');s.style.setProperty('--mobile-y',((1-q(.3,.7))*4)+'vh')})};const allTick=()=>{tick();envTick()};addEventListener('scroll',allTick,{passive:true});allTick()})();
-</script>
 {{ end }}
-
-<style id="living-water-immersive-foundation">
-/* Immersive foundation: depth comes from viewport, typography, light and motion — not raster wallpaper. */
-.lw-hero{min-height:100svh;overflow:hidden;isolation:isolate;background:
-radial-gradient(70vw 70vw at 72% 48%,rgba(255,252,235,.96) 0,rgba(239,226,188,.58) 34%,rgba(206,189,116,.12) 58%,transparent 72%),
-linear-gradient(118deg,#d8ccb7 0 17%,#eee7d8 17% 61%,#cbbd9f 61% 100%)!important}
-.lw-hero:before{content:""!important;display:block!important;position:absolute;inset:0!important;background:
-linear-gradient(90deg,rgba(37,37,37,.12) 0 1px,transparent 1px) 17% 0/1px 100% no-repeat,
-linear-gradient(90deg,rgba(37,37,37,.1) 0 1px,transparent 1px) 61% 0/1px 100% no-repeat!important;pointer-events:none}
-.lw-hero:after{content:""!important;display:block!important;position:absolute;width:46vw;height:46vw;left:49%;top:48%;border:1px solid rgba(206,189,116,.34);border-radius:50%;transform:translate(-50%,-50%) scale(var(--sun,.82));opacity:var(--sun-opacity,.35);background:none!important;pointer-events:none}
-.lw-hero__copy{position:relative;z-index:2;width:min(1320px,90vw);min-height:100svh;margin:auto;padding:12vh 0 10vh;display:grid;grid-template-columns:minmax(220px,.72fr) minmax(360px,1.45fr);grid-template-rows:auto 1fr auto;gap:3vh 7vw;align-items:center;background:none!important}
-.lw-hero__copy .lw-eyebrow{align-self:start}
-.lw-hero__copy .lw-logo{align-self:center;max-width:min(43vw,620px);transform:translateY(var(--hero-y,0))}
-.lw-hero__copy blockquote{align-self:center;max-width:29rem;margin:0;padding-left:2rem;border-left:1px solid rgba(37,37,37,.25);transform:translateY(var(--verse-y,0))}
-.lw-scroll{z-index:3}
-.lw-stage{min-height:130svh!important}
-.lw-stage__inner,.lw-water__inner,.lw-four__inner{min-height:100svh}
-@media(max-width:760px){
-.lw-hero{background:radial-gradient(90vw 90vw at 70% 32%,rgba(255,252,235,.92),rgba(206,189,116,.12) 58%,transparent 72%),linear-gradient(155deg,#ded3c0,#f3eee3 54%,#c9b996)!important}
-.lw-hero__copy{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;gap:2rem;padding:11vh 7vw 8vh}
-.lw-hero__copy .lw-logo{max-width:82vw}.lw-hero__copy blockquote{max-width:80vw}
-.lw-hero:before{background:none!important}.lw-hero:after{width:86vw;height:86vw;left:70%;top:35%}
-}
-</style>
