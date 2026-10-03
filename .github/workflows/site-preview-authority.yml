@@ -1,6 +1,9 @@
 name: Site Preview Authority
 
 on:
+  push:
+    branches:
+      - sites-clean-visual-replacement
   pull_request:
     paths:
       - 'layouts/**'
