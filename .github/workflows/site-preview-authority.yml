@@ -65,3 +65,27 @@ jobs:
           name: site-preview-${{ github.event.pull_request.number || github.run_id }}
           path: public
           retention-days: 7
+      - name: Install Chromium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
+      - name: Render preview at QA viewports
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/site-preview.log 2>&1 &
+          echo $! > /tmp/site-preview.pid
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break; sleep 1; done
+          mkdir -p visual-qa
+          CHROME=$(command -v chromium-browser || command -v chromium)
+          for W in 1440 1920 2560 3840; do
+            "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=$W,2160 --screenshot="visual-qa/home-$W.png" http://127.0.0.1:4173/
+          done
+          test -s visual-qa/home-1440.png
+          test -s visual-qa/home-1920.png
+          test -s visual-qa/home-2560.png
+          test -s visual-qa/home-3840.png
+      - name: Upload rendered visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-visual-qa-${{ github.event.pull_request.number || github.run_id }}
+          path: visual-qa
+          retention-days: 7
