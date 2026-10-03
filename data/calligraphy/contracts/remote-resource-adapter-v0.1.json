@@ -1,0 +1,59 @@
+{
+  "id": "remote-resource-adapter-v0.1",
+  "purpose": "Keep calligraphy research source-native: reference remote works and request only the representation needed for analysis, without pre-downloading or publishing full-resolution originals.",
+  "defaultPolicy": {
+    "downloadFullWork": false,
+    "vendorFullResolutionIntoRepo": false,
+    "publishResearchSourceImage": false,
+    "cachePermanentFullWork": false,
+    "preferRemoteRegionRequest": true,
+    "preferExistingSiteTranscodePipeline": true,
+    "storeDerivedKnowledgeNotSourcePayload": true
+  },
+  "resourceKinds": [
+    "iiif-image-service",
+    "iiif-manifest",
+    "museum-viewer",
+    "remote-tile-service",
+    "existing-site-transcode-adapter",
+    "reference-only-page"
+  ],
+  "adapterContract": {
+    "identity": ["provider","workId","witnessId","sourceURI","resourceKind"],
+    "capabilities": ["metadata","transcription","full-view","region-request","tile-request","zoom","stable-coordinate-space"],
+    "researchRequests": ["line-context","phrase-context","glyph-context","comparison-context"],
+    "storedOutputs": ["source-reference","text-anchor","line-or-column-id","normalized-region","relative-scale","center-of-gravity","lean","gap-rhythm","entry-exit-observation","teacher-memory-rule","confidence","counterexample"],
+    "notStoredByDefault": ["full-resolution-original","whole-work-binary","bulk-page-download"]
+  },
+  "iiifCompatibility": {
+    "strategy": "When a provider exposes IIIF, use info.json plus region/size requests instead of acquiring the full source image.",
+    "imageApiPattern": "{service}/{identifier}/{region}/{size}/{rotation}/{quality}.{format}",
+    "regionMayBe": ["full","x,y,w,h","pct:x,y,w,h"],
+    "note": "IIIF is an adapter option, not a requirement. Museum viewers and the site's existing transcode layer may expose equivalent region/tile access."
+  },
+  "teacherResearchPriority": [
+    "preserve original line/column context",
+    "study phrase-to-phrase movement",
+    "extract Hand Grammar observations",
+    "retain provenance and counterexamples",
+    "derive a glyph crop only when a downstream composition actually needs it"
+  ],
+  "tc001Correction": {
+    "oldMainline": "Acquire high-resolution Shenlong whole-scroll representation, register the complete image, then crop individual glyphs.",
+    "newMainline": "Keep Shenlong at source; bind 是 and 和 through remote line/phrase access or existing transcode resources, record normalized/contextual observations, and avoid whole-scroll acquisition.",
+    "imageBoundingBox": "optional derived field, not a prerequisite for Teacher Memory",
+    "flowEvidence": "parent line + phrase relation + relative spatial/brush observations",
+    "generationAllowed": false
+  },
+  "runtimeBoundary": {
+    "research": "May inspect remote representations on demand and discard temporary payloads after extracting structured observations.",
+    "canonicalCorpus": "Stores provenance, metadata, context, observations and approved lightweight derivatives only.",
+    "publicCafe": "Displays only resources admitted by the public collection gate; research-only sources are never exposed automatically.",
+    "futureComposition": "Requests the minimum needed glyph/region representation through the adapter/transcode layer at render time or preparation time."
+  },
+  "nextGate": {
+    "name": "wang-xizhi-context-first-expansion",
+    "requirement": "Stop waiting for whole-scroll image registration. Expand Wang Xizhi evidence for TC001 and Teacher Memory through source-native transcription, line/phrase context and remote visual inspection; promote spatial fields only when the remote resource exposes a stable coordinate space.",
+    "generationAllowedAfterThisFile": false
+  }
+}

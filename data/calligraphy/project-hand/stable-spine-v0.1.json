@@ -1,0 +1,58 @@
+{
+  "id": "project-hand-stable-spine-v0.1",
+  "status": "research-baseline",
+  "generationAllowed": false,
+  "purpose": "Derive a project-owned running/running-cursive writing grammar from four independent core teachers without averaging their glyph shapes or impersonating any historical hand.",
+  "coreTeachers": [
+    {"id":"wang-xizhi","contribution":["natural continuity","contextual variation","brush-intent continuity without compulsory linking"]},
+    {"id":"mi-fu","contribution":["dynamic imbalance and recovery","lift-press rhythm","controlled directional energy"]},
+    {"id":"zhao-mengfu","contribution":["structural legibility","discipline within flow","measured density and release"]},
+    {"id":"wen-zhengming","contribution":["character-to-character transition","long-form rhythm","strength within controlled structure","mature assimilation without loss of identity"]}
+  ],
+  "nonNegotiableSpine": [
+    {"rule":"structure-before-style","meaning":"A character must remain structurally intelligible before stylistic compression, linkage or deformation is considered."},
+    {"rule":"movement-with-recovery","meaning":"Tilt, extension, compression and directional force are permitted only when the following character, group or line resolves or meaningfully continues the movement."},
+    {"rule":"qi-without-forced-threads","meaning":"Continuity may be carried by exit direction, entry direction, spacing, scale, center of gravity and rhythm; visible linking threads are optional rather than mandatory."},
+    {"rule":"context-before-isolated-beauty","meaning":"Choose a glyph for its role in a 2/3/5-character window and the whole line, not because it is the most attractive isolated specimen."},
+    {"rule":"controlled-variation","meaning":"Scale, tilt, density, spacing, weight and speed must vary, but variation must contribute to a larger rhythmic pattern rather than random decoration."},
+    {"rule":"legibility-with-life","meaning":"Scripture calligraphy should remain readable and dignified without becoming regular-script typesetting."},
+    {"rule":"evidence-and-counterexample","meaning":"Every promoted grammar rule must retain supporting historical evidence and counterexamples; no teacher is reduced to a stereotype."},
+    {"rule":"provenance-honesty","meaning":"Historical glyphs, adjusted historical glyphs and Project Hand reconstructions remain distinct and traceable."}
+  ],
+  "projectPreferencesV01": {
+    "scriptRange": "running to restrained running-cursive",
+    "defaultTemperament": ["clear","alive","restrained","breathing","dignified"],
+    "avoid": ["font-like uniformity","continuous decorative ligatures","random tilt","equal character scale","mechanical centering","historical-author impersonation"],
+    "scriptureBias": "semantic gravity may influence pauses, expansion, compression and line breaks, but must not override calligraphic coherence",
+    "coupletBias": "paired lines should correspond in visual weight and cadence without becoming mirrored copies"
+  },
+  "teacherConflictResolution": {
+    "principle": "Do not vote or average.",
+    "order": [
+      "preserve character structure and provenance",
+      "preserve phrase and line continuity",
+      "select the teacher principle that solves the local calligraphic problem",
+      "test against the other teachers for distortion or stereotype",
+      "keep unresolved when evidence is insufficient"
+    ]
+  },
+  "influenceLibraryPolicy": {
+    "defaultAccess": "experiment-only",
+    "mayModifyStableSpine": false,
+    "promotionRequires": ["repeated evidence across works","explicit rule statement","compatibility with core spine","TC001 before/after comparison","counterexample review","human approval"]
+  },
+  "benchmark": {
+    "id":"TC001",
+    "text":"敬畏耶和華是智慧的開端",
+    "requiredOutputsBeforeGeneration": [
+      "four teacher-specific writing plans",
+      "one Project Hand writing plan",
+      "2/3/5-character flow analysis",
+      "unresolved glyph list",
+      "provenance map",
+      "explanation of pauses, scale changes, tilt/recovery and line breathing"
+    ],
+    "generationAllowed": false
+  },
+  "nextResearchStep": "Run TC001 as a planning-only five-hand benchmark and compare where the Project Hand agrees with, departs from, or combines principles learned from the four teachers."
+}

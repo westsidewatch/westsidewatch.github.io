@@ -1,0 +1,111 @@
+{
+  "id": "wang-xizhi-shengjiao-single-glyph-grammar-v0.1",
+  "teacher": "wang-xizhi",
+  "sourceWork": "懷仁集王羲之聖教序",
+  "evidenceMode": "single-glyph-only",
+  "researchAllowed": true,
+  "publicDisplayAllowed": false,
+  "flowEngineInputAllowed": false,
+  "generationAllowed": false,
+  "purpose": "Extract reusable single-character writing knowledge from transmitted Wang-form vocabulary without treating Huairen's assembled adjacency as Wang Xizhi flow evidence.",
+  "authority": {
+    "primaryInstitutionalSource": "National Palace Museum, Taipei",
+    "sourceType": "rubbing / collected Wang characters",
+    "studySupport": "Palace Museum technical study explicitly treats dot/stroke methods, component combination, structural features, difficult/near-form characters and same-character variants as study dimensions."
+  },
+  "teacherMemoryLayers": {
+    "stableSkeleton": {
+      "definition": "Features that should survive across legitimate variants of the same character.",
+      "observe": [
+        "major component topology",
+        "relative component hierarchy",
+        "main load-bearing stroke or axis",
+        "internal opening/closing pattern",
+        "balance strategy inside the glyph",
+        "recognition-critical stroke relationships"
+      ]
+    },
+    "variableZones": {
+      "definition": "Places where Wang-form vocabulary permits controlled change without losing character identity.",
+      "observe": [
+        "overall tall/flat proportion",
+        "local compression and release",
+        "stroke joining versus separation inside one glyph",
+        "square versus rounded turning in transmitted form",
+        "terminal extension or containment",
+        "component lean and local displacement",
+        "degree of running-script simplification"
+      ]
+    },
+    "transmissionNoise": {
+      "definition": "Features not promoted to Wang Xizhi brush grammar without corroborating ink evidence.",
+      "exclude": [
+        "rubbing-derived apparent stroke thickness",
+        "stone-cut edge roughness",
+        "paper/rubbing defects",
+        "micro-pressure claims inferred only from black/white width",
+        "inter-character spacing in Huairen's assembled inscription"
+      ]
+    }
+  },
+  "tc001GlyphProgram": {
+    "是": {
+      "verifiedOccurrences": 2,
+      "studyMode": "same-character variant comparison",
+      "extract": ["stable lower/upper structural relation","axis and center-of-gravity alternatives","internal joining/separation choices","recognition-critical invariants"],
+      "context": "locator-only"
+    },
+    "智": {
+      "verifiedOccurrences": 3,
+      "studyMode": "same-character variant comparison",
+      "extract": ["top/bottom density allocation","知/日-like component relationship as transmitted","vertical compression options","which internal strokes may simplify or join"],
+      "context": "locator-only"
+    },
+    "慧": {
+      "verifiedOccurrences": 1,
+      "studyMode": "single exemplar plus component-analogue expansion",
+      "extract": ["multi-tier density control","vertical stacking hierarchy","lower 心 treatment","candidate component analogues elsewhere in Wang-form corpus"],
+      "context": "locator-only",
+      "confidenceRule": "One occurrence cannot define a Wang invariant by itself. Promote observations as hypotheses until corroborated by other Wang-form or ink witnesses."
+    },
+    "端": {
+      "verifiedOccurrences": 3,
+      "studyMode": "same-character variant comparison",
+      "extract": ["left-right weight distribution","立-side compression","right-side vertical organization","outer silhouette alternatives","stable recognition skeleton versus flourish"],
+      "context": "locator-only"
+    }
+  },
+  "comparisonProtocol": [
+    "Retrieve only the needed remote glyph regions through the existing resource/transcode layer; never download the whole work by default.",
+    "Normalize comparison scale for structural inspection, but retain original aspect ratio metadata.",
+    "Trace component topology before tracing stroke contour.",
+    "Mark each observed feature as invariant-candidate, variable-zone, or transmission-uncertain.",
+    "Require at least two independent occurrences or corroborating Wang evidence before promoting a feature to stableSkeleton.",
+    "Keep single-occurrence features as hypotheses.",
+    "Never use neighboring inscription characters to infer entry, exit, spacing or qi-flow."
+  ],
+  "projectHandUse": {
+    "allowed": [
+      "select among historically supported single-glyph structures",
+      "learn how far a component may compress, displace or simplify",
+      "construct missing-character hypotheses from Wang component grammar only after provenance labeling",
+      "counter-check whether a reconstructed glyph looks font-like or mechanically regular"
+    ],
+    "blocked": [
+      "copy Huairen inscription spacing",
+      "derive phrase rhythm",
+      "derive ligature decisions between target scripture characters",
+      "claim a reconstructed form is an attested Wang Xizhi glyph"
+    ]
+  },
+  "flowEvidenceSeparation": {
+    "singleGlyphTeacher": "聖教序 may teach how a character can be built.",
+    "flowTeacher": "Flow must come from continuous-writing witnesses such as credible manuscript/copy passages preserving sequential relationships.",
+    "mergeRule": "Project Hand may later place a Shengjiao-informed glyph into a phrase only after Flow Engine independently determines scale, lean, spacing, entry/exit adaptation and phrase rhythm."
+  },
+  "nextGate": {
+    "name": "remote-glyph-region-comparison",
+    "requirement": "Bind remote regions for repeated 是、智、端 and the single 慧, then populate observed invariant-candidates and variable zones. Do not use inscription adjacency.",
+    "generationAllowedAfterThisFile": false
+  }
+}

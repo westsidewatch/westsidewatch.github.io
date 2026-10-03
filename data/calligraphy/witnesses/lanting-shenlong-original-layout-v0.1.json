@@ -1,0 +1,51 @@
+{
+  "id": "lanting-shenlong-original-layout-v0.1",
+  "work": "蘭亭序・神龍本",
+  "teacher": "wang-xizhi",
+  "witnessType": "Tang tracing-copy witness",
+  "generationAllowed": false,
+  "purpose": "Create a non-destructive original-layout coordinate layer for TC001 glyph binding. This file does not contain downloaded artwork and does not publish derivative crops.",
+  "sourceFacts": {
+    "textLength": 324,
+    "originalLineCount": 28,
+    "scrollHeightCm": 24.5,
+    "scrollWidthCm": 69.9,
+    "layoutPolicy": "Preserve the historical 28-line irregular layout. Reject modern 27 x 12 or other normalized reflows as spatial evidence."
+  },
+  "targets": {
+    "是": {
+      "recordId": "wxz-lanting-shenlong-shi-001",
+      "textAnchor": "暢敘幽情。是日也。天朗氣清",
+      "localAnchor": "是日也",
+      "imageBinding": {"status":"pending-authoritative-image-representation","lineId":null,"normalizedBoundingBox":null,"fullLineRegion":null},
+      "rule": "Do not infer a coordinate from a reflowed transcription."
+    },
+    "和": {
+      "recordId": "wxz-lanting-shenlong-he-001",
+      "textAnchor": "天朗氣清。惠風和暢。仰觀宇宙",
+      "localAnchor": "惠風和暢",
+      "imageBinding": {"status":"pending-authoritative-image-representation","lineId":null,"normalizedBoundingBox":null,"fullLineRegion":null},
+      "rule": "Retain 惠風和暢 as the minimum contextual crop once image binding exists."
+    }
+  },
+  "bindingProcedure": [
+    "Resolve an image representation that demonstrably preserves the original 28-line Shenlong layout.",
+    "Register the whole writing field in normalized 0..1 coordinates before selecting individual glyphs.",
+    "Identify line boundaries first; never locate a glyph by freehand pixel guess.",
+    "Bind text anchors to line IDs and retain a full-line region.",
+    "Only then derive normalized glyph bounding boxes for 是 and 和.",
+    "Measure relative scale, center of gravity, lean, neighboring gap and line-axis offset from the same registered field.",
+    "Record entry/exit direction and implicit continuation as observations, with confidence and evidence notes.",
+    "Keep the source representation external; store only source reference, measurements and research annotations in this project unless separately admitted by the corpus rights gate."
+  ],
+  "qualityGates": {
+    "layoutAuthenticity": "28-line irregular original layout required",
+    "wholeFieldFirst": true,
+    "fullLineBeforeGlyph": true,
+    "reflowedEditionRejected": true,
+    "rubbingAsSpatialSubstituteRejected": true,
+    "manualCoordinateWithoutVisibleSourceRejected": true
+  },
+  "researchNote": "A modern digital recreation found during source discovery explicitly states that it regularizes the original 28 irregular lines into 27 lines of 12 characters. It is useful as a negative control only and must never enter spatial training.",
+  "nextGate": "authoritative-image-registration"
+}

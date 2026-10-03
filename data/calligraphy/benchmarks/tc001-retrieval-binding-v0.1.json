@@ -1,0 +1,93 @@
+{
+  "id": "TC001-retrieval-binding-v0.1",
+  "text": "敬畏耶和華是智慧的開端",
+  "stage": "retrieval-plan-binding",
+  "generationAllowed": false,
+  "principle": "Planning claims must be bound to corpus evidence before any missing-glyph reconstruction is permitted.",
+  "characters": ["敬","畏","耶","和","華","是","智","慧","的","開","端"],
+  "bindingSchema": {
+    "candidateIdentity": ["teacher","work","workState","lineOrColumn","character","sourceType"],
+    "sourceTypeAllowed": ["original","copy","tracing-copy","rubbing","later-copy"],
+    "contextRequired": ["previousCharacter","nextCharacter","twoCharacterWindow","threeCharacterWindow","fiveCharacterWindow"],
+    "spatialRequired": ["boundingBox","relativeScale","centerOfGravity","lean","interCharacterGap","lineAxisOffset"],
+    "brushObservation": ["entryDirection","exitDirection","pressureChange","visibleLink","implicitContinuation"],
+    "provenance": ["sourceURI","collection","attributionStatus","copyistIfKnown","dateOrPeriod","evidenceNote"]
+  },
+  "retrievalOrder": [
+    "same work + same character + compatible local context",
+    "same work + same character",
+    "same teacher + same work-state + same character",
+    "same teacher + compatible running-script state + same character",
+    "same teacher structural/component analogues",
+    "remain unresolved"
+  ],
+  "hardRules": [
+    "Do not select the visually prettiest isolated glyph when its entry/exit behavior conflicts with the target phrase.",
+    "A copied, traced or rubbed glyph is usable when provenance is explicit.",
+    "Never silently convert an unresolved character into a generated character.",
+    "Cross-teacher evidence may teach grammar but may not be presented as that teacher's historical glyph.",
+    "Preserve the original line/column crop before deriving an isolated glyph crop.",
+    "The name group 耶和華 receives a readability gate before style scoring.",
+    "The exclusion policy for prohibited works remains upstream of canonical/public corpus admission."
+  ],
+  "phraseBindings": {
+    "敬畏耶": {
+      "planningNeed": "opening gravity that begins to move",
+      "candidateScoring": ["stable opening structure","exit direction from 敬","compression/release into 畏","ability of 耶 to receive rather than interrupt momentum"]
+    },
+    "耶和華": {
+      "planningNeed": "semantic center with maximum identity clarity",
+      "candidateScoring": ["legibility","moderated local rhythm","balanced density","no forced cursivization"]
+    },
+    "是智慧": {
+      "planningNeed": "re-energize after semantic center",
+      "candidateScoring": ["hinge behavior of 是","density differentiation between 智 and 慧","controlled scale change"]
+    },
+    "智慧的": {
+      "planningNeed": "three-character continuity without obligatory ligature",
+      "candidateScoring": ["exit-entry compatibility","density relief","implicit continuation","gap rhythm"]
+    },
+    "的開端": {
+      "planningNeed": "light bridge, release, living closure",
+      "candidateScoring": ["contextual compatibility of 的","spatial release at 開","firm but non-frozen terminal behavior at 端"]
+    }
+  },
+  "teacherBindingPolicies": {
+    "wang-xizhi": {
+      "preferredStates": ["controlled-running", "flowing-running", "running-cursive"],
+      "priority": "natural continuity and contextual variation",
+      "rejectWhen": ["candidate requires decorative ligature to appear alive","candidate normalizes local variation into font-like sameness"]
+    },
+    "mi-fu": {
+      "preferredStates": ["tiaoxi-middle-running", "shusu-1088", "late-letter", "small-running-cursive"],
+      "priority": "dynamic imbalance with recoverable balance",
+      "rejectWhen": ["lean has no recovery function","agitation becomes uniform across the phrase"]
+    },
+    "zhao-mengfu": {
+      "preferredStates": ["luoshenfu-running", "letter-running"],
+      "priority": "structural clarity with internal movement",
+      "rejectWhen": ["candidate produces regular-script procession","roundness erases temporal rhythm"]
+    },
+    "wen-zhengming": {
+      "preferredStates": ["mature-longscroll-running", "late-running", "relaxed-poem-running", "large-running-cursive"],
+      "priority": "bone structure and long-line rhythmic control",
+      "rejectWhen": ["neatness suppresses movement","late mannerism is applied indiscriminately"]
+    }
+  },
+  "projectHandBinding": {
+    "rule": "Project Hand does not retrieve a synthetic fifth historical corpus. It selects and studies evidence through Stable Spine constraints, then records which teacher principle solved each local problem.",
+    "requiredDecisionTrace": ["localProblem","candidateSet","selectedEvidence","teacherPrincipleUsed","counterChecks","reasonForRejectionOfAlternatives"]
+  },
+  "coverageMatrix": {
+    "status": "pending-corpus-query",
+    "teachers": ["wang-xizhi","mi-fu","zhao-mengfu","wen-zhengming"],
+    "characters": ["敬","畏","耶","和","華","是","智","慧","的","開","端"],
+    "cellStates": ["context-match","same-work","same-teacher","structural-analogue","unresolved"],
+    "note": "No cell may be marked resolved without a source-bound corpus record."
+  },
+  "nextGate": {
+    "name": "TC001-real-coverage-matrix",
+    "requirement": "Populate 11 x 4 source-bound coverage cells from canonical/research corpus records, retaining line context and provenance.",
+    "generationAllowedAfterThisFile": false
+  }
+}

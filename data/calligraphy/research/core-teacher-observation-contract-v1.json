@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "purpose": "Research contract for four living Core Teachers and Project Hand; no public runtime exposure.",
+  "teachers": ["王羲之", "米芾", "趙孟頫", "文徵明"],
+  "layers": {
+    "work": ["workId", "author", "script", "period", "sourceType", "provenance"],
+    "column": ["columnId", "transcription", "bbox", "axis", "density", "spacingRhythm", "sizeRhythm"],
+    "group": ["text", "length", "bbox", "entryDirection", "exitDirection", "ligature", "spacing", "weightTransition"],
+    "glyph": ["char", "bbox", "inkStyle", "strokeStyle", "characterStructure", "centerOfGravity", "slant", "scale", "entryDirection", "exitDirection"]
+  },
+  "borrowedConcepts": {
+    "HCSU": {
+      "use": ["ink_style", "stroke_style", "character_structure", "expert-description-as-evidence"],
+      "policy": "schema inspiration and internal research only; do not publish HCSU dataset assets through the site"
+    },
+    "UniCalli": {
+      "use": ["column-level transcription", "character bounding boxes", "author/script labels", "spatial box-map concept"],
+      "policy": "annotation grammar and research reference only; no runtime dependency on the 23GB model"
+    }
+  },
+  "teacherMemory": {
+    "stableWriterHabits": [],
+    "periodVariants": [],
+    "workStateVariants": [],
+    "contextRules": [],
+    "counterExamples": [],
+    "confidence": null,
+    "evidence": []
+  },
+  "projectHand": {
+    "stableSpine": [
+      "legible structure",
+      "credible brush logic",
+      "contextual glyph choice",
+      "continuous but non-mechanical flow",
+      "controlled variation in scale slant density and spacing",
+      "scripture dignity without stiffness",
+      "traceable decisions"
+    ],
+    "promotionRule": "Influence observations cannot modify the stable spine without repeated evidence, TC001 comparison, and human approval."
+  },
+  "tc001": {
+    "text": "敬畏耶和華是智慧的開端",
+    "outputs": ["王羲之", "米芾", "趙孟頫", "文徵明", "Project Hand"],
+    "phase": "research-and-retrieval",
+    "generationAllowed": false
+  }
+}

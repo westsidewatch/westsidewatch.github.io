@@ -1,0 +1,84 @@
+{
+  "id": "wang-xizhi-huairen-shengjiao-tc001-v0.3",
+  "teacher": "wang-xizhi",
+  "work": "懷仁集王羲之聖教序",
+  "role": "restricted-single-glyph-research-evidence",
+  "researchAllowed": true,
+  "publicDisplayAllowed": false,
+  "wholeWorkPublicDisplayAllowed": false,
+  "whiteDayCafeEligible": false,
+  "generationAllowed": false,
+  "singleGlyphOnly": true,
+  "flowEvidenceAllowed": false,
+  "phraseFlowEvidenceAllowed": false,
+  "adjacencyEvidenceAllowed": false,
+  "reasonForRestriction": "Huairen assembled characters from Wang Xizhi sources into a new inscription. This project therefore uses the work for single-glyph study only, never as evidence of Wang Xizhi's original inter-character flow.",
+  "resourcePolicy": {
+    "downloadWholeWork": false,
+    "storeWholeWorkInRepository": false,
+    "accessMode": "remote-reference-or-existing-transcode-layer",
+    "derivedSingleGlyphAnnotationsAllowed": true
+  },
+  "sourceAuthority": {
+    "institution": "National Palace Museum, Taipei",
+    "workNumber": "贈拓00044500000",
+    "category": "拓片",
+    "script": "行書",
+    "sourceURI": "https://digitalarchive.npm.gov.tw/opendata/Pub/DetailEng/36283?dep=P&mode=full",
+    "verificationBasis": "institutional full transcription"
+  },
+  "tc001Candidates": {
+    "是": {"status":"transcription-verified-single-glyph-evidence","mayInformTeacherMemory":true,"mayResolveSingleGlyphCoverage":true,"occurrenceCount":2,"contextUse":"locator-only","evidenceClass":"collected-Wang-form-via-Huairen-rubbing"},
+    "智": {"status":"transcription-verified-single-glyph-evidence","mayInformTeacherMemory":true,"mayResolveSingleGlyphCoverage":true,"occurrenceCount":3,"contextUse":"locator-only","evidenceClass":"collected-Wang-form-via-Huairen-rubbing"},
+    "慧": {"status":"transcription-verified-single-glyph-evidence","mayInformTeacherMemory":true,"mayResolveSingleGlyphCoverage":true,"occurrenceCount":1,"contextUse":"locator-only","evidenceClass":"collected-Wang-form-via-Huairen-rubbing"},
+    "端": {"status":"transcription-verified-single-glyph-evidence","mayInformTeacherMemory":true,"mayResolveSingleGlyphCoverage":true,"occurrenceCount":3,"contextUse":"locator-only","evidenceClass":"collected-Wang-form-via-Huairen-rubbing"}
+  },
+  "singleGlyphStudy": {
+    "allowed": [
+      "overall glyph structure",
+      "component proportion and placement",
+      "stroke-path hypothesis",
+      "turning and simplification strategy visible in the transmitted form",
+      "same-character variant comparison",
+      "same-component comparison across different characters",
+      "running-script transformation from regular structural expectations",
+      "structural invariants and variable zones"
+    ],
+    "transmissionCautions": [
+      "Do not treat rubbing thickness as Wang Xizhi's original ink pressure.",
+      "Do not treat carving artifacts as original brush micro-features.",
+      "Keep Huairen selection, stone carving and rubbing transmission explicit in provenance."
+    ]
+  },
+  "contextPolicy": {
+    "inscriptionContextPurpose": "locator-only",
+    "allowedUses": ["identify occurrence","distinguish repeated glyph instances","link a remote region to the correct character"],
+    "forbiddenUses": ["learn entry from previous character","learn exit into next character","learn inter-character spacing","learn phrase rhythm","learn line rhythm","learn Wang Xizhi original qi-flow"]
+  },
+  "teacherMemoryBinding": {
+    "promoteTo": ["glyphVariantMemory","componentAnalogueMemory","singleGlyphStructureMemory","structuralCounterexamples","strokePathHypotheses"],
+    "blockedTargets": ["flowEngine","phraseFlowMemory","adjacencyMemory","interCharacterSpacingMemory","originalInkPressure","originalWangPhraseFlow","publicExhibitionCollection"]
+  },
+  "flowEngineGate": {
+    "inputAllowed": false,
+    "rejectReason": "assembled inscription adjacency is not evidence that Wang Xizhi wrote these neighboring characters together",
+    "eligibleEvidenceInstead": ["continuous ink manuscript witnesses","credible copies preserving continuous original writing relationships","letters and handscroll passages with defensible sequential-writing provenance"]
+  },
+  "coverageEffect": {
+    "teacher": "wang-xizhi",
+    "charactersPromoted": ["是","智","慧","端"],
+    "coverageClass": "restricted-single-glyph-bound",
+    "countsToward": ["historical glyph coverage","single-glyph structural coverage"],
+    "doesNotCountToward": ["context-match coverage","adjacency coverage","phrase-flow coverage","Flow Engine training coverage"]
+  },
+  "publicationLeakTest": {
+    "queryInvariant": "whiteDayCafeEligible == true AND publicDisplayAllowed == true",
+    "expectedResultForThisWork": "excluded",
+    "failClosed": true
+  },
+  "nextGate": {
+    "name": "restricted-single-glyph-variant-comparison",
+    "requirement": "Compare repeated 是、智、端 and the verified 慧 only as isolated transmitted glyph forms; extract structural invariants and variable zones without using neighboring characters as flow evidence.",
+    "generationAllowedAfterThisFile": false
+  }
+}

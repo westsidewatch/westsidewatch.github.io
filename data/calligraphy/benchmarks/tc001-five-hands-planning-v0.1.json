@@ -1,0 +1,102 @@
+{
+  "id": "TC001-five-hands-planning-v0.1",
+  "text": "敬畏耶和華是智慧的開端",
+  "mode": "planning-only",
+  "generationAllowed": false,
+  "purpose": "Compare how the four Core Teachers and Project Hand plan the same scripture before any glyph synthesis or final composition.",
+  "sharedConstraints": {
+    "script": ["running-script", "running-cursive"],
+    "preserveReadability": true,
+    "avoidMechanicalUniformity": true,
+    "forcedLigatures": false,
+    "contextWindows": [2, 3, 5],
+    "provenanceRequired": true,
+    "unresolvedGlyphsRemainUnresolved": true
+  },
+  "phraseWindows": [
+    {"text": "敬畏耶", "role": "opening", "questions": ["How does the opening establish gravity without becoming static?", "Where should the first release of movement occur?"]},
+    {"text": "耶和華", "role": "name", "questions": ["Keep high legibility and dignity.", "Do not sacrifice character identity for cursive continuity."]},
+    {"text": "是智慧", "role": "turn", "questions": ["How should the line re-energize after the central name group?", "Which character carries expansion or compression?"]},
+    {"text": "智慧的", "role": "flow-test", "questions": ["Test three-character continuity without mandatory physical linking.", "Balance 智 and 慧 so their visual density does not stall the line."]},
+    {"text": "的開端", "role": "closure", "questions": ["How does 的 bridge into 開 rather than behave as an isolated modern-looking glyph?", "How does 端 close firmly without freezing the final cadence?"]}
+  ],
+  "hands": {
+    "wang-xizhi": {
+      "teacherIntent": "Natural emergence and continuous brush intention.",
+      "plan": [
+        "Open with controlled weight rather than display.",
+        "Use spacing, entry/exit direction and scale to carry qi before considering visible linking.",
+        "Allow local variation among glyph choices; do not normalize repeated structural behavior into a font.",
+        "Let the central name group remain legible while preserving a living line axis.",
+        "Close with gathered force rather than a rigid terminal block."
+      ],
+      "riskChecks": ["over-smoothing", "too many ligatures", "turning Lanting-like variation into a preset"]
+    },
+    "mi-fu": {
+      "teacherIntent": "Dynamic imbalance followed by recovery.",
+      "plan": [
+        "Create controlled lean and pressure contrast early, but require recovery points.",
+        "Use compact centers against released long strokes to produce rhythm.",
+        "Treat 智慧 as a density challenge: one may gather while the other releases.",
+        "Use stroke ending, spacing and pressure changes to transmit momentum without decorative silk connections.",
+        "Make the final group regain balance rather than simply slow down."
+      ],
+      "riskChecks": ["lean without recovery", "exaggerated Mi-style theatrics", "uniform agitation"]
+    },
+    "zhao-mengfu": {
+      "teacherIntent": "Movement inside structural discipline.",
+      "plan": [
+        "Keep the eleven characters immediately readable while avoiding equal-size procession.",
+        "Establish structural anchors at key semantic points and allow lighter transitions between them.",
+        "Use restrained pitch, spacing and rise/fall to generate movement rather than distortion.",
+        "Preserve clarity in 耶和華 and let surrounding groups carry more rhythmic variation.",
+        "Finish with a stable 端 whose approach remains fluid."
+      ],
+      "riskChecks": ["regular-script queue", "over-rounding", "beautification that removes temporal rhythm"]
+    },
+    "wen-zhengming": {
+      "teacherIntent": "Controlled structure, bone strength and cultivated long-line rhythm.",
+      "plan": [
+        "Make transitions between characters explicit through rise, fall and directional response.",
+        "Maintain bone structure while varying density and spacing across the sentence.",
+        "Avoid reducing refinement to small neat glyphs.",
+        "Use the long phrase as one compositional breath with internal pauses rather than eleven independent units.",
+        "Let the closure become mature and collected, not decorative."
+      ],
+      "riskChecks": ["over-neatness", "weak bone structure", "late-Wen mannerism applied everywhere"]
+    },
+    "project-hand": {
+      "teacherIntent": "Scripture-first running-script grammar built on the four teachers without averaging them.",
+      "stableSpineApplication": [
+        "Structure before stylistic display.",
+        "Every imbalance must have a contextual purpose and recovery path.",
+        "Continuity may be invisible: spacing, scale, axis, entry and exit can carry flow.",
+        "Choose glyphs by phrase context before isolated beauty.",
+        "Keep sacred text highly legible and dignified without becoming regular-script typesetting.",
+        "Use controlled variation in scale, lean, density and spacing.",
+        "Keep original, adjusted and reconstructed glyph provenance separate."
+      ],
+      "provisionalPlan": {
+        "opening": "敬畏 begins gathered and weighty; movement should emerge rather than arrive pre-decorated.",
+        "nameGroup": "耶和華 receives maximum identity clarity and a calmer local rhythm, functioning as a semantic center rather than a typographic highlight.",
+        "turn": "是 acts as a hinge; 智慧 may increase density but must be internally differentiated to avoid a dark block.",
+        "bridge": "的 should be selected or reconstructed for contextual compatibility, serving as a light bridge into 開.",
+        "closure": "開 releases space; 端 gathers the sentence into a firm but still living stop."
+      },
+      "teacherConflictPolicy": "No voting and no percentage blend. For each phrase, identify the concrete writing problem, consult the most relevant teacher principle, then use the other teachers as counter-checks against drift."
+    }
+  },
+  "benchmarkChecks": [
+    "Can the five plans be distinguished without naming the hand?",
+    "Does every proposed movement have a reason in the local phrase context?",
+    "Can continuity survive when visible ligatures are removed?",
+    "Does 耶和華 remain unmistakably readable in every plan?",
+    "Does Project Hand solve problems rather than average teacher mannerisms?",
+    "Are unresolved characters still explicitly unresolved rather than silently synthesized?"
+  ],
+  "nextGate": {
+    "name": "retrieval-plan binding",
+    "requirement": "Bind each planning decision to actual corpus candidates and source context before permitting any reconstruction.",
+    "generationAllowedAfterThisFile": false
+  }
+}

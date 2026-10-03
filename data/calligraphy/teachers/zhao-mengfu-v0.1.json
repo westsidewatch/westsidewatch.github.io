@@ -1,0 +1,70 @@
+{
+  "id": "zhao-mengfu",
+  "name": "趙孟頫",
+  "version": "0.1",
+  "role": "core-teacher",
+  "generationAllowed": false,
+  "researchScope": ["行書", "行草"],
+  "teacherStates": [
+    {
+      "id": "luoshen-running",
+      "anchor": "行書洛神賦卷",
+      "traits": ["行中兼楷", "結構端正勻稱", "運筆圓潤靈秀", "輕捷連筆", "密中有疏", "飄逸中內斂", "俯仰起伏"],
+      "use": "研究法度、可讀性與流動如何同時成立"
+    },
+    {
+      "id": "letter-natural-running",
+      "anchor": "七札／付至紙素尺牘等尺牘",
+      "traits": ["實用尺牘", "自然書寫", "上下文連續", "非展示性章法"],
+      "use": "校正作品型行書，觀察日常書寫中的速度、字距、行距與承接"
+    },
+    {
+      "id": "running-cursive-transmission",
+      "anchor": "刻帖及傳承材料",
+      "traits": ["行草轉換", "簡省", "連帶", "傳承差異需標 provenance"],
+      "use": "只作行草語法研究，不與墨跡證據等權"
+    }
+  ],
+  "stableWriterHabits": [
+    {
+      "rule": "法度不是僵直；端正結構內仍允許俯仰、連筆與疏密變化。",
+      "confidence": "high",
+      "evidenceAnchors": ["行書洛神賦卷"]
+    },
+    {
+      "rule": "連筆應輕捷並服從結構可讀性，不以牽絲數量代表流動。",
+      "confidence": "high",
+      "evidenceAnchors": ["行書洛神賦卷"]
+    },
+    {
+      "rule": "密中必須能見疏；局部緊密不能導致整行等距、等大、等重。",
+      "confidence": "high",
+      "evidenceAnchors": ["行書洛神賦卷"]
+    },
+    {
+      "rule": "圓潤與豐腴必須由運鋒和點畫關係產生，不可退化成機械加粗。",
+      "confidence": "medium",
+      "evidenceAnchors": ["行書洛神賦卷"]
+    }
+  ],
+  "counterExamplesPolicy": {
+    "required": true,
+    "rule": "任何『趙孟頫通常如此』都必須同步尋找尺牘、不同時期或不同作品中的反例；不得把《洛神賦》做成趙孟頫唯一模板。"
+  },
+  "tc001TeacherQuestions": [
+    "如何讓『敬畏耶和華是智慧的開端』保持高度可讀，而不寫成楷書排字？",
+    "哪些字應端正承骨，哪些字可以俯仰或略作欹側以形成流動？",
+    "敬→畏→耶與智→慧→的之間，如何用輕捷承接而不是強制牽絲？",
+    "十一字如何形成密中有疏，而不是平均字距？",
+    "如何保持經文莊重，同時保留趙孟頫行書的靈秀與起伏？"
+  ],
+  "projectHandLessons": [
+    "結構穩定與行氣流動可以同時成立。",
+    "可讀性是行書骨架，不等於保守或僵硬。",
+    "連帶、俯仰、疏密應在法度內形成變化。"
+  ],
+  "exclusion": {
+    "globalContentGateApplies": true,
+    "note": "禁收內容不得因研究趙孟頫而進入 canonical/public corpus；研究層與公開館藏層保持分離。"
+  }
+}

@@ -1,0 +1,109 @@
+{
+  "id": "wang-xizhi-component-family-expansion-pass-v0.1",
+  "teacher": "wang-xizhi",
+  "generationAllowed": false,
+  "mode": "single-glyph-component-expansion",
+  "sourceScope": {
+    "researchSourcesAllowed": true,
+    "publicDisplayIndependent": true,
+    "wholeWorkDownload": false,
+    "primaryResearchWitness": "懷仁集王羲之聖教序",
+    "continuousWitnessesReservedForFlow": true
+  },
+  "sourceFindings": [
+    {
+      "finding": "The Palace Museum's Shengjiao technical study explicitly treats basic strokes, component combination, structural features, similar characters and same-character variants as study dimensions.",
+      "effect": "Component-family comparison remains valid as single-glyph research, while adjacency and phrase flow remain excluded."
+    },
+    {
+      "finding": "Research on the inscription reports that repeated characters and even repeated components can vary materially in form.",
+      "effect": "Variation must be retained as evidence; no averaged radical template is permitted."
+    },
+    {
+      "finding": "Scholarship discusses possible assembled/constructed glyphs in the compilation.",
+      "effect": "Anomalous component matches are tagged transmission-or-compilation-sensitive and cannot alone establish a Wang stable rule."
+    }
+  ],
+  "familyPass": {
+    "日": {
+      "currentSeeds": ["是","智"],
+      "expansionTargets": ["明","時","春","晉","莫","潛"],
+      "status": "supported-pattern-candidate",
+      "provisionalInvariants": [
+        "日 is not treated as a fixed rectangular module",
+        "host-glyph role can change its aspect ratio and vertical placement",
+        "internal white space must be evaluated relative to total host density"
+      ],
+      "notYetStable": ["exact closure behavior","fixed slant","fixed width-height ratio"]
+    },
+    "心": {
+      "currentSeeds": ["慧"],
+      "expansionTargets": ["愚","感","意","思","情","懷","惠"],
+      "status": "hypothesis-expanding",
+      "provisionalInvariants": [
+        "lower 心 must be judged as a support/release system for the upper mass rather than an isolated radical shape"
+      ],
+      "notYetStable": ["left-right spread","point/stroke distribution","degree of compression"]
+    },
+    "立": {
+      "currentSeeds": ["端"],
+      "expansionTargets": ["意","位","章"],
+      "status": "hypothesis-expanding",
+      "provisionalInvariants": [
+        "left-side 立 in 端 must preserve identification while yielding width to the right component"
+      ],
+      "notYetStable": ["upper-dot treatment","vertical-axis slant","host-dependent narrowing range"]
+    },
+    "口": {
+      "currentSeeds": ["智"],
+      "expansionTargets": ["和","知","名","君","可","同"],
+      "status": "supported-pattern-candidate",
+      "provisionalInvariants": [
+        "口 participates in host compression and is not required to remain a closed square",
+        "turning strategy and enclosure openness must be compared across host roles"
+      ],
+      "notYetStable": ["preferred opening direction","preferred angularity"]
+    },
+    "矢-知": {
+      "currentSeeds": ["智"],
+      "expansionTargets": ["知"],
+      "status": "hypothesis-expanding",
+      "provisionalInvariants": ["readable 知 skeleton must survive compression when embedded in 智"],
+      "notYetStable": ["compression ratio","internal joining path"]
+    },
+    "耑": {
+      "currentSeeds": ["端"],
+      "expansionTargets": ["端-variant-instances"],
+      "status": "same-glyph-variant-study",
+      "provisionalInvariants": ["right mass must remain identifiable while balancing the narrow left 立"],
+      "notYetStable": ["transferability to other 耑-family host glyphs"]
+    },
+    "dense-upper-plus-heart": {
+      "currentSeeds": ["慧"],
+      "expansionTargets": ["慧-analogue-structures","愚","意"],
+      "status": "hypothesis-only",
+      "provisionalInvariants": ["negative-space preservation is mandatory when a dense upper body sits over 心"],
+      "notYetStable": ["specific Wang handling of 慧 upper stack","center-axis transfer into 心"]
+    }
+  },
+  "promotionDecisions": {
+    "stableRulesPromoted": [],
+    "supportedPatternCandidates": ["日","口"],
+    "remainHypothesis": ["心","立","矢-知","dense-upper-plus-heart"],
+    "sameGlyphVariantOnly": ["耑"],
+    "reason": "This pass expands the evidence graph but does not fabricate visual measurements that have not yet been bound to verified remote glyph instances."
+  },
+  "antiContamination": {
+    "noFlowFromShengjiao": true,
+    "noNeighborSpacingFromShengjiao": true,
+    "noOriginalInkPressureFromRubbing": true,
+    "noComponentAveraging": true,
+    "noShapePasting": true,
+    "contextInShengjiao": "locator-only"
+  },
+  "nextGate": {
+    "name": "verified-component-instance-binding",
+    "requirement": "Bind expansion targets to verified remote glyph instances, beginning with 日 and 口 because they already have multiple host roles; promote only cross-host invariants that survive those comparisons.",
+    "generationAllowedAfterThisFile": false
+  }
+}

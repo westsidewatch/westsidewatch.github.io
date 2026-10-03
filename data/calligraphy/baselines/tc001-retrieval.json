@@ -1,0 +1,79 @@
+{
+  "version": 1,
+  "id": "TC001",
+  "text": "敬畏耶和華是智慧的開端",
+  "mode": "retrieval-only",
+  "productionLine": "scripture-calligraphy",
+  "coreViews": ["wang-xizhi-running", "wen-zhengming-running", "mi-fu-running", "zhao-mengfu-running"],
+  "rules": {
+    "generationAllowed": false,
+    "fontFallbackAllowed": false,
+    "crossCalligrapherGlyphSubstitutionAllowed": false,
+    "contextWindows": [2, 3, 5],
+    "preserveSourceHierarchy": ["work", "column", "group", "glyph"]
+  },
+  "candidateWorks": [
+    {
+      "calligrapher": "王羲之",
+      "title": "快雪時晴帖",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 19,
+      "admission": "core-candidate"
+    },
+    {
+      "calligrapher": "文徵明",
+      "title": "自書紀行詩",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 2530,
+      "admission": "core-candidate"
+    },
+    {
+      "calligrapher": "文徵明",
+      "title": "自書詩帖",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 2529,
+      "admission": "core-candidate"
+    },
+    {
+      "calligrapher": "米芾",
+      "title": "蜀素帖",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 912,
+      "admission": "core-candidate"
+    },
+    {
+      "calligrapher": "米芾",
+      "title": "苕溪詩帖",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 21295,
+      "admission": "core-candidate"
+    },
+    {
+      "calligrapher": "趙孟頫",
+      "title": "付至紙素尺牘",
+      "style": "行書",
+      "source": "NPM",
+      "collectionId": 108,
+      "admission": "core-candidate"
+    }
+  ],
+  "excludedCandidates": [
+    {
+      "calligrapher": "趙孟頫",
+      "collectionIds": [74, 75, 76, 77, 78, 79, 80, 82, 83],
+      "reason": "Buddhist/monastic context; excluded by site corpus policy"
+    }
+  ],
+  "acceptance": [
+    "Report exact real-glyph coverage for each core view.",
+    "Report unresolved characters without synthesis.",
+    "Retain original column/group context for every retrieved glyph.",
+    "Score adjacent-pair compatibility separately from single-glyph quality.",
+    "TC001 remains reproducible as the permanent regression baseline."
+  ]
+}

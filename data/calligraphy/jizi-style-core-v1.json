@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "status": "internal-research",
+  "public": false,
+  "coreCalligraphers": ["王羲之", "文徵明", "米芾", "趙孟頫"],
+  "acceptedStyles": ["行書", "行草"],
+  "purpose": "Use real running-script and running-cursive works as the stylistic and compositional core for character collection and missing-character completion.",
+  "principles": {
+    "unit": "contextual-glyph-not-isolated-character",
+    "preserveSourceSequence": true,
+    "learnPairs": true,
+    "learnTriplets": true,
+    "learnLineContext": true,
+    "learnWholeWorkRhythm": true,
+    "missingGlyphCompletion": "same-calligrapher-and-compatible-running-style-first",
+    "fontSubstitution": false
+  },
+  "contextFeatures": [
+    "previousCharacter", "nextCharacter", "pairDistance", "pairOverlap", "pairAxisShift",
+    "entryDirection", "exitDirection", "strokeContinuation", "ligatureState",
+    "glyphWidth", "glyphHeight", "visualMass", "centerOfGravity", "slant",
+    "inkDensity", "sizeContrast", "spacingRhythm", "lineAxis", "lineSway",
+    "columnDensity", "breathingSpace", "localTempo", "wholeWorkTempo"
+  ],
+  "selectionOrder": [
+    "same-work-neighbourhood",
+    "same-work-other-occurrence",
+    "same-calligrapher-same-style",
+    "same-calligrapher-compatible-running-style",
+    "cross-calligrapher-reference-only"
+  ],
+  "hardRules": [
+    "A glyph candidate is not ranked by visual similarity alone.",
+    "Neighbour compatibility and line rhythm are first-class evidence.",
+    "Do not normalize every glyph to the same box, baseline, scale, or spacing.",
+    "Original pair/triplet/line relationships must be retained as training evidence before character cropping.",
+    "Cross-calligrapher material may inform general running-script grammar but must not silently impersonate another calligrapher.",
+    "Generated or reconstructed missing glyphs must be labelled as reconstructed and remain distinct from source glyphs."
+  ]
+}

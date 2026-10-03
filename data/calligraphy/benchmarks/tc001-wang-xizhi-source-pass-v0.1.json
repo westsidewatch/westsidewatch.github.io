@@ -1,0 +1,64 @@
+{
+  "id": "TC001-wang-xizhi-source-pass-v0.1",
+  "text": "敬畏耶和華是智慧的開端",
+  "teacher": "wang-xizhi",
+  "generationAllowed": false,
+  "method": "transcription-first source pass; resolve only characters explicitly attested in the verified source transcription. Image/line geometry remains a later annotation step.",
+  "verifiedSources": [
+    {
+      "work": "快雪帖（快雪時晴帖系統）",
+      "sourceType": "modelbook/rubbing record",
+      "script": "行書",
+      "collection": "國立故宮博物院",
+      "sourceURI": "https://digitalarchive.npm.gov.tw/Collection/Detail/26336?dep=P",
+      "transcription": "羲之頓首。快雪時晴。佳想安善。未果為結。力不次。王羲之頓首。山陰張侯。",
+      "rightsNote": "NPM page exposes CC0/CC BY 4.0 image tiers."
+    },
+    {
+      "work": "蘭亭集序傳本系統",
+      "sourceType": "transmitted/copy tradition",
+      "script": "行書",
+      "sourceURI": "https://cerclearning.tp.edu.tw/classical/datapage/143",
+      "transcriptionEvidence": "Contains 是 and 和 in the phrase 是日也…惠風和暢; used here only as transcription evidence pending specific image-version binding."
+    },
+    {
+      "work": "雨快帖（淳化閣法帖系統）",
+      "sourceType": "modelbook/rubbing",
+      "script": "草書",
+      "collection": "國立故宮博物院",
+      "sourceURI": "https://digitalarchive.npm.gov.tw/Collection/Detail/24324?dep=P",
+      "transcription": "三月十六日。羲之白。一昨省不悉。雨快。君可不。万石轉差也。灸得力不。不得後問。懸悒不去懷。君云當有旨信。遲望其至。僕劣劣。故遣不具。還具示。王羲之。"
+    }
+  ],
+  "cells": {
+    "敬": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "畏": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "耶": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "和": {"state":"same-teacher","evidence":[{"work":"蘭亭集序傳本系統","context":"惠風和暢","bindingStatus":"transcription-bound; image-version binding pending"}]},
+    "華": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "是": {"state":"same-teacher","evidence":[{"work":"蘭亭集序傳本系統","context":"是日也","bindingStatus":"transcription-bound; image-version binding pending"}]},
+    "智": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "慧": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "的": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "開": {"state":"unresolved","reason":"not attested in current verified source transcriptions"},
+    "端": {"state":"unresolved","reason":"not attested in current verified source transcriptions"}
+  },
+  "negativeEvidence": {
+    "快雪帖": "None of the eleven TC001 target characters appears in the verified transcription.",
+    "雨快帖": "None of the eleven TC001 target characters appears in the verified transcription.",
+    "importance": "Core works remain valuable Teacher Grammar evidence even when they contribute zero direct glyph coverage to a specific scripture."
+  },
+  "coverage": {
+    "transcriptionBound": 2,
+    "fullyImageAndContextBound": 0,
+    "unresolved": 9,
+    "total": 11
+  },
+  "nextActions": [
+    "Bind 是 and 和 to a specific high-resolution Lanting copy/version and preserve their complete original line context.",
+    "Expand Wang Xizhi source search beyond the three anchor systems for the remaining nine characters.",
+    "Record structural/component analogues for 耶 separately without changing its unresolved glyph state.",
+    "Do not crop isolated glyphs before the parent line/column record exists."
+  ],
+  "nextGate": "wang-xizhi-image-context-binding-v0.1"
+}

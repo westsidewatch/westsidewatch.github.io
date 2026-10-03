@@ -1,0 +1,114 @@
+{
+  "id": "teacher-mi-fu-v0.1",
+  "calligrapher": "米芾",
+  "romanized": "Mi Fu",
+  "role": "core-teacher",
+  "scripts": ["行書", "行草"],
+  "status": "research-memory",
+  "generationAllowed": false,
+  "principle": "Model Mi Fu as a changing writing behavior, not a static style preset.",
+  "anchorStates": [
+    {
+      "id": "middle-period-running",
+      "anchor": "苕溪詩帖",
+      "date": "1088",
+      "observations": [
+        "rapid but controlled stroke movement",
+        "center and side brush usage alternate",
+        "hidden and exposed tips alternate",
+        "natural pressure rise and fall",
+        "center palace slightly gathered",
+        "long strokes expand outward",
+        "overall characters tend slightly left",
+        "oblique structures recover balance rather than remaining unstable"
+      ],
+      "source": "Beijing Palace Museum"
+    },
+    {
+      "id": "middle-period-silk-running",
+      "anchor": "蜀素帖",
+      "date": "1088",
+      "observations": [
+        "same-year comparison state for material, rhythm, density and line behavior",
+        "must remain a distinct work-state rather than being averaged into Tiaoxi"
+      ],
+      "source": "National Palace Museum, Taipei"
+    },
+    {
+      "id": "late-letter-running",
+      "anchor": "米芾尺牘卷",
+      "dateRange": "1102-1106",
+      "observations": [
+        "compact character spacing",
+        "slightly wider line spacing",
+        "vertically elongated and left-leaning structures",
+        "strong oblique momentum",
+        "firm brush character",
+        "fluid rhythmic turning"
+      ],
+      "source": "National Palace Museum"
+    },
+    {
+      "id": "small-running-cursive",
+      "anchor": "盛制帖",
+      "observations": [
+        "small running-cursive with visibly flying momentum",
+        "larger terminal characters can be executed as a single energetic phrase",
+        "use as evidence for stronger continuity and speed, not as default running-script behavior"
+      ],
+      "source": "Beijing Palace Museum"
+    }
+  ],
+  "stableWriterHabits": [
+    {
+      "rule": "dynamic-balance",
+      "statement": "Obliqueness is used to create motion, but the character and phrase must recover structural balance.",
+      "confidence": "high"
+    },
+    {
+      "rule": "variable-brush-face",
+      "statement": "Do not normalize strokes to one brush orientation; center/side and hidden/exposed behavior may alternate within a phrase.",
+      "confidence": "high"
+    },
+    {
+      "rule": "pressure-as-rhythm",
+      "statement": "Pressure change is part of phrase rhythm, not merely local stroke decoration.",
+      "confidence": "high"
+    },
+    {
+      "rule": "gather-and-release",
+      "statement": "A slightly gathered center can coexist with outward-reaching long strokes; contraction and expansion should be modeled together.",
+      "confidence": "high"
+    },
+    {
+      "rule": "continuity-with-variation",
+      "statement": "Continuity comes from coordinated transitions, pressure, spacing and momentum; it must not collapse into uniform ligature density.",
+      "confidence": "medium-high"
+    }
+  ],
+  "counterExamplesPolicy": {
+    "required": true,
+    "rule": "Every promoted Mi Fu habit must retain work-level counterexamples and state boundaries. Tiaoxi, Shusu, late letters and small running-cursive must never be averaged into a single fixed preset."
+  },
+  "teacherQuestions": [
+    "Where should this phrase deliberately lean, and where must it recover balance?",
+    "Which character should contract so that the next can release?",
+    "Does the next character need a visible thread, or can pressure, spacing and exit direction carry the qi?",
+    "Is this variation supported by the selected Mi Fu work-state or merely a generic idea of 'Mi Fu style'?"
+  ],
+  "tc001": {
+    "text": "敬畏耶和華是智慧的開端",
+    "mode": "teacher-explanation-only",
+    "generationAllowed": false,
+    "requiredWindows": ["敬畏耶", "畏耶和", "耶和華", "智慧的", "慧的開", "的開端"],
+    "firstPass": [
+      "select one Mi Fu work-state before glyph choice",
+      "map contraction/release opportunities across the sentence",
+      "mark planned lean and recovery points",
+      "compare true glyph candidates in original phrase context",
+      "leave missing characters unresolved",
+      "record counterexamples before promoting any new teacher rule"
+    ]
+  },
+  "projectHandBoundary": "Mi Fu contributes dynamic balance, brush-face variation, pressure rhythm and gather/release evidence to Project Hand research, but cannot directly rewrite the Project Hand stable spine."
+}

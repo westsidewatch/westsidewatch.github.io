@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "status": "research",
+  "purpose": "Grow a project-owned running-script hand from four historically grounded teacher models without averaging or erasing them.",
+  "coreTeachers": [
+    {"id":"wang-xizhi","role":"core-teacher","contributes":["natural continuity","responsive variation","character-to-character momentum","running/cursive transition"]},
+    {"id":"mi-fu","role":"core-teacher","contributes":["dynamic balance","inclination and recovery","brush-direction variation","tempo and spatial tension"]},
+    {"id":"zhao-mengfu","role":"core-teacher","contributes":["structural discipline","legibility","rounded continuity","controlled fluency"]},
+    {"id":"wen-zhengming","role":"core-teacher","contributes":["long-form rhythm","strength within elegance","controlled transitions","late-style temporal variation"]}
+  ],
+  "representation": {
+    "layers": ["writerInvariant","periodState","workState","lineState","characterContext","glyphInstance"],
+    "principle": "Writer identity and local character realization must be modeled separately; a teacher is not one averaged style vector."
+  },
+  "projectHand": {
+    "id":"westside-project-hand",
+    "mustNotBe":"weighted visual average of the four teachers",
+    "stableSpine": [
+      "readable character structure",
+      "brush-motion plausibility",
+      "context-sensitive character choice",
+      "continuous but non-mechanical qi flow",
+      "controlled variation of size, slant, density and spacing",
+      "scripture-appropriate gravity without stiffness",
+      "evidence-traceable decisions"
+    ],
+    "learnableDimensions": [
+      "entryExitDirection","centerOfGravity","slant","aspectRatio","componentCompression",
+      "strokeExtension","connectionLikelihood","spacing","sizeRhythm","density","lineAxis",
+      "tempo","pause","release","columnBreathing","multiColumnBalance"
+    ]
+  },
+  "influenceLibrary": {
+    "enabled": true,
+    "defaultEffect":"experiment-only",
+    "mayModifyCore": false,
+    "promotionGate": {
+      "required": [
+        "repeated evidence across multiple works",
+        "explicit rule proposal",
+        "teacher-core compatibility review",
+        "TC001 before-after comparison",
+        "no degradation of structural legibility or provenance",
+        "human approval"
+      ]
+    }
+  },
+  "evaluation": {
+    "anchorCase":"TC001",
+    "text":"敬畏耶和華是智慧的開端",
+    "outputs":["wang-xizhi-plan","mi-fu-plan","zhao-mengfu-plan","wen-zhengming-plan","project-hand-plan"],
+    "projectHandQuestion":"Can the fifth plan be recognizably its own hand while every major decision remains explainable through stable grammar and evidence?"
+  },
+  "researchNotes": [
+    "Modern handwriting research supports separating writer-level regularities from character-level realization rather than compressing style into one representation.",
+    "Structure-aware calligraphy research supports explicit modeling of component relationships so style growth does not destroy character structure.",
+    "Historical teacher models must preserve work and period variation; later influences enrich vocabulary but cannot silently rewrite the stable spine."
+  ]
+}
