@@ -96,3 +96,45 @@ ARMCD：具體碑刻／墨跡來源與碑線候選研究。
 ## 下一階段
 
 建立可視化 **Source Board**，把「拾／字」的現有候選真正攤開。這是 NODesign Chinese Logo Lab 的第一個工具介面，而不是一次性的 Logo 草稿。
+
+
+## 文徵明專項探索
+
+文徵明不只作為「一位書家」加入，而作為 NODesign Chinese Logo Lab 的一條獨立研究線。
+
+### 已確認的成熟來源
+
+1. **National Palace Museum｜文徵明四體千文**
+   - 同一核心文本存在篆、隸、楷、草等多體材料。
+   - 適合做「同一書家／同一文字／不同書體」的結構與動勢比較。
+   - 優先研究官方開放資料與可下載影像，不以二次整理圖包作 source of truth。
+
+2. **National Palace Museum｜文徵明草書千字文**
+   - 用於帖氣、速度、連帶、傾側研究。
+   - 與四體千文形成同書家跨書體對照。
+
+3. **National Palace Museum Open Data｜文徵明行書**
+   - 已確認存在可下載的 CC0 presentation image，並有較高解析度 CC BY 4.0 資產。
+   - 可作 provenance 清楚的候選來源。
+
+4. **Paris Musées / Musée Cernuschi**
+   - 已確認文徵明相關書法影像提供 CC0，並暴露 IIIF Manifest。
+   - IIIF 適合作為後續自動切字／Source Board ingestion 的成熟接口。
+   - 館藏條目標示為後世拓本時，必須保留「拓本／原作」層級，不與原墨跡混標。
+
+### 現有開源字庫
+
+neil-zt/calligraphy-community / zhuojg/chinese-calligraphy-dataset 繼續作快速單字檢索層。其優點是已切字、已有索引；缺點是 provenance 粒度不足，不能取代博物館原始館藏記錄。
+
+### 研發策略
+
+文徵明線採兩層結構：
+
+- **Fast corpus**：成熟切字庫，用於快速查「這個字有沒有」。
+- **Authority corpus**：故宮、Paris Musées 等館藏，用於確認作品、書體、年代、影像權利與原始上下文。
+
+研究中心最終不只存單字圖片，而要存：
+
+character → glyph → calligrapher → work → script → source image → crop coordinates → rights → source URL/IIIF → design corrections
+
+這將成為未來中文字 Logo 工具的 provenance backbone。
