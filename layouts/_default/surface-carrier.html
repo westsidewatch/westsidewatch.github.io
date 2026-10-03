@@ -1,0 +1,24 @@
+{{ define "main" }}
+  {{/* Canonical first-level surfaces declare layout: surface-carrier.  Keep
+       that route-level contract while rendering through the shared Sites
+       visual system instead of Hugo's unstyled default list fallback. */}}
+  <article class="sites-surface" data-surface="{{ .Section }}">
+    <header class="sites-surface-head">
+      <p>Westside Watch</p>
+      <h1>{{ .Params.display_title | default .Title }}</h1>
+      {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
+      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+    </header>
+
+    {{ with .Content }}<div class="sites-surface-content">{{ . }}</div>{{ end }}
+
+    {{ if .Pages }}
+      <nav class="sites-surface-entries" aria-label="{{ .Title }} entries">
+        {{ range .Pages.ByWeight }}
+          {{ $entryHref := .Params.entry_url | default .RelPermalink }}
+          <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Params.subtitle }}<small>{{ . }}</small>{{ end }}{{ with .Description }}<p>{{ . }}</p>{{ end }}</a>
+        {{ end }}
+      </nav>
+    {{ end }}
+  </article>
+{{ end }}
