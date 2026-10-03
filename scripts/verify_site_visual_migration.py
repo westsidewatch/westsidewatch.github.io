@@ -21,6 +21,7 @@ required_visual_assets = (
     "static/css/editorial-authority.css",
     "static/css/home-candidate01-authority.css",
     "static/css/church-mersi-motion.css",
+    "static/css/sites-second-layer.css",
     "static/js/typography-system.js",
 )
 
@@ -54,3 +55,9 @@ if missing_routes:
     raise SystemExit("Current main navigation contract changed: " + ", ".join(missing_routes))
 
 print("PASS: Site visual system is present; current GitHub navigation contract remains intact.")
+
+# GitHub Pages serves cinema/index.html directly, bypassing Hugo's asset
+# pipeline. Keep its linked visual shell in the static publication layer.
+cinema = (ROOT / "cinema/index.html").read_text(encoding="utf-8")
+if 'href="/css/sites-second-layer.css"' not in cinema:
+    raise SystemExit("Static Cinema entry no longer links its published visual shell.")
