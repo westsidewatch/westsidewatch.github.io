@@ -81,6 +81,31 @@ body{font-size:var(--ui-body)}
     padding-left:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
     padding-right:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
   }
+
+  /* The homepage has no .sites-home-inner wrapper.  Its first screen is
+     positioned directly by these five elements, so it must consume the
+     composition authority here rather than through the generic containers. */
+  .sites-home-hero{
+    --sites-home-composition-edge:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+  }
+  .sites-home-film{
+    inset-inline-start:auto;
+    width:var(--comp-media-span);
+  }
+  .sites-home-masthead{
+    left:var(--sites-home-composition-edge);
+    width:clamp(430px,calc(var(--comp-canvas) * .24),760px);
+  }
+  .sites-home-intro{
+    left:var(--sites-home-composition-edge);
+  }
+  .sites-home-intro h1{
+    font-size:clamp(150px,calc(var(--comp-canvas) * .09),310px);
+  }
+  .sites-home-entry{
+    right:var(--sites-home-composition-edge);
+    gap:calc(2.5rem * var(--comp-density));
+  }
 }
 @media(min-width:2560px){
   .sites-home-gather-media{width:var(--comp-media-span)}
