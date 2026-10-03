@@ -16,11 +16,11 @@ import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
 export class HeritageBuilder{
   constructor(materials){this.materials=materials;this.batches=new Map();this.cache=new Map();this.transform=new THREE.Object3D();this.progress={value:0};this.meshes=[];this.depths=[];this.pieces=0;}
   add(geometry,material,start,options={}){
-    const {p=[0,0,0],r=[0,0,0],s=[1,1,1],shade=1,tint=[1,1,1],duration=.013,lift=.45}=options;
+    const {p=[0,0,0],r=[0,0,0],s=[1,1,1],shade=1,tint=[1,1,1],duration=.013,lift=.45}=options;const safeLift=Math.min(lift,28);
     this.transform.position.set(...p);this.transform.rotation.set(...r);this.transform.scale.set(...s);this.transform.updateMatrix();
     const g=geometry.index?geometry.toNonIndexed():geometry.clone();g.applyMatrix4(this.transform.matrix);const n=g.getAttribute('position').count;
     const schedule=new Float32Array(n*3),color=new Float32Array(n*3);const normal=g.getAttribute('normal');
-    for(let i=0;i<n;i++){schedule.set([start,duration,lift],i*3);const underside=normal?THREE.MathUtils.lerp(.76,1,THREE.MathUtils.smoothstep(normal.getY(i),-.8,.2)):1;color.set(tint.map(v=>v*shade*underside),i*3);}
+    for(let i=0;i<n;i++){schedule.set([start,duration,safeLift],i*3);const underside=normal?THREE.MathUtils.lerp(.76,1,THREE.MathUtils.smoothstep(normal.getY(i),-.8,.2)):1;color.set(tint.map(v=>v*shade*underside),i*3);}
     g.setAttribute('aBuild',new THREE.BufferAttribute(schedule,3));g.setAttribute('color',new THREE.BufferAttribute(color,3));
     if(!g.getAttribute('uv'))g.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(n*2),2));if(!g.getAttribute('normal'))g.computeVertexNormals();
     for(const name of Object.keys(g.attributes))if(!['position','normal','uv','aBuild','color'].includes(name))g.deleteAttribute(name);
