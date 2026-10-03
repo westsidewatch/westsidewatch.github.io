@@ -20,3 +20,71 @@ body{font-size:var(--ui-body)}
 .sites-journal-head p,.sites-volume-head>p,.sites-surface-head p,.sites-church-intro>p{font-size:var(--ui-small)!important}
 .sites-journal-routes strong,.sites-surface-entries strong,.sites-church-entries strong{font-size:var(--ui-h3)!important}
 @media(min-width:2560px){.sites-layer-wordmark{width:clamp(250px,11vw,360px)!important}.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a{min-height:220px}.sites-product-frame{width:100%;min-height:100vh}}
+
+
+/* COMPOSITION AUTHORITY
+   Scale Authority owns readability; this layer owns canvas occupancy,
+   section geometry and editorial density on large displays. */
+:root{
+  --comp-canvas:var(--ui-canvas);
+  --comp-wide:var(--ui-wide);
+  --comp-section-x:var(--ui-gutter);
+  --comp-section-y:clamp(72px,8vh,132px);
+  --comp-media-span:min(100%,1760px);
+  --comp-density:1;
+}
+@media(min-width:1920px){
+  :root{
+    --comp-canvas:min(94vw,1900px);
+    --comp-wide:min(96vw,2440px);
+    --comp-section-y:clamp(84px,8vh,150px);
+    --comp-media-span:min(92vw,2100px);
+    --comp-density:1.06;
+  }
+}
+@media(min-width:2560px){
+  :root{
+    --comp-canvas:min(94vw,2400px);
+    --comp-wide:min(97vw,3000px);
+    --comp-section-y:clamp(96px,7vh,170px);
+    --comp-media-span:min(94vw,2720px);
+    --comp-density:1.14;
+  }
+}
+@media(min-width:3400px){
+  :root{
+    --comp-canvas:min(94vw,3400px);
+    --comp-wide:min(97vw,3680px);
+    --comp-section-x:clamp(72px,3vw,132px);
+    --comp-section-y:clamp(108px,6.2vh,190px);
+    --comp-media-span:min(95vw,3520px);
+    --comp-density:1.24;
+  }
+}
+
+/* Shared editorial surfaces consume composition tokens; reading measure stays
+   governed by --ui-reading rather than stretching with the viewport. */
+.sites-home-inner,.sites-home-section-inner,
+.sites-second-layer,.sites-second-layer-inner,
+.sites-surface[data-surface],.sites-surface-inner,
+.sites-church,.sites-church-inner{
+  width:var(--comp-canvas)!important;
+  max-width:none;
+}
+.sites-home-section-head,.sites-home-gather-media{
+  width:var(--comp-canvas);
+  max-width:none;
+}
+@media(min-width:1920px){
+  .sites-home-section,.sites-second-layer,.sites-surface[data-surface],
+  .sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture{
+    padding-left:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+    padding-right:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+  }
+}
+@media(min-width:2560px){
+  .sites-home-gather-media{width:var(--comp-media-span)}
+  .sites-journal-routes,.sites-surface-entries,.sites-church-entries{
+    gap:calc(var(--ui-gap) * var(--comp-density));
+  }
+}
