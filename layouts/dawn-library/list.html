@@ -1,12 +1,7 @@
 {{ define "main" }}
-<section class="dawn-library-shell" aria-label="黎明書局">
-  <iframe id="dawn-library-product-surface" class="dawn-library-shell__frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
+<section class="sites-second-layer sites-dawn-library" aria-label="黎明書局">
+  <iframe id="dawn-library-product-surface" class="sites-product-frame" src="{{ "dawn-library/product/?surface=bookstore-20260930c" | relURL }}" title="黎明書局" loading="eager"></iframe>
 </section>
-<style>
-  .dawn-library-shell{width:100%;margin:0;padding:0;background:#f4efe5}
-  .dawn-library-shell__frame{display:block;width:100%;height:100svh;min-height:760px;border:0;background:#f4efe5}
-  @media(max-width:900px){.dawn-library-shell__frame{min-height:100svh}}
-</style>
 <script>
 (() => {
   const frame = document.getElementById('dawn-library-product-surface');
