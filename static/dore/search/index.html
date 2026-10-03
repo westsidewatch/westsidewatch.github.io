@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="/css/ui-scale-system.css">
 <meta name="theme-color" content="#CEBD74">
 <title>DORÉ Bible Search · 聖經搜索</title>
 <meta name="description" content="Doré Bible Search — 經文、關鍵字、原文字詞、詞形與跨版本搜索。">
@@ -18,7 +18,7 @@ body{margin:0;color:#252525;font-family:"Noto Serif TC",serif;background-image:l
 .brand{text-decoration:none;color:#8c6818;font:500 clamp(1.45rem,1.7vw,2rem) "Cormorant Garamond",serif;letter-spacing:.11em}
 .topnav{display:flex;gap:clamp(14px,1.3vw,28px)}
 .topnav a{text-decoration:none;color:#252525;font-size:clamp(.66rem,.72vw,.86rem);opacity:.72}
-.hero{width:min(94vw,1760px);margin:auto;padding:clamp(24px,2.2vw,46px) 0 clamp(58px,5vw,92px)}
+.hero{width:var(--ui-canvas);margin:auto;padding:clamp(24px,2.2vw,46px) 0 clamp(58px,5vw,92px)}
 .art-stage{position:relative;width:100%;height:clamp(560px,43vw,780px);min-height:560px;overflow:hidden;border:1px solid rgba(80,64,26,.18);box-shadow:0 18px 55px rgba(65,45,8,.13);background:rgba(242,226,179,.34)}
 .dore-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;filter:sepia(.88) contrast(.84) brightness(1.08);opacity:0;transition:opacity 1.2s ease,object-position 15s linear}
 .dore-art.is-active{opacity:.72}
@@ -29,7 +29,7 @@ body{margin:0;color:#252525;font-family:"Noto Serif TC",serif;background-image:l
 .verse{margin:0;max-width:900px;line-height:1.9;font-size:clamp(.9rem,1vw,1.12rem)}
 .verse cite{display:block;margin-top:.45vw;font-size:clamp(.68rem,.72vw,.82rem);font-style:normal}
 .plate-credit{position:absolute;z-index:3;left:clamp(14px,1.2vw,24px);bottom:clamp(12px,1vw,20px);margin:0;color:rgba(37,37,37,.56);font:italic clamp(.58rem,.62vw,.72rem) "Cormorant Garamond",serif}
-.search-shell{position:relative;z-index:5;width:min(78vw,1320px);margin:clamp(-118px,-6.3vw,-82px) auto 0}
+.search-shell{position:relative;z-index:5;width:min(78vw,var(--ui-canvas));margin:clamp(-118px,-6.3vw,-82px) auto 0}
 .search-form{display:flex;min-height:clamp(76px,5.2vw,94px);background:rgba(255,253,246,.96);border:1px solid rgba(116,85,20,.42);border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(74,50,8,.2);backdrop-filter:blur(8px)}
 .search-icon{width:clamp(62px,5vw,92px);display:grid;place-items:center;color:#967018;font:2rem "Cormorant Garamond",serif}
 .search-form input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#252525;font:400 clamp(1rem,1.25vw,1.42rem) "Cormorant Garamond","Noto Serif TC",serif}
@@ -37,15 +37,15 @@ body{margin:0;color:#252525;font-family:"Noto Serif TC",serif;background-image:l
 .search-form button:disabled,.search-form input:disabled{opacity:.5}
 .ai-state{display:none;width:min(78vw,1320px);margin:.7rem auto 0;color:#765619;font-size:.82rem}
 .ai-state.on{display:block}
-.capabilities{width:min(84vw,1440px);margin:clamp(38px,4vw,68px) auto 0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.4vw,28px)}
+.capabilities{width:min(84vw,var(--ui-wide));margin:clamp(38px,4vw,68px) auto 0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.4vw,28px)}
 .cap{text-align:center;padding:clamp(10px,.8vw,16px)}
 .cap b{display:block;color:#9d7318;font:500 clamp(1.45rem,2vw,2.15rem) "Cormorant Garamond",serif}
 .cap strong{display:block;margin:.4vw 0 .2vw;font-size:clamp(.76rem,.8vw,.9rem)}
 .cap span{font-size:clamp(.62rem,.66vw,.72rem);opacity:.66;line-height:1.5;white-space:nowrap;word-break:keep-all}
-.info{width:min(82vw,1380px);margin:clamp(28px,2.6vw,48px) auto 0;padding:clamp(20px,1.5vw,30px) clamp(24px,2vw,40px);border:1px solid rgba(95,70,20,.17);background:rgba(255,249,227,.18)}
+.info{width:min(82vw,var(--ui-canvas));margin:clamp(28px,2.6vw,48px) auto 0;padding:clamp(20px,1.5vw,30px) clamp(24px,2vw,40px);border:1px solid rgba(95,70,20,.17);background:rgba(255,249,227,.18)}
 .info h2{margin:0 0 10px;color:#8f6815;font-size:clamp(.9rem,1vw,1.08rem);font-weight:500}
 .info p{margin:0;max-width:1100px;font-size:clamp(.76rem,.8vw,.88rem);line-height:1.9}
-.results-wrap{width:min(84vw,1460px);margin:clamp(48px,4vw,78px) auto 0;scroll-margin-top:20px}
+.results-wrap{width:min(84vw,var(--ui-wide));margin:clamp(48px,4vw,78px) auto 0;scroll-margin-top:20px}
 .results-head{display:flex;align-items:end;justify-content:space-between;border-bottom:1px solid rgba(82,62,20,.22);padding-bottom:clamp(12px,.8vw,16px)}
 .results-head h2{margin:0;font:500 clamp(1.35rem,1.55vw,1.8rem) "Cormorant Garamond","Noto Serif TC",serif}
 .results-head span{font-size:clamp(.68rem,.72vw,.8rem);opacity:.65}
@@ -76,6 +76,7 @@ body{margin:0;color:#252525;font-family:"Noto Serif TC",serif;background-image:l
 .topbar{height:64px;padding:0 15px}.topnav{gap:10px}.hero{width:calc(100% - 16px);padding:14px 0 44px}.art-stage{height:680px;min-height:680px}.dore-art{object-fit:cover;object-position:center top}.hero-copy{padding:22px 14px 150px}.hero-title{font-size:4rem}.verse{max-width:90%}.search-shell,.results-wrap,.info,.dore-signature,.ai-state{width:calc(100% - 24px)}.search-shell{margin-top:-92px}.search-form{min-height:76px}.search-icon{width:52px}.search-form button{padding:0 16px}.capabilities{width:calc(100% - 24px);grid-template-columns:repeat(3,1fr);row-gap:24px;margin-top:42px}.cap span{white-space:normal;word-break:keep-all}.dore-signature{margin-top:56px;padding:36px 12px 30px}.dore-signature .sig-motto{margin-top:12px}.dore-signature .sig-sdg{margin-top:12px}.footer{width:calc(100% - 28px);flex-direction:column;text-align:center}.result-card{padding:20px 2px}.result-card footer{flex-direction:column}.plate-credit{left:12px;bottom:10px}.hero-sub{margin:10px 0 14px}}
 @media(max-width:520px){.topnav a:first-child{display:none}.capabilities{grid-template-columns:repeat(2,1fr)}.search-form button{padding:0 12px}.search-icon{min-width:44px;width:44px}.search-form input{font-size:.95rem}.results-head{align-items:flex-start;gap:12px;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.dore-art{transition:opacity .35s ease;object-position:center center!important}}
+@media(min-width:2560px){.topnav a,.ai-state,.cap span,.info p,.results-head span,.result-card footer{font-size:var(--ui-small)}.topbar{padding-left:var(--ui-gutter);padding-right:var(--ui-gutter)}.verse,.result-card p,.chapter-reading p{font-size:var(--ui-body)}.search-form input{font-size:var(--ui-body-lg)}}
 </style>
 </head>
 <body>
