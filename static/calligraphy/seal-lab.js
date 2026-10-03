@@ -18,7 +18,8 @@ function refParts(ref){const m=String(ref||"").match(/^(.+?)(\d+):(\d+)$/);retur
 function svgEl(n,a={}){const e=document.createElementNS(NS,n);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e}
 function layoutCandidate(chars,rows,pad=145){const n=chars.length,cols=Math.ceil(n/rows),w=1000-pad*2,h=1000-pad*2,cw=w/cols,ch=h/rows,slots=[];for(let i=0;i<n;i++){const col=Math.floor(i/rows),row=i%rows;slots.push({index:i,col,row,x:1000-pad-col*cw-cw/2,y:pad+row*ch+ch/2,size:Math.min(cw,ch)*.78,scaleX:1,scaleY:1,rotate:0})}return{id:`vrtl-${cols}x${rows}`,flow:"vertical-rtl",rows,cols,pad,slots,metrics:{occupancy:n/(rows*cols),cellAspect:cw/ch}}}
 function sealLayoutCandidates(chars){const n=chars.length;if(!n)return[];const rows=new Set([n<=3?n:Math.ceil(n/2),Math.ceil(Math.sqrt(n)),Math.ceil(n/2)]);return[...rows].filter(r=>r>0&&r<=n).map(r=>layoutCandidate(chars,r))}
-function selectSealLayout(candidates){return candidates[0]||null}
+function scoreSealLayout(c){const m=c.metrics||{},empty=1-(m.occupancy||0),aspect=Math.abs(Math.log(Math.max(.01,m.cellAspect||1))),gridAspect=Math.abs(Math.log(Math.max(.01,c.cols/c.rows))),utilization=(m.occupancy||0)/(1+aspect);const score=utilization*100-empty*45-aspect*18-gridAspect*6;return{score,components:{utilization,emptyPenalty:empty,cellAspectPenalty:aspect,gridAspectPenalty:gridAspect}}}
+function selectSealLayout(candidates){let best=null;for(const c of candidates){c.scoring=scoreSealLayout(c);if(!best||c.scoring.score>best.scoring.score)best=c}return best}
 async function make(text,opt={}){const style=STYLES[opt.style]||STYLES.genesis,seed=opt.seed??hash(text+style.id),r=rng(seed),yin=opt.yin??style.yin;
  const svg=svgEl("svg",{viewBox:"0 0 1000 1000",role:"img","aria-label":text,"data-seal-style":style.id,"data-seed":seed});
  const bg=svgEl(style.shape==="round"?"circle":"rect",style.shape==="round"?{cx:500,cy:500,r:455}:{x:55,y:55,width:890,height:890,rx:style.shape==="organic"?70:8});
@@ -43,7 +44,7 @@ function mount(){
  async function draw(newSeed=false){if(newSeed)seed=(Date.now()&0xffffffff)>>>0;const s=seed||undefined;const [bookSvg,refSvg]=await Promise.all([make(bookText,{style:sel.value,yin:!yin,seed:s,book:bookText,role:"book"}),make(txt.value||"一章一節",{style:sel.value,yin,seed:s,book:bookText,role:"reference"})]);bookPreview.replaceChildren(bookSvg);preview.replaceChildren(refSvg)}
  sel.onchange=()=>{yin=STYLES[sel.value].yin;seed=0;draw()};txt.oninput=()=>{seed=0;draw()};box.querySelector("#sealYang").onclick=()=>{yin=false;draw()};box.querySelector("#sealYin").onclick=()=>{yin=true;draw()};box.querySelector("#sealAgain").onclick=()=>draw(true);
  draw();
- window.SEAL_LAB={make,styles:STYLES,registerGlyphProvider,resolveGlyph,layoutCandidates:sealLayoutCandidates,selectLayout:selectSealLayout,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
+ window.SEAL_LAB={make,styles:STYLES,registerGlyphProvider,resolveGlyph,layoutCandidates:sealLayoutCandidates,scoreLayout:scoreSealLayout,selectLayout:selectSealLayout,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 })();
