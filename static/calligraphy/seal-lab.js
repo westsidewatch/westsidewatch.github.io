@@ -16,14 +16,16 @@ function hash(s){let h=2166136261;for(const c of String(s)){h^=c.codePointAt(0);
 function rng(seed){let x=seed||1;return()=>((x=Math.imul(x^x>>>15,1|x),x^=x+Math.imul(x^x>>>7,61|x),((x^x>>>14)>>>0)/4294967296))}
 function refParts(ref){const m=String(ref||"").match(/^(.+?)(\d+):(\d+)$/);return m?{book:m[1],chapter:m[2],verse:m[3]}:{book:"",chapter:"",verse:""}}
 function svgEl(n,a={}){const e=document.createElementNS(NS,n);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e}
-function sealLayout(chars){const n=chars.length;if(!n)return[];const rows=n<=3?n:Math.ceil(n/2),cols=Math.ceil(n/rows),pad=145,w=710,h=710,cw=w/cols,ch=h/rows,out=[];for(let i=0;i<n;i++){const col=Math.floor(i/rows),row=i%rows;out.push({x:1000-pad-col*cw-cw/2,y:pad+row*ch+ch/2,size:Math.min(cw,ch)*.78})}return out}
+function layoutCandidate(chars,rows,pad=145){const n=chars.length,cols=Math.ceil(n/rows),w=1000-pad*2,h=1000-pad*2,cw=w/cols,ch=h/rows,slots=[];for(let i=0;i<n;i++){const col=Math.floor(i/rows),row=i%rows;slots.push({index:i,col,row,x:1000-pad-col*cw-cw/2,y:pad+row*ch+ch/2,size:Math.min(cw,ch)*.78,scaleX:1,scaleY:1,rotate:0})}return{id:`vrtl-${cols}x${rows}`,flow:"vertical-rtl",rows,cols,pad,slots,metrics:{occupancy:n/(rows*cols),cellAspect:cw/ch}}}
+function sealLayoutCandidates(chars){const n=chars.length;if(!n)return[];const rows=new Set([n<=3?n:Math.ceil(n/2),Math.ceil(Math.sqrt(n)),Math.ceil(n/2)]);return[...rows].filter(r=>r>0&&r<=n).map(r=>layoutCandidate(chars,r))}
+function selectSealLayout(candidates){return candidates[0]||null}
 async function make(text,opt={}){const style=STYLES[opt.style]||STYLES.genesis,seed=opt.seed??hash(text+style.id),r=rng(seed),yin=opt.yin??style.yin;
  const svg=svgEl("svg",{viewBox:"0 0 1000 1000",role:"img","aria-label":text,"data-seal-style":style.id,"data-seed":seed});
  const bg=svgEl(style.shape==="round"?"circle":"rect",style.shape==="round"?{cx:500,cy:500,r:455}:{x:55,y:55,width:890,height:890,rx:style.shape==="organic"?70:8});
  bg.setAttribute("fill",yin?style.ink:"none");bg.setAttribute("stroke",style.ink);bg.setAttribute("stroke-width","34");svg.appendChild(bg);
- const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x)),slots=sealLayout(chars);
+ const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x)),layout=selectSealLayout(sealLayoutCandidates(chars)),slots=layout?.slots||[];
  for(let i=0;i<chars.length;i++){const c=chars[i],{x,y,size:glyphSize}=slots[i];
-  const g=svgEl("g",{"data-char":c,"data-layout":"vertical-columns-rtl",transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
+  const g=svgEl("g",{"data-char":c,"data-layout":layout?.id||"none",transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
   const resolved=await resolveGlyph(c,{style:style.id,book:opt.book||"",role:opt.role||"seal"});
   if(resolved){g.appendChild(pathGlyph(resolved,x,y,glyphSize,yin?"#f6efe1":style.ink));g.setAttribute("data-vector-glyph","1")}
   else{const t=svgEl("text",{x,y,"text-anchor":"middle","font-size":glyphSize*.9,"font-family":'"Noto Serif TC","STSong","Songti TC",serif',"font-weight":"700",fill:yin?"#f6efe1":style.ink});t.textContent=c;g.appendChild(t);g.setAttribute("data-glyph-fallback","text")}
@@ -41,7 +43,7 @@ function mount(){
  async function draw(newSeed=false){if(newSeed)seed=(Date.now()&0xffffffff)>>>0;const s=seed||undefined;const [bookSvg,refSvg]=await Promise.all([make(bookText,{style:sel.value,yin:!yin,seed:s,book:bookText,role:"book"}),make(txt.value||"一章一節",{style:sel.value,yin,seed:s,book:bookText,role:"reference"})]);bookPreview.replaceChildren(bookSvg);preview.replaceChildren(refSvg)}
  sel.onchange=()=>{yin=STYLES[sel.value].yin;seed=0;draw()};txt.oninput=()=>{seed=0;draw()};box.querySelector("#sealYang").onclick=()=>{yin=false;draw()};box.querySelector("#sealYin").onclick=()=>{yin=true;draw()};box.querySelector("#sealAgain").onclick=()=>draw(true);
  draw();
- window.SEAL_LAB={make,styles:STYLES,registerGlyphProvider,resolveGlyph,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
+ window.SEAL_LAB={make,styles:STYLES,registerGlyphProvider,resolveGlyph,layoutCandidates:sealLayoutCandidates,selectLayout:selectSealLayout,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 })();
