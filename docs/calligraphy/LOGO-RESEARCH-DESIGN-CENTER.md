@@ -363,3 +363,43 @@ SEAL LAB 同時服務兩個目的：
 **text → glyph source → layout preset → per-glyph transform → positive/negative mode → border → optical corrections → export**
 
 這使拾字印章生成器本身可立即使用，同一批 layout/transform 資料又可被池底設 Logo Lab 研究。
+
+
+## SEAL GLYPH STACK v2｜先擴米，再接章法
+
+### 重大更新：Unicode 18 小篆層
+2026 年 Unicode 18 已正式加入 Small Seal Script block。工程不再把「現代漢字直接套一款篆體字型」當唯一方案，而建立：
+**modern Han → Small Seal mapping → Unicode Small Seal code point → seal glyph source**
+
+### Tier 0｜全覆蓋基礎層
+- **PlanschriftSeal**：Unicode 18 Small Seal 11,328 字符全覆蓋；MIT/OFL 雙許可。作為拾字 SEAL 的高覆蓋基底。
+- **Kaiyuan Small Seal**：現有對齊資料顯示 11,328 小篆字符中僅約 348 glyph 尚缺；OFL。作為第二高覆蓋 renderer / cross-check source。
+
+Tier 0 的目的：解決「輸入一句話卻大量缺字」。它保證可生成，不等同於最終藝術選字。
+
+### Tier 1｜權威字源層
+- **小學堂小篆**：9,831 字頭、11,101 字形。保存《說文》部目、異體與來源描述。作 authority/reference；權利逐項確認後再決定哪些圖像可進 runtime。
+- **Unicode SealSources /《說文》四大來源**：THX、CCZ、QJZ、DYC。作 modern↔seal 映射與字源核對。
+- **全字庫《說文解字》**：已有開源項目記錄 6,721 字、OGDL-TW-1.0/CC-BY-4.0-compatible；需在實際納入前重新核驗原始授權與下載源。
+
+### Tier 2｜藝術變體層
+- **LXGW Seal**：OFL；字必有《說文》依據，數量少但 provenance 強。
+- **JFZSKSealScript / 中山王篆**：OFL；約 2,700 vocabulary entries，提供戰國金文／中山王系造形。
+- **思文小篆**：OFL 1.1；候選完整文本字體，需下一輪做 glyph coverage audit。
+- 後續加入可驗證授權的秦篆、漢篆、古璽、清人篆書／篆刻字形，不混成單一「篆體」。
+
+### Tier 3｜研究資料層
+- **EVOBC**：甲骨、金文、春秋、戰國、Seal Script、隸書的跨時代字形資料；CC BY-NC-SA 4.0，只進研究，不進商用 runtime。
+- **小學堂衍生工具／crawler**：證明可把字頭、異體、來源描述結構化；只借資料模型與檢索思路，抓取及再利用須遵守原資料權利。
+
+### Resolver 原則
+SEAL 不應只有 font fallback，而是候選 resolver：
+1. 解析今字；
+2. 找 Unicode Small Seal 對應；
+3. Tier 0 保證 glyph；
+4. Tier 1 驗證字源；
+5. Tier 2 提供藝術候選；
+6. 送入 vYinn-derived layout/transform engine；
+7. 保留每個 glyph 的 source / authority / license。
+
+因此同一個「西」將來不是一個篆字，而是一組有來源的候選，章法引擎再決定哪一個最適合當前印面。
