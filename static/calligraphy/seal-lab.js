@@ -16,17 +16,17 @@ function hash(s){let h=2166136261;for(const c of String(s)){h^=c.codePointAt(0);
 function rng(seed){let x=seed||1;return()=>((x=Math.imul(x^x>>>15,1|x),x^=x+Math.imul(x^x>>>7,61|x),((x^x>>>14)>>>0)/4294967296))}
 function refParts(ref){const m=String(ref||"").match(/^(.+?)(\d+):(\d+)$/);return m?{book:m[1],chapter:m[2],verse:m[3]}:{book:"",chapter:"",verse:""}}
 function svgEl(n,a={}){const e=document.createElementNS(NS,n);for(const[k,v]of Object.entries(a))e.setAttribute(k,v);return e}
+function sealLayout(chars){const n=chars.length;if(!n)return[];const rows=n<=3?n:Math.ceil(n/2),cols=Math.ceil(n/rows),pad=145,w=710,h=710,cw=w/cols,ch=h/rows,out=[];for(let i=0;i<n;i++){const col=Math.floor(i/rows),row=i%rows;out.push({x:1000-pad-col*cw-cw/2,y:pad+row*ch+ch/2,size:Math.min(cw,ch)*.78})}return out}
 async function make(text,opt={}){const style=STYLES[opt.style]||STYLES.genesis,seed=opt.seed??hash(text+style.id),r=rng(seed),yin=opt.yin??style.yin;
  const svg=svgEl("svg",{viewBox:"0 0 1000 1000",role:"img","aria-label":text,"data-seal-style":style.id,"data-seed":seed});
  const bg=svgEl(style.shape==="round"?"circle":"rect",style.shape==="round"?{cx:500,cy:500,r:455}:{x:55,y:55,width:890,height:890,rx:style.shape==="organic"?70:8});
  bg.setAttribute("fill",yin?style.ink:"none");bg.setAttribute("stroke",style.ink);bg.setAttribute("stroke-width","34");svg.appendChild(bg);
- const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x));
- const three=chars.length===3,cols=chars.length<=2?1:2,rows=Math.ceil(chars.length/cols),cw=760/cols,ch=760/rows,threeSlots=[[690,330],[310,330],[690,690]];
- for(let i=0;i<chars.length;i++){const c=chars[i],col=i%cols,row=Math.floor(i/cols),x=three?threeSlots[i][0]:120+col*cw+cw/2,y=three?threeSlots[i][1]:120+row*ch+ch*.66,glyphSize=three?315:Math.min(cw,ch)*.72;
-  const g=svgEl("g",{"data-char":c,"data-layout":three?"three-character":"grid",transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
+ const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x)),slots=sealLayout(chars);
+ for(let i=0;i<chars.length;i++){const c=chars[i],{x,y,size:glyphSize}=slots[i];
+  const g=svgEl("g",{"data-char":c,"data-layout":"vertical-columns-rtl",transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
   const resolved=await resolveGlyph(c,{style:style.id,book:opt.book||"",role:opt.role||"seal"});
   if(resolved){g.appendChild(pathGlyph(resolved,x,y,glyphSize,yin?"#f6efe1":style.ink));g.setAttribute("data-vector-glyph","1")}
-  else{const t=svgEl("text",{x,y,"text-anchor":"middle","font-size":three?280:Math.min(cw,ch)*.66,"font-family":'"Noto Serif TC","STSong","Songti TC",serif',"font-weight":"700",fill:yin?"#f6efe1":style.ink});t.textContent=c;g.appendChild(t);g.setAttribute("data-glyph-fallback","text")}
+  else{const t=svgEl("text",{x,y,"text-anchor":"middle","font-size":glyphSize*.9,"font-family":'"Noto Serif TC","STSong","Songti TC",serif',"font-weight":"700",fill:yin?"#f6efe1":style.ink});t.textContent=c;g.appendChild(t);g.setAttribute("data-glyph-fallback","text")}
   svg.appendChild(g)
  }
  return svg
