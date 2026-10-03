@@ -1038,3 +1038,7 @@ main,.views{background:transparent}
 .connection-note>span,.connection-scripture-missing>span{display:block;margin-bottom:.18rem;color:var(--gold);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase}
 .connection-scripture-missing{margin:.8rem 0 0;padding-top:.7rem;border-top:1px solid var(--line);color:var(--muted);font-size:.82rem;line-height:1.65}
 .connection-section blockquote[data-one-scripture="true"]{margin:.85rem 0 0}
+
+/* UI SCALE AUTHORITY BRIDGE */
+@media(min-width:1920px){:root{--one-body-size:var(--ui-body)}.chapter-detail>.study-intro,.chapter-detail>.chapter-section,.chapter-detail>.scripture-reading{font-size:var(--ui-body)}}
+@media(min-width:2560px){.chapter-detail>.study-intro,.chapter-detail>.chapter-section,.chapter-detail>.scripture-reading{padding-left:var(--ui-gutter);padding-right:var(--ui-gutter)}}
