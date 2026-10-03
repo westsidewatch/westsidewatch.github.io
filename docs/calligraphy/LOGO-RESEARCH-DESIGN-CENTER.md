@@ -484,6 +484,26 @@ modern text → Small Seal mapping → font/glyph candidate → source metadata
 - 自研 font parser
 - 自研 bitmap vectorizer
 
+
+### MVP 測試文本
+第一版不用「池底設」作範例，改用**聖經經卷名稱**作為固定測試集。原因是它天然覆蓋 2–4 字以上的不同字數、常用字與較難字，並直接服務拾字的實際使用情境。
+
+首批可用：
+- 約翰福音
+- 馬太福音
+- 創世記
+- 出埃及記
+- 詩篇
+- 箴言
+
+這組測試同時驗證 resolver 覆蓋率、章法對不同字數的適應，以及 SVG path 在縮放、挪讓和輸出後的穩定性。
+
+### SVG 作為長期共同底層
+SEAL 第一版採用 SVG scene 不只是為了下載。保留每個字為獨立 vector path / group，連同 transform、來源與 optical correction，使同一套資料將來可直接進 Logo Lab：
+**seal SVG → 拆除印框／朱白文媒介特徵 → 保留字形與空間關係 → Optical Board → logo master SVG**
+
+因此避免把文字過早 rasterize 或 flatten；PNG 只作輸出格式，不作 canonical master。
+
 ### 快速線成功條件
 不是「像真正篆刻家一樣自動設計」，而是：
 **任意常用 1–4 字可解析 → 有篆字 → 套成熟章法 → 人可以快速挪讓 → 朱白文切換 → SVG/PNG 可用。**
