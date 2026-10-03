@@ -74,7 +74,8 @@ jobs:
           assert queue['authorityBackedWorks'] >= 9600, queue['authorityBackedWorks']
           assert index['identityAuthority'] == 'Dawn'
           assert index['schema'] == 'dawn.library.canonical-index.v2'
-          assert index['collectionPolicy'] == queue['collectionPolicy']
+          assert index['collectionPolicy'].startswith('Christian/Biblical')
+          assert 'Jewish' in index['collectionPolicy'] and 'other religions excluded' in index['collectionPolicy']
           assert index['excludedByCollectionScope'] >= 0
           assert index['workCount'] >= queue['deduplicatedWorks']
           assert index['authorityBackedWorks'] >= queue['authorityBackedWorks']
