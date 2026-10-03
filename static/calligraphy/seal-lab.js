@@ -47,6 +47,7 @@ function mount(){
  async function draw(newSeed=false){if(newSeed)seed=(Date.now()&0xffffffff)>>>0;const s=seed||undefined;const [bookSvg,refSvg]=await Promise.all([make(bookText,{style:sel.value,yin:!yin,seed:s,book:bookText,role:"book"}),make(txt.value||"一章一節",{style:sel.value,yin,seed:s,book:bookText,role:"reference"})]);bookPreview.replaceChildren(bookSvg);preview.replaceChildren(refSvg)}
  sel.onchange=()=>{yin=STYLES[sel.value].yin;seed=0;draw()};txt.oninput=()=>{seed=0;draw()};box.querySelector("#sealYang").onclick=()=>{yin=false;draw()};box.querySelector("#sealYin").onclick=()=>{yin=true;draw()};box.querySelector("#sealAgain").onclick=()=>draw(true);
  draw();
+ window.SEAL_CORPUS?.refresh?.().then(()=>draw()).catch(e=>console.warn("seal corpus",e));
  window.SEAL_LAB={make,styles:STYLES,registerGlyphProvider,resolveGlyph,compositions:COMPOSITIONS,layoutCandidates:sealLayoutCandidates,scoreLayout:scoreSealLayout,selectLayout:selectSealLayout,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
