@@ -1,0 +1,64 @@
+name: Site Preview Authority
+
+on:
+  pull_request:
+    paths:
+      - 'layouts/**'
+      - 'content/**'
+      - 'static/**'
+      - 'cinema/**'
+      - 'assets/**'
+      - 'hugo.toml'
+      - 'config.toml'
+      - '.github/workflows/site-preview-authority.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HUGO_VERSION: 0.164.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Install Hugo
+        run: |
+          wget -q -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+      - name: Normalize Hugo front matter compatibility
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root=Path('content')
+          if root.exists():
+              for path in root.rglob('*'):
+                  if path.is_file() and path.suffix.lower() in {'.md','.html'}:
+                      s=path.read_text(encoding='utf-8')
+                      n=re.sub(r'(?m)^([ \t]*)_build([ \t]*:)', r'\1build\2', s)
+                      if n != s: path.write_text(n, encoding='utf-8')
+          PY
+      - name: Build branch preview
+        run: hugo --minify --baseURL /
+      - name: Publish static production surfaces
+        run: |
+          mkdir -p public/cinema
+          test -f cinema/index.html && cp -a cinema/. public/cinema/
+          test -f public/index.html
+          test -f public/css/ui-scale-system.css
+      - name: Package preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number || github.run_id }}
+          path: public
+          retention-days: 7
