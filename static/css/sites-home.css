@@ -13,3 +13,6 @@ html{scroll-behavior:smooth}body.home{margin:0;background:var(--paper);color:var
 .sites-layer-nav{font-size:var(--ui-nav);gap:var(--ui-gap)}
 .sites-home-inner,.sites-home-section-inner{width:var(--ui-canvas);max-width:none}
 @media(min-width:2560px){.sites-home-kicker,.sites-home-meta,.sites-home-caption{font-size:var(--ui-small)}.sites-home-copy{font-size:var(--ui-body)}}
+
+/* FINAL SCALE LEAKAGE SEAL */
+@media(min-width:1920px){.sites-layer-nav{font-size:var(--ui-nav)}.sites-home-masthead p,.sites-home-intro cite,.sites-home-entry span,.sites-home-section-head>p:first-child,.sites-home-section-head>p:last-child,.sites-home-water-item span,.sites-home-water-item p,.sites-home-gather-copy a,.sites-home-gather-copy span,.sites-layer-footer{font-size:var(--ui-small)}.sites-home-section-head{width:var(--ui-canvas);max-width:none}.sites-home-gather-media{max-width:var(--ui-canvas)}}
