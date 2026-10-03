@@ -31,5 +31,5 @@ jobs:
         run: |
           git config user.name 'Dore CI'
           git config user.email 'dore-ci@users.noreply.github.com'
-          git add static/dawn-library/surfaces/dawn-reading-layers.json static/dawn-library/surfaces/dawn-readable-layer.json static/dawn-library/surfaces/dawn-jump-reading-layer.json
+          git add -A static/dawn-library/surfaces/dawn-reading-layers.json static/dawn-library/surfaces/dawn-readable-layer.json static/dawn-library/surfaces/dawn-jump-reading-root.json static/dawn-library/surfaces/jump-reading static/dawn-library/surfaces/dawn-jump-reading-layer.json
           if git diff --cached --quiet; then echo 'Reading layers already current.'; else git commit -m 'data(dawn): refresh two-layer reading surfaces [skip ci]'; git push origin HEAD:main; fi

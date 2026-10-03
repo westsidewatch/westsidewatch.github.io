@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFile } from 'node:fs/promises';
+import { readFile, stat } from 'node:fs/promises';
+import fs from 'node:fs';
 
 const staticRoot = new URL('../static/', import.meta.url);
 let sequence = 0;
@@ -107,4 +108,62 @@ test('the bookstore reads its catalogue, Chinese collection, and cover projectio
     assert.ok(requests.includes('/dawn-library/chinese-collection.json'));
     assert.ok(requests.includes('/dawn-library/cover-preview/chinese-collection.json'));
   });
+});
+
+test('the living publication exposes its canonical projection through bounded shards', async () => {
+  const living = new URL('dawn-library/living/', staticRoot);
+  const root = JSON.parse(await readFile(new URL('root.json', living)));
+  const cloudflareAssetLimit = 25 * 1024 * 1024;
+
+  assert.equal(root.schema, 'dawn.library.living-root.v1');
+  assert.equal(root.projectionOnly, true);
+  assert.equal(root.admissionAuthority, false);
+  assert.equal(root.shardCount, root.shards.length);
+  assert.equal(fs.existsSync(new URL('../living-library.json', living)), false,
+    'the retired monolithic projection must not be published');
+
+  let total = 0;
+  for (const shard of root.shards) {
+    const file = new URL(shard.href.replace(/^\//, ''), staticRoot);
+    const [metadata, payload] = await Promise.all([
+      stat(file), readFile(file, 'utf8').then(JSON.parse)
+    ]);
+    assert.ok(metadata.size < cloudflareAssetLimit,
+      `${shard.href} exceeds the Cloudflare Pages single-asset limit`);
+    assert.equal(payload.schema, 'dawn.library.living-wall-shard.v1');
+    assert.equal(payload.projectionOnly, true);
+    assert.equal(payload.admissionAuthority, false);
+    assert.equal(payload.workCount, payload.workRefs.length);
+    total += payload.workCount;
+  }
+  assert.equal(total, root.canonicalWorkCount);
+});
+
+test('the jump-reading publication exposes its full projection through bounded shards', async () => {
+  const surface = new URL('dawn-library/surfaces/', staticRoot);
+  const root = JSON.parse(await readFile(new URL('dawn-jump-reading-root.json', surface)));
+  const cloudflareAssetLimit = 25 * 1024 * 1024;
+
+  assert.equal(root.schema, 'dawn.library.jump-reading-root.v1');
+  assert.equal(root.projectionOnly, true);
+  assert.equal(root.admissionAuthority, false);
+  assert.equal(root.shardCount, root.shards.length);
+  assert.equal(fs.existsSync(new URL('dawn-jump-reading-layer.json', surface)), false,
+    'the retired monolithic jump-reading projection must not be published');
+
+  let total = 0;
+  for (const shard of root.shards) {
+    const file = new URL(shard.href, surface);
+    const [metadata, payload] = await Promise.all([
+      stat(file), readFile(file, 'utf8').then(JSON.parse)
+    ]);
+    assert.ok(metadata.size < cloudflareAssetLimit,
+      `${shard.href} exceeds the Cloudflare Pages single-asset limit`);
+    assert.equal(payload.schema, 'dawn.library.jump-reading-shard.v1');
+    assert.equal(payload.projectionOnly, true);
+    assert.equal(payload.admissionAuthority, false);
+    assert.equal(payload.count, payload.works.length);
+    total += payload.count;
+  }
+  assert.equal(total, root.count);
 });
