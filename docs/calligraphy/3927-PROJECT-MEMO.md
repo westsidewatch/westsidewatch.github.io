@@ -197,3 +197,46 @@ PNG 只是輸出格式。
 6. 先完成兩枚「三九二七」總章作為第 0 組真實案例。
 7. 開始 66 卷 Master；《創世記》作為石鼓文方向的首批研究候選之一。
 8. 將可用成果逐步接入拾字，而不是等待全部 66 枚完成後一次上線。
+
+
+## Physical Editions｜SVG 到實體刻印
+
+canonical SVG 不只服務網頁與 PNG，也必須保留為可製造的數字刻印母版。教會現有 CNC 數控機床相關實作能力，因此從第一版 SVG 架構開始就避免只為螢幕渲染而設計。
+
+### 雙層 SVG 輸出
+每枚 Master 保留兩種由同一來源導出的表示：
+- **Display SVG**：網頁、作品展示、印刷與互動使用；
+- **Fabrication SVG**：供 CNC／雷射／雕刻流程使用的乾淨幾何版本。
+
+Fabrication SVG 原則：
+- 文字全部轉 path，不依賴 runtime font；
+- 封閉輪廓、可檢查 winding / compound path；
+- 陰文／陽文有明確正負幾何；
+- 不使用濾鏡、陰影、mask 等純螢幕效果作為必要結構；
+- 保存真實尺寸、最小線寬／最小間隙等 fabrication constraints；
+- 可由同一 canonical scene 產生，而不是另畫一套製造稿。
+
+具體刀具直徑、切削深度、材料厚度、補償量與機台參數不寫死在作品 Master；在實際製造前按材料與機台建立 CAM profile。
+
+### 3927 Physical Editions
+除 66 枚陶土章外，作品可形成可批量製作的實體版本：
+- 66 枚不同色彩的玻璃版本；
+- 66 枚不同色彩的有機玻璃／亞克力版本；
+- 後續其他適合雕刻的材料版本。
+
+顏色不先做任意彩虹化分配。先完成逐卷 Biblical Color research，再把經文、材料與全案色彩系統映射到 66 枚實體章。
+
+### Gift Edition
+當設計、材料、安全性與製造流程成熟後，可形成小批量／批量成品，作為：
+- 福音禮物；
+- 教會奉獻／紀念禮物；
+- 《三九二七》作品衍生實物。
+
+禮物版本仍源自同一 66 Master / Style Genome，不另做廉價簡化視覺系統。可按成本與材料建立不同 edition，但保持作品身份與 provenance。
+
+### 工程含義
+因此 SVG 從現在起同時承擔四種角色：
+
+**screen master → generator master → logo research vector → fabrication master**
+
+任何後續 SVG 架構調整，都必須避免破壞可製造性。
