@@ -3,6 +3,7 @@
    base template. Keep their shell here rather than depending on a missing
    generated asset. */
 @import url('/css/sites-surface-reset.css');
+@import url('/css/ui-scale-system.css');
 
 body.sites-cinema{margin:0;background:#11120f;color:#f7f3e8;font-family:var(--serif);font-size:16px;line-height:1.45}
 .sites-cinema *{box-sizing:border-box}.sites-cinema a{color:inherit;text-decoration:none}.sites-cinema img,.sites-cinema video,.sites-cinema iframe{display:block;max-width:100%}
@@ -16,3 +17,13 @@ body.sites-cinema{margin:0;background:#11120f;color:#f7f3e8;font-family:var(--se
 #cinema-week-programme,#cinema-archive-index,#cinema-library{max-width:1480px;margin:0 auto}.sites-cinema-week{background:#eee4c9}.sites-cinema-week button{width:100%;display:grid;grid-template-columns:1fr 2fr 1fr;gap:2vw;text-align:left;background:transparent;border:0;border-top:1px solid rgba(37,37,37,.18);padding:1.2rem 0;font:inherit;color:inherit;cursor:pointer}.sites-cinema-week button:hover{background:rgba(206,189,116,.18)}
 .sites-cinema-source{max-width:1480px;margin:6vh auto 0;padding-top:1rem;border-top:1px solid rgba(37,37,37,.18);display:flex;gap:1.5rem;flex-wrap:wrap;font-size:12px}.sites-cinema-source a{border-bottom:1px solid currentColor}.sites-cinema-friends{padding:3rem max(5vw,calc((100vw - 1480px)/2));background:#11120f;display:flex;gap:2rem;align-items:center;font-size:12px}.sites-cinema-friends p{margin-right:auto;font-size:10px;letter-spacing:.16em}
 @media(max-width:760px){.sites-return{left:18px;top:16px}.sites-cinema-brand{left:18px;bottom:16vh}.sites-cinema-brand h1{font-size:20vw}.sites-cinema-enter{right:18px;bottom:6vh}.sites-cinema-reason,.sites-cinema-week,.sites-cinema-archive{padding:10vh 18px}.sites-cinema-reason>header,.sites-cinema-week>header,.sites-cinema-archive>header,#cinema-why-tonight{display:block}.sites-cinema-reason h2,.sites-cinema-week h2,.sites-cinema-archive h2{font-size:18vw;margin:2rem 0}.sites-cinema-week button{display:block}.sites-cinema-week button>*{display:block;margin:.3rem 0}.sites-cinema-friends{padding:2rem 18px;display:block}.sites-cinema-friends>*{display:block;margin:1rem 0}}
+
+/* Static Cinema is published outside Hugo.  It must consume the same wide
+   Sites canvas and remain still instead of reviving legacy hover choreography. */
+body.sites-cinema{font-size:var(--ui-body)}
+body.sites-cinema *{animation:none!important;transition:none!important}
+@media(min-width:1920px){
+  .sites-cinema-reason,.sites-cinema-week,.sites-cinema-archive{padding-left:5vw;padding-right:5vw}
+  .sites-cinema-reason>header,.sites-cinema-week>header,.sites-cinema-archive>header,#cinema-why-tonight,#cinema-week-programme,#cinema-archive-index,#cinema-library,.sites-cinema-source{max-width:none;width:90vw}
+  .sites-cinema-brand{left:5vw;max-width:56rem}.sites-cinema-brand h1{font-size:clamp(110px,9vw,280px)}
+}
