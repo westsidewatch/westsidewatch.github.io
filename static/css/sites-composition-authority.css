@@ -11,3 +11,22 @@
 .home .watch-tile{transform-origin:center center}
 .home .watch-windows{overflow:hidden}
 @media(max-width:700px){.home .watch-stream:nth-child(n) .watch-tile:first-child{margin-left:0}.home .watch-film{inset:0}}
+
+/* Recovery authority.  The original presentation experiments used perpetual
+   motion and narrow fixed canvases.  Sites owns the published composition:
+   keep the film itself, but remove decorative motion and let every first-level
+   surface use the responsive canvas above. */
+.sites-home-isolated .sites-home-water-row,
+.sites-home-isolated .sites-home-gather-media i,
+.sites-surface .sites-church-intro:before,
+.sites-surface .sites-church-intro:after,
+.sites-surface .sites-church-water:after{animation:none!important;transition:none!important}
+.sites-surface .sites-church-intro:before,
+.sites-surface .sites-church-intro:after{display:none}
+.sites-home-isolated .sites-home-water-row{transform:none!important}
+.sites-home-isolated .sites-home-water-row:nth-child(even){transform:none!important}
+@media(min-width:1920px){
+  .sites-church-intro,.sites-church-entries,.sites-church-footer{width:var(--comp-canvas);max-width:none}
+  .sites-church-intro{min-height:min(72svh,980px)}
+  .sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture{min-height:min(68svh,900px)}
+}

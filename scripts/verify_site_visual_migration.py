@@ -35,6 +35,7 @@ for needle in (
     'resources.Get "css/second-layer-system.css"',
     'resources.Get "css/typography-system.css"',
     '"js/typography-system.js" | relURL',
+    '"css/sites-composition-authority.css" | relURL',
 ):
     if needle not in base:
         raise SystemExit(f"Visual system is not wired into the Hugo shell: {needle}")
