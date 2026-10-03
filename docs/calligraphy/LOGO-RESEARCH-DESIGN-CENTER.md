@@ -271,3 +271,53 @@ authority record、作品名、年代／年齡、書體、載體、尺寸、原�
 - provenance / rights
 
 這使「西望」未來可以同時看魏碑、趙之謙、文徵明、王羲之、米芾及後續 corpus，而不是先選一個書家再找「西」「望」。
+
+
+## 拾字插入工程｜SEAL LAB
+
+### 定位
+在「拾字」既定流程中，把後續的印章生成提前成一個可研究節點：
+
+**拾字 GLEAN → 寫心 INSCRIBE → 印章 SEAL LAB → 成卷**
+
+SEAL LAB 同時服務兩個目的：
+1. 拾字產品：生成可實際使用的印章；
+2. 池底設 Logo Lab：把篆刻視為高度濃縮的中文字標實驗場。
+
+印章不是 Logo 的附屬裝飾，也不等同 Logo；研究的是兩者共有的造形問題。
+
+### 研究維度
+**字法**：篆書、古文字與印化字形；同字變體；增減、屈曲、伸縮、挪讓；為方寸空間而發生的字形變化。
+
+**章法**：一字、二字、三字、四字及多字印；縱／橫／回文等次序；字的面積分配；主次、疏密、呼應；邊欄與字的關係。
+
+**空間**：正負形；留紅／留白；中宮與外輪廓；邊角壓力；視覺重心；不對稱平衡。
+
+**刀法／邊界**：朱文／白文；線條粗細；粘連、斷裂、殘邊；石味與印面邊界；小尺寸辨識。
+
+### 資料模型
+印章研究不只保存成品圖。每枚印建立可逆資料：
+
+**seal → inscription → reading order → grid/regions → glyph variants → transformations → positive/negative space → border → source/provenance**
+
+由此研究：字為什麼因整體而變形、字間為何不是平均分配、哪些空間關係能遷移到二字／三字 Logo，以及哪些只是篆刻媒介特徵。
+
+### Logo Lab 的橋接
+從 SEAL LAB 抽取的不是「印章風 Logo」，而是可跨媒介的規則：
+- 字形允許為整體而變；
+- 字與字可以共享／競爭空間；
+- 負空間也是造形；
+- 外輪廓可以先於單字局部；
+- 視覺面積不等於幾何面積；
+- 小尺度必須重新做 optical correction。
+
+這些規則進入 Pairing Board 與 Optical Board，但保留來源標記 seal-derived，避免把篆刻語法與碑帖語法混為一談。
+
+### 工程順序
+1. 建立印章 authority/source corpus；
+2. 做章法標註，不急著生成；
+3. 建立可調 grid / region / reading-order 模型；
+4. 接入拾字現有 glyph resolver；
+5. 生成候選印面；
+6. 人工選擇後做 optical correction；
+7. 輸出印章，同時把可泛化的佈局規則送入 Logo Lab。
