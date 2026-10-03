@@ -446,3 +446,46 @@ SEAL 不應只有 font fallback，而是候選 resolver：
 3. Unicode 18 Small Seal 的官方 mapping/source files；
 4. PlanschriftSeal、全字庫說文、思文小篆的實際 glyph coverage/授權 audit；
 5. 古璽、秦漢印、明清流派印的可開放圖像來源。
+
+
+## SEAL FAST TRACK v1｜工程快速線
+
+研究庫繼續累積，但不阻塞拾字 SEAL 第一版。快速線只採已成熟、可替代大量自研工作的組件。
+
+### 直接採用／借模型
+1. **vYinn**：借章法參數、逐字 transform、朱白文、印框、做殘／擴散模型；不搬 Perl UI。
+2. **opentype.js**：瀏覽器直接讀 OTF/TTF/WOFF，完成 character→glyph、bbox、Bezier path、SVG path。以此作字形渲染核心，避免自行寫 font parser/vectorizer。
+3. **Unicode 18 Small Seal + 高覆蓋 OFL 字體**：先做 resolver 的保底層；藝術變體後掛，不阻塞 MVP。
+4. **現有拾字 OpenCC / resolver / export 經驗**：沿用現有輸入、fallback、來源標記、cache/version 與下載流程。
+5. **Potrace 類工具**：只在歷史印蛻／bitmap 必須轉 SVG 時使用；不進第一版主路徑。
+6. **Maker.js**：保留為後續 SVG 幾何、印框／切割／實體治印輸出候選；第一版不用它增加依賴。
+
+### 第一版只保留四個模組
+**SealResolver**
+modern text → Small Seal mapping → font/glyph candidate → source metadata
+
+**SealLayout**
+1–4 字 preset；每字 x/y/scaleX/scaleY/rotate；方印；朱文／白文；border
+
+**SealEditor**
+拖動、縮放、壓扁／拉長、旋轉、換候選字形；所有修改直接寫 transform，不做破壞性 bitmap editing
+
+**SealExport**
+同一 SVG scene 輸出 SVG；PNG 由 SVG rasterize。避免維護兩套 renderer。
+
+### 明確延後
+- AI 自動章法
+- 大型歷代印譜 ingestion
+- OCR
+- 自動做殘學習
+- 圓／橢圓／異形印
+- 多字長文
+- 實體刻印／CNC
+- 自研 font parser
+- 自研 bitmap vectorizer
+
+### 快速線成功條件
+不是「像真正篆刻家一樣自動設計」，而是：
+**任意常用 1–4 字可解析 → 有篆字 → 套成熟章法 → 人可以快速挪讓 → 朱白文切換 → SVG/PNG 可用。**
+
+之後所有研究庫成果都以新增 candidate / preset / rule 的方式插入，不重寫第一版架構。
