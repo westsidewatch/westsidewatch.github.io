@@ -321,3 +321,45 @@ SEAL LAB 同時服務兩個目的：
 5. 生成候選印面；
 6. 人工選擇後做 optical correction；
 7. 輸出印章，同時把可泛化的佈局規則送入 Logo Lab。
+
+
+## SEAL LAB｜多雷探索：可搬成熟方案（第一輪）
+
+目標遵循拾字的成功路徑：先取得成熟、授權清楚、可拆用的資源，不從零造引擎。
+
+### 第一核心：vYinn（殷人）
+定位為首要工程參考／移植來源。MIT。其現成能力與拾字印章需求高度重合：
+- 陰文／陽文；
+- 方、圓、橢圓印框；
+- 每字獨立大小、座標、橫縱變形、旋轉；
+- 字與印框分層；
+- 做殘、油墨、擴散；
+- 透明 PNG；
+- 配置驅動；
+- 從既有印文圖像扣取透明印文。
+
+策略：不搬 Perl UI；抽取它已驗證的「印面參數模型、圖層模型、變形模型、效果模型」，重寫為拾字現有 Web runtime。
+
+### 第二核心：篆字字形層
+**LXGW Seal / 霞鶩篆書**：OFL 1.1，小篆 Unicode 18.0 對應與今字映射清楚；現階段字數有限，適合作為來源可靠的基礎／fallback，不作唯一字庫。
+
+**JFZSKSealScript / 中山王篆**：OFL 1.1，兩千字級覆蓋，可作第二種篆書造形來源。其擴展字形包含設計性補字，因此必須和《說文》來源型字形分級標註，不混為同一 authority。
+
+### 第三核心：Authority / provenance
+博物館開放資料只做來源與研究層。優先接有 CC0 / CC BY 高解析圖與 IIIF 的館藏，保存原印面與書畫上的作者／收藏印記，用於章法研究和後續 provenance，不直接把未知權利的網路印譜切字塞進產品。
+
+### 暫不採用
+- 現代公司公章 generator：幾何渲染可參考，但與文人篆刻章法目標不同；
+- OCR seal datasets：可留給未來自動切印／識別，不作第一版生成核心；
+- 權利不清楚的「古印字體包」：不進 runtime。
+
+### 最小可行版本
+第一版只做：
+**輸入 1–4 字 → 篆字解析 → 方印 → 朱文／白文 → 2–4 個成熟章法 preset → 每字 optical adjustment → 印框 → PNG/SVG**
+
+第一版不做 AI 自動審美、不做大量仿舊、不做公司公章模板。
+
+資料結構從第一天保留：
+**text → glyph source → layout preset → per-glyph transform → positive/negative mode → border → optical corrections → export**
+
+這使拾字印章生成器本身可立即使用，同一批 layout/transform 資料又可被池底設 Logo Lab 研究。
