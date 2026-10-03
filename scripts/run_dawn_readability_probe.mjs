@@ -3,7 +3,11 @@ import path from 'node:path';
 import { JSDOM } from 'jsdom';
 import { Readability } from '@mozilla/readability';
 
-const sourceUrl = process.env.DAWN_READABILITY_SOURCE || 'https://bibleproject.com/articles/did-god-or-people-write-bible/';
+// The previous article now ships its body through the client application.
+// Keep this acceptance probe against an official, server-rendered BibleProject
+// article so Readability continues to prove that the external reader path has
+// real, extractable text rather than a successful-but-empty shell response.
+const sourceUrl = process.env.DAWN_READABILITY_SOURCE || 'https://bibleproject.com/articles/study-notes-for-the-bible/';
 const response = await fetch(sourceUrl, { headers: { 'User-Agent': 'DawnLibrary/1.0 (+https://westsidewatch.github.io)' } });
 if (!response.ok) throw new Error(`source HTTP ${response.status}`);
 const html = await response.text();
