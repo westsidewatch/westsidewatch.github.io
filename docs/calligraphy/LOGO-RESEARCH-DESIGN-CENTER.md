@@ -138,3 +138,72 @@ neil-zt/calligraphy-community / zhuojg/chinese-calligraphy-dataset 繼續作快�
 character → glyph → calligrapher → work → script → source image → crop coordinates → rights → source URL/IIIF → design corrections
 
 這將成為未來中文字 Logo 工具的 provenance backbone。
+
+
+## 文徵明研究計畫 v1
+
+### 研究問題
+不把文徵明簡化成一條按年齡前進的「風格時間線」。研究單位改為：
+
+**作品 → 段落／書寫狀態 → 行 → 字 → 字間關係**
+
+核心問題：
+1. 同一作品內是否存在可重複辨識的多種行書狀態？
+2. 單字骨架、筆勢與整行行氣之間如何互相制約？
+3. 文徵明如何由精整的小字／行書，發展到能承擔大尺度的晚年行書？
+4. 哪些特徵可以轉譯為中文字標，而不需要仿造一套「文徵明字體」？
+
+### Anchor Work 01｜題仿米雲山圖（1535）
+第一階段不預設「兩種風格」的名稱，也不先把它們解釋成早／晚風格。先建立可驗證的 A/B segmentation。
+
+保存五層資料：
+- 原卷／權威圖版
+- 段落
+- 完整行
+- 單字 crop
+- 相鄰字與行位置 context
+
+每個字除 glyph 外，記錄：
+- bounding box / crop coordinates
+- 字高、字寬、墨面比例
+- 重心
+- 傾側
+- 行軸偏移
+- 與前後字距
+- 前後字尺度變化
+- 可見連帶／呼應
+- Style A / B / transition / uncertain
+
+研究輸出：
+- A/B 全卷分布圖
+- 兩種狀態的代表字板
+- 同字異寫對照
+- 行氣樣本
+- transition zones
+- 可用於 Logo 的「骨」與「勢」特徵，不直接生成 Logo
+
+### 對照作品
+不只按年代選，而按研究功能選：
+- 早期／早年端整材料：觀察原始骨架
+- 中年行楷／行書：觀察控制性
+- 1535 前後作品：驗證《題仿米雲山圖》是否為孤例
+- 約六十九歲草書：觀察節奏與行氣上限
+- 晚年大字行書：觀察尺度放大後的骨架、墨量與招牌性
+- 晚年小楷：作反向控制組，避免把「晚年」錯等同於「粗壯／大字」
+
+### 三個 Corpus Layer
+1. **Authority Layer**：博物館原件、IIIF、權威著錄。
+2. **Context Layer**：整卷、段落、整行；專門保存行氣。
+3. **Glyph Layer**：切字與同字聚類；服務「拾字」與 Logo Lab。
+
+任何 Glyph 都必須能返回 Context，再返回 Authority。
+
+### 第一階段完成標準
+不是「收了多少字」，而是：
+- Anchor Work 01 可逐行瀏覽；
+- A/B/transition 標記可以被人工覆核；
+- 任一單字可一鍵回到原行；
+- 至少找到一組同字在 A/B 狀態下的異寫；
+- 能與至少三件不同功能的對照作品並排比較。
+
+這一階段完成後，才決定是否值得把文徵明線擴成完整 corpus。
