@@ -5,6 +5,9 @@ const STYLES={
  matthew:{id:"matthew",label:"馬太福音",shape:"rect",yin:false,ink:"#7f2f2b"},
  psalms:{id:"psalms",label:"詩篇",shape:"round",yin:false,ink:"#8b3f35"}
 };
+const BOOK_STYLE={"創世記":"genesis","创世记":"genesis","馬太福音":"matthew","马太福音":"matthew","詩篇":"psalms","诗篇":"psalms"};
+const NUM=["零","一","二","三","四","五","六","七","八","九"];
+function cnNum(n){n=+n;if(n<10)return NUM[n];if(n<20)return"十"+(n%10?NUM[n%10]:"");if(n<100)return NUM[Math.floor(n/10)]+"十"+(n%10?NUM[n%10]:"");return String(n)}
 function hash(s){let h=2166136261;for(const c of String(s)){h^=c.codePointAt(0);h=Math.imul(h,16777619)}return h>>>0}
 function rng(seed){let x=seed||1;return()=>((x=Math.imul(x^x>>>15,1|x),x^=x+Math.imul(x^x>>>7,61|x),((x^x>>>14)>>>0)/4294967296))}
 function refParts(ref){const m=String(ref||"").match(/^(.+?)(\d+):(\d+)$/);return m?{book:m[1],chapter:m[2],verse:m[3]}:{book:"",chapter:"",verse:""}}
@@ -23,15 +26,15 @@ function make(text,opt={}){const style=STYLES[opt.style]||STYLES.genesis,seed=op
 }
 function mount(){
  const variants=document.querySelector(".variants");if(!variants||document.querySelector("#sealLab"))return;
- const box=document.createElement("section");box.id="sealLab";box.innerHTML='<div class="seal-lab-head"><small>3927 / SEAL LAB</small><h2>印章生成</h2></div><div id="sealPreview"></div><label>風格</label><select id="sealStyle"><option value="genesis">創世記</option><option value="matthew">馬太福音</option><option value="psalms">詩篇</option></select><label>印文</label><input id="sealText" value="一章一節"><div class="seal-row"><button id="sealYang">陽文</button><button id="sealYin">陰文</button><button id="sealAgain">再生成</button></div>';
+ const box=document.createElement("section");box.id="sealLab";box.innerHTML='<div class="seal-lab-head"><small>3927 / SEAL LAB</small><h2>印章生成</h2></div><div id="sealPair"><div><small>經卷</small><div id="bookSealPreview"></div></div><div><small>章節</small><div id="sealPreview"></div></div></div><label>風格</label><select id="sealStyle"><option value="genesis">創世記</option><option value="matthew">馬太福音</option><option value="psalms">詩篇</option></select><label>印文</label><input id="sealText" value="一章一節"><div class="seal-row"><button id="sealYang">陽文</button><button id="sealYin">陰文</button><button id="sealAgain">再生成</button></div>';
  variants.appendChild(box);
- const style=document.createElement("style");style.textContent='#sealLab{margin-top:2rem;padding-top:1.4rem;border-top:1px solid #d8d1c2}#sealLab h2{margin:.45em 0 1em}#sealLab small{font:10px/1 Arial,sans-serif;letter-spacing:.16em;color:#8f7d38}#sealPreview{width:min(220px,100%);aspect-ratio:1;margin:0 auto 1rem}#sealPreview svg{width:100%;height:100%;display:block}#sealLab select,#sealLab input{width:100%;border:1px solid #d8d1c2;background:rgba(255,255,255,.5);padding:.7em;color:#24231f}#sealLab .seal-row{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:.45rem;margin-top:1rem}#sealLab button{border:1px solid #d8d1c2;background:transparent;padding:.65em .35em;cursor:pointer}';document.head.appendChild(style);
+ const style=document.createElement("style");style.textContent='#sealLab{margin-top:2rem;padding-top:1.4rem;border-top:1px solid #d8d1c2}#sealLab h2{margin:.45em 0 1em}#sealLab small{font:10px/1 Arial,sans-serif;letter-spacing:.16em;color:#8f7d38}#sealPair{display:grid;grid-template-columns:1.25fr .75fr;gap:.8rem;align-items:end;margin-bottom:1rem}#sealPair>div>small{display:block;margin-bottom:.4rem}#bookSealPreview,#sealPreview{width:100%;aspect-ratio:1}#bookSealPreview svg,#sealPreview svg{width:100%;height:100%;display:block}#sealLab select,#sealLab input{width:100%;border:1px solid #d8d1c2;background:rgba(255,255,255,.5);padding:.7em;color:#24231f}#sealLab .seal-row{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:.45rem;margin-top:1rem}#sealLab button{border:1px solid #d8d1c2;background:transparent;padding:.65em .35em;cursor:pointer}';document.head.appendChild(style);
  let yin=STYLES.genesis.yin,seed=0;
- const preview=box.querySelector("#sealPreview"),txt=box.querySelector("#sealText"),sel=box.querySelector("#sealStyle");
- function draw(newSeed=false){if(newSeed)seed=(Date.now()&0xffffffff)>>>0;preview.replaceChildren(make(txt.value||"一章一節",{style:sel.value,yin,seed:seed||undefined}))}
+ const preview=box.querySelector("#sealPreview"),bookPreview=box.querySelector("#bookSealPreview"),txt=box.querySelector("#sealText"),sel=box.querySelector("#sealStyle");let bookText="創世記";
+ function draw(newSeed=false){if(newSeed)seed=(Date.now()&0xffffffff)>>>0;const s=seed||undefined;bookPreview.replaceChildren(make(bookText,{style:sel.value,yin:!yin,seed:s}));preview.replaceChildren(make(txt.value||"一章一節",{style:sel.value,yin,seed:s}))}
  sel.onchange=()=>{yin=STYLES[sel.value].yin;seed=0;draw()};txt.oninput=()=>{seed=0;draw()};box.querySelector("#sealYang").onclick=()=>{yin=false;draw()};box.querySelector("#sealYin").onclick=()=>{yin=true;draw()};box.querySelector("#sealAgain").onclick=()=>draw(true);
  draw();
- window.SEAL_LAB={make,styles:STYLES,fromReference(ref){const p=refParts(ref);txt.value=p.chapter&&p.verse?`${p.chapter}章${p.verse}節`:txt.value;draw()}}
+ window.SEAL_LAB={make,styles:STYLES,fromReference(ref){const p=refParts(ref);if(p.book){bookText=p.book;const sid=BOOK_STYLE[p.book];if(sid){sel.value=sid;yin=STYLES[sid].yin}}if(p.chapter&&p.verse)txt.value=cnNum(p.chapter)+"章"+cnNum(p.verse)+"節";seed=0;draw()}}
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",mount,{once:true});else mount();
 })();
