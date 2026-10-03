@@ -1,0 +1,115 @@
+:root{
+  --ui-scale:1;
+  --ui-caption:11px;--ui-small:12px;--ui-body:16px;--ui-body-lg:18px;
+  --ui-nav:13px;--ui-label:12px;
+  --ui-h3:clamp(26px,1.65vw,38px);--ui-h2:clamp(42px,3.8vw,78px);--ui-display:clamp(68px,7vw,132px);
+  --ui-gutter:clamp(18px,3.5vw,72px);--ui-gap:clamp(14px,1.8vw,34px);
+  --ui-reading:76ch;--ui-canvas:min(94vw,1760px);--ui-wide:min(96vw,2200px);
+}
+@media(min-width:1920px){:root{--ui-scale:1.08;--ui-caption:12px;--ui-small:13px;--ui-body:17px;--ui-body-lg:19px;--ui-nav:14px;--ui-label:13px;--ui-canvas:min(94vw,1900px);--ui-wide:min(96vw,2440px)}}
+@media(min-width:2560px){:root{--ui-scale:1.18;--ui-caption:14px;--ui-small:15px;--ui-body:19px;--ui-body-lg:21px;--ui-nav:16px;--ui-label:15px;--ui-h3:clamp(32px,1.35vw,44px);--ui-h2:clamp(52px,3vw,88px);--ui-display:clamp(82px,5.4vw,144px);--ui-gutter:clamp(42px,3.2vw,96px);--ui-canvas:min(92vw,2320px);--ui-wide:min(95vw,2860px)}}
+@media(min-width:3400px){:root{--ui-scale:1.28;--ui-caption:16px;--ui-small:17px;--ui-body:21px;--ui-body-lg:23px;--ui-nav:18px;--ui-label:17px;--ui-h3:clamp(36px,1.15vw,48px);--ui-h2:clamp(58px,2.35vw,94px);--ui-display:clamp(90px,4.1vw,152px);--ui-gutter:clamp(58px,2.8vw,112px);--ui-gap:clamp(22px,1.35vw,46px);--ui-canvas:min(90vw,3000px);--ui-wide:min(94vw,3440px)}}
+@media(max-width:760px){:root{--ui-caption:10px;--ui-small:11px;--ui-body:15px;--ui-body-lg:17px;--ui-nav:11px;--ui-label:10px;--ui-h3:clamp(24px,8vw,34px);--ui-h2:clamp(38px,12vw,60px);--ui-display:clamp(58px,19vw,92px);--ui-gutter:18px;--ui-gap:14px;--ui-canvas:calc(100vw - 36px);--ui-wide:100vw}}
+/* Global readable UI floor. Product-specific composition may override layout, not readability. */
+body{font-size:var(--ui-body)}
+.sites-layer-nav{font-size:var(--ui-nav)!important}.sites-layer-section-nav{font-size:var(--ui-small)!important}
+.sites-layer-header{padding-left:var(--ui-gutter)!important;padding-right:var(--ui-gutter)!important}
+.sites-second-layer,.sites-surface[data-surface],.sites-church{width:var(--ui-canvas)!important}
+.sites-breadcrumb,.sites-layer-footer{font-size:var(--ui-caption)!important}
+.sites-journal-head h1,.sites-volume-head h1,.sites-surface-head h1,.sites-church-intro h1{font-size:var(--ui-display)!important}
+.sites-journal-head p,.sites-volume-head>p,.sites-surface-head p,.sites-church-intro>p{font-size:var(--ui-small)!important}
+.sites-journal-routes strong,.sites-surface-entries strong,.sites-church-entries strong{font-size:var(--ui-h3)!important}
+@media(min-width:2560px){.sites-layer-wordmark{width:clamp(250px,11vw,360px)!important}.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a{min-height:220px}.sites-product-frame{width:100%;min-height:100vh}}
+
+
+/* COMPOSITION AUTHORITY
+   Scale Authority owns readability; this layer owns canvas occupancy,
+   section geometry and editorial density on large displays. */
+:root{
+  --comp-canvas:var(--ui-canvas);
+  --comp-wide:var(--ui-wide);
+  --comp-section-x:var(--ui-gutter);
+  --comp-section-y:clamp(72px,8vh,132px);
+  --comp-media-span:min(100%,1760px);
+  --comp-density:1;
+}
+@media(min-width:1920px){
+  :root{
+    --comp-canvas:min(94vw,1900px);
+    --comp-wide:min(96vw,2440px);
+    --comp-section-y:clamp(84px,8vh,150px);
+    --comp-media-span:min(92vw,2100px);
+    --comp-density:1.06;
+  }
+}
+@media(min-width:2560px){
+  :root{
+    --comp-canvas:min(94vw,2400px);
+    --comp-wide:min(97vw,3000px);
+    --comp-section-y:clamp(96px,7vh,170px);
+    --comp-media-span:min(94vw,2720px);
+    --comp-density:1.14;
+  }
+}
+@media(min-width:3400px){
+  :root{
+    --comp-canvas:min(94vw,3400px);
+    --comp-wide:min(97vw,3680px);
+    --comp-section-x:clamp(72px,3vw,132px);
+    --comp-section-y:clamp(108px,6.2vh,190px);
+    --comp-media-span:min(95vw,3520px);
+    --comp-density:1.24;
+  }
+}
+
+/* Shared editorial surfaces consume composition tokens; reading measure stays
+   governed by --ui-reading rather than stretching with the viewport. */
+.sites-home-inner,.sites-home-section-inner,
+.sites-second-layer,.sites-second-layer-inner,
+.sites-surface[data-surface],.sites-surface-inner,
+.sites-church,.sites-church-inner{
+  width:var(--comp-canvas)!important;
+  max-width:none;
+}
+.sites-home-section-head,.sites-home-gather-media{
+  width:var(--comp-canvas);
+  max-width:none;
+}
+@media(min-width:1920px){
+  .sites-home-section,.sites-second-layer,.sites-surface[data-surface],
+  .sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture{
+    padding-left:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+    padding-right:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+  }
+
+  /* The homepage has no .sites-home-inner wrapper.  Its first screen is
+     positioned directly by these five elements, so it must consume the
+     composition authority here rather than through the generic containers. */
+  .sites-home-hero{
+    --sites-home-composition-edge:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2));
+  }
+  .sites-home-film{
+    inset-inline-start:auto;
+    width:var(--comp-media-span);
+  }
+  .sites-home-masthead{
+    left:var(--sites-home-composition-edge);
+    width:clamp(430px,calc(var(--comp-canvas) * .24),760px);
+  }
+  .sites-home-intro{
+    left:var(--sites-home-composition-edge);
+  }
+  .sites-home-intro h1{
+    font-size:clamp(150px,calc(var(--comp-canvas) * .09),310px);
+  }
+  .sites-home-entry{
+    right:var(--sites-home-composition-edge);
+    gap:calc(2.5rem * var(--comp-density));
+  }
+}
+@media(min-width:2560px){
+  .sites-home-gather-media{width:var(--comp-media-span)}
+  .sites-journal-routes,.sites-surface-entries,.sites-church-entries{
+    gap:calc(var(--ui-gap) * var(--comp-density));
+  }
+}

@@ -1,6 +1,6 @@
 ---
 title: "Podcast (legacy)"
-_build:
+build:
   render: never
   list: never
 ---

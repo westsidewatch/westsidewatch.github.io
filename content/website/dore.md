@@ -1,6 +1,6 @@
 ---
 title: "多雷（legacy entry）"
-_build:
+build:
   render: never
   list: never
 ---

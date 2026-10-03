@@ -1,6 +1,6 @@
 ---
 title: "天堂電影院（legacy）"
-_build:
+build:
   render: never
   list: never
 ---

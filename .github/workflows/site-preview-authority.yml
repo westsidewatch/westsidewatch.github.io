@@ -1,0 +1,91 @@
+name: Site Preview Authority
+
+on:
+  push:
+    branches:
+      - sites-clean-visual-replacement
+  pull_request:
+    paths:
+      - 'layouts/**'
+      - 'content/**'
+      - 'static/**'
+      - 'cinema/**'
+      - 'assets/**'
+      - 'hugo.toml'
+      - 'config.toml'
+      - '.github/workflows/site-preview-authority.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      HUGO_VERSION: 0.164.0
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+          fetch-depth: 0
+      - name: Install Hugo
+        run: |
+          wget -q -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+      - name: Normalize Hugo front matter compatibility
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          root=Path('content')
+          if root.exists():
+              for path in root.rglob('*'):
+                  if path.is_file() and path.suffix.lower() in {'.md','.html'}:
+                      s=path.read_text(encoding='utf-8')
+                      n=re.sub(r'(?m)^([ \t]*)_build([ \t]*:)', r'\1build\2', s)
+                      if n != s: path.write_text(n, encoding='utf-8')
+          PY
+      - name: Build branch preview
+        run: hugo --minify --baseURL /
+      - name: Publish static production surfaces
+        run: |
+          mkdir -p public/cinema
+          test -f cinema/index.html && cp -a cinema/. public/cinema/
+          test -f public/index.html
+          test -f public/css/ui-scale-system.css
+      - name: Package preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-preview-${{ github.event.pull_request.number || github.run_id }}
+          path: public
+          retention-days: 7
+      - name: Install Chromium
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y chromium-browser || sudo apt-get install -y chromium
+      - name: Render preview at QA viewports
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/site-preview.log 2>&1 &
+          echo $! > /tmp/site-preview.pid
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4173/ >/dev/null && break; sleep 1; done
+          mkdir -p visual-qa
+          CHROME=$(command -v chromium-browser || command -v chromium)
+          for W in 1440 1920 2560 3840; do
+            "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=$W,2160 --screenshot="visual-qa/home-$W.png" http://127.0.0.1:4173/
+          done
+          test -s visual-qa/home-1440.png
+          test -s visual-qa/home-1920.png
+          test -s visual-qa/home-2560.png
+          test -s visual-qa/home-3840.png
+      - name: Upload rendered visual QA
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-visual-qa-${{ github.event.pull_request.number || github.run_id }}
+          path: visual-qa
+          retention-days: 7

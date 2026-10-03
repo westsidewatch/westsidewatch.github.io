@@ -1,24 +1,12 @@
 {{ define "main" }}
-  <article class="volume volume--contents">
-    <nav class="breadcrumb" aria-label="Breadcrumb">
-      <a href="{{ site.Home.RelPermalink }}">Home</a>
-      <span aria-hidden="true">/</span>
-      <a href="{{ "journal/" | relURL }}">Journal</a>
-      <span aria-hidden="true">/</span>
-      <span aria-current="page">Vol.00</span>
-    </nav>
-    <header class="volume__header volume__header--contents">
-      <p class="kicker">{{ .Params.volume }} · Founding Volume</p>
-      <h1>{{ .Title }}</h1>
-      {{ with .Description }}<p class="volume__description">{{ . }}</p>{{ end }}
-      <nav class="volume__routes" aria-label="Volume routes">
-        <a href="{{ "/vol-00/#vol-00-proclamation" | relURL }}">Read the opening</a>
-        <a href="#contents">Browse contents</a>
-        <a href="{{ "journal/" | relURL }}">Return to Journal</a>
-      </nav>
-    </header>
-
-    {{ partial "home-proclamation.html" . }}
-    {{ partial "vol-00-contents.html" . }}
-  </article>
+<article class="sites-second-layer sites-volume" id="vol-00">
+  <nav class="sites-breadcrumb" aria-label="Breadcrumb"><a href="{{ site.Home.RelPermalink }}">Home</a><span aria-hidden="true">/</span><a href="{{ "journal/" | relURL }}">Journal</a><span aria-hidden="true">/</span><span aria-current="page">Vol.00</span></nav>
+  <header class="sites-volume-head">
+    <p>{{ .Params.volume }} · Founding Volume</p><h1>{{ .Title }}</h1>{{ with .Description }}<p>{{ . }}</p>{{ end }}
+    <nav class="sites-volume-routes" aria-label="Volume routes"><a href="#opening">Read the opening</a><a href="#contents">Browse contents</a><a href="{{ "journal/" | relURL }}">Return to Journal</a></nav>
+  </header>
+  <section id="opening" class="sites-volume-opening"><p>Founding Volume · 創刊號</p><h2>{{ site.Params.volumeTitle }}</h2><blockquote><p>“For he looked for a city which hath foundations, whose builder and maker is God.”</p><p lang="zh-Hant">「因為他等候那座有根基的城，就是神所經營、所建造的。」</p><cite>希伯來書 11:10 · KJV</cite></blockquote></section>
+  {{ $volume := index hugo.Data.volumes "vol-00" }}
+  <section id="contents" class="sites-volume-contents"><header><p>Contents · 目錄</p><h2>A city under light</h2></header>{{ range $movement := $volume.movements }}<section class="sites-volume-movement" id="movement-{{ lower $movement.name }}"><header><p>{{ $movement.number }} · {{ $movement.tempo }}</p><h3>{{ upper $movement.name }}</h3><p lang="zh-Hant">{{ $movement.name_zh }}</p></header><ol>{{ range $column := $movement.columns }}<li id="column-{{ $column.number }}"><span>{{ $column.number }}</span><strong lang="zh-Hant">{{ $column.name }}</strong><small>{{ $column.name_en }}</small><p lang="zh-Hant">{{ $column.title }}</p></li>{{ end }}</ol></section>{{ end }}</section>
+</article>
 {{ end }}

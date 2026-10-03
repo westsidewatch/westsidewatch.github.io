@@ -1,6 +1,6 @@
 ---
 title: "黎明書局（legacy）"
-_build:
+build:
   render: never
   list: never
 ---

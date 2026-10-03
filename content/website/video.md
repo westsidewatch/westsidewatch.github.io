@@ -1,6 +1,6 @@
 ---
 title: "Video (legacy)"
-_build:
+build:
   render: never
   list: never
 ---

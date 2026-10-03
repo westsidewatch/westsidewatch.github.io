@@ -1,6 +1,6 @@
 ---
 title: "About (legacy)"
-_build:
+build:
   render: never
   list: never
 ---
