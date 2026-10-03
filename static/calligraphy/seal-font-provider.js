@@ -1,17 +1,28 @@
 (()=>{"use strict";
-const FONT_URL="https://cdn.jsdelivr.net/gh/lxgw/LxgwSeal@main/TTF/LXGWSeal-Regular.ttf";
-let fontPromise;
-function loadFont(){
- if(!window.opentype)return Promise.reject(new Error("opentype.js unavailable"));
- return fontPromise||(fontPromise=new Promise((resolve,reject)=>window.opentype.load(FONT_URL,(e,f)=>e?reject(e):resolve(f))));
+const GLYPH_BASE="https://cdn.jsdelivr.net/gh/frankslin/kaiyuan-small-seal-font@main/glyphs/";
+const cache=new Map();
+let converter;
+function toSeal(ch){
+ if(!window.OpenCCSeal)return null;
+ converter||(converter=window.OpenCCSeal.Converter({from:"t",to:"seal"}));
+ const out=converter(ch),cp=out.codePointAt(0);
+ return cp>=0x3D000&&cp<=0x3FC3F?out:null;
 }
-function pathData(path){return path.commands.map(c=>{switch(c.type){case"M":return`M${c.x} ${-c.y}`;case"L":return`L${c.x} ${-c.y}`;case"C":return`C${c.x1} ${-c.y1} ${c.x2} ${-c.y2} ${c.x} ${-c.y}`;case"Q":return`Q${c.x1} ${-c.y1} ${c.x} ${-c.y}`;case"Z":return"Z";default:return""}}).join(" ")}
 async function resolve(ch){
- const font=await loadFont(),glyph=font.charToGlyph(ch);
- if(!glyph||glyph.index===0)return null;
- const bb=glyph.getBoundingBox(),path=glyph.getPath(0,0,1000);
- return {path:pathData(path),viewBox:[bb.x1,-bb.y2,Math.max(1,bb.x2-bb.x1),Math.max(1,bb.y2-bb.y1)],source:"LXGW Seal / Shuowen-derived",license:"OFL-1.1",unicode:ch.codePointAt(0).toString(16).toUpperCase()}
+ const seal=toSeal(ch);
+ if(!seal)return null;
+ const hex=seal.codePointAt(0).toString(16).toUpperCase();
+ if(cache.has(hex))return cache.get(hex);
+ const task=fetch(`${GLYPH_BASE}u${hex}.svg`).then(async r=>{
+  if(!r.ok)return null;
+  const doc=new DOMParser().parseFromString(await r.text(),"image/svg+xml");
+  const svg=doc.documentElement,path=svg.querySelector("path"),vb=(svg.getAttribute("viewBox")||"0 -880 1000 1000").trim().split(/\s+/).map(Number);
+  if(!path||vb.length!==4||vb.some(Number.isNaN))return null;
+  return {path:path.getAttribute("d"),viewBox:vb,source:"Kaiyuan Small Seal / Shuowen",license:"OFL-1.1",unicode:hex};
+ }).catch(()=>null);
+ cache.set(hex,task);
+ return task;
 }
-function register(){window.SEAL_LAB?.registerGlyphProvider({id:"lxgw-seal",resolve})}
+function register(){window.SEAL_LAB?.registerGlyphProvider({id:"kaiyuan-small-seal",resolve})}
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",register,{once:true});else register();
 })();
