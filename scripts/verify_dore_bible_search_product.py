@@ -19,7 +19,7 @@ def main():
     one_crossref=Path('static/one/one-cross-reference-scripture-global-audit.js').read_text(encoding='utf-8')
     one_crossref_ui=Path('static/one/one-dore-crossref-ui.js').read_text(encoding='utf-8')
     one_crossref_ui_css=Path('static/one/one-dore-crossref-ui.css').read_text(encoding='utf-8')
-    home=Path('layouts/index.html').read_text(encoding='utf-8')
+    home=Path('layouts/index.html').read_text(encoding='utf-8')+Path('layouts/partials/watch-home.html').read_text(encoding='utf-8')
     assets=Path('static/one/one-dore-assets-241.js').read_text(encoding='utf-8')
     core_path=Path('static/dore/search-index.json');orig_path=Path('static/dore/original-index.json')
     manifest_path=Path('static/dore/crossrefs/manifest.json')

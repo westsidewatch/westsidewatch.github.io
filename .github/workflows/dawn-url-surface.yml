@@ -105,7 +105,8 @@ jobs:
           assert d['targetWorks'] == 10000
           assert d['sourceCandidates'] >= d['deduplicatedWorks']
           assert d['deduplicatedWorks'] > 0
-          assert d['admission'].startswith('none')
+          assert d['admission'] == 'collection-scope gate precedes technical reconciliation'
+          assert all(i.get('admission') == 'none' for i in d['items'])
           assert all(i.get('queueId') and i.get('status') for i in d['items'])
           print({'sourceCandidates': d['sourceCandidates'], 'deduplicatedWorks': d['deduplicatedWorks'], 'targetWorks': d['targetWorks']})
           PY
