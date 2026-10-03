@@ -566,3 +566,74 @@ SEAL 第一版採用 SVG scene 不只是為了下載。保留每個字為獨立 
 - Logo Lab 的 66 個真實章法／字形／負空間研究樣本。
 
 因此 SEAL 66 本身就是從研究、工具到產品的第一個閉環。
+
+
+## SEAL GENERATOR｜從數字章到人名章
+
+### 兩枚章是一個 composition
+經卷章與章節數字章不各自孤立生成。每套 book style 同時定義 companion rules，使兩枚章放在經文旁時形成一個和諧畫面：
+- 主／副尺度比例
+- 間距
+- 對齊與錯位
+- 陰／陽文搭配
+- 外形互補
+- 朱白比例
+- 墨量／視覺重量
+- 可接受的旋轉與不規則度
+
+因此輸出單位除了單枚 SVG，還有 seal-pair composition。
+
+### 數字章＝第一個隨機生成 benchmark
+章／節數字天然是有限字符、組合數高、結果容易人工判斷的生成測試集。
+
+生成器不做無約束 random，而採：
+**style genome + constraints + seed → deterministic candidate**
+
+同一 seed 必須可重現。每次生成保存：
+- style_id
+- seed
+- glyph choices
+- layout topology
+- transforms
+- positive/negative
+- enclosure
+- optical corrections
+
+用數字章先驗證：
+- 隨機候選是否仍屬於選定風格；
+- 是否出現碰撞、失衡、不可讀；
+- companion seal 是否與經卷章和諧；
+- 哪些規則需要硬 constraint，哪些可以 stochastic。
+
+### 66卷＝至少66個 Style Genome
+每個 canonical book seal 除 master SVG 外，再抽取一份可生成的 style profile：
+- script families / preferred variants
+- layout families
+- enclosure families
+- positive/negative tendencies
+- density range
+- stroke-mass range
+- asymmetry range
+- border behavior
+- glyph deformation limits
+- spacing/negative-space rules
+- companion-seal rules
+- theological/editorial design notes
+
+「神學氣氛」作為 editorial design intent 保存，不宣稱字體或印制形式具有歷史神學必然性。
+
+### 人名章＝隨機生成的主要產品出口
+流程：
+**輸入姓名 → 選 Style Genome（如「馬太福音」）→ 選形狀 → 選陰／陽文 → resolver 取得字形候選 → seeded generator 生成若干候選 → optical checks → 使用者選擇／微調 → canonical SVG**
+
+因此人名章不是把姓名塞進「馬太福音.svg」模板，而是繼承馬太福音的章法、密度、空間、字形偏好與邊界規則後重新生成。
+
+### 擴展
+66 只是首批 style genomes。後續可由：
+- 古璽
+- 秦漢印
+- 石鼓／金文
+- 明清流派
+- 特定篆刻家研究
+- 池底設新創章法
+繼續增加 style profiles，而不改 generator 架構。
