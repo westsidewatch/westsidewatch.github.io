@@ -21,7 +21,7 @@ jobs:
             HTML=$(curl -fsS http://127.0.0.1:4173/cinema/ 2>/dev/null || true)
             if printf '%s' "$HTML" | grep -q '天堂電影院'; then
               printf '%s' "$HTML" | grep -q 'PARADISE CINEMA'
-              printf '%s' "$HTML" | grep -q 'cinema.css'
+              printf '%s' "$HTML" | grep -q 'sites-second-layer.css'
               printf '%s' "$HTML" | grep -q 'cinema.js'
               curl -fsS http://127.0.0.1:4173/cinema/data/video-resource.v0.json | grep -q 'holy-light.video-resource.v0'
               curl -fsS http://127.0.0.1:4173/cinema/data/bible-media-coordinate.v0.json | grep -q 'dore.bible-media-coordinate.v0'

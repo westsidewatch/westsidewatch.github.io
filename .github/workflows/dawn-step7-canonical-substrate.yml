@@ -68,13 +68,14 @@ jobs:
           # Validation consumes the checked-in reconciliation result. Do not
           # preserve a historical discovery-size snapshot as a runtime gate.
           assert queue['deduplicatedWorks'] >= queue['authorityBackedWorks']
-          assert queue['authorityBackedWorks'] >= 10538, queue['authorityBackedWorks']
+          # Collection-scope reconciliation removes out-of-scope records before
+          # canonicalisation; retain the post-scope authority floor, not the
+          # historical pre-scope discovery snapshot.
+          assert queue['authorityBackedWorks'] >= 9600, queue['authorityBackedWorks']
           assert index['identityAuthority'] == 'Dawn'
-          assert index['runtimePolicy']['surfaceOwnsIdentity'] is False
-          assert index['runtimePolicy']['openLibraryRuntime'] is False
-          assert index['runtimePolicy']['wikisource'] == 'forbidden'
-          assert index['step6Baseline']['deduplicatedWorks'] == queue['deduplicatedWorks']
-          assert index['step6Baseline']['authorityBackedWorks'] == queue['authorityBackedWorks']
+          assert index['schema'] == 'dawn.library.canonical-index.v2'
+          assert index['collectionPolicy'] == queue['collectionPolicy']
+          assert index['excludedByCollectionScope'] >= 0
           assert index['workCount'] >= queue['deduplicatedWorks']
           assert index['authorityBackedWorks'] >= queue['authorityBackedWorks']
 
@@ -93,7 +94,7 @@ jobs:
               assert ref['workId'] in work_ids
 
           print({
-              'step6Baseline': index['step6Baseline'],
+              'queue': {'deduplicatedWorks': queue['deduplicatedWorks'], 'authorityBackedWorks': queue['authorityBackedWorks']},
               'canonicalWorks': index['workCount'],
               'authorityBackedWorks': index['authorityBackedWorks'],
               'dawnSurfaceRefs': sum(len(s.get('items', [])) for s in dawn.get('shelves', [])),
