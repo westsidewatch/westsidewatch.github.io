@@ -403,3 +403,46 @@ SEAL 不應只有 font fallback，而是候選 resolver：
 7. 保留每個 glyph 的 source / authority / license。
 
 因此同一個「西」將來不是一個篆字，而是一組有來源的候選，章法引擎再決定哪一個最適合當前印面。
+
+
+## SEAL RESOURCE MAP v3｜擴大探索，不急於實作
+
+本輪把資源從「篆書字體」擴成五個彼此獨立的池，避免把小篆、古璽、印人篆刻混成一種字體。
+
+### A. 可直接使用的高覆蓋 glyph
+- PlanschriftSeal：Unicode 18 Small Seal 11,328 code points 全覆蓋；MIT/OFL。
+- 全字庫《說文解字》字形：約 6,721 字；作第二套《說文》型字形來源，授權在納入 runtime 前以原始來源再核驗。
+- 思文小篆：OFL 1.1；完整文本取向，待做 coverage audit。
+- 峄山碑篆體：已有 MIT Web 工具 XiaoZhuan 以 2,503 常用字方式整合；字體本身的原始授權仍須獨立核驗。
+- LXGW Seal：OFL，少量但字源規則嚴格。
+- JFZSKSealScript：OFL，2,700 vocabulary entries，戰國中山王系。
+
+### B. 字源／異體 authority
+- Unicode Small Seal + THX / CCZ / QJZ / DYC 四大《說文》來源。
+- 小學堂：楷篆對應、異體、部件、《說文》釋義；作 reference/authority，不把網站資料權利自動視為可再發布。
+- CC0《說文解字》結構化文本可作釋義、字頭與 resolver 輔助，不等於 glyph 圖像授權。
+
+### C. 真實印面／章法母庫
+- 復旦「印藏」：一期 501 種印譜、約 15 萬圖、約 200 位印人；IIIF。優先研究印面、章法、印文與印人關聯；逐項確認影像再利用條件。
+- 上海博物館中國歷代璽印篆刻館：約 15,000 件館藏，古璽印、封泥、明清篆刻脈絡完整；適合作時代／類型 authority 和研究索引。
+- 故宮璽印專題：作宮廷璽印、古璽、漢印及研究書目的 authority index。
+- 西泠印社／中國印學博物館：作近現代篆刻、印學史、印人與印譜研究索引。
+
+### D. 開放博物館圖像
+建立 CC0 / Public Domain 印章清單，優先從 Met Open Access、Smithsonian metadata、Wikimedia Commons 等逐件確認。只把明確開放的圖像進可再利用 corpus。
+
+### E. 成熟工具／工程模型
+- vYinn：MIT；核心章法、逐字 transform、朱白文、邊框、做殘／擴散、PNG。
+- ChinaSeal：現成開源篆刻印稿、排版、鏡像與精密打印工具；作第二工程對照，特別研究 Web 版未必需要但實際治印需要的鏡像／打印尺度。
+- XiaoZhuan：MIT；2,503 字現成今字↔小篆 Web dictionary，可借 resolver/data UX，不直接假定其 bundled font 授權可轉移。
+
+### 暫定結論
+目前不應鎖定單一「字庫」。拾字 SEAL 應形成：
+**高覆蓋小篆底庫 + 權威異體層 + 戰國／秦篆等藝術變體 + 真實歷代印面 corpus + vYinn/ChinaSeal 章法工程。**
+
+下一輪探索重點不再是一般關鍵詞「seal font」，而是：
+1. 復旦印藏 IIIF manifest 是否可批量取得及 metadata 粒度；
+2. 上海博物館 15,000 件中線上可機讀／可下載比例；
+3. Unicode 18 Small Seal 的官方 mapping/source files；
+4. PlanschriftSeal、全字庫說文、思文小篆的實際 glyph coverage/授權 audit；
+5. 古璽、秦漢印、明清流派印的可開放圖像來源。
