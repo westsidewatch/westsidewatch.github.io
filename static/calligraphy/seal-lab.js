@@ -20,12 +20,13 @@ async function make(text,opt={}){const style=STYLES[opt.style]||STYLES.genesis,s
  const svg=svgEl("svg",{viewBox:"0 0 1000 1000",role:"img","aria-label":text,"data-seal-style":style.id,"data-seed":seed});
  const bg=svgEl(style.shape==="round"?"circle":"rect",style.shape==="round"?{cx:500,cy:500,r:455}:{x:55,y:55,width:890,height:890,rx:style.shape==="organic"?70:8});
  bg.setAttribute("fill",yin?style.ink:"none");bg.setAttribute("stroke",style.ink);bg.setAttribute("stroke-width","34");svg.appendChild(bg);
- const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x)),cols=chars.length<=2?1:2,rows=Math.ceil(chars.length/cols),cw=760/cols,ch=760/rows;
- for(let i=0;i<chars.length;i++){const c=chars[i],col=i%cols,row=Math.floor(i/cols),x=120+col*cw+cw/2,y=120+row*ch+ch*.66;
-  const g=svgEl("g",{"data-char":c,transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
+ const chars=[...String(text)].filter(x=>!/[\s:：]/.test(x));
+ const three=chars.length===3,cols=chars.length<=2?1:2,rows=Math.ceil(chars.length/cols),cw=760/cols,ch=760/rows,threeSlots=[[690,330],[310,330],[690,690]];
+ for(let i=0;i<chars.length;i++){const c=chars[i],col=i%cols,row=Math.floor(i/cols),x=three?threeSlots[i][0]:120+col*cw+cw/2,y=three?threeSlots[i][1]:120+row*ch+ch*.66,glyphSize=three?315:Math.min(cw,ch)*.72;
+  const g=svgEl("g",{"data-char":c,"data-layout":three?"three-character":"grid",transform:`translate(${(r()-.5)*18} ${(r()-.5)*18}) rotate(${(r()-.5)*3} ${x} ${y})`});
   const resolved=await resolveGlyph(c,{style:style.id,book:opt.book||"",role:opt.role||"seal"});
-  if(resolved){g.appendChild(pathGlyph(resolved,x,y,Math.min(cw,ch)*.72,yin?"#f6efe1":style.ink));g.setAttribute("data-vector-glyph","1")}
-  else{const t=svgEl("text",{x,y,"text-anchor":"middle","font-size":Math.min(cw,ch)*.66,"font-family":'"Noto Serif TC","STSong","Songti TC",serif',"font-weight":"700",fill:yin?"#f6efe1":style.ink});t.textContent=c;g.appendChild(t);g.setAttribute("data-glyph-fallback","text")}
+  if(resolved){g.appendChild(pathGlyph(resolved,x,y,glyphSize,yin?"#f6efe1":style.ink));g.setAttribute("data-vector-glyph","1")}
+  else{const t=svgEl("text",{x,y,"text-anchor":"middle","font-size":three?280:Math.min(cw,ch)*.66,"font-family":'"Noto Serif TC","STSong","Songti TC",serif',"font-weight":"700",fill:yin?"#f6efe1":style.ink});t.textContent=c;g.appendChild(t);g.setAttribute("data-glyph-fallback","text")}
   svg.appendChild(g)
  }
  return svg
