@@ -509,3 +509,60 @@ SEAL 第一版採用 SVG scene 不只是為了下載。保留每個字為獨立 
 **任意常用 1–4 字可解析 → 有篆字 → 套成熟章法 → 人可以快速挪讓 → 朱白文切換 → SVG/PNG 可用。**
 
 之後所有研究庫成果都以新增 candidate / preset / rule 的方式插入，不重寫第一版架構。
+
+
+## SEAL 66｜從 benchmark 直接變成產品內容
+
+66 卷不再只作 regression corpus，而是第一套正式成品：**66 卷 × 66 枚彼此有性格、但屬於同一系統的經卷印章**。
+
+### 產品結構
+每卷建立固定 book-seal，經文引用時直接按經卷 ID 調用：
+**verse → book_id → book-seal SVG**
+
+另建立獨立的 reference-seal：
+**chapter + verse → 幾章幾節印章**
+
+最終經文落款可組合：
+**經卷印章 + 章節印章**
+兩者彼此獨立，避免為每一節重新生成完整印章。
+
+### 66 枚不是 66 次隨機生成
+每卷先研究經卷內容、文類、歷史語境與視覺性格，再在可考的篆書／古文字候選中選擇：
+- 陰文／陽文；
+- 大篆／小篆；
+- 金文／石鼓文等可考字形來源；
+- 方、長方、圓、橢圓、隨形；
+- 線條粗細、疏密、邊欄、朱白比例；
+- 必要的 optical correction。
+
+「風格聯繫經卷特色」只作設計詮釋，不偽稱為該經卷歷史年代所使用的字體。每枚保存 glyph provenance。
+
+### 系統化而非模板化
+先建立有限的 Seal Grammar，再由 66 卷產生 66 個 Master：
+- script family
+- positive/negative
+- enclosure shape
+- layout topology
+- density
+- stroke mass
+- border behavior
+- glyph transforms
+
+每卷最終保存 canonical SVG master，而不是每次 runtime 隨機重算。
+
+### 拾字整合
+經文被選中後：
+1. resolver 已知 book_id / chapter / verse；
+2. 載入該卷 canonical book-seal.svg；
+3. 章節 renderer 生成或載入 reference-seal；
+4. INSCRIBE / SEAL 輸出時可帶入兩枚印章；
+5. 使用者仍可關閉、替換或調整。
+
+### 雙重價值
+66 枚完成後同時得到：
+- 拾字第一套正式印章產品；
+- 66 個可重跑的 SVG regression cases；
+- 一套初步完整的中文 Seal Grammar；
+- Logo Lab 的 66 個真實章法／字形／負空間研究樣本。
+
+因此 SEAL 66 本身就是從研究、工具到產品的第一個閉環。
