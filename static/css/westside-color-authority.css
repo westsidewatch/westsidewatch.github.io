@@ -64,3 +64,141 @@
 [data-ws-light="daylight"]{--ws-light-x:62%;--ws-light-y:4%;--ws-light-strength:9%}
 
 @media (prefers-reduced-motion:reduce){.ws-material-field:after{transition:none}}
+
+
+/* === Color Operating System v1 ============================================
+   Every branch exposes the same executable roles. Components consume roles,
+   never anchors. The scale is perceptual (OKLab color-mix), so material,
+   engraving and illumination remain inside one chromatic family. */
+:root{
+  --ws-material:color-mix(in oklab,var(--ws-branch) 6%,var(--ws-surface));
+  --ws-structure:color-mix(in oklab,var(--ws-branch) 34%,var(--ws-ink));
+  --ws-identity:var(--ws-branch);
+  --ws-engraving:color-mix(in oklab,var(--ws-branch) 46%,var(--ws-ink));
+  --ws-text-muted:color-mix(in oklab,var(--ws-branch) 12%,var(--ws-ink));
+  --ws-focus:color-mix(in oklab,var(--ws-branch) 82%,var(--ws-ink));
+  --ws-selection:color-mix(in oklab,var(--ws-branch) 24%,var(--ws-paper));
+}
+
+/* Branch material territories. These are executable assignments, not page decoration. */
+.sites-section-church{
+  --ws-material:color-mix(in oklab,var(--ws-water) 7%,white);
+  --ws-engraving:color-mix(in oklab,var(--ws-water) 42%,var(--ws-ink));
+}
+.sites-section-journal,.sites-section-vol-00{
+  --ws-material:color-mix(in oklab,var(--ws-first-light) 7%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-first-light) 48%,var(--ws-ink));
+}
+.section-one,.sites-section-one{
+  --ws-material:color-mix(in oklab,var(--ws-pale-gold) 13%,var(--ws-papyrus));
+  --ws-engraving:color-mix(in oklab,var(--ws-pale-gold) 38%,#4b391a);
+}
+.sites-section-olive{
+  --ws-material:color-mix(in oklab,var(--ws-olive) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-olive) 48%,var(--ws-ink));
+}
+.sites-section-dawn-library{
+  --ws-material:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-harvest) 52%,#4b3822);
+}
+.sites-section-cinema{
+  --ws-material:color-mix(in oklab,var(--ws-crimson) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-crimson) 54%,var(--ws-ink));
+}
+.sites-section-daylight-cafe{
+  --ws-material:color-mix(in oklab,var(--ws-daylight-mauve) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-daylight-mauve) 42%,var(--ws-ink));
+}
+
+/* Functional zones */
+[data-ws-zone="atmosphere"]{background:var(--ws-atmosphere);color:var(--ws-text)}
+[data-ws-zone="material"]{background:var(--ws-material);color:var(--ws-text)}
+[data-ws-zone="surface"]{background:var(--ws-surface);color:var(--ws-text)}
+[data-ws-zone="raised"]{background:var(--ws-raised);color:var(--ws-text)}
+[data-ws-zone="identity"]{color:var(--ws-identity)}
+[data-ws-zone="deep"]{background:var(--ws-deep);color:var(--ws-paper)}
+[data-ws-zone="structure"]{border-color:var(--ws-structure)}
+[data-ws-zone="engraving"]{color:var(--ws-engraving)}
+
+/* Shared component behavior */
+.sites-surface :where(a,button,[role="button"]):focus-visible{
+  outline:2px solid var(--ws-focus);outline-offset:3px;
+}
+.sites-surface ::selection{background:var(--ws-selection);color:var(--ws-ink)}
+.sites-surface :where(hr,.ws-rule){border-color:var(--ws-structure)}
+.sites-surface :where(.ws-muted,small){color:var(--ws-text-muted)}
+
+/* Dore linework inherits branch material identity when used as mask/currentColor.
+   Raster engravings remain controlled by opacity/blend in .ws-material-field. */
+.ws-engraving{color:var(--ws-engraving)}
+.ws-engraving :where(svg,path,line,polyline,polygon,circle,ellipse){stroke:currentColor}
+.ws-engraving [fill]:not([fill="none"]){fill:currentColor}
+
+/* Shared site chrome stays neutral; current branch appears as a restrained signal. */
+.sites-surface .sites-layer-header{border-color:color-mix(in oklab,var(--ws-structure) 45%,transparent)}
+.sites-surface .sites-layer-nav a[aria-current="page"],
+.sites-surface .sites-layer-section-nav a[aria-current="page"]{color:var(--ws-identity);text-decoration-color:var(--ws-structure)}
+.sites-surface .sites-layer-footer{border-color:color-mix(in oklab,var(--ws-structure) 48%,transparent)}
+
+/* Operating-system guardrail: gold cannot become the voice of a dark surface. */
+.ws-dark-surface{
+  --ws-identity:var(--ws-paper);
+  --ws-interaction:var(--ws-paper);
+  --ws-focus:var(--ws-paper);
+  --ws-structure:color-mix(in oklab,var(--ws-paper) 32%,transparent);
+}
+
+/* Material density is responsive: preserve information before texture. */
+@media(max-width:760px){
+  :root{--ws-engraving-opacity:.075;--ws-light-strength:7%}
+}
+@media(prefers-contrast:more){
+  :root{--ws-line:color-mix(in oklab,var(--ws-text) 42%,transparent);--ws-text-muted:var(--ws-text)}
+  .sites-surface :where(a,button,[role="button"]):focus-visible{outline-width:3px}
+}
+
+
+/* === Product Color Protocol ==============================================
+   The Color OS is site-wide infrastructure, not a Sites-only theme.
+   Products opt into a family + material + light context and receive the same
+   semantic runtime contract without inheriting a page layout. */
+[data-ws-product],[data-ws-color-family]{
+  --ws-product-surface:var(--ws-surface);
+  --ws-product-text:var(--ws-text);
+  --ws-product-muted:var(--ws-text-muted);
+  --ws-product-line:var(--ws-structure);
+  --ws-product-accent:var(--ws-identity);
+  --ws-product-active:var(--ws-interaction);
+  --ws-product-focus:var(--ws-focus);
+  --ws-product-selection:var(--ws-selection);
+  --ws-product-engraving:var(--ws-engraving);
+  color:var(--ws-product-text);
+}
+
+/* Reusable families for ONE, Dore Folio, Multiwrite, Gate, Reader and future tools. */
+[data-ws-color-family="bible"]{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14}
+[data-ws-color-family="water"]{--ws-branch:var(--ws-water)}
+[data-ws-color-family="magazine"]{--ws-branch:var(--ws-first-light)}
+[data-ws-color-family="sermon"]{--ws-branch:var(--ws-olive)}
+[data-ws-color-family="book"]{--ws-branch:var(--ws-harvest)}
+[data-ws-color-family="cinema"]{--ws-branch:var(--ws-crimson)}
+[data-ws-color-family="life"]{--ws-branch:var(--ws-daylight-mauve)}
+[data-ws-color-family="neutral"]{--ws-branch:var(--ws-ink);--ws-surface:var(--ws-paper)}
+
+/* Product components consume these aliases; product UI may define geometry,
+   never a competing chromatic system. */
+[data-ws-product] :where(input,textarea,select,button){
+  border-color:var(--ws-product-line);
+  accent-color:var(--ws-product-accent);
+}
+[data-ws-product] :where(input,textarea,select,button,a):focus-visible{
+  outline:2px solid var(--ws-product-focus);outline-offset:2px;
+}
+[data-ws-product] ::selection{background:var(--ws-product-selection);color:var(--ws-ink)}
+[data-ws-product] [aria-current="true"],
+[data-ws-product] [aria-selected="true"],
+[data-ws-product] [aria-pressed="true"]{color:var(--ws-product-active)}
+[data-ws-product] :where(.ws-product-rule,hr){border-color:var(--ws-product-line)}
+[data-ws-product] .ws-product-muted{color:var(--ws-product-muted)}
+[data-ws-product] .ws-product-accent{color:var(--ws-product-accent)}
+[data-ws-product] .ws-product-surface{background:var(--ws-product-surface);color:var(--ws-product-text)}
