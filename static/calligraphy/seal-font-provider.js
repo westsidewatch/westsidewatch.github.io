@@ -18,7 +18,8 @@ async function resolve(ch){
   const doc=new DOMParser().parseFromString(await r.text(),"image/svg+xml");
   const svg=doc.documentElement,path=svg.querySelector("path"),vb=(svg.getAttribute("viewBox")||"0 -880 1000 1000").trim().split(/\s+/).map(Number);
   if(!path||vb.length!==4||vb.some(Number.isNaN))return null;
-  return {path:path.getAttribute("d"),viewBox:vb,source:"Kaiyuan Small Seal / Shuowen",license:"OFL-1.1",unicode:hex};
+  let bounds=null;try{const probe=document.createElementNS("http://www.w3.org/2000/svg","svg"),p=document.createElementNS("http://www.w3.org/2000/svg","path");probe.setAttribute("width","0");probe.setAttribute("height","0");probe.style.cssText="position:absolute;visibility:hidden;pointer-events:none";p.setAttribute("d",path.getAttribute("d"));probe.appendChild(p);document.body.appendChild(probe);const b=p.getBBox();if(b.width>0&&b.height>0)bounds=[b.x,b.y,b.width,b.height];probe.remove()}catch(e){}
+  return {path:path.getAttribute("d"),viewBox:vb,bounds,source:"Kaiyuan Small Seal / Shuowen",license:"OFL-1.1",unicode:hex};
  }).catch(()=>null);
  cache.set(hex,task);
  return task;
