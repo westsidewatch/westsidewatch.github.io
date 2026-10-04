@@ -1,14 +1,53 @@
 {
-  "version": "0.2",
+  "version": "0.3",
   "capability": "video-acquisition",
   "execution": "local-first",
-  "commands": ["probe", "formats", "download"],
+  "commands": [
+    "probe",
+    "formats",
+    "download"
+  ],
   "routing": [
-    {"match": "webpage or ordinary media URL", "engine": "yt-dlp"},
-    {"match": "direct .m3u8/.mpd/.ism/manifest URL", "engine": "N_m3u8DL-RE"}
+    {
+      "match": "direct .m3u8/.mpd/.ism/manifest URL",
+      "engine": "N_m3u8DL-RE"
+    },
+    {
+      "match": "ordinary webpage/media URL",
+      "engine": "yt-dlp"
+    },
+    {
+      "match": "yt-dlp failure + public manifest exposed in HTML/inline JSON",
+      "engine": "N_m3u8DL-RE",
+      "discovery": "automatic"
+    }
   ],
   "primary_engine": "yt-dlp",
-  "stream_fallback": {"engine": "N_m3u8DL-RE", "status": "active", "protocols": ["HLS", "DASH", "MSS"]},
-  "policy": {"allowed": "public or authorized media", "drm_bypass": false},
-  "probe_fields": ["engine","id","title","webpage_url","duration","is_live","thumbnail","subtitles","automatic_captions","formats"]
+  "stream_fallback": {
+    "engine": "N_m3u8DL-RE",
+    "status": "active",
+    "protocols": [
+      "HLS",
+      "DASH",
+      "MSS"
+    ]
+  },
+  "policy": {
+    "allowed": "public or authorized media",
+    "drm_bypass": false,
+    "manifest_discovery": "public HTML/inline JSON only",
+    "drm_markers": "reject fallback discovery"
+  },
+  "probe_fields": [
+    "engine",
+    "id",
+    "title",
+    "webpage_url",
+    "duration",
+    "is_live",
+    "thumbnail",
+    "subtitles",
+    "automatic_captions",
+    "formats"
+  ]
 }
