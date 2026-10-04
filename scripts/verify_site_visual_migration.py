@@ -62,8 +62,10 @@ print("PASS: Site visual system is present; current GitHub navigation contract r
 # GitHub Pages serves cinema/index.html directly, bypassing Hugo's asset
 # pipeline. Keep its linked visual shell in the static publication layer.
 cinema = (ROOT / "cinema/index.html").read_text(encoding="utf-8")
-if 'href="/css/sites-second-layer.css"' not in cinema:
-    raise SystemExit("Static Cinema entry no longer links its published visual shell.")
+if 'href="cinema-unified.css"' not in cinema:
+    raise SystemExit("Static Cinema entry no longer links its unified visual shell.")
+if not (ROOT / 'cinema/cinema-unified.css').is_file():
+    raise SystemExit("Static Cinema unified visual shell is missing.")
 
 # Motion reduction belongs only to the user's accessibility preference.  A
 # static route must not globally silence the Cinema programme.

@@ -1,19 +1,11 @@
-/* Sites composition authority: loaded last on home to prevent legacy candidate layers from flattening the recovered composition. */
-.home .watch-cover{min-height:100svh}
-.home .watch-film{inset:0 0 0 27%}
-.home .watch-cover__voice{position:relative;z-index:3}
-.home .watch-cover__actions{position:relative;z-index:4}
-.home .watch-current__stage,.home .watch-confluence__stage{background-blend-mode:multiply}
-.home .watch-streams{perspective:1200px}
-.home .watch-stream:nth-child(2n) .watch-tile:first-child{margin-left:7vw}
-.home .watch-stream:nth-child(3n) .watch-tile:first-child{margin-left:13vw}
-.home .watch-stream:nth-child(4n) .watch-tile:first-child{margin-left:3vw}
-.home .watch-tile{transform-origin:center center}
-.home .watch-windows{overflow:hidden}
-@media(max-width:700px){.home .watch-stream:nth-child(n) .watch-tile:first-child{margin-left:0}.home .watch-film{inset:0}}
-
-@media(min-width:1920px){
-  .sites-church-intro,.sites-church-entries,.sites-church-footer{width:var(--comp-canvas);max-width:none}
-  .sites-church-intro{min-height:min(72svh,980px)}
-  .sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture{min-height:min(68svh,900px)}
-}
+/* The only layout authority for Sites surfaces.  Legacy publication geometry
+   is intentionally absent from every Sites route. */
+:root{--comp-canvas:min(94vw,1760px);--comp-wide:min(96vw,2200px);--comp-section-x:var(--ui-gutter);--comp-section-y:clamp(72px,8vh,132px);--comp-media-span:min(100%,1760px);--comp-density:1}
+@media(min-width:1920px){:root{--comp-canvas:min(94vw,1900px);--comp-wide:min(96vw,2440px);--comp-section-y:clamp(84px,8vh,150px);--comp-media-span:min(92vw,2100px);--comp-density:1.06}}
+@media(min-width:2560px){:root{--comp-canvas:min(94vw,2400px);--comp-wide:min(97vw,3000px);--comp-section-y:clamp(96px,7vh,170px);--comp-media-span:min(94vw,2720px);--comp-density:1.14}}
+@media(min-width:3400px){:root{--comp-canvas:min(94vw,4600px);--comp-wide:min(97vw,5000px);--comp-section-x:clamp(72px,3vw,132px);--comp-section-y:clamp(108px,6.2vh,190px);--comp-media-span:min(95vw,3520px);--comp-density:1.24}}
+@media(min-width:5000px){:root{--comp-canvas:94vw;--comp-wide:97vw;--comp-media-span:95vw}}
+.sites-home-section-head,.sites-home-gather-media,.sites-home-city-grid,.sites-home-closing,.sites-second-layer,.sites-surface[data-surface],.sites-surface-inner,.sites-church,.sites-church-inner{width:var(--comp-canvas);max-width:none}
+@media(min-width:1920px){.sites-home-hero{--sites-home-composition-edge:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2))}.sites-home-film{inset-inline-start:auto;width:var(--comp-media-span)}.sites-home-masthead{left:var(--sites-home-composition-edge);width:clamp(430px,calc(var(--comp-canvas)*.24),760px)}.sites-home-intro{left:var(--sites-home-composition-edge)}.sites-home-intro h1{font-size:clamp(150px,calc(var(--comp-canvas)*.09),310px)}.sites-home-entry{right:var(--sites-home-composition-edge);gap:calc(2.5rem*var(--comp-density))}.sites-home-section{padding-inline:max(var(--comp-section-x),calc((100vw - var(--comp-canvas))/2))}.sites-home-gather-media{width:var(--comp-media-span)}}
+@media(min-width:2560px){.sites-journal-routes,.sites-surface-entries,.sites-church-entries{gap:calc(var(--ui-gap)*var(--comp-density))}}
+@media(max-width:760px){:root{--comp-canvas:calc(100vw - 36px);--comp-wide:100vw;--comp-media-span:100%}}
