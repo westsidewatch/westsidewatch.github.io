@@ -45,8 +45,11 @@ assert "stationEvent=station=>station.eventId?eventById.get(station.eventId)||nu
 assert 'journeyPayload.exactMomentOverrides' in graph
 assert "mediaState=exactMoments.length?'exact':(relatedWorks.length?'available':'unmapped')" in graph
 assert "dataset.cinemaJourneyDerivation='canonical-event-id-v1'" in graph
-assert 'cinema-unified.css' in index and 'journey-layer.js' in index and 'id="cinema-journey"' in index
-assert "@import url('journey-layer.css')" in (ROOT/'cinema/cinema-unified.css').read_text()
+assert 'cinema-unified.css' in index
+# Journey remains canonical graph data for event/moment derivation, but is no longer a public Cinema surface.
+assert 'journey-layer.js' not in index and 'id="cinema-journey"' not in index
+assert "@import url('journey-layer.css')" not in (ROOT/'cinema/cinema-unified.css').read_text()
+# Keep dormant renderer assets valid so graph consumers may still reuse the canonical journey without forcing UI exposure.
 assert 'station.exactMoments?.length' in layer and 'graph.deepLink(moment.momentId)' in layer and '精確影像' in layer
 assert 'journey-station[data-terminal="true"]' in style
-print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d derived=%d overrides=0 identity=eventId compatibility=closed terminal=new-creation' % (len(stations),len(expected)))
+print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d derived=%d overrides=0 identity=eventId public_surface=retired terminal=new-creation' % (len(stations),len(expected)))
