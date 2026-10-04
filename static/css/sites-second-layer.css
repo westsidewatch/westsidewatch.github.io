@@ -18,10 +18,13 @@ body.sites-cinema{margin:0;background:#11120f;color:#f7f3e8;font-family:var(--se
 .sites-cinema-source{max-width:1480px;margin:6vh auto 0;padding-top:1rem;border-top:1px solid rgba(37,37,37,.18);display:flex;gap:1.5rem;flex-wrap:wrap;font-size:12px}.sites-cinema-source a{border-bottom:1px solid currentColor}.sites-cinema-friends{padding:3rem max(5vw,calc((100vw - 1480px)/2));background:#11120f;display:flex;gap:2rem;align-items:center;font-size:12px}.sites-cinema-friends p{margin-right:auto;font-size:10px;letter-spacing:.16em}
 @media(max-width:760px){.sites-return{left:18px;top:16px}.sites-cinema-brand{left:18px;bottom:16vh}.sites-cinema-brand h1{font-size:20vw}.sites-cinema-enter{right:18px;bottom:6vh}.sites-cinema-reason,.sites-cinema-week,.sites-cinema-archive{padding:10vh 18px}.sites-cinema-reason>header,.sites-cinema-week>header,.sites-cinema-archive>header,#cinema-why-tonight{display:block}.sites-cinema-reason h2,.sites-cinema-week h2,.sites-cinema-archive h2{font-size:18vw;margin:2rem 0}.sites-cinema-week button{display:block}.sites-cinema-week button>*{display:block;margin:.3rem 0}.sites-cinema-friends{padding:2rem 18px;display:block}.sites-cinema-friends>*{display:block;margin:1rem 0}}
 
-/* Static Cinema is published outside Hugo.  It must consume the same wide
-   Sites canvas and remain still instead of reviving legacy hover choreography. */
+/* Static Cinema is published outside Hugo and consumes the same scale tokens
+   as the Hugo surfaces.  Motion belongs to the programme and is never
+   globally disabled here. */
 body.sites-cinema{font-size:var(--ui-body)}
-body.sites-cinema *{animation:none!important;transition:none!important}
+body.sites-cinema{background-color:#e9e2d3;background-image:radial-gradient(ellipse at 76% 10%,rgba(206,189,116,.18),transparent 29%),repeating-radial-gradient(ellipse at 25% 65%,transparent 0 15px,rgba(56,43,20,.045) 15px 16px)}
+.sites-cinema-reason,.sites-cinema-week,.sites-cinema-archive{position:relative;isolation:isolate;background-color:transparent}.sites-cinema-reason:before,.sites-cinema-week:before,.sites-cinema-archive:before{content:'';position:absolute;z-index:-1;inset:0;background:linear-gradient(90deg,transparent 7.9%,rgba(37,37,37,.11) 8%,transparent 8.1% 91.9%,rgba(37,37,37,.08) 92%,transparent 92.1%);pointer-events:none}.sites-cinema-hall:after{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 78% 18%,rgba(206,189,116,.18),transparent 26%);mix-blend-mode:screen}.sites-cinema-brand,.sites-cinema-enter{animation:cinema-shell-reveal .9s cubic-bezier(.2,.7,.2,1) both}.sites-cinema-enter{animation-delay:.16s}@keyframes cinema-shell-reveal{from{opacity:0;transform:translateY(1.2rem)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.sites-cinema-brand,.sites-cinema-enter{animation:none}}
 @media(min-width:1920px){
   .sites-cinema-reason,.sites-cinema-week,.sites-cinema-archive{padding-left:5vw;padding-right:5vw}
   .sites-cinema-reason>header,.sites-cinema-week>header,.sites-cinema-archive>header,#cinema-why-tonight,#cinema-week-programme,#cinema-archive-index,#cinema-library,.sites-cinema-source{max-width:none;width:90vw}

@@ -1,23 +1,27 @@
 {{ define "main" }}
-  {{/* Canonical first-level surfaces declare layout: surface-carrier.  Keep
-       that route-level contract while rendering through the shared Sites
-       visual system instead of Hugo's unstyled default list fallback. */}}
-  <article class="sites-surface" data-surface="{{ .Section }}">
-    <header class="sites-surface-head">
-      <p>Westside Watch</p>
-      <h1>{{ .Params.display_title | default .Title }}</h1>
-      {{ with .Params.subtitle }}<p>{{ . }}</p>{{ end }}
-      {{ with .Description }}<p>{{ . }}</p>{{ end }}
+  {{/* First-level routes are atlas surfaces: the cover establishes a world,
+       the index provides the usable route map. */}}
+  <article class="section-atlas sites-surface" data-surface="{{ .Section }}">
+    <header class="section-atlas__cover">
+      <div class="section-atlas__folio"><span>WESTSIDE WATCH / {{ upper .Section }}</span><span>{{ now.Format "2006" }}</span></div>
+      <div class="section-atlas__title">
+        <p>01 / {{ upper .Section }}</p>
+        <h1>{{ .Params.display_title | default .Title }}</h1>
+        {{ with .Params.subtitle }}<p class="section-atlas__zh">{{ . }}</p>{{ end }}
+      </div>
+      <div class="section-atlas__intro">{{ with .Description }}{{ . }}{{ else }}{{ .Summary | plainify }}{{ end }}</div>
+      <div class="section-atlas__orbit" aria-hidden="true"><i></i><i></i><i></i></div>
     </header>
-
-    {{ with .Content }}<div class="sites-surface-content">{{ . }}</div>{{ end }}
-
+    {{ with .Content }}<div class="sites-atlas-prologue">{{ . }}</div>{{ end }}
     {{ if .Pages }}
-      <nav class="sites-surface-entries" aria-label="{{ .Title }} entries">
-        {{ range .Pages.ByWeight }}
-          {{ $entryHref := .Params.entry_url | default .RelPermalink }}
-          <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Params.subtitle }}<small>{{ . }}</small>{{ end }}{{ with .Description }}<p>{{ . }}</p>{{ end }}</a>
-        {{ end }}
+      <nav class="section-atlas__index" aria-label="{{ .Title }} entries">
+        <header><p>INDEX / {{ printf "%02d" (len .Pages) }} ROUTES</p><h2>Enter <span>進入此頁的各個入口</span></h2></header>
+        <div class="section-atlas__grid">
+          {{ range $index, $page := .Pages.ByWeight }}
+            {{ $entryHref := .Params.entry_url | default .RelPermalink }}
+            <a class="atlas-entry atlas-entry--{{ mod $index 4 }}" href="{{ $entryHref }}"><span class="atlas-entry__number">{{ printf "%02d" (add $index 1) }}</span><div><small>{{ .Params.subtitle | default "Westside Watch" }}</small><h3>{{ .Title }}</h3>{{ with .Description }}<p>{{ . }}</p>{{ end }}</div><b>↗</b></a>
+          {{ end }}
+        </div>
       </nav>
     {{ end }}
   </article>
