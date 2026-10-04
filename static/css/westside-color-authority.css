@@ -64,3 +64,95 @@
 [data-ws-light="daylight"]{--ws-light-x:62%;--ws-light-y:4%;--ws-light-strength:9%}
 
 @media (prefers-reduced-motion:reduce){.ws-material-field:after{transition:none}}
+
+
+/* === Color Operating System v1 ============================================
+   Every branch exposes the same executable roles. Components consume roles,
+   never anchors. The scale is perceptual (OKLab color-mix), so material,
+   engraving and illumination remain inside one chromatic family. */
+:root{
+  --ws-material:color-mix(in oklab,var(--ws-branch) 6%,var(--ws-surface));
+  --ws-structure:color-mix(in oklab,var(--ws-branch) 34%,var(--ws-ink));
+  --ws-identity:var(--ws-branch);
+  --ws-engraving:color-mix(in oklab,var(--ws-branch) 46%,var(--ws-ink));
+  --ws-text-muted:color-mix(in oklab,var(--ws-branch) 12%,var(--ws-ink));
+  --ws-focus:color-mix(in oklab,var(--ws-branch) 82%,var(--ws-ink));
+  --ws-selection:color-mix(in oklab,var(--ws-branch) 24%,var(--ws-paper));
+}
+
+/* Branch material territories. These are executable assignments, not page decoration. */
+.sites-section-church{
+  --ws-material:color-mix(in oklab,var(--ws-water) 7%,white);
+  --ws-engraving:color-mix(in oklab,var(--ws-water) 42%,var(--ws-ink));
+}
+.sites-section-journal,.sites-section-vol-00{
+  --ws-material:color-mix(in oklab,var(--ws-first-light) 7%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-first-light) 48%,var(--ws-ink));
+}
+.section-one,.sites-section-one{
+  --ws-material:color-mix(in oklab,var(--ws-pale-gold) 13%,var(--ws-papyrus));
+  --ws-engraving:color-mix(in oklab,var(--ws-pale-gold) 38%,#4b391a);
+}
+.sites-section-olive{
+  --ws-material:color-mix(in oklab,var(--ws-olive) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-olive) 48%,var(--ws-ink));
+}
+.sites-section-dawn-library{
+  --ws-material:color-mix(in oklab,var(--ws-harvest) 9%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-harvest) 52%,#4b3822);
+}
+.sites-section-cinema{
+  --ws-material:color-mix(in oklab,var(--ws-crimson) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-crimson) 54%,var(--ws-ink));
+}
+.sites-section-daylight-cafe{
+  --ws-material:color-mix(in oklab,var(--ws-daylight-mauve) 8%,var(--ws-paper));
+  --ws-engraving:color-mix(in oklab,var(--ws-daylight-mauve) 42%,var(--ws-ink));
+}
+
+/* Functional zones */
+[data-ws-zone="atmosphere"]{background:var(--ws-atmosphere);color:var(--ws-text)}
+[data-ws-zone="material"]{background:var(--ws-material);color:var(--ws-text)}
+[data-ws-zone="surface"]{background:var(--ws-surface);color:var(--ws-text)}
+[data-ws-zone="raised"]{background:var(--ws-raised);color:var(--ws-text)}
+[data-ws-zone="identity"]{color:var(--ws-identity)}
+[data-ws-zone="deep"]{background:var(--ws-deep);color:var(--ws-paper)}
+[data-ws-zone="structure"]{border-color:var(--ws-structure)}
+[data-ws-zone="engraving"]{color:var(--ws-engraving)}
+
+/* Shared component behavior */
+.sites-surface :where(a,button,[role="button"]):focus-visible{
+  outline:2px solid var(--ws-focus);outline-offset:3px;
+}
+.sites-surface ::selection{background:var(--ws-selection);color:var(--ws-ink)}
+.sites-surface :where(hr,.ws-rule){border-color:var(--ws-structure)}
+.sites-surface :where(.ws-muted,small){color:var(--ws-text-muted)}
+
+/* Dore linework inherits branch material identity when used as mask/currentColor.
+   Raster engravings remain controlled by opacity/blend in .ws-material-field. */
+.ws-engraving{color:var(--ws-engraving)}
+.ws-engraving :where(svg,path,line,polyline,polygon,circle,ellipse){stroke:currentColor}
+.ws-engraving [fill]:not([fill="none"]){fill:currentColor}
+
+/* Shared site chrome stays neutral; current branch appears as a restrained signal. */
+.sites-surface .sites-layer-header{border-color:color-mix(in oklab,var(--ws-structure) 45%,transparent)}
+.sites-surface .sites-layer-nav a[aria-current="page"],
+.sites-surface .sites-layer-section-nav a[aria-current="page"]{color:var(--ws-identity);text-decoration-color:var(--ws-structure)}
+.sites-surface .sites-layer-footer{border-color:color-mix(in oklab,var(--ws-structure) 48%,transparent)}
+
+/* Operating-system guardrail: gold cannot become the voice of a dark surface. */
+.ws-dark-surface{
+  --ws-identity:var(--ws-paper);
+  --ws-interaction:var(--ws-paper);
+  --ws-focus:var(--ws-paper);
+  --ws-structure:color-mix(in oklab,var(--ws-paper) 32%,transparent);
+}
+
+/* Material density is responsive: preserve information before texture. */
+@media(max-width:760px){
+  :root{--ws-engraving-opacity:.075;--ws-light-strength:7%}
+}
+@media(prefers-contrast:more){
+  :root{--ws-line:color-mix(in oklab,var(--ws-text) 42%,transparent);--ws-text-muted:var(--ws-text)}
+  .sites-surface :where(a,button,[role="button"]):focus-visible{outline-width:3px}
+}
