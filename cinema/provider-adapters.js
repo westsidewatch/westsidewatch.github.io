@@ -11,9 +11,9 @@
 window.HolyLightProviders={
   resolve(item,startSeconds=0){
     const source=(item.providerSources||[])[0]||{};
-    if(source.streamUrl){
-      return{kind:'hls',provider:source.provider,url:source.streamUrl,source,official:!!source.official,startSeconds};
-    }
+    // Prefer the provider's official embed when it exists.  It owns playback
+    // compatibility, captions and DRM; HLS is only a fallback for sources
+    // without an official player.
     if(source.embed&&source.embedUrl){
       const url=new URL(source.embedUrl,window.location.href);
       if(startSeconds>0){
@@ -22,6 +22,9 @@ window.HolyLightProviders={
       }
       if(source.provider==='youtube')url.searchParams.set('autoplay','1');
       return{kind:'embed',provider:source.provider,url:url.toString(),official:!!source.official};
+    }
+    if(source.streamUrl){
+      return{kind:'hls',provider:source.provider,url:source.streamUrl,source,official:!!source.official,startSeconds};
     }
     if(source.url){
       const url=new URL(source.url,window.location.href);
