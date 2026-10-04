@@ -292,3 +292,118 @@ body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws
   background:color-mix(in oklab,var(--ws-crimson) 10%,var(--ws-paper));
   color:var(--ws-ink);
 }
+
+
+/* === Branch Surface Migration — seven first-level identities ==============
+   Quiet reading surfaces stay material-led. Identity concentrates in rules,
+   raised cards, current states and branch-specific light rather than floods. */
+.sites-section-church{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-water) 5%,white);
+  --ws-branch-raised:color-mix(in oklab,var(--ws-water) 9%,white);
+  --ws-branch-rule:color-mix(in oklab,var(--ws-water) 34%,transparent);
+}
+.sites-section-journal,.sites-section-vol-00{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 4%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-first-light) 9%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-first-light) 36%,transparent);
+}
+.sites-section-olive{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-olive) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-olive) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-olive) 38%,transparent);
+}
+.sites-section-dawn-library{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-harvest) 38%,transparent);
+}
+.sites-section-cinema{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-crimson) 4%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-crimson) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-crimson) 40%,transparent);
+}
+.sites-section-daylight-cafe{
+  --ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 5%,var(--ws-paper));
+  --ws-branch-raised:color-mix(in oklab,var(--ws-daylight-mauve) 10%,var(--ws-paper));
+  --ws-branch-rule:color-mix(in oklab,var(--ws-daylight-mauve) 34%,transparent);
+}
+.sites-surface{
+  --paper:var(--ws-branch-surface,var(--ws-surface));
+  --paper2:var(--ws-branch-raised,var(--ws-material));
+  --ink:var(--ws-text);
+  --gold:var(--ws-identity);
+  --line:var(--ws-branch-rule,var(--ws-line));
+  --sites-paper:var(--ws-branch-surface,var(--ws-surface));
+  --sites-ink:var(--ws-text);
+  --sites-gold:var(--ws-identity);
+  background:var(--ws-branch-surface,var(--ws-surface))!important;
+}
+.sites-surface :where(.sites-journal-head,.sites-volume-head,.sites-surface-head,.sites-church-intro,
+.sites-journal-current,.sites-journal-routes,.sites-surface-entries,.sites-church-entries,
+.sites-volume-movement,.sites-church-footer){border-color:var(--ws-branch-rule,var(--ws-line))}
+.sites-surface :where(.sites-journal-routes,.sites-surface-entries,.sites-church-entries) a:hover,
+.sites-surface .sites-volume-movement li:hover{background:var(--ws-branch-raised,var(--ws-raised))}
+.sites-surface :where(.sites-journal-current strong,.sites-surface-head h1,.sites-church-intro h1){
+  text-decoration-color:var(--ws-branch-rule,var(--ws-line));
+}
+
+/* LivingWaterWest — white/water-blue/gold, with blue as identity and gold as light. */
+.sites-section-church .sites-layer-header,
+.sites-section-church+.sites-layer-footer{background:color-mix(in oklab,var(--ws-water) 4%,white)}
+.sites-section-church .sites-church-gather{background:var(--ws-branch-surface)}
+.sites-section-church .sites-church-water{
+  background:linear-gradient(115deg,
+    color-mix(in oklab,var(--ws-water) 14%,white) 0%,
+    color-mix(in oklab,var(--ws-water) 5%,white) 64%,white 100%);
+}
+.sites-section-church .sites-church-life{background:color-mix(in oklab,var(--ws-water) 2%,white)}
+.sites-section-church .sites-church-scripture{background:color-mix(in oklab,var(--ws-water) 8%,white)}
+.sites-section-church .sites-church-gather:after{border-color:color-mix(in oklab,var(--ws-water) 30%,transparent)}
+.sites-section-church .sites-church-water:after{
+  background:linear-gradient(90deg,transparent,var(--ws-water),color-mix(in oklab,var(--ws-pale-gold) 55%,var(--ws-water)),transparent)
+}
+
+/* Magazine — First Light is editorial punctuation, never a gold wash. */
+.sites-section-journal .sites-journal-current,
+.sites-section-vol-00 .sites-volume-opening{background:color-mix(in oklab,var(--ws-first-light) 7%,var(--ws-paper))}
+.sites-section-journal :where(.sites-journal-current span,.sites-breadcrumb),
+.sites-section-vol-00 :where(.sites-volume-opening>p,.sites-volume-contents>header>p){color:var(--ws-deep)}
+
+/* Sermon — olive hillside material. */
+.sites-section-olive :where(.sites-surface-head,.sites-surface-entries){border-color:var(--ws-branch-rule)}
+.sites-section-olive .sites-surface-entries a:hover{background:var(--ws-branch-raised)}
+
+/* Book — harvest paper, preserving publication quiet. */
+.sites-section-dawn-library{background:var(--ws-branch-surface)!important}
+.sites-section-dawn-library :where(.sites-layer-header,.sites-layer-footer){background:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper))}
+
+/* Cinema — crimson projection identity; gold literals inherited from old CSS
+   are redirected through --gold to crimson rather than becoming a second voice. */
+.sites-section-cinema{
+  --gold:var(--ws-crimson);
+  --paper:var(--ws-branch-surface);
+  --line:var(--ws-branch-rule);
+}
+.sites-section-cinema :where(.sites-cinema,.cinema-shell,.cinema-archive){accent-color:var(--ws-crimson)}
+.sites-section-cinema :where(a,button,[role="button"]):focus-visible{outline-color:var(--ws-focus)}
+
+/* Life — daylight mauve remains low-chroma and airy. */
+.sites-section-daylight-cafe :where(.sites-surface-head,.sites-surface-entries){border-color:var(--ws-branch-rule)}
+.sites-section-daylight-cafe .sites-surface-entries a:hover{background:var(--ws-branch-raised)}
+
+/* Bible / ONE is a product rather than a Sites surface, but it is one of the
+   seven first-level identities and receives the same complete role contract. */
+[data-ws-product="one"][data-ws-color-family="bible"]{
+  --ws-product-surface:var(--ws-papyrus);
+  --ws-product-accent:var(--ws-pale-gold);
+  --ws-product-line:color-mix(in oklab,var(--ws-pale-gold) 42%,#4b391a);
+  --ws-product-muted:color-mix(in oklab,var(--ws-pale-gold) 18%,var(--ws-ink));
+  background:var(--ws-product-surface);
+  color:var(--ws-product-text);
+}
+[data-ws-product="one"] :where(.card,.panel,.surface,[data-surface]){
+  border-color:var(--ws-product-line);
+}
+[data-ws-product="one"] :where([aria-current="true"],[aria-selected="true"],[aria-pressed="true"]){
+  background:color-mix(in oklab,var(--ws-pale-gold) 14%,var(--ws-papyrus));
+}
