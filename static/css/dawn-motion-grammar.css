@@ -1,0 +1,73 @@
+/* Dawn Motion Grammar — one motion language for Sites surfaces.
+   FLOW = continuous current
+   REVEAL = threshold/opening
+   GATHER = separated elements converging
+   DAWN = dark-to-light emergence */
+:root{
+  --dawn-ease-flow:linear;
+  --dawn-ease-reveal:cubic-bezier(.68,0,.18,1);
+  --dawn-ease-gather:cubic-bezier(.2,.75,.2,1);
+  --dawn-ease-light:cubic-bezier(.22,.61,.36,1);
+  --dawn-time-fast:420ms;
+  --dawn-time:800ms;
+  --dawn-time-slow:1400ms;
+  --dawn-shift:clamp(18px,2.2vw,48px);
+}
+
+/* FLOW — living current keeps motion continuous rather than decorative. */
+.sites-home-water-row{animation-timing-function:var(--dawn-ease-flow)}
+.sites-church-water:after{animation-timing-function:var(--dawn-ease-light)}
+
+/* REVEAL — thresholds open from a concealed state. */
+.sites-church-intro:before,.sites-church-intro:after{
+  animation-duration:var(--dawn-time-slow);
+  animation-timing-function:var(--dawn-ease-reveal)
+}
+.sites-home-city-tile{
+  --dawn-reveal-y:var(--dawn-shift);
+  --dawn-reveal-clip:12%
+}
+
+/* GATHER — related fragments move toward a shared centre. */
+.sites-home-gather-media i{
+  transition:
+    transform var(--dawn-time) var(--dawn-ease-gather),
+    filter var(--dawn-time) var(--dawn-ease-light),
+    opacity var(--dawn-time) var(--dawn-ease-light)
+}
+.sites-home-gather:hover .sites-home-gather-media i,
+.sites-home-gather:focus-within .sites-home-gather-media i{filter:none}
+
+/* DAWN — imagery emerges by light, not by generic zoom alone. */
+.sites-home-city-tile img{
+  transition:
+    transform var(--dawn-time-slow) var(--dawn-ease-gather),
+    filter var(--dawn-time) var(--dawn-ease-light),
+    opacity var(--dawn-time) var(--dawn-ease-light)
+}
+.sites-layer-nav a:after{
+  transition:right var(--dawn-time-fast) var(--dawn-ease-reveal)
+}
+.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,
+.sites-church-entries a,.sites-volume-movement li,.sites-church-scripture a{
+  transition-duration:var(--dawn-time-fast);
+  transition-timing-function:var(--dawn-ease-gather)
+}
+
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-section-head,.sites-home-gather-copy,.sites-home-closing blockquote{
+    animation:dawn-emerge both var(--dawn-time-slow) var(--dawn-ease-light);
+    animation-timeline:view();
+    animation-range:entry 8% cover 30%
+  }
+  @keyframes dawn-emerge{
+    from{opacity:.18;transform:translateY(var(--dawn-shift))}
+    to{opacity:1;transform:none}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-section-head,.sites-home-gather-copy,.sites-home-closing blockquote{animation:none}
+  .sites-home-gather-media i,.sites-home-city-tile img,.sites-layer-nav a:after,
+  .sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,
+  .sites-church-entries a,.sites-volume-movement li,.sites-church-scripture a{transition:none}
+}
