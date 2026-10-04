@@ -202,3 +202,93 @@
 [data-ws-product] .ws-product-muted{color:var(--ws-product-muted)}
 [data-ws-product] .ws-product-accent{color:var(--ws-product-accent)}
 [data-ws-product] .ws-product-surface{background:var(--ws-product-surface);color:var(--ws-product-text)}
+
+
+/* === Main Site Color Migration ===========================================
+   First-layer composition now consumes Color OS roles instead of the legacy
+   paper/night/gold mini-theme. The homepage is a convergence surface: branch
+   identity appears as restrained signals while shared material stays neutral. */
+body.home{
+  --paper:var(--ws-surface);
+  --paper-deep:var(--ws-material);
+  --ink:var(--ws-text);
+  --line:var(--ws-line);
+  background:var(--ws-surface);
+  color:var(--ws-text);
+}
+body.home .sites-home-hero{
+  --ws-home-hero-deep:color-mix(in oklab,var(--ws-night) 88%,var(--ws-water));
+  background:var(--ws-home-hero-deep);
+  color:var(--ws-paper);
+}
+body.home .sites-home-film:after{
+  background:linear-gradient(90deg,
+    color-mix(in oklab,var(--ws-home-hero-deep) 88%,transparent),
+    color-mix(in oklab,var(--ws-home-hero-deep) 16%,transparent) 58%,
+    color-mix(in oklab,var(--ws-home-hero-deep) 52%,transparent));
+}
+body.home .sites-home-water{
+  --ws-branch:var(--ws-water);
+  --ws-material:color-mix(in oklab,var(--ws-water) 9%,var(--ws-paper));
+  background:var(--ws-material);
+}
+body.home .sites-home-water .sites-home-section-head{border-color:color-mix(in oklab,var(--ws-water) 32%,transparent)}
+body.home .sites-home-water-item img{filter:saturate(.82) contrast(.96)}
+body.home .sites-home-water-item :where(span,p){color:color-mix(in oklab,var(--ws-water) 38%,var(--ws-ink))}
+
+body.home .sites-home-gather{
+  --ws-branch:var(--ws-first-light);
+  background:color-mix(in oklab,var(--ws-first-light) 3%,var(--ws-paper));
+}
+body.home .sites-home-gather-media i{
+  background:color-mix(in oklab,var(--ws-first-light) 14%,var(--ws-ink));
+  border-color:color-mix(in oklab,var(--ws-first-light) 26%,transparent);
+  box-shadow:0 25px 55px color-mix(in oklab,var(--ws-first-light) 9%,transparent);
+}
+body.home .sites-home-gather-media i img{filter:grayscale(.24) sepia(.10) saturate(.86)}
+body.home .sites-home-gather-copy{border-color:color-mix(in oklab,var(--ws-first-light) 28%,transparent)}
+
+body.home .sites-home-city{
+  --ws-branch:var(--ws-olive);
+  --ws-city-deep:color-mix(in oklab,var(--ws-olive) 42%,var(--ws-night));
+  background:var(--ws-city-deep);
+  color:var(--ws-paper);
+}
+body.home .sites-home-city .sites-home-section-head{border-color:color-mix(in oklab,var(--ws-paper) 24%,transparent)}
+body.home .sites-home-city-grid{background:color-mix(in oklab,var(--ws-olive) 38%,transparent)}
+body.home .sites-home-city-tile{background:color-mix(in oklab,var(--ws-olive) 20%,var(--ws-night))}
+body.home .sites-home-city-tile img{filter:grayscale(.48) saturate(.68) brightness(.58)}
+body.home .sites-home-city-tile:after{
+  background:linear-gradient(180deg,transparent,color-mix(in oklab,var(--ws-city-deep) 88%,transparent));
+}
+body.home .sites-home-city-tile:hover img{filter:grayscale(.08) saturate(.9) brightness(.76)}
+
+body.home .sites-home-closing{
+  --ws-branch:var(--ws-daylight-mauve);
+  background:color-mix(in oklab,var(--ws-daylight-mauve) 5%,var(--ws-paper));
+}
+body.home .sites-home-closing blockquote{color:color-mix(in oklab,var(--ws-daylight-mauve) 18%,var(--ws-ink))}
+body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws-line)}
+
+/* Branch pages receive material before local legacy CSS can turn identity into
+   an unrelated theme. Keep reading surfaces quiet; identity is strongest in
+   rules, current states and small structural signals. */
+.sites-surface:not(.sites-section-cinema){background:var(--ws-surface);color:var(--ws-text)}
+.sites-surface :where(.sites-second-layer,.sites-surface-inner,.sites-church,.sites-church-inner){
+  --ws-local-rule:color-mix(in oklab,var(--ws-structure) 72%,transparent);
+}
+.sites-surface :where(.sites-layer-header,.sites-layer-footer){background:color-mix(in oklab,var(--ws-branch) 2%,var(--ws-paper))}
+.sites-surface .sites-layer-section-nav{border-color:color-mix(in oklab,var(--ws-structure) 58%,transparent)}
+.sites-surface .sites-layer-section-nav>span{color:var(--ws-identity)}
+.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a:hover{color:var(--ws-interaction)}
+
+/* Cinema keeps a deep projection field, but its voice is crimson rather than
+   the retired black+gold pairing. */
+.sites-section-cinema{
+  --ws-cinema-deep:color-mix(in oklab,var(--ws-crimson) 34%,var(--ws-night));
+  background:var(--ws-cinema-deep);
+}
+.sites-section-cinema :where(.sites-layer-header,.sites-layer-footer){
+  background:color-mix(in oklab,var(--ws-crimson) 10%,var(--ws-paper));
+  color:var(--ws-ink);
+}
