@@ -19,6 +19,21 @@
 
 <section class="sites-home-gather" aria-labelledby="sites-gather-title">
   <header class="sites-home-section-head"><p>02 / MANY WINDOWS, ONE WORLD</p><h2 id="sites-gather-title">Come <em>together.</em></h2><p lang="zh-Hant">不同的窗口，望向同一座城。</p></header>
-  <div class="sites-home-gather-media" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+  <div class="sites-home-gather-media" aria-hidden="true">
+    {{ range first 3 (index site.Data.home.currents.rows 0) }}<i><img src="{{ .image }}" alt=""></i>{{ end }}
+  </div>
   <div class="sites-home-gather-copy"><p>Watch for the city.<br><em>Wait for the light.</em></p><a href="/vol-00/">Open the Journal <span lang="zh-Hant">守望，一座光明的城 · 創刊號 ↗</span></a></div>
 </section>
+
+<section class="sites-home-city" aria-labelledby="sites-city-title">
+  <header class="sites-home-section-head"><p>03 / THE CITY BEFORE MORNING</p><h2 id="sites-city-title">The <em>Living Wall.</em></h2><p lang="zh-Hant">閱讀、查經、相聚與收藏，是同一座城的不同入口。</p></header>
+  <div class="sites-home-city-grid">
+    {{ range $i, $item := (index site.Data.home.currents.rows 0) }}
+      <a class="sites-home-city-tile sites-home-city-tile--{{ $i }}" href="{{ .url }}"><img src="{{ .image }}" alt="" loading="lazy"><span>{{ .label }}</span><strong>{{ .title }}</strong><em>{{ .zh }}</em><b>↗</b></a>
+    {{ end }}
+    {{ range $i, $item := (index site.Data.home.currents.rows 2) }}
+      <a class="sites-home-city-tile sites-home-city-tile--{{ add $i 3 }}" href="{{ .url }}"><img src="{{ .image }}" alt="" loading="lazy"><span>{{ .label }}</span><strong>{{ .title }}</strong><em>{{ .zh }}</em><b>↗</b></a>
+    {{ end }}
+  </div>
+</section>
+<section class="sites-home-closing" aria-label="Watch for the Dawn"><p>ROMANS 13:12</p><blockquote>Watch for the city.<br><em>Wait for the light.</em></blockquote><a href="/journal/">Enter the Journal ↗</a></section>

@@ -45,7 +45,8 @@ assert "stationEvent=station=>station.eventId?eventById.get(station.eventId)||nu
 assert 'journeyPayload.exactMomentOverrides' in graph
 assert "mediaState=exactMoments.length?'exact':(relatedWorks.length?'available':'unmapped')" in graph
 assert "dataset.cinemaJourneyDerivation='canonical-event-id-v1'" in graph
-assert 'journey-layer.css' in index and 'journey-layer.js' in index and 'id="cinema-journey"' in index
+assert 'cinema-unified.css' in index and 'journey-layer.js' in index and 'id="cinema-journey"' in index
+assert "@import url('journey-layer.css')" in (ROOT/'cinema/cinema-unified.css').read_text()
 assert 'station.exactMoments?.length' in layer and 'graph.deepLink(moment.momentId)' in layer and '精確影像' in layer
 assert 'journey-station[data-terminal="true"]' in style
 print('PARADISE_CINEMA_BIBLE_JOURNEY=PASS stations=%d derived=%d overrides=0 identity=eventId compatibility=closed terminal=new-creation' % (len(stations),len(expected)))

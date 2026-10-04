@@ -53,7 +53,8 @@ for suffix in ('matthew','mark','luke','john'):
 index=(ROOT/'cinema/index.html').read_text()
 controller=(ROOT/'cinema/preview-controller.js').read_text()
 style=(ROOT/'cinema/preview-layer.css').read_text()
-assert 'preview-layer.css' in index
+assert 'cinema-unified.css' in index
+assert "@import url('preview-layer.css')" in (ROOT/'cinema/cinema-unified.css').read_text()
 assert 'preview-controller.js' in index
 assert index.index('cinema.js') < index.index('preview-controller.js')
 assert 'youtube-nocookie.com' in controller
