@@ -22,6 +22,7 @@ required_visual_assets = (
     "static/css/home-candidate01-authority.css",
     "static/css/church-mersi-motion.css",
     "static/css/sites-second-layer.css",
+    "static/css/sites-layer-restoration.css",
     "static/js/typography-system.js",
 )
 
@@ -36,6 +37,7 @@ for needle in (
     'resources.Get "css/typography-system.css"',
     '"js/typography-system.js" | relURL',
     '"css/sites-composition-authority.css" | relURL',
+    '"css/sites-layer-restoration.css" | relURL',
 ):
     if needle not in base:
         raise SystemExit(f"Visual system is not wired into the Hugo shell: {needle}")
@@ -62,3 +64,9 @@ print("PASS: Site visual system is present; current GitHub navigation contract r
 cinema = (ROOT / "cinema/index.html").read_text(encoding="utf-8")
 if 'href="/css/sites-second-layer.css"' not in cinema:
     raise SystemExit("Static Cinema entry no longer links its published visual shell.")
+
+# Motion reduction belongs only to the user's accessibility preference.  A
+# static route must not globally silence the Cinema programme.
+cinema_shell = (ROOT / "static/css/sites-second-layer.css").read_text(encoding="utf-8")
+if "body.sites-cinema *{animation:none!important" in cinema_shell:
+    raise SystemExit("Static Cinema shell globally disables programme motion.")
