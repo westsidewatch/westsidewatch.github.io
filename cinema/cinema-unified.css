@@ -31,3 +31,70 @@
   .sites-cinema-reason h2,.sites-cinema-week h2,.sites-cinema-archive h2{font-size:clamp(92px,5.5vw,168px)}
   .resource-card h3{font-size:clamp(38px,2.2vw,68px)}
 }
+
+
+/* CINEMA POLISH 01 — Hall / opening frame */
+.sites-cinema-hall{
+  min-height:max(100svh,760px);
+  background:#0d0d0b;
+  isolation:isolate
+}
+.sites-cinema-hall:before{
+  content:"";position:absolute;z-index:3;inset:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 68% 42%,rgba(206,189,116,.09),transparent 34%),
+    linear-gradient(90deg,rgba(8,8,7,.88) 0%,rgba(8,8,7,.38) 38%,rgba(8,8,7,.06) 70%,rgba(8,8,7,.34) 100%)
+}
+.sites-cinema-hall:after{
+  z-index:4;height:22vh;
+  background:linear-gradient(180deg,transparent 0%,rgba(13,13,11,.38) 42%,var(--cinema-paper) 100%)
+}
+.sites-cinema-brand{
+  z-index:8;bottom:clamp(12vh,15vh,18vh);max-width:min(46rem,44vw);
+  text-shadow:0 3px 28px rgba(0,0,0,.72)
+}
+.sites-cinema-brand p{margin-bottom:clamp(1rem,1.5vh,1.5rem);color:#CEBD74}
+.sites-cinema-brand h1{
+  font-size:clamp(72px,9.1vw,176px);line-height:.76;
+  letter-spacing:-.055em;text-wrap:balance
+}
+.sites-cinema-brand h1 em{font-style:italic}
+.sites-cinema-brand h1 span{
+  margin-top:clamp(1rem,2vh,1.8rem);font-size:clamp(15px,.18em,28px);
+  line-height:1.25;letter-spacing:.14em
+}
+.sites-cinema-screen{z-index:1;transform:scale(1.018);transform-origin:center}
+.sites-cinema-screen:after{
+  background:
+    linear-gradient(90deg,rgba(10,10,8,.78) 0%,rgba(10,10,8,.18) 44%,rgba(10,10,8,.08) 72%,rgba(10,10,8,.44) 100%),
+    linear-gradient(0deg,rgba(7,7,6,.32),transparent 42%)
+}
+.sites-cinema-enter{
+  z-index:9;bottom:clamp(5vh,7vh,9vh);padding:.7rem 0;
+  border-bottom-color:rgba(247,243,232,.42);
+  transition:border-color 420ms ease,transform 420ms cubic-bezier(.2,.75,.2,1)
+}
+.sites-cinema-enter:hover,.sites-cinema-enter:focus-visible{border-bottom-color:#CEBD74;transform:translateY(-3px)}
+.sites-cinema-enter:focus-visible,.cinema-feature__curtain:focus-visible,.sites-return:focus-visible{
+  outline:1px solid #CEBD74;outline-offset:6px
+}
+.sites-return{z-index:10;opacity:.82;transition:opacity 300ms ease}
+.sites-return:hover,.sites-return:focus-visible{opacity:1}
+.cinema-feature__curtain span{
+  border-color:rgba(247,243,232,.58);backdrop-filter:blur(8px);
+  transition:background 300ms ease,border-color 300ms ease,transform 420ms cubic-bezier(.2,.75,.2,1)
+}
+.cinema-feature__curtain:hover span,.cinema-feature__curtain:focus-visible span{
+  border-color:#CEBD74;background:rgba(13,13,11,.82);transform:scale(1.025)
+}
+@media(max-width:760px){
+  .sites-cinema-hall{min-height:100svh}
+  .sites-cinema-brand{left:18px;right:18px;bottom:15vh;max-width:none}
+  .sites-cinema-brand h1{font-size:clamp(58px,19vw,104px);line-height:.8}
+  .sites-cinema-brand h1 span{font-size:14px;letter-spacing:.12em}
+  .sites-cinema-hall:before{background:linear-gradient(90deg,rgba(8,8,7,.76),rgba(8,8,7,.12))}
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-cinema-screen{transform:none}
+  .sites-cinema-enter,.sites-return,.cinema-feature__curtain span{transition:none}
+}
