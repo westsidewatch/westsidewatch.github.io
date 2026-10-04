@@ -14,9 +14,29 @@ Scope: public or authorized media. DRM bypass is intentionally out of scope.
 from __future__ import annotations
 import argparse, json, os, re, shutil, subprocess, sys
 from pathlib import Path
-from urllib.parse import urlparse
+from urllib.parse import urljoin, urlparse
+from urllib.request import Request, urlopen
 
 MANIFEST_EXTENSIONS=(".m3u8",".mpd",".ism","/manifest")
+DRM_MARKERS=("widevine","playready","fairplay","com.widevine","skd://")
+MANIFEST_RE=re.compile(r"""(?P<url>(?:https?:)?//[^"'<>\\\s]+?(?:\.m3u8|\.mpd|\.ism)(?:\?[^"'<>\\\s]*)?|/[^"'<>\\\s]+?(?:\.m3u8|\.mpd|\.ism)(?:\?[^"'<>\\\s]*)?)""",re.I)
+
+def discover_manifests(page_url):
+    """Discover manifest URLs exposed in public HTML/inline JSON; no browser interception."""
+    req=Request(page_url,headers={"User-Agent":"Mozilla/5.0 Dore/0.3"})
+    with urlopen(req,timeout=15) as r:
+        raw=r.read(4_000_000)
+        charset=(r.headers.get_content_charset() or "utf-8")
+    html=raw.decode(charset,errors="replace")
+    lowered=html.lower()
+    if any(marker in lowered for marker in DRM_MARKERS):
+        return []
+    found=[]
+    for m in MANIFEST_RE.finditer(html.replace("\\/", "/")):
+        u=m.group("url")
+        u=(urlparse(page_url).scheme+":"+u) if u.startswith("//") else urljoin(page_url,u)
+        if u not in found: found.append(u)
+    return found
 
 def run(cmd):
     p=subprocess.run(cmd,text=True,capture_output=True)
@@ -65,7 +85,15 @@ def manifest_probe(url):
 def probe(url):
     if is_manifest(url):
         return manifest_probe(url)
-    return yt_probe(url)
+    try:
+        return yt_probe(url)
+    except RuntimeError as primary_error:
+        manifests=discover_manifests(url)
+        if not manifests: raise primary_error
+        d=manifest_probe(manifests[0])
+        d["discovered_from"]=url
+        d["manifest_candidates"]=manifests
+        return d
 
 def download_manifest(url, output):
     Path(output).mkdir(parents=True,exist_ok=True)
@@ -85,10 +113,16 @@ def download(url, fmt, output):
         return download_manifest(url,output)
     try:
         return download_yt(url,fmt,output)
-    except subprocess.CalledProcessError:
-        if is_manifest(url):
-            return download_manifest(url,output)
-        raise
+    except subprocess.CalledProcessError as primary_error:
+        manifests=discover_manifests(url)
+        if not manifests: raise primary_error
+        last_error=None
+        for manifest in manifests:
+            try:
+                return download_manifest(manifest,output)
+            except subprocess.CalledProcessError as e:
+                last_error=e
+        raise last_error or primary_error
 
 def main():
     ap=argparse.ArgumentParser()
