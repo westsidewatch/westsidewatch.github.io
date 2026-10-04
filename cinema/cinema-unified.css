@@ -166,3 +166,74 @@
 @media(prefers-reduced-motion:reduce){
   .sites-cinema-reason header,.sites-cinema-reason .reason-copy,.sites-cinema-reason .cinema-reason__copy,.sites-cinema-reason blockquote{animation:none!important}
 }
+
+
+/* CINEMA POLISH 03 — This Week / screening programme */
+.sites-cinema-week{
+  position:relative;isolation:isolate;
+  padding-block:clamp(7rem,11vh,13rem);
+  background:#171714;color:var(--cinema-paper)
+}
+.sites-cinema-week:before{
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:
+    radial-gradient(ellipse at 76% 18%,rgba(206,189,116,.08),transparent 32%),
+    linear-gradient(180deg,rgba(255,255,255,.025),transparent 22%)
+}
+.sites-cinema-week header{
+  display:grid;grid-template-columns:minmax(10rem,.48fr) minmax(0,1.52fr);
+  gap:clamp(2.5rem,6vw,9rem);align-items:end;
+  padding-bottom:clamp(2.5rem,4vw,5rem);
+  border-bottom:1px solid rgba(247,243,232,.22)
+}
+.sites-cinema-week header p{
+  grid-column:1;margin:0 0 .55em;color:#CEBD74;
+  font-size:clamp(11px,.72vw,14px);letter-spacing:.16em;text-transform:uppercase
+}
+.sites-cinema-week h2{
+  grid-column:2;margin:0;
+  font-size:clamp(72px,7vw,142px);line-height:.82;letter-spacing:-.052em
+}
+.sites-cinema-week .week-grid,
+.sites-cinema-week .cinema-week__grid{
+  display:grid;grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(14px,1.4vw,28px);row-gap:clamp(3rem,6vh,6rem);
+  margin-top:clamp(3.5rem,6vw,7rem)
+}
+.sites-cinema-week article{
+  position:relative;grid-column:span 6;
+  padding-top:clamp(1.4rem,2vw,2.2rem);
+  border-top:1px solid rgba(247,243,232,.2)
+}
+.sites-cinema-week article:nth-child(3n+1){grid-column:span 7}
+.sites-cinema-week article:nth-child(3n+2){grid-column:span 5}
+.sites-cinema-week article h3{
+  margin:.35em 0 .45em;font-size:clamp(34px,3vw,62px);
+  line-height:.94;letter-spacing:-.035em;text-wrap:balance
+}
+.sites-cinema-week article p{max-width:48rem;color:rgba(247,243,232,.72);line-height:1.62}
+.sites-cinema-week article a{color:inherit;text-decoration-color:rgba(206,189,116,.5);text-underline-offset:.22em}
+.sites-cinema-week article a:hover,.sites-cinema-week article a:focus-visible{color:#CEBD74;text-decoration-color:#CEBD74}
+.sites-cinema-week article a:focus-visible{outline:1px solid #CEBD74;outline-offset:5px}
+@supports(animation-timeline:view()){
+  .sites-cinema-week header,.sites-cinema-week article{
+    animation:dawn-emerge var(--dawn-time-slow,1400ms) var(--dawn-ease-gather,cubic-bezier(.2,.75,.2,1)) both;
+    animation-timeline:view();animation-range:entry 8% cover 32%
+  }
+}
+@media(min-width:2560px){
+  .sites-cinema-week h2{font-size:clamp(108px,5.4vw,168px)}
+  .sites-cinema-week .week-grid,.sites-cinema-week .cinema-week__grid{column-gap:clamp(24px,1.5vw,46px)}
+  .sites-cinema-week article h3{font-size:clamp(48px,2.2vw,72px)}
+}
+@media(max-width:760px){
+  .sites-cinema-week{padding-block:clamp(5rem,10vh,7rem)}
+  .sites-cinema-week header{display:block;padding-bottom:2rem}
+  .sites-cinema-week header p{margin-bottom:1.2rem}
+  .sites-cinema-week h2{font-size:clamp(58px,18vw,92px);line-height:.84}
+  .sites-cinema-week .week-grid,.sites-cinema-week .cinema-week__grid{display:block;margin-top:3rem}
+  .sites-cinema-week article,.sites-cinema-week article:nth-child(n){margin-top:2.5rem;padding-top:1.4rem}
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-cinema-week header,.sites-cinema-week article{animation:none!important}
+}
