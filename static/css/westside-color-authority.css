@@ -156,3 +156,49 @@
   :root{--ws-line:color-mix(in oklab,var(--ws-text) 42%,transparent);--ws-text-muted:var(--ws-text)}
   .sites-surface :where(a,button,[role="button"]):focus-visible{outline-width:3px}
 }
+
+
+/* === Product Color Protocol ==============================================
+   The Color OS is site-wide infrastructure, not a Sites-only theme.
+   Products opt into a family + material + light context and receive the same
+   semantic runtime contract without inheriting a page layout. */
+[data-ws-product],[data-ws-color-family]{
+  --ws-product-surface:var(--ws-surface);
+  --ws-product-text:var(--ws-text);
+  --ws-product-muted:var(--ws-text-muted);
+  --ws-product-line:var(--ws-structure);
+  --ws-product-accent:var(--ws-identity);
+  --ws-product-active:var(--ws-interaction);
+  --ws-product-focus:var(--ws-focus);
+  --ws-product-selection:var(--ws-selection);
+  --ws-product-engraving:var(--ws-engraving);
+  color:var(--ws-product-text);
+}
+
+/* Reusable families for ONE, Dore Folio, Multiwrite, Gate, Reader and future tools. */
+[data-ws-color-family="bible"]{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14}
+[data-ws-color-family="water"]{--ws-branch:var(--ws-water)}
+[data-ws-color-family="magazine"]{--ws-branch:var(--ws-first-light)}
+[data-ws-color-family="sermon"]{--ws-branch:var(--ws-olive)}
+[data-ws-color-family="book"]{--ws-branch:var(--ws-harvest)}
+[data-ws-color-family="cinema"]{--ws-branch:var(--ws-crimson)}
+[data-ws-color-family="life"]{--ws-branch:var(--ws-daylight-mauve)}
+[data-ws-color-family="neutral"]{--ws-branch:var(--ws-ink);--ws-surface:var(--ws-paper)}
+
+/* Product components consume these aliases; product UI may define geometry,
+   never a competing chromatic system. */
+[data-ws-product] :where(input,textarea,select,button){
+  border-color:var(--ws-product-line);
+  accent-color:var(--ws-product-accent);
+}
+[data-ws-product] :where(input,textarea,select,button,a):focus-visible{
+  outline:2px solid var(--ws-product-focus);outline-offset:2px;
+}
+[data-ws-product] ::selection{background:var(--ws-product-selection);color:var(--ws-ink)}
+[data-ws-product] [aria-current="true"],
+[data-ws-product] [aria-selected="true"],
+[data-ws-product] [aria-pressed="true"]{color:var(--ws-product-active)}
+[data-ws-product] :where(.ws-product-rule,hr){border-color:var(--ws-product-line)}
+[data-ws-product] .ws-product-muted{color:var(--ws-product-muted)}
+[data-ws-product] .ws-product-accent{color:var(--ws-product-accent)}
+[data-ws-product] .ws-product-surface{background:var(--ws-product-surface);color:var(--ws-product-text)}
