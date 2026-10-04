@@ -1,0 +1,31 @@
+{
+  "version": "0.1",
+  "capability": "video-acquisition",
+  "execution": "local-first",
+  "commands": [
+    "probe",
+    "formats",
+    "download"
+  ],
+  "primary_engine": "yt-dlp",
+  "stream_fallback": {
+    "engine": "N_m3u8DL-RE",
+    "status": "next"
+  },
+  "policy": {
+    "allowed": "public or authorized media",
+    "drm_bypass": false
+  },
+  "probe_fields": [
+    "engine",
+    "id",
+    "title",
+    "webpage_url",
+    "duration",
+    "is_live",
+    "thumbnail",
+    "subtitles",
+    "automatic_captions",
+    "formats"
+  ]
+}
