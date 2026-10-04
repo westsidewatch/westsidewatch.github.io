@@ -173,3 +173,31 @@ body.sites-home-isolated:before,body.sites-surface:before{
 @media(prefers-reduced-motion:reduce){
   body.sites-home-isolated:before,body.sites-surface:before{transition:none}
 }
+
+
+/* Polish Gate — interaction states, mobile restraint and render hygiene. */
+.sites-layer-header a,.sites-layer-section-nav a,.sites-layer-footer a,
+.sites-home-isolated a,.sites-surface a{
+  text-underline-offset:.22em;
+  text-decoration-thickness:1px
+}
+.sites-layer-header a:focus-visible,.sites-layer-section-nav a:focus-visible,
+.sites-layer-footer a:focus-visible,.sites-home-isolated a:focus-visible,.sites-surface a:focus-visible{
+  outline:1px solid currentColor;outline-offset:5px;border-radius:1px
+}
+.sites-layer-header a[aria-current=page],.sites-layer-section-nav a[aria-current=page]{
+  text-decoration:underline;text-decoration-color:var(--gold,#CEBD74)
+}
+.sites-home-water img,.sites-home-gather img,.sites-home-city img,.sites-surface main img{
+  content-visibility:auto
+}
+@media(max-width:720px){
+  body.sites-home-isolated:before,body.sites-surface:before{height:2px}
+  .sites-home-gather-media,.sites-home-city-grid{transform:none!important}
+  .sites-layer-header{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}
+  .sites-layer-header::-webkit-scrollbar{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-isolated *,.sites-surface *{scroll-behavior:auto!important}
+  .sites-home-gather-media,.sites-home-city-grid,.sites-home-water-row{transform:none!important}
+}
