@@ -98,3 +98,71 @@
   .sites-cinema-screen{transform:none}
   .sites-cinema-enter,.sites-return,.cinema-feature__curtain span{transition:none}
 }
+
+
+/* CINEMA POLISH 02 — Why Tonight / programme note */
+.sites-cinema-reason{
+  position:relative;isolation:isolate;
+  padding-block:clamp(7rem,12vh,14rem);
+  background:
+    linear-gradient(180deg,rgba(206,189,116,.045),transparent 24%),
+    var(--cinema-paper)
+}
+.sites-cinema-reason:before{
+  content:"";position:absolute;top:0;left:var(--cinema-gutter);right:var(--cinema-gutter);
+  height:1px;background:linear-gradient(90deg,transparent,rgba(37,37,37,.24) 12%,rgba(37,37,37,.24) 88%,transparent)
+}
+.sites-cinema-reason header{
+  display:grid;grid-template-columns:minmax(10rem,.52fr) minmax(0,1.48fr);
+  column-gap:clamp(2.5rem,6vw,9rem);align-items:start
+}
+.sites-cinema-reason header p{
+  grid-column:1;margin-top:.55em;
+  font-size:clamp(11px,.72vw,14px);line-height:1.5;letter-spacing:.16em;
+  text-transform:uppercase;color:rgba(37,37,37,.62)
+}
+.sites-cinema-reason h2{
+  grid-column:2;margin:0;
+  font-size:clamp(72px,7vw,142px);line-height:.82;letter-spacing:-.052em;
+  text-wrap:balance
+}
+.sites-cinema-reason .reason-copy,
+.sites-cinema-reason .cinema-reason__copy{
+  width:min(100%,62rem);margin-left:auto;
+  font-size:clamp(18px,1.15vw,25px);line-height:1.72
+}
+.sites-cinema-reason blockquote{
+  width:min(100%,72rem);margin:clamp(4rem,7vh,8rem) 0 0 auto;
+  padding:clamp(1.8rem,3vw,3.5rem) 0 0;
+  border-top:1px solid rgba(37,37,37,.26);
+  font-family:"Cormorant Garamond","Noto Serif TC",serif;
+  font-size:clamp(30px,2.6vw,58px);line-height:1.08;letter-spacing:-.025em
+}
+.sites-cinema-reason a{
+  text-decoration-thickness:1px;text-underline-offset:.22em;
+  transition:text-decoration-color 300ms ease,color 300ms ease
+}
+.sites-cinema-reason a:hover,.sites-cinema-reason a:focus-visible{color:#76672f;text-decoration-color:#CEBD74}
+.sites-cinema-reason a:focus-visible{outline:1px solid #9d8c48;outline-offset:5px}
+@supports(animation-timeline:view()){
+  .sites-cinema-reason header,.sites-cinema-reason .reason-copy,.sites-cinema-reason .cinema-reason__copy,.sites-cinema-reason blockquote{
+    animation:dawn-emerge var(--dawn-time-slow,1400ms) var(--dawn-ease-reveal,cubic-bezier(.68,0,.18,1)) both;
+    animation-timeline:view();animation-range:entry 8% cover 34%
+  }
+}
+@media(min-width:2560px){
+  .sites-cinema-reason header{grid-template-columns:minmax(16rem,.48fr) minmax(0,1.52fr)}
+  .sites-cinema-reason h2{font-size:clamp(108px,5.4vw,168px)}
+  .sites-cinema-reason .reason-copy,.sites-cinema-reason .cinema-reason__copy{width:min(100%,78rem)}
+}
+@media(max-width:760px){
+  .sites-cinema-reason{padding-block:clamp(5rem,10vh,7rem)}
+  .sites-cinema-reason header{display:block}
+  .sites-cinema-reason header p{margin:0 0 1.2rem}
+  .sites-cinema-reason h2{font-size:clamp(58px,18vw,92px);line-height:.84}
+  .sites-cinema-reason .reason-copy,.sites-cinema-reason .cinema-reason__copy{margin-top:2.5rem;font-size:17px;line-height:1.68}
+  .sites-cinema-reason blockquote{margin-top:3.5rem;font-size:clamp(28px,9vw,42px)}
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-cinema-reason header,.sites-cinema-reason .reason-copy,.sites-cinema-reason .cinema-reason__copy,.sites-cinema-reason blockquote{animation:none!important}
+}
