@@ -1,27 +1,79 @@
 {{ define "main" }}
-<div class="mersi-church" id="church">
-  <section class="mc-hero" aria-labelledby="church-title">
-    <figure class="mc-hero-media"><img src="{{ "images/jerusalem-wall.png" | relURL }}" alt="Jerusalem stone and light"></figure>
-    <div class="mc-hero-copy">
-      <p class="mc-kicker">P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
-      {{ with .Params.display_logo }}<img class="mc-church-logo" src="{{ . | relURL }}" alt="神召會活水堂西區教會">{{ end }}
-      <h1 id="church-title" class="mc-visually-hidden">{{ .Params.display_title }}</h1>
-      <p class="mc-verse">「信我的人，就如經上所說：從他腹中要流出活水的江河來。」</p>
-      <div class="mc-gesture"><span>JOHN 7:38</span><em>敬拜 · 讀經 · 禱告 · 同行</em><b>ENTER / 進入</b></div>
-    </div>
+<div class="sites-church" id="church">
+  <section class="sites-church-intro" aria-labelledby="church-title">
+    <p>P.A.O.C. · LIVING WATER ASSEMBLY WEST · VAUGHAN</p>
+    {{ with .Params.display_logo }}
+      <img src="{{ . | relURL }}" alt="神召會活水堂西區教會">
+      <h1 id="church-title" class="sites-structural-title">{{ $.Params.display_title | default "神召會活水堂西區教會" }}</h1>
+    {{ else }}
+      <h1 id="church-title">{{ .Params.display_title }}</h1>
+    {{ end }}
+    <blockquote>「信我的人，就如經上所說：從他腹中要流出活水的江河來。」<cite>JOHN 7:38</cite></blockquote>
   </section>
-  <section class="mc-scripture" aria-labelledby="church-scripture-title">
-    <p>01 / LIVING WATER</p><h2 id="church-scripture-title">COME ·<br>DRINK ·<br>FLOW</h2>
+
+  <section class="sites-church-gather" aria-labelledby="church-gather-title">
+    <p>01 / GATHER</p>
+    <h2 id="church-gather-title">活水</h2>
+    <p>不是一個地方。</p>
+    <p>The church is a gathered people.<br>敬拜 · 讀經 · 禱告 · 同行</p>
+  </section>
+
+  <section class="sites-church-water" aria-labelledby="church-water-title">
+    <p>02 / LIVING WATER</p>
+    <h2 id="church-water-title">COME · DRINK · FLOW</h2>
     <blockquote>「我所賜的水，要在他裡頭成為泉源，直湧到永生。」<cite>JOHN 4:14</cite></blockquote>
   </section>
-  <section class="mc-directory" aria-labelledby="church-directory-title">
-    <header><p>02 / THE GATHERED LIFE</p><h2 id="church-directory-title">一起生活<br>在福音裡。</h2><span>主日敬拜不是節目。查經不是課程。禱告不是儀式。我們在基督裡被召聚，也在日常裡彼此成全。</span></header>
-    <nav aria-label="Church life">{{ range $index, $page := .Pages.ByWeight }}{{ $entryHref := .Params.entry_url | default .RelPermalink }}<a href="{{ $entryHref }}"><small>{{ printf "%02d" (add $index 1) }}</small><strong>{{ .Title }}</strong><em>{{ .Params.subtitle | default .Description }}</em></a>{{ end }}</nav>
+
+  <section class="sites-church-life" aria-labelledby="church-life-title">
+    <p>03 / THE GATHERED LIFE</p>
+    <h2 id="church-life-title">一起生活<br>在福音裡。</h2>
+    <p>主日敬拜不是節目。查經不是課程。禱告不是儀式。<br>我們在基督裡被召聚，也在日常裡彼此成全。</p>
+    <p>WATCH FOR THE DAWN · ROMANS 13:12</p>
   </section>
-  <section class="mc-scripture mc-scripture--stone" aria-label="Scripture and witness">
-    <p>03 / MATTHEW 3:13–17 · JORDAN</p><h2>耶穌<br>受洗</h2>
-    <blockquote>經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。<cite>BAPTISM OF JESUS</cite></blockquote>
+
+  {{/* Scripture Environment consumer: preserve canonical Cinema data and fail-soft defaults. */}}
+  {{ $filmHref := "https://www.jesusfilm.org/watch/lumo-the-gospel-of-matthew.html/lumo-matthew-3-1-4-25/english.html" }}
+  {{ $filmLabel := "LUMO · Matthew 3:1–4:25" }}
+  {{ $filmProvider := "Jesus Film Project · LUMO" }}
+  {{ $moments := readFile "cinema/data/video-moment.v0.json" | transform.Unmarshal }}
+  {{ $resources := readFile "cinema/data/video-resource.v0.json" | transform.Unmarshal }}
+  {{ with $moments }}
+    {{ range .items }}
+      {{ $moment := . }}{{ $eventMatch := false }}
+      {{ range .anchors }}{{ if and (eq .type "event") (eq .value "baptism-of-jesus") }}{{ $eventMatch = true }}{{ end }}{{ end }}
+      {{ if $eventMatch }}
+        {{ $filmLabel = $moment.label | default $filmLabel }}
+        {{ $filmHref = $moment.sourcePointer | default $filmHref }}
+        {{ with $resources }}{{ range .items }}
+          {{ if and (eq .canonicalId $moment.workId) .provenance.verified (not .rights.rehost) }}
+            {{ $filmProvider = .creator | default $filmProvider }}
+          {{ end }}
+        {{ end }}{{ end }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+
+  <section class="sites-church-scripture" aria-labelledby="church-scripture-title">
+    <p>MATTHEW 3:13–17 · JORDAN · BAPTISM</p>
+    <h2 id="church-scripture-title">耶穌受洗 <span>BAPTISM OF JESUS</span></h2>
+    <p>太 3:13–17 · MATTHEW 3:13–17</p>
+    <p>經文不是資料卡，而是空間的座標。影像、地方、歷史與見證在這裡進入同一段經文。</p>
+    <a href="{{ $filmHref }}" rel="noopener"><small>IMAGE / FILM</small><strong>{{ $filmLabel }}</strong><span>{{ $filmProvider }}</span></a>
+    <p>PLACE / HISTORY · JORDAN</p>
+    <p>SERMON / WITNESS · VOICE</p>
   </section>
-  <footer class="mc-final"><img src="{{ "images/living-water-west-church-name.png" | relURL }}" alt="神召會活水堂西區教會"><p>P.A.O.C. LIVING WATER ASSEMBLY WEST</p><span>WATCH FOR THE DAWN · ROMANS 13:12</span></footer>
+
+  <nav class="sites-church-entries" aria-label="Church life">
+    {{ range .Pages.ByWeight }}
+      {{ $entryHref := .Params.entry_url | default .RelPermalink }}
+      <a href="{{ $entryHref }}"><span>{{ printf "%02d" .Weight }}</span><strong>{{ .Title }}</strong>{{ with .Description }}<em>{{ . }}</em>{{ end }}<b>↗</b></a>
+    {{ end }}
+  </nav>
+
+  <footer class="sites-church-footer">
+    <span>P.A.O.C. Living Water Assembly West</span>
+    <strong>神召會活水堂西區教會</strong>
+    <small>Watch for the Dawn · Romans 13:12</small>
+  </footer>
 </div>
 {{ end }}
