@@ -80,3 +80,14 @@ Search has no independent branch color. Results may carry a restrained provenanc
 ## 10. Governance
 
 The canonical implementation is `static/css/westside-color-authority.css`. New visual work must consume its tokens. Existing surfaces migrate progressively; migration must preserve functionality and information architecture.
+
+
+## 11. Executable Color Operating System
+
+The authority now exposes a uniform runtime contract for every branch:
+
+`atmosphere → material → surface → raised → structure → identity → interaction → deep → text → engraving`.
+
+Components consume semantic variables and `data-ws-zone` roles; anchors are not component APIs. Doré linework derives from each branch's engraving role. Shared navigation remains neutral and reveals branch identity only for current-state signals.
+
+Responsive material density and increased-contrast behavior are part of the authority. New pages must not bypass this contract with local theme literals.
