@@ -270,3 +270,39 @@
   .programme-card.programme-featured span{display:block;margin-top:1.5rem}
 }
 @media(prefers-reduced-motion:reduce){.programme-card.programme-featured:after{transition:none}}
+
+
+/* VISUAL POLICY — dark + gold pairing is forbidden on site surfaces.
+   Cinema programme surfaces return to the shared paper / ink language. */
+.sites-cinema-week,
+.sites-cinema-week[data-screening-mode="featured"]{
+  background:var(--cinema-paper);color:#252525
+}
+.sites-cinema-week:before{
+  background:
+    radial-gradient(ellipse at 76% 18%,rgba(37,37,37,.035),transparent 34%),
+    linear-gradient(180deg,rgba(255,255,255,.22),transparent 24%)
+}
+.sites-cinema-week header{border-bottom-color:rgba(37,37,37,.22)}
+.sites-cinema-week header p{color:rgba(37,37,37,.58)}
+.sites-cinema-week article{border-top-color:rgba(37,37,37,.2)}
+.sites-cinema-week article p{color:rgba(37,37,37,.68)}
+.sites-cinema-week article a{color:inherit;text-decoration-color:rgba(37,37,37,.35)}
+.sites-cinema-week article a:hover,.sites-cinema-week article a:focus-visible{color:#252525;text-decoration-color:#252525}
+.sites-cinema-week article a:focus-visible{outline-color:#252525}
+.sites-cinema-week[data-screening-mode="featured"] header{border-bottom-color:rgba(37,37,37,.24)}
+.programme-card.programme-featured{
+  color:#252525;border-color:rgba(37,37,37,.22);
+  background:
+    radial-gradient(ellipse at 78% 18%,rgba(37,37,37,.045),transparent 32%),
+    linear-gradient(135deg,rgba(255,255,255,.34),rgba(238,228,201,.22))
+}
+.programme-card.programme-featured:before,
+.programme-card.programme-featured:after{color:#252525}
+.programme-card.programme-featured time{color:rgba(37,37,37,.58)}
+.programme-card.programme-featured span{color:rgba(37,37,37,.68)}
+.programme-card.programme-featured:focus-visible{outline-color:#252525}
+#cinema-week-programme[data-screening-mode="strip"]{background:rgba(37,37,37,.14)}
+#cinema-week-programme[data-screening-mode="strip"] .programme-card:not([hidden]){
+  background:var(--cinema-paper);color:#252525;border-top-color:rgba(37,37,37,.3)
+}
