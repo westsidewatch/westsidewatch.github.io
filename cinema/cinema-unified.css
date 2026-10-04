@@ -237,3 +237,36 @@
 @media(prefers-reduced-motion:reduce){
   .sites-cinema-week header,.sites-cinema-week article{animation:none!important}
 }
+
+
+/* Adaptive Screening System — 1 feature / 2–4 strip / 5+ week */
+.sites-cinema-week[data-screening-mode="featured"]{min-height:min(88svh,1080px);display:flex;flex-direction:column;justify-content:center}
+.sites-cinema-week[data-screening-mode="featured"] header{border-bottom-color:rgba(206,189,116,.34)}
+#cinema-week-programme[data-screening-mode="featured"]{margin-top:clamp(3rem,7vh,7rem)}
+.programme-card.programme-featured{
+  width:100%;min-height:clamp(25rem,42vw,50rem);padding:clamp(2.5rem,5vw,7rem);
+  display:grid;grid-template-columns:minmax(9rem,.38fr) minmax(0,1.62fr);align-content:end;
+  column-gap:clamp(2rem,6vw,9rem);text-align:left;color:var(--cinema-paper);
+  border:1px solid rgba(247,243,232,.22);background:
+    radial-gradient(ellipse at 78% 18%,rgba(206,189,116,.12),transparent 30%),
+    linear-gradient(135deg,rgba(255,255,255,.025),rgba(255,255,255,0));
+  cursor:pointer;overflow:hidden;position:relative
+}
+.programme-card.programme-featured:before{content:"FEATURED SCREENING";grid-column:1;color:#CEBD74;font-size:clamp(11px,.7vw,14px);letter-spacing:.18em}
+.programme-card.programme-featured time{grid-column:1;margin-top:1.2rem;color:rgba(247,243,232,.58);font-size:clamp(13px,.85vw,17px);line-height:1.6}
+.programme-card.programme-featured strong{grid-column:2;grid-row:1/span 3;align-self:end;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(58px,7vw,142px);line-height:.82;letter-spacing:-.05em;font-weight:400;text-wrap:balance}
+.programme-card.programme-featured span{grid-column:2;margin-top:clamp(1.5rem,2.5vw,3rem);font-size:clamp(14px,1vw,19px);letter-spacing:.08em;color:rgba(247,243,232,.68)}
+.programme-card.programme-featured:after{content:"ENTER SCREENING  →";position:absolute;right:clamp(2rem,4vw,5rem);bottom:clamp(1.5rem,3vw,3.5rem);font-size:clamp(11px,.72vw,14px);letter-spacing:.14em;color:#CEBD74;transition:transform 420ms cubic-bezier(.2,.75,.2,1)}
+.programme-card.programme-featured:hover:after,.programme-card.programme-featured:focus-visible:after{transform:translateX(.55rem)}
+.programme-card.programme-featured:focus-visible{outline:1px solid #CEBD74;outline-offset:7px}
+#cinema-week-programme[data-screening-mode="strip"]{display:flex;gap:1px;overflow-x:auto;scroll-snap-type:x mandatory;margin-top:clamp(3rem,6vw,6rem);background:rgba(247,243,232,.16)}
+#cinema-week-programme[data-screening-mode="strip"] .programme-card:not([hidden]){display:grid;flex:0 0:min(76vw,42rem);min-height:25rem;scroll-snap-align:start;padding:clamp(2rem,3vw,4rem);text-align:left;background:#171714;color:var(--cinema-paper);border:0;border-top:1px solid rgba(206,189,116,.42)}
+@media(max-width:760px){
+  .sites-cinema-week[data-screening-mode="featured"]{min-height:auto}
+  .programme-card.programme-featured{display:block;min-height:31rem;padding:2rem}
+  .programme-card.programme-featured:before{display:block;margin-bottom:5rem}
+  .programme-card.programme-featured time{display:block;margin-bottom:1.2rem}
+  .programme-card.programme-featured strong{display:block;font-size:clamp(50px,15vw,76px)}
+  .programme-card.programme-featured span{display:block;margin-top:1.5rem}
+}
+@media(prefers-reduced-motion:reduce){.programme-card.programme-featured:after{transition:none}}
