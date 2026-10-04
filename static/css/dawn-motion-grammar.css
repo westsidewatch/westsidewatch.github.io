@@ -71,3 +71,81 @@
   .sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,
   .sites-church-entries a,.sites-volume-movement li,.sites-church-scripture a{transition:none}
 }
+
+
+/* Continuous Transition — sections hand visual state to the next section.
+   No reset-to-neutral between scenes: paper -> water -> gathering -> city -> dawn. */
+.sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing{
+  position:relative;
+  isolation:isolate
+}
+.sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  left:0;right:0;
+  height:clamp(72px,12vh,180px)
+}
+.sites-home-water:after{
+  bottom:calc(clamp(72px,12vh,180px) * -.55);
+  background:linear-gradient(180deg,rgba(247,243,232,0),rgba(247,243,232,.72) 48%,rgba(238,228,201,.22));
+  opacity:.72
+}
+.sites-home-gather:before{
+  top:calc(clamp(72px,12vh,180px) * -.45);
+  background:linear-gradient(180deg,rgba(247,243,232,0),rgba(247,243,232,.92));
+}
+.sites-home-city:before{
+  top:0;
+  z-index:0;
+  background:linear-gradient(180deg,rgba(247,243,232,.16),rgba(18,18,15,0));
+  mix-blend-mode:screen;
+  opacity:.42
+}
+.sites-home-closing:before{
+  top:calc(clamp(72px,12vh,180px) * -1);
+  height:clamp(110px,18vh,260px);
+  background:linear-gradient(180deg,rgba(18,18,15,0),rgba(247,243,232,.72) 72%,var(--paper,#f7f3e8));
+}
+
+/* Carry the same continuity into second-layer editorial surfaces. */
+.sites-surface main,.sites-section-church main,.sites-section-journal main,.sites-section-vol-00 main{
+  position:relative
+}
+.sites-layer-header{
+  transition:
+    background-color var(--dawn-time) var(--dawn-ease-light),
+    border-color var(--dawn-time) var(--dawn-ease-light),
+    color var(--dawn-time) var(--dawn-ease-light)
+}
+
+/* Scroll-driven continuity: adjacent scenes overlap optically before the next locks in. */
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing{
+    animation:dawn-scene-continuity both linear;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%
+  }
+  @keyframes dawn-scene-continuity{
+    0%{--dawn-scene-light:.86}
+    18%{--dawn-scene-light:1}
+    82%{--dawn-scene-light:1}
+    100%{--dawn-scene-light:.9}
+  }
+  .sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+    animation:dawn-seam breathe var(--dawn-time-slow) var(--dawn-ease-light) both;
+    animation-timeline:view();
+    animation-range:entry 0% cover 24%
+  }
+  @keyframes dawn-seam{
+    from{opacity:0;transform:translateY(calc(var(--dawn-shift) * .45))}
+    to{opacity:1;transform:none}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing,
+  .sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+    animation:none
+  }
+}
