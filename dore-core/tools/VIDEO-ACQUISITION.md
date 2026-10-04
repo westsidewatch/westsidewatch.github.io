@@ -1,23 +1,23 @@
 # Doré Video Acquisition Adapter v0
 
-First executable slice of Doré's local video acquisition capability.
+Executable local-first acquisition chain:
 
-## Contract
+`URL → route → probe/formats/download`
 
-`probe → formats → download`
+## Engines
 
-Primary engine: **yt-dlp**. The adapter returns normalized JSON instead of exposing yt-dlp internals to Doré.
+- **yt-dlp** — normal webpages and ordinary media URLs.
+- **N_m3u8DL-RE** — active fallback/router for direct HLS/DASH/MSS manifests: `.m3u8`, `.mpd`, `.ism` and manifest endpoints.
+- **ffmpeg** — recommended for yt-dlp audio/video merge and media processing.
 
-The next fallback is **N_m3u8DL-RE** for direct HLS/DASH/MSS manifests. Lux/cobalt are intentionally deferred until the contract is stable.
+The normalized Doré contract remains `probe → formats → download`; engine choice stays behind the adapter.
 
 ## Local requirements
 
-- Python 3
-- yt-dlp
-- ffmpeg (recommended for merged audio/video and subtitle processing)
+Python 3 plus `yt-dlp`. Install `N_m3u8DL-RE` on PATH to enable direct manifest acquisition. No paid API is required.
 
-No paid API is required. Media is written locally; large media files must not be committed to this repository.
+Media is written locally and must not be committed to this repository.
 
 ## Boundary
 
-Use for public media or media the operator is authorized to save. DRM or access-control bypass is not part of this capability.
+Use for public media or media the operator is authorized to save. DRM/access-control bypass is deliberately excluded.
