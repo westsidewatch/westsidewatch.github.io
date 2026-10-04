@@ -149,3 +149,27 @@
     animation:none
   }
 }
+
+
+/* Interaction Layer — scroll, pointer and reading progress become quiet material. */
+:root{--dawn-read-progress:0;--dawn-pointer-x:.5;--dawn-pointer-y:.5}
+body.sites-home-isolated:before,body.sites-surface:before{
+  content:"";position:fixed;z-index:9999;left:0;top:0;height:1px;width:100%;
+  pointer-events:none;transform-origin:left center;
+  transform:scaleX(var(--dawn-read-progress));
+  background:var(--gold,#CEBD74);opacity:.72
+}
+[data-dawn-active]{--dawn-active-opacity:1}
+.sites-home-water-row{will-change:transform}
+.sites-home-gather-media,.sites-home-city-grid{
+  --dawn-pointer-dx:calc((var(--dawn-pointer-x) - .5) * 1.2vw);
+  --dawn-pointer-dy:calc((var(--dawn-pointer-y) - .5) * .8vw)
+}
+@media(prefers-reduced-motion:no-preference) and (pointer:fine){
+  .sites-home-gather-media{transform:translate3d(var(--dawn-pointer-dx),var(--dawn-pointer-dy),0);transition:transform 900ms var(--dawn-ease-gather)}
+  .sites-home-city-grid{transform:translate3d(calc(var(--dawn-pointer-dx) * -.18),calc(var(--dawn-pointer-dy) * -.18),0);transition:transform 1200ms var(--dawn-ease-gather)}
+  .sites-home-water-row{animation-duration:calc(42s - (var(--dawn-read-progress) * 10s))}
+}
+@media(prefers-reduced-motion:reduce){
+  body.sites-home-isolated:before,body.sites-surface:before{transition:none}
+}
