@@ -1,0 +1,29 @@
+name: Dore Video Acquisition Acceptance
+on:
+  pull_request:
+    paths:
+      - "dore-core/tools/video_acquisition.py"
+      - "dore-core/tools/test_video_acquisition.py"
+      - "dore-core/contracts/video-acquisition-v0.json"
+      - ".github/workflows/dore-video-acquisition-acceptance.yml"
+  workflow_dispatch:
+jobs:
+  acceptance:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Contract and routing acceptance
+        run: python dore-core/tools/test_video_acquisition.py
+      - name: Public Apple HLS fixture is reachable
+        run: |
+          python - <<'PY'
+          from urllib.request import urlopen
+          u="https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_16x9/bipbop_16x9_variant.m3u8"
+          with urlopen(u,timeout=15) as r:
+              body=r.read(256).decode("utf-8","replace")
+          assert "#EXTM3U" in body
+          print("PASS: public HLS manifest reachable")
+          PY
