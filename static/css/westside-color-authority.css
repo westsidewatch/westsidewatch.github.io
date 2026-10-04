@@ -1,0 +1,66 @@
+/* Westside Chromatic Field — Color Authority
+   Identity × Material × Light = Surface
+   Pages consume semantic roles; raw branch colors are authority inputs, not local themes. */
+:root{
+  /* Foundation */
+  --ws-paper:#faf9f5;--ws-ink:#252525;--ws-night:#102a43;
+  --ws-first-light:#a2872a;--ws-warm-gold:#b79838;--ws-morning-gold:#d2bc69;
+  /* Sacred / landscape anchors */
+  --ws-water:#5b8fa8;--ws-olive:#738a5a;--ws-harvest:#b8944a;--ws-crimson:#a14d57;
+  /* Bible material authority */
+  --ws-papyrus:#eee4c9;--ws-pale-gold:#cebd74;
+  /* Life: Daylight Mauve — provisional chromatic-field anchor, not an arbitrary UI purple */
+  --ws-daylight-mauve:oklch(67% .075 330);
+  /* Default semantic roles */
+  --ws-branch:var(--ws-first-light);--ws-surface:var(--ws-paper);--ws-text:var(--ws-ink);
+  --ws-line:color-mix(in oklab,var(--ws-text) 22%,transparent);
+  --ws-atmosphere:color-mix(in oklab,var(--ws-branch) 8%,var(--ws-surface));
+  --ws-raised:color-mix(in oklab,var(--ws-branch) 4%,var(--ws-surface));
+  --ws-interaction:color-mix(in oklab,var(--ws-branch) 86%,var(--ws-ink));
+  --ws-deep:color-mix(in oklab,var(--ws-branch) 68%,var(--ws-ink));
+  --ws-shadow:color-mix(in oklab,var(--ws-branch) 24%,var(--ws-ink));
+  /* Material / illumination controls */
+  --ws-engraving-opacity:.11;--ws-engraving-blend:multiply;--ws-light-x:72%;--ws-light-y:18%;
+  --ws-light-strength:10%;--ws-light-radius:42%;
+}
+/* Current information architecture → one branch identity. */
+.sites-section-church{--ws-branch:var(--ws-water);--ws-engraving-opacity:.09}
+.sites-section-journal,.sites-section-vol-00{--ws-branch:var(--ws-first-light);--ws-engraving-opacity:.10}
+.section-one,.sites-section-one{--ws-branch:var(--ws-pale-gold);--ws-surface:var(--ws-papyrus);--ws-engraving-opacity:.14}
+.sites-section-olive{--ws-branch:var(--ws-olive);--ws-engraving-opacity:.13}
+.sites-section-dawn-library{--ws-branch:var(--ws-harvest);--ws-engraving-opacity:.12}
+.sites-section-cinema{--ws-branch:var(--ws-crimson);--ws-engraving-opacity:.16;--ws-light-x:76%;--ws-light-y:12%}
+.sites-section-daylight-cafe{--ws-branch:var(--ws-daylight-mauve);--ws-engraving-opacity:.09;--ws-light-x:64%;--ws-light-y:8%}
+
+/* Shared material field. Engraving artwork is supplied by each branch's Dore corpus;
+   this layer owns density/blend/light so pages cannot invent local color effects. */
+.ws-material-field{position:relative;isolation:isolate;background:var(--ws-surface);color:var(--ws-text)}
+.ws-material-field:before,.ws-material-field:after{content:"";position:absolute;inset:0;pointer-events:none;z-index:-1}
+.ws-material-field:before{background:var(--ws-engraving-image,none) center/cover no-repeat;opacity:var(--ws-engraving-opacity);mix-blend-mode:var(--ws-engraving-blend)}
+.ws-material-field:after{background:radial-gradient(circle at var(--ws-light-x) var(--ws-light-y),color-mix(in oklab,var(--ws-branch) var(--ws-light-strength),white),transparent var(--ws-light-radius));opacity:.72}
+
+/* Semantic consumption */
+.ws-color-atmosphere{background:var(--ws-atmosphere)}
+.ws-color-surface{background:var(--ws-surface);color:var(--ws-text)}
+.ws-color-raised{background:var(--ws-raised)}
+.ws-color-line{border-color:var(--ws-line)}
+.ws-color-identity{color:var(--ws-branch)}
+.ws-color-interaction{color:var(--ws-interaction)}
+.ws-color-deep{color:var(--ws-deep)}
+.ws-color-shadow{color:var(--ws-shadow)}
+
+/* Hard policy: dark + gold is never a dominant site theme.
+   Gold may act as light/detail, never as the identity voice on a dark field. */
+.ws-dark-surface{--ws-branch:currentColor;color:var(--ws-paper)}
+.ws-dark-surface .ws-color-identity{color:inherit}
+
+/* Motion changes illumination, never branch identity. */
+[data-ws-light="dawn"]{--ws-light-x:24%;--ws-light-y:6%;--ws-light-strength:12%}
+[data-ws-light="sacred"]{--ws-light-x:50%;--ws-light-y:0%;--ws-light-strength:9%}
+[data-ws-light="scripture"]{--ws-light-x:58%;--ws-light-y:14%;--ws-light-strength:8%}
+[data-ws-light="hillside"]{--ws-light-x:78%;--ws-light-y:20%;--ws-light-strength:8%}
+[data-ws-light="reading"]{--ws-light-x:38%;--ws-light-y:12%;--ws-light-strength:7%}
+[data-ws-light="projection"]{--ws-light-x:50%;--ws-light-y:28%;--ws-light-strength:11%}
+[data-ws-light="daylight"]{--ws-light-x:62%;--ws-light-y:4%;--ws-light-strength:9%}
+
+@media (prefers-reduced-motion:reduce){.ws-material-field:after{transition:none}}
