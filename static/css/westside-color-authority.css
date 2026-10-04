@@ -407,3 +407,20 @@ body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws
 [data-ws-product="one"] :where([aria-current="true"],[aria-selected="true"],[aria-pressed="true"]){
   background:color-mix(in oklab,var(--ws-pale-gold) 14%,var(--ws-papyrus));
 }
+
+
+/* === Final Color Calibration ============================================== */
+:root{--ws-event:var(--ws-interaction);--ws-event-soft:color-mix(in oklab,var(--ws-branch) 14%,var(--ws-surface));--ws-chrome:color-mix(in oklab,var(--ws-branch) 2%,var(--ws-paper))}
+.sites-surface{color-scheme:light;caret-color:var(--ws-interaction)}
+.sites-surface :where(a,button,[role="button"]){text-decoration-color:color-mix(in oklab,var(--ws-identity) 46%,transparent)}
+.sites-surface :where(a,button,[role="button"]):active{color:var(--ws-event)}
+.sites-surface :where(.sites-layer-header,.sites-layer-footer){background:var(--ws-chrome)}
+.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a[aria-current="page"]{color:var(--ws-identity);text-decoration-thickness:1px;text-underline-offset:.32em}
+.sites-surface :where(.sites-journal-routes,.sites-surface-entries,.sites-church-entries) a:hover{background:var(--ws-event-soft)}
+body.home .sites-home-hero,body.home .sites-home-city,.sites-section-cinema .ws-dark-surface{--ws-structure:color-mix(in oklab,var(--ws-paper) 30%,transparent);--ws-line:color-mix(in oklab,var(--ws-paper) 24%,transparent)}
+.sites-section-church img{--ws-image-sat:.90}.sites-section-journal img,.sites-section-vol-00 img{--ws-image-sat:.92}.sites-section-olive img{--ws-image-sat:.86}.sites-section-dawn-library img{--ws-image-sat:.88}.sites-section-cinema img{--ws-image-sat:.90}.sites-section-daylight-cafe img{--ws-image-sat:.94}
+.sites-surface img{transition:filter .45s ease}.sites-surface :where(article,a,figure):hover img{filter:saturate(var(--ws-image-sat,1)) contrast(.98)}
+@media(max-width:760px){.sites-section-church{--ws-branch-surface:color-mix(in oklab,var(--ws-water) 3%,white)}.sites-section-journal,.sites-section-vol-00{--ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 2.5%,var(--ws-paper))}.sites-section-olive{--ws-branch-surface:color-mix(in oklab,var(--ws-olive) 3%,var(--ws-paper))}.sites-section-dawn-library{--ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 3%,var(--ws-paper))}.sites-section-daylight-cafe{--ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 3%,var(--ws-paper))}body.home .sites-home-water{--ws-material:color-mix(in oklab,var(--ws-water) 6%,var(--ws-paper))}body.home .sites-home-gather{background:color-mix(in oklab,var(--ws-first-light) 2%,var(--ws-paper))}body.home .sites-home-closing{background:color-mix(in oklab,var(--ws-daylight-mauve) 3%,var(--ws-paper))}}
+@media(min-width:2560px){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 42%,transparent)}.sites-surface .sites-layer-header{border-bottom-color:color-mix(in oklab,var(--ws-structure) 52%,transparent)}}
+@media(prefers-contrast:more){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 58%,var(--ws-ink))}.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a[aria-current="page"]{text-decoration:underline}}
+@media(prefers-reduced-motion:reduce){.sites-surface img{transition:none}}
