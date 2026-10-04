@@ -25,6 +25,6 @@
     {{ else if not $sitesSurface }}{{ partial "header.html" . }}{{ end }}
     <main id="main">{{ block "main" . }}{{ end }}</main>
     {{ if $sitesSurface }}<footer class="sites-layer-footer"><a href="{{ site.Home.RelPermalink }}">Westside Watch</a><p>{{ now.Year }}</p></footer>{{ else }}{{ partial "footer.html" . }}{{ end }}
-    {{ if not $sitesSurface }}<script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script><script src="{{ "js/typography-system.js" | relURL }}" defer></script>{{ end }}
+    {{ if $sitesSurface }}<script src="{{ "js/dawn-interaction-layer.js" | relURL }}?v=20261004-interaction-layer" defer></script>{{ else }}<script src="{{ "js/dore-visual-surface-consumer.js" | relURL }}?v=20260911-cut08" defer></script><script src="{{ "js/typography-system.js" | relURL }}" defer></script>{{ end }}
   </body>
 </html>
