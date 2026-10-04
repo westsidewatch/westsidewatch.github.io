@@ -1,0 +1,203 @@
+/* Dawn Motion Grammar — one motion language for Sites surfaces.
+   FLOW = continuous current
+   REVEAL = threshold/opening
+   GATHER = separated elements converging
+   DAWN = dark-to-light emergence */
+:root{
+  --dawn-ease-flow:linear;
+  --dawn-ease-reveal:cubic-bezier(.68,0,.18,1);
+  --dawn-ease-gather:cubic-bezier(.2,.75,.2,1);
+  --dawn-ease-light:cubic-bezier(.22,.61,.36,1);
+  --dawn-time-fast:420ms;
+  --dawn-time:800ms;
+  --dawn-time-slow:1400ms;
+  --dawn-shift:clamp(18px,2.2vw,48px);
+}
+
+/* FLOW — living current keeps motion continuous rather than decorative. */
+.sites-home-water-row{animation-timing-function:var(--dawn-ease-flow)}
+.sites-church-water:after{animation-timing-function:var(--dawn-ease-light)}
+
+/* REVEAL — thresholds open from a concealed state. */
+.sites-church-intro:before,.sites-church-intro:after{
+  animation-duration:var(--dawn-time-slow);
+  animation-timing-function:var(--dawn-ease-reveal)
+}
+.sites-home-city-tile{
+  --dawn-reveal-y:var(--dawn-shift);
+  --dawn-reveal-clip:12%
+}
+
+/* GATHER — related fragments move toward a shared centre. */
+.sites-home-gather-media i{
+  transition:
+    transform var(--dawn-time) var(--dawn-ease-gather),
+    filter var(--dawn-time) var(--dawn-ease-light),
+    opacity var(--dawn-time) var(--dawn-ease-light)
+}
+.sites-home-gather:hover .sites-home-gather-media i,
+.sites-home-gather:focus-within .sites-home-gather-media i{filter:none}
+
+/* DAWN — imagery emerges by light, not by generic zoom alone. */
+.sites-home-city-tile img{
+  transition:
+    transform var(--dawn-time-slow) var(--dawn-ease-gather),
+    filter var(--dawn-time) var(--dawn-ease-light),
+    opacity var(--dawn-time) var(--dawn-ease-light)
+}
+.sites-layer-nav a:after{
+  transition:right var(--dawn-time-fast) var(--dawn-ease-reveal)
+}
+.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,
+.sites-church-entries a,.sites-volume-movement li,.sites-church-scripture a{
+  transition-duration:var(--dawn-time-fast);
+  transition-timing-function:var(--dawn-ease-gather)
+}
+
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-section-head,.sites-home-gather-copy,.sites-home-closing blockquote{
+    animation:dawn-emerge both var(--dawn-time-slow) var(--dawn-ease-light);
+    animation-timeline:view();
+    animation-range:entry 8% cover 30%
+  }
+  @keyframes dawn-emerge{
+    from{opacity:.18;transform:translateY(var(--dawn-shift))}
+    to{opacity:1;transform:none}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-section-head,.sites-home-gather-copy,.sites-home-closing blockquote{animation:none}
+  .sites-home-gather-media i,.sites-home-city-tile img,.sites-layer-nav a:after,
+  .sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,
+  .sites-church-entries a,.sites-volume-movement li,.sites-church-scripture a{transition:none}
+}
+
+
+/* Continuous Transition — sections hand visual state to the next section.
+   No reset-to-neutral between scenes: paper -> water -> gathering -> city -> dawn. */
+.sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing{
+  position:relative;
+  isolation:isolate
+}
+.sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  pointer-events:none;
+  left:0;right:0;
+  height:clamp(72px,12vh,180px)
+}
+.sites-home-water:after{
+  bottom:calc(clamp(72px,12vh,180px) * -.55);
+  background:linear-gradient(180deg,rgba(247,243,232,0),rgba(247,243,232,.72) 48%,rgba(238,228,201,.22));
+  opacity:.72
+}
+.sites-home-gather:before{
+  top:calc(clamp(72px,12vh,180px) * -.45);
+  background:linear-gradient(180deg,rgba(247,243,232,0),rgba(247,243,232,.92));
+}
+.sites-home-city:before{
+  top:0;
+  z-index:0;
+  background:linear-gradient(180deg,rgba(247,243,232,.16),rgba(18,18,15,0));
+  mix-blend-mode:screen;
+  opacity:.42
+}
+.sites-home-closing:before{
+  top:calc(clamp(72px,12vh,180px) * -1);
+  height:clamp(110px,18vh,260px);
+  background:linear-gradient(180deg,rgba(18,18,15,0),rgba(247,243,232,.72) 72%,var(--paper,#f7f3e8));
+}
+
+/* Carry the same continuity into second-layer editorial surfaces. */
+.sites-surface main,.sites-section-church main,.sites-section-journal main,.sites-section-vol-00 main{
+  position:relative
+}
+.sites-layer-header{
+  transition:
+    background-color var(--dawn-time) var(--dawn-ease-light),
+    border-color var(--dawn-time) var(--dawn-ease-light),
+    color var(--dawn-time) var(--dawn-ease-light)
+}
+
+/* Scroll-driven continuity: adjacent scenes overlap optically before the next locks in. */
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing{
+    animation:dawn-scene-continuity both linear;
+    animation-timeline:view();
+    animation-range:entry 0% exit 100%
+  }
+  @keyframes dawn-scene-continuity{
+    0%{--dawn-scene-light:.86}
+    18%{--dawn-scene-light:1}
+    82%{--dawn-scene-light:1}
+    100%{--dawn-scene-light:.9}
+  }
+  .sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+    animation:dawn-seam breathe var(--dawn-time-slow) var(--dawn-ease-light) both;
+    animation-timeline:view();
+    animation-range:entry 0% cover 24%
+  }
+  @keyframes dawn-seam{
+    from{opacity:0;transform:translateY(calc(var(--dawn-shift) * .45))}
+    to{opacity:1;transform:none}
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-water,.sites-home-gather,.sites-home-city,.sites-home-closing,
+  .sites-home-water:after,.sites-home-gather:before,.sites-home-city:before,.sites-home-closing:before{
+    animation:none
+  }
+}
+
+
+/* Interaction Layer — scroll, pointer and reading progress become quiet material. */
+:root{--dawn-read-progress:0;--dawn-pointer-x:.5;--dawn-pointer-y:.5}
+body.sites-home-isolated:before,body.sites-surface:before{
+  content:"";position:fixed;z-index:9999;left:0;top:0;height:1px;width:100%;
+  pointer-events:none;transform-origin:left center;
+  transform:scaleX(var(--dawn-read-progress));
+  background:var(--gold,#CEBD74);opacity:.72
+}
+[data-dawn-active]{--dawn-active-opacity:1}
+.sites-home-water-row{will-change:transform}
+.sites-home-gather-media,.sites-home-city-grid{
+  --dawn-pointer-dx:calc((var(--dawn-pointer-x) - .5) * 1.2vw);
+  --dawn-pointer-dy:calc((var(--dawn-pointer-y) - .5) * .8vw)
+}
+@media(prefers-reduced-motion:no-preference) and (pointer:fine){
+  .sites-home-gather-media{transform:translate3d(var(--dawn-pointer-dx),var(--dawn-pointer-dy),0);transition:transform 900ms var(--dawn-ease-gather)}
+  .sites-home-city-grid{transform:translate3d(calc(var(--dawn-pointer-dx) * -.18),calc(var(--dawn-pointer-dy) * -.18),0);transition:transform 1200ms var(--dawn-ease-gather)}
+  .sites-home-water-row{animation-duration:calc(42s - (var(--dawn-read-progress) * 10s))}
+}
+@media(prefers-reduced-motion:reduce){
+  body.sites-home-isolated:before,body.sites-surface:before{transition:none}
+}
+
+
+/* Polish Gate — interaction states, mobile restraint and render hygiene. */
+.sites-layer-header a,.sites-layer-section-nav a,.sites-layer-footer a,
+.sites-home-isolated a,.sites-surface a{
+  text-underline-offset:.22em;
+  text-decoration-thickness:1px
+}
+.sites-layer-header a:focus-visible,.sites-layer-section-nav a:focus-visible,
+.sites-layer-footer a:focus-visible,.sites-home-isolated a:focus-visible,.sites-surface a:focus-visible{
+  outline:1px solid currentColor;outline-offset:5px;border-radius:1px
+}
+.sites-layer-header a[aria-current=page],.sites-layer-section-nav a[aria-current=page]{
+  text-decoration:underline;text-decoration-color:var(--gold,#CEBD74)
+}
+.sites-home-water img,.sites-home-gather img,.sites-home-city img,.sites-surface main img{
+  content-visibility:auto
+}
+@media(max-width:720px){
+  body.sites-home-isolated:before,body.sites-surface:before{height:2px}
+  .sites-home-gather-media,.sites-home-city-grid{transform:none!important}
+  .sites-layer-header{overflow-x:auto;overscroll-behavior-inline:contain;scrollbar-width:none}
+  .sites-layer-header::-webkit-scrollbar{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-isolated *,.sites-surface *{scroll-behavior:auto!important}
+  .sites-home-gather-media,.sites-home-city-grid,.sites-home-water-row{transform:none!important}
+}

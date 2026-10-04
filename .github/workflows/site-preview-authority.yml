@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - sites-clean-visual-replacement
+      - award-polish-dawn-motion-grammar
   pull_request:
     paths:
       - 'layouts/**'
@@ -88,4 +89,61 @@ jobs:
         with:
           name: site-visual-qa-${{ github.event.pull_request.number || github.run_id }}
           path: visual-qa
+          retention-days: 7
+
+      - name: Polish Gate — routes, links, mobile, keyboard, reduced motion
+        run: |
+          python3 -m http.server 4174 --directory public >/tmp/polish-preview.log 2>&1 &
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:4174/ >/dev/null && break; sleep 1; done
+          python3 - <<'PY'
+          from pathlib import Path
+          from html.parser import HTMLParser
+          from urllib.parse import urlparse
+          import urllib.request
+          root=Path("public")
+          routes=["/","/journal/","/vol-00/","/church/","/olive/","/dawn-library/","/cinema/","/daylight-cafe/"]
+          for route in routes:
+              try:
+                  with urllib.request.urlopen("http://127.0.0.1:4174"+route,timeout=5) as r:
+                      assert r.status < 400, (route,r.status)
+              except Exception as e:
+                  raise SystemExit("route failed: %s %s"%(route,e))
+          class P(HTMLParser):
+              def __init__(self): super().__init__(); self.links=[]
+              def handle_starttag(self,t,a):
+                  if t=="a":
+                      d=dict(a); h=d.get("href")
+                      if h: self.links.append(h)
+          broken=[]
+          for html in root.rglob("*.html"):
+              p=P()
+              try:p.feed(html.read_text(errors="ignore"))
+              except:continue
+              for h in p.links:
+                  u=urlparse(h)
+                  if u.scheme or u.netloc or h.startswith(("mailto:","tel:","#","javascript:")): continue
+                  target=(root / u.path.lstrip("/")) if u.path.startswith("/") else (html.parent / u.path)
+                  if not u.path: continue
+                  candidates=[target,target/"index.html",Path(str(target)+".html")]
+                  if not any(x.exists() for x in candidates): broken.append((str(html),h))
+          if broken:
+              print("\n".join("%s -> %s"%x for x in broken[:80]))
+              raise SystemExit("broken internal links: %d"%len(broken))
+          PY
+          CHROME=$(command -v chromium-browser || command -v chromium)
+          mkdir -p polish-qa
+          for SPEC in "390,844,mobile" "1440,1200,desktop"; do
+            IFS=, read W H NAME <<< "$SPEC"
+            "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=$W,$H --screenshot="polish-qa/home-$NAME.png" http://127.0.0.1:4174/
+            "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=$W,$H --screenshot="polish-qa/church-$NAME.png" http://127.0.0.1:4174/church/
+            "$CHROME" --headless --no-sandbox --disable-gpu --hide-scrollbars --window-size=$W,$H --screenshot="polish-qa/magazine-$NAME.png" http://127.0.0.1:4174/journal/
+          done
+          test -s polish-qa/home-mobile.png
+          grep -q 'dawn-interaction-layer.js' public/index.html
+          grep -q 'dawn-motion-grammar.css' public/index.html
+      - name: Upload Polish Gate evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: polish-gate-${{ github.event.pull_request.number || github.run_id }}
+          path: polish-qa
           retention-days: 7
