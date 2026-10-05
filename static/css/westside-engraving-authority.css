@@ -1,0 +1,57 @@
+/* Westside Engraving Authority
+   Sole owner of branch engraving scenes. Color remains owned by Color OS.
+   Scene grammar is continuous from homepage realm to the branch interior. */
+:root{
+ --ws-engraving-opacity:.16;
+ --ws-engraving-line:color-mix(in oklab,var(--ws-branch,var(--ws-identity)) 42%,transparent);
+ --ws-engraving-fine:color-mix(in oklab,var(--ws-branch,var(--ws-identity)) 22%,transparent)
+}
+.sites-home-realm,.sites-surface{position:relative;isolation:isolate}
+.sites-home-realm:after,.sites-surface:after{
+ content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+ opacity:var(--ws-engraving-opacity);mix-blend-mode:multiply;background-repeat:no-repeat
+}
+/* Living Water — long water currents / baptismal flow. */
+.sites-home-realm[data-realm=church]:after,.sites-section-church:after{
+ background-image:
+ repeating-radial-gradient(ellipse 120% 44% at 18% 22%,transparent 0 20px,var(--ws-engraving-line) 20.5px 21px,transparent 21.5px 34px),
+ linear-gradient(112deg,transparent 0 58%,var(--ws-engraving-fine) 58.1% 58.25%,transparent 58.35%)
+}
+/* Magazine — engraved editorial folds / page diagonals. */
+.sites-home-realm[data-realm=magazine]:after,.sites-section-journal:after,.sites-section-vol-00:after{
+ background-image:
+ repeating-linear-gradient(118deg,transparent 0 46px,var(--ws-engraving-fine) 46.5px 47px,transparent 47.5px 92px),
+ radial-gradient(ellipse 68% 42% at 78% 18%,transparent 0 56%,var(--ws-engraving-line) 56.2% 56.5%,transparent 56.8%)
+}
+/* Sermon — olive terraces / hillside contours. */
+.sites-home-realm[data-realm=sermon]:after,.sites-section-olive:after{
+ background-image:
+ repeating-radial-gradient(ellipse 82% 28% at 82% 88%,transparent 0 24px,var(--ws-engraving-line) 24.5px 25px,transparent 25.5px 42px)
+}
+/* Book — page leaves / library folios. */
+.sites-home-realm[data-realm=book]:after,.sites-section-dawn-library:after{
+ background-image:
+ repeating-linear-gradient(96deg,transparent 0 72px,var(--ws-engraving-fine) 72.5px 73px,transparent 73.5px 146px),
+ repeating-radial-gradient(ellipse 96% 52% at 14% 8%,transparent 0 28px,var(--ws-engraving-line) 28.5px 29px,transparent 29.5px 48px)
+}
+/* Cinema — curtains / projected light. */
+.sites-home-realm[data-realm=cinema]:after,.sites-section-cinema:after{
+ background-image:
+ repeating-radial-gradient(ellipse 34% 108% at 50% -8%,transparent 0 30px,var(--ws-engraving-line) 30.5px 31px,transparent 31.5px 52px),
+ linear-gradient(104deg,transparent 18%,var(--ws-engraving-fine) 50%,transparent 82%)
+}
+/* Life — table rings / ordinary objects and conversation. */
+.sites-home-realm[data-realm=life]:after,.sites-section-daylight-cafe:after{
+ background-image:
+ repeating-radial-gradient(circle at 78% 24%,transparent 0 34px,var(--ws-engraving-line) 34.5px 35px,transparent 35.5px 58px),
+ repeating-linear-gradient(0deg,transparent 0 88px,var(--ws-engraving-fine) 88.5px 89px,transparent 89.5px 178px)
+}
+/* Bible is a product family but appears as a first-layer realm. */
+.sites-home-realm[data-realm=bible]:after{
+ background-image:
+ repeating-linear-gradient(90deg,transparent 0 96px,var(--ws-engraving-fine) 96.5px 97px,transparent 97.5px 194px),
+ repeating-radial-gradient(ellipse 70% 46% at 50% 50%,transparent 0 26px,var(--ws-engraving-line) 26.5px 27px,transparent 27.5px 46px)
+}
+.sites-surface>*,.sites-home-realm>*{position:relative;z-index:1}
+@media(max-width:760px){:root{--ws-engraving-opacity:.1}}
+@media(prefers-contrast:more){:root{--ws-engraving-opacity:.22}}
