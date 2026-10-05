@@ -452,3 +452,22 @@ body.home .sites-home-realm h2 em{color:color-mix(in oklab,var(--realm) 78%,var(
 .sites-section-dawn-library :where(.sites-dawn-library,.dawn-library,.library-shell,.library-home,.reader-shell,.catalogue,.collection){background-color:var(--ws-branch-surface)!important}
 .sites-section-dawn-library :where(.card,.book-card,.collection-card,.reader-panel,.catalogue-item){background-color:var(--ws-branch-raised)!important}
 .sites-section-cinema :where(.sites-cinema,.cinema-shell,.cinema-archive,main,#main){background-color:var(--ws-branch-surface)}
+
+
+/* === Sole Color Ownership Pass ============================================
+   Branch interiors and their nested product shells consume the same branch
+   surface tokens as their first-layer realm. No child may restore white/paper. */
+.sites-surface{background-color:var(--ws-branch-surface,var(--ws-surface))}
+.sites-surface :where(main,#main,section,article,aside,header,footer,nav,div){
+ --paper:var(--ws-branch-surface,var(--ws-surface));
+ --paper2:var(--ws-branch-raised,var(--ws-material));
+ --bg:var(--ws-branch-surface,var(--ws-surface));
+ --background:var(--ws-branch-surface,var(--ws-surface));
+ --cream:var(--ws-branch-surface,var(--ws-surface))
+}
+.sites-surface :where(.sites-second-layer,.sites-surface-content,.section-atlas__cover,.section-atlas__index,.sites-atlas-prologue,.sites-church,.sites-church-intro,.sites-church-gather,.sites-church-water,.sites-church-life,.sites-church-scripture,.sites-dawn-library,.sites-cinema,.library-shell,.library-home,.reader-shell,.catalogue,.collection){
+ background-color:transparent!important;background-image:none!important
+}
+.sites-surface :where(.atlas-entry,.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a,.card,.book-card,.collection-card,.reader-panel,.catalogue-item){
+ background-color:color-mix(in oklab,var(--ws-branch) 7%,var(--ws-branch-surface,var(--ws-surface)))!important
+}
