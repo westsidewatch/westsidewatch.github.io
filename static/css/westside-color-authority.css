@@ -471,3 +471,13 @@ body.home .sites-home-realm h2 em{color:color-mix(in oklab,var(--realm) 78%,var(
 .sites-surface :where(.atlas-entry,.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a,.card,.book-card,.collection-card,.reader-panel,.catalogue-item){
  background-color:color-mix(in oklab,var(--ws-branch) 7%,var(--ws-branch-surface,var(--ws-surface)))!important
 }
+
+
+/* Regression seal: Sites pages always retain document scrolling. */
+html:has(body.sites-surface),body.sites-surface{overflow-x:hidden;overflow-y:auto!important;height:auto!important;min-height:100%}
+body.sites-surface>main{overflow:visible!important;min-height:100svh}
+
+/* Product carriers: parent surface remains visibly chromatic around isolated products. */
+.sites-section-dawn-library,.sites-section-cinema{background-color:var(--ws-branch-surface)!important}
+.sites-section-dawn-library .sites-dawn-library,.sites-section-cinema .sites-cinema{background-color:transparent!important}
+.sites-section-dawn-library .sites-product-frame{background:#ead7a8}
