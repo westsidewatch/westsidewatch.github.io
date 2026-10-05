@@ -6,18 +6,8 @@
   <nav class="sites-home-entry" aria-label="Homepage entry points"><a href="/preview/watch-city-vol00/hosanna/">Enter the film <span lang="zh-Hant">進城 ↗</span></a><a href="#sites-first-layer">Enter Westside Watch <span lang="zh-Hant">進入西望 ↓</span></a></nav>
 </section>
 
-{{ $candidateWindows := slice }}
-{{ range site.Data.home.currents.rows }}{{ range . }}{{ $candidateWindows = $candidateWindows | append . }}{{ end }}{{ end }}
-{{ $screenTitles := slice "第一樂章 · WATCH / WITNESS" "第二樂章 · WALK / WORSHIP" }}
-{{ range $screen, $title := $screenTitles }}
-<section class="sites-home-candidate-window" data-candidate-window aria-labelledby="candidate-window-title-{{ $screen }}">
-  <header class="candidate-window-heading"><p>0{{ add $screen 2 }} / {{ $title }}</p><h2 id="candidate-window-title-{{ $screen }}">Eight <em>windows.</em></h2><p lang="zh-Hant">八個窗口同時運動；停留時，一扇窗展開成為可閱讀的世界。</p></header>
-  <div class="candidate-window-field">
-    <ol class="candidate-window-grid">{{ range $i, $item := first 8 $candidateWindows }}<li><a class="candidate-window-card" href="{{ .url }}" data-kind="{{ if lt $i 4 }}{{ if eq $screen 0 }}WATCH{{ else }}WALK{{ end }}{{ else }}{{ if eq $screen 0 }}WITNESS{{ else }}WORSHIP{{ end }}{{ end }}" data-title="{{ .title }}" data-subtitle="{{ .zh }}"><img src="{{ .image }}" alt="" loading="lazy"><span>{{ .label }}</span><strong>{{ .title }}</strong><em lang="zh-Hant">{{ .zh }}</em></a></li>{{ end }}</ol>
-    <aside class="candidate-window-preview" aria-live="polite"><div><small data-preview-kind></small><h3 data-preview-title></h3><p data-preview-subtitle></p><span>Enter ↗</span></div></aside>
-  </div>
-</section>
-{{ end }}
+<section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="2"><iframe title="Candidate 01 · 第一樂章 WATCH / 第二樂章 WITNESS" loading="eager" src="/candidate01/watch-witness.html"></iframe></section>
+<section class="candidate-focus-screen" data-current="focus" data-layer="first" data-screen="3"><iframe title="Candidate 01 · 第三樂章 WALK / 第四樂章 WORSHIP" loading="eager" src="/candidate01/walk-worship.html"></iframe></section>
 
 <nav class="sites-home-realms" id="sites-first-layer" aria-label="Westside Watch first layer">
   <a class="sites-home-realm" data-realm="church" href="/church/"><span>01 / LIVING WATER WEST</span><h2>LivingWater<em>West.</em></h2><p lang="zh-Hant">神召會活水堂西區 · 聚會、牧養、門訓與共同生活。</p><b>Enter ↗</b></a>
