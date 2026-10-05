@@ -424,3 +424,31 @@ body.home .sites-home-hero,body.home .sites-home-city,.sites-section-cinema .ws-
 @media(min-width:2560px){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 42%,transparent)}.sites-surface .sites-layer-header{border-bottom-color:color-mix(in oklab,var(--ws-structure) 52%,transparent)}}
 @media(prefers-contrast:more){.sites-surface{--ws-branch-rule:color-mix(in oklab,var(--ws-branch) 58%,var(--ws-ink))}.sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a[aria-current="page"]{text-decoration:underline}}
 @media(prefers-reduced-motion:reduce){.sites-surface img{transition:none}}
+
+
+/* === Chromatic Coverage Pass ==============================================
+   First-layer identity must read at a glance; product internals inherit the
+   same family even when their own legacy shells still paint paper surfaces. */
+body.home .sites-home-realm{background:color-mix(in oklab,var(--realm) 18%,var(--ws-paper))}
+body.home .sites-home-realm:before{background:radial-gradient(circle at 78% 22%,color-mix(in oklab,var(--realm) 34%,transparent),transparent 38%),repeating-radial-gradient(ellipse 92% 58% at 16% 74%,transparent 0 16px,color-mix(in oklab,var(--realm) 13%,transparent) 16px 17px);opacity:.88}
+body.home .sites-home-realm>span,body.home .sites-home-realm b{color:color-mix(in oklab,var(--realm) 72%,var(--ws-ink))}
+body.home .sites-home-realm h2 em{color:color-mix(in oklab,var(--realm) 78%,var(--ws-ink))}
+
+.sites-section-church{--ws-branch-surface:color-mix(in oklab,var(--ws-water) 11%,white);--ws-branch-raised:color-mix(in oklab,var(--ws-water) 18%,white)}
+.sites-section-journal,.sites-section-vol-00{--ws-branch-surface:color-mix(in oklab,var(--ws-first-light) 10%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-first-light) 17%,var(--ws-paper))}
+.sites-section-olive{--ws-branch-surface:color-mix(in oklab,var(--ws-olive) 12%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-olive) 19%,var(--ws-paper))}
+.sites-section-dawn-library{--ws-branch-surface:color-mix(in oklab,var(--ws-harvest) 13%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-harvest) 20%,var(--ws-paper))}
+.sites-section-cinema{--ws-branch-surface:color-mix(in oklab,var(--ws-crimson) 11%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-crimson) 19%,var(--ws-paper))}
+.sites-section-daylight-cafe{--ws-branch-surface:color-mix(in oklab,var(--ws-daylight-mauve) 11%,var(--ws-paper));--ws-branch-raised:color-mix(in oklab,var(--ws-daylight-mauve) 18%,var(--ws-paper))}
+
+/* Seal legacy white/paper islands inside first-level Sites pages. */
+.sites-surface :where(main,#main,.section-atlas,.section-atlas__cover,.section-atlas__index,.sites-second-layer,.sites-surface-content,.sites-atlas-prologue){background-color:var(--ws-branch-surface,var(--ws-surface))}
+.sites-surface :where(.atlas-entry,.sites-journal-current,.sites-journal-routes a,.sites-surface-entries a,.sites-church-entries a){background-color:color-mix(in oklab,var(--ws-branch) 7%,var(--ws-branch-surface,var(--ws-surface)))}
+
+/* Dawn Library and Cinema contain product shells with their own historical
+   paper variables; bind those variables to Color OS instead of recoloring
+   individual components one by one. */
+.sites-section-dawn-library{--paper:var(--ws-branch-surface);--paper2:var(--ws-branch-raised);--bg:var(--ws-branch-surface);--background:var(--ws-branch-surface);--cream:var(--ws-branch-surface)}
+.sites-section-dawn-library :where(.sites-dawn-library,.dawn-library,.library-shell,.library-home,.reader-shell,.catalogue,.collection){background-color:var(--ws-branch-surface)!important}
+.sites-section-dawn-library :where(.card,.book-card,.collection-card,.reader-panel,.catalogue-item){background-color:var(--ws-branch-raised)!important}
+.sites-section-cinema :where(.sites-cinema,.cinema-shell,.cinema-archive,main,#main){background-color:var(--ws-branch-surface)}
