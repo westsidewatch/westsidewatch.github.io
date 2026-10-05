@@ -16,4 +16,19 @@
   <a class="sites-home-realm" data-realm="life" href="/daylight-cafe/"><span>07 / LIFE</span><h2>Daylight<em> Café.</em></h2><p lang="zh-Hant">白晝咖啡館 · 信仰進入日常生活的共同空間。</p><b>Gather ↗</b></a>
 </nav>
 
+{{ $windows := slice }}
+{{ range site.Data.home.currents.rows }}
+  {{ range . }}
+    {{ $windows = $windows | append . }}
+  {{ end }}
+{{ end }}
+<section class="sites-home-gather" id="sites-many-windows" aria-labelledby="sites-gather-title">
+  <header class="sites-home-section-head"><p>08 / MANY WINDOWS, ONE WORLD</p><h2 id="sites-gather-title">Come <em>together.</em></h2><p lang="zh-Hant">八個窗口，同時向著同一座城打開。</p></header>
+  <div class="sites-home-window-stage"><div class="sites-home-window-grid">{{ range first 8 $windows }}<a class="sites-home-window" href="{{ .url }}"><img src="{{ .image }}" alt="" loading="lazy"><span>{{ .label }}</span><strong>{{ .title }}</strong><em lang="zh-Hant">{{ .zh }}</em></a>{{ end }}</div><p class="sites-home-window-mark" aria-hidden="true">08<br><small>WINDOWS</small></p></div>
+  <div class="sites-home-gather-copy"><p>Watch for the city.<br><em>Wait for the light.</em></p><a href="/vol-00/">Open the Journal <span lang="zh-Hant">守望，一座光明的城 · 創刊號 ↗</span></a></div>
+</section>
+<section class="sites-home-city" id="sites-living-wall" aria-labelledby="sites-city-title">
+  <header class="sites-home-section-head"><p>09 / THE CITY BEFORE MORNING</p><h2 id="sites-city-title">The <em>Living Wall.</em></h2><p lang="zh-Hant">八扇窗繼續展開，成為閱讀、查經、相聚與收藏的入口。</p></header>
+  <div class="sites-home-city-grid">{{ range $i, $item := first 8 $windows }}<a class="sites-home-city-tile sites-home-city-tile--{{ $i }}" href="{{ .url }}"><img src="{{ .image }}" alt="" loading="lazy"><span>{{ .label }}</span><strong>{{ .title }}</strong><em>{{ .zh }}</em><b>↗</b></a>{{ end }}</div>
+</section>
 <section class="sites-home-closing" aria-label="Watch for the Dawn"><p>ROMANS 13:12</p><blockquote>Watch for the city.<br><em>Wait for the light.</em></blockquote><a href="/dore/search/">Search Westside Watch ↗</a></section>
