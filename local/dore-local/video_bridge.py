@@ -43,12 +43,10 @@ def segment_progress(root,total=None):
     root=Path(root).expanduser()
     if not root.exists(): return {"segments":0}
     parts=[p for p in root.rglob("*.ts") if not p.name.startswith("._")]
-    done=len(parts)
-    if total and done > total:
-        track_counts={}
-        for p in parts:
-            track_counts[p.parent]=track_counts.get(p.parent,0)+1
-        done=max(track_counts.values(),default=0)
+    track_counts={}
+    for p in parts:
+        track_counts[p.parent]=track_counts.get(p.parent,0)+1
+    done=max(track_counts.values(),default=0)
     progress={"segments":done}
     if total:
         progress.update({"total_segments":total,"percent":min(100,round(done*100/total))})
