@@ -2,7 +2,8 @@
 import importlib.util, pathlib, sys, unittest
 from unittest.mock import patch
 
-P=pathlib.Path(__file__).with_name("video_acquisition.py")\nsys.path.insert(0,str(P.parent))
+P=pathlib.Path(__file__).with_name("video_acquisition.py")
+sys.path.insert(0,str(P.parent))
 spec=importlib.util.spec_from_file_location("video_acquisition",P)
 va=importlib.util.module_from_spec(spec); spec.loader.exec_module(va)
 
