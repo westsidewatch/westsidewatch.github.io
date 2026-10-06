@@ -5,6 +5,7 @@ on:
       - 'dore-core/tools/video_acquisition.py'
       - 'dore-core/tools/video_runtime_probe.py'
       - 'dore-core/tools/test_video_runtime_integration.py'
+      - 'dore-core/tools/test_video_progress.py'
       - 'local/dore-local/video_bridge.py'
       - 'static/dore/video/index.html'
       - '.github/workflows/dore-video-runtime-integration.yml'
@@ -18,4 +19,5 @@ jobs:
         with:
           python-version: '3.11'
       - run: python dore-core/tools/test_video_runtime_integration.py
+      - run: python dore-core/tools/test_video_progress.py
       - run: python -m py_compile dore-core/tools/video_acquisition.py dore-core/tools/video_runtime_probe.py local/dore-local/video_bridge.py
