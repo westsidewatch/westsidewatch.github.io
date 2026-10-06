@@ -107,12 +107,12 @@ html,body{height:100%;overflow:hidden!important}
     layer.style.height=`${maxY-minY}px`;
     layer.style.minHeight='0';
     const ordered=[...cr].sort((a,b)=>a.top-b.top||a.left-b.left);const firstRow=ordered.slice(0,4).sort((a,b)=>a.left-b.left);const cardW=Math.max(1,firstRow[0]?.width||cr[0].width);const gap=Math.max(0,(firstRow[1]?.left||0)-(firstRow[0]?.right||0));const groupW=Math.max(1,cardW*2+gap);
-    const groupH=Math.max(1,maxY-minY);
+    const groupH=Math.max(1,groupW*5/8);
     [left,right].forEach(p=>{
       p.style.width=`${groupW}px`;
       p.style.height=`${groupH}px`;
-      p.style.top='0';
-      p.style.transform='none';
+      p.style.top='50%';
+      p.style.transform='translateY(-50%)';
     });
     left.style.left='0'; left.style.right='auto';
     right.style.right='0'; right.style.left='auto';
