@@ -1,98 +1,118 @@
 {{ define "main" }}
-<article class="olive-production">
-  <section class="olive-hero">
-    <p class="olive-eyebrow">WESTSIDE WATCH · SERMON</p>
+<article class="olive-archive">
+  <header class="olive-hero">
+    <p class="olive-eyebrow">WESTSIDE WATCH · SERMON ARCHIVE</p>
     <h1>Olive<br>Mountain.</h1>
     <p class="olive-zh">橄欖山</p>
-    <p class="olive-intro">中文講道、教導與信息。</p>
+    <p class="olive-intro">中文講道、教導與信息。沿人物進入系列，在系列中閱讀與觀看。</p>
+  </header>
+
+  <div class="olive-preview" aria-hidden="true">
+    <div class="olive-preview__field"></div>
+    <div class="olive-preview__copy"><small>OLIVE MOUNTAIN</small><strong></strong><span></span></div>
+  </div>
+
+  <section class="olive-index" aria-label="講道人物與系列">
+    <article class="person-row" data-person="江秀琴">
+      <div class="person-head"><span class="person-no">01</span><h2>江秀琴</h2></div>
+      <div class="series-rail">
+        <a class="series-chip" data-preview="45 篇 · 內在生命操練" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-inner-life-45">內在生活 <sup>45</sup></a>
+        <a class="series-chip" data-preview="讚美系列" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-praise">讚美</a>
+        <a class="series-chip" data-preview="進入神的安息美地" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-rest">安息美地</a>
+        <a class="series-chip" data-preview="慕主先鋒信息" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-forerunner-message">慕主先鋒</a>
+        <a class="series-chip" data-preview="內在生活饗宴特會" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-inner-life-feast">內在生活饗宴</a>
+        <a class="series-chip" data-preview="道在人間" href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-good-message">道在人間</a>
+      </div>
+    </article>
+
+    <article class="person-row" data-person="大衛鮑森">
+      <div class="person-head"><span class="person-no">02</span><h2>大衛鮑森</h2></div>
+      <div class="series-rail">
+        <span class="series-chip" data-preview="大衛鮑森國際中文頻道 · 系列講座">系列講座</span>
+      </div>
+    </article>
+
+    <article class="person-row" data-person="賴若瀚">
+      <div class="person-head"><span class="person-no">03</span><h2>賴若瀚</h2></div>
+      <div class="series-rail">
+        <span class="series-chip" data-preview="從啟示錄看疫情與末日災難">啟示錄</span>
+        <span class="series-chip" data-preview="靈程點滴短片系列">靈程點滴</span>
+        <span class="series-chip" data-preview="十分釋經">十分釋經</span>
+        <span class="series-chip" data-preview="傳道書">傳道書</span>
+        <span class="series-chip" data-preview="孝道全方位">孝道全方位</span>
+      </div>
+    </article>
+
+    <article class="person-row" data-person="劉彤">
+      <div class="person-head"><span class="person-no">04</span><h2>劉彤</h2></div>
+      <div class="series-rail"><span class="series-chip" data-preview="信仰的傳承">信仰的傳承</span><span class="series-chip" data-preview="活出最好的你">活出最好的你</span></div>
+    </article>
+
+    {{ range $i, $p := (slice
+      (dict "n" "05" "name" "葉光明" "meta" "Derek Prince 中文講道")
+      (dict "n" "06" "name" "倪柝聲" "meta" "中文講道 · 出版信息")
+      (dict "n" "07" "name" "康來昌" "meta" "中文講道")
+      (dict "n" "08" "name" "唐崇榮" "meta" "中文講道")
+      (dict "n" "09" "name" "寇紹恩" "meta" "中文講道")
+      (dict "n" "10" "name" "華理克" "meta" "Rick Warren 中文講道")
+      (dict "n" "11" "name" "于宏潔" "meta" "館藏整理中")
+      (dict "n" "12" "name" "黃淑華" "meta" "館藏整理中")
+    ) }}
+    <article class="person-row person-row--quiet" data-person="{{ $p.name }}">
+      <div class="person-head"><span class="person-no">{{ $p.n }}</span><h2>{{ $p.name }}</h2></div>
+      <div class="series-rail"><span class="series-chip" data-preview="{{ $p.meta }}">{{ $p.meta }}</span></div>
+    </article>
+    {{ end }}
   </section>
-  <section class="olive-section olive-people" aria-label="人物">
-    <div id="olive-speakers" class="olive-speaker-grid">
-      <div class="speaker-card"><h3><a href="/olive/?person=david-pawson">大衛鮑森</a></h3><p>大衛鮑森國際中文頻道 · 系列講座</p></div>
-      <div class="speaker-card"><h3><a href="/olive/?person=jiang-xiuqin">江秀琴</a></h3><p><a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-inner-life-45">內在生活</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-praise">讚美</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-rest">進入神的安息美地</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-forerunner-message">慕主先鋒信息</a></p></div>
-      <div class="speaker-card"><h3>葉光明</h3><p>Derek Prince 中文講道館藏</p></div>
-      <div class="speaker-card"><h3>倪柝聲</h3><p>中文講道 · 出版信息</p></div>
-      <div class="speaker-card"><h3>康來昌</h3><p>中文講道館藏</p></div>
-      <div class="speaker-card"><h3>唐崇榮</h3><p>中文講道館藏</p></div>
-      <div class="speaker-card"><h3>寇紹恩</h3><p>中文講道館藏</p></div>
-      <div class="speaker-card"><h3>華理克</h3><p>Rick Warren 中文講道館藏</p></div>
-      <div class="speaker-card"><h3>劉彤</h3><p><span>信仰的傳承</span> · <span>活出最好的你</span></p></div>
-      <div class="speaker-card"><h3>賴若瀚</h3><p><span>從啟示錄看疫情與末日災難</span> · <span>靈程點滴</span> · <span>十分釋經</span> · <span>傳道書</span> · <span>孝道全方位</span></p></div>
-      <div class="speaker-card speaker-card--pending"><h3>于宏潔</h3><p>館藏整理中</p></div>
-      <div class="speaker-card speaker-card--pending"><h3>黃淑華</h3><p>館藏整理中</p></div>
-    </div>
-  </section>
-  <section class="olive-section olive-topics" aria-label="講道主題">
-    <div id="olive-series" class="olive-series-grid" aria-live="polite"></div>
+
+  <section id="olive-detail" class="olive-detail" hidden>
+    <button class="detail-close" type="button" aria-label="返回">← 返回</button>
+    <p class="detail-kicker"></p><h2 class="detail-title"></h2>
+    <div class="detail-grid"></div>
   </section>
 </article>
+
 <style>
-.olive-production{width:var(--comp-canvas);max-width:none;margin:auto;padding:clamp(72px,7vw,150px) 0 clamp(100px,12vw,220px);color:#252525;font-size:var(--ui-body)}.olive-eyebrow,.olive-section header p{font:var(--ui-small)/1.2 Arial,sans-serif;letter-spacing:.16em}.olive-hero{min-height:58vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid rgba(37,37,37,.28);padding-bottom:4vw}.olive-hero h1{font:400 var(--ui-display)/.8 "Cormorant Garamond",Georgia,serif;margin:.18em 0}.olive-zh{font-size:var(--ui-h3);margin:.2em 0}.olive-intro{max-width:var(--ui-reading);font-size:var(--ui-body-lg);line-height:1.55}.olive-section{margin-top:7vw}.olive-speaker-grid,.olive-series-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(37,37,37,.18);margin-top:1px}.speaker-card,.series-card{display:block;background:#f1eee6;padding:calc(2rem * var(--ui-scale));min-height:calc(190px * var(--ui-scale));color:inherit;text-decoration:none;transition:transform .18s ease,background .18s ease}.speaker-card:hover,.series-card:hover{transform:translateY(-2px);background:#ebe6da}.speaker-card--pending{opacity:.48}.speaker-card--pending:hover{transform:none;background:#f1eee6}.speaker-card h3,.series-card h3{font-size:var(--ui-h3);font-weight:400;margin:.35em 0}.speaker-card a{color:inherit;text-decoration:none}.speaker-card p a{border-bottom:1px solid rgba(37,37,37,.28)}.speaker-card p a:hover{border-bottom-color:currentColor}.speaker-card p:last-child,.series-card p:last-child{max-width:34em;font:var(--ui-body)/1.6 "Noto Sans TC",Arial,sans-serif}@media(max-width:760px){.olive-production{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:10vh}.olive-speaker-grid,.olive-series-grid{grid-template-columns:1fr}.olive-section>header{display:block}}
+.olive-archive{width:var(--comp-canvas);margin:auto;padding:clamp(72px,7vw,150px) 0 clamp(100px,12vw,220px);color:#252525;font-size:var(--ui-body);position:relative}.olive-hero{min-height:52vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid rgba(37,37,37,.28);padding-bottom:4vw}.olive-eyebrow{font:var(--ui-small)/1.2 Arial,sans-serif;letter-spacing:.16em}.olive-hero h1{font:400 var(--ui-display)/.8 "Cormorant Garamond",Georgia,serif;margin:.18em 0}.olive-zh{font-size:var(--ui-h3);margin:.2em 0}.olive-intro{max-width:var(--ui-reading);font-size:var(--ui-body-lg);line-height:1.55}.olive-index{margin-top:clamp(64px,8vw,140px);border-top:1px solid rgba(37,37,37,.28)}.person-row{display:grid;grid-template-columns:minmax(260px,.8fr) minmax(0,2.2fr);align-items:center;min-height:clamp(150px,13vw,230px);border-bottom:1px solid rgba(37,37,37,.22);position:relative}.person-head{display:flex;align-items:baseline;gap:clamp(18px,2vw,38px)}.person-no{font:var(--ui-small)/1 Arial,sans-serif;letter-spacing:.12em;opacity:.5}.person-head h2{font:400 clamp(42px,4.6vw,88px)/.95 "Cormorant Garamond","Noto Serif TC",serif;margin:0}.series-rail{display:flex;align-items:center;gap:clamp(22px,2.4vw,48px);overflow-x:auto;scrollbar-width:none;padding:24px 4px}.series-rail::-webkit-scrollbar{display:none}.series-chip{flex:0 0 auto;color:inherit;text-decoration:none;font:400 var(--ui-body-lg)/1.2 "Noto Serif TC",serif;white-space:nowrap;border-bottom:1px solid transparent;padding:7px 0;cursor:pointer;transition:opacity .2s,transform .25s,border-color .2s}.series-chip:hover{transform:translateY(-3px);border-color:currentColor}.person-row:has(.series-chip:hover) .series-chip:not(:hover){opacity:.3}.person-row--quiet{opacity:.68}.olive-preview{position:fixed;right:clamp(24px,4vw,80px);top:18vh;width:min(34vw,620px);aspect-ratio:4/3;z-index:5;pointer-events:none;opacity:0;transform:translateY(18px) scale(.97);transition:opacity .25s,transform .35s cubic-bezier(.2,.75,.2,1)}.olive-preview.is-on{opacity:1;transform:none}.olive-preview__field{position:absolute;inset:0;background:linear-gradient(145deg,#d8cfb0,#8f815c 55%,#252525);filter:saturate(.55)}.olive-preview__field:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 8px,rgba(255,255,255,.08) 9px,transparent 10px)}.olive-preview__copy{position:absolute;inset:auto 7% 8%;color:#fff;display:grid;gap:8px;text-shadow:0 1px 12px rgba(0,0,0,.28)}.olive-preview__copy small{font:11px/1 Arial,sans-serif;letter-spacing:.16em}.olive-preview__copy strong{font:400 clamp(30px,3vw,58px)/.95 "Noto Serif TC",serif}.olive-preview__copy span{font-size:var(--ui-small)}.olive-detail{margin-top:clamp(64px,8vw,140px);border-top:1px solid rgba(37,37,37,.28);padding-top:clamp(38px,4vw,72px)}.detail-close{border:0;background:none;padding:0 0 38px;font:inherit;cursor:pointer}.detail-kicker{font:var(--ui-small)/1.2 Arial,sans-serif;letter-spacing:.14em}.detail-title{font:400 clamp(52px,7vw,120px)/.9 "Noto Serif TC",serif;margin:.2em 0 .6em}.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:rgba(37,37,37,.18)}.detail-card{background:#f1eee6;padding:calc(2rem * var(--ui-scale));min-height:calc(190px * var(--ui-scale));color:inherit;text-decoration:none}.detail-card h3{font-size:var(--ui-h3);font-weight:400;margin:.35em 0}.detail-card p{font:var(--ui-body)/1.6 "Noto Sans TC",sans-serif}@media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:10vh}.olive-hero{min-height:44vh}.person-row{display:block;padding:30px 0;min-height:0}.person-head h2{font-size:clamp(38px,12vw,64px)}.series-rail{margin-top:14px;gap:24px;margin-right:calc(-1 * var(--ui-gutter));padding-right:var(--ui-gutter);scroll-snap-type:x proximity}.series-chip{scroll-snap-align:start}.olive-preview{display:none}.detail-grid{grid-template-columns:1fr}}
 </style>
+
 <script>
 (() => {
-  const q=new URLSearchParams(location.search);
-  const stage=document.getElementById('olive-series');
-  const person=q.get('person');
-  const topic=q.get('topic');
-  if(!stage) return;
+  const preview=document.querySelector('.olive-preview');
+  const previewName=preview?.querySelector('strong');
+  const previewMeta=preview?.querySelector('span');
+  document.querySelectorAll('.series-chip').forEach(chip=>{
+    chip.addEventListener('mouseenter',()=>{
+      if(!preview) return;
+      previewName.textContent=chip.closest('.person-row')?.dataset.person||'';
+      previewMeta.textContent=chip.dataset.preview||chip.textContent.trim();
+      preview.classList.add('is-on');
+    });
+    chip.addEventListener('mouseleave',()=>preview?.classList.remove('is-on'));
+  });
 
-  const renderWorks=(works) => {
-    stage.innerHTML='';
-    for(const [title,url,meta] of works){
-      const a=document.createElement('a');
-      a.className='series-card';
-      a.href=url;
-      a.target='_blank';
-      a.rel='noopener noreferrer';
-      a.innerHTML='<h3>'+title+'</h3><p>'+meta+' <b aria-hidden="true">↗</b></p>';
-      stage.append(a);
-    }
-  };
-
-  if(person==='david-pawson'){
-    const series=[
-      ['舊約縱覽','大衛鮑森國際中文頻道 · 完整系列'],
-      ['新約縱覽','大衛鮑森國際中文頻道 · 完整系列']
-    ];
-    for(const [name,meta] of series){
-      const card=document.createElement('div'); card.className='series-card';
-      card.innerHTML='<h3>'+name+'</h3><p>'+meta+'</p>'; stage.append(card);
-    }
-    return;
-  }
-
-  if(person!=='jiang-xiuqin') return;
-
+  const q=new URLSearchParams(location.search), person=q.get('person'), topic=q.get('topic');
+  const detail=document.querySelector('#olive-detail');
   const works={
     'jiang-xiuqin-goodtv-good-message':[
       ['承受美地為業的祕訣','https://www.youtube.com/watch?v=SeWck245iSE','道在人間'],
       ['追求認識神','https://www.youtube.com/watch?v=nelt0FmxwiA','道在人間'],
-      ['興起發光 迎接復興浪潮','https://www.youtube.com/watch?v=4l-MLiv3Kto','道在人間']
-    ],
-    'jiang-xiuqin-goodtv-forerunner-message':[
-      ['脫離努力 進入恩寵','https://www.youtube.com/watch?v=-esBfKgikXg','慕主先鋒信息']
-    ],
-    'jiang-xiuqin-goodtv-rest':[
-      ['等候神好像沒什麼感覺？放掉努力進入神的安息！','https://www.youtube.com/watch?v=ZWGlQkGDgMU','進入神的安息美地']
-    ]
+      ['興起發光 迎接復興浪潮','https://www.youtube.com/watch?v=4l-MLiv3Kto','道在人間']],
+    'jiang-xiuqin-goodtv-forerunner-message':[['脫離努力 進入恩寵','https://www.youtube.com/watch?v=-esBfKgikXg','慕主先鋒信息']],
+    'jiang-xiuqin-goodtv-rest':[['等候神好像沒什麼感覺？放掉努力進入神的安息！','https://www.youtube.com/watch?v=ZWGlQkGDgMU','進入神的安息美地']]
   };
-  if(topic && works[topic]){ renderWorks(works[topic]); return; }
-
-  const topics=[
-    ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
-    ['讚美','jiang-xiuqin-goodtv-praise','進入'],
-    ['進入神的安息美地','jiang-xiuqin-goodtv-rest','進入'],
-    ['慕主先鋒信息','jiang-xiuqin-goodtv-forerunner-message','進入'],
-    ['內在生活饗宴','jiang-xiuqin-goodtv-inner-life-feast','進入'],
-    ['道在人間','jiang-xiuqin-goodtv-good-message','進入']
-  ];
-  for(const [name,key,meta] of topics){
-    const a=document.createElement('a');
-    a.className='series-card';
-    a.href='/olive/?person=jiang-xiuqin&topic='+key;
-    a.innerHTML='<h3>'+name+'</h3><p>'+meta+' <b aria-hidden="true">↗</b></p>';
-    stage.append(a);
+  if(detail && person==='jiang-xiuqin' && topic){
+    const title=document.querySelector('[href*="topic='+CSS.escape(topic)+'"]')?.textContent.trim()||'江秀琴';
+    detail.hidden=false;
+    detail.querySelector('.detail-kicker').textContent='江秀琴 · SERIES';
+    detail.querySelector('.detail-title').textContent=title;
+    const grid=detail.querySelector('.detail-grid');
+    (works[topic]||[]).forEach(([name,url,meta])=>{
+      const a=document.createElement('a'); a.className='detail-card'; a.href=url; a.target='_blank'; a.rel='noopener noreferrer';
+      a.innerHTML='<h3>'+name+'</h3><p>'+meta+' ↗</p>'; grid.append(a);
+    });
+    requestAnimationFrame(()=>detail.scrollIntoView({behavior:'smooth',block:'start'}));
+    detail.querySelector('.detail-close').addEventListener('click',()=>history.length>1?history.back():location.assign('/olive/'));
   }
 })();
 </script>
