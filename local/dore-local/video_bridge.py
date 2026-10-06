@@ -43,8 +43,10 @@ def segment_progress(root,total=None):
     root=Path(root).expanduser()
     if not root.exists(): return {"segments":0}
     parts=[p for p in root.rglob("*.ts") if not p.name.startswith("._")]
-    stems={p.stem for p in parts}
-    done=len(stems)
+    track_counts={}
+    for p in parts:
+        track_counts[p.parent]=track_counts.get(p.parent,0)+1
+    done=max(track_counts.values(),default=0)
     progress={"segments":done}
     if total:
         progress.update({"total_segments":total,"percent":min(100,round(done*100/total))})
@@ -111,7 +113,7 @@ class H(BaseHTTPRequestHandler):
                 output=str(Path(body.get("output") or Path.home()/"Desktop").expanduser())
                 total=hls_total(url)
                 progress={"segments":0}; progress.update({"total_segments":total,"percent":0} if total else {})
-                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"progress":progress}
+                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"output":output,"progress":progress}
                 threading.Thread(target=run_download_task,args=(task_id,cmd,output,total),daemon=True).start()
                 return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued"})
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
