@@ -30,3 +30,17 @@
 @media(max-width:760px){.sites-home-realm{min-height:82svh;grid-template-columns:1fr;grid-template-rows:auto 1fr auto auto;padding:10vh 18px}.sites-home-realm h2,.sites-home-realm p,.sites-home-realm b{grid-column:1}.sites-home-realm h2{font-size:19vw}.sites-home-realm p{align-self:end}}
 /* Candidate 01: use the verified eight-window GridToFullPreview engine unchanged. */
 .candidate-focus-screen{position:relative;min-height:100svh;height:100svh;overflow:hidden;background:#eee8da;color:#252525}.candidate-focus-screen iframe{display:block;width:100%;height:100%;border:0;background:#eee8da}
+
+/* Homepage motion runtime — current DOM only. */
+@media(prefers-reduced-motion:no-preference){
+  .candidate-focus-screen{view-timeline-name:--focus-screen;animation:focus-screen-arrive both linear;animation-timeline:--focus-screen;animation-range:entry 0% cover 24%}
+  .candidate-focus-screen iframe{transform:scale(1.025);opacity:.82;transition:transform var(--dawn-time-slow,1400ms) var(--dawn-ease-reveal,cubic-bezier(.68,0,.18,1)),opacity var(--dawn-time,800ms) ease}
+  .candidate-focus-screen[data-motion-live] iframe{transform:scale(1);opacity:1}
+  .sites-home-realm>span,.sites-home-realm h2,.sites-home-realm p,.sites-home-realm b{transition:transform var(--dawn-time-slow,1400ms) var(--dawn-ease-reveal,cubic-bezier(.68,0,.18,1)),opacity var(--dawn-time,800ms) ease}
+  .sites-home-realm:not([data-motion-live])>span,.sites-home-realm:not([data-motion-live]) h2,.sites-home-realm:not([data-motion-live]) p,.sites-home-realm:not([data-motion-live]) b{transform:translateY(clamp(12px,2vh,28px));opacity:.34}
+  .sites-home-realm[data-motion-live]>span,.sites-home-realm[data-motion-live] h2,.sites-home-realm[data-motion-live] p,.sites-home-realm[data-motion-live] b{transform:none;opacity:1}
+  @keyframes focus-screen-arrive{from{clip-path:inset(4% 0 0)}to{clip-path:inset(0)}}
+}
+@media(prefers-reduced-motion:reduce){
+  .candidate-focus-screen,.candidate-focus-screen iframe,.sites-home-realm>*{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}
+}
