@@ -1,54 +1,60 @@
 (() => {
   'use strict';
-
-  const speakers = [
-    ['speaker:david-pawson','大衛鮑森'],['speaker:jiang-xiuqin','江秀琴'],['speaker:derek-prince','葉光明'],
-    ['speaker:watchman-nee','倪柝聲'],['speaker:kang-lai-chang','康來昌'],['speaker:stephen-tong','唐崇榮'],
-    ['speaker:kou-shao-en','寇紹恩'],['speaker:rick-warren','華理克'],['speaker:tong-liu','劉彤'],
-    ['speaker:jerry-lai','賴若瀚'],['speaker:yu-hong-jie','于宏潔'],['speaker:huang-shuhua','黃淑華']
+  const people=[['david-pawson','大衛鮑森'],['jiang-xiuqin','江秀琴'],['derek-prince','葉光明'],['watchman-nee','倪柝聲'],['kang-lai-chang','康來昌'],['stephen-tong','唐崇榮'],['kou-shao-en','寇紹恩'],['rick-warren','華理克'],['tong-liu','劉彤'],['jerry-lai','賴若瀚'],['yu-hong-jie','于宏潔'],['huang-shuhua','黃淑華']];
+  const jiangTopics=[
+    ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
+    ['讚美','jiang-xiuqin-goodtv-praise',''],
+    ['進入神的安息美地','jiang-xiuqin-goodtv-rest',''],
+    ['慕主先鋒信息','jiang-xiuqin-goodtv-forerunner-message',''],
+    ['內在生活饗宴','jiang-xiuqin-goodtv-inner-life-feast',''],
+    ['道在人間','jiang-xiuqin-goodtv-good-message','']
   ];
   const speakerStage=document.querySelector('#olive-speakers');
-  const seriesStage=document.querySelector('#olive-series');
-  const slug=id=>id.replace(/^speaker:/,'').replace(/^series:/,'').replace(/:/g,'-');
+  const topicStage=document.querySelector('#olive-series');
+  const q=new URLSearchParams(location.search);
+  const selectedPerson=q.get('person');
+  const selectedTopic=q.get('topic');
   const recordsOf=p=>Array.isArray(p)?p:Array.isArray(p?.records)?p.records:Array.isArray(p?.items)?p.items:Array.isArray(p?.resources)?p.resources:[];
-  const countOf=p=>recordsOf(p).length || p?.itemCount || (Array.isArray(p?.series)?p.series.length:0);
 
-  function speakerCard(id,name,payload){
-    const a=document.createElement('a');
-    a.className='speaker-card';
-    a.href='/olive/?speaker='+encodeURIComponent(slug(id));
-    a.innerHTML=`<h3>${name}</h3><p>${countOf(payload) ? countOf(payload)+" 篇" : "進入"} <b aria-hidden="true">↗</b></p>`;
-    return a;
+  function linkCard(cls,title,meta,href){
+    const a=document.createElement('a'); a.className=cls; a.href=href;
+    a.innerHTML=`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`; return a;
   }
-
-  async function loadSpeakers(){
-    if(!speakerStage) return;
+  async function renderPeople(){
     speakerStage.replaceChildren();
-    for(const [id,name] of speakers){
-      let payload={};
-      try{ payload=await window.WestsideResources.index('by-speaker',id); }catch(_){}
-      speakerStage.append(speakerCard(id,name,payload));
+    for(const [slug,name] of people){
+      let p={}; try{p=await WestsideResources.index('by-speaker','speaker:'+slug)}catch(_){}
+      const n=recordsOf(p).length||p.itemCount||0;
+      speakerStage.append(linkCard('speaker-card',name,n?n+' 篇':'進入','/olive/?person='+slug));
     }
   }
-
-  async function loadSeries(){
-    if(!seriesStage) return;
-    const topics=[
-      ['內在生活','series:jiang-xiuqin:inner-life-45','45 篇'],
-      ['讚美','series:jiang-xiuqin:goodtv:praise','進入'],
-      ['進入神的安息美地','series:jiang-xiuqin:goodtv:rest','進入'],
-      ['慕主先鋒信息','series:jiang-xiuqin:goodtv:forerunner-message','進入'],
-      ['內在生活饗宴','series:jiang-xiuqin:goodtv:inner-life-feast','進入'],
-      ['道在人間','series:jiang-xiuqin:goodtv:good-message','進入']
+  async function renderJiangTopics(){
+    topicStage.replaceChildren();
+    for(const [name,key,fallback] of jiangTopics) topicStage.append(linkCard('series-card',name,fallback,'/olive/?person=jiang-xiuqin&topic='+key));
+  }
+  async function renderTopic(key){
+    topicStage.replaceChildren();
+    let payload={}; try{payload=await WestsideResources.index('by-series','series:'+key.replace(/-/g,':'))}catch(_){}
+    let rows=recordsOf(payload);
+    if(!rows.length && key==='jiang-xiuqin-goodtv-good-message') rows=[
+      {title:'興起發光 迎接復興浪潮',url:'https://www.youtube.com/watch?v=4l-MLiv3Kto'},
+      {title:'承受美地為業的祕訣',url:'https://www.youtube.com/watch?v=SeWck245iSE'},
+      {title:'追求認識神',url:'https://www.youtube.com/watch?v=nelt0FmxwiA'}
     ];
-    seriesStage.replaceChildren();
-    for(const [name,id,fallback] of topics){
-      const a=document.createElement('a');
-      a.className='series-card';
-      a.href='/olive/?topic='+encodeURIComponent(slug(id));
-      a.innerHTML=`<h3>${name}</h3><p>${fallback} <b aria-hidden="true">↗</b></p>`;
-      seriesStage.append(a);
+    if(!rows.length){ await renderJiangTopics(); return; }
+    for(const r of rows){
+      const title=r.title||r.name||r.id||'講道';
+      const href=r.url||r.sourcePointer||r.providerSources?.[0]?.url||'#';
+      topicStage.append(linkCard('series-card',title,'觀看',href));
     }
   }
-  if(window.WestsideResources) Promise.allSettled([loadSpeakers(),loadSeries()]);
+  async function init(){
+    await renderPeople();
+    if(selectedPerson==='jiang-xiuqin'){
+      if(selectedTopic) await renderTopic(selectedTopic); else await renderJiangTopics();
+    } else {
+      topicStage.replaceChildren();
+    }
+  }
+  if(window.WestsideResources) init();
 })();
