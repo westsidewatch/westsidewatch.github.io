@@ -144,10 +144,17 @@ def merge_downloaded_segments(root):
 def download_manifest(url, output):
     out=Path(output).expanduser().resolve()
     out.mkdir(parents=True,exist_ok=True)
+    before={p.resolve() for p in out.iterdir() if p.is_dir()}
     cmd=[nm3u8(),url,"--save-dir",str(out),"--auto-select"]
     subprocess.run(cmd,check=True,cwd=out)
-    result={"ok":True,"downloaded":True,"output_dir":str(out)}
-    result.update(merge_downloaded_segments(out))
+    after=[p.resolve() for p in out.iterdir() if p.is_dir()]
+    created=[p for p in after if p not in before]
+    task_dir=max(created,key=lambda p:p.stat().st_mtime) if created else None
+    if task_dir is None:
+        candidates=[p for p in after if any(x.is_dir() and any(y.name.endswith(".ts") and not y.name.startswith("._") for y in x.glob("*.ts")) for x in p.iterdir())]
+        task_dir=max(candidates,key=lambda p:p.stat().st_mtime) if candidates else out
+    result={"ok":True,"downloaded":True,"output_dir":str(out),"task_dir":str(task_dir)}
+    result.update(merge_downloaded_segments(task_dir))
     print(json.dumps(result,ensure_ascii=False))
 
 def download_yt(url, fmt, output):
