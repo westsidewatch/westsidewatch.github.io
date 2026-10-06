@@ -105,18 +105,50 @@ def probe(url):
         if runtime is not None: d["runtime"]=runtime
         return d
 
+def _natural_key(path):
+    return [int(x) if x.isdigit() else x.lower() for x in re.split(r"(\\d+)", path.name)]
+
+def merge_downloaded_segments(root):
+    """Best-effort post-process. Download success never depends on this step."""
+    exe=executable("ffmpeg")
+    if not exe:
+        return {"merged":False,"merge_error":"FFmpeg not found; downloaded segments were preserved."}
+    groups=[]
+    for folder in root.rglob("*"):
+        if folder.is_dir():
+            parts=sorted(folder.glob("*.ts"),key=_natural_key)
+            if parts: groups.append((folder,parts))
+    if len(groups)<2:
+        return {"merged":False,"merge_error":"Downloaded segments were preserved; no separate audio/video segment groups were found."}
+    audio=next(((d,p) for d,p in groups if any(x in d.name.lower() for x in ("aac","audio","m4a"))),None)
+    video=next(((d,p) for d,p in groups if not any(x in d.name.lower() for x in ("aac","audio","m4a"))),None)
+    if not audio or not video:
+        return {"merged":False,"merge_error":"Downloaded segments were preserved; audio/video groups could not be identified."}
+    lists=[]
+    try:
+        for label,parts in (("video",video[1]),("audio",audio[1])):
+            lp=root/f".dore-{label}-concat.txt"
+            lp.write_text("".join(f"file '{str(p.resolve()).replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))}'\\n" for p in parts),encoding="utf-8")
+            lists.append(lp)
+        final=root/(video[0].parent.name+".mp4")
+        cmd=[exe,"-y","-f","concat","-safe","0","-i",str(lists[0]),"-f","concat","-safe","0","-i",str(lists[1]),"-map","0:v:0","-map","1:a:0","-c","copy",str(final)]
+        p=subprocess.run(cmd,text=True,capture_output=True)
+        if p.returncode or not final.exists():
+            return {"merged":False,"merge_error":(p.stderr or "FFmpeg merge failed").strip()[-2000:]}
+        return {"merged":True,"file":str(final.resolve())}
+    finally:
+        for lp in lists:
+            try: lp.unlink()
+            except FileNotFoundError: pass
+
 def download_manifest(url, output):
     out=Path(output).expanduser().resolve()
     out.mkdir(parents=True,exist_ok=True)
-    before={p.resolve() for p in out.rglob("*") if p.is_file()}
-    ffmpeg_path=ffmpeg()\n    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done","--ffmpeg-binary-path",ffmpeg_path,"-M","format=mp4:muxer=ffmpeg:keep=false"]
+    cmd=[nm3u8(),url,"--save-dir",str(out),"--auto-select"]
     subprocess.run(cmd,check=True,cwd=out)
-    media_exts={".mp4",".mkv",".mov",".webm",".m4v"}
-    produced=[p for p in out.rglob("*") if p.is_file() and p.resolve() not in before and p.suffix.lower() in media_exts and ".dore-video-tmp" not in p.parts]
-    if not produced:
-        raise RuntimeError(f"Segments were downloaded but no merged video file was created in {out}. Ensure FFmpeg is installed and available on PATH.")
-    final=max(produced,key=lambda p:p.stat().st_mtime)
-    print(json.dumps({"ok":True,"file":str(final.resolve()),"output_dir":str(out)},ensure_ascii=False))
+    result={"ok":True,"downloaded":True,"output_dir":str(out)}
+    result.update(merge_downloaded_segments(out))
+    print(json.dumps(result,ensure_ascii=False))
 
 def download_yt(url, fmt, output):
     Path(output).mkdir(parents=True,exist_ok=True)
