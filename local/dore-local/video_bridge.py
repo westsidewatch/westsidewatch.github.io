@@ -1,13 +1,29 @@
 #!/usr/bin/env python3
 """Loopback-only HTTP bridge for Doré Video Acquisition."""
 from __future__ import annotations
-import argparse, json, subprocess, sys
+import argparse, json, subprocess, sys, threading, uuid
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"
 ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}
+TASKS={}
+TASK_LOCK=threading.Lock()
+
+def run_download_task(task_id,cmd):
+    with TASK_LOCK: TASKS[task_id]["status"]="running"
+    try:
+        p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
+        raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
+        try: result=json.loads(raw)
+        except Exception: result={"raw":raw}
+        status="failed"
+        if p.returncode==0:
+            status="merged" if result.get("merged") else ("downloaded" if result.get("downloaded") else "completed")
+        with TASK_LOCK: TASKS[task_id].update({"status":status,"ok":p.returncode==0,"result":result})
+    except Exception as e:
+        with TASK_LOCK: TASKS[task_id].update({"status":"failed","ok":False,"error":type(e).__name__,"detail":str(e)})
 
 class H(BaseHTTPRequestHandler):
     def _cors(self):
@@ -22,6 +38,10 @@ class H(BaseHTTPRequestHandler):
         self.send_response(204); self._cors(); self.send_header("Access-Control-Allow-Methods","GET,POST,OPTIONS"); self.send_header("Access-Control-Allow-Headers","Content-Type"); self.end_headers()
     def do_GET(self):
         if self.path=="/health": return self._send(200,{"ok":True,"service":"dore-video-bridge","loopback":True})
+        if self.path.startswith("/task/"):
+            task_id=self.path.split("/",2)[2]
+            with TASK_LOCK: task=TASKS.get(task_id)
+            return self._send(200,task) if task else self._send(404,{"ok":False,"error":"task_not_found"})
         self._send(404,{"ok":False,"error":"not_found"})
     def do_POST(self):
         op=self.path.strip("/")
@@ -33,6 +53,11 @@ class H(BaseHTTPRequestHandler):
             if op=="download":
                 if body.get("format"): cmd += ["--format",str(body["format"])]
                 if body.get("output"): cmd += ["--output",str(body["output"])]
+            if op=="download":
+                task_id=uuid.uuid4().hex
+                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True}
+                threading.Thread(target=run_download_task,args=(task_id,cmd),daemon=True).start()
+                return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued"})
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
             raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
             try: result=json.loads(raw)
