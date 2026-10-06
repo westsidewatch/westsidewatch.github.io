@@ -62,16 +62,15 @@ jobs:
           test -d "$ROOT/.git"
           cd "$ROOT"
           git remote get-url origin
-      - name: Resolve current Candidate 01 head
+      - name: Resolve current workflow revision
         run: |
           ROOT="$HOME/westsidewatch.github.io"
           cd "$ROOT"
-          git fetch origin +refs/heads/dore/candidate01-visual-graph-experiment:refs/remotes/origin/dore/candidate01-visual-graph-experiment
-          CANDIDATE_SHA="$(git rev-parse refs/remotes/origin/dore/candidate01-visual-graph-experiment)"
-          test -n "$CANDIDATE_SHA"
+          git fetch origin "$GITHUB_REF"
+          CANDIDATE_SHA="$(git rev-parse "$GITHUB_SHA")"
           echo "CANDIDATE_SHA=$CANDIDATE_SHA" >> "$GITHUB_ENV"
           echo "candidate=$CANDIDATE_SHA"
-      - name: Build detached Candidate 01 Design worktree
+      - name: Build detached Candidate 01 publication worktree
         run: |
           ROOT="$HOME/westsidewatch.github.io"
           WT="$HOME/.dore/design-candidate01"
@@ -80,43 +79,45 @@ jobs:
           rm -rf "$WT"
           git worktree add --force --detach "$WT" "$CANDIDATE_SHA"
           cd "$WT"
-          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/candidate01_visual_graph_experiment.py dore-design/italian_editorial_atlas_runtime.py dore-design/app_design2.py
+          python3 -m py_compile dore-design/codrops_site_8x5.py dore-design/design_motion_registry.py dore-design/app_design2.py
+          test -f static/candidate01/watch-witness.html
+          test -f static/candidate01/walk-worship.html
           test -f static/dore-design/italian-editorial-atlas.html
           test -f static/dore-design/italian-editorial-grammars.v1.json
-      - name: Install into local Candidate 01 Design resident
+      - name: Verify published Candidate 01 motion contracts
         run: |
           WT="$HOME/.dore/design-candidate01"
           cd "$WT"
-          export DORE_REPO_ROOT="$WT"
-          export DORE_SKIP_CONTROL_PLANE_REFRESH=1
-          bash dore-design/install-macos.sh
-      - name: Verify running localhost Candidate 01 resident
+          python3 - <<'PY'
+          from pathlib import Path
+          pages = [
+              Path('static/candidate01/watch-witness.html'),
+              Path('static/candidate01/walk-worship.html'),
+          ]
+          required = (
+              'living-water-8x5-current',
+              'lw-current-a',
+              'lw-current-b',
+              'translateX(',
+              'function pv(p)',
+              'function covered(preview)',
+              'product-preview.--left',
+              'product-preview.--right',
+              'aspect-ratio:8/5',
+              'candidate-01-4w-labels',
+          )
+          for page in pages:
+              html = page.read_text(encoding='utf-8')
+              missing = [marker for marker in required if marker not in html]
+              assert not missing, f'{page}: missing {missing}'
+              assert 'translateY(-50%) scale(1)' in html, f'{page}: preview must remain vertically anchored'
+              assert 'opacity:.08' in html and 'scale(.42)' in html, f'{page}: covered cards must contract behind preview'
+          print('CANDIDATE01_PUBLICATION_CONTRACT_PASS')
+          PY
+      - name: Verify Italian atlas publication assets
         run: |
-          FOUND=0
-          for i in $(seq 1 30); do
-            HTML=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=living-water-candidate-01' 2>/dev/null || true)
-            if grep -q 'candidate01-exact-grid-preview-geometry' <<<"$HTML"; then
-              grep -q 'candidate01-living-current-runtime' <<<"$HTML"
-              grep -q 'candidate01-page2-assembly-runtime' <<<"$HTML"
-              grep -q 'centered-mirror-' <<<"$HTML"
-              grep -q 'candidate01-four-w-runtime' <<<"$HTML"
-              grep -q 'WATCH' <<<"$HTML"
-              grep -q 'WITNESS' <<<"$HTML"
-              grep -q 'WALK' <<<"$HTML"
-              grep -q 'WORSHIP' <<<"$HTML"
-              ! grep -q 'dore-mosaic-layer' <<<"$HTML"
-              FOUND=1
-              break
-            fi
-            sleep 2
-          done
-          test "$FOUND" = 1
-          EDITOR=$(curl -fsS 'http://127.0.0.1:4310/editor?page=italian-editorial-atlas')
-          grep -q 'Italian Editorial Atlas / 義大利編輯圖譜' <<<"$EDITOR"
-          ATLAS=$(curl -fsS 'http://127.0.0.1:4310/editor-canvas?page=italian-editorial-atlas')
-          grep -q 'italian-editorial-atlas.html' <<<"$ATLAS"
-          SURFACE=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-atlas.html')
-          grep -q 'Italian Editorial Atlas' <<<"$SURFACE"
-          REGISTRY=$(curl -fsS 'http://127.0.0.1:4310/dore-design/italian-editorial-grammars.v1.json')
-          grep -q 'dore.italian-editorial-grammars.v1' <<<"$REGISTRY"
-          echo "CANDIDATE01_LOCAL_RESIDENT_PASS sha=$CANDIDATE_SHA markers=exact-grid,living-current,page2-centered,four-w,italian-atlas"
+          WT="$HOME/.dore/design-candidate01"
+          cd "$WT"
+          grep -q 'Italian Editorial Atlas' static/dore-design/italian-editorial-atlas.html
+          grep -q 'dore.italian-editorial-grammars.v1' static/dore-design/italian-editorial-grammars.v1.json
+          echo "CANDIDATE01_PUBLICATION_PASS sha=$CANDIDATE_SHA markers=horizontal-current,opposite-preview,covered-card-fold,atlas"
