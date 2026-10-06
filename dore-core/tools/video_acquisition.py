@@ -94,10 +94,15 @@ def probe(url):
         return yt_probe(url)
     except RuntimeError as primary_error:
         manifests=discover_manifests(url)
+        runtime=None
+        if not manifests and runtime_probe is not None:
+            runtime=runtime_probe(url)
+            manifests=[m["url"] for m in runtime.get("manifests",[]) if m.get("url")]
         if not manifests: raise primary_error
         d=manifest_probe(manifests[0])
         d["discovered_from"]=url
         d["manifest_candidates"]=manifests
+        if runtime is not None: d["runtime"]=runtime
         return d
 
 def download_manifest(url, output):
@@ -120,6 +125,9 @@ def download(url, fmt, output):
         return download_yt(url,fmt,output)
     except subprocess.CalledProcessError as primary_error:
         manifests=discover_manifests(url)
+        if not manifests and runtime_probe is not None:
+            runtime=runtime_probe(url)
+            manifests=[m["url"] for m in runtime.get("manifests",[]) if m.get("url")]
         if not manifests: raise primary_error
         last_error=None
         for manifest in manifests:
