@@ -1,0 +1,22 @@
+{
+  "schema": "westside-index.v1",
+  "index": "by-speaker",
+  "key": "speaker:jiang-xiuqin",
+  "displayName": "江秀琴",
+  "primarySurface": "OliveMountain",
+  "series": [
+    "series:jiang-xiuqin:inner-life-45",
+    "series:jiang-xiuqin:hope-of-calling-12"
+  ],
+  "sources": [
+    "source:youtube:jiang-xiuqin-inner-life-45",
+    "source:goodtv:jiang-xiuqin:hope-of-calling-12"
+  ],
+  "consumers": [
+    "OliveMountain",
+    "ParadiseCinema",
+    "Journal",
+    "Emmaus",
+    "Search"
+  ]
+}
