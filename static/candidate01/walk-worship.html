@@ -169,44 +169,4 @@ html,body{height:100%;overflow:hidden!important}
 })();
 </script>
 
-<script id="candidate01-exact-grid-preview-geometry">
-(()=>{
-  const sync=()=>{
-    const root=document.querySelector('.products');
-    const grid=document.querySelector('.products__grid');
-    const layer=document.querySelector('.products__preview');
-    const cards=[...document.querySelectorAll('.products__grid .product')];
-    const left=document.querySelector('.product-preview.--left');
-    const right=document.querySelector('.product-preview.--right');
-    if(!root||!grid||!layer||cards.length<8||!left||!right)return;
-    const rr=root.getBoundingClientRect();
-    const cr=cards.map(el=>el.getBoundingClientRect());
-    const minX=Math.min(...cr.map(r=>r.left));
-    const maxX=Math.max(...cr.map(r=>r.right));
-    const minY=Math.min(...cr.map(r=>r.top));
-    const maxY=Math.max(...cr.map(r=>r.bottom));
-    layer.style.inset='auto';
-    layer.style.left=`${minX-rr.left}px`;
-    layer.style.top=`${minY-rr.top}px`;
-    layer.style.width=`${maxX-minX}px`;
-    layer.style.height=`${maxY-minY}px`;
-    layer.style.minHeight='0';
-    const groupW=cr[1].right-cr[0].left;
-    const groupH=maxY-minY;
-    [left,right].forEach(p=>{
-      p.style.width=`${groupW}px`;
-      p.style.height=`${groupH}px`;
-      p.style.top='50%';
-      p.style.transform='translateY(-50%)';
-    });
-    left.style.left='0'; left.style.right='auto';
-    right.style.right='0'; right.style.left='auto';
-    document.documentElement.dataset.candidate01Geometry=`${Math.round(groupW)}x${Math.round(groupH)}`;
-  };
-  window.__candidate01SyncGeometry=sync;
-  const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{sync();window.dispatchEvent(new Event('resize'));}));
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',settle,{once:true});else settle();
-  window.addEventListener('resize',sync,{passive:true});
-})();
-</script>
 </body></html>
