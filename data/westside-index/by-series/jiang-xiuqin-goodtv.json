@@ -1,0 +1,49 @@
+{
+  "schema": "westside-index.v1",
+  "index": "by-series",
+  "key": "series:jiang-xiuqin:goodtv",
+  "displayName": "江秀琴 · GOOD TV",
+  "primarySurface": "OliveMountain",
+  "speaker": "speaker:jiang-xiuqin",
+  "provider": "GOOD TV",
+  "resources": [
+    {
+      "id": "resource:goodtv:jiang-xiuqin:enter-grace",
+      "title": "脫離努力 進入恩寵",
+      "series": "慕主先鋒信息",
+      "url": "https://www.youtube.com/watch?v=-esBfKgikXg",
+      "embedUrl": "https://www.youtube.com/embed/-esBfKgikXg",
+      "posterUrl": "https://i.ytimg.com/vi/-esBfKgikXg/hqdefault.jpg",
+      "official": true,
+      "rehost": false
+    },
+    {
+      "id": "resource:goodtv:jiang-xiuqin:rise-and-shine",
+      "title": "興起發光 迎接復興浪潮",
+      "series": "道在人間",
+      "url": "https://www.youtube.com/watch?v=4l-MLiv3Kto",
+      "embedUrl": "https://www.youtube.com/embed/4l-MLiv3Kto",
+      "posterUrl": "https://i.ytimg.com/vi/4l-MLiv3Kto/hqdefault.jpg",
+      "official": true,
+      "rehost": false
+    },
+    {
+      "id": "resource:goodtv:jiang-xiuqin:rest-in-god",
+      "title": "等候神好像沒什麼感覺？放掉努力進入神的安息！",
+      "series": "讓自己安歇親近神",
+      "url": "https://www.youtube.com/watch?v=ZWGlQkGDgMU",
+      "embedUrl": "https://www.youtube.com/embed/ZWGlQkGDgMU",
+      "posterUrl": "https://i.ytimg.com/vi/ZWGlQkGDgMU/hqdefault.jpg",
+      "official": true,
+      "rehost": false
+    }
+  ],
+  "rights": {
+    "rehost": false,
+    "policy": "provider-embed"
+  },
+  "provenance": {
+    "source": "GOOD TV official YouTube",
+    "migratedFrom": "legacy Cinema canonical records"
+  }
+}
