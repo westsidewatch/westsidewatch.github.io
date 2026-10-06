@@ -203,11 +203,12 @@ html,body{height:100%;overflow:hidden!important}
     layer.style.width=`${maxX-minX}px`;
     layer.style.height=`${maxY-minY}px`;
     layer.style.minHeight='0';
-    const ordered=[...cr].sort((a,b)=>a.top-b.top||a.left-b.left);const firstRow=ordered.slice(0,4).sort((a,b)=>a.left-b.left);const cardW=Math.max(1,firstRow[0]?.width||cr[0].width);const gap=Math.max(0,(firstRow[1]?.left||0)-(firstRow[0]?.right||0));const groupW=Math.max(1,cardW*2+gap);
-    const rows=[...new Set(cr.map(r=>Math.round(r.top)))].sort((a,b)=>a-b);
+    const cardW=Math.max(1,cr[0].width);
     const cardH=Math.max(1,cr[0].height);
-    const rowGap=rows.length>1?Math.max(0,rows[1]-rows[0]-cardH):gap;
-    const groupH=Math.max(1,cardH*2+rowGap);
+    const gapX=Math.max(0,Math.min(...cr.slice(1).map(r=>Math.abs(r.left-cr[0].left)-cardW).filter(v=>v>=0)));
+    const gapY=Math.max(0,Math.min(...cr.slice(1).map(r=>Math.abs(r.top-cr[0].top)-cardH).filter(v=>v>=0)));
+    const groupW=Math.max(1,cardW*2+(Number.isFinite(gapX)?gapX:0));
+    const groupH=Math.max(1,cardH*2+(Number.isFinite(gapY)?gapY:0));
     [left,right].forEach(p=>{
       p.style.width=`${groupW}px`;
       p.style.height=`${groupH}px`;
@@ -225,3 +226,6 @@ html,body{height:100%;overflow:hidden!important}
 })();
 </script>
 </body></html>
+<style id="candidate01-four-window-footprint-v2">
+.products__preview .product-preview{max-width:none!important;max-height:none!important;aspect-ratio:auto!important}
+</style>
