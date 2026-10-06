@@ -184,12 +184,23 @@ def main():
         p=sub.add_parser(name); p.add_argument("url")
     p=sub.add_parser("download"); p.add_argument("url"); p.add_argument("--format")
     p.add_argument("--output",default=os.environ.get("DORE_VIDEO_OUTPUT",str(Path.home()/"Desktop")))
+    p=sub.add_parser("merge"); p.add_argument("directory")
     a=ap.parse_args()
     if a.command in ("probe","formats"):
         d=probe(a.url)
         print(json.dumps(d if a.command=="probe" else d["formats"],ensure_ascii=False,indent=2))
-    else:
+    elif a.command=="download":
         download(a.url,a.format,a.output)
+    else:
+        root=Path(a.directory).expanduser().resolve()
+        if not root.is_dir():
+            raise RuntimeError(f"Merge directory not found: {root}")
+        result=merge_downloaded_segments(root)
+        result["ok"]=bool(result.get("merged"))
+        result["output_dir"]=str(root)
+        print(json.dumps(result,ensure_ascii=False))
+        if not result.get("merged"):
+            raise RuntimeError(result.get("merge_error") or "Merge failed")
 
 if __name__=="__main__":
     try: main()
