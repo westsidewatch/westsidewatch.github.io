@@ -23,7 +23,7 @@
   async function renderPeople(){
     speakerStage.replaceChildren();
     for(const [slug,name] of people){
-      let p={}; try{p=await WestsideResources.index('by-speaker','speaker:'+slug)}catch(_){}
+      let p={}; try{if(window.WestsideResources) p=await window.WestsideResources.index('by-speaker','speaker:'+slug)}catch(_){}
       const n=recordsOf(p).length||p.itemCount||0;
       speakerStage.append(linkCard('speaker-card',name,n?n+' 篇':'進入','/olive/?person='+slug));
     }
@@ -34,7 +34,7 @@
   }
   async function renderTopic(key){
     topicStage.replaceChildren();
-    let payload={}; try{payload=await WestsideResources.index('by-series','series:'+key.replace(/-/g,':'))}catch(_){}
+    let payload={}; try{if(window.WestsideResources) payload=await window.WestsideResources.index('by-series','series:'+key.replace(/-/g,':'))}catch(_){}
     let rows=recordsOf(payload);
     if(!rows.length && key==='jiang-xiuqin-goodtv-good-message') rows=[
       {title:'興起發光 迎接復興浪潮',url:'https://www.youtube.com/watch?v=4l-MLiv3Kto'},
@@ -56,5 +56,5 @@
       topicStage.replaceChildren();
     }
   }
-  if(window.WestsideResources) init();
+  init();
 })();
