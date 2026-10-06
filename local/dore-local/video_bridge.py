@@ -56,9 +56,11 @@ def watch_progress(task_id,root,stop,total=None):
         with TASK_LOCK:
             if task_id not in TASKS: return
             TASKS[task_id]["progress"]=progress
+            if total and progress.get("percent")==100 and TASKS[task_id].get("status")=="downloading":
+                TASKS[task_id]["status"]="merging"
 
 def run_download_task(task_id,cmd,output,total=None):
-    with TASK_LOCK: TASKS[task_id]["status"]="running"
+    with TASK_LOCK: TASKS[task_id]["status"]="downloading"
     stop=threading.Event()
     watcher=threading.Thread(target=watch_progress,args=(task_id,output,stop,total),daemon=True); watcher.start()
     try:
