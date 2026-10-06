@@ -239,3 +239,41 @@ html,body{height:100%;overflow:hidden!important}
  window.__candidate01SyncGeometry=sync;
 })();
 </script>
+<style id="candidate01-seam-collapse">
+/* Morph only: geometry remains owned by the current Westside 8:5 grid. */
+.products.living-current-focus .living-current-band{animation-play-state:paused}
+.product.c01-seam-piece{z-index:7;will-change:transform,opacity}
+</style>
+<script id="candidate01-seam-collapse-runtime">
+(()=>{
+ const products=[...document.querySelectorAll('.products__grid .product')];
+ const previews=[...document.querySelectorAll('.product-preview')];
+ if(products.length<8||previews.length<2)return;
+ let seamAnimations=[];
+ const stop=()=>{seamAnimations.forEach(a=>a.cancel());seamAnimations=[]};
+ const groupFor=preview=>products.filter(x=>preview.classList.contains('--right')?((+x.dataset.index)%4>=2):((+x.dataset.index)%4<2));
+ const morph=(preview,opening)=>{
+   stop();
+   const target=preview.getBoundingClientRect(), group=groupFor(preview);
+   group.forEach(card=>{
+     const r=card.getBoundingClientRect();
+     const tx=target.left-r.left,ty=target.top-r.top,sx=target.width/r.width,sy=target.height/r.height;
+     card.classList.add('c01-seam-piece');
+     const from={transform:'translate3d(0,0,0) scale(1,1)',opacity:1};
+     const to={transform:`translate3d(${tx}px,${ty}px,0) scale(${sx},${sy})`,opacity:0};
+     const a=card.animate(opening?[from,to]:[to,from],{duration:opening?620:520,easing:'cubic-bezier(.65,0,.2,1)',fill:'both'});
+     a.onfinish=()=>{if(!opening)card.classList.remove('c01-seam-piece')};
+     seamAnimations.push(a);
+   });
+ };
+ previews.forEach(preview=>{
+   preview.addEventListener('transitionrun',e=>{
+     if(e.propertyName==='opacity'&&preview.classList.contains('is-visible'))morph(preview,true);
+   });
+   preview.addEventListener('transitionrun',e=>{
+     if(e.propertyName==='opacity'&&!preview.classList.contains('is-visible'))morph(preview,false);
+   });
+ });
+ window.__candidate01SeamMorph=morph;
+})();
+</script>
