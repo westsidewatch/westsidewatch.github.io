@@ -1,0 +1,23 @@
+{
+  "schema": "westside-index.v1",
+  "index": "by-speaker",
+  "key": "speaker:jiang-xiuqin",
+  "displayName": "江秀琴",
+  "primarySurface": "OliveMountain",
+  "series": [
+    "series:jiang-xiuqin:inner-life-45",
+    "series:jiang-xiuqin:goodtv"
+  ],
+  "resources": [
+    "resource:goodtv:jiang-xiuqin:enter-grace",
+    "resource:goodtv:jiang-xiuqin:rise-and-shine",
+    "resource:goodtv:jiang-xiuqin:rest-in-god"
+  ],
+  "consumers": [
+    "OliveMountain",
+    "ParadiseCinema",
+    "Journal",
+    "Emmaus",
+    "Search"
+  ]
+}
