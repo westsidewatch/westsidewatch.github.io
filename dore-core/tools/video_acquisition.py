@@ -109,12 +109,12 @@ def download_manifest(url, output):
     out=Path(output).expanduser().resolve()
     out.mkdir(parents=True,exist_ok=True)
     before={p.resolve() for p in out.rglob("*") if p.is_file()}
-    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done"]
+    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done","--use-shaka-packager","false"]
     subprocess.run(cmd,check=True,cwd=out)
-    media_exts={".mp4",".mkv",".mov",".webm",".m4v",".ts",".m4a",".aac"}
+    media_exts={".mp4",".mkv",".mov",".webm",".m4v"}
     produced=[p for p in out.rglob("*") if p.is_file() and p.resolve() not in before and p.suffix.lower() in media_exts and ".dore-video-tmp" not in p.parts]
     if not produced:
-        raise RuntimeError(f"N_m3u8DL-RE exited successfully but no final media file was created in {out}")
+        raise RuntimeError(f"Segments were downloaded but no merged video file was created in {out}. Ensure FFmpeg is installed and available on PATH.")
     final=max(produced,key=lambda p:p.stat().st_mtime)
     print(json.dumps({"ok":True,"file":str(final.resolve()),"output_dir":str(out)},ensure_ascii=False))
 
