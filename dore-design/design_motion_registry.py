@@ -102,6 +102,8 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
+/* Candidate 01 focus completion is a landscape 8:5 world, never a vertical half-screen. */
+.product-preview{left:50%!important;right:auto!important;width:min(72vw,1120px)!important;height:auto!important;aspect-ratio:8/5;transform:translate(-50%,-50%)}
 .lw-movement-label{position:absolute;z-index:20;left:0;right:0;height:2.35rem;display:flex;align-items:center;padding:0 1.2vw;background:transparent;color:#CEBD74;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;white-space:nowrap;pointer-events:none;box-sizing:border-box}
 .lw-movement-label.label-a{top:.35%}
 .lw-movement-label.label-b{top:48.35%}
@@ -129,6 +131,8 @@ def _movement_labels_script(labels):
 def _candidate_focus_screen(screen_no, labels):
     """Reuse the locked focus runtime unchanged and label its two existing currents."""
     motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
+    # Keep the original preview timeline while centring its completed 8:5 landscape.
+    motion_html = motion_html.replace('translateY(-50%)', 'translate(-50%,-50%)')
     motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
     motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + '</body>', 1)
     srcdoc = html_lib.escape(motion_html, quote=True)
