@@ -6,4 +6,4 @@ aliases:
   - "/magazine/"
 ---
 
-Westside Watch 的獨立網刊與期刊出版空間。`/journal/` 暫時保留為現有承載路徑，但公開身份統一為 Magazine；亞杜蘭洞與期刊內的以馬忤斯仍是 Magazine 的編輯欄目，不等同於一級 Bible / Emmaus surface。
+Westside Watch 的獨立網刊與期刊出版空間。亞杜蘭洞與以馬忤斯是 Magazine 的編輯欄目。
