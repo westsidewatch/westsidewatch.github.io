@@ -128,7 +128,7 @@ def merge_downloaded_segments(root):
     try:
         for label,parts in (("video",video[1]),("audio",audio[1])):
             lp=root/f".dore-{label}-concat.txt"
-            lp.write_text("".join(f"file '{str(p.resolve()).replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))}'\\n" for p in parts),encoding="utf-8")
+            lp.write_text("".join(f"file '{str(p.resolve()).replace(chr(39), chr(39)+chr(92)+chr(39)+chr(39))}'\n" for p in parts),encoding="utf-8")
             lists.append(lp)
         final=root/(video[0].parent.name+".mp4")
         cmd=[exe,"-y","-f","concat","-safe","0","-i",str(lists[0]),"-f","concat","-safe","0","-i",str(lists[1]),"-map","0:v:0","-map","1:a:0","-c","copy",str(final)]
