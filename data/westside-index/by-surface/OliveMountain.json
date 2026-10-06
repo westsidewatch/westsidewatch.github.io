@@ -1,13 +1,13 @@
 {
-  "schema":"westside-index.surface.v1",
-  "surface":"OliveMountain",
-  "navLabel":"Sermon",
-  "displayName":"橄欖山",
-  "resourceAuthority":"Westside Core",
-  "scopes":[
+  "schema": "westside-index.surface.v1",
+  "surface": "OliveMountain",
+  "navLabel": "Sermon",
+  "displayName": "橄欖山",
+  "resourceAuthority": "Westside Core",
+  "scopes": [
     {
-      "index":"by-speaker",
-      "keys":[
+      "index": "by-speaker",
+      "keys": [
         "speaker:david-pawson",
         "speaker:jiang-xiuqin",
         "speaker:derek-prince",
@@ -23,12 +23,21 @@
       ]
     },
     {
-      "index":"by-series",
-      "keys":["series:jiang-xiuqin:inner-life-45"]
+      "index": "by-series",
+      "keys": [
+        "series:jiang-xiuqin:inner-life-45",
+        "series:jiang-xiuqin:hope-of-calling-12"
+      ]
     }
   ],
-  "excludedGenericScopes":[{"index":"by-type","key":"video","reason":"Video is a shared resource type and is too broad for the Sermon surface."}],
-  "ownsResources":false,
-  "fullCorpusRead":false,
-  "rule":"Olive Mountain resolves sermon/ministry content through explicit speaker, series and ministry scopes; it must not consume the site-wide video corpus."
+  "excludedGenericScopes": [
+    {
+      "index": "by-type",
+      "key": "video",
+      "reason": "Video is a shared resource type and is too broad for the Sermon surface."
+    }
+  ],
+  "ownsResources": false,
+  "fullCorpusRead": false,
+  "rule": "Olive Mountain resolves sermon/ministry content through explicit speaker, series and ministry scopes; it must not consume the site-wide video corpus."
 }
