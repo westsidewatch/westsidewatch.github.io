@@ -15,7 +15,7 @@ from __future__ import annotations
 import argparse, json, os, re, shutil, subprocess, sys
 from pathlib import Path
 from urllib.parse import urljoin, urlparse
-from urllib.request import Request, urlopen
+from urllib.request import Request, urlopen\n\ntry:\n    from video_runtime_probe import probe as runtime_probe\nexcept ImportError:\n    runtime_probe=None
 
 MANIFEST_EXTENSIONS=(".m3u8",".mpd",".ism","/manifest")
 DRM_MARKERS=("widevine","playready","fairplay","com.widevine","skd://")
