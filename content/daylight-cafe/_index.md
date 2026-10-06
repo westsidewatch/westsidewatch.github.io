@@ -8,7 +8,7 @@ aliases:
   - "/resources/daylight-cafe/"
 ---
 
-白晝咖啡館是 Westside Watch 的基督徒生活空間。它作為一級 Life surface 獨立呈現，不再從 Website 大資源欄目下顯示。
+白晝咖啡館是 Westside Watch 的基督徒生活空間。
 
 ## Life Topics
 
@@ -16,7 +16,7 @@ aliases:
 
 ## Practical Guides
 
-面向具體生活問題的實用內容。每一項指南可以引用教會、講道、書籍或其他 canonical resources，但白晝咖啡館只負責生活情境與閱讀入口。
+面向具體生活問題的實用內容，連結教會、講道、書籍與日常生活。
 
 ## Conversations
 
@@ -44,7 +44,7 @@ aliases:
 
 ## From the Rest of Westside Watch
 
-白晝咖啡館可以浮現與生活主題相關的 LivingWaterWest、Magazine、Book 與 Sermon 內容，但不複製它們的 canonical records，也不改變原本 ownership。
+白晝咖啡館也會呈現與生活主題相關的 LivingWaterWest、Magazine、Book 與 Sermon 內容。
 
 ---
 
