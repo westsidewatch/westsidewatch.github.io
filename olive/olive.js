@@ -17,7 +17,7 @@
     const a=document.createElement('a');
     a.className='speaker-card';
     a.href='/olive/?speaker='+encodeURIComponent(slug(id));
-    a.innerHTML=`<p class="olive-eyebrow">SPEAKER</p><h3>${name}</h3><p>${countOf(payload)} 項已索引內容 <b aria-hidden="true">↗</b></p>`;
+    a.innerHTML=`<h3>${name}</h3><p>${countOf(payload) ? countOf(payload)+" 篇" : "進入"} <b aria-hidden="true">↗</b></p>`;
     return a;
   }
 
@@ -34,8 +34,8 @@
   async function loadSeries(){
     if(!seriesStage) return;
     const specs=[
-      ['series:jiang-xiuqin:inner-life-45','SERIES','江秀琴 · 內在生活','45 集系列'],
-      ['series:jiang-xiuqin:goodtv','GOOD TV','江秀琴 · GOOD TV','GOOD TV 系列館藏']
+      ['series:jiang-xiuqin:inner-life-45','','內在生活','45 篇'],
+      ['series:jiang-xiuqin:goodtv','','江秀琴 GOOD TV 講道','進入']
     ];
     seriesStage.replaceChildren();
     for(const [id,label,name,fallback] of specs){
@@ -45,7 +45,7 @@
       a.className='series-card';
       a.href='/olive/?series='+encodeURIComponent(slug(id));
       const n=countOf(payload);
-      a.innerHTML=`<p class="olive-eyebrow">${label}</p><h3>${name}</h3><p>${n?n+' 項已索引內容':fallback} <b aria-hidden="true">↗</b></p>`;
+      a.innerHTML=`<h3>${name}</h3><p>${n?n+" 篇":fallback} <b aria-hidden="true">↗</b></p>`;
       seriesStage.append(a);
     }
   }
