@@ -11,7 +11,7 @@
 .living-current-band .product{flex:1 1 0;min-width:0;margin:0;will-change:transform,opacity}
 .living-current-band:nth-child(1){top:4%;animation:lw-current-a 28s linear infinite alternate}
 .living-current-band:nth-child(2){top:52%;animation:lw-current-b 34s linear infinite alternate;animation-delay:-11s}
-.products.living-current-focus .living-current-band{animation-play-state:running}
+.products.living-current-focus .living-current-band{animation-play-state:paused}
 @media(max-width:900px){
  .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
  .living-current-band{display:contents;animation:none!important}
@@ -180,7 +180,7 @@ html,body{height:100%;overflow:hidden!important}
     const right=document.querySelector('.product-preview.--right');
     if(!root||!grid||!layer||cards.length<8||!left||!right)return;
     const rr=root.getBoundingClientRect();
-    const cr=cards.map(el=>el.getBoundingClientRect());
+    const cr=cards.map(el=>{const r=el.getBoundingClientRect(),band=el.closest('.living-current-band');if(!band)return r;const br=band.getBoundingClientRect(),tx=new DOMMatrixReadOnly(getComputedStyle(band).transform==='none'?undefined:getComputedStyle(band).transform).m41;return {left:r.left-tx,right:r.right-tx,top:r.top,bottom:r.bottom,width:r.width,height:r.height}});
     const minX=Math.min(...cr.map(r=>r.left));
     const maxX=Math.max(...cr.map(r=>r.right));
     const minY=Math.min(...cr.map(r=>r.top));
@@ -191,8 +191,8 @@ html,body{height:100%;overflow:hidden!important}
     layer.style.width=`${maxX-minX}px`;
     layer.style.height=`${maxY-minY}px`;
     layer.style.minHeight='0';
-    const groupW=cr[1].right-cr[0].left;
-    const groupH=maxY-minY;
+    const ordered=[...cr].sort((a,b)=>a.top-b.top||a.left-b.left);const firstRow=ordered.slice(0,4).sort((a,b)=>a.left-b.left);const cardW=Math.max(1,firstRow[0]?.width||cr[0].width);const gap=Math.max(0,(firstRow[1]?.left||0)-(firstRow[0]?.right||0));const groupW=Math.max(1,cardW*2+gap);
+    const groupH=Math.max(1,groupW*5/8);
     [left,right].forEach(p=>{
       p.style.width=`${groupW}px`;
       p.style.height=`${groupH}px`;
