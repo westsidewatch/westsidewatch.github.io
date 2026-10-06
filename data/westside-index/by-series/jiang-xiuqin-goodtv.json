@@ -45,5 +45,78 @@
   "provenance": {
     "source": "GOOD TV official YouTube",
     "migratedFrom": "legacy Cinema canonical records"
+  },
+  "seriesFamilies": [
+    {
+      "id": "series:jiang-xiuqin:goodtv:good-message",
+      "displayName": "道在人間 · 江秀琴",
+      "provider": "GOOD TV",
+      "status": "verified-open-family",
+      "verifiedItems": [
+        {
+          "title": "全世界最有魅力的領袖",
+          "source": "GOOD TV 好消息講台"
+        },
+        {
+          "title": "承受美地為業的祕訣",
+          "url": "https://www.youtube.com/watch?v=SeWck245iSE"
+        },
+        {
+          "title": "追求認識神",
+          "url": "https://www.youtube.com/watch?v=nelt0FmxwiA"
+        },
+        {
+          "title": "興起發光 迎接復興浪潮",
+          "url": "https://www.youtube.com/watch?v=4l-MLiv3Kto"
+        }
+      ]
+    },
+    {
+      "id": "series:jiang-xiuqin:goodtv:praise",
+      "displayName": "讚美系列",
+      "program": "道在人間（華語）",
+      "provider": "GOOD TV",
+      "status": "series-verified-by-goodtv-magazine",
+      "knownTitles": [
+        "為什麼要讚美",
+        "聚會中的讚美",
+        "讚美的方式",
+        "讚美的生活"
+      ]
+    },
+    {
+      "id": "series:jiang-xiuqin:goodtv:forerunner-message",
+      "displayName": "慕主先鋒信息",
+      "program": "特會精選",
+      "provider": "GOOD TV",
+      "status": "verified-open-family",
+      "verifiedItems": [
+        {
+          "title": "脫離努力 進入恩寵",
+          "url": "https://www.youtube.com/watch?v=-esBfKgikXg"
+        }
+      ]
+    },
+    {
+      "id": "series:jiang-xiuqin:goodtv:inner-life-feast",
+      "displayName": "內在生活饗宴特會",
+      "program": "特會精選",
+      "provider": "GOOD TV",
+      "status": "verified-series",
+      "knownTitles": [
+        "安靜中的大能"
+      ]
+    },
+    {
+      "id": "series:jiang-xiuqin:goodtv:rest",
+      "displayName": "進入神的安息美地",
+      "provider": "GOOD TV",
+      "status": "verified-message-family"
+    }
+  ],
+  "scan": {
+    "status": "open",
+    "rule": "Only GOOD TV official/first-party verified series or items are promoted; discovery remains additive and does not imply completeness.",
+    "lastScan": "2026-10-06"
   }
 }
