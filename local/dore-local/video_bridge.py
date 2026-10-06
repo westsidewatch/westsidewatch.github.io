@@ -30,7 +30,7 @@ class H(BaseHTTPRequestHandler):
             n=int(self.headers.get("Content-Length","0")); body=json.loads(self.rfile.read(n) or b"{}"); url=str(body.get("url","")).strip()
             if not url.startswith(("http://","https://")): return self._send(400,{"ok":False,"error":"public_http_url_required"})
             cmd=[sys.executable,str(ADAPTER),op,url]
-            if op=="download" and body.get("output"): cmd += ["--output",str(body["output"])]
+            if op=="download":\n                if body.get("format"): cmd += ["--format",str(body["format"])]\n                if body.get("output"): cmd += ["--output",str(body["output"])]
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
             raw=(p.stdout or p.stderr).strip()
             try: result=json.loads(raw)
