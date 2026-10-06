@@ -33,19 +33,20 @@
 
   async function loadSeries(){
     if(!seriesStage) return;
-    const specs=[
-      ['series:jiang-xiuqin:inner-life-45','','內在生活','45 篇'],
-      ['series:jiang-xiuqin:goodtv','','江秀琴 GOOD TV 講道','進入']
+    const topics=[
+      ['內在生活','series:jiang-xiuqin:inner-life-45','45 篇'],
+      ['讚美','series:jiang-xiuqin:goodtv:praise','進入'],
+      ['進入神的安息美地','series:jiang-xiuqin:goodtv:rest','進入'],
+      ['慕主先鋒信息','series:jiang-xiuqin:goodtv:forerunner-message','進入'],
+      ['內在生活饗宴','series:jiang-xiuqin:goodtv:inner-life-feast','進入'],
+      ['道在人間','series:jiang-xiuqin:goodtv:good-message','進入']
     ];
     seriesStage.replaceChildren();
-    for(const [id,label,name,fallback] of specs){
-      let payload={};
-      try{ payload=await window.WestsideResources.index('by-series',id); }catch(_){}
+    for(const [name,id,fallback] of topics){
       const a=document.createElement('a');
       a.className='series-card';
-      a.href='/olive/?series='+encodeURIComponent(slug(id));
-      const n=countOf(payload);
-      a.innerHTML=`<h3>${name}</h3><p>${n?n+" 篇":fallback} <b aria-hidden="true">↗</b></p>`;
+      a.href='/olive/?topic='+encodeURIComponent(slug(id));
+      a.innerHTML=`<h3>${name}</h3><p>${fallback} <b aria-hidden="true">↗</b></p>`;
       seriesStage.append(a);
     }
   }
