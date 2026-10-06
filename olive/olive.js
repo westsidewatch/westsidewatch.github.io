@@ -56,7 +56,7 @@
       ]);
       const innerRecords = innerLife.status === 'fulfilled' ? recordsOf(innerLife.value) : [];
       const goodtvRecords = goodtv.status === 'fulfilled' ? recordsOf(goodtv.value) : [];
-      seriesStage.innerHTML = `<article class="series-card"><p class="eyebrow">SERIES</p><h3>江秀琴 · 內在生活</h3><p>${innerRecords.length || 45} 集系列</p></article><article class="series-card"><p class="eyebrow">GOOD TV</p><h3>江秀琴 · GOOD TV</h3><p>${goodtvRecords.length || 3} 項已索引內容</p></article>`;
+      seriesStage.innerHTML = `<article class="series-card"><p class="olive-eyebrow">SERIES</p><h3>江秀琴 · 內在生活</h3><p>${innerRecords.length || 45} 集系列</p></article><article class="series-card"><p class="olive-eyebrow">GOOD TV</p><h3>江秀琴 · GOOD TV</h3><p>${goodtvRecords.length || 3} 項已索引內容</p></article>`;
     } catch (error) {
       seriesStage.innerHTML = '<article class="series-card"><p class="eyebrow">SERIES</p><h3>江秀琴 · 內在生活</h3><p>45 集系列 · 索引接入中</p></article>';
     }

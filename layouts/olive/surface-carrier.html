@@ -1,0 +1,23 @@
+{{ define "main" }}
+<article class="olive-production">
+  <section class="olive-hero">
+    <p class="olive-eyebrow">WESTSIDE WATCH · SERMON</p>
+    <h1>Olive<br>Mountain.</h1>
+    <p class="olive-zh">橄欖山</p>
+    <p class="olive-intro">中文講道、講員、事工與教導系列。這裡呈現 Westside Core 共享館藏中的講道內容，不另建影片資料庫。</p>
+  </section>
+  <section class="olive-section" aria-labelledby="olive-speakers-title">
+    <header><h2 id="olive-speakers-title">講員</h2><p>SPEAKERS</p></header>
+    <div id="olive-speakers" class="olive-speaker-grid" aria-live="polite"></div>
+  </section>
+  <section class="olive-section" aria-labelledby="olive-series-title">
+    <header><h2 id="olive-series-title">系列</h2><p>SERIES</p></header>
+    <div id="olive-series" class="olive-series-grid" aria-live="polite"></div>
+  </section>
+</article>
+<style>
+.olive-production{max-width:1180px;margin:auto;padding:7vw 5vw 12vw;color:#252525}.olive-eyebrow,.olive-section header p{font:12px/1.2 Arial,sans-serif;letter-spacing:.16em}.olive-hero{min-height:58vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid rgba(37,37,37,.28);padding-bottom:4vw}.olive-hero h1{font:400 clamp(64px,12vw,170px)/.8 "Cormorant Garamond",Georgia,serif;margin:.18em 0}.olive-zh{font-size:clamp(24px,3vw,46px);margin:.2em 0}.olive-intro{max-width:720px;font-size:clamp(18px,2vw,28px);line-height:1.55}.olive-section{margin-top:7vw}.olive-section>header{display:flex;align-items:baseline;justify-content:space-between;border-bottom:1px solid rgba(37,37,37,.28);padding-bottom:1rem}.olive-section h2{font:400 clamp(32px,5vw,64px)/1 "Cormorant Garamond","Noto Sans TC",serif;margin:0}.olive-speaker-grid,.olive-series-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(37,37,37,.18);margin-top:1px}.speaker-card,.series-card{background:#f1eee6;padding:2rem;min-height:150px}.speaker-card h3,.series-card h3{font-size:26px;font-weight:400;margin:.35em 0}.speaker-card p:last-child,.series-card p:last-child{font:14px/1.6 Arial,sans-serif}@media(max-width:720px){.olive-speaker-grid,.olive-series-grid{grid-template-columns:1fr}.olive-section>header{display:block}}
+</style>
+<script src="/js/westside-resource-query.js"></script>
+<script src="/olive/olive.js"></script>
+{{ end }}
