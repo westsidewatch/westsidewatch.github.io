@@ -210,3 +210,32 @@ html,body{height:100%;overflow:hidden!important}
 })();
 </script>
 </body></html>
+<style id="candidate01-css-grid-morph">
+/* Site ratio is authoritative: cards keep the existing 8/5 geometry. */
+.products{--candidate-card-ratio:8/5}
+.product{aspect-ratio:var(--candidate-card-ratio)}
+/* Preview owns no independent ratio: it is the union of the existing 2×2 card footprint. */
+.products__preview{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,auto)}
+.product-preview{height:auto;top:auto;transform:none}
+</style>
+<script id="candidate01-css-grid-morph-runtime">
+(()=>{
+ const root=document.querySelector('.products'),grid=document.querySelector('.products__grid'),layer=document.querySelector('.products__preview');
+ const cards=[...document.querySelectorAll('.products__grid .product')],left=document.querySelector('.product-preview.--left'),right=document.querySelector('.product-preview.--right');
+ if(!root||!grid||!layer||cards.length<8||!left||!right)return;
+ const sync=()=>{
+   const gr=grid.getBoundingClientRect(),rr=root.getBoundingClientRect();
+   const cs=getComputedStyle(grid),gapX=parseFloat(cs.columnGap)||0,gapY=parseFloat(cs.rowGap)||0;
+   const card=cards[0].getBoundingClientRect();
+   const w=card.width*2+gapX,h=card.height*2+gapY;
+   layer.style.inset='auto';layer.style.left=(gr.left-rr.left)+'px';layer.style.top=(gr.top-rr.top)+'px';
+   layer.style.width=gr.width+'px';layer.style.height=gr.height+'px';layer.style.minHeight='0';
+   for(const p of [left,right]){p.style.width=w+'px';p.style.height=h+'px';p.style.top='0';p.style.transform='none'}
+   left.style.left='0';left.style.right='auto';right.style.right='0';right.style.left='auto';
+ };
+ const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(sync));
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',settle,{once:true});else settle();
+ window.addEventListener('resize',sync,{passive:true});
+ window.__candidate01SyncGeometry=sync;
+})();
+</script>
