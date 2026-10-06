@@ -3,22 +3,7 @@
 .one-live-preview{position:absolute;top:0;right:0;bottom:0;width:54%;z-index:3;display:flex;padding:clamp(28px,3.2vw,54px);background:linear-gradient(90deg,rgba(238,232,218,.96),#eee8da 16%,#e8e0cf 100%);color:#252525;overflow:hidden;transform:translateX(102%);opacity:0;will-change:transform,opacity;box-shadow:-26px 0 58px rgba(24,21,15,.16)}.one-live-preview[hidden]{display:none}.one-live-copy{min-width:0;display:flex;flex-direction:column;justify-content:center}.one-live-copy small{font:9px ui-monospace,monospace;letter-spacing:.16em;color:#8d793f}.one-live-copy h2{font:400 clamp(27px,3vw,50px)/1 "Noto Serif TC",Georgia,serif;margin:12px 0 7px;max-width:10em}.one-live-passage{font:10px ui-monospace,monospace;letter-spacing:.07em;margin:0 0 19px;color:#6f654f}.one-live-story{font-size:clamp(12px,1vw,15px);line-height:1.75;max-width:38em;margin:0 0 16px}.one-live-route{list-style:none;margin:0;padding:0;border-top:1px solid rgba(37,37,37,.16)}.one-live-route li{display:grid;grid-template-columns:58px 1fr;gap:10px;padding:6px 0;border-bottom:1px solid rgba(37,37,37,.12);font-size:10px;line-height:1.4}.one-live-route b{font:9px ui-monospace,monospace;color:#8d793f}.one-live-cta{margin-top:16px;font:9px ui-monospace,monospace;letter-spacing:.08em;color:#5f543c}.product-preview.is-one-live .product-preview__details{transition:opacity .28s ease}.product-preview.is-one-reading .product-preview__details{opacity:0}
 @media(max-width:1100px){.one-live-preview{width:60%;padding:26px}.one-live-copy h2{font-size:34px}.one-live-story{font-size:12px}}@media(max-width:900px){.products__grid{grid-template-columns:repeat(2,1fr)}.products__preview{display:none}.frame{grid-template-columns:1fr}.frame span,.frame em{display:none}}
 </style>
-<style id="living-water-8x5-current">
-@keyframes lw-current-a{from{transform:translateX(0)}to{transform:translateX(-12vw)}}
-@keyframes lw-current-b{from{transform:translateX(-9vw)}to{transform:translateX(4vw)}}
-.products__grid.living-current-field{display:block;position:relative;overflow:hidden;min-height:calc(100vh - 204px)}
-.living-current-band{position:absolute;left:-12vw;display:flex;align-items:center;gap:3vw;width:124vw;will-change:transform}
-.living-current-band .product{flex:1 1 0;min-width:0;margin:0;will-change:transform,opacity}
-.living-current-band:nth-child(1){top:4%;animation:lw-current-a 28s linear infinite alternate}
-.living-current-band:nth-child(2){top:52%;animation:lw-current-b 34s linear infinite alternate;animation-delay:-11s}
-.products.living-current-focus .living-current-band{animation-play-state:paused}
-@media(max-width:900px){
- .products__grid.living-current-field{display:grid;grid-template-columns:repeat(2,1fr);overflow:visible}
- .living-current-band{display:contents;animation:none!important}
- .living-current-band .product{width:auto}
-}
-@media(prefers-reduced-motion:reduce){.living-current-band{animation:none!important}}
-</style>
+
 
 <style id="candidate-01-focus-screen-embed">
 html,body{height:100%;overflow:hidden!important}
@@ -95,91 +80,9 @@ html,body{height:100%;overflow:hidden!important}
  products.forEach(p=>{p.addEventListener('mouseenter',()=>{clearTimeout(timer);timer=setTimeout(()=>{enter(p);timer=null},100)});p.addEventListener('mouseleave',leave);p.addEventListener('click',()=>{location.href=p.dataset.href})});
  document.addEventListener('pointermove',leaveOutsideActive,{passive:true});document.documentElement.addEventListener('mouseleave',leave);window.addEventListener('blur',leave);document.documentElement.dataset.motion='ready';document.documentElement.dataset.oneMotion='idle'
 })();</script>
-<script id="living-water-8x5-current-runtime">
-(()=>{
-  const stage=document.querySelector('.products');
-  const grid=stage?.querySelector('.products__grid');
-  if(!stage||!grid||stage.dataset.livingCurrentBound==='true')return;
-  stage.dataset.livingCurrentBound='true';
 
-  const cards=[...grid.querySelectorAll(':scope > .product')];
-  if(cards.length){
-    grid.classList.add('living-current-field');
-    const perBand=Math.max(1,Math.ceil(cards.length/2));
-    for(let i=0;i<2;i++){
-      const slice=cards.slice(i*perBand,(i+1)*perBand);
-      if(!slice.length)continue;
-      const band=document.createElement('div');
-      band.className='living-current-band';
-      band.dataset.current=String(i+1);
-      grid.appendChild(band);
-      slice.forEach(card=>band.appendChild(card));
-    }
-  }
 
-  let resumeTimer=0;
-  let focusedCard=null;
-  let forceLeave=false;
-  const hold=card=>{
-    clearTimeout(resumeTimer);
-    focusedCard=card;
-    stage.classList.add('living-current-focus');
-  };
-  const release=()=>{
-    clearTimeout(resumeTimer);
-    resumeTimer=setTimeout(()=>{
-      if(!stage.matches(':hover'))stage.classList.remove('living-current-focus');
-    },560);
-  };
 
-  stage.querySelectorAll('.product').forEach(card=>{
-    card.addEventListener('mouseenter',()=>hold(card));
-    card.addEventListener('mouseleave',event=>{
-      if(!forceLeave && stage.matches(':hover')){
-        event.stopImmediatePropagation();
-        return;
-      }
-      if(focusedCard===card)focusedCard=null;
-      release();
-    },true);
-  });
-
-  stage.addEventListener('mouseleave',()=>{
-    if(!focusedCard)return release();
-    const card=focusedCard;
-    forceLeave=true;
-    card.dispatchEvent(new MouseEvent('mouseleave',{bubbles:false}));
-    forceLeave=false;
-    focusedCard=null;
-    release();
-  },true);
-
-  document.documentElement.dataset.livingCurrent='two-full-width-bands-focus-latched';
-})();
-</script>
-
-<script id="candidate-01-4w-labels">
-(()=>{
-  const labels=['第三樂章 WALK', '第四樂章 WORSHIP'];
-  const attach=()=>{
-    const grid=document.querySelector('.products__grid.living-current-field');
-    const bands=[...document.querySelectorAll('.living-current-band')];
-    if(!grid||bands.length<2)return false;
-    if(grid.querySelector(':scope > .lw-movement-label'))return true;
-    labels.forEach((text,i)=>{
-      const label=document.createElement('div');
-      label.className='lw-movement-label '+(i===0?'label-a':'label-b');
-      label.textContent=text;
-      grid.appendChild(label);
-    });
-    return true;
-  };
-  if(!attach()){
-    const observer=new MutationObserver(()=>{if(attach())observer.disconnect();});
-    observer.observe(document.documentElement,{childList:true,subtree:true});
-  }
-})();
-</script>
 
 <script id="candidate01-exact-grid-preview-geometry">
 (()=>{
