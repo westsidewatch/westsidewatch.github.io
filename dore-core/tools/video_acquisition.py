@@ -109,7 +109,7 @@ def download_manifest(url, output):
     out=Path(output).expanduser().resolve()
     out.mkdir(parents=True,exist_ok=True)
     before={p.resolve() for p in out.rglob("*") if p.is_file()}
-    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done","--use-shaka-packager","false"]
+    ffmpeg_path=ffmpeg()\n    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done","--ffmpeg-binary-path",ffmpeg_path,"-M","format=mp4:muxer=ffmpeg:keep=false"]
     subprocess.run(cmd,check=True,cwd=out)
     media_exts={".mp4",".mkv",".mov",".webm",".m4v"}
     produced=[p for p in out.rglob("*") if p.is_file() and p.resolve() not in before and p.suffix.lower() in media_exts and ".dore-video-tmp" not in p.parts]
