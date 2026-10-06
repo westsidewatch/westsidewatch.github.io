@@ -1,0 +1,21 @@
+name: Dore Video Internal Runtime Integration
+on:
+  pull_request:
+    paths:
+      - 'dore-core/tools/video_acquisition.py'
+      - 'dore-core/tools/video_runtime_probe.py'
+      - 'dore-core/tools/test_video_runtime_integration.py'
+      - 'local/dore-local/video_bridge.py'
+      - 'static/dore/video/index.html'
+      - '.github/workflows/dore-video-runtime-integration.yml'
+  workflow_dispatch:
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python dore-core/tools/test_video_runtime_integration.py
+      - run: python -m py_compile dore-core/tools/video_acquisition.py dore-core/tools/video_runtime_probe.py local/dore-local/video_bridge.py

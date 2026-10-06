@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """Loopback-only HTTP bridge for Doré Video Acquisition."""
 from __future__ import annotations
-import argparse, json, subprocess, sys\nfrom collections import deque
+import argparse, json, subprocess, sys
+from collections import deque
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"
-ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}\nCAPTURES=deque(maxlen=100)
+ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}
+CAPTURES=deque(maxlen=100)
 
 class H(BaseHTTPRequestHandler):
     def _cors(self):
@@ -21,7 +23,8 @@ class H(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204); self._cors(); self.send_header("Access-Control-Allow-Methods","GET,POST,OPTIONS"); self.send_header("Access-Control-Allow-Headers","Content-Type"); self.end_headers()
     def do_GET(self):
-        if self.path=="/health": return self._send(200,{"ok":True,"service":"dore-video-bridge","loopback":True,"captures":len(CAPTURES)})\n        if self.path=="/captures": return self._send(200,{"ok":True,"captures":list(CAPTURES)})
+        if self.path=="/health": return self._send(200,{"ok":True,"service":"dore-video-bridge","loopback":True})
+        if self.path=="/captures": return self._send(200,{"ok":True,"captures":list(CAPTURES)})
         self._send(404,{"ok":False,"error":"not_found"})
     def do_POST(self):
         op=self.path.strip("/")
