@@ -127,7 +127,7 @@
 @keyframes olive-in{from{opacity:0;transform:translateY(28px) scale(.985)}to{opacity:1;transform:none}}@keyframes olive-out{to{opacity:0;transform:translateY(-10px)}}
 @media(prefers-reduced-motion:reduce){.olive-preview,.series-chip,.olive-archive.is-detail .olive-hero,.olive-archive.is-detail .olive-index{transition:none!important;transform:none!important;filter:none!important}::view-transition-old(olive-detail),::view-transition-new(olive-detail){animation:none!important}}
 @media(max-width:1100px) and (min-width:761px){.person-row{flex-basis:54vw}.olive-preview{width:40vw}}
-@media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:5vh}.olive-hero{display:block}.olive-intro{margin-top:28px}.olive-index{margin-top:34px;overflow:visible}.olive-index-track{margin-right:calc(-1 * var(--ui-gutter));padding-right:18vw;gap:14px}.person-row{flex-basis:82vw;min-height:58vh;padding:26px 20px}.person-head h2{font-size:clamp(44px,12vw,66px)}.series-rail{gap:22px;scroll-snap-type:x proximity;mask-image:none}.series-chip{scroll-snap-align:start}.olive-preview{display:none}}.olive-hero{width:100%;min-height:0;display:block}.olive-intro{margin-top:28px}.olive-index{width:100%;margin-top:64px}.person-row{display:block;padding:32px 0;min-height:0}.person-head h2{font-size:clamp(40px,12vw,64px)}.series-rail{margin-top:12px;gap:24px;margin-right:calc(-1 * var(--ui-gutter));padding-right:var(--ui-gutter);scroll-snap-type:x proximity;mask-image:none}.series-chip{scroll-snap-align:start}.olive-preview{display:none}.detail-lead{grid-template-columns:1fr}.detail-entry{grid-template-columns:42px minmax(0,1fr)}.detail-entry__meta{grid-column:2}}
+@media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:5vh}.olive-hero{display:block}.olive-intro{margin-top:28px}.olive-index{margin-top:34px;overflow:visible}.olive-index-track{margin-right:calc(-1 * var(--ui-gutter));padding-right:18vw;gap:14px}.person-row{flex-basis:82vw;min-height:58vh;padding:26px 20px}.person-head h2{font-size:clamp(44px,12vw,66px)}.series-rail{gap:22px;scroll-snap-type:x proximity;mask-image:none}.series-chip{scroll-snap-align:start}.olive-preview{display:none}}
 </style>
 
 <script>
@@ -151,13 +151,6 @@
     chip.addEventListener('focus',()=>showPreview(chip));
     chip.addEventListener('blur',hidePreview);
   });
-
-  if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const observer=new IntersectionObserver(entries=>{
-      entries.forEach(entry=>entry.target.classList.toggle('is-current',entry.isIntersecting && entry.intersectionRatio>.55));
-    },{threshold:[.55]});
-    document.querySelectorAll('.person-row').forEach(row=>observer.observe(row));
-  }
 
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
     link.addEventListener('click',e=>{
