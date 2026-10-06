@@ -36,7 +36,18 @@
       <button class="olive-speaker-card" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
       <button class="olive-speaker-card" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
       <button class="olive-speaker-card" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>
-    </div>
+
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="葉光明"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="倪柝聲"><span>06</span><strong>倪柝聲</strong><small>講道與出版</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="康來昌"><span>07</span><strong>康來昌</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="唐崇榮"><span>08</span><strong>唐崇榮</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="寇紹恩"><span>09</span><strong>寇紹恩</strong><small>系列信息</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
+      <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>    </div>
   </section>
 
   <section id="olive-detail" class="olive-detail" hidden>
@@ -65,14 +76,15 @@
 .olive-feature__caption small{font:10px/1 Arial,sans-serif;letter-spacing:.18em}
 .olive-feature__caption h2{font:400 clamp(46px,5vw,90px)/.9 "Noto Serif TC",serif;margin:.16em 0 .08em}
 .olive-feature__caption p{font-size:var(--ui-body-lg);margin:0}
-.olive-speaker-rail{height:100%;display:flex;gap:clamp(8px,.8vw,14px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;padding:0 14vw 2px 0;overscroll-behavior-inline:contain}
+.olive-speaker-rail{height:100%;display:flex;gap:clamp(8px,.8vw,14px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:none;scrollbar-width:none;padding:0 14vw 2px 0;overscroll-behavior-inline:contain}
 .olive-speaker-rail::-webkit-scrollbar{display:none}
-.olive-speaker-card{appearance:none;flex:0 0 clamp(150px,13vw,220px);scroll-snap-align:start;border:1px solid rgba(37,37,37,.2);background:rgba(255,255,255,.22);color:inherit;text-align:left;padding:clamp(14px,1.4vw,24px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;transition:transform .25s,background .25s,border-color .25s}
+.olive-speaker-card{appearance:none;flex:0 0 clamp(150px,13vw,220px);border:1px solid rgba(37,37,37,.2);background:rgba(255,255,255,.22);color:inherit;text-align:left;padding:clamp(14px,1.4vw,24px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;transition:transform .25s,background .25s,border-color .25s}
 .olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-4px);background:rgba(206,189,116,.12);border-color:rgba(37,37,37,.5);outline:0}
 .olive-speaker-card span{font:9px/1 Arial,sans-serif;letter-spacing:.14em;opacity:.48}
 .olive-speaker-card strong{align-self:center;font:400 clamp(20px,1.65vw,30px)/1.05 "Noto Serif TC",serif}
 .olive-speaker-card small{font-size:10px;opacity:.58;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .olive-preview{display:none}
+@media(prefers-reduced-motion:reduce){.olive-speaker-card{transition:none}}
 @media(max-width:900px){.olive-speaker-card{flex-basis:clamp(145px,20vw,190px)}}
 @media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:4vh}.olive-hero{display:block}.olive-intro{margin-top:22px}.olive-home-stage{height:68svh;grid-template-rows:minmax(330px,1fr) 118px;margin-right:calc(-1 * var(--ui-gutter));padding-right:var(--ui-gutter)}.olive-speaker-rail{padding-right:22vw}.olive-speaker-card{flex-basis:42vw;padding:14px}.olive-feature__caption h2{font-size:clamp(42px,12vw,64px)}}
 .olive-detail{min-height:90vh;margin-top:clamp(80px,9vw,160px);border-top:1px solid rgba(37,37,37,.3);padding-top:clamp(42px,5vw,82px);view-transition-name:olive-detail}
@@ -103,11 +115,34 @@
 <script>
 (() => {
   const speakerRail=document.querySelector('.olive-speaker-rail');
-  speakerRail?.addEventListener('wheel',e=>{
-    if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
-    e.preventDefault();
-    speakerRail.scrollLeft+=e.deltaY;
-  },{passive:false});
+  if(speakerRail){
+    const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
+    let last=performance.now(), boost=0, raf=0;
+    const halfWidth=()=>speakerRail.scrollWidth/2;
+    const normalize=()=>{
+      const half=halfWidth();
+      if(half>0 && speakerRail.scrollLeft>=half) speakerRail.scrollLeft-=half;
+      else if(speakerRail.scrollLeft<0) speakerRail.scrollLeft+=half;
+    };
+    const tick=now=>{
+      const dt=Math.min(40,now-last); last=now;
+      if(!reduceMotion.matches){
+        speakerRail.scrollLeft+=(0.018*dt)+boost;
+        boost*=.88;
+        normalize();
+      }
+      raf=requestAnimationFrame(tick);
+    };
+    raf=requestAnimationFrame(tick);
+    speakerRail.addEventListener('wheel',e=>{
+      if(Math.abs(e.deltaY)>Math.abs(e.deltaX)){
+        e.preventDefault();
+        boost+=Math.max(-18,Math.min(18,e.deltaY*.11));
+      }
+    },{passive:false});
+    speakerRail.addEventListener('scroll',normalize,{passive:true});
+    window.addEventListener('pagehide',()=>cancelAnimationFrame(raf),{once:true});
+  }
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
     link.addEventListener('click',e=>{
       if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||link.target) return;
