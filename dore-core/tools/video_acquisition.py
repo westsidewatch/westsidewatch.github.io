@@ -106,9 +106,17 @@ def probe(url):
         return d
 
 def download_manifest(url, output):
-    Path(output).mkdir(parents=True,exist_ok=True)
-    cmd=[nm3u8(),url,"--save-dir",str(Path(output).resolve()),"--auto-select"]
-    subprocess.run(cmd,check=True)
+    out=Path(output).expanduser().resolve()
+    out.mkdir(parents=True,exist_ok=True)
+    before={p.resolve() for p in out.rglob("*") if p.is_file()}
+    cmd=[nm3u8(),url,"--save-dir",str(out),"--tmp-dir",str(out/".dore-video-tmp"),"--auto-select","--del-after-done","--use-shaka-packager","false"]
+    subprocess.run(cmd,check=True,cwd=out)
+    media_exts={".mp4",".mkv",".mov",".webm",".m4v"}
+    produced=[p for p in out.rglob("*") if p.is_file() and p.resolve() not in before and p.suffix.lower() in media_exts and ".dore-video-tmp" not in p.parts]
+    if not produced:
+        raise RuntimeError(f"Segments were downloaded but no merged video file was created in {out}. Ensure FFmpeg is installed and available on PATH.")
+    final=max(produced,key=lambda p:p.stat().st_mtime)
+    print(json.dumps({"ok":True,"file":str(final.resolve()),"output_dir":str(out)},ensure_ascii=False))
 
 def download_yt(url, fmt, output):
     Path(output).mkdir(parents=True,exist_ok=True)
@@ -143,7 +151,7 @@ def main():
     for name in ("probe","formats"):
         p=sub.add_parser(name); p.add_argument("url")
     p=sub.add_parser("download"); p.add_argument("url"); p.add_argument("--format")
-    p.add_argument("--output",default=os.environ.get("DORE_VIDEO_OUTPUT","downloads"))
+    p.add_argument("--output",default=os.environ.get("DORE_VIDEO_OUTPUT",str(Path.home()/"Desktop")))
     a=ap.parse_args()
     if a.command in ("probe","formats"):
         d=probe(a.url)
