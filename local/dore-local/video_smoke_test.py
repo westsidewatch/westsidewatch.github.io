@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 BRIDGE="http://127.0.0.1:43127"
-GOODTV_HLS="https://vod.streamingfast.net/hls-vod/video/T405001_0099.m3u8"
+GOODTV_URL="https://www.goodtv.tv/watch?episode=80468"
 
 def request(path, payload=None):
     data=None if payload is None else json.dumps(payload).encode()
@@ -20,7 +20,7 @@ def main():
     ns=ap.parse_args()
     health=request("/health")
     assert health.get("ok"),health
-    start=request("/download",{"url":GOODTV_HLS,"output":ns.output})
+    start=request("/download",{"url":GOODTV_URL,"output":ns.output})
     task_id=start["task_id"]
     deadline=time.time()+ns.timeout
     last=None
