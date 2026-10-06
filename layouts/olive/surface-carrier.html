@@ -7,7 +7,20 @@
     <p class="olive-intro">中文講道、教導與信息。</p>
   </section>
   <section class="olive-section olive-people" aria-label="人物">
-    <div id="olive-speakers" class="olive-speaker-grid" aria-live="polite"></div>
+    <div id="olive-speakers" class="olive-speaker-grid">
+      <a class="speaker-card" href="/olive/?person=david-pawson"><h3>大衛鮑森</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=jiang-xiuqin"><h3>江秀琴</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=derek-prince"><h3>葉光明</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=watchman-nee"><h3>倪柝聲</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=kang-lai-chang"><h3>康來昌</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=stephen-tong"><h3>唐崇榮</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=kou-shao-en"><h3>寇紹恩</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=rick-warren"><h3>華理克</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=tong-liu"><h3>劉彤</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=jerry-lai"><h3>賴若瀚</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=yu-hong-jie"><h3>于宏潔</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+      <a class="speaker-card" href="/olive/?person=huang-shuhua"><h3>黃淑華</h3><p>進入 <b aria-hidden="true">↗</b></p></a>
+    </div>
   </section>
   <section class="olive-section olive-topics" aria-label="講道主題">
     <div id="olive-series" class="olive-series-grid" aria-live="polite"></div>
@@ -16,6 +29,26 @@
 <style>
 .olive-production{max-width:1180px;margin:auto;padding:7vw 5vw 12vw;color:#252525}.olive-eyebrow,.olive-section header p{font:12px/1.2 Arial,sans-serif;letter-spacing:.16em}.olive-hero{min-height:58vh;display:flex;flex-direction:column;justify-content:flex-end;border-bottom:1px solid rgba(37,37,37,.28);padding-bottom:4vw}.olive-hero h1{font:400 clamp(64px,12vw,170px)/.8 "Cormorant Garamond",Georgia,serif;margin:.18em 0}.olive-zh{font-size:clamp(24px,3vw,46px);margin:.2em 0}.olive-intro{max-width:720px;font-size:clamp(18px,2vw,28px);line-height:1.55}.olive-section{margin-top:7vw}.olive-speaker-grid,.olive-series-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:rgba(37,37,37,.18);margin-top:1px}.speaker-card,.series-card{display:block;background:#f1eee6;padding:2rem;min-height:150px;color:inherit;text-decoration:none;transition:transform .18s ease,background .18s ease}.speaker-card:hover,.series-card:hover{transform:translateY(-2px);background:#ebe6da}.speaker-card h3,.series-card h3{font-size:26px;font-weight:400;margin:.35em 0}.speaker-card p:last-child,.series-card p:last-child{font:14px/1.6 Arial,sans-serif}@media(max-width:720px){.olive-speaker-grid,.olive-series-grid{grid-template-columns:1fr}.olive-section>header{display:block}}
 </style>
-<script src="/js/westside-resource-query.js"></script>
-<script src="/olive/olive.js"></script>
+<script>
+(() => {
+  const q=new URLSearchParams(location.search);
+  const stage=document.getElementById('olive-series');
+  if(q.get('person')!=='jiang-xiuqin'||!stage) return;
+  const topics=[
+    ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
+    ['讚美','jiang-xiuqin-goodtv-praise','進入'],
+    ['進入神的安息美地','jiang-xiuqin-goodtv-rest','進入'],
+    ['慕主先鋒信息','jiang-xiuqin-goodtv-forerunner-message','進入'],
+    ['內在生活饗宴','jiang-xiuqin-goodtv-inner-life-feast','進入'],
+    ['道在人間','jiang-xiuqin-goodtv-good-message','進入']
+  ];
+  for(const [name,key,meta] of topics){
+    const a=document.createElement('a');
+    a.className='series-card';
+    a.href='/olive/?person=jiang-xiuqin&topic='+key;
+    a.innerHTML='<h3>'+name+'</h3><p>'+meta+' <b aria-hidden="true">↗</b></p>';
+    stage.append(a);
+  }
+})();
+</script>
 {{ end }}
