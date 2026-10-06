@@ -34,7 +34,22 @@
   const q=new URLSearchParams(location.search);
   const stage=document.getElementById('olive-series');
   const person=q.get('person');
+  const topic=q.get('topic');
   if(!stage) return;
+
+  const renderWorks=(works) => {
+    stage.innerHTML='';
+    for(const [title,url,meta] of works){
+      const a=document.createElement('a');
+      a.className='series-card';
+      a.href=url;
+      a.target='_blank';
+      a.rel='noopener noreferrer';
+      a.innerHTML='<h3>'+title+'</h3><p>'+meta+' <b aria-hidden="true">↗</b></p>';
+      stage.append(a);
+    }
+  };
+
   if(person==='david-pawson'){
     const topics=[['解鎖舊約','unlocking-old-testament-zh'],['解鎖新約','unlocking-new-testament-zh']];
     for(const [name,key] of topics){
@@ -43,7 +58,24 @@
     }
     return;
   }
+
   if(person!=='jiang-xiuqin') return;
+
+  const works={
+    'jiang-xiuqin-goodtv-good-message':[
+      ['承受美地為業的祕訣','https://www.youtube.com/watch?v=SeWck245iSE','道在人間'],
+      ['追求認識神','https://www.youtube.com/watch?v=nelt0FmxwiA','道在人間'],
+      ['興起發光 迎接復興浪潮','https://www.youtube.com/watch?v=4l-MLiv3Kto','道在人間']
+    ],
+    'jiang-xiuqin-goodtv-forerunner-message':[
+      ['脫離努力 進入恩寵','https://www.youtube.com/watch?v=-esBfKgikXg','慕主先鋒信息']
+    ],
+    'jiang-xiuqin-goodtv-rest':[
+      ['等候神好像沒什麼感覺？放掉努力進入神的安息！','https://www.youtube.com/watch?v=ZWGlQkGDgMU','進入神的安息美地']
+    ]
+  };
+  if(topic && works[topic]){ renderWorks(works[topic]); return; }
+
   const topics=[
     ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
     ['讚美','jiang-xiuqin-goodtv-praise','進入'],
