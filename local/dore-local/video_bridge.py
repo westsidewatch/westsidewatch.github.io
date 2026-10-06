@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Loopback-only HTTP bridge for Doré Video Acquisition."""
 from __future__ import annotations
-import argparse, json, subprocess, sys, threading, uuid
+import argparse, json, subprocess, sys, threading, uuid, time
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -11,8 +11,23 @@ ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"
 TASKS={}
 TASK_LOCK=threading.Lock()
 
-def run_download_task(task_id,cmd):
+def segment_progress(root):
+    root=Path(root).expanduser()
+    if not root.exists(): return {"segments":0}
+    parts=[p for p in root.rglob("*.ts") if not p.name.startswith("._")]
+    return {"segments":len(parts)}
+
+def watch_progress(task_id,root,stop):
+    while not stop.wait(1):
+        progress=segment_progress(root)
+        with TASK_LOCK:
+            if task_id not in TASKS: return
+            TASKS[task_id]["progress"]=progress
+
+def run_download_task(task_id,cmd,output):
     with TASK_LOCK: TASKS[task_id]["status"]="running"
+    stop=threading.Event()
+    watcher=threading.Thread(target=watch_progress,args=(task_id,output,stop),daemon=True); watcher.start()
     try:
         p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
         raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
@@ -24,6 +39,9 @@ def run_download_task(task_id,cmd):
         with TASK_LOCK: TASKS[task_id].update({"status":status,"ok":p.returncode==0,"result":result})
     except Exception as e:
         with TASK_LOCK: TASKS[task_id].update({"status":"failed","ok":False,"error":type(e).__name__,"detail":str(e)})
+    finally:
+        stop.set()
+        with TASK_LOCK: TASKS[task_id]["progress"]=segment_progress(output)
 
 class H(BaseHTTPRequestHandler):
     def _cors(self):
@@ -55,8 +73,9 @@ class H(BaseHTTPRequestHandler):
                 if body.get("output"): cmd += ["--output",str(body["output"])]
             if op=="download":
                 task_id=uuid.uuid4().hex
-                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True}
-                threading.Thread(target=run_download_task,args=(task_id,cmd),daemon=True).start()
+                output=str(Path(body.get("output") or Path.home()/"Desktop").expanduser())
+                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"progress":{"segments":0}}
+                threading.Thread(target=run_download_task,args=(task_id,cmd,output),daemon=True).start()
                 return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued"})
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
             raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
