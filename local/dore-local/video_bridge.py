@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """Loopback-only HTTP bridge for Doré Video Acquisition."""
 from __future__ import annotations
-import argparse, json, subprocess, sys, threading, uuid, time
+import argparse, json, subprocess, sys, threading, uuid, time, re
+from urllib.parse import urljoin
+from urllib.request import Request, urlopen
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -11,23 +13,54 @@ ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"
 TASKS={}
 TASK_LOCK=threading.Lock()
 
-def segment_progress(root):
+def hls_total(url):
+    if ".m3u8" not in url.lower(): return None
+    def read(u):
+        req=Request(u,headers={"User-Agent":"Mozilla/5.0 Dore/0.3"})
+        with urlopen(req,timeout=15) as r: return r.read(4_000_000).decode("utf-8",errors="replace")
+    try:
+        text=read(url); lines=[x.strip() for x in text.splitlines() if x.strip()]
+        if "#EXT-X-STREAM-INF" not in text:
+            return sum(1 for x in lines if not x.startswith("#"))
+        variants=[]
+        for i,line in enumerate(lines[:-1]):
+            if line.startswith("#EXT-X-STREAM-INF"):
+                m=re.search(r"BANDWIDTH=(\\d+)",line); bw=int(m.group(1)) if m else 0
+                if not lines[i+1].startswith("#"): variants.append((bw,urljoin(url,lines[i+1])))
+        totals=[]
+        if variants:
+            _,video_url=max(variants,key=lambda x:x[0])
+            totals.append(hls_total(video_url) or 0)
+        for line in lines:
+            if line.startswith("#EXT-X-MEDIA") and "TYPE=AUDIO" in line:
+                m=re.search(r'URI="([^"]+)"',line)
+                if m: totals.append(hls_total(urljoin(url,m.group(1))) or 0)
+        return max(totals) if totals else None
+    except Exception:
+        return None
+
+def segment_progress(root,total=None):
     root=Path(root).expanduser()
     if not root.exists(): return {"segments":0}
     parts=[p for p in root.rglob("*.ts") if not p.name.startswith("._")]
-    return {"segments":len(parts)}
+    stems={p.stem for p in parts}
+    done=len(stems)
+    progress={"segments":done}
+    if total:
+        progress.update({"total_segments":total,"percent":min(100,round(done*100/total))})
+    return progress
 
-def watch_progress(task_id,root,stop):
+def watch_progress(task_id,root,stop,total=None):
     while not stop.wait(1):
-        progress=segment_progress(root)
+        progress=segment_progress(root,total)
         with TASK_LOCK:
             if task_id not in TASKS: return
             TASKS[task_id]["progress"]=progress
 
-def run_download_task(task_id,cmd,output):
+def run_download_task(task_id,cmd,output,total=None):
     with TASK_LOCK: TASKS[task_id]["status"]="running"
     stop=threading.Event()
-    watcher=threading.Thread(target=watch_progress,args=(task_id,output,stop),daemon=True); watcher.start()
+    watcher=threading.Thread(target=watch_progress,args=(task_id,output,stop,total),daemon=True); watcher.start()
     try:
         p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
         raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
@@ -41,7 +74,7 @@ def run_download_task(task_id,cmd,output):
         with TASK_LOCK: TASKS[task_id].update({"status":"failed","ok":False,"error":type(e).__name__,"detail":str(e)})
     finally:
         stop.set()
-        with TASK_LOCK: TASKS[task_id]["progress"]=segment_progress(output)
+        with TASK_LOCK: TASKS[task_id]["progress"]=segment_progress(output,total)
 
 class H(BaseHTTPRequestHandler):
     def _cors(self):
@@ -74,8 +107,10 @@ class H(BaseHTTPRequestHandler):
             if op=="download":
                 task_id=uuid.uuid4().hex
                 output=str(Path(body.get("output") or Path.home()/"Desktop").expanduser())
-                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"progress":{"segments":0}}
-                threading.Thread(target=run_download_task,args=(task_id,cmd,output),daemon=True).start()
+                total=hls_total(url)
+                progress={"segments":0}; progress.update({"total_segments":total,"percent":0} if total else {})
+                with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"progress":progress}
+                threading.Thread(target=run_download_task,args=(task_id,cmd,output,total),daemon=True).start()
                 return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued"})
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
             raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
