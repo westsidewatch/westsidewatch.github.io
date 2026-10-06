@@ -20,6 +20,10 @@ class Base:
 class Multi:
     SUPPORTED=set(homepage_candidates.PAGES)
 
+    @staticmethod
+    def render_canvas(page_id='homepage', edit=False):
+        return f'<canvas data-page="{page_id}" data-edit="{edit}"></canvas>'
+
 base=Base();pages_before=len(base.w['pages'])
 first=rows['templates'][0]
 result=template_library.instantiate(base,homepage_candidates,Multi,first['id'])
