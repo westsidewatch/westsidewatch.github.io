@@ -21,7 +21,7 @@ class H(BaseHTTPRequestHandler):
     def do_OPTIONS(self):
         self.send_response(204); self._cors(); self.send_header("Access-Control-Allow-Methods","GET,POST,OPTIONS"); self.send_header("Access-Control-Allow-Headers","Content-Type"); self.end_headers()
     def do_GET(self):
-        if self.path=="/health": return self._send(200,{"ok":True,"service":"dore-video-bridge","loopback":True,"captures":len(CAPTURES)})\n        if self.path=="/captures": return self._send(200,{"ok":True,"captures":list(CAPTURES)})
+        if self.path=="/health": return self._send(200,{"ok":True,"service":"dore-video-bridge","loopback":True})\n        if self.path=="/captures": return self._send(200,{"ok":True,"captures":list(CAPTURES)})
         self._send(404,{"ok":False,"error":"not_found"})
     def do_POST(self):
         op=self.path.strip("/")
