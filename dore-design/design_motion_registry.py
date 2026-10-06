@@ -103,7 +103,7 @@ html,body{height:100%;overflow:hidden!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
 /* The focused landscape opens opposite its source card, leaving that card visible. */
-.product-preview{width:min(45vw,700px)!important;height:auto!important;aspect-ratio:8/5}
+.product-preview{z-index:5;width:min(60vw,1100px)!important;height:auto!important;aspect-ratio:8/5}
 .product-preview.--left{left:0!important;right:auto!important}
 .product-preview.--right{right:0!important;left:auto!important}
 .lw-movement-label{position:absolute;z-index:20;left:0;right:0;height:2.35rem;display:flex;align-items:center;padding:0 1.2vw;background:transparent;color:#CEBD74;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;white-space:nowrap;pointer-events:none;box-sizing:border-box}
