@@ -24,15 +24,18 @@
       </a>
     </article>
 
-    <div class="olive-speaker-grid" aria-label="其他講員">
-      <button class="olive-speaker-card" type="button" data-person="江秀琴" data-preview="內在生活 · 讚美 · 安息美地"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
-      <button class="olive-speaker-card" type="button" data-person="賴若瀚" data-preview="啟示錄 · 十分釋經 · 傳道書"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
-      <button class="olive-speaker-card" type="button" data-person="劉彤" data-preview="信仰的傳承 · 活出最好的你"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
-      <button class="olive-speaker-card" type="button" data-person="葉光明" data-preview="葉光明中文事工"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
-      <button class="olive-speaker-card" type="button" data-person="倪柝聲" data-preview="中文講道 · 出版信息"><span>06</span><strong>倪柝聲</strong><small>講道與出版</small></button>
-      <button class="olive-speaker-card" type="button" data-person="康來昌" data-preview="中文講道"><span>07</span><strong>康來昌</strong><small>中文講道</small></button>
-      <button class="olive-speaker-card" type="button" data-person="唐崇榮" data-preview="中文講道"><span>08</span><strong>唐崇榮</strong><small>中文講道</small></button>
-      <button class="olive-speaker-card" type="button" data-person="寇紹恩" data-preview="天聲傳播 · 系列信息"><span>09</span><strong>寇紹恩</strong><small>系列信息</small></button>
+    <div class="olive-speaker-rail" aria-label="其他講員" tabindex="0">
+      <button class="olive-speaker-card" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
+      <button class="olive-speaker-card" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
+      <button class="olive-speaker-card" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
+      <button class="olive-speaker-card" type="button" data-person="葉光明"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
+      <button class="olive-speaker-card" type="button" data-person="倪柝聲"><span>06</span><strong>倪柝聲</strong><small>講道與出版</small></button>
+      <button class="olive-speaker-card" type="button" data-person="康來昌"><span>07</span><strong>康來昌</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card" type="button" data-person="唐崇榮"><span>08</span><strong>唐崇榮</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card" type="button" data-person="寇紹恩"><span>09</span><strong>寇紹恩</strong><small>系列信息</small></button>
+      <button class="olive-speaker-card" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
+      <button class="olive-speaker-card" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
+      <button class="olive-speaker-card" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>
     </div>
   </section>
 
@@ -51,8 +54,8 @@
 .olive-hero h1{font:400 clamp(54px,5.8vw,108px)/.76 "Cormorant Garamond",Georgia,serif;margin:.16em 0 .04em;letter-spacing:-.045em}
 .olive-zh{font-size:var(--ui-h3);margin:.15em 0}
 .olive-intro{max-width:38em;font-size:var(--ui-body-lg);line-height:1.6;margin:0 0 .3em}
-.olive-home-stage{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(300px,.75fr);gap:clamp(14px,1.5vw,26px);height:clamp(430px,52vh,690px);margin-top:clamp(18px,2vw,30px);padding-bottom:clamp(24px,3vw,48px)}
-.olive-feature{min-width:0;height:100%}
+.olive-home-stage{display:grid;grid-template-rows:minmax(330px,1fr) clamp(118px,14vh,170px);gap:clamp(10px,1vw,16px);height:clamp(500px,64vh,780px);margin-top:clamp(18px,2vw,30px);padding-bottom:clamp(24px,3vw,48px);overflow:hidden}
+.olive-feature{min-width:0;min-height:0;height:100%}
 .olive-feature__media{height:100%;display:block;position:relative;overflow:hidden;color:#fff;text-decoration:none;background:#2c2a25}
 .olive-feature__art{position:absolute;inset:0;background:radial-gradient(circle at 24% 22%,rgba(231,218,165,.82),transparent 25%),linear-gradient(128deg,#b5a878 0,#766c4c 42%,#292824 100%)}
 .olive-feature__art:after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(105deg,transparent 0 7px,rgba(255,255,255,.07) 8px,transparent 9px)}
@@ -62,15 +65,16 @@
 .olive-feature__caption small{font:10px/1 Arial,sans-serif;letter-spacing:.18em}
 .olive-feature__caption h2{font:400 clamp(46px,5vw,90px)/.9 "Noto Serif TC",serif;margin:.16em 0 .08em}
 .olive-feature__caption p{font-size:var(--ui-body-lg);margin:0}
-.olive-speaker-grid{height:100%;display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);gap:clamp(8px,.8vw,14px)}
-.olive-speaker-card{appearance:none;border:1px solid rgba(37,37,37,.2);background:rgba(255,255,255,.22);color:inherit;text-align:left;padding:clamp(14px,1.4vw,24px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;transition:transform .25s,background .25s,border-color .25s}
+.olive-speaker-rail{height:100%;display:flex;gap:clamp(8px,.8vw,14px);overflow-x:auto;overflow-y:hidden;scroll-snap-type:x proximity;scrollbar-width:none;padding:0 14vw 2px 0;overscroll-behavior-inline:contain}
+.olive-speaker-rail::-webkit-scrollbar{display:none}
+.olive-speaker-card{appearance:none;flex:0 0 clamp(150px,13vw,220px);scroll-snap-align:start;border:1px solid rgba(37,37,37,.2);background:rgba(255,255,255,.22);color:inherit;text-align:left;padding:clamp(14px,1.4vw,24px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;transition:transform .25s,background .25s,border-color .25s}
 .olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-4px);background:rgba(206,189,116,.12);border-color:rgba(37,37,37,.5);outline:0}
 .olive-speaker-card span{font:9px/1 Arial,sans-serif;letter-spacing:.14em;opacity:.48}
 .olive-speaker-card strong{align-self:center;font:400 clamp(20px,1.65vw,30px)/1.05 "Noto Serif TC",serif}
 .olive-speaker-card small{font-size:10px;opacity:.58;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .olive-preview{display:none}
-@media(max-width:900px){.olive-home-stage{grid-template-columns:minmax(0,1.4fr) minmax(260px,.8fr)}.olive-speaker-grid{grid-template-columns:1fr}}
-@media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:4vh}.olive-hero{display:block}.olive-intro{margin-top:22px}.olive-home-stage{display:flex;height:62svh;overflow-x:auto;scroll-snap-type:x mandatory;margin-right:calc(-1 * var(--ui-gutter));padding-right:18vw;gap:12px}.olive-feature{flex:0 0 86vw;scroll-snap-align:start}.olive-speaker-grid{flex:0 0 86vw;grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr);scroll-snap-align:start}.olive-feature__caption h2{font-size:clamp(42px,12vw,64px)}}
+@media(max-width:900px){.olive-speaker-card{flex-basis:clamp(145px,20vw,190px)}}
+@media(max-width:760px){.olive-archive{width:calc(100vw - (2 * var(--ui-gutter)));padding-top:4vh}.olive-hero{display:block}.olive-intro{margin-top:22px}.olive-home-stage{height:68svh;grid-template-rows:minmax(330px,1fr) 118px;margin-right:calc(-1 * var(--ui-gutter));padding-right:var(--ui-gutter)}.olive-speaker-rail{padding-right:22vw}.olive-speaker-card{flex-basis:42vw;padding:14px}.olive-feature__caption h2{font-size:clamp(42px,12vw,64px)}}
 .olive-detail{min-height:90vh;margin-top:clamp(80px,9vw,160px);border-top:1px solid rgba(37,37,37,.3);padding-top:clamp(42px,5vw,82px);view-transition-name:olive-detail}
 .olive-archive.is-detail .olive-hero,.olive-archive.is-detail .olive-index{opacity:.08;filter:blur(3px);transition:opacity .35s,filter .35s;pointer-events:none}
 .olive-archive.is-detail .olive-preview{opacity:0!important}
@@ -98,6 +102,12 @@
 
 <script>
 (() => {
+  const speakerRail=document.querySelector('.olive-speaker-rail');
+  speakerRail?.addEventListener('wheel',e=>{
+    if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return;
+    e.preventDefault();
+    speakerRail.scrollLeft+=e.deltaY;
+  },{passive:false});
   document.querySelectorAll('a.series-chip[href*="topic="]').forEach(link=>{
     link.addEventListener('click',e=>{
       if(e.metaKey||e.ctrlKey||e.shiftKey||e.altKey||link.target) return;
