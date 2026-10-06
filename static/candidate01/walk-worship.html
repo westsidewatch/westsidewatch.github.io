@@ -168,47 +168,6 @@ html,body{height:100%;overflow:hidden!important}
   }
 })();
 </script>
-
-<script id="candidate01-exact-grid-preview-geometry">
-(()=>{
-  const sync=()=>{
-    const root=document.querySelector('.products');
-    const grid=document.querySelector('.products__grid');
-    const layer=document.querySelector('.products__preview');
-    const cards=[...document.querySelectorAll('.products__grid .product')];
-    const left=document.querySelector('.product-preview.--left');
-    const right=document.querySelector('.product-preview.--right');
-    if(!root||!grid||!layer||cards.length<8||!left||!right)return;
-    const rr=root.getBoundingClientRect();
-    const cr=cards.map(el=>el.getBoundingClientRect());
-    const minX=Math.min(...cr.map(r=>r.left));
-    const maxX=Math.max(...cr.map(r=>r.right));
-    const minY=Math.min(...cr.map(r=>r.top));
-    const maxY=Math.max(...cr.map(r=>r.bottom));
-    layer.style.inset='auto';
-    layer.style.left=`${minX-rr.left}px`;
-    layer.style.top=`${minY-rr.top}px`;
-    layer.style.width=`${maxX-minX}px`;
-    layer.style.height=`${maxY-minY}px`;
-    layer.style.minHeight='0';
-    const groupW=cr[1].right-cr[0].left;
-    const groupH=maxY-minY;
-    [left,right].forEach(p=>{
-      p.style.width=`${groupW}px`;
-      p.style.height=`${groupH}px`;
-      p.style.top='50%';
-      p.style.transform='translateY(-50%)';
-    });
-    left.style.left='0'; left.style.right='auto';
-    right.style.right='0'; right.style.left='auto';
-    document.documentElement.dataset.candidate01Geometry=`${Math.round(groupW)}x${Math.round(groupH)}`;
-  };
-  window.__candidate01SyncGeometry=sync;
-  const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{sync();window.dispatchEvent(new Event('resize'));}));
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',settle,{once:true});else settle();
-  window.addEventListener('resize',sync,{passive:true});
-})();
-</script>
 </body></html>
 <style id="candidate01-css-grid-morph">
 /* Site ratio is authoritative: cards keep the existing 8/5 geometry. */
@@ -216,7 +175,7 @@ html,body{height:100%;overflow:hidden!important}
 .product{aspect-ratio:var(--candidate-card-ratio)}
 /* Preview owns no independent ratio: it is the union of the existing 2×2 card footprint. */
 .products__preview{grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(2,auto)}
-.product-preview{height:auto;top:auto;transform:none}
+.product-preview{height:auto!important;top:0!important;transform:none!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important}
 </style>
 <script id="candidate01-css-grid-morph-runtime">
 (()=>{
