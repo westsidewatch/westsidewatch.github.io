@@ -6,7 +6,7 @@ from pathlib import Path
 from urllib.request import Request, urlopen
 
 BRIDGE="http://127.0.0.1:43127"
-GOODTV_URL="https://www.goodtv.tv/watch?episode=80468"
+GOODTV_URL="https://www.goodtv.tv/watch?episode=80469"
 
 def request(path, payload=None):
     data=None if payload is None else json.dumps(payload).encode()
