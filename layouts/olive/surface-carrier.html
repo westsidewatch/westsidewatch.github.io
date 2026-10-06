@@ -8,7 +8,7 @@
   </section>
   <section class="olive-section olive-people" aria-label="人物">
     <div id="olive-speakers" class="olive-speaker-grid">
-      <div class="speaker-card"><h3><a href="/olive/?person=david-pawson">大衛鮑森</a></h3><p><a href="/olive/?person=david-pawson&topic=unlocking-old-testament-zh">舊約縱覽</a> · <a href="/olive/?person=david-pawson&topic=unlocking-new-testament-zh">新約縱覽</a></p></div>
+      <div class="speaker-card"><h3><a href="/olive/?person=david-pawson">大衛鮑森</a></h3><p>大衛鮑森國際中文頻道 · 系列講座</p></div>
       <div class="speaker-card"><h3><a href="/olive/?person=jiang-xiuqin">江秀琴</a></h3><p><a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-inner-life-45">內在生活</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-praise">讚美</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-rest">進入神的安息美地</a> · <a href="/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-forerunner-message">慕主先鋒信息</a></p></div>
       <div class="speaker-card"><h3>葉光明</h3><p>Derek Prince 中文講道館藏</p></div>
       <div class="speaker-card"><h3>倪柝聲</h3><p>中文講道 · 出版信息</p></div>
@@ -51,19 +51,13 @@
   };
 
   if(person==='david-pawson'){
-    const pawsonWorks={
-      'unlocking-old-testament-zh':[
-        ['大衛鮑森舊約縱覽 - 出埃及記(一)','https://www.youtube.com/watch?v=jlHOgXhkEMo','舊約縱覽 · 出埃及記']
-      ],
-      'unlocking-new-testament-zh':[
-        ['大衛鮑森新約縱覽 - 馬太福音(一)','https://www.youtube.com/watch?v=mbNZAzDSWbo','新約縱覽 · 馬太福音']
-      ]
-    };
-    if(topic && pawsonWorks[topic]){ renderWorks(pawsonWorks[topic]); return; }
-    const topics=[['舊約縱覽','unlocking-old-testament-zh'],['新約縱覽','unlocking-new-testament-zh']];
-    for(const [name,key] of topics){
-      const a=document.createElement('a'); a.className='series-card'; a.href='/olive/?person=david-pawson&topic='+key;
-      a.innerHTML='<h3>'+name+'</h3><p>進入 <b aria-hidden="true">↗</b></p>'; stage.append(a);
+    const series=[
+      ['舊約縱覽','大衛鮑森國際中文頻道 · 完整系列'],
+      ['新約縱覽','大衛鮑森國際中文頻道 · 完整系列']
+    ];
+    for(const [name,meta] of series){
+      const card=document.createElement('div'); card.className='series-card';
+      card.innerHTML='<h3>'+name+'</h3><p>'+meta+'</p>'; stage.append(card);
     }
     return;
   }
