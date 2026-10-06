@@ -105,6 +105,8 @@ jobs:
               'product-preview.--right',
               'aspect-ratio:8/5',
               'candidate-01-4w-labels',
+              'candidate01-exact-grid-preview-geometry',
+              'const groupW=cr[1].right-cr[0].left',
           )
           for page in pages:
               html = page.read_text(encoding='utf-8')

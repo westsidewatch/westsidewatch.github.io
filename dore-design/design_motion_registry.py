@@ -102,10 +102,10 @@ html,body{height:100%;overflow:hidden!important}
 .products{position:relative;height:100vh;min-height:100vh;padding:3.2vw 4vw!important}
 .products__grid.living-current-field{height:100%;min-height:100%!important}
 .products__preview{inset:3.2vw 4vw!important;min-height:calc(100vh - 6.4vw)!important}
-/* The focused landscape opens opposite its source card, leaving that card visible. */
-.product-preview{z-index:5;width:calc((100% - 4vw) / 2)!important;height:auto!important;aspect-ratio:8/5}
-.product-preview.--left{left:0!important;right:auto!important}
-.product-preview.--right{right:0!important;left:auto!important}
+/* Candidate 01 computes the completed window from the live small-card bounds. */
+.product-preview{z-index:5!important}
+.product-preview.--left{left:0;right:auto}
+.product-preview.--right{right:0;left:auto}
 .lw-movement-label{position:absolute;z-index:20;left:0;right:0;height:2.35rem;display:flex;align-items:center;padding:0 1.2vw;background:transparent;color:#CEBD74;font-family:"Cormorant Garamond","Noto Serif TC",serif;font-size:clamp(11px,.78vw,14px);font-weight:500;letter-spacing:.12em;white-space:nowrap;pointer-events:none;box-sizing:border-box}
 .lw-movement-label.label-a{top:.35%}
 .lw-movement-label.label-b{top:48.35%}
@@ -124,6 +124,50 @@ def _install_living_current(html):
     return html.replace('</body>', _LIVING_CURRENT_SCRIPT + '</body>', 1)
 
 
+_CANDIDATE_FOCUS_GEOMETRY = r'''
+<script id="candidate01-exact-grid-preview-geometry">
+(()=>{
+  const sync=()=>{
+    const root=document.querySelector('.products');
+    const grid=document.querySelector('.products__grid');
+    const layer=document.querySelector('.products__preview');
+    const cards=[...document.querySelectorAll('.products__grid .product')];
+    const left=document.querySelector('.product-preview.--left');
+    const right=document.querySelector('.product-preview.--right');
+    if(!root||!grid||!layer||cards.length<8||!left||!right)return;
+    const rr=root.getBoundingClientRect();
+    const cr=cards.map(el=>el.getBoundingClientRect());
+    const minX=Math.min(...cr.map(r=>r.left));
+    const maxX=Math.max(...cr.map(r=>r.right));
+    const minY=Math.min(...cr.map(r=>r.top));
+    const maxY=Math.max(...cr.map(r=>r.bottom));
+    layer.style.inset='auto';
+    layer.style.left=`${minX-rr.left}px`;
+    layer.style.top=`${minY-rr.top}px`;
+    layer.style.width=`${maxX-minX}px`;
+    layer.style.height=`${maxY-minY}px`;
+    layer.style.minHeight='0';
+    const groupW=cr[1].right-cr[0].left;
+    const groupH=maxY-minY;
+    [left,right].forEach(p=>{
+      p.style.width=`${groupW}px`;
+      p.style.height=`${groupH}px`;
+      p.style.top='50%';
+      p.style.transform='translateY(-50%)';
+    });
+    left.style.left='0'; left.style.right='auto';
+    right.style.right='0'; right.style.left='auto';
+    document.documentElement.dataset.candidate01Geometry=`${Math.round(groupW)}x${Math.round(groupH)}`;
+  };
+  window.__candidate01SyncGeometry=sync;
+  const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{sync();window.dispatchEvent(new Event('resize'));}));
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',settle,{once:true});else settle();
+  window.addEventListener('resize',sync,{passive:true});
+})();
+</script>
+'''
+
+
 def _movement_labels_script(labels):
     """Place pale-gold 4W names above the two existing currents without changing their positions."""
     first, second = labels
@@ -135,7 +179,7 @@ def _candidate_focus_screen(screen_no, labels):
     motion_html = _install_living_current(codrops_site_8x5.render(edit=False))
     # Keep Candidate 01's opposite-side hover geometry and its horizontal 8:5 focus preview.
     motion_html = motion_html.replace('</head>', _CANDIDATE_FOCUS_EMBED_STYLE + '</head>', 1)
-    motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + '</body>', 1)
+    motion_html = motion_html.replace('</body>', _movement_labels_script(labels) + _CANDIDATE_FOCUS_GEOMETRY + '</body>', 1)
     srcdoc = html_lib.escape(motion_html, quote=True)
     return (
         '<section class="candidate-focus-screen" data-current="focus" '
