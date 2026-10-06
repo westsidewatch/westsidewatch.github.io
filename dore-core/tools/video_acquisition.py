@@ -116,7 +116,7 @@ def merge_downloaded_segments(root):
     groups=[]
     for folder in root.rglob("*"):
         if folder.is_dir():
-            parts=sorted(folder.glob("*.ts"),key=_natural_key)
+            parts=sorted((p for p in folder.glob("*.ts") if not p.name.startswith("._")),key=_natural_key)
             if parts: groups.append((folder,parts))
     if len(groups)<2:
         return {"merged":False,"merge_error":"Downloaded segments were preserved; no separate audio/video segment groups were found."}
