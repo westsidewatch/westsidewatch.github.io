@@ -137,6 +137,6 @@
 
 /* HOME HERO RUNTIME REPAIR — never magnify low-resolution archival footage. */
 .sites-home-film iframe{transform:none!important;animation:none!important}
-.sites-home-masthead{width:clamp(24rem,30vw,58rem);max-width:none}
-@media(min-width:1600px){.sites-home-masthead{width:clamp(28rem,27vw,54rem);max-width:none}}
-@media(max-width:900px){.sites-home-masthead{width:min(82vw,32rem);max-width:none}}
+.sites-home-masthead{width:clamp(30rem,38vw,68rem);max-width:none}
+@media(min-width:1600px){.sites-home-masthead{width:clamp(34rem,34vw,64rem);max-width:none}}
+@media(max-width:900px){.sites-home-masthead{width:min(90vw,38rem);max-width:none}}
