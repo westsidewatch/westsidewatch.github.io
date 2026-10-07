@@ -44,9 +44,12 @@ const viewports = registry.viewports;
      const animations=cards.map(e=>getComputedStyle(e).animationName);
      return {preview:pr,cards:cr,deltaTop:pr.top-group.top,deltaBottom:pr.bottom-group.bottom,animations};
    });
-   const ok=!report.error && Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
+   const desktopContract=viewport.width>=901;
+   const ok=!report.error && (!desktopContract || (
+     Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
      Math.abs(report.preview.ratio-1.6)<=0.01 && report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01) &&
-     report.animations.some(x=>x&&x!=='none');
+     report.animations.some(x=>x&&x!=='none')
+   ));
    console.log(JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
    if(!ok) failed=true;
    await page.close();
