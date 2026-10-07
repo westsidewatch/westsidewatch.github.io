@@ -26,7 +26,7 @@ jobs:
         uses: actions/cache@v4
         with:
           path: preview/watch-city-vol00/hosanna/media/clips
-          key: vol00-media-v2-${{ hashFiles('.github/workflows/vol00-media.yaml', 'preview/watch-city-vol00/**', 'dore-core/tools/video_master.py') }}
+          key: vol00-media-v3-${{ hashFiles('.github/workflows/vol00-media.yaml', 'preview/watch-city-vol00/**', 'dore-core/tools/video_master.py') }}
       - name: Render verified media
         if: steps.cache.outputs.cache-hit != 'true'
         timeout-minutes: 12
@@ -36,9 +36,13 @@ jobs:
           source_dir="$RUNNER_TEMP/vol00-source"
           clip_dir="preview/watch-city-vol00/hosanna/media/clips"
           mkdir -p "$source_dir" "$clip_dir"
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1903.webm" 'https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1912.webm" 'https://upload.wikimedia.org/wikipedia/commons/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm'
-          curl --fail --location --retry 3 --retry-delay 2 --output "$source_dir/1927.webm" 'https://upload.wikimedia.org/wikipedia/commons/e/eb/The_King_of_Kings_%281927%29.webm'
+                    fetch_segment(){ ffmpeg -hide_banner -loglevel error -y -ss "$2" -i "$1" -t "$3" -c copy "$4"; }
+          src1903='https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm'
+          src1912='https://upload.wikimedia.org/wikipedia/commons/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm'
+          src1927='https://upload.wikimedia.org/wikipedia/commons/e/eb/The_King_of_Kings_%281927%29.webm'
+          fetch_segment "$src1903" 1458 24 "$source_dir/1903.webm"
+          fetch_segment "$src1912" 2722 56 "$source_dir/1912.webm"
+          fetch_segment "$src1927" 3965 48 "$source_dir/1927.webm"
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/dore-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/0/0f/Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg'
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/1873-palms.jpg" 'https://upload.wikimedia.org/wikipedia/commons/7/71/Jesus_entering_Jerusalem.jpg'
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/morgner-1912-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/7/7d/Entry_of_Jesus_into_Jerusalem_by_Wilhelm_Morgner.jpg'
@@ -51,15 +55,15 @@ jobs:
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/prang-1892-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/f/f2/Jesus%27_entry_into_Jerusalem_%28Mark_XXI-8%2C_9%29_LCCN2016652375.jpg'
           curl --fail --location --retry 3 --retry-delay 2 --output "$clip_dir/ensor-1885-entry.jpg" 'https://upload.wikimedia.org/wikipedia/commons/4/4b/James_Ensor%2C_La_Vive_et_rayonnante_-_L%27Entr%C3%A9e_a_Jerusalem%2C_1885.jpg'
           render_clip(){ ffmpeg -hide_banner -loglevel error -y -ss "$2" -t 6 -i "$1" -an -vf "scale='min(1920,iw*2)':-2:flags=lanczos" -c:v libvpx-vp9 -crf 24 -b:v 0 -deadline good -cpu-used 2 "$3"; }
-          render_clip "$source_dir/1912.webm" 2730 "$clip_dir/1912-approach.webm"
-          render_clip "$source_dir/1903.webm" 1466 "$clip_dir/1903-gate.webm"
-          render_clip "$source_dir/1927.webm" 3973 "$clip_dir/1927-crowd.webm"
-          render_clip "$source_dir/1912.webm" 2764 "$clip_dir/1912-hosanna.webm"
-          render_clip "$source_dir/1903.webm" 1472 "$clip_dir/1903-crowd.webm"
-          render_clip "$source_dir/1927.webm" 4004 "$clip_dir/1927-hosanna.webm"
-          ffmpeg -hide_banner -loglevel error -y -ss 1469 -i "$source_dir/1903.webm" -frames:v 1 -q:v 2 "$clip_dir/1903-entry-still.jpg"
-          ffmpeg -hide_banner -loglevel error -y -ss 2734 -i "$source_dir/1912.webm" -frames:v 1 -q:v 2 "$clip_dir/1912-entry-still.jpg"
-          ffmpeg -hide_banner -loglevel error -y -ss 4006 -i "$source_dir/1927.webm" -frames:v 1 -q:v 2 "$clip_dir/1927-entry-still.jpg"
+          render_clip "$source_dir/1912.webm" 8 "$clip_dir/1912-approach.webm"
+          render_clip "$source_dir/1903.webm" 8 "$clip_dir/1903-gate.webm"
+          render_clip "$source_dir/1927.webm" 8 "$clip_dir/1927-crowd.webm"
+          render_clip "$source_dir/1912.webm" 42 "$clip_dir/1912-hosanna.webm"
+          render_clip "$source_dir/1903.webm" 14 "$clip_dir/1903-crowd.webm"
+          render_clip "$source_dir/1927.webm" 39 "$clip_dir/1927-hosanna.webm"
+          ffmpeg -hide_banner -loglevel error -y -ss 11 -i "$source_dir/1903.webm" -frames:v 1 -q:v 2 "$clip_dir/1903-entry-still.jpg"
+          ffmpeg -hide_banner -loglevel error -y -ss 12 -i "$source_dir/1912.webm" -frames:v 1 -q:v 2 "$clip_dir/1912-entry-still.jpg"
+          ffmpeg -hide_banner -loglevel error -y -ss 41 -i "$source_dir/1927.webm" -frames:v 1 -q:v 2 "$clip_dir/1927-entry-still.jpg"
       - name: Verify producer contract
         run: |
           test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.webm' -size +250k | wc -l)" -eq 6
