@@ -44,3 +44,97 @@
 @media(prefers-reduced-motion:reduce){
   .candidate-focus-screen,.candidate-focus-screen iframe,.sites-home-realm>*{animation:none!important;transition:none!important;transform:none!important;opacity:1!important}
 }
+
+
+/* AWARD POLISH v1 — homepage hierarchy, whitespace, interaction and responsive rhythm.
+   Keeps current IA, palette and Candidate 01 engines authoritative. */
+.sites-home-hero{--hero-edge:max(3.2vw,calc((100vw - var(--comp-canvas,94vw))/2));}
+.sites-home-nav{top:clamp(18px,2.2vh,34px);right:var(--hero-edge);gap:clamp(.9rem,1.25vw,1.7rem);font-size:clamp(9px,.58vw,12px);letter-spacing:.055em}
+.sites-home-nav a{opacity:.72;transition:opacity .35s ease,border-color .35s ease,transform .35s ease}
+.sites-home-nav a:hover,.sites-home-nav a:focus-visible{opacity:1;transform:translateY(-1px)}
+.sites-home-film:after{background:linear-gradient(90deg,rgba(11,12,10,.72),rgba(11,12,10,.08) 54%,rgba(11,12,10,.34)),linear-gradient(0deg,rgba(11,12,10,.28),transparent 38% 72%,rgba(11,12,10,.12))}
+.sites-home-masthead{top:15.5vh;left:var(--hero-edge);width:clamp(18rem,22vw,43rem)}
+.sites-home-masthead p{margin-top:1.25rem;font-size:clamp(8px,.52vw,11px);letter-spacing:.2em;opacity:.68}
+.sites-home-intro{left:var(--hero-edge);bottom:11.5vh;max-width:min(44vw,760px)}
+.sites-home-star{width:clamp(11px,.8vw,17px);margin-bottom:clamp(1rem,2vh,1.8rem);opacity:.78}
+.sites-home-intro h1{font-size:clamp(4.5rem,7.25vw,10.8rem);line-height:.78;letter-spacing:-.045em;text-wrap:balance}
+.sites-home-intro p{font-size:clamp(10px,.64vw,13px);letter-spacing:.055em;opacity:.8}
+.sites-home-intro p+p{font-size:clamp(10px,.68vw,14px);opacity:.68}
+.sites-home-intro cite{font-size:clamp(7px,.46vw,10px);opacity:.74}
+.sites-home-entry{right:var(--hero-edge);bottom:5.4vh;gap:clamp(1.8rem,2.8vw,3.8rem);font-size:clamp(9px,.62vw,13px)}
+.sites-home-entry a{opacity:.72;transition:opacity .35s ease,transform .35s ease,border-color .35s ease}
+.sites-home-entry a:hover,.sites-home-entry a:focus-visible{opacity:1;transform:translateY(-2px)}
+.sites-home-entry span{font-size:clamp(7px,.48vw,10px);opacity:.72}
+
+/* Editorial hierarchy: quiet labels, decisive titles, generous negative space. */
+.sites-home-realm{padding-inline:max(var(--ui-gutter),calc((100vw - var(--comp-canvas,94vw))/2));grid-template-columns:minmax(7rem,.72fr) minmax(20rem,2.5fr) minmax(15rem,.9fr);column-gap:clamp(2rem,4.5vw,7rem)}
+.sites-home-realm>span{font-size:clamp(8px,.55vw,11px);letter-spacing:.2em;opacity:.62}
+.sites-home-realm h2{font-size:clamp(4.6rem,8.2vw,10.8rem);line-height:.76;letter-spacing:-.05em}
+.sites-home-realm p{font-size:clamp(11px,.72vw,15px);line-height:1.85;opacity:.72}
+.sites-home-realm b{font-size:clamp(8px,.55vw,11px);letter-spacing:.15em;opacity:.7;transition:opacity .3s ease,transform .3s ease}
+.sites-home-realm:hover b,.sites-home-realm:focus-visible b{opacity:1;transform:translateX(4px)}
+.sites-home-closing{min-height:68svh}
+.sites-home-closing p{opacity:.58}.sites-home-closing blockquote{font-size:clamp(3.2rem,5.5vw,7.4rem);line-height:.86}.sites-home-closing a{opacity:.7}
+
+/* Keyboard polish without decorative focus boxes. */
+.sites-home-nav a:focus-visible,.sites-home-entry a:focus-visible,.sites-home-realm:focus-visible,.sites-home-closing a:focus-visible{outline:1px solid currentColor;outline-offset:6px}
+
+@media(min-width:1600px){
+  .sites-home-masthead{width:clamp(21rem,20vw,39rem)}
+  .sites-home-intro{bottom:10.5vh}
+  .sites-home-intro h1{font-size:clamp(5.8rem,6.65vw,10rem)}
+}
+@media(max-width:900px){
+  .sites-home-hero{--hero-edge:18px}
+  .sites-home-nav{left:18px;right:18px;top:1rem;padding-bottom:.4rem;gap:1rem;font-size:9px}
+  .sites-home-masthead{top:16vh;left:18px;width:min(72vw,25rem)}
+  .sites-home-intro{left:18px;right:18px;bottom:15vh;max-width:none}
+  .sites-home-intro h1{font-size:clamp(4.5rem,19vw,8rem);line-height:.78}
+  .sites-home-entry{left:18px;right:18px;bottom:4.5vh;justify-content:space-between;gap:1rem}
+}
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-masthead,.sites-home-intro,.sites-home-entry{animation:award-hero-reveal 1.25s cubic-bezier(.22,.72,.18,1) both}
+  .sites-home-intro{animation-delay:.08s}.sites-home-entry{animation-delay:.16s}
+  @keyframes award-hero-reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+}
+
+
+/* AWARD POLISH v1.1 — deliberate editorial grid and optical balance. */
+@media(min-width:901px){
+  .sites-home-hero:before{content:"";position:absolute;z-index:1;inset:0 auto 0 var(--hero-edge);width:1px;background:color-mix(in oklab,var(--ws-paper) 11%,transparent);pointer-events:none}
+  .sites-home-masthead,.sites-home-intro{padding-left:clamp(0px,.2vw,4px)}
+  .sites-home-masthead{max-width:34rem}
+  .sites-home-intro h1{max-width:5.2ch}
+  .sites-home-intro p[lang=zh-Hant]{margin-top:1.05rem}
+  .sites-home-entry{align-items:flex-end}
+  .sites-home-entry a{min-width:clamp(9.5rem,10vw,13rem);display:flex;justify-content:space-between;gap:1rem}
+  .sites-home-realm:after{content:"";position:absolute;left:max(var(--ui-gutter),calc((100vw - var(--comp-canvas,94vw))/2));right:max(var(--ui-gutter),calc((100vw - var(--comp-canvas,94vw))/2));bottom:clamp(2rem,4vh,4rem);height:1px;background:color-mix(in oklab,currentColor 10%,transparent);pointer-events:none}
+  .sites-home-realm h2{align-self:center;max-width:8.5ch}
+  .sites-home-realm p{align-self:center;max-width:25rem}
+}
+/* Keep image/video treatment editorial rather than effect-heavy. */
+.sites-home-film iframe{filter:saturate(.82) contrast(1.025) brightness(.94)}
+.sites-home-realm:before{opacity:.56}
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-film iframe{transform:scale(1.012);animation:award-film-breathe 18s ease-in-out infinite alternate}
+  @keyframes award-film-breathe{to{transform:scale(1.026) translateX(-.18%)}}
+}
+@media(prefers-reduced-motion:reduce){.sites-home-film iframe{animation:none!important;transform:none!important}}
+
+
+/* AWARD POLISH v1.2 — interaction restraint and typographic finish. */
+.sites-home-masthead img{opacity:.94}
+.sites-home-intro h1 em{font-style:italic;font-weight:400}
+.sites-home-realm h2 em{font-style:italic}
+.sites-home-realm{transition:background-color .7s ease}
+.sites-home-realm h2,.sites-home-realm p,.sites-home-realm>span{will-change:transform,opacity}
+.sites-home-realm:hover{background:color-mix(in oklab,var(--realm) 9%,var(--ws-surface))}
+.sites-home-realm:hover h2{transform:translateX(clamp(2px,.25vw,5px))}
+.sites-home-realm h2{transition:transform .65s cubic-bezier(.2,.72,.18,1)}
+.sites-home-closing blockquote em{font-style:italic;font-weight:400}
+.sites-home-closing a{transition:opacity .3s ease,transform .3s ease}
+.sites-home-closing a:hover,.sites-home-closing a:focus-visible{opacity:1;transform:translateX(3px)}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-realm,.sites-home-realm h2,.sites-home-closing a{transition:none!important}
+  .sites-home-realm:hover h2,.sites-home-closing a:hover,.sites-home-closing a:focus-visible{transform:none!important}
+}

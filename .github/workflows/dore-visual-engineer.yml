@@ -29,11 +29,17 @@ jobs:
         run: |
           npm install --no-save playwright
           npx playwright install --with-deps chromium
-      - name: Start PR-local static preview
+      - name: Build PR-local Hugo site
         run: |
-          python3 -m http.server 4173 --directory static >/tmp/dore-preview.log 2>&1 &
+          HUGO_VERSION=0.167.0
+          curl -fsSL "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.tar.gz" -o /tmp/hugo.tgz
+          tar -xzf /tmp/hugo.tgz -C /tmp hugo
+          /tmp/hugo --minify --destination public
+      - name: Start PR-local site preview
+        run: |
+          python3 -m http.server 4173 --directory public >/tmp/dore-preview.log 2>&1 &
           for i in {1..20}; do
-            curl -fsS http://127.0.0.1:4173/candidate01/walk-worship.html >/dev/null && exit 0
+            curl -fsS http://127.0.0.1:4173/ >/dev/null && curl -fsS http://127.0.0.1:4173/candidate01/walk-worship.html >/dev/null && exit 0
             sleep 1
           done
           cat /tmp/dore-preview.log

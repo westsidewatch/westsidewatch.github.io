@@ -75,6 +75,30 @@
           "reduced": "none"
         }
       }
+    },
+    {
+      "id": "homepage-award-polish",
+      "path": "/",
+      "probe": "homepage",
+      "required": true,
+      "states": [
+        {
+          "name": "default"
+        },
+        {
+          "name": "reduced-motion",
+          "reducedMotion": "reduce"
+        }
+      ],
+      "rules": {
+        "geometry": {
+          "tolerancePx": 2
+        },
+        "motion": {
+          "normal": "present",
+          "reduced": "none"
+        }
+      }
     }
   ],
   "defaults": {

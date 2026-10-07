@@ -27,7 +27,7 @@ const viewports = registry.viewports;
  fs.mkdirSync(artifactRoot,{recursive:true});
  let failed=false;
  for(const contract of registry.contracts){
-  if(contract.probe!=='candidate01') continue;
+  if(!['candidate01','homepage'].includes(contract.probe)) continue;
   const url=new URL(contract.path,baseUrl).href;
   for(const viewport of viewports){
    for(const state of (contract.states||[{name:'default'}])){
@@ -35,6 +35,33 @@ const viewports = registry.viewports;
    await page.goto(url,{waitUntil:'networkidle'});
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
    // reading transition and would contaminate the four-card geometry contract.
+   if(contract.probe==='homepage'){
+     await page.waitForTimeout(1400);
+     const report=await page.evaluate(()=>{
+       const rect=s=>{const e=document.querySelector(s);if(!e)return null;const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height}};
+       const hero=rect('.sites-home-hero'), masthead=rect('.sites-home-masthead'), intro=rect('.sites-home-intro'), nav=rect('.sites-home-nav'), entry=rect('.sites-home-entry');
+       const title=rect('.sites-home-intro h1');
+       const animations=[...document.querySelectorAll('.sites-home-masthead,.sites-home-intro,.sites-home-entry')].map(e=>getComputedStyle(e).animationName);
+       const overlap=(a,b)=>!!(a&&b&&a.left<b.right&&a.right>b.left&&a.top<b.bottom&&a.bottom>b.top);
+       return {hero,masthead,intro,title,nav,entry,animations,overlaps:{navMasthead:overlap(nav,masthead),introEntry:overlap(intro,entry)}};
+     });
+     const required=[report.hero,report.masthead,report.intro,report.nav,report.entry];
+     const inside=required.every(Boolean)&&report.masthead.left>=report.hero.left&&report.intro.left>=report.hero.left&&report.nav.right<=report.hero.right+2&&report.entry.right<=report.hero.right+2;
+     const collisionFree=!report.overlaps.navMasthead&&!report.overlaps.introEntry;
+     const mobile=viewport.width<=900;
+     const titleReadable=!!report.title&&report.title.width<=report.hero.width*(mobile?.98:.58);
+     const reduced=state.reducedMotion==='reduce';
+     const motionOk=reduced?report.animations.every(x=>!x||x==='none'):report.animations.some(x=>x&&x!=='none');
+     const ok=inside&&collisionFree&&titleReadable&&motionOk;
+     const artifactDir=path.join(artifactRoot,contract.id); fs.mkdirSync(artifactDir,{recursive:true});
+     const stem=(viewport.name+'--'+state.name).replace(/[^a-z0-9_-]/gi,'-');
+     await page.screenshot({path:path.join(artifactDir,stem+'.png'),fullPage:true});
+     fs.writeFileSync(path.join(artifactDir,stem+'.json'),JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
+     console.log(JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
+     if(!ok) failed=true;
+     await page.close();
+     continue;
+   }
    const card=page.locator(state.target||'.products__grid .product:not([data-source="ONE"])').first();
    // Animated targets never become "stable"; move the real pointer to the
    // current rendered centre instead of using Playwright's stability-gated hover().
