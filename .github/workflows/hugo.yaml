@@ -3,6 +3,8 @@ name: Deploy Hugo site to Pages
 on:
   push:
     branches: ["main"]
+    paths-ignore:
+      - "docs/projects/watch-city-vol00/manuscript/**"
   workflow_dispatch:
 
 permissions:
