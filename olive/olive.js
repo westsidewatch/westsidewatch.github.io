@@ -1,6 +1,5 @@
 (() => {
   'use strict';
-  const magazineFamilies=['full-bleed','asymmetric-split','negative-space','portrait-inset','extreme-crop','typographic-no-portrait'];
   const people=[['david-pawson','大衛鮑森'],['jiang-xiuqin','江秀琴'],['derek-prince','葉光明'],['watchman-nee','倪柝聲'],['kang-lai-chang','康來昌'],['stephen-tong','唐崇榮'],['kou-shao-en','寇紹恩'],['rick-warren','華理克'],['tong-liu','劉彤'],['jerry-lai','賴若瀚'],['yu-hong-jie','于宏潔'],['huang-shuhua','黃淑華']];
   const jiangTopics=[
     ['內在生活','jiang-xiuqin-inner-life-45','45 篇'],
@@ -15,11 +14,12 @@
   const q=new URLSearchParams(location.search);
   const selectedPerson=q.get('person');
   const selectedTopic=q.get('topic');
+  let doreCompositions=new Map();
   const recordsOf=p=>Array.isArray(p)?p:Array.isArray(p?.records)?p.records:Array.isArray(p?.items)?p.items:Array.isArray(p?.resources)?p.resources:[];
 
   function linkCard(cls,title,meta,href){
     const a=document.createElement('a'); a.className=cls; a.href=href;
-    if(cls==='speaker-card'){const slug=new URL(href,location.origin).searchParams.get('person');const idx=Math.max(0,people.findIndex(([s])=>s===slug));a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';a.dataset.doreFamily=magazineFamilies[idx%magazineFamilies.length];a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
+    if(cls==='speaker-card'){const slug=new URL(href,location.origin).searchParams.get('person');const composition=doreCompositions.get(slug);a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';if(composition?.family)a.dataset.doreFamily=composition.family;a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
     a.innerHTML=`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`; return a;
   }
   async function renderPeople(){
@@ -51,6 +51,7 @@
     }
   }
   async function init(){
+    try{const r=await fetch('/dore-design/runtime/olive-speaker-compositions.v1.json',{cache:'no-cache'});if(r.ok){const d=await r.json();doreCompositions=new Map((d.records||[]).map(x=>[x.speaker,x]));}}catch(_){}
     await renderPeople();
     if(selectedPerson==='jiang-xiuqin'){
       if(selectedTopic) await renderTopic(selectedTopic); else await renderJiangTopics();
