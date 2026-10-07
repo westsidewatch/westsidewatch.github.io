@@ -17,7 +17,9 @@ const viewports = [
  for(const viewport of viewports){
    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:'no-preference'});
    await page.goto(url,{waitUntil:'networkidle'});
-   const card=page.locator('.products__grid .product').first();
+   // Probe a generic Candidate card, not ONE: ONE has its own second-level
+   // reading transition and would contaminate the four-card geometry contract.
+   const card=page.locator('.products__grid .product:not([data-source="ONE"])').first();
    // Animated targets never become "stable"; move the real pointer to the
    // current rendered centre instead of using Playwright's stability-gated hover().
    const box=await card.boundingBox();
@@ -26,8 +28,16 @@ const viewports = [
    await page.waitForTimeout(750);
    const report=await page.evaluate(()=>{
      const rect=e=>{const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height,ratio:r.width/r.height}};
-     const cards=[...document.querySelectorAll('.products__grid .product')].slice(0,4);
      const preview=[...document.querySelectorAll('.product-preview')].find(e=>getComputedStyle(e).opacity!=='0')||document.querySelector('.product-preview');
+     const all=[...document.querySelectorAll('.products__grid .product')];
+     const pr0=preview?rect(preview):null;
+     // Measure the four small cards on the side opposite the active preview.
+     // Focus animations can enlarge/move covered cards, so "first four DOM nodes"
+     // is not a valid visual group.
+     const candidates=pr0 ? all.map(e=>({e,r:rect(e)})).filter(x=>
+       pr0.left > innerWidth/2 ? x.r.right <= innerWidth/2+4 : x.r.left >= innerWidth/2-4
+     ) : [];
+     const cards=candidates.slice(0,4).map(x=>x.e);
      if(cards.length<4||!preview) return {error:'Candidate 01 targets missing'};
      const cr=cards.map(rect), pr=rect(preview);
      const group={top:Math.min(...cr.map(r=>r.top)),bottom:Math.max(...cr.map(r=>r.bottom))};
