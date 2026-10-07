@@ -8,7 +8,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"
+ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"\nMASTER=ROOT/"dore-core"/"tools"/"video_master.py"
 ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}
 TASKS={}
 TASK_LOCK=threading.Lock()
@@ -100,11 +100,19 @@ class H(BaseHTTPRequestHandler):
         self._send(404,{"ok":False,"error":"not_found"})
     def do_POST(self):
         op=self.path.strip("/")
-        if op not in {"probe","formats","download"}: return self._send(404,{"ok":False,"error":"not_found"})
+        if op not in {"probe","formats","download","master-probe","restore"}: return self._send(404,{"ok":False,"error":"not_found"})
         try:
             n=int(self.headers.get("Content-Length","0")); body=json.loads(self.rfile.read(n) or b"{}"); url=str(body.get("url","")).strip()
             if not url.startswith(("http://","https://")): return self._send(400,{"ok":False,"error":"public_http_url_required"})
-            cmd=[sys.executable,str(ADAPTER),op,url]
+            if op in {"master-probe","restore"}:
+                file=str(body.get("file","")).strip()
+                if not file: return self._send(400,{"ok":False,"error":"local_file_required"})
+                target=Path(file).expanduser().resolve()
+                if not target.is_file(): return self._send(404,{"ok":False,"error":"local_file_not_found"})
+                cmd=[sys.executable,str(MASTER),"probe" if op=="master-probe" else "restore",str(target)]
+                if op=="restore" and body.get("output"): cmd += ["--output",str(body["output"])]
+            else:
+                cmd=[sys.executable,str(ADAPTER),op,url]
             if op=="download":
                 if body.get("format"): cmd += ["--format",str(body["format"])]
                 if body.get("output"): cmd += ["--output",str(body["output"])]
