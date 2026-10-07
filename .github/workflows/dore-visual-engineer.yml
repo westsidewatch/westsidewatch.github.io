@@ -25,15 +25,14 @@ jobs:
         run: |
           npm install --no-save playwright
           npx playwright install --with-deps chromium
-      - name: Select probe URL
-        id: target
-        env:
-          INPUT_URL: ${{ inputs.url }}
+      - name: Start PR-local static preview
         run: |
-          if [ -n "$INPUT_URL" ]; then
-            echo "url=$INPUT_URL" >> "$GITHUB_OUTPUT"
-          else
-            echo "url=https://westsidewatch.github.io/candidate01/walk-worship.html" >> "$GITHUB_OUTPUT"
-          fi
+          python3 -m http.server 4173 --directory static >/tmp/dore-preview.log 2>&1 &
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:4173/candidate01/walk-worship.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dore-preview.log
+          exit 1
       - name: Probe Candidate 01 visual contract
-        run: node tools/dore-visual/geometry-probe.js "${{ steps.target.outputs.url }}"
+        run: node tools/dore-visual/geometry-probe.js "http://127.0.0.1:4173/candidate01/walk-worship.html"
