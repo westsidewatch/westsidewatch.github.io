@@ -1,10 +1,41 @@
 {
   "version": 1,
   "viewports": [
-    {"name":"desktop-16x9","width":1920,"height":1080},
-    {"name":"desktop-16x10","width":1680,"height":1050},
-    {"name":"laptop","width":1440,"height":900},
-    {"name":"tablet","width":1024,"height":768}
+    {
+      "name": "desktop-16x9",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "name": "desktop-16x10",
+      "width": 1680,
+      "height": 1050
+    },
+    {
+      "name": "user-reference",
+      "width": 1648,
+      "height": 927
+    },
+    {
+      "name": "laptop",
+      "width": 1440,
+      "height": 900
+    },
+    {
+      "name": "desktop-compact",
+      "width": 1024,
+      "height": 768
+    },
+    {
+      "name": "breakpoint-desktop",
+      "width": 901,
+      "height": 800
+    },
+    {
+      "name": "breakpoint-mobile",
+      "width": 900,
+      "height": 800
+    }
   ],
   "contracts": [
     {
