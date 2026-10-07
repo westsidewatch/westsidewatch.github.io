@@ -21,6 +21,32 @@ def probe(path):
 
 def run(cmd): subprocess.run(cmd,check=True)
 
+def quality_gate(source, master):
+    """Reject masters that regress geometry, timing, FPS, or contain obvious black/frozen-frame damage."""
+    src=probe(source); out=probe(master)
+    def fps(v):
+        try:
+            a,b=str(v or "0/1").split("/"); return float(a)/float(b)
+        except Exception: return 0.0
+    sf,of=fps(src.get("avg_frame_rate")),fps(out.get("avg_frame_rate"))
+    sd,od=float(src.get("duration") or 0),float(out.get("duration") or 0)
+    duration_delta=abs(sd-od)
+    geometry_ok=out["width"]>=src["width"] and out["height"]>=src["height"]
+    fps_ok=(not sf or not of) or abs(sf-of)<=max(.01,sf*.001)
+    duration_ok=duration_delta<=max(.12,sd*.001)
+    ff=exe("ffmpeg")
+    scan=subprocess.run([ff,"-hide_banner","-i",str(master),"-vf",
+        "blackdetect=d=0.5:pix_th=0.10,freezedetect=n=-50dB:d=2",
+        "-an","-f","null","-"],text=True,capture_output=True)
+    log=(scan.stderr or "")[-20000:]
+    black_hits=log.count("black_start:")
+    freeze_hits=log.count("freeze_start:")
+    passed=geometry_ok and fps_ok and duration_ok and black_hits==0 and freeze_hits==0
+    return {"passed":passed,"geometry_ok":geometry_ok,"fps_ok":fps_ok,"duration_ok":duration_ok,
+      "duration_delta_seconds":round(duration_delta,3),"source_fps":sf,"output_fps":of,
+      "source_geometry":[src["width"],src["height"]],"output_geometry":[out["width"],out["height"]],
+      "black_frame_events":black_hits,"freeze_events":freeze_hits}
+
 def restore(src,out):
     info=probe(src); src=Path(src).expanduser().resolve(); out=Path(out).expanduser().resolve(); out.mkdir(parents=True,exist_ok=True)
     ff=exe("ffmpeg"); master=out/(src.stem+"-master.mp4")
@@ -44,7 +70,9 @@ def restore(src,out):
     streams=check.get("streams") or []; video=next((x for x in streams if x.get("codec_type")=="video"),{}); audio=next((x for x in streams if x.get("codec_type")=="audio"),None)
     sync={"duration_delta_seconds":round(abs(srcdur-outdur),3),"duration_ok":abs(srcdur-outdur)<=max(.12,srcdur*.001),"audio_present":audio is not None,"output_frame_rate":video.get("avg_frame_rate")}
     if not sync["duration_ok"]: raise RuntimeError("Video Master sync gate failed: duration drift")
-    return {"ok":True,"master":str(master),"renditions":rend,"diagnosis":info,"sync_gate":sync}
+    quality=quality_gate(src,master)
+    if not quality["passed"]: raise RuntimeError("Video Master quality gate failed: "+json.dumps(quality,ensure_ascii=False))
+    return {"ok":True,"master":str(master),"renditions":rend,"diagnosis":info,"sync_gate":sync,"quality_gate":quality}
 
 def main():
     ap=argparse.ArgumentParser();sub=ap.add_subparsers(dest="cmd",required=True)
