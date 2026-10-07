@@ -101,7 +101,6 @@
 
 /* AWARD POLISH v1.1 — deliberate editorial grid and optical balance. */
 @media(min-width:901px){
-  .sites-home-hero:before{content:"";position:absolute;z-index:1;inset:0 auto 0 var(--hero-edge);width:1px;background:color-mix(in oklab,var(--ws-paper) 11%,transparent);pointer-events:none}
   .sites-home-masthead,.sites-home-intro{padding-left:clamp(0px,.2vw,4px)}
   .sites-home-masthead{max-width:34rem}
   .sites-home-intro h1{max-width:5.2ch}
@@ -115,10 +114,7 @@
 /* Keep image/video treatment editorial rather than effect-heavy. */
 .sites-home-film iframe{filter:saturate(.82) contrast(1.025) brightness(.94)}
 .sites-home-realm:before{opacity:.56}
-@media(prefers-reduced-motion:no-preference){
-  .sites-home-film iframe{transform:scale(1.012);animation:award-film-breathe 18s ease-in-out infinite alternate}
-  @keyframes award-film-breathe{to{transform:scale(1.026) translateX(-.18%)}}
-}
+
 @media(prefers-reduced-motion:reduce){.sites-home-film iframe{animation:none!important;transform:none!important}}
 
 
@@ -138,3 +134,9 @@
   .sites-home-realm,.sites-home-realm h2,.sites-home-closing a{transition:none!important}
   .sites-home-realm:hover h2,.sites-home-closing a:hover,.sites-home-closing a:focus-visible{transform:none!important}
 }
+
+/* HOME HERO RUNTIME REPAIR — never magnify low-resolution archival footage. */
+.sites-home-film iframe{transform:none!important;animation:none!important}
+.sites-home-masthead{width:clamp(24rem,30vw,58rem);max-width:none}
+@media(min-width:1600px){.sites-home-masthead{width:clamp(28rem,27vw,54rem);max-width:none}}
+@media(max-width:900px){.sites-home-masthead{width:min(82vw,32rem);max-width:none}}
