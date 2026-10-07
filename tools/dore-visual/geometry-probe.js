@@ -18,7 +18,11 @@ const viewports = [
    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:'no-preference'});
    await page.goto(url,{waitUntil:'networkidle'});
    const card=page.locator('.products__grid .product').first();
-   await card.hover();
+   // Animated targets never become "stable"; move the real pointer to the
+   // current rendered centre instead of using Playwright's stability-gated hover().
+   const box=await card.boundingBox();
+   if(!box) throw new Error('Candidate 01 hover target missing');
+   await page.mouse.move(box.x+box.width/2,box.y+box.height/2);
    await page.waitForTimeout(750);
    const report=await page.evaluate(()=>{
      const rect=e=>{const r=e.getBoundingClientRect();return {top:r.top,bottom:r.bottom,left:r.left,right:r.right,width:r.width,height:r.height,ratio:r.width/r.height}};
