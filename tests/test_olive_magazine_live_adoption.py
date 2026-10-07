@@ -12,3 +12,8 @@ def test_olive_live_palette_has_no_gold_token():
  for p in ("layouts/olive/surface-carrier.html","olive/index.html","olive/olive.js"):
   text=(ROOT/p).read_text(encoding="utf-8")
   assert "#CEBD74" not in text
+
+def test_all_live_carrier_cards_are_magazine_controlled():
+ carrier=(ROOT/"layouts/olive/surface-carrier.html").read_text(encoding="utf-8")
+ assert carrier.count('class="olive-speaker-card dore-magazine-card') >= 22
+ assert '--dore-type-x' in carrier and '--dore-type-h' in carrier
