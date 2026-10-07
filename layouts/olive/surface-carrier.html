@@ -114,6 +114,17 @@
     },{once:true});
   }
 
+  const speakerRoutes={
+    '江秀琴':'jiang-xiuqin','賴若瀚':'jerry-lai','劉彤':'tong-liu','葉光明':'derek-prince',
+    '倪柝聲':'watchman-nee','康來昌':'kang-lai-chang','唐崇榮':'stephen-tong','寇紹恩':'kou-shao-en',
+    '華理克':'rick-warren','于宏潔':'yu-hong-jie','黃淑華':'huang-shuhua'
+  };
+  document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
+    const slug=speakerRoutes[card.dataset.person];
+    if(!slug) return;
+    card.addEventListener('click',()=>location.assign('/olive/?person='+encodeURIComponent(slug)));
+  });
+
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
