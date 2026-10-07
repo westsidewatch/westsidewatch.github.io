@@ -165,6 +165,22 @@
   });
 
   const q=new URLSearchParams(location.search), person=q.get('person'), topic=q.get('topic');
+  const personNames={
+    'jiang-xiuqin':'江秀琴','jerry-lai':'賴若瀚','tong-liu':'劉彤','derek-prince':'葉光明',
+    'watchman-nee':'倪柝聲','kang-lai-chang':'康來昌','stephen-tong':'唐崇榮','kou-shao-en':'寇紹恩',
+    'rick-warren':'華理克','yu-hong-jie':'于宏潔','huang-shuhua':'黃淑華'
+  };
+  if(person && personNames[person] && !topic){
+    const selected=document.querySelector('.olive-speaker-card[data-person="'+CSS.escape(personNames[person])+'"]');
+    if(selected){
+      selected.setAttribute('aria-current','true');
+      selected.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',inline:'center',block:'nearest'});
+    }
+    const caption=document.querySelector('.olive-feature__caption h2');
+    const title=document.querySelector('[data-pawson-title]');
+    if(caption) caption.textContent=personNames[person];
+    if(title) title.textContent='講員頻道 · 已進入';
+  }
   const detail=document.querySelector('#olive-detail');
   const works={
     'jiang-xiuqin-goodtv-good-message':[
