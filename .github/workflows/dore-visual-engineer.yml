@@ -40,4 +40,4 @@ jobs:
           exit 1
       - name: Probe sitewide visual contracts
         run: |
-          node tools/dore-visual/geometry-probe.js "http://127.0.0.1:4173/candidate01/walk-worship.html"
+          node tools/dore-visual/geometry-probe.js "http://127.0.0.1:4173/"
