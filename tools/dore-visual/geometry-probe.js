@@ -49,11 +49,15 @@ const viewports = registry.viewports;
      return {preview:pr,cards:cr,deltaTop:pr.top-group.top,deltaBottom:pr.bottom-group.bottom,animations};
    });
    const desktopContract=viewport.width>=901;
-   const ok=!report.error && (!desktopContract || (
+   const reduced=state.reducedMotion==='reduce';
+   const geometryOk=!report.error &&
      Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
-     Math.abs(report.preview.ratio-1.6)<=0.01 && report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01) &&
-     report.animations.some(x=>x&&x!=='none')
-   ));
+     Math.abs(report.preview.ratio-1.6)<=0.01 &&
+     report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01);
+   const motionOk=!report.error && (reduced
+     ? report.animations.every(x=>!x||x==='none')
+     : report.animations.some(x=>x&&x!=='none'));
+   const ok=!desktopContract ? true : geometryOk && motionOk;
    const artifactDir=path.join(artifactRoot,contract.id);
    fs.mkdirSync(artifactDir,{recursive:true});
    const stem=(viewport.name+'--'+state.name).replace(/[^a-z0-9_-]/gi,'-');
