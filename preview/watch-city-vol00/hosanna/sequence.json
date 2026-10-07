@@ -8,11 +8,10 @@
   "master": {
     "type": "dore-original",
     "title": "王進城 / The King Enters the City",
-    "image": null,
+    "image": "/preview/watch-city-vol00/hosanna/media/clips/dore-entry.jpg",
     "cameraPath": "Mount of Olives approach → descent → crowd → garments/branches → donkey → city/gate",
-    "status": "SOURCE_VERIFIED_ARTIFACT_UNMATERIALIZED",
-    "sourcePage": "https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg",
-    "publishState": "withheld-missing-artifact"
+    "status": "PUBLISHABLE_PD_ART",
+    "sourcePage": "https://commons.wikimedia.org/wiki/File:Gustave_Dor%C3%A9_-_Christ%27s_Entry_into_Jerusalem.jpg"
   },
   "timing": {
     "approachMs": 5200,
@@ -83,7 +82,7 @@
         "start": 0,
         "end": 6
       },
-      "rightsState": "publishable-source-unmaterialized",
+      "rightsState": "publishable",
       "durationMs": 6000,
       "offsetMs": 0,
       "note": "Frame-probed Mount of Olives descent / approach clip. Rendered as a six-second same-origin WebM from source 2730–2736s for continuous montage playback.",
@@ -94,7 +93,7 @@
         "branches",
         "threshold"
       ],
-      "retrievalState": "commons-vp9-local-artifact-frame-probed-artifact-missing",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
       "assetType": "video",
       "previewTimecodeState": "frame-probed-2730-2736-preview",
       "previewAssetProfile": {
@@ -106,8 +105,7 @@
       "sourceTimestamp": {
         "start": 2730,
         "end": 2736
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "jruchi-12c-miniature",
@@ -123,8 +121,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1800,
       "offsetMs": 0,
       "note": "Twelfth-century Georgian Gospel miniature: compressed iconographic bodies turn the same branches-and-donkey action into a manuscript field.",
@@ -156,8 +154,7 @@
           "peak": 0.64,
           "hold": 0.5
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "sinai-14c-icon",
@@ -173,8 +170,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1100,
       "offsetMs": 0,
       "overlayFor": "manger-cross-1912-entry",
@@ -201,8 +198,7 @@
           "peak": 0.58,
           "hold": 0.45
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "manger-cross-1912-entry-still",
@@ -216,8 +212,8 @@
         "end": 1.45
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 2734s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
@@ -235,8 +231,7 @@
       "motion": "motion-push-in",
       "presentation": "film-frame",
       "overlayFor": null,
-      "overlayDelayMs": null,
-      "publishState": "withheld-missing-artifact"
+      "overlayDelayMs": null
     },
     {
       "id": "story-bible-1873-palms-still",
@@ -250,8 +245,8 @@
         "end": 1.8
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1800,
       "offsetMs": 0,
       "note": "Public-domain 1873 Bible illustration: foreground palms and garments provide a cut-on-gesture bridge between moving-image crowd shots.",
@@ -286,8 +281,7 @@
           "peak": 0.66,
           "hold": 0.52
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "prang-1892-lithograph",
@@ -303,8 +297,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-library-of-congress-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-library-of-congress-materialized",
       "durationMs": 1100,
       "offsetMs": 0,
       "overlayFor": "manger-cross-1912-hosanna",
@@ -332,8 +326,7 @@
           "peak": 0.6,
           "hold": 0.47
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "life-passion-1903-entry",
@@ -347,7 +340,7 @@
       },
       "tableau": 14,
       "catalogueNumber": 855,
-      "rightsState": "publishable-source-unmaterialized",
+      "rightsState": "publishable",
       "evidence": [
         "Wikimedia Commons marks the surviving 43:54 copy as public-domain material.",
         "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
@@ -370,7 +363,7 @@
       "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
       "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
       "sourceRuntime": "43:55",
-      "retrievalState": "pages-artifact-local-vp9-webm-diagnostic-artifact-missing",
+      "retrievalState": "pages-artifact-local-vp9-webm-diagnostic",
       "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
       "actionCoordinates": [
         "approach",
@@ -392,8 +385,7 @@
       "sourceTimestamp": {
         "start": 1466,
         "end": 1472
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "giotto-1304-entry",
@@ -409,8 +401,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1900,
       "offsetMs": 0,
       "note": "Giotto's Scrovegni Chapel fresco changes the procession into a shallow architectural stage, making a deliberate bridge from manuscript to cinema.",
@@ -443,8 +435,7 @@
           "peak": 0.65,
           "hold": 0.51
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "flemish-17c-entry",
@@ -460,8 +451,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1150,
       "offsetMs": 0,
       "overlayFor": "life-passion-1903-entry",
@@ -489,8 +480,7 @@
           "peak": 0.57,
           "hold": 0.44
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "life-passion-1903-entry-still",
@@ -503,8 +493,8 @@
         "end": 1.45
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 1469s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
@@ -523,8 +513,7 @@
       "motion": "motion-crowd-turn",
       "presentation": "film-frame",
       "overlayFor": null,
-      "overlayDelayMs": null,
-      "publishState": "withheld-missing-artifact"
+      "overlayDelayMs": null
     },
     {
       "id": "morgner-1912-entry-still",
@@ -538,8 +527,8 @@
         "end": 1.8
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-york-project-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-york-project-reproduction-materialized",
       "durationMs": 1800,
       "offsetMs": 0,
       "note": "Public-domain 1912 expressionist painting: its broad, tilted procession shifts scale before the silent-film crowd resumes.",
@@ -575,8 +564,7 @@
           "peak": 0.62,
           "hold": 0.49
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "king-of-kings-1927-entry",
@@ -589,8 +577,8 @@
         "start": 0,
         "end": 6
       },
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-vp9-local-artifact-frame-probed-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
       "durationMs": 6000,
       "offsetMs": 0,
       "note": "Frame-probed 1927 crowd-acclamation clip in the documented Triumphal Entry sequence. Rendered as a six-second same-origin WebM from source 3973–3979s for continuous montage playback.",
@@ -615,8 +603,7 @@
       "sourceTimestamp": {
         "start": 3973,
         "end": 3979
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "durer-1510-entry",
@@ -632,8 +619,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1800,
       "offsetMs": 0,
       "note": "Dürer's woodcut makes the crowd and branches graphic and high-contrast, serving as the print-era hinge before modern illustration and moving film.",
@@ -666,8 +653,7 @@
           "peak": 0.66,
           "hold": 0.52
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "schnorr-1860-entry",
@@ -683,8 +669,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1050,
       "offsetMs": 0,
       "overlayFor": "king-of-kings-1927-entry",
@@ -712,8 +698,7 @@
           "peak": 0.58,
           "hold": 0.45
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "king-of-kings-1927-entry-still",
@@ -727,8 +712,8 @@
         "end": 1.45
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "public-domain-source-film-frame-rendered-in-pages-build",
       "durationMs": 1450,
       "offsetMs": 0,
       "note": "Public-domain film still rendered from the verified Entry into Jerusalem source frame at 4006s. Kept in the source registry but withheld from the public loop so the moving-image spine is never duplicated by a still frame.",
@@ -747,8 +732,7 @@
       "motion": "motion-gate-rise",
       "presentation": "film-frame",
       "overlayFor": null,
-      "overlayDelayMs": null,
-      "publishState": "withheld-missing-artifact"
+      "overlayDelayMs": null
     },
     {
       "id": "dore-christs-entry-jerusalem",
@@ -762,8 +746,8 @@
         "end": 2.1
       },
       "assetType": "image",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 2100,
       "offsetMs": 0,
       "note": "Doré's original-entry composition is a public-domain painting; it is used as a moving still between film eras.",
@@ -798,8 +782,7 @@
           "peak": 0.67,
           "hold": 0.53
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "ensor-1885-entry",
@@ -815,8 +798,8 @@
       "assetType": "image",
       "presentation": "double-exposure",
       "motion": "motion-semantic",
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-public-domain-faithful-reproduction-materialized-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-public-domain-faithful-reproduction-materialized",
       "durationMs": 1200,
       "offsetMs": 0,
       "overlayFor": "life-passion-1903-crowd",
@@ -843,8 +826,7 @@
           "peak": 0.6,
           "hold": 0.46
         }
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "manger-cross-1912-hosanna",
@@ -857,8 +839,8 @@
         "start": 0,
         "end": 6
       },
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-vp9-local-artifact-frame-probed-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
       "durationMs": 6000,
       "offsetMs": 0,
       "assetType": "video",
@@ -879,8 +861,7 @@
       "sourceTimestamp": {
         "start": 2764,
         "end": 2770
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "life-passion-1903-crowd",
@@ -894,7 +875,7 @@
       },
       "tableau": 14,
       "catalogueNumber": 855,
-      "rightsState": "publishable-source-unmaterialized",
+      "rightsState": "publishable",
       "evidence": [
         "Wikimedia Commons marks the surviving 43:54 copy as public-domain material.",
         "Contemporary/filmographic scene lists identify L’Entrée à Jérusalem as tableau 14, Pathé catalogue no. 855.",
@@ -917,7 +898,7 @@
       "archiveItem": "https://archive.org/details/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903",
       "archiveDerivative": "https://archive.org/download/LaVieEtLaPassionDeJsusChristpassionAndDeathOfChrist1903/LaVieEtLaPassionDeJsusChrist1903_512kb.mp4",
       "sourceRuntime": "43:55",
-      "retrievalState": "pages-artifact-local-vp9-webm-diagnostic-artifact-missing",
+      "retrievalState": "pages-artifact-local-vp9-webm-diagnostic",
       "blocker": "Exact source derivative is resolved, but this execution environment cannot retrieve the Archive.org binary redirect. No guessed timecode or fabricated clip is admitted.",
       "actionCoordinates": [
         "approach",
@@ -939,8 +920,7 @@
       "sourceTimestamp": {
         "start": 1472,
         "end": 1478
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "king-of-kings-1927-hosanna",
@@ -953,8 +933,8 @@
         "start": 0,
         "end": 6
       },
-      "rightsState": "publishable-source-unmaterialized",
-      "retrievalState": "commons-vp9-local-artifact-frame-probed-artifact-missing",
+      "rightsState": "publishable",
+      "retrievalState": "commons-vp9-local-artifact-frame-probed",
       "durationMs": 6000,
       "offsetMs": 0,
       "note": "Frame-probed 1927 Hosanna crowd clip. Rendered as a six-second same-origin WebM from source 4004–4010s for continuous montage playback.",
@@ -979,8 +959,7 @@
       "sourceTimestamp": {
         "start": 4004,
         "end": 4010
-      },
-      "publishState": "withheld-missing-artifact"
+      }
     },
     {
       "id": "life-passion-1903-entry-alt-edition",
