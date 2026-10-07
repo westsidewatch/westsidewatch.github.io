@@ -1,20 +1,20 @@
 #!/usr/bin/env node
 const { chromium } = require('playwright');
+const fs = require('fs');
 
-const url = process.argv[2];
-if (!url) throw new Error('usage: node tools/dore-visual/geometry-probe.js <url>');
+const baseUrl = process.argv[2];
+if (!baseUrl) throw new Error('usage: node tools/dore-visual/geometry-probe.js <base-url>');
 
-const viewports = [
-  { name:'desktop-16x9', width:1920, height:1080 },
-  { name:'desktop-16x10', width:1680, height:1050 },
-  { name:'laptop', width:1440, height:900 },
-  { name:'tablet', width:1024, height:768 }
-];
+const registry = JSON.parse(fs.readFileSync('tools/dore-visual/contracts.json','utf8'));
+const viewports = registry.viewports;
 
 (async()=>{
  const browser=await chromium.launch({headless:true});
  let failed=false;
- for(const viewport of viewports){
+ for(const contract of registry.contracts){
+  if(contract.probe!=='candidate01') continue;
+  const url=new URL(contract.path,baseUrl).href;
+  for(const viewport of viewports){
    const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:'no-preference'});
    await page.goto(url,{waitUntil:'networkidle'});
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
@@ -47,9 +47,10 @@ const viewports = [
    const ok=!report.error && Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
      Math.abs(report.preview.ratio-1.6)<=0.01 && report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01) &&
      report.animations.some(x=>x&&x!=='none');
-   console.log(JSON.stringify({viewport,...report,pass:ok},null,2));
+   console.log(JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
    if(!ok) failed=true;
    await page.close();
+  }
  }
  await browser.close();
  process.exit(failed?1:0);
