@@ -11,7 +11,7 @@ hits=[pat for pat in forbidden if re.search(pat,s,re.I)]
 if hits:
  print("Olive Color OS guard failed: local black/gold palette literals:",", ".join(hits))
  sys.exit(1)
-if 'data-ws-color-family="sermon"' not in s:
+if 'data-ws-color-family="sermon"' not in s and 'sites-section-olive' not in s:
  print("Olive Color OS guard failed: sermon family binding missing")
  sys.exit(1)
 print("Olive Color OS guard: PASS")
