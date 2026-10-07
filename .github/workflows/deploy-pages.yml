@@ -29,9 +29,9 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: preview/watch-city-vol00/hosanna/media/clips
-          key: vol00-media-v1-
+          key: vol00-media-v2-
           restore-keys: |
-            vol00-media-v1-
+            vol00-media-v2-
       - name: Verify Vol.00 producer output
         run: |
           test -d preview/watch-city-vol00/hosanna/media/clips
