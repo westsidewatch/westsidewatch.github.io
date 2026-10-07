@@ -18,11 +18,12 @@ const viewports = registry.viewports;
   if(contract.probe!=='candidate01') continue;
   const url=new URL(contract.path,baseUrl).href;
   for(const viewport of viewports){
-   const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:'no-preference'});
+   for(const state of (contract.states||[{name:'default'}])){
+   const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:state.reducedMotion||'no-preference'});
    await page.goto(url,{waitUntil:'networkidle'});
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
    // reading transition and would contaminate the four-card geometry contract.
-   const card=page.locator('.products__grid .product:not([data-source="ONE"])').first();
+   const card=page.locator(state.target||'.products__grid .product:not([data-source="ONE"])').first();
    // Animated targets never become "stable"; move the real pointer to the
    // current rendered centre instead of using Playwright's stability-gated hover().
    const box=await card.boundingBox();
@@ -55,12 +56,13 @@ const viewports = registry.viewports;
    ));
    const artifactDir=path.join(artifactRoot,contract.id);
    fs.mkdirSync(artifactDir,{recursive:true});
-   const stem=viewport.name.replace(/[^a-z0-9_-]/gi,'-');
+   const stem=(viewport.name+'--'+state.name).replace(/[^a-z0-9_-]/gi,'-');
    await page.screenshot({path:path.join(artifactDir,stem+'.png'),fullPage:true});
-   fs.writeFileSync(path.join(artifactDir,stem+'.json'),JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
-   console.log(JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
+   fs.writeFileSync(path.join(artifactDir,stem+'.json'),JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
+   console.log(JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
    if(!ok) failed=true;
    await page.close();
+   }
   }
  }
  await browser.close();
