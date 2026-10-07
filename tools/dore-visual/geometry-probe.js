@@ -1,25 +1,41 @@
 #!/usr/bin/env node
 const { chromium } = require('playwright');
+const fs = require('fs');
+const path = require('path');
 
-const url = process.argv[2];
-if (!url) throw new Error('usage: node tools/dore-visual/geometry-probe.js <url>');
+const baseUrl = process.argv[2];
+if (!baseUrl) throw new Error('usage: node tools/dore-visual/geometry-probe.js <base-url>');
 
-const viewports = [
-  { name:'desktop-16x9', width:1920, height:1080 },
-  { name:'desktop-16x10', width:1680, height:1050 },
-  { name:'laptop', width:1440, height:900 },
-  { name:'tablet', width:1024, height:768 }
-];
+const registry = JSON.parse(fs.readFileSync('tools/dore-visual/contracts.json','utf8'));
+const required=registry.schema?.contractRequired||['id','path','probe','required'];
+const supportedRules=new Set(registry.schema?.supportedRules||[]);
+const supportedStates=new Set(registry.schema?.supportedStates||[]);
+const ids=new Set();
+for(const contract of registry.contracts||[]){
+  const missing=required.filter(k=>contract[k]===undefined||contract[k]===null||contract[k]==='');
+  if(missing.length) throw new Error(`invalid visual contract ${contract.id||'<unnamed>'}: missing ${missing.join(', ')}`);
+  if(ids.has(contract.id)) throw new Error(`duplicate visual contract id: ${contract.id}`);
+  ids.add(contract.id);
+  for(const key of Object.keys(contract.rules||{})) if(supportedRules.size&&!supportedRules.has(key)) throw new Error(`unsupported rule "${key}" in ${contract.id}`);
+  for(const state of contract.states||[]) for(const key of Object.keys(state)) if(key!=='name'&&supportedStates.size&&!supportedStates.has(key)) throw new Error(`unsupported state field "${key}" in ${contract.id}`);
+}
+const viewports = registry.viewports;
 
 (async()=>{
  const browser=await chromium.launch({headless:true});
+ const artifactRoot=process.env.DORE_VISUAL_ARTIFACTS||'artifacts/dore-visual';
+ fs.mkdirSync(artifactRoot,{recursive:true});
  let failed=false;
- for(const viewport of viewports){
-   const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:'no-preference'});
+ for(const contract of registry.contracts){
+  if(contract.probe!=='candidate01') continue;
+  const url=new URL(contract.path,baseUrl).href;
+  for(const viewport of viewports){
+   for(const state of (contract.states||[{name:'default'}])){
+   const page=await browser.newPage({viewport:{width:viewport.width,height:viewport.height},reducedMotion:state.reducedMotion||'no-preference'});
    await page.goto(url,{waitUntil:'networkidle'});
    // Probe a generic Candidate card, not ONE: ONE has its own second-level
    // reading transition and would contaminate the four-card geometry contract.
-   const card=page.locator('.products__grid .product:not([data-source="ONE"])').first();
+   const card=page.locator(state.target||'.products__grid .product:not([data-source="ONE"])').first();
    // Animated targets never become "stable"; move the real pointer to the
    // current rendered centre instead of using Playwright's stability-gated hover().
    const box=await card.boundingBox();
@@ -44,12 +60,31 @@ const viewports = [
      const animations=cards.map(e=>getComputedStyle(e).animationName);
      return {preview:pr,cards:cr,deltaTop:pr.top-group.top,deltaBottom:pr.bottom-group.bottom,animations};
    });
-   const ok=!report.error && Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
-     Math.abs(report.preview.ratio-1.6)<=0.01 && report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01) &&
-     report.animations.some(x=>x&&x!=='none');
-   console.log(JSON.stringify({viewport,...report,pass:ok},null,2));
+   const rules=contract.rules||{};
+   const tolerancePx=rules.geometry?.tolerancePx??registry.defaults?.tolerancePx??2;
+   const ratioTolerance=rules.aspectRatio?.tolerance??registry.defaults?.aspectRatioTolerance??0.01;
+   const previewRatio=rules.aspectRatio?.preview??1.6;
+   const cardRatio=rules.aspectRatio?.cards??1.6;
+   const desktopContract=viewport.width>=(registry.defaults?.desktopMinWidth??901);
+   const reduced=state.reducedMotion==='reduce';
+   const geometryOk=!report.error &&
+     Math.abs(report.deltaTop)<=tolerancePx && Math.abs(report.deltaBottom)<=tolerancePx &&
+     Math.abs(report.preview.ratio-previewRatio)<=ratioTolerance &&
+     report.cards.every(r=>Math.abs(r.ratio-cardRatio)<=ratioTolerance);
+   const motionOk=!report.error && (reduced
+     ? (rules.motion?.reduced??'none')==='none' && report.animations.every(x=>!x||x==='none')
+     : (rules.motion?.normal??'present')==='present' && report.animations.some(x=>x&&x!=='none'));
+   const ok=!desktopContract ? true : geometryOk && motionOk;
+   const artifactDir=path.join(artifactRoot,contract.id);
+   fs.mkdirSync(artifactDir,{recursive:true});
+   const stem=(viewport.name+'--'+state.name).replace(/[^a-z0-9_-]/gi,'-');
+   await page.screenshot({path:path.join(artifactDir,stem+'.png'),fullPage:true});
+   fs.writeFileSync(path.join(artifactDir,stem+'.json'),JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
+   console.log(JSON.stringify({contract:contract.id,state:state.name,viewport,...report,pass:ok},null,2));
    if(!ok) failed=true;
    await page.close();
+   }
+  }
  }
  await browser.close();
  process.exit(failed?1:0);
