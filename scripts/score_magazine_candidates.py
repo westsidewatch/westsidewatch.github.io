@@ -41,6 +41,8 @@ def content_signal(c):
 
 def precedent_signal(c):
  rows=c.get("precedents",[]) or []
+ if isinstance(rows,dict): rows=rows.get("records",[]) or rows.get("items",[]) or []
+ rows=[x for x in rows if isinstance(x,dict)]
  if not rows:return 35.0
  matched=sum(len(x.get("matchedTokens",[])) for x in rows)
  authorities=len({x.get("authority") for x in rows if x.get("authority")})
