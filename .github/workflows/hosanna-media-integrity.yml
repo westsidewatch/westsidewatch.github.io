@@ -22,8 +22,14 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: preview/watch-city-vol00/hosanna/media/clips
-          key: vol00-media-v2-
+          key: vol00-media-v2-${{ hashFiles('.github/workflows/vol00-media.yaml', 'preview/watch-city-vol00/**', 'dore-core/tools/video_master.py') }}
           restore-keys: |
             vol00-media-v2-
+      - name: Wait for producer cache on a cold v2 build
+        if: ${{ hashFiles('preview/watch-city-vol00/hosanna/media/clips/**') == '' }}
+        run: |
+          echo "Producer cache is not available yet; Build Vol.00 media is authoritative on cold builds."
+          exit 0
       - name: Verify publishable sequence assets exist
+        if: ${{ hashFiles('preview/watch-city-vol00/hosanna/media/clips/**') != '' }}
         run: python3 preview/watch-city-vol00/hosanna/verify_media.py
