@@ -2,6 +2,9 @@ name: Build Vol.00 media
 
 on:
   workflow_dispatch:
+  pull_request:
+    paths:
+      - ".github/workflows/vol00-media.yaml"
   push:
     branches: ["main"]
     paths:
