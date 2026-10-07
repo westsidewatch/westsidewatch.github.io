@@ -2,7 +2,7 @@
 <article class="olive-archive" data-ws-color-family="sermon">
   <section class="olive-index olive-home-stage" aria-label="橄欖山講道首頁">
     <article class="olive-feature" data-person="大衛鮑森">
-      <a class="olive-feature__media" href="/olive/?person=david-pawson" aria-label="進入大衛鮑森">
+      <div class="olive-feature__media" aria-label="大衛鮑森系列講座預覽">
         <div class="olive-feature__art">
           <iframe class="olive-feature__youtube" data-pawson-preview title="大衛鮑森系列講座預覽" loading="eager" allow="encrypted-media; picture-in-picture" tabindex="-1"></iframe>
           <span class="olive-feature__veil" aria-hidden="true"></span>
@@ -17,7 +17,7 @@
           <h2>大衛鮑森</h2>
           <p><span data-pawson-title>系列講座</span> <i>ENTER →</i></p>
         </div>
-      </a>
+      </div>
     </article>
 
     <div class="olive-speaker-rail" aria-label="其他講員" tabindex="0">
@@ -44,13 +44,6 @@
       <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="華理克"><span>10</span><strong>華理克</strong><small>中文講道</small></button>
       <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="于宏潔"><span>11</span><strong>于宏潔</strong><small>講道</small></button>
       <button class="olive-speaker-card olive-speaker-card--clone" aria-hidden="true" tabindex="-1" type="button" data-person="黃淑華"><span>12</span><strong>黃淑華</strong><small>講道</small></button>    </div>
-  </section>
-
-  <section id="olive-detail" class="olive-detail" hidden>
-    <button class="detail-close" type="button" aria-label="返回">← 返回</button>
-    <div class="detail-lead"><div><p class="detail-kicker"></p><h2 class="detail-title"></h2></div><p class="detail-deck"></p></div>
-    <div class="detail-rule"><span>講次</span><span class="detail-count"></span></div>
-    <ol class="detail-list"></ol>
   </section>
 </article>
 
@@ -82,26 +75,6 @@
 .olive-speaker-card--clone{pointer-events:none}
 @media(prefers-reduced-motion:reduce){.olive-speaker-card{transition:none}}
 @media(max-width:760px){.olive-home-stage{height:calc(100svh - var(--site-header-height,42px));min-height:620px;margin-right:calc(-1 * var(--ui-gutter))}.olive-feature{inset:0 0 128px 0}.olive-brand{left:24px;top:34px}.olive-brand h1{font-size:clamp(64px,20vw,96px)}.olive-feature__caption{left:24px;bottom:34px}.olive-feature__caption h2{font-size:clamp(40px,12vw,62px)}.olive-speaker-rail{left:24px;bottom:24px;height:138px;padding-right:22vw}.olive-speaker-card{flex-basis:58vw;padding:14px}}
-.olive-detail{min-height:90vh;margin-top:clamp(80px,9vw,160px);border-top:1px solid var(--ws-line);padding-top:clamp(42px,5vw,82px);view-transition-name:olive-detail}
- .olive-archive.is-detail .olive-index{opacity:.08;filter:blur(3px);transition:opacity .35s,filter .35s;pointer-events:none}
-.olive-archive.is-detail .olive-detail{position:relative;z-index:10}
-.detail-close{border:0;background:none;padding:0 0 clamp(42px,5vw,76px);font:inherit;cursor:pointer}
-.detail-close:focus-visible{outline:1px solid currentColor;outline-offset:6px}
-.detail-lead{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(240px,.6fr);gap:clamp(30px,6vw,110px);align-items:end;padding-bottom:clamp(48px,6vw,96px)}
-.detail-kicker{font:var(--ui-small)/1.2 Arial,sans-serif;letter-spacing:.14em}
-.detail-title{font:400 clamp(52px,7vw,120px)/.9 "Noto Serif TC",serif;margin:.2em 0 0}
-.detail-deck{font-size:var(--ui-body-lg);line-height:1.6;max-width:32em}
-.detail-rule{display:flex;justify-content:space-between;border-top:1px solid var(--ws-line);padding:14px 0;font:var(--ui-small)/1.2 Arial,sans-serif;letter-spacing:.12em}
-.detail-list{list-style:none;margin:0;padding:0;border-bottom:1px solid var(--ws-line)}
-.detail-entry{display:grid;grid-template-columns:clamp(44px,6vw,92px) minmax(0,1fr) auto;gap:24px;align-items:baseline;padding:clamp(24px,3vw,48px) 0;border-top:1px solid var(--ws-line);color:inherit;text-decoration:none}
-.detail-entry__no{font:400 clamp(28px,3vw,52px)/1 "Cormorant Garamond",serif;opacity:.45}
-.detail-entry h3{font:400 clamp(25px,2.3vw,44px)/1.18 "Noto Serif TC",serif;margin:0}
-.detail-entry__meta{font-size:var(--ui-small);white-space:nowrap;opacity:.62}
-.detail-entry:hover h3,.detail-entry:focus-visible h3{text-decoration:underline;text-underline-offset:.18em}
-.detail-entry:focus-visible{outline:1px solid currentColor;outline-offset:6px}
-::view-transition-old(olive-detail){animation:olive-out .24s ease both}::view-transition-new(olive-detail){animation:olive-in .46s cubic-bezier(.2,.75,.2,1) both}
-@keyframes olive-in{from{opacity:0;transform:translateY(28px) scale(.985)}to{opacity:1;transform:none}}@keyframes olive-out{to{opacity:0;transform:translateY(-10px)}}
-@media(prefers-reduced-motion:reduce){.olive-archive.is-detail .olive-index{transition:none!important;transform:none!important;filter:none!important}::view-transition-old(olive-detail),::view-transition-new(olive-detail){animation:none!important}}
 </style>
 
 <script>
