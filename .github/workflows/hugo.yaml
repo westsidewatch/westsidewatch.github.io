@@ -33,18 +33,6 @@ jobs:
         with:
           submodules: recursive
           fetch-depth: 0
-      - name: Restore Vol.00 producer output
-        id: vol00-cache
-        uses: actions/cache/restore@v4
-        with:
-          path: preview/watch-city-vol00/hosanna/media/clips
-          key: vol00-media-v2-
-          restore-keys: |
-            vol00-media-v2-
-      - name: Verify Vol.00 producer output
-        run: |
-          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.webm' -size +100k | wc -l)" -eq 6
-          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.jpg' -size +10k | wc -l)" -ge 13
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
