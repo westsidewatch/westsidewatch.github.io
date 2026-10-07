@@ -3,6 +3,7 @@ import argparse, importlib.util, json, sys
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 REGISTRY=ROOT/'static'/'dore-design'/'design-generation-consumers.v1.json'
+MAGAZINE_PROFILE=ROOT/'static'/'dore-design'/'magazine-profile.olive-speaker.v1.json'
 RESOLVER=ROOT/'scripts'/'resolve_design_generation_prompt.py'
 
 def load(path): return json.loads(path.read_text(encoding='utf-8'))
@@ -12,14 +13,21 @@ def resolver():
 
 def consumers(): return {x['id']:x for x in load(REGISTRY).get('consumers',[]) if x.get('enabled')}
 
+def magazine_profile(consumer,artifact_type):
+    if consumer!='westside-watch' or artifact_type!='speaker-cover': return None
+    profile=load(MAGAZINE_PROFILE)
+    if profile.get('consumer')!=consumer or profile.get('artifactType')!=artifact_type: raise ValueError('magazine profile authority mismatch')
+    return profile
+
 def prepare(consumer,era,subject=None,artifact_type='image',modules=None,exploration=False,constraints=None):
     known=consumers()
     if consumer not in known: raise ValueError('unregistered generation consumer: '+consumer)
     resolved=resolver().resolve(era,modules,subject,artifact_type,consumer,exploration)
+    profile=magazine_profile(consumer,artifact_type)
     prompt=resolved['canonical_prompt']
     extra=[str(x).strip() for x in (constraints or []) if str(x).strip()]
     if extra: prompt+='\n\nConsumer constraints:\n- '+'\n- '.join(extra)
-    return {'schema':'dore.design-generation-gateway.v1','status':'READY_FOR_GENERATOR','consumer':consumer,'formal':not exploration,'generator_prompt':prompt,'resolution':resolved,'must_visual_verify':True,'may_be_historical_authority':False}
+    return {'schema':'dore.design-generation-gateway.v1','status':'READY_FOR_GENERATOR','composition_profile':profile,'consumer':consumer,'formal':not exploration,'generator_prompt':prompt,'resolution':resolved,'must_visual_verify':True,'may_be_historical_authority':False}
 
 def main():
     p=argparse.ArgumentParser(); p.add_argument('--consumer',required=True); p.add_argument('--era',required=True); p.add_argument('--subject'); p.add_argument('--artifact-type',default='image'); p.add_argument('--module',action='append',dest='modules'); p.add_argument('--constraint',action='append',dest='constraints'); p.add_argument('--exploration',action='store_true'); p.add_argument('--prompt-only',action='store_true'); a=p.parse_args()
