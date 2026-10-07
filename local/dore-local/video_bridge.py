@@ -8,7 +8,8 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
-ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"\nMASTER=ROOT/"dore-core"/"tools"/"video_master.py"
+ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"
+MASTER=ROOT/"dore-core"/"tools"/"video_master.py"
 ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}
 TASKS={}
 TASK_LOCK=threading.Lock()
