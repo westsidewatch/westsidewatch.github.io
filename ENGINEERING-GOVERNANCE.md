@@ -24,3 +24,14 @@ A PR, commit, merge, CI pass, deployment trigger, successful deployment, runtime
 ## Scope
 
 Project-local governance may add stricter requirements but may not weaken this repository-wide execution rule. New projects inherit it automatically; it does not need to be restated in every project folder or conversation.
+
+
+## Repository-wide chromatic prohibition
+
+The dominant **dark/black + gold** visual theme is permanently retired across this repository.
+
+- This prohibition applies to every current and future surface, product, template, component, experiment, and generated visual implementation.
+- Gold may remain only where the canonical Westside Color Authority assigns it a semantic role; it may not be locally paired with a dark/black field to recreate the retired theme.
+- Page and product code must consume Color OS semantic roles instead of locally declaring a competing dark/gold palette.
+- Project-local design work may be stricter but may not opt out of this prohibition.
+- The repository-wide `Global Black Gold Ban` gate is the executable enforcement of this rule and must run on every pull request to `main`.
