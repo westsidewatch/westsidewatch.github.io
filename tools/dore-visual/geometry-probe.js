@@ -48,15 +48,20 @@ const viewports = registry.viewports;
      const animations=cards.map(e=>getComputedStyle(e).animationName);
      return {preview:pr,cards:cr,deltaTop:pr.top-group.top,deltaBottom:pr.bottom-group.bottom,animations};
    });
-   const desktopContract=viewport.width>=901;
+   const rules=contract.rules||{};
+   const tolerancePx=rules.geometry?.tolerancePx??registry.defaults?.tolerancePx??2;
+   const ratioTolerance=rules.aspectRatio?.tolerance??registry.defaults?.aspectRatioTolerance??0.01;
+   const previewRatio=rules.aspectRatio?.preview??1.6;
+   const cardRatio=rules.aspectRatio?.cards??1.6;
+   const desktopContract=viewport.width>=(registry.defaults?.desktopMinWidth??901);
    const reduced=state.reducedMotion==='reduce';
    const geometryOk=!report.error &&
-     Math.abs(report.deltaTop)<=2 && Math.abs(report.deltaBottom)<=2 &&
-     Math.abs(report.preview.ratio-1.6)<=0.01 &&
-     report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01);
+     Math.abs(report.deltaTop)<=tolerancePx && Math.abs(report.deltaBottom)<=tolerancePx &&
+     Math.abs(report.preview.ratio-previewRatio)<=ratioTolerance &&
+     report.cards.every(r=>Math.abs(r.ratio-cardRatio)<=ratioTolerance);
    const motionOk=!report.error && (reduced
-     ? report.animations.every(x=>!x||x==='none')
-     : report.animations.some(x=>x&&x!=='none'));
+     ? (rules.motion?.reduced??'none')==='none' && report.animations.every(x=>!x||x==='none')
+     : (rules.motion?.normal??'present')==='present' && report.animations.some(x=>x&&x!=='none'));
    const ok=!desktopContract ? true : geometryOk && motionOk;
    const artifactDir=path.join(artifactRoot,contract.id);
    fs.mkdirSync(artifactDir,{recursive:true});
