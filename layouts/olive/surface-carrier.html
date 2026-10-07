@@ -23,7 +23,7 @@
     </article>
 
     <div class="olive-speaker-rail" aria-label="其他講員" tabindex="0">
-      <button class="olive-speaker-card" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
+      <button class="olive-speaker-card dore-magazine-card" type="button" data-person="江秀琴"><span>02</span><strong>江秀琴</strong><small>內在生活</small></button>
       <button class="olive-speaker-card" type="button" data-person="賴若瀚"><span>03</span><strong>賴若瀚</strong><small>十分釋經</small></button>
       <button class="olive-speaker-card" type="button" data-person="劉彤"><span>04</span><strong>劉彤</strong><small>信仰的傳承</small></button>
       <button class="olive-speaker-card" type="button" data-person="葉光明"><span>05</span><strong>葉光明</strong><small>中文事工</small></button>
@@ -74,7 +74,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 .olive-feature__caption i{font:normal 10px/1 Arial,sans-serif;letter-spacing:.14em;margin-left:18px}
 .olive-speaker-rail{position:absolute;z-index:3;left:clamp(26%,31vw,38%);right:clamp(18px,2vw,34px);bottom:clamp(154px,18vh,214px);height:clamp(176px,20vh,226px);display:flex;gap:clamp(10px,1vw,16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;padding:0 18vw 8px 0}
 .olive-speaker-rail::-webkit-scrollbar{display:none}
-.olive-speaker-card{appearance:none;text-decoration:none;flex:0 0 clamp(240px,19vw,340px);border:1px solid rgba(255,255,255,.58);background:color-mix(in oklab,var(--ws-olive) 82%,#fff);color:#fff;text-align:left;padding:clamp(16px,1.5vw,25px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;position:relative;overflow:hidden;isolation:isolate;transition:transform .28s,filter .28s}
+.dore-magazine-card{--dore-paper:color-mix(in oklab,var(--ws-olive) 82%,#fff);--dore-ink:#fff;--dore-rule:rgba(255,255,255,.58)}
+.olive-speaker-card{appearance:none;text-decoration:none;flex:0 0 clamp(240px,19vw,340px);border:1px solid var(--dore-rule);background:var(--dore-paper);color:var(--dore-ink);text-align:left;padding:clamp(16px,1.5vw,25px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;position:relative;overflow:hidden;isolation:isolate;transition:transform .28s,filter .28s}
 .olive-speaker-card:before{content:"";position:absolute;inset:0;z-index:-2;background-image:var(--preview,linear-gradient(135deg,color-mix(in oklab,var(--ws-olive) 76%,#fff),var(--ws-olive)));background-size:cover;background-position:center;transform:scale(1.02);transition:transform .45s ease}
 .olive-speaker-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.05),color-mix(in oklab,var(--ws-olive) 18%,transparent) 42%,color-mix(in oklab,var(--ws-olive) 84%,transparent));pointer-events:none}
 .olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-8px);filter:brightness(1.06);outline:0}.olive-speaker-card:hover:before,.olive-speaker-card:focus-visible:before{transform:scale(1.07)}
@@ -123,6 +124,7 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   document.querySelectorAll('.olive-speaker-card:not(.olive-speaker-card--clone)').forEach(card=>{
     const slug=speakerRoutes[card.dataset.person];
     if(!slug) return;
+    card.dataset.doreSurface='speaker-card'; card.dataset.doreSpeaker=slug; card.dataset.doreIdentitySynthesis='false';
     card.addEventListener('click',()=>location.assign('/olive/?person='+encodeURIComponent(slug)));
   });
 
