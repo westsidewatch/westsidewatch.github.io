@@ -20,7 +20,7 @@ def load(p): return json.loads(p.read_text(encoding="utf-8"))
 
 def speaker(slug):
  db=load(SPEAKERS)
- items=db.get("items") or db.get("speakers") or db
+ items=db.get("records") or db.get("items") or db.get("speakers") or db
  if isinstance(items,dict): items=list(items.values())
  for x in items:
   if x.get("id")==f"speaker:{slug}" or x.get("slug")==slug: return x
