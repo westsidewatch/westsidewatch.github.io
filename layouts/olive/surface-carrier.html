@@ -4,7 +4,7 @@
     <article class="olive-feature" data-person="大衛鮑森">
       <div class="olive-feature__media" aria-label="點擊播放大衛鮑森系列講座">
         <div class="olive-feature__art">
-          <img class="olive-feature__poster" data-pawson-poster alt="" decoding="async" fetchpriority="high">
+          <div class="olive-feature__poster" data-pawson-poster aria-hidden="true"></div>
           <iframe class="olive-feature__youtube" data-pawson-preview title="大衛鮑森系列講座" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen tabindex="-1" hidden></iframe>
           <button class="olive-feature__play" type="button" data-pawson-play aria-label="播放大衛鮑森系列講座"><span aria-hidden="true">▶</span></button>
           <span class="olive-feature__veil" aria-hidden="true"></span>
@@ -56,7 +56,9 @@
 .olive-feature__media{position:absolute;inset:0;display:block;overflow:hidden;color:#fff;text-decoration:none;background:var(--ws-olive)}
 .olive-feature__art{position:absolute;inset:0;background:linear-gradient(135deg,color-mix(in oklab,var(--ws-olive) 88%,#fff),var(--ws-olive));overflow:hidden}
 .olive-feature__poster,.olive-feature__youtube{position:absolute;left:50%;top:50%;width:100%;height:100%;min-width:100%;min-height:100%;border:0;transform:translate(-50%,-50%) scale(1.015)}
-.olive-feature__poster{object-fit:cover;object-position:center;filter:saturate(var(--ws-image-sat,.86));transition:opacity .28s ease}
+.olive-feature__poster{background:
+radial-gradient(ellipse at 72% 34%,rgba(255,255,255,.16),transparent 34%),
+linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix(in oklab,var(--ws-olive) 76%,#fff) 48%,var(--ws-olive) 100%);transition:opacity .28s ease}
 .olive-feature__youtube[hidden]{display:none}
 .olive-feature__play{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);width:clamp(52px,4.5vw,74px);height:clamp(52px,4.5vw,74px);border:1px solid rgba(255,255,255,.72);border-radius:50%;background:color-mix(in oklab,var(--ws-olive) 78%,transparent);color:#fff;display:grid;place-items:center;cursor:pointer;backdrop-filter:blur(5px)}
 .olive-feature__play span{font-size:clamp(16px,1.4vw,23px);margin-left:.15em}
@@ -101,11 +103,6 @@
     let index=Number.isFinite(previous)?(previous+1)%pawsonPool.length:Math.floor(Math.random()*pawsonPool.length);
     sessionStorage.setItem('olive-pawson-index',String(index));
     const [videoId,label]=pawsonPool[index];
-    const maxres='https://i.ytimg.com/vi/'+videoId+'/maxresdefault.jpg';
-    const fallback='https://i.ytimg.com/vi/'+videoId+'/hqdefault.jpg';
-    pawsonPoster.src=maxres;
-    pawsonPoster.onerror=()=>{ if(pawsonPoster.src!==fallback) pawsonPoster.src=fallback; };
-    pawsonPoster.alt=label;
     if(pawsonTitle) pawsonTitle.textContent=label;
     pawsonPlay.addEventListener('click',()=>{
       pawsonFrame.src='https://www.youtube-nocookie.com/embed/'+videoId+'?autoplay=1&rel=0&modestbranding=1';
