@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Deterministic hard-gate + editorial scoring for Doré magazine candidates."""
-import argparse, json
+import argparse, json\nROOT=Path(__file__).resolve().parents[1]\nPREFERENCES=ROOT/"static/dore-design/magazine-preferences.v1.json"
 from pathlib import Path
 
 def rect_ok(r):
@@ -12,7 +12,7 @@ def overlap(a,b):
  y=max(0,min(a[1]+a[3],b[1]+b[3])-max(a[1],b[1]))
  return x*y
 
-def score(c):
+def preference_signal(c):\n try: rows=json.loads(PREFERENCES.read_text(encoding="utf-8")).get("records",[])\n except FileNotFoundError:return 50.0\n family=c["family"];speaker=c.get("content",{}).get("speaker");wins=losses=0\n for r in rows:\n  if r.get("surface")!="OliveMountain":continue\n  weight=2 if r.get("speaker")==speaker else 1\n  if r.get("selectedFamily")==family:wins+=weight\n  if family in r.get("rejectedFamilies",[]):losses+=weight\n return max(0.0,min(100.0,50.0+(wins-losses)*10.0))\n\ndef score(c):
  g=c["geometry"]; im=g.get("image"); ty=g["type"]; family=c["family"]
  hard={"bounds":rect_ok(im) and rect_ok(ty),"typeArea":ty[2]*ty[3]>=700,
        "portraitPolicy":not (c["assetPolicy"]["portrait"]=="missing" and im is not None)}
