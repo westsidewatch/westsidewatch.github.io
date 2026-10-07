@@ -17,3 +17,11 @@ def test_all_live_carrier_cards_are_magazine_controlled():
  carrier=(ROOT/"layouts/olive/surface-carrier.html").read_text(encoding="utf-8")
  assert carrier.count('class="olive-speaker-card dore-magazine-card') >= 22
  assert '--dore-type-x' in carrier and '--dore-type-h' in carrier
+
+def test_live_olive_exposes_all_six_magazine_families():
+ carrier=(ROOT/"layouts/olive/surface-carrier.html").read_text(encoding="utf-8")
+ js=(ROOT/"olive/olive.js").read_text(encoding="utf-8")
+ families=("full-bleed","asymmetric-split","negative-space","portrait-inset","extreme-crop","typographic-no-portrait")
+ for family in families:
+  assert 'data-dore-family="'+family+'"' in carrier
+  assert family in js
