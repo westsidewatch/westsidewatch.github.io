@@ -18,8 +18,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: vol00-media
-  cancel-in-progress: true
+  group: vol00-media-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: false
 
 jobs:
   build:
