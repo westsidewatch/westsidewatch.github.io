@@ -16,8 +16,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: vol00-media
-  cancel-in-progress: false
+  group: vol00-media-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -39,7 +39,7 @@ jobs:
           source_dir="$RUNNER_TEMP/vol00-source"
           clip_dir="preview/watch-city-vol00/hosanna/media/clips"
           mkdir -p "$source_dir" "$clip_dir"
-                    fetch_segment(){ ffmpeg -hide_banner -loglevel error -y -ss "$2" -i "$1" -t "$3" -c copy "$4"; }
+          fetch_segment(){ ffmpeg -hide_banner -loglevel error -y -ss "$2" -i "$1" -t "$3" -c copy "$4"; }
           src1903='https://upload.wikimedia.org/wikipedia/commons/5/53/Vie_et_Passion_du_Christ_%281903%29.webm'
           src1912='https://upload.wikimedia.org/wikipedia/commons/0/01/From_The_Manger_To_The_Cross_%281912%29_Best_Quality.webm'
           src1927='https://upload.wikimedia.org/wikipedia/commons/transcoded/e/eb/The_King_of_Kings_%281927%29.webm/The_King_of_Kings_%281927%29.webm.720p.vp9.webm'
