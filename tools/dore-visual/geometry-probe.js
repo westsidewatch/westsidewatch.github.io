@@ -7,6 +7,18 @@ const baseUrl = process.argv[2];
 if (!baseUrl) throw new Error('usage: node tools/dore-visual/geometry-probe.js <base-url>');
 
 const registry = JSON.parse(fs.readFileSync('tools/dore-visual/contracts.json','utf8'));
+const required=registry.schema?.contractRequired||['id','path','probe','required'];
+const supportedRules=new Set(registry.schema?.supportedRules||[]);
+const supportedStates=new Set(registry.schema?.supportedStates||[]);
+const ids=new Set();
+for(const contract of registry.contracts||[]){
+  const missing=required.filter(k=>contract[k]===undefined||contract[k]===null||contract[k]==='');
+  if(missing.length) throw new Error(`invalid visual contract ${contract.id||'<unnamed>'}: missing ${missing.join(', ')}`);
+  if(ids.has(contract.id)) throw new Error(`duplicate visual contract id: ${contract.id}`);
+  ids.add(contract.id);
+  for(const key of Object.keys(contract.rules||{})) if(supportedRules.size&&!supportedRules.has(key)) throw new Error(`unsupported rule "${key}" in ${contract.id}`);
+  for(const state of contract.states||[]) for(const key of Object.keys(state)) if(key!=='name'&&supportedStates.size&&!supportedStates.has(key)) throw new Error(`unsupported state field "${key}" in ${contract.id}`);
+}
 const viewports = registry.viewports;
 
 (async()=>{
