@@ -1,0 +1,11 @@
+{
+  "schema": "dore.video-master.v0.1",
+  "capability": "video-master",
+  "execution": "local-first",
+  "stage": "diagnosis",
+  "requires": ["ffprobe"],
+  "optional_next_engines": ["Real-ESRGAN-ncnn-vulkan", "ffmpeg"],
+  "classes": ["restore-upscale", "upscale", "compression-repair", "web-master"],
+  "policy": {"cloud_api_required": false, "drm_bypass": false},
+  "outputs": ["source diagnosis", "restoration class", "target master geometry", "responsive rendition plan"]
+}
