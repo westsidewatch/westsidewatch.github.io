@@ -4,7 +4,7 @@
     <article class="olive-feature" data-person="大衛鮑森">
       <a class="olive-feature__media" href="/olive/?person=david-pawson" aria-label="進入大衛鮑森">
         <div class="olive-feature__art">
-          <iframe class="olive-feature__youtube" src="https://www.youtube-nocookie.com/embed/fizg-bxIjuY?rel=0&modestbranding=1" title="大衛鮑森舊約縱覽・創世記（一）預覽" loading="eager" allow="encrypted-media; picture-in-picture" tabindex="-1"></iframe>
+          <iframe class="olive-feature__youtube" data-pawson-preview title="大衛鮑森系列講座預覽" loading="eager" allow="encrypted-media; picture-in-picture" tabindex="-1"></iframe>
           <span class="olive-feature__veil" aria-hidden="true"></span>
         </div>
         <div class="olive-brand">
@@ -15,7 +15,7 @@
         <div class="olive-feature__caption">
           <small>FEATURED CHANNEL · 01</small>
           <h2>大衛鮑森</h2>
-          <p>舊約縱覽 · 創世記（一） <i>ENTER →</i></p>
+          <p><span data-pawson-title>系列講座</span> <i>ENTER →</i></p>
         </div>
       </a>
     </article>
@@ -70,17 +70,18 @@
 .olive-feature__caption h2{font:400 clamp(44px,4.7vw,82px)/.9 "Noto Serif TC",serif;margin:.08em 0}
 .olive-feature__caption p{font-size:var(--ui-body-lg);margin:0}
 .olive-feature__caption i{font:normal 10px/1 Arial,sans-serif;letter-spacing:.14em;margin-left:18px}
-.olive-speaker-rail{position:absolute;z-index:3;left:clamp(28%,34vw,42%);right:0;bottom:clamp(28px,4vh,52px);height:clamp(150px,18vh,205px);display:flex;gap:clamp(10px,1vw,16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;padding-right:18vw}
+.olive-speaker-rail{position:absolute;z-index:3;left:clamp(26%,31vw,38%);right:clamp(18px,2vw,34px);bottom:clamp(154px,18vh,214px);height:clamp(176px,20vh,226px);display:flex;gap:clamp(10px,1vw,16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;padding:0 18vw 8px 0}
 .olive-speaker-rail::-webkit-scrollbar{display:none}
-.olive-speaker-card{appearance:none;text-decoration:none;flex:0 0 clamp(205px,17vw,300px);border:1px solid rgba(255,255,255,.5);background:linear-gradient(145deg,rgba(244,240,220,.96),rgba(194,184,146,.94));backdrop-filter:blur(8px);color:#252525;text-align:left;padding:clamp(16px,1.5vw,25px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;position:relative;overflow:hidden;transition:transform .28s,background .28s}
-.olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-10px);background:#f4f1e5;outline:0}
-.olive-speaker-card:after{content:attr(data-person);position:absolute;right:-.08em;bottom:-.22em;font:400 clamp(56px,5.5vw,96px)/1 "Noto Serif TC",serif;color:rgba(37,37,37,.055);white-space:nowrap;pointer-events:none}
-.olive-speaker-card span{font:9px/1 Arial,sans-serif;letter-spacing:.16em;opacity:.48;position:relative;z-index:1}
+.olive-speaker-card{appearance:none;text-decoration:none;flex:0 0 clamp(240px,19vw,340px);border:1px solid rgba(255,255,255,.5);background:linear-gradient(145deg,#d7cfaa,#8e876b);color:#fff;text-align:left;padding:clamp(16px,1.5vw,25px);display:grid;grid-template-rows:auto 1fr auto;cursor:pointer;position:relative;overflow:hidden;isolation:isolate;transition:transform .28s,filter .28s}
+.olive-speaker-card:before{content:"";position:absolute;inset:0;z-index:-2;background-image:var(--preview,linear-gradient(135deg,rgba(206,189,116,.82),rgba(37,37,37,.9)));background-size:cover;background-position:center;transform:scale(1.02);transition:transform .45s ease}
+.olive-speaker-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(20,20,18,.08),rgba(20,20,18,.15) 38%,rgba(20,20,18,.78));pointer-events:none}
+.olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-8px);filter:brightness(1.06);outline:0}.olive-speaker-card:hover:before,.olive-speaker-card:focus-visible:before{transform:scale(1.07)}
+.olive-speaker-card span{font:9px/1 Arial,sans-serif;letter-spacing:.16em;opacity:.72;position:relative;z-index:1}
 .olive-speaker-card strong{align-self:center;font:400 clamp(25px,2vw,38px)/1.05 "Noto Serif TC",serif;position:relative;z-index:1}
-.olive-speaker-card small{font-size:10px;opacity:.6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1}
+.olive-speaker-card small{font-size:10px;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1}
 .olive-speaker-card--clone{pointer-events:none}
 @media(prefers-reduced-motion:reduce){.olive-speaker-card{transition:none}}
-@media(max-width:760px){.olive-home-stage{height:calc(100svh - var(--site-header-height,42px));min-height:620px;margin-right:calc(-1 * var(--ui-gutter))}.olive-feature{inset:0 0 128px 0}.olive-brand{left:24px;top:34px}.olive-brand h1{font-size:clamp(64px,20vw,96px)}.olive-feature__caption{left:24px;bottom:34px}.olive-feature__caption h2{font-size:clamp(40px,12vw,62px)}.olive-speaker-rail{left:24px;bottom:24px;height:138px;padding-right:22vw}.olive-speaker-card{flex-basis:44vw;padding:14px}}
+@media(max-width:760px){.olive-home-stage{height:calc(100svh - var(--site-header-height,42px));min-height:620px;margin-right:calc(-1 * var(--ui-gutter))}.olive-feature{inset:0 0 128px 0}.olive-brand{left:24px;top:34px}.olive-brand h1{font-size:clamp(64px,20vw,96px)}.olive-feature__caption{left:24px;bottom:34px}.olive-feature__caption h2{font-size:clamp(40px,12vw,62px)}.olive-speaker-rail{left:24px;bottom:24px;height:138px;padding-right:22vw}.olive-speaker-card{flex-basis:58vw;padding:14px}}
 .olive-detail{min-height:90vh;margin-top:clamp(80px,9vw,160px);border-top:1px solid rgba(37,37,37,.3);padding-top:clamp(42px,5vw,82px);view-transition-name:olive-detail}
  .olive-archive.is-detail .olive-index{opacity:.08;filter:blur(3px);transition:opacity .35s,filter .35s;pointer-events:none}
 .olive-archive.is-detail .olive-detail{position:relative;z-index:10}
@@ -105,6 +106,23 @@
 
 <script>
 (() => {
+  const pawsonPool=[
+    ['fizg-bxIjuY','舊約縱覽 · 創世記（一）'],
+    ['jlHOgXhkEMo','舊約縱覽 · 出埃及記（一）'],
+    ['YpBGW86YsYA','舊約縱覽 · 以斯帖記'],
+    ['cabJrRVBt7E','舊約縱覽 · 但以理書（一）']
+  ];
+  const pawsonFrame=document.querySelector('[data-pawson-preview]');
+  const pawsonTitle=document.querySelector('[data-pawson-title]');
+  if(pawsonFrame){
+    const previous=Number(sessionStorage.getItem('olive-pawson-index'));
+    let index=Number.isFinite(previous)?(previous+1)%pawsonPool.length:Math.floor(Math.random()*pawsonPool.length);
+    sessionStorage.setItem('olive-pawson-index',String(index));
+    const [videoId,label]=pawsonPool[index];
+    pawsonFrame.src='https://www.youtube-nocookie.com/embed/'+videoId+'?rel=0&modestbranding=1';
+    if(pawsonTitle) pawsonTitle.textContent=label;
+  }
+
   const speakerRail=document.querySelector('.olive-speaker-rail');
   if(speakerRail){
     const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
