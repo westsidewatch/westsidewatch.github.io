@@ -22,8 +22,8 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           path: preview/watch-city-vol00/hosanna/media/clips
-          key: vol00-media-v1-
+          key: vol00-media-v2-
           restore-keys: |
-            vol00-media-v1-
+            vol00-media-v2-
       - name: Verify publishable sequence assets exist
         run: python3 preview/watch-city-vol00/hosanna/verify_media.py
