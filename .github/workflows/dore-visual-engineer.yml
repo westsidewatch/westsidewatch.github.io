@@ -1,0 +1,38 @@
+name: Dore Visual Engineer
+
+on:
+  pull_request:
+    paths:
+      - 'static/candidate01/**'
+      - 'tools/dore-visual/**'
+      - '.github/workflows/dore-visual-engineer.yml'
+  workflow_dispatch:
+    inputs:
+      url:
+        description: Public or preview URL to probe
+        required: true
+        default: https://westsidewatch.github.io/candidate01/walk-worship.html
+
+jobs:
+  candidate01-geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Playwright Chromium
+        run: |
+          npm install --no-save playwright
+          npx playwright install --with-deps chromium
+      - name: Start PR-local static preview
+        run: |
+          python3 -m http.server 4173 --directory static >/tmp/dore-preview.log 2>&1 &
+          for i in {1..20}; do
+            curl -fsS http://127.0.0.1:4173/candidate01/walk-worship.html >/dev/null && exit 0
+            sleep 1
+          done
+          cat /tmp/dore-preview.log
+          exit 1
+      - name: Probe Candidate 01 visual contract
+        run: node tools/dore-visual/geometry-probe.js "http://127.0.0.1:4173/candidate01/walk-worship.html"
