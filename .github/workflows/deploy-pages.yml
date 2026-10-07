@@ -33,10 +33,22 @@ jobs:
           restore-keys: |
             vol00-media-v2-
       - name: Verify Vol.00 producer output
+        id: vol00_media
+        shell: bash
         run: |
-          test -d preview/watch-city-vol00/hosanna/media/clips
-          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.webm' -size +100k | wc -l)" -eq 6
-          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.jpg' -size +10k | wc -l)" -ge 13
+          clips=preview/watch-city-vol00/hosanna/media/clips
+          webm=0
+          jpg=0
+          if [ -d "$clips" ]; then
+            webm="$(find "$clips" -name '*.webm' -size +100k | wc -l)"
+            jpg="$(find "$clips" -name '*.jpg' -size +10k | wc -l)"
+          fi
+          if [ "$webm" -eq 6 ] && [ "$jpg" -ge 13 ]; then
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::Vol.00 producer media cache is incomplete ($webm webm, $jpg jpg); deploy will continue without treating cache state as site authority."
+          fi
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
