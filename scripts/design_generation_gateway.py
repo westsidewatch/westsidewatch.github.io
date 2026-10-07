@@ -7,6 +7,7 @@ MAGAZINE_PROFILE=ROOT/'static'/'dore-design'/'magazine-profile.olive-speaker.v1.
 RESOLVER=ROOT/'scripts'/'resolve_design_generation_prompt.py'
 MAGAZINE_CANDIDATES=ROOT/'scripts'/'generate_magazine_candidates.py'
 MAGAZINE_SCORER=ROOT/'scripts'/'score_magazine_candidates.py'
+MAGAZINE_COMPOSER=ROOT/'scripts'/'compose_magazine_production.py'
 
 def load(path): return json.loads(path.read_text(encoding='utf-8'))
 def resolver():
@@ -28,7 +29,9 @@ def compose_magazine(consumer,artifact_type,speaker,portrait_state='missing'):
     if not magazine_profile(consumer,artifact_type): return None
     if not speaker: raise ValueError('speaker-cover composition requires speaker slug')
     candidates=module(MAGAZINE_CANDIDATES,'dore_magazine_candidates').generate(speaker,portrait_state)
-    return module(MAGAZINE_SCORER,'dore_magazine_scorer').rank(candidates)
+    scored=module(MAGAZINE_SCORER,'dore_magazine_scorer').rank(candidates)
+    production=module(MAGAZINE_COMPOSER,'dore_magazine_composer').produce(scored,magazine_profile(consumer,artifact_type))
+    return {**scored,'production':production}
 
 def prepare(consumer,era,subject=None,artifact_type='image',modules=None,exploration=False,constraints=None,speaker=None,portrait_state='missing'):
     known=consumers()
