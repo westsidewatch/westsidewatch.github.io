@@ -49,10 +49,6 @@
 .ws-color-deep{color:var(--ws-deep)}
 .ws-color-shadow{color:var(--ws-shadow)}
 
-/* Hard policy: dark + gold is never a dominant site theme.
-   Gold may act as light/detail, never as the identity voice on a dark field. */
-.ws-dark-surface{--ws-branch:currentColor;color:var(--ws-paper)}
-.ws-dark-surface .ws-color-identity{color:inherit}
 
 /* Motion changes illumination, never branch identity. */
 [data-ws-light="dawn"]{--ws-light-x:24%;--ws-light-y:6%;--ws-light-strength:12%}
@@ -140,13 +136,6 @@
 .sites-surface .sites-layer-section-nav a[aria-current="page"]{color:var(--ws-identity);text-decoration-color:var(--ws-structure)}
 .sites-surface .sites-layer-footer{border-color:color-mix(in oklab,var(--ws-structure) 48%,transparent)}
 
-/* Operating-system guardrail: gold cannot become the voice of a dark surface. */
-.ws-dark-surface{
-  --ws-identity:var(--ws-paper);
-  --ws-interaction:var(--ws-paper);
-  --ws-focus:var(--ws-paper);
-  --ws-structure:color-mix(in oklab,var(--ws-paper) 32%,transparent);
-}
 
 /* Material density is responsive: preserve information before texture. */
 @media(max-width:760px){
@@ -282,8 +271,7 @@ body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws
 .sites-surface .sites-layer-section-nav>span{color:var(--ws-identity)}
 .sites-surface :where(.sites-layer-nav,.sites-layer-section-nav) a:hover{color:var(--ws-interaction)}
 
-/* Cinema keeps a deep projection field, but its voice is crimson rather than
-   the retired black+gold pairing. */
+/* Cinema uses the canonical crimson projection family. */
 .sites-section-cinema{
   --ws-cinema-deep:color-mix(in oklab,var(--ws-crimson) 34%,var(--ws-night));
   background:var(--ws-cinema-deep);
@@ -331,11 +319,9 @@ body.home .sites-layer-footer{background:var(--ws-surface);border-color:var(--ws
   --paper:var(--ws-branch-surface,var(--ws-surface));
   --paper2:var(--ws-branch-raised,var(--ws-material));
   --ink:var(--ws-text);
-  --gold:var(--ws-identity);
   --line:var(--ws-branch-rule,var(--ws-line));
   --sites-paper:var(--ws-branch-surface,var(--ws-surface));
   --sites-ink:var(--ws-text);
-  --sites-gold:var(--ws-identity);
   background:var(--ws-branch-surface,var(--ws-surface))!important;
 }
 .sites-surface :where(.sites-journal-head,.sites-volume-head,.sites-surface-head,.sites-church-intro,
