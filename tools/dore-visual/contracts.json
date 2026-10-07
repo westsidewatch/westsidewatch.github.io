@@ -56,7 +56,30 @@
           "name": "reduced-motion",
           "reducedMotion": "reduce"
         }
-      ]
+      ],
+      "rules": {
+        "geometry": {
+          "align": [
+            "preview.top=smallGroup.top",
+            "preview.bottom=smallGroup.bottom"
+          ],
+          "tolerancePx": 2
+        },
+        "aspectRatio": {
+          "preview": 1.6,
+          "cards": 1.6,
+          "tolerance": 0.01
+        },
+        "motion": {
+          "normal": "present",
+          "reduced": "none"
+        }
+      }
     }
-  ]
+  ],
+  "defaults": {
+    "tolerancePx": 2,
+    "aspectRatioTolerance": 0.01,
+    "desktopMinWidth": 901
+  }
 }
