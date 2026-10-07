@@ -42,7 +42,21 @@
       "id": "candidate01",
       "path": "/candidate01/walk-worship.html",
       "probe": "candidate01",
-      "required": true
+      "required": true,
+      "states": [
+        {
+          "name": "hover-left",
+          "target": ".products__grid .product:not([data-source=\"ONE\"]):nth-child(-n+4)"
+        },
+        {
+          "name": "hover-right",
+          "target": ".products__grid .product:not([data-source=\"ONE\"]):nth-child(n+5)"
+        },
+        {
+          "name": "reduced-motion",
+          "reducedMotion": "reduce"
+        }
+      ]
     }
   ]
 }
