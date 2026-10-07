@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """Generate deterministic structured magazine-layout candidates for Doré."""
-import argparse, hashlib, json
+import argparse, hashlib, importlib.util, json
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
 PROFILE=ROOT/"static/dore-design/magazine-profile.olive-speaker.v1.json"
-SPEAKERS=ROOT/"data/westside-core/entities/sermon-speakers.v1.json"
+SPEAKERS=ROOT/"data/westside-core/entities/sermon-speakers.v1.json"\nPRECEDENT_SCRIPT=ROOT/"scripts/retrieve_editorial_precedents.py"\nspec=importlib.util.spec_from_file_location("precedents",PRECEDENT_SCRIPT)\nprecedents=importlib.util.module_from_spec(spec);spec.loader.exec_module(precedents)
 
 GEOMETRY={
  "full-bleed":{"image":[0,0,100,100],"type":[7,66,52,26]},
