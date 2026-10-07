@@ -1,0 +1,16 @@
+name: Olive Color OS Guard
+on:
+  pull_request:
+    paths:
+      - 'layouts/olive/**'
+      - 'static/css/westside-color-authority.css'
+      - 'scripts/check_olive_color_os.py'
+jobs:
+  olive-color-os:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - run: python scripts/check_olive_color_os.py
