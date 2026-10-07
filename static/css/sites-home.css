@@ -97,3 +97,26 @@
   .sites-home-intro{animation-delay:.08s}.sites-home-entry{animation-delay:.16s}
   @keyframes award-hero-reveal{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 }
+
+
+/* AWARD POLISH v1.1 — deliberate editorial grid and optical balance. */
+@media(min-width:901px){
+  .sites-home-hero:before{content:"";position:absolute;z-index:1;inset:0 auto 0 var(--hero-edge);width:1px;background:color-mix(in oklab,var(--ws-paper) 11%,transparent);pointer-events:none}
+  .sites-home-masthead,.sites-home-intro{padding-left:clamp(0px,.2vw,4px)}
+  .sites-home-masthead{max-width:34rem}
+  .sites-home-intro h1{max-width:5.2ch}
+  .sites-home-intro p[lang=zh-Hant]{margin-top:1.05rem}
+  .sites-home-entry{align-items:flex-end}
+  .sites-home-entry a{min-width:clamp(9.5rem,10vw,13rem);display:flex;justify-content:space-between;gap:1rem}
+  .sites-home-realm:after{content:"";position:absolute;left:max(var(--ui-gutter),calc((100vw - var(--comp-canvas,94vw))/2));right:max(var(--ui-gutter),calc((100vw - var(--comp-canvas,94vw))/2));bottom:clamp(2rem,4vh,4rem);height:1px;background:color-mix(in oklab,currentColor 10%,transparent);pointer-events:none}
+  .sites-home-realm h2{align-self:center;max-width:8.5ch}
+  .sites-home-realm p{align-self:center;max-width:25rem}
+}
+/* Keep image/video treatment editorial rather than effect-heavy. */
+.sites-home-film iframe{filter:saturate(.82) contrast(1.025) brightness(.94)}
+.sites-home-realm:before{opacity:.56}
+@media(prefers-reduced-motion:no-preference){
+  .sites-home-film iframe{transform:scale(1.012);animation:award-film-breathe 18s ease-in-out infinite alternate}
+  @keyframes award-film-breathe{to{transform:scale(1.026) translateX(-.18%)}}
+}
+@media(prefers-reduced-motion:reduce){.sites-home-film iframe{animation:none!important;transform:none!important}}
