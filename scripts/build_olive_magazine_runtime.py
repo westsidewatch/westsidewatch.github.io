@@ -17,7 +17,7 @@ def build():
   doc=gen.generate(slug,"verified")
   ranked=score.rank(doc)
   winner=next(x for x in ranked["candidates"] if x["id"]==ranked["winner"])
-  records.append({"speaker":slug,"displayName":s["name"],"family":winner["family"],"candidateId":winner["id"],"geometry":winner["geometry"],"reward":winner["score"]["reward"],"identitySynthesis":False,"assetBinding":"none"})
+  records.append({"speaker":slug,"displayName":s["name"],"family":winner["family"],"identitySynthesis":False,"assetBinding":"none","candidateId":winner["id"],"geometry":winner["geometry"],"reward":winner["score"]["reward"]})
  return {"schema":"dore.olive-speaker-compositions.v1","authority":"Doré Magazine Engine scoring","deterministic":True,"records":records}
 def main():
  OUT.parent.mkdir(parents=True,exist_ok=True);OUT.write_text(json.dumps(build(),ensure_ascii=False,indent=2)+"\n",encoding="utf-8")

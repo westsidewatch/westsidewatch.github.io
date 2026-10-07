@@ -41,6 +41,8 @@ def content_signal(c):
 
 def precedent_signal(c):
  rows=c.get("precedents",[]) or []
+ if isinstance(rows,dict): rows=rows.get("records",[]) or rows.get("items",[]) or []
+ rows=[x for x in rows if isinstance(x,dict)]
  if not rows:return 35.0
  matched=sum(len(x.get("matchedTokens",[])) for x in rows)
  authorities=len({x.get("authority") for x in rows if x.get("authority")})
@@ -78,7 +80,6 @@ def main():
  p=argparse.ArgumentParser();p.add_argument("input");p.add_argument("--output");a=p.parse_args()
  out=rank(json.loads(Path(a.input).read_text(encoding="utf-8")))
  payload=json.dumps(out,ensure_ascii=False,indent=2)
- if a.output:Path(a.output).write_text(payload+"
-",encoding="utf-8")
+ if a.output:Path(a.output).write_text(payload+"\\n",encoding="utf-8")
  else:print(payload)
 if __name__=="__main__":main()

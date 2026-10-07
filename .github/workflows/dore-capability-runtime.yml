@@ -8,6 +8,9 @@ on:
       - 'local/dore-local/**'
       - 'tests/**'
       - 'scripts/**'
+      - 'static/dore-design/magazine-*.json'
+      - 'static/dore-design/runtime/**'
+      - 'data/westside-core/entities/sermon-speakers.v1.json'
       - '.github/workflows/dore-capability-runtime.yml'
   push:
     branches: [main]
@@ -17,6 +20,9 @@ on:
       - 'local/dore-local/**'
       - 'tests/**'
       - 'scripts/**'
+      - 'static/dore-design/magazine-*.json'
+      - 'static/dore-design/runtime/**'
+      - 'data/westside-core/entities/sermon-speakers.v1.json'
       - '.github/workflows/dore-capability-runtime.yml'
 
 permissions:
@@ -66,6 +72,11 @@ jobs:
           python -m py_compile local/dore-local/knowledge-substrate-poc.py local/dore-local/production_actions.py local/dore-local/capability_bus.py local/dore-local/book_intelligence_capability.py local/dore-local/dimensional_writing_capability.py dore_core/bible/query_planner.py
       - name: Run zero-metered-cost benchmark
         run: python scripts/dore_capability_benchmark.py
+      - name: Refresh Olive Magazine runtime from current scoring authority
+        run: |
+          python scripts/build_olive_magazine_runtime.py
+          python scripts/check_olive_magazine_runtime_freshness.py
+          git diff --exit-code -- static/dore-design/runtime/olive-speaker-compositions.v1.json || { echo 'Runtime was stale; commit the regenerated authority artifact.'; exit 1; }
       - name: Run shared-state visual execution probe
         run: python scripts/dore_visual_pipeline_probe.py
       - name: Verify renderer probe fails closed when absent
