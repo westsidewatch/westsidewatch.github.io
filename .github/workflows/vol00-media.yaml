@@ -33,8 +33,12 @@ jobs:
       - name: Prepare video toolchain
         if: steps.cache.outputs.cache-hit != 'true'
         run: |
-          sudo apt-get update
-          sudo apt-get install --yes ffmpeg
+          if command -v ffmpeg >/dev/null 2>&1 && command -v ffprobe >/dev/null 2>&1; then
+            ffmpeg -version | head -n 1
+          else
+            sudo apt-get update
+            sudo apt-get install --yes ffmpeg
+          fi
           mkdir -p "$RUNNER_TEMP/vol00-source" preview/watch-city-vol00/hosanna/media/clips
       - name: Fetch 1903 segment
         if: steps.cache.outputs.cache-hit != 'true'
