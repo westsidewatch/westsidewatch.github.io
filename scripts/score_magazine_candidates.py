@@ -78,7 +78,6 @@ def main():
  p=argparse.ArgumentParser();p.add_argument("input");p.add_argument("--output");a=p.parse_args()
  out=rank(json.loads(Path(a.input).read_text(encoding="utf-8")))
  payload=json.dumps(out,ensure_ascii=False,indent=2)
- if a.output:Path(a.output).write_text(payload+"
-",encoding="utf-8")
+ if a.output:Path(a.output).write_text(payload+"\\n",encoding="utf-8")
  else:print(payload)
 if __name__=="__main__":main()
