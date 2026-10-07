@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "viewports": [
+    {"name":"desktop-16x9","width":1920,"height":1080},
+    {"name":"desktop-16x10","width":1680,"height":1050},
+    {"name":"laptop","width":1440,"height":900},
+    {"name":"tablet","width":1024,"height":768}
+  ],
+  "contracts": [
+    {
+      "id": "candidate01",
+      "path": "/candidate01/walk-worship.html",
+      "probe": "candidate01",
+      "required": true
+    }
+  ]
+}
