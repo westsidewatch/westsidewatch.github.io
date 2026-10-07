@@ -138,3 +138,8 @@
   .sites-home-realm,.sites-home-realm h2,.sites-home-closing a{transition:none!important}
   .sites-home-realm:hover h2,.sites-home-closing a:hover,.sites-home-closing a:focus-visible{transform:none!important}
 }
+
+/* HOME HERO CLEANUP — main masthead is the sole identity mark. */
+.sites-home-masthead{width:clamp(24rem,30vw,58rem);max-width:none}
+@media(min-width:1600px){.sites-home-masthead{width:clamp(28rem,27vw,54rem);max-width:none}}
+@media(max-width:900px){.sites-home-masthead{width:min(82vw,32rem);max-width:none}}
