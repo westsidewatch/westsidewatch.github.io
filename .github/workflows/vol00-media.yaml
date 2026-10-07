@@ -2,11 +2,6 @@ name: Build Vol.00 media
 
 on:
   workflow_dispatch:
-  pull_request:
-    paths:
-      - ".github/workflows/vol00-media.yaml"
-      - "preview/watch-city-vol00/**"
-      - "dore-core/tools/video_master.py"
   push:
     branches: ["main"]
     paths:
@@ -18,7 +13,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: vol00-media-${{ github.event.pull_request.number || github.ref }}
+  group: vol00-media
   cancel-in-progress: false
 
 jobs:
