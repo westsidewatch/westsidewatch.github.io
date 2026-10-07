@@ -4,6 +4,7 @@ import argparse, json
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
 PREFERENCES=ROOT/"static/dore-design/magazine-preferences.v1.json"
+SPEAKERS=ROOT/"data/westside-core/entities/sermon-speakers.v1.json"
 
 def rect_ok(r):
  return r is None or (len(r)==4 and r[0]>=0 and r[1]>=0 and r[2]>0 and r[3]>0 and r[0]+r[2]<=100 and r[1]+r[3]<=100)
@@ -25,6 +26,26 @@ def preference_signal(c):
   if family in r.get("rejectedFamilies",[]):losses+=weight
  return max(0.0,min(100.0,50.0+(wins-losses)*10.0))
 
+def content_signal(c):
+ speaker=c.get("content",{}).get("speaker"); family=c["family"]
+ try: rows=json.loads(SPEAKERS.read_text(encoding="utf-8")).get("records",[])
+ except FileNotFoundError:return 50.0
+ row=next((x for x in rows if x.get("id")=="speaker:"+str(speaker)),{})
+ aliases=row.get("aliases",[]); status=row.get("status","canonical")
+ # Content evidence changes layout fitness without becoming a fixed family assignment.
+ signal=50.0
+ if aliases and family in {"asymmetric-split","negative-space","full-bleed"}:signal+=8
+ if not aliases and family in {"typographic-no-portrait","negative-space"}:signal+=6
+ if status in {"discovery-pending","local-corpus"} and family=="typographic-no-portrait":signal+=12
+ return min(100.0,signal)
+
+def precedent_signal(c):
+ rows=c.get("precedents",[]) or []
+ if not rows:return 35.0
+ matched=sum(len(x.get("matchedTokens",[])) for x in rows)
+ authorities=len({x.get("authority") for x in rows if x.get("authority")})
+ return min(100.0,45.0+matched*6.0+authorities*5.0)
+
 def score(c):
  g=c["geometry"]; im=g.get("image"); ty=g["type"]; family=c["family"]
  hard={"bounds":rect_ok(im) and rect_ok(ty),"typeArea":ty[2]*ty[3]>=700,
@@ -39,7 +60,9 @@ def score(c):
   "negativeSpace":round(min(100,35+whitespace/90),1),
   "imageTypeRelation":100.0 if im is None else round(max(0,100-min(70,ov/45)),1),
   "distinctiveness":{"full-bleed":76,"asymmetric-split":91,"negative-space":94,"portrait-inset":84,"extreme-crop":88,"typographic-no-portrait":90}.get(family,70),
-  "humanPreference":round(preference_signal(c),1)
+  "humanPreference":round(preference_signal(c),1),
+  "contentFit":round(content_signal(c),1),
+  "precedentEvidence":round(precedent_signal(c),1)
  }
  reward=round(sum(editorial.values())/len(editorial),1) if hard_pass else 0.0
  return {**c,"scoreState":"scored","score":{"hard":hard,"hardPass":hard_pass,"editorial":editorial,"reward":reward}}
