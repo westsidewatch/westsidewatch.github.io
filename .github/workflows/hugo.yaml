@@ -36,6 +36,18 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Restore Hosanna media for publication
+        id: hosanna-media
+        uses: actions/cache/restore@v4
+        with:
+          path: preview/watch-city-vol00/hosanna/media/clips
+          key: hosanna-pages-media-${{ github.sha }}
+          restore-keys: |
+            vol00-media-v2-
+      - name: Verify Hosanna media is publishable
+        run: |
+          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.webm' -size +250k 2>/dev/null | wc -l)" -eq 6
+          test "$(find preview/watch-city-vol00/hosanna/media/clips -name '*.jpg' -size +10k 2>/dev/null | wc -l)" -ge 13
       - name: Restore Dawn build cache
         id: dawn-cache
         uses: actions/cache@v4
