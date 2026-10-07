@@ -1,6 +1,11 @@
 name: Dore Visual Engineer
 
 on:
+  pull_request:
+    paths:
+      - 'static/candidate01/**'
+      - 'tools/dore-visual/**'
+      - '.github/workflows/dore-visual-engineer.yml'
   workflow_dispatch:
     inputs:
       url:
@@ -20,5 +25,15 @@ jobs:
         run: |
           npm install --no-save playwright
           npx playwright install --with-deps chromium
+      - name: Select probe URL
+        id: target
+        env:
+          INPUT_URL: ${{ inputs.url }}
+        run: |
+          if [ -n "$INPUT_URL" ]; then
+            echo "url=$INPUT_URL" >> "$GITHUB_OUTPUT"
+          else
+            echo "url=https://westsidewatch.github.io/candidate01/walk-worship.html" >> "$GITHUB_OUTPUT"
+          fi
       - name: Probe Candidate 01 visual contract
-        run: node tools/dore-visual/geometry-probe.js "${{ inputs.url }}"
+        run: node tools/dore-visual/geometry-probe.js "${{ steps.target.outputs.url }}"
