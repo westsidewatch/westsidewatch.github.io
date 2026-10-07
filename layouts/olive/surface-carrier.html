@@ -84,6 +84,10 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 .olive-speaker-card--clone{pointer-events:none}
 @media(prefers-reduced-motion:reduce){.olive-speaker-card{transition:none}}
 @media(max-width:760px){.olive-home-stage{height:calc(100svh - var(--site-header-height,42px));min-height:620px;margin-right:calc(-1 * var(--ui-gutter))}.olive-feature{inset:0 0 128px 0}.olive-brand{left:24px;top:34px}.olive-brand h1{font-size:clamp(64px,20vw,96px)}.olive-feature__caption{left:24px;bottom:34px}.olive-feature__caption h2{font-size:clamp(40px,12vw,62px)}.olive-speaker-rail{left:24px;bottom:24px;height:138px;padding-right:22vw}.olive-speaker-card{flex-basis:58vw;padding:14px}}
+.olive-speaker-channel{position:absolute;left:clamp(1rem,4vw,4rem);bottom:clamp(7rem,18vh,11rem);z-index:7;width:min(34rem,calc(100% - 2rem));padding:1rem 1.15rem 1.15rem;background:rgba(255,255,255,.92);color:var(--ws-olive);border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(12px)}
+.olive-speaker-channel__eyebrow{margin:0 0 .25rem;font:500 .68rem/1.2 system-ui;letter-spacing:.18em}.olive-speaker-channel h2{margin:0 0 .7rem;font-family:"Noto Serif TC",serif;font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500}
+.olive-speaker-channel__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.olive-speaker-channel__entry{display:flex;justify-content:space-between;gap:.8rem;padding:.62rem .7rem;border-top:1px solid color-mix(in oklab,var(--ws-olive) 24%,transparent);color:inherit;text-decoration:none}.olive-speaker-channel__entry strong{font-weight:500}.olive-speaker-channel__entry span{white-space:nowrap;font-size:.72rem;opacity:.68}
+@media(max-width:680px){.olive-speaker-channel{bottom:8.5rem}.olive-speaker-channel__list{grid-template-columns:1fr}}
 </style>
 
 <script>
@@ -162,6 +166,24 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
   });
 
   const q=new URLSearchParams(location.search), person=q.get('person'), topic=q.get('topic');
+  const verifiedSpeakerChannels={'jiang-xiuqin':{label:'江秀琴',entries:[
+    ['內在生活 45 講','45 講系列','/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-inner-life-45'],
+    ['道在人間 · 江秀琴','GOOD TV','/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-good-message'],
+    ['慕主先鋒信息','GOOD TV','/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-forerunner-message'],
+    ['進入神的安息美地','GOOD TV','/olive/?person=jiang-xiuqin&topic=jiang-xiuqin-goodtv-rest']
+  ]}};
+  const renderSpeakerChannel=(slug)=>{
+    const channel=verifiedSpeakerChannels[slug];
+    if(!channel) return;
+    const stage=document.querySelector('.olive-home-stage');
+    if(!stage || stage.querySelector('.olive-speaker-channel')) return;
+    const section=document.createElement('section'); section.className='olive-speaker-channel';
+    section.setAttribute('aria-label',channel.label+'講員頻道');
+    section.innerHTML='<p class="olive-speaker-channel__eyebrow">VERIFIED SERIES</p><h2>'+channel.label+'</h2><div class="olive-speaker-channel__list"></div>';
+    const list=section.querySelector('.olive-speaker-channel__list');
+    channel.entries.forEach(([name,meta,url])=>{const a=document.createElement('a');a.className='olive-speaker-channel__entry';a.href=url;a.innerHTML='<strong>'+name+'</strong><span>'+meta+' →</span>';list.append(a);});
+    stage.append(section);
+  };
   const personNames={
     'jiang-xiuqin':'江秀琴','jerry-lai':'賴若瀚','tong-liu':'劉彤','derek-prince':'葉光明',
     'watchman-nee':'倪柝聲','kang-lai-chang':'康來昌','stephen-tong':'唐崇榮','kou-shao-en':'寇紹恩',
@@ -176,7 +198,8 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
     const caption=document.querySelector('.olive-feature__caption h2');
     const title=document.querySelector('[data-pawson-title]');
     if(caption) caption.textContent=personNames[person];
-    if(title) title.textContent='講員頻道 · 已進入';
+    if(title) title.textContent=verifiedSpeakerChannels[person]?'講員頻道 · 已核實系列':'講員頻道';
+    renderSpeakerChannel(person);
   }
   const detail=document.querySelector('#olive-detail');
   const works={
