@@ -9,6 +9,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[2]
 ADAPTER=ROOT/"dore-core"/"tools"/"video_acquisition.py"
+MASTER=ROOT/"dore-core"/"tools"/"video_master.py"
 ORIGINS={"https://westsidewatch.github.io","http://localhost","http://127.0.0.1"}
 TASKS={}
 TASK_LOCK=threading.Lock()
@@ -61,7 +62,7 @@ def watch_progress(task_id,root,stop,total=None):
             if total and progress.get("percent")==100 and TASKS[task_id].get("status")=="downloading":
                 TASKS[task_id]["status"]="merging"
 
-def run_download_task(task_id,cmd,output,total=None):
+def run_download_task(task_id,cmd,output,total=None,auto_master=False):
     with TASK_LOCK: TASKS[task_id]["status"]="downloading"
     stop=threading.Event()
     watcher=threading.Thread(target=watch_progress,args=(task_id,output,stop,total),daemon=True); watcher.start()
@@ -73,7 +74,21 @@ def run_download_task(task_id,cmd,output,total=None):
         status="failed"
         if p.returncode==0:
             status="merged" if result.get("merged") else ("downloaded" if result.get("downloaded") else "completed")
-        with TASK_LOCK: TASKS[task_id].update({"status":status,"ok":p.returncode==0,"result":result})
+        if p.returncode==0 and auto_master:
+            media=result.get("file")
+            if not media and result.get("task_dir"):
+                candidates=[x for x in Path(result["task_dir"]).rglob("*") if x.is_file() and x.suffix.lower() in {".mp4",".mov",".mkv",".webm"}]
+                media=str(max(candidates,key=lambda x:x.stat().st_mtime)) if candidates else None
+            if media and Path(media).is_file():
+                with TASK_LOCK: TASKS[task_id]["status"]="mastering"
+                outdir=str(Path(output).expanduser()/"Dore-Video-Master")
+                mp=subprocess.run([sys.executable,str(MASTER),"restore",media,"--output",outdir],cwd=ROOT,text=True,capture_output=True,timeout=14400)
+                try: master_result=json.loads((mp.stdout if mp.returncode==0 else mp.stderr).strip())
+                except Exception: master_result={"raw":((mp.stdout or mp.stderr) or "").strip()}
+                result["video_master"]=master_result
+                if mp.returncode: status="master_failed"
+                else: status="mastered"
+        with TASK_LOCK: TASKS[task_id].update({"status":status,"ok":p.returncode==0 and status!="master_failed","result":result})
     except Exception as e:
         with TASK_LOCK: TASKS[task_id].update({"status":"failed","ok":False,"error":type(e).__name__,"detail":str(e)})
     finally:
@@ -100,11 +115,19 @@ class H(BaseHTTPRequestHandler):
         self._send(404,{"ok":False,"error":"not_found"})
     def do_POST(self):
         op=self.path.strip("/")
-        if op not in {"probe","formats","download"}: return self._send(404,{"ok":False,"error":"not_found"})
+        if op not in {"probe","formats","download","master-probe","restore"}: return self._send(404,{"ok":False,"error":"not_found"})
         try:
             n=int(self.headers.get("Content-Length","0")); body=json.loads(self.rfile.read(n) or b"{}"); url=str(body.get("url","")).strip()
             if not url.startswith(("http://","https://")): return self._send(400,{"ok":False,"error":"public_http_url_required"})
-            cmd=[sys.executable,str(ADAPTER),op,url]
+            if op in {"master-probe","restore"}:
+                file=str(body.get("file","")).strip()
+                if not file: return self._send(400,{"ok":False,"error":"local_file_required"})
+                target=Path(file).expanduser().resolve()
+                if not target.is_file(): return self._send(404,{"ok":False,"error":"local_file_not_found"})
+                cmd=[sys.executable,str(MASTER),"probe" if op=="master-probe" else "restore",str(target)]
+                if op=="restore" and body.get("output"): cmd += ["--output",str(body["output"])]
+            else:
+                cmd=[sys.executable,str(ADAPTER),op,url]
             if op=="download":
                 if body.get("format"): cmd += ["--format",str(body["format"])]
                 if body.get("output"): cmd += ["--output",str(body["output"])]
@@ -114,8 +137,8 @@ class H(BaseHTTPRequestHandler):
                 total=hls_total(url)
                 progress={"segments":0}; progress.update({"total_segments":total,"percent":0} if total else {})
                 with TASK_LOCK: TASKS[task_id]={"task_id":task_id,"status":"queued","ok":True,"output":output,"progress":progress}
-                threading.Thread(target=run_download_task,args=(task_id,cmd,output,total),daemon=True).start()
-                return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued"})
+                threading.Thread(target=run_download_task,args=(task_id,cmd,output,total,bool(body.get("auto_master"))),daemon=True).start()
+                return self._send(202,{"ok":True,"operation":"download","task_id":task_id,"status":"queued","auto_master":bool(body.get("auto_master"))})
             p=subprocess.run(cmd,cwd=ROOT,text=True,capture_output=True,timeout=3600)
             raw=((p.stdout if p.returncode==0 else p.stderr) or p.stdout or p.stderr).strip()
             try: result=json.loads(raw)

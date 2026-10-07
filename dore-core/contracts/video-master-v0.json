@@ -1,0 +1,35 @@
+{
+  "schema": "dore.video-master.v0.1",
+  "capability": "video-master",
+  "execution": "local-first",
+  "stage": "executable-restoration",
+  "requires": [
+    "ffprobe",
+    "ffmpeg"
+  ],
+  "optional_next_engines": [
+    "Real-ESRGAN-ncnn-vulkan"
+  ],
+  "classes": [
+    "restore-upscale",
+    "upscale",
+    "compression-repair",
+    "web-master"
+  ],
+  "policy": {
+    "cloud_api_required": false,
+    "drm_bypass": false
+  },
+  "outputs": [
+    "source diagnosis",
+    "restored master",
+    "720p web rendition",
+    "1080p web rendition",
+    "1440p web rendition when appropriate"
+  ],
+  "version": "0.2",
+  "commands": [
+    "probe",
+    "restore"
+  ]
+}

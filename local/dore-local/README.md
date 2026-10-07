@@ -58,3 +58,7 @@ Expected deterministic core result:
 ```text
 DORE_DESIGN_MEMORY_D1_D2_D3_CORE_PASS
 ```
+
+
+### Doré Video Master
+The loopback Video Bridge also exposes local-only `POST /master-probe` and `POST /restore`. Both accept a local `file`; restore may also receive `output`. The bridge never uploads source media and the Video Master remains local-first.
