@@ -10,9 +10,11 @@ ROOT = Path(__file__).resolve().parents[1]
 # records and canonical pointers, but must never download or mirror source media.
 # Canonical Resource Fabric may only grow through
 # gate_dawn_canonical_promotion.py -> promote_dawn_canonical_batch.py.
-STEPS = (
-    'scripts/discover_dawn_10k_openlibrary_works.py',
-    'scripts/discover_dawn_av_records.py',
+DISCOVERY_STEPS = (
+    ('scripts/discover_dawn_10k_openlibrary_works.py', ROOT / 'data/dawn-10k-openlibrary-works.json'),
+    ('scripts/discover_dawn_av_records.py', ROOT / 'data/dawn-corpus/records/open-av-discovery.json'),
+)
+BUILD_STEPS = (
     'scripts/build_dawn_10k_work_queue.py',
     'scripts/build_dawn_resource_queue.py',
 )
@@ -20,8 +22,22 @@ STEPS = (
 def run(path: str) -> None:
     subprocess.run([sys.executable, path], cwd=ROOT, check=True)
 
+def discover(path: str, fallback: Path) -> None:
+    try:
+        run(path)
+    except subprocess.CalledProcessError as exc:
+        # Discovery depends on public upstream APIs. A transient provider outage
+        # must not destroy a previously validated harvest or turn unrelated main
+        # pushes red. We only fall back when a prior corpus snapshot exists;
+        # all integrity/policy baselines below remain hard failures.
+        if not fallback.exists():
+            raise
+        print(json.dumps({'warning':'discovery-source-unavailable','step':path,'exitCode':exc.returncode,'fallback':str(fallback.relative_to(ROOT))}, ensure_ascii=False), file=sys.stderr)
+
 def main() -> int:
-    for step in STEPS:
+    for step, fallback in DISCOVERY_STEPS:
+        discover(step, fallback)
+    for step in BUILD_STEPS:
         run(step)
     source=json.loads((ROOT/'data/dawn-10k-openlibrary-works.json').read_text(encoding='utf-8'))
     av_path=ROOT/'data/dawn-corpus/records/open-av-discovery.json'
