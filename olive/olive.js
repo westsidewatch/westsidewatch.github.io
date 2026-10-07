@@ -18,6 +18,7 @@
 
   function linkCard(cls,title,meta,href){
     const a=document.createElement('a'); a.className=cls; a.href=href;
+    if(cls==='speaker-card'){const slug=new URL(href,location.origin).searchParams.get('person');a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
     a.innerHTML=`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`; return a;
   }
   async function renderPeople(){
