@@ -120,3 +120,21 @@
   @keyframes award-film-breathe{to{transform:scale(1.026) translateX(-.18%)}}
 }
 @media(prefers-reduced-motion:reduce){.sites-home-film iframe{animation:none!important;transform:none!important}}
+
+
+/* AWARD POLISH v1.2 — interaction restraint and typographic finish. */
+.sites-home-masthead img{opacity:.94}
+.sites-home-intro h1 em{font-style:italic;font-weight:400}
+.sites-home-realm h2 em{font-style:italic}
+.sites-home-realm{transition:background-color .7s ease}
+.sites-home-realm h2,.sites-home-realm p,.sites-home-realm>span{will-change:transform,opacity}
+.sites-home-realm:hover{background:color-mix(in oklab,var(--realm) 9%,var(--ws-surface))}
+.sites-home-realm:hover h2{transform:translateX(clamp(2px,.25vw,5px))}
+.sites-home-realm h2{transition:transform .65s cubic-bezier(.2,.72,.18,1)}
+.sites-home-closing blockquote em{font-style:italic;font-weight:400}
+.sites-home-closing a{transition:opacity .3s ease,transform .3s ease}
+.sites-home-closing a:hover,.sites-home-closing a:focus-visible{opacity:1;transform:translateX(3px)}
+@media(prefers-reduced-motion:reduce){
+  .sites-home-realm,.sites-home-realm h2,.sites-home-closing a{transition:none!important}
+  .sites-home-realm:hover h2,.sites-home-closing a:hover,.sites-home-closing a:focus-visible{transform:none!important}
+}
