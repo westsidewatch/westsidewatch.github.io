@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 const { chromium } = require('playwright');
 const fs = require('fs');
+const path = require('path');
 
 const baseUrl = process.argv[2];
 if (!baseUrl) throw new Error('usage: node tools/dore-visual/geometry-probe.js <base-url>');
@@ -10,6 +11,8 @@ const viewports = registry.viewports;
 
 (async()=>{
  const browser=await chromium.launch({headless:true});
+ const artifactRoot=process.env.DORE_VISUAL_ARTIFACTS||'artifacts/dore-visual';
+ fs.mkdirSync(artifactRoot,{recursive:true});
  let failed=false;
  for(const contract of registry.contracts){
   if(contract.probe!=='candidate01') continue;
@@ -50,6 +53,11 @@ const viewports = registry.viewports;
      Math.abs(report.preview.ratio-1.6)<=0.01 && report.cards.every(r=>Math.abs(r.ratio-1.6)<=0.01) &&
      report.animations.some(x=>x&&x!=='none')
    ));
+   const artifactDir=path.join(artifactRoot,contract.id);
+   fs.mkdirSync(artifactDir,{recursive:true});
+   const stem=viewport.name.replace(/[^a-z0-9_-]/gi,'-');
+   await page.screenshot({path:path.join(artifactDir,stem+'.png'),fullPage:true});
+   fs.writeFileSync(path.join(artifactDir,stem+'.json'),JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
    console.log(JSON.stringify({contract:contract.id,viewport,...report,pass:ok},null,2));
    if(!ok) failed=true;
    await page.close();
