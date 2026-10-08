@@ -39,3 +39,12 @@ test('generated rectangular block parcels are nonoverlapping and within block',(
  assert.equal(result.valid,true,JSON.stringify(result.errors.slice(0,8)));
  for(const p of parcels.filter(p=>p.metadata?.perimeterFabric)) assert.ok(p.metadata.frontage);
 });
+
+test('generated blocks publish a successful geometry audit',()=>{
+ const polygon=rectangle(0,0,120,100);
+ const block={id:'audit:block',districtId:'audit',geometry:{polygon},metadata:{}};
+ const parcels=subdivideBlockToParcels(block);
+ assert.ok(parcels.length>0);
+ assert.equal(block.metadata.geometryAudit?.valid,true);
+ assert.equal(block.metadata.geometryAudit.parcelCount,parcels.length);
+});
