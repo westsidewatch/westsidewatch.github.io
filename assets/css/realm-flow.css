@@ -9,8 +9,8 @@
 .realm-preview:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(5,16,24,.92),rgba(5,16,24,.03) 68%)}
 .realm-preview__copy{position:absolute;z-index:2;left:1.2rem;right:1.2rem;bottom:1.1rem;display:grid;gap:.25rem}
 .realm-preview__copy small{font:600 .7rem/1 var(--font-display);letter-spacing:.16em;color:var(--home-gold)}
-.realm-preview__copy strong{font:500 clamp(1.65rem,2.1vw,2.45rem)/.95 var(--font-display);letter-spacing:-.025em}
-.realm-preview__copy em{font:500 .86rem/1.5 var(--home-zh);font-style:normal;letter-spacing:.04em}
+.realm-preview__copy strong{font:400 clamp(1.65rem,2.1vw,2.45rem)/.95 var(--font-display);letter-spacing:-.025em}
+.realm-preview__copy em{font:400 .86rem/1.5 var(--home-zh);font-style:normal;letter-spacing:.04em}
 .realm-preview:hover img,.realm-preview:focus-visible img{transform:scale(1.055) translateX(-1%)}
 .realm-preview:focus-visible{outline:2px solid var(--home-gold);outline-offset:-3px}
 .realm__copy{left:max(6vw,calc((100vw - 86rem)/2));bottom:10vh;width:min(48vw,50rem);text-shadow:0 1px 28px rgba(0,0,0,.2)}

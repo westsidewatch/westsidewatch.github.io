@@ -30,7 +30,7 @@ h1,h2,h3,h4,.wordmark,.primary-nav,.utility-nav{font-family:var(--ws-type-displa
 /* Chinese lines keep intentional phrases together; desktop taglines remain one editorial line. */
 .living-screen__head>span{width:auto;min-width:31em;max-width:none;white-space:nowrap;text-wrap:nowrap}
 .realm__description,.dawn-intro,.section-head+ p{max-width:38rem;text-wrap:pretty}
-.realm__copy h2{font-weight:400}.realm__zh{font-family:var(--ws-type-display-zh);font-weight:600;word-break:keep-all}.realm__description{font-family:var(--ws-type-display-zh);font-weight:300}
+.realm__copy h2{font-weight:400}.realm__zh{font-family:var(--ws-type-display-zh);font-weight:600;word-break:keep-all}.realm__description{font-family:var(--ws-type-display-zh);font-weight:200}
 
 /* Eight distinct engraving fields derived from Doré hatch rhythms. */
 .realm:nth-child(1){--etch:repeating-linear-gradient(168deg,transparent 0 8px,rgba(37,37,37,.052) 8px 9px),repeating-linear-gradient(12deg,transparent 0 24px,rgba(37,37,37,.025) 24px 25px)}
@@ -60,7 +60,7 @@ h1,h2,h3,h4,.wordmark,.primary-nav,.utility-nav{font-family:var(--ws-type-displa
 :root{--ww-temple:#f2ede1;--ww-temple-shadow:#d9cfb9;--ww-first-light:#cebd74;--ww-aged-gold:#a2872a;--ww-ink:#292722;--ww-night:#193247;--ww-olive:#69755b;--ww-zh:var(--type-zh)}
 html,body{background:var(--ww-temple);color:var(--ww-ink)}
 :lang(zh-Hant),[lang=zh-Hant],.issue-cover__zh,.issue-dispatch__body,.movement-spread__statement,.story-card h3,.story-card__name small,.story-card__deck,.story-card__source,.issue-coda__zh,.issue-coda__routes a,.mc-zh,.mc-copy,.mc-list em,.mc-paths span{font-family:var(--ws-type-display-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal;text-wrap:pretty}
-.issue-cover__zh,.realm__zh,.mc-zh{font-weight:600!important}.issue-dispatch__body,.movement-spread__statement,.story-card__deck,.mc-copy,.mc-paths span{font-weight:300!important}
+.issue-cover__zh,.realm__zh,.mc-zh{font-weight:600!important}.issue-dispatch__body,.movement-spread__statement,.story-card__deck,.mc-copy,.mc-paths span{font-weight:200!important}
 h1,h2,h3,h4{font-synthesis:none}.realm__copy h2+.realm__zh,.mc-list strong+em{position:relative;display:block;margin-top:.75rem}.realm__flow,.realm__copy,.mc-hero figure,.mc-hero>div{isolation:isolate}
 
 /* Every large colour field carries an engraved line field and moving light. */
