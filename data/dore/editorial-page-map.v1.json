@@ -1,0 +1,24 @@
+{
+  "version": 1,
+  "status": "source-verified-partial",
+  "authority": {
+    "routes": "content/*/_index.md on main, checked 2026-10-08",
+    "type": "assets/css/typography-system.css on main",
+    "palette": "only Olive Mountain green/white is explicitly approved for this compiler"
+  },
+  "surfaces": [
+    {"route":"/journal/","source":"content/journal/_index.md","section":"Magazine","scenario":"essay-concept","slot":"feature-lead","palette":null,"state":"blocked-palette"},
+    {"route":"/magazine/","source":"content/journal/_index.md aliases","section":"Magazine alias","scenario":"essay-concept","slot":"feature-lead","palette":null,"state":"blocked-palette"},
+    {"route":"/cinema/","source":"content/cinema/_index.md","section":"ParadiseCinema","scenario":"cinema-program","slot":"hero","palette":null,"state":"blocked-palette"},
+    {"route":"/olive/","source":"content/olive/_index.md","section":"OliveMountain","scenario":"section-hero","slot":"hero","palette":"olive-mountain","state":"ready-for-brief"},
+    {"route":"/church/","source":"content/church/_index.md","section":"LivingWaterWest","scenario":"section-hero","slot":"hero","palette":null,"state":"blocked-palette"},
+    {"route":"/archive/","source":"route mapping only; content page not independently verified","section":"Archive","scenario":"archive-thumbnail","slot":"thumbnail","palette":null,"state":"unverified-route"}
+  ],
+  "type_contract": {
+    "english_display":"Bodoni Moda Regular 400",
+    "chinese_display":"Chiron Hei",
+    "chinese_reading":"Noto Serif TC",
+    "rendering":"HTML/CSS only, never rasterize typography into image"
+  },
+  "note":"A route does not establish a single universal slot for every article. Article-level front matter must override scenario and slot. No speculative palette is applied."
+}
