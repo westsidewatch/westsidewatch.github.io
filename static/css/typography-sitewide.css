@@ -15,9 +15,9 @@
  --ws-size-meta:clamp(.8125rem,.2vw + .75rem,.9375rem);
  --ws-size-control:clamp(1rem,.35vw + .875rem,1.125rem);
  --ws-size-library-title:var(--ws-size-card);
- --ws-type-display-en:"Bodoni Moda",Georgia,serif;
- --ws-type-display-zh:"Chiron Hei HK WS","PingFang TC",sans-serif;
- --ws-type-reading-zh:"Noto Serif TC","Songti TC",serif;
+ --ws-type-display-en:"Bodoni Moda",serif;
+ --ws-type-display-zh:"Chiron Hei HK WS",sans-serif;
+ --ws-type-reading-zh:"Noto Serif TC",serif;
  --type-en:var(--ws-type-display-en);
  --type-zh:var(--ws-type-display-zh);
  --type-ui:var(--ws-type-display-zh);
