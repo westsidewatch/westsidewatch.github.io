@@ -11,16 +11,16 @@ BASE = 'http://127.0.0.1:8790'
 
 
 def generate(prompt_file, output_file):
-    with urlopen(BASE + '/health', timeout=15) as response:
-        health = json.load(response)
-    if health.get('model_backed') is not True:
-        raise RuntimeError('Local image model is not ready; SVG fallback refused')
     prompt_path = Path(prompt_file)
     quality_path = prompt_path.with_name('editorial-quality.json')
     if quality_path.exists():
         quality = json.loads(quality_path.read_text(encoding='utf-8'))
         if quality.get('requiresReferenceConditioning'):
             raise RuntimeError('REFERENCE_CONDITIONING_UNSUPPORTED: the resident /generate adapter only sends text. Refusing to fake an identity-grounded portrait. Install and verify a reference-image capable local adapter before rendering.')
+    with urlopen(BASE + '/health', timeout=15) as response:
+        health = json.load(response)
+    if health.get('model_backed') is not True:
+        raise RuntimeError('Local image model is not ready; SVG fallback refused')
     prompt = prompt_path.read_text(encoding='utf-8')
     request = Request(BASE + '/generate', data=json.dumps({'message': 'Generate image: ' + prompt}).encode(),
                       headers={'Content-Type': 'application/json', 'X-Dore-Origin': 'dore-search'})
