@@ -57,9 +57,9 @@
       "$value": {
         "colorSpace": "srgb",
         "components": [
-          0.9569,
-          0.9529,
-          0.9294
+          0.9803921568627451,
+          0.9764705882352941,
+          0.9607843137254902
         ]
       }
     },
@@ -142,6 +142,16 @@
     "component": {
       "$type": "string",
       "$value": "component"
+    }
+  },
+  "overrides": {
+    "olive": {
+      "--ws-weight-zh-air": "200",
+      "--ws-olive-speaker-name-weight": "var(--ws-weight-zh-air)",
+      "--ws-olive-layer-zh-weight": "var(--ws-weight-zh-air)"
+    },
+    "one": {
+      "--ws-interaction": "var(--ws-pale-gold)"
     }
   }
 }
