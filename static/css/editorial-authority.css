@@ -1,5 +1,6 @@
+@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 /* Final visual authority: bilingual hierarchy, visible engraving, no enlarged wall. */
-:root{--ww-en:"Bodoni Moda",Georgia,"Times New Roman",serif;--ww-zh-only:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;--ww-zh:var(--ww-en),var(--ww-zh-only);--font-display:var(--ww-en);--font-sans:var(--ww-en);--font-text:var(--ww-zh);--type-en:var(--ww-en);--type-ui:var(--ww-en);--type-zh:var(--ww-zh);--sl-en:var(--ww-en);--sl-zh:var(--ww-zh);--west-en:var(--ww-en);--west-zh:var(--ww-zh);--home-zh:var(--ww-zh)}
+:root{--ww-en:"Bodoni Moda",Georgia,"Times New Roman",serif;--ww-zh-only:"Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;--ww-zh:var(--ww-en),var(--ww-zh-only);--font-display:var(--ww-en);--font-sans:var(--ww-en);--font-text:var(--ww-zh);--type-en:var(--ww-en);--type-ui:var(--ww-en);--type-zh:var(--ww-zh);--sl-en:var(--ww-en);--sl-zh:var(--ww-zh);--west-en:var(--ww-en);--west-zh:var(--ww-zh);--home-zh:var(--ww-zh)}
 /* One resolver for the whole site: Latin glyphs always come from Cormorant;
    CJK glyphs fall through to Noto Sans TC. No English sans-serif remains. */
 html body{font-family:var(--ww-zh)!important}
