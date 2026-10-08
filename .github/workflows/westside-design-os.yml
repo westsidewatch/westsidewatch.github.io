@@ -1,0 +1,12 @@
+name: Westside Design OS
+on:
+  pull_request:
+  push:
+    branches: [main]
+jobs:
+  authority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate single visual authority
+        run: python3 scripts/check_westside_design_os.py
