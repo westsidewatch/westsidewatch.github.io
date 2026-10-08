@@ -4,6 +4,7 @@ import argparse,json
 from pathlib import Path
 from dore_editorial_portrait_recipes import PORTRAIT_RECIPES, portrait_direction
 from dore_editorial_scenarios import SCENARIOS,SLOTS,scene_direction
+from dore_editorial_palettes import PALETTES
 
 RECIPES={
  'overscale-collision':{
@@ -36,7 +37,6 @@ RECIPES={
   'art_direction':'Place an oversized foreground form against a tiny distant subject. Leave the space between them unfilled. Avoid conventional landscape depth.'
  }
 }
-PALETTES={'olive-mountain':{'paper':'#FFFFFF','image_ink':'#174B35','secondary_ink':'#47735E','type_ink':'#174B35'}}
 def compile_brief(args):
  recipe=RECIPES[args.recipe]
  portrait_style=getattr(args,'portrait_style','none')
@@ -67,7 +67,7 @@ Crop subject at these canvas boundaries: {', '.join(recipe['crop_edges'])}.
 COMPOSITION DIRECTIVE: {recipe['art_direction']}
 Do not shrink the subject to fit. Negative space is an intentional visual shape, not a pasted-on title bar.
 MATERIAL: {material}
-INK ROLES: White paper {palette['paper']} is active negative space and highlights. Primary image ink {palette['image_ink']} controls the darkest contours and masses. Secondary {palette['secondary_ink']} is optional and restricted to sparse midtones. Do not use any other hue, aged-paper tint, or universal color filter.
+INK ROLES: Paper {palette['paper']} is active negative space and highlights. Primary image ink {palette['image_ink']} controls the darkest contours and masses. Secondary {palette['secondary_ink']} is optional and restricted to sparse midtones. Do not use any other hue, aged-paper tint, or universal color filter.
 TYPE CONTRACT: Image contains absolutely NO text, glyphs, logos, numerals, labels or decorative rules. CSS will later draw the editorial headline in the specified text box, on top of the image at the crossing zone. Preserve the visual subject's identity-bearing features outside that crossing zone.
 SCENARIO-SPECIFIC SAFETY: A named real person's recognizable portrait requires a verified and authorized reference image supplied with the generation request. Never fabricate their face; if absent, generate only a non-identifying visual proof. Respect the subject-specific cautions above.
 MOBILE: Keep focal features recognizable in a narrow crop approximated by {recipe['mobile_subject_box']}; the CSS layout may reposition text.
