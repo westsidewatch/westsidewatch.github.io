@@ -35,5 +35,9 @@ jobs:
         run: python3 tools/dore/narrative-engine/manuscript_integration_test.py
       - name: Revision history and feedback loop tests
         run: python3 tools/dore/narrative-engine/iteration.py test
+      - name: Narrative climax regression tests
+        run: python3 tools/dore/narrative-engine/climax_gate.py test
+      - name: Golden Gate baseline completeness report
+        run: python3 tools/dore/narrative-engine/climax_gate.py
       - name: Syntax validation
         run: python3 -m compileall -q tools/dore/narrative-engine
