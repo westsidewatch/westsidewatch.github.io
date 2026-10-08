@@ -10,6 +10,7 @@ sys.path.insert(0, str(HERE))
 from narrative import extract, audit
 from revision_loop import prepare, critique
 from training_runner import build_exercises
+from climax_gate import check as check_climax
 
 MANUSCRIPT = ROOT / "docs/projects/watch-city-vol00/manuscript/JERUSALEM-BUILD.md"
 
@@ -24,6 +25,8 @@ def main():
     assert len(build_exercises()) == 36
     inventory = audit(golden_gate)
     assert inventory["paragraphs"] > 10
+    climax = check_climax(source)
+    assert climax["status"] == "PASS", climax
     # Explicitly prohibit publication of an unreviewed candidate.
     candidate = {"scene_id": "final-assault", "draft": "七月十五日，攻城塔逼近城牆。守軍抵抗。",
                  "evidence": [{"category": "documented", "claim": "July 15 breach",
@@ -32,7 +35,7 @@ def main():
     print(json.dumps({"status": "PASS", "source": str(MANUSCRIPT.relative_to(ROOT)),
                       "section_characters": len(golden_gate),
                       "paragraphs": inventory["paragraphs"],
-                      "exercise_count": 36, "unreviewed_candidate": "BLOCK"},
+                      "exercise_count": 36, "climax": climax["status"], "unreviewed_candidate": "BLOCK"},
                      ensure_ascii=False))
 
 if __name__ == "__main__":
