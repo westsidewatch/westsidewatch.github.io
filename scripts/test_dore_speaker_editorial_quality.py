@@ -28,12 +28,10 @@ class EditorialPortraitTests(unittest.TestCase):
             (directory/'image-prompt.txt').write_text('portrait',encoding='utf-8')
             (directory/'editorial-quality.json').write_text(json.dumps({'requiresReferenceConditioning':True}))
             with patch('dore_speaker_image_backend.urlopen') as remote:
-                # Health may be queried first, but no generation request is allowed.
-                remote.return_value.__enter__.return_value.read.return_value=b'{"model_backed":true}'
                 with self.assertRaisesRegex(RuntimeError,'REFERENCE_CONDITIONING_UNSUPPORTED'):
                     generate(directory/'image-prompt.txt',directory/'output.png')
                 self.assertFalse((directory/'output.png').exists())
-                self.assertEqual(remote.call_count,1)
+                self.assertEqual(remote.call_count,0)
 
 if __name__=='__main__':
     unittest.main()
