@@ -26,3 +26,12 @@
  --type-zh-strong:600;
 }
 html{font-synthesis:none}
+
+
+/* Sites family authority: family only; geometry remains owned by each surface. */
+body.home,body.sites-surface{--serif:var(--ws-type-display-en);--zh:var(--ws-type-display-zh);--ww-en:var(--ws-type-display-en);--ww-zh:var(--ws-type-display-zh);}
+body.home :where(h1,h2,h3,h4,.sites-home-nav,.sites-home-entry,.sites-home-section-head,.sites-layer-nav,.sites-layer-wordmark),
+body.sites-surface :where(h1,h2,h3,h4,.sites-layer-nav,.sites-layer-wordmark,[class*="title-en"],[class*="label-en"],[lang^="en"]){font-family:var(--ws-type-display-en)!important;font-synthesis:none;}
+body.home :where([lang^="zh"],.realm__zh),
+body.sites-surface :where([lang^="zh"],.mersi-church,.sites-atlas-prologue){font-family:var(--ws-type-display-zh)!important;font-synthesis:none;}
+body.sites-surface :where(.article-body,.reading-body,.longform,[data-reading="longform"]):lang(zh-Hant){font-family:var(--ws-type-reading-zh)!important;}
