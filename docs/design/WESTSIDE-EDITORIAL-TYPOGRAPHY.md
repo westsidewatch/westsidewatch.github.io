@@ -3,7 +3,7 @@
 ## Fonts
 - English display, headings, navigation and folios: Bodoni Moda, regular 400. Never synthesize bold.
 - English editorial small-cap labels: authentic Bodoni Moda SC, regular 400. No browser-synthesized small caps.
-- Chinese realm and UI: Chiron Hei HK WS. Realm headings use the strongest approved weight 600; speaker/subject names use 200.
+- Chinese realm and UI: Chiron Hei HK WS. Realm headings use the strongest approved weight 600; airy editorial typography uses 200 across all surfaces; structural hierarchy uses 600.
 - Chinese long-form reading: Noto Serif TC, 400 / 600.
 
 ## Semantic scale (responsive)
@@ -11,7 +11,7 @@
 | --- | --- | --- | --- | --- |
 | Realm Chinese | clamp(36px, 4.2vw, 68px) | Chiron 600 | native Chinese | .12em |
 | Realm English | clamp(72px, 10vw, 160px) | Bodoni 400 | Title Case, preserve proper name | -.04em |
-| Speaker / subject Chinese | clamp(25px, 2vw, 38px) | Chiron 200 | native Chinese | normal |
+| Airy editorial Chinese | clamp(25px, 2vw, 38px) | Chiron 200 | native Chinese | normal |
 | Editorial label | clamp(11px, .85vw, 14px) | Bodoni Moda SC 400 | Small Caps | .1em |
 
 ## English case authority
@@ -55,3 +55,18 @@ The editorial system uses the genuine Bodoni Moda Italic and Bodoni Moda SC Ital
 - `ws-type-editorial-label-italic`: genuine Bodoni Moda SC Italic.
 - Never use `font-style:oblique`, `transform:skew()`, or browser-synthesized italics.
 - Renderer coverage must include Hugo long-form, ONE Bible references, magazine article templates and Doré-generated HTML/SVG covers; these require separate runtime validation, not merely a token declaration.
+
+## Global weight grammar — weight is a visual function, not a content type
+**200 / Air** is a sitewide editorial voice, not a speaker-name style. It is appropriate for spacious Chinese display and secondary headlines, article standfirsts, people and author names, book/film titles in editorial contexts, cover typography, selected navigation identities, pull-quote attributions, and large contemplative captions. Use it where ample size, contrast and breathing room preserve readability. Do not use 200 for dense paragraphs, tiny UI controls, accessibility-critical labels or low-contrast overlays.
+
+**400 / Standard** is the working voice for Chinese interface controls, descriptive metadata, short body text, explanatory headings, form fields and neutral information hierarchy. For sustained Chinese reading, switch family to Noto Serif TC 400 rather than assuming Chiron 400.
+
+**600 / Anchor** is the structural voice for realm names, major Chinese section markers, selected issue or collection headers, and short hierarchy anchors. It is not the default for every heading and must not spread into long paragraphs.
+
+### Weight and size are independent axes
+- A person name is not automatically 200; a realm title is not automatically 600 outside the corresponding visual role. Determine **semantic hierarchy, available space, reading density, and contrast** first.
+- Pair a restrained 200 Chinese display with Bodoni Moda Roman or Italic when the composition needs air; pair 600 Chinese structural lettering with thin-stroke Bodoni Moda 400 for intentional contrast.
+- The 200 role is available on the homepage, Journal, Archive, Dawn Library, Cinema, Emmaus/ONE, Olive Mountain, Church, magazine layouts and Doré-generated covers. Adoption requires each surface to bind the same shared tokens, not duplicate arbitrary declarations.
+- Font size uses semantic type-scale tokens, not a per-component increase to compensate for a heavy-looking fallback font.
+- Real browser verification must confirm Chiron Hei HK WS loads the 200 instance: its documented variable weight range is 200–900. A computed CSS weight of 200 does not guarantee the loaded glyphs are Chiron ExtraLight.
+- New components should choose among `ws-type-air`, `ws-type-standard`, `ws-type-anchor` or equivalent semantic tokens; never invent a content-specific global weight role.
