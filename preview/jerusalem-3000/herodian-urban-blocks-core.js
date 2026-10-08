@@ -9,7 +9,18 @@ function shrink(poly,f){const c=centroid(poly);return poly.map(p=>({x:c.x+(p.x-c
 function segmentIntersection(a,b,c,d){const r={x:b.x-a.x,z:b.z-a.z},s={x:d.x-c.x,z:d.z-c.z},den=r.x*s.z-r.z*s.x;if(Math.abs(den)<EPS)return null;const q={x:c.x-a.x,z:c.z-a.z},t=(q.x*s.z-q.z*s.x)/den,u=(q.x*r.z-q.z*r.x)/den;if(t>EPS&&t<1-EPS&&u>EPS&&u<1-EPS)return{x:a.x+t*r.x,z:a.z+t*r.z,t,u};return null}
 function roadSegments(roads){const out=[];for(const road of roads){const pts=road.geometry?.points||[];for(let i=0;i<pts.length-1;i++)if(dist(pts[i],pts[i+1])>EPS)out.push({a:pts[i],b:pts[i+1],roadId:road.id})}return out}
 function envelopeSegments(boundary){return boundary.map((a,i)=>({a,b:boundary[(i+1)%boundary.length],roadId:'__envelope__',boundary:true}))}
-function splitAtIntersections(segments){const cuts=segments.map(()=>[0,1]);for(let i=0;i<segments.length;i++)for(let j=i+1;j<segments.length;j++){const hit=segmentIntersection(segments[i].a,segments[i].b,segments[j].a,segments[j].b);if(hit){cuts[i].push(hit.t);cuts[j].push(hit.u)}}const out=[];for(let i=0;i<segments.length;i++){const ts=[...new Set(cuts[i].map(v=>Math.round(v*1e6)/1e6))].sort((a,b)=>a-b);for(let j=0;j<ts.length-1;j++){const a=lerp(segments[i].a,segments[i].b,ts[j]),b=lerp(segments[i].a,segments[i].b,ts[j+1]);if(dist(a,b)>1)out.push({...segments[i],a,b})}}return out}
+function splitAtIntersections(segments){const cuts=segments.map(()=>[0,1]);
+ // A road ending on another segment is a topological junction even without a proper crossing.
+ for(let i=0;i<segments.length;i++)for(let j=0;j<segments.length;j++){
+  if(i===j)continue;
+  const s=segments[i],t=segments[j],dx=t.b.x-t.a.x,dz=t.b.z-t.a.z,len2=dx*dx+dz*dz;
+  if(len2<EPS)continue;
+  for(const p of [s.a,s.b]){
+   const u=((p.x-t.a.x)*dx+(p.z-t.a.z)*dz)/len2;
+   if(u>EPS&&u<1-EPS&&Math.hypot(p.x-(t.a.x+u*dx),p.z-(t.a.z+u*dz))<.05)cuts[j].push(u);
+  }
+ }
+for(let i=0;i<segments.length;i++)for(let j=i+1;j<segments.length;j++){const hit=segmentIntersection(segments[i].a,segments[i].b,segments[j].a,segments[j].b);if(hit){cuts[i].push(hit.t);cuts[j].push(hit.u)}}const out=[];for(let i=0;i<segments.length;i++){const ts=[...new Set(cuts[i].map(v=>Math.round(v*1e6)/1e6))].sort((a,b)=>a-b);for(let j=0;j<ts.length-1;j++){const a=lerp(segments[i].a,segments[i].b,ts[j]),b=lerp(segments[i].a,segments[i].b,ts[j+1]);if(dist(a,b)>1)out.push({...segments[i],a,b})}}return out}
 function graphFromSegments(segments){const nodes=new Map(),edges=[];function node(p){const k=key(p);if(!nodes.has(k))nodes.set(k,{id:k,x:p.x,z:p.z,out:[]});return nodes.get(k)}for(const s of segments){const a=node(s.a),b=node(s.b),e={a,b,roadId:s.roadId,boundary:!!s.boundary};edges.push(e);a.out.push({to:b,edge:e});b.out.push({to:a,edge:e})}return{nodes,edges}}
 function angle(from,to){return Math.atan2(to.z-from.z,to.x-from.x)}
 function traceFaces(graph){const used=new Set(),faces=[];for(const node of graph.nodes.values())for(const first of node.out){const start=`${node.id}>${first.to.id}`;if(used.has(start))continue;let prev=node,cur=first.to,face=[{x:node.x,z:node.z}],guard=0;used.add(start);while(guard++<2048){face.push({x:cur.x,z:cur.z});if(cur.id===node.id)break;const incoming=angle(cur,prev),choices=cur.out.filter(o=>o.to.id!==prev.id||cur.out.length===1).map(o=>{let turn=angle(cur,o.to)-incoming;while(turn<=0)turn+=Math.PI*2;return{o,turn}}).sort((a,b)=>a.turn-b.turn);if(!choices.length){face=[];break}const next=choices[0].o,directed=`${cur.id}>${next.to.id}`;if(used.has(directed)&&next.to.id!==node.id){face=[];break}used.add(directed);prev=cur;cur=next.to}if(face.length>=4&&face[face.length-1].x===face[0].x&&face[face.length-1].z===face[0].z){face.pop();const a=area(face);if(Math.abs(a)>25)faces.push({polygon:face,signedArea:a})}}return faces}
