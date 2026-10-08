@@ -1,0 +1,15 @@
+/* Westside Design OS v1 — single runtime authority for site + tools.
+   Global values are defaults. Scoped values override only inside their surface. */
+@import url("/css/typography-sitewide.css");
+@import url("/css/westside-color-authority.css");
+:root{--ws-design-os:"westside-v1";--ws-design-scope:"global"}
+[data-ws-scope]{--ws-design-scope:"local"}
+[data-ws-scope="church"]{--ws-scope-identity:var(--ws-water)}
+[data-ws-scope="journal"]{--ws-scope-identity:var(--ws-first-light)}
+[data-ws-scope="one"]{--ws-scope-identity:var(--ws-pale-gold)}
+[data-ws-scope="olive"]{--ws-scope-identity:var(--ws-olive)}
+[data-ws-scope="dawn-library"]{--ws-scope-identity:var(--ws-harvest)}
+[data-ws-scope="cinema"]{--ws-scope-identity:var(--ws-crimson)}
+[data-ws-scope="daylight-cafe"]{--ws-scope-identity:var(--ws-daylight-mauve)}
+[data-ws-scope="search"],[data-ws-scope="tool"]{--ws-scope-identity:var(--ws-ink)}
+[data-ws-scope]{--ws-identity:var(--ws-scope-identity,var(--ws-branch));}
