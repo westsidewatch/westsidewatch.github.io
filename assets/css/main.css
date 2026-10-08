@@ -17,14 +17,14 @@
   --font-display: var(--type-en);
   --font-text: var(--type-zh);
   /* Editorial type hierarchy, adapted from Brand Standards pp. 18–19. */
-  --type-display: clamp(3.5rem, 7vw, 7.4rem);
-  --type-h1: clamp(3rem, 7vw, 7.4rem);
-  --type-h2: clamp(1.75rem, 3vw, 2.5rem);
-  --type-h3: clamp(1.125rem, 2vw, 1.4rem);
-  --type-h4: clamp(.8125rem, 1vw, .875rem);
-  --type-body: 1.1rem;
-  --type-caption: .75rem;
-  --type-label: .68rem;
+  --type-display: var(--ws-type-scale-display-lg);
+  --type-h1: var(--ws-type-scale-title-lg);
+  --type-h2: var(--ws-type-scale-title-md);
+  --type-h3: var(--ws-type-scale-title-sm);
+  --type-h4: var(--ws-type-scale-ui);
+  --type-body: var(--ws-type-scale-reading);
+  --type-caption: var(--ws-type-scale-meta);
+  --type-label: var(--ws-type-scale-meta);
   --page: min(100% - 2rem, 88rem);
   --grid-columns: 12;
   --grid-gap: clamp(1rem, 2.2vw, 2rem);
@@ -44,8 +44,8 @@ body {
   --section-deep: var(--watch-night);
   margin: 0;
   font-family: var(--ws-type-display-zh);
-  font-size: 1rem;
-  line-height: 1.55;
+  font-size: var(--ws-type-scale-reading);
+  line-height: var(--ws-type-leading-ui);
   text-rendering: optimizeLegibility;
 }
 
@@ -158,7 +158,7 @@ a { color: inherit; }
 
 .wordmark > img { display: block; width: 100%; height: auto; }
 
-.primary-nav { display: flex; gap: 1.5rem; font-family: var(--ws-type-display-en); font-size: .82rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; }
+.primary-nav { display:flex; gap:1.5rem; font-family:var(--ws-type-display-en); font-size:var(--ws-type-scale-ui); font-weight:400; letter-spacing:.06em; text-transform:none; }
 .primary-nav a { position: relative; padding-top: .78rem; text-decoration: none; }
 .primary-nav a::before {
   position: absolute;
@@ -207,10 +207,10 @@ a { color: inherit; }
   overflow-x: auto;
   color: color-mix(in srgb, var(--ink) 58%, var(--paper));
   font-family: var(--ws-type-display-en);
-  font-size: .7rem;
-  letter-spacing: .11em;
+  font-size: var(--ws-type-scale-meta);
+  letter-spacing: .06em;
   scrollbar-width: none;
-  text-transform: uppercase;
+  text-transform: none;
   white-space: nowrap;
 }
 
@@ -238,7 +238,7 @@ a { color: inherit; }
   z-index: 1;
   margin-right: auto;
   color: var(--section-accent);
-  font-weight: 600;
+  font-weight: 400;
   background: var(--paper);
 }
 .section-nav__identity::after { margin-left: 1rem; color: var(--line); content: "—"; }
@@ -338,10 +338,12 @@ a { color: inherit; }
 .section-label {
   margin: 0 0 1.25rem;
   color: color-mix(in srgb, var(--ink) 55%, var(--paper));
-  font-size: var(--type-label);
-  font-weight: 600;
-  letter-spacing: .18em;
-  text-transform: uppercase;
+  font-family:var(--ws-type-display-en-sc);
+  font-size:var(--ws-type-scale-meta);
+  font-weight:400;
+  letter-spacing:var(--ws-editorial-label-tracking);
+  text-transform:none;
+  font-synthesis:none;
 }
 
 h1 {
@@ -359,7 +361,7 @@ h1 {
   margin: 2rem 0;
   color: color-mix(in srgb, var(--ink) 78%, var(--paper));
   font-family: var(--ws-type-display-en);
-  font-size: clamp(1.1rem, 1.6vw, 1.4rem);
+  font-size: var(--ws-type-scale-reading-lg);
 }
 
 .text-link { font-family:var(--ws-type-display-en-sc); font-size:var(--ws-editorial-label-size); font-weight:400; letter-spacing:var(--ws-editorial-label-tracking); text-decoration:none; text-transform:none; font-synthesis:none; }
@@ -452,7 +454,7 @@ h1 {
   margin: .65rem 0 0;
   color: var(--living-paper);
   font-family: var(--ws-type-display-en);
-  font-size: clamp(4rem, 7.3vw, 7.75rem);
+  font-size: var(--ws-type-scale-display-lg);
   font-weight: 400;
   line-height: .96;
   letter-spacing: -.045em;
