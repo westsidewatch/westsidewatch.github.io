@@ -7,18 +7,23 @@ import argparse,json,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
 from build_dore_speaker_previews import SOURCE,compile_record,svg
+from dore_speaker_editorial_quality import build_reference_profile
 def main():
  p=argparse.ArgumentParser()
  p.add_argument('--speaker',default='david-pawson')
  p.add_argument('--out',default='local/dore-speaker-jobs')
+ p.add_argument('--reference-image',help='Authorized speaker photo for identity-grounded editorial portrait mode')
  a=p.parse_args()
  records=json.loads(SOURCE.read_text(encoding='utf-8'))['records']
  matches=[(i,r) for i,r in enumerate(records) if r['id']=='speaker:'+a.speaker]
  if not matches:raise SystemExit('Unknown canonical speaker: '+a.speaker)
  i,r=matches[0];spec=compile_record(r,i)
+ quality=build_reference_profile(spec,a.reference_image) if a.reference_image else None
  out=Path(a.out)/a.speaker;out.mkdir(parents=True,exist_ok=True)
  (out/'design-spec.json').write_text(json.dumps(spec,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
- (out/'image-prompt.txt').write_text(spec['prompt']+'\n',encoding='utf-8')
+ (out/'image-prompt.txt').write_text((quality['prompt'] if quality else spec['prompt'])+'\n',encoding='utf-8')
+ if quality:
+  (out/'editorial-quality.json').write_text(json.dumps(quality,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
  (out/'typography-proof.svg').write_text(svg(spec),encoding='utf-8')
  job={'schema':'dore.local-image-job.v0','device':'Mac mini M4 / 16GB unified memory',
       'status':'AWAITING_LOCAL_RENDER','speaker':r['id'],'imagePromptFile':'image-prompt.txt',
@@ -31,5 +36,5 @@ def main():
                'Run scripts/composite_dore_speaker_cover.py with --job path to this directory.',
                'Review final-cover.png before publication.']}
  (out/'job.json').write_text(json.dumps(job,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
- print('READY:',out,'(render requires installed local image model)')
+ print('READY:',out,'(reference-conditioned portrait mode)' if quality else '(background-only mode)')
 if __name__=='__main__':main()
