@@ -61,6 +61,22 @@ jobs:
           HUGO_ENVIRONMENT: production
           HUGO_ENV: production
         run: hugo --gc --minify --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Verify Olive Mountain in Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s public/olive/index.html
+          test -s public/olive/olive.js
+          test -s public/dore-design/runtime/olive-speaker-compositions.v1.json
+          grep -q 'data-dore-index' public/olive/index.html
+          grep -q 'doreIndex' public/olive/olive.js
+          python3 - <<'PY'
+          import json
+          with open('public/dore-design/runtime/olive-speaker-compositions.v1.json') as f:
+              records=json.load(f)['records']
+          assert len(records)==12, f'Expected 12 speaker covers, got {len(records)}'
+          print('Olive Pages artifact verified: HTML, JS, 12 Doré compositions')
+          PY
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -76,3 +92,21 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+      - name: Verify published Olive Mountain
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="${{ steps.deployment.outputs.page_url }}"
+          base="${base%/}"
+          for attempt in $(seq 1 12); do
+            html="$(curl --fail --location --silent --show-error --max-time 20 "${base}/olive/?verify=${GITHUB_SHA}" || true)"
+            js="$(curl --fail --location --silent --show-error --max-time 20 "${base}/olive/olive.js?verify=${GITHUB_SHA}" || true)"
+            if [[ "${html}" == *'data-dore-index'* && "${js}" == *'doreIndex'* ]]; then
+              echo "Published Olive verified: ${base}/olive/ at commit ${GITHUB_SHA}"
+              exit 0
+            fi
+            echo "Waiting for Olive deployment to propagate (attempt ${attempt}/12)"
+            sleep 15
+          done
+          echo "::error::Olive HTML/JS changes absent from published Pages site"
+          exit 1
