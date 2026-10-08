@@ -21,3 +21,9 @@ The page-map data file records only observed routes and initial editorial purpos
 3. Scan article templates for real slot geometry; distinguish desktop and mobile.
 4. Generate image+CSS proofs for one real content item per scenario, with actual authorized portrait references where required.
 5. Keep draft PR until visual review.
+
+## Follow-up: actual chromatic authority located
+
+The production base layout `layouts/_default/baseof.html` loads `static/css/westside-color-authority.css` after section-specific style sheets. That file explicitly maps journal to `--ws-first-light`, cinema to `--ws-crimson`, church to `--ws-water`, dawn-library to `--ws-harvest`, and one to papyrus/pale-gold. This supersedes the **unresolved palette** status recorded above at the earlier audit time. The new compiler module `scripts/dore_editorial_palettes.py` maps those concrete color anchors into image-ink roles. Olive Mountain retains its separately approved strict green/white art palette rather than inheriting the generic `--ws-olive` anchor.
+
+Important distinction: section anchor colors do not establish that a generated image matches the *computed browser palette* under every state. Runtime CSS color-mix, lighting, and cascade remain outside the static compiler; no visual deployment acceptance is implied. Historical site CSS may contain colors that should not be copied directly into editorial images.
