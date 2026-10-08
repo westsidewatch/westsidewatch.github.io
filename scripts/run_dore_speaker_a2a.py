@@ -6,7 +6,7 @@ Image backend is a configurable local command, never a paid API.
 import argparse,json,subprocess,shlex,sys,os
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[1]
-def run(job_dir,backend_command,dry_run=False):
+def run(job_dir,backend_command,dry_run=False,font=None):
  job_dir=Path(job_dir).resolve()
  job=json.loads((job_dir/'job.json').read_text(encoding='utf-8'))
  if job.get('schema')!='dore.local-image-job.v0' or job.get('constraints',{}).get('portraitSynthesis') is not False:
@@ -30,6 +30,7 @@ def run(job_dir,backend_command,dry_run=False):
   raise RuntimeError(f'Local backend failed ({result.returncode}): {result.stderr[-1600:]}')
  if not output.is_file() or output.stat().st_size==0:raise RuntimeError('Backend returned success without output PNG')
  composite=[sys.executable,str(ROOT/'scripts/composite_dore_speaker_cover.py'),'--job',str(job_dir)]
+ if font:composite.extend(['--font',str(font)])
  result=subprocess.run(composite,cwd=str(ROOT),capture_output=True,text=True,timeout=120,check=False)
  if result.returncode:raise RuntimeError('Composite failed: '+result.stderr[-1600:]+result.stdout[-800:])
  print(json.dumps({'status':'LOCAL_RENDER_COMPLETE','background':str(output),'finalCover':str(job_dir/'final-cover.png'),'published':False},ensure_ascii=False))
@@ -38,7 +39,8 @@ def main():
  p.add_argument('--job',required=True)
  p.add_argument('--backend-command',default=os.environ.get('DORE_LOCAL_IMAGE_BACKEND',''))
  p.add_argument('--dry-run',action='store_true')
+ p.add_argument('--font',help='Explicit font for compositor, including CI fixtures')
  a=p.parse_args()
  if not a.backend_command:raise SystemExit('Set DORE_LOCAL_IMAGE_BACKEND with {prompt_file} and {output_file} placeholders')
- run(a.job,a.backend_command,a.dry_run)
+ run(a.job,a.backend_command,a.dry_run,a.font)
 if __name__=='__main__':main()

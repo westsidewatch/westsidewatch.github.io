@@ -2,7 +2,9 @@ name: Doré Speaker Generator Preview
 on:
   pull_request:
     paths:
-      - 'scripts/build_dore_speaker_previews.py'
+      - 'scripts/*dore_speaker*'
+      - 'scripts/prepare_dore_local_image_job.py'
+      - 'local/dore-local/companion_4312.py'
       - 'data/westside-core/entities/sermon-speakers.v1.json'
       - '.github/workflows/dore-speaker-generator-preview.yml'
   workflow_dispatch:
@@ -16,7 +18,13 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - name: Install compositor dependency\n        run: python3 -m pip install Pillow\n      - name: Smoke-test local A2A worker contract\n        run: python3 scripts/test_dore_speaker_a2a.py\n      - name: Generate all twelve preview covers
+      - name: Install compositor dependency
+        run: python3 -m pip install Pillow
+      - name: Smoke-test local A2A worker contract
+        run: python3 scripts/test_dore_speaker_a2a.py
+      - name: Test restricted Gateway binding
+        run: python3 scripts/test_dore_speaker_gateway.py
+      - name: Generate all twelve preview covers
         run: python3 scripts/build_dore_speaker_previews.py --out /tmp/dore-speaker-preview
       - name: Validate outputs and identity constraints
         run: |

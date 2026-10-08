@@ -41,6 +41,20 @@ def _load_adapter():
 ADAPTER = _load_adapter()
 
 
+def _speaker_worker():
+    root = Path(os.environ.get("DORE_SPEAKER_WORKER_ROOT") or ROOT)
+    path = root / "scripts/dore_speaker_gateway.py"
+    if not path.is_file():
+        return None
+    spec = importlib.util.spec_from_file_location("dore_speaker_gateway", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+SPEAKER_WORKER = _speaker_worker()
+
+
 def health_payload() -> dict[str, Any]:
     return {
         "ok": True,
@@ -48,7 +62,7 @@ def health_payload() -> dict[str, Any]:
         "protocol": PROTOCOL,
         "version": "1.0",
         "bind": f"{HOST}:{PORT}",
-        "capabilities": [
+        "capabilities": ([{"id": SPEAKER_WORKER.CAPABILITY, "available": True, "consumer": "design"}] if SPEAKER_WORKER else []) + [
             {"id": LEGACY_CAPABILITY, "available": True, "surface": "diagnostic"},
             {"id": "design.compose", "available": True, "consumer": "design"},
             {"id": "design.verify", "available": True, "consumer": "design"},
@@ -66,11 +80,21 @@ def route_payload(payload: Any) -> tuple[int, dict[str, Any]]:
     if not isinstance(payload, dict):
         return 400, {"ok": False, "error": "JSON body must be an object"}
 
+    if SPEAKER_WORKER:
+        speaker_result = SPEAKER_WORKER.dispatch(payload)
+        if speaker_result is not None:
+            return 200, speaker_result
+
     try:
         typed = ADAPTER.handle_companion_payload(payload)
     except Exception as exc:
         return 400, {"ok": False, "protocol": PROTOCOL, "error": str(exc)}
     if typed is not None:
+        if SPEAKER_WORKER and payload.get("action") == "discover":
+            for consumer in typed.get("consumers", []):
+                if consumer.get("id") == "design":
+                    consumer["capability_ids"] = list(dict.fromkeys(
+                        list(consumer.get("capability_ids", [])) + [SPEAKER_WORKER.CAPABILITY]))
         return 200, typed
 
     if _legacy_stage2_requested(payload):

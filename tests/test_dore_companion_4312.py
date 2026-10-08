@@ -51,7 +51,8 @@ class Companion4312ContractTests(unittest.TestCase):
         self.assertEqual(body["protocol"], "dore.a2a/1")
         self.assertEqual(body["status"], "succeeded")
         consumers = {c["id"]: c for c in body["consumers"]}
-        self.assertEqual(consumers["design"]["capability_ids"], ("design.compose", "design.verify"))
+        self.assertEqual(tuple(consumers["design"]["capability_ids"][:2]), ("design.compose", "design.verify"))
+        self.assertIn("design.speaker-cover.render", consumers["design"]["capability_ids"])
 
     def test_typed_design_compose_and_status_round_trip(self):
         request = {

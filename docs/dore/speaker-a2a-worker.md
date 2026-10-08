@@ -2,7 +2,7 @@
 
 ## Status
 
-The **worker entrypoint** is implemented. The live A2A gateway and Mac mini are **not connected or executed by this PR**. A2A transport binding must use the project's existing authorized gateway and runner; do not invent endpoints, tokens, or launch agents.
+The worker entrypoint and optional binding to the existing Companion Gateway are implemented. Installation on an authorized Mac is required; GitHub fixture tests alone do not prove a running model. The binding uses the established localhost service and does not create another Gateway.
 
 ## Execution on authorized Mac mini runner
 
@@ -35,3 +35,32 @@ python3 scripts/run_dore_speaker_a2a.py --job local/dore-speaker-jobs/david-paws
 ## Acceptance
 
 A2A gateway availability, authorized Mac execution, installed local image model, backend command compatibility, actual image generation and final visual review remain separate gates. This contract is not proof of any of them.
+
+## Installed Gateway binding
+
+`Companion /a2a` now supports `design.speaker-cover.render` for the `design`
+consumer. The binding accepts only canonical `speaker` and boolean `dry_run`;
+backend commands, URLs and arbitrary paths are not accepted over the transport.
+The fixed adapter uses the existing `http://127.0.0.1:8790` local image service,
+requires `model_backed: true`, rejects SVG fallback and downloads only PNG assets
+from that service. Completed requests have durable receipts; exact retries replay
+those receipts rather than rerunning the model. A process lock serializes work.
+
+From a Mac-side shell, including Codex's local terminal tool:
+
+```sh
+python3 scripts/call_dore_speaker_gateway.py --speaker david-pawson --dry-run
+python3 scripts/call_dore_speaker_gateway.py --speaker david-pawson --request-id speaker-proof-1
+```
+
+The existing Companion launch configuration uses `DORE_SPEAKER_WORKER_ROOT` for
+the deployed minimal worker bundle and `DORE_SPEAKER_PYTHON` for a Python runtime
+with Pillow. Put the bundle in the existing Application Support service directory:
+macOS background processes may not read a Documents checkout. Preserve the
+original launch configuration and Companion before updating them. No new daemon,
+public port, paid API, or production publishing is involved.
+
+Model readiness does not establish cover quality. Inspect the actual PNG and
+model provenance before accepting any cover. The existing resident model's canvas
+settings govern generation; the compositor outputs 720×960, which does not prove
+that the model generated at that resolution or met the editorial constraints.

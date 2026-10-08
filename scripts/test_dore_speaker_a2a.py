@@ -29,6 +29,9 @@ def main():
   except ImportError:
    print('PASS A2A job preparation and dry-run; Pillow unavailable for composite smoke test')
    return
+  # Linux CI font is a fixture only; production uses the Mac Chinese font.
+  fixture_font=Path('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
+  if fixture_font.exists():args.extend(['--font',str(fixture_font)])
   done=subprocess.run(args,capture_output=True,text=True)
   assert done.returncode==0,done.stderr+done.stdout
   assert (job/'final-cover.png').is_file()
