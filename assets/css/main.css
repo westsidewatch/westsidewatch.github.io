@@ -14,8 +14,8 @@
   --ink: var(--ink-black);
   --paper: var(--living-paper);
   --line: color-mix(in srgb, var(--first-light-gold) 32%, transparent);
-  --font-display: var(--type-en), "Noto Serif TC", serif;
-  --font-text: "Noto Serif TC", var(--type-en), serif;
+  --font-display: var(--type-en);
+  --font-text: var(--type-zh);
   /* Editorial type hierarchy, adapted from Brand Standards pp. 18–19. */
   --type-display: clamp(3.5rem, 7vw, 7.4rem);
   --type-h1: clamp(3rem, 7vw, 7.4rem);
@@ -158,7 +158,7 @@ a { color: inherit; }
 
 .wordmark > img { display: block; width: 100%; height: auto; }
 
-.primary-nav { display: flex; gap: 1.5rem; font-family: var(--font-display); font-size: .82rem; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; }
+.primary-nav { display: flex; gap: 1.5rem; font-family: var(--font-display); font-size: .82rem; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; }
 .primary-nav a { position: relative; padding-top: .78rem; text-decoration: none; }
 .primary-nav a::before {
   position: absolute;
