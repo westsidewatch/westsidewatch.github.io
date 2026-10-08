@@ -11,7 +11,7 @@ from capture_dore_editorial_screenshots import capture
 def build(repo,overlay,out):
  repo=Path(repo).resolve();overlay=Path(overlay).resolve();out=Path(out).resolve()
  content=overlay/'content';asset=overlay/'static'
- if not (repo/'hugo.toml').is_file():raise FileNotFoundError(repo/'hugo.toml')
+ if not any((repo/name).is_file() for name in ('hugo.toml','hugo.yaml','hugo.yml','config.toml','config.yaml','config.yml')) and not (repo/'config'/'_default').is_dir():raise FileNotFoundError('Hugo site configuration not found')
  if not content.is_dir():raise FileNotFoundError(content)
  if not asset.is_dir():raise FileNotFoundError(asset)
  if not shutil.which('hugo'):raise RuntimeError('hugo executable unavailable')
