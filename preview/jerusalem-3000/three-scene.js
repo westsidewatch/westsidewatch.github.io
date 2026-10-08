@@ -28,8 +28,9 @@ import {
 } from './phase2-era-morphology.js';
 import { loadTemporalCityCore } from './temporal-city-core-adapter.js';
 import { registerHerodianUrbanCore } from './herodian-urban-core-adapter.js';
-import { buildHerodianParcelCore } from './herodian-parcel-core.js';
-import { buildHerodianParcelArchitecture } from './herodian-typology-grammar.js';
+import { buildHerodianParcelCore, buildEraParcelCore } from './herodian-parcel-core.js';
+import { deriveEraRegistration } from './era-registration-adapter.js';
+import { buildHerodianParcelArchitecture, buildEraParcelArchitecture } from './herodian-typology-grammar.js';
 import {
   createCityProjection,
   isCorePhase,
@@ -258,10 +259,11 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     historical = new THREE.Group(),
     temporalLayer = new THREE.Group(),
     eraFabricLayer = new THREE.Group(),
-    cityCoreLayer = new THREE.Group();
+    cityCoreLayer = new THREE.Group(),
+    sharedEraLayer = new THREE.Group();
   cityCoreLayer.name = 'j3k-canonical-herodian-city';
   scene.add(root);
-  root.add(historical, temporalLayer, eraFabricLayer, cityCoreLayer);
+  root.add(historical, temporalLayer, eraFabricLayer, cityCoreLayer, sharedEraLayer);
   const materials = makeMaterials(),
     builder = new HeritageBuilder(materials),
     temporalMaterials = {};
@@ -287,6 +289,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     cityProjection = null,
     evidenceProjection = null;
   const temporalMeshes = new Map();
+  const eraCities = new Map();
+  let eraRegistrationReference = null;
   function herodianPhaseActive() {
     return (
       currentPhaseId === 'herodian-jesus' ||
@@ -302,7 +306,33 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       PROPAGATED_ERAS.has(currentPhaseId)
     );
   }
+  function ensureEraCity(phaseId) {
+    if (isCorePhase(phaseId) || !ERA_FOOTPRINTS[phaseId] || !eraRegistrationReference || !cityCoreRuntime) return null;
+    if (eraCities.has(phaseId)) return eraCities.get(phaseId);
+    const registration = deriveEraRegistration(eraRegistrationReference, phaseId, ERA_FOOTPRINTS[phaseId]);
+    const group = new THREE.Group();
+    group.name = `j3k-shared-era-${phaseId}`;
+    sharedEraLayer.add(group);
+    const parcels = buildEraParcelCore(cityCoreRuntime.core, terrainRuntime, {
+      phaseId, registration, districtId: registration.districts[0].id,
+      dataset: 'provisional-era-registration',
+    });
+    const architecture = buildEraParcelArchitecture(group, cityCoreRuntime.core, temporalMaterials, terrainRuntime, {
+      phaseId, grammarId: 'shared-era-parcel-typology-v1',
+    });
+    const roads = buildHerodianRoadGeometry(group, registration.roads, temporalMaterials, terrainRuntime);
+    const result = { group, parcels, architecture, roads, phaseId };
+    eraCities.set(phaseId, result);
+    return result;
+  }
   function updateCityCoreVisibility() {
+    for (const [phaseId, city] of eraCities) {
+      city.group.visible = phaseId === currentPhaseId && currentEvidenceMode !== 'disputed';
+      if (city.group.visible) {
+        const ruined = currentPhaseId.includes('destruction');
+        for (const mesh of city.architecture.meshes) mesh.visible = !ruined || currentRuin < 1;
+      }
+    }
     if (cityProjection)
       cityProjection.apply({
         phaseId: currentPhaseId,
@@ -378,8 +408,13 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   }
   function rebuildUrbanFabric(phaseId) {
     clearFabric();
-    /* The canonical parcel city owns residential fabric throughout its ruin slice. */
+    /* Every phase uses the same parcel-and-architecture pipeline. */
     if (isCorePhase(phaseId)) return;
+    const sharedCity = ensureEraCity(phaseId);
+    if (sharedCity?.architecture.buildings > 0) {
+      eraFabricLayer.visible = false;
+      return;
+    }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
     const ruined = phaseId.includes('destruction');
     if (phaseId === 'ottoman')
@@ -552,6 +587,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         terrain: terrainRuntime,
       });
       await registerHerodianUrbanCore(loaded.core);
+      const eraRegistrationResponse = await fetch('./data/urban/herodian-30ce.registration.json', { cache: 'no-store' });
+      if (!eraRegistrationResponse.ok) throw new Error(`Era registration unavailable: ${eraRegistrationResponse.status}`);
+      eraRegistrationReference = await eraRegistrationResponse.json();
       const parcels = await buildHerodianParcelCore(
         loaded.core,
         terrainRuntime,
@@ -717,7 +755,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
           setTemporalCityState([], 0, phaseId);
           const projection = cityProjection?.diagnostics();
           const visibleCore = cityCoreLayer.visible && projection?.visibleBuildings > 0;
-          const visibleFabric = eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible);
+          const visibleFabric = (eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible)) || Boolean(eraCities.get(phaseId)?.group.visible && eraCities.get(phaseId)?.architecture.buildings);
           const canonicalPhase = isCorePhase(phaseId);
           const canonicalValid = !canonicalPhase || Boolean(
             cityCoreRuntime?.parcels?.blockCount > 0 &&
@@ -731,8 +769,9 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             hasVisibleCity,
             canonicalValid,
             visibleCoreBuildings: projection?.visibleBuildings || 0,
-            visibleFabricMeshes: eraFabricLayer.visible
-              ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
+            visibleFabricMeshes: eraCities.get(phaseId)?.group.visible
+              ? eraCities.get(phaseId).architecture.meshes.length
+              : eraFabricLayer.visible ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
             canonicalBlocks: cityCoreRuntime?.parcels?.blockCount || 0,
             canonicalParcels: cityCoreRuntime?.parcels?.count || 0,
           });
