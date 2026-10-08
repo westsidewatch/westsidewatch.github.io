@@ -38,6 +38,10 @@ disableKinds = ["taxonomy", "term"]
   [[module.mounts]]
     source = "join"
     target = "static/join"
+  # Publish the Doré-generated Olive Mountain editorial surface and runtime.
+  [[module.mounts]]
+    source = "olive"
+    target = "static/olive"
   [[module.mounts]]
     source = "cinema"
     target = "static/cinema"
