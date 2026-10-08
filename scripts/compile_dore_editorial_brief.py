@@ -2,6 +2,7 @@
 """Compile an explicit Italian editorial image+CSS layout brief without paid services."""
 import argparse,json
 from pathlib import Path
+from dore_editorial_portrait_recipes import PORTRAIT_RECIPES, portrait_direction
 
 RECIPES={
  'overscale-collision':{
@@ -37,10 +38,12 @@ RECIPES={
 PALETTES={'olive-mountain':{'paper':'#FFFFFF','image_ink':'#174B35','secondary_ink':'#47735E','type_ink':'#174B35'}}
 def compile_brief(args):
  recipe=RECIPES[args.recipe]
+ portrait_style=getattr(args,'portrait_style','none')
+ portrait_note=portrait_direction(args.subject,portrait_style,args.verified_reference) if portrait_style!='none' else ''
  palette=PALETTES[args.palette]
  spec={'version':1,'subject':args.subject,'recipe':args.recipe,'composition':recipe,
        'palette':palette,'material':args.material,'verified_reference':args.verified_reference,
-       'output':'text-free illustration only','publication_approved':False}
+       'portrait_style':portrait_style,'portrait_reference_required':portrait_style!='none','output':'text-free illustration only','publication_approved':False}
  identity=('A verified and authorized visual reference will be supplied in the SAME image-generation request; preserve its identity without inventing features.' if args.verified_reference else 'No verified visual reference is supplied. Do not claim an invented face represents a named person; use a symbolic or non-portrait subject.')
  material={'halftone':'Use physically credible variable-size offset halftone dots, dense in shadow, sparse in light, with white paper knockouts and crisp solid-ink shapes.',
  'engraving':'Use precise directional contour hatching and crosshatching following material form; white paper provides highlights. No blurred pseudo-engraving.',
@@ -49,6 +52,7 @@ def compile_brief(args):
 SUBJECT: {args.subject}
 IDENTITY: {identity}
 VISUAL PROPOSITION: {recipe['idea']}.
+PORTRAIT-SPECIFIC DIRECTION: {portrait_note}
 GEOMETRY (normalized image coordinates, 0–100; allow boxes to extend beyond canvas):
 Main subject box: {recipe['subject_box']}.
 Future live CSS text box: {recipe['type_box']}.
@@ -83,6 +87,7 @@ def main():
  p.add_argument('--material',choices=['halftone','engraving','cutout'],default='halftone')
  p.add_argument('--palette',choices=PALETTES,default='olive-mountain')
  p.add_argument('--verified-reference',action='store_true')
+ p.add_argument('--portrait-style',choices=['none']+list(PORTRAIT_RECIPES),default='none')
  p.add_argument('--out',default='local/dore-editorial-brief')
  args=p.parse_args()
  spec,prompt,css=compile_brief(args)
