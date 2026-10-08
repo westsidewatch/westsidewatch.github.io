@@ -37,6 +37,52 @@
  --type-zh-regular:400;
  --type-zh-strong:600;
 }
+
+/* Visual type-scale normalization — cross-surface semantic authority.
+   Surface CSS may own geometry and placement; it must not invent a competing type scale. */
+:root{
+ --ws-type-scale-display-xl:clamp(4.5rem,8vw + 1rem,10rem);
+ --ws-type-scale-display-lg:clamp(3.25rem,5.5vw + .75rem,7rem);
+ --ws-type-scale-display-md:clamp(2.35rem,3.6vw + .65rem,4.75rem);
+ --ws-type-scale-title-lg:clamp(2rem,2.6vw + .65rem,3.75rem);
+ --ws-type-scale-title-md:clamp(1.55rem,1.7vw + .7rem,2.65rem);
+ --ws-type-scale-title-sm:clamp(1.25rem,1vw + .75rem,1.8rem);
+ --ws-type-scale-reading-lg:clamp(1.125rem,.45vw + 1rem,1.35rem);
+ --ws-type-scale-reading:clamp(1rem,.3vw + .94rem,1.18rem);
+ --ws-type-scale-ui:clamp(.875rem,.18vw + .84rem,1rem);
+ --ws-type-scale-meta:clamp(.72rem,.12vw + .7rem,.84rem);
+ --ws-type-scale-micro:clamp(.64rem,.08vw + .62rem,.75rem);
+ --ws-type-leading-display:.9;
+ --ws-type-leading-title:1.12;
+ --ws-type-leading-reading:1.82;
+ --ws-type-leading-ui:1.42;
+ --ws-type-measure-reading:40em;
+ --ws-size-hero:var(--ws-type-scale-display-xl);
+ --ws-size-cover:var(--ws-type-scale-display-lg);
+ --ws-size-h1:var(--ws-type-scale-title-lg);
+ --ws-size-h2:var(--ws-type-scale-title-md);
+ --ws-size-h3:var(--ws-type-scale-title-sm);
+ --ws-size-nav:var(--ws-type-scale-ui);
+ --ws-size-card:var(--ws-type-scale-title-sm);
+ --ws-size-reading:var(--ws-type-scale-reading-lg);
+ --ws-size-body:var(--ws-type-scale-reading);
+ --ws-size-meta:var(--ws-type-scale-meta);
+ --ws-size-control:var(--ws-type-scale-ui);
+ --ws-subject-zh-size:var(--ws-type-scale-title-md);
+ --ws-editorial-label-size:var(--ws-type-scale-meta);
+}
+:where(.ws-type-display-xl,[data-ws-type="display-xl"]){font-size:var(--ws-type-scale-display-xl);line-height:var(--ws-type-leading-display)}
+:where(.ws-type-display-lg,[data-ws-type="display-lg"]){font-size:var(--ws-type-scale-display-lg);line-height:var(--ws-type-leading-display)}
+:where(.ws-type-display-md,[data-ws-type="display-md"]){font-size:var(--ws-type-scale-display-md);line-height:.96}
+:where(.ws-type-title-lg,[data-ws-type="title-lg"]){font-size:var(--ws-type-scale-title-lg);line-height:var(--ws-type-leading-title)}
+:where(.ws-type-title-md,[data-ws-type="title-md"]){font-size:var(--ws-type-scale-title-md);line-height:var(--ws-type-leading-title)}
+:where(.ws-type-title-sm,[data-ws-type="title-sm"]){font-size:var(--ws-type-scale-title-sm);line-height:1.18}
+:where(.ws-type-reading,[data-ws-type="reading"]){font-size:var(--ws-type-scale-reading);line-height:var(--ws-type-leading-reading);max-width:var(--ws-type-measure-reading)}
+:where(.ws-type-meta,[data-ws-type="meta"]){font-size:var(--ws-type-scale-meta);line-height:var(--ws-type-leading-ui)}
+:where(.ws-type-air,[data-ws-weight="air"]){font-family:var(--ws-type-display-zh);font-weight:var(--ws-weight-zh-air)!important;font-synthesis:none}
+:where(.ws-type-standard,[data-ws-weight="standard"]){font-weight:var(--ws-weight-zh-standard)!important;font-synthesis:none}
+:where(.ws-type-anchor,[data-ws-weight="anchor"]){font-weight:var(--ws-weight-zh-anchor)!important;font-synthesis:none}
+
 html{font-synthesis:none}
 
 

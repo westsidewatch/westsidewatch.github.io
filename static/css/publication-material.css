@@ -2,7 +2,7 @@
 :root{--paper:#e8dbb8;--ink:#352d20;--publication-en:var(--ws-type-display-en),var(--ws-type-display-zh),serif;--publication-zh:var(--ws-type-display-zh)}
 body{background:linear-gradient(#eddfbbcc,#e5d7b3dd),url('/images/temple-stone-light.png') center/520px;color:var(--ink);font-family:var(--publication-en)}
 .cinema-navigation,.cinema-feature,.cinema-explore,.moment-search,.special-source,.living-poster__copy,.living-poster__timeline{background:transparent}
-.hall-brand h1{font-family:var(--publication-en);font-size:clamp(3.5rem,7.5vw,10rem);max-width:8ch}
+.hall-brand h1{font-family:var(--publication-en);font-size:var(--ws-type-scale-display-xl);max-width:8ch}
 .hall-brand h1 span{display:block;font:400 clamp(1rem,1.8vw,2rem) var(--publication-zh);margin-top:1rem;letter-spacing:.15em}
 .dawn-title{font-family:var(--publication-en)}
 .publication-return{position:relative;z-index:30;display:block;width:fit-content;margin:1rem 4vw;color:var(--ink);font:1.1rem var(--publication-en);text-decoration:none}
