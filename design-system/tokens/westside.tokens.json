@@ -1,0 +1,147 @@
+{
+  "$schema": "https://www.designtokens.org/schemas/2025.10/format.json",
+  "meta": {
+    "name": "Westside Design OS",
+    "version": "1.0.0",
+    "authority": "single-source",
+    "scope": "site-and-tools"
+  },
+  "font": {
+    "display-en": {
+      "$type": "fontFamily",
+      "$value": [
+        "Bodoni Moda",
+        "serif"
+      ]
+    },
+    "display-en-sc": {
+      "$type": "fontFamily",
+      "$value": [
+        "Bodoni Moda SC",
+        "Bodoni Moda",
+        "serif"
+      ]
+    },
+    "display-zh": {
+      "$type": "fontFamily",
+      "$value": [
+        "Chiron Hei HK WS",
+        "sans-serif"
+      ]
+    },
+    "reading-zh": {
+      "$type": "fontFamily",
+      "$value": [
+        "Noto Serif TC",
+        "serif"
+      ]
+    }
+  },
+  "weight": {
+    "air": {
+      "$type": "fontWeight",
+      "$value": 200
+    },
+    "standard": {
+      "$type": "fontWeight",
+      "$value": 400
+    },
+    "anchor": {
+      "$type": "fontWeight",
+      "$value": 600
+    }
+  },
+  "color": {
+    "paper": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.9569,
+          0.9529,
+          0.9294
+        ]
+      }
+    },
+    "ink": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.1451,
+          0.1451,
+          0.1451
+        ]
+      }
+    },
+    "water": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.3569,
+          0.5608,
+          0.6588
+        ]
+      }
+    },
+    "first-light": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6353,
+          0.5294,
+          0.1647
+        ]
+      }
+    },
+    "olive": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.451,
+          0.5412,
+          0.3529
+        ]
+      }
+    },
+    "harvest": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.7216,
+          0.5804,
+          0.2902
+        ]
+      }
+    },
+    "crimson": {
+      "$type": "color",
+      "$value": {
+        "colorSpace": "srgb",
+        "components": [
+          0.6314,
+          0.302,
+          0.3412
+        ]
+      }
+    }
+  },
+  "scope": {
+    "site": {
+      "$type": "string",
+      "$value": "site"
+    },
+    "tool": {
+      "$type": "string",
+      "$value": "tool"
+    },
+    "component": {
+      "$type": "string",
+      "$value": "component"
+    }
+  }
+}
