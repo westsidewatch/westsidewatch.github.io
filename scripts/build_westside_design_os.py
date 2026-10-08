@@ -16,7 +16,7 @@ def css_value(item):
     if kind == "color":
         if value.get("colorSpace") != "srgb" or len(value["components"]) != 3:
             raise ValueError("Only three-channel sRGB color is supported")
-        return "#" + "".join(f"{round(x * 255):02x}" for x in value["components"])
+        return "rgb(" + " ".join(str(round(x * 255)) for x in value["components"]) + ")"
     if kind == "fontWeight":
         return str(int(value))
     if kind in ("dimension", "string"):
