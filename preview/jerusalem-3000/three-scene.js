@@ -744,50 +744,34 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setEvidenceMode,
     setTemporalCityState,
     auditCityPhases(phaseIds) {
-      const previousPhase = currentPhaseId;
-      const previousProgress = currentProgress;
-      const previousRuin = currentRuin;
-      const records = [];
-      try {
-        for (const phaseId of phaseIds) {
-          currentProgress = 1;
-          currentRuin = phaseId === 'roman-destruction' ? 1 : 0;
-          setTemporalCityState([], 0, phaseId);
-          const projection = cityProjection?.diagnostics();
-          const visibleCore = cityCoreLayer.visible && projection?.visibleBuildings > 0;
-          const visibleFabric = (eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible)) || Boolean(eraCities.get(phaseId)?.group.visible && eraCities.get(phaseId)?.architecture.buildings);
-          const canonicalPhase = isCorePhase(phaseId);
-          const canonicalValid = !canonicalPhase || Boolean(
-            cityCoreRuntime?.parcels?.blockCount > 0 &&
-            cityCoreRuntime?.parcels?.count > 0 &&
-            cityCoreRuntime?.architecture?.buildings > 0 &&
-            visibleCore
-          );
-          const hasVisibleCity = Boolean((visibleCore || visibleFabric) && canonicalValid);
-          records.push({
-            phaseId,
-            hasVisibleCity,
-            canonicalValid,
-            visibleCoreBuildings: projection?.visibleBuildings || 0,
-            visibleFabricMeshes: eraCities.get(phaseId)?.group.visible
-              ? eraCities.get(phaseId).architecture.meshes.length
-              : eraFabricLayer.visible ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
-            canonicalBlocks: cityCoreRuntime?.parcels?.blockCount || 0,
-            canonicalParcels: cityCoreRuntime?.parcels?.count || 0,
-          });
-        }
-      } finally {
-        currentProgress = previousProgress;
-        currentRuin = previousRuin;
-        setTemporalCityState([], 0, previousPhase);
-        applyTemporalState();
-      }
+      // A startup audit must NEVER switch eras or build WebGL geometry.
+      // Previously this synchronously generated all 18 city meshes and froze the UI.
+      const records = phaseIds.map((phaseId) => {
+        const canonicalPhase = isCorePhase(phaseId);
+        const canonicalValid = !canonicalPhase || Boolean(
+          cityCoreRuntime?.parcels?.blockCount > 0 &&
+          cityCoreRuntime?.parcels?.count > 0 &&
+          cityCoreRuntime?.architecture?.buildings > 0
+        );
+        return {
+          phaseId,
+          canonicalValid,
+          status: canonicalPhase ? (canonicalValid ? 'validated' : 'failed') : 'deferred-render-check',
+          hasVisibleCity: canonicalPhase ? canonicalValid : null,
+          canonicalBlocks: canonicalPhase ? cityCoreRuntime?.parcels?.blockCount || 0 : null,
+          canonicalParcels: canonicalPhase ? cityCoreRuntime?.parcels?.count || 0 : null,
+        };
+      });
+      const deferredPhases = records.filter(record => record.status === 'deferred-render-check').map(record => record.phaseId);
+      const canonicalFailures = records.filter(record => !record.canonicalValid).map(record => record.phaseId);
       return {
-        ok: records.length === phaseIds.length && records.every((record) => record.hasVisibleCity),
-        checked: records.length,
+        ok: canonicalFailures.length === 0,
+        complete: deferredPhases.length === 0 && canonicalFailures.length === 0,
+        checked: records.length - deferredPhases.length,
+        deferredPhases,
         records,
-        emptyPhases: records.filter((record) => !record.hasVisibleCity).map((record) => record.phaseId),
-        canonicalFailures: records.filter((record) => !record.canonicalValid).map((record) => record.phaseId),
+        emptyPhases: canonicalFailures,
+        canonicalFailures,
       };
     },
     dispose() {
