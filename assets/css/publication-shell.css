@@ -11,8 +11,8 @@
   --living-paper: #e8dbb8;
   --ink: #30291d;
   --ink-black: #30291d;
-  --font-display: "Cormorant Garamond", "Noto Sans TC", serif;
-  --font-text: "Noto Sans TC", sans-serif;
+  --font-display: var(--type-en), var(--type-zh), serif;
+  --font-text: var(--type-zh), sans-serif;
   min-height: 100%;
   background-color: var(--paper);
   background-image:
@@ -28,7 +28,7 @@
   font-family: var(--font-display);
   font-weight: 500;
 }
-:where(p,li,blockquote,button,input) { font-family: "Cormorant Garamond", "Noto Sans TC", serif; }
+:where(p,li,blockquote,button,input) { font-family: var(--type-en), var(--type-zh), serif; }
 .primary-nav, .section-nav { font-family: var(--font-display); }
 .hero__watchword, .hero__scripture p:nth-child(2), .hero__scripture cite { font-family:var(--font-display); }
 .hero__scripture p[lang], .proclamation__lead, [lang="zh-Hant"] { font-family:var(--font-text); }
