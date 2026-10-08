@@ -309,6 +309,14 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   function ensureEraCity(phaseId) {
     if (isCorePhase(phaseId) || !ERA_FOOTPRINTS[phaseId] || !eraRegistrationReference || !cityCoreRuntime) return null;
     if (eraCities.has(phaseId)) return eraCities.get(phaseId);
+    // Keep at most one generated non-core city in GPU memory.
+    for (const [oldPhase, oldCity] of eraCities) {
+      sharedEraLayer.remove(oldCity.group);
+      oldCity.group.traverse((node) => {
+        if (node.isMesh) node.geometry?.dispose?.();
+      });
+      eraCities.delete(oldPhase);
+    }
     const registration = deriveEraRegistration(eraRegistrationReference, phaseId, ERA_FOOTPRINTS[phaseId]);
     const group = new THREE.Group();
     group.name = `j3k-shared-era-${phaseId}`;
@@ -413,6 +421,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     const sharedCity = ensureEraCity(phaseId);
     if (sharedCity?.architecture.buildings > 0) {
       eraFabricLayer.visible = false;
+      updateCityCoreVisibility();
+      needsFrame = true;
       return;
     }
     eraFabricLayer.visible = currentEvidenceMode !== 'disputed';
@@ -782,6 +792,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
         mesh.geometry?.dispose?.();
+      for (const city of eraCities.values())
+        city.group.traverse(node => { if (node.isMesh) node.geometry?.dispose?.(); });
       renderer.dispose();
     },
   };
