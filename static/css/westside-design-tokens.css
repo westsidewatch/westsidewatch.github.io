@@ -7,7 +7,7 @@
   --ws-weight-air: 200;
   --ws-weight-standard: 400;
   --ws-weight-anchor: 600;
-  --ws-paper: #f4f3ed;
+  --ws-paper: #faf9f5;
   --ws-ink: #252525;
   --ws-water: #5b8fa8;
   --ws-first-light: #a2872a;
@@ -19,4 +19,11 @@
   --ws-os-font-display-zh: var(--ws-type-display-zh);
   --ws-os-font-reading-zh: var(--ws-type-reading-zh);
 }
-
+[data-ws-scope="olive"] {
+  --ws-olive-layer-zh-weight: var(--ws-weight-zh-air);
+  --ws-olive-speaker-name-weight: var(--ws-weight-zh-air);
+  --ws-weight-zh-air: 200;
+}
+[data-ws-scope="one"] {
+  --ws-interaction: var(--ws-pale-gold);
+}
