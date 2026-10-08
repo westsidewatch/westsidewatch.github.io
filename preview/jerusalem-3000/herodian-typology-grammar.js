@@ -8,8 +8,17 @@ function streetFootprint(parcel,fallbackFactor=.9){
   const [a,b,c,d]=poly;
   // Preserve the surveyed parcel's street-facing edge instead of shrinking it away.
   // The side and rear walls remain inset to avoid merging neighboring buildings.
-  const inset=.018;
-  return [a,b,{x:c.x+(b.x-c.x)*inset,z:c.z+(b.z-c.z)*inset},{x:d.x+(a.x-d.x)*inset,z:d.z+(a.z-d.z)*inset}];
+  // Inset the side walls in world units, not a percentage of depth:
+  // long and short lots should maintain the same visible party-wall clearance.
+  const frontWidth=Math.hypot(b.x-a.x,b.z-a.z);
+  const clearance=Math.min(.22,frontWidth*.012);
+  const vx=(b.x-a.x)/(frontWidth||1),vz=(b.z-a.z)/(frontWidth||1);
+  return [
+    {x:a.x+vx*clearance,z:a.z+vz*clearance},
+    {x:b.x-vx*clearance,z:b.z-vz*clearance},
+    {x:c.x-vx*clearance,z:c.z-vz*clearance},
+    {x:d.x+vx*clearance,z:d.z+vz*clearance}
+  ];
 }
 function streetEdge(parcel,poly){
   if(parcel.metadata?.frontage&&poly.length===4)return {a:poly[0],b:poly[1],length:Math.hypot(poly[1].x-poly[0].x,poly[1].z-poly[0].z)};
