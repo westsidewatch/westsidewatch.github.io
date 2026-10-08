@@ -2,6 +2,7 @@
    Global values are defaults. Scoped values override only inside their surface. */
 @import url("/css/typography-sitewide.css");
 @import url("/css/westside-color-authority.css");
+@import url("/css/westside-design-tokens.css");
 :root{--ws-design-os:"westside-v1";--ws-design-scope:"global"}
 [data-ws-scope]{--ws-design-scope:"local"}
 [data-ws-scope="church"]{--ws-scope-identity:var(--ws-water)}
