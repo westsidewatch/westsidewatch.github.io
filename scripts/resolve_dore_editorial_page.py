@@ -9,9 +9,11 @@ from pathlib import Path
 
 ROUTES={
  '/journal/':('essay-concept','feature-lead',None),
+ '/archive/':('archive-thumbnail','thumbnail',None),
  '/magazine/':('essay-concept','feature-lead',None),
  '/cinema/':('cinema-program','hero',None),
  '/olive-mountain/':('section-hero','hero','olive-mountain'),
+ '/church/':('section-hero','hero',None),
  '/olive/':('section-hero','hero','olive-mountain'),
 }
 LAYOUT_SLOTS={'hero':'hero','cover':'cover','feature':'feature-lead','feature-lead':'feature-lead',
