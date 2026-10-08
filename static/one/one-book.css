@@ -496,7 +496,7 @@ main,.views{background:transparent}
   color:var(--one-gilt-dark);
   font:600 .54rem var(--sans);
   letter-spacing:.17em;
-  text-transform:uppercase;
+  text-transform:none;
 }
 .reading-tools p strong{color:var(--one-ink);font:400 1.05rem var(--display)}
 .reading-mode{display:flex;border:1px solid rgba(117,85,31,.44)}
@@ -536,7 +536,7 @@ main,.views{background:transparent}
   font:600 .5rem var(--sans)!important;
   letter-spacing:.16em!important;
   line-height:1.2!important;
-  text-transform:uppercase;
+  text-transform:none;
 }
 .running-head b{font:inherit}
 .chapter-detail>*:nth-child(even)>.running-head{flex-direction:row-reverse}
@@ -569,7 +569,7 @@ main,.views{background:transparent}
   font:600 .55rem var(--sans);
   font-style:normal;
   letter-spacing:.14em;
-  text-transform:uppercase;
+  text-transform:none;
 }
 .chapter-turn button strong,.chapter-turn__boundary strong{font:400 clamp(1rem,2vw,1.35rem) var(--display)}
 .chapter-turn__boundary{opacity:.42}
