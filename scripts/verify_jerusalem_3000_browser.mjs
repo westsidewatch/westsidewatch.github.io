@@ -27,16 +27,17 @@ try {
   const runtime = await page.evaluate(() => window.__JERUSALEM3000__);
   assert.equal(runtime.status, 'ready', JSON.stringify(runtime));
   assert.equal(
-    runtime.productionReady,
+    runtime.production.ok,
     true,
     JSON.stringify(runtime.production),
   );
+  assert.equal(runtime.productionReady, runtime.production.ok && runtime.phaseAudit.complete);
   assert.equal(
     runtime.complete,
     false,
     'a verified slice must not claim the whole timeline is complete',
   );
-  for (const value of [8, 8.9, 9, 9.5, 10, 9.5, 8]) {
+  for (const value of [8, 8.9, 9, 9.5, 9.9, 9.5, 8]) {
     await page.locator('.j3k-scrubber').evaluate((el, value) => {
       el.value = String(value);
       el.dispatchEvent(new Event('input', { bubbles: true }));
@@ -64,7 +65,7 @@ try {
     assert.equal(state.render.visibleLegacyTemporalMeshes, 0);
     assert.equal(state.inheritance.active, false);
     reports.push({ value, ...state });
-    if ([8, 9.5, 10].includes(value))
+    if ([8, 9.5, 9.9].includes(value))
       await page.screenshot({
         path: `${output}/city-${value}.png`,
         fullPage: true,
@@ -98,6 +99,37 @@ try {
       window.__JERUSALEM3000__.renderDiagnostics?.cityProjection
         ?.visibleBuildings > 0,
   );
+  // Render every era separately. Startup metadata is not proof of a visible city.
+  const phaseReports = [];
+  for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
+    const value = phase + (phase === runtime.phaseAudit.records.length - 1 ? 0 : 0.9);
+    const started = Date.now();
+    await page.locator('.j3k-scrubber').evaluate((el, value) => {
+      el.value = String(value);
+      el.dispatchEvent(new Event('input', { bubbles: true }));
+    }, value);
+    await page.waitForFunction(value => {
+      const s = window.__JERUSALEM3000__;
+      return s?.historicalTime?.position === value &&
+        s.renderDiagnostics?.phase === s.historicalTime.phase;
+    }, value, { timeout: 15000 });
+    const sample = await page.evaluate(() => ({
+      time: window.__JERUSALEM3000__.historicalTime,
+      render: window.__JERUSALEM3000__.renderDiagnostics,
+    }));
+    assert.ok(sample.render.webgl && sample.render.frames > 0);
+    const visible = sample.render.visibleCoreMeshes +
+      sample.render.urbanFabric.phase2Components + sample.render.visibleLegacyTemporalMeshes;
+    assert.ok(visible > 0, `No urban geometry rendered for ${sample.time.phase}`);
+    if (phase === 10) assert.equal(sample.render.visibleCoreMeshes, 0,
+      'Aelia must not reuse standing Herodian architecture');
+    phaseReports.push({ value, elapsedMs: Date.now() - started, visible, ...sample });
+    await page.screenshot({ path: `${output}/phase-${phase}.png`, fullPage: true });
+  }
+  await writeFile(`${output}/phase-report.json`, JSON.stringify({
+    scope: 'render-smoke-only; historical continuity remains unverified',
+    phaseAudit: runtime.phaseAudit, phaseReports,
+  }, null, 2));
   assert.deepEqual(errors, []);
   const mobile = await browser.newPage({
     viewport: { width: 390, height: 844 },
@@ -116,7 +148,7 @@ try {
         ?.visibleBuildings > 0,
   );
   assert.equal(
-    await mobile.evaluate(() => window.__JERUSALEM3000__.productionReady),
+    await mobile.evaluate(() => window.__JERUSALEM3000__.production.ok),
     true,
   );
   await mobile.screenshot({
@@ -139,7 +171,7 @@ try {
   await writeFile(
     `${output}/report.json`,
     JSON.stringify(
-      { ok: true, core: runtime.evidenceObjects.cityCoreAB, reports, errors },
+      { ok: true, core: runtime.evidenceObjects.cityCoreAB, phaseReports, reports, errors },
       null,
       2,
     ),
@@ -149,6 +181,8 @@ try {
       ok: true,
       buildings: runtime.evidenceObjects.cityCoreAB.buildings,
       samples: reports.length,
+      renderedPhases: phaseReports.length,
+      fullTimelineReady: runtime.productionReady,
       errors,
     }),
   );
