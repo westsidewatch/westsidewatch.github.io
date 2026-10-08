@@ -705,6 +705,43 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setRuinProgress,
     setEvidenceMode,
     setTemporalCityState,
+    auditCityPhases(phaseIds) {
+      const previousPhase = currentPhaseId;
+      const previousProgress = currentProgress;
+      const previousRuin = currentRuin;
+      const records = [];
+      try {
+        for (const phaseId of phaseIds) {
+          currentProgress = 1;
+          currentRuin = phaseId === 'roman-destruction' ? 1 : 0;
+          setTemporalCityState([], 0, phaseId);
+          const projection = cityProjection?.diagnostics();
+          const visibleCore = cityCoreLayer.visible && projection?.visibleBuildings > 0;
+          const visibleFabric = eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible);
+          const hasVisibleCity = Boolean(visibleCore || visibleFabric);
+          records.push({
+            phaseId,
+            hasVisibleCity,
+            visibleCoreBuildings: projection?.visibleBuildings || 0,
+            visibleFabricMeshes: eraFabricLayer.visible
+              ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
+            canonicalBlocks: cityCoreRuntime?.parcels?.blockCount || 0,
+            canonicalParcels: cityCoreRuntime?.parcels?.count || 0,
+          });
+        }
+      } finally {
+        currentProgress = previousProgress;
+        currentRuin = previousRuin;
+        setTemporalCityState([], 0, previousPhase);
+        applyTemporalState();
+      }
+      return {
+        ok: records.length === phaseIds.length && records.every((record) => record.hasVisibleCity),
+        checked: records.length,
+        records,
+        emptyPhases: records.filter((record) => !record.hasVisibleCity).map((record) => record.phaseId),
+      };
+    },
     dispose() {
       cancelAnimationFrame(raf);
       ro.disconnect();
