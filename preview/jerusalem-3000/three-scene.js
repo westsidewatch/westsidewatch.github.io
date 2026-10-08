@@ -290,8 +290,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   function herodianPhaseActive() {
     return (
       currentPhaseId === 'herodian-jesus' ||
-      currentPhaseId === 'roman-destruction' ||
-      currentPhaseId === 'aelia'
+      currentPhaseId === 'roman-destruction'
     );
   }
   function phase2BuildActive() {
@@ -570,8 +569,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         architecture,
         validation: loaded.core.validate(),
       };
-      if (!architecture.buildings || !cityCoreRuntime.validation.ok)
-        throw new Error('Canonical city has no valid buildings');
+      if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
+        throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(
         ...buildHerodianRoadGeometry(
           cityCoreLayer,
@@ -606,7 +605,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       ledgerObjects: ledger.objects.length,
       constructionPieces: builder.pieces,
       temporalRuntime: 'canonical-herodian-ruin-slice',
-      objectContinuityPhases: ['herodian-jesus', 'roman-destruction', 'aelia'],
+      objectContinuityPhases: ['herodian-jesus', 'roman-destruction'],
       transformationRuntime: 'reversible-standing-to-ruin',
       renderProfile: coarsePointer ? 'coarse-pointer' : 'desktop',
       terrain: 'canonical-dem',
@@ -659,6 +658,15 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             webgl: !renderer.getContext().isContextLost(),
             sceneChildren: scene.children.length,
             cityProjection: cityProjection?.diagnostics(),
+            urbanFabric: {
+              phase: currentPhaseId,
+              coreVisible: cityCoreLayer.visible,
+              fabricVisible: eraFabricLayer.visible,
+              phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              blocks: cityCoreRuntime?.parcels?.blockCount || 0,
+              parcels: cityCoreRuntime?.parcels?.count || 0,
+              buildings: cityCoreRuntime?.architecture?.buildings || 0,
+            },
             visibleLegacyTemporalMeshes: [...temporalMeshes.values()].filter(
               (m) => m.visible,
             ).length,
@@ -697,6 +705,52 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setRuinProgress,
     setEvidenceMode,
     setTemporalCityState,
+    auditCityPhases(phaseIds) {
+      const previousPhase = currentPhaseId;
+      const previousProgress = currentProgress;
+      const previousRuin = currentRuin;
+      const records = [];
+      try {
+        for (const phaseId of phaseIds) {
+          currentProgress = 1;
+          currentRuin = phaseId === 'roman-destruction' ? 1 : 0;
+          setTemporalCityState([], 0, phaseId);
+          const projection = cityProjection?.diagnostics();
+          const visibleCore = cityCoreLayer.visible && projection?.visibleBuildings > 0;
+          const visibleFabric = eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible);
+          const canonicalPhase = isCorePhase(phaseId);
+          const canonicalValid = !canonicalPhase || Boolean(
+            cityCoreRuntime?.parcels?.blockCount > 0 &&
+            cityCoreRuntime?.parcels?.count > 0 &&
+            cityCoreRuntime?.architecture?.buildings > 0 &&
+            visibleCore
+          );
+          const hasVisibleCity = Boolean((visibleCore || visibleFabric) && canonicalValid);
+          records.push({
+            phaseId,
+            hasVisibleCity,
+            canonicalValid,
+            visibleCoreBuildings: projection?.visibleBuildings || 0,
+            visibleFabricMeshes: eraFabricLayer.visible
+              ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
+            canonicalBlocks: cityCoreRuntime?.parcels?.blockCount || 0,
+            canonicalParcels: cityCoreRuntime?.parcels?.count || 0,
+          });
+        }
+      } finally {
+        currentProgress = previousProgress;
+        currentRuin = previousRuin;
+        setTemporalCityState([], 0, previousPhase);
+        applyTemporalState();
+      }
+      return {
+        ok: records.length === phaseIds.length && records.every((record) => record.hasVisibleCity),
+        checked: records.length,
+        records,
+        emptyPhases: records.filter((record) => !record.hasVisibleCity).map((record) => record.phaseId),
+        canonicalFailures: records.filter((record) => !record.canonicalValid).map((record) => record.phaseId),
+      };
+    },
     dispose() {
       cancelAnimationFrame(raf);
       ro.disconnect();

@@ -1,5 +1,6 @@
 // One generated city, projected through time without replacing its objects.
-const CORE_PHASES = new Set(['herodian-jesus', 'roman-destruction', 'aelia']);
+// Aelia Capitolina is a replanned Roman city, not a surviving Herodian residential layer.
+const CORE_PHASES = new Set(['herodian-jesus', 'roman-destruction']);
 export function isCorePhase(phaseId) {
   return CORE_PHASES.has(phaseId);
 }
@@ -15,6 +16,7 @@ export function createCityProjection(group, meshes) {
     ground:
       mesh.userData.cityObject.terrainGround ?? mesh.userData.phase2?.groundY,
     confidence: mesh.userData.cityObject.confidence,
+    infrastructure: Boolean(mesh.userData.cityObject.infrastructure),
   }));
   let state = { phaseId: '', ruin: 0, visibleBuildings: 0 };
   return {
@@ -27,14 +29,17 @@ export function createCityProjection(group, meshes) {
       const visible = new Set();
       for (const item of snapshots) {
         const { mesh, position, ground } = item;
+        const objectScale = item.infrastructure ? 1 : scale;
         mesh.visible = active && evidenceAllowed(item.confidence);
         mesh.position.x = position.x;
         mesh.position.z = position.z;
-        mesh.position.y = ground + (position.y - ground) * scale;
-        mesh.scale.y = item.scaleY * scale;
+        mesh.position.y = ground + (position.y - ground) * objectScale;
+        mesh.scale.y = item.scaleY * objectScale;
         mesh.userData.cityObject.buildingId = item.id;
         mesh.userData.cityObject.lifecycleState =
-          amount === 0 ? 'standing' : amount === 1 ? 'ruin' : 'destruction';
+          item.infrastructure
+            ? 'street-continuity'
+            : amount === 0 ? 'standing' : amount === 1 ? 'ruin' : 'destruction';
         if (mesh.visible && mesh.userData.cityObject.parcelId)
           visible.add(item.id);
       }
