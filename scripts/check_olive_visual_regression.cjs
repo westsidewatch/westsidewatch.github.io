@@ -2,7 +2,7 @@ const { chromium } = require('playwright');
 const fs = require('node:fs');
 (async () => {
   const browser = await chromium.launch({headless:true});
-  const sizes = [{name:'mobile',width:390,height:844},{name:'tablet',width:768,height:1024},{name:'desktop',width:1440,height:900}];
+  const sizes = [{name:'mobile-narrow',width:320,height:640},{name:'mobile',width:390,height:844},{name:'mobile-landscape',width:844,height:390},{name:'tablet',width:768,height:1024},{name:'tablet-landscape',width:1024,height:768},{name:'desktop',width:1440,height:900},{name:'desktop-wide',width:1920,height:1080}];
   fs.mkdirSync('/tmp/olive-visual',{recursive:true});
   try {
     for (const size of sizes) {
@@ -18,9 +18,12 @@ const fs = require('node:fs');
           const rect=card.getBoundingClientRect();
           const title=card.querySelector('h3')?.getBoundingClientRect();
           const meta=card.querySelector('p')?.getBoundingClientRect();
+          const image=card.querySelector('.dore-verified-portrait')?.getBoundingClientRect();
+          if(image && (image.left<rect.left-2||image.right>rect.right+2||image.top<rect.top-2||image.bottom>rect.bottom+2)) errors.push(card.dataset.doreSpeaker+': image outside card');
           if(title && (title.left<rect.left-2||title.right>rect.right+2||title.top<rect.top-2||title.bottom>rect.bottom+2)) errors.push(card.dataset.doreSpeaker+': title outside card');
           if(meta && (meta.left<rect.left-2||meta.right>rect.right+2||meta.top<rect.top-2||meta.bottom>rect.bottom+2)) errors.push(card.dataset.doreSpeaker+': meta outside card');
           if(title&&meta&&title.bottom>meta.top+2&&title.top<meta.bottom-2) errors.push(card.dataset.doreSpeaker+': title/meta overlap');
+          if(title && card.querySelector('h3').scrollHeight>card.querySelector('h3').clientHeight+2) errors.push(card.dataset.doreSpeaker+': title content clipped');
         }
         return errors;
       });

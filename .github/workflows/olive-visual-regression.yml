@@ -3,6 +3,7 @@ on:
   pull_request:
     paths:
       - 'olive/**'
+      - 'scripts/check_olive_visual_regression.cjs'
       - '.github/workflows/olive-visual-regression.yml'
   workflow_dispatch:
 jobs:
