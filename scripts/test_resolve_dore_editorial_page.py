@@ -5,15 +5,16 @@ class PageResolverTests(unittest.TestCase):
  def test_olive_section(self):
   r=resolve('/olive-mountain/')
   self.assertEqual((r['scenario'],r['slot'],r['palette']),('section-hero','hero','olive-mountain'))
- def test_journal_requires_palette(self):
-  with self.assertRaisesRegex(ValueError,'palette'):
-   resolve('/journal/')
- def test_cinema_requires_palette(self):
-  with self.assertRaisesRegex(ValueError,'palette'):
-   resolve('/cinema/')
+ def test_journal_palette(self):
+  self.assertEqual(resolve('/journal/')['palette'],'magazine')
+ def test_cinema_palette(self):
+  self.assertEqual(resolve('/cinema/')['palette'],'cinema')
  def test_explicit_override(self):
   r=resolve('/journal/',{'dore_scenario':'column-author','dore_slot':'profile-card','dore_palette':'olive-mountain'})
   self.assertEqual((r['scenario'],r['slot']),('column-author','profile-card'))
+ def test_church_and_library(self):
+  self.assertEqual(resolve('/church/')['palette'],'church')
+  self.assertEqual(resolve('/dawn-library/')['palette'],'dawn-library')
  def test_unknown_route_fails(self):
   with self.assertRaisesRegex(ValueError,'No explicit'):
    resolve('/not-a-real-section/')
