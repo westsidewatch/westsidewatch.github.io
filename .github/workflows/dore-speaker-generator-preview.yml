@@ -1,0 +1,45 @@
+name: Doré Speaker Generator Preview
+on:
+  pull_request:
+    paths:
+      - 'scripts/*dore_speaker*'
+      - 'scripts/prepare_dore_local_image_job.py'
+      - 'local/dore-local/companion_4312.py'
+      - 'data/westside-core/entities/sermon-speakers.v1.json'
+      - '.github/workflows/dore-speaker-generator-preview.yml'
+  workflow_dispatch:
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install compositor dependency
+        run: python3 -m pip install Pillow
+      - name: Smoke-test local A2A worker contract
+        run: python3 scripts/test_dore_speaker_a2a.py
+      - name: Test restricted Gateway binding
+        run: python3 scripts/test_dore_speaker_gateway.py
+      - name: Generate all twelve preview covers
+        run: python3 scripts/build_dore_speaker_previews.py --out /tmp/dore-speaker-preview
+      - name: Validate outputs and identity constraints
+        run: |
+          python3 - <<'PY'
+          import json,pathlib
+          p=pathlib.Path('/tmp/dore-speaker-preview')
+          m=json.loads((p/'manifest.json').read_text())
+          assert len(m['records'])==12 and not m['published']
+          assert len(list(p.glob('*.svg')))==12
+          assert all(not r['portraitAllowed'] and r['status']=='PREVIEW_NOT_PUBLISHED' for r in m['records'])
+          assert all('#174B35' in (p/(r['slug']+'.svg')).read_text() for r in m['records'])
+          print('PASS: 12 deterministic SVG covers + 12 detailed prompts')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dore-speaker-cover-previews
+          path: /tmp/dore-speaker-preview
+          retention-days: 14
