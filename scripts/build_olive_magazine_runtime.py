@@ -44,6 +44,5 @@ def main():
  for number,r in enumerate(payload["records"],1):
   filename=r["speaker"]+".svg"
   (COVERS/filename).write_text(render_cover(r,number),encoding="utf-8")
-  r["cover"]="/dore-design/runtime/olive-covers/"+filename
  OUT.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
 if __name__=="__main__":main()
