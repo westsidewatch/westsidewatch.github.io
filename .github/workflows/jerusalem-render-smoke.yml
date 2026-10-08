@@ -1,0 +1,52 @@
+name: Jerusalem 3000 Render Smoke
+on:
+  pull_request:
+    paths:
+      - 'preview/jerusalem-3000/**'
+      - '.github/workflows/jerusalem-render-smoke.yml'
+  workflow_dispatch:
+jobs:
+  browser-render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright@1.56.1
+      - run: npx playwright install --with-deps chromium
+      - name: Serve preview
+        run: |
+          python3 -m http.server 8765 --bind 127.0.0.1 > /tmp/j3k-server.log 2>&1 &
+          echo $! > /tmp/j3k-server.pid
+      - name: Render Herodian city and capture evidence
+        run: |
+          node --input-type=module <<'EOF'
+          import {chromium} from 'playwright';
+          import fs from 'node:fs';
+          const browser=await chromium.launch({headless:true,args:['--enable-webgl','--use-gl=angle','--use-angle=swiftshader','--disable-web-security']});
+          const page=await browser.newPage({viewport:{width:1440,height:900},deviceScaleFactor:1});
+          const errors=[];
+          page.on('pageerror',error=>errors.push(error.message));
+          page.on('console',msg=>{if(msg.type()==='error')errors.push(msg.text())});
+          await page.goto('http://127.0.0.1:8765/preview/jerusalem-3000/',{waitUntil:'domcontentloaded'});
+          await page.waitForTimeout(15000);
+          await page.locator('[data-phase="8"]').click();
+          await page.waitForTimeout(5000);
+          fs.mkdirSync('artifacts/jerusalem-render',{recursive:true});
+          await page.screenshot({path:'artifacts/jerusalem-render/herodian-desktop.png',fullPage:true});
+          const state=await page.evaluate(()=>{
+            const canvas=document.querySelector('[data-three-stage] canvas');
+            return {canvas:!!canvas,width:canvas?.width||0,height:canvas?.height||0,caption:document.querySelector('.j3k-caption h2')?.textContent||'',terrainBadge:document.querySelector('.j3k-terrain-badge')?.textContent||''};
+          });
+          fs.writeFileSync('artifacts/jerusalem-render/report.json',JSON.stringify({state,errors},null,2));
+          await browser.close();
+          if(!state.canvas||!state.width||!state.height)throw new Error('Three.js canvas missing or zero-sized');
+          if(errors.some(x=>/WebGL|failed safely|Uncaught|TypeError|ReferenceError/i.test(x)))throw new Error('Scene runtime errors: '+errors.join('; ').slice(0,1000));
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jerusalem-herodian-render
+          path: artifacts/jerusalem-render/
