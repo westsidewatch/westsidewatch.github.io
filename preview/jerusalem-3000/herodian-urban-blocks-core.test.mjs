@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { subdivideBlockToParcels, validateParcelGeometry } from './herodian-urban-blocks-core.js';
+import { generateUrbanBlocks, subdivideBlockToParcels, validateParcelGeometry } from './herodian-urban-blocks-core.js';
 
 const rectangle=(x0,z0,x1,z1)=>[{x:x0,z:z0},{x:x1,z:z0},{x:x1,z:z1},{x:x0,z:z1}];
 const parcel=(id,polygon)=>({id,geometry:{polygon}});
@@ -47,4 +47,17 @@ test('generated blocks publish a successful geometry audit',()=>{
  assert.ok(parcels.length>0);
  assert.equal(block.metadata.geometryAudit?.valid,true);
  assert.equal(block.metadata.geometryAudit.parcelCount,parcels.length);
+});
+
+test('T junction road endpoint is noded against crossing street',()=>{
+ const district={id:'test-district',geometry:{polygon:rectangle(0,0,120,100)}};
+ const road=(id,points)=>({id,geometry:{points}});
+ const roads=[
+  road('vertical',[{x:60,z:0},{x:60,z:100}]),
+  road('branch',[{x:60,z:50},{x:120,z:50}])
+ ];
+ const result=generateUrbanBlocks({district,roads});
+ assert.equal(result.withheld,false);
+ assert.ok(result.graphNodes>=7,'T junction must create a graph node');
+ assert.ok(result.graphEdges>=9,'T junction must split the vertical road');
 });
