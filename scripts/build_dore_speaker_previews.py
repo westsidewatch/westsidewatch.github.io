@@ -21,15 +21,26 @@ def compile_record(record,index):
       'typography':{'display':'site-approved Chinese serif','latin':'Bodoni Moda regular','syntheticBold':False},
       'print':{'authority':'vendor/mono-color-skill','techniques':['controlled ink density','paper knockout','fine print linework'],'engraving':'experimental-not-required'},
       'layout':{'safeMargin':48,'nameBaseline':800,'headerBaseline':92,'artBounds':[48,155,624,540]}}
-    spec['prompt']=('Produce one finished 720×960 editorial illustration BACKGROUND ONLY, no letters, no names, no numbers, no typography. '
-      'Single ink #174B35 on white #FFFFFF paper, no gold, beige, blue, black, gradients or additional hues. '
-      f'Editorial family: {family}. Subject: {motif.replace("-"," ")}. '
-      'A detailed, cohesive nineteenth-century engraved-print-inspired illustration with credible tonal modeling, '
-      'fine controlled hatch lines, rich but disciplined shadow structure, readable highlights formed by exposed paper, '
-      'accurate perspective and clear visual hierarchy. Avoid generic geometric blocks, circles, stock illustrations, '
-      'faux portrait silhouettes and artificial halftone-only fills. Reserve the bottom 25 percent for separate deterministic typography. '
-      'Respect 48 px safe margins, and concentrate subject imagery in the region x=48..672 y=155..695. '
-      'No human portrait or implied likeness of the named speaker. Produce one visually distinct composition.')
+    scenes={
+      'olive-branches':'An old olive tree on a stony hillside, gnarled trunk with intricate bark, branches extending asymmetrically into generous white sky, botanical plate detail.',
+      'scripture-pages':'An open antique Bible resting on a carved wooden reading stand, pages and wood grain rendered with meticulous fine lines; no readable letters.',
+      'stone-arch':'A sunlit limestone archway and worn stone steps in a quiet ancient courtyard, strong architectural perspective and distinct masonry joints.',
+      'mountain-light':'Layered Judean limestone hills under a wide white sky, terraced slopes and sparse olive groves, finely hatched geological strata.',
+      'courtyard':'A small Mediterranean stone courtyard with a single olive tree and an empty stone bench, archway receding in correct perspective.',
+      'open-book':'A weathered open book on a plain wooden table beside an olive branch, paper edges, wood grain and cast shadows in precise engraving.'
+    }
+    spec['prompt']=(
+      'Use a verified, rights-cleared reference photograph for a recognizable speaker portrait when one is supplied. Preserve identity and facial geometry. Otherwise use the non-portrait editorial scene specified below. '
+      'Never invent a speaker likeness without a verified reference. No writing, text, letters, signatures or typography. '
+      +scenes[motif]+' '
+      'Composition: one clear foreground subject with a secondary background plane, strong asymmetric negative space, '
+      'legible structural perspective, crisp contour boundaries, close parallel crosshatching with varied spacing to model form. '
+      'Traditional copperplate etching on pure white paper with dark olive green ink only. '
+      'NO sepia, orange, ochre, tan, beige, gold, red, blue, black, photographic skin tones, blurred photography, '
+      'glowing gradient, vignette, soft focus, anonymous invented face, or 3D render. '
+      'Keep main visual interest in the upper three quarters, with lower quarter empty white for later type composition. '
+      'Image background only; no graphic frame or type. High-resolution sharp printmaking illustration.'
+    )
     return spec
 def motif_svg(motif):
     # Vector structural illustrations; decorative only, never impersonation.
