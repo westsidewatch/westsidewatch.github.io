@@ -3,11 +3,29 @@
 :root{
   --type-en:"Bodoni Moda",Georgia,"Times New Roman",serif;
   --type-zh:"Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;
-  --type-ui:Inter,"Helvetica Neue",Arial,sans-serif;
+  --type-ui:var(--type-zh);
   --type-zh-light:200;
   --type-zh-regular:400;
   --type-zh-strong:600;
   --type-en-regular:400;
+  /* Shared responsive role scale; rem floors respect browser text zoom. */
+  --ws-size-hero:clamp(3rem,7vw + 1rem,9rem);
+  --ws-size-cover:clamp(2.25rem,5vw + .5rem,6rem);
+  --ws-size-h1:clamp(2rem,3.6vw + .5rem,4.5rem);
+  --ws-size-h2:clamp(1.625rem,2.2vw + .5rem,2.75rem);
+  --ws-size-h3:clamp(1.375rem,1.3vw + .5rem,1.875rem);
+  --ws-size-nav:clamp(1rem,.4vw + .875rem,1.1875rem);
+  --ws-size-card:clamp(1.25rem,1vw + .75rem,1.75rem);
+  --ws-size-reading:clamp(1.0625rem,.5vw + 1rem,1.25rem);
+  --ws-size-body:clamp(1rem,.35vw + .875rem,1.125rem);
+  --ws-size-meta:clamp(.8125rem,.2vw + .75rem,.9375rem);
+  --ws-size-control:clamp(1rem,.35vw + .875rem,1.125rem);
+  --ws-leading-reading:1.85;
+  --ws-leading-ui:1.5;
+  --ws-reading-measure:38ch;
+  --ws-type-display-en:var(--type-en);
+  --ws-type-display-zh:var(--type-zh);
+  --ws-type-reading-zh:"Noto Serif TC","Songti TC",serif;
   --type-body:clamp(1rem,.97rem + .12vw,1.1rem);
   --type-small:clamp(.78rem,.76rem + .08vw,.84rem);
   --leading-body:1.9;
@@ -18,7 +36,7 @@ body{font-family:var(--type-zh)!important;font-size:var(--type-body);font-weight
 .type-en,[lang^="en"]{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important;font-synthesis:none}
 .type-zh,[lang="zh-Hant"],[lang="zh-TW"],[lang="zh"]{font-family:var(--type-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal}
 .type-mixed{font-family:var(--type-zh)!important;font-synthesis:none}
-p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--type-body)!important;font-weight:var(--type-zh-light)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
+p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--type-body)!important;font-weight:var(--type-zh-regular)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
 h1.type-en,h2.type-en,h3.type-en,h4.type-en,.type-en:is(strong,b){font-weight:var(--type-en-regular)!important}
 h1.type-zh,h2.type-zh,h3.type-zh,h4.type-zh,.type-zh:is(strong,b){font-weight:var(--type-zh-strong)!important;line-height:1.24!important;letter-spacing:.025em!important}
 h1.type-zh{font-size:clamp(2.75rem,5.4vw,5.8rem)!important}
