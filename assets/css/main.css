@@ -14,8 +14,8 @@
   --ink: var(--ink-black);
   --paper: var(--living-paper);
   --line: color-mix(in srgb, var(--first-light-gold) 32%, transparent);
-  --font-display: "Cormorant Garamond", "Noto Serif TC", serif;
-  --font-text: "Noto Serif TC", "Cormorant Garamond", serif;
+  --font-display: "Bodoni Moda", "Noto Serif TC", serif;
+  --font-text: "Noto Serif TC", "Bodoni Moda", serif;
   /* Editorial type hierarchy, adapted from Brand Standards pp. 18–19. */
   --type-display: clamp(3.5rem, 7vw, 7.4rem);
   --type-h1: clamp(3rem, 7vw, 7.4rem);
