@@ -1,9 +1,12 @@
 /* Standalone pages and iframes: shared fonts and role sizes.
    Keep independent from Hugo templates; no homepage composition rules. */
-@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Bodoni+Moda+SC:opsz,wght@6..96,400&family=Noto+Serif+TC:wght@400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Bodoni+Moda+SC:ital,opsz,wght@0,6..96,400;1,6..96,400&family=Noto+Serif+TC:wght@400;600&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 :root{--ws-olive-layer-zh-weight:600;--ws-olive-speaker-name-weight:200;--ws-olive-folio-weight:400;
  --ws-type-display-en-sc:"Bodoni Moda SC", "Bodoni Moda", serif;
+ --ws-type-scripture-reference-size:clamp(13px,.9vw + 8px,17px);
+ --ws-type-scripture-reference-tracking:.015em;
+ --ws-type-quote-en-size:clamp(19px,1vw + 13px,27px);
  --ws-realm-zh-size:clamp(36px,4.2vw,68px);
  --ws-realm-en-size:clamp(72px,10vw,160px);
  --ws-subject-zh-size:clamp(25px,2vw,38px);
@@ -49,3 +52,10 @@ body.sites-surface :where(.article-body,.reading-body,.longform,[data-reading="l
 .ws-type-realm-en{font-family:var(--ws-type-display-en);font-size:var(--ws-realm-en-size);font-weight:400;letter-spacing:var(--ws-realm-en-tracking);line-height:.9}
 .ws-type-subject-zh{font-family:var(--ws-type-display-zh);font-size:var(--ws-subject-zh-size);font-weight:var(--ws-olive-speaker-name-weight);line-height:1.12}
 .ws-type-editorial-label{font-family:var(--ws-type-display-en-sc);font-size:var(--ws-editorial-label-size);font-weight:400;letter-spacing:var(--ws-editorial-label-tracking);font-variant-caps:normal;text-transform:none;font-synthesis:none}
+
+/* Editorial italics: actual italic files, not skewed roman glyphs. */
+.ws-type-italic-en,.ws-scripture-reference,.ws-scripture-reference :where(a,span,em,cite){font-family:var(--ws-type-display-en);font-style:italic;font-weight:400;font-synthesis:none}
+.ws-scripture-reference{font-size:var(--ws-type-scripture-reference-size);letter-spacing:var(--ws-type-scripture-reference-tracking);font-variant-numeric:lining-nums tabular-nums;white-space:normal}
+.ws-scripture-reference :where(sup){font:inherit;vertical-align:super;font-size:.75em}
+.ws-type-quote-en{font-family:var(--ws-type-display-en);font-size:var(--ws-type-quote-en-size);font-style:italic;font-weight:400;line-height:1.42;font-synthesis:none}
+.ws-type-editorial-label-italic{font-family:var(--ws-type-display-en-sc);font-style:italic;font-weight:400;font-synthesis:none}
