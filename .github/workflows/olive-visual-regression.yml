@@ -1,0 +1,26 @@
+name: Olive Visual Regression
+on:
+  pull_request:
+    paths:
+      - 'olive/**'
+      - '.github/workflows/olive-visual-regression.yml'
+  workflow_dispatch:
+jobs:
+  screenshots:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save --package-lock=false playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Serve site
+        run: python3 -m http.server 8765 --directory . > /tmp/olive-server.log 2>&1 &
+      - name: Check responsive layout and capture screenshots
+        run: node scripts/check_olive_visual_regression.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: olive-responsive-screenshots
+          path: /tmp/olive-visual/*.png
