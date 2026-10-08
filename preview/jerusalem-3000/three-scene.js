@@ -718,10 +718,18 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
           const projection = cityProjection?.diagnostics();
           const visibleCore = cityCoreLayer.visible && projection?.visibleBuildings > 0;
           const visibleFabric = eraFabricLayer.visible && fabricMeshes.some((mesh) => mesh.visible);
-          const hasVisibleCity = Boolean(visibleCore || visibleFabric);
+          const canonicalPhase = isCorePhase(phaseId);
+          const canonicalValid = !canonicalPhase || Boolean(
+            cityCoreRuntime?.parcels?.blockCount > 0 &&
+            cityCoreRuntime?.parcels?.count > 0 &&
+            cityCoreRuntime?.architecture?.buildings > 0 &&
+            visibleCore
+          );
+          const hasVisibleCity = Boolean((visibleCore || visibleFabric) && canonicalValid);
           records.push({
             phaseId,
             hasVisibleCity,
+            canonicalValid,
             visibleCoreBuildings: projection?.visibleBuildings || 0,
             visibleFabricMeshes: eraFabricLayer.visible
               ? fabricMeshes.filter((mesh) => mesh.visible).length : 0,
@@ -740,6 +748,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         checked: records.length,
         records,
         emptyPhases: records.filter((record) => !record.hasVisibleCity).map((record) => record.phaseId),
+        canonicalFailures: records.filter((record) => !record.canonicalValid).map((record) => record.phaseId),
       };
     },
     dispose() {
