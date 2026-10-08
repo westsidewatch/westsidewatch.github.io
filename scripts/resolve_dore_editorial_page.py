@@ -8,13 +8,15 @@ import argparse,json,re
 from pathlib import Path
 
 ROUTES={
- '/journal/':('essay-concept','feature-lead',None),
- '/archive/':('archive-thumbnail','thumbnail',None),
- '/magazine/':('essay-concept','feature-lead',None),
- '/cinema/':('cinema-program','hero',None),
+ '/journal/':('essay-concept','feature-lead','magazine'),
+ '/archive/':('archive-thumbnail','thumbnail','magazine'),
+ '/magazine/':('essay-concept','feature-lead','magazine'),
+ '/cinema/':('cinema-program','hero','cinema'),
  '/olive-mountain/':('section-hero','hero','olive-mountain'),
- '/church/':('section-hero','hero',None),
+ '/church/':('section-hero','hero','church'),
  '/olive/':('section-hero','hero','olive-mountain'),
+ '/dawn-library/':('book-publication','hero','dawn-library'),
+ '/one/':('section-hero','hero','bible'),
 }
 LAYOUT_SLOTS={'hero':'hero','cover':'cover','feature':'feature-lead','feature-lead':'feature-lead',
               'inline':'inline','profile':'profile-card','profile-card':'profile-card',
