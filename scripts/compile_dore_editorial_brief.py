@@ -3,6 +3,7 @@
 import argparse,json
 from pathlib import Path
 from dore_editorial_portrait_recipes import PORTRAIT_RECIPES, portrait_direction
+from dore_editorial_scenarios import SCENARIOS,SLOTS,scene_direction
 
 RECIPES={
  'overscale-collision':{
@@ -39,17 +40,21 @@ PALETTES={'olive-mountain':{'paper':'#FFFFFF','image_ink':'#174B35','secondary_i
 def compile_brief(args):
  recipe=RECIPES[args.recipe]
  portrait_style=getattr(args,'portrait_style','none')
+ scenario=getattr(args,'scenario','essay-concept')
+ slot=getattr(args,'slot','cover')
+ scene=scene_direction(scenario,slot)
  portrait_note=portrait_direction(args.subject,portrait_style,args.verified_reference) if portrait_style!='none' else ''
  palette=PALETTES[args.palette]
  spec={'version':1,'subject':args.subject,'recipe':args.recipe,'composition':recipe,
        'palette':palette,'material':args.material,'verified_reference':args.verified_reference,
-       'portrait_style':portrait_style,'portrait_reference_required':portrait_style!='none','output':'text-free illustration only','publication_approved':False}
+       'scenario':scenario,'slot':slot,'slot_spec':SLOTS[slot],'scenario_spec':SCENARIOS[scenario], 'portrait_style':portrait_style,'portrait_reference_required':portrait_style!='none','output':'text-free illustration only','publication_approved':False}
  identity=('A verified and authorized visual reference will be supplied in the SAME image-generation request; preserve its identity without inventing features.' if args.verified_reference else 'No verified visual reference is supplied. Do not claim an invented face represents a named person; use a symbolic or non-portrait subject.')
  material={'halftone':'Use physically credible variable-size offset halftone dots, dense in shadow, sparse in light, with white paper knockouts and crisp solid-ink shapes.',
  'engraving':'Use precise directional contour hatching and crosshatching following material form; white paper provides highlights. No blurred pseudo-engraving.',
  'cutout':'Use sharply cut silhouettes with limited ink roles and precise edge rhythm; no decorative gradients.'}[args.material]
- prompt=f"""Generate ONE sophisticated text-free editorial illustration, portrait 3:4.
+ prompt=f"""Generate ONE sophisticated text-free editorial illustration. Target aspect ratio: {SLOTS[slot]['ratio']}.
 SUBJECT: {args.subject}
+{scene}
 IDENTITY: {identity}
 VISUAL PROPOSITION: {recipe['idea']}.
 PORTRAIT-SPECIFIC DIRECTION: {portrait_note}
@@ -64,6 +69,7 @@ Do not shrink the subject to fit. Negative space is an intentional visual shape,
 MATERIAL: {material}
 INK ROLES: White paper {palette['paper']} is active negative space and highlights. Primary image ink {palette['image_ink']} controls the darkest contours and masses. Secondary {palette['secondary_ink']} is optional and restricted to sparse midtones. Do not use any other hue, aged-paper tint, or universal color filter.
 TYPE CONTRACT: Image contains absolutely NO text, glyphs, logos, numerals, labels or decorative rules. CSS will later draw the editorial headline in the specified text box, on top of the image at the crossing zone. Preserve the visual subject's identity-bearing features outside that crossing zone.
+SCENARIO-SPECIFIC SAFETY: A named real person's recognizable portrait requires a verified and authorized reference image supplied with the generation request. Never fabricate their face; if absent, generate only a non-identifying visual proof. Respect the subject-specific cautions above.
 MOBILE: Keep focal features recognizable in a narrow crop approximated by {recipe['mobile_subject_box']}; the CSS layout may reposition text.
 REJECT: centered stock illustration, generic poster, photo with a white footer bar, invented speaker face, ornamental filler, muddy gradients, poor edge detail, illegible embedded text, unrelated color, and symmetrical framing.
 DELIVERABLE: one complete high-resolution illustration asset, no typography, for separate responsive CSS composition. Do not publish automatically.
@@ -71,6 +77,8 @@ DELIVERABLE: one complete high-resolution illustration asset, no typography, for
  css=f"""# Live CSS composition contract
 - Canvas: portrait 3:4, normalized percentage coordinates.
 - Recipe: {args.recipe}; idea: {recipe['idea']}
+- Scenario: {scenario}; output slot: {slot}, aspect ratio: {SLOTS[slot]['ratio']}.
+- Slot layout policy: {SLOTS[slot]['css']}
 - Headline box: {recipe['type_box']} [left, top, right, bottom].
 - Crossing box: {recipe['crossing_box']}; type above image in this region.
 - Negative-space region: {recipe['negative_space']}.
@@ -88,6 +96,8 @@ def main():
  p.add_argument('--palette',choices=PALETTES,default='olive-mountain')
  p.add_argument('--verified-reference',action='store_true')
  p.add_argument('--portrait-style',choices=['none']+list(PORTRAIT_RECIPES),default='none')
+ p.add_argument('--scenario',choices=SCENARIOS,default='essay-concept')
+ p.add_argument('--slot',choices=SLOTS,default='cover')
  p.add_argument('--out',default='local/dore-editorial-brief')
  args=p.parse_args()
  spec,prompt,css=compile_brief(args)
