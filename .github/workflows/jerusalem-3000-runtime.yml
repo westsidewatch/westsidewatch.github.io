@@ -22,8 +22,10 @@ jobs:
           node scripts/verify_jerusalem_3000_city_lifecycle.mjs
       - name: Install browser
         run: |
-          npm install --no-save playwright@1.55.0
+          npm install --no-save playwright@1.55.0 three@0.180.0
           npx playwright install --with-deps chromium
+      - name: Verify bounded shared generation
+        run: node scripts/verify_jerusalem_3000_shared_era.mjs
       - name: Render the proposed city and scrub through destruction
         run: |
           python3 -m http.server 8765 > /tmp/j3k-server.log 2>&1 &

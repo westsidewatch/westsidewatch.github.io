@@ -1,3 +1,4 @@
+import { createSharedEraRuntime, isSharedSlicePhase } from './shared-era-runtime.js';
 import * as THREE from 'three';
 import { buildHerodianRoadGeometry } from './herodian-road-geometry.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -28,9 +29,8 @@ import {
 } from './phase2-era-morphology.js';
 import { loadTemporalCityCore } from './temporal-city-core-adapter.js';
 import { registerHerodianUrbanCore } from './herodian-urban-core-adapter.js';
-import { buildHerodianParcelCore, buildEraParcelCore } from './herodian-parcel-core.js';
-import { deriveEraRegistration } from './era-registration-adapter.js';
-import { buildHerodianParcelArchitecture, buildEraParcelArchitecture } from './herodian-typology-grammar.js';
+import { buildHerodianParcelCore } from './herodian-parcel-core.js';
+import { buildHerodianParcelArchitecture } from './herodian-typology-grammar.js';
 import {
   createCityProjection,
   isCorePhase,
@@ -289,7 +289,12 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     cityProjection = null,
     evidenceProjection = null;
   const temporalMeshes = new Map();
-  const eraCities = new Map();
+  let sharedEraRuntime = null;
+  const generationStatus = document.createElement('p');
+  generationStatus.className = 'j3k-generation-status';
+  generationStatus.setAttribute('role', 'status');
+  generationStatus.hidden = true;
+  mount.parentElement.appendChild(generationStatus);
   let eraRegistrationReference = null;
   function herodianPhaseActive() {
     return (
@@ -306,36 +311,11 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       PROPAGATED_ERAS.has(currentPhaseId)
     );
   }
-  function ensureEraCity(phaseId) {
-    // Safety rollback: synchronous inferred parcel generation freezes the main thread
-    // during initial update(0), even after the startup audit was made non-mutating.
-    // Keep canonical Herodian geometry; use established phase morphology elsewhere.
-    return null;
-    if (isCorePhase(phaseId) || !ERA_FOOTPRINTS[phaseId] || !eraRegistrationReference || !cityCoreRuntime) return null;
-    if (eraCities.has(phaseId)) return eraCities.get(phaseId);
-    const registration = deriveEraRegistration(eraRegistrationReference, phaseId, ERA_FOOTPRINTS[phaseId]);
-    const group = new THREE.Group();
-    group.name = `j3k-shared-era-${phaseId}`;
-    sharedEraLayer.add(group);
-    const parcels = buildEraParcelCore(cityCoreRuntime.core, terrainRuntime, {
-      phaseId, registration, districtId: registration.districts[0].id,
-      dataset: 'provisional-era-registration',
-    });
-    const architecture = buildEraParcelArchitecture(group, cityCoreRuntime.core, temporalMaterials, terrainRuntime, {
-      phaseId, grammarId: 'shared-era-parcel-typology-v1',
-    });
-    const roads = buildHerodianRoadGeometry(group, registration.roads, temporalMaterials, terrainRuntime);
-    const result = { group, parcels, architecture, roads, phaseId };
-    eraCities.set(phaseId, result);
-    return result;
-  }
   function updateCityCoreVisibility() {
-    for (const [phaseId, city] of eraCities) {
-      city.group.visible = phaseId === currentPhaseId && currentEvidenceMode !== 'disputed';
-      if (city.group.visible) {
-        const ruined = currentPhaseId.includes('destruction');
-        for (const mesh of city.architecture.meshes) mesh.visible = !ruined || currentRuin < 1;
-      }
+    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed });
+    if (sharedActive) {
+      clearFabric(); eraFabricLayer.visible = false;
+      for (const mesh of temporalMeshes.values()) mesh.visible = false;
     }
     if (cityProjection)
       cityProjection.apply({
@@ -412,10 +392,10 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   }
   function rebuildUrbanFabric(phaseId) {
     clearFabric();
-    /* Every phase uses the same parcel-and-architecture pipeline. */
+    // Request only this bounded slice; other eras retain their established morphology.
+    sharedEraRuntime?.request(phaseId);
     if (isCorePhase(phaseId)) return;
-    const sharedCity = ensureEraCity(phaseId);
-    if (sharedCity?.architecture.buildings > 0) {
+    if (sharedEraRuntime?.status === 'ready' && isSharedSlicePhase(phaseId)) {
       eraFabricLayer.visible = false;
       return;
     }
@@ -477,7 +457,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     objects.forEach((object, index) => {
       if (
         !(object.visible || object.ruined) ||
-        !legacyTemporalAllowed(object, phaseId)
+        !legacyTemporalAllowed(object, phaseId) ||
+        (isSharedSlicePhase(phaseId) && sharedEraRuntime?.status === 'ready')
       )
         return;
       activeIds.add(object.id);
@@ -623,6 +604,15 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       );
       cityProjection = createCityProjection(cityCoreLayer, architecture.meshes);
       cityCoreRuntime.projection = cityProjection;
+      sharedEraRuntime = createSharedEraRuntime(sharedEraLayer, {
+        reference: eraRegistrationReference, footprint: ERA_FOOTPRINTS['late-first-temple'],
+        terrain: terrainRuntime, materials: temporalMaterials,
+        onChange: () => { applyTemporalState(); needsFrame = true; },
+        onProgress: ({ completed, total }) => {
+          if (isSharedSlicePhase(currentPhaseId) && completed % 4 === 0)
+            generationStatus.textContent = `城市生成中 · ${completed}/${total}`;
+        },
+      });
     } catch (error) {
       throw new Error(`Canonical city construction failed: ${error.message}`, {
         cause: error,
@@ -691,6 +681,12 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       try {
         renderer.render(scene, camera);
         frameCount++;
+        const sharedState = sharedEraRuntime?.diagnostics();
+        const activeSharedSlice = isSharedSlicePhase(currentPhaseId);
+        generationStatus.hidden = !activeSharedSlice || !['generating', 'error'].includes(sharedState?.status);
+        generationStatus.textContent = sharedState?.status === 'error'
+          ? '城市生成失敗，暫時顯示示意圖。請重新切換時代再試。'
+          : `城市生成中 · ${sharedState?.completed || 0}/${sharedState?.total || 0}`;
         const state = window.__JERUSALEM3000__;
         if (state)
           state.renderDiagnostics = {
@@ -700,6 +696,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             webgl: !renderer.getContext().isContextLost(),
             sceneChildren: scene.children.length,
             cityProjection: cityProjection?.diagnostics(),
+            sharedEra: sharedState,
             urbanFabric: {
               phase: currentPhaseId,
               coreVisible: cityCoreLayer.visible,
@@ -783,6 +780,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       ro.disconnect();
       controls.dispose();
       builder.dispose();
+      sharedEraRuntime?.dispose();
+      generationStatus.remove();
       terrainRuntime?.dispose?.();
       for (const mesh of cityCoreRuntime?.architecture?.meshes || [])
         mesh.geometry?.dispose?.();

@@ -5,7 +5,10 @@ export function isCorePhase(phaseId) {
   return CORE_PHASES.has(phaseId);
 }
 
-export function createCityProjection(group, meshes) {
+export function createCityProjection(group, meshes, {
+  phaseIds = [...CORE_PHASES], standingPhase = 'herodian-jesus',
+} = {}) {
+  const activePhases = new Set(phaseIds);
   const snapshots = meshes.map((mesh) => ({
     mesh,
     id:
@@ -21,9 +24,9 @@ export function createCityProjection(group, meshes) {
   let state = { phaseId: '', ruin: 0, visibleBuildings: 0 };
   return {
     apply({ phaseId, ruin = 0, evidenceAllowed = () => true }) {
-      const active = isCorePhase(phaseId);
+      const active = activePhases.has(phaseId);
       const amount =
-        phaseId === 'herodian-jesus' ? 0 : Math.max(0, Math.min(1, ruin));
+        phaseId === standingPhase ? 0 : Math.max(0, Math.min(1, ruin));
       const scale = 1 - 0.82 * amount;
       group.visible = active;
       const visible = new Set();

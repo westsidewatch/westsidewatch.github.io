@@ -1,3 +1,4 @@
+import { isSharedSlicePhase } from './shared-era-runtime.js';
 import { isCorePhase } from './city-lifecycle-projection.js';
 import { mountJerusalemThreeScene } from './three-scene.js';
 import { HistoricalTimeEngine } from './historical-time-engine.js';
@@ -79,7 +80,7 @@ try {
     const state = time.sample(v),
       p = state.phase,
       herodian = time.herodianVisibility(v),
-      transformation = ruin.sample(v),
+      transformation = ruin.sample(v, p.id === 'babylonian-destruction' ? p.id : 'roman-destruction'),
       cityObjects = temporalCity.sample(state.position),
       citySummary = temporalCity.summary(state.position),
       localProgress = Math.max(0, Math.min(1, state.position - state.index));
@@ -90,8 +91,8 @@ try {
     three.setTemporalCityState?.(cityObjects, state.position, p.id);
     if (inheritance) {
       try {
-        inheritance.setVisible(!isCorePhase(p.id));
-        if (!isCorePhase(p.id)) {
+        inheritance.setVisible(!isCorePhase(p.id) && !isSharedSlicePhase(p.id));
+        if (!isCorePhase(p.id) && !isSharedSlicePhase(p.id)) {
           if (inheritedPhase !== p.id) {
             inheritance.setPhase(p.id, localProgress);
             inheritedPhase = p.id;
@@ -127,13 +128,13 @@ try {
     };
     window.__JERUSALEM3000__.inheritanceState = {
       phase: p.id,
-      active: !isCorePhase(p.id) && !!inheritance?.runtime,
+      active: !isCorePhase(p.id) && !isSharedSlicePhase(p.id) && !!inheritance?.runtime,
       progress: localProgress,
     };
     date.textContent = p.dateLabel;
     eraEn.textContent = (p.state || '').toUpperCase() + ' · ' + p.dateLabel;
     eraZh.textContent = p.label;
-    note.textContent = p.note;
+    note.textContent = isSharedSlicePhase(p.id) ? `${p.note} 地塊、道路與住宅為推定示意，尚未完成該時代的考古定位。` : p.note;
     ticks.forEach((x, i) => {
       x.classList.toggle('is-past', i < state.index);
       x.classList.toggle('is-current', i === state.index);
@@ -148,7 +149,7 @@ try {
       cityObjects.filter((object) => object.visible || object.ruined).length,
     );
     stage.dataset.inheritance =
-      !isCorePhase(p.id) && inheritance?.runtime
+      !isCorePhase(p.id) && !isSharedSlicePhase(p.id) && inheritance?.runtime
         ? 'active'
         : window.__JERUSALEM3000__.inheritance
           ? 'ready'
