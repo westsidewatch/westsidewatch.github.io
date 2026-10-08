@@ -569,8 +569,8 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         architecture,
         validation: loaded.core.validate(),
       };
-      if (!architecture.buildings || !cityCoreRuntime.validation.ok)
-        throw new Error('Canonical city has no valid buildings');
+      if (!parcels.blockCount || !parcels.count || !architecture.buildings || !cityCoreRuntime.validation.ok)
+        throw new Error(`Canonical city incomplete: ${parcels.blockCount || 0} blocks, ${parcels.count || 0} parcels, ${architecture.buildings || 0} buildings`);
       architecture.meshes.push(
         ...buildHerodianRoadGeometry(
           cityCoreLayer,
@@ -605,7 +605,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
       ledgerObjects: ledger.objects.length,
       constructionPieces: builder.pieces,
       temporalRuntime: 'canonical-herodian-ruin-slice',
-      objectContinuityPhases: ['herodian-jesus', 'roman-destruction', 'aelia'],
+      objectContinuityPhases: ['herodian-jesus', 'roman-destruction'],
       transformationRuntime: 'reversible-standing-to-ruin',
       renderProfile: coarsePointer ? 'coarse-pointer' : 'desktop',
       terrain: 'canonical-dem',
@@ -658,6 +658,15 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
             webgl: !renderer.getContext().isContextLost(),
             sceneChildren: scene.children.length,
             cityProjection: cityProjection?.diagnostics(),
+            urbanFabric: {
+              phase: currentPhaseId,
+              coreVisible: cityCoreLayer.visible,
+              fabricVisible: eraFabricLayer.visible,
+              phase2Components: fabricMeshes.filter((mesh) => mesh.visible).length,
+              blocks: cityCoreRuntime?.parcels?.blockCount || 0,
+              parcels: cityCoreRuntime?.parcels?.count || 0,
+              buildings: cityCoreRuntime?.architecture?.buildings || 0,
+            },
             visibleLegacyTemporalMeshes: [...temporalMeshes.values()].filter(
               (m) => m.visible,
             ).length,
