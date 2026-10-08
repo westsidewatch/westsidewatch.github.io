@@ -15,7 +15,7 @@ html{scroll-behavior:smooth}
 body{margin:0;color:#252525;font-family:var(--ws-type-reading-zh,"Noto Serif TC",serif);background-image:linear-gradient(rgba(206,189,116,.78),rgba(206,189,116,.78)),url('/api/dore/assets/site-file?code=SITE-BACKGROUND');background-size:cover;background-position:center;background-attachment:fixed}
 .page{min-height:100vh}
 .topbar{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(22px,3vw,64px);border-bottom:1px solid rgba(55,45,20,.14)}
-.brand{text-decoration:none;color:#8c6818;font:400 clamp(1.45rem,1.7vw,2rem) "Bodoni Moda",serif;letter-spacing:.11em}
+.brand{text-decoration:none;color:#8c6818;font:400 clamp(1.45rem,1.7vw,2rem) var(--ws-type-display-en);letter-spacing:.11em}
 .topnav{display:flex;gap:clamp(14px,1.3vw,28px)}
 .topnav a{text-decoration:none;color:#252525;font-size:clamp(.66rem,.72vw,.86rem);opacity:.72}
 .hero{width:min(94vw,1760px);margin:auto;padding:clamp(24px,2.2vw,46px) 0 clamp(58px,5vw,92px)}
@@ -33,7 +33,7 @@ body{margin:0;color:#252525;font-family:var(--ws-type-reading-zh,"Noto Serif TC"
 .search-form{display:flex;min-height:clamp(76px,5.2vw,94px);background:rgba(255,253,246,.96);border:1px solid rgba(116,85,20,.42);border-radius:14px;overflow:hidden;box-shadow:0 12px 30px rgba(74,50,8,.2);backdrop-filter:blur(8px)}
 .search-icon{width:clamp(62px,5vw,92px);display:grid;place-items:center;color:#967018;font:2rem "Bodoni Moda",serif}
 .search-form input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#252525;font:400 clamp(1rem,1.25vw,1.42rem) "Bodoni Moda",var(--ws-type-reading-zh,"Noto Serif TC",serif)}
-.search-form button{border:0;border-left:1px solid rgba(120,90,28,.16);padding:0 clamp(24px,2.3vw,48px);background:transparent;color:#9b7015;font:400 clamp(.86rem,.92vw,1rem) var(--ws-type-display-zh,"PingFang TC",sans-serif);cursor:pointer}
+.search-form button{border:0;border-left:1px solid rgba(120,90,28,.16);padding:0 clamp(24px,2.3vw,48px);background:transparent;color:#9b7015;font:400 clamp(.86rem,.92vw,1rem) var(--ws-type-display-zh);cursor:pointer}
 .search-form button:disabled,.search-form input:disabled{opacity:.5}
 .ai-state{display:none;width:min(78vw,1320px);margin:.7rem auto 0;color:#765619;font-size:.82rem}
 .ai-state.on{display:block}
