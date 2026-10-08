@@ -28,8 +28,30 @@ COLOR_APPLICATION=(
  'Keep some regions almost untouched white while concentrating the darkest olive in one deliberate focal mass. '
  'No continuous beige paper tint, no gold highlights, no black strokes, no monochrome photographic green tint.'
 )
+\nEDITORIAL_DIRECTOR={
+ 'asymmetric-editorial':(
+  'EXTREME OFF-CANVAS CROP / 01',
+  'Make the subject occupy 130–160% of the frame width, so the image edge physically cuts through the subject. Only one striking fragment is visible; do not show a complete conventional bust or whole object. Put the principal mass in the lower-left 55%, leaving a huge uninterrupted upper-right white field. No background city, tree canopy or decorative framing unless essential to the main subject.',
+  'The asymmetry should feel intentionally unfinished, with visual tension between overscale detail and white space.'
+ ),
+ 'negative-space':(
+  'EDITORIAL SILENCE / 02',
+  'Allocate 55–65% of the image to almost untouched white. Compress a sharply detailed subject into a narrow vertical strip along the right edge, cropped off-canvas. A few detached contour lines may bridge the empty field, but do not fill it with scenic detail.',
+  'One image element must carry the entire narrative; absence is a positive compositional shape.'
+ ),
+ 'vertical-monument':(
+  'MONUMENTAL FRAGMENT / 03',
+  'Use an extreme low-angle crop of one sculptural element; the form enters from below and disappears above the frame. Its shadow occupies a single deep olive wedge. Keep the left third white. Do not add a conventional horizon or symmetrical background.',
+  'The design is a collision between one oversized vertical mass and precise open paper.'
+ ),
+ 'architectural-frame':(
+  'INTERRUPTED FRAME / 04',
+  'A giant partial stone arch enters from the upper left and is severed by the canvas. Show only 40–55% of its outline; through it reveal a small, distant scene positioned unusually low and right. Preserve a large clean field between the two scales.',
+  'Architecture acts as editorial cropping machinery, not as decorative scenery.'
+ )
+}
 \ndef brief(spec,has_reference):
- subject,composition=SCENES[spec['motif']]\n crop_name,crop_direction=CROP_SYSTEM[spec['family']]
+ subject,composition=SCENES[spec['motif']]\n crop_name,crop_direction=CROP_SYSTEM[spec['family']]\n concept,blocking,tension=EDITORIAL_DIRECTOR[spec['family']]
  name=spec['displayName']
  identity=(
  f'A VERIFIED reference photograph of {name} is supplied with this request. Use it as the sole identity source. Preserve the subject\'s facial geometry, age cues, hairline, expression and proportions; transform the verified photograph into finely engraved olive-ink linework. Do not invent or beautify a different face. Position the recognizable face within the upper 65% with breathable negative space.'
@@ -47,9 +69,16 @@ You are executing a finished art-director specification, not inventing a new bra
 
 ## 2. Identity and visual subject
 {identity}
-Editorial scene alternative: {subject}.
+Editorial scene alternative (use only if it supports the mandatory crop concept): {subject}.
 Exact scene direction: {composition}
 Subject matter is Christian sermon editorial content. No unrelated religious iconography or spiritualist motifs. Do not add unsupported biographical facts or sermon titles.
+
+## 2A. Non-negotiable editorial concept / layout blocking
+Concept: {concept}
+Shot and crop instruction: {blocking}
+Intended visual tension: {tension}
+This is NOT a historical illustration commission. Do not use the safe composition of a centered portrait with a picturesque background, an olive branch in the corner, or a scenic skyline. Reject the previous repeated portrait-left/city-right/tree-top arrangement. Produce a visually surprising magazine image asset, not a commemorative church poster. The composition should still work after CSS typography is added.
+Prioritize this spatial blocking over decorative subject matter; remove secondary objects rather than diluting the layout.
 
 ## 3. Art direction and spatial composition
 Canvas 3:4, upright. Use a confident asymmetrical editorial composition, not centered clip art. Establish a clear foreground, secondary midground and restrained background. One strong focal point visible even as a small thumbnail. Preserve a clean title zone with enough actual negative space for type. Allow the illustration to breathe; do not place a rectangular photo in a generic card. At least 48px-equivalent edge safety on a 720px design width.
