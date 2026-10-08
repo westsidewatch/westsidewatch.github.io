@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "pilot": "金門",
+  "goal": "Evidence-bound scene-first narrative nonfiction",
+  "modules": [
+    {
+      "id": "hart-scene",
+      "reference": "Jack Hart, Storycraft",
+      "skill": "scene construction",
+      "exercise": "Rewrite June 13 failed assault as a scene grounded in documented ladder shortage",
+      "rubric": [
+        "time_place",
+        "actor_goal",
+        "physical_obstacle",
+        "observable_action",
+        "consequence",
+        "source_trace"
+      ]
+    },
+    {
+      "id": "franklin-arc",
+      "reference": "Jon Franklin, Writing for Story",
+      "skill": "complication and resolution",
+      "exercise": "Build the three-year expedition / 38-day siege as nested dramatic arcs",
+      "rubric": [
+        "central_question",
+        "escalation",
+        "reversal",
+        "climax",
+        "aftermath"
+      ]
+    },
+    {
+      "id": "nieman-evidence",
+      "reference": "Nieman narrative journalism and Telling True Stories",
+      "skill": "reported scene ethics",
+      "exercise": "Mark every asserted detail as documented, contextual inference or unsupported",
+      "rubric": [
+        "source_trace",
+        "uncertainty_handling",
+        "no_invented_dialogue",
+        "no_invented_thoughts"
+      ]
+    },
+    {
+      "id": "clark-revision",
+      "reference": "Roy Peter Clark, Writing Tools",
+      "skill": "sentence-level editing",
+      "exercise": "Cut static exposition without removing historical causality",
+      "rubric": [
+        "active_verbs",
+        "rhythm",
+        "specific_nouns",
+        "no_redundant_explanation"
+      ]
+    }
+  ],
+  "assessment": {
+    "scale": "0-4 per criterion; manual human review required",
+    "pass": "No unsupported fabrication; all four modules reviewed; 1099 siege chronology and civilian aftermath retained",
+    "workflow": "baseline -> scene ledger -> draft -> critique -> revise -> evidence check -> approval"
+  },
+  "copyright": "Only original instructions and short bibliographic references; no book text reproduction."
+}
