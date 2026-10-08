@@ -13,6 +13,8 @@ export function auditProductionReadiness(runtime={}){
   if(registrationAudit&&registrationAudit.rendered!==runtime.evidenceObjects?.renderableObjects)failures.push('spatial-registration-count');
   if(grammarAudit&&registrationAudit&&grammarAudit.eligible!==registrationAudit.rendered)failures.push('architectural-grammar-count');
   if(pieceAudit?.ok===false)failures.push('architectural-piece-density');
+  const city=runtime.evidenceObjects?.cityCoreAB;
+  if(!city?.ok||!city.validation?.ok||!(city.buildings>0)||city.semanticBoxes!==0)failures.push('canonical-city-core');
   return{
     ok:failures.length===0,
     failures,

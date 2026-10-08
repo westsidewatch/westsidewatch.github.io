@@ -8,6 +8,8 @@ export function auditProductionCompletion(runtime={},timeline={}){
   const failures=[...readiness.failures];
   const phases=Array.isArray(timeline.phases)?timeline.phases:[];
   if(phases.length!==REQUIRED_PHASE_COUNT)failures.push(`timeline-phases:${phases.length}/${REQUIRED_PHASE_COUNT}`);
+  const covered=new Set(runtime.evidenceObjects?.objectContinuityPhases||[]);
+  if(phases.some(phase=>!covered.has(phase.id)))failures.push('full-timeline-object-continuity-unverified');
   const ids=new Set(phases.map(phase=>phase.id));
   if(ids.size!==phases.length)failures.push('timeline-phase-ids-not-unique');
   const audit=runtime.evidenceObjects?.evidenceResolutionAudit;
