@@ -21,7 +21,13 @@ function inOrOn(p,poly){return inside(p,poly)||poly.some((a,i)=>onSegment(p,a,po
 function polyInside(poly,boundary){if(!poly.every(p=>inOrOn(p,boundary)))return false;for(let i=0;i<poly.length;i++)for(let j=0;j<boundary.length;j++)if(strictCross(poly[i],poly[(i+1)%poly.length],boundary[j],boundary[(j+1)%boundary.length]))return false;return true}
 function orient(a,b,c){return(b.x-a.x)*(c.z-a.z)-(b.z-a.z)*(c.x-a.x)}
 function strictCross(a,b,c,d){const ab1=orient(a,b,c),ab2=orient(a,b,d),cd1=orient(c,d,a),cd2=orient(c,d,b);return ab1*ab2 < -EPS && cd1*cd2 < -EPS}
-function polygonsOverlap(a,b){if(a.some(p=>inside(p,b))||b.some(p=>inside(p,a)))return true;for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)if(strictCross(a[i],a[(i+1)%a.length],b[j],b[(j+1)%b.length]))return true;return false}
+function polygonsOverlap(a,b){
+  // Detect crossings and proper containment, including coincident centroids.
+  for(let i=0;i<a.length;i++)for(let j=0;j<b.length;j++)if(strictCross(a[i],a[(i+1)%a.length],b[j],b[(j+1)%b.length]))return true;
+  if(a.some(p=>inside(p,b))||b.some(p=>inside(p,a)))return true;
+  const ca=centroid(a),cb=centroid(b);
+  return inside(ca,b)||inside(cb,a);
+}
 function parcelOverlap(poly,parcels){return parcels.some(p=>polygonsOverlap(poly,p.geometry.polygon))}
 function edgeClearance(a,b,other){const v={x:b.x-a.x,z:b.z-a.z},length=Math.hypot(v.x,v.z);if(length<EPS)return 0;const dx=v.x/length,dz=v.z/length;const project=p=>(p.x-a.x)*dx+(p.z-a.z)*dz;const lo=Math.max(0,Math.min(...other.map(project))),hi=Math.min(length,Math.max(...other.map(project)));return Math.max(0,hi-lo)}
 function sharedStreetFrontage(poly,parcels){const edgeA=poly[0],edgeB=poly[1];return parcels.filter(p=>p.metadata?.frontage&&p.geometry?.polygon?.length===4).map(p=>{const q=p.geometry.polygon;return {parcelId:p.id,sharedLength:edgeClearance(edgeA,edgeB,q.slice(0,2)),collinear:Math.abs(orient(edgeA,edgeB,q[0]))<.05&&Math.abs(orient(edgeA,edgeB,q[1]))<.05}}).filter(x=>x.collinear&&x.sharedLength>EPS)}
