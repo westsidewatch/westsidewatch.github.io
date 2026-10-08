@@ -29,7 +29,17 @@ function polygonize(boundary,roads){const split=splitAtIntersections([...roadSeg
 function rectAt(center,tx,tz,w,d){const nx=-tz,nz=tx,hw=w/2,hd=d/2;return[[-hw,-hd],[hw,-hd],[hw,hd],[-hw,hd]].map(([u,v])=>({x:center.x+tx*u+nx*v,z:center.z+tz*u+nz*v}))}
 function onSegment(p,a,b){return Math.abs(orient(a,b,p))<EPS&&p.x>=Math.min(a.x,b.x)-EPS&&p.x<=Math.max(a.x,b.x)+EPS&&p.z>=Math.min(a.z,b.z)-EPS&&p.z<=Math.max(a.z,b.z)+EPS}
 function inOrOn(p,poly){return inside(p,poly)||poly.some((a,i)=>onSegment(p,a,poly[(i+1)%poly.length]))}
-function polyInside(poly,boundary){if(!poly.every(p=>inOrOn(p,boundary)))return false;for(let i=0;i<poly.length;i++)for(let j=0;j<boundary.length;j++)if(strictCross(poly[i],poly[(i+1)%poly.length],boundary[j],boundary[(j+1)%boundary.length]))return false;return true}
+function polyInside(poly,boundary){
+ if(!poly.every(p=>inOrOn(p,boundary)))return false;
+ for(let i=0;i<poly.length;i++)for(let j=0;j<boundary.length;j++)if(strictCross(poly[i],poly[(i+1)%poly.length],boundary[j],boundary[(j+1)%boundary.length]))return false;
+ // A concave block may contain all four parcel corners while the connecting
+ // parcel edges still cross a re-entrant notch.
+ for(let i=0;i<poly.length;i++){
+  const a=poly[i],b=poly[(i+1)%poly.length];
+  if(!inOrOn(lerp(a,b,.25),boundary)||!inOrOn(lerp(a,b,.5),boundary)||!inOrOn(lerp(a,b,.75),boundary))return false;
+ }
+ return true;
+}
 function orient(a,b,c){return(b.x-a.x)*(c.z-a.z)-(b.z-a.z)*(c.x-a.x)}
 function strictCross(a,b,c,d){const ab1=orient(a,b,c),ab2=orient(a,b,d),cd1=orient(c,d,a),cd2=orient(c,d,b);return ab1*ab2 < -EPS && cd1*cd2 < -EPS}
 function polygonEdges(poly){return poly.map((a,i)=>[a,poly[(i+1)%poly.length]])}
