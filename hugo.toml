@@ -48,6 +48,10 @@ disableKinds = ["taxonomy", "term"]
   [[module.mounts]]
     source = "preview"
     target = "static/preview"
+  # Publish the Fond writing reader and its local assets at /fond/.
+  [[module.mounts]]
+    source = "fond"
+    target = "static/fond"
   [[module.mounts]]
     source = "background.jpg"
     target = "static/api/dore/assets/site-file?code=SITE-BACKGROUND"
