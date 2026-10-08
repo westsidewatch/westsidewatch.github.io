@@ -61,3 +61,11 @@ test('T junction road endpoint is noded against crossing street',()=>{
  assert.ok(result.graphNodes>=7,'T junction must create a graph node');
  assert.ok(result.graphEdges>=9,'T junction must split the vertical road');
 });
+
+test('concave street-block notch rejects parcel bridging missing land',()=>{
+ const boundary=[{x:0,z:0},{x:100,z:0},{x:100,z:30},{x:30,z:30},{x:30,z:100},{x:0,z:100}];
+ const crossing=parcel('notch-bridge',[{x:10,z:10},{x:90,z:10},{x:10,z:90}]);
+ const result=validateParcelGeometry([crossing],boundary);
+ assert.equal(result.valid,false);
+ assert.ok(result.errors.some(e=>e.kind==='outside-block'));
+});
