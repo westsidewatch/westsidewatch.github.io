@@ -16,4 +16,12 @@ class EditorialBriefTests(unittest.TestCase):
  def test_reference_guard(self):
   spec,prompt,_=compile_brief(Namespace(subject='named speaker',recipe='quiet-field',material='engraving',palette='olive-mountain',verified_reference=False))
   self.assertIn('Do not claim an invented face',prompt)
+ def test_portrait_reference_gate_and_direction(self):
+  a=Namespace(subject='speaker',recipe='overscale-collision',material='engraving',palette='olive-mountain',verified_reference=False,portrait_style='face-fragment')
+  spec,prompt,_=compile_brief(a)
+  self.assertTrue(spec['portrait_reference_required'])
+  self.assertIn('Hold the identity-bearing render',prompt)
+  a.verified_reference=True
+  _,prompt,_=compile_brief(a)
+  self.assertIn('Preserve identity-critical features',prompt)
 if __name__=='__main__':unittest.main()
