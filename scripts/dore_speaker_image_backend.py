@@ -2,6 +2,7 @@
 """Fixed localhost model adapter. Never accepts a remote URL or SVG fallback."""
 import argparse
 import json
+import sys
 from pathlib import Path
 from urllib.parse import urlparse
 from urllib.request import Request, urlopen
@@ -14,7 +15,13 @@ def generate(prompt_file, output_file):
         health = json.load(response)
     if health.get('model_backed') is not True:
         raise RuntimeError('Local image model is not ready; SVG fallback refused')
-    prompt = Path(prompt_file).read_text(encoding='utf-8')
+    prompt_path = Path(prompt_file)
+    quality_path = prompt_path.with_name('editorial-quality.json')
+    if quality_path.exists():
+        quality = json.loads(quality_path.read_text(encoding='utf-8'))
+        if quality.get('requiresReferenceConditioning'):
+            raise RuntimeError('REFERENCE_CONDITIONING_UNSUPPORTED: the resident /generate adapter only sends text. Refusing to fake an identity-grounded portrait. Install and verify a reference-image capable local adapter before rendering.')
+    prompt = prompt_path.read_text(encoding='utf-8')
     request = Request(BASE + '/generate', data=json.dumps({'message': 'Generate image: ' + prompt}).encode(),
                       headers={'Content-Type': 'application/json', 'X-Dore-Origin': 'dore-search'})
     with urlopen(request, timeout=1500) as response:
