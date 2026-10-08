@@ -1,0 +1,90 @@
+{
+  "version": 1,
+  "status": "palette-authority-mapped-partial",
+  "authority": {
+    "routes": "content/*/_index.md on main, checked 2026-10-08",
+    "type": "assets/css/typography-system.css on main",
+    "palette": "static/css/westside-color-authority.css on main, section --ws-branch anchors; Olive Mountain approved image palette override"
+  },
+  "surfaces": [
+    {
+      "route": "/journal/",
+      "source": "content/journal/_index.md",
+      "section": "Magazine",
+      "scenario": "essay-concept",
+      "slot": "feature-lead",
+      "palette": "magazine",
+      "state": "ready-for-brief"
+    },
+    {
+      "route": "/magazine/",
+      "source": "content/journal/_index.md aliases",
+      "section": "Magazine alias",
+      "scenario": "essay-concept",
+      "slot": "feature-lead",
+      "palette": "magazine",
+      "state": "ready-for-brief"
+    },
+    {
+      "route": "/cinema/",
+      "source": "content/cinema/_index.md",
+      "section": "ParadiseCinema",
+      "scenario": "cinema-program",
+      "slot": "hero",
+      "palette": "cinema",
+      "state": "ready-for-brief"
+    },
+    {
+      "route": "/olive/",
+      "source": "content/olive/_index.md",
+      "section": "OliveMountain",
+      "scenario": "section-hero",
+      "slot": "hero",
+      "palette": "olive-mountain",
+      "state": "ready-for-brief"
+    },
+    {
+      "route": "/church/",
+      "source": "content/church/_index.md",
+      "section": "LivingWaterWest",
+      "scenario": "section-hero",
+      "slot": "hero",
+      "palette": "church",
+      "state": "ready-for-brief"
+    },
+    {
+      "route": "/archive/",
+      "source": "route mapping only; content page not independently verified",
+      "section": "Archive",
+      "scenario": "archive-thumbnail",
+      "slot": "thumbnail",
+      "palette": "magazine",
+      "state": "unverified-route"
+    },
+    {
+      "route": "/dawn-library/",
+      "source": "layouts/_default/baseof.html navigation; content index not checked",
+      "section": "DawnLibrary",
+      "scenario": "book-publication",
+      "slot": "hero",
+      "palette": "dawn-library",
+      "state": "route-requires-verification"
+    },
+    {
+      "route": "/one/",
+      "source": "layouts/_default/baseof.html navigation",
+      "section": "Bible",
+      "scenario": "section-hero",
+      "slot": "hero",
+      "palette": "bible",
+      "state": "route-requires-verification"
+    }
+  ],
+  "type_contract": {
+    "english_display": "Bodoni Moda Regular 400",
+    "chinese_display": "Chiron Hei",
+    "chinese_reading": "Noto Serif TC",
+    "rendering": "HTML/CSS only, never rasterize typography into image"
+  },
+  "note": "A route does not establish a single universal slot for every article. Article-level front matter must override scenario and slot. No speculative palette is applied."
+}
