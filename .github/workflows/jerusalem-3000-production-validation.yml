@@ -15,6 +15,8 @@ jobs:
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -26,46 +28,11 @@ jobs:
         env:
           J3K_URL: https://westsidewatch.github.io/preview/jerusalem-3000/
         run: |
-          cat > j3k-production.mjs <<'NODE'
-          import { chromium } from 'playwright';
-          const browser=await chromium.launch({headless:true});
-          const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
-          const errors=[]; const failed=[]; const responses=[];
-          page.on('pageerror',e=>errors.push(`pageerror: ${String(e)}`));
-          page.on('console',m=>{if(m.type()==='error')errors.push(`console: ${m.text()}`)});
-          page.on('requestfailed',r=>failed.push(`${r.method()} ${r.url()} :: ${r.failure()?.errorText||'failed'}`));
-          page.on('response',r=>{if(r.status()>=400||/jerusalem|terrain|three/i.test(r.url()))responses.push(`${r.status()} ${r.url()}`)});
-          await page.goto(process.env.J3K_URL,{waitUntil:'networkidle',timeout:90000});
-          try {
-            await page.waitForFunction(()=>window.__JERUSALEM3000__?.status==='ready',{timeout:30000});
-          } catch (error) {
-            const diagnostic=await page.evaluate(()=>({runtime:window.__JERUSALEM3000__??null,href:location.href,scripts:[...document.scripts].map(s=>s.src||'[inline]'),canvasCount:document.querySelectorAll('[data-three-stage] canvas').length,badge:document.querySelector('.j3k-terrain-badge')?.textContent||null,caption:document.querySelector('.j3k-caption h2')?.textContent||null,stage:document.querySelector('[data-three-stage]')?.getAttribute('data-runtime-stage')||null}));
-            console.error('J3K_BOOT_DIAGNOSTIC='+JSON.stringify({diagnostic,errors,failed,responses},null,2));
-            await page.screenshot({path:'jerusalem-3000-bootstrap-failure.png',fullPage:true});
-            throw error;
-          }
-          const boot=await page.evaluate(()=>window.__JERUSALEM3000__);
-          if(!boot.three||!boot.timeline||!boot.evidence)throw new Error(`runtime flags invalid: ${JSON.stringify(boot)}`);
-          if((boot.evidenceObjects?.renderableObjects||0)<1)throw new Error('no renderable evidence objects');
-          const canvas=page.locator('[data-three-stage] canvas');if(await canvas.count()!==1)throw new Error('Three.js canvas missing');
-          const badge=await page.locator('.j3k-terrain-badge').innerText();if(!badge.includes('JERUSALEM 3000')||!badge.includes('TEMPORAL CITY')||!badge.includes('EVIDENCE OBJECTS')||!badge.includes('PIECES'))throw new Error(`runtime badge invalid: ${badge}`);
-          const slider=page.locator('.j3k-scrubber');await slider.evaluate(el=>{el.value='8';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(900);
-          const herodian=await page.locator('.j3k-caption h2').innerText();if(!herodian.includes('大希律'))throw new Error(`Herodian timeline state failed: ${herodian}`);
-          await page.screenshot({path:'jerusalem-3000-herodian.png',fullPage:true});
-          await slider.evaluate(el=>{el.value='9';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(700);
-          const ruin=await page.locator('.j3k-caption h2').innerText();if(!ruin.includes('羅馬'))throw new Error(`70 CE timeline state failed: ${ruin}`);
-          await slider.evaluate(el=>{el.value='8';el.dispatchEvent(new Event('input',{bubbles:true}))});await page.waitForTimeout(500);
-          const reversible=await page.locator('.j3k-caption h2').innerText();if(!reversible.includes('大希律'))throw new Error('reverse timeline failed');
-          if(errors.length)throw new Error(`browser errors: ${errors.join(' | ')}`);
-          await browser.close();
-          NODE
-          node j3k-production.mjs
+          node scripts/verify_jerusalem_3000_browser.mjs
       - name: Upload production visual evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: jerusalem-3000-production-visual
-          path: |
-            jerusalem-3000-herodian.png
-            jerusalem-3000-bootstrap-failure.png
+          path: work/j3k-validation/
           if-no-files-found: warn

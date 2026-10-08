@@ -1,0 +1,35 @@
+name: Jerusalem 3000 Runtime
+on:
+  pull_request:
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+  push:
+    branches: [main]
+    paths: ['preview/jerusalem-3000/**', 'scripts/verify_jerusalem_3000_*.mjs', '.github/workflows/jerusalem-3000-runtime.yml']
+permissions:
+  contents: read
+jobs:
+  city-runtime:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Parse every city module and verify lifecycle projection
+        run: |
+          set -euo pipefail
+          for file in preview/jerusalem-3000/*.js; do node --check "$file"; done
+          node scripts/verify_jerusalem_3000_city_lifecycle.mjs
+      - name: Install browser
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+      - name: Render the proposed city and scrub through destruction
+        run: |
+          python3 -m http.server 8765 > /tmp/j3k-server.log 2>&1 &
+          node scripts/verify_jerusalem_3000_browser.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: jerusalem-3000-runtime-evidence
+          path: work/j3k-validation/

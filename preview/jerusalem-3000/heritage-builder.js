@@ -14,7 +14,7 @@ import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
  * Jerusalem evidence ledgers remain the geometry authority. This class only supplies construction mechanics.
  */
 export class HeritageBuilder{
-  constructor(materials){this.materials=materials;this.batches=new Map();this.cache=new Map();this.transform=new THREE.Object3D();this.progress={value:0};this.meshes=[];this.depths=[];this.pieces=0;}
+  constructor(materials){this.materials=materials;this.batches=new Map();this.objects=new Map();this.currentObject=null;this.cache=new Map();this.transform=new THREE.Object3D();this.progress={value:0};this.meshes=[];this.depths=[];this.pieces=0;}
   add(geometry,material,start,options={}){
     const {p=[0,0,0],r=[0,0,0],s=[1,1,1],shade=1,tint=[1,1,1],duration=.013,lift=.45}=options;
     this.transform.position.set(...p);this.transform.rotation.set(...r);this.transform.scale.set(...s);this.transform.updateMatrix();
@@ -24,13 +24,13 @@ export class HeritageBuilder{
     g.setAttribute('aBuild',new THREE.BufferAttribute(schedule,3));g.setAttribute('color',new THREE.BufferAttribute(color,3));
     if(!g.getAttribute('uv'))g.setAttribute('uv',new THREE.BufferAttribute(new Float32Array(n*2),2));if(!g.getAttribute('normal'))g.computeVertexNormals();
     for(const name of Object.keys(g.attributes))if(!['position','normal','uv','aBuild','color'].includes(name))g.deleteAttribute(name);
-    if(!this.batches.has(material))this.batches.set(material,[]);this.batches.get(material).push(g);this.pieces++;
+    const key=JSON.stringify([material,this.currentObject?.id||null]);if(!this.batches.has(key))this.batches.set(key,[]);this.batches.get(key).push(g);if(this.currentObject)this.objects.set(this.currentObject.id,this.currentObject);this.pieces++;
   }
   geo(key,fn){if(!this.cache.has(key))this.cache.set(key,fn());return this.cache.get(key);}
   box(size,p,material,start,options={}){const key=`box:${size.join(',')}`;const geometry=this.geo(key,()=>new THREE.BoxGeometry(...size));this.add(geometry,material,start,{...options,p});}
   finish(scene){
     const inject=m=>{m.onBeforeCompile=shader=>{shader.uniforms.uBuildProgress=this.progress;shader.vertexShader='attribute vec3 aBuild; uniform float uBuildProgress; varying float vConstruction;\n'+shader.vertexShader.replace('#include <begin_vertex>',`#include <begin_vertex>\nfloat buildT=clamp((uBuildProgress-aBuild.x)/max(.0001,aBuild.y),0.0,1.0);\nvConstruction=buildT;\nfloat settle=sin(buildT*6.2831853)*pow(1.0-buildT,2.0)*0.035;\ntransformed.y+=aBuild.z*(pow(1.0-buildT,3.0)-settle);`);shader.fragmentShader='varying float vConstruction;\n'+shader.fragmentShader.replace('void main() {','void main() { if(vConstruction<=0.0) discard;');};m.customProgramCacheKey=()=> 'j3k-heritage-solid-assembly-v1';};
-    for(const [name,geometries] of this.batches){const combined=mergeGeometries(geometries,false);if(!combined)throw new Error(`Unable to merge Jerusalem construction batch: ${name}`);combined.computeBoundingSphere();geometries.forEach(g=>g.dispose());const material=this.materials[name];inject(material);const mesh=new THREE.Mesh(combined,material);mesh.name=`heritage-${name}`;mesh.receiveShadow=true;mesh.castShadow=true;const depth=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking});inject(depth);mesh.customDepthMaterial=depth;this.depths.push(depth);this.meshes.push(mesh);scene.add(mesh);}
+    for(const [key,geometries] of this.batches){const [name,objectId]=JSON.parse(key);const combined=mergeGeometries(geometries,false);if(!combined)throw new Error(`Unable to merge Jerusalem construction batch: ${name}`);combined.computeBoundingSphere();geometries.forEach(g=>g.dispose());const material=this.materials[name];inject(material);const mesh=new THREE.Mesh(combined,material);mesh.name=`heritage-${objectId||name}`;if(objectId)mesh.userData.evidenceObject=this.objects.get(objectId);mesh.receiveShadow=true;mesh.castShadow=true;const depth=new THREE.MeshDepthMaterial({depthPacking:THREE.RGBADepthPacking});inject(depth);mesh.customDepthMaterial=depth;this.depths.push(depth);this.meshes.push(mesh);scene.add(mesh);}
     this.cache.forEach(g=>g.dispose());this.cache.clear();this.batches.clear();return this.meshes;
   }
   setProgress(value){this.progress.value=Math.max(0,Math.min(1,value));}
