@@ -290,8 +290,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
   function herodianPhaseActive() {
     return (
       currentPhaseId === 'herodian-jesus' ||
-      currentPhaseId === 'roman-destruction' ||
-      currentPhaseId === 'aelia'
+      currentPhaseId === 'roman-destruction'
     );
   }
   function phase2BuildActive() {
