@@ -24,4 +24,16 @@ class EditorialBriefTests(unittest.TestCase):
   a.verified_reference=True
   _,prompt,_=compile_brief(a)
   self.assertIn('Preserve identity-critical features',prompt)
+ def test_magazine_scenarios_and_slots(self):
+  from dore_editorial_scenarios import SCENARIOS,SLOTS
+  for scenario in SCENARIOS:
+   for slot in SLOTS:
+    with self.subTest(scenario=scenario,slot=slot):
+     a=Namespace(subject='editorial subject',recipe='quiet-field',material='engraving',palette='olive-mountain',verified_reference=False,portrait_style='none',scenario=scenario,slot=slot)
+     spec,prompt,css=compile_brief(a)
+     self.assertEqual(spec['scenario'],scenario)
+     self.assertEqual(spec['slot'],slot)
+     self.assertIn(SLOTS[slot]['ratio'],prompt)
+     self.assertIn('SCENARIO-SPECIFIC SAFETY',prompt)
+     self.assertIn('Slot layout policy',css)
 if __name__=='__main__':unittest.main()
