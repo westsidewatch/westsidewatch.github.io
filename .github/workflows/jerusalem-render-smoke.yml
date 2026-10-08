@@ -41,11 +41,12 @@ jobs:
           await page.screenshot({path:'artifacts/jerusalem-render/herodian-desktop.png',fullPage:true});
           const state=await page.evaluate(()=>{
             const canvas=document.querySelector('[data-three-stage] canvas');
-            return {canvas:!!canvas,width:canvas?.width||0,height:canvas?.height||0,caption:document.querySelector('.j3k-caption h2')?.textContent||'',terrainBadge:document.querySelector('.j3k-terrain-badge')?.textContent||''};
+            return {canvas:!!canvas,width:canvas?.width||0,height:canvas?.height||0,caption:document.querySelector('.j3k-caption h2')?.textContent||'',terrainBadge:document.querySelector('.j3k-terrain-badge')?.textContent||'',cityCore:window.__JERUSALEM3000__?.evidenceObjects?.cityCoreAB||null};
           });
           fs.writeFileSync('artifacts/jerusalem-render/report.json',JSON.stringify({initial,state,errors,failedRequests},null,2));
           await browser.close();
           if(!state.canvas||!state.width||!state.height)throw new Error('Three.js canvas missing or zero-sized');
+          if(state.cityCore?.ok!==true||!(state.cityCore.buildings>0))throw new Error('Herodian City Core failed to build: '+JSON.stringify(state.cityCore));
           if(errors.some(x=>/WebGL|failed safely|Uncaught|TypeError|ReferenceError/i.test(x)))throw new Error('Scene runtime errors: '+errors.join('; ').slice(0,1000));
           EOF
       - uses: actions/upload-artifact@v4
