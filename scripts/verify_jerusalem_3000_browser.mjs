@@ -143,6 +143,31 @@ try {
   await page.getByRole('button', { name: '全部', exact: true }).click();
   await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
   await writeFile(`${output}/shared-report.json`, JSON.stringify({ sharedReports }, null, 2));
+  // Persian rebuilding retains the same earlier fabric as an opt-in ruin layer.
+  await page.locator('.j3k-scrubber').evaluate(el => {
+    el.value = '6.5'; el.dispatchEvent(new Event('input', { bubbles: true }));
+  });
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.phaseId === 'persian-nehemiah');
+  const retainedButton = page.getByRole('button', {name:'前代遺存 · 推定', exact:true});
+  assert.equal(await retainedButton.getAttribute('aria-pressed'),'false');
+  await retainedButton.click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
+  const retained = await page.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics);
+  assert.equal(retained.sharedEra.projection.identityFingerprint, sharedReports[0].shared.projection.identityFingerprint);
+  assert.equal(retained.sharedEra.projection.ruin,1);
+  assert.equal(retained.sharedEra.projection.layerState,'retained-ruin');
+  assert.equal(retained.sharedEra.retainedObjects, retained.sharedEra.projection.visibleBuildings);
+  assert.ok(retained.urbanFabric.phase2Components > 0, 'retained ruins must coexist with successor morphology');
+  assert.equal(retained.sharedEra.projection.burialDepthVerified,false);
+  assert.equal(retained.sharedEra.projection.reuseLinksVerified,false);
+  await page.screenshot({path:`${output}/persian-retained.png`,fullPage:true});
+  await page.getByRole('button', {name:'實證',exact:true}).click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings === 0);
+  await page.getByRole('button', {name:'全部',exact:true}).click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings > 0);
+  await retainedButton.click();
+  await page.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra.projection.visibleBuildings === 0);
+  await writeFile(`${output}/persian-retained-report.json`,JSON.stringify(retained,null,2));
   // Render every era separately. Startup metadata is not proof of a visible city.
   const phaseReports = [];
   for (let phase = 0; phase < runtime.phaseAudit.records.length; phase++) {
@@ -201,11 +226,14 @@ try {
     fullPage: true,
   });
   await mobile.locator('.j3k-scrubber').evaluate(el => {
-    el.value = '4.9'; el.dispatchEvent(new Event('input', { bubbles: true }));
+    el.value = '6.5'; el.dispatchEvent(new Event('input', { bubbles: true }));
   });
+  await mobile.getByRole('button', {name:'前代遺存 · 推定',exact:true}).click();
   await mobile.waitForFunction(() => window.__JERUSALEM3000__.renderDiagnostics?.sharedEra?.status === 'ready', null, {timeout:60000});
   const mobileShared = await mobile.evaluate(() => window.__JERUSALEM3000__.renderDiagnostics.sharedEra);
   assert.ok(mobileShared.projection.visibleBuildings > 0);
+  assert.equal(mobileShared.projection.layerState,'retained-ruin');
+  assert.equal(mobileShared.retainedObjects,mobileShared.projection.visibleBuildings);
   await mobile.screenshot({path:`${output}/shared-mobile.png`,fullPage:true});
   await mobile.close();
   const broken = await browser.newPage();

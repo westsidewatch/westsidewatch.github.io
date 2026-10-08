@@ -8,6 +8,8 @@ import { createCityProjection } from './city-lifecycle-projection.js';
 
 export const SHARED_SLICE_PHASES = ['late-first-temple', 'babylonian-destruction'];
 export const isSharedSlicePhase = id => SHARED_SLICE_PHASES.includes(id);
+export const RETAINED_PHASE = 'persian-nehemiah';
+export const isSharedGenerationPhase = id => isSharedSlicePhase(id) || id === RETAINED_PHASE;
 
 // One provisional first-temple fabric, inherited by destruction in place.
 // Reuse is a schematic lifecycle, not evidence of surveyed period-specific parcels.
@@ -22,7 +24,7 @@ export function createSharedEraRuntime(parent, { reference, footprint, terrain, 
   }
   function request(phaseId) {
     current = phaseId;
-    if (!isSharedSlicePhase(phaseId)) {
+    if (!isSharedGenerationPhase(phaseId)) {
       pending?.controller.abort();
       if (city) city.group.visible = false;
       return;
@@ -42,7 +44,7 @@ export function createSharedEraRuntime(parent, { reference, footprint, terrain, 
         await new Promise(resolve => setTimeout(resolve, 0));
         if (controller.signal.aborted) throw new DOMException('Cancelled', 'AbortError');
         const phaseId = SHARED_SLICE_PHASES[0];
-        const core = new TemporalCityCore({ phases: SHARED_SLICE_PHASES.map(id => ({ id })), terrain });
+        const core = new TemporalCityCore({ phases: [...SHARED_SLICE_PHASES, RETAINED_PHASE].map(id => ({ id })), terrain });
         const registration = deriveEraRegistration(reference, phaseId, footprint);
         const parcels = buildEraParcelCore(core, terrain, {
           phaseId, registration, districtId: registration.districts[0].id,
@@ -53,9 +55,18 @@ export function createSharedEraRuntime(parent, { reference, footprint, terrain, 
           onProgress: progress => { state = { status: 'generating', ...progress }; onProgress(progress); },
         });
         if (!architecture.buildings || !core.validate().ok) throw new Error('Shared era generated no valid architecture');
+        // Carry the SAME records into the successor period as hypothetical ruins.
+        // Do not claim Persian road continuity, burial depths or rebuilding links.
+        for (const id of architecture.buildingIds) {
+          const record = core.get(id);
+          core.register({ ...record, phaseIds: [...record.phaseIds, RETAINED_PHASE],
+            metadata: { ...record.metadata, retainedPhase: RETAINED_PHASE,
+              retentionAuthority: 'schematic-not-surveyed', burialDepthVerified: false, reuseLinksVerified: false } });
+        }
         const roads = buildHerodianRoadGeometry(group, registration.roads, sharedMaterials, terrain);
         const projection = createCityProjection(group, [...architecture.meshes, ...roads], {
-          phaseIds: SHARED_SLICE_PHASES, standingPhase: phaseId,
+          phaseIds: [...SHARED_SLICE_PHASES, RETAINED_PHASE], standingPhase: phaseId,
+          phaseStates: { [RETAINED_PHASE]: { state: 'retained-ruin', ruin: 1 } },
         });
         city = { group, core, parcels, architecture, projection };
         state = { status: 'ready', completed: architecture.buildings, total: architecture.buildings,
@@ -67,7 +78,7 @@ export function createSharedEraRuntime(parent, { reference, footprint, terrain, 
         if (pending === task) pending = null;
         if (!disposed) {
           // A rapid leave/return may request this slice while cancellation settles.
-          if (state.status === 'cancelled' && isSharedSlicePhase(current)) request(current);
+          if (state.status === 'cancelled' && isSharedGenerationPhase(current)) request(current);
           onChange();
         }
       }
@@ -76,12 +87,13 @@ export function createSharedEraRuntime(parent, { reference, footprint, terrain, 
   return {
     request,
     get status() { return state.status; },
-    apply({ phaseId, ruin, evidenceAllowed }) {
-      city?.projection.apply({ phaseId, ruin, evidenceAllowed });
+    apply({ phaseId, ruin, evidenceAllowed, retainedVisible }) {
+      city?.projection.apply({ phaseId, ruin, evidenceAllowed, retainedVisible });
       return Boolean(city && isSharedSlicePhase(phaseId));
     },
     diagnostics() { return { ...state, phase: current, projection: city?.projection.diagnostics() ?? null,
-      identityPolicy: 'same-first-temple-objects-through-babylonian-destruction',
+      retainedObjects: city?.core.phase(RETAINED_PHASE).filter(object => object.type === 'building').length ?? 0,
+      identityPolicy: 'same-first-temple-objects-through-destruction-and-persian-retention',
       historicalRegistrationVerified: false }; },
     dispose() { disposed = true; if (!materials.facadeOpening) openingMaterial.dispose(); pending?.controller.abort(); if (city) release(city.group); city = null; },
   };

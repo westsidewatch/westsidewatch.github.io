@@ -1,4 +1,4 @@
-import { createSharedEraRuntime, isSharedSlicePhase } from './shared-era-runtime.js';
+import { createSharedEraRuntime, isSharedSlicePhase, isSharedGenerationPhase } from './shared-era-runtime.js';
 import * as THREE from 'three';
 import { buildHerodianRoadGeometry } from './herodian-road-geometry.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -290,6 +290,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     evidenceProjection = null;
   const temporalMeshes = new Map();
   let sharedEraRuntime = null;
+  let retainedVisible = false;
   const generationStatus = document.createElement('p');
   generationStatus.className = 'j3k-generation-status';
   generationStatus.setAttribute('role', 'status');
@@ -312,7 +313,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     );
   }
   function updateCityCoreVisibility() {
-    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed });
+    const sharedActive = sharedEraRuntime?.apply({ phaseId: currentPhaseId, ruin: currentRuin, evidenceAllowed, retainedVisible });
     if (sharedActive) {
       clearFabric(); eraFabricLayer.visible = false;
       for (const mesh of temporalMeshes.values()) mesh.visible = false;
@@ -609,7 +610,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         terrain: terrainRuntime, materials: temporalMaterials,
         onChange: () => { applyTemporalState(); needsFrame = true; },
         onProgress: ({ completed, total }) => {
-          if (isSharedSlicePhase(currentPhaseId) && completed % 4 === 0)
+          if (isSharedGenerationPhase(currentPhaseId) && completed % 4 === 0)
             generationStatus.textContent = `城市生成中 · ${completed}/${total}`;
         },
       });
@@ -682,7 +683,7 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
         renderer.render(scene, camera);
         frameCount++;
         const sharedState = sharedEraRuntime?.diagnostics();
-        const activeSharedSlice = isSharedSlicePhase(currentPhaseId);
+        const activeSharedSlice = isSharedGenerationPhase(currentPhaseId);
         generationStatus.hidden = !activeSharedSlice || !['generating', 'error'].includes(sharedState?.status);
         generationStatus.textContent = sharedState?.status === 'error'
           ? '城市生成失敗，暫時顯示示意圖。請重新切換時代再試。'
@@ -744,6 +745,11 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     setRuinProgress,
     setEvidenceMode,
     setTemporalCityState,
+    setRetainedLayerVisible(visible) {
+      retainedVisible = Boolean(visible);
+      applyTemporalState();
+      needsFrame = true;
+    },
     auditCityPhases(phaseIds) {
       // A startup audit must NEVER switch eras or build WebGL geometry.
       // Previously this synchronously generated all 18 city meshes and froze the UI.

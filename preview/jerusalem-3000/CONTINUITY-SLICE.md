@@ -33,3 +33,11 @@ Both phases use the same building IDs, meshes and footprints. Babylonian destruc
 The registration transforms the existing provisional road/district scaffold using the legacy first-temple envelope. Every generated building remains inferred. The caption explicitly discloses that roads, parcels and residences are not archaeologically registered. No full-timeline readiness claim is made, and the startup phase audit still defers historical validation.
 
 `node scripts/verify_jerusalem_3000_shared_era.mjs` compares batched geometry with the synchronous builder, checks deterministic IDs and inherited phase membership, cancellation cleanup, surfaced errors and independent destruction boundaries. The browser test adds rapid cancellation, shared-identity and reverse-transform checks, legacy-layer exclusion, desktop/mobile shared screenshots and the existing all-18-phase smoke test.
+
+## Persian retained fabric (2026-10-08)
+
+The first-temple shared runtime also accepts direct entry into `persian-nehemiah`. It registers the same building IDs in that phase as a hypothetical retained ruin layer, with the complete Babylonian collapse held fixed. No new first-temple geometry is generated when switching from destruction to Persian rebuilding.
+
+The Persian morphology remains a separate provisional reconstruction. The “前代遺存 · 推定” button enables comparison with earlier ruins; it is off by default and remains subject to evidence filtering. Roads are withheld in this successor layer because their Persian continuity has not been established. Buildings retain their terrain anchors without invented burial depths. The layer does not identify which ruins actually survived, which buildings were reused, or the sourced Persian settlement envelope.
+
+Browser validation checks identity preservation, ruin state, coexistence with successor morphology, evidence filtering, hiding the overlay, and direct Persian entry on mobile. This advances the lifecycle interface; Persian replacement architecture and sourced burial/reuse links remain unfinished. Full-timeline readiness remains false.
