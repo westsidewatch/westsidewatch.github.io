@@ -13,8 +13,23 @@ SCENES={
  'courtyard':('Ancient courtyard and olive tree','A narrow colonnade recedes behind one olive tree; stone bench and worn paving convey scale without figures.'),
  'open-book':('Antique open book and olive sprig','Book occupies the foreground diagonal, with page-edge relief and carved table texture; calm white space above.')
 }
-def brief(spec,has_reference):
- subject,composition=SCENES[spec['motif']]
+CROP_SYSTEM={
+ 'asymmetric-editorial':('Editorial off-axis portrait crop','Primary subject may cross the left or top image boundary; crop decisively rather than shrinking it to fit. Place the visual center at x≈34%, y≈42%; keep x≈65–94% comparatively quiet. Let the cropped foreground be a deliberate editorial gesture.'),
+ 'negative-space':('Large architectural negative-space field','Subject occupies roughly 48–60% of the picture, with 30–40% continuous quiet paper or sparsely etched atmosphere. Negative space is a designed shape, not an accidental blank white bar.'),
+ 'vertical-monument':('Monumental vertical crop','A tall architectural or organic element runs beyond the top crop; cut at least one secondary edge with intention. Emphasize a single vertical axis and contrast it against generous lateral whitespace.'),
+ 'architectural-frame':('Partial frame and interrupted geometry','Use an arch, doorway or tree canopy as an incomplete frame, visibly cropped by one image edge. Do not enclose everything in a centered symmetrical border; preserve off-axis depth and editorial tension.')
+}
+COLOR_APPLICATION=(
+ 'Treat color as printed material and spatial hierarchy, not a universal filter. '
+ 'Deep olive #174B35 carries the foreground structural contours and the darkest crosshatched shadows. '
+ 'Secondary olive #47735E is optional and only for selected midground marks, never a broad wash. '
+ 'White #FFFFFF is an active paper knockout: it forms highlights, air, breathing room and the light-facing side of forms. '
+ 'Create depth through density, scale and spacing of green marks, not by adding brown/gray/sepia or generic photographic gradients. '
+ 'Keep some regions almost untouched white while concentrating the darkest olive in one deliberate focal mass. '
+ 'No continuous beige paper tint, no gold highlights, no black strokes, no monochrome photographic green tint.'
+)
+\ndef brief(spec,has_reference):
+ subject,composition=SCENES[spec['motif']]\n crop_name,crop_direction=CROP_SYSTEM[spec['family']]
  name=spec['displayName']
  identity=(
  f'A VERIFIED reference photograph of {name} is supplied with this request. Use it as the sole identity source. Preserve the subject\'s facial geometry, age cues, hairline, expression and proportions; transform the verified photograph into finely engraved olive-ink linework. Do not invent or beautify a different face. Position the recognizable face within the upper 65% with breathable negative space.'
@@ -44,6 +59,17 @@ Bottom 75–95%: preserve natural image negative space suitable for an HTML/CSS 
 Bottom 5%: image continuation or paper white; the edition line is rendered later by CSS.
 No overlapping text, no clipped characters, no arbitrary dividers.
 
+## 3A. Doré editorial cropping and negative-space grammar
+Composition family: {spec['family']} — {crop_name}.
+Exact crop directive: {crop_direction}
+The image is NOT an illustration centered within a fixed box. Permit meaningful edge cropping, foreground scale shifts, interruptions and asymmetrical tension. Design for the eventual CSS text overlay: reserve a calm area with enough local contrast but do not create a fake white title panel. The HTML layer will decide exact type positions and responsive line breaks.
+For mobile crop safety, the main subject must remain readable when the center 80% of the image width is shown; important facial landmarks (if a verified portrait is provided) must not be clipped. Keep the image compelling both full-bleed and in a narrower card.
+
+## 3B. Color as material and visual hierarchy
+{COLOR_APPLICATION}
+Use a deliberate color-density map: 65–75% visually light paper or lightly etched atmosphere; 15–25% mid-density olive markwork; 5–12% concentrated deep-olive focal darks. These are art-direction targets, not a demand for flat pixel fills. Shadows should reveal etched lines and white channels even in dense regions.
+The artwork must have no default brown/yellow aged-paper background. Avoid covering the entire picture with olive tint. Let the white paper itself carry light and editorial space.
+
 ## 4. Engraving and physical printing
 Use detailed etched/copperplate engraving language: precise contour lines, short directional hatches following form, deliberate crosshatching only in deeper shadows, and untouched white paper for light. Distinguish wood grain, stone grain, foliage, hair and fabric with material-specific linework. Rich tonal hierarchy must come from controlled ink density and paper knockout, not photographic blur, muddy gradients, synthetic grain or crude halftone dots. Avoid pseudo-engraving filters, thick cartoon outlines, crude green circles, flat stock vector graphics and generic symmetrical ornament.
 
@@ -63,7 +89,7 @@ A. Recognizable likeness ONLY when a verified reference is actually supplied; ot
 B. Crisp linework and coherent materials at full resolution and thumbnail size.
 C. Olive-and-white print palette throughout.
 D. Zero text or typographic marks in the generated image; all lettering is delegated to HTML/CSS.
-E. Visually convincing editorial hierarchy and no hard white paste-over strip.
+E. Purposeful asymmetric crop, meaningful continuous negative space, controlled olive ink density, and no hard white paste-over strip.
 F. This is a design proof; do not publish or silently substitute assets.
 
 ## 9. Output instruction
