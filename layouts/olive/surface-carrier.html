@@ -65,13 +65,13 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 .olive-feature.is-playing .olive-feature__poster,.olive-feature.is-playing .olive-feature__play,.olive-feature.is-playing .olive-feature__veil{opacity:0;pointer-events:none}
 .olive-feature__veil{position:absolute;inset:0;background:linear-gradient(90deg,color-mix(in oklab,var(--ws-olive) 72%,transparent) 0,color-mix(in oklab,var(--ws-olive) 30%,transparent) 42%,transparent 72%,color-mix(in oklab,var(--ws-olive) 24%,transparent) 100%);pointer-events:none}
 .olive-brand{position:absolute;left:clamp(30px,4.2vw,78px);top:clamp(34px,5vh,70px);display:grid;gap:10px;text-shadow:0 1px 20px color-mix(in oklab,var(--ws-shadow) 28%,transparent)}
-.olive-brand small,.olive-feature__caption small{font:10px/1 Arial,sans-serif;letter-spacing:.18em}
-.olive-brand h1{font:400 clamp(70px,8.4vw,154px)/.72 "Cormorant Garamond",Georgia,serif;letter-spacing:-.055em;margin:.08em 0 .02em}
-.olive-brand>span{font:400 clamp(18px,1.5vw,27px)/1 "Noto Serif TC",serif}
+.olive-brand small,.olive-feature__caption small{font:10px/1 var(--ws-type-display-en);letter-spacing:.18em}
+.olive-brand h1{font:400 clamp(70px,8.4vw,154px)/.72 var(--ws-type-display-en);letter-spacing:-.055em;margin:.08em 0 .02em}
+.olive-brand>span{font:400 clamp(18px,1.5vw,27px)/1 var(--ws-type-display-zh)}
 .olive-feature__caption{position:absolute;left:clamp(30px,4.2vw,78px);bottom:clamp(38px,5vh,76px);display:grid;gap:8px;text-shadow:0 1px 18px color-mix(in oklab,var(--ws-shadow) 34%,transparent)}
-.olive-feature__caption h2{font:400 clamp(44px,4.7vw,82px)/.9 "Noto Serif TC",serif;margin:.08em 0}
+.olive-feature__caption h2{font:400 clamp(44px,4.7vw,82px)/.9 var(--ws-type-display-zh);margin:.08em 0}
 .olive-feature__caption p{font-size:var(--ui-body-lg);margin:0}
-.olive-feature__caption i{font:normal 10px/1 Arial,sans-serif;letter-spacing:.14em;margin-left:18px}
+.olive-feature__caption i{font:normal 10px/1 var(--ws-type-display-en);letter-spacing:.14em;margin-left:18px}
 .olive-speaker-rail{position:absolute;z-index:3;left:clamp(26%,31vw,38%);right:clamp(18px,2vw,34px);bottom:clamp(154px,18vh,214px);height:clamp(176px,20vh,226px);display:flex;gap:clamp(10px,1vw,16px);overflow-x:auto;overflow-y:hidden;scrollbar-width:none;overscroll-behavior-inline:contain;padding:0 18vw 8px 0}
 .olive-speaker-rail::-webkit-scrollbar{display:none}
 .dore-magazine-card{--dore-paper:color-mix(in oklab,var(--ws-olive) 82%,#fff);--dore-ink:#fff;--dore-rule:rgba(255,255,255,.58);--dore-type-x:7%;--dore-type-y:16%;--dore-type-w:86%;--dore-type-h:68%}
@@ -92,14 +92,14 @@ linear-gradient(118deg,color-mix(in oklab,var(--ws-olive) 94%,#fff) 0%,color-mix
 .olive-speaker-card:before{content:"";position:absolute;inset:0;z-index:-2;background-image:var(--preview,linear-gradient(135deg,color-mix(in oklab,var(--ws-olive) 76%,#fff),var(--ws-olive)));background-size:cover;background-position:center;transform:scale(1.02);transition:transform .45s ease}
 .olive-speaker-card:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.05),color-mix(in oklab,var(--ws-olive) 18%,transparent) 42%,color-mix(in oklab,var(--ws-olive) 84%,transparent));pointer-events:none}
 .olive-speaker-card:hover,.olive-speaker-card:focus-visible{transform:translateY(-8px);filter:brightness(1.06);outline:0}.olive-speaker-card:hover:before,.olive-speaker-card:focus-visible:before{transform:scale(1.07)}
-.olive-speaker-card span{font:9px/1 Arial,sans-serif;letter-spacing:.16em;opacity:.72;position:relative;z-index:1}
-.olive-speaker-card strong{align-self:center;font:400 clamp(25px,2vw,38px)/1.05 "Noto Serif TC",serif;position:relative;z-index:1}
+.olive-speaker-card span{font:9px/1 var(--ws-type-display-en);letter-spacing:.16em;opacity:.72;position:relative;z-index:1}
+.olive-speaker-card strong{align-self:center;font:400 clamp(25px,2vw,38px)/1.05 var(--ws-type-display-zh);position:relative;z-index:1}
 .olive-speaker-card small{font-size:10px;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;position:relative;z-index:1}
 .olive-speaker-card--clone{pointer-events:none}
 @media(prefers-reduced-motion:reduce){.olive-speaker-card{transition:none}}
 @media(max-width:760px){.olive-home-stage{height:calc(100svh - var(--site-header-height,42px));min-height:620px;margin-right:calc(-1 * var(--ui-gutter))}.olive-feature{inset:0 0 128px 0}.olive-brand{left:24px;top:34px}.olive-brand h1{font-size:clamp(64px,20vw,96px)}.olive-feature__caption{left:24px;bottom:34px}.olive-feature__caption h2{font-size:clamp(40px,12vw,62px)}.olive-speaker-rail{left:24px;bottom:24px;height:138px;padding-right:22vw}.olive-speaker-card{flex-basis:58vw;padding:14px}}
 .olive-speaker-channel{position:absolute;left:clamp(1rem,4vw,4rem);bottom:clamp(7rem,18vh,11rem);z-index:7;width:min(34rem,calc(100% - 2rem));padding:1rem 1.15rem 1.15rem;background:rgba(255,255,255,.92);color:var(--ws-olive);border:1px solid rgba(255,255,255,.72);backdrop-filter:blur(12px)}
-.olive-speaker-channel__eyebrow{margin:0 0 .25rem;font:500 .68rem/1.2 system-ui;letter-spacing:.18em}.olive-speaker-channel h2{margin:0 0 .7rem;font-family:"Noto Serif TC",serif;font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500}
+.olive-speaker-channel__eyebrow{margin:0 0 .25rem;font:400 .68rem/1.2 var(--ws-type-display-zh);letter-spacing:.18em}.olive-speaker-channel h2{margin:0 0 .7rem;font-family:var(--ws-type-display-zh);font-size:clamp(1.35rem,2.2vw,2rem);font-weight:500}
 .olive-speaker-channel__list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}.olive-speaker-channel__entry{display:flex;justify-content:space-between;gap:.8rem;padding:.62rem .7rem;border-top:1px solid color-mix(in oklab,var(--ws-olive) 24%,transparent);color:inherit;text-decoration:none}.olive-speaker-channel__entry strong{font-weight:500}.olive-speaker-channel__entry span{white-space:nowrap;font-size:.72rem;opacity:.68}
 @media(max-width:680px){.olive-speaker-channel{bottom:8.5rem}.olive-speaker-channel__list{grid-template-columns:1fr}}
 </style>
