@@ -15,12 +15,14 @@
   const selectedPerson=q.get('person');
   const selectedTopic=q.get('topic');
   let doreCompositions=new Map();
+  let verifiedPortraits=new Map();
+  const validPortrait=r=>r&&r.verified===true&&r.licenseVerified===true&&r.identityVerified===true&&typeof r.url==='string'&&r.url.startsWith('/')&&!r.url.startsWith('//')&&!r.url.includes('..');
   const recordsOf=p=>Array.isArray(p)?p:Array.isArray(p?.records)?p.records:Array.isArray(p?.items)?p.items:Array.isArray(p?.resources)?p.resources:[];
 
   function linkCard(cls,title,meta,href){
     const a=document.createElement('a'); a.className=cls; a.href=href;
-    if(cls==='speaker-card'){const slug=new URL(href,location.origin).searchParams.get('person');const composition=doreCompositions.get(slug);a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';if(composition?.family)a.dataset.doreFamily=composition.family;if(composition?.geometry?.type){const [x,y,w,h]=composition.geometry.type;a.style.setProperty('--dore-type-x',x+'%');a.style.setProperty('--dore-type-y',y+'%');a.style.setProperty('--dore-type-w',w+'%');a.style.setProperty('--dore-type-h',h+'%');a.dataset.doreGeometry='runtime';}if(composition?.geometry?.image){const [x,y,w,h]=composition.geometry.image;a.style.setProperty('--dore-image-x',x+'%');a.style.setProperty('--dore-image-y',y+'%');a.style.setProperty('--dore-image-w',w+'%');a.style.setProperty('--dore-image-h',h+'%');a.dataset.doreImage='unbound';}a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
-    a.innerHTML=`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`; return a;
+    if(cls==='speaker-card'){const slug=new URL(href,location.origin).searchParams.get('person');const composition=doreCompositions.get(slug);a.dataset.doreSurface='speaker-card';a.dataset.doreSpeaker=slug||'';if(composition?.family)a.dataset.doreFamily=composition.family;if(composition?.geometry?.type){const [x,y,w,h]=composition.geometry.type;a.style.setProperty('--dore-type-x',x+'%');a.style.setProperty('--dore-type-y',y+'%');a.style.setProperty('--dore-type-w',w+'%');a.style.setProperty('--dore-type-h',h+'%');a.dataset.doreGeometry='runtime';}if(composition?.geometry?.image){const [x,y,w,h]=composition.geometry.image;a.style.setProperty('--dore-image-x',x+'%');a.style.setProperty('--dore-image-y',y+'%');a.style.setProperty('--dore-image-w',w+'%');a.style.setProperty('--dore-image-h',h+'%');a.dataset.doreImage='unbound';const portrait=verifiedPortraits.get(slug);if(validPortrait(portrait)){const img=document.createElement('img');img.className='dore-verified-portrait';img.src=portrait.url;img.alt='';img.loading='lazy';img.decoding='async';a.append(img);a.dataset.doreImage='verified';}}a.dataset.doreIdentitySynthesis='false';if(slug===selectedPerson)a.setAttribute('aria-current','true');}
+    a.insertAdjacentHTML('beforeend',`<h3>${title}</h3><p>${meta||'進入'} <b aria-hidden="true">↗</b></p>`); return a;
   }
   async function renderPeople(){
     speakerStage.replaceChildren();
@@ -52,6 +54,7 @@
   }
   async function init(){
     try{const r=await fetch('/dore-design/runtime/olive-speaker-compositions.v1.json',{cache:'no-cache'});if(r.ok){const d=await r.json();doreCompositions=new Map((d.records||[]).map(x=>[x.speaker,x]));}}catch(_){}
+    try{const r=await fetch('/dore-design/runtime/olive-verified-portraits.v1.json',{cache:'no-cache'});if(r.ok){const d=await r.json();verifiedPortraits=new Map((d.records||[]).filter(validPortrait).map(x=>[x.speaker,x]));}}catch(_){}
     await renderPeople();
     if(selectedPerson==='jiang-xiuqin'){
       if(selectedTopic) await renderTopic(selectedTopic); else await renderJiangTopics();
