@@ -1,5 +1,6 @@
 // One generated city, projected through time without replacing its objects.
-const CORE_PHASES = new Set(['herodian-jesus', 'roman-destruction', 'aelia']);
+// Aelia Capitolina is a replanned Roman city, not a surviving Herodian residential layer.
+const CORE_PHASES = new Set(['herodian-jesus', 'roman-destruction']);
 export function isCorePhase(phaseId) {
   return CORE_PHASES.has(phaseId);
 }
