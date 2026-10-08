@@ -10,9 +10,9 @@ html body :is(button,label,input,textarea,select,option){font-family:var(--ws-ty
 .adullam-motion :is(.am-kicker,.am-label,.am-num,.am-open,.am-enter,.am-field span,.am-cross span){font-family:var(--ws-type-display-en)!important;font-weight:400!important}
 .adullam-motion .am-panel h2{margin:auto 0;max-width:min(64rem,72vw);font-family:var(--ws-type-display-en)!important;font-size:clamp(4.5rem,9vw,10rem)!important;font-weight:400!important;line-height:.76!important;letter-spacing:-.045em!important;text-wrap:balance}
 .adullam-motion .am-title-en{display:block;font-family:var(--ws-type-display-en)!important;font-weight:400!important}
-.adullam-motion .am-title-zh{display:block;width:max-content;max-width:min(34rem,75vw);margin-top:clamp(1.1rem,2vw,2rem);font-family:var(--ws-type-display-zh)!important;font-size:clamp(.95rem,1.35vw,1.35rem)!important;font-weight:600!important;line-height:1.55!important;letter-spacing:.08em!important;word-break:keep-all;line-break:strict;overflow-wrap:normal}
-.adullam-motion .am-cover__title>span{font-family:var(--ws-type-display-zh)!important;font-size:clamp(.9rem,1.15vw,1.15rem)!important;font-weight:600;letter-spacing:.12em}
-.adullam-motion .am-cover>p,.adullam-motion .am-voice__statement,.adullam-motion .am-emerge>p:not(.am-label){font-family:var(--ws-type-display-zh)!important;font-weight:var(--type-zh-light,200)!important;line-height:1.9!important;letter-spacing:.045em!important}
+.adullam-motion .am-title-zh{display:block;width:max-content;max-width:min(34rem,75vw);margin-top:clamp(1.1rem,2vw,2rem);font-family:var(--ws-type-display-zh)!important;font-size:clamp(.95rem,1.35vw,1.35rem)!important;font-weight:var(--ws-weight-zh-anchor)!important;line-height:1.55!important;letter-spacing:.08em!important;word-break:keep-all;line-break:strict;overflow-wrap:normal}
+.adullam-motion .am-cover__title>span{font-family:var(--ws-type-display-zh)!important;font-size:clamp(.9rem,1.15vw,1.15rem)!important;font-weight:var(--ws-weight-zh-anchor);letter-spacing:.12em}
+.adullam-motion .am-cover>p,.adullam-motion .am-voice__statement,.adullam-motion .am-emerge>p:not(.am-label){font-family:var(--ws-type-display-zh)!important;font-weight:var(--ws-weight-zh-air,200)!important;line-height:1.9!important;letter-spacing:.045em!important}
 
 /* Every large colour field gets a different Doré-derived engraved plate. */
 .adullam-motion .am-panel{isolation:isolate;background-color:var(--paper)}
