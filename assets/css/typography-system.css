@@ -69,10 +69,19 @@ small.type-en,.type-en:is(.meta,.eyebrow,.kicker){font-family:var(--type-ui)!imp
 :where(.type-zh,h1,h2,h3,h4,p,li,strong,em,span){text-wrap:pretty}
 :where(h1,h2,h3,h4,.type-en){font-synthesis:none}
 .primary-nav,.utility-nav,.section-nav,.site-footer{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important}
-.primary-nav,.utility-nav,.section-nav{font-size:clamp(.78rem,.74rem + .12vw,.88rem)!important;line-height:1.2!important;letter-spacing:.1em!important}
+.primary-nav,.utility-nav,.section-nav{font-size:var(--ws-size-nav)!important;line-height:var(--ws-leading-ui)!important;letter-spacing:.1em!important}
 
 @media(max-width:700px){
-  h1.type-zh{font-size:clamp(2.4rem,12vw,4.35rem)!important}
-  h2.type-zh{font-size:clamp(2rem,9vw,3.25rem)!important}
-  .living-screen__head>span,.realm__zh,.layer-hero__zh,.section-atlas__zh,.issue-cover__zh,.mc-zh{font-size:.95rem!important;line-height:1.7!important}
+  h1.type-zh{font-size:var(--ws-size-h1)!important}
+  h2.type-zh{font-size:var(--ws-size-h2)!important}
+  .living-screen__head>span,.realm__zh,.layer-hero__zh,.section-atlas__zh,.issue-cover__zh,.mc-zh{font-size:var(--ws-size-body)!important;line-height:1.7!important}
+}
+
+/* Accessibility: preserve readable type under narrow viewports and zoom. */
+@media(max-width:700px){
+  :where(.primary-nav,.utility-nav,.section-nav){font-size:var(--ws-size-nav)!important;line-height:var(--ws-leading-ui)!important}
+  :where(.type-zh,.type-en){overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  :where(.type-zh,.type-en,.primary-nav,.utility-nav,.section-nav){transition:none!important;animation:none!important}
 }
