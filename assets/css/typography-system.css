@@ -32,21 +32,21 @@
   --tracking-zh:.035em;
 }
 html{font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
-body{font-family:var(--type-zh)!important;font-size:var(--type-body);font-weight:var(--type-zh-light);line-height:var(--leading-body)}
+body{font-family:var(--type-zh)!important;font-size:var(--ws-size-body);font-weight:var(--type-zh-light);line-height:var(--leading-body)}
 .type-en,[lang^="en"]{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important;font-synthesis:none}
 .type-zh,[lang="zh-Hant"],[lang="zh-TW"],[lang="zh"]{font-family:var(--type-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal}
 .type-mixed{font-family:var(--type-zh)!important;font-synthesis:none}
-p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--type-body)!important;font-weight:var(--type-zh-regular)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
+p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--ws-size-reading)!important;font-weight:var(--type-zh-regular)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
 h1.type-en,h2.type-en,h3.type-en,h4.type-en,.type-en:is(strong,b){font-weight:var(--type-en-regular)!important}
 h1.type-zh,h2.type-zh,h3.type-zh,h4.type-zh,.type-zh:is(strong,b){font-weight:var(--type-zh-strong)!important;line-height:1.24!important;letter-spacing:.025em!important}
-h1.type-zh{font-size:clamp(2.75rem,5.4vw,5.8rem)!important}
-h2.type-zh{font-size:clamp(2.15rem,3.8vw,4rem)!important}
-h3.type-zh{font-size:clamp(1.45rem,2.25vw,2.35rem)!important}
+h1.type-zh{font-size:var(--ws-size-h1)!important}
+h2.type-zh{font-size:var(--ws-size-h2)!important}
+h3.type-zh{font-size:var(--ws-size-h3)!important}
 h4.type-zh{font-size:clamp(1.15rem,1.45vw,1.45rem)!important}
 h1.type-en{font-size:clamp(5rem,10vw,11rem)}
 h2.type-en{font-size:clamp(3.6rem,7vw,7.5rem)}
 h3.type-en{font-size:clamp(2rem,3.5vw,3.8rem)}
-small.type-zh,.type-zh:is(.meta,.eyebrow,.kicker){font-size:var(--type-small)!important;font-weight:var(--type-zh-regular)!important;line-height:1.65!important;letter-spacing:.08em!important}
+small.type-zh,.type-zh:is(.meta,.eyebrow,.kicker){font-size:var(--ws-size-meta)!important;font-weight:var(--type-zh-regular)!important;line-height:1.65!important;letter-spacing:.08em!important}
 small.type-en,.type-en:is(.meta,.eyebrow,.kicker){font-family:var(--type-ui)!important;font-size:var(--type-small)!important;font-weight:400!important;line-height:1.35!important;letter-spacing:.14em!important;text-transform:uppercase}
 
 /* Paired title grammar: English leads in scale; Chinese annotates with weight. */
