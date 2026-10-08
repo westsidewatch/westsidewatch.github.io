@@ -18,9 +18,9 @@ def render_frontmatter(spec,asset,title):
   raise ValueError('Unsafe asset path')
  # Standalone test page under the original section; actual production CSS and base layout.
  section=route.strip('/')
- safe_title=title.replace('"','\\"').replace('\n',' ')
+ safe_title=json.dumps(title,ensure_ascii=False)
  content='''---
-title: "%s"
+title: %s
 layout: "dore-proof"
 draft: false
 url: "/%s/dore-proof/"
