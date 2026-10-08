@@ -2,8 +2,8 @@
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 /* Westside Watch type authority — the only cross-site bilingual scale. */
 :root{
-  --type-en:"Bodoni Moda",Georgia,"Times New Roman",serif;
-  --type-zh:"Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;
+  --type-en:var(--ws-type-display-en);
+  --type-zh:var(--ws-type-display-zh);
   --type-ui:var(--type-zh);
   --type-zh-light:200;
   --type-zh-regular:400;
@@ -26,7 +26,7 @@
   --ws-reading-measure:38ch;
   --ws-type-display-en:var(--type-en);
   --ws-type-display-zh:var(--type-zh);
-  --ws-type-reading-zh:"Noto Serif TC","Songti TC",serif;
+  --ws-type-reading-zh:"Noto Serif TC",serif;
   /* Sitewide typography authority first; homepage composition is the final phase. */
   --ws-typography-phase:sitewide;
   --ws-size-ui:var(--ws-size-body);

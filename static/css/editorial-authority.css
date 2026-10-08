@@ -1,18 +1,18 @@
 /* Final visual authority: bilingual hierarchy, visible engraving, no enlarged wall. */
-:root{--ww-en:var(--ws-type-display-en,var(--type-en));--ww-zh-only:var(--ws-type-display-zh,var(--type-zh));--ww-zh:var(--ww-zh-only);--font-display:var(--ww-en);--font-sans:var(--ww-zh);--font-text:var(--ww-zh);--type-en:var(--ww-en);--type-ui:var(--ww-zh);--type-zh:var(--ww-zh);--sl-en:var(--ww-en);--sl-zh:var(--ww-zh);--west-en:var(--ww-en);--west-zh:var(--ww-zh);--home-zh:var(--ww-zh)}
+:root{--ww-en:var(--ws-type-display-en,var(--type-en));--ww-zh-only:var(--ws-type-display-zh,var(--type-zh));--ww-zh:var(--ww-zh-only);--font-display:var(--ws-type-display-en);--font-sans:var(--ws-type-display-zh);--font-text:var(--ws-type-display-zh);--type-en:var(--ws-type-display-en);--type-ui:var(--ws-type-display-zh);--type-zh:var(--ws-type-display-zh);--sl-en:var(--ws-type-display-en);--sl-zh:var(--ws-type-display-zh);--west-en:var(--ws-type-display-en);--west-zh:var(--ws-type-display-zh);--home-zh:var(--ws-type-display-zh)}
 /* One resolver for the whole site: English display uses Bodoni Moda;
    CJK interface uses Chiron Hei HK WS. Long-form reading uses its own serif role. */
-html body{font-family:var(--ww-zh)!important}
-html body :is(button,label,input,textarea,select,option){font-family:var(--ww-zh)!important}
+html body{font-family:var(--ws-type-display-zh)!important}
+html body :is(button,label,input,textarea,select,option){font-family:var(--ws-type-display-zh)!important}
 /* Preserve explicitly assigned English display and Chinese long-form reading fonts. */
-.adullam-motion{font-family:var(--ww-zh)!important}
-.adullam-motion :is(p,a,b,span):not(.am-title-en):not(.am-label):not(.am-kicker):not(.am-num){font-family:var(--ww-zh)}
-.adullam-motion :is(.am-kicker,.am-label,.am-num,.am-open,.am-enter,.am-field span,.am-cross span){font-family:var(--ww-en)!important;font-weight:400!important}
-.adullam-motion .am-panel h2{margin:auto 0;max-width:min(64rem,72vw);font-family:var(--ww-en)!important;font-size:clamp(4.5rem,9vw,10rem)!important;font-weight:400!important;line-height:.76!important;letter-spacing:-.045em!important;text-wrap:balance}
-.adullam-motion .am-title-en{display:block;font-family:var(--ww-en)!important;font-weight:400!important}
-.adullam-motion .am-title-zh{display:block;width:max-content;max-width:min(34rem,75vw);margin-top:clamp(1.1rem,2vw,2rem);font-family:var(--ww-zh)!important;font-size:clamp(.95rem,1.35vw,1.35rem)!important;font-weight:600!important;line-height:1.55!important;letter-spacing:.08em!important;word-break:keep-all;line-break:strict;overflow-wrap:normal}
-.adullam-motion .am-cover__title>span{font-family:var(--ww-zh)!important;font-size:clamp(.9rem,1.15vw,1.15rem)!important;font-weight:600;letter-spacing:.12em}
-.adullam-motion .am-cover>p,.adullam-motion .am-voice__statement,.adullam-motion .am-emerge>p:not(.am-label){font-family:var(--ww-zh)!important;font-weight:var(--type-zh-light,200)!important;line-height:1.9!important;letter-spacing:.045em!important}
+.adullam-motion{font-family:var(--ws-type-display-zh)!important}
+.adullam-motion :is(p,a,b,span):not(.am-title-en):not(.am-label):not(.am-kicker):not(.am-num){font-family:var(--ws-type-display-zh)}
+.adullam-motion :is(.am-kicker,.am-label,.am-num,.am-open,.am-enter,.am-field span,.am-cross span){font-family:var(--ws-type-display-en)!important;font-weight:400!important}
+.adullam-motion .am-panel h2{margin:auto 0;max-width:min(64rem,72vw);font-family:var(--ws-type-display-en)!important;font-size:clamp(4.5rem,9vw,10rem)!important;font-weight:400!important;line-height:.76!important;letter-spacing:-.045em!important;text-wrap:balance}
+.adullam-motion .am-title-en{display:block;font-family:var(--ws-type-display-en)!important;font-weight:400!important}
+.adullam-motion .am-title-zh{display:block;width:max-content;max-width:min(34rem,75vw);margin-top:clamp(1.1rem,2vw,2rem);font-family:var(--ws-type-display-zh)!important;font-size:clamp(.95rem,1.35vw,1.35rem)!important;font-weight:600!important;line-height:1.55!important;letter-spacing:.08em!important;word-break:keep-all;line-break:strict;overflow-wrap:normal}
+.adullam-motion .am-cover__title>span{font-family:var(--ws-type-display-zh)!important;font-size:clamp(.9rem,1.15vw,1.15rem)!important;font-weight:600;letter-spacing:.12em}
+.adullam-motion .am-cover>p,.adullam-motion .am-voice__statement,.adullam-motion .am-emerge>p:not(.am-label){font-family:var(--ws-type-display-zh)!important;font-weight:var(--type-zh-light,200)!important;line-height:1.9!important;letter-spacing:.045em!important}
 
 /* Every large colour field gets a different Doré-derived engraved plate. */
 .adullam-motion .am-panel{isolation:isolate;background-color:var(--paper)}

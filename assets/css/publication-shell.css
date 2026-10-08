@@ -12,7 +12,7 @@
   --ink: #30291d;
   --ink-black: #30291d;
   --font-display: var(--type-en);
-  --font-text: var(--type-zh);
+  --font-text: var(--ws-type-display-zh);
   min-height: 100%;
   background-color: var(--paper);
   background-image:
@@ -25,16 +25,16 @@
 .publication-shell .site-footer { background: color-mix(in srgb, var(--paper) 87%, transparent); }
 .publication-shell .site-header { border-bottom-color:var(--shell-hairline); }
 :where(h1,h2,h3,.hero__watchword,.movement__opening,.issue-door__title) {
-  font-family: var(--font-display);
+  font-family: var(--ws-type-display-en);
   font-weight: 400;
 }
-:where(p,li,blockquote,button,input) { font-family: var(--type-zh); }
-.primary-nav, .section-nav { font-family: var(--font-display); }
-.hero__watchword, .hero__scripture p:nth-child(2), .hero__scripture cite { font-family:var(--font-display); }
-.hero__scripture p[lang], .proclamation__lead, [lang="zh-Hant"] { font-family:var(--font-text); }
+:where(p,li,blockquote,button,input) { font-family: var(--ws-type-display-zh); }
+.primary-nav, .section-nav { font-family: var(--ws-type-display-en); }
+.hero__watchword, .hero__scripture p:nth-child(2), .hero__scripture cite { font-family:var(--ws-type-display-en); }
+.hero__scripture p[lang], .proclamation__lead, [lang="zh-Hant"] { font-family:var(--ws-type-display-zh); }
 .hero__star, .stone-intro__rhythm, .watch-rhythm b {
   color:var(--morning-gold);
-  font-family:var(--font-display);
+  font-family:var(--ws-type-display-en);
   text-shadow: 1px 0 currentColor, -1px 0 rgba(94,68,21,.34), 0 1px rgba(94,68,21,.34);
 }
 .hero__star::after, .stone-intro__rhythm::after {
@@ -45,7 +45,7 @@
   vertical-align:top;
 }
 .editorial-chapter { display:grid; grid-template-columns:repeat(12,minmax(0,1fr)); gap:var(--grid-gap); width:var(--page); margin-inline:auto; padding-block:clamp(5rem,11vw,10rem); border-top:1px solid var(--shell-hairline); }
-.editorial-chapter__index { grid-column:1 / span 2; color:var(--section-accent); font:400 var(--type-label)/1 var(--font-display); letter-spacing:.15em; }
+.editorial-chapter__index { grid-column:1 / span 2; color:var(--section-accent); font:400 var(--type-label)/1 var(--ws-type-display-en); letter-spacing:.15em; }
 .editorial-chapter__title { grid-column:4 / span 7; margin:0; }
 .editorial-chapter__body { grid-column:8 / -1; max-width:33rem; }
 .editorial-chapter__body p:first-child { margin-top:0; font-size:clamp(1.1rem,1.65vw,1.45rem); }
