@@ -30,14 +30,14 @@ def compile_record(record,index):
       'open-book':'A weathered open book on a plain wooden table beside an olive branch, paper edges, wood grain and cast shadows in precise engraving.'
     }
     spec['prompt']=(
-      'Landscape and still-life illustration ONLY. Absolutely NO human beings, NO faces, NO heads, NO silhouettes, NO portraits. '
-      'Do not depict the speaker. No writing, text, letters, signatures or typography. '
+      'Use a verified, rights-cleared reference photograph for a recognizable speaker portrait when one is supplied. Preserve identity and facial geometry. Otherwise use the non-portrait editorial scene specified below. '
+      'Never invent a speaker likeness without a verified reference. No writing, text, letters, signatures or typography. '
       +scenes[motif]+' '
       'Composition: one clear foreground subject with a secondary background plane, strong asymmetric negative space, '
       'legible structural perspective, crisp contour boundaries, close parallel crosshatching with varied spacing to model form. '
       'Traditional copperplate etching on pure white paper with dark olive green ink only. '
       'NO sepia, orange, ochre, tan, beige, gold, red, blue, black, photographic skin tones, blurred photography, '
-      'glowing gradient, vignette, soft focus, painted portrait, 3D render, or artificial human face. '
+      'glowing gradient, vignette, soft focus, anonymous invented face, or 3D render. '
       'Keep main visual interest in the upper three quarters, with lower quarter empty white for later type composition. '
       'Image background only; no graphic frame or type. High-resolution sharp printmaking illustration.'
     )
