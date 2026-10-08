@@ -227,18 +227,23 @@ try {
   stage.dataset.evidenceMode = 'all';
   window.__JERUSALEM3000__.evidenceMode = 'all';
   update(0);
+  const phaseAudit = three.auditCityPhases(phases.map((phase) => phase.id));
+  window.__JERUSALEM3000__.phaseAudit = phaseAudit;
+  stage.dataset.phaseAudit = phaseAudit.ok ? 'pass' : 'fail';
+  if (!phaseAudit.ok) console.error('[Jerusalem 3000 phase audit]', phaseAudit.emptyPhases);
+  update(0);
   window.__JERUSALEM3000__.status = 'ready';
   const production = auditProductionReadiness(window.__JERUSALEM3000__);
   window.__JERUSALEM3000__.production = production;
-  window.__JERUSALEM3000__.productionReady = production.ok;
-  stage.dataset.productionReady = String(production.ok);
+  window.__JERUSALEM3000__.productionReady = production.ok && phaseAudit.ok;
+  stage.dataset.productionReady = String(window.__JERUSALEM3000__.productionReady);
   const completion = auditProductionCompletion(
     window.__JERUSALEM3000__,
     timeline,
   );
   window.__JERUSALEM3000__.completion = completion;
-  window.__JERUSALEM3000__.complete = completion.ok;
-  stage.dataset.complete = String(completion.ok);
+  window.__JERUSALEM3000__.complete = completion.ok && phaseAudit.ok;
+  stage.dataset.complete = String(window.__JERUSALEM3000__.complete);
   badge.textContent = `JERUSALEM 3000 · TEMPORAL CITY · ${production.evidenceObjects || 0} EVIDENCE OBJECTS · ${production.constructionPieces || 0} PIECES`;
   window.addEventListener(
     'pagehide',
