@@ -109,7 +109,9 @@ def main():
  spec,prompt,css=compile_brief(args)
  if args.route:spec['page_resolution']=resolved
  out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
- for filename,data in [('art-direction.json',json.dumps(spec,ensure_ascii=False,indent=2)+'\n'),('image-prompt.md',prompt),('css-layout-contract.md',css)]:
+ from review_dore_editorial_art import CHECKS
+ review_template={key:{'status':'pending','evidence':''} for key in CHECKS}
+ for filename,data in [('art-direction.json',json.dumps(spec,ensure_ascii=False,indent=2)+'\n'),('image-prompt.md',prompt),('css-layout-contract.md',css),('visual-review.template.json',json.dumps(review_template,ensure_ascii=False,indent=2)+'\n')]:
   (out/filename).write_text(data,encoding='utf-8')
  print(out)
 if __name__=='__main__':main()
