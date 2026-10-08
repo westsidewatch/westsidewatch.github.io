@@ -98,9 +98,16 @@ def main():
  p.add_argument('--portrait-style',choices=['none']+list(PORTRAIT_RECIPES),default='none')
  p.add_argument('--scenario',choices=SCENARIOS,default='essay-concept')
  p.add_argument('--slot',choices=SLOTS,default='cover')
+ p.add_argument('--route',help='Resolve editorial scenario, slot and palette from a known site route')
+ p.add_argument('--content-file',help='Optional Hugo front matter for route-specific design metadata')
  p.add_argument('--out',default='local/dore-editorial-brief')
  args=p.parse_args()
+ if args.route:
+  from resolve_dore_editorial_page import resolve,parse_frontmatter
+  resolved=resolve(args.route,parse_frontmatter(args.content_file) if args.content_file else None)
+  args.scenario=resolved['scenario'];args.slot=resolved['slot'];args.palette=resolved['palette']
  spec,prompt,css=compile_brief(args)
+ if args.route:spec['page_resolution']=resolved
  out=Path(args.out);out.mkdir(parents=True,exist_ok=True)
  for filename,data in [('art-direction.json',json.dumps(spec,ensure_ascii=False,indent=2)+'\n'),('image-prompt.md',prompt),('css-layout-contract.md',css)]:
   (out/filename).write_text(data,encoding='utf-8')
