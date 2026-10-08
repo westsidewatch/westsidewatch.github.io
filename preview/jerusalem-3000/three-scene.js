@@ -307,6 +307,10 @@ export function mountJerusalemThreeScene(mount, { onReady } = {}) {
     );
   }
   function ensureEraCity(phaseId) {
+    // Safety rollback: synchronous inferred parcel generation freezes the main thread
+    // during initial update(0), even after the startup audit was made non-mutating.
+    // Keep canonical Herodian geometry; use established phase morphology elsewhere.
+    return null;
     if (isCorePhase(phaseId) || !ERA_FOOTPRINTS[phaseId] || !eraRegistrationReference || !cityCoreRuntime) return null;
     if (eraCities.has(phaseId)) return eraCities.get(phaseId);
     const registration = deriveEraRegistration(eraRegistrationReference, phaseId, ERA_FOOTPRINTS[phaseId]);
