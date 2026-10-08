@@ -1,0 +1,22 @@
+{{ define "main" }}
+{{/* Proof-only Hugo layout; uses real baseof.html and the production CSS cascade. */}}
+<article class="section-atlas sites-surface dore-proof" data-surface="{{ .Section }}" data-dore-proof="true">
+  <header class="section-atlas__cover">
+    <div class="section-atlas__folio"><span>WESTSIDE WATCH / {{ upper .Section }}</span><span>VISUAL PROOF</span></div>
+    <div class="section-atlas__title">
+      <p>EDITORIAL / {{ upper (.Params.dore_slot | default "cover") }}</p>
+      <h1>{{ .Title }}</h1>
+    </div>
+    <figure class="dore-proof__image">
+      {{ with .Params.dore_image }}<img src="{{ . | safeURL }}" alt="Editorial visual proof" loading="eager">{{ end }}
+    </figure>
+  </header>
+</article>
+<style>
+.dore-proof .section-atlas__cover{position:relative;isolation:isolate;min-height:75vh}
+.dore-proof__image{position:relative;margin:clamp(16px,3vw,56px) 0;width:100%;height:min(62vh,850px);overflow:hidden}
+.dore-proof__image img{display:block;width:100%;height:100%;object-fit:cover}
+.dore-proof .section-atlas__title{position:relative;z-index:2}
+@media(max-width:760px){.dore-proof__image{height:48vh}}
+</style>
+{{ end }}
