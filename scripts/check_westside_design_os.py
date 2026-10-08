@@ -7,6 +7,7 @@ required=[
  root/"design-system/tokens/westside.tokens.json",
  root/"design-system/scopes.json",
  root/"static/css/westside-design-os.css",
+ root/"static/css/westside-design-tokens.css",
 ]
 missing=[str(p.relative_to(root)) for p in required if not p.exists()]
 if missing:
@@ -27,4 +28,9 @@ for legacy in ["/css/typography-sitewide.css","/css/westside-color-authority.css
  if legacy not in runtime:
   print("Design OS guard failed: compatibility runtime missing",legacy);sys.exit(1)
 
+import subprocess
+result=subprocess.run([sys.executable,str(root/"scripts/build_westside_design_os.py"),"--check"],cwd=root)
+if result.returncode: sys.exit(result.returncode)
+if '/css/westside-design-tokens.css' not in runtime:
+ print("Design OS guard failed: generated token runtime is not loaded");sys.exit(1)
 print("Westside Design OS guard: PASS")
