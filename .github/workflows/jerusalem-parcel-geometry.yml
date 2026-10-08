@@ -1,0 +1,21 @@
+name: Jerusalem 3000 Parcel Geometry
+on:
+  pull_request:
+    paths:
+      - 'preview/jerusalem-3000/herodian-urban-blocks-core.js'
+      - 'preview/jerusalem-3000/herodian-urban-blocks-core.test.mjs'
+      - '.github/workflows/jerusalem-parcel-geometry.yml'
+  push:
+    paths:
+      - 'preview/jerusalem-3000/herodian-urban-blocks-core.js'
+      - 'preview/jerusalem-3000/herodian-urban-blocks-core.test.mjs'
+      - '.github/workflows/jerusalem-parcel-geometry.yml'
+jobs:
+  parcel-geometry:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --test preview/jerusalem-3000/herodian-urban-blocks-core.test.mjs
