@@ -1,4 +1,4 @@
-:root{--font-zh-editorial:"Noto Sans TC","PingFang TC","Microsoft JhengHei",serif;--font-en-editorial:"Cormorant Garamond",Georgia,serif}
+:root{--font-zh-editorial:var(--type-zh),"PingFang TC","Microsoft JhengHei",serif;--font-en-editorial:var(--type-en),Georgia,serif}
 body,[lang="zh-Hant"]{font-family:var(--font-zh-editorial)}
 h1,h2,h3,h4,.primary-nav,.utility-nav,.wordmark{font-family:var(--font-en-editorial);font-weight:400}
 .site-header__primary{min-height:4.5rem;align-items:center}.site-header .wordmark,.site-header .primary-nav,.site-header .utility-nav{align-self:center}.site-header .primary-nav,.site-header .utility-nav{height:2rem;align-items:center}.site-header .utility-nav{display:flex;gap:1.2rem}.site-header .primary-nav a,.site-header .utility-nav a{display:flex;align-items:center;height:2rem;padding:.1rem 0;font-weight:400;line-height:1;border-bottom:1px solid transparent}.home .site-header__primary{padding-top:.8rem}

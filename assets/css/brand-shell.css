@@ -6,13 +6,13 @@
   --warm-gold:#b79838;
   --morning-gold:#d2bc69;
   --watch-night:#102a43;
-  --font-display:"Cormorant Garamond","Noto Sans TC",serif;
-  --font-text:"Noto Sans TC",serif;
+  --font-display:var(--type-en),var(--type-zh),serif;
+  --font-text:var(--type-zh),serif;
   --shell-ease:cubic-bezier(.22,.7,0,1);
 }
 html{background:var(--paper);color:var(--ink)}
 body{font-family:var(--font-text)}
-.publication-shell{--paper:#faf9f5;--living-paper:#faf9f5;--ink:#252525;--ink-black:#252525;--font-display:"Cormorant Garamond","Noto Sans TC",serif;--font-text:"Noto Sans TC",serif;background-color:var(--paper);background-image:linear-gradient(rgba(250,249,245,.93),rgba(246,242,233,.95)),url('/images/temple-stone-light.png');background-attachment:fixed;background-size:auto,48rem auto}
+.publication-shell{--paper:#faf9f5;--living-paper:#faf9f5;--ink:#252525;--ink-black:#252525;--font-display:var(--type-en),var(--type-zh),serif;--font-text:var(--type-zh),serif;background-color:var(--paper);background-image:linear-gradient(rgba(250,249,245,.93),rgba(246,242,233,.95)),url('/images/temple-stone-light.png');background-attachment:fixed;background-size:auto,48rem auto}
 .site-header{position:relative;z-index:12;display:grid;grid-template-columns:minmax(9rem,.7fr) minmax(20rem,1fr) auto;align-items:center;column-gap:clamp(1rem,2.5vw,2.5rem);width:100%;padding:1rem max(1rem,calc((100% - 88rem)/2));border-bottom:1px solid rgba(162,135,42,.28);background:rgba(250,249,245,.9);backdrop-filter:blur(14px)}
 .site-header__primary{display:contents}.wordmark{width:clamp(9rem,14vw,12rem)}
 .primary-nav,.utility-nav{display:flex;align-items:center;gap:clamp(1rem,2vw,2rem);font-family:var(--font-display);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;white-space:nowrap}.primary-nav{justify-content:center}.utility-nav{justify-content:flex-end;gap:1rem}.primary-nav a,.utility-nav a{position:relative;padding:.55rem 0;text-decoration:none}.primary-nav a:after,.utility-nav a:after{position:absolute;right:0;bottom:0;left:0;height:1px;background:var(--first-light-gold);content:"";transform:scaleX(0);transform-origin:right;transition:transform .35s var(--shell-ease)}.primary-nav a:hover:after,.utility-nav a:hover:after,.primary-nav a[aria-current=page]:after,.utility-nav a[aria-current=page]:after{transform:scaleX(1);transform-origin:left}.utility-nav a:last-child{padding:.55rem .8rem;border:1px solid rgba(162,135,42,.45)}.utility-nav a:last-child:after{display:none}

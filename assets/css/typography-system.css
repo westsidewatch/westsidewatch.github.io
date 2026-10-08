@@ -1,33 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Noto+Serif+TC:wght@400;600&display=swap');
+@import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
 /* Westside Watch type authority — the only cross-site bilingual scale. */
 :root{
-  --type-en:"Cormorant Garamond",Georgia,"Times New Roman",serif;
-  --type-zh:"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;
-  --type-ui:Inter,"Helvetica Neue",Arial,sans-serif;
-  --type-zh-light:300;
+  --type-en:"Bodoni Moda",Georgia,"Times New Roman",serif;
+  --type-zh:"Chiron Hei HK WS","PingFang TC","Microsoft JhengHei",sans-serif;
+  --type-ui:var(--type-zh);
+  --type-zh-light:200;
   --type-zh-regular:400;
   --type-zh-strong:600;
   --type-en-regular:400;
+  /* Shared responsive role scale; rem floors respect browser text zoom. */
+  --ws-size-hero:clamp(3rem,7vw + 1rem,9rem);
+  --ws-size-cover:clamp(2.25rem,5vw + .5rem,6rem);
+  --ws-size-h1:clamp(2rem,3.6vw + .5rem,4.5rem);
+  --ws-size-h2:clamp(1.625rem,2.2vw + .5rem,2.75rem);
+  --ws-size-h3:clamp(1.375rem,1.3vw + .5rem,1.875rem);
+  --ws-size-nav:clamp(1rem,.4vw + .875rem,1.1875rem);
+  --ws-size-card:clamp(1.25rem,1vw + .75rem,1.75rem);
+  --ws-size-reading:clamp(1.0625rem,.5vw + 1rem,1.25rem);
+  --ws-size-body:clamp(1rem,.35vw + .875rem,1.125rem);
+  --ws-size-meta:clamp(.8125rem,.2vw + .75rem,.9375rem);
+  --ws-size-control:clamp(1rem,.35vw + .875rem,1.125rem);
+  --ws-leading-reading:1.85;
+  --ws-leading-ui:1.5;
+  --ws-reading-measure:38ch;
+  --ws-type-display-en:var(--type-en);
+  --ws-type-display-zh:var(--type-zh);
+  --ws-type-reading-zh:"Noto Serif TC","Songti TC",serif;
+  /* Sitewide typography authority first; homepage composition is the final phase. */
+  --ws-typography-phase:sitewide;
+  --ws-size-ui:var(--ws-size-body);
+  --ws-size-index:var(--ws-size-meta);
+  --ws-size-article-title:var(--ws-size-h1);
+  --ws-size-article-section:var(--ws-size-h2);
+  --ws-size-library-title:var(--ws-size-card);
+  --ws-size-video-title:var(--ws-size-card);
+  --ws-size-scripture:var(--ws-size-reading);
   --type-body:clamp(1rem,.97rem + .12vw,1.1rem);
   --type-small:clamp(.78rem,.76rem + .08vw,.84rem);
   --leading-body:1.9;
   --tracking-zh:.035em;
 }
 html{font-synthesis:none;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
-body{font-family:var(--type-zh)!important;font-size:var(--type-body);font-weight:var(--type-zh-light);line-height:var(--leading-body)}
+body{font-family:var(--type-zh)!important;font-size:var(--ws-size-body);font-weight:var(--type-zh-light);line-height:var(--leading-body)}
 .type-en,[lang^="en"]{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important;font-synthesis:none}
 .type-zh,[lang="zh-Hant"],[lang="zh-TW"],[lang="zh"]{font-family:var(--type-zh)!important;font-synthesis:none;word-break:keep-all;line-break:strict;overflow-wrap:normal}
 .type-mixed{font-family:var(--type-zh)!important;font-synthesis:none}
-p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--type-body)!important;font-weight:var(--type-zh-light)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
+p.type-zh,li.type-zh,blockquote.type-zh,.mc-copy,.realm__description,.story-card__deck,.layer-statement>div{font-size:var(--ws-size-reading)!important;font-weight:var(--type-zh-regular)!important;line-height:var(--leading-body)!important;letter-spacing:var(--tracking-zh)!important}
 h1.type-en,h2.type-en,h3.type-en,h4.type-en,.type-en:is(strong,b){font-weight:var(--type-en-regular)!important}
 h1.type-zh,h2.type-zh,h3.type-zh,h4.type-zh,.type-zh:is(strong,b){font-weight:var(--type-zh-strong)!important;line-height:1.24!important;letter-spacing:.025em!important}
-h1.type-zh{font-size:clamp(2.75rem,5.4vw,5.8rem)!important}
-h2.type-zh{font-size:clamp(2.15rem,3.8vw,4rem)!important}
-h3.type-zh{font-size:clamp(1.45rem,2.25vw,2.35rem)!important}
+h1.type-zh{font-size:var(--ws-size-h1)!important}
+h2.type-zh{font-size:var(--ws-size-h2)!important}
+h3.type-zh{font-size:var(--ws-size-h3)!important}
 h4.type-zh{font-size:clamp(1.15rem,1.45vw,1.45rem)!important}
 h1.type-en{font-size:clamp(5rem,10vw,11rem)}
 h2.type-en{font-size:clamp(3.6rem,7vw,7.5rem)}
 h3.type-en{font-size:clamp(2rem,3.5vw,3.8rem)}
-small.type-zh,.type-zh:is(.meta,.eyebrow,.kicker){font-size:var(--type-small)!important;font-weight:var(--type-zh-regular)!important;line-height:1.65!important;letter-spacing:.08em!important}
+small.type-zh,.type-zh:is(.meta,.eyebrow,.kicker){font-size:var(--ws-size-meta)!important;font-weight:var(--type-zh-regular)!important;line-height:1.65!important;letter-spacing:.08em!important}
 small.type-en,.type-en:is(.meta,.eyebrow,.kicker){font-family:var(--type-ui)!important;font-size:var(--type-small)!important;font-weight:400!important;line-height:1.35!important;letter-spacing:.14em!important;text-transform:uppercase}
 
 /* Paired title grammar: English leads in scale; Chinese annotates with weight. */
@@ -50,10 +79,19 @@ small.type-en,.type-en:is(.meta,.eyebrow,.kicker){font-family:var(--type-ui)!imp
 :where(.type-zh,h1,h2,h3,h4,p,li,strong,em,span){text-wrap:pretty}
 :where(h1,h2,h3,h4,.type-en){font-synthesis:none}
 .primary-nav,.utility-nav,.section-nav,.site-footer{font-family:var(--type-en)!important;font-weight:var(--type-en-regular)!important}
-.primary-nav,.utility-nav,.section-nav{font-size:clamp(.78rem,.74rem + .12vw,.88rem)!important;line-height:1.2!important;letter-spacing:.1em!important}
+.primary-nav,.utility-nav,.section-nav{font-size:var(--ws-size-nav)!important;line-height:var(--ws-leading-ui)!important;letter-spacing:.1em!important}
 
 @media(max-width:700px){
-  h1.type-zh{font-size:clamp(2.4rem,12vw,4.35rem)!important}
-  h2.type-zh{font-size:clamp(2rem,9vw,3.25rem)!important}
-  .living-screen__head>span,.realm__zh,.layer-hero__zh,.section-atlas__zh,.issue-cover__zh,.mc-zh{font-size:.95rem!important;line-height:1.7!important}
+  h1.type-zh{font-size:var(--ws-size-h1)!important}
+  h2.type-zh{font-size:var(--ws-size-h2)!important}
+  .living-screen__head>span,.realm__zh,.layer-hero__zh,.section-atlas__zh,.issue-cover__zh,.mc-zh{font-size:var(--ws-size-body)!important;line-height:1.7!important}
+}
+
+/* Accessibility: preserve readable type under narrow viewports and zoom. */
+@media(max-width:700px){
+  :where(.primary-nav,.utility-nav,.section-nav){font-size:var(--ws-size-nav)!important;line-height:var(--ws-leading-ui)!important}
+  :where(.type-zh,.type-en){overflow-wrap:anywhere}
+}
+@media(prefers-reduced-motion:reduce){
+  :where(.type-zh,.type-en,.primary-nav,.utility-nav,.section-nav){transition:none!important;animation:none!important}
 }
