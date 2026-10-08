@@ -4,6 +4,7 @@ Requires Pillow, installed on Mac with: python3 -m pip install Pillow
 Never invents portraits. Background is external locally generated PNG.
 """
 import argparse,json
+from check_dore_speaker_image import validate
 from pathlib import Path
 def main():
  p=argparse.ArgumentParser();p.add_argument('--job',required=True)
@@ -16,6 +17,8 @@ def main():
  if spec.get('portraitAllowed') or spec['section']!='olive':raise SystemExit('Invalid cover policy')
  source=job/'generated-background.png'
  if not source.exists():raise SystemExit(f'Missing local image: {source}. Render the prompt first.')
+ reasons=validate(source)
+ if reasons:raise SystemExit('Image quality gate failed: '+'; '.join(reasons))
  im=Image.open(source).convert('RGB').resize((720,960),Image.Resampling.LANCZOS)
  # Force generated image into the illustration field; text region is deterministic white.
  im.paste('#FFFFFF',(0,700,720,960))
