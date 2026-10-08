@@ -16,7 +16,7 @@ export function buildHerodianRoadGeometry(group,roads,materials,terrain){
         geometry.setIndex([0,2,1,1,2,3]);geometry.computeVertexNormals();
         const mesh=new THREE.Mesh(geometry,materials[road.confidence]||materials.inferred);
         mesh.receiveShadow=true;
-        mesh.userData.cityObject={objectId:road.id,confidence:road.confidence,terrainGround:(y0+y1)/2};
+        mesh.userData.cityObject={objectId:road.id,confidence:road.confidence,infrastructure:true,terrainGround:(y0+y1)/2};
         group.add(mesh);meshes.push(mesh);
       }
     }
