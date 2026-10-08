@@ -362,7 +362,7 @@ h1 {
   font-size: clamp(1.1rem, 1.6vw, 1.4rem);
 }
 
-.text-link { font-size: .76rem; font-weight: 700; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
+.text-link { font-size: .76rem; font-weight:600; letter-spacing: .12em; text-decoration: none; text-transform: uppercase; }
 .text-link span { display: inline-block; margin-left: .6em; transition: transform .2s ease; }
 .text-link:hover span { transform: translateX(.3rem); }
 .text-link--quiet { color: color-mix(in srgb, var(--ink) 58%, var(--paper)); }
@@ -1577,7 +1577,7 @@ h1 {
 
 .column-list__number,
 .interlude__label { color: color-mix(in srgb, var(--ink) 52%, var(--paper)); font-size: var(--type-label); letter-spacing: .13em; text-transform: uppercase; }
-.interlude__label b { color: var(--first-light-gold); font-weight: 500; }
+.interlude__label b { color: var(--first-light-gold); font-weight:400; }
 .column-list strong { color: var(--watch-night); font-family: var(--ws-type-display-en); font-size: var(--type-h4); font-weight: 400; letter-spacing: .06em; }
 .column-list__role { font-size: var(--type-caption); }
 
