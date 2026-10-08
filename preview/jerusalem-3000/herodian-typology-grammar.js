@@ -30,7 +30,32 @@ function add(group,meshes,mat,poly,h,terrain,parcel,kind,start,yOffset=0){const 
 function edges(poly){return poly.map((a,i)=>{const b=poly[(i+1)%poly.length];return{a,b,length:Math.hypot(b.x-a.x,b.z-a.z)}})}
 function insetBand(poly,outerFactor,innerFactor){const outer=shrink(poly,outerFactor),inner=shrink(poly,innerFactor),bands=[];for(let i=0;i<outer.length;i++)bands.push([outer[i],outer[(i+1)%outer.length],inner[(i+1)%inner.length],inner[i]]);return bands}
 function facade(group,meshes,materials,terrain,parcel,edge,h,index,start,yOffset=0){if(!edge||edge.length<2.2)return 0;const dx=edge.b.x-edge.a.x,dz=edge.b.z-edge.a.z,L=edge.length||1,tx=dx/L,tz=dz/L,nx=-tz,nz=tx,c={x:(edge.a.x+edge.b.x)/2,z:(edge.a.z+edge.b.z)/2},ground=terrainY(terrain,c.x,c.z)+1.2+yOffset,openings=buildFacadeOpenings({buildingId:`${parcel.id}:${index}`,phaseId:'herodian-jesus',face:`edge-${index}`,width:L,height:h,floors:h>15?2:1,streetFacing:true}),mat=materials.facadeOpening||new THREE.MeshStandardMaterial({color:0x3d3327,roughness:.94,metalness:0}),depth=.18;let count=0;for(const o of openings){const g=new THREE.BoxGeometry(o.width,o.height,depth),m=new THREE.Mesh(g,mat);m.position.set(c.x+tx*o.x+nx*(depth*.55),ground+o.y,c.z+tz*o.x+nz*(depth*.55));m.rotation.y=-Math.atan2(dz,dx);m.castShadow=false;m.receiveShadow=true;m.userData.phase2={stage:`architecture-facade-${o.kind}`,start:start+.006,baseHeight:o.height,groundY:ground};m.userData.cityObject={parcelId:parcel.id,kind:`facade-${o.kind}`,confidence:'inferred',semantic:true};group.add(m);meshes.push(m);count++}return count}
-function roof(group,meshes,mat,terrain,parcel,poly,wallHeight,index,start){const roofPoly=shrink(poly,.94),step=.65+(index%3)*.38;add(group,meshes,mat,roofPoly,step,terrain,parcel,'roof-slab',start,wallHeight);const es=edges(roofPoly),parapetH=1.15+(index%2)*.35;for(let i=0;i<es.length;i++){const e=es[i],dx=e.b.x-e.a.x,dz=e.b.z-e.a.z,L=Math.hypot(dx,dz)||1,nx=-dz/L,nz=dx/L,t=.72,band=[{x:e.a.x+nx*t,z:e.a.z+nz*t},{x:e.b.x+nx*t,z:e.b.z+nz*t},{x:e.b.x-nx*t,z:e.b.z-nz*t},{x:e.a.x-nx*t,z:e.a.z-nz*t}];add(group,meshes,mat,band,parapetH,terrain,parcel,'roof-parapet',start+.008,wallHeight+step)}if(index%4===0){const upper=shrink(roofPoly,.34);add(group,meshes,mat,upper,3.2+(index%3),terrain,parcel,'roof-room',start+.016,wallHeight+step)}return 2+es.length}
+function roof(group,meshes,mat,terrain,parcel,poly,wallHeight,index,start){
+ // Keep the roof aligned to its supporting walls; a large centroid shrink
+ // makes street-facing facades look detached from their roof slabs.
+ const roofPoly=shrink(poly,.992),step=.65+(index%3)*.38;
+ add(group,meshes,mat,roofPoly,step,terrain,parcel,'roof-slab',start,wallHeight);
+ const es=edges(roofPoly),parapetH=1.15+(index%2)*.35;
+ const c=centroid(roofPoly);
+ for(let i=0;i<es.length;i++){
+  const e=es[i],dx=e.b.x-e.a.x,dz=e.b.z-e.a.z,L=Math.hypot(dx,dz);
+  if(L<.8)continue;
+  // Build the parapet inward from the roof edge, avoiding overhang into
+  // the neighboring parcel. Width scales down for short narrow edges.
+  const width=Math.min(.48,L*.08);
+  const nx=-dz/L,nz=dx/L;
+  const mid={x:(e.a.x+e.b.x)*.5,z:(e.a.z+e.b.z)*.5};
+  const inward=((c.x-mid.x)*nx+(c.z-mid.z)*nz)>=0?1:-1;
+  const ox=nx*width*inward,oz=nz*width*inward;
+  const band=[e.a,e.b,{x:e.b.x+ox,z:e.b.z+oz},{x:e.a.x+ox,z:e.a.z+oz}];
+  add(group,meshes,mat,band,parapetH,terrain,parcel,'roof-parapet',start+.008,wallHeight+step);
+ }
+ if(index%4===0){
+  const upper=shrink(roofPoly,.34);
+  add(group,meshes,mat,upper,3.2+(index%3),terrain,parcel,'roof-room',start+.016,wallHeight+step);
+ }
+ return 2+es.length;
+}
 export function chooseHerodianTypology(parcel,index){
  const pool=parcel.typologyPool||parcel.metadata?.typologyPool||['courtyard-house'];
  // Select by stable parcel identity, not array position: a rejected parcel must
