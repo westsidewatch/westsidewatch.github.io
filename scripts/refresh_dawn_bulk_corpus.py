@@ -50,10 +50,17 @@ def main() -> int:
     if av and av.get('contentDownloaded') is not False: raise SystemExit('AV discovery must remain metadata-pointer-only')
     if not (source.get('policy') or {}).get('wikisourceForbidden'): raise SystemExit('Wikisource gate missing')
     if (source.get('metrics') or {}).get('works',0) < 10000: raise SystemExit('bulk corpus below 10k')
-    if (source.get('metrics') or {}).get('chineseMatchedWorksAdded',0) < 1: raise SystemExit('Chinese corpus empty')
+    # Incremental discovery may find no new Chinese works while the admitted
+    # collection still contains Chinese holdings. Validate the rebuilt holdings,
+    # not this run's additions, and count each work only once.
+    chinese_works = sum(
+        1 for item in queue.get('items', [])
+        if 'chi' in (item.get('languages') or []) or item.get('matchedLanguage') == 'chi'
+    )
+    if chinese_works < 1: raise SystemExit('Chinese corpus empty')
     if queue.get('deduplicatedWorks',0) < 10000 or queue.get('authorityBackedWorks',0) < 9000: raise SystemExit('queue below accepted bulk baseline')
     if resource_queue.get('resourceCount',0) < queue.get('deduplicatedWorks',0): raise SystemExit('resource queue lost legacy works')
-    print(json.dumps({'schema':'dawn.bulk-corpus-refresh.v4','phase':'pre-canonical','sourceWorks':source['metrics']['works'],'chineseWorks':source['metrics']['chineseMatchedWorksAdded'],'avRecords':av.get('itemCount',0),'queueWorks':queue['deduplicatedWorks'],'authorityBackedWorks':queue['authorityBackedWorks'],'resourceQueue':resource_queue['resourceCount'],'canonicalBaseline':canonical.get('resourceCount',0),'canonicalMutation':'forbidden-before-promotion','mediaDownload':'forbidden'},ensure_ascii=False))
+    print(json.dumps({'schema':'dawn.bulk-corpus-refresh.v4','phase':'pre-canonical','sourceWorks':source['metrics']['works'],'chineseWorks':chinese_works,'chineseMatchedWorksAdded':source['metrics'].get('chineseMatchedWorksAdded',0),'avRecords':av.get('itemCount',0),'queueWorks':queue['deduplicatedWorks'],'authorityBackedWorks':queue['authorityBackedWorks'],'resourceQueue':resource_queue['resourceCount'],'canonicalBaseline':canonical.get('resourceCount',0),'canonicalMutation':'forbidden-before-promotion','mediaDownload':'forbidden'},ensure_ascii=False))
     return 0
 
 if __name__=='__main__': raise SystemExit(main())
