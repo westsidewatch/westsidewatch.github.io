@@ -18,7 +18,7 @@ def build():
   doc=gen.generate(slug,"verified")
   ranked=score.rank(doc)
   winner=next(x for x in ranked["candidates"] if x["id"]==ranked["winner"])
-  records.append({"speaker":slug,"displayName":s["name"],"family":winner["family"],"identitySynthesis":False,"assetBinding":"none","candidateId":winner["id"],"geometry":winner["geometry"],"reward":winner["score"]["reward"]})
+  records.append({"speaker":slug,"displayName":s["name"],"family":winner["family"],"identitySynthesis":False,"assetBinding":"none","candidateId":winner["id"],"geometry":winner["geometry"],"reward":winner["score"]["reward"],"cover":"/dore-design/runtime/olive-covers/"+slug+".svg"})
  return {"schema":"dore.olive-speaker-compositions.v1","authority":"Doré Magazine Engine scoring","deterministic":True,"records":records}
 def render_cover(r, number):
  from html import escape
