@@ -2,7 +2,7 @@
    Keep independent from Hugo templates; no homepage composition rules. */
 @import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400&family=Noto+Serif+TC:wght@400;600&display=swap');
 @import url('https://cdn.jsdelivr.net/npm/chiron-hei-hk-webfont/css/vf.css');
-:root{
+:root{--ws-olive-layer-zh-weight:600;--ws-olive-speaker-name-weight:200;--ws-olive-folio-weight:400;
  --ws-size-hero:clamp(3rem,7vw + 1rem,9rem);
  --ws-size-cover:clamp(2.25rem,5vw + .5rem,6rem);
  --ws-size-h1:clamp(2rem,3.6vw + .5rem,4.5rem);
