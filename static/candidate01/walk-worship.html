@@ -126,22 +126,24 @@ html,body{height:100%;overflow:hidden!important}
     layer.style.width=`${maxX-minX}px`;
     layer.style.height=`${maxY-minY}px`;
     layer.style.minHeight='0';
-    const ordered=[...cr].sort((a,b)=>a.top-b.top||a.left-b.left);const firstRow=ordered.slice(0,4).sort((a,b)=>a.left-b.left);const cardW=Math.max(1,firstRow[0]?.width||cr[0].width);const gap=Math.max(0,(firstRow[1]?.left||0)-(firstRow[0]?.right||0));const groupW=Math.max(1,cardW*2+gap);
-    const groupH=Math.max(1,groupW*5/8);
-    [left,right].forEach(p=>{
-      p.style.width=`${groupW}px`;
-      p.style.height=`${groupH}px`;
-      p.style.top='50%';
-      p.style.transform='translateY(-50%)';
-    });
-    left.style.left='0'; left.style.right='auto';
-    right.style.right='0'; right.style.left='auto';
+    const mobile=matchMedia('(max-width:900px)').matches;
+    const rows=[...cr].sort((a,b)=>a.top-b.top||a.left-b.left);
+    const firstRow=rows.slice(0,mobile?2:4).sort((a,b)=>a.left-b.left);
+    const cardW=Math.max(1,firstRow[0]?.width||cr[0].width);
+    const gap=Math.max(0,(firstRow[1]?.left||0)-(firstRow[0]?.right||0));
+    const groupW=mobile?Math.max(1,maxX-minX):Math.max(1,cardW*2+gap);
+    const groupH=mobile?Math.max(1,(maxY-minY-gap)/2):Math.max(1,groupW*5/8);
+    [left,right].forEach(p=>{p.style.width=`${groupW}px`;p.style.height=`${groupH}px`;p.style.transform='translateY(-50%)';});
+    if(mobile){left.style.left='0';left.style.right='auto';left.style.top='25%';right.style.left='0';right.style.right='auto';right.style.top='75%';}
+    else{left.style.left='0';left.style.right='auto';left.style.top='50%';right.style.right='0';right.style.left='auto';right.style.top='50%';}
     document.documentElement.dataset.candidate01Geometry=`${Math.round(groupW)}x${Math.round(groupH)}`;
   };
   window.__candidate01SyncGeometry=sync;
   const settle=()=>requestAnimationFrame(()=>requestAnimationFrame(()=>{sync();window.dispatchEvent(new Event('resize'));}));
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',settle,{once:true});else settle();
   window.addEventListener('resize',sync,{passive:true});
+  window.addEventListener('orientationchange',settle,{passive:true});
+  if(window.visualViewport)window.visualViewport.addEventListener('resize',sync,{passive:true});
 })();
 </script>
 </body></html>
